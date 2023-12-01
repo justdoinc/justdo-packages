@@ -9,7 +9,7 @@ Npm.depends({
   'body-parser': '1.12.4'
 });
 
-Package.on_use(function (api) {
+Package.onUse(function (api) {
   api.versionsFrom('METEOR@0.9.2');
   // meteor dependencies
   api.use('underscore');
@@ -43,34 +43,34 @@ Package.on_use(function (api) {
   // for RouteController which inherits from this
   api.use('iron:controller@1.0.12');
 
-  api.add_files('lib/current_options.js');
-  api.add_files('lib/http_methods.js');
-  api.add_files('lib/route_controller.js');
-  api.add_files('lib/route_controller_server.js', 'server');
-  api.add_files('lib/route_controller_client.js', 'client');
-  api.add_files('lib/route.js');
-  api.add_files('lib/router.js');
-  api.add_files('lib/hooks.js');
-  api.add_files('lib/helpers.js');
-  api.add_files('lib/router_client.js', 'client');
-  api.add_files('lib/body_parser_server.js', 'server');
-  api.add_files('lib/router_server.js', 'server');
-  api.add_files('lib/plugins.js');
-  api.add_files('lib/global_router.js');
-  api.add_files('lib/templates.html');
+  api.addFiles('lib/current_options.js');
+  api.addFiles('lib/http_methods.js');
+  api.addFiles('lib/route_controller.js');
+  api.addFiles('lib/route_controller_server.js', 'server');
+  api.addFiles('lib/route_controller_client.js', 'client');
+  api.addFiles('lib/route.js');
+  api.addFiles('lib/router.js');
+  api.addFiles('lib/hooks.js');
+  api.addFiles('lib/helpers.js');
+  api.addFiles('lib/router_client.js', 'client');
+  api.addFiles('lib/body_parser_server.js', 'server');
+  api.addFiles('lib/router_server.js', 'server');
+  api.addFiles('lib/plugins.js');
+  api.addFiles('lib/global_router.js');
+  api.addFiles('lib/templates.html');
 
   // symbol exports
   api.export('Router');
   api.export('RouteController');
 });
 
-Package.on_test(function (api) {
+Package.onTest(function (api) {
   api.use('iron:router');
   api.use('tinytest');
   api.use('test-helpers');
 
-  api.add_files('test/helpers.js');
-  api.add_files('test/route_test.js');
-  api.add_files('test/router_test.js');
-  api.add_files('test/route_controller_test.js');
+  api.addFiles('test/helpers.js');
+  api.addFiles('test/route_test.js');
+  api.addFiles('test/router_test.js');
+  api.addFiles('test/route_controller_test.js');
 });

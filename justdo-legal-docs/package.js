@@ -20,15 +20,15 @@ Package.onUse(function (api) {
 
   api.use("justdoinc:justdo-legal-docs-versions", both);
 
-  api.add_files("common-legal-style.sass", client);
+  api.addFiles("common-legal-style.sass", client);
 
-  api.add_files("docs/copyright.html", client);
-  api.add_files("docs/privacy-policy.html", client);
-  api.add_files("docs/terms-conditions.html", client);
-  api.add_files("docs/privacy-shield.html", client);
-  api.add_files("docs/on-premise.html", client);
-  api.add_files("docs/promoters-terms-conditions.html", client);
-  api.add_files("docs/cookie-policy.html", client);
-  api.add_files("docs/common.coffee", client);
+  api.addFiles("docs/copyright.html", client);
+  api.addFiles("docs/privacy-policy.html", client);
+  api.addFiles("docs/terms-conditions.html", client);
+  api.addFiles("docs/privacy-shield.html", client);
+  api.addFiles("docs/on-premise.html", client);
+  api.addFiles("docs/promoters-terms-conditions.html", client);
+  api.addFiles("docs/cookie-policy.html", client);
+  api.addFiles("docs/common.coffee", client);
   api.addAssets("docs/data-subject-access-request.pdf", client);
 });

@@ -24,20 +24,20 @@ Package.onUse(function (api) {
 
   api.use("justdoinc:justdo-analytics@1.0.0", both);
 
-  api.add_files("lib/server/email.coffee", server);
-  api.add_files("lib/server/templates/wrappers/email-wrapper.handlebars", server);
+  api.addFiles("lib/server/email.coffee", server);
+  api.addFiles("lib/server/templates/wrappers/email-wrapper.handlebars", server);
 
-  api.add_files("lib/server/templates/admins/contact-request.handlebars", server);
+  api.addFiles("lib/server/templates/admins/contact-request.handlebars", server);
 
-  api.add_files("lib/server/templates/notifications/notifications-added-to-new-project.handlebars", server);
+  api.addFiles("lib/server/templates/notifications/notifications-added-to-new-project.handlebars", server);
 
-  api.add_files("lib/server/templates/project-notifications/ownership-transfer.handlebars", server);
-  api.add_files("lib/server/templates/project-notifications/ownership-transfer-rejected.handlebars", server);
+  api.addFiles("lib/server/templates/project-notifications/ownership-transfer.handlebars", server);
+  api.addFiles("lib/server/templates/project-notifications/ownership-transfer-rejected.handlebars", server);
 
-  api.add_files("lib/server/templates/email-verification.handlebars", server);
-  api.add_files("lib/server/templates/password-recovery.handlebars", server);
+  api.addFiles("lib/server/templates/email-verification.handlebars", server);
+  api.addFiles("lib/server/templates/password-recovery.handlebars", server);
 
-  api.add_files("lib/server/templates/chat-notifications/notifications-iv-unread-chat.handlebars", server);
+  api.addFiles("lib/server/templates/chat-notifications/notifications-iv-unread-chat.handlebars", server);
 
   api.addAssets("media/logo.png", client);
 

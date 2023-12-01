@@ -13,7 +13,7 @@ Package.onUse(function (api) {
   api.use("underscore", client);
   api.use("coffeescript", client);
 
-  api.add_files("lib/client.coffee", client);
+  api.addFiles("lib/client.coffee", client);
 
   api.export("JustdoColorGradient", client);
 });

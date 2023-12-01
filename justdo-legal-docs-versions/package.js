@@ -15,13 +15,13 @@ Package.onUse(function (api) {
   api.use("coffeescript", both);
   api.use("underscore", both);
 
-  api.add_files("common.coffee", both);
-  api.add_files("docs-versions.coffee", both);
+  api.addFiles("common.coffee", both);
+  api.addFiles("docs-versions.coffee", both);
 
-  api.add_files("server/api.coffee", server);
-  api.add_files("server/methods.coffee", server);
+  api.addFiles("server/api.coffee", server);
+  api.addFiles("server/methods.coffee", server);
 
-  api.add_files("client/api.coffee", client);
+  api.addFiles("client/api.coffee", client);
 
   api.export("JustdoLegalDocsVersions", both);
   api.export("JustdoLegalDocsVersionsApi", both);

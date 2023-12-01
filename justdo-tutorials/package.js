@@ -89,9 +89,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/methods.coffee", client);
 
   // Always after templates
-  api.add_files("i18n/en.i18n.json", both);
-  api.add_files("i18n/vi.i18n.json", both);
-  api.add_files("i18n/zh-TW.i18n.json", both);
+  api.addFiles("i18n/en.i18n.json", both);
+  api.addFiles("i18n/vi.i18n.json", both);
+  api.addFiles("i18n/zh-TW.i18n.json", both);
   
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.

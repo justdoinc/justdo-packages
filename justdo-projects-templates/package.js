@@ -104,9 +104,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/core-templates-categories/blank/blank.coffee", both)
 
   // Always after templates
-  api.add_files("i18n/en.i18n.json", both);
-  api.add_files("i18n/vi.i18n.json", both);
-  api.add_files("i18n/zh-TW.i18n.json", both);
+  api.addFiles("i18n/en.i18n.json", both);
+  api.addFiles("i18n/vi.i18n.json", both);
+  api.addFiles("i18n/zh-TW.i18n.json", both);
 
   api.export("JustDoProjectsTemplates", both);
 });

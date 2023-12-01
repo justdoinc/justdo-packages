@@ -29,19 +29,19 @@ Package.onUse(function (api) {
   api.use('staringatlights:inject-data@2.3.0', both);
   api.use('meteorhacks:picker@1.0.3', both);
 
-  api.add_files("lib/both/init.coffee", both);
-  api.add_files('lib/both/errors-types.coffee', both);
+  api.addFiles("lib/both/init.coffee", both);
+  api.addFiles('lib/both/errors-types.coffee', both);
 
-  api.add_files("lib/server/init.coffee", server);
-  api.add_files("lib/server/data-injections.coffee", server);
-  api.add_files("lib/server/api.coffee", server);
-  api.add_files("lib/server/allow-deny.coffee", server);
-  api.add_files("lib/server/methods.coffee", server);
+  api.addFiles("lib/server/init.coffee", server);
+  api.addFiles("lib/server/data-injections.coffee", server);
+  api.addFiles("lib/server/api.coffee", server);
+  api.addFiles("lib/server/allow-deny.coffee", server);
+  api.addFiles("lib/server/methods.coffee", server);
 
-  api.add_files("lib/client/init.coffee", client);
-  api.add_files("lib/client/api.coffee", client);
-  api.add_files("lib/client/methods.coffee", client);
-  api.add_files("lib/client/templates-helpers.coffee", client);
+  api.addFiles("lib/client/init.coffee", client);
+  api.addFiles("lib/client/api.coffee", client);
+  api.addFiles("lib/client/methods.coffee", client);
+  api.addFiles("lib/client/templates-helpers.coffee", client);
 
   api.export("JustdoLoginState", both);
 });

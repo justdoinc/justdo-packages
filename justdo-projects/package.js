@@ -59,99 +59,99 @@ Package.onUse(function (api) {
   api.use("meteorspark:app@0.3.0", both);
   api.use("justdoinc:justdo-webapp-boot@1.0.0", both);
 
-  api.add_files('lib/globals.js', both);
+  api.addFiles('lib/globals.js', both);
 
   // both
-  api.add_files('lib/both/init.coffee', server);
-  api.add_files('lib/both/init.coffee', client, {bare: true});
-  api.add_files('lib/both/static.coffee', both);
-  api.add_files('lib/both/errors-types.coffee', both);
-  api.add_files('lib/both/defaults.coffee', both);
-  api.add_files('lib/both/helpers.coffee', both);
-  api.add_files('lib/both/schema.coffee', both);
+  api.addFiles('lib/both/init.coffee', server);
+  api.addFiles('lib/both/init.coffee', client, {bare: true});
+  api.addFiles('lib/both/static.coffee', both);
+  api.addFiles('lib/both/errors-types.coffee', both);
+  api.addFiles('lib/both/defaults.coffee', both);
+  api.addFiles('lib/both/helpers.coffee', both);
+  api.addFiles('lib/both/schema.coffee', both);
 
   // client
-  api.add_files('lib/client/grid-sections/tickets-queue.coffee', client);
-  api.add_files('lib/client/grid-sections/my-direct-tasks.coffee', client);
-  api.add_files('lib/client/grid-sections/members-direct-tasks.coffee', client);
-  api.add_files('lib/client/grid-sections/project-toolbar-detached-data-subtrees.coffee', client);
-  api.add_files("lib/client/display-name-formatter.coffee", client);
+  api.addFiles('lib/client/grid-sections/tickets-queue.coffee', client);
+  api.addFiles('lib/client/grid-sections/my-direct-tasks.coffee', client);
+  api.addFiles('lib/client/grid-sections/members-direct-tasks.coffee', client);
+  api.addFiles('lib/client/grid-sections/project-toolbar-detached-data-subtrees.coffee', client);
+  api.addFiles("lib/client/display-name-formatter.coffee", client);
 
-  api.add_files('lib/client/init.coffee', client);
-  api.add_files('lib/client/api.coffee', client);
-  api.add_files('lib/client/subscriptions.coffee', client);
-  api.add_files('lib/client/load-project.coffee', client);
-  api.add_files('lib/client/methods.coffee', client);
-  api.add_files('lib/client/hash-requests.coffee', client);
-  api.add_files('lib/client/drawer-menu-items.coffee', client);
+  api.addFiles('lib/client/init.coffee', client);
+  api.addFiles('lib/client/api.coffee', client);
+  api.addFiles('lib/client/subscriptions.coffee', client);
+  api.addFiles('lib/client/load-project.coffee', client);
+  api.addFiles('lib/client/methods.coffee', client);
+  api.addFiles('lib/client/hash-requests.coffee', client);
+  api.addFiles('lib/client/drawer-menu-items.coffee', client);
 
   api.addFiles("lib/client/add-as-guest-toggle/add-as-guest-toggle.sass", client);
   api.addFiles("lib/client/add-as-guest-toggle/add-as-guest-toggle.html", client);
   api.addFiles("lib/client/add-as-guest-toggle/add-as-guest-toggle.coffee", client);
 
   // server
-  api.add_files('lib/server/init.coffee', server);
-  api.add_files('lib/server/api.coffee', server);
-  api.add_files('lib/server/methods.coffee', server);
-  api.add_files('lib/server/db-migrations.coffee', server);
-  api.add_files('lib/server/fast-render.coffee', server);
-  api.add_files('lib/server/collections-indices.coffee', server);
-  api.add_files('lib/server/hooks.coffee', server);
-  api.add_files('lib/server/projects-plugins-cache.coffee', server);
-  api.add_files('lib/server/publications.coffee', server);
-  api.add_files('lib/server/allow-deny.coffee', server);
-  api.add_files('lib/server/grid-control-middlewares.coffee', server);
+  api.addFiles('lib/server/init.coffee', server);
+  api.addFiles('lib/server/api.coffee', server);
+  api.addFiles('lib/server/methods.coffee', server);
+  api.addFiles('lib/server/db-migrations.coffee', server);
+  api.addFiles('lib/server/fast-render.coffee', server);
+  api.addFiles('lib/server/collections-indices.coffee', server);
+  api.addFiles('lib/server/hooks.coffee', server);
+  api.addFiles('lib/server/projects-plugins-cache.coffee', server);
+  api.addFiles('lib/server/publications.coffee', server);
+  api.addFiles('lib/server/allow-deny.coffee', server);
+  api.addFiles('lib/server/grid-control-middlewares.coffee', server);
 
   //
   // modules
   //
 
   // due-lists
-  api.add_files('lib/modules/due-lists/due-lists-both.coffee', both);
-  api.add_files('lib/modules/due-lists/due-lists-client.coffee', client);
-  api.add_files('lib/modules/due-lists/due-lists-server.coffee', server);
+  api.addFiles('lib/modules/due-lists/due-lists-both.coffee', both);
+  api.addFiles('lib/modules/due-lists/due-lists-client.coffee', client);
+  api.addFiles('lib/modules/due-lists/due-lists-server.coffee', server);
 
   // tickets queues
-  api.add_files('lib/modules/owners/owners-both.coffee', both);
-  api.add_files('lib/modules/owners/owners-server.coffee', server);
-  api.add_files('lib/modules/owners/templates/ownership-rejection-hash-request-bootbox.html', client);
-  api.add_files('lib/modules/owners/templates/ownership-rejection-hash-request-bootbox.sass', client);
-  api.add_files('lib/modules/owners/owners-client.coffee', client);
+  api.addFiles('lib/modules/owners/owners-both.coffee', both);
+  api.addFiles('lib/modules/owners/owners-server.coffee', server);
+  api.addFiles('lib/modules/owners/templates/ownership-rejection-hash-request-bootbox.html', client);
+  api.addFiles('lib/modules/owners/templates/ownership-rejection-hash-request-bootbox.sass', client);
+  api.addFiles('lib/modules/owners/owners-client.coffee', client);
 
   // tickets queues
-  api.add_files('lib/modules/tickets-queues/tickets-queues-both.coffee', both);
-  api.add_files('lib/modules/tickets-queues/tickets-queues-client.coffee', client);
-  api.add_files('lib/modules/tickets-queues/tickets-queues-grid-section-styling.sass', client);
-  api.add_files('lib/modules/tickets-queues/tickets-queues-server.coffee', server);
+  api.addFiles('lib/modules/tickets-queues/tickets-queues-both.coffee', both);
+  api.addFiles('lib/modules/tickets-queues/tickets-queues-client.coffee', client);
+  api.addFiles('lib/modules/tickets-queues/tickets-queues-grid-section-styling.sass', client);
+  api.addFiles('lib/modules/tickets-queues/tickets-queues-server.coffee', server);
 
   // required actions
-  api.add_files('lib/modules/required-actions/required-actions-both.coffee', both);
-  api.add_files('lib/modules/required-actions/required-actions-client.coffee', client);
-  api.add_files('lib/modules/required-actions/required-actions-common.sass', client);
-  api.add_files('lib/modules/required-actions/required-actions-server.coffee', server);
+  api.addFiles('lib/modules/required-actions/required-actions-both.coffee', both);
+  api.addFiles('lib/modules/required-actions/required-actions-client.coffee', client);
+  api.addFiles('lib/modules/required-actions/required-actions-common.sass', client);
+  api.addFiles('lib/modules/required-actions/required-actions-server.coffee', server);
 
   //
   // required actions types definitions
   //
 
   // ownership transfer request
-  api.add_files('lib/modules/required-actions/types/transfer-request/transfer-request-server.coffee', server);
-  api.add_files('lib/modules/required-actions/types/transfer-request/transfer-request-card.html', client);
-  api.add_files('lib/modules/required-actions/types/transfer-request/transfer-request-card.sass', client);
-  api.add_files('lib/modules/required-actions/types/transfer-request/transfer-request-card.coffee', client);
+  api.addFiles('lib/modules/required-actions/types/transfer-request/transfer-request-server.coffee', server);
+  api.addFiles('lib/modules/required-actions/types/transfer-request/transfer-request-card.html', client);
+  api.addFiles('lib/modules/required-actions/types/transfer-request/transfer-request-card.sass', client);
+  api.addFiles('lib/modules/required-actions/types/transfer-request/transfer-request-card.coffee', client);
 
   // ownership transfer rejected
-  api.add_files('lib/modules/required-actions/types/ownership-transfer-rejected/ownership-transfer-rejected-server.coffee', server);
-  api.add_files('lib/modules/required-actions/types/ownership-transfer-rejected/ownership-transfer-rejected-card.html', client);
-  api.add_files('lib/modules/required-actions/types/ownership-transfer-rejected/ownership-transfer-rejected-card.sass', client);
-  api.add_files('lib/modules/required-actions/types/ownership-transfer-rejected/ownership-transfer-rejected-card.coffee', client);
+  api.addFiles('lib/modules/required-actions/types/ownership-transfer-rejected/ownership-transfer-rejected-server.coffee', server);
+  api.addFiles('lib/modules/required-actions/types/ownership-transfer-rejected/ownership-transfer-rejected-card.html', client);
+  api.addFiles('lib/modules/required-actions/types/ownership-transfer-rejected/ownership-transfer-rejected-card.sass', client);
+  api.addFiles('lib/modules/required-actions/types/ownership-transfer-rejected/ownership-transfer-rejected-card.coffee', client);
 
   // Personal tasks
-  api.add_files('lib/modules/direct-tasks/direct-tasks-both.coffee', both);
-  api.add_files('lib/modules/direct-tasks/direct-tasks-client.coffee', client);
-  api.add_files('lib/modules/direct-tasks/direct-tasks-server.coffee', server);
+  api.addFiles('lib/modules/direct-tasks/direct-tasks-both.coffee', both);
+  api.addFiles('lib/modules/direct-tasks/direct-tasks-client.coffee', client);
+  api.addFiles('lib/modules/direct-tasks/direct-tasks-server.coffee', server);
 
-  api.add_files('lib/both/app-integration.coffee', both);
+  api.addFiles('lib/both/app-integration.coffee', both);
 
   api.export('Projects');
 });

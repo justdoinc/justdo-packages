@@ -45,25 +45,25 @@ Package.onUse(function (api) {
 
   api.use("http", server);
 
-  api.add_files("lib/both/init.coffee", both);
-  api.add_files("lib/both/static.coffee", both);
-  api.add_files('lib/both/errors-types.coffee', both);
-  api.add_files("lib/both/api.coffee", both);
-  api.add_files("lib/both/collections-schemas.coffee", both);
+  api.addFiles("lib/both/init.coffee", both);
+  api.addFiles("lib/both/static.coffee", both);
+  api.addFiles('lib/both/errors-types.coffee', both);
+  api.addFiles("lib/both/api.coffee", both);
+  api.addFiles("lib/both/collections-schemas.coffee", both);
 
-  api.add_files("lib/server/init.coffee", server);
-  api.add_files("lib/server/api.coffee", server);
-  api.add_files("lib/server/allow-deny.coffee", server);
-  api.add_files("lib/server/collections-hooks.coffee", server);
-  api.add_files("lib/server/collections-indexes.coffee", server);
-  api.add_files("lib/server/methods.coffee", server);
-  api.add_files("lib/server/publications.coffee", server);
-  api.add_files("lib/server/db-migrations.coffee", server);
+  api.addFiles("lib/server/init.coffee", server);
+  api.addFiles("lib/server/api.coffee", server);
+  api.addFiles("lib/server/allow-deny.coffee", server);
+  api.addFiles("lib/server/collections-hooks.coffee", server);
+  api.addFiles("lib/server/collections-indexes.coffee", server);
+  api.addFiles("lib/server/methods.coffee", server);
+  api.addFiles("lib/server/publications.coffee", server);
+  api.addFiles("lib/server/db-migrations.coffee", server);
 
-  api.add_files("lib/client/init.coffee", client);
-  api.add_files("lib/client/api.coffee", client);
-  api.add_files("lib/client/methods.coffee", client);
-  api.add_files("lib/client/drop-pane.coffee", client);
+  api.addFiles("lib/client/init.coffee", client);
+  api.addFiles("lib/client/api.coffee", client);
+  api.addFiles("lib/client/methods.coffee", client);
+  api.addFiles("lib/client/drop-pane.coffee", client);
 
   api.export("TasksFileManager", both);
 });

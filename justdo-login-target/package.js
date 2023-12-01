@@ -22,13 +22,13 @@ Package.onUse(function (api) {
   api.use('justdoinc:justdo-helpers@1.0.0', both);
   api.use('jparker:crypto-base64@0.1.0', both);
 
-  api.add_files("lib/both/init.coffee", both);
-  api.add_files('lib/both/errors-types.coffee', both);
-  api.add_files("lib/both/api.coffee", both);
+  api.addFiles("lib/both/init.coffee", both);
+  api.addFiles('lib/both/errors-types.coffee', both);
+  api.addFiles("lib/both/api.coffee", both);
 
-  api.add_files("lib/server/init.coffee", server);
+  api.addFiles("lib/server/init.coffee", server);
 
-  api.add_files("lib/client/init.coffee", client);
+  api.addFiles("lib/client/init.coffee", client);
 
   api.export("JustdoLoginTarget", both);
 });

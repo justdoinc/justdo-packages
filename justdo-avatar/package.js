@@ -19,18 +19,18 @@ Package.onUse(function (api) {
 
   api.use("justdoinc:justdo-helpers", both);
 
-  api.add_files("lib/settings.js", both);
-  api.add_files("lib/both.coffee", both);
+  api.addFiles("lib/settings.js", both);
+  api.addFiles("lib/both.coffee", both);
 
-  api.add_files("lib/templates.html", client);
-  api.add_files("lib/client.coffee", client);
-  api.add_files("lib/styles.sass", client);
+  api.addFiles("lib/templates.html", client);
+  api.addFiles("lib/client.coffee", client);
+  api.addFiles("lib/styles.sass", client);
   api.addAssets("lib/img/anonymous-profile-image.png", client);
 
   // Avatars box
-  api.add_files("lib/avatars-box/avatars-box.html", client);
-  api.add_files("lib/avatars-box/avatars-box.sass", client);
-  api.add_files("lib/avatars-box/avatars-box.coffee", client);
+  api.addFiles("lib/avatars-box/avatars-box.html", client);
+  api.addFiles("lib/avatars-box/avatars-box.sass", client);
+  api.addFiles("lib/avatars-box/avatars-box.coffee", client);
 
   api.export("JustdoAvatar", both);
 });

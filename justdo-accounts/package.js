@@ -42,28 +42,28 @@ Package.onUse(function (api) {
 
   api.use("matb33:collection-hooks@0.8.4", both);
 
-  api.add_files("lib/both/init.coffee", both);
-  api.add_files('lib/both/errors-types.coffee', both);
-  api.add_files('lib/both/meteor-accounts-configuration.coffee', both);
-  api.add_files('lib/both/schemas.coffee', both);
-  api.add_files('lib/both/api.coffee', both);
+  api.addFiles("lib/both/init.coffee", both);
+  api.addFiles('lib/both/errors-types.coffee', both);
+  api.addFiles('lib/both/meteor-accounts-configuration.coffee', both);
+  api.addFiles('lib/both/schemas.coffee', both);
+  api.addFiles('lib/both/api.coffee', both);
 
-  api.add_files("lib/server/init.coffee", server);
-  api.add_files("lib/server/api.coffee", server);
-  api.add_files("lib/server/collection-hooks.coffee", server);
-  api.add_files("lib/server/allow-deny.coffee", server);
-  api.add_files("lib/server/methods.coffee", server);
-  api.add_files("lib/server/publications.coffee", server);
+  api.addFiles("lib/server/init.coffee", server);
+  api.addFiles("lib/server/api.coffee", server);
+  api.addFiles("lib/server/collection-hooks.coffee", server);
+  api.addFiles("lib/server/allow-deny.coffee", server);
+  api.addFiles("lib/server/methods.coffee", server);
+  api.addFiles("lib/server/publications.coffee", server);
 
-  api.add_files("lib/client/init.coffee", client);
-  api.add_files("lib/client/api.coffee", client);
-  api.add_files("lib/client/collection-hooks.coffee", client);
-  api.add_files("lib/client/methods.coffee", client);
+  api.addFiles("lib/client/init.coffee", client);
+  api.addFiles("lib/client/api.coffee", client);
+  api.addFiles("lib/client/collection-hooks.coffee", client);
+  api.addFiles("lib/client/methods.coffee", client);
 
   // Always after templates
-  api.add_files("i18n/en.i18n.json", both);
-  api.add_files("i18n/vi.i18n.json", both);
-  api.add_files("i18n/zh-TW.i18n.json", both);
+  api.addFiles("i18n/en.i18n.json", both);
+  api.addFiles("i18n/vi.i18n.json", both);
+  api.addFiles("i18n/zh-TW.i18n.json", both);
 
   api.use("meteorspark:app@0.3.0", both);
 
