@@ -30,52 +30,52 @@ Package.onUse(function (api) {
   api.use('ovcharik:jsdiff@2.0.1', both);
   api.use('justdoinc:justdo-helpers@1.0.0', both);
 
-  api.add_files('lib/globals.js', both);
-  api.add_files('lib/helpers.coffee', both);
+  api.addFiles('lib/globals.js', both);
+  api.addFiles('lib/helpers.coffee', both);
 
   // GridDataCore
-  api.add_files('lib/grid-data-core/grid-data-core-client.coffee', client);
-  api.add_files('lib/grid-data-core/grid-data-core-errors.coffee', client);
+  api.addFiles('lib/grid-data-core/grid-data-core-client.coffee', client);
+  api.addFiles('lib/grid-data-core/grid-data-core-errors.coffee', client);
 
   // GridData
-  api.add_files('lib/grid-data/grid-data.coffee', both);
+  api.addFiles('lib/grid-data/grid-data.coffee', both);
 
   // GridDataCom
-  api.add_files('lib/grid-data-com/grid-data-com-client.coffee', client);
-  api.add_files('lib/grid-data-com/grid-data-com-server.coffee', server);
-  api.add_files('lib/grid-data-com/grid-data-com-server-api.coffee', server);
+  api.addFiles('lib/grid-data-com/grid-data-com-client.coffee', client);
+  api.addFiles('lib/grid-data-com/grid-data-com-server.coffee', server);
+  api.addFiles('lib/grid-data-com/grid-data-com-server-api.coffee', server);
 
-  api.add_files('lib/errors-types.coffee', both);
+  api.addFiles('lib/errors-types.coffee', both);
 
   // Core data structures
-  api.add_files('lib/grid-data/data-structure-management/core-data-structures.coffee', client);
+  api.addFiles('lib/grid-data/data-structure-management/core-data-structures.coffee', client);
 
   // Load apis
-  api.add_files('lib/grid-data/api/core-api.coffee', client);
-  api.add_files('lib/grid-data/api/search.coffee', client);
+  api.addFiles('lib/grid-data/api/core-api.coffee', client);
+  api.addFiles('lib/grid-data/api/search.coffee', client);
 
   // Filters
-  api.add_files('lib/grid-data/data-structure-management/filters/filters.coffee', client);
-  api.add_files('lib/grid-data/data-structure-management/filters/filters-independent-items.coffee', client);
+  api.addFiles('lib/grid-data/data-structure-management/filters/filters.coffee', client);
+  api.addFiles('lib/grid-data/data-structure-management/filters/filters-independent-items.coffee', client);
 
   // Items Types settings
-  api.add_files('lib/grid-data/data-structure-management/items-types/items-types.coffee', client);
-  api.add_files('lib/grid-data/data-structure-management/items-types/types-settings/section-item.coffee', client);
+  api.addFiles('lib/grid-data/data-structure-management/items-types/items-types.coffee', client);
+  api.addFiles('lib/grid-data/data-structure-management/items-types/types-settings/section-item.coffee', client);
 
   // Grid Sections
-  api.add_files('lib/grid-data/data-structure-management/grid-sections/grid-sections.coffee', client);
-  api.add_files('lib/grid-data/data-structure-management/grid-sections/sections-managers/section-manager-proto.coffee', client);
-  api.add_files('lib/grid-data/data-structure-management/grid-sections/sections-managers/natural-collection-subtree.coffee', client);
-  api.add_files('lib/grid-data/data-structure-management/grid-sections/sections-managers/query.coffee', client);
-  api.add_files('lib/grid-data/data-structure-management/grid-sections/sections-managers/data-tree.coffee', client);
-  api.add_files('lib/grid-data/data-structure-management/grid-sections/sections-managers/detached-data-subtrees.coffee', client);
+  api.addFiles('lib/grid-data/data-structure-management/grid-sections/grid-sections.coffee', client);
+  api.addFiles('lib/grid-data/data-structure-management/grid-sections/sections-managers/section-manager-proto.coffee', client);
+  api.addFiles('lib/grid-data/data-structure-management/grid-sections/sections-managers/natural-collection-subtree.coffee', client);
+  api.addFiles('lib/grid-data/data-structure-management/grid-sections/sections-managers/query.coffee', client);
+  api.addFiles('lib/grid-data/data-structure-management/grid-sections/sections-managers/data-tree.coffee', client);
+  api.addFiles('lib/grid-data/data-structure-management/grid-sections/sections-managers/detached-data-subtrees.coffee', client);
 
   // Metadata management
-  api.add_files('lib/grid-data/data-structure-management/metadata.coffee', client);
+  api.addFiles('lib/grid-data/data-structure-management/metadata.coffee', client);
 
   // Collection operations
-  api.add_files('lib/grid-data/collection-operations/collection-operations.coffee', client);
-  api.add_files('lib/grid-data/collection-operations/hooks.coffee', client);
+  api.addFiles('lib/grid-data/collection-operations/collection-operations.coffee', client);
+  api.addFiles('lib/grid-data/collection-operations/hooks.coffee', client);
 
   api.export('GridDataCore');
   api.export('GridData');
@@ -96,7 +96,7 @@ Package.onTest(function(api) {
   api.use('stem-capital:grid-data', both);
   api.use('stem-capital:grid-data-seeder', server);
 
-  api.add_files('lib/helpers.coffee', both);
+  api.addFiles('lib/helpers.coffee', both);
 
   // Just so we can use it from the console for debugging...
   api.export('GridDataCore');

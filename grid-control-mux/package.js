@@ -28,19 +28,19 @@ Package.onUse(function (api) {
   api.use("reactive-var", both);
   api.use("tracker", client);
 
-  api.add_files("lib/both/init.coffee", both);
-  api.add_files('lib/both/errors-types.coffee', both);
-  api.add_files("lib/both/api.coffee", both);
+  api.addFiles("lib/both/init.coffee", both);
+  api.addFiles('lib/both/errors-types.coffee', both);
+  api.addFiles("lib/both/api.coffee", both);
 
-  api.add_files("lib/server/init.coffee", server);
-  api.add_files("lib/server/api.coffee", server);
-  api.add_files("lib/server/allow-deny.coffee", server);
-  api.add_files("lib/server/methods.coffee", server);
+  api.addFiles("lib/server/init.coffee", server);
+  api.addFiles("lib/server/api.coffee", server);
+  api.addFiles("lib/server/allow-deny.coffee", server);
+  api.addFiles("lib/server/methods.coffee", server);
 
-  api.add_files("lib/client/init.coffee", client);
-  api.add_files("lib/client/api.coffee", client);
-  api.add_files("lib/client/methods.coffee", client);
-  api.add_files("lib/client/style.sass", client);
+  api.addFiles("lib/client/init.coffee", client);
+  api.addFiles("lib/client/api.coffee", client);
+  api.addFiles("lib/client/methods.coffee", client);
+  api.addFiles("lib/client/style.sass", client);
 
   api.export("GridControlMux", both);
 });

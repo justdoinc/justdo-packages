@@ -27,10 +27,10 @@ Package.onUse(function (api) {
   api.use("tap:i18n", both);
   api.use('justdoinc:justdo-i18n@1.0.0', both);
 
-  api.add_files('lib/globals.js', both);
+  api.addFiles('lib/globals.js', both);
 
-  api.add_files('lib/client/grid_control_search.sass', client);
-  api.add_files('lib/client/grid_control_search.coffee', client);
+  api.addFiles('lib/client/grid_control_search.sass', client);
+  api.addFiles('lib/client/grid_control_search.coffee', client);
 
   api.export('GridControlSearch');
 });

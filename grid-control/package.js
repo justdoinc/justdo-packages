@@ -48,103 +48,103 @@ Package.onUse(function (api) {
 
   api.use("justdoinc:justdo-mathjs@1.0.0", both);
 
-  api.add_files('lib/globals.js', both);
+  api.addFiles('lib/globals.js', both);
 
-  api.add_files('lib/both/helpers.coffee', both);
-  api.add_files('lib/both/simple_schema_extensions.coffee', both);
+  api.addFiles('lib/both/helpers.coffee', both);
+  api.addFiles('lib/both/simple_schema_extensions.coffee', both);
 
-  api.add_files('lib/client/grid_control.coffee', client);
-  api.add_files('lib/client/grid_control-static-methods.coffee', client);
-  api.add_files('lib/client/errors_types.coffee', client);
-  api.add_files('lib/client/grid_control.sass', client);
+  api.addFiles('lib/client/grid_control.coffee', client);
+  api.addFiles('lib/client/grid_control-static-methods.coffee', client);
+  api.addFiles('lib/client/errors_types.coffee', client);
+  api.addFiles('lib/client/grid_control.sass', client);
 
   api.addAssets('lib/client/media/cell-handle.png', client);
   api.addAssets('lib/client/media/loader.gif', client);
 
   // Operations
-  api.add_files('lib/client/grid_operations/init.coffee', client);
-  api.add_files('lib/client/grid_operations/operations_lock.coffee', client);
-  api.add_files('lib/client/grid_operations/operations_prereq.coffee', client);
-  api.add_files('lib/client/grid_operations/operations/add.coffee', client);
-  api.add_files('lib/client/grid_operations/operations/move.coffee', client);
-  api.add_files('lib/client/grid_operations/operations/remove.coffee', client);
-  api.add_files('lib/client/grid_operations/operations/sort.coffee', client);
+  api.addFiles('lib/client/grid_operations/init.coffee', client);
+  api.addFiles('lib/client/grid_operations/operations_lock.coffee', client);
+  api.addFiles('lib/client/grid_operations/operations_prereq.coffee', client);
+  api.addFiles('lib/client/grid_operations/operations/add.coffee', client);
+  api.addFiles('lib/client/grid_operations/operations/move.coffee', client);
+  api.addFiles('lib/client/grid_operations/operations/remove.coffee', client);
+  api.addFiles('lib/client/grid_operations/operations/sort.coffee', client);
 
   // Plugins
-  api.add_files('lib/client/plugins/init.coffee', client);
-  api.add_files('lib/client/plugins/items_sortable/items_sortable.sass', client);
-  api.add_files('lib/client/plugins/items_sortable/sortable_ext.coffee', client);
-  api.add_files('lib/client/plugins/items_sortable/items_sortable.coffee', client);
-  api.add_files('lib/client/plugins/grid_bound_element/grid_bound_element.coffee', client);
-  api.add_files('lib/client/plugins/grid_views/init.coffee', client);
-  api.add_files('lib/client/plugins/grid_views/filters/filters.coffee', client);
-  api.add_files('lib/client/plugins/grid_views/filters/filters.sass', client);
-  api.add_files('lib/client/plugins/grid_views/filters/filters_dom.coffee', client);
-  api.add_files('lib/client/plugins/grid_views/filters/filters_dom.sass', client);
-  api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/custom-where-clause-filter.coffee', client);
-  api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/whitelist.coffee', client);
-  api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/whitelist.sass', client);
-  api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/numeric.coffee', client);
-  api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/numeric.sass', client);
-  api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/unicode-dates-filter.coffee', client);
-  api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/unicode-dates-filter.sass', client);
-  api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/unicode-dates-custom-where-clause-filter.coffee', client);
-  api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/numeric-custom-where-clause-filter.coffee', client);
+  api.addFiles('lib/client/plugins/init.coffee', client);
+  api.addFiles('lib/client/plugins/items_sortable/items_sortable.sass', client);
+  api.addFiles('lib/client/plugins/items_sortable/sortable_ext.coffee', client);
+  api.addFiles('lib/client/plugins/items_sortable/items_sortable.coffee', client);
+  api.addFiles('lib/client/plugins/grid_bound_element/grid_bound_element.coffee', client);
+  api.addFiles('lib/client/plugins/grid_views/init.coffee', client);
+  api.addFiles('lib/client/plugins/grid_views/filters/filters.coffee', client);
+  api.addFiles('lib/client/plugins/grid_views/filters/filters.sass', client);
+  api.addFiles('lib/client/plugins/grid_views/filters/filters_dom.coffee', client);
+  api.addFiles('lib/client/plugins/grid_views/filters/filters_dom.sass', client);
+  api.addFiles('lib/client/plugins/grid_views/filters/filters_controllers/custom-where-clause-filter.coffee', client);
+  api.addFiles('lib/client/plugins/grid_views/filters/filters_controllers/whitelist.coffee', client);
+  api.addFiles('lib/client/plugins/grid_views/filters/filters_controllers/whitelist.sass', client);
+  api.addFiles('lib/client/plugins/grid_views/filters/filters_controllers/numeric.coffee', client);
+  api.addFiles('lib/client/plugins/grid_views/filters/filters_controllers/numeric.sass', client);
+  api.addFiles('lib/client/plugins/grid_views/filters/filters_controllers/unicode-dates-filter.coffee', client);
+  api.addFiles('lib/client/plugins/grid_views/filters/filters_controllers/unicode-dates-filter.sass', client);
+  api.addFiles('lib/client/plugins/grid_views/filters/filters_controllers/unicode-dates-custom-where-clause-filter.coffee', client);
+  api.addFiles('lib/client/plugins/grid_views/filters/filters_controllers/numeric-custom-where-clause-filter.coffee', client);
 
-  api.add_files('lib/client/plugins/grid_views/columns_reordering.coffee', client);
-  api.add_files('lib/client/plugins/grid_views/columns_context_menu.coffee', client);
-  api.add_files('lib/client/plugins/cell_editing_timeout/cell_editing_timeout.coffee', client);
-  api.add_files('lib/client/plugins/collapse_all/collapse_all.sass', client);
-  api.add_files('lib/client/plugins/collapse_all/collapse_all.coffee', client);
-  api.add_files('lib/client/plugins/multi_select/multi_select.sass', client);
-  api.add_files('lib/client/plugins/multi_select/multi_select.coffee', client);
+  api.addFiles('lib/client/plugins/grid_views/columns_reordering.coffee', client);
+  api.addFiles('lib/client/plugins/grid_views/columns_context_menu.coffee', client);
+  api.addFiles('lib/client/plugins/cell_editing_timeout/cell_editing_timeout.coffee', client);
+  api.addFiles('lib/client/plugins/collapse_all/collapse_all.sass', client);
+  api.addFiles('lib/client/plugins/collapse_all/collapse_all.coffee', client);
+  api.addFiles('lib/client/plugins/multi_select/multi_select.sass', client);
+  api.addFiles('lib/client/plugins/multi_select/multi_select.coffee', client);
 
   // jquery_events
-  api.add_files('lib/client/jquery_events/init.coffee', client);
-  api.add_files('lib/client/jquery_events/destroy_editor_on_blur.coffee', client);
-  api.add_files('lib/client/jquery_events/activate_on_click.coffee', client);
+  api.addFiles('lib/client/jquery_events/init.coffee', client);
+  api.addFiles('lib/client/jquery_events/destroy_editor_on_blur.coffee', client);
+  api.addFiles('lib/client/jquery_events/activate_on_click.coffee', client);
 
   // Formatters & Editors
-  api.add_files('lib/client/formatters-and-editors/common-fomatters-and-editors.sass', client);
-  api.add_files('lib/client/formatters-and-editors/formatters-init.coffee', client);
-  api.add_files('lib/client/formatters-and-editors/editors-init.coffee', client);
+  api.addFiles('lib/client/formatters-and-editors/common-fomatters-and-editors.sass', client);
+  api.addFiles('lib/client/formatters-and-editors/formatters-init.coffee', client);
+  api.addFiles('lib/client/formatters-and-editors/editors-init.coffee', client);
 
-  api.add_files('lib/client/formatters-and-editors/tags-field/tags-field.coffee', client);
-  api.add_files('lib/client/formatters-and-editors/tags-field/tags-field.sass', client);
+  api.addFiles('lib/client/formatters-and-editors/tags-field/tags-field.coffee', client);
+  api.addFiles('lib/client/formatters-and-editors/tags-field/tags-field.sass', client);
 
-  api.add_files('lib/client/formatters-and-editors/selector-editor/selector-editor.coffee', client);
-  api.add_files('lib/client/formatters-and-editors/selector-editor/selector-editor.sass', client);
-  api.add_files('lib/client/formatters-and-editors/multi-select/multi-select-editor.coffee', client);
-  api.add_files('lib/client/formatters-and-editors/multi-select/multi-select-editor.sass', client);
-  api.add_files('lib/client/formatters-and-editors/multi-select/multi-select-formatter.coffee', client);
+  api.addFiles('lib/client/formatters-and-editors/selector-editor/selector-editor.coffee', client);
+  api.addFiles('lib/client/formatters-and-editors/selector-editor/selector-editor.sass', client);
+  api.addFiles('lib/client/formatters-and-editors/multi-select/multi-select-editor.coffee', client);
+  api.addFiles('lib/client/formatters-and-editors/multi-select/multi-select-editor.sass', client);
+  api.addFiles('lib/client/formatters-and-editors/multi-select/multi-select-formatter.coffee', client);
 
-  api.add_files('lib/client/formatters-and-editors/textarea-editor/textarea-editor.coffee', client);
-  api.add_files('lib/client/formatters-and-editors/textarea-editor/textarea-editor.sass', client);
+  api.addFiles('lib/client/formatters-and-editors/textarea-editor/textarea-editor.coffee', client);
+  api.addFiles('lib/client/formatters-and-editors/textarea-editor/textarea-editor.sass', client);
 
-  api.add_files('lib/client/formatters-and-editors/textarea-with-tree-controls/textarea-with-tree-controls-editor.coffee', client);
-  api.add_files('lib/client/formatters-and-editors/textarea-with-tree-controls/textarea-with-tree-controls-editor.sass', client);
-  api.add_files('lib/client/formatters-and-editors/textarea-with-tree-controls/text-with-tree-controls.coffee', client);
-  api.add_files('lib/client/formatters-and-editors/textarea-with-tree-controls/text-with-tree-controls-events.coffee', client);
-  api.add_files('lib/client/formatters-and-editors/textarea-with-tree-controls/text-with-tree-controls.sass', client);
+  api.addFiles('lib/client/formatters-and-editors/textarea-with-tree-controls/textarea-with-tree-controls-editor.coffee', client);
+  api.addFiles('lib/client/formatters-and-editors/textarea-with-tree-controls/textarea-with-tree-controls-editor.sass', client);
+  api.addFiles('lib/client/formatters-and-editors/textarea-with-tree-controls/text-with-tree-controls.coffee', client);
+  api.addFiles('lib/client/formatters-and-editors/textarea-with-tree-controls/text-with-tree-controls-events.coffee', client);
+  api.addFiles('lib/client/formatters-and-editors/textarea-with-tree-controls/text-with-tree-controls.sass', client);
 
-  api.add_files('lib/client/formatters-and-editors/unicode-date/unicode-date.coffee', client);
-  api.add_files('lib/client/formatters-and-editors/unicode-date/unicode-date.sass', client);
+  api.addFiles('lib/client/formatters-and-editors/unicode-date/unicode-date.coffee', client);
+  api.addFiles('lib/client/formatters-and-editors/unicode-date/unicode-date.sass', client);
   api.addAssets('lib/client/formatters-and-editors/unicode-date/media/calendar.gif', client);
 
-  api.add_files('lib/client/formatters-and-editors/calculated-field/calculated-field.coffee', client);
-  api.add_files('lib/client/formatters-and-editors/calculated-field/calculated-field.sass', client);
-  api.add_files('lib/client/formatters-and-editors/calculated-field/functions/common-filter-aware-tree-op-calculator-funcs.coffee', client);
+  api.addFiles('lib/client/formatters-and-editors/calculated-field/calculated-field.coffee', client);
+  api.addFiles('lib/client/formatters-and-editors/calculated-field/calculated-field.sass', client);
+  api.addFiles('lib/client/formatters-and-editors/calculated-field/functions/common-filter-aware-tree-op-calculator-funcs.coffee', client);
 
-  api.add_files('lib/client/formatters-and-editors/default-formatter/default-formatter.coffee', client);
-  api.add_files('lib/client/formatters-and-editors/default-formatter/default-formatter.sass', client);
-  api.add_files('lib/client/formatters-and-editors/default-formatter/extensions/status-field-formatter.coffee', client);
+  api.addFiles('lib/client/formatters-and-editors/default-formatter/default-formatter.coffee', client);
+  api.addFiles('lib/client/formatters-and-editors/default-formatter/default-formatter.sass', client);
+  api.addFiles('lib/client/formatters-and-editors/default-formatter/extensions/status-field-formatter.coffee', client);
 
-  api.add_files('lib/client/formatters-and-editors/key-value-formatter/key-value.coffee', client);
+  api.addFiles('lib/client/formatters-and-editors/key-value-formatter/key-value.coffee', client);
 
-  api.add_files('lib/client/formatters-and-editors/datetime-formatter/datetime-formatter.coffee', client);
-  api.add_files('lib/client/formatters-and-editors/datetime-formatter/datetime-formatter.sass', client);
+  api.addFiles('lib/client/formatters-and-editors/datetime-formatter/datetime-formatter.coffee', client);
+  api.addFiles('lib/client/formatters-and-editors/datetime-formatter/datetime-formatter.sass', client);
 
-  api.add_files('lib/client/formatters-and-editors/array-fields/array-fields.coffee', client);
+  api.addFiles('lib/client/formatters-and-editors/array-fields/array-fields.coffee', client);
 
   api.export('GridControl');
 });

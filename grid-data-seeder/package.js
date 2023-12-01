@@ -17,8 +17,8 @@ Package.onUse(function (api) {
   api.use('mongo', both);
   api.use('accounts-password', both);
 
-  api.add_files('lib/globals.js', both);
-  api.add_files('lib/server.coffee', server);
+  api.addFiles('lib/globals.js', both);
+  api.addFiles('lib/server.coffee', server);
 
   api.export('gridDataSeeder', server);
 });
@@ -34,5 +34,5 @@ Package.onTest(function(api) {
 
   api.use('stem-capital:grid-data-seeder', both);
 
-  api.add_files('unittest/server.coffee', server);
+  api.addFiles('unittest/server.coffee', server);
 });

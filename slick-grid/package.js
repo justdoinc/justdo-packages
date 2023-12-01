@@ -17,16 +17,16 @@ Package.onUse(function (api) {
   api.use('meteorspark:json-sortify@0.1.0', both);
   api.use('underscore', both);
 
-  api.add_files('slick.grid.scss', client);
-  api.add_files('lib/jquery.event.drag-2.2.js', client);
-  api.add_files('slick.core.js', client);
-  api.add_files('plugins/slick.cellrangedecorator.js', client);
-  api.add_files('plugins/slick.cellrangeselector.js', client);
-  api.add_files('plugins/slick.cellselectionmodel.js', client);
-  api.add_files('plugins/slick.rowselectionmodel.js', client);
-  api.add_files('slick.formatters.js', client);
-  api.add_files('slick.editors.js', client);
-  api.add_files('slick.grid.js', client);
+  api.addFiles('slick.grid.scss', client);
+  api.addFiles('lib/jquery.event.drag-2.2.js', client);
+  api.addFiles('slick.core.js', client);
+  api.addFiles('plugins/slick.cellrangedecorator.js', client);
+  api.addFiles('plugins/slick.cellrangeselector.js', client);
+  api.addFiles('plugins/slick.cellselectionmodel.js', client);
+  api.addFiles('plugins/slick.rowselectionmodel.js', client);
+  api.addFiles('slick.formatters.js', client);
+  api.addFiles('slick.editors.js', client);
+  api.addFiles('slick.grid.js', client);
 
   api.export('SlickGrid');
 });

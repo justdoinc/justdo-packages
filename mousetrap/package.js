@@ -15,7 +15,7 @@ Package.onUse(function (api) {
 
   api.use('meteorspark:logger@0.3.0', both);
 
-  api.add_files('mousetrap-v' + version + '/mousetrap.js', client);
+  api.addFiles('mousetrap-v' + version + '/mousetrap.js', client);
 
   api.export('Mousetrap', client);
 });
