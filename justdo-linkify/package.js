@@ -7,7 +7,7 @@ Package.describe({
 Package.onUse(function(api) {
   api.versionsFrom('1.1.0.3');
 
-  api.add_files('lib/linkify/linkify.min.js', 'client');
-  api.add_files('lib/linkify/linkify-string.min.js', 'client');
-  api.add_files('lib/linkify/linkify-html.min.js', 'client');
+  api.addFiles('lib/linkify/linkify.min.js', 'client');
+  api.addFiles('lib/linkify/linkify-string.min.js', 'client');
+  api.addFiles('lib/linkify/linkify-html.min.js', 'client');
 });

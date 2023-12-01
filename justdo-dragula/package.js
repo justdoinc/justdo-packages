@@ -8,8 +8,8 @@ Package.describe({
 client = "client"
 
 Package.onUse(function (api) {
-  api.add_files("dragula.css", client);
-  api.add_files("dragula.js", client);
+  api.addFiles("dragula.css", client);
+  api.addFiles("dragula.js", client);
 
   // api.export("JustdoAvatar", client);
 });

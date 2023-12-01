@@ -9,7 +9,7 @@ client = "client";
 server = "server";
 both = [client, server];
 
-Package.on_use(function (api) {
+Package.onUse(function (api) {
   api.use(['session@1.0.0',
     'spacebars@1.0.0',
     'stylus@1.0.0 || 2.0.0',
@@ -46,7 +46,7 @@ Package.on_use(function (api) {
 
   api.use("justdoinc:justdo-avatar@1.0.0", client);
 
-  api.add_files([
+  api.addFiles([
     'accounts_ui.js',
 
     // translations

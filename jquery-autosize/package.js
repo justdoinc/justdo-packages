@@ -4,10 +4,10 @@ Package.describe({
   git: "https://github.com/copleykj/jquery-autosize.git"
 });
 
-Package.on_use(function (api) {
+Package.onUse(function (api) {
   api.versionsFrom("METEOR@0.9.0");
   api.use('jquery', 'client');
-  api.add_files(['lib/jquery.autosize.js'], 'client');
+  api.addFiles(['lib/jquery.autosize.js'], 'client');
   
   api.export("autosize");
 });

@@ -22,15 +22,15 @@ Package.onUse(function (api) {
   api.use("meteorspark:logger@0.3.0", both);
   api.use("meteorspark:app@0.3.0", both);
 
-  api.add_files("lib/init.coffee", both);
+  api.addFiles("lib/init.coffee", both);
 
-  api.add_files("lib/both/cdn.coffee", both);
-  api.add_files("lib/both/same-tick-cache.coffee", both);
-  api.add_files("lib/both/same-tick-stats.coffee", both);
-  api.add_files("lib/both/constructors_tools.coffee", both);
-  api.add_files("lib/both/event-emitter-helpers.coffee", both);
-  api.add_files("lib/both/flush-manager.coffee", both);
-  api.add_files("lib/both/profiling.coffee", both);
+  api.addFiles("lib/both/cdn.coffee", both);
+  api.addFiles("lib/both/same-tick-cache.coffee", both);
+  api.addFiles("lib/both/same-tick-stats.coffee", both);
+  api.addFiles("lib/both/constructors_tools.coffee", both);
+  api.addFiles("lib/both/event-emitter-helpers.coffee", both);
+  api.addFiles("lib/both/flush-manager.coffee", both);
+  api.addFiles("lib/both/profiling.coffee", both);
 
   api.export("JustdoCoreHelpers", both);
 });

@@ -14,6 +14,6 @@ Package.onUse(function (api) {
   api.use('jquery', 'client');
   api.use('twbs:bootstrap@3.3.4', 'client', {weak: true});
 
-  api.add_files('bootbox/bootbox.js', "client"); // taken from cb75620 https://github.com/makeusabrew/bootbox.git
-  api.add_files('justdoinc-mods/new-design.sass', "client");
+  api.addFiles('bootbox/bootbox.js', "client"); // taken from cb75620 https://github.com/makeusabrew/bootbox.git
+  api.addFiles('justdoinc-mods/new-design.sass', "client");
 });

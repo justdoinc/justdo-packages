@@ -7,5 +7,5 @@ Package.describe({
 });
 
 Package.onUse(function (api) {
-  api.add_files("html2canvas.min.js", "client");
+  api.addFiles("html2canvas.min.js", "client");
 });
