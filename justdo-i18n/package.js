@@ -50,8 +50,6 @@ Package.onUse(function (api) {
   api.use("iron:router@1.1.2", both);
 
   api.use("justdoinc:justdo-analytics@1.0.0", both);
-  api.use("justdoinc:justdo-webapp-boot@1.0.0", both);
-  api.use("justdoinc:justdo-promoters-campaigns@1.0.0", both, {unordered: true});
   api.use("tap:i18n", both);
   api.use("momentjs:moment", both);
   // Although we prefer tap:i18n, anti:i18n is used by other packages like meteor-accounts-ui-bootstrap-3

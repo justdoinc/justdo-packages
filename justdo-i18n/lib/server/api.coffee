@@ -24,21 +24,24 @@ _.extend JustdoI18n.prototype,
 
 
   _setupAfterImprintCampaignIdHook: ->
-    APP.justdo_promoters_campaigns?.on "after-imprint-campaign-id", ({campaign_doc, user_id}) =>
-      if not (lang = campaign_doc?.lang)?
-        return
-      
-      # Don't set campaign lang if user already has lang defined
-      if @getUserLang(user_id)?
-        return
+    APP.on "justdo-promoters-campaigns-initiated", =>
+      APP.justdo_promoters_campaigns?.on "after-imprint-campaign-id", ({campaign_doc, user_id}) =>
+        if not (lang = campaign_doc?.lang)?
+          return
+        
+        # Don't set campaign lang if user already has lang defined
+        if @getUserLang(user_id)?
+          return
 
-      modifier = 
-        $set:
-          "profile.lang": lang
-      Meteor.users.update(user_id, modifier)
+        modifier = 
+          $set:
+            "profile.lang": lang
+        Meteor.users.update(user_id, modifier)
+
+        return
 
       return
-      
+        
     return
 
   tr: (key, options, user) ->
