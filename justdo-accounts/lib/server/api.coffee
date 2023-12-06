@@ -719,14 +719,11 @@ _.extend JustdoAccounts.prototype,
 
       return
 
-    is_requesting_user_ssa = APP.justdo_site_admins?.isUserSuperSiteAdmin requesting_user
-
     if not password?
       if data.all_emails_verified isnt true # If data.all_emails_verified is true, it is obvious the user completed enrollment (using the oauth flow), even if he doesn't have data.services?.password
         # Remove the invited_by field that is published only in specific cases where
         # the user isn't enrolled, see below.
-        if not is_requesting_user_ssa
-          delete data.invited_by
+        delete data.invited_by
         delete data.users_allowed_to_edit_pre_enrollment
 
         return
@@ -734,7 +731,7 @@ _.extend JustdoAccounts.prototype,
     if _.isEmpty data.services
       delete data.services
 
-    if (data.invited_by != requesting_user) and (not is_requesting_user_ssa)
+    if data.invited_by != requesting_user
       # We don't want to leak invited_by info to those that doesn't need it.
       delete data.invited_by
 
