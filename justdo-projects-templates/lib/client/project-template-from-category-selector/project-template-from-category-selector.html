@@ -31,40 +31,62 @@
       </div>
     {{/with}}
 
-  </div>
-
-  <!-- AI Wizard Modal -->
-  <div class="modal fade bootbox-new-design" id="ai-template-wizard" data-backdrop="true" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div class="ai-wizard-header">
-            <div class="ai-wizard-title">
-              AI Wizard
-            </div>
-            <svg class="jd-icon jd-c-pointer ai-wizard-close"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
-          </div>
-          <div class="ai-wizard-body">
-            <div class="ai-wizard-spacer"></div>
-            <div class="ai-wizard-message bot">
-              <div class="ai-wizard-text">
-                Hello, tell me about your project and I will help you create a JustDo
+    <!-- AI Wizard Modal -->
+    <div class="modal bootbox-new-design" id="ai-template-wizard" data-backdrop="true" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="ai-wizard-header">
+              <div class="ai-wizard-title">
+                <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#jd-ai"></use></svg>
+                {{_ "ai_wizard_title"}}
               </div>
+              <svg class="jd-icon jd-c-pointer ai-wizard-close"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
             </div>
-            <div class="ai-wizard-message user">
-              <div class="ai-wizard-text">
-                Hi
+            <div class="ai-wizard-body">
+              <div class="ai-wizard-spacer"></div>
+              <div class="ai-wizard-message bot">
+                <img class="ai-wizard-avatar" src="/packages/justdoinc_justdo-projects-templates/lib/client/assets/bot_avatar.png" alt="JustDo Bot">
+                <div class="ai-wizard-text-wrapper">
+                  <div class="ai-wizard-author">
+                    {{_ "ai_wizard_bot_name"}}
+                  </div>
+                  <div class="ai-wizard-text">
+                    {{_ "ai_wizard_welcome_msg"}}
+                  </div>
+                </div>
               </div>
+              {{#if userMessage}}
+                <div class="ai-wizard-message user">
+                  <div class="ai-wizard-text">
+                    {{userMessage}}
+                  </div>
+                </div>
+              {{/if}}
+              {{#if showBotThinking}}
+                <div class="ai-wizard-message bot">
+                  <img class="ai-wizard-avatar" src="/packages/justdoinc_justdo-projects-templates/lib/client/assets/bot_avatar.png" alt="JustDo Bot">
+                    <div class="ai-wizard-text-wrapper">
+                      <div class="ai-wizard-author">
+                        {{_ "ai_wizard_bot_name"}}
+                      </div>
+                      <div class="ai-wizard-text">
+                        {{#if showBotMessage}}
+                          {{_ "ai_wizard_error_msg"}}
+                        {{else}}
+                          <div class="typing">
+                            <span></span><span></span><span></span>
+                          </div>
+                        {{/if}}
+                      </div>
+                    </div>
+                </div>
+              {{/if}}
             </div>
-            <div class="ai-wizard-message bot">
-              <div class="ai-wizard-text">
-              Sorry error
-              </div>
+            <div class="ai-wizard-footer">
+              <input class="ai-wizard-input" type="text" placeholder="{{_ 'ai_wizard_input_placeholder'}}">
+              <button class="ai-wizard-send btn btn-primary btn-sm" type="button">{{_ "ai_wizard_send"}}</button>
             </div>
-          </div>
-          <div class="ai-wizard-footer">
-            <input class="ai-wizard-input" type="text" name="" value="" placeholder="Message...">
-            <button class="ai-wizard-send btn btn-primary btn-sm" type="button">Send</button>
           </div>
         </div>
       </div>

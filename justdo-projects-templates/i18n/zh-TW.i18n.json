@@ -3,5 +3,12 @@
 
   "project_templates_blank_label": "空白",
 
-  "project_templates_task_title_my_first_task": "第一個任務"
+  "project_templates_task_title_my_first_task": "第一個任務",
+
+  "ai_wizard_title": "AI Wizard",
+  "ai_wizard_bot_name": "JustDo Bot",
+  "ai_wizard_welcome_msg": "Hello, tell me about your project and I will help you create a JustDo",
+  "ai_wizard_error_msg": "Due to the high demand, we can't process your request right now :(  please select a template from the picker.",
+  "ai_wizard_send": "Send",
+  "ai_wizard_input_placeholder": "Message..."
 }
