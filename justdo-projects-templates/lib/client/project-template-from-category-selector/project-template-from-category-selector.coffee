@@ -12,6 +12,18 @@ Template.project_template_from_category_selector.onCreated ->
   @active_template_id_rv = new ReactiveVar ""
   return
 
+Template.project_template_from_category_selector.onRendered ->
+  $("#ai-template-wizard").modal "show"
+
+  $("#ai-template-wizard").on "shown.bs.modal", ->
+    $(".ai-wizard-input").focus()
+    console.log "show"
+
+    return
+
+
+  return
+
 Template.project_template_from_category_selector.helpers
   rerenderTrigger: ->
     tpl = Template.instance()
@@ -41,4 +53,9 @@ Template.project_template_from_category_selector.events
   "click .template-item": (e, tpl) ->
     tpl.active_template_id_rv.set $(e.target).closest(".template-item").data "id"
     Tracker.flush()
+    return
+
+  "click .ai-wizard-close": (e, tpl) ->
+    $("#ai-template-wizard").modal "hide"
+
     return

@@ -13,7 +13,7 @@
         </div>
       {{/each}}
     </div>
-    
+
 
     {{#with activeTemplate}}
       <div class="template-demo-container">
@@ -31,6 +31,44 @@
       </div>
     {{/with}}
 
+  </div>
+
+  <!-- AI Wizard Modal -->
+  <div class="modal fade bootbox-new-design" id="ai-template-wizard" data-backdrop="true" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="ai-wizard-header">
+            <div class="ai-wizard-title">
+              AI Wizard
+            </div>
+            <svg class="jd-icon jd-c-pointer ai-wizard-close"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+          </div>
+          <div class="ai-wizard-body">
+            <div class="ai-wizard-spacer"></div>
+            <div class="ai-wizard-message bot">
+              <div class="ai-wizard-text">
+                Hello, tell me about your project and I will help you create a JustDo
+              </div>
+            </div>
+            <div class="ai-wizard-message user">
+              <div class="ai-wizard-text">
+                Hi
+              </div>
+            </div>
+            <div class="ai-wizard-message bot">
+              <div class="ai-wizard-text">
+              Sorry error
+              </div>
+            </div>
+          </div>
+          <div class="ai-wizard-footer">
+            <input class="ai-wizard-input" type="text" name="" value="" placeholder="Message...">
+            <button class="ai-wizard-send btn btn-primary btn-sm" type="button">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 

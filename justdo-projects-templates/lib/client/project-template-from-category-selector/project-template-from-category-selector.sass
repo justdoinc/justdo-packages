@@ -65,6 +65,74 @@
       padding: 16px 4px
       border: none
 
+#ai-template-wizard
+  backdrop-filter: blur(2px)
+  background-color: rgba(0, 0, 0, 0.25)
+  .modal-dialog
+    margin: 6rem auto
+    height: auto
+    max-width: 400px
+  .modal-content
+    border-radius: 8px
+    padding: 0px
+    background-color: white
+  .modal-body
+    padding: 0px
+  .ai-wizard-header,
+  .ai-wizard-body,
+  .ai-wizard-footer
+    display: flex
+  .ai-wizard-header,
+  .ai-wizard-footer
+    padding: 16px 20px
+    justify-content: space-between
+  .ai-wizard-title
+    font-weight: 600
+    color: #3D495B
+    font-size: 15px
+  .ai-wizard-body
+    border-top: 1px solid #E3EBF8
+    border-bottom: 1px solid #E3EBF8
+    height: 400px
+    padding: 0px 20px 20px 20px
+    display: flex
+    flex-direction: column
+  .ai-wizard-input
+    border: none
+    width: 100%
+    margin-right: 8px
+    background-color: white
+    &::placeholder
+      color: #ABB9C6
+    &:focus
+      outline: none
+  .ai-wizard-spacer
+    display: flex
+    flex-grow: 1
+  .ai-wizard-message
+    display: flex
+    margin-bottom: 8px
+    &.bot
+      justify-content: start
+      .ai-wizard-text
+        background-color: #F0F6FD
+        color: #3C495B
+    &.user
+      justify-content: end
+      .ai-wizard-text
+        background-color: #2c7fdf
+        color: white
+  .ai-wizard-text
+    border-radius: 8px
+    padding: 8px 12px
+  .ai-wizard-close
+    stroke-width: 2
+    opacity: 0.75
+    &:hover
+      opacity: 1
+      transform: scale(1.02)
+
+
 @media (max-width: 992px)
   .project-templates-modal
     .modal-content
