@@ -2,7 +2,7 @@ APP.justdo_news.registerNews "news",
   _id: "v3-142"
   title: "v3.142"
   aliases: ["v3-142-x"]
-  date: "2023-11-24"
+  date: "2023-12-08"
   templates: [
     {
       _id: "main"
@@ -22,5 +22,16 @@ APP.justdo_news.registerNews "news",
         ]
       }
       name: "What's new"
+    },
+    {
+      _id: "features"
+      template_name: "version_release_features"
+      template_data: {
+        title: "Improvements"
+        update_items: [
+          "1. Introducing 'Select All' and 'Deselect All' buttons to our Task Copy feature - making field selection faster and simpler."
+        ]
+      }
+      name: "Other Updates"
     }
   ]
