@@ -11,7 +11,9 @@
         </div>
         <div class="tutorial-body">
           <div class="tutorial-title">{{_ title}}</div>
-          <div class="tutorial-subtitle">{{_ subtitle}}</div>
+          {{#if subtitle}}
+            <div class="tutorial-subtitle">{{_ subtitle}}</div>
+          {{/if}}
           <div class="tutorial-instruction-btn">
             <button class="skip btn btn-light btn-sm">{{_ "skip"}}</button>
             <button class="done btn btn-primary btn-sm">{{_ "done"}}</button>
@@ -21,7 +23,7 @@
           {{#if $eq media_type "iframe"}}
             <div class="tutorial-welcome-media">
               <iframe id="{{media_id}}" src="{{media}}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="{{media_style}}"></iframe>
-            </div>{{{xssGuard html}}}
+            </div>
           {{else}}
             <video class="tutorial-media" loop muted>
               <source src="{{media}}" type="video/mp4">

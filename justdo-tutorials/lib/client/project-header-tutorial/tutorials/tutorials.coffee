@@ -5,7 +5,6 @@ APP.executeAfterAppLibCode ->
     @tutorials = new ReactiveVar [
       {
         "title": "welcome_to_justdo",
-        "subtitle": "welcome video",
         "media": "https://player.vimeo.com/video/813068460#t=7.5s"
         "media_type": "iframe"
         "media_id": "vimeo-player"
