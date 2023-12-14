@@ -1,6 +1,8 @@
 {
     "email_greeting_with_name": "__name__您好，",
+    "unread_task_chat_notification_subject": "您有待查看的信息",
     "unread_task_chat_notification_title": "下列任務有新的信息待您查看：",
+    "unread_group_chat_notification_subject": "您有來自__channel_title__的新信息",
     "unread_group_chat_notification_title_html": "<span style=\"font-weight: bold;\">__channel_title__</span>群組有新的信息待你查看！",
     "open_in_justdo": "於JustDo開啟",
     "unsubscribe_from_justdo": "取消訂閱",

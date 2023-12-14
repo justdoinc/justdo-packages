@@ -1,6 +1,8 @@
 {
     "email_greeting_with_name": "Hi __name__, ",
+    "unread_task_chat_notification_subject": "New chat messages are waiting for you",
     "unread_task_chat_notification_title": "New chat messages are waiting for you in the following task:",
+    "unread_group_chat_notification_subject": "New messages from __channel_title__ are waiting for you",
     "unread_group_chat_notification_title_html": "New messages from <span style=\"font-weight: bold;\">__channel_title__</span> are waiting for you!",
     "open_in_justdo": "Open in JustDo",
     "unsubscribe_from_justdo": "Unsubscribe from JustDo.",
