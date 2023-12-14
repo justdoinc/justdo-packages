@@ -11,10 +11,10 @@
         <td>
           <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
-              <td align="left" style="font-size: 20px; font-weight: bold; font-family: Helvetica, Arial, sans-serif; color: #333333; padding-top: 32px;" class="padding-copy">Hi {{user.profile.first_name}},</td>
+              <td align="left" style="font-size: 20px; font-weight: bold; font-family: Helvetica, Arial, sans-serif; color: #333333; padding-top: 32px;" class="padding-copy">{{_ "email_greeting_with_name" name=user.profile.first_name lng=user.profile.lang}}</td>
             </tr>
             <tr>
-              <td align="left" style="padding: 12px 0 0 0; font-size: 16px; line-height: 25px; font-family: Helvetica, Arial, sans-serif; color: #68757B;" class="padding-copy">New group chat messages are waiting for you!</td>
+              <td align="left" style="padding: 12px 0 0 0; font-size: 16px; line-height: 25px; font-family: Helvetica, Arial, sans-serif; color: #68757B;" class="padding-copy">{{{_ "unread_group_chat_notification_title_html" channel_title=channel_title lng=user.profile.lang}}}</td>
             </tr>
           </table>
         </td>
@@ -43,7 +43,7 @@
                       <table role="presentation" border="0" cellspacing="0" cellpadding="0" class="mobile-button-container" width="100%">
                         <tr>
                           <td align="center" style="border-radius: 3px; color: #ffffff; padding: 12px" bgcolor="#2B71CF">
-                            <a href="{{read_link}}" target="_blank" style="font-size: 16px; width: 100%; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; display: inline-block;" class="mobile-button">Open in JustDo</a>
+                            <a href="{{read_link}}" target="_blank" style="font-size: 16px; width: 100%; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; display: inline-block;" class="mobile-button">{{_ "open_in_justdo" lng=user.profile.lang}}</a>
                           </td>
                         </tr>
                       </table>
@@ -74,8 +74,8 @@
     <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" align="center" style="max-width: 500px;" class="responsive-table">
       <tr>
         <td align="center" style="font-size: 12px; line-height: 20px; font-family: Helvetica, Arial, sans-serif; color:#68757B;">
-          <a href="{{unsubscribe_link}}" target="_blank" style="color: #2B71CF; text-decoration: none;">Unsubscribe from the {{project.title}} JustDo.</a><br>
-            Having any issues? Reply to this email for support.
+          <a href="{{unsubscribe_link}}" target="_blank" style="color: #2B71CF; text-decoration: none;">{{_ "unsubscribe_from_justdo" lng=user.profile.lang}}</a><br>
+            {{_ "reply_email_for_support" lng=user.profile.lang}}
         </td>
       </tr>
     </table>
