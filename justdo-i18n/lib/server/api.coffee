@@ -18,6 +18,17 @@ _.extend JustdoI18n.prototype,
     # Defined in collections-indexes.coffee
     @_ensureIndexesExists()
 
+    @_setupHandlebarsHelper()
+
+    return
+
+  _setupHandlebarsHelper: ->
+    OriginalHandlebars.registerHelper "_", (key, args...) ->
+      options = args.pop().hash
+      if not _.isEmpty args
+        options.sprintf = args
+      
+      return TAPi18n.__ key, options
     return
 
   tr: (key, options, user) ->
