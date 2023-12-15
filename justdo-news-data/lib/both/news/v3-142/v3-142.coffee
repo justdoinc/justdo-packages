@@ -2,7 +2,7 @@ APP.justdo_news.registerNews "news",
   _id: "v3-142"
   title: "v3.142"
   aliases: ["v3-142-x"]
-  date: "2023-12-08"
+  date: "2023-12-15"
   templates: [
     {
       _id: "main"
