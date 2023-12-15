@@ -16,5 +16,7 @@
   "org_access_restricted_title": "__org_name__: Temporary Access Restriction",
   "org_access_restricted_html": "Access to your organization <b>__org_name__</b> is currently restricted. Please contact your organization administrators for more details regarding this matter. <br> We appreciate your patience and understanding.",
   "renew_org_license_instruction_html": "You can renew the license by clicking on the \"Renew License\" button below.<br>Our support team is always happy to assist you.<br><br>Thank you for being part of the JustDo community. We are actively developing new features for the next release to enhance your workflow!",
-  "renew_org_licnese_modal_btn_label": "Renew License"
+  "renew_org_licnese_modal_btn_label": "Renew License",
+  "org_pre_expire_renewal_contact_page_message": "My organization __org_name__ __optional_domain_msg__ is about to expire and I'd like to renew the license.",
+  "org_post_expire_renewal_contact_page_message": "My organization __org_name__ __optional_domain_msg__ has expired and I'd like to renew the license."
 }

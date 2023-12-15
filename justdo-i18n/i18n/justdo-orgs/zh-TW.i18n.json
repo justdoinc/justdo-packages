@@ -16,5 +16,7 @@
   "org_access_restricted_title": "__org_name__: 暫時無法存取您的組織",
   "org_access_restricted_html": "目前無法存取您的組織<b>__org_name__</b>。請聯繫您的組織管理員以獲取更多詳細信息。<br>感謝您的耐心和理解。",
   "renew_org_license_instruction_html": "您可以點擊下面的「續訂授權」按鈕來續訂授權以繼續使用JustDo，<br>我們的支援團隊隨時樂意為您提供幫助。<br><br>感謝您成為JustDo社群的一員。我們正在積極開發新功能，以跟上閣下業務發展之步伐！",
-  "renew_org_licnese_modal_btn_label": "續訂授權"
+  "renew_org_licnese_modal_btn_label": "續訂授權",
+  "org_pre_expire_renewal_contact_page_message": "我的組織__org_name__ __optional_domain_msg__的授權即將到期，請更新我的授權。",
+  "org_post_expire_renewal_contact_page_message": "我的組織__org_name__ __optional_domain_msg__的授權已到期，請更新我的授權。"
 }
