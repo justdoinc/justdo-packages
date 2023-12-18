@@ -1,6 +1,7 @@
 _.extend JustdoTutorials.prototype,
   _immediateInit: ->
     @is_tutorial_dropdown_allowed_to_close = true
+    @is_vimeo_player_loaded_rv = new ReactiveVar false
     @_registerPlaceholderItems()
     return
 

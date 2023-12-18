@@ -9,6 +9,7 @@ APP.executeAfterAppLibCode ->
         "media_type": "iframe"
         "media_id": "vimeo-player"
         "media_style": "position:absolute;top:0;left:0;width:100%;height:100%;"
+        "allow": "autoplay; fullscreen; picture-in-picture"
         "class": "welcome"
         "status": "" # pending, done
       },
@@ -80,6 +81,17 @@ APP.executeAfterAppLibCode ->
 
     tutorialIsDone: ->
       return @status == "done"
+    
+    loadMediaIfVimeoPlayerIsLoaded: ->
+      # This is to make sure the vimeo player is loaded before the dropdown is shown,
+      # but not before the user clicks on the dropdown.
+      if not APP.justdo_vimeo_loader.isVimeoPlayerLoaded()
+        $(".nav-tutorials").one "shown.bs.dropdown", ->
+          APP.justdo_vimeo_loader.loadVimeoPlayer()
+          return
+        return
+
+      return @media
 
     promoUnlocked: ->
       tutorials = Template.instance().tutorials.get()

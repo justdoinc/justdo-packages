@@ -22,7 +22,7 @@
         <div class="tutorial-instruction shadow-lg">
           {{#if $eq media_type "iframe"}}
             <div class="tutorial-welcome-media">
-              <iframe id="{{media_id}}" src="{{media}}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="{{media_style}}"></iframe>
+              <iframe id="{{media_id}}" src="{{loadMediaIfVimeoPlayerIsLoaded}}" frameborder="0" allow="{{allow}}" style="{{media_style}}"></iframe>
             </div>
           {{else}}
             <video class="tutorial-media" loop muted>
@@ -64,5 +64,4 @@
     </div>
   </div>
 
-  <script src="https://player.vimeo.com/api/player.js"></script>
 </template>
