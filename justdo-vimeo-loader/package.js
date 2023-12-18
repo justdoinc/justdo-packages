@@ -57,23 +57,8 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/client/init.coffee", client);
   api.addFiles("lib/client/static.coffee", client);
-  api.addFiles("lib/client/router.coffee", client);
   api.addFiles("lib/client/errors-types.coffee", client);
   api.addFiles("lib/client/api.coffee", client);
-
-  api.addFiles("lib/client/project-conf/project-conf.sass", client);
-  api.addFiles("lib/client/project-conf/project-conf.html", client);
-  api.addFiles("lib/client/project-conf/project-conf.coffee", client);
-
-  api.addFiles("lib/client/plugin-page/plugin-page.sass", client);
-  api.addFiles("lib/client/plugin-page/plugin-page.html", client);
-  api.addFiles("lib/client/plugin-page/plugin-page.coffee", client);
-
-  api.addFiles("lib/client/task-pane-section/task-pane-section-registrar.coffee", client);
-
-  api.addFiles("lib/client/task-pane-section/task-pane-section.sass", client);
-  api.addFiles("lib/client/task-pane-section/task-pane-section.html", client);
-  api.addFiles("lib/client/task-pane-section/task-pane-section.coffee", client);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
