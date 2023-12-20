@@ -43,9 +43,12 @@ JustdoChat.registerChannelTypeServerSpecific
             user_id:
               $in: users_to_remove
 
+      options =
+        multi: true
+
       # We use rawCollection() since the request is too heavy for collection2/simple-schema
-      APP.justdo_analytics.logMongoRawConnectionOp(@channels_collection._name, "update", query, update)
-      @channels_collection.rawCollection().update(query, update)
+      APP.justdo_analytics.logMongoRawConnectionOp(@channels_collection._name, "update", query, update, options)
+      @channels_collection.rawCollection().update(query, update, options)
 
       return
 
