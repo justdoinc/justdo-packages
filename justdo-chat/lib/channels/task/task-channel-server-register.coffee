@@ -88,13 +88,7 @@ JustdoChat.registerChannelTypeServerSpecific
     #  * Rename its subscribers field to "archived_subscribers", read more about that
     #    field in schemas.coffee.
     #  * Remove its bottom_windows field.
-    grid_data_com.setGridMethodMiddleware "afterRemoveParent", (path, performing_user, options) =>
-      if not options.no_more_parents
-        return true
-      
-      if not (task_id = options?.item?._id)?
-        return true
-
+    archiveTaskChannel = (task_id) =>
       query = {task_id}
       #
       # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
@@ -109,6 +103,22 @@ JustdoChat.registerChannelTypeServerSpecific
       # We use rawCollection() since the request is too heavy for collection2/simple-schema
       APP.justdo_analytics.logMongoRawConnectionOp(@channels_collection._name, "update", query, update)
       @channels_collection.rawCollection().update(query, update)
+
+      return
+    
+    @tasks_collection.after.remove (user_id, doc, field_names, modifier, options) =>
+      archiveTaskChannel doc._id
+
+      return
+      
+    grid_data_com.setGridMethodMiddleware "afterRemoveParent", (path, performing_user, options) =>
+      if not options.no_more_parents
+        return true
+      
+      if not (task_id = options?.item?._id)?
+        return true
+      
+      archiveTaskChannel task_id
 
       return true
 
