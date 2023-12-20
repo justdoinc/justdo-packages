@@ -5,6 +5,7 @@ JustdoChat.registerChannelTypeServerSpecific
   channel_type: "task" # Must be the same as task-channel-both-register.coffee
 
   _immediateInit: ->
+    grid_data_com = APP.projects._grid_data_com
     # @ is the JustdoChat object's
 
     # When a user stop being a member of a task:
@@ -65,11 +66,16 @@ JustdoChat.registerChannelTypeServerSpecific
     # When a task is removed:
     #
     #  * Rename its subscribers field to "archived_subscribers", read more about that
-    #    field in schemas.coffee .
-    #  * Remove its bottom_windows field
-    @tasks_collection.after.remove (user_id, doc, field_names, modifier, options) =>
-      query = {task_id: doc._id}
+    #    field in schemas.coffee.
+    #  * Remove its bottom_windows field.
+    grid_data_com.setGridMethodMiddleware "afterRemoveParent", (path, performing_user, options) =>
+      if not options.no_more_parents
+        return true
+      
+      if not (task_id = options?.item?._id)?
+        return true
 
+      query = {task_id}
       #
       # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
       # and to drop obsolete indexes (see CHANNEL_IDENTIFIER_INDEX there)
@@ -84,7 +90,7 @@ JustdoChat.registerChannelTypeServerSpecific
       APP.justdo_analytics.logMongoRawConnectionOp(@channels_collection._name, "update", query, update)
       @channels_collection.rawCollection().update(query, update)
 
-      return
+      return true
 
     # When a project is removed, rename the subscribers field of all its channels to
     # archived_subscribers. read more about that field in schemas.coffee .
