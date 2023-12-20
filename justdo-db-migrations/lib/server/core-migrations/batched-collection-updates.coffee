@@ -195,6 +195,7 @@ APP.executeAfterAppLibCode ->
                 
                 if err?
                   throw new Error err
+                APP.emit "batched-collection-update-executed", type_def.collection, selector, modifier, mongo_update_options
 
                 modifiers_processed += 1
                 actual_docs_processed += result.result.n
