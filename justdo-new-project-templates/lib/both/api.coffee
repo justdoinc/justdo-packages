@@ -16,5 +16,3 @@ _.extend JustdoNewProjectTemplates.prototype,
         is_user_campaign_allow_picker_to_show = user_campaign_doc.show_post_registration_new_project_templates_picker
     
     return is_user_campaign_allow_picker_to_show
-
-    return
