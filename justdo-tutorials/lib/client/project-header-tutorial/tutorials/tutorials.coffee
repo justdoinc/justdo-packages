@@ -180,12 +180,22 @@ APP.executeAfterAppLibCode ->
       return
 
     "mouseenter .welcome": (e, tpl) ->
+      if not Vimeo?
+        APP.justdo_vimeo_loader.forceLoadVimeoPlayer()
+        console.warn "Vimeo is not loaded"
+        return
+      
       player = new Vimeo.Player($("#vimeo-player"))
       player.play()
 
       return
 
     "mouseleave .welcome": (e, tpl) ->
+      if not Vimeo?
+        APP.justdo_vimeo_loader.forceLoadVimeoPlayer()
+        console.warn "Vimeo is not loaded"
+        return
+      
       player = new Vimeo.Player($("#vimeo-player"))
       player.pause()
 
