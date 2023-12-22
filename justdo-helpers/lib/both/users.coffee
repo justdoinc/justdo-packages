@@ -207,6 +207,14 @@ _.extend JustdoHelpers,
       return moment_date.format("MMMM Do YYYY, #{time_string_in_user_preference_format}")
 
     return
+  
+  friendlyTimeFormat: (date, show_seconds=true) ->
+    moment_date = moment(date)
+
+    time_string_in_user_preference_format =
+      JustdoHelpers.getTimeStringInUserPreferenceFormat(show_seconds)
+    
+    return moment_date.format(time_string_in_user_preference_format)
 
   sortUsersDocsArrayByDisplayName: (users_docs, options) ->
     if options?.logged_in_user_first is true
