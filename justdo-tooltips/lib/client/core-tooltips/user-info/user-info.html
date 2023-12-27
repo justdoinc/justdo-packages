@@ -1,11 +1,10 @@
 <template name="user_info_tooltip">
-  <div class="avatar-container">
-    <img class="avatar" src="{{userAvatar}}">
-    {{!--<div class="user-online"></div>--}}
-  </div>
+  <div class="avatar-container" style="background-image: url({{userAvatar}})"></div>
   <div class="info">
-    <div class="name">
-      {{userName}}
+    <div class="name">{{userName}}</div>
+    <div class="action-item">
+      <svg class="jd-icon text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#message-circle"></use></svg>
+      Send message
     </div>
     {{!--<div class="sub-info">
       <div class="online-status">
@@ -21,5 +20,8 @@
     <div class="actions">
       <a href="#" class="send-message">Send message</a>
     </div>--}}
+  </div>
+  <div class="info-bottom">
+    {{userEmail}}
   </div>
 </template>
