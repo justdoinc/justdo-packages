@@ -7,7 +7,7 @@ getCurrentProjectMembersIds = ->
 getCurrentProjectMembersDocsSortedByDisplayNameWithLoggedInUserFirst = ->
   if not (current_project = APP.modules.project_page.curProj())?
     return []
-  
+
   members_docs = current_project.getMembersDocs()
 
   return JustdoHelpers.sortUsersDocsArrayByDisplayName(members_docs, {logged_in_user_first: true})
@@ -118,7 +118,7 @@ _.extend OwnersFilterControllerConstructor.prototype,
     for member in @members
       member_item = """<li class="member-item" member-id="#{JustdoHelpers.xssGuard(member?._id, {enclosing_char: '"'})}">""" # Not part of xssGuard below, because xssGuard removes member-id
       member_item += JustdoHelpers.xssGuard("""
-          <img class="justdo-avatar" src="#{JustdoAvatar.showUserAvatarOrFallback(member)}" title="#{JustdoHelpers.xssGuard(JustdoHelpers.displayName(member))}">
+          <img class="justdo-avatar" src="#{JustdoAvatar.showUserAvatarOrFallback(member)}" title="#{JustdoHelpers.xssGuard(JustdoHelpers.displayName(member))}" jd-tt="user-info?id=#{member?._id}">
           <div class="display-name">#{JustdoHelpers.displayName(member)}</div>
       """, {allow_html_parsing: true, enclosing_char: ""})
       member_item += """</li>"""

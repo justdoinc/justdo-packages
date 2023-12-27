@@ -3,7 +3,7 @@ getDisplayName = (user) ->
 
 GridControl.installFormatter "display_name_formatter",
   slickGridColumnStateMaintainer: ->
-    # current_baseline = APP.justdo_planning_utilities.getCurrentBaseline() 
+    # current_baseline = APP.justdo_planning_utilities.getCurrentBaseline()
     # JustdoHelpers.getUserPreferredDateFormat()
 
     return
@@ -18,7 +18,7 @@ GridControl.installFormatter "display_name_formatter",
     margin = 4 + icon_width
 
     formatter_html = """<div class="grid-formatter display-name-formatter">"""
-    
+
     if user_doc?
       formatter_html += """
         <span class="slick-prevent-edit grid-tree-control-user-display-only"
@@ -28,6 +28,7 @@ GridControl.installFormatter "display_name_formatter",
           <img src="#{JustdoAvatar.showUserAvatarOrFallback(user_doc)}"
                 class="grid-tree-control-user-img slick-prevent-edit"
                 alt="#{display_name}"
+                jd-tt="user-info?id=#{user_doc._id}"
                 style="
                       width: #{icon_width}px;
                       height: #{icon_width}px;">
@@ -38,7 +39,7 @@ GridControl.installFormatter "display_name_formatter",
     formatter_html += "</div>"
 
     return formatter_html
-  
+
   print: ->
     {value} = @getFriendlyArgs()
 
