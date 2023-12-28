@@ -2,7 +2,7 @@ _.extend JustdoAvatar,
   avatar_required_fields: JustdoHelpers.avatar_required_fields
 
   getAvatarHtml: (user_doc) ->
-    return """<img class="justdo-avatar" src="#{JustdoHelpers.xssGuard(JustdoAvatar.showUserAvatarOrFallback(user_doc))}" title="#{JustdoHelpers.xssGuard(JustdoHelpers.displayName(user_doc))}" />"""
+    return """<img class="justdo-avatar" src="#{JustdoHelpers.xssGuard(JustdoAvatar.showUserAvatarOrFallback(user_doc))}" jd-tt="user-info?id=#{user_doc?._id}" />"""
 
 justdo_avatar_helpers =
   avatar_url: ->
