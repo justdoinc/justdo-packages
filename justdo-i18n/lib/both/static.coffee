@@ -33,11 +33,11 @@ _.extend JustdoI18n,
         lll: 'D MMM YYYY HH:mm'
         llll: 'ddd, D MMM YYYY HH:mm'
       calendar:
-        sameDay: '[Hôm nay lúc] LT'
-        nextDay: '[Ngày mai lúc] LT'
-        nextWeek: 'dddd [tuần tới lúc] LT'
-        lastDay: '[Hôm qua lúc] LT'
-        lastWeek: 'dddd [tuần trước lúc] LT'
+        sameDay: '[Hôm nay lúc]'
+        nextDay: '[Ngày mai lúc]'
+        nextWeek: 'dddd [tuần tới lúc]'
+        lastDay: '[Hôm qua lúc]'
+        lastWeek: 'dddd [tuần trước lúc]'
         sameElse: 'L'
       relativeTime:
         future: '%s tới'
@@ -105,11 +105,11 @@ _.extend JustdoI18n,
         else
           '晚上'
       calendar:
-        sameDay: '[今天] LT'
-        nextDay: '[明天] LT'
-        nextWeek: '[下]dddd LT'
-        lastDay: '[昨天] LT'
-        lastWeek: '[上]dddd LT'
+        sameDay: '[今天]'
+        nextDay: '[明天]'
+        nextWeek: '[下]dddd'
+        lastDay: '[昨天]'
+        lastWeek: '[上]dddd'
         sameElse: 'L'
       dayOfMonthOrdinalParse: /\d{1,2}(日|月|週)/
       ordinal: (number, period) ->
