@@ -2,20 +2,53 @@ APP.justdo_tooltips.registerTooltip
   id: "user-info"
   template: "user_info_tooltip"
 
+Template.user_info_tooltip.onCreated ->
+  @user_rv = new ReactiveVar {}
+  @avatar_url_rv = new ReactiveVar ""
+  @autorun =>
+    user_id = @data.options.id
+
+    if APP.justdo_chat.isBotUserId(user_id)
+      user = APP.collections.JDChatBotsInfo.findOne(user_id)
+    else
+      user = Meteor.users.findOne(user_id)
+    
+    @user_rv.set user
+    @avatar_url_rv.set JustdoAvatar.showUserAvatarOrFallback user
+    return
+  
+  @avatar_img_obj = {}
+  @avatar_loaded_dep = new Tracker.Dependency()
+  @autorun =>
+    if not (avatar_url = @avatar_url_rv.get())?
+      return
+
+    @avatar_img_obj = new Image()
+    @avatar_img_obj.crossOrigin = "anonymous"
+    @avatar_img_obj.src = avatar_url
+
+    if @avatar_img_obj.complete
+      @avatar_loaded_dep.changed()
+    else
+      @avatar_img_obj.addEventListener "load", => 
+        @avatar_loaded_dep.changed()
+        return
+      , {once: true}
+    return
+    
+  return
+
 Template.user_info_tooltip.helpers
   userName: ->
-
-    return JustdoHelpers.displayName(@options.id)
+    tpl = Template.instance()
+    return JustdoHelpers.displayName(tpl.user_rv.get())
 
   userAvatar: ->
-    user = Meteor.users.findOne(@options.id)
-
-    if user?
-      avatar = JustdoAvatar.showUserAvatarOrFallback(user)
+    tpl = Template.instance()
+    avatar = tpl.avatar_url_rv.get()
     
     # If avatar is a base64 svg, enlarge the text.
     if JustdoAvatar.isAvatarBase64Svg avatar
-      # Enlarge the svg avatar and the text inside it.
       $svg = JustdoAvatar.base64SvgAvatarToElement avatar
       $svg.attr("width", "100%")
       $svg.attr("height", "100%")
@@ -28,21 +61,21 @@ Template.user_info_tooltip.helpers
     return avatar
   
   userAvatarBgColor: ->
-    if APP.justdo_chat.isBotUserId(@options.id)
-      user = APP.collections.JDChatBotsInfo.findOne(@options.id)
-    else
-      user = Meteor.users.findOne(@options.id)
+    tpl = Template.instance()
+    tpl.avatar_loaded_dep.depend()
+    if not (avatar_url = tpl.avatar_url_rv.get())?
+      return
 
-    if not user?
-      return 
-
-    avatar = JustdoAvatar.showUserAvatarOrFallback(user)
-    if JustdoAvatar.isAvatarBase64Svg avatar
-      $svg = JustdoAvatar.base64SvgAvatarToElement avatar
+    if JustdoAvatar.isAvatarBase64Svg avatar_url
+      $svg = JustdoAvatar.base64SvgAvatarToElement avatar_url
       return $svg.find("circle").attr("fill")
     else
-      $img = $("<img />").attr("src", avatar).attr("crossorigin", "anonymous")
-      bg_color_arr = JustdoHelpers.getImageColor $img.get(0)
+      # If avatar_img_obj element is not loaded yet, return.
+      avatar_img_obj = tpl.avatar_img_obj
+      if not avatar_img_obj.complete
+        return
+
+      bg_color_arr = JustdoHelpers.getImageColor avatar_img_obj
 
       return "rgb(#{bg_color_arr?[0]}, #{bg_color_arr?[1]}, #{bg_color_arr?[2]})"
 
@@ -50,15 +83,18 @@ Template.user_info_tooltip.helpers
     return true
 
   userEmail: ->
-    user = Meteor.users.findOne(@options.id)
+    tpl = Template.instance()
 
-    if user?
+    if (user = tpl.user_rv.get())?
       return JustdoHelpers.getUserMainEmail user
   
   isMessageButtonsAllowedToShow: ->
-    is_user_performing_user = @options.id is Meteor.userId()
-    is_user_bot = APP.justdo_chat.isBotUserId(@options.id)
-    is_user_proxy = APP.justdo_site_admins.isProxyUser(@options.id)
+    tpl = Template.instance()
+    user_id = tpl.user_rv.get()._id
+
+    is_user_performing_user = user_id is Meteor.userId()
+    is_user_bot = APP.justdo_chat.isBotUserId(user_id)
+    is_user_proxy = APP.justdo_site_admins.isProxyUser(user_id)
     return (not is_user_performing_user) and (not is_user_bot) and (not is_user_proxy)
   
   isCreateGroupAllowedToShow: ->
