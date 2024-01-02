@@ -53,7 +53,16 @@ Template.user_info_tooltip.helpers
     user = Meteor.users.findOne(@options.id)
 
     if user?
-      return user.emails[0].address
+      return JustdoHelpers.getUserMainEmail user
+  
+  isMessageButtonsAllowedToShow: ->
+    is_user_performing_user = @options.id is Meteor.userId()
+    is_user_bot = APP.justdo_chat.isBotUserId(@options.id)
+    is_user_proxy = APP.justdo_site_admins.isProxyUser(@options.id)
+    return (not is_user_performing_user) and (not is_user_bot) and (not is_user_proxy)
+  
+  isCreateGroupAllowedToShow: ->
+    return JD.activeJustdoId()?
 
 Template.user_info_tooltip.events
   "click .send-message": ->
