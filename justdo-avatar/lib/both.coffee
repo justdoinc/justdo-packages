@@ -141,3 +141,15 @@ _.extend JustdoAvatar,
       base_64_svg = window.btoa(unescape(encodeURIComponent(svg)))
 
     return "#{@getBase64SvgPrefix()}#{base_64_svg}"
+
+  isAvatarBase64Svg: (avatar_url) ->
+    return avatar_url?.substr(0, @base64_svg_prefix.length) is @base64_svg_prefix
+
+  base64SvgAvatarToElement: (avatar_url) ->
+    if not @isAvatarBase64Svg avatar_url
+      return
+    
+    avatar_url = avatar_url.replace @base64_svg_prefix, ""
+
+    $svg = $(window.atob(avatar_url))
+    return $svg
