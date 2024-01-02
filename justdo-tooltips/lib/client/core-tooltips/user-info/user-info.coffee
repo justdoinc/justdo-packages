@@ -11,7 +11,22 @@ Template.user_info_tooltip.helpers
     user = Meteor.users.findOne(@options.id)
 
     if user?
-      return JustdoAvatar.showUserAvatarOrFallback(user)
+      avatar = JustdoAvatar.showUserAvatarOrFallback(user)
+    
+    # If avatar is a base64 svg, enlarge the text.
+    if JustdoAvatar.isAvatarBase64Svg avatar
+      # Enlarge the svg avatar and the text inside it.
+      $svg = JustdoAvatar.base64SvgAvatarToElement avatar
+      $svg.attr("width", "100%")
+      $svg.attr("height", "100%")
+      $svg.find("circle").attr("cx", "50%")
+      $svg.find("circle").attr("cy", "50%")
+      $svg.find("circle").attr("r", "100%")
+      $svg.find("text").css("font-size", "60px")
+      return "#{JustdoAvatar.base64_svg_prefix}#{window.btoa(unescape(encodeURIComponent($svg.get(0).outerHTML)))}"
+
+    return avatar
+  
   userAvatarBgColor: ->
     if APP.justdo_chat.isBotUserId(@options.id)
       user = APP.collections.JDChatBotsInfo.findOne(@options.id)
