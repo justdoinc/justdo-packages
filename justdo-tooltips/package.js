@@ -53,6 +53,8 @@ Package.onUse(function (api) {
 
   api.use("reactive-var", client);
   api.use("tracker", client);
+  api.use("justdoinc:justdo-chat@1.0.0", client);
+  api.use("justdoinc:justdo-avatar@1.0.0", client);
 
   api.addFiles("lib/both/analytics.coffee", both);
 
