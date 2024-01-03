@@ -38,12 +38,35 @@ Template.user_info_tooltip.helpers
       $svg.find("circle").attr("cy", "50%")
       $svg.find("circle").attr("r", "100%")
       $svg.find("text").css("font-size", "60px")
+      # Proxy users has dotted border around their avatar. Here we replace it with a square version.
+      if ($dotted_border = $svg.find("circle[style*=stroke-dasharray]")).length > 0 
+        $dotted_border.remove()
+        # First rect is to bring back the white border.
+        # Second rect is the dotted lines.
+        $svg.append """
+            <rect width="100%" height="100%" fill="none" style="
+              stroke: #ffffff;
+              stroke-width: 5px;
+            ">
+            </rect>
+            <rect width="100%" height="100%" fill="none" style="
+              stroke: #546e7a;
+              stroke-width: 3px;
+              stroke-dasharray: 2 5;
+              stroke-linecap: round;
+              stroke-linejoin: round;">
+            </rect>
+        """
+
       return "#{JustdoAvatar.base64_svg_prefix}#{window.btoa(unescape(encodeURIComponent($svg.get(0).outerHTML)))}"
 
-    return avatar
-  
+    # Request a larger avatar from gravatar.
+    if avatar.includes "gravatar"
+      avatar = new URL(avatar)
+      avatar.searchParams.set "s", 200
+      avatar = avatar.toString()
 
-
+    return encodeURI avatar
 
   showEmail: ->
     return true
