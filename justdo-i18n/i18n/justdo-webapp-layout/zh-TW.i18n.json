@@ -42,6 +42,9 @@
   "member_dropdown_invite_share_none": "不分享任何任務",
   "member_dropdown_invite_cannot_recognize_email_with_input": "無法從以下輸入辨識電郵地址：__input__",
 
+  "member_management_dialog_add_members": "增加成員：",
+  "members_management_dialog_keep_members": "保留成員：",
+  "members_management_dialog_members": "成員：",
 
   "new_child_task_label": "創建子任務",
   "new_sibling_task_label": "創建任務",

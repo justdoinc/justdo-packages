@@ -32,5 +32,8 @@
   "stop": "停止",
   "generate": "生產",
   "regenerate": "重新生成",
-  "undo": "復原"
+  "undo": "復原",
+  "you": "您",
+  "all": "全部",
+  "none": "沒有"
 }

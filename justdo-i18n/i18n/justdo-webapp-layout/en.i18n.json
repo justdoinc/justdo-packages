@@ -42,6 +42,9 @@
   "member_dropdown_invite_share_none": "Share none",
   "member_dropdown_invite_cannot_recognize_email_with_input": "Unable to recognize email address from the following input: __input__",
 
+  "member_management_dialog_add_members": "Add Members:",
+  "members_management_dialog_keep_members": "Keep Members:",
+  "members_management_dialog_members": "Members:",  
 
   "new_child_task_label": "New Child Task",
   "new_sibling_task_label": "New Sibling Task",

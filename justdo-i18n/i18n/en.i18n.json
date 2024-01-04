@@ -32,5 +32,8 @@
   "stop": "Stop",
   "generate": "Generate",
   "regenerate": "Regenerate",
-  "undo": "Undo"
+  "undo": "Undo",
+  "you": "you",
+  "all": "All",
+  "none": "None"
 }
