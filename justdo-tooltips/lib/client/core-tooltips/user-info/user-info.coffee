@@ -20,9 +20,9 @@ Template.user_info_tooltip.onCreated ->
   return
 
 Template.user_info_tooltip.helpers
-  userName: ->
+  userDoc: ->
     tpl = Template.instance()
-    return JustdoHelpers.displayName(tpl.user_rv.get())
+    return tpl.user_rv.get()
 
   userAvatar: ->
     tpl = Template.instance()
