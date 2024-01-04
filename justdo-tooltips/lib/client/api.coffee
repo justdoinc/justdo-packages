@@ -373,9 +373,10 @@ _.extend JustdoTooltips.prototype,
     return
 
   renderTooltip: ->
-    {tooltip_id, configured_tooltip_def, tooltip_template_options} = @state_machine.getStateAttr()
+    {tooltip_id, configured_tooltip_def, tooltip_template_options, $target_container} = @state_machine.getStateAttr()
 
     tooltip_controller =
+      $target_container: $target_container
       closeTooltip: =>
         @closeTooltip()
 
