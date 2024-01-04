@@ -72,7 +72,11 @@ Template.user_info_tooltip.helpers
 
   templateData: -> 
     tpl = Template.instance()
-    return {user_rv: tpl.user_rv}
+
+    ret = 
+      user_rv: tpl.user_rv
+      tooltip_controller: tpl.data.tooltip_controller
+    return ret
 
   showEmail: ->
     return true
@@ -94,9 +98,3 @@ Template.user_info_tooltip.helpers
   
   isCreateGroupAllowedToShow: ->
     return JD.activeJustdoId()?
-
-Template.user_info_tooltip.events
-  "click .send-message": ->
-    Template.instance().data.tooltip_controller.closeTooltip()
-
-    return
