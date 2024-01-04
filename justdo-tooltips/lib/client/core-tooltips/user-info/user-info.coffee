@@ -19,6 +19,13 @@ Template.user_info_tooltip.onCreated ->
 
   return
 
+Template.user_info_tooltip.onRendered ->
+  $name_el = @$(".name")
+  if JustdoHelpers.isTextElementOverflowing $name_el
+    $name_el.attr "title", $name_el.text().trim()
+  
+  return
+
 Template.user_info_tooltip.helpers
   userDoc: ->
     tpl = Template.instance()
