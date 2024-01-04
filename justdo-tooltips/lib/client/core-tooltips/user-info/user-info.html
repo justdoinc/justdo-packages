@@ -2,24 +2,13 @@
   <div class="avatar-container" style="background-image: url('{{userAvatar}}');"></div>
   <div class="info">
     <div class="name">{{userName}}</div>
-    <div class="action-item">
-      <svg class="jd-icon text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#message-circle"></use></svg>
-      Send message
-    </div>
-    {{!--<div class="sub-info">
-      <div class="online-status">
-        Online
-      </div>
-      {{#if showEmail}}
-        <div class="dot"></div>
-        <div class="mail" title="{{userEmail}}">
-          {{userEmail}}
-        </div>
+    {{#each getUserTooltipActionItems}}
+      {{#if template}}
+        {{> Template.dynamic template=template data=templateData}}
+      {{else if html}}
+        {{{html}}}
       {{/if}}
-    </div>
-    <div class="actions">
-      <a href="#" class="send-message">Send message</a>
-    </div>--}}
+    {{/each}}
   </div>
   <div class="info-bottom">
     {{userEmail}}

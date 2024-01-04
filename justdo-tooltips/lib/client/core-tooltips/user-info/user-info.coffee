@@ -68,6 +68,12 @@ Template.user_info_tooltip.helpers
 
     return encodeURI avatar
 
+  getUserTooltipActionItems: -> JD.getPlaceholderItems "user-info-tooltip-actions"
+
+  templateData: -> 
+    tpl = Template.instance()
+    return {user_rv: tpl.user_rv}
+
   showEmail: ->
     return true
 
