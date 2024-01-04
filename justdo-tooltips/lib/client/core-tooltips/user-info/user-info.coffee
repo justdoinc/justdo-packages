@@ -2,6 +2,15 @@ APP.justdo_tooltips.registerTooltip
   id: "user-info"
   template: "user_info_tooltip"
 
+APP.executeAfterAppLibCode ->
+  JD.registerPlaceholderItem "user-info-tooltip-project-membership",
+    data:
+      template: "user_info_tooltip_project_membership_info"
+    domain: "user-info-tooltip-bottom"
+    position: 100
+    listingCondition: -> JD.activeJustdoId()?
+  return
+
 Template.user_info_tooltip.onCreated ->
   @user_rv = new ReactiveVar {}
   @avatar_url_rv = new ReactiveVar ""
@@ -87,12 +96,6 @@ Template.user_info_tooltip.helpers
 
   showEmail: ->
     return true
-
-  userEmail: ->
-    tpl = Template.instance()
-
-    if (user = tpl.user_rv.get())?
-      return JustdoHelpers.getUserMainEmail user
   
   isMessageButtonsAllowedToShow: ->
     tpl = Template.instance()
@@ -105,3 +108,30 @@ Template.user_info_tooltip.helpers
   
   isCreateGroupAllowedToShow: ->
     return JD.activeJustdoId()?
+
+  getUserTooltipBottomItems: -> JD.getPlaceholderItems "user-info-tooltip-bottom"
+
+Template.user_info_tooltip_project_membership_info.onCreated ->
+  @user_rv = @data?.user_rv
+  return
+
+Template.user_info_tooltip_project_membership_info.helpers
+  projectMemberStatus: ->
+    tpl = Template.instance()
+    user_id = tpl.user_rv.get()._id
+
+    if not (project = APP.modules.project_page.curProj())?
+      return
+    
+    if _.find(project.getAdmins(), (admin) -> admin.user_id is user_id)
+      return "Admin"
+    
+    if _.find(project.getGuests(), (guest) -> guest.user_id is user_id)
+      return "Guest"
+
+    if _.find(project.getMembers(), (member) -> member.user_id is user_id)
+      return "Member"
+    
+    return "Not a member"
+  
+  projectName: -> JD.activeJustdo({title: 1})?.title

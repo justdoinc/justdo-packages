@@ -14,7 +14,22 @@
       {{/if}}
     {{/each}}
   </div>
-  <div class="info-bottom">
-    {{userEmail}}
-  </div>
+
+  {{#with getUserTooltipBottomItems}}
+    <div class="info-bottom">
+      {{#each this}}
+        {{#if template}}
+          {{> Template.dynamic template=template data=templateData}}
+        {{else if html}}
+          {{{html}}}
+        {{/if}}
+      {{/each}}
+    </div>
+  {{/with}}
+</template>
+
+<template name="user_info_tooltip_project_membership_info">
+  {{#with projectMemberStatus}}
+    {{this}} of current JustDo ({{projectName}})
+  {{/with}}
 </template>
