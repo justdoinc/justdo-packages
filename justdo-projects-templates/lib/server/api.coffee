@@ -115,20 +115,27 @@ _.extend JustDoProjectsTemplates.prototype,
       console.error e
       return
 
-    content = JSON.parse(JSON.parse(res.content).choices[0].message.content)
-    project_title = content.t
-    template = @parseOpenAiTemplateToTasksTemplate content.ts
+    content = JSON.parse(res.content).choices[0].message.content
+    return @_generateTemplateFromOpenAi content, options, user_id
 
+  # The reason for having generateTemplateFromOpenAi and _generateTemplateFromOpenAi as seperate functions
+  # is to allow developers to test the generated output from OpenAI API.
+  _generateTemplateFromOpenAi: (content, options, user_id) ->
+    if _.isString content
+      content = JSON.parse content
+
+    project_title = content.t
+    APP.collections.Projects.update options.project_id, {$set: {title: project_title}}
+
+    template = @parseOpenAiTemplateToTasksTemplate content.ts
     create_template_options = 
       project_id: options.project_id
       users: 
         performing_user: user_id
       perform_as: "performing_user"
       template: template
-    @createSubtreeFromTemplateUnsafe create_template_options
-
-    @projects_collection.update project_id, {$set: {title: project_title}}
-    return
+    
+    return @createSubtreeFromTemplateUnsafe create_template_options
 
   parseOpenAiTemplateToTasksTemplate: (tasks_arr) ->
     check tasks_arr, Array
