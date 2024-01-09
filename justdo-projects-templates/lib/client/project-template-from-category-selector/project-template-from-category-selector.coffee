@@ -34,7 +34,16 @@ Template.project_template_from_category_selector.onCreated ->
       }
 
       # Send using Mail API
-      console.log message_data
+      options = 
+        project_id: JD.activeJustdoId()
+        msg: message
+      APP.justdo_projects_templates.createSubtreeFromAiGeneratedTemplate options, (err, res) ->
+        if err?
+          console.error err
+          return
+        bootbox.hideAll()
+        $("#ai-template-wizard").modal "hide"
+        return
 
       setTimeout ->
         tpl.show_bot_response_thinking.set true
