@@ -133,6 +133,10 @@ _.extend JustDoProjectsTemplates.prototype,
     msg:
       type: String
       optional: false
+    set_project_title:
+      type: Boolean
+      optional: true
+      defaultValue: false
   generateTemplateFromOpenAi: (options, user_id) ->
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
@@ -146,12 +150,7 @@ _.extend JustDoProjectsTemplates.prototype,
       APP.projects.requireUserIsMemberOfProject options.project_id, user_id
 
     req = @_generateReqForOpenAiTemplateGeneration options.msg
-
-    try
-      res = APP.justdo_ai_kit.openai.createChatCompletion req
-    catch e
-      console.error e
-      return
+    res = APP.justdo_ai_kit.openai.createChatCompletion req
 
     content = JSON.parse(res.content).choices[0].message.content
     return @_generateTemplateFromOpenAi content, options, user_id
@@ -162,8 +161,9 @@ _.extend JustDoProjectsTemplates.prototype,
     if _.isString content
       content = JSON.parse content
 
-    project_title = content.t
-    APP.collections.Projects.update options.project_id, {$set: {title: project_title}}
+    if options.set_project_title
+      project_title = content.t
+      APP.collections.Projects.update options.project_id, {$set: {title: project_title}}
 
     template = @parseOpenAiTemplateToTasksTemplate content.ts
     create_template_options = 

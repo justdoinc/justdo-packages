@@ -37,6 +37,7 @@ Template.project_template_from_category_selector.onCreated ->
       options = 
         project_id: JD.activeJustdoId()
         msg: message
+        set_project_title: true
       APP.justdo_projects_templates.createSubtreeFromAiGeneratedTemplate options, (err, res) ->
         if err?
           console.error err
