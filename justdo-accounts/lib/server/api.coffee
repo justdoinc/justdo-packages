@@ -1,6 +1,6 @@
 # BEGIN CODE TAKEN FROM Meteor's accounts-password: passowrd_server.js
 
-bcrypt = NpmModuleBcrypt
+bcrypt = require "bcrypt"
 bcryptHash = Meteor.wrapAsync(bcrypt.hash)
 
 getPasswordString = (password) ->

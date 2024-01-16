@@ -11,9 +11,6 @@ both = [client, server]
 
 Package.onUse(function (api) {
   api.versionsFrom("1.1.0.3");
-
-  api.use('npm-bcrypt@0.9.2', server);
-
   api.use("coffeescript", both);
   api.use("mongo", both);
   api.use("check", both);
@@ -22,6 +19,7 @@ Package.onUse(function (api) {
   api.use("accounts-password@1.3.3", both);
   api.use("tracker", client);
   api.use("http", both);
+  api.use("ecmascript", both);
 
   api.use("sha", both);
   api.use("srp", both);
