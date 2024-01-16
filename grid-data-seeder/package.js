@@ -9,8 +9,6 @@ server = 'server';
 client = 'client';
 
 Package.onUse(function (api) {
-  api.versionsFrom('1.1.0.2');
-
   api.use('coffeescript', both);
   api.use('underscore', both);
   api.use('tracker', both);
