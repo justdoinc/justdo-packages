@@ -8,8 +8,6 @@ Package.describe({
 })
 
 Package.onUse(function (api, where) {
-  api.versionsFrom('1.7.0.5')
-
   api.use([
     'mongo',
     'tracker',

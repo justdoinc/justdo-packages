@@ -13,7 +13,7 @@ Package.onUse(function (api) {
   api.use(['session@1.0.0',
     'spacebars@1.0.0',
     'stylus@1.0.0 || 2.0.0',
-    'accounts-base@1.0.0',
+    'accounts-base',
     'underscore@1.0.0',
     'templating@1.0.0',
     'anti:i18n@0.4.3'
@@ -37,7 +37,7 @@ Package.onUse(function (api) {
   api.use('accounts-oauth@1.0.0', {weak: true});
   // Allows us to directly test if accounts-password (which doesn't use
   // Accounts.oauth.registerService) exists.
-  api.use('accounts-password@1.0.0', {weak: true});
+  api.use('accounts-password', {weak: true});
 
   api.use('fourseven:scss@3.2.0', "client");
 
