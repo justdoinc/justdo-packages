@@ -58,7 +58,7 @@ Package.onUse(function (api) {
   api.use("reactive-var", both);
   api.use("tracker", client);
 
-  api.use("ostrio:files@1.11.2", both);
+  api.use("ostrio:files@2.3.3", both);
   
   api.addFiles("lib/both/permissions.coffee", both);
 
