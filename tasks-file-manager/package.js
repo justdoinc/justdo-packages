@@ -20,8 +20,6 @@ both = [client, server]
 // });
 
 Package.onUse(function (api) {
-  api.versionsFrom("1.3.5.1");
-
   api.use("coffeescript", both);
   api.use("underscore", both);
   api.use("check", both);

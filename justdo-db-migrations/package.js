@@ -10,8 +10,6 @@ server = "server"
 both = [client, server]
 
 Package.onUse(function (api) {
-  api.versionsFrom("1.4.1.1");
-
   api.use("coffeescript", both);
   api.use("underscore", both);
   api.use("mongo", both);
@@ -42,7 +40,7 @@ Package.onUse(function (api) {
   api.use("templating", client);
   api.use('fourseven:scss@3.2.0', client);
 
-  api.use("accounts-base@1.2.14", both);
+  api.use("accounts-base", both);
 
   api.use("aldeed:simple-schema@1.5.3", both);
   api.use('aldeed:collection2@2.3.2', both);

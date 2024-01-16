@@ -15,8 +15,6 @@ Npm.depends({
 });
 
 Package.onUse(function (api) {
-  api.versionsFrom("1.4.1.1");
-
   api.use("coffeescript", both);
   api.use("underscore", both);
   api.use("mongo", both);

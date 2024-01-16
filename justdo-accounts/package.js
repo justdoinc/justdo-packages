@@ -10,13 +10,12 @@ server = "server"
 both = [client, server]
 
 Package.onUse(function (api) {
-  api.versionsFrom("1.1.0.3");
   api.use("coffeescript", both);
   api.use("mongo", both);
   api.use("check", both);
   api.use("underscore", both);
-  api.use("accounts-base@1.2.14", both);
-  api.use("accounts-password@1.3.3", both);
+  api.use("accounts-base", both);
+  api.use("accounts-password", both);
   api.use("tracker", client);
   api.use("http", both);
   api.use("ecmascript", both);
