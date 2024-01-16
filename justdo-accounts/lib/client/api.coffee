@@ -188,7 +188,6 @@ _.extend JustdoAccounts.prototype,
               file: resized_img
               meta:
                 is_avatar: true
-              streams: "dynamic"
               chunkSize: "dynamic"
               transport: "ddp"
             , false

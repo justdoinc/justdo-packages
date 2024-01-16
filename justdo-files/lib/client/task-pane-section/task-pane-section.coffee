@@ -309,7 +309,6 @@ Template.justdo_files_uploader.onCreated ->
           meta:
             task_id: Tracker.nonreactive -> APP.modules.project_page.activeItemId()
             project_id: Tracker.nonreactive -> JD.activeJustdoId()
-          streams: "dynamic"
           chunkSize: "dynamic"
           transport: "ddp" # Need to find out why http doesn't work
         , false
