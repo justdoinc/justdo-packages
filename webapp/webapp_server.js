@@ -996,7 +996,7 @@ function runWebAppServer() {
     if (! appUrl(req.url)) {
       return next();
 
-    } else if (req.method !== 'HEAD' && req.method !== 'GET') {
+    } else if (req.method !== 'HEAD' && req.method !== 'GET' && req.method !== 'POST') {
       const status = req.method === 'OPTIONS' ? 200 : 405;
       res.writeHead(status, {
         'Allow': 'OPTIONS, GET, HEAD',
