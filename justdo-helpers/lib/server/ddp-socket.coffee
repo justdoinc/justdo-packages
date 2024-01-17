@@ -32,7 +32,7 @@ FakeDdpSocket = ->
     version: "pre1"
     support: ["pre1"]
 
-  Meteor.default_server._handleConnect(fake_socket, ddp_connect_message)
+  Meteor.server._handleConnect(fake_socket, ddp_connect_message)
   open_fake_sockets += 1
 
   if open_fake_sockets > sockets_threshold_for_warning
@@ -108,7 +108,7 @@ _.extend FakeDdpSocket.prototype,
 
     open_fake_sockets -= 1
 
-    Meteor.default_server._removeSession(@socket._meteorSession)
+    Meteor.server._removeSession(@socket._meteorSession)
 
     return
 
