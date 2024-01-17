@@ -12,7 +12,6 @@ both = [client, server];
 Package.onUse(function (api) {
   api.use(['session@1.0.0',
     'spacebars@1.0.0',
-    'stylus@1.0.0 || 2.0.0',
     'accounts-base',
     'underscore@1.0.0',
     'templating@1.0.0',
@@ -63,7 +62,7 @@ Package.onUse(function (api) {
     'login_buttons_single.js',
 
     'login_buttons_dialogs.js',
-    'accounts_ui.styl',
+    'accounts_ui.sass',
 
     // Most of JustDo modifications starts here
     'dropdown/login_buttons_dropdown.html',
