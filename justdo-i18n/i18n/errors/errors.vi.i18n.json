@@ -7,6 +7,7 @@
   "err_email_empty": "Vui lòng nhập email của bạn",
   "err_password_empty": "Vui lòng nhập mật khẩu của bạn",
   "err_incorrect_password": "Sai mật khẩu",
+  
   "err_password_too_similar": "Mật khẩu giống với tên, họ hoặc email của bạn",
   "err_retype_password_empty": "Vui lòng nhập lại mật khẩu của bạn",
   "err_retype_password_not_match": "Mất khẩu không hợp lệ",
