@@ -23,7 +23,7 @@ share.SearchDropdown = JustdoHelpers.generateNewTemplateDropdown "grid-control-s
 
 highlight = (text, search_val, type) ->
   if text
-    text = text.toString()
+    text = JustdoHelpers.xssGuard text.toString()
     index = text.toUpperCase().indexOf search_val.toUpperCase()
 
     if index >= 0
@@ -113,7 +113,7 @@ Template.grid_control_search_dropdown.events
     return
 
   "click .filter-item-remove": (e, tpl) ->
-    filter_title = @.title
+    filter_title = @title
     filters_array = tpl.filters.get()
     filters_array = _.filter filters_array, (filter) -> filter.title != filter_title
     tpl.filters.set filters_array
