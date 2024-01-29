@@ -1,0 +1,105 @@
+.grid-control-search-dropdown
+  border-radius: 4px
+  overflow: hidden
+
+.search-dropdown
+  background-color: white
+  width: 420px
+  max-height: 540px
+  display: flex
+  flex-direction: column
+
+  .search-result-empty
+    height: 80px
+    display: flex
+    align-items: center
+    justify-content: center
+    color: rgba(49, 69, 99, 0.25)
+
+  .search-dropdown-nav
+    display: flex
+    padding: 16px 0px 8px 0px
+    margin: 0px 20px
+    border-bottom: 1px solid #eceff1
+    display: none
+
+  .search-dropdown-nav-link
+    font-weight: bold
+    position: relative
+    opacity: 0.6
+    cursor: pointer
+    &.active
+      opacity: 1
+      .search-dropdown-nav-indicator
+        opacity: 1
+
+  .search-dropdown-nav-indicator
+    position: absolute
+    width: 100%
+    height: 2px
+    bottom: -9px
+    opacity: 0
+
+  .search-dropdown-nav-link + .search-dropdown-nav-link
+    margin-left: 12px
+
+  .search-dropdown-filters
+    padding: 12px 0px
+    margin: 0px 20px
+    // display: flex
+    border-bottom: 1px solid #eceff1
+    display: none
+    .filter-item
+      display: flex
+      color: white
+      padding: 4px 4px 4px 8px
+      line-height: 100%
+      align-items: inherit
+    .filter-item + .filter-item
+      margin-left: 4px
+    .filter-item-remove
+      width: 16px
+      height: 16px
+      padding: 1px
+      stroke-width: 2
+      opacity: 0.4
+      margin-left: 4px
+      cursor: pointer
+      transition: opacity 0.32
+      &:hover
+        opacity: 1
+
+  .search-result-list
+    overflow: auto
+    padding: 8px
+
+  .search-result-item
+    display: flex
+    flex-direction: column
+    cursor: pointer
+    padding: 6px 12px
+    &:hover
+      background-color: #f8f9fa
+
+  .task-title
+    color: black
+  
+  .task-seq-id
+    font-weight: 600
+
+  .task-info
+    color: rgba(49, 69, 99, 0.6)
+
+  .task-info-state,
+  .task-info-note
+    font-weight: 600
+    color: rgba(49, 69, 99, 0.7)
+
+  .task-info-state + .task-info-note
+    padding-left: 4px
+
+  .highlight
+    background-color: #fff7af
+    font-weight: bold
+    color: black
+    border-radius: 2px

@@ -42,8 +42,14 @@ _.extend GridControlSearch.prototype,
       </div>"""
     @container.html(@search_ui_component)
 
-    @input =
-      $('.search-input', @container)
+    @search_dropdown = new share.SearchDropdown(@container) # defined in /grid_control_search_dropdown.coffee
+    @search_dropdown.template_data = {
+      "result_paths": new ReactiveVar []
+      "search_val": new ReactiveVar ""
+    }
+    share.search_dropdown = @search_dropdown
+
+    @input = $('.search-input', @container)
 
     @clear_button =
       $('.clear-button', @container)
@@ -89,6 +95,7 @@ _.extend GridControlSearch.prototype,
 
     @input.keyup =>
       @search(@input.val())
+      @search_dropdown.template_data.search_val.set @input.val()
 
     # clear button function
     @clear_button.on 'click', =>
@@ -227,6 +234,8 @@ _.extend GridControlSearch.prototype,
 
     @highlightMatchedPaths()
 
+    @search_dropdown.template_data.result_paths.set @paths
+
     return
 
   _unsetHaveResults: () ->
@@ -240,6 +249,8 @@ _.extend GridControlSearch.prototype,
     @_setMessage "0"
 
     @clearMatchedPaths()
+
+    @search_dropdown.template_data.result_paths.set []
 
     return
 
