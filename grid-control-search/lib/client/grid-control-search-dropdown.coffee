@@ -18,16 +18,18 @@ share.SearchDropdown = JustdoHelpers.generateNewTemplateDropdown "grid-control-s
             top: 20
             left: 0
 
-
     return
 
 highlight = (text, search_val, type) ->
   if text
-    text = JustdoHelpers.xssGuard text.toString()
+    text = text.toString()
     index = text.toUpperCase().indexOf search_val.toUpperCase()
 
     if index >= 0
-      text = text.substring(0, index) + "<span class='highlight'>" + text.substring(index, index + search_val.length) + "</span>" + text.substring(index + search_val.length)
+      pre_highlight_part = JustdoHelpers.xssGuard text.substring(0, index)
+      highlighted_part = JustdoHelpers.xssGuard text.substring(index, index + search_val.length)
+      post_highlight_part = JustdoHelpers.xssGuard text.substring(index + search_val.length)
+      text = pre_highlight_part + "<span class='highlight'>" + highlighted_part + "</span>" + post_highlight_part
     else
       if type == "status" or type == "state"
         text = ""
