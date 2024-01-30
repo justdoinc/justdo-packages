@@ -16,6 +16,8 @@ _.extend PACK.modules,
             "profile.first_name": 1
             "profile.last_name": 1
             "profile.profile_pic": 1
+            "is_proxy": 1
+            "emails": 1
           grid_column_formatter: "display_name_formatter"
           grid_visible_column: true
           grid_editable_column: false
@@ -36,6 +38,8 @@ _.extend PACK.modules,
             "profile.first_name": 1
             "profile.last_name": 1
             "profile.profile_pic": 1
+            "is_proxy": 1
+            "emails": 1
           grid_column_formatter: "display_name_formatter"
           grid_visible_column: true
           grid_editable_column: false

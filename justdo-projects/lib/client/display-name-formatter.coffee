@@ -11,7 +11,7 @@ GridControl.installFormatter "display_name_formatter",
   slick_grid: ->
     {value} = @getFriendlyArgs()
 
-    user_doc = Meteor.users.findOne(value, {fields: {profile: 1}})
+    user_doc = Meteor.users.findOne(value, {fields: {profile: 1, is_proxy: 1, emails: 1}})
     display_name = getDisplayName(user_doc) or ""
 
     icon_width = 28
