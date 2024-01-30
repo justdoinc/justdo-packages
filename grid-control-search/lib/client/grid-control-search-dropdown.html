@@ -31,6 +31,9 @@
               {{#if state}}
                 <span class="task-info-state">State: </span>{{{state}}}
               {{/if}}
+              {{#if $and state note}}
+                <br>
+              {{/if}}
               {{#if note}}
                 <span class="task-info-note">Note: </span>{{{note}}}
               {{/if}}

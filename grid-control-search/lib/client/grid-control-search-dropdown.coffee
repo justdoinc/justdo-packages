@@ -26,9 +26,9 @@ highlight = (text, search_val, type) ->
     index = text.toUpperCase().indexOf search_val.toUpperCase()
 
     if index >= 0
-      pre_highlight_part = JustdoHelpers.xssGuard text.substring(0, index)
-      highlighted_part = JustdoHelpers.xssGuard text.substring(index, index + search_val.length)
-      post_highlight_part = JustdoHelpers.xssGuard text.substring(index + search_val.length)
+      pre_highlight_part = JustdoHelpers.xssGuard text.substring(0, index), {allow_html_parsing: true, enclosing_char: ""}
+      highlighted_part = JustdoHelpers.xssGuard text.substring(index, index + search_val.length), {allow_html_parsing: true, enclosing_char: ""}
+      post_highlight_part = JustdoHelpers.xssGuard text.substring(index + search_val.length), {allow_html_parsing: true, enclosing_char: ""}
       text = pre_highlight_part + "<span class='highlight'>" + highlighted_part + "</span>" + post_highlight_part
     else
       if type == "status" or type == "state"
