@@ -57,11 +57,6 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/collection-hooks.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
-  // Always after templates
-  api.addFiles("i18n/en.i18n.json", both);
-  api.addFiles("i18n/vi.i18n.json", both);
-  api.addFiles("i18n/zh-TW.i18n.json", both);
-
   api.use("meteorspark:app@0.3.0", both);
 
   api.export("JustdoAccounts", both);

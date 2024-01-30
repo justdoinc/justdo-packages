@@ -50,13 +50,15 @@ Package.onUse(function (api) {
   api.use("iron:router@1.1.2", both);
 
   api.use("justdoinc:justdo-analytics@1.0.0", both);
-  api.use("justdoinc:justdo-promoters-campaigns@1.0.0", both, {weak: true});
+  api.use("justdoinc:justdo-webapp-boot@1.0.0", both);
+  api.use("justdoinc:justdo-promoters-campaigns@1.0.0", both, {unordered: true});
   api.use("tap:i18n", both);
   api.use("momentjs:moment", both);
   // Although we prefer tap:i18n, anti:i18n is used by other packages like meteor-accounts-ui-bootstrap-3
   api.use("anti:i18n@0.4.3", client, {weak: true}); 
 
   api.use("matb33:collection-hooks@0.8.4", both);
+  api.use("meteorspark:app@0.3.0", both);
 
   api.use("reactive-var", both);
   api.use("tracker", client);
@@ -182,11 +184,10 @@ Package.onUse(function (api) {
   api.addFiles("i18n/justdo-resources-availability/en.i18n.json", both);
   api.addFiles("i18n/justdo-print-grid/zh-TW.i18n.json", both);
   api.addFiles("i18n/justdo-print-grid/en.i18n.json", both);
+  api.addFiles("i18n/justdo-accounts/en.i18n.json", both);
+  api.addFiles("i18n/justdo-accounts/zh-TW.i18n.json", both);
+  api.addFiles("i18n/justdo-accounts/vi.i18n.json", both);
 
-  // Uncomment only in packages that integrate with the main applications
-  // Pure logic packages should avoid any app specific integration.
-  api.use("meteorspark:app@0.3.0", both);
-  api.use("justdoinc:justdo-webapp-boot@1.0.0", both);
   api.addFiles("lib/both/app-integration.coffee", both);
   // Note: app-integration need to load last, so immediateInit procedures in
   // the server will have the access to the apis loaded after the init.coffee
