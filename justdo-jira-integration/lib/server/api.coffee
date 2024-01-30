@@ -1230,14 +1230,15 @@ _.extend JustdoJiraIntegration.prototype,
 
     deleted_jira_users_emails = Array.from deleted_jira_users_emails
 
+    # For case option.justdo_id wasn't provided, fetch it from the db
     if _.isEmpty deleted_jira_users_emails
-      justdo_id = @tasks_collection.findOne({jira_project_id}, {fields: {project_id: 1}})?.project_id
+      fallback_justdo_id = @tasks_collection.findOne({jira_project_id}, {fields: {project_id: 1}})?.project_id
     else
       tasks_to_remove_member = @tasks_collection.find({jira_project_id}, {fields: {project_id: 1}}).fetch()
-      justdo_id = tasks_to_remove_member[0]?.project_id
+      fallback_justdo_id = tasks_to_remove_member[0]?.project_id
 
     if not options?.justdo_id?
-      options.justdo_id = justdo_id
+      options.justdo_id = fallback_justdo_id
 
     {jira_user_objects} = @_createProxyUserIfEmailNotRecognized users_info, options
 
@@ -1254,10 +1255,10 @@ _.extend JustdoJiraIntegration.prototype,
         deleted_user_ids.push user_id
 
     if not _.isEmpty deleted_user_ids
-      APP.projects.bulkUpdateTasksUsers justdo_id,
+      APP.projects.bulkUpdateTasksUsers options.justdo_id,
         tasks: _.map tasks_to_remove_member, (doc) -> doc._id
         members_to_remove: deleted_user_ids
-      , @_getJustdoAdmin justdo_id
+      , @_getJustdoAdmin options.justdo_id
 
     return
 
