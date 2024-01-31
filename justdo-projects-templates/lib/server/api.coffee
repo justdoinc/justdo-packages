@@ -49,7 +49,7 @@ _.extend JustDoProjectsTemplates.prototype,
 
   _generateReqForOpenAiTemplateGeneration: (msg) ->
     req = 
-        "model": "gpt-4-1106-preview",
+        "model": "gpt-4-turbo-preview",
         "messages": [
           {
             "role": "system",
