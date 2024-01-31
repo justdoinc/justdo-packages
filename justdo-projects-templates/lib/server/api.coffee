@@ -126,7 +126,11 @@ _.extend JustDoProjectsTemplates.prototype,
       }
     return req
   
-  _generateTemplateFromOpenAiOptionsSchema: new SimpleSchema
+  generateTemplateFromOpenAi: (msg) ->
+    req = @_generateReqForOpenAiTemplateGeneration msg
+    return APP.justdo_ai_kit.openai.createChatCompletion req
+
+  _createSubtreeFromOpenAiOptionsSchema: new SimpleSchema
     project_id:
       type: String
       optional: false
@@ -137,10 +141,10 @@ _.extend JustDoProjectsTemplates.prototype,
       type: Boolean
       optional: true
       defaultValue: false
-  generateTemplateFromOpenAi: (options, user_id) ->
+  createSubtreeFromOpenAi: (options, user_id) ->
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
-        @_generateTemplateFromOpenAiOptionsSchema,
+        @_createSubtreeFromOpenAiOptionsSchema,
         options or {},
         {self: @, throw_on_error: true}
       )
@@ -149,15 +153,14 @@ _.extend JustDoProjectsTemplates.prototype,
     if user_id?
       APP.projects.requireUserIsMemberOfProject options.project_id, user_id
 
-    req = @_generateReqForOpenAiTemplateGeneration options.msg
-    res = APP.justdo_ai_kit.openai.createChatCompletion req
+    res = @generateTemplateFromOpenAi options.msg
 
     content = JSON.parse(res.content).choices[0].message.content
-    return @_generateTemplateFromOpenAi content, options, user_id
+    return @_createSubtreeFromOpenAi content, options, user_id
 
-  # The reason for having generateTemplateFromOpenAi and _generateTemplateFromOpenAi as seperate functions
+  # The reason for having createSubtreeFromOpenAi and _createSubtreeFromOpenAi as seperate functions
   # is to allow developers to test the generated output from OpenAI API.
-  _generateTemplateFromOpenAi: (content, options, user_id) ->
+  _createSubtreeFromOpenAi: (content, options, user_id) ->
     if _.isString content
       content = JSON.parse content
 

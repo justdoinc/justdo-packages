@@ -22,9 +22,9 @@ _.extend JustDoProjectsTemplates.prototype,
         return APP.justdo_projects_templates.createSubtreeFromTemplateUnsafe options
 
       createSubtreeFromAiGeneratedTemplate: (options) ->
-        # Options are throughly checked inside generateTemplateFromOpenAi
+        # Options are throughly checked inside createSubtreeFromOpenAi
         check options, Object
         check @userId, String
-        return self.generateTemplateFromOpenAi options, @userId
+        return self.createSubtreeFromOpenAi options, @userId
 
     return
