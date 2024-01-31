@@ -128,7 +128,7 @@ _.extend JustDoProjectsTemplates.prototype,
   
   generateTemplateFromOpenAi: (msg) ->
     req = @_generateReqForOpenAiTemplateGeneration msg
-    return APP.justdo_ai_kit.openai.createChatCompletion req
+    await return APP.justdo_ai_kit.openai.chat.completions.create req
 
   _createSubtreeFromOpenAiOptionsSchema: new SimpleSchema
     project_id:
@@ -153,9 +153,9 @@ _.extend JustDoProjectsTemplates.prototype,
     if user_id?
       APP.projects.requireUserIsMemberOfProject options.project_id, user_id
 
-    res = @generateTemplateFromOpenAi options.msg
+    res = await @generateTemplateFromOpenAi options.msg
 
-    content = JSON.parse(res.content).choices[0].message.content
+    content = JSON.parse(res?.choices?[0]?.message?.content)
     return @_createSubtreeFromOpenAi content, options, user_id
 
   # The reason for having createSubtreeFromOpenAi and _createSubtreeFromOpenAi as seperate functions
