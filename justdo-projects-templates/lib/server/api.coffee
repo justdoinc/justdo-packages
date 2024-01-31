@@ -49,70 +49,70 @@ _.extend JustDoProjectsTemplates.prototype,
 
   _generateReqForOpenAiTemplateGeneration: (msg) ->
     req = 
-        "model": "gpt-4-turbo-preview",
-        "messages": [
-          {
-            "role": "system",
-            "content": """
-              You are a template generator for a project management software named "JustDo". Your job is to generate relevant tasks template based on user's input in JSON format.  
+      "model": "gpt-4-0125-preview",
+      "messages": [
+        {
+          "role": "system",
+          "content": """
+            You are a template generator for a project management software named "JustDo". Your job is to generate relevant tasks template based on user's input in JSON format.  
 
-              Your output of tasks tree should only be in the following structure:
-              ###output begin###
-              {
-                t: <title, a summary of what the user wants to do with JustDo>,
-                ts: (tasks) [title(Follow the user's language), start_date, end_date, due_date, state, key(unique sequence id, starting from 0.), subtasks(an array of "output" array, could be omitted if there is no subtasks)] 
-              }
-              ###output ends###
+            Your output of tasks tree should only be in the following structure:
+            ###output begin###
+            {
+              t: <title, a summary of what the user wants to do with JustDo>,
+              ts: (tasks) [title(Follow the user's language), start_date, end_date, due_date, state, key(unique sequence id, starting from 0.), subtasks(an array of "output" array, could be omitted if there is no subtasks)] 
+            }
+            ###output ends###
 
-              In JustDo, parent tasks' date fields will be automatically derived from the child tasks' dates.
-              E.g. The earliest child task's start_date will be the parent task's start_date, the latest child task's end_date will be the parent task's end_date.
-              Because of this, there is no need to set the dates for parent tasks.
-              Note that you will still have to set the dates for child tasks.
-              Structure the dates in a way that matches the execution order of tasks inside a project.
-              All dates field should be an integer offset relative to today's date or an empty string.
-              Use 0 (today's date) as the earliest task start_date.
+            In JustDo, parent tasks' date fields will be automatically derived from the child tasks' dates.
+            E.g. The earliest child task's start_date will be the parent task's start_date, the latest child task's end_date will be the parent task's end_date.
+            Because of this, there is no need to set the dates for parent tasks.
+            Note that you will still have to set the dates for child tasks.
+            Structure the dates in a way that matches the execution order of tasks inside a project.
+            All dates field should be an integer offset relative to today's date or an empty string.
+            Use 0 (today's date) as the earliest task start_date.
 
-              Below are all the possible values of the state field:
-              possible_states = ["pending", "in-progress", "done", "will-not-do", "on-hold", "duplicate", "nil"]
-              All the possible_states, except "will-not-do" and "nil", represents the task state by itself. 
-              "nil" is the default state for a task that means there is no state.
-              "will-not-do"  means the task is cancelled.
-              Apply as many states to the tasks generated as you can, but ensure they make sense (e.g. if a child task is pending/in-progress, the parent task should never be set to done.)
-              When generating tasks, use the index of possible_states to reference a state.
+            Below are all the possible values of the state field:
+            possible_states = ["pending", "in-progress", "done", "will-not-do", "on-hold", "duplicate", "nil"]
+            All the possible_states, except "will-not-do" and "nil", represents the task state by itself. 
+            "nil" is the default state for a task that means there is no state.
+            "will-not-do"  means the task is cancelled.
+            Apply as many states to the tasks generated as you can, but ensure they make sense (e.g. if a child task is pending/in-progress, the parent task should never be set to done.)
+            When generating tasks, use the index of possible_states to reference a state.
 
-              The user's input is how the user intent to use JustDo to manage their team or business. 
+            The user's input is how the user intent to use JustDo to manage their team or business. 
 
-              The tree structure should be as follows:
-              First layer (root task): The category of the child tasks, or a department.
-              Second layer: The projects under the category or the department.
-              Third layer: One to three tasks representing action items that can be assigned to team members under the parent category
+            The tree structure should be as follows:
+            First layer (root task): The category of the child tasks, or a department.
+            Second layer: The projects under the category or the department.
+            Third layer: One to three tasks representing action items that can be assigned to team members under the parent category
 
-              Some examples will be provided in the chat history. Use them as a reference to generate the tasks tree structure. 
-              Generate 40 to 100 tasks in total.
+            Some examples will be provided in the chat history. Use them as a reference to generate the tasks tree structure. 
+            Generate 40 to 100 tasks in total.
 
-              Respond only with the generated output array without any spaces, indents or line breaks.
-            """
-          },
-          {
-            "role": "user",
-            "content": "管理醫院人事部門"
-          },
-          {
-            "role": "assistant",
-            "content": "{\"t\":\"人事部門\",\"ts\":[\"醫院人事部門\",0,19,19,6,0,[[\"招聘計劃\",1,5,5,0,1,[[\"醫生招聘\",1,3,3,0,2,[[\"撰寫醫生職位描述\",1,1,1,0,3],[\"發布職位廣告\",2,2,2,0,4],[\"篩選簡歷\",3,3,3,0,5]]],[\"護士招聘\",1,4,4,0,6,[[\"撰寫護士職位描述\",1,1,1,0,7],[\"發布職位廣告\",2,2,2,0,8],[\"篩選簡歷\",3,3,3,0,9],[\"安排面試\",4,4,4,0,10]]],[\"行政人員招聘\",2,5,5,0,11,[[\"撰寫行政人員職位描述\",2,2,2,0,12],[\"發布職位廣告\",3,3,3,0,13],[\"篩選簡歷\",4,4,4,0,14],[\"安排面試\",5,5,5,0,15]]]]],[\"在職培訓\",6,10,10,0,16,[[\"醫生專業培訓\",6,7,7,0,17,[[\"培訓需求分析\",6,6,6,0,18],[\"培訓資料準備\",7,7,7,0,19]]],[\"護士技能培訓\",8,9,9,0,20,[[\"培訓需求分析\",8,8,8,0,21],[\"培訓資料準備\",9,9,9,0,22]]],[\"行政流程培訓\",10,10,10,0,23,[[\"培訓需求分析\",10,10,10,0,24],[\"培訓資料準備\",10,10,10,0,25]]]]],[\"員工績效評估\",11,15,15,0,26,[[\"醫生績效評估\",11,12,12,0,27,[[\"評估標準制定\",11,11,11,0,28],[\"進行績效評估\",12,12,12,0,29]]],[\"護士績效評估\",13,14,14,0,30,[[\"評估標準制定\",13,13,13,0,31],[\"進行績效評估\",14,14,14,0,32]]],[\"行政人員績效評估\",14,15,15,0,33,[[\"評估標準制定\",14,14,14,0,34],[\"進行績效評估\",15,15,15,0,35]]]]],[\"員工健康與福利\",16,19,19,0,36,[[\"健康保險計劃更新\",16,17,17,0,37,[[\"市場調研\",16,16,16,0,38],[\"計劃選擇\",17,17,17,0,39]]],[\"員工支持計劃\",18,19,19,0,40,[[\"心理健康支持\",18,18,18,0,41],[\"運動與健身計劃\",19,19,19,0,42]]]]]]]}"
-          },
-          {
-            "role": "user",
-            "content": "Manage a fast food chain"
-          },
-          {
-            "role": "assistant",
-            "content": "{\"t\":\"Fast Food Chain\",\"ts\":[\"Manage a Fast Food Chain\",0,99,99,6,0,[[\"Location Management\",1,40,40,0,1,[[\"New Store Openings\",1,10,10,0,2,[[\"Site Selection\",1,2,2,0,3],[\"Lease Negotiations\",3,5,5,0,4],[\"Store Design\",6,7,7,0,5],[\"Construction\",8,10,10,0,6]]],[\"Existing Store Upgrades\",11,20,20,0,7,[[\"Renovation Planning\",11,13,13,0,8],[\"Equipment Upgrades\",14,16,16,0,9],[\"Rebranding\",17,18,18,0,10],[\"Reopening\",19,20,20,0,11]]],[\"Store Closures\",21,30,30,0,12,[[\"Performance Review\",21,22,22,0,13],[\"Asset Liquidation\",23,25,25,0,14],[\"Lease Termination\",26,28,28,0,15],[\"Staff Relocation\",29,30,30,0,16]]],[\"Maintenance\",31,40,40,0,17,[[\"Scheduled Maintenance\",31,34,34,0,18],[\"Emergency Repairs\",35,36,36,0,19],[\"Health and Safety Inspections\",37,38,38,0,20],[\"Equipment Servicing\",39,40,40,0,21]]]]],[\"Operations\",41,70,70,0,22,[[\"Staffing\",41,50,50,0,23,[[\"Recruitment\",41,42,42,0,24],[\"Training\",43,45,45,0,25],[\"Scheduling\",46,48,48,0,26],[\"Performance Management\",49,50,50,0,27]]],[\"Supply Chain Management\",51,60,60,0,28,[[\"Vendor Selection\",51,52,52,0,29],[\"Inventory Management\",53,55,55,0,30],[\"Order Fulfillment\",56,58,58,0,31],[\"Logistics\",59,60,60,0,32]]],[\"Quality Assurance\",61,70,70,0,33,[[\"Food Safety\",61,63,63,0,34],[\"Customer Service Standards\",64,66,66,0,35],[\"Compliance Audits\",67,68,68,0,36],[\"Continuous Improvement\",69,70,70,0,37]]]]],[\"Marketing and Sales\",71,99,99,0,38,[[\"Promotions\",71,80,80,0,39,[[\"Seasonal Campaigns\",71,73,73,0,40],[\"New Product Launches\",74,76,76,0,41],[\"Discount Programs\",77,78,78,0,42],[\"Loyalty Rewards\",79,80,80,0,43]]],[\"Digital Marketing\",81,90,90,0,44,[[\"Social Media\",81,83,83,0,45],[\"Email Campaigns\",84,86,86,0,46],[\"Online Ads\",87,88,88,0,47],[\"Website Updates\",89,90,90,0,48]]],[\"Sales Analysis\",91,99,99,0,49,[[\"Market Trends\",91,93,93,0,50],[\"Sales Reporting\",94,96,96,0,51],[\"Customer Feedback\",97,98,98,0,52],[\"Strategic Adjustments\",99,99,99,0,53]]]]]]]}"
-          },
-          {
-            "role": "user",
-            "content": msg
-          }
+            Respond only with the generated output array without any spaces, indents or line breaks. Ensure the returned JSON is valid.
+          """
+        },
+        {
+          "role": "user",
+          "content": "管理醫院人事部門"
+        },
+        {
+          "role": "assistant",
+          "content": "{\"t\":\"人事部門\",\"ts\":[\"醫院人事部門\",0,19,19,6,0,[[\"招聘計劃\",1,5,5,0,1,[[\"醫生招聘\",1,3,3,0,2,[[\"撰寫醫生職位描述\",1,1,1,0,3],[\"發布職位廣告\",2,2,2,0,4],[\"篩選簡歷\",3,3,3,0,5]]],[\"護士招聘\",1,4,4,0,6,[[\"撰寫護士職位描述\",1,1,1,0,7],[\"發布職位廣告\",2,2,2,0,8],[\"篩選簡歷\",3,3,3,0,9],[\"安排面試\",4,4,4,0,10]]],[\"行政人員招聘\",2,5,5,0,11,[[\"撰寫行政人員職位描述\",2,2,2,0,12],[\"發布職位廣告\",3,3,3,0,13],[\"篩選簡歷\",4,4,4,0,14],[\"安排面試\",5,5,5,0,15]]]]],[\"在職培訓\",6,10,10,0,16,[[\"醫生專業培訓\",6,7,7,0,17,[[\"培訓需求分析\",6,6,6,0,18],[\"培訓資料準備\",7,7,7,0,19]]],[\"護士技能培訓\",8,9,9,0,20,[[\"培訓需求分析\",8,8,8,0,21],[\"培訓資料準備\",9,9,9,0,22]]],[\"行政流程培訓\",10,10,10,0,23,[[\"培訓需求分析\",10,10,10,0,24],[\"培訓資料準備\",10,10,10,0,25]]]]],[\"員工績效評估\",11,15,15,0,26,[[\"醫生績效評估\",11,12,12,0,27,[[\"評估標準制定\",11,11,11,0,28],[\"進行績效評估\",12,12,12,0,29]]],[\"護士績效評估\",13,14,14,0,30,[[\"評估標準制定\",13,13,13,0,31],[\"進行績效評估\",14,14,14,0,32]]],[\"行政人員績效評估\",14,15,15,0,33,[[\"評估標準制定\",14,14,14,0,34],[\"進行績效評估\",15,15,15,0,35]]]]],[\"員工健康與福利\",16,19,19,0,36,[[\"健康保險計劃更新\",16,17,17,0,37,[[\"市場調研\",16,16,16,0,38],[\"計劃選擇\",17,17,17,0,39]]],[\"員工支持計劃\",18,19,19,0,40,[[\"心理健康支持\",18,18,18,0,41],[\"運動與健身計劃\",19,19,19,0,42]]]]]]]}"
+        },
+        {
+          "role": "user",
+          "content": "Manage a fast food chain"
+        },
+        {
+          "role": "assistant",
+          "content": "{\"t\":\"Fast Food Chain\",\"ts\":[\"Manage a Fast Food Chain\",0,99,99,6,0,[[\"Location Management\",1,40,40,0,1,[[\"New Store Openings\",1,10,10,0,2,[[\"Site Selection\",1,2,2,0,3],[\"Lease Negotiations\",3,5,5,0,4],[\"Store Design\",6,7,7,0,5],[\"Construction\",8,10,10,0,6]]],[\"Existing Store Upgrades\",11,20,20,0,7,[[\"Renovation Planning\",11,13,13,0,8],[\"Equipment Upgrades\",14,16,16,0,9],[\"Rebranding\",17,18,18,0,10],[\"Reopening\",19,20,20,0,11]]],[\"Store Closures\",21,30,30,0,12,[[\"Performance Review\",21,22,22,0,13],[\"Asset Liquidation\",23,25,25,0,14],[\"Lease Termination\",26,28,28,0,15],[\"Staff Relocation\",29,30,30,0,16]]],[\"Maintenance\",31,40,40,0,17,[[\"Scheduled Maintenance\",31,34,34,0,18],[\"Emergency Repairs\",35,36,36,0,19],[\"Health and Safety Inspections\",37,38,38,0,20],[\"Equipment Servicing\",39,40,40,0,21]]]]],[\"Operations\",41,70,70,0,22,[[\"Staffing\",41,50,50,0,23,[[\"Recruitment\",41,42,42,0,24],[\"Training\",43,45,45,0,25],[\"Scheduling\",46,48,48,0,26],[\"Performance Management\",49,50,50,0,27]]],[\"Supply Chain Management\",51,60,60,0,28,[[\"Vendor Selection\",51,52,52,0,29],[\"Inventory Management\",53,55,55,0,30],[\"Order Fulfillment\",56,58,58,0,31],[\"Logistics\",59,60,60,0,32]]],[\"Quality Assurance\",61,70,70,0,33,[[\"Food Safety\",61,63,63,0,34],[\"Customer Service Standards\",64,66,66,0,35],[\"Compliance Audits\",67,68,68,0,36],[\"Continuous Improvement\",69,70,70,0,37]]]]],[\"Marketing and Sales\",71,99,99,0,38,[[\"Promotions\",71,80,80,0,39,[[\"Seasonal Campaigns\",71,73,73,0,40],[\"New Product Launches\",74,76,76,0,41],[\"Discount Programs\",77,78,78,0,42],[\"Loyalty Rewards\",79,80,80,0,43]]],[\"Digital Marketing\",81,90,90,0,44,[[\"Social Media\",81,83,83,0,45],[\"Email Campaigns\",84,86,86,0,46],[\"Online Ads\",87,88,88,0,47],[\"Website Updates\",89,90,90,0,48]]],[\"Sales Analysis\",91,99,99,0,49,[[\"Market Trends\",91,93,93,0,50],[\"Sales Reporting\",94,96,96,0,51],[\"Customer Feedback\",97,98,98,0,52],[\"Strategic Adjustments\",99,99,99,0,53]]]]]]]}"
+        },
+        {
+          "role": "user",
+          "content": msg
+        }
       ],
       "temperature": 1,
       "top_p": 1,
