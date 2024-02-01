@@ -26,5 +26,11 @@ _.extend JustDoProjectsTemplates.prototype,
         check options, Object
         check @userId, String
         return self.createSubtreeFromOpenAi options, @userId
+      
+      generateTemplateFromOpenAi: (msg) ->
+        check msg, String
+        check @userId, String # login required
+        res = await self.generateTemplateFromOpenAi(msg)
+        return JSON.parse(res?.choices?[0]?.message?.content)
 
     return
