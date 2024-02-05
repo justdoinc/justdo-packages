@@ -236,14 +236,20 @@ Meteor.methods
     addChildrenToParents options.parents, options.max_levels
     
     # allocate seqId
-    result = APP.collections.Projects.findAndModify
-      query:
-        _id: options.project_id
-      fields:
+
+    raw_projects_collection = APP.collections.Projects.rawCollection()
+    findOneAndUpdate = Meteor.wrapAsync(raw_projects_collection.findOneAndUpdate, raw_projects_collection)
+
+    query =
+      _id: options.project_id
+    update =
+      $inc:
+        lastTaskSeqId: items_added
+    options =
+      projection:
         lastTaskSeqId: 1
-      update:
-        $inc:
-          lastTaskSeqId: items_added
+
+    result = findOneAndUpdate query, update, options
 
     current_seq_id = result?.value?.lastTaskSeqId + 1
     for task in all_tasks
