@@ -17,7 +17,7 @@ JustdoHelpers.sendCustomJsonStructure = (options) ->
 
   cursor.rewind()
 
-  if cursor.isDead()
+  if cursor.closed
     throw new Error "Cursor is closed."
 
   if prefixGenerator? or suffixGenerator?
