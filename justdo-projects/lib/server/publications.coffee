@@ -206,23 +206,23 @@ _.extend Projects.prototype,
 
           # There's no need to add the forbidden fields to the initial payload
           for forbidden_field_id in Projects.tasks_forbidden_fields
-            Meteor._ensure query_options, "fields"
-            query_options.fields[forbidden_field_id] = 0
+            Meteor._ensure query_options, "projection"
+            query_options.projection[forbidden_field_id] = 0
 
           if pub_options.init_payload_raw_cursors_mode
             if allow_init_payload_forced_column_value_directive
-              Meteor._ensure query_options, "fields"
-              query_options.fields.project_id = 0 # The project_id is obvious from the request.
+              Meteor._ensure query_options, "projection"
+              query_options.projection.project_id = 0 # The project_id is obvious from the request.
 
               init_payload_forced_column_value = {project_id: query.project_id}
 
             init_payload_query_options = _.extend {raw: true}, query_options
             init_payload_private_data_query_options = _.extend {raw: true}, private_data_query_options
 
-            if not init_payload_private_data_query_options.fields?
-              init_payload_private_data_query_options.fields = {}
+            if not init_payload_private_data_query_options.projection?
+              init_payload_private_data_query_options.projection = {}
             for forbidden_field_id in Projects.tasks_private_fields_docs_initial_payload_redundant_fields
-              init_payload_private_data_query_options.fields[forbidden_field_id] = 0
+              init_payload_private_data_query_options.projection[forbidden_field_id] = 0
 
             if paginated?
               # ## Pagination model:
