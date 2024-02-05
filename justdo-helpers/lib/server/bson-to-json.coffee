@@ -48,10 +48,9 @@ JustdoHelpers.sendCustomJsonStructure = (options) ->
     # Read all buffered documents. This loop doesn't wait for the stream to
     # drain: The source documents are already in memory, so try to free
     # that memory up ASAP (although it allocates new memory).
-    {cursorState} = cursor
-    documents = cursorState.documents
+    documents = cursor.readBufferedDocuments()
 
-    i = cursorState.cursorIndex
+    i = 0
     while i < documents.length - 1 # Note < and not <= the last document is taken later to decide how fast
                                    # to keep draining (according to the writable_stream capacity)
                                    # Daniel C.
@@ -68,7 +67,6 @@ JustdoHelpers.sendCustomJsonStructure = (options) ->
 
       should_wait_drain = not outputRawDoc(last_doc)
 
-      cursorState.cursorIndex = documents.length
       if should_wait_drain
         writable_stream.once "drain", ->
           fiber.run()
@@ -87,7 +85,6 @@ JustdoHelpers.sendCustomJsonStructure = (options) ->
     if not has_next
       break
 
-    cursorState.cursorIndex -= 1
 
     if rest # The first time we ever run there won't be docs. Daniel C.
       writable_stream.write ","
