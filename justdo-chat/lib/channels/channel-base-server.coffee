@@ -246,7 +246,6 @@ _.extend ChannelBaseServer.prototype,
       returnDocument: "after"
 
     result = findOneAndUpdate query, update, options
-    console.log result
 
     if result.ok != 1
       throw @_error "db-error", "Unknown database error when trying to create channel"
