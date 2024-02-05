@@ -1204,16 +1204,20 @@ _.extend Projects.prototype,
   allocateNewTaskSeqId: (project_id) ->
     # Get a new sequential id for a task under project_id
     # We assume, authentications and permissions were tested.
-    result = @projects_collection.findAndModify
-      query:
-        _id: project_id
-      fields:
-        lastTaskSeqId: 1
-      update:
-        $inc: 
-          lastTaskSeqId: 1
-      new: true
+    raw_projects_collection = @projects_collection.rawCollection()
+    findOneAndUpdate = Meteor.wrapAsync raw_projects_collection.findOneAndUpdate, raw_projects_collection
 
+    query =
+      _id: project_id
+    update =
+      $inc: 
+        lastTaskSeqId: 1
+    options =
+      projection:
+        lastTaskSeqId: 1
+      returnDocument: "after"
+
+    result = findOneAndUpdate query, update, options
 
     return result.value.lastTaskSeqId
 

@@ -39,8 +39,6 @@ Package.onUse(function (api) {
 
   api.use('matb33:collection-hooks@0.8.0', both);
 
-  api.use('fongandrew:find-and-modify@0.2.1', both);
-
   api.use('raix:eventemitter@0.1.1', both);
   api.use('meteorspark:util@0.2.0', both);
   api.use('meteorspark:logger@0.3.0', both);
