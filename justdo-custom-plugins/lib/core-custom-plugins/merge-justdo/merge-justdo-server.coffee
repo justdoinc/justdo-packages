@@ -57,16 +57,21 @@ Meteor.methods
 
     source_justdo_tasks_count = source_justdo_tasks_cursor.count()
     
+    raw_projects_collection = APP.collections.Projects.rawCollection()
+    findOneAndUpdate = Meteor.wrapAsync(raw_projects_collection.findOneAndUpdate, raw_projects_collection)
+
+    query =
+      _id: target_justdo_id
+    update =
+      $inc: 
+        lastTaskSeqId: source_justdo_tasks_count
+    options =
+      projection:
+        lastTaskSeqId: 1
+
     # Allocate sequence IDs for the tasks we are about to merge by incrementing
     # the target project lastTaskSeqId
-    result = APP.collections.Projects.findAndModify
-      query:
-        _id: target_justdo_id
-      fields:
-        lastTaskSeqId: 1
-      update:
-        $inc: 
-          lastTaskSeqId: source_justdo_tasks_count
+    result = findOneAndUpdate query, update, options
 
     current_task_seqId = result?.value?.lastTaskSeqId + 1
     seqIds_map = {}
