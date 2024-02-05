@@ -229,16 +229,24 @@ _.extend ChannelBaseServer.prototype,
       @logger.info "@findAndModifyChannelDoc: conf.update not provided"
 
       return
+    
+    if update.$setOnInsert?
+      update.$setOnInsert._id = Random.id()
 
     #
     # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
     # and to drop obsolete indexes (see CHANNEL_IDENTIFIER_INDEX there)
     #
-    result = @justdo_chat.channels_collection.findAndModify
-      query: @channel_identifier,
-      update: update
+    raw_channels_collection = @justdo_chat.channels_collection.rawCollection()
+    findOneAndUpdate = Meteor.wrapAsync(raw_channels_collection.findOneAndUpdate, raw_channels_collection)
+
+    query = @channel_identifier
+    options =
       upsert: upsert
-      new: true # return the doc after the modification
+      returnDocument: "after"
+
+    result = findOneAndUpdate query, update, options
+    console.log result
 
     if result.ok != 1
       throw @_error "db-error", "Unknown database error when trying to create channel"
