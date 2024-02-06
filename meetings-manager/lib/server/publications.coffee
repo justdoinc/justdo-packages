@@ -173,7 +173,7 @@ _.extend MeetingsManager.prototype,
           _id: 1
           title: 1
           status: 1
-          project_id: project_id
+          project_id: 1
           date: 1
 
     Meteor.publish "meetings_meetings_for_task", (task_id) ->
