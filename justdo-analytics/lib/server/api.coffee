@@ -284,7 +284,7 @@ _.extend JustdoAnalytics.prototype,
 
             return originalOp.apply(self._collection, args)
 
-    for op in ["find", "findOne", "findOneAndUpdate"]
+    for op in ["find", "findOne"]
       do (op) ->
         originalOp = Mongo._CollectionPrototype[op]
 
