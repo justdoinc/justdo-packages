@@ -356,19 +356,24 @@ _.extend MeetingsManager.prototype,
 
     meeting_task_id = meeting_task.id
 
-    # Ensure that the note exists
-    @meetings_tasks.findAndModify
-      query:
-        _id: meeting_task_id
-        user_notes:
-          $not:
-            $elemMatch:
-              user_id: user_id
-      update:
-        $push:
-          user_notes:
+    query =
+      _id: meeting_task_id
+      user_notes:
+        $not:
+          $elemMatch:
             user_id: user_id
-            date_added: new Date()
+    
+    update =
+      $push:
+        user_notes:
+          user_id: user_id
+          date_added: new Date()
+
+    raw_meetings_tasks_collection = @meetings_tasks.rawCollection()
+    findAndModify = Meteor.wrapAsync(raw_meetings_tasks_collection.findAndModify, raw_meetings_tasks_collection)
+
+    # Ensure that the note exists
+    @meetings_tasks.findAndModify query, update
 
     # Update the note text
     @meetings_tasks.update
