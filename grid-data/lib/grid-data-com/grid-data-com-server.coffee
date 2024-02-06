@@ -211,7 +211,7 @@ _.extend GridDataCom.prototype,
         user_id: @userId
         _raw_frozen: null # Exclude frozen fields (they are equivalent to removed, just recoverable).
       if respect_exclude_from_tasks_grid_pub_directive
-        query_options = {fields: _.extend {}, self.excluded_fields_projection}
+        query_options = {projection: _.extend {}, self.excluded_fields_projection}
       else
         query_options = {}
 
