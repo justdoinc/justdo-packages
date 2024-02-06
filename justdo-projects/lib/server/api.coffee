@@ -1217,6 +1217,7 @@ _.extend Projects.prototype,
         lastTaskSeqId: 1
       returnDocument: "after"
 
+    APP.justdo_analytics.logMongoRawConnectionOp(@projects_collection._name, "findOneAndUpdate", query, update, options)
     result = findOneAndUpdate query, update, options
 
     return result.value.lastTaskSeqId

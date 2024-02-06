@@ -71,6 +71,7 @@ Meteor.methods
 
     # Allocate sequence IDs for the tasks we are about to merge by incrementing
     # the target project lastTaskSeqId
+    APP.justdo_analytics.logMongoRawConnectionOp(APP.collections.Projects._name, "findOneAndUpdate", query, update, options)
     result = findOneAndUpdate query, update, options
 
     current_task_seqId = result?.value?.lastTaskSeqId + 1
