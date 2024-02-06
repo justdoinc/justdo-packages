@@ -249,6 +249,7 @@ Meteor.methods
       projection:
         lastTaskSeqId: 1
 
+    APP.justdo_analytics.logMongoRawConnectionOp(APP.collections.Projects._name, "findOneAndUpdate", query, update, options)
     result = findOneAndUpdate query, update, options
 
     current_seq_id = result?.value?.lastTaskSeqId + 1
