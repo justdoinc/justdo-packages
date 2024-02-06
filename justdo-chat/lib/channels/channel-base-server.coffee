@@ -237,16 +237,13 @@ _.extend ChannelBaseServer.prototype,
     # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
     # and to drop obsolete indexes (see CHANNEL_IDENTIFIER_INDEX there)
     #
-    raw_channels_collection = @justdo_chat.channels_collection.rawCollection()
-    findOneAndUpdate = Meteor.wrapAsync(raw_channels_collection.findOneAndUpdate, raw_channels_collection)
 
     query = @channel_identifier
     options =
       upsert: upsert
       returnDocument: "after"
 
-    APP.justdo_analytics.logMongoRawConnectionOp(@justdo_chat.channels_collection._name, "findOneAndUpdate", query, update, options)
-    result = findOneAndUpdate query, update, options
+    result = JustdoHelpers.findOneAndUpdate @justdo_chat.channels_collection, query, update, options
 
     if result.ok != 1
       throw @_error "db-error", "Unknown database error when trying to create channel"
