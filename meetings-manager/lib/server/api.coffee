@@ -369,11 +369,8 @@ _.extend MeetingsManager.prototype,
           user_id: user_id
           date_added: new Date()
 
-    raw_meetings_tasks_collection = @meetings_tasks.rawCollection()
-    findAndModify = Meteor.wrapAsync(raw_meetings_tasks_collection.findAndModify, raw_meetings_tasks_collection)
-
     # Ensure that the note exists
-    @meetings_tasks.findAndModify query, update
+    JustdoHelpers.findOneAndUpdate @meetings_tasks, query, update
 
     # Update the note text
     @meetings_tasks.update
