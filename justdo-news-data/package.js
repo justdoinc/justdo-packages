@@ -110,5 +110,12 @@ Package.onUse(function (api) {
   ], client);
   api.addFiles("lib/both/news/v3-134/v3-134.coffee", both);
 
+  // v3.134
+  api.addAssets([
+    "lib/both/news/v5/assets/1.jpg",
+    "lib/both/news/v5/assets/2.jpg"
+  ], client);
+  api.addFiles("lib/both/news/v5/v5.coffee", both);
+
   api.export("JustdoNewsData", both);
 });
