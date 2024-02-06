@@ -42,6 +42,11 @@ Template.themes_selector.helpers
     }
 
     {
+      id: "solid-orange"
+      label: "Solid Orange"
+    }
+
+    {
       id: "classic"
       label: "Classic"
     }
