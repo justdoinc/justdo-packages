@@ -7184,12 +7184,6 @@ a.text-dark:hover, a.text-dark:focus {
   box-shadow: inset 0px 0px 0px 1px rgba(var(--color-primary), 1);
 }
 
-.grid-tree-control-priority {
-  left: 4px !important;
-  top: 4px !important;
-  bottom: 4px !important;
-}
-
 .not-multi-select.frozen-columns-mode .slick-row.active {
   background-color: rgba(var(--color-primary), 0.16) !important;
 }
