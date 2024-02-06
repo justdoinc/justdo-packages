@@ -245,6 +245,7 @@ _.extend ChannelBaseServer.prototype,
       upsert: upsert
       returnDocument: "after"
 
+    APP.justdo_analytics.logMongoRawConnectionOp(@justdo_chat.channels_collection._name, "findOneAndUpdate", query, update, options)
     result = findOneAndUpdate query, update, options
 
     if result.ok != 1
