@@ -115,6 +115,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/ddp.coffee", server);
   api.addFiles("lib/server/fibers.coffee", server);
   api.addFiles("lib/server/ddp-socket.coffee", server);
+  api.addFiles("lib/server/mongo.coffee", server);
   api.addFiles("lib/server/network.coffee", server);
   api.addFiles("lib/server/cpu.coffee", server);
   api.addFiles("lib/server/users-generator.coffee", server);
