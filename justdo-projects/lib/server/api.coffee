@@ -1204,8 +1204,6 @@ _.extend Projects.prototype,
   allocateNewTaskSeqId: (project_id) ->
     # Get a new sequential id for a task under project_id
     # We assume, authentications and permissions were tested.
-    raw_projects_collection = @projects_collection.rawCollection()
-    findOneAndUpdate = Meteor.wrapAsync raw_projects_collection.findOneAndUpdate, raw_projects_collection
 
     query =
       _id: project_id
@@ -1217,8 +1215,7 @@ _.extend Projects.prototype,
         lastTaskSeqId: 1
       returnDocument: "after"
 
-    APP.justdo_analytics.logMongoRawConnectionOp(@projects_collection._name, "findOneAndUpdate", query, update, options)
-    result = findOneAndUpdate query, update, options
+    result = JustdoHelpers.findOneAndUpdate @projects_collection, query, update, options
 
     return result.value.lastTaskSeqId
 

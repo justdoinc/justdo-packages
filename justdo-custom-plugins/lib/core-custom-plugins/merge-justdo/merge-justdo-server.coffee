@@ -58,7 +58,6 @@ Meteor.methods
     source_justdo_tasks_count = source_justdo_tasks_cursor.count()
     
     raw_projects_collection = APP.collections.Projects.rawCollection()
-    findOneAndUpdate = Meteor.wrapAsync(raw_projects_collection.findOneAndUpdate, raw_projects_collection)
 
     query =
       _id: target_justdo_id
@@ -71,8 +70,7 @@ Meteor.methods
 
     # Allocate sequence IDs for the tasks we are about to merge by incrementing
     # the target project lastTaskSeqId
-    APP.justdo_analytics.logMongoRawConnectionOp(APP.collections.Projects._name, "findOneAndUpdate", query, update, options)
-    result = findOneAndUpdate query, update, options
+    result = JustdoHelpers.findOneAndUpdate APP.collections.Projects, query, update, options
 
     current_task_seqId = result?.value?.lastTaskSeqId + 1
     seqIds_map = {}
