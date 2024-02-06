@@ -236,10 +236,6 @@ Meteor.methods
     addChildrenToParents options.parents, options.max_levels
     
     # allocate seqId
-
-    raw_projects_collection = APP.collections.Projects.rawCollection()
-    findOneAndUpdate = Meteor.wrapAsync(raw_projects_collection.findOneAndUpdate, raw_projects_collection)
-
     query =
       _id: options.project_id
     update =
@@ -249,8 +245,7 @@ Meteor.methods
       projection:
         lastTaskSeqId: 1
 
-    APP.justdo_analytics.logMongoRawConnectionOp(APP.collections.Projects._name, "findOneAndUpdate", query, update, options)
-    result = findOneAndUpdate query, update, options
+    result = JustdoHelpers.findOneAndUpdate APP.collections.Projects, query, update, options
 
     current_seq_id = result?.value?.lastTaskSeqId + 1
     for task in all_tasks
