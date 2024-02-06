@@ -76,7 +76,7 @@ JustdoHelpers.sendCustomJsonStructure = (options) ->
         JustdoHelpers.fiberYield()
 
     # Get next batch from MongoDB (i.e. issue GET_MORE).
-    cursor.next().then (has_next) ->
+    cursor.hasNext().then (has_next) ->
       fiber.run(has_next)
 
       return
