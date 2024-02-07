@@ -56,9 +56,9 @@ _.extend JustdoTasksContextMenu.prototype,
             return ""
 
           if task_doc["priv:favorite"]?
-            return "Remove from favorites"
+            return "Remove from Favorites"
           else
-            return "Add to favorites"
+            return "Add to Favorites"
         label_i18n: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           if not (task_doc = APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "priv:favorite": 1}}))?
             # This should never happen
