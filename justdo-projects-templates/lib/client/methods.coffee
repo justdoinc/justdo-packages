@@ -4,3 +4,6 @@ _.extend JustDoProjectsTemplates.prototype,
   
   createSubtreeFromAiGeneratedTemplate: (options, cb) ->
     return Meteor.call "createSubtreeFromAiGeneratedTemplate", options, cb
+  
+  stopStreamTemplateFromOpenAi: (pub_id) ->
+    return Meteor.call "stopStreamTemplateFromOpenAi", pub_id

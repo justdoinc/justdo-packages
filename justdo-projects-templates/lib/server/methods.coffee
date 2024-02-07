@@ -37,5 +37,11 @@ _.extend JustDoProjectsTemplates.prototype,
         check msg, String
         check @userId, String # login required
         return self.streamTemplateFromOpenAiMethodHandler(msg, @userId)
+      
+      stopStreamTemplateFromOpenAi: (pub_id) ->
+        check pub_id, String
+        check @userId, String
+        self.emit "stop_stream_#{pub_id}_#{@userId}"
+        return
 
     return

@@ -159,8 +159,12 @@ _.extend JustDoProjectsTemplates.prototype,
     pub_id = Random.id()
     Meteor.publish pub_id, ->
       publish_this = @
-      
       stream = await self.streamTemplateFromOpenAi msg, user_id
+      
+      self.once "stop_stream_#{pub_id}_#{user_id}", ->
+        stream.abort()
+        publish_this.stop()
+        return
 
       tasks = []
       task_string = ""
@@ -212,6 +216,7 @@ _.extend JustDoProjectsTemplates.prototype,
       
       stream.done().then ->
         publish_this.stop()
+        self.off "stop_stream_#{pub_id}_#{user_id}"
         return
 
       return
