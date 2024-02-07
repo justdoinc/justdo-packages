@@ -47,83 +47,99 @@ _.extend JustDoProjectsTemplates.prototype,
 
     return
 
-  _generateReqForOpenAiTemplateGeneration: (msg) ->
+  _generateStreamReq: (msg) ->
     req = 
-      "model": "gpt-4-0125-preview",
+      "model": "gpt-3.5-turbo-0125",
       "messages": [
         {
           "role": "system",
           "content": """
-            You are a template generator for a project management software named "JustDo". Your job is to generate relevant tasks template based on user's input in JSON format.  
+            Based on user input, generate an array of tasks. They must be relevant to the user input.
 
-            Your output of tasks tree should only be in the following structure:
-            ###output begin###
+            Below is the JSON schema of a task object:
+            ### JSON schema begin ###
             {
-              t: <title, a summary of what the user wants to do with JustDo>,
-              ts: (tasks) [title(Follow the user's language), start_date, end_date, due_date, state, key(unique sequence id, starting from 0.), subtasks(an array of "output" array, could be omitted if there is no subtasks)] 
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "description": "Title of the task describing the task, or describing what the child tasks does if it has child tasks."
+                },
+                "start_date_offset": {
+                  "type": "number",
+                  "description": "Start date of the task represented by the offset in days relative to today's date"
+                },
+                "end_date_offset": {
+                  "type": "number",
+                  "description": "End date of the task represented by the offset in days relative to today's date"
+                },
+                "due_date_offset": {
+                  "type": "number",
+                  "description": "Due date of the task represented by the offset in days relative to today's date"
+                },
+                "state_idx": {
+                  "type": "number",
+                  "description": "Index of the task's state from this list: ['pending', 'in-progress', 'done', 'will-not-do', 'on-hold', 'duplicate', 'nil']"
+                },
+                "key": {
+                  "type": "number",
+                  "description": "0-based sequence ID of the task."
+                },
+                "parent_task_key": {
+                  "type": "number",
+                  "description": "Parent task's key. The parent task must exist before referencing. If the task is a top-level task, use -1."
+                }
+              }
             }
-            ###output ends###
+            ### JSON schema ends ###
 
-            In JustDo, parent tasks' date fields will be automatically derived from the child tasks' dates.
-            E.g. The earliest child task's start_date will be the parent task's start_date, the latest child task's end_date will be the parent task's end_date.
-            Because of this, there is no need to set the dates for parent tasks.
-            Note that you will still have to set the dates for child tasks.
-            Structure the dates in a way that matches the execution order of tasks inside a project.
-            All dates field should be an integer offset relative to today's date or an empty string.
-            Use 0 (today's date) as the earliest task start_date.
+            The tasks hierachy are as follows:
+            ### Tasks hierarchy begin ###
+            Top level tasks must have 3 to 6 child tasks, and it's depth must be 3 to 5 levels.
 
-            Below are all the possible values of the state field:
-            possible_states = ["pending", "in-progress", "done", "will-not-do", "on-hold", "duplicate", "nil"]
-            All the possible_states, except "will-not-do" and "nil", represents the task state by itself. 
+            Depth means the number of levels of the task tree. E.g. a top-level task with no child tasks has a depth of 1, a top-level task with 1 child task has a depth of 2, and so on.
+
+            The title of top level tasks must be a category or a department.
+
+            Immediate child tasks of top level tasks must be projects under the category or the department.
+
+            Other child tasks must be action items that can be assigned to team members under the parent project or category.
+
+            All child tasks must be grouped under a relevant parent task.
+            ### Tasks hierarchy ends ###
+
+            Only set dates for child tasks. For parent tasks, set the date to an empty string.
+
+            For state_idx field:
             "nil" is the default state for a task that means there is no state.
             "will-not-do"  means the task is cancelled.
             Apply as many states to the tasks generated as you can, but ensure they make sense (e.g. if a child task is pending/in-progress, the parent task should never be set to done.)
             When generating tasks, use the index of possible_states to reference a state.
 
-            The user's input is how the user intent to use JustDo to manage their team or business. 
-
-            The tree structure should be as follows:
-            First layer (root task): The category of the child tasks, or a department.
-            Second layer: The projects under the category or the department.
-            Third layer: One to three tasks representing action items that can be assigned to team members under the parent category
-
-            Some examples will be provided in the chat history. Use them as a reference to generate the tasks tree structure. 
-            Generate 40 to 100 tasks in total.
-
-            Respond only with the generated output array without any spaces, indents or line breaks. Ensure the returned JSON is valid.
-          """
+            To reduce the size of task definition, use an array to represent a task. The array must contain only the value of the task object, in the order of the schema.
+            Generate 45 to 60 tasks in total. Return only the array without any formatting like whitespaces and line breakes.
+          """.trim()
         },
         {
           "role": "user",
-          "content": "管理醫院人事部門"
+          "content": "Manage a tech startup"
         },
         {
           "role": "assistant",
-          "content": "{\"t\":\"人事部門\",\"ts\":[\"醫院人事部門\",0,19,19,6,0,[[\"招聘計劃\",1,5,5,0,1,[[\"醫生招聘\",1,3,3,0,2,[[\"撰寫醫生職位描述\",1,1,1,0,3],[\"發布職位廣告\",2,2,2,0,4],[\"篩選簡歷\",3,3,3,0,5]]],[\"護士招聘\",1,4,4,0,6,[[\"撰寫護士職位描述\",1,1,1,0,7],[\"發布職位廣告\",2,2,2,0,8],[\"篩選簡歷\",3,3,3,0,9],[\"安排面試\",4,4,4,0,10]]],[\"行政人員招聘\",2,5,5,0,11,[[\"撰寫行政人員職位描述\",2,2,2,0,12],[\"發布職位廣告\",3,3,3,0,13],[\"篩選簡歷\",4,4,4,0,14],[\"安排面試\",5,5,5,0,15]]]]],[\"在職培訓\",6,10,10,0,16,[[\"醫生專業培訓\",6,7,7,0,17,[[\"培訓需求分析\",6,6,6,0,18],[\"培訓資料準備\",7,7,7,0,19]]],[\"護士技能培訓\",8,9,9,0,20,[[\"培訓需求分析\",8,8,8,0,21],[\"培訓資料準備\",9,9,9,0,22]]],[\"行政流程培訓\",10,10,10,0,23,[[\"培訓需求分析\",10,10,10,0,24],[\"培訓資料準備\",10,10,10,0,25]]]]],[\"員工績效評估\",11,15,15,0,26,[[\"醫生績效評估\",11,12,12,0,27,[[\"評估標準制定\",11,11,11,0,28],[\"進行績效評估\",12,12,12,0,29]]],[\"護士績效評估\",13,14,14,0,30,[[\"評估標準制定\",13,13,13,0,31],[\"進行績效評估\",14,14,14,0,32]]],[\"行政人員績效評估\",14,15,15,0,33,[[\"評估標準制定\",14,14,14,0,34],[\"進行績效評估\",15,15,15,0,35]]]]],[\"員工健康與福利\",16,19,19,0,36,[[\"健康保險計劃更新\",16,17,17,0,37,[[\"市場調研\",16,16,16,0,38],[\"計劃選擇\",17,17,17,0,39]]],[\"員工支持計劃\",18,19,19,0,40,[[\"心理健康支持\",18,18,18,0,41],[\"運動與健身計劃\",19,19,19,0,42]]]]]]]}"
-        },
+          "content": """[["Product Development", "", "", "", 6, 0, -1], ["Website Launch", "", "", "", 6, 1, 0], ["Design Homepage", 1, 7, 7, 2, 2, 1], ["Setup Hosting", 0, 1, 1, 1, 3, 1], ["Implement SEO Best Practices", 3, 10, 10, 0, 4, 1], ["Launch Marketing Campaign", 8, 14, 14, 2, 5, 1], ["App Development", "", "", "", 6, 6, 0], ["Design UI/UX", 1, 14, 14, 1, 7, 6], ["Develop Backend", 3, 30, 40, 1, 8, 6], ["Quality Assurance", 15, 50, 50, 1, 9, 6], ["Publish to App Store", 51, 60, 60, 0, 10, 6], ["Market Research", "", "", "", 6, 11, 0], ["Identify Target Market", 0, 5, 5, 1, 12, 11], ["Competitor Analysis", 1, 10, 10, 1, 13, 11], ["Product Feedback Loop", 11, 60, 60, 1, 14, 11], ["Sales Strategy", "", "", "", 6, 15, 0], ["Define Pricing Model", 3, 7, 7, 1, 16, 15], ["Identify Sales Channels", 4, 8, 8, 1, 17, 15], ["Train Sales Team", 5, 9, 9, 1, 18, 15], ["Operate Sales Campaigns", 10, 60, 60, 0, 19, 15], ["Customer Support Setup", "", "", "", 6, 20, 0], ["Implement Support Software", 2, 9, 9, 1, 21, 20], ["Hire Support Team", 3, 12, 12, 1, 22, 20], ["Train Support Team", 13, 20, 20, 1, 23, 20], ["Publish FAQ and Documentation", 10, 15, 15, 1, 24, 20], ["Investor Relations", "", "", "", 6, 25, 0], ["Prepare Investment Deck", 5, 12, 12, 1, 26, 25], ["Identify Potential Investors", 1, 5, 5, 1, 27, 25], ["Schedule Meetings", 6, 18, 18, 1, 28, 25], ["Follow-up Communications", 19, 22, 22, 1, 29, 25], ["Legal & Compliance", "", "", "", 6, 30, 0], ["Register Business", 0, 1, 1, 1, 31, 30], ["Trademark Product Names", 2, 8, 8, 1, 32, 30], ["Legal Review of Contracts", 3, 9, 9, 1, 33, 30], ["Ensure Data Protection Compliance", 4, 10, 10, 1, 34, 30], ["Financial Planning", "", "", "", 6, 35, 0], ["Budget Allocation", 1, 3, 3, 1, 36, 35], ["Cash Flow Management", 2, 6, 6, 1, 37, 35], ["Financial Reporting", 4, 8, 8, 1, 38, 35], ["Resource Planning", "", "", "", 6, 39, 0], ["Hire Key Roles", 1, 7, 7, 1, 40, 39], ["Allocate Office Space", 2, 8, 8, 1, 41, 39], ["Setup Workstations", 3, 9, 9, 1, 42, 39], ["Technology Procurement", 4, 10, 10, 1, 43, 39], ["Team Development", "", "", "", 6, 44, 0], ["Regular Team Meetings", 1, 30, 30, 1, 45, 44], ["Team Building Activities", 10, 40, 40, 0, 46, 44], ["Professional Development Programs", 15, 45, 45, 1, 47, 44], ["Performance Review Process", 20, 50, 50, 1, 48, 44]]"""
+        }
         {
           "role": "user",
-          "content": "Manage a fast food chain"
-        },
-        {
-          "role": "assistant",
-          "content": "{\"t\":\"Fast Food Chain\",\"ts\":[\"Manage a Fast Food Chain\",0,99,99,6,0,[[\"Location Management\",1,40,40,0,1,[[\"New Store Openings\",1,10,10,0,2,[[\"Site Selection\",1,2,2,0,3],[\"Lease Negotiations\",3,5,5,0,4],[\"Store Design\",6,7,7,0,5],[\"Construction\",8,10,10,0,6]]],[\"Existing Store Upgrades\",11,20,20,0,7,[[\"Renovation Planning\",11,13,13,0,8],[\"Equipment Upgrades\",14,16,16,0,9],[\"Rebranding\",17,18,18,0,10],[\"Reopening\",19,20,20,0,11]]],[\"Store Closures\",21,30,30,0,12,[[\"Performance Review\",21,22,22,0,13],[\"Asset Liquidation\",23,25,25,0,14],[\"Lease Termination\",26,28,28,0,15],[\"Staff Relocation\",29,30,30,0,16]]],[\"Maintenance\",31,40,40,0,17,[[\"Scheduled Maintenance\",31,34,34,0,18],[\"Emergency Repairs\",35,36,36,0,19],[\"Health and Safety Inspections\",37,38,38,0,20],[\"Equipment Servicing\",39,40,40,0,21]]]]],[\"Operations\",41,70,70,0,22,[[\"Staffing\",41,50,50,0,23,[[\"Recruitment\",41,42,42,0,24],[\"Training\",43,45,45,0,25],[\"Scheduling\",46,48,48,0,26],[\"Performance Management\",49,50,50,0,27]]],[\"Supply Chain Management\",51,60,60,0,28,[[\"Vendor Selection\",51,52,52,0,29],[\"Inventory Management\",53,55,55,0,30],[\"Order Fulfillment\",56,58,58,0,31],[\"Logistics\",59,60,60,0,32]]],[\"Quality Assurance\",61,70,70,0,33,[[\"Food Safety\",61,63,63,0,34],[\"Customer Service Standards\",64,66,66,0,35],[\"Compliance Audits\",67,68,68,0,36],[\"Continuous Improvement\",69,70,70,0,37]]]]],[\"Marketing and Sales\",71,99,99,0,38,[[\"Promotions\",71,80,80,0,39,[[\"Seasonal Campaigns\",71,73,73,0,40],[\"New Product Launches\",74,76,76,0,41],[\"Discount Programs\",77,78,78,0,42],[\"Loyalty Rewards\",79,80,80,0,43]]],[\"Digital Marketing\",81,90,90,0,44,[[\"Social Media\",81,83,83,0,45],[\"Email Campaigns\",84,86,86,0,46],[\"Online Ads\",87,88,88,0,47],[\"Website Updates\",89,90,90,0,48]]],[\"Sales Analysis\",91,99,99,0,49,[[\"Market Trends\",91,93,93,0,50],[\"Sales Reporting\",94,96,96,0,51],[\"Customer Feedback\",97,98,98,0,52],[\"Strategic Adjustments\",99,99,99,0,53]]]]]]]}"
-        },
-        {
-          "role": "user",
-          "content": msg
+          "content": msg.trim()
         }
       ],
       "temperature": 1,
       "top_p": 1,
       "n": 1,
-      "stream": false,
+      "stream": true,
       "max_tokens": 4096,
       "presence_penalty": 0,
       "frequency_penalty": 0,
-      "response_format": {
-          "type": "json_object"
-      }
     return req
   
   generateTemplateFromOpenAi: (msg) ->
