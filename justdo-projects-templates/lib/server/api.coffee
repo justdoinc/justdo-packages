@@ -185,6 +185,7 @@ _.extend JustDoProjectsTemplates.prototype,
 
         fields = 
           _id: key
+          pub_id: pub_id
           parent: parent_task_key
           title: title
           start_date: if _.isNumber(start_date_offset) then moment().add(start_date_offset, 'days').format("YYYY-MM-DD") else null
