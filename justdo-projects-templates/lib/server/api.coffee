@@ -211,7 +211,6 @@ _.extend JustDoProjectsTemplates.prototype,
           task_string = incomplete_task_string
       
       stream.done().then ->
-        console.log "xxx stream ended"
         publish_this.stop()
         return
 
