@@ -18,6 +18,11 @@ APP.justdo_news.registerNews "news",
             "title": "Introduce the Solid Orange theme"
             "subtitle": ""
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v5/assets/2.jpg"
+          },
+          {
+            "title": "Design Improvements"
+            "subtitle": "The task pane handle has been redesigned for simplicity and enhanced visibility."
+            "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v5/assets/3.jpg"
           }
         ]
       }
