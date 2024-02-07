@@ -32,5 +32,10 @@ _.extend JustDoProjectsTemplates.prototype,
         check @userId, String # login required
         res = await self.generateTemplateFromOpenAi(msg)
         return JSON.parse(res?.choices?[0]?.message?.content)
+      
+      streamTemplateFromOpenAi: (msg) ->
+        check msg, String
+        check @userId, String # login required
+        return self.streamTemplateFromOpenAiMethodHandler(msg, @userId)
 
     return

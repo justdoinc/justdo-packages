@@ -150,8 +150,75 @@ _.extend JustDoProjectsTemplates.prototype,
     
     await return stream
   
+  streamTemplateFromOpenAiMethodHandler: (msg, user_id) ->
+    check msg, String
+    check user_id, String
+
+    self = @
+
+    pub_id = Random.id()
+    Meteor.publish pub_id, ->
+      publish_this = @
+      
+      stream = await self.streamTemplateFromOpenAi msg, user_id
+
+      tasks = []
+      task_string = ""
+      task_key_to_created_id = {}
+      _parseStreamedTasks = (task_arr) ->
+        states = ["pending", "in-progress", "done", "will-not-do", "on-hold", "duplicate", "nil"]
+        grid_data = APP.projects._grid_data_com
+        
+        [
+          title
+          start_date_offset
+          end_date_offset
+          due_date_offset
+          state_idx
+          key
+          parent_task_key
+        ] = task_arr
+
+        fields = 
+          _id: key
+          parent: parent_task_key
+          title: title
+          start_date: if _.isNumber(start_date_offset) then moment().add(start_date_offset, 'days').format("YYYY-MM-DD") else null
+          end_date: if _.isNumber(end_date_offset) then moment().add(end_date_offset, 'days').format("YYYY-MM-DD") else null
+          due_date: if _.isNumber(due_date_offset) then moment().add(due_date_offset, 'days').format("YYYY-MM-DD") else null
+          state: if (state_idx >= 0) then states[state_idx] else "nil"
+
+        return fields
+
+      for await part from stream
+        res += part.choices[0].delta.content
+        task_string += part.choices[0].delta.content
+
+        if task_string.includes "]"
+          # Replace double brackets with single brackets
+          task_string = task_string.replace /\[\s*\[/g, "["
+          task_string = task_string.replace /\]\s*\]/g, "]"
+
+          # When the task_string contains a complete task, parse it and add it to the tasks array
+          [finished_task_string, incomplete_task_string] = task_string.split(/],?/)
+
+          # Add back the missing bracket from .split()
+          finished_task_string += "]"
+
+          task_arr = JSON.parse finished_task_string
+          task = _parseStreamedTasks task_arr
+          @added "ai_response", task._id, task
+          task_string = incomplete_task_string
+      
+      stream.done().then ->
+        console.log "xxx stream ended"
+        publish_this.stop()
+        return
+
+      return
     
-    return @createSubtreeFromTemplateUnsafe create_template_options
+    return pub_id
+    
 
 getFromTemplateOnly = (key) ->
   return @template[key]
