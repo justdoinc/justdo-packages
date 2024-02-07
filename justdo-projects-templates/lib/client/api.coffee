@@ -83,6 +83,8 @@ _.extend JustDoProjectsTemplates.prototype,
       #
       #       return false
 
+    message_template.template_instance.bootbox_dialog = dialog
+
     current_url = Router.current().originalUrl
 
     @close_dialog_tracker?.stop?()
