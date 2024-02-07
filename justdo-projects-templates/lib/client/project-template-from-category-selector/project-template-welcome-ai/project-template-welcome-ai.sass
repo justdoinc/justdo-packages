@@ -1,0 +1,111 @@
+.project-template-ai-modal
+  .modal-dialog .modal-content
+    background-color: rgba(255, 255, 255, 0.6)
+    backdrop-filter: blur(8px)
+
+    .modal-body
+      overflow: visible
+
+  .bootbox-body > div
+    height: inherit
+
+  .project-template-welcome-ai
+    display: flex
+    justify-content: center
+    align-items: center
+    height: 100%
+
+    .content
+      display: flex
+      flex-direction: column
+      position: relative
+
+    .welcome-ai-title
+      margin-bottom: 16px
+      font-weight: 500
+      font-size: 20px
+      color: #000000
+      text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.16)
+
+    .welcome-ai-input-wrapper
+      background: linear-gradient(to right, #1EB2F2, #C660EA)
+      padding: 2px
+      border-radius: 8px
+      box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.08)
+      position: relative
+      display: flex
+      align-items: center
+      width: 640px
+      margin-bottom: 150px
+      transition: all 0.32s
+
+    .welcome-ai-input
+      width: 100%
+      border: none
+      border-radius: 6px
+      padding: 20px 16px
+      &::placeholder
+        color: #A9B1C3
+
+    .welcome-ai-btn
+      position: absolute
+      right: 16px
+      font-weight: 600
+      cursor: pointer
+      color: #094d90
+      transform: scale(1)
+      transition: all 0.28s
+      opacity: 0.95
+      &:hover
+        transform: scale(1.01)
+        opacity: 1
+      &:active
+        transform: scale(0.98)
+
+    .welcome-ai-results
+      display: flex
+      flex-direction: column
+      position: absolute
+      background-color: white
+      border-radius: 6px
+      box-shadow: 0px 3px 40px rgba(0, 0, 0, 0.08)
+      width: 100%
+      left: 0
+      top: 40px
+      padding: 10px 12px
+      opacity: 0
+      pointer-events: none
+      transition: all 0.32s
+      &.show
+        pointer-events: all
+        opacity: 1
+        top: 50px
+
+    .welcome-ai-result-item
+      background-color: white
+      transition: background-color 0.32s
+      padding: 4px 8px
+      border-radius: 4px
+      color: #495057
+      cursor: pointer
+      span
+        color: black
+        font-weight: 600
+      &:hover
+        background-color: #f8f9fa
+
+    .jd-style-bg-circle
+      position: absolute
+      width: 600px
+      height: 600px
+      border-radius: 100%
+      z-index: -2
+      pointer-events: none
+      &.left
+        bottom: -300px
+        right: 50%
+        background: radial-gradient(50% 50% at 50% 50%,rgba(7,166,255,.2) 0,rgba(7,166,255,0) 100%)
+      &.right
+        bottom: -200px
+        left: 50%
+        background: radial-gradient(50% 50% at 50% 50%, rgba(189, 102, 235, 0.16) 0%, rgba(189, 102, 235, 0) 100%)
