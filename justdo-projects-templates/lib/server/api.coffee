@@ -141,56 +141,15 @@ _.extend JustDoProjectsTemplates.prototype,
       "presence_penalty": 0,
       "frequency_penalty": 0,
     return req
+
+  streamTemplateFromOpenAi: (msg, user_id) ->
+    req = @_generateStreamReq msg
+    request_id = await APP.justdo_ai_kit.openai.createChatCompletion req, user_id
+    stream = await APP.justdo_ai_kit.openai.getRequest request_id
+
+    
+    await return stream
   
-  generateTemplateFromOpenAi: (msg) ->
-    req = @_generateReqForOpenAiTemplateGeneration msg
-    await return APP.justdo_ai_kit.openai.chat.completions.create req
-
-  _createSubtreeFromOpenAiOptionsSchema: new SimpleSchema
-    project_id:
-      type: String
-      optional: false
-    msg:
-      type: String
-      optional: false
-    set_project_title:
-      type: Boolean
-      optional: true
-      defaultValue: false
-  createSubtreeFromOpenAi: (options, user_id) ->
-    {cleaned_val} =
-      JustdoHelpers.simpleSchemaCleanAndValidate(
-        @_createSubtreeFromOpenAiOptionsSchema,
-        options or {},
-        {self: @, throw_on_error: true}
-      )
-    options = cleaned_val
-
-    if user_id?
-      APP.projects.requireUserIsMemberOfProject options.project_id, user_id
-
-    res = await @generateTemplateFromOpenAi options.msg
-
-    content = JSON.parse(res?.choices?[0]?.message?.content)
-    return @_createSubtreeFromOpenAi content, options, user_id
-
-  # The reason for having createSubtreeFromOpenAi and _createSubtreeFromOpenAi as seperate functions
-  # is to allow developers to test the generated output from OpenAI API.
-  _createSubtreeFromOpenAi: (content, options, user_id) ->
-    if _.isString content
-      content = JSON.parse content
-
-    if options.set_project_title
-      project_title = content.t
-      APP.collections.Projects.update options.project_id, {$set: {title: project_title}}
-
-    template = @parseOpenAiTemplateToTasksTemplate content.ts
-    create_template_options = 
-      project_id: options.project_id
-      users: 
-        performing_user: user_id
-      perform_as: "performing_user"
-      template: template
     
     return @createSubtreeFromTemplateUnsafe create_template_options
 
