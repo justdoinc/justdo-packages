@@ -57,8 +57,6 @@ Meteor.methods
 
     source_justdo_tasks_count = source_justdo_tasks_cursor.count()
     
-    raw_projects_collection = APP.collections.Projects.rawCollection()
-
     query =
       _id: target_justdo_id
     update =
