@@ -39,6 +39,7 @@ _.extend JustDoProjectsTemplates.prototype,
       scrollable: true
       backdrop: false
       closeButton: options.allow_closing
+      onEscape: true
       className: "bootbox-new-design project-templates-modal project-template-ai-modal"
       # buttons:
       #   Create:
