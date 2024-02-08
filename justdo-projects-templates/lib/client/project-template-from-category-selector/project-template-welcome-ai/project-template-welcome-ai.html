@@ -20,7 +20,9 @@
             {{#each rootTemplate}}
               {{> project_template_welcome_ai_task_item}}
             {{/each}}
-            <div class="welcome-ai-create-btn btn-primary btn-lg text-center">Create</div>
+            {{#if $not isLoading}}
+              <div class="welcome-ai-create-btn btn-primary btn-lg text-center">Create</div>
+            {{/if}}
           {{else}}
             <div class="welcome-ai-suggestion-item">Create a project for an <span>IT</span> company</div>
             <div class="welcome-ai-suggestion-item">Create project for <span>Real Estate</span> company</div>
