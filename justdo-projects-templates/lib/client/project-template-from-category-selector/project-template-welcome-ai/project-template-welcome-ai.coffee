@@ -153,8 +153,10 @@ Template.project_template_welcome_ai.events
     $el = $(e.currentTarget).closest(".welcome-ai-result-item-checkbox")
     is_checked = $el.is(":checked")
     if is_checked
+      # Ensure all ancestors are checked
       $el.parents(".welcome-ai-result-item").children(".welcome-ai-result-item-checkbox").prop("checked", true).trigger("change")
     else
+      # Ensure all descendants are unchecked
       $el.siblings(".welcome-ai-result-item").children(".welcome-ai-result-item-checkbox").prop("checked", false).trigger("change")
     return
 
