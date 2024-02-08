@@ -145,6 +145,18 @@ Template.project_template_welcome_ai.events
     APP.justdo_projects_templates.stopStreamTemplateFromOpenAi tpl.pub_id_rv.get()
     tpl.unlockInput()
     return
+  
+  # This is to handle the checkbox logic for the AI response items:
+  # If a child item is checked, all its parent items will be checked;
+  # If a parent item is unchecked, all its child items will be unchecked.
+  "change .welcome-ai-result-item-checkbox": (e, tpl) ->
+    $el = $(e.currentTarget).closest(".welcome-ai-result-item-checkbox")
+    is_checked = $el.is(":checked")
+    if is_checked
+      $el.parents(".welcome-ai-result-item").children(".welcome-ai-result-item-checkbox").prop("checked", true).trigger("change")
+    else
+      $el.siblings(".welcome-ai-result-item").children(".welcome-ai-result-item-checkbox").prop("checked", false).trigger("change")
+    return
 
 Template.project_template_welcome_ai_task_item.helpers
   childTemplate: ->
