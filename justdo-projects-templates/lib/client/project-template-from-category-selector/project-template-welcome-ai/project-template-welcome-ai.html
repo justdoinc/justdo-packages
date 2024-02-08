@@ -17,9 +17,11 @@
         </div>
         <div class="welcome-ai-results">
           {{#if $or isResponseExists isLoading}}
-            {{#each rootTemplate}}
-              {{> project_template_welcome_ai_task_item}}
-            {{/each}}
+            <div class="welcome-ai-results-items pl-3">
+              {{#each rootTemplate}}
+                {{> project_template_welcome_ai_task_item}}
+              {{/each}}
+            </div>
             {{#if $not isLoading}}
               <div class="welcome-ai-create-btn btn-primary btn-lg text-center">Create</div>
             {{/if}}

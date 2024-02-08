@@ -80,6 +80,11 @@
         pointer-events: all
         opacity: 1
         top: 50px
+      .welcome-ai-results-items
+        display: flex
+        flex-direction: column
+        max-height: 45vh
+        overflow: scroll
 
     .welcome-ai-result-item, .welcome-ai-suggestion-item
       background-color: white
@@ -93,6 +98,9 @@
         font-weight: 600
       &:hover
         background-color: #f8f9fa
+      
+    .welcome-ai-result-item-checkbox
+      position: unset
 
     .jd-style-bg-circle
       position: absolute
