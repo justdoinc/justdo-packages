@@ -6,7 +6,19 @@ _.extend JustdoNewProjectTemplates.prototype,
   _deferredInit: ->
     if @destroyed
       return
+    
+    @_setupOpenAIPromptOnProjectCreationHook()
 
+    return
+
+  _setupOpenAIPromptOnProjectCreationHook: ->
+    APP.projects.on "post-create-new-project", (project_id) => 
+      Tracker.autorun (computation) =>
+        if JD.activeJustdoId() is project_id
+          @showFirstJustDoTemplatePicker()
+          computation.stop()
+        return
+      return
     return
 
   showFirstJustDoTemplatePicker: ->
