@@ -1,8 +1,8 @@
 Template.project_template_welcome_ai.onCreated ->
   @templates_sub_handle = null
   @pub_id_rv = new ReactiveVar ""
-
   @is_loading_rv = new ReactiveVar false
+
   @lockInput = ->
     $(".welcome-ai-input").prop "disabled", true
     return
@@ -15,6 +15,15 @@ Template.project_template_welcome_ai.onCreated ->
       return false
     return APP.collections.AIResponse.findOne({pub_id: pub_id, parent: -1}, {fields: {_id: 1}})?
 
+  @clear = ->
+    @pub_id_rv.set ""
+    @is_loading_rv.set false
+
+    $(".welcome-ai-input").val ""
+    @unlockInput()
+
+    return
+
   @showDropdown = -> $(".welcome-ai-dropdown").addClass "show"
   @hideDropdown = -> $(".welcome-ai-dropdown").removeClass "show"
 
@@ -23,13 +32,6 @@ Template.project_template_welcome_ai.onCreated ->
     $(".welcome-ai-results-items").animate(scrollTop: $('.welcome-ai-results-items').prop("scrollHeight"), 100)
 
     return
-
-  return
-
-Template.project_template_welcome_ai.onRendered ->
-  setTimeout ->
-    $(".welcome-ai-input").focus()
-  , 1000
 
   return
 
@@ -164,6 +166,11 @@ Template.project_template_welcome_ai.events
     APP.justdo_projects_templates.stopStreamTemplateFromOpenAi tpl.pub_id_rv.get()
     tpl.unlockInput()
     $(".welcome-ai-input").focus()
+    return
+
+  "click .welcome-ai-clear": (e, tpl) ->
+    tpl.clear()
+
     return
 
   # This is to handle the checkbox logic for the AI response items:

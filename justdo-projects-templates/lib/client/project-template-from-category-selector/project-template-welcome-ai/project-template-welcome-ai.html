@@ -1,59 +1,63 @@
 <template name="project_template_welcome_ai">
   <div class="project-template-welcome-ai">
-    <div class="content">
+    <div class="content {{#if isResponseExists}}show-results{{/if}}">
       <div class="welcome-ai-title">
         Welcome to JustDo
       </div>
       <div class="welcome-ai-input-wrapper">
         <input class="welcome-ai-input form-control form-control-md" type="text" placeholder="What kind of project do you want to create?">
-        <div class="welcome-ai-btn {{#if isLoading}}welcome-ai-stop-generation{{else}}welcome-ai-btn-generate{{/if}}">
-          {{#if isLoading}}
-            Stop
-          {{else if isResponseExists}}
-            Regenerate
-          {{else}}
-            Generate
+        <div class="welcome-ai-btn-wrapper">
+          <div class="welcome-ai-btn {{#if isLoading}}welcome-ai-stop-generation{{else}}welcome-ai-btn-generate{{/if}}">
+            {{#if isLoading}}
+              Stop
+            {{else if isResponseExists}}
+              Regenerate
+            {{else}}
+              Generate
+            {{/if}}
+          </div>
+          {{#if $or isResponseExists isLoading}}
+            <div class="welcome-ai-clear">
+              Clear
+            </div>
           {{/if}}
         </div>
+
+        {{#unless $or isResponseExists isLoading}}
+          <div class="welcome-ai-dropdown">
+            <div class="welcome-ai-suggestion-item">Create a project for an <span>IT</span> company</div>
+            <div class="welcome-ai-suggestion-item">Create project for <span>Real Estate</span> company</div>
+            <div class="welcome-ai-suggestion-item">Create project for <span>Movie Production</span> company</div>
+          </div>
+        {{/unless}}
+
         <div class="jd-style-bg-circle left"></div>
         <div class="jd-style-bg-circle right"></div>
       </div>
 
-      {{#unless $or isResponseExists isLoading}}
-        <div class="welcome-ai-dropdown">
-          <div class="welcome-ai-suggestion-item">Create a project for an <span>IT</span> company</div>
-          <div class="welcome-ai-suggestion-item">Create project for <span>Real Estate</span> company</div>
-          <div class="welcome-ai-suggestion-item">Create project for <span>Movie Production</span> company</div>
-        </div>
-      {{/unless}}
-
+      {{#if isResponseExists}}
       <div class="welcome-ai-results">
-        {{#if $or isResponseExists isLoading}}
-          {{#if isResponseExists}}
-            <div class="welcome-ai-results-items">
-              {{#each rootTemplate}}
-                {{> project_template_welcome_ai_task_item}}
-              {{/each}}
-            </div>
-          {{else}}
-            <div class="welcome-ai-results-loading">
-              <div class="loader">
-                <div class="double-bounce1 bg-primary"></div>
-                <div class="double-bounce2 bg-primary"></div>
-              </div>
-            </div>
-          {{/if}}
-          {{#if $not isLoading}}
-            <div class="welcome-ai-create-btn-wrapper">
-              <div class="welcome-ai-create-btn btn-primary btn-sm text-center">Create</div>
-            </div>
-          {{/if}}
+        {{#if isResponseExists}}
+          <div class="welcome-ai-results-items">
+            {{#each rootTemplate}}
+              {{> project_template_welcome_ai_task_item}}
+            {{/each}}
+          </div>
         {{else}}
-          <div class="welcome-ai-results-empty">
-            No tasks
+          <div class="welcome-ai-results-loading">
+            <div class="loader">
+              <div class="double-bounce1 bg-primary"></div>
+              <div class="double-bounce2 bg-primary"></div>
+            </div>
+          </div>
+        {{/if}}
+        {{#if $not isLoading}}
+          <div class="welcome-ai-create-btn-wrapper">
+            <div class="welcome-ai-create-btn btn-primary btn-sm text-center">Create</div>
           </div>
         {{/if}}
       </div>
+      {{/if}}
     </div>
   </div>
 </template>

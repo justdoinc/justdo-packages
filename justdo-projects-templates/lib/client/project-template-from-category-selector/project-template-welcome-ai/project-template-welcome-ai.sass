@@ -21,6 +21,12 @@
       flex-direction: column
       height: 100%
       position: relative
+      justify-content: center
+      padding-bottom: 150px
+      transition: all 0.32s
+      &.show-results
+        justify-content: flex-start
+        padding-bottom: 0
 
     .welcome-ai-title
       margin-bottom: 16px
@@ -52,9 +58,17 @@
         color: #1177c7
         cursor: wait
 
-    .welcome-ai-btn
+    .welcome-ai-btn-wrapper
       position: absolute
       right: 16px
+      display: flex
+
+    .welcome-ai-clear
+      margin-left: 12px
+      border-left: 1px solid rgba(96, 125, 139, 0.3)
+      padding-left: 12px
+
+    .welcome-ai-btn, .welcome-ai-clear
       font-weight: 600
       cursor: pointer
       color: #094d90
@@ -73,30 +87,28 @@
       background-color: white
       border-radius: 6px
       box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.08)
-      left: 8px
-      right: 8px
-      width: auto
+      width: 100%
       opacity: 0
       pointer-events: none
       transition: all 0.32s
       position: absolute
-      top: 80px
+      top: 40px
       padding: 8px 0px
       &.show
         pointer-events: all
         opacity: 1
-        top: 96px
+        top: 50px
 
     .welcome-ai-results
       display: flex
       flex-direction: column
       border-radius: 6px
       width: 100%
-      margin-top: 16px
+      margin-top: 8px
       overflow: hidden
       flex-grow: 1
       background-color: white
-      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.04)
+      box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.08)
 
       .welcome-ai-results-items
         display: flex
@@ -104,13 +116,6 @@
         overflow: auto
         padding: 12px 0px
         flex-grow: 1
-
-    .welcome-ai-results-empty
-      display: flex
-      flex-grow: 1
-      align-items: center
-      justify-content: center
-      color: rgba(96, 125, 139, 0.4)
 
     .welcome-ai-results-loading
       display: flex
