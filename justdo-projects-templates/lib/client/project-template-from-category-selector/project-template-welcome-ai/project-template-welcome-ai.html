@@ -15,33 +15,42 @@
             Generate
           {{/if}}
         </div>
-        <div class="welcome-ai-results">
-          {{#if $or isResponseExists isLoading}}
-            <div class="welcome-ai-results-items pl-3">
-              {{#each rootTemplate}}
-                {{> project_template_welcome_ai_task_item}}
-              {{/each}}
-            </div>
-            {{#if $not isLoading}}
-              <div class="welcome-ai-create-btn btn-primary btn-lg text-center">Create</div>
-            {{/if}}
-          {{else}}
-            <div class="welcome-ai-suggestion-item">Create a project for an <span>IT</span> company</div>
-            <div class="welcome-ai-suggestion-item">Create project for <span>Real Estate</span> company</div>
-            <div class="welcome-ai-suggestion-item">Create project for <span>Movie Production</span> company</div>
-          {{/if}}
-        </div>
       </div>
-      <div class="jd-style-bg-circle left"></div>
-      <div class="jd-style-bg-circle right"></div>
+
+
+      <div class="welcome-ai-results">
+        {{#if $or isResponseExists isLoading}}
+          <div class="welcome-ai-results-items">
+            {{#each rootTemplate}}
+              {{> project_template_welcome_ai_task_item}}
+            {{/each}}
+          </div>
+          {{#if $not isLoading}}
+            <div class="welcome-ai-create-btn-wrapper">
+              <div class="welcome-ai-create-btn btn-primary btn-sm text-center">Create</div>
+            </div>
+          {{/if}}
+        {{else}}
+          <div class="welcome-ai-suggestion-item">Create a project for an <span>IT</span> company</div>
+          <div class="welcome-ai-suggestion-item">Create project for <span>Real Estate</span> company</div>
+          <div class="welcome-ai-suggestion-item">Create project for <span>Movie Production</span> company</div>
+        {{/if}}
+      </div>
+
+
+      <!-- <div class="jd-style-bg-circle left"></div>
+      <div class="jd-style-bg-circle right"></div> -->
     </div>
   </div>
 </template>
 
 <template name="project_template_welcome_ai_task_item">
   <div class="welcome-ai-result-item">
-      <input class="welcome-ai-result-item-checkbox form-check-input" id="{{pub_id}}_{{_id}}" data-id="{{_id}}" type="checkbox" checked>
-      <label class="form-check-label" for="{{pub_id}}_{{_id}}">{{title}}</label>
+      <!-- <input class="welcome-ai-result-item-checkbox form-check-input" id="{{pub_id}}_{{_id}}" data-id="{{_id}}" type="checkbox" checked> -->
+      <div class="welcome-ai-result-item-content">
+        <div class="welcome-ai-result-item-checkbox checked" id="{{pub_id}}_{{_id}}" data-id="{{_id}}"></div>
+        {{title}}
+      </div>
       {{#each childTemplate}}
         {{> project_template_welcome_ai_task_item}}
       {{/each}}

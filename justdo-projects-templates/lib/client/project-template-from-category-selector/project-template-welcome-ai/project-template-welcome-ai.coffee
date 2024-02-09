@@ -9,22 +9,28 @@ Template.project_template_welcome_ai.onCreated ->
   @unlockInput = ->
     $(".welcome-ai-input").prop "disabled", false
     return
-  
-  @isResponseExists = -> 
+
+  @isResponseExists = ->
     if _.isEmpty(pub_id = @pub_id_rv.get())
       return false
     return APP.collections.AIResponse.findOne({pub_id: pub_id, parent: -1}, {fields: {_id: 1}})?
-  
+
   @showDropdown = -> $(".welcome-ai-results").addClass "show"
   @hideDropdown = -> $(".welcome-ai-results").removeClass "show"
 
+  @autorun ->
+    APP.collections.AIResponse.find().fetch()
+    $(".welcome-ai-results-items").animate(scrollTop: $('.welcome-ai-results-items').prop("scrollHeight"), 100)
+
+    return
+
   return
 
-Template.project_template_welcome_ai.helpers 
+Template.project_template_welcome_ai.helpers
   isLoading: ->
     tpl = Template.instance()
     return tpl.is_loading_rv.get()
-  
+
   isResponseExists: ->
     tpl = Template.instance()
     return tpl.isResponseExists()
@@ -44,7 +50,7 @@ Template.project_template_welcome_ai.events
     tpl.showDropdown()
 
     return
-  
+
   "click .welcome-ai-suggestion-item": (e, tpl) ->
     request = $(e.currentTarget).text()
     $(".welcome-ai-input").val request
@@ -62,14 +68,14 @@ Template.project_template_welcome_ai.events
         JustdoSnackbar.show
           text: err.reason or err
         return
-      
+
       tpl.pub_id_rv.set ""
       tpl.templates_sub_handle?.stop()
 
       tpl.pub_id_rv.set pub_id
-      tpl.templates_sub_handle = Meteor.subscribe pub_id, 
+      tpl.templates_sub_handle = Meteor.subscribe pub_id,
         onReady: -> tpl.showDropdown()
-        onStop: -> 
+        onStop: ->
           tpl.is_loading_rv.set false
           tpl.unlockInput()
           return
@@ -90,15 +96,21 @@ Template.project_template_welcome_ai.events
       $(".welcome-ai-btn-generate").click()
     return
 
+  "click .welcome-ai-result-item-content": (e, tpl) ->
+    checkbox = $(e.target).closest(".welcome-ai-result-item-content").find(".welcome-ai-result-item-checkbox")
+    $(checkbox).toggleClass "checked"
+
+    return
+
   "click .welcome-ai-create-btn": (e, tpl) ->
     pub_id = tpl.pub_id_rv.get()
     project_id = JD.activeJustdoId()
 
-    query = 
+    query =
       pub_id: pub_id
       parent: -1
-    if not _.isEmpty(excluded_item_ids = $(".welcome-ai-result-item-checkbox:not(:checked)").map((i, el) -> $(el).data("id")).get())
-      query._id = 
+    if not _.isEmpty(excluded_item_ids = $(".welcome-ai-result-item-checkbox:not(.checked)").map((i, el) -> $(el).data("id")).get())
+      query._id =
         $nin: excluded_item_ids
 
     grid_data = APP.modules.project_page.gridData()
@@ -117,35 +129,35 @@ Template.project_template_welcome_ai.events
           JustdoSnackbar.show
             text: err.reason or err
           return
-        
+
         for created_task_id_and_path, i in created_task_ids
           created_task_path = created_task_id_and_path[1]
           corresponding_template_item_id = template_item_ids[i]
-          child_query = 
+          child_query =
             pub_id: pub_id
             parent: corresponding_template_item_id
           if not _.isEmpty excluded_item_ids
-            child_query._id = 
+            child_query._id =
               $nin: excluded_item_ids
 
           template_items = APP.collections.AIResponse.find(child_query).fetch()
           recursiveBulkCreateTasks created_task_path, template_items
 
       return
-    
+
     if _.isEmpty(template_items = APP.collections.AIResponse.find(query).fetch())
       return
 
     recursiveBulkCreateTasks("/", template_items)
     tpl.bootbox_dialog.modal "hide"
-  
+
     return
 
   "click .welcome-ai-stop-generation": (e, tpl) ->
     APP.justdo_projects_templates.stopStreamTemplateFromOpenAi tpl.pub_id_rv.get()
     tpl.unlockInput()
     return
-  
+
   # This is to handle the checkbox logic for the AI response items:
   # If a child item is checked, all its parent items will be checked;
   # If a parent item is unchecked, all its child items will be unchecked.

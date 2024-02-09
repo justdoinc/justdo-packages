@@ -2,6 +2,7 @@
   .modal-dialog .modal-content
     background-color: rgba(255, 255, 255, 0.6)
     backdrop-filter: blur(8px)
+    overflow: hidden
 
     .modal-body
       overflow: visible
@@ -18,7 +19,7 @@
     .content
       display: flex
       flex-direction: column
-      position: relative
+      height: 100%
 
     .welcome-ai-title
       margin-bottom: 16px
@@ -36,7 +37,6 @@
       display: flex
       align-items: center
       width: 640px
-      margin-bottom: 150px
       transition: all 0.32s
 
     .welcome-ai-input
@@ -65,17 +65,15 @@
     .welcome-ai-results
       display: flex
       flex-direction: column
-      position: absolute
       background-color: white
       border-radius: 6px
       box-shadow: 0px 3px 40px rgba(0, 0, 0, 0.08)
       width: 100%
-      left: 0
-      top: 40px
-      padding: 10px 12px
       opacity: 0
       pointer-events: none
       transition: all 0.32s
+      margin-top: 12px
+      overflow: hidden
       &.show
         pointer-events: all
         opacity: 1
@@ -83,24 +81,53 @@
       .welcome-ai-results-items
         display: flex
         flex-direction: column
-        max-height: 45vh
-        overflow: scroll
+        overflow: auto
+        padding: 12px 0px
 
     .welcome-ai-result-item, .welcome-ai-suggestion-item
-      background-color: white
-      transition: background-color 0.32s
-      padding: 4px 8px
-      border-radius: 4px
+      padding-left: 16px
       color: #495057
       cursor: pointer
       span
         color: black
         font-weight: 600
+
+    .welcome-ai-result-item-content
+      display: flex
+      align-items: center
+      transition: background-color 0.32s
+      background-color: white
+      padding: 4px
+      cursor: pointer
       &:hover
         background-color: #f8f9fa
-      
+
     .welcome-ai-result-item-checkbox
-      position: unset
+      cursor: pointer
+      width: 18px
+      height: 18px
+      border-radius: 4px
+      border: 2px solid rgba(49, 69, 99, 0.5)
+      margin-right: 8px
+      align-items: center
+      justify-content: center
+      display: flex
+      &::before
+        display: none
+      &.checked::before
+        content: ""
+        width: 65%
+        height: 65%
+        background: rgba(49, 69, 99, 0.75)
+        border-radius: 2px
+        display: flex
+
+    .welcome-ai-create-btn-wrapper
+      padding: 16px
+      border-top: 1px solid rgba(207, 216, 220, 0.5)
+      .welcome-ai-create-btn
+        padding: 8px
+        cursor: pointer
 
     .jd-style-bg-circle
       position: absolute
