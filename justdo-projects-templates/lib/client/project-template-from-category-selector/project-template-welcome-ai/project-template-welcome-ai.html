@@ -7,6 +7,12 @@
       <div class="welcome-ai-input-wrapper">
         <input class="welcome-ai-input form-control form-control-md" type="text" placeholder="What kind of project do you want to create?">
         <div class="welcome-ai-btn-wrapper">
+          {{#if isLoading}}
+            <div class="loader">
+              <div class="double-bounce1 bg-primary"></div>
+              <div class="double-bounce2 bg-primary"></div>
+            </div>
+          {{/if}}
           <div class="welcome-ai-btn {{#if isLoading}}welcome-ai-stop-generation{{else}}welcome-ai-btn-generate{{/if}}">
             {{#if isLoading}}
               Stop
@@ -36,27 +42,18 @@
       </div>
 
       {{#if isResponseExists}}
-      <div class="welcome-ai-results">
-        {{#if isResponseExists}}
+        <div class="welcome-ai-results">
           <div class="welcome-ai-results-items">
             {{#each rootTemplate}}
               {{> project_template_welcome_ai_task_item}}
             {{/each}}
           </div>
-        {{else}}
-          <div class="welcome-ai-results-loading">
-            <div class="loader">
-              <div class="double-bounce1 bg-primary"></div>
-              <div class="double-bounce2 bg-primary"></div>
+          {{#if $not isLoading}}
+            <div class="welcome-ai-create-btn-wrapper">
+              <div class="welcome-ai-create-btn btn-primary btn-sm text-center">Create</div>
             </div>
-          </div>
-        {{/if}}
-        {{#if $not isLoading}}
-          <div class="welcome-ai-create-btn-wrapper">
-            <div class="welcome-ai-create-btn btn-primary btn-sm text-center">Create</div>
-          </div>
-        {{/if}}
-      </div>
+          {{/if}}
+        </div>
       {{/if}}
     </div>
   </div>
