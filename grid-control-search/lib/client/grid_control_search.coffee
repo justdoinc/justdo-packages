@@ -234,7 +234,10 @@ _.extend GridControlSearch.prototype,
 
     @highlightMatchedPaths()
 
-    @search_dropdown.template_data.result_paths.set @paths
+    if _.size(paths) <= GridControlSearch.dropdown_results_limit
+      @search_dropdown.template_data.result_paths.set @paths
+    else
+      @search_dropdown.template_data.result_paths.set []
 
     return
 

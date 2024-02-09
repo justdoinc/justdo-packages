@@ -64,7 +64,7 @@ Template.grid_control_search_dropdown.onCreated ->
     search_val = @data.search_val.get().trim()
     paths = share.search_dropdown.template_data.result_paths.get()
 
-    if search_val == "" or paths.length > 100
+    if search_val == "" or _.isEmpty(paths)
       tpl.result_count.set tpl.result_count_step
       share.search_dropdown.$dropdown.removeClass "open"
     else

@@ -34,6 +34,8 @@ Package.onUse(function (api) {
   api.addFiles('lib/client/grid_control_search.sass', client);
   api.addFiles('lib/client/grid_control_search.coffee', client);
 
+  api.addFiles('lib/client/static.coffee', client);
+
   api.addFiles('lib/client/grid-control-search-dropdown.html', client);
   api.addFiles('lib/client/grid-control-search-dropdown.sass', client);
   api.addFiles('lib/client/grid-control-search-dropdown.coffee', client);
