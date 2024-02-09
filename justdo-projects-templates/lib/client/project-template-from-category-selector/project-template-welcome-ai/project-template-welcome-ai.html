@@ -15,6 +15,8 @@
             Generate
           {{/if}}
         </div>
+        <div class="jd-style-bg-circle left"></div>
+        <div class="jd-style-bg-circle right"></div>
       </div>
 
       {{#unless $or isResponseExists isLoading}}
@@ -24,7 +26,6 @@
           <div class="welcome-ai-suggestion-item">Create project for <span>Movie Production</span> company</div>
         </div>
       {{/unless}}
-
 
       <div class="welcome-ai-results">
         {{#if $or isResponseExists isLoading}}
@@ -53,10 +54,6 @@
           </div>
         {{/if}}
       </div>
-
-
-      <!-- <div class="jd-style-bg-circle left"></div>
-      <div class="jd-style-bg-circle right"></div> -->
     </div>
   </div>
 </template>
