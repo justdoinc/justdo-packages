@@ -68,6 +68,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/xss.coffee", both);
   api.addFiles("lib/both/control-flows.coffee", both);
   api.addFiles("lib/both/mongo.coffee", both);
+  api.addFiles("lib/both/numbers.coffee", both);
   api.addFiles("lib/both/objects.coffee", both);
   api.addFiles("lib/both/debug-tracker.coffee", both);
   api.addFiles("lib/both/computed-reactive-var.coffee", both);
