@@ -54,7 +54,8 @@ _.extend JustDoProjectsTemplates.prototype,
         {
           "role": "system",
           "content": """
-            Based on user input, generate an array of tasks. They must be relevant to the user input.
+            Based on user input, generate an array of tasks. 
+            They must be relevant to the user input, and must be in the same language as the user input.
 
             Below is the JSON schema of a task object:
             ### JSON schema begin ###
@@ -127,7 +128,15 @@ _.extend JustDoProjectsTemplates.prototype,
         {
           "role": "assistant",
           "content": """[["Product Development", "", "", "", 6, 0, -1], ["Website Launch", "", "", "", 6, 1, 0], ["Design Homepage", 1, 7, 7, 2, 2, 1], ["Setup Hosting", 0, 1, 1, 1, 3, 1], ["Implement SEO Best Practices", 3, 10, 10, 0, 4, 1], ["Launch Marketing Campaign", 8, 14, 14, 2, 5, 1], ["App Development", "", "", "", 6, 6, 0], ["Design UI/UX", 1, 14, 14, 1, 7, 6], ["Develop Backend", 3, 30, 40, 1, 8, 6], ["Quality Assurance", 15, 50, 50, 1, 9, 6], ["Publish to App Store", 51, 60, 60, 0, 10, 6], ["Market Research", "", "", "", 6, 11, 0], ["Identify Target Market", 0, 5, 5, 1, 12, 11], ["Competitor Analysis", 1, 10, 10, 1, 13, 11], ["Product Feedback Loop", 11, 60, 60, 1, 14, 11], ["Sales Strategy", "", "", "", 6, 15, 0], ["Define Pricing Model", 3, 7, 7, 1, 16, 15], ["Identify Sales Channels", 4, 8, 8, 1, 17, 15], ["Train Sales Team", 5, 9, 9, 1, 18, 15], ["Operate Sales Campaigns", 10, 60, 60, 0, 19, 15], ["Customer Support Setup", "", "", "", 6, 20, 0], ["Implement Support Software", 2, 9, 9, 1, 21, 20], ["Hire Support Team", 3, 12, 12, 1, 22, 20], ["Train Support Team", 13, 20, 20, 1, 23, 20], ["Publish FAQ and Documentation", 10, 15, 15, 1, 24, 20], ["Investor Relations", "", "", "", 6, 25, 0], ["Prepare Investment Deck", 5, 12, 12, 1, 26, 25], ["Identify Potential Investors", 1, 5, 5, 1, 27, 25], ["Schedule Meetings", 6, 18, 18, 1, 28, 25], ["Follow-up Communications", 19, 22, 22, 1, 29, 25], ["Legal & Compliance", "", "", "", 6, 30, 0], ["Register Business", 0, 1, 1, 1, 31, 30], ["Trademark Product Names", 2, 8, 8, 1, 32, 30], ["Legal Review of Contracts", 3, 9, 9, 1, 33, 30], ["Ensure Data Protection Compliance", 4, 10, 10, 1, 34, 30], ["Financial Planning", "", "", "", 6, 35, 0], ["Budget Allocation", 1, 3, 3, 1, 36, 35], ["Cash Flow Management", 2, 6, 6, 1, 37, 35], ["Financial Reporting", 4, 8, 8, 1, 38, 35], ["Resource Planning", "", "", "", 6, 39, 0], ["Hire Key Roles", 1, 7, 7, 1, 40, 39], ["Allocate Office Space", 2, 8, 8, 1, 41, 39], ["Setup Workstations", 3, 9, 9, 1, 42, 39], ["Technology Procurement", 4, 10, 10, 1, 43, 39], ["Team Development", "", "", "", 6, 44, 0], ["Regular Team Meetings", 1, 30, 30, 1, 45, 44], ["Team Building Activities", 10, 40, 40, 0, 46, 44], ["Professional Development Programs", 15, 45, 45, 1, 47, 44], ["Performance Review Process", 20, 50, 50, 1, 48, 44]]"""
-        }
+        },
+        {
+          "role": "user",
+          "content": "管理醫院人事部門"
+        },
+        {
+          "role": "assistant",
+          "content": """[["人事部門","","","",6,0,-1],["招聘流程","","","",6,1,0],["確定員工需求",1,5,5,1,2,1],["制定職位描述",2,7,7,1,3,1],["發布職位空缺",3,8,8,1,4,1],["篩選簡歷",4,10,10,1,5,1],["面試候選人",6,12,12,1,6,1],["招聘決策",8,14,14,1,7,1],["員工入職",10,17,17,1,8,1],["培訓與發展",15,20,20,1,9,1],["績效評估",20,25,25,1,10,1],["員工關係","","","",6,11,-1],["解決員工關切",1,5,5,1,12,11],["解決工作場所衝突",2,6,6,1,13,11],["員工表揚計劃",7,15,15,1,14,11],["組織文化發展",10,20,20,1,15,11],["人力資源政策與合規","","","",6,16,-1],["更新員工手冊",1,7,7,1,17,16],["確保勞工法合規",2,8,8,1,18,16],["實施多元和包容性倡議",5,12,12,1,19,16],["衝突解決程序",10,15,15,1,20,16],["培訓與發展","","","",6,21,-1],["確定培訓需求",1,5,5,1,22,21],["制定培訓計劃",2,8,8,1,23,21],["培訓交付",5,12,12,1,24,21],["培訓評估",10,15,15,1,25,21],["健康與安全計畫","","","",6,26,-1],["實施 OSHA 指南",1,7,7,1,27,26],["緊急應變培訓",2,8,8,1,28,26],["工作場所安全檢查",5,12,12,1,29,26],["健康和健康計劃",10,15,15,1,30,26],["福利管理","","","",6,31,-1],["設計員工福利計劃",3,10,10,1,32,31],["參加福利計劃",5,12,12,1,33,31],["福利溝通",8,15,15,1,34,31],["福利評估和調整",12,20,20,1,35,31],["勞動力規劃","","","",6,36,-1],["預測員工需求",2,5,5,1,37,36],["承傳計劃",3,7,7,1,38,36],["管理組織變革",8,12,12,1,39,36],["人才管理",13,17,17,1,40,36],["員工發展","","","",6,41,-1],["職業規劃",2,5,5,1,42,41],["導師計劃",5,8,8,1,43,41],["專業發展機會",8,12,12,1,44,41],["領導培訓",13,15,15,1,45,41],["員工參與","","","",6,46,-1],["員工反饋調查",2,5,5,1,47,46],["員工表揚計劃",6,10,10,1,48,46]]"""
+        },
         {
           "role": "user",
           "content": msg.trim()
