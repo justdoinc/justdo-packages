@@ -313,6 +313,23 @@ _.extend TemplateParser.prototype,
 
   "lookup:project_id": getFromOptionsOrParents
 
+  "lookup:status_i18n": ->
+    if not (status_i18n = getFromTemplateOnly.call(@, "status_i18n"))?
+      return
+
+    perform_as = @user @lookup "perform_as"
+
+    if _.isObject status_i18n
+      status = APP.justdo_i18n.tr status_i18n.key, status_i18n.options, perform_as
+    if _.isString status_i18n
+      status = APP.justdo_i18n.tr status_i18n, {}, perform_as
+    return status
+  
+  "lookup:archived": ->
+    if getFromTemplateOnly.call(@, "archived")
+      return new Date()
+    return null
+
   "lookup:path": (key) ->
     if @parent?.task_id? and @parent?.task_id isnt "/"
       return "/#{@parent.task_id}/"
@@ -345,6 +362,10 @@ _.extend TemplateParser.prototype,
       due_date: @lookup "due_date"
       follow_up: @lookup "follow_up"
       state: @lookup "state"
+      archived: @lookup "archived"
+    
+    if (status = @lookup "status_i18n")?
+      task_props.status = status
 
     @task_id = APP.projects._grid_data_com.addChild path, task_props, user
 
