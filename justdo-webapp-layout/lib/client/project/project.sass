@@ -7,8 +7,6 @@
 .page-container-header
   position: relative
   z-index: 1
-  display: flex
-  align-items: center
 
 .project-container
   position: relative
@@ -17,14 +15,15 @@
 
   .dropdown-menu
     overflow: hidden
-
+  
   margin-top: -1 * $project-header-height
 
 .page-container-header
   height: $project-header-height
-  padding: 0 12px 0 6px
+  padding: 0 12px
 
 #project-main
+  padding: 0 15px
   padding-top: $project-header-height // XXX
 
 .below-project-header-items
@@ -38,9 +37,8 @@
 //
 
 #task-pane
-  z-index: 101
+  z-index: 10
   top: 0
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 4px
 
 .right-toolbar, .left-toolbar
   #project-main

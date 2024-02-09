@@ -20,42 +20,24 @@ $horizontal-toolbar-token-background-color: #F8F8F8
 $token-border-style-toolbar-connection-border-vertical: 1px solid $vertical-toolbar-token-background-color
 $token-border-style-toolbar-connection-border-horizontal: 1px solid $horizontal-toolbar-token-background-color
 
-$resize-token-hover-transition: all .2s ease-in-out
-
-.task-pane-resizable
-  position: absolute
-  transition: opacity 0.32s
-  display: flex
-  align-items: center
-  top: 0
-  height: 100%
-
 .task-pane-resize-token
-  height: 58px
-  width: 18px
-  display: flex
-  align-items: center
-  justify-content: center
   position: absolute
+  width: $vertical-resize-token-dim-width
+  height: $vertical-resize-token-dim-height
+  z-index: 100
   cursor: pointer
-  transition: all .2s ease-in-out
-  transform: scale(1)
-  &:hover
-    transform: scale(1.075)
+  background: #FFFFFF
+  border: 1px solid #C0C0C0
+  user-select: none
 
-  .resize-token-wrapper
-    display: flex
-    flex-direction: column
-    .resize-token-item
-      width: 4px
-      height: 15px
-      background-color: black
-      border-radius: 4px
-      transition: all .2s ease-in-out
-      &.top
-        transform: translateY(0.15rem) rotate(0deg) translateZ(0px)
-      &.bottom
-        transform: translateY(-0.15rem) rotate(0deg) translateZ(0px)
+  &::before
+    content: " "
+    width: 2px
+    height: 26px
+    background: #C0C0C0
+    position: absolute
+    border-radius: 1px
+
 
 .closed-toolbar
   .task-pane-header-container
@@ -63,22 +45,48 @@ $resize-token-hover-transition: all .2s ease-in-out
   .task-pane-content-container
     display: none
 
+//
+// task pane - Right
+//
 .right-toolbar
   .task-pane-resizable
     width: 7px
     left: -5px
-  .task-pane-resize-token
-    right: 0
+    top: 0
+    height: 100%
 
+  .task-pane-resize-token
+    left: $token-offset-from-toolbar-vertical
+    top: 0
+    bottom: 0
+    margin: auto 0
+    border-radius: $resize-token-border-radius 0px 0px $resize-token-border-radius
+    border-right: $token-border-style-toolbar-connection-border-vertical
+
+    &::before
+      right: $vertical-resize-token-inner-line-offset
+      top: 0
+      bottom: 0
+      margin: auto 0
+
+  &.closed-toolbar
+    #task-pane
+      right: $closed-toolbar-visible-area
+
+//
+// Resizable style
+//
 .right-toolbar
   .task-pane-resizable
     width: 7px
-    left: -7px
+    left: -5px
+    top: 0
+    height: 100%
 
 .left-toolbar
   .task-pane-resizable
     width: 7px
-    right: -7px
+    right: -5px
     top: 0
     height: 100%
 
@@ -89,28 +97,31 @@ $resize-token-hover-transition: all .2s ease-in-out
     top: -5px
     left: 0
 
+//
+// task pane - Left
+//
 .left-toolbar
   .task-pane-resize-token
-    left: 0
-  &.closed-toolbar
-    .task-pane-resize-token
-      &:hover
-        transform: scale(1.075) translatex(2px)
-    .resize-token-item.top
-      transform: translateY(0.15rem) rotate(-15deg) translateZ(0px)
-    .resize-token-item.bottom
-      transform: translateY(-0.15rem) rotate(15deg) translateZ(0px)
+    right: $token-offset-from-toolbar-vertical
+    top: 0
+    bottom: 0
+    margin: auto 0
+    border-radius: 0px $resize-token-border-radius $resize-token-border-radius 0px
+    border-left: $token-border-style-toolbar-connection-border-vertical
 
-.right-toolbar
-  &.closed-toolbar
-    .task-pane-resize-token
-      &:hover
-        transform: scale(1.075) translatex(-2px)
-    .resize-token-item.top
-      transform: translateY(0.15rem) rotate(15deg) translateZ(0px)
-    .resize-token-item.bottom
-      transform: translateY(-0.15rem) rotate(-15deg) translateZ(0px)
+    &::before
+      left: $vertical-resize-token-inner-line-offset
+      top: 0
+      bottom: 0
+      margin: auto 0
 
+  &.closed-toolbar
+    #task-pane
+      left: $closed-toolbar-visible-area
+
+//
+// task pane - Bottom
+//
 .bottom-toolbar
   .task-pane-resize-token
     left: 0
@@ -141,37 +152,28 @@ $resize-token-hover-transition: all .2s ease-in-out
 //
 // Resize token transition
 //
+$resize-token-hover-transition: all .2s ease-in-out
 .right-toolbar
   .task-pane-resize-token
     &:hover, &:active
-      .resize-token-item.top
-        transform: translateY(0.15rem) rotate(-15deg) translateZ(0px)
-      .resize-token-item.bottom
-        transform: translateY(-0.15rem) rotate(15deg) translateZ(0px)
+      transition: $resize-token-hover-transition
+      width: $vertical-resize-token-dim-width + $token-hover-extension
+      left: $token-offset-from-toolbar-vertical - $token-hover-extension
 
-.right-toolbar.closed-toolbar
-  .task-pane-resize-token
-    &:hover, &:active
-      .resize-token-item.top
-        transform: translateY(0.15rem) rotate(15deg) translateZ(0px)
-      .resize-token-item.bottom
-        transform: translateY(-0.15rem) rotate(-15deg) translateZ(0px)
+      &::before
+        transition: $resize-token-hover-transition
+        right: $vertical-resize-token-inner-line-offset + $token-hover-extension
 
 .left-toolbar
   .task-pane-resize-token
     &:hover, &:active
-      .resize-token-item.top
-        transform: translateY(0.15rem) rotate(15deg) translateZ(0px)
-      .resize-token-item.bottom
-        transform: translateY(-0.15rem) rotate(-15deg) translateZ(0px)
+      transition: $resize-token-hover-transition
+      width: $vertical-resize-token-dim-width + $token-hover-extension
+      right: $token-offset-from-toolbar-vertical - $token-hover-extension
 
-.left-toolbar.closed-toolbar
-  .task-pane-resize-token
-    &:hover, &:active
-      .resize-token-item.top
-        transform: translateY(0.15rem) rotate(-15deg) translateZ(0px)
-      .resize-token-item.bottom
-        transform: translateY(-0.15rem) rotate(15deg) translateZ(0px)
+      &::before
+        transition: $resize-token-hover-transition
+        left: $vertical-resize-token-inner-line-offset + $token-hover-extension
 
 .bottom-toolbar
   .task-pane-resize-token
