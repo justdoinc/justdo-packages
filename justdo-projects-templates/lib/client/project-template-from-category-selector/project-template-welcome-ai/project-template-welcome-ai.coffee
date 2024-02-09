@@ -173,6 +173,10 @@ Template.project_template_welcome_ai.events
     if _.isEmpty(template_items = APP.collections.AIResponse.find(query).fetch())
       return
 
+    # Top level tasks' state should always be nil
+    template_items = _.map template_items, (item) -> 
+      item.state = "nil"
+      return item
     recursiveBulkCreateTasks("/", template_items)
     tpl.bootbox_dialog.modal "hide"
 

@@ -156,7 +156,6 @@ _.extend JustDoProjectsTemplates.prototype,
     request_id = await APP.justdo_ai_kit.openai.createChatCompletion req, user_id
     stream = await APP.justdo_ai_kit.openai.getRequest request_id
 
-    
     await return stream
   
   streamTemplateFromOpenAiMethodHandler: (msg, user_id) ->
@@ -200,7 +199,10 @@ _.extend JustDoProjectsTemplates.prototype,
           start_date: if _.isNumber(start_date_offset) then moment().add(start_date_offset, 'days').format("YYYY-MM-DD") else null
           end_date: if _.isNumber(end_date_offset) then moment().add(end_date_offset, 'days').format("YYYY-MM-DD") else null
           due_date: if _.isNumber(due_date_offset) then moment().add(due_date_offset, 'days').format("YYYY-MM-DD") else null
-          state: if (state_idx >= 0) then states[state_idx] else "nil"
+          # state: if (state_idx >= 0) then states[state_idx] else "nil"
+          # Uncomment the line above and remove the line below once the AI model is updated to return more variety of states,
+          # instead just in-progress.
+          state: "pending"
 
         return fields
 
