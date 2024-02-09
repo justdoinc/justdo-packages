@@ -60,6 +60,7 @@ Template.grid_control_search_dropdown.onCreated ->
   ]
   # Prototyping data - End
 
+  @prev_search_val = ""
   Tracker.autorun =>
     search_val = @data.search_val.get().trim()
     paths = share.search_dropdown.template_data.result_paths.get()
@@ -67,7 +68,8 @@ Template.grid_control_search_dropdown.onCreated ->
     if search_val == "" or _.isEmpty(paths)
       tpl.result_count.set tpl.result_count_step
       share.search_dropdown.$dropdown.removeClass "open"
-    else
+    else if search_val isnt @prev_search_val
+      @prev_search_val = search_val
       share.search_dropdown.$dropdown.addClass "open"
 
   return

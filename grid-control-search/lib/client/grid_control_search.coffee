@@ -355,6 +355,8 @@ _.extend GridControlSearch.prototype,
       @_setMessage("")
 
   prev: ->
+    share.search_dropdown.$dropdown.removeClass "open"
+
     if not @isGridControlDefined()
       @logger.debug "Grid control is not defined, @prev() cancelled"
 
@@ -364,6 +366,8 @@ _.extend GridControlSearch.prototype,
       @grid_control.activatePath(@prev_path)
 
   next: ->
+    share.search_dropdown.$dropdown.removeClass "open"
+
     if not @isGridControlDefined()
       @logger.debug "Grid control is not defined, @next() cancelled"
 
