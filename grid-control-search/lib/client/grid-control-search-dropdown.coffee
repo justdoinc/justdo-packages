@@ -76,25 +76,26 @@ Template.grid_control_search_dropdown.onCreated ->
 
 Template.grid_control_search_dropdown.helpers
   result_tasks: ->
+    tpl = Template.instance()
+
     search_val = share.search_dropdown.template_data.search_val.get()
     paths = share.search_dropdown.template_data.result_paths.get()
     tasks = []
 
-    for path in paths
-      task_id = GridData.helpers.getPathItemId path
+    task_ids = _.map paths, (path) -> GridData.helpers.getPathItemId path
+    result_count = tpl.result_count.get()
+    tasks = APP.collections.Tasks.find({_id: {$in: task_ids}}, {limit: result_count}).map (task_doc) ->
+      task_obj = {
+        task_id: task_doc._id
+        seqId: highlight(task_doc.seqId, search_val, "seqId")
+        title: highlight(task_doc.title, search_val, "title")
+        state: highlight(stateFormatter(task_doc.state), search_val, "state")
+        note: highlight(task_doc.status, search_val, "status")
+      }
 
-      if (task = APP.collections.Tasks.findOne(task_id))?
-        task_obj = {
-          task_id: task_id
-          seqId: highlight(task.seqId, search_val, "seqId")
-          title: highlight(task.title, search_val, "title")
-          state: highlight(stateFormatter(task.state), search_val, "state")
-          note: highlight(task.status, search_val, "status")
-        }
+      return task_obj
 
-        tasks.push task_obj
-
-    return tasks.slice(0, Template.instance().result_count.get())
+    return tasks
 
   resultTasksCount: ->
     paths = share.search_dropdown.template_data.result_paths.get()
