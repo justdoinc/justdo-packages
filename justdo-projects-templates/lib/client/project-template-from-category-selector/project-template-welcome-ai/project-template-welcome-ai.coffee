@@ -24,6 +24,66 @@ Template.project_template_welcome_ai.onCreated ->
 
     return
 
+  @removeAllItemsWithPubIdInMiniMongo = (pub_id) ->
+    APP.collections.AIResponse._collection.remove({pub_id: pub_id})
+    return
+
+  @sendRequestToOpenAI = (request) ->
+    @is_loading_rv.set true
+    @lockInput()
+    Meteor.call "streamTemplateFromOpenAi", request, (err, pub_id) =>
+      if err?
+        JustdoSnackbar.show
+          text: err.reason or err
+        return
+      
+      old_pub_id = Tracker.nonreactive => @pub_id_rv.get()
+      if not _.isEmpty(old_pub_id)
+        @removeAllItemsWithPubIdInMiniMongo old_pub_id
+
+      @pub_id_rv.set ""
+      @templates_sub_handle?.stop()
+
+      @pub_id_rv.set pub_id
+      @templates_sub_handle = Meteor.subscribe pub_id, 
+        onReady: => @showDropdown()
+        onStop: => 
+          @is_loading_rv.set false
+          @unlockInput()
+          return
+
+      return
+
+  @removeAllItemsWithPubIdInMiniMongo = (pub_id) ->
+    APP.collections.AIResponse._collection.remove({pub_id: pub_id})
+    return
+
+  @sendRequestToOpenAI = (request) ->
+    @is_loading_rv.set true
+    @lockInput()
+    Meteor.call "streamTemplateFromOpenAi", request, (err, pub_id) =>
+      if err?
+        JustdoSnackbar.show
+          text: err.reason or err
+        return
+      
+      old_pub_id = Tracker.nonreactive => @pub_id_rv.get()
+      if not _.isEmpty(old_pub_id)
+        @removeAllItemsWithPubIdInMiniMongo old_pub_id
+
+      @pub_id_rv.set ""
+      @templates_sub_handle?.stop()
+
+      @pub_id_rv.set pub_id
+      @templates_sub_handle = Meteor.subscribe pub_id, 
+        onReady: => @showDropdown()
+        onStop: => 
+          @is_loading_rv.set false
+          @unlockInput()
+          return
+
+      return
+
   return
 
 Template.project_template_welcome_ai.helpers
@@ -61,26 +121,11 @@ Template.project_template_welcome_ai.events
   "click .welcome-ai-btn-generate": (e, tpl) ->
     request = $(".welcome-ai-input").val().trim()
 
-    tpl.is_loading_rv.set true
-    tpl.lockInput()
-    Meteor.call "streamTemplateFromOpenAi", request, (err, pub_id) ->
-      if err?
-        JustdoSnackbar.show
-          text: err.reason or err
-        return
-
-      tpl.pub_id_rv.set ""
-      tpl.templates_sub_handle?.stop()
-
-      tpl.pub_id_rv.set pub_id
-      tpl.templates_sub_handle = Meteor.subscribe pub_id,
-        onReady: -> tpl.showDropdown()
-        onStop: ->
-          tpl.is_loading_rv.set false
-          tpl.unlockInput()
-          return
-
-      return
+    # If request is empty, use the first example prompt from the dropdown.
+    if _.isEmpty request
+      $($(".welcome-ai-suggestion-item").get(0)).click()
+    else
+      tpl.sendRequestToOpenAI request
 
     return
 
