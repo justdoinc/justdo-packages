@@ -167,6 +167,51 @@ _.extend JustDoProjectsTemplates.prototype,
     pub_id = Random.id()
     Meteor.publish pub_id, ->
       publish_this = @
+
+      # This block is to specifically handle requests that requires pre-defined templates.
+      if (template_obj = self.getTemplateById msg)?
+        _id = 0
+        _recursiveParseAndPublishTemplateTask = (template_task, parent) ->
+          fields = 
+            _id: _id
+            pub_id: pub_id
+            parent: parent
+            state: template_task.state
+            start_date: template_task.start_date
+            end_date: template_task.end_date
+            due_date: template_task.due_date
+
+          if _.isFunction(i18n_title = template_task.title_i18n)
+            fields.title = i18n_title user_id
+          else if _.isObject i18n_title
+            fields.title = APP.justdo_i18n.tr i18n_title.key, i18n_title.options, user_id
+          else if _.isString i18n_title
+            fields.title = APP.justdo_i18n.tr i18n_title, {}, user_id
+
+          if _.isObject(status_i18n = template_task.status_i18n)
+            fields.status = APP.justdo_i18n.tr status_i18n.key, status_i18n.options, user_id
+          else if _.isString status_i18n
+            fields.status = APP.justdo_i18n.tr status_i18n, {}, user_id
+
+          if template_task.archived
+            fields.archived = new Date()
+          
+          publish_this.added "ai_response", fields._id, fields
+          _id += 1
+
+          if (subtasks = template_task.tasks)?
+            for subtask in subtasks
+              _recursiveParseAndPublishTemplateTask subtask, fields._id
+
+          return
+        
+        template_tasks = template_obj.template.tasks
+        for template_task in template_tasks
+          _recursiveParseAndPublishTemplateTask template_task, -1
+        
+        publish_this.stop()
+        return
+
       stream = await self.streamTemplateFromOpenAi msg, user_id
       
       self.once "stop_stream_#{pub_id}_#{user_id}", ->

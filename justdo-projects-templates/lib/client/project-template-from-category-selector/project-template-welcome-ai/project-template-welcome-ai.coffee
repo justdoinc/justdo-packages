@@ -112,9 +112,19 @@ Template.project_template_welcome_ai.events
     return
 
   "click .welcome-ai-suggestion-item": (e, tpl) ->
+    # On the first click, we fetch the pre-definied template from server and remove the data attribute.
+    # On the second click of the same item, if the user wishes to re-generate, we actually pass the request to OpenAI.
+
     request = $(e.currentTarget).text()
     $(".welcome-ai-input").val request
-    $(".welcome-ai-btn-generate").click()
+    tpl.lockInput()
+    tpl.hideDropdown()
+    
+    if (template_id = $(e.currentTarget).data("template_id"))?
+      $(e.currentTarget).removeData "template_id"
+      tpl.sendRequestToOpenAI template_id
+    else
+      $(".welcome-ai-btn-generate").click()
 
     return
 
