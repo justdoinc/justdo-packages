@@ -12,6 +12,8 @@ _.extend JustdoNewProjectTemplates.prototype,
     return
 
   _setupOpenAIPromptOnProjectCreationHook: ->
+    APP.projects.on "pre-create-new-project", (options) -> options.init_first_task = false
+
     APP.projects.on "post-create-new-project", (project_id) => 
       Tracker.autorun (computation) =>
         if JD.activeJustdoId() is project_id
