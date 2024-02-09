@@ -408,6 +408,7 @@ GridControl.installFormatter formatter_name,
 
     # If field is calculated field, show its returned value
     if (cval = value.cval)?
+      cval = JustdoHelpers.roundNumber cval, 2
       return """<div style="font-weight: bold; text-decoration: underline; text-align: right;">#{cval}</div>"""
 
     return """<div style="text-align: right;">#{value}</div>"""
