@@ -165,7 +165,11 @@ Template.project_template_welcome_ai.events
           recursiveBulkCreateTasks created_task_path, template_items
 
       return
-
+    
+    # In case the resnpose has only 1 root task, use the child tasks as root tasks.
+    if APP.collections.AIResponse.find(query).count() is 1
+      query.parent = 0
+    
     if _.isEmpty(template_items = APP.collections.AIResponse.find(query).fetch())
       return
 
