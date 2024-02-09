@@ -17,23 +17,40 @@
         </div>
       </div>
 
+      {{#unless $or isResponseExists isLoading}}
+        <div class="welcome-ai-dropdown">
+          <div class="welcome-ai-suggestion-item">Create a project for an <span>IT</span> company</div>
+          <div class="welcome-ai-suggestion-item">Create project for <span>Real Estate</span> company</div>
+          <div class="welcome-ai-suggestion-item">Create project for <span>Movie Production</span> company</div>
+        </div>
+      {{/unless}}
+
 
       <div class="welcome-ai-results">
         {{#if $or isResponseExists isLoading}}
-          <div class="welcome-ai-results-items">
-            {{#each rootTemplate}}
-              {{> project_template_welcome_ai_task_item}}
-            {{/each}}
-          </div>
+          {{#if isResponseExists}}
+            <div class="welcome-ai-results-items">
+              {{#each rootTemplate}}
+                {{> project_template_welcome_ai_task_item}}
+              {{/each}}
+            </div>
+          {{else}}
+            <div class="welcome-ai-results-loading">
+              <div class="loader">
+                <div class="double-bounce1 bg-primary"></div>
+                <div class="double-bounce2 bg-primary"></div>
+              </div>
+            </div>
+          {{/if}}
           {{#if $not isLoading}}
             <div class="welcome-ai-create-btn-wrapper">
               <div class="welcome-ai-create-btn btn-primary btn-sm text-center">Create</div>
             </div>
           {{/if}}
         {{else}}
-          <div class="welcome-ai-suggestion-item">Create a project for an <span>IT</span> company</div>
-          <div class="welcome-ai-suggestion-item">Create project for <span>Real Estate</span> company</div>
-          <div class="welcome-ai-suggestion-item">Create project for <span>Movie Production</span> company</div>
+          <div class="welcome-ai-results-empty">
+            No tasks
+          </div>
         {{/if}}
       </div>
 

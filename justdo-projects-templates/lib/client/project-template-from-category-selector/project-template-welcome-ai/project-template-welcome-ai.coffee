@@ -15,14 +15,21 @@ Template.project_template_welcome_ai.onCreated ->
       return false
     return APP.collections.AIResponse.findOne({pub_id: pub_id, parent: -1}, {fields: {_id: 1}})?
 
-  @showDropdown = -> $(".welcome-ai-results").addClass "show"
-  @hideDropdown = -> $(".welcome-ai-results").removeClass "show"
+  @showDropdown = -> $(".welcome-ai-dropdown").addClass "show"
+  @hideDropdown = -> $(".welcome-ai-dropdown").removeClass "show"
 
   @autorun ->
     APP.collections.AIResponse.find().fetch()
     $(".welcome-ai-results-items").animate(scrollTop: $('.welcome-ai-results-items').prop("scrollHeight"), 100)
 
     return
+
+  return
+
+Template.project_template_welcome_ai.onRendered ->
+  setTimeout ->
+    $(".welcome-ai-input").focus()
+  , 1000
 
   return
 
@@ -156,6 +163,7 @@ Template.project_template_welcome_ai.events
   "click .welcome-ai-stop-generation": (e, tpl) ->
     APP.justdo_projects_templates.stopStreamTemplateFromOpenAi tpl.pub_id_rv.get()
     tpl.unlockInput()
+    $(".welcome-ai-input").focus()
     return
 
   # This is to handle the checkbox logic for the AI response items:
