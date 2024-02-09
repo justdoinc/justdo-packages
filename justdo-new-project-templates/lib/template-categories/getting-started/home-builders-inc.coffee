@@ -39,40 +39,30 @@ APP.getEnv (env) ->
         key: "first_root_task" # task with key: "first_root_task" will dictate the range of gantt chart shown by its basket start date and end date 
         tasks: [
           title_i18n: "project_templates_task_title_demo_site_name_1"
+          state: "in-progress"
           events: [
             action: "toggleIsProject"
-          ,
-            action: "setState"
-            args: "in-progress"
           ]
           tasks: [
             title_i18n: "project_templates_task_title_project_planning"
             key: "s1_planning"
             expand: true
-            events: [
-              action: "setState"
-              args: "in-progress"
-            ]
+            state: "in-progress"
             tasks: [
               title_i18n: "project_templates_task_title_scope_definition"
               key: "s1_scoping"
               start_date: share.getDateOffsetByDays(-365 * 3)
               end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 4)
               due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 4)
-              events: [
-                action: "setState"
-                args: "done"
-              ]
+              state: "done"
             ,
               title_i18n: "project_templates_task_title_timeline_and_budgeting"
               key: "s1_timeline"
               start_date: share.getDateOffsetByDays(-365 * 3 + 30 * 4 + 1)
               end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 6)
               due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 6)
+              state: "pending"
               events: [
-                action: "setState"
-                args: "pending"
-              ,
                 action: "addGanttDependency"
                 args: ["s1_scoping"]
               ]
@@ -82,10 +72,8 @@ APP.getEnv (env) ->
               start_date: share.getDateOffsetByDays(-365 * 3 + 30 * 4 + 1)
               end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 6)
               due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 6)
+              state: "will-not-do"
               events: [
-                action: "setState"
-                args: "will-not-do"
-              ,
                 action: "addGanttDependency"
                 args: ["s1_scoping"]                
               ]
@@ -93,10 +81,8 @@ APP.getEnv (env) ->
           ,
             title_i18n: "project_templates_task_title_design_and_engineering"
             key: "s1_design"
+            state: "in-progress"
             events: [
-              action: "setState"
-              args: "in-progress"
-            ,
               action: "addGanttDependency"
               args: ["s1_planning"]
             ]
@@ -131,10 +117,8 @@ APP.getEnv (env) ->
           ,
             title_i18n: "project_templates_task_title_site_preparation"
             key: "s1_site_prep"
+            state: "pending"
             events: [
-              action: "setState"
-              args: "pending"
-            ,
               action: "addGanttDependency"
               args: ["s1_design"]
             ]            
@@ -167,10 +151,8 @@ APP.getEnv (env) ->
           ,
             title_i18n: "project_templates_task_title_construction"
             key: "s1_construction"
+            state: "done"
             events: [
-              action: "setState"
-              args: "done"
-            ,
               action: "addGanttDependency"
               args: ["s1_site_prep"]
             ]
@@ -180,20 +162,15 @@ APP.getEnv (env) ->
               start_date: share.getDateOffsetByDays(-365 * 3 + 30 * 24 + 1)
               end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 30)
               due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 30)
-              events: [
-                action: "setState"
-                args: "done"
-              ]
+              state: "done"
             ,
               title_i18n: "project_templates_task_title_interior_and_exterior_finishing"
               key: "s1_finishing"
               start_date: share.getDateOffsetByDays(-365 * 3 + 30 * 30 + 1)
               end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 36)
               due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 36)
+              state: "done"
               events: [
-                action: "setState"
-                args: "done"
-              ,
                 action: "addGanttDependency"
                 args: ["s1_structural"]
               ]            
@@ -202,22 +179,18 @@ APP.getEnv (env) ->
               start_date: share.getDateOffsetByDays(-365 * 3 + 30 * 36 + 1)
               end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 38)
               due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 38)
+              state: "done"
               events: [
-                action: "setState"
-                args: "done"
-              ,
                 action: "addGanttDependency"
                 args: ["s1_finishing"]
               ]
             ]
           ,
             title_i18n: "project_templates_task_title_inspection_and_quality_control"
+            state: "done"
             events: [
-              action: "setState"
-              args: "done"
-            ,
-                action: "addGanttDependency"
-                args: ["s1_construction"]
+              action: "addGanttDependency"
+              args: ["s1_construction"]
             ]
             tasks: [
               title_i18n: "project_templates_task_title_code_compliance"
@@ -225,39 +198,28 @@ APP.getEnv (env) ->
               start_date: share.getDateOffsetByDays(-365 * 3 + 30 * 38 + 1)
               end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 41)
               due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 41)
-              events: [
-                action: "setState"
-                args: "done"
-              ]              
+              state: "done"              
             ,
               title_i18n: "project_templates_task_title_safety_inspections"
               key: "s1_inspections"
               start_date: share.getDateOffsetByDays(-365 * 3 + 30 * 38 + 1)
               end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 41)
               due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 41)
-              events: [
-                action: "setState"
-                args: "done"
-              ]            
+              state: "done"            
             ,
               title_i18n: "project_templates_task_title_punch_list"
               start_date: share.getDateOffsetByDays(-365 * 3 + 30 * 41 + 1)
               end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 43)
               due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 43)
+              state: "done"
               events: [
-                action: "setState"
-                args: "done"
-              ,
                 action: "addGanttDependency"
                 args: ["s1_compliance", "s1_inspections"]
               ]            
             ]
           ,
             title_i18n: "project_templates_task_title_project_closeout"
-            events: [
-              action: "setState"
-              args: "in-progress"
-            ]            
+            state: "in-progress"            
             tasks: [
               title_i18n: "project_templates_task_title_final_documentation"
             ,
@@ -268,10 +230,7 @@ APP.getEnv (env) ->
           ]
         ,
           title_i18n: "project_templates_task_title_demo_site_name_2"
-          events: [
-            action: "setState"
-            args: "will-not-do"
-          ]          
+          state: "will-not-do"          
           events: [
             action: "toggleIsProject"
           ]
@@ -335,36 +294,20 @@ APP.getEnv (env) ->
             options = 
               task_name: APP.justdo_i18n.tr "project_templates_task_title_demo_site_name_3", {}, user
             APP.justdo_i18n.tr "project_templates_task_title_completed_suffix", options, user
-          events: [
-            action: "setArchived"
-          ,
-            action: "setState"
-            args: "done"
-          ]
+          state: "done"
+          archived: true
           tasks: [
             title_i18n: "project_templates_task_title_project_planning"
-            events: [
-              action: "setState"
-              args: "done"
-            ]            
+            state: "done"            
             tasks: [
               title_i18n: "project_templates_task_title_scope_definition"
-              events: [
-                action: "setState"
-                args: "done"
-              ]              
+              state: "done"              
             ,
               title_i18n: "project_templates_task_title_timeline_and_budgeting"
-              events: [
-                action: "setState"
-                args: "done"
-              ]            
+              state: "done"            
             ,
               title_i18n: "project_templates_task_title_permitting_and_compliance"
-              events: [
-                action: "setState"
-                args: "done"
-              ]            
+              state: "done"            
             ]
           ,
             title_i18n: "project_templates_task_title_design_and_engineering"
@@ -417,36 +360,20 @@ APP.getEnv (env) ->
             options = 
               task_name: APP.justdo_i18n.tr "project_templates_task_title_demo_site_name_4", {}, user
             APP.justdo_i18n.tr "project_templates_task_title_completed_suffix", options, user
-          events: [
-            action: "setArchived"
-          ,
-            action: "setState"
-            args: "done"
-          ]
+          state: "done"
+          archived: true
           tasks: [
             title_i18n: "project_templates_task_title_project_planning"
-            events: [
-              action: "setState"
-              args: "done"
-            ]
+            state: "done"
             tasks: [
               title_i18n: "project_templates_task_title_scope_definition"
-              events: [
-                action: "setState"
-                args: "done"
-              ]              
+              state: "done"              
             ,
               title_i18n: "project_templates_task_title_timeline_and_budgeting"
-              events: [
-                action: "setState"
-                args: "done"
-              ]            
+              state: "done"            
             ,
               title_i18n: "project_templates_task_title_permitting_and_compliance"
-              events: [
-                action: "setState"
-                args: "done"
-              ]            
+              state: "done"            
             ]
           ,
             title_i18n: "project_templates_task_title_design_and_engineering"
@@ -497,38 +424,23 @@ APP.getEnv (env) ->
         ]
       ,
         title_i18n: "project_templates_task_title_finance"
-        events: [
-          action: "setState"
-          args: "nil"
-        ]
+        state: "nil"
         tasks: [
           title_i18n: (user) ->
             options = 
               site_name: APP.justdo_i18n.tr "project_templates_task_title_demo_site_name_1", {}, user
             return APP.justdo_i18n.tr "project_templates_task_title_secure_financing_for_custom_name", options, user
           expand: true
-          events: [
-            action: "setState"
-            args: "pending"
-          ]
+          state: "pending"
           tasks: [
             title_i18n: "project_templates_task_title_determine_load_requirements"
-            events: [
-              action: "setState"
-              args: "will-not-do"
-            ]                 
+            state: "will-not-do"                 
           ,
             title_i18n: "project_templates_task_title_create_a_financial_model"
-            events: [
-              action: "setState"
-              args: "in-progress"
-            ]     
+            state: "in-progress"     
           ,
             title_i18n: "project_templates_task_title_identify_potential_lenders"
-            events: [
-              action: "setState"
-              args: "pending"
-            ]                 
+            state: "pending"                 
             tasks: [
               title_i18n: 
                 key: "project_templates_task_title_bank_with_custom_name"
@@ -549,10 +461,7 @@ APP.getEnv (env) ->
           ]
         ,
           title_i18n: "project_templates_task_title_prepare_fy_report"
-          events: [
-            action: "setState"
-            args: "on-hold"
-          ]
+          state: "on-hold"
           tasks: [
             title_i18n: "project_templates_task_title_contact_auditor"
           ,
@@ -561,38 +470,24 @@ APP.getEnv (env) ->
         ]
       ,
         title_i18n: "project_templates_task_title_human_resources"
-        events: [
-          action: "setState"
-          args: "nil"
-        ]        
+        state: "nil"        
         expand: true
         tasks: [
           title_i18n: "project_templates_task_title_recruit_on_site_engineer"
-          events: [
-            action: "setState"
-            args: "in-progress"
-          ]          
+          state: "in-progress"          
           tasks: [
             title_i18n: 
               key: "project_templates_task_title_candidate_with_custom_name"
               options: 
                 candidate_name: "A"
-            events: [
-              action: "setStatus"
-              args: "project_templates_task_title_coordinate_zoom_meeting"
-            ,
-              action: "setState"
-              args: "done"
-            ]
+            state: "done"
+            status_i18n: "project_templates_task_title_coordinate_zoom_meeting"
           ,
             title_i18n: 
               key: "project_templates_task_title_candidate_with_custom_name"
               options: 
                 candidate_name: "B"
-            events: [
-              action: "setStatus"
-              args: "project_templates_task_title_cv_is_missing_contact_by_email"
-            ]
+            status_i18n: "project_templates_task_title_cv_is_missing_contact_by_email"
           ]
         ]
       ]

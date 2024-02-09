@@ -39,77 +39,56 @@ APP.getEnv (env) ->
         key: "first_root_task" # task with key: "first_root_task" will dictate the range of gantt chart shown by its basket start date and end date 
         tasks: [
           title_i18n: "demo_movie_name_1"
+          state: "in-progress"
           events: [
             action: "toggleIsProject"
-          ,
-            action: "setState"
-            args: "in-progress"
           ]
           tasks: [
             title_i18n: "development"
             key: "m1_development"
             expand: true
-            events: [
-              action: "setState"
-              args: "in-progress"
-            ]            
+            state: "in-progress"            
             tasks: [
               title_i18n:"evaluate_and_acquire_idea"
               key: "acquire_idea"
               start_date: share.getDateOffsetByDays -30 * 9
               end_date: share.getDateOffsetByDays -30 * 3
               due_date: share.getDateOffsetByDays -30 * 3 + 10
-              events: [
-                action: "setState"
-                args: "done"
-              ]              
+              state: "done"              
             ,
               title_i18n: "develop_story_conecpt_into_screenplay"
               key: "story_to_screenplay"
               start_date: share.getDateOffsetByDays -30 * 3 + 11
               end_date: share.getDateOffsetByDays 30 + 25
               due_date: share.getDateOffsetByDays 30 + 25
+              state: "in-progress"
               events: [
-                action: "setState"
-                args: "in-progress"
-              ,
                 action: "addGanttDependency"
                 args: ["acquire_idea"]
               ]   
             ,
               title_i18n: "attaching_key_talent"
               expand: true
-              events: [
-                action: "setState"
-                args: "in-progress"
-              ]
+              state: "in-progress"
               tasks: [
                 title_i18n: "potential_actors"
                 start_date: share.getDateOffsetByDays -30 * 3 - 5
                 end_date: share.getDateOffsetByDays 30 * 2 - 5
                 due_date: share.getDateOffsetByDays 30 * 2 - 5
-                events: [
-                  action: "setState"
-                  args: "in-progress"
-                ]
+                state: "in-progress"
               ,
                 title_i18n: "directors"
                 start_date: share.getDateOffsetByDays -30 * 4 + 9
                 end_date: share.getDateOffsetByDays -5
                 due_date: share.getDateOffsetByDays -5
-                events: [
-                  action: "setState"
-                  args: "done"
-                ]
+                state: "done"
               ]                         
             ]
           ,
             title_i18n: "pre_production"
             key: "pre_production"
+            state: "in-progress"
             events: [
-              action: "setState"
-              args: "in-progress"
-            ,
               action: "addGanttDependency"
               args: ["m1_development"]
             ]
@@ -151,10 +130,7 @@ APP.getEnv (env) ->
           ,
             title_i18n: "post_production"
             key: "post_production"
-            events: [
-              action: "setState"
-              args: "on-hold"
-            ]
+            state: "on-hold"
             tasks: [
               title_i18n: "collaborating_with_the_composer_on_the_flims_score"
               key: "flim_score"
@@ -234,11 +210,9 @@ APP.getEnv (env) ->
           ]
         ,
           title_i18n: "demo_movie_name_2"
+          state: "in-progress"
           events: [
             action: "toggleIsProject"
-          ,
-            action: "setState"
-            args: "in-progress"
           ]
           tasks: [
             title_i18n: "development"
@@ -246,20 +220,15 @@ APP.getEnv (env) ->
             start_date: share.getDateOffsetByDays(-(365 + 30 * 4))
             end_date: share.getDateOffsetByDays(-30 * 11 + 5)
             due_date: share.getDateOffsetByDays(-30 * 11)
-            events: [
-              action: "setState"
-              args: "done"
-            ]
+            state: "done"
           ,
             title_i18n: "pre_production"
             key: "pre_production"
             start_date: share.getDateOffsetByDays(-30 * 11 + 6)
             end_date: share.getDateOffsetByDays(-30 * 7 + 12)
             due_date: share.getDateOffsetByDays(-30 * 8)
+            state: "done"
             events: [
-              action: "setState"
-              args: "done"
-            ,
               action: "addGanttDependency"
               args: ["m2_development"]
             ]          
@@ -268,10 +237,8 @@ APP.getEnv (env) ->
             start_date: share.getDateOffsetByDays(-30 * 7 + 13)
             end_date: share.getDateOffsetByDays 30 + 14
             due_date: share.getDateOffsetByDays 30 + 25
+            state: "done"
             events: [
-              action: "setState"
-              args: "done"
-            ,
               action: "addGanttDependency"
               args: ["pre_production"]
             ]          
@@ -280,10 +247,8 @@ APP.getEnv (env) ->
             start_date: share.getDateOffsetByDays(-30 * 7 + 13)
             end_date: share.getDateOffsetByDays 30 * 5 - 5
             due_date: share.getDateOffsetByDays 30 * 5 - 5
+            state: "in-progress"
             events: [
-              action: "setState"
-              args: "in-progress"
-            ,
               action: "addGanttDependency"
               args: ["pre_production"]
             ]          
@@ -293,13 +258,8 @@ APP.getEnv (env) ->
             options = 
               task_name: APP.justdo_i18n.tr "demo_movie_name_3", {}, user
             return APP.justdo_i18n.tr "project_templates_task_title_completed_suffix", options, user
-          events: [
-            action: "setArchived"
-            args: "nil"
-          ,
-            action: "setState"
-            args: "done"
-          ]
+          state: "done"
+          archived: true
           tasks: [
             title_i18n: "development"
           ,
@@ -312,17 +272,11 @@ APP.getEnv (env) ->
         ]
       ,
         title_i18n: "project_templates_task_title_finance"
-        events: [
-          action: "setState"
-          args: "in-progress"
-        ]        
+        state: "in-progress"        
         tasks: [
           title_i18n: "funding_identification_and_procurement"
           expand: true
-          events: [
-            action: "setState"
-            args: "in-progress"
-          ]          
+          state: "in-progress"          
           tasks: [
             title_i18n: (user) ->
               options =
@@ -333,18 +287,12 @@ APP.getEnv (env) ->
               title_i18n: "negotiate_terms_and_conditions"
             ,
               title_i18n: "draft_legal_agreement"
-              events: [
-                action: "setStatus"
-                args: "remember_to_exclude_exclusive_right_to_finance"
-              ]
+              status_i18n: "remember_to_exclude_exclusive_right_to_finance"
             ]
           ]
         ,
           title_i18n: "cash_flow_management"
-          events: [
-            action: "setState"
-            args: "in-progress"
-            ]          
+          state: "in-progress"          
         ,
           title_i18n: "contract_negotiation_and_management"
         ]
@@ -357,19 +305,13 @@ APP.getEnv (env) ->
               key: "project_templates_task_title_candidate_with_custom_name"
               options: 
                 candidate_name: "A"
-            events: [
-              action: "setStatus"
-              args: "project_templates_task_title_coordinate_zoom_meeting"
-            ]
+            status_i18n: "project_templates_task_title_coordinate_zoom_meeting"
           ,
             title_i18n: 
               key: "project_templates_task_title_candidate_with_custom_name"
               options: 
                 candidate_name: "B"
-            events: [
-              action: "setStatus"
-              args: "project_templates_task_title_cv_is_missing_contact_by_email"
-            ]
+            status_i18n: "project_templates_task_title_cv_is_missing_contact_by_email"
           ]
         ]
       ]

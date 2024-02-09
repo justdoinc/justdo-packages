@@ -37,96 +37,64 @@ APP.getEnv (env) ->
       tasks: [
         title_i18n: "project_templates_task_title_research_and_development"
         key: "first_root_task" # task with key: "first_root_task" will dictate the range of gantt chart shown by its basket start date and end date 
-        events: [
-          action: "setState"
-          args: "nil"
-        ]
+        state: "nil"
         tasks: [
           title_i18n: "project_templates_task_title_mobile_app_development"
-          events: [
-            action: "setState"
-            args: "nil"
-          ]
+          state: "nil"
           tasks: [
             title_i18n: "project_templates_task_title_sprints"
-            events: [
-              action: "setState"
-              args: "nil"
-            ]
+            state: "nil"
             tasks: [
               title_i18n: "v0.0.1 (POC)"
-              events: [
-                action: "setArchived"
-              ,
-                action: "setState"
-                args: "done"
-              ]
+              state: "done"
+              archived: true
               tasks: [
                 title_i18n: 
                   key: "project_templates_task_title_task_with_custom_name",
                   options: 
                     task_name: "A"
-                events: [
-                  action: "setState"
-                  args: "done"
-                ]
+                state: "done"
               ,
                 title_i18n: 
                   key: "project_templates_task_title_task_with_custom_name",
                   options: 
                     task_name: "B"
-                events: [
-                  action: "setState"
-                  args: "done"
-                ]              
+                state: "done"              
               ]
             ,
               title_i18n: "v1.0.0"
               start_date: share.getDateOffsetByDays -14
               due_date: share.getDateOffsetByDays 60
+              state: "in-progress"
               events: [
                 action: "toggleIsProject"
-              ,
-                action: "setState"
-                args: "in-progress"
               ]
               tasks: [
                 title_i18n: 
                   key: "project_templates_task_title_implement_new_feature_with_custom_name",
                   options: 
                     feature_name: "1"
-                events: [
-                  action: "setState"
-                  args: "in-progress"
-                ]
+                state: "in-progress"
                 tasks: [
                   title_i18n: "project_templates_task_title_design_and_ui_ux"
                   key: "design_ui_ux"
                   expand: true
-                  events: [
-                    action: "setState"
-                    args: "in-progress"
-                  ]                  
+                  state: "in-progress"                  
                   tasks: [
                     title_i18n: "project_templates_task_title_requirements_gathering"
                     key: "requirements_gathering"
                     start_date: share.getDateOffsetByDays -14
                     due_date: share.getDateOffsetByDays 7
                     end_date: share.getDateOffsetByDays 5
-                    events: [
-                      action: "setState"
-                      args: "done"
-                    ]
+                    state: "done"
                   ,
                     title_i18n: "project_templates_task_title_wireframes"
                     key: "build_wireframes"
                     start_date: share.getDateOffsetByDays 8
                     due_date: share.getDateOffsetByDays 15
                     end_date: share.getDateOffsetByDays 14
+                    state: "done"
                     events: [
-                      action: "setState"
-                      args: "done"
-                    ,
                       action: "addGanttDependency"
                       args: ["requirements_gathering"]
                     ]
@@ -136,10 +104,8 @@ APP.getEnv (env) ->
                     start_date: share.getDateOffsetByDays 16
                     due_date: share.getDateOffsetByDays 24
                     end_date: share.getDateOffsetByDays 25
+                    state: "in-progress"
                     events: [
-                      action: "setState"
-                      args: "in-progress"
-                    ,
                       action: "addGanttDependency"
                       args: ["build_wireframes"]
                     ]                    
@@ -148,10 +114,8 @@ APP.getEnv (env) ->
                     start_date: share.getDateOffsetByDays 16
                     due_date: share.getDateOffsetByDays 24
                     end_date: share.getDateOffsetByDays 24
+                    state: "will-not-do"
                     events: [
-                      action: "setState"
-                      args: "will-not-do"
-                    ,
                       action: "addGanttDependency"
                       args: ["build_wireframes"]
                     ]                    
@@ -160,10 +124,8 @@ APP.getEnv (env) ->
                   title_i18n: "project_templates_task_title_backend_development"
                   key: "backend_dev"
                   expand: true
+                  state: "in-progress"
                   events: [
-                    action: "setState"
-                    args: "in-progress"
-                  ,
                     action: "addGanttDependency"
                     args: ["requirements_gathering"]
                   ]                  
@@ -175,18 +137,13 @@ APP.getEnv (env) ->
                     start_date: share.getDateOffsetByDays 6
                     due_date: share.getDateOffsetByDays 20
                     end_date: share.getDateOffsetByDays 25
-                    events: [
-                      action: "setState"
-                      args: "pending"
-                    ]                    
+                    state: "pending"                    
                   ]
                 ,
                   title_i18n: "project_templates_task_title_frontend_development"
                   expand: true
+                  state: "on-hold"
                   events: [
-                    action: "setState"
-                    args: "on-hold"
-                  ,
                     action: "addGanttDependency"
                     args: ["build_wireframes"]
                   ]                  
@@ -195,18 +152,13 @@ APP.getEnv (env) ->
                       key: "project_templates_task_title_feature_with_custom_name",
                       options: 
                         feature_name: "A"
-                    events: [
-                      action: "setState"
-                      args: "on-hold"
-                    ]                        
+                    state: "on-hold"                        
                   ]
                 ,
                   title_i18n: "project_templates_task_title_quality_assurance"
                   expand: true
+                  state: "nil"
                   events: [
-                    action: "setState"
-                    args: "nil"
-                  ,
                     action: "addGanttDependency"
                     args: ["design_ui_ux", "frontend_dev", "backend_dev"]
                   ]                  
@@ -218,10 +170,7 @@ APP.getEnv (env) ->
                     start_date: share.getDateOffsetByDays 26
                     due_date: share.getDateOffsetByDays 33
                     end_date: share.getDateOffsetByDays 31
-                    events: [
-                      action: "setState"
-                      args: "in-progress"
-                    ]                        
+                    state: "in-progress"                        
                   ,
                     title_i18n: 
                       key: "project_templates_task_title_write_auto_test_with_custom_name",
@@ -230,10 +179,7 @@ APP.getEnv (env) ->
                     start_date: share.getDateOffsetByDays 26
                     due_date: share.getDateOffsetByDays 33
                     end_date: share.getDateOffsetByDays 35
-                    events: [
-                      action: "setState"
-                      args: "in-progress"
-                    ]                        
+                    state: "in-progress"                        
                   ]
                 ]
               ]
@@ -263,25 +209,19 @@ APP.getEnv (env) ->
                 key: "project_templates_task_title_roadmap_feature_with_custom_name",
                 options: 
                   feature_name: "2"
-              events: [
-                action: "setStatus"
-                args: 
-                  key: "project_templates_task_title_requested_by_client_with_custom_name"
-                  options: 
-                    client_name: "XYZ"
-              ]
+              status: 
+                key: "project_templates_task_title_requested_by_client_with_custom_name"
+                options: 
+                  client_name: "XYZ"
             ,
               title_i18n: 
                 key: "project_templates_task_title_roadmap_feature_with_custom_name",
                 options: 
                   feature_name: "3"
-              events: [
-                action: "setStatus"
-                args: 
-                  key: "project_templates_task_title_requested_by_client_with_custom_name"
-                  options: 
-                    client_name: "ABC"
-              ]
+              status: 
+                key: "project_templates_task_title_requested_by_client_with_custom_name"
+                options: 
+                  client_name: "ABC"
             ]
           ,
             title_i18n: "project_templates_task_title_mobile_app_qa"
@@ -294,22 +234,13 @@ APP.getEnv (env) ->
         title_i18n: "project_templates_task_title_finance"
         tasks: [
           title_i18n: "project_templates_task_title_prepare_fy_report"
-          events: [
-            action: "setState"
-            args: "in-progress"
-          ]
+          state: "in-progress"
           tasks: [
             title_i18n: "project_templates_task_title_contact_auditor"
-            events: [
-              action: "setState"
-              args: "done"
-            ]
+            state: "done"
           ,
             title_i18n: "project_templates_task_title_prepare_employer_return"
-            events: [
-              action: "setState"
-              args: "in-progress"
-            ]                    
+            state: "in-progress"                    
           ]
         ]
       ,
@@ -319,20 +250,14 @@ APP.getEnv (env) ->
             key: "project_templates_task_title_client_with_custom_name",
             options: 
               client_name: "A"
-          events: [
-            action: "setState"
-            args: "done"
-          ]                    
+          state: "done"                    
           tasks: [
             title_i18n: 
               key: "project_templates_task_title_deployment_version_on_client_server"
               options:
                 version: "v3.0.0"
                 client: "A"
-              events: [
-                action: "setState"
-                args: "done"
-              ]                    
+              state: "done"                    
           ]
         ,
           title_i18n: 
@@ -347,31 +272,20 @@ APP.getEnv (env) ->
         title_i18n: "project_templates_task_title_human_resources"
         tasks: [
           title_i18n: "project_templates_task_title_recruit_position_for_frontend"
-          events: [
-            action: "setState"
-            args: "in-progress"
-          ]
+          state: "in-progress"
           tasks: [
             title_i18n:
               key: "project_templates_task_title_candidate_with_custom_name"
               options: 
                 candidate_name: "A"
-            events: [
-              action: "setStatus"
-              args: "project_templates_task_title_coordinate_zoom_meeting"
-            ,
-              action: "setState"
-              args: "done"
-            ]
+            state: "done"
+            status_i18n: "project_templates_task_title_coordinate_zoom_meeting"
           ,
             title_i18n:
               key: "project_templates_task_title_candidate_with_custom_name"
               options: 
                 candidate_name: "B"
-            events: [
-              action: "setStatus"
-              args: "project_templates_task_title_cv_is_missing_contact_by_email"
-            ]
+            status_i18n: "project_templates_task_title_cv_is_missing_contact_by_email"
           ]
         ]
       ]
