@@ -69,12 +69,21 @@ _.extend TemplateDropdownProto.prototype,
 
   allowOpen: -> true
 
+  isOpenDropdown: ->
+    return @$dropdown.data("isOpen")()
+  
   openDropdown: ->
     if not @$dropdown.data("open")?
       @_init() # Re-init, the need to reinit might happen when blaze re-rerendered the element.
 
     @$dropdown.data("open")(@id, @$connected_element)
 
+    return
+
+  ensureOpenDropdown: ->
+    if not @isOpenDropdown()
+      @openDropdown()
+    
     return
 
   closeDropdown: ->
