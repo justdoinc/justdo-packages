@@ -92,6 +92,7 @@ Package.onUse(function (api) {
   api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user20.jpg", client);
   api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user21.jpg", client);
   api.addAssets("lib/client/assets/bot_avatar.png", client);
+  api.addAssets("lib/client/assets/style_grid.png", client);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
