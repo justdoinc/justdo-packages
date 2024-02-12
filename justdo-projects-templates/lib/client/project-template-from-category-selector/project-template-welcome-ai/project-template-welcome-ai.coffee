@@ -15,15 +15,6 @@ Template.project_template_welcome_ai.onCreated ->
       return false
     return APP.collections.AIResponse.findOne({pub_id: pub_id, parent: -1}, {fields: {_id: 1}})?
 
-  @clear = ->
-    @pub_id_rv.set ""
-    @is_loading_rv.set false
-
-    $(".welcome-ai-input").val ""
-    @unlockInput()
-
-    return
-
   @showDropdown = -> $(".welcome-ai-dropdown").addClass "show"
   @hideDropdown = -> $(".welcome-ai-dropdown").removeClass "show"
 
@@ -187,11 +178,6 @@ Template.project_template_welcome_ai.events
     APP.justdo_projects_templates.stopStreamTemplateFromOpenAi tpl.pub_id_rv.get()
     tpl.unlockInput()
     $(".welcome-ai-input").focus()
-    return
-
-  "click .welcome-ai-clear": (e, tpl) ->
-    tpl.clear()
-
     return
 
 Template.project_template_welcome_ai_task_item.helpers
