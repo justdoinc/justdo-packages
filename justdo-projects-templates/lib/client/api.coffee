@@ -25,8 +25,11 @@ _.extend JustDoProjectsTemplates.prototype,
       allow_closing: false
     options = _.extend default_options, options
 
+    # This code used to show the previous version of template picker
+    #
     # message_template = JustdoHelpers.renderTemplateInNewNode Template.project_template_from_category_selector, {categories: options.categories, subtitle_i18n: options.popup_subtitle_i18n}
     # message_template.node.classList.add "project-template-selector-wrapper"
+    #
 
     message_template = JustdoHelpers.renderTemplateInNewNode Template.project_template_welcome_ai
 
@@ -34,13 +37,19 @@ _.extend JustDoProjectsTemplates.prototype,
 
     dialog = bootbox.dialog
       message: message_template.node
+      # This code used to show the previous version of template picker
+      #
       # title: TAPi18n.__ options.popup_title_i18n
-      animate: true
+      #
+      animate: false
       scrollable: true
       backdrop: false
       closeButton: options.allow_closing
       onEscape: true
       className: "bootbox-new-design project-templates-modal project-template-ai-modal"
+
+      # This code used to show the previous version of template picker
+      #
       # buttons:
       #   Create:
       #     label: APP.justdo_i18n.generateI18nModalButtonLabel "create_btn_label"
@@ -83,6 +92,7 @@ _.extend JustDoProjectsTemplates.prototype,
       #         return
       #
       #       return false
+      #
 
     message_template.template_instance.bootbox_dialog = dialog
 
