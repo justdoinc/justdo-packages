@@ -105,10 +105,31 @@ Template.project_template_welcome_ai.events
       $(".welcome-ai-btn-generate").click()
     return
 
-  "click .welcome-ai-result-item-content": (e, tpl) ->
-    checkbox = $(e.target).closest(".welcome-ai-result-item-content").find(".welcome-ai-result-item-checkbox")
-    $(checkbox).toggleClass "checked"
+  # This is to handle the checkbox logic for the AI response items:
+  # If a child item is checked, all its parent items will be checked;
+  # If a parent item is unchecked, all its child items will be unchecked.
 
+  "click .welcome-ai-result-item-content": (e, tpl) ->
+    item_content = $(e.target).closest(".welcome-ai-result-item-content")
+    checkbox = item_content.find(".welcome-ai-result-item-checkbox")
+    check_state = null
+
+    if checkbox.hasClass "checked"
+      check_state = false
+      checkbox.removeClass "checked"
+    else
+      check_state = true
+      checkbox.addClass "checked"
+
+    item_content.siblings().each (i, el) ->
+      $(el).find(".welcome-ai-result-item-checkbox").each (i, el_checkbox) ->
+        if check_state
+          $(el_checkbox).addClass "checked"
+        else
+          $(el_checkbox).removeClass "checked"
+
+        return
+      return
     return
 
   "click .welcome-ai-create-btn": (e, tpl) ->
@@ -171,20 +192,6 @@ Template.project_template_welcome_ai.events
   "click .welcome-ai-clear": (e, tpl) ->
     tpl.clear()
 
-    return
-
-  # This is to handle the checkbox logic for the AI response items:
-  # If a child item is checked, all its parent items will be checked;
-  # If a parent item is unchecked, all its child items will be unchecked.
-  "change .welcome-ai-result-item-checkbox": (e, tpl) ->
-    $el = $(e.currentTarget).closest(".welcome-ai-result-item-checkbox")
-    is_checked = $el.is(":checked")
-    if is_checked
-      # Ensure all ancestors are checked
-      $el.parents(".welcome-ai-result-item").children(".welcome-ai-result-item-checkbox").prop("checked", true).trigger("change")
-    else
-      # Ensure all descendants are unchecked
-      $el.siblings(".welcome-ai-result-item").children(".welcome-ai-result-item-checkbox").prop("checked", false).trigger("change")
     return
 
 Template.project_template_welcome_ai_task_item.helpers
