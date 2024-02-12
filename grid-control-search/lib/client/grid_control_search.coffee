@@ -6,11 +6,15 @@ GridControlSearch = (container) ->
   @destroyed = false
   @container = $(container)
 
+  @container.removeClass('input-not-empty') # When switching between JustDos (not between grid-control of the same JustDo, just when switching between JustDos) the search input container might retain the input-not-empty class, so we remove it here to avoid that.
+
   @grid_control = null
 
   @input = @search_info = @clear_button = @search_prev = @search_next = null # controls
   @current_term = ""
-  @paths = null # stores an array with results paths or null if no results or clear
+  @current_term_dep = new Tracker.Dependency()
+  @paths = [] # stores an array with results paths
+  @paths_dep = new Tracker.Dependency()
   @next_path = null # stores path for next result, if exists
   @prev_path = null # stores path for prev result, if exists
 
@@ -42,13 +46,9 @@ _.extend GridControlSearch.prototype,
       </div>"""
     @container.html(@search_ui_component)
 
-    @search_dropdown = new share.SearchDropdown(@container) # defined in /grid_control_search_dropdown.coffee
-    @search_dropdown.template_data = {
-      "result_paths": new ReactiveVar []
-      "search_val": new ReactiveVar ""
-    }
-    share.search_dropdown = @search_dropdown
-
+    @search_dropdown = new share.SearchDropdown @container, # defined in /grid_control_search_dropdown.coffee
+      grid_control_search: @
+    
     @input = $('.search-input', @container)
 
     @clear_button =
@@ -95,7 +95,6 @@ _.extend GridControlSearch.prototype,
 
     @input.keyup =>
       @search(@input.val())
-      @search_dropdown.template_data.search_val.set @input.val()
 
     # clear button function
     @clear_button.on 'click', =>
@@ -200,10 +199,10 @@ _.extend GridControlSearch.prototype,
         fields: fields
         exclude_filtered_paths: true
         exclude_typed_items: true
-      @paths = @grid_control._grid_data.search search_regexp, search_options
+      paths = @grid_control._grid_data.search search_regexp, search_options
 
-      if @paths.length > 0
-        @_setHaveResults(@paths)
+      if paths.length > 0
+        @_setHaveResults(paths)
       else
         @_unsetHaveResults()
 
@@ -224,7 +223,7 @@ _.extend GridControlSearch.prototype,
     return
 
   _setHaveResults: (paths) ->
-    @paths = paths
+    @_setPaths(paths)
     @container.addClass('results-found')
     @search_info.addClass('label-primary')
     @search_info.removeClass('label-warning')
@@ -234,15 +233,35 @@ _.extend GridControlSearch.prototype,
 
     @highlightMatchedPaths()
 
-    if _.size(paths) <= GridControlSearch.dropdown_results_limit
-      @search_dropdown.template_data.result_paths.set @paths
-    else
-      @search_dropdown.template_data.result_paths.set []
+    return
+
+  _setPaths: (paths) ->
+    if not paths?
+      paths = []
+    
+    @paths = paths
+    @paths_dep.changed()
 
     return
 
+  _unsetPaths: ->
+    return @_setPaths([])
+
+  getPaths: ->
+    @paths_dep.depend()
+    return @paths
+
+  _setCurrentTerm: (term) ->
+    @current_term = term
+    @current_term_dep.changed()
+    return
+
+  getCurrentTerm: ->
+    @current_term_dep.depend()
+    return @current_term
+
   _unsetHaveResults: () ->
-    @paths = null
+    @_unsetPaths()
     @next_path = null
     @prev_path = null
     @container.removeClass('results-found')
@@ -252,8 +271,6 @@ _.extend GridControlSearch.prototype,
     @_setMessage "0"
 
     @clearMatchedPaths()
-
-    @search_dropdown.template_data.result_paths.set []
 
     return
 
@@ -346,7 +363,7 @@ _.extend GridControlSearch.prototype,
   clear: ->
     if @current_term != ""
       @input.val('')
-      @current_term = ""
+      @_setCurrentTerm("")
       @container.removeClass('input-not-empty')
 
       @input.focus()
@@ -355,7 +372,7 @@ _.extend GridControlSearch.prototype,
       @_setMessage("")
 
   prev: ->
-    share.search_dropdown.$dropdown.removeClass "open"
+    @search_dropdown.closeDropdown()
 
     if not @isGridControlDefined()
       @logger.debug "Grid control is not defined, @prev() cancelled"
@@ -366,7 +383,7 @@ _.extend GridControlSearch.prototype,
       @grid_control.activatePath(@prev_path)
 
   next: ->
-    share.search_dropdown.$dropdown.removeClass "open"
+    @search_dropdown.closeDropdown()
 
     if not @isGridControlDefined()
       @logger.debug "Grid control is not defined, @next() cancelled"
@@ -381,11 +398,13 @@ _.extend GridControlSearch.prototype,
       if @current_term != term
         @container.addClass('input-not-empty')
 
-        @current_term = term
+        @_setCurrentTerm(term)
         if @input.val() != term
           @input.val term
 
         @_search()
+
+        @search_dropdown.ensureOpenDropdown()
     else
       @clear()
 
@@ -398,6 +417,10 @@ _.extend GridControlSearch.prototype,
 
     @unsetGridControl()
 
+    @search_dropdown.destroy()
+
     @container.empty()
 
     @logger.debug "Destroyed"
+
+    return

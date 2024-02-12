@@ -44,6 +44,10 @@ stateFormatter = (state) ->
 
 Template.grid_control_search_dropdown.onCreated ->
   tpl = @
+
+  @grid_control_search = tpl.data.grid_control_search
+  @search_dropdown_comp = @grid_control_search.search_dropdown
+
   tpl.result_count_step = 20
   tpl.result_count = new ReactiveVar tpl.result_count_step
 
@@ -61,16 +65,20 @@ Template.grid_control_search_dropdown.onCreated ->
   # Prototyping data - End
 
   @prev_search_val = ""
-  Tracker.autorun =>
-    search_val = @data.search_val.get().trim()
-    paths = share.search_dropdown.template_data.result_paths.get()
+  @autorun =>
+    # if _.size(paths) <= GridControlSearch.dropdown_results_limit
+    paths = @grid_control_search.getPaths()
+
+    search_val = @grid_control_search.getCurrentTerm()
 
     if search_val == "" or _.isEmpty(paths)
       tpl.result_count.set tpl.result_count_step
-      share.search_dropdown.$dropdown.removeClass "open"
+      @search_dropdown_comp.closeDropdown()
     else if search_val isnt @prev_search_val
       @prev_search_val = search_val
-      share.search_dropdown.$dropdown.addClass "open"
+      @search_dropdown_comp.ensureOpenDropdown()
+
+    return
 
   return
 
@@ -78,8 +86,8 @@ Template.grid_control_search_dropdown.helpers
   result_tasks: ->
     tpl = Template.instance()
 
-    search_val = share.search_dropdown.template_data.search_val.get()
-    paths = share.search_dropdown.template_data.result_paths.get()
+    search_val = tpl.grid_control_search.getCurrentTerm()
+    paths = tpl.grid_control_search.getPaths()
     tasks = []
 
     task_ids = _.map paths, (path) -> GridData.helpers.getPathItemId path
@@ -98,7 +106,9 @@ Template.grid_control_search_dropdown.helpers
     return tasks
 
   resultTasksCount: ->
-    paths = share.search_dropdown.template_data.result_paths.get()
+    tpl = Template.instance()
+
+    paths = tpl.grid_control_search.getPaths()
 
     return paths.length
 

@@ -25,17 +25,17 @@
         {{#each result_tasks}}
           <div class="search-result-item">
             <div class="task-title">
-              <span class="task-seq-id">Task #{{{seqId}}}:</span> {{{title}}}
+              <span class="task-seq-id">Task #{{{xssGuard seqId}}}:</span> {{{xssGuard title}}}
             </div>
             <div class="task-info">
               {{#if state}}
-                <span class="task-info-state">State: </span>{{{state}}}
+                <span class="task-info-state">State: </span>{{{xssGuard state}}}
               {{/if}}
               {{#if $and state note}}
                 <br>
               {{/if}}
               {{#if note}}
-                <span class="task-info-note">Note: </span>{{{note}}}
+                <span class="task-info-note">Note: </span>{{{xssGuard note}}}
               {{/if}}
             </div>
           </div>
