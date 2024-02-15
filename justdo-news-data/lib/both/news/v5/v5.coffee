@@ -2,7 +2,7 @@ APP.justdo_news.registerNews "news",
   _id: "v5-0"
   title: "v5.0"
   aliases: ["v5-0-x"]
-  date: "2024-02-07"
+  date: "2024-02-15"
   templates: [
     {
       _id: "main"
@@ -18,26 +18,21 @@ APP.justdo_news.registerNews "news",
             "title": "Introduce the Solid Orange theme"
             "subtitle": ""
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v5/assets/2.jpg"
-          },
-          {
-            "title": "Design Improvements"
-            "subtitle": "The task pane handle has been redesigned for simplicity and enhanced visibility."
-            "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v5/assets/3.jpg"
           }
         ]
       }
       name: "What's new"
     }
-    # ,
-    # {
-    #   _id: "features"
-    #   template_name: "version_release_features"
-    #   template_data: {
-    #     title: "Improvements"
-    #     update_items: [
-    #       "1. Introducing 'Select All' and 'Deselect All' buttons to our Task Copy feature - making field selection faster and simpler."
-    #     ]
-    #   }
-    #   name: "Other Updates"
-    # }
+    ,
+    {
+      _id: "features"
+      template_name: "version_release_features"
+      template_data: {
+        title: "Improvements"
+        update_items: [
+          "1. Smart numbers: improve numbers rounding and formatting."
+        ]
+      }
+      name: "Other Updates"
+    }
   ]
