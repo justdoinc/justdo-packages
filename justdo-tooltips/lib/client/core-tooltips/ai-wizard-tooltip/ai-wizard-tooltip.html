@@ -1,0 +1,36 @@
+<template name="ai_wizard_tooltip">
+  <div class="ai-wizard-tooltip shadow-lg">
+    <div class="ai-wizard-list">
+      {{#if isResponseExists}}
+        {{#each rootTemplate}}
+          {{> ai_wizard_item}}
+        {{/each}}
+      {{else}}
+        {{#if isLoading}}
+          <div class="ai-wizard-loader-wrapper">
+            <div class="loader">
+              <div class="double-bounce1 bg-primary"></div>
+              <div class="double-bounce2 bg-primary"></div>
+            </div>
+          </div>
+        {{/if}}
+      {{/if}}
+    </div>
+    <div class="ai-wizard-footer">
+      <div class="btn btn-sm btn-primary {{#if isLoading}}ai-wizard-stop{{else}}ai-wizard-generate{{/if}}">{{#if isLoading}}Stop{{else}}Regenerate{{/if}}</div>
+      <div class="ai-wizard-create btn btn-sm btn-primary {{#if isLoading}}disabled{{/if}}">Create</div>
+    </div>
+  </div>
+</template>
+
+<template name="ai_wizard_item">
+  <div class="ai-wizard-item">
+    <div class="ai-wizard-item-content">
+      <div class="ai-wizard-item-checkbox checked" id="{{pub_id}}_{{_id}}" data-id="{{_id}}"></div>
+      {{title}}
+    </div>
+    {{#each childTemplate}}
+      {{> ai_wizard_item}}
+    {{/each}}
+  </div>
+</template>
