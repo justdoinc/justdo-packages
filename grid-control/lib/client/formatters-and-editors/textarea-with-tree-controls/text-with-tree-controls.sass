@@ -114,7 +114,7 @@
 
 .grid-tree-control-user
   cursor: pointer
-  
+
   .transfer-owner
     width: 14px
     height: 14px
@@ -253,3 +253,29 @@
   &.f-leaf
     .hl.hl-f
       display: none
+
+.task-ai-wizard
+  background-color: white
+  position: absolute
+  right: -12px
+  top: 7px
+  width: 18px
+  height: 18px
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2)
+  border-radius: 4px
+  cursor: pointer
+  transition: transform 0.28s ease-in-out
+  pointer-events: none
+  user-select: none
+  transform: scale(0)
+  display: flex
+  align-items: center
+  justify-content: center
+  .jd-icon
+    width: 18px
+    height: 18px
+    stroke-width: 0
+
+.slick-row.active .task-ai-wizard
+  transform: scale(1)
+  pointer-events: all

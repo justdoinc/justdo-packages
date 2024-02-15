@@ -13,7 +13,7 @@ getHeighestSeqId = ->
   #
   # Must be called with @ set to the current GridControl object.
 
-  query = 
+  query =
     seqId:
       $ne: null
 
@@ -65,7 +65,7 @@ getMinimalSeqIdSpace = ->
   #
   # Reactive resource
   #
-  # Must be called with @ set to the current GridControl object. 
+  # Must be called with @ set to the current GridControl object.
 
   current_heighest_seq_id = getHeighestSeqId.call(@)
 
@@ -192,7 +192,7 @@ GridControl.installFormatter "textWithTreeControls",
       return
 
     return
-    
+
 
   slick_grid: ->
     {row, cell, value, doc, self, path} = @getFriendlyArgs()
@@ -357,7 +357,7 @@ GridControl.installFormatter "textWithTreeControls",
       tree_control += """
           <i class="fa fa-fw chat-messages #{chat_classes} slick-prevent-edit" title="#{TAPi18n.__ "tree_control_tooltip_chat_messages"}" aria-hidden="true"></i>
       """
-    
+
     if (doc.iem_emails_count > 0)
       last_email_time = doc["iem_last_email_time"]
       last_read = doc["priv:iem_last_read_time"]
@@ -384,7 +384,7 @@ GridControl.installFormatter "textWithTreeControls",
     if @getCurrentColumnData("delivery_planner_plugin_enabled")
       if (is_project = doc["p:dp:is_project"])?
         is_archived_project = doc["p:dp:is_archived_project"]
-        
+
         if is_project
           tree_control += """
               <i class="fa fa-fw fa-briefcase task-is-project #{if is_archived_project then "task-is-archived-project" else ""} slick-prevent-edit" title="#{TAPi18n.__ "tree_control_tooltip_task_is_a_project"}" aria-hidden="true"></i>
@@ -427,7 +427,7 @@ GridControl.installFormatter "textWithTreeControls",
       # minimal_seq_id_space won't be accurate in environment without JustDo
       # projects, in such cases, we need to fallback to current cell seqId
       # length
-      index_chars = Math.max(minimal_seq_id_space, ("" + index).length)   
+      index_chars = Math.max(minimal_seq_id_space, ("" + index).length)
 
       index_width = Math.ceil(index_chars * index_width_per_char)
       index_horizontal_paddings = 6 * 2
@@ -559,6 +559,12 @@ GridControl.installFormatter "textWithTreeControls",
         tree_control += """
           <div class="hl" style="left: #{level_indent * i + 4}px"></div>
         """
+
+    tree_control += """
+      <div class="task-ai-wizard" jd-tt="ai-wizard-tooltip">
+        <svg class="jd-icon text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#jd-ai"></use></svg>
+      </div>
+    """
 
     return tree_control
 
