@@ -257,25 +257,38 @@
 .task-ai-wizard
   background-color: white
   position: absolute
-  right: -12px
+  right: -10px
   top: 7px
-  width: 18px
-  height: 18px
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2)
   border-radius: 4px
   cursor: pointer
-  transition: transform 0.28s ease-in-out
+  transition: all 0.28s ease-in-out
   pointer-events: none
   user-select: none
   transform: scale(0)
+  background: linear-gradient(to right, #1EB2F2, #C660EA)
+  padding: 2px
+  &:hover
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3)
+    .jd-icon
+      transform: scale(1.1)
+
+.task-ai-wizard-content
   display: flex
   align-items: center
   justify-content: center
+  width: 12px
+  height: 14px
+  border-radius: 2px
+  background-color: white
   .jd-icon
-    width: 18px
-    height: 18px
-    stroke-width: 0
+    width: 8px
+    height: 16px
+    stroke-width: 6
+    padding: 0
+    transform: scale(1)
 
-.slick-row.active .task-ai-wizard
-  transform: scale(1)
-  pointer-events: all
+.slick-row.active:not(.multi-selected)
+  .task-ai-wizard
+    transform: scale(1)
+    pointer-events: all

@@ -562,7 +562,9 @@ GridControl.installFormatter "textWithTreeControls",
 
     tree_control += """
       <div class="task-ai-wizard" jd-tt="ai-wizard-tooltip">
-        <svg class="jd-icon text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#jd-ai"></use></svg>
+        <div class="task-ai-wizard-content">
+          <svg class="jd-icon text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#plus"></use></svg>
+        </div>
       </div>
     """
 
