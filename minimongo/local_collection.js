@@ -57,6 +57,14 @@ export default class LocalCollection {
     });
   }
 
+  countDocuments(selector, options) {
+    return this.find(selector ?? {}, options).countAsync();
+  }
+
+  estimatedDocumentCount(options) {
+    return this.find({}, options).countAsync();
+  }
+
   flushSetDocFieldsReactivity() {
     if (this.set_doc_fields_calls_since_last_flush > this.set_doc_fields_max_direct_update_calls_per_flush) {
       this.recomputeAllQueries();
