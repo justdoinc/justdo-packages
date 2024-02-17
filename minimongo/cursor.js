@@ -7,6 +7,7 @@ import {
   sameTickStatsAddToDict,
   reportOptimizationIssue,
 } from './common.js';
+import { ASYNC_CURSOR_METHODS, getAsyncMethodName } from "./constants";
 
 // Cursor: a specification for a particular subset of documents, w/ a defined
 // order, limit, and offset.  creating a Cursor with LocalCollection.find(),
@@ -107,6 +108,15 @@ export default class Cursor {
         }
 
         return {done: true};
+      }
+    };
+  }
+
+  [Symbol.asyncIterator]() {
+    const syncResult = this[Symbol.iterator]();
+    return {
+      async next() {
+        return Promise.resolve(syncResult.next());
       }
     };
   }
@@ -565,3 +575,11 @@ export default class Cursor {
     );
   }
 }
+
+// Implements async version of cursor methods to keep collections isomorphic
+ASYNC_CURSOR_METHODS.forEach(method => {
+  const asyncName = getAsyncMethodName(method);
+  Cursor.prototype[asyncName] = function(...args) {
+    return Promise.resolve(this[method].apply(this, args));
+  };
+});
