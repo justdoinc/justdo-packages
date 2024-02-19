@@ -64,12 +64,12 @@ _.extend JustDoProjectsTemplates.prototype,
               },
               "parents": {
                 "type": "array",
-                "description": "Array of parent task titles. The first element is the top level parent (less relevant), and the last element is the immidiate parent (most relevant). If provided, assume the user intends to generate task under the immidiate parent. Never include the parent tasks in the output.",
+                "description": "Array of parent task titles. The first element is the top level parent (least relevant), and the last element is the immidiate parent (most relevant). If provided, the tasks will be generated under the immidiate parent, and therefore should only be relevant to it. Other parents are for additonal information only. Never include the parent tasks in the output.",
                 "optional": true
               },
               "siblings": {
                 "type": "array",
-                "description": "Array of sibling task titles. If provided, assume the user intends to generate task under the same parent as the siblings. Never include the sibling tasks in the output.",
+                "description": "Array of same-level task titles. Use the siblings as extra context to understand what the task tree is about. Never include the sibling tasks in the output.",
                 "optional": true
               },
               "msg": {
@@ -78,7 +78,7 @@ _.extend JustDoProjectsTemplates.prototype,
                 "optional": true
               }
             }
-            They must be relevant to the user input, and must be in the same language as the user input.
+            They must be relevant to the "msg" or overall context, and must be in the same language as the "msg" property in user input if provided, or the same language as the last item in the parents array.
 
             Below is the JSON schema of a task object:
             ### JSON schema begin ###
@@ -186,6 +186,14 @@ _.extend JustDoProjectsTemplates.prototype,
         {
             "role" : "assistant",
             "content" : """[["Patient Monitoring", "", "", "", 6, 0, -1], ["Vital Signs Tracking", 1, 7, 7, 1, 1, 0], ["Symptom Assessment", 2, 8, 8, 1, 2, 0], ["Medication Administration", 3, 10, 10, 1, 3, 0], ["Progress Notes Documentation", 5, 12, 12, 1, 4, 0], ["Recovery Plan Implementation", "", "", "", 6, 5, -1], ["Activity Monitoring", 1, 5, 5, 1, 6, 5], ["Diet Supervision", 2, 6, 6, 1, 7, 5], ["Pain Management", 3, 7, 7, 1, 8, 5], ["Follow-up Appointments Scheduling", 5, 10, 10, 1, 9, 5], ["Post-Discharge Care", "", "", "", 6, 10, -1], ["Home Care Instructions", 1, 7, 7, 1, 11, 10], ["Medication Regimen Explanation", 2, 8, 8, 1, 12, 10], ["Rehabilitation Referrals", 4, 10, 10, 1, 13, 10], ["Symptom Monitoring Plan", 5, 12, 12, 1, 14, 10]]"""
+        },
+        {
+            "role" : "user",
+            "content" : """{"project":"咖啡店管理","parents":["營銷推廣","社交媒體宣傳"]},"siblings": ["舉辦試喝活動", "優惠促銷策略"]"""
+        },
+        {
+            "role" : "assistant",
+            "content" : """[["線上活動", "", "", "", 6, 0, -1], ["推文創作", 1, 7, 7, 1, 1, 0], ["社群互動", 2, 8, 8, 1, 2, 0], ["市場分析", 3, 10, 10, 1, 3, 0], ["品牌形象", "", "", "", 6, 4, -1], ["設計視覺元素", 1, 7, 7, 1, 5, 4], ["制定廣告策略", 2, 8, 8, 1, 6, 4], ["品牌定位優化", 3, 9, 9, 1, 7, 4], ["優惠促銷", "", "", "", 6, 8, -1], ["設計促銷活動", 1, 5, 5, 1, 9, 8], ["製作宣傳物料", 3, 6, 6, 1, 10, 8], ["執行促銷計劃", 5, 8, 8, 1, 11, 8]]"""
         },
         {
           "role": "user",
@@ -362,7 +370,7 @@ _.extend JustDoProjectsTemplates.prototype,
       "messages": [
         {
           "role": "system",
-          "content": "Summerize user input to a few words that will be used in a project's title."
+          "content": "Summerize user input to a few words that will be used in a project's title. Your response must be in the same language as the user input."
         },
         {
           "role" : "user",
@@ -379,7 +387,15 @@ _.extend JustDoProjectsTemplates.prototype,
         {
           "role" : "assistant",
           "content" : "Tech startup management"
-        }
+        },
+        {
+          "role" : "user",
+          "content" : "管理醫院"
+        },
+        {
+          "role" : "assistant",
+          "content" : "醫院管理"
+        },
         {
           "role": "user",
           "content": msg.trim()
