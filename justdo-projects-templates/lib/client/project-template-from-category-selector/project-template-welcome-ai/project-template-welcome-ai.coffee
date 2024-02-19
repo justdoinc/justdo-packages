@@ -60,6 +60,11 @@ Template.project_template_welcome_ai.onCreated ->
 
   return
 
+Template.project_template_welcome_ai.onRendered ->
+  $(".welcome-ai-input").focus()
+
+  return
+
 Template.project_template_welcome_ai.helpers
   isLoading: ->
     tpl = Template.instance()
