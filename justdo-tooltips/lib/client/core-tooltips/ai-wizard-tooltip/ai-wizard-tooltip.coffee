@@ -14,7 +14,17 @@ Template.ai_wizard_tooltip.onCreated ->
     return APP.collections.AIResponse.findOne({pub_id: pub_id, parent: -1}, {fields: {_id: 1}})?
 
   tpl.streamTemplateFromOpenAi = ->
-    request = JD.activeItem({title: 1}).title
+    active_path = JD.activePath()
+    parent_tasks_query = 
+      _id:
+        $in:
+          GridData.helpers.getPathArray active_path
+    parent_task_id = GridData.helpers.getPathParentId active_path
+    request = 
+      project: JD.activeJustdo({title: 1})?.title
+      parents: APP.collections.Tasks.find(parent_tasks_query, {fields: {title: 1}}).map (task) -> task.title
+      siblings: APP.collections.Tasks.find({"parents.#{parent_task_id}": {$ne: null}, _id: {$ne: JD.activeItemId()}}, {fields: {title: 1}}).map (task) -> task.title
+    
     tpl.is_loading_rv.set true
 
     Meteor.call "streamTemplateFromOpenAi", request, (err, pub_id) ->
