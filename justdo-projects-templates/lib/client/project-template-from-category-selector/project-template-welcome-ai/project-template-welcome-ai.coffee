@@ -168,6 +168,9 @@ Template.project_template_welcome_ai.events
       delete template_item.pub_id
       return template_item
     recursiveBulkCreateTasks = (path, template_items_arr) ->
+      if _.isEmpty template_items_arr
+        return
+        
       # template_item_ids is to keep track of the corresponding template item id for each created task
       template_item_ids = _.map template_items_arr, (item) -> item._id
 
@@ -205,6 +208,7 @@ Template.project_template_welcome_ai.events
       item.state = "nil"
       return item
     recursiveBulkCreateTasks("/", template_items)
+
     tpl.bootbox_dialog.modal "hide"
 
     return
