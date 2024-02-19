@@ -47,7 +47,7 @@ _.extend JustDoProjectsTemplates.prototype,
 
     return
 
-  _generateStreamReq: (msg) ->
+  _generateStreamTemplateReq: (msg) ->
     req = 
       "model": JustDoProjectsTemplates.openai_template_generation_model,
       "messages": [
@@ -152,7 +152,7 @@ _.extend JustDoProjectsTemplates.prototype,
     return req
 
   streamTemplateFromOpenAi: (msg, user_id) ->
-    req = @_generateStreamReq msg
+    req = @_generateStreamTemplateReq msg
     request_id = await APP.justdo_ai_kit.openai.createChatCompletion req, user_id
     stream = await APP.justdo_ai_kit.openai.getRequest request_id
 
