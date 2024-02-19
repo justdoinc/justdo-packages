@@ -49,7 +49,7 @@ _.extend JustDoProjectsTemplates.prototype,
 
   _generateStreamReq: (msg) ->
     req = 
-      "model": "gpt-3.5-turbo-0125",
+      "model": JustDoProjectsTemplates.openai_template_generation_model,
       "messages": [
         {
           "role": "system",
