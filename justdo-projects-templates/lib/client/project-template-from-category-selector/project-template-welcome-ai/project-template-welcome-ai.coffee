@@ -29,36 +29,7 @@ Template.project_template_welcome_ai.onCreated ->
     return
 
   @sendRequestToOpenAI = (request) ->
-    @is_loading_rv.set true
-    @lockInput()
-    Meteor.call "streamTemplateFromOpenAi", request, (err, pub_id) =>
-      if err?
-        JustdoSnackbar.show
-          text: err.reason or err
-        return
-      
-      old_pub_id = Tracker.nonreactive => @pub_id_rv.get()
-      if not _.isEmpty(old_pub_id)
-        @removeAllItemsWithPubIdInMiniMongo old_pub_id
 
-      @pub_id_rv.set ""
-      @templates_sub_handle?.stop()
-
-      @pub_id_rv.set pub_id
-      @templates_sub_handle = Meteor.subscribe pub_id, 
-        onReady: => @showDropdown()
-        onStop: => 
-          @is_loading_rv.set false
-          @unlockInput()
-          return
-
-      return
-
-  @removeAllItemsWithPubIdInMiniMongo = (pub_id) ->
-    APP.collections.AIResponse._collection.remove({pub_id: pub_id})
-    return
-
-  @sendRequestToOpenAI = (request) ->
     @is_loading_rv.set true
     @lockInput()
     Meteor.call "streamTemplateFromOpenAi", request, (err, pub_id) =>
