@@ -123,6 +123,7 @@ Template.ai_wizard_tooltip.events
     grid_data = APP.modules.project_page.gridData()
     transformTemplateItemToTaskDoc = (template_item) ->
       template_item.project_id = project_id
+      delete template_item.parent
       delete template_item._id
       delete template_item.pub_id
       return template_item
