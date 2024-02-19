@@ -2,6 +2,8 @@ Template.project_template_welcome_ai.onCreated ->
   @templates_sub_handle = null
   @pub_id_rv = new ReactiveVar ""
   @is_loading_rv = new ReactiveVar false
+  # Store the request string for project title generation
+  @sent_request = ""
 
   @lockInput = ->
     $(".welcome-ai-input").prop "disabled", true
@@ -28,11 +30,12 @@ Template.project_template_welcome_ai.onCreated ->
     APP.collections.AIResponse._collection.remove({pub_id: pub_id})
     return
 
-  @sendRequestToOpenAI = (request) ->
-
+  @sendRequestToOpenAI = (msg) ->
+    @sent_request = msg
     @is_loading_rv.set true
     @lockInput()
-    Meteor.call "streamTemplateFromOpenAi", request, (err, pub_id) =>
+    
+    Meteor.call "streamTemplateFromOpenAi", msg, (err, pub_id) =>
       if err?
         JustdoSnackbar.show
           text: err.reason or err
@@ -125,7 +128,6 @@ Template.project_template_welcome_ai.events
   # This is to handle the checkbox logic for the AI response items:
   # If a child item is checked, all its parent items will be checked;
   # If a parent item is unchecked, all its child items will be unchecked.
-
   "click .welcome-ai-result-item-content": (e, tpl) ->
     item_content = $(e.target).closest(".welcome-ai-result-item-content")
     checkbox = item_content.find(".welcome-ai-result-item-checkbox")
@@ -150,6 +152,15 @@ Template.project_template_welcome_ai.events
     return
 
   "click .welcome-ai-create-btn": (e, tpl) ->
+    # Set the project title
+    APP.justdo_projects_templates.generateProjectTitleFromOpenAi tpl.sent_request, (err, title) ->
+      if err?
+        console.error err
+        return
+
+      APP.collections.Projects.update JD.activeJustdoId(), {$set: {title}}
+      return
+
     pub_id = tpl.pub_id_rv.get()
     project_id = JD.activeJustdoId()
 

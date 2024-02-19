@@ -356,6 +356,52 @@ _.extend JustDoProjectsTemplates.prototype,
     
     return pub_id
     
+  _generateProjectTitleReq: (msg) ->
+    req = 
+      "model": JustDoProjectsTemplates.openai_template_generation_model,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Summerize user input to a few words that will be used in a project's title."
+        },
+        {
+          "role" : "user",
+          "content" : "I'd like to manage a corner store"
+        },
+        {
+          "role" : "assistant",
+          "content" : "Corner store management"
+        },
+        {
+          "role" : "user",
+          "content" : "I'd like to manage a tech company that has about 10 employees"
+        },
+        {
+          "role" : "assistant",
+          "content" : "Tech startup management"
+        }
+        {
+          "role": "user",
+          "content": msg.trim()
+        }
+      ],
+      "temperature": 1,
+      "top_p": 1,
+      "n": 1,
+      "max_tokens": 128,
+      "presence_penalty": 0,
+      "frequency_penalty": 0,
+    return req
+  
+  generateProjectTitleFromOpenAiMethodHandler: (msg, user_id) ->
+    check msg, String
+    check user_id, String
+
+    req = @_generateProjectTitleReq msg
+    request_id = APP.justdo_ai_kit.openai.createChatCompletion req, user_id
+    res = await APP.justdo_ai_kit.openai.getRequest(request_id)
+
+    await return res?.choices?[0]?.message?.content
 
 getFromTemplateOnly = (key) ->
   return @template[key]

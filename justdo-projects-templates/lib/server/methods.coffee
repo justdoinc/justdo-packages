@@ -45,5 +45,10 @@ _.extend JustDoProjectsTemplates.prototype,
         check @userId, String
         self.emit "stop_stream_#{pub_id}_#{@userId}"
         return
+      
+      generateProjectTitleFromOpenAi: (msg) ->
+        check msg, String
+        check @userId, String
+        return self.generateProjectTitleFromOpenAiMethodHandler msg, @userId
 
     return

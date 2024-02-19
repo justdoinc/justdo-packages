@@ -7,3 +7,6 @@ _.extend JustDoProjectsTemplates.prototype,
   
   stopStreamTemplateFromOpenAi: (pub_id) ->
     return Meteor.call "stopStreamTemplateFromOpenAi", pub_id
+  
+  generateProjectTitleFromOpenAi: (msg, cb) ->
+    return Meteor.call "generateProjectTitleFromOpenAi", msg, cb
