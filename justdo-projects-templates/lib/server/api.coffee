@@ -54,7 +54,30 @@ _.extend JustDoProjectsTemplates.prototype,
         {
           "role": "system",
           "content": """
-            Based on user input, generate an array of tasks. 
+            Based on user input, generate an array of tasks.
+            User input is a json object that may include only the msg, or the context. The structure is as follows:
+            {
+              "project": {
+                "type": "string",
+                "description": "Title of the project that the tasks will be generated to.",
+                "optional": true
+              },
+              "parents": {
+                "type": "array",
+                "description": "Array of parent task titles. The first element is the top level parent (less relevant), and the last element is the immidiate parent (most relevant). If provided, assume the user intends to generate task under the immidiate parent. Never include the parent tasks in the output.",
+                "optional": true
+              },
+              "siblings": {
+                "type": "array",
+                "description": "Array of sibling task titles. If provided, assume the user intends to generate task under the same parent as the siblings. Never include the sibling tasks in the output.",
+                "optional": true
+              },
+              "msg": {
+                "type": "string",
+                "description": "The kind of tasks user wish to generate",
+                "optional": true
+              }
+            }
             They must be relevant to the user input, and must be in the same language as the user input.
 
             Below is the JSON schema of a task object:
@@ -94,8 +117,10 @@ _.extend JustDoProjectsTemplates.prototype,
             }
             ### JSON schema ends ###
 
-            The tasks hierachy are as follows:
+            If context (parents, siblings) is provided, generate subtasks under the immidiate parent or the same parent as the siblings. Ensure tasks genrated are coherent with its parent and siblings.
+            If only msg is provided, follow the following hierarchy.
             ### Tasks hierarchy begin ###
+
             Top level tasks must have 3 to 6 child tasks, and it's depth must be 3 to 5 levels.
 
             Depth means the number of levels of the task tree. E.g. a top-level task with no child tasks has a depth of 1, a top-level task with 1 child task has a depth of 2, and so on.
@@ -110,6 +135,7 @@ _.extend JustDoProjectsTemplates.prototype,
             ### Tasks hierarchy ends ###
 
             Only set dates for child tasks. For parent tasks, set the date to an empty string.
+            If context is provided, set the date to an empty string regardless.
 
             For state_idx field:
             "nil" is the default state for a task that means there is no state.
@@ -123,7 +149,7 @@ _.extend JustDoProjectsTemplates.prototype,
         },
         {
           "role": "user",
-          "content": "Manage a tech startup"
+          "content": """{"msg": "Manage a tech startup"}"""
         },
         {
           "role": "assistant",
@@ -131,7 +157,7 @@ _.extend JustDoProjectsTemplates.prototype,
         },
         {
           "role": "user",
-          "content": "管理醫院人事部門"
+          "content": """{"msg": "管理醫院人事部門"}"""
         },
         {
           "role": "assistant",
@@ -139,7 +165,31 @@ _.extend JustDoProjectsTemplates.prototype,
         },
         {
           "role": "user",
-          "content": msg.trim()
+          "content": """{"project": "Untitled JustDo", "parents": ["Travel Planning", "Trip to Hong Kong"]}"""
+        },
+        {
+          "role" : "assistant",
+          "content" : """[["Transportation", "", "", "", 6, 0, -1], ["Book Flight Tickets", 1, 7, 7, 1, 1, 0], ["Arrange Airport Transfer", 2, 8, 8, 1, 2, 0], ["Accommodation", "", "", "", 6, 3, -1], ["Hotel Reservation", 1, 7, 7, 1, 4, 3], ["Check-in Online", 2, 6, 6, 1, 5, 3], ["Activities", "", "", "", 6, 6, -1], ["Sightseeing Tours Booking", 1, 5, 5, 1, 7, 6], ["Dining Reservations", 2, 6, 6, 1, 8, 6], ["Shopping Plans", 3, 7, 7, 1, 9, 6], ["Emergency Contact List", 4, 8, 8, 1, 10, 6]]"""
+        },
+        {
+          "role" : "user",
+          "content" : """{"project":"Untitled JustDo","parents":["R&D","Mobile App Development","Sprints","v1.0.0","Implement new feature 1","Design & UX/UI","User Interface Design"]}"""
+        },
+        {
+          "role" : "assistant",
+          "content" : """[["Interaction Design", "", "", "", 6, 0, -1], ["Wireframes Creation", 1, 7, 7, 1, 1, 0], ["Prototyping", 2, 8, 8, 1, 2, 0], ["Visual Design", "", "", "", 6, 3, -1], ["Create Style Guide", 1, 7, 7, 1, 4, 3], ["Design Mockups", 2, 8, 8, 1, 5, 3], ["Iconography", 3, 9, 9, 1, 6, 3], ["User Testing", "", "", "", 6, 7, -1], ["Prepare Test Scenarios", 1, 5, 5, 1, 8, 7], ["Conduct User Interviews", 2, 8, 8, 1, 9, 7], ["Collect Feedback", 5, 12, 12, 1, 10, 7], ["Iterate Design", 10, 15, 15, 1, 11, 7]]"""
+        },
+        {
+            "role" : "user",
+            "content" : """{"project":"Hospital Management","parents":["Clinical Services","Surgical Services","Post-Op Care Plans"],"siblings":["Surgical Team Coordination","Pre-Op Procedures","Equipment Sterilization"]}"""
+        },
+        {
+            "role" : "assistant",
+            "content" : """[["Patient Monitoring", "", "", "", 6, 0, -1], ["Vital Signs Tracking", 1, 7, 7, 1, 1, 0], ["Symptom Assessment", 2, 8, 8, 1, 2, 0], ["Medication Administration", 3, 10, 10, 1, 3, 0], ["Progress Notes Documentation", 5, 12, 12, 1, 4, 0], ["Recovery Plan Implementation", "", "", "", 6, 5, -1], ["Activity Monitoring", 1, 5, 5, 1, 6, 5], ["Diet Supervision", 2, 6, 6, 1, 7, 5], ["Pain Management", 3, 7, 7, 1, 8, 5], ["Follow-up Appointments Scheduling", 5, 10, 10, 1, 9, 5], ["Post-Discharge Care", "", "", "", 6, 10, -1], ["Home Care Instructions", 1, 7, 7, 1, 11, 10], ["Medication Regimen Explanation", 2, 8, 8, 1, 12, 10], ["Rehabilitation Referrals", 4, 10, 10, 1, 13, 10], ["Symptom Monitoring Plan", 5, 12, 12, 1, 14, 10]]"""
+        },
+        {
+          "role": "user",
+          "content": JSON.stringify msg
         }
       ],
       "temperature": 1,
@@ -153,14 +203,40 @@ _.extend JustDoProjectsTemplates.prototype,
 
   streamTemplateFromOpenAi: (msg, user_id) ->
     req = @_generateStreamTemplateReq msg
-    request_id = await APP.justdo_ai_kit.openai.createChatCompletion req, user_id
+    request_id = APP.justdo_ai_kit.openai.createChatCompletion req, user_id
     stream = await APP.justdo_ai_kit.openai.getRequest request_id
 
     await return stream
   
-  streamTemplateFromOpenAiMethodHandler: (msg, user_id) ->
-    check msg, String
+  _streamTemplateFromOpenAiMethodHandlerRequestSchema: new SimpleSchema
+    msg: 
+      type: String
+      optional: true
+    project: 
+      type: String
+      optional: true
+    parents:
+      type: [String]
+      optional: true
+    "parents.$":
+      type: String
+      optional: true
+    siblings:
+      type: [String]
+      optional: true
+    "siblings.$":
+      type: String
+      optional: true
+  streamTemplateFromOpenAiMethodHandler: (request, user_id) ->
     check user_id, String
+
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_streamTemplateFromOpenAiMethodHandlerRequestSchema,
+        request,
+        {self: @, throw_on_error: true}
+      )
+    request = cleaned_val
 
     self = @
 
@@ -169,7 +245,7 @@ _.extend JustDoProjectsTemplates.prototype,
       publish_this = @
 
       # This block is to specifically handle requests that requires pre-defined templates.
-      if (template_obj = self.getTemplateById msg)?
+      if (template_obj = self.getTemplateById request.msg)?
         _id = 0
         _recursiveParseAndPublishTemplateTask = (template_task, parent) ->
           fields = 
@@ -212,7 +288,7 @@ _.extend JustDoProjectsTemplates.prototype,
         publish_this.stop()
         return
 
-      stream = await self.streamTemplateFromOpenAi msg, user_id
+      stream = await self.streamTemplateFromOpenAi request, user_id
       
       self.once "stop_stream_#{pub_id}_#{user_id}", ->
         stream.abort()
