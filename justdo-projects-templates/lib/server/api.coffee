@@ -222,7 +222,6 @@ _.extend JustDoProjectsTemplates.prototype,
 
       tasks = []
       task_string = ""
-      task_key_to_created_id = {}
       _parseStreamedTasks = (task_arr) ->
         states = ["pending", "in-progress", "done", "will-not-do", "on-hold", "duplicate", "nil"]
         grid_data = APP.projects._grid_data_com
@@ -238,7 +237,7 @@ _.extend JustDoProjectsTemplates.prototype,
         ] = task_arr
 
         fields = 
-          _id: Random.id()
+          _id: "#{key}_#{pub_id}"
           key: key
           pub_id: pub_id
           parent: parent_task_key
@@ -512,14 +511,13 @@ _.extend JustDoProjectsTemplates.prototype,
 
       tasks = []
       task_string = ""
-      task_key_to_created_id = {}
       _parseStreamedTasks = (task_arr) ->
         grid_data = APP.projects._grid_data_com
 
         [title, key, parent_task_key] = task_arr
 
         fields = 
-          _id: Random.id()
+          _id: "#{key}_#{pub_id}"
           key: key
           pub_id: pub_id
           parent: parent_task_key
