@@ -155,6 +155,14 @@ Template.project_template_welcome_ai.events
 
         return
       return
+    
+    if check_state
+      # Ensure all parents are checked
+      $item = $(e.target).closest(".welcome-ai-result-item")
+      while ($parent_content = $item.siblings(".welcome-ai-result-item-content")).length > 0
+        $parent_content.find(".welcome-ai-result-item-checkbox").addClass "checked"
+        $item = $parent_content.closest(".welcome-ai-result-item")
+
     return
 
   "click .welcome-ai-create-btn": (e, tpl) ->
