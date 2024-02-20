@@ -169,10 +169,11 @@ _.extend JustDoProjectsTemplates.prototype,
 
       # This block is to specifically handle requests that requires pre-defined project templates.
       if (template_obj = self.getTemplateById msg)?
-        _id = 0
+        key = 0
         _recursiveParseAndPublishTemplateTask = (template_task, parent) ->
           fields = 
-            _id: _id
+            _id: "#{key}_#{pub_id}"
+            key: key
             pub_id: pub_id
             parent: parent
             state: template_task.state
@@ -196,11 +197,11 @@ _.extend JustDoProjectsTemplates.prototype,
             fields.archived = new Date()
           
           publish_this.added "ai_response", fields._id, fields
-          _id += 1
+          key += 1
 
           if (subtasks = template_task.tasks)?
             for subtask in subtasks
-              _recursiveParseAndPublishTemplateTask subtask, fields._id
+              _recursiveParseAndPublishTemplateTask subtask, fields.key
 
           return
         
