@@ -42,5 +42,10 @@ _.extend JustDoProjectsTemplates.prototype,
         check msg, String
         check @userId, String
         return self.generateProjectTitleFromOpenAiMethodHandler msg, @userId
+      
+      streamChildTasksFromOpenAi: (context) ->
+        # context is checked inside streamChildTasksFromOpenAiMethodHandler
+        check @userId, String
+        return self.streamChildTasksFromOpenAiMethodHandler context, @userId
 
     return

@@ -336,6 +336,226 @@ _.extend JustDoProjectsTemplates.prototype,
 
     await return res?.choices?[0]?.message?.content
 
+  _generateStreamChildTasksReq: (msg) ->
+    req = 
+      "model": JustDoProjectsTemplates.openai_template_generation_model,
+      "messages": [
+        {
+          "role": "system",
+          "content": """
+            User input will be a JSON object containing the project context. Based on the project context, expand the idea of the target task and generate child tasks under it.
+            "project context" contains the project title, and the surrounding tasks of the target task, including "parents", "siblings", and "children".
+            "target task" is always the last element in the "parents" array.
+
+            User input will be the project context in JSON format. The schema is provided below. The "description" of each schema field contains instruction on how the data should be handled.
+            ### User input JSON schema begin ###
+            {
+              "title": {
+                "type": "string",
+                "description": "Title of the project.",
+                "optional": true
+              },
+              "parents": {
+                "type": "array",
+                "description": "Array of parent task titles. The first element is the top level parent (least relevant), and the last element is the target task (most relevant). The tasks you will be genereating are only children tasks of the target task. ",
+                "optional": true
+              },
+              "siblings": {
+                "type": "array",
+                "description": "Array of same-level task titles provided to you to understand what the project is about.",
+                "optional": true
+              },
+              "children": {
+                "type": "array",
+                "description": "Array of existing children task titles under the target task. The tasks you generate will be siblings of children. If provided, the tasks you generate must be different from the existing children tasks.",
+                "optional": true
+              }
+            }
+            ### User input JSON schema ends ###
+
+            Below is the JSON schema of a task object that you will be generating:
+            ### JSON schema begin ###
+            {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "description": "Title of the task describing the task, or describing what the child tasks does if it has child tasks."
+                },
+                "key": {
+                  "type": "number",
+                  "description": "0-based sequence ID of the task."
+                },
+                "parent_task_key": {
+                  "type": "number",
+                  "description": "Parent task's key. The parent task must exist before referencing. If the task parent is the target task, use -1."
+                }
+              }
+            }
+            ### JSON schema ends ###
+
+            Ensure the generated task title is the same as the target task.
+
+            To reduce the size of task definition, use an array to represent a task. The array must contain only the value of the task object, in the order of the schema.
+            Generate 5 to 20 tasks in total. Return only the array without any formatting like whitespaces and line breakes.
+          """.trim()
+        },
+        {
+          "role": "user",
+          "content": """{"project": "Untitled JustDo", "parents": ["Travel Planning", "Trip to Hong Kong"]}"""
+        },
+        {
+          "role" : "assistant",
+          "content" : """[["Transportation",0,-1],["Book Flight Tickets",1,0],["Arrange Airport Transfer",2,0],["Accommodation",3,-1],["Hotel Reservation",4,3],["Check-in Online",5,3],["Activities",6,-1],["Sightseeing Tours Booking",7,6],["Dining Reservations",8,6],["Shopping Plans",9,6],["Emergency Contact List",10,6]]"""
+        },
+        {
+          "role" : "user",
+          "content" : """{"project":"Travel ideas","parents":["Locations","Israel"],"siblings":["Hong Kong","Vietnam","Korea","Russia"],"children":["Transportation"]}"""
+        },
+        {
+          "role" : "assistant",
+          "content" : """[["Accommodation",0,-1],["Hotel Reservation",1,0],["Check-in Procedures",2,0],["Explore Attractions",3,-1],["Historical Sites Visits",4,3],["Cultural Landmarks Tour",5,3],["Food and Drinks",6,3],["Local Cuisine Tasting",7,6],["Street Food Exploration",8,6],["Modern Bistros Visit",9,6],["Shopping",10,-1],["Souvenir Hunting",11,10],["Local Markets Exploration",12,10],["Specialty Stores Visit",13,16]]"""
+        },
+        {
+          "role" : "user",
+          "content" : """{"project":"1","parents":["Product Development","Prototype Development"],"siblings":["Market Research","Product Launch"],"children":["Design Sketching","3D Modeling","Prototype Testing","Feedback Collection"]}"""
+        },
+        {
+          "role" : "assistant",
+          "content" : """[["Material Selection",0,-1],["Cost Analysis",1,-1],["User Testing",2,-1],["Quality Assurance",3,-1],["Documentation",4,-1],["Demo Setup",5,-1],["Prepare for Production",6,-1]]"""
+        },
+        # {
+        #   "role" : "user",
+        #   "content" : """{"project":"Untitled JustDo","parents":["R&D","Mobile App Development","Sprints","v1.0.0","Implement new feature 1","Design & UX/UI","User Interface Design"]}"""
+        # },
+        # {
+        #   "role" : "assistant",
+        #   "content" : """[["Interaction Design",0,-1],["Wireframes Creation",1,0],["Prototyping",2,0],["Visual Design",3,-1],["Create Style Guide",4,3],["Design Mockups",5,3],["Iconography",6,3],["User Testing",7,-1],["Prepare Test Scenarios",8,7],["Conduct User Interviews",9,7],["Collect Feedback",10,7],["Iterate Design",11,7]]"""
+        # },
+        # {
+        #     "role" : "user",
+        #     "content" : """{"project":"Hospital Management","parents":["Clinical Services","Surgical Services","Post-Op Care Plans"],"siblings":["Surgical Team Coordination","Pre-Op Procedures","Equipment Sterilization"]}"""
+        # },
+        # {
+        #     "role" : "assistant",
+        #     "content" : """[["Patient Monitoring",0,-1],["Vital Signs Tracking",1,0],["Symptom Assessment",2,0],["Medication Administration",3,0],["Progress Notes Documentation",4,0],["Recovery Plan Implementation",5,-1],["Activity Monitoring",6,5],["Diet Supervision",7,5],["Pain Management",8,5],["Follow-up Appointments Scheduling",9,5],["Post-Discharge Care",10,-1],["Home Care Instructions",11,10],["Medication Regimen Explanation",12,10],["Rehabilitation Referrals",13,10],["Symptom Monitoring Plan",14,10]]"""
+        # },
+        # {
+        #     "role" : "user",
+        #     "content" : """{"project":"咖啡店管理","parents":["營銷推廣","社交媒體宣傳"]},"siblings": ["舉辦試喝活動", "優惠促銷策略"]"""
+        # },
+        # {
+        #     "role" : "assistant",
+        #     "content" : """[["線上活動",0,-1],["推文創作",1,0],["社群互動",2,0],["市場分析",3,0],["品牌形象",4,-1],["設計視覺元素",5,4],["制定廣告策略",6,4],["品牌定位優化",7,4],["優惠促銷",8,-1],["設計促銷活動",9,8],["製作宣傳物料",10,8],["執行促銷計劃",11,8]]"""
+        # },
+        {
+          "role": "user",
+          "content": JSON.stringify msg
+        }
+      ],
+      "temperature": 1,
+      "top_p": 1,
+      "n": 1,
+      "stream": true,
+      "max_tokens": 4096,
+      "presence_penalty": 0,
+      "frequency_penalty": 0,
+    return req
+
+  _streamChildTasksFromOpenAiMethodHandlerContextSchema: new SimpleSchema
+    project: 
+      type: String
+      optional: true
+    parents:
+      type: [String]
+      optional: true
+    "parents.$":
+      type: String
+      optional: true
+    siblings:
+      type: [String]
+      optional: true
+    "siblings.$":
+      type: String
+      optional: true
+    children: 
+      type: [String]
+      optional: true
+    "children.$":
+      type: String
+      optional: true
+  streamChildTasksFromOpenAiMethodHandler: (context, user_id) ->
+    check user_id, String
+
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_streamChildTasksFromOpenAiMethodHandlerContextSchema,
+        context,
+        {self: @, throw_on_error: true}
+      )
+    context = cleaned_val
+
+    self = @
+
+    pub_id = Random.id()
+    Meteor.publish pub_id, ->
+      publish_this = @
+
+      req = self._generateStreamChildTasksReq context
+      stream = await self.createStreamRequestWithOpenAi req, user_id
+
+      self.once "stop_stream_#{pub_id}_#{user_id}", ->
+        stream.abort()
+        publish_this.stop()
+        return
+
+      tasks = []
+      task_string = ""
+      task_key_to_created_id = {}
+      _parseStreamedTasks = (task_arr) ->
+        grid_data = APP.projects._grid_data_com
+
+        [title, key, parent_task_key] = task_arr
+
+        fields = 
+          _id: Random.id()
+          key: key
+          pub_id: pub_id
+          parent: parent_task_key
+          title: title
+          state: "pending"
+
+        return fields
+
+      for await part from stream
+        res += part.choices[0].delta.content
+        task_string += part.choices[0].delta.content
+
+        if task_string.includes "]"
+          # Replace double brackets with single brackets
+          task_string = task_string.replace /\[\s*\[/g, "["
+          task_string = task_string.replace /\]\s*\]/g, "]"
+
+          # When the task_string contains a complete task, parse it and add it to the tasks array
+          [finished_task_string, incomplete_task_string] = task_string.split(/],?/)
+
+          # Add back the missing bracket from .split()
+          finished_task_string += "]"
+
+          task_arr = JSON.parse finished_task_string
+          task = _parseStreamedTasks task_arr
+          @added "ai_response", task._id, task
+          task_string = incomplete_task_string
+
+      stream.done().then ->
+        publish_this.stop()
+        self.off "stop_stream_#{pub_id}_#{user_id}"
+        return
+
+      return
+
+    return pub_id
+
 getFromTemplateOnly = (key) ->
   return @template[key]
 

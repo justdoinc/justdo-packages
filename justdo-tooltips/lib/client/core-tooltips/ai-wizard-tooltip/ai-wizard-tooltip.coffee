@@ -30,7 +30,7 @@ Template.ai_wizard_tooltip.onCreated ->
     
     tpl.is_loading_rv.set true
 
-    APP.justdo_projects_templates.streamTemplateFromOpenAi request, (err, pub_id) ->
+    APP.justdo_projects_templates.streamChildTasksFromOpenAi request, (err, pub_id) ->
       if err?
         JustdoSnackbar.show
           text: err.reason or err
@@ -141,6 +141,7 @@ Template.ai_wizard_tooltip.events
       template_item.project_id = project_id
       delete template_item.parent
       delete template_item._id
+      delete template_item.key
       delete template_item.pub_id
       return template_item
     recursiveBulkCreateTasks = (path, template_items_arr) ->

@@ -13,3 +13,6 @@ _.extend JustDoProjectsTemplates.prototype,
   
   generateProjectTitleFromOpenAi: (msg, cb) ->
     return Meteor.call "generateProjectTitleFromOpenAi", msg, cb
+  
+  streamChildTasksFromOpenAi: (context, cb) ->
+    return Meteor.call "streamChildTasksFromOpenAi", context, cb
