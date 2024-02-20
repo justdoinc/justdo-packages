@@ -134,18 +134,19 @@ Template.project_template_welcome_ai.events
   # If a child item is checked, all its parent items will be checked;
   # If a parent item is unchecked, all its child items will be unchecked.
   "click .welcome-ai-result-item-content": (e, tpl) ->
-    item_content = $(e.target).closest(".welcome-ai-result-item-content")
-    checkbox = item_content.find(".welcome-ai-result-item-checkbox")
+    $item_content = $(e.target).closest(".welcome-ai-result-item-content")
+    $checkbox = $item_content.find(".welcome-ai-result-item-checkbox")
     check_state = null
 
-    if checkbox.hasClass "checked"
+    if $checkbox.hasClass "checked"
       check_state = false
-      checkbox.removeClass "checked"
+      $checkbox.removeClass "checked"
     else
       check_state = true
-      checkbox.addClass "checked"
+      $checkbox.addClass "checked"
 
-    item_content.siblings().each (i, el) ->
+    # Checks/unchecks child tasks
+    $item_content.siblings().each (i, el) ->
       $(el).find(".welcome-ai-result-item-checkbox").each (i, el_checkbox) ->
         if check_state
           $(el_checkbox).addClass "checked"
