@@ -2,10 +2,13 @@ APP.justdo_tooltips.registerTooltip
   id: "ai-wizard-tooltip"
   template: "ai_wizard_tooltip"
 
+prev_task_id = ""
+prev_pub_id = ""
+
 Template.ai_wizard_tooltip.onCreated ->
   tpl = @
   tpl.templates_sub_handle = null
-  tpl.pub_id_rv = new ReactiveVar ""
+  tpl.pub_id_rv = new ReactiveVar prev_pub_id
   tpl.is_loading_rv = new ReactiveVar false
 
   tpl.isResponseExists = ->
@@ -33,9 +36,11 @@ Template.ai_wizard_tooltip.onCreated ->
           text: err.reason or err
         return
 
+      tpl.removeAllItemsWithPubIdInMiniMongo  tpl.pub_id_rv.get()
       tpl.pub_id_rv.set ""
       tpl.templates_sub_handle?.stop()
 
+      prev_pub_id = pub_id
       tpl.pub_id_rv.set pub_id
       tpl.templates_sub_handle = Meteor.subscribe pub_id,
         onReady: -> tpl.showDropdown()
@@ -46,15 +51,18 @@ Template.ai_wizard_tooltip.onCreated ->
       return
     return
 
+  tpl.removeAllItemsWithPubIdInMiniMongo = (pub_id) ->
+    APP.collections.AIResponse._collection.remove({pub_id: pub_id})
+    return
+
   tpl.autorun ->
     APP.collections.AIResponse.find().fetch()
     $(".ai-wizard-list").animate(scrollTop: $(".ai-wizard-list").prop("scrollHeight"), 100)
 
-  return
-
-Template.ai_wizard_tooltip.onRendered ->
-  tpl = @
-  tpl.streamTemplateFromOpenAi()
+  if (task_id = JD.activeItemId()) isnt prev_task_id
+    tpl.removeAllItemsWithPubIdInMiniMongo  tpl.pub_id_rv.get()
+    tpl.streamTemplateFromOpenAi()
+    prev_task_id = task_id
 
   return
 
