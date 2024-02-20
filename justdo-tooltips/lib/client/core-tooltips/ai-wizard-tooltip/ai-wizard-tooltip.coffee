@@ -103,6 +103,14 @@ Template.ai_wizard_tooltip.events
 
         return
       return
+    
+    if check_state
+      # Ensure all parents are checked
+      $item = $(e.target).closest(".ai-wizard-item")
+      while ($parent_content = $item.siblings(".ai-wizard-item-content")).length > 0
+        $parent_content.find(".ai-wizard-item-checkbox").addClass "checked"
+        $item = $parent_content.closest(".ai-wizard-item")
+
     return
 
   "click .ai-wizard-stop": (e, tpl) ->
