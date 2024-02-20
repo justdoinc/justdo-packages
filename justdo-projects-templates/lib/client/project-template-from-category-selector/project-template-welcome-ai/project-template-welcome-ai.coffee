@@ -181,23 +181,24 @@ Template.project_template_welcome_ai.events
     query =
       pub_id: pub_id
       parent: -1
-    if not _.isEmpty(excluded_item_ids = $(".welcome-ai-result-item-checkbox:not(.checked)").map((i, el) -> $(el).data("id")).get())
-      query._id =
-        $nin: excluded_item_ids
+    if not _.isEmpty(excluded_item_keys = $(".welcome-ai-result-item-checkbox:not(.checked)").map((i, el) -> $(el).data("key")).get())
+      query.key =
+        $nin: excluded_item_keys
 
     grid_data = APP.modules.project_page.gridData()
     transformTemplateItemToTaskDoc = (template_item) ->
       template_item.project_id = project_id
       delete template_item.parent
       delete template_item._id
+      delete template_item.key
       delete template_item.pub_id
       return template_item
     recursiveBulkCreateTasks = (path, template_items_arr) ->
       if _.isEmpty template_items_arr
         return
         
-      # template_item_ids is to keep track of the corresponding template item id for each created task
-      template_item_ids = _.map template_items_arr, (item) -> item._id
+      # template_item_keys is to keep track of the corresponding template item id for each created task
+      template_item_keys = _.map template_items_arr, (item) -> item.key
 
       items_to_add = _.map template_items_arr, (item) -> transformTemplateItemToTaskDoc item
       grid_data.bulkAddChild path, items_to_add, (err, created_task_ids) ->
@@ -208,13 +209,13 @@ Template.project_template_welcome_ai.events
 
         for created_task_id_and_path, i in created_task_ids
           created_task_path = created_task_id_and_path[1]
-          corresponding_template_item_id = template_item_ids[i]
+          corresponding_template_item_key = template_item_keys[i]
           child_query =
             pub_id: pub_id
-            parent: corresponding_template_item_id
-          if not _.isEmpty excluded_item_ids
-            child_query._id =
-              $nin: excluded_item_ids
+            parent: corresponding_template_item_key
+          if not _.isEmpty excluded_item_keys
+            child_query.key =
+              $nin: excluded_item_keys
 
           template_items = APP.collections.AIResponse.find(child_query).fetch()
           recursiveBulkCreateTasks created_task_path, template_items
@@ -246,4 +247,4 @@ Template.project_template_welcome_ai.events
 
 Template.project_template_welcome_ai_task_item.helpers
   childTemplate: ->
-    return APP.collections.AIResponse.find({pub_id: @pub_id, parent: @_id}).fetch()
+    return APP.collections.AIResponse.find({pub_id: @pub_id, parent: @key}).fetch()

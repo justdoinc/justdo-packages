@@ -321,7 +321,8 @@ _.extend JustDoProjectsTemplates.prototype,
         ] = task_arr
 
         fields = 
-          _id: key
+          _id: Random.id()
+          key: key
           pub_id: pub_id
           parent: parent_task_key
           title: title
