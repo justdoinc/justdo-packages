@@ -18,15 +18,45 @@ Template.ai_wizard_tooltip.onCreated ->
 
   tpl.streamTemplateFromOpenAi = ->
     active_path = JD.activePath()
+
     parent_tasks_query = 
       _id:
         $in:
           GridData.helpers.getPathArray active_path
+    parent_titles = APP.collections.Tasks.find(parent_tasks_query, {fields: {title: 1}}).map (task) -> task.title
+
+    child_or_sibling_limit = 10 # Limit the number of siblings and children to 10
+
     parent_task_id = GridData.helpers.getPathParentId active_path
+    active_task_order = JD.activeItem({parents: 1}).parents[parent_task_id].order
+    sibling_task_query = 
+      $or: [
+        "parents.#{parent_task_id}.order":
+          $lte: active_task_order
+          $gte: active_task_order - child_or_sibling_limit
+      ,
+        "parents.#{parent_task_id}.order":
+          $lte: active_task_order + child_or_sibling_limit
+          $gte: active_task_order
+      ]
+      _id: 
+        $ne: JD.activeItemId()
+    sibling_task_candidates = APP.collections.Tasks.find(sibling_task_query, {fields: {title: 1, parents: 1}}).fetch()
+    # For sibling tasks, we want to get the closest tasks to the active task. 
+    # We sort the tasks by the absolute difference between the active task's order and the sibling task's order
+    # For example, if active task has order of 5, the result of the following sort is [{...order: 4}, {...order: 6}, {...order: 3}, ...] 
+    sibling_task_candidates = _.sortBy sibling_task_candidates, (task) ->
+      task_order_offset = Math.abs(task.parents[parent_task_id].order - active_task_order)
+      return task_order_offset
+    sibling_titles = _.map(sibling_task_candidates.slice(0, child_or_sibling_limit), (task) -> task.title)
+    
+    children_titles = APP.collections.Tasks.find({"parents.#{JD.activeItemId()}": {$ne: null}}, {fields: {title: 1}, limit: child_or_sibling_limit}).map (task) -> task.title
+    
     request = 
       project: JD.activeJustdo({title: 1})?.title
-      parents: APP.collections.Tasks.find(parent_tasks_query, {fields: {title: 1}}).map (task) -> task.title
-      siblings: APP.collections.Tasks.find({"parents.#{parent_task_id}": {$ne: null}, _id: {$ne: JD.activeItemId()}}, {fields: {title: 1}}).map (task) -> task.title
+      parents: parent_titles
+      siblings: sibling_titles
+      children: children_titles
     
     tpl.is_loading_rv.set true
 
