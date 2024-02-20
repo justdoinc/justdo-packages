@@ -209,8 +209,7 @@ _.extend JustDoProjectsTemplates.prototype,
       "frequency_penalty": 0,
     return req
 
-  streamTemplateFromOpenAi: (msg, user_id) ->
-    req = @_generateStreamTemplateReq msg
+  createStreamRequestWithOpenAi: (req, user_id) ->
     request_id = APP.justdo_ai_kit.openai.createChatCompletion req, user_id
     stream = await APP.justdo_ai_kit.openai.getRequest request_id
 
@@ -296,7 +295,8 @@ _.extend JustDoProjectsTemplates.prototype,
         publish_this.stop()
         return
 
-      stream = await self.streamTemplateFromOpenAi request, user_id
+      req = self._generateStreamTemplateReq msg
+      stream = await self.createStreamRequestWithOpenAi req, user_id
       
       self.once "stop_stream_#{pub_id}_#{user_id}", ->
         stream.abort()
