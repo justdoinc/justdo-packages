@@ -35,7 +35,7 @@ Template.project_template_welcome_ai.onCreated ->
     @is_loading_rv.set true
     @lockInput()
     
-    Meteor.call "streamTemplateFromOpenAi", msg, (err, pub_id) =>
+    APP.justdo_projects_templates.streamTemplateFromOpenAi msg, (err, pub_id) =>
       if err?
         JustdoSnackbar.show
           text: err.reason or err

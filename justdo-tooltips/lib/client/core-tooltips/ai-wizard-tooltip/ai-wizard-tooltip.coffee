@@ -30,7 +30,7 @@ Template.ai_wizard_tooltip.onCreated ->
     
     tpl.is_loading_rv.set true
 
-    Meteor.call "streamTemplateFromOpenAi", request, (err, pub_id) ->
+    APP.justdo_projects_templates.streamTemplateFromOpenAi request, (err, pub_id) ->
       if err?
         JustdoSnackbar.show
           text: err.reason or err
