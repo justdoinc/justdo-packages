@@ -28,9 +28,7 @@ _.extend JustDoProjectsTemplates.prototype,
         return self.createSubtreeFromOpenAi options, @userId
       
       streamTemplateFromOpenAi: (msg) ->
-        # Checking of msg is done inside streamTemplateFromOpenAiMethodHandler
-        if _.isString msg
-          msg = {msg}
+        check msg, String
         check @userId, String # login required
         return self.streamTemplateFromOpenAiMethodHandler(msg, @userId)
       
