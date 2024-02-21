@@ -18,11 +18,13 @@ Template.ai_wizard_tooltip.onCreated ->
 
   tpl.streamTemplateFromOpenAi = ->
     active_path = JD.activePath()
+    active_task_id = GridData.helpers.getPathItemId active_path
 
     parent_tasks_query = 
       _id:
         $in:
           GridData.helpers.getPathArray active_path
+        $ne: active_task_id
     parent_titles = APP.collections.Tasks.find(parent_tasks_query, {fields: {title: 1}}).map (task) -> task.title
 
     child_or_sibling_limit = 10 # Limit the number of siblings and children to 10
@@ -40,7 +42,7 @@ Template.ai_wizard_tooltip.onCreated ->
           $gte: active_task_order
       ]
       _id: 
-        $ne: JD.activeItemId()
+        $ne: active_task_id
     sibling_task_candidates = APP.collections.Tasks.find(sibling_task_query, {fields: {title: 1, parents: 1}}).fetch()
     # For sibling tasks, we want to get the closest tasks to the active task. 
     # We sort the tasks by the absolute difference between the active task's order and the sibling task's order
@@ -50,10 +52,11 @@ Template.ai_wizard_tooltip.onCreated ->
       return task_order_offset
     sibling_titles = _.map(sibling_task_candidates.slice(0, child_or_sibling_limit), (task) -> task.title)
     
-    children_titles = APP.collections.Tasks.find({"parents.#{JD.activeItemId()}": {$ne: null}}, {fields: {title: 1}, limit: child_or_sibling_limit}).map (task) -> task.title
+    children_titles = APP.collections.Tasks.find({"parents.#{active_task_id}": {$ne: null}}, {fields: {title: 1}, limit: child_or_sibling_limit}).map (task) -> task.title
     
     request = 
       project: JD.activeJustdo({title: 1})?.title
+      target_task: JD.activeItem({title: 1})?.title
       parents: parent_titles
       siblings: sibling_titles
       children: children_titles
