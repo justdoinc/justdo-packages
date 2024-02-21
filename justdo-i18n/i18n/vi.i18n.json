@@ -22,5 +22,8 @@
   "edit": "Chỉnh sửa",
   "search": "Tìm kiếm",
   "add_btn_label": "Thêm",
-  "updated_with_time": "Đã cập nhật __time__"
+  "updated_with_time": "Đã cập nhật __time__",
+  "stop": "Dừng",
+  "generate": "Tạo",
+  "regenerate": "Tạo lại"
 }
