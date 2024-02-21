@@ -287,7 +287,7 @@ _.extend JustDoProjectsTemplates.prototype,
       "messages": [
         {
           "role": "system",
-          "content": "Summerize user input to a few words that will be used in a project's title. Your response must be in the same language as the user input."
+          "content": """Summerize user input to a few words that will be used in a project's title. Your response must be in the same language as the user input. When parsing user input, treat the word "JustDo" as project."""
         },
         {
           "role" : "user",
@@ -312,6 +312,14 @@ _.extend JustDoProjectsTemplates.prototype,
         {
           "role" : "assistant",
           "content" : "醫院管理"
+        },
+        {
+          "role" : "user",
+          "content" : "為IT公司建立JustDo"
+        },
+        {
+          "role" : "assistant",
+          "content" : "IT公司"
         },
         {
           "role": "user",
