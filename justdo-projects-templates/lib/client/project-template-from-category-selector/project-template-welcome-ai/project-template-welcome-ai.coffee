@@ -181,9 +181,6 @@ Template.project_template_welcome_ai.events
     query =
       pub_id: pub_id
       parent: -1
-    if not _.isEmpty(excluded_item_keys = $(".welcome-ai-result-item-checkbox:not(.checked)").map((i, el) -> $(el).data("key")).get())
-      query.key =
-        $nin: excluded_item_keys
 
     grid_data = APP.modules.project_page.gridData()
     transformTemplateItemToTaskDoc = (template_item) ->
@@ -225,6 +222,10 @@ Template.project_template_welcome_ai.events
     # In case the resnpose has only 1 root task, use the child tasks as root tasks.
     if APP.collections.AIResponse.find(query).count() is 1
       query.parent = 0
+    
+    if not _.isEmpty(excluded_item_keys = $(".welcome-ai-result-item-checkbox:not(.checked)").map((i, el) -> $(el).data("key")).get())
+      query.key =
+        $nin: excluded_item_keys
     
     if _.isEmpty(template_items = APP.collections.AIResponse.find(query).fetch())
       return
