@@ -27,5 +27,8 @@
   "edit": "編輯",
   "search": "搜尋",
   "add_btn_label": "增加",
-  "updated_with_time": "最後更新於__time__"
+  "updated_with_time": "最後更新於__time__",
+  "stop": "停止",
+  "generate": "生產",
+  "regenerate": "重新生成"
 }

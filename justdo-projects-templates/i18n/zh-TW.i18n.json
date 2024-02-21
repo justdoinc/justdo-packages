@@ -5,11 +5,20 @@
 
   "project_templates_task_title_my_first_task": "第一個任務",
 
-  "ai_wizard_title": "AI Wizard",
-  "ai_wizard_bot_name": "JustDo Bot",
-  "ai_wizard_welcome_msg": "Hello, tell me about your project and I will help you create a JustDo",
-  "ai_wizard_waiting_for_template_msg": "Generating a template based on your requirement... It should take less than a minute.",
-  "ai_wizard_error_msg": "Due to the high demand, we can't process your request right now :(  please select a template from the picker.",
-  "ai_wizard_send": "Send",
-  "ai_wizard_input_placeholder": "Message..."
-}
+  "ai_wizard_title": "AI助手",
+  "ai_wizard_bot_name": "JustDo助手",
+  "ai_wizard_welcome_msg": "您好！請描述欲建立的專案，讓我來幫你建立一個JustDo。",
+  "ai_wizard_waiting_for_template_msg": "根據您的要求生成專案... 預計需要不到一分鐘。",
+  "ai_wizard_error_msg": "由於需求過高，目前無法處理您的請求 :( 請從選擇器中選擇範本。",
+  "ai_wizard_send": "發送",
+  "ai_wizard_input_placeholder": "輸入...",
+
+  "ai_wizard_create_a_project_for_an": "為__purpose__建立JustDo",
+  "ai_wizard_create_project_for": "為__purpose__建立JustDo",
+
+  "ai_wizard_what_kind_of_project_do_you_want_to_create": "您想創建什麼樣的JustDo?",
+
+  "ai_wizard_it_company_html": "<span>科技公司</span>",
+  "ai_wizard_real_estate_company_html": "<span>房地產公司</span>",
+  "ai_wizard_movie_production_company_html": "<span>電影製作公司</span>"
+  }

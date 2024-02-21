@@ -2,10 +2,10 @@
   <div class="project-template-welcome-ai">
     <div class="content {{#if isResponseExists}}show-results{{/if}}">
       <div class="welcome-ai-title">
-        Welcome to JustDo
+        {{_ "welcome_to_justdo"}}
       </div>
       <div class="welcome-ai-input-wrapper">
-        <input class="welcome-ai-input form-control form-control-md" type="text" placeholder="What kind of project do you want to create?">
+        <input class="welcome-ai-input form-control form-control-md" type="text" placeholder="{{_ "ai_wizard_what_kind_of_project_do_you_want_to_create"}}">
         <div class="welcome-ai-btn-wrapper">
           {{#if isLoading}}
             <div class="loader">
@@ -15,20 +15,20 @@
           {{/if}}
           <div class="welcome-ai-btn text-primary {{#if isLoading}}welcome-ai-stop-generation{{else}}welcome-ai-btn-generate{{/if}}">
             {{#if isLoading}}
-              Stop
+              {{_ "stop"}}
             {{else if isResponseExists}}
-              Regenerate
+              {{_ "regenerate"}}
             {{else}}
-              Generate
+              {{_ "generate"}}
             {{/if}}
           </div>
         </div>
 
         {{#unless $or isResponseExists isLoading}}
           <div class="welcome-ai-dropdown">
-            <div class="welcome-ai-suggestion-item" data-template_id="it-firm">Create a project for an <span>IT</span> company</div>
-            <div class="welcome-ai-suggestion-item" data-template_id="home-builders-inc">Create project for <span>Real Estate</span> company</div>
-            <div class="welcome-ai-suggestion-item" data-template_id="movies-production">Create project for <span>Movie Production</span> company</div>
+            <div class="welcome-ai-suggestion-item" data-template_id="it-firm">{{{_ "ai_wizard_create_a_project_for_an" purpose=(_ "ai_wizard_it_company_html")}}}</div>
+            <div class="welcome-ai-suggestion-item" data-template_id="home-builders-inc">{{{_ "ai_wizard_create_project_for" purpose=(_ "ai_wizard_real_estate_company_html")}}}</div>
+            <div class="welcome-ai-suggestion-item" data-template_id="movies-production">{{{_ "ai_wizard_create_project_for" purpose=(_ "ai_wizard_movie_production_company_html")}}}</div>
           </div>
         {{/unless}}
 
@@ -46,7 +46,7 @@
           </div>
           {{#if $not isLoading}}
             <div class="welcome-ai-create-btn-wrapper">
-              <div class="welcome-ai-create-btn btn-primary btn-sm text-center">Create</div>
+              <div class="welcome-ai-create-btn btn-primary btn-sm text-center">{{_ "create"}}</div>
             </div>
           {{/if}}
         </div>
@@ -57,7 +57,6 @@
 
 <template name="project_template_welcome_ai_task_item">
   <div class="welcome-ai-result-item">
-      <!-- <input class="welcome-ai-result-item-checkbox form-check-input" id="{{pub_id}}_{{_id}}" data-id="{{_id}}" type="checkbox" checked> -->
       <div class="welcome-ai-result-item-content">
         <div class="welcome-ai-result-item-checkbox checked" data-key="{{key}}"></div>
         {{title}}

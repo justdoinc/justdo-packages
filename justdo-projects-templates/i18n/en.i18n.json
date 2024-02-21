@@ -11,5 +11,15 @@
   "ai_wizard_waiting_for_template_msg": "Generating a template based on your requirement... It should take less than a minute.",
   "ai_wizard_error_msg": "Due to the high demand, we can't process your request right now :(  please select a template from the picker.",
   "ai_wizard_send": "Send",
-  "ai_wizard_input_placeholder": "Message..."
+  "ai_wizard_input_placeholder": "Message...",
+
+  "ai_wizard_create_a_project_for_an": "Create a project for an __purpose__",
+  "ai_wizard_create_project_for": "Create project for __purpose__",
+
+  "ai_wizard_what_kind_of_project_do_you_want_to_create": "What kind of project do you want to create?",
+
+  "ai_wizard_it_company_html": "<span>IT</span> company",
+  "ai_wizard_real_estate_company_html": "<span>Real Estate</span> company",
+  "ai_wizard_movie_production_company_html": "<span>Movie Production</span> company"
+
 }

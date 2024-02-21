@@ -27,5 +27,8 @@
   "edit": "Edit",
   "search": "Search",
   "add_btn_label": "ADD",
-  "updated_with_time": "Updated __time__"
+  "updated_with_time": "Updated __time__",
+  "stop": "Stop",
+  "generate": "Generate",
+  "regenerate": "Regenerate"
 }
