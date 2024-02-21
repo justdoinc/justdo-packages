@@ -214,6 +214,9 @@ Template.project_template_welcome_ai.events
             child_query.key =
               $nin: excluded_item_keys
 
+          # Remove created tasks from AIResponse collection
+          APP.collections.AIResponse._collection.remove({pub_id: pub_id, key: corresponding_template_item_key})
+
           template_items = APP.collections.AIResponse.find(child_query).fetch()
           recursiveBulkCreateTasks created_task_path, template_items
 
