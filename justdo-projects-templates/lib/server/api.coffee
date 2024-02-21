@@ -343,21 +343,28 @@ _.extend JustDoProjectsTemplates.prototype,
         {
           "role": "system",
           "content": """
-            User input will be a JSON object containing the project context. Based on the project context, expand the idea of the target task and generate child tasks under it.
+            You are a task generator of a project management system. Generate tasks based on user input. Be creative and try to come up with subtasks under the target task.
+
+            User input will be a JSON object containing the project context.
             "project context" contains the project title, and the surrounding tasks of the target task, including "parents", "siblings", and "children".
             "target task" is always the last element in the "parents" array.
 
-            User input will be the project context in JSON format. The schema is provided below. The "description" of each schema field contains instruction on how the data should be handled.
+            The schema of user input is provided below. The "description" of each schema field contains instruction on how the data should be handled.
             ### User input JSON schema begin ###
             {
-              "title": {
+              "project": {
                 "type": "string",
                 "description": "Title of the project.",
                 "optional": true
               },
+              "target_task": {
+                "type": "string",
+                "description": "Title of the target task. This is the task you will be generating subtasks for. Ensure the generated task are relevant to this task.",
+                "optional": true
+              },
               "parents": {
                 "type": "array",
-                "description": "Array of parent task titles. The first element is the top level parent (least relevant), and the last element is the target task (most relevant). The tasks you will be genereating are only children tasks of the target task. ",
+                "description": "Array of parent task titles. The first element is the top level parent, and the last element is the immidiate parent of the target task.",
                 "optional": true
               },
               "siblings": {
@@ -367,11 +374,18 @@ _.extend JustDoProjectsTemplates.prototype,
               },
               "children": {
                 "type": "array",
-                "description": "Array of existing children task titles under the target task. The tasks you generate will be siblings of children. If provided, the tasks you generate must be different from the existing children tasks.",
+                "description": "Array of existing children task titles under the target task.",
                 "optional": true
               }
             }
             ### User input JSON schema ends ###
+
+            Note that "parents", "siblings", "children" are provided to you to understand the context of the project.
+            Never generate tasks that are already in the project, or tasks that should be children of other tasks.
+
+            The length of parents indicates the depth of the target task. As the depth increases, the scope of the task should decrease.
+            Example 1: If there are only a 1 to 2 parents and no children, generated tasks should be broad in scope (like departments, categories, sub-projects, etc. each with their own relevant subtasks).
+            Example 2: If there are multiple parnets and some children, generated tasks should be more specific and are actionable items or examples of the target task.
 
             Below is the JSON schema of a task object that you will be generating:
             ### JSON schema begin ###
@@ -394,15 +408,16 @@ _.extend JustDoProjectsTemplates.prototype,
             }
             ### JSON schema ends ###
 
-            Ensure the generated task title is the same as the target task.
+            Ensure the language of generated tasks are the same as the target task.
 
             To reduce the size of task definition, use an array to represent a task. The array must contain only the value of the task object, in the order of the schema.
             Generate 5 to 20 tasks in total. Return only the array without any formatting like whitespaces and line breakes.
+
           """.trim()
         },
         {
           "role": "user",
-          "content": """{"project": "Untitled JustDo", "parents": ["Travel Planning", "Trip to Hong Kong"]}"""
+          "content": """{"project": "Untitled JustDo","target_task": "Trip to Hong Kong", "parents": ["Travel Planning"]}"""
         },
         {
           "role" : "assistant",
@@ -410,7 +425,7 @@ _.extend JustDoProjectsTemplates.prototype,
         },
         {
           "role" : "user",
-          "content" : """{"project":"Travel ideas","parents":["Locations","Israel"],"siblings":["Hong Kong","Vietnam","Korea","Russia"],"children":["Transportation"]}"""
+          "content" : """{"project":"Travel ideas","target_task":"Israel","parents":["Locations"],"siblings":["Hong Kong","Vietnam","Korea","Russia"],"children":["Transportation"]}"""
         },
         {
           "role" : "assistant",
@@ -418,36 +433,44 @@ _.extend JustDoProjectsTemplates.prototype,
         },
         {
           "role" : "user",
-          "content" : """{"project":"1","parents":["Product Development","Prototype Development"],"siblings":["Market Research","Product Launch"],"children":["Design Sketching","3D Modeling","Prototype Testing","Feedback Collection"]}"""
+          "content" : """{"project":"Untitled JustDo","target_task":"User Interface Design","parents":["R&D","Mobile App Development","Sprints","v1.0.0","Implement new feature 1","Design & UX/UI"]}"""
         },
         {
           "role" : "assistant",
-          "content" : """[["Material Selection",0,-1],["Cost Analysis",1,-1],["User Testing",2,-1],["Quality Assurance",3,-1],["Documentation",4,-1],["Demo Setup",5,-1],["Prepare for Production",6,-1]]"""
+          "content" : """[["Interaction Design",0,-1],["Wireframes Creation",1,0],["Prototyping",2,0],["Visual Design",3,-1],["Create Style Guide",4,3],["Design Mockups",5,3],["Iconography",6,3],["User Testing",7,-1],["Prepare Test Scenarios",8,7],["Conduct User Interviews",9,7],["Collect Feedback",10,7],["Iterate Design",11,7]]"""
         },
-        # {
-        #   "role" : "user",
-        #   "content" : """{"project":"Untitled JustDo","parents":["R&D","Mobile App Development","Sprints","v1.0.0","Implement new feature 1","Design & UX/UI","User Interface Design"]}"""
-        # },
-        # {
-        #   "role" : "assistant",
-        #   "content" : """[["Interaction Design",0,-1],["Wireframes Creation",1,0],["Prototyping",2,0],["Visual Design",3,-1],["Create Style Guide",4,3],["Design Mockups",5,3],["Iconography",6,3],["User Testing",7,-1],["Prepare Test Scenarios",8,7],["Conduct User Interviews",9,7],["Collect Feedback",10,7],["Iterate Design",11,7]]"""
-        # },
-        # {
-        #     "role" : "user",
-        #     "content" : """{"project":"Hospital Management","parents":["Clinical Services","Surgical Services","Post-Op Care Plans"],"siblings":["Surgical Team Coordination","Pre-Op Procedures","Equipment Sterilization"]}"""
-        # },
-        # {
-        #     "role" : "assistant",
-        #     "content" : """[["Patient Monitoring",0,-1],["Vital Signs Tracking",1,0],["Symptom Assessment",2,0],["Medication Administration",3,0],["Progress Notes Documentation",4,0],["Recovery Plan Implementation",5,-1],["Activity Monitoring",6,5],["Diet Supervision",7,5],["Pain Management",8,5],["Follow-up Appointments Scheduling",9,5],["Post-Discharge Care",10,-1],["Home Care Instructions",11,10],["Medication Regimen Explanation",12,10],["Rehabilitation Referrals",13,10],["Symptom Monitoring Plan",14,10]]"""
-        # },
-        # {
-        #     "role" : "user",
-        #     "content" : """{"project":"咖啡店管理","parents":["營銷推廣","社交媒體宣傳"]},"siblings": ["舉辦試喝活動", "優惠促銷策略"]"""
-        # },
-        # {
-        #     "role" : "assistant",
-        #     "content" : """[["線上活動",0,-1],["推文創作",1,0],["社群互動",2,0],["市場分析",3,0],["品牌形象",4,-1],["設計視覺元素",5,4],["制定廣告策略",6,4],["品牌定位優化",7,4],["優惠促銷",8,-1],["設計促銷活動",9,8],["製作宣傳物料",10,8],["執行促銷計劃",11,8]]"""
-        # },
+        {
+          "role" : "user",
+          "content" : """{"project":"Hospital Management","target_task":"Pre-Op Procedures","parents":["Clinical Services","Surgical Services"],"siblings":["Surgical Team Coordination","Post-Op Care Plans","Equipment Sterilization"],"children":[]}"""
+        },
+        {
+          "role" : "assistant",
+          "content" : """[["Patient Assessment",0,-1],["Medical History Review",1,0],["Physical Examination",2,0],["Pre-Surgery Instructions",3,0],["Consent Form Signing",4,0],["Lab Tests",5,-1],["Blood Work",6,5],["X-Rays",7,5],["ECG",8,5],["Pre-Surgery Checklist",9,-1],["Verify Consent",10,9],["Confirm Allergies",11,9],["Prepare Equipment",12,9],["Anesthesia Assessment",13,9]]"""
+        },
+        {
+            "role" : "user",
+            "content" : """{"project":"Hospital Management","target_task":"Post-Op Care Plans","parents":["Clinical Services","Surgical Services"],"siblings":["Surgical Team Coordination","Pre-Op Procedures","Equipment Sterilization"]}"""
+        },
+        {
+            "role" : "assistant",
+            "content" : """[["Patient Monitoring",0,-1],["Vital Signs Tracking",1,0],["Symptom Assessment",2,0],["Medication Administration",3,0],["Progress Notes Documentation",4,0],["Recovery Plan Implementation",5,-1],["Activity Monitoring",6,5],["Diet Supervision",7,5],["Pain Management",8,5],["Follow-up Appointments Scheduling",9,5],["Post-Discharge Care",10,-1],["Home Care Instructions",11,10],["Medication Regimen Explanation",12,10],["Rehabilitation Referrals",13,10],["Symptom Monitoring Plan",14,10]]"""
+        },
+        {
+            "role" : "user",
+            "content" : """{"project":"咖啡店管理","target_task":"社交媒體宣傳","parents":["營銷推廣"]},"siblings": ["舉辦試喝活動", "優惠促銷策略"]"""
+        },
+        {
+            "role" : "assistant",
+            "content" : """[["線上活動",0,-1],["推文創作",1,0],["社群互動",2,0],["市場分析",3,0],["品牌形象",4,-1],["設計視覺元素",5,4],["制定廣告策略",6,4],["品牌定位優化",7,4],["優惠促銷",8,-1],["設計促銷活動",9,8],["製作宣傳物料",10,8],["執行促銷計劃",11,8]]"""
+        },
+        {
+          "role" : "user",
+          "content" : """{"project":"IT firm management","target_task":"Backend Development","parents":["R&D","Mobile App Development","Sprints","v1.0.0","Implement new feature 1"],"siblings":["Design & UX/UI","Frontend Development","QA"],"children":["Feature B"]}"""
+        },
+        {
+          "role" : "assistant",
+          "content" : """[["Database Design",0,-1],["ER Diagram Creation",1,0],["Schema Implementation",2,0],["API Development",3,-1],["Endpoint Creation",4,3],["Data Manipulation Functions",5,3],["Security Integration",6,-1],["Authentication Systems",7,6],["Authorization Processes",8,6],["Performance Optimization",9,-1],["Database Queries Refinement",10,9],["Query Caching Implementation",11,9],["Error Handling Enhancement",12,9]]"""
+        },
         {
           "role": "user",
           "content": JSON.stringify msg
@@ -466,6 +489,8 @@ _.extend JustDoProjectsTemplates.prototype,
     project: 
       type: String
       optional: true
+    target_task:
+      type: String
     parents:
       type: [String]
       optional: true
