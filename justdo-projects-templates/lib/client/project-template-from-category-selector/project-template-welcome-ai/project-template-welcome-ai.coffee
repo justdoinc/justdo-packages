@@ -167,13 +167,17 @@ Template.project_template_welcome_ai.events
 
   "click .welcome-ai-create-btn": (e, tpl) ->
     # Set the project title
-    APP.justdo_projects_templates.generateProjectTitleFromOpenAi tpl.sent_request, (err, title) ->
-      if err?
-        console.error err
-        return
+    if (template = APP.justdo_projects_templates.getTemplateById tpl.sent_request)?
+      project_title = TAPi18n.__ template.label_i18n
+      APP.collections.Projects.update JD.activeJustdoId(), {$set: {title: project_title}}
+    else
+      APP.justdo_projects_templates.generateProjectTitleFromOpenAi tpl.sent_request, (err, title) ->
+        if err?
+          console.error err
+          return
 
-      APP.collections.Projects.update JD.activeJustdoId(), {$set: {title}}
-      return
+        APP.collections.Projects.update JD.activeJustdoId(), {$set: {title}}
+        return
 
     pub_id = tpl.pub_id_rv.get()
     project_id = JD.activeJustdoId()
