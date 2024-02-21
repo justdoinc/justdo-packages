@@ -17,8 +17,8 @@
       {{/if}}
     </div>
     <div class="ai-wizard-footer">
-      <div class="btn btn-sm btn-light {{#if isLoading}}ai-wizard-stop{{else}}ai-wizard-generate{{/if}}">{{#if isLoading}}Stop{{else}}Regenerate{{/if}}</div>
-      <div class="ai-wizard-create btn btn-sm btn-primary {{#if isLoading}}disabled{{/if}}">Create</div>
+      <div class="btn btn-sm btn-light {{#if isLoading}}ai-wizard-stop{{else}}ai-wizard-generate{{/if}}">{{#if isLoading}}{{_ "stop"}}{{else}}{{_ "regenerate"}}{{/if}}</div>
+      <div class="ai-wizard-create btn btn-sm btn-primary {{#if isLoading}}disabled{{/if}}">{{_ "create"}}</div>
     </div>
   </div>
 </template>
