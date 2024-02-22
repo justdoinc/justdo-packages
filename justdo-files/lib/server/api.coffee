@@ -1,13 +1,13 @@
-import Grid from "gridfs-stream"
 import fs from "fs"
 import { MongoInternals } from "meteor/mongo"
+mongodb = MongoInternals.NpmModule
 import JSZip from "jszip"
 
 Fiber = Npm.require "fibers"
 
 _.extend JustdoFiles.prototype,
   _immediateInit: ->
-    @gfs = Grid MongoInternals.defaultRemoteCollectionDriver().mongo.db, MongoInternals.NpmModule
+    @gfs = new mongodb.GridFSBucket MongoInternals.defaultRemoteCollectionDriver().mongo.db
 
     @_setupOstrioFiles()
     @_setupFilesArchiveRoute()
@@ -65,13 +65,12 @@ _.extend JustdoFiles.prototype,
     gfs = @gfs
 
     files_collection_onAfterUpload = (file) ->
-      writestream = gfs.createWriteStream
-        filename: file.name
+      writestream = gfs.openUploadStream file.name,
         content_type: file.mime
 
       fs.createReadStream(file.path).pipe writestream
 
-      writestream.on "close", Meteor.bindEnvironment (gridfs_file) =>
+      writestream.on "finish", Meteor.bindEnvironment (gridfs_file) =>
         removed_before_linking = false
 
         try
@@ -123,8 +122,8 @@ _.extend JustdoFiles.prototype,
       gridfs_id = file.meta.gridfs_id
 
       if gridfs_id?
-        readstream = gfs.createReadStream
-          _id: gridfs_id
+        readstream = gfs.openDownloadStream mongodb.ObjectId gridfs_id
+
         readstream.on "error", (err) ->
           throw err
         
@@ -180,7 +179,7 @@ _.extend JustdoFiles.prototype,
     if not gfs_id?
       return
 
-    @gfs.remove {_id: gfs_id}, (err) ->
+    @gfs.delete mongodb.ObjectId(gfs_id), (err) ->
       if (err)
         throw err
 
@@ -226,8 +225,8 @@ _.extend JustdoFiles.prototype,
       gridfs_id = file.meta.gridfs_id
 
       if gridfs_id?
-        filestream = @gfs.createReadStream
-          _id: gridfs_id
+        filestream = @gfs.openDownloadStream mongodb.ObjectId gridfs_id
+
         filestream.on "error", (err) ->
           throw err
         
