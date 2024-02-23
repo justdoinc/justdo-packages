@@ -238,11 +238,13 @@ _.extend JustDoProjectsTemplates.prototype,
 
       req = self._generateStreamTemplateReq msg
       stream = await self.createStreamRequestWithOpenAi req, user_id
-      
-      self.once "stop_stream_#{pub_id}_#{user_id}", ->
+
+      stopStreamAndPublication = ->
         stream.abort()
         publish_this.stop()
         return
+      
+      stop_event_handler = self.once "stop_stream_#{pub_id}_#{user_id}", stopStreamAndPublication
 
       tasks = []
       task_string = ""
@@ -298,7 +300,7 @@ _.extend JustDoProjectsTemplates.prototype,
       
       stream.done().then ->
         publish_this.stop()
-        self.off "stop_stream_#{pub_id}_#{user_id}"
+        self.off "stop_stream_#{pub_id}_#{user_id}", stopStreamAndPublication
         return
 
       return
@@ -614,10 +616,12 @@ _.extend JustDoProjectsTemplates.prototype,
       req = self._generateStreamChildTasksReq context
       stream = await self.createStreamRequestWithOpenAi req, user_id
 
-      self.once "stop_stream_#{pub_id}_#{user_id}", ->
+      stopStreamAndPublication = ->
         stream.abort()
         publish_this.stop()
         return
+
+      stop_event_handler = self.once "stop_stream_#{pub_id}_#{user_id}", stopStreamAndPublication
 
       tasks = []
       task_string = ""
@@ -658,7 +662,7 @@ _.extend JustDoProjectsTemplates.prototype,
 
       stream.done().then ->
         publish_this.stop()
-        self.off "stop_stream_#{pub_id}_#{user_id}"
+        self.off "stop_stream_#{pub_id}_#{user_id}", stopStreamAndPublication
         return
 
       return
