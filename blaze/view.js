@@ -34,6 +34,14 @@
 /// Views associated with templates have names of the form "Template.foo".
 
 /**
+ * A binding is either `undefined` (pending), `{ error }` (rejected), or
+ * `{ value }` (resolved). Synchronous values are immediately resolved (i.e.,
+ * `{ value }` is used). The other states are reserved for asynchronous bindings
+ * (i.e., values wrapped with `Promise`s).
+ * @typedef {{ error: unknown } | { value: unknown } | undefined} Binding
+ */
+
+/**
  * @class
  * @summary Constructor for a View, which represents a reactive region of DOM.
  * @locus Client
@@ -81,6 +89,7 @@ Blaze.View = function (name, render) {
   this._hasGeneratedParent = false;
   // Bindings accessible to children views (via view.lookup('name')) within the
   // closest template view.
+  /** @type {Record<string, ReactiveVar<Binding>>} */
   this._scopeBindings = {};
 
   this.renderCount = 0;
@@ -489,14 +498,19 @@ Blaze._destroyView = function (view, _skipNodes) {
     return;
   view.isDestroyed = true;
 
-  Blaze._fireCallbacks(view, 'destroyed');
 
   // Destroy views and elements recursively.  If _skipNodes,
   // only recurse up to views, not elements, for the case where
   // the backend (jQuery) is recursing over the elements already.
 
-  if (view._domrange)
-    view._domrange.destroyMembers(_skipNodes);
+  if (view._domrange) view._domrange.destroyMembers(_skipNodes);
+
+  // XXX: fire callbacks after potential members are destroyed
+  // otherwise it's tracker.flush will cause the above line will
+  // not be called and their views won't be destroyed
+  // Involved issues: DOMRange "Must be attached" error, mem leak
+  
+  Blaze._fireCallbacks(view, 'destroyed');
 };
 
 Blaze._destroyNode = function (node) {
@@ -526,6 +540,12 @@ Blaze._isContentEqual = function (a, b) {
  */
 Blaze.currentView = null;
 
+/**
+ * @template T
+ * @param {Blaze.View} view
+ * @param {() => T} func
+ * @returns {T}
+ */
 Blaze._withCurrentView = function (view, func) {
   var oldView = Blaze.currentView;
   try {
@@ -692,9 +712,11 @@ Blaze.remove = function (view) {
   while (view) {
     if (! view.isDestroyed) {
       var range = view._domrange;
-      if (range.attached && ! range.parentRange)
-        range.detach();
       range.destroy();
+
+      if (range.attached && ! range.parentRange) {
+        range.detach();
+      }
     }
 
     view = view._hasGeneratedParent && view.parentView;
@@ -888,7 +910,7 @@ Blaze._addEventMap = function (view, eventMap, thisInHandler) {
         handles.push(Blaze._EventSupport.listen(
           element, newEvents, selector,
           function (evt) {
-            if (! range.containsElement(evt.currentTarget))
+            if (! range.containsElement(evt.currentTarget, selector, newEvents))
               return null;
             var handlerThis = thisInHandler || this;
             var handlerArgs = arguments;

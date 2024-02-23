@@ -1,6 +1,37 @@
 import has from 'lodash.has';
 
-Blaze._globalHelpers = {};
+/** @param {(binding: Binding) => boolean} fn */
+function _createBindingsHelper(fn) {
+  /** @param {string[]} names */
+  return (...names) => {
+    const view = Blaze.currentView;
+
+    // There's either zero arguments (i.e., check all bindings) or an additional
+    // "hash" argument that we have to ignore.
+    names = names.length === 0
+      // TODO: Should we walk up the bindings here?
+      ? Object.keys(view._scopeBindings)
+      : names.slice(0, -1);
+
+    return names.some(name => {
+      const binding = _lexicalBindingLookup(view, name);
+      if (!binding) {
+        throw new Error(`Binding for "${name}" was not found.`);
+      }
+
+      return fn(binding.get());
+    });
+  };
+}
+
+Blaze._globalHelpers = {
+  /** @summary Check whether any of the given bindings (or all if none given) is still pending. */
+  '@pending': _createBindingsHelper(binding => binding === undefined),
+  /** @summary Check whether any of the given bindings (or all if none given) has rejected. */
+  '@rejected': _createBindingsHelper(binding => !!binding && 'error' in binding),
+  /** @summary Check whether any of the given bindings (or all if none given) has resolved. */
+  '@resolved': _createBindingsHelper(binding => !!binding && 'value' in binding),
+};
 
 // Documented as Template.registerHelper.
 // This definition also provides back-compat for `UI.registerHelper`.
@@ -84,9 +115,27 @@ var wrapHelper = function (f, templateFunc) {
   };
 };
 
-Blaze._lexicalBindingLookup = function (view, name) {
+function _lexicalKeepGoing(currentView) {
+  if (!currentView.parentView) {
+    return undefined;
+  }
+  if (!currentView.__startsNewLexicalScope) {
+    return currentView.parentView;
+  }
+  if (currentView.parentView.__childDoesntStartNewLexicalScope) {
+    return currentView.parentView;
+  }
+  
+  // in the case of {{> Template.contentBlock data}} the contentBlock loses the lexical scope of it's parent, wheras {{> Template.contentBlock}} it does not
+  // this is because a #with sits between the include InOuterTemplateScope
+  if (currentView.parentView.name === "with" && currentView.parentView.parentView && currentView.parentView.parentView.__childDoesntStartNewLexicalScope) {
+    return currentView.parentView;
+  }
+  return undefined;
+}
+
+function _lexicalBindingLookup(view, name) {
   var currentView = view;
-  var blockHelpersStack = [];
 
   // walk up the views stopping at a Spacebars.include or Template view that
   // doesn't have an InOuterTemplateScope view as a parent
@@ -94,17 +143,16 @@ Blaze._lexicalBindingLookup = function (view, name) {
     // skip block helpers views
     // if we found the binding on the scope, return it
     if (has(currentView._scopeBindings, name)) {
-      var bindingReactiveVar = currentView._scopeBindings[name];
-      return function () {
-        return bindingReactiveVar.get();
-      };
+      return currentView._scopeBindings[name];
     }
-  } while (! (currentView.__startsNewLexicalScope &&
-              ! (currentView.parentView &&
-                 currentView.parentView.__childDoesntStartNewLexicalScope))
-           && (currentView = currentView.parentView));
+  } while (currentView = _lexicalKeepGoing(currentView));
 
   return null;
+}
+
+Blaze._lexicalBindingLookup = function (view, name) {
+  const binding = _lexicalBindingLookup(view, name);
+  return binding && (() => binding.get()?.value);
 };
 
 // templateInstance argument is provided to be available for possible

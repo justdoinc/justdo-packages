@@ -173,21 +173,8 @@ Template.prototype.constructView = function (contentFunc, elseFunc) {
     inst.data = Blaze.getData(view);
 
     if (view._domrange && !view.isDestroyed) {
-      try {
-        inst.firstNode = view._domrange.firstNode();
-      } catch (e) {
-        console.warn("blaze: templateInstance(): failed to obtain the instance's firstNode(), where it should have been possible to obtain one.", e)
-
-        inst.firstNode = null;
-      }
-
-      try {
-        inst.lastNode = view._domrange.lastNode();
-      } catch (e) {
-        console.warn("blaze: templateInstance(): failed to obtain the instance's lastNode(), where it should have been possible to obtain one.", e)
-
-        inst.lastNode = null;
-      }
+      inst.firstNode = view._domrange.firstNode();
+      inst.lastNode = view._domrange.lastNode();
     } else {
       // on 'created' or 'destroyed' callbacks we don't have a DomRange
       inst.firstNode = null;
@@ -543,14 +530,18 @@ Template.prototype.events = function (eventMap) {
     eventMap2[k] = (function (k, v) {
       return function (event /*, ...*/) {
         var view = this; // passed by EventAugmenter
-        var data = Blaze.getData(event.currentTarget);
-        if (data == null) data = {};
         var args = Array.prototype.slice.call(arguments);
-        var tmplInstanceFunc = Blaze._bind(view.templateInstance, view);
-        args.splice(1, 0, tmplInstanceFunc());
-
-        return Template._withTemplateInstanceFunc(tmplInstanceFunc, function () {
-          return v.apply(data, args);
+        // Exiting the current computation to avoid creating unnecessary
+        // and unexpected reactive dependencies with Templates data
+        // or any other reactive dependencies defined in event handlers
+        return Tracker.nonreactive(function () {
+          var data = Blaze.getData(event.currentTarget);
+          if (data == null) data = {};
+          var tmplInstanceFunc = Blaze._bind(view.templateInstance, view);
+          args.splice(1, 0, tmplInstanceFunc());
+          return Template._withTemplateInstanceFunc(tmplInstanceFunc, function () {
+            return v.apply(data, args);
+          });
         });
       };
     })(k, eventMap[k]);
