@@ -904,8 +904,9 @@ Object.assign(Mongo.Collection.prototype, {
       this._name,
       this.upsert.isCalledFromAsync
     );
-    this.upsert.isCalledFromAsync = false; // will not trigger warning in `update`
-
+    this.upsert.isCalledFromAsync = false; 
+    // caught here https://github.com/meteor/meteor/issues/12626 
+    this.update.isCalledFromAsync = true; // to not trigger on the next call
     return this.update(
       selector,
       modifier,
@@ -992,7 +993,7 @@ Object.assign(Mongo.Collection.prototype, {
       throw new Error(
         'Can only call _createCappedCollection on server collections'
       );
-    
+
     // [FIBERS]
     // TODO: Remove this when 3.0 is released.
     warnUsingOldApi(
@@ -1080,7 +1081,7 @@ Mongo.Collection.ObjectID = Mongo.ObjectID;
 Meteor.Collection = Mongo.Collection;
 
 // Allow deny stuff is now in the allow-deny package
-Object.assign(Meteor.Collection.prototype, AllowDeny.CollectionPrototype);
+Object.assign(Mongo.Collection.prototype, AllowDeny.CollectionPrototype);
 
 function popCallbackFromArgs(args) {
   // Pull off any callback (or perhaps a 'callback' variable that was passed
