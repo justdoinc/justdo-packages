@@ -198,7 +198,7 @@ APP.executeAfterAppLibCode ->
                 APP.emit "batched-collection-update-executed", type_def.collection, selector, modifier, mongo_update_options
 
                 modifiers_processed += 1
-                actual_docs_processed += result.result.n
+                actual_docs_processed += result.modifiedCount
               else
                 modifiers_processed += 1
                 actual_docs_processed += type_def.collection.update selector, modifier, mongo_update_options
