@@ -374,7 +374,7 @@ _.extend ChannelBaseServer.prototype,
     APP.justdo_analytics.logMongoRawConnectionOp(@justdo_chat.channels_collection._name, "update", update_existing_bottom_window_query, update_existing_bottom_window_query_update)
     @justdo_chat.channels_collection.rawCollection().update update_existing_bottom_window_query, update_existing_bottom_window_query_update, Meteor.bindEnvironment (err, res) =>
       # XXX API might change to nMatched on future Mongo versions
-      if res.result.n != 0
+      if res.modifiedCount != 0
         # Update performed, nothing further to do.
 
         return
