@@ -7,7 +7,6 @@ prev_pub_id = ""
 
 Template.ai_wizard_tooltip.onCreated ->
   tpl = @
-  tpl.templates_sub_handle = null
   tpl.pub_id_rv = new ReactiveVar prev_pub_id
   tpl.is_loading_rv = new ReactiveVar false
 
@@ -54,32 +53,29 @@ Template.ai_wizard_tooltip.onCreated ->
     
     children_titles = APP.collections.Tasks.find({"parents.#{active_task_id}": {$ne: null}}, {fields: {title: 1}, limit: child_or_sibling_limit}).map (task) -> task.title
     
-    request = 
-      project: JD.activeJustdo({title: 1})?.title
-      target_task: JD.activeItem({title: 1})?.title
-      parents: parent_titles
-      siblings: sibling_titles
-      children: children_titles
-    
+
+    options = 
+      req_template_id: "stream_child_tasks"
+      req_options:
+        project: JD.activeJustdo({title: 1})?.title
+        target_task: JD.activeItem({title: 1})?.title
+        parents: parent_titles
+        siblings: sibling_titles
+        children: children_titles
+      subOnReady: -> tpl.showDropdown()
+      subOnStop: -> tpl.is_loading_rv.set false
     tpl.is_loading_rv.set true
+    APP.justdo_ai_kit.createStreamRequestAndPublishResponse options, (err, pub_id) ->
+      old_pub_id = Tracker.nonreactive -> tpl.pub_id_rv.get()
 
-    APP.justdo_projects_templates.streamChildTasksFromOpenAi request, (err, pub_id) ->
-      if err?
-        JustdoSnackbar.show
-          text: err.reason or err
-        return
-
-      tpl.removeAllItemsWithPubIdInMiniMongo  tpl.pub_id_rv.get()
+      if not _.isEmpty(old_pub_id)
+        APP.justdo_ai_kit.stopAndDeleteSubHandle old_pub_id
+        tpl.removeAllItemsWithPubIdInMiniMongo old_pub_id
+      
       tpl.pub_id_rv.set ""
-      tpl.templates_sub_handle?.stop()
 
       prev_pub_id = pub_id
       tpl.pub_id_rv.set pub_id
-      tpl.templates_sub_handle = Meteor.subscribe pub_id,
-        onReady: -> tpl.showDropdown()
-        onStop: ->
-          tpl.is_loading_rv.set false
-          return
 
       return
     return
@@ -155,7 +151,7 @@ Template.ai_wizard_tooltip.events
     return
 
   "click .ai-wizard-stop": (e, tpl) ->
-    APP.justdo_projects_templates.stopStreamTemplateFromOpenAi tpl.pub_id_rv.get()
+    APP.justdo_ai_kit.stopStreamAndKillPublication tpl.pub_id_rv.get()
     return
 
   "click .ai-wizard-create": (e, tpl) ->
