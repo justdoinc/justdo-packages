@@ -1,5 +1,4 @@
 Template.project_template_welcome_ai.onCreated ->
-  @templates_sub_handle = null
   @pub_id_rv = new ReactiveVar ""
   @is_loading_rv = new ReactiveVar false
   # Store the request string for project title generation
@@ -31,30 +30,31 @@ Template.project_template_welcome_ai.onCreated ->
     return
 
   @sendRequestToOpenAI = (msg) ->
+    tpl = @
+
     @sent_request = msg
     @is_loading_rv.set true
     @lockInput()
     
-    APP.justdo_projects_templates.streamTemplateFromOpenAi msg, (err, pub_id) =>
-      if err?
-        JustdoSnackbar.show
-          text: err.reason or err
+    options = 
+      req_template_id: "stream_project_template"
+      req_options:
+        msg: msg
+      subOnReady: -> tpl.showDropdown()
+      subOnStop: -> 
+        tpl.is_loading_rv.set false
+        tpl.unlockInput()
         return
-      
-      old_pub_id = Tracker.nonreactive => @pub_id_rv.get()
+    APP.justdo_ai_kit.createStreamRequestAndPublishResponse options, (err, pub_id) ->
+      old_pub_id = Tracker.nonreactive => tpl.pub_id_rv.get()
+
       if not _.isEmpty(old_pub_id)
-        @removeAllItemsWithPubIdInMiniMongo old_pub_id
+        APP.justdo_ai_kit.stopAndDeleteSubHandle old_pub_id
+        tpl.removeAllItemsWithPubIdInMiniMongo old_pub_id
 
-      @pub_id_rv.set ""
-      @templates_sub_handle?.stop()
+      tpl.pub_id_rv.set ""
 
-      @pub_id_rv.set pub_id
-      @templates_sub_handle = Meteor.subscribe pub_id, 
-        onReady: => @showDropdown()
-        onStop: => 
-          @is_loading_rv.set false
-          @unlockInput()
-          return
+      tpl.pub_id_rv.set pub_id
 
       return
 
@@ -248,7 +248,7 @@ Template.project_template_welcome_ai.events
     return
 
   "click .welcome-ai-stop-generation": (e, tpl) ->
-    APP.justdo_projects_templates.stopStreamTemplateFromOpenAi tpl.pub_id_rv.get()
+    APP.justdo_ai_kit.stopStreamAndKillPublication tpl.pub_id_rv.get()
     tpl.unlockInput()
     $(".welcome-ai-input").focus()
     return
