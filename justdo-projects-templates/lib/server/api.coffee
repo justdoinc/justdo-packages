@@ -191,6 +191,11 @@ _.extend JustDoProjectsTemplates.prototype,
     Meteor.publish pub_id, ->
       publish_this = @
 
+      stopAndRemovePublication = ->
+        publish_this.stop()
+        delete Meteor.server.publish_handlers[pub_id]
+        return
+
       # This block is to specifically handle requests that requires pre-defined project templates.
       if (template_obj = self.getTemplateById msg)?
         key = 0
@@ -233,7 +238,7 @@ _.extend JustDoProjectsTemplates.prototype,
         for template_task in template_tasks
           _recursiveParseAndPublishTemplateTask template_task, -1
         
-        publish_this.stop()
+        stopAndRemovePublication()
         return
 
       req = self._generateStreamTemplateReq msg
@@ -241,7 +246,7 @@ _.extend JustDoProjectsTemplates.prototype,
 
       stopStreamAndPublication = ->
         stream.abort()
-        publish_this.stop()
+        stopAndRemovePublication()
         return
       stop_event_handler = self.once "stop_stream_#{pub_id}_#{user_id}", stopStreamAndPublication
 
@@ -299,8 +304,8 @@ _.extend JustDoProjectsTemplates.prototype,
         return
     
       stream.done().then ->
-        publish_this.stop()
         self.off "stop_stream_#{pub_id}_#{user_id}", stopStreamAndPublication
+        stopAndRemovePublication()
         return
 
       return
@@ -612,13 +617,17 @@ _.extend JustDoProjectsTemplates.prototype,
     pub_id = Random.id()
     Meteor.publish pub_id, ->
       publish_this = @
+      stopAndRemovePublication = ->
+        publish_this.stop()
+        delete Meteor.server.publish_handlers[pub_id]
+        return
 
       req = self._generateStreamChildTasksReq context
       stream = await self.createStreamRequestWithOpenAi req, user_id
 
       stopStreamAndPublication = ->
         stream.abort()
-        publish_this.stop()
+        stopAndRemovePublication()
         return
 
       stop_event_handler = self.once "stop_stream_#{pub_id}_#{user_id}", stopStreamAndPublication
@@ -660,8 +669,8 @@ _.extend JustDoProjectsTemplates.prototype,
           task_string = incomplete_task_string
 
       stream.done().then ->
-        publish_this.stop()
         self.off "stop_stream_#{pub_id}_#{user_id}", stopStreamAndPublication
+        stopAndRemovePublication()
         return
 
       return
