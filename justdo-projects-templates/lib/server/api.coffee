@@ -640,9 +640,8 @@ _.extend JustDoProjectsTemplates.prototype,
 
         return fields
 
-      for await part from stream
-        res += part.choices[0].delta.content
-        task_string += part.choices[0].delta.content
+      stream.on "chunk", (chunk, snapshot) =>
+        task_string += chunk.choices[0].delta.content
 
         if task_string.includes "]"
           # Replace double brackets with single brackets
