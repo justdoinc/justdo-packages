@@ -243,7 +243,6 @@ _.extend JustDoProjectsTemplates.prototype,
         stream.abort()
         publish_this.stop()
         return
-      
       stop_event_handler = self.once "stop_stream_#{pub_id}_#{user_id}", stopStreamAndPublication
 
       tasks = []
@@ -278,9 +277,8 @@ _.extend JustDoProjectsTemplates.prototype,
 
         return fields
 
-      for await part from stream
-        res += part.choices[0].delta.content
-        task_string += part.choices[0].delta.content
+      stream.on "chunk", (chunk, snapshot) =>
+        task_string += chunk.choices[0].delta.content
 
         if task_string.includes "]"
           # Replace double brackets with single brackets
@@ -295,9 +293,11 @@ _.extend JustDoProjectsTemplates.prototype,
 
           task_arr = JSON.parse finished_task_string
           task = _parseStreamedTasks task_arr
-          @added "ai_response", task._id, task
+          publish_this.added "ai_response", task._id, task
           task_string = incomplete_task_string
-      
+        
+        return
+    
       stream.done().then ->
         publish_this.stop()
         self.off "stop_stream_#{pub_id}_#{user_id}", stopStreamAndPublication
