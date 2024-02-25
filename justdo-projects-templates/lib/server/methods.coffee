@@ -21,31 +21,9 @@ _.extend JustDoProjectsTemplates.prototype,
 
         return APP.justdo_projects_templates.createSubtreeFromTemplateUnsafe options
 
-      createSubtreeFromAiGeneratedTemplate: (options) ->
-        # Options are throughly checked inside createSubtreeFromOpenAi
-        check options, Object
-        check @userId, String
-        return self.createSubtreeFromOpenAi options, @userId
-      
-      streamTemplateFromOpenAi: (msg) ->
-        check msg, String
-        check @userId, String # login required
-        return self.streamTemplateFromOpenAiMethodHandler(msg, @userId)
-      
-      stopStreamTemplateFromOpenAi: (pub_id) ->
-        check pub_id, String
-        check @userId, String
-        self.emit "stop_stream_#{pub_id}_#{@userId}"
-        return
-      
       generateProjectTitleFromOpenAi: (msg) ->
         check msg, String
         check @userId, String
         return self.generateProjectTitleFromOpenAiMethodHandler msg, @userId
-      
-      streamChildTasksFromOpenAi: (context) ->
-        # context is checked inside streamChildTasksFromOpenAiMethodHandler
-        check @userId, String
-        return self.streamChildTasksFromOpenAiMethodHandler context, @userId
 
     return
