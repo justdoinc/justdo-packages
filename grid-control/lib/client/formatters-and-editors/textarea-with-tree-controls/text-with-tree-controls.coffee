@@ -399,6 +399,15 @@ GridControl.installFormatter "textWithTreeControls",
       """
 
     tree_control += """
+      <div class="task-ai-wizard" jd-tt="ai-wizard-tooltip">
+        <div class="task-ai-wizard-content">
+          <svg class="jd-icon text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#jd-ai"></use></svg>
+        </div>
+      </div>
+    """
+
+
+    tree_control += """
       <svg class="jd-icon jd-icon-context-menu ongrid-jd-icon jd-c-pointer text-secondary slick-prevent-edit">
         <use xlink:href="/layout/icons-feather-sprite.svg#more-vertical" class="slick-prevent-edit"></use>
       </svg>
@@ -559,14 +568,6 @@ GridControl.installFormatter "textWithTreeControls",
         tree_control += """
           <div class="hl" style="left: #{level_indent * i + 4}px"></div>
         """
-
-    tree_control += """
-      <div class="task-ai-wizard" jd-tt="ai-wizard-tooltip">
-        <div class="task-ai-wizard-content">
-          <svg class="jd-icon text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#plus"></use></svg>
-        </div>
-      </div>
-    """
 
     return tree_control
 
