@@ -4,6 +4,7 @@ APP.justdo_tooltips.registerTooltip
 
 prev_task_id = ""
 prev_pub_id = ""
+prev_excluded_item_keys = []
 
 Template.ai_wizard_tooltip.onCreated ->
   tpl = @
@@ -52,7 +53,6 @@ Template.ai_wizard_tooltip.onCreated ->
     sibling_titles = _.map(sibling_task_candidates.slice(0, child_or_sibling_limit), (task) -> task.title)
     
     children_titles = APP.collections.Tasks.find({"parents.#{active_task_id}": {$ne: null}}, {fields: {title: 1}, limit: child_or_sibling_limit}).map (task) -> task.title
-    
 
     options = 
       req_template_id: "stream_child_tasks"
@@ -92,6 +92,7 @@ Template.ai_wizard_tooltip.onCreated ->
     tpl.removeAllItemsWithPubIdInMiniMongo  tpl.pub_id_rv.get()
     tpl.streamTemplateFromOpenAi()
     prev_task_id = task_id
+    prev_excluded_item_keys = []
 
   return
 
@@ -149,6 +150,9 @@ Template.ai_wizard_tooltip.events
       while ($parent_content = $item.siblings(".ai-wizard-item-content")).length > 0
         $parent_content.find(".ai-wizard-item-checkbox").addClass "checked"
         $item = $parent_content.closest(".ai-wizard-item")
+    
+    # Store the excluded items for showing the same state if the tooltip is re-opened in the same task.
+    prev_excluded_item_keys = $(".ai-wizard-item-checkbox:not(.checked)").map((i, el) -> $(el).data("key")).get()
 
     return
 
@@ -214,3 +218,5 @@ Template.ai_wizard_tooltip.events
 Template.ai_wizard_item.helpers
   childTemplate: ->
     return APP.collections.AIResponse.find({pub_id: @pub_id, parent: @key}).fetch()
+
+  unchecked: -> @key in prev_excluded_item_keys

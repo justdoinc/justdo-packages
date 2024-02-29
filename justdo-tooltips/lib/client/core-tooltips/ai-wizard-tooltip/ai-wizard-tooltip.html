@@ -26,7 +26,7 @@
 <template name="ai_wizard_item">
   <div class="ai-wizard-item">
     <div class="ai-wizard-item-content">
-      <div class="ai-wizard-item-checkbox checked" data-key="{{key}}"></div>
+      <div class="ai-wizard-item-checkbox {{#unless unchecked}}checked{{/unless}}" data-key="{{key}}"></div>
       {{title}}
     </div>
     {{#each childTemplate}}
