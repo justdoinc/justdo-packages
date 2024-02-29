@@ -330,6 +330,12 @@ _.extend JustdoChat.prototype,
       limit: options.limit
       user_id: user_id
       fields: fields_to_fetch
+    
+    subscribed_channels_recent_activity_has_more_result_cursor = @_getSubscribedChannelsRecentActivityCursor
+      limit: options.limit + 1
+      user_id: user_id
+      fields: 
+        _id: 1
 
     # See comment under publications.coffee for why we use pseudo collection name
     # here. (under jdcSubscribedChannelsRecentActivity)
@@ -568,7 +574,7 @@ _.extend JustdoChat.prototype,
 
         return
 
-    getChannelsRecentActivityCount = -> subscribed_channels_recent_activity_cursor.count()
+    getChannelsRecentActivityCount = -> subscribed_channels_recent_activity_has_more_result_cursor.count()
 
     jdc_info_collection_name = JustdoChat.jdc_info_pseudo_collection_name
 
