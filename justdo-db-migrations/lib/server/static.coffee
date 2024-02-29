@@ -139,14 +139,24 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
 
         query_options.limit = options.batch_size
         return options.collection.find(query, query_options)
+      
+      getCursorWithoutLimit = ->
+        {query, query_options} = options.queryGenerator()
+
+        if query_options?.jd_analytics_skip_logging isnt false
+          query_options.jd_analytics_skip_logging = true
+
+        delete query_options.limit # Ensure limit is not set for use with .count()
+        return options.collection.find(query, query_options)
 
       scriptWrapper = ->
         pending_migration_set_cursor = getCursor()
+        pending_migration_set_without_limit_cursor = getCursorWithoutLimit()
 
         # The two var below are solely for logging progress
         num_processed = 0
         if options.mark_as_completed_upon_batches_exhaustion
-          initial_affected_docs_count = pending_migration_set_cursor.count() # Note: count ignores limit
+          initial_affected_docs_count = pending_migration_set_without_limit_cursor.count()
           @logProgress "Total documents to be updated: #{initial_affected_docs_count}."
           expected_batches = Math.ceil(initial_affected_docs_count / options.batch_size)
           @logProgress "Expected batches: #{expected_batches}."
@@ -195,7 +205,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
           if not options.static_query
             pending_migration_set_cursor = getCursor()
 
-          if pending_migration_set_cursor.count() == 0
+          if pending_migration_set_without_limit_cursor.count() == 0
             if options.mark_as_completed_upon_batches_exhaustion
               @markAsCompleted()
 

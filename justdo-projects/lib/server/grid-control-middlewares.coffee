@@ -238,6 +238,7 @@ _.extend Projects.prototype,
         "parents2.parent": item_id
 
       query_options = _.extend {}, query_options, {fields: {_id: 1}}
+      delete query_options.limit # Ensure limit is not set for count
 
       return @find(query, query_options).count()
 

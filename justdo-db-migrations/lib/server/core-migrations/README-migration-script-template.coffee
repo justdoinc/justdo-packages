@@ -71,16 +71,16 @@ APP.justdo_db_migrations.registerMigrationScript "migration-script-name",
       fields: {}
       limit: batch_size
 
-    collection_cursor = APP.collections.CollectionName.find(query, options)
-    @logProgress "Total documents to be updated: #{initial_affected_docs_count = collection_cursor.count()}"
+    collection_without_limit_cursor = APP.collections.CollectionName.find(query, _.omit(options, "limit"))
+    @logProgress "Total documents to be updated: #{initial_affected_docs_count = collection_without_limit_cursor.count()}"
 
-    while collection_cursor.count() > 0 and @allowedToContinue()
+    while collection_without_limit_cursor.count() > 0 and @allowedToContinue()
       # Do stuffs here
       # Remember to increase num_processed
       @logProgress "#{num_processed}/#{initial_affected_docs_count} documents updated"
 
     # Check if all documents are updated.
-    if collection_cursor.count() is 0
+    if collection_without_limit_cursor.count() is 0
       @markAsCompleted()
 
   haltScript: ->
