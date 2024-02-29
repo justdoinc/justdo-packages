@@ -112,6 +112,8 @@ Template.ai_wizard_tooltip.helpers
     root_tasks = APP.collections.AIResponse.find({pub_id: pub_id, parent: -1}).fetch()
 
     return root_tasks
+  
+  ucFirst: (str) -> JustdoHelpers.ucFirst str
 
 Template.ai_wizard_tooltip.events
   "click .ai-wizard-generate": (e, tpl) ->
