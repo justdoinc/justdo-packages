@@ -195,9 +195,6 @@ Template.project_template_welcome_ai.events
       delete template_item.pub_id
       return template_item
     recursiveBulkCreateTasks = (path, template_items_arr) ->
-      if _.isEmpty template_items_arr
-        return
-        
       # template_item_keys is to keep track of the corresponding template item id for each created task
       template_item_keys = _.map template_items_arr, (item) -> item.key
 
@@ -221,14 +218,19 @@ Template.project_template_welcome_ai.events
           # Remove created tasks from AIResponse collection
           APP.collections.AIResponse._collection.remove({pub_id: pub_id, key: corresponding_template_item_key})
 
-          template_items = APP.collections.AIResponse.find(child_query).fetch()
-          recursiveBulkCreateTasks created_task_path, template_items
+          if _.isEmpty (child_template_items = APP.collections.AIResponse.find(child_query).fetch())
+            APP.justdo_ai_kit.postNewProjectTemplateCreationCallback pub_id
+          else
+            recursiveBulkCreateTasks created_task_path, child_template_items
+        
+        return
 
       return
     
     # In case the resnpose has only 1 root task, use the child tasks as root tasks.
     if APP.collections.AIResponse.find(query).count() is 1
       query.parent = 0
+      APP.collections.AIResponse._collection.remove {pub_id: pub_id, key: 0}
     
     if not _.isEmpty(excluded_item_keys = $(".welcome-ai-result-item-checkbox:not(.checked)").map((i, el) -> $(el).data("key")).get())
       query.key =
