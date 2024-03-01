@@ -137,12 +137,9 @@ _.extend JustDoProjectsTemplates,
           "frequency_penalty": 0,
         return req
       cachedResponseCondition: (req_options, pub_id, user_id) ->
-        {msg} = req_options
-        return APP.justdo_projects_templates.getTemplateById(msg)?
+        return APP.justdo_projects_templates.getTemplateById(req_options.cache_token)?
       cachedResponsePublisher: (req_options, pub_id, user_id) ->
-        {msg} = req_options
-
-        template_obj = APP.justdo_projects_templates.getTemplateById(msg)
+        template_obj = APP.justdo_projects_templates.getTemplateById(req_options.cache_token)
         key = 0
 
         _recursiveParseAndPublishTemplateTask = (template_task, parent) ->

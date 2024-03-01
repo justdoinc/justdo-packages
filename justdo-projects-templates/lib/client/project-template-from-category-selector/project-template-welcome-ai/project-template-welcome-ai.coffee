@@ -1,7 +1,7 @@
 Template.project_template_welcome_ai.onCreated ->
   @pub_id_rv = new ReactiveVar ""
   @is_loading_rv = new ReactiveVar false
-  # Store the request string for project title generation
+  # Store the request sent for template generation, for use with project title generation
   @sent_request = ""
 
   @lockInput = ->
@@ -29,17 +29,18 @@ Template.project_template_welcome_ai.onCreated ->
     APP.collections.AIResponse._collection.remove({pub_id: pub_id})
     return
 
-  @sendRequestToOpenAI = (msg) ->
+  @sendRequestToOpenAI = (request) ->
     tpl = @
 
-    @sent_request = msg
+    @sent_request = request
     @is_loading_rv.set true
     @lockInput()
     
     options = 
       req_template_id: "stream_project_template"
-      req_options:
-        msg: msg
+      req_options: 
+        msg: request.msg
+      cache_token: request.cache_token
       subOnReady: -> tpl.showDropdown()
       subOnStop: -> 
         tpl.is_loading_rv.set false
@@ -101,7 +102,7 @@ Template.project_template_welcome_ai.events
     
     if (template_id = $(e.currentTarget).data("template_id"))?
       $(e.currentTarget).removeData "template_id"
-      tpl.sendRequestToOpenAI template_id
+      tpl.sendRequestToOpenAI {cache_token: template_id, msg: request}
     else
       $(".welcome-ai-btn-generate").click()
 
@@ -114,7 +115,7 @@ Template.project_template_welcome_ai.events
     if _.isEmpty request
       $($(".welcome-ai-suggestion-item").get(0)).click()
     else
-      tpl.sendRequestToOpenAI request
+      tpl.sendRequestToOpenAI {msg: request}
 
     return
 
@@ -167,11 +168,11 @@ Template.project_template_welcome_ai.events
 
   "click .welcome-ai-create-btn": (e, tpl) ->
     # Set the project title
-    if (template = APP.justdo_projects_templates.getTemplateById tpl.sent_request)?
+    if (template = APP.justdo_projects_templates.getTemplateById tpl.sent_request.cache_token)?
       project_title = TAPi18n.__ template.label_i18n
       APP.collections.Projects.update JD.activeJustdoId(), {$set: {title: project_title}}
     else
-      APP.justdo_projects_templates.generateProjectTitleFromOpenAi tpl.sent_request, (err, title) ->
+      APP.justdo_projects_templates.generateProjectTitleFromOpenAi tpl.sent_request.msg, (err, title) ->
         if err?
           console.error err
           return
