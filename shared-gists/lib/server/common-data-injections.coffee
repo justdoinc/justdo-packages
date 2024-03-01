@@ -76,6 +76,7 @@ env_vars_to_expose = [
   "ALLOW_UPDATES_MODAL"
   "ORGANIZATIONS"
   "JUSTDO_AI_ENABLED"
+  "JUSTDO_AI_CONF"
 ]
 
 if JustdoHelpers.permitAppVersionExposeToClient()
