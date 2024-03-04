@@ -36,28 +36,21 @@ Template.project_template_welcome_ai.onCreated ->
     @is_loading_rv.set true
     @lockInput()
     
+    sub_id = Random.id()
+    tpl.pub_id_rv.set sub_id
     options = 
+      sub_id: sub_id
       req_template_id: "stream_project_template"
       req_options: 
         msg: request.msg
       cache_token: request.cache_token
-      subOnReady: -> tpl.showDropdown()
-      subOnStop: -> 
+      subOnReady: -> 
         tpl.is_loading_rv.set false
         tpl.unlockInput()
         return
-    APP.justdo_ai_kit.createStreamRequestAndPublishResponse options, (err, pub_id) ->
-      old_pub_id = Tracker.nonreactive => tpl.pub_id_rv.get()
 
-      if not _.isEmpty(old_pub_id)
-        APP.justdo_ai_kit.stopAndDeleteSubHandle old_pub_id
-        tpl.removeAllItemsWithPubIdInMiniMongo old_pub_id
-
-      tpl.pub_id_rv.set ""
-
-      tpl.pub_id_rv.set pub_id
-
-      return
+    APP.justdo_ai_kit.createStreamRequestAndPublishResponse options
+    tpl.showDropdown()
 
   return
 
