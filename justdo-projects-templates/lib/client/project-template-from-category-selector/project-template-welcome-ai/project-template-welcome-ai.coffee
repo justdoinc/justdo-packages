@@ -36,6 +36,9 @@ Template.project_template_welcome_ai.onCreated ->
     @is_loading_rv.set true
     @lockInput()
     
+    if (old_sub_id = tpl.pub_id_rv.get())?
+      APP.justdo_ai_kit.stopAndDeleteSubHandle old_sub_id
+
     sub_id = Random.id()
     tpl.pub_id_rv.set sub_id
     options = 
@@ -49,7 +52,7 @@ Template.project_template_welcome_ai.onCreated ->
         tpl.unlockInput()
         return
 
-    APP.justdo_ai_kit.createStreamRequestAndPublishResponse options
+    APP.justdo_ai_kit.createStreamRequestAndSubscribeToResponse options
     tpl.showDropdown()
 
   return
