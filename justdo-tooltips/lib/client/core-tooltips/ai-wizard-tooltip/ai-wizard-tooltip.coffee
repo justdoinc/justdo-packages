@@ -53,8 +53,16 @@ Template.ai_wizard_tooltip.onCreated ->
     sibling_titles = _.map(sibling_task_candidates.slice(0, child_or_sibling_limit), (task) -> task.title)
     
     children_titles = APP.collections.Tasks.find({"parents.#{active_task_id}": {$ne: null}}, {fields: {title: 1}, limit: child_or_sibling_limit}).map (task) -> task.title
+    
+    tpl.is_loading_rv.set true
+    if not _.isEmpty(old_sub_id = tpl.pub_id_rv.get())
+      APP.justdo_ai_kit.stopAndDeleteSubHandle old_sub_id
+      tpl.removeAllItemsWithPubIdInMiniMongo old_sub_id
 
+    sub_id = Random.id()
+    tpl.pub_id_rv.set sub_id
     options = 
+      sub_id: sub_id
       req_template_id: "stream_child_tasks"
       req_options:
         project: JD.activeJustdo({title: 1})?.title
@@ -62,22 +70,10 @@ Template.ai_wizard_tooltip.onCreated ->
         parents: parent_titles
         siblings: sibling_titles
         children: children_titles
-      subOnReady: -> tpl.showDropdown()
-      subOnStop: -> tpl.is_loading_rv.set false
-    tpl.is_loading_rv.set true
-    APP.justdo_ai_kit.createStreamRequestAndPublishResponse options, (err, pub_id) ->
-      old_pub_id = Tracker.nonreactive -> tpl.pub_id_rv.get()
+      subOnReady: -> tpl.is_loading_rv.set false
+    APP.justdo_ai_kit.createStreamRequestAndSubscribeToResponse options
 
-      if not _.isEmpty(old_pub_id)
-        APP.justdo_ai_kit.stopAndDeleteSubHandle old_pub_id
-        tpl.removeAllItemsWithPubIdInMiniMongo old_pub_id
-      
-      tpl.pub_id_rv.set ""
-
-      prev_pub_id = pub_id
-      tpl.pub_id_rv.set pub_id
-
-      return
+    tpl.showDropdown()
     return
 
   tpl.removeAllItemsWithPubIdInMiniMongo = (pub_id) ->
