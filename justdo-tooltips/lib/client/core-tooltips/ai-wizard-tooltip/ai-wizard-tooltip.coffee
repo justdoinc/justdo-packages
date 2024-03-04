@@ -73,7 +73,6 @@ Template.ai_wizard_tooltip.onCreated ->
       subOnReady: -> tpl.is_loading_rv.set false
     APP.justdo_ai_kit.createStreamRequestAndSubscribeToResponse options
 
-    tpl.showDropdown()
     return
 
   tpl.removeAllItemsWithPubIdInMiniMongo = (pub_id) ->
