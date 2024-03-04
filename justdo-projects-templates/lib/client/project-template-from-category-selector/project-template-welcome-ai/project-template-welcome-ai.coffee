@@ -1,5 +1,5 @@
 Template.project_template_welcome_ai.onCreated ->
-  @pub_id_rv = new ReactiveVar ""
+  @sub_id_rv = new ReactiveVar ""
   @is_loading_rv = new ReactiveVar false
   # Store the request sent for template generation, for use with project title generation
   @sent_request = ""
@@ -12,9 +12,9 @@ Template.project_template_welcome_ai.onCreated ->
     return
 
   @isResponseExists = ->
-    if _.isEmpty(pub_id = @pub_id_rv.get())
+    if _.isEmpty(sub_id = @sub_id_rv.get())
       return false
-    return APP.collections.AIResponse.findOne({pub_id: pub_id, parent: -1}, {fields: {_id: 1}})?
+    return APP.collections.AIResponse.findOne({sub_id: sub_id, parent: -1}, {fields: {_id: 1}})?
 
   @showDropdown = -> $(".welcome-ai-dropdown").addClass "show"
   @hideDropdown = -> $(".welcome-ai-dropdown").removeClass "show"
@@ -25,8 +25,8 @@ Template.project_template_welcome_ai.onCreated ->
 
     return
 
-  @removeAllItemsWithPubIdInMiniMongo = (pub_id) ->
-    APP.collections.AIResponse._collection.remove({pub_id: pub_id})
+  @removeAllItemsWithPubIdInMiniMongo = (sub_id) ->
+    APP.collections.AIResponse._collection.remove({sub_id: sub_id})
     return
 
   @sendRequestToOpenAI = (request) ->
@@ -36,11 +36,11 @@ Template.project_template_welcome_ai.onCreated ->
     @is_loading_rv.set true
     @lockInput()
     
-    if (old_sub_id = tpl.pub_id_rv.get())?
+    if (old_sub_id = tpl.sub_id_rv.get())?
       APP.justdo_ai_kit.stopAndDeleteSubHandle old_sub_id
 
     sub_id = Random.id()
-    tpl.pub_id_rv.set sub_id
+    tpl.sub_id_rv.set sub_id
     options = 
       sub_id: sub_id
       req_template_id: "stream_project_template"
@@ -73,10 +73,10 @@ Template.project_template_welcome_ai.helpers
 
   rootTemplate: ->
     tpl = Template.instance()
-    if _.isEmpty(pub_id = tpl.pub_id_rv.get())
+    if _.isEmpty(sub_id = tpl.sub_id_rv.get())
       return
 
-    if not _.isEmpty(root_tasks = APP.collections.AIResponse.find({pub_id: pub_id, parent: -1}).fetch())
+    if not _.isEmpty(root_tasks = APP.collections.AIResponse.find({sub_id: sub_id, parent: -1}).fetch())
       tpl.showDropdown()
 
     return root_tasks
@@ -176,11 +176,11 @@ Template.project_template_welcome_ai.events
         APP.collections.Projects.update JD.activeJustdoId(), {$set: {title}}
         return
 
-    pub_id = tpl.pub_id_rv.get()
+    sub_id = tpl.sub_id_rv.get()
     project_id = JD.activeJustdoId()
 
     query =
-      pub_id: pub_id
+      sub_id: sub_id
       parent: -1
 
     grid_data = APP.modules.project_page.gridData()
@@ -189,7 +189,7 @@ Template.project_template_welcome_ai.events
       delete template_item.parent
       delete template_item._id
       delete template_item.key
-      delete template_item.pub_id
+      delete template_item.sub_id
       return template_item
     recursiveBulkCreateTasks = (path, template_items_arr) ->
       # template_item_keys is to keep track of the corresponding template item id for each created task
@@ -206,17 +206,17 @@ Template.project_template_welcome_ai.events
           created_task_path = created_task_id_and_path[1]
           corresponding_template_item_key = template_item_keys[i]
           child_query =
-            pub_id: pub_id
+            sub_id: sub_id
             parent: corresponding_template_item_key
           if not _.isEmpty excluded_item_keys
             child_query.key =
               $nin: excluded_item_keys
 
           # Remove created tasks from AIResponse collection
-          APP.collections.AIResponse._collection.remove({pub_id: pub_id, key: corresponding_template_item_key})
+          APP.collections.AIResponse._collection.remove({sub_id: sub_id, key: corresponding_template_item_key})
 
           if _.isEmpty (child_template_items = APP.collections.AIResponse.find(child_query).fetch())
-            APP.justdo_ai_kit.postNewProjectTemplateCreationCallback pub_id
+            APP.justdo_ai_kit.postNewProjectTemplateCreationCallback sub_id
           else
             recursiveBulkCreateTasks created_task_path, child_template_items
         
@@ -227,7 +227,7 @@ Template.project_template_welcome_ai.events
     # In case the resnpose has only 1 root task, use the child tasks as root tasks.
     if APP.collections.AIResponse.find(query).count() is 1
       query.parent = 0
-      APP.collections.AIResponse._collection.remove {pub_id: pub_id, key: 0}
+      APP.collections.AIResponse._collection.remove {sub_id: sub_id, key: 0}
     
     if not _.isEmpty(excluded_item_keys = $(".welcome-ai-result-item-checkbox:not(.checked)").map((i, el) -> $(el).data("key")).get())
       query.key =
@@ -247,11 +247,11 @@ Template.project_template_welcome_ai.events
     return
 
   "click .welcome-ai-stop-generation": (e, tpl) ->
-    APP.justdo_ai_kit.stopStreamAndKillPublication tpl.pub_id_rv.get()
+    APP.justdo_ai_kit.stopStreamAndKillPublication tpl.sub_id_rv.get()
     tpl.unlockInput()
     $(".welcome-ai-input").focus()
     return
 
 Template.project_template_welcome_ai_task_item.helpers
   childTemplate: ->
-    return APP.collections.AIResponse.find({pub_id: @pub_id, parent: @key}).fetch()
+    return APP.collections.AIResponse.find({sub_id: @sub_id, parent: @key}).fetch()

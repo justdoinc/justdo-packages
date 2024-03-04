@@ -136,17 +136,17 @@ _.extend JustDoProjectsTemplates,
           "presence_penalty": 0,
           "frequency_penalty": 0,
         return req
-      cachedResponseCondition: (req_options, pub_id, user_id) ->
+      cachedResponseCondition: (req_options, sub_id, user_id) ->
         return APP.justdo_projects_templates.getTemplateById(req_options.cache_token)?
-      cachedResponsePublisher: (req_options, pub_id, user_id) ->
+      cachedResponsePublisher: (req_options, sub_id, user_id) ->
         template_obj = APP.justdo_projects_templates.getTemplateById(req_options.cache_token)
         key = 0
 
         _recursiveParseAndPublishTemplateTask = (template_task, parent) ->
           fields = 
-            _id: "#{key}_#{pub_id}"
+            _id: "#{key}_#{sub_id}"
             key: key
-            pub_id: pub_id
+            sub_id: sub_id
             parent: parent
             state: template_task.state
             start_date: template_task.start_date
@@ -182,8 +182,8 @@ _.extend JustDoProjectsTemplates,
           _recursiveParseAndPublishTemplateTask.call @, template_task, -1
         
         return
-      streamedResponsePublisher: (res_data, req_options, pub_id) ->
-        _parseStreamedTasks = (task_arr, pub_id) ->
+      streamedResponsePublisher: (res_data, req_options, sub_id) ->
+        _parseStreamedTasks = (task_arr, sub_id) ->
           states = ["pending", "in-progress", "done", "will-not-do", "on-hold", "duplicate", "nil"]          
           [
             title
@@ -196,9 +196,9 @@ _.extend JustDoProjectsTemplates,
           ] = task_arr
 
           fields = 
-            _id: "#{key}_#{pub_id}"
+            _id: "#{key}_#{sub_id}"
             key: key
-            pub_id: pub_id
+            sub_id: sub_id
             parent: parent_task_key
             title: title
             start_date: if _.isNumber(start_date_offset) then moment().add(start_date_offset, 'days').format("YYYY-MM-DD") else null
@@ -223,7 +223,7 @@ _.extend JustDoProjectsTemplates,
           finished_intermediate_res += "]"
 
           task_arr = JSON.parse finished_intermediate_res
-          task = _parseStreamedTasks task_arr, pub_id
+          task = _parseStreamedTasks task_arr, sub_id
           @added "ai_response", task._id, task
           res_data.intermediate_res = incomplete_intermediate_res
 
@@ -403,14 +403,14 @@ _.extend JustDoProjectsTemplates,
           "presence_penalty": 0,
           "frequency_penalty": 0,
         return req
-      streamedResponsePublisher: (res_data, req_options, pub_id) ->
-        _parseStreamedTasks = (task_arr, pub_id) ->
+      streamedResponsePublisher: (res_data, req_options, sub_id) ->
+        _parseStreamedTasks = (task_arr, sub_id) ->
           [title, key, parent_task_key] = task_arr
 
           fields = 
-            _id: "#{key}_#{pub_id}"
+            _id: "#{key}_#{sub_id}"
             key: key
-            pub_id: pub_id
+            sub_id: sub_id
             parent: parent_task_key
             title: title
             state: "pending"
@@ -429,6 +429,6 @@ _.extend JustDoProjectsTemplates,
           finished_intermediate_res += "]"
 
           task_arr = JSON.parse finished_intermediate_res
-          task = _parseStreamedTasks task_arr, pub_id
+          task = _parseStreamedTasks task_arr, sub_id
           @added "ai_response", task._id, task
           res_data.intermediate_res = incomplete_intermediate_res

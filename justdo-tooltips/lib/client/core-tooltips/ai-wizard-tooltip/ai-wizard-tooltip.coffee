@@ -3,18 +3,18 @@ APP.justdo_tooltips.registerTooltip
   template: "ai_wizard_tooltip"
 
 prev_task_id = ""
-prev_pub_id = ""
+prev_sub_id = ""
 prev_excluded_item_keys = []
 
 Template.ai_wizard_tooltip.onCreated ->
   tpl = @
-  tpl.pub_id_rv = new ReactiveVar prev_pub_id
+  tpl.sub_id_rv = new ReactiveVar prev_sub_id
   tpl.is_loading_rv = new ReactiveVar false
 
   tpl.isResponseExists = ->
-    if _.isEmpty(pub_id = @pub_id_rv.get())
+    if _.isEmpty(sub_id = @sub_id_rv.get())
       return false
-    return APP.collections.AIResponse.findOne({pub_id: pub_id, parent: -1}, {fields: {_id: 1}})?
+    return APP.collections.AIResponse.findOne({sub_id: sub_id, parent: -1}, {fields: {_id: 1}})?
 
   tpl.streamTemplateFromOpenAi = ->
     active_path = JD.activePath()
@@ -55,12 +55,12 @@ Template.ai_wizard_tooltip.onCreated ->
     children_titles = APP.collections.Tasks.find({"parents.#{active_task_id}": {$ne: null}}, {fields: {title: 1}, limit: child_or_sibling_limit}).map (task) -> task.title
     
     tpl.is_loading_rv.set true
-    if not _.isEmpty(old_sub_id = tpl.pub_id_rv.get())
+    if not _.isEmpty(old_sub_id = tpl.sub_id_rv.get())
       APP.justdo_ai_kit.stopAndDeleteSubHandle old_sub_id
       tpl.removeAllItemsWithPubIdInMiniMongo old_sub_id
 
     sub_id = Random.id()
-    tpl.pub_id_rv.set sub_id
+    tpl.sub_id_rv.set sub_id
     options = 
       sub_id: sub_id
       req_template_id: "stream_child_tasks"
@@ -75,8 +75,8 @@ Template.ai_wizard_tooltip.onCreated ->
 
     return
 
-  tpl.removeAllItemsWithPubIdInMiniMongo = (pub_id) ->
-    APP.collections.AIResponse._collection.remove({pub_id: pub_id})
+  tpl.removeAllItemsWithPubIdInMiniMongo = (sub_id) ->
+    APP.collections.AIResponse._collection.remove({sub_id: sub_id})
     return
 
   tpl.autorun ->
@@ -84,7 +84,7 @@ Template.ai_wizard_tooltip.onCreated ->
     $(".ai-wizard-list").animate(scrollTop: $(".ai-wizard-list").prop("scrollHeight"), 100)
 
   if (task_id = JD.activeItemId()) isnt prev_task_id
-    tpl.removeAllItemsWithPubIdInMiniMongo  tpl.pub_id_rv.get()
+    tpl.removeAllItemsWithPubIdInMiniMongo  tpl.sub_id_rv.get()
     tpl.streamTemplateFromOpenAi()
     prev_task_id = task_id
     prev_excluded_item_keys = []
@@ -102,10 +102,10 @@ Template.ai_wizard_tooltip.helpers
 
   rootTemplate: ->
     tpl = Template.instance()
-    if _.isEmpty(pub_id = tpl.pub_id_rv.get())
+    if _.isEmpty(sub_id = tpl.sub_id_rv.get())
       return
 
-    root_tasks = APP.collections.AIResponse.find({pub_id: pub_id, parent: -1}).fetch()
+    root_tasks = APP.collections.AIResponse.find({sub_id: sub_id, parent: -1}).fetch()
 
     return root_tasks
   
@@ -152,15 +152,15 @@ Template.ai_wizard_tooltip.events
     return
 
   "click .ai-wizard-stop": (e, tpl) ->
-    APP.justdo_ai_kit.stopStreamAndKillPublication tpl.pub_id_rv.get()
+    APP.justdo_ai_kit.stopStreamAndKillPublication tpl.sub_id_rv.get()
     return
 
   "click .ai-wizard-create": (e, tpl) ->
-    pub_id = tpl.pub_id_rv.get()
+    sub_id = tpl.sub_id_rv.get()
     project_id = JD.activeJustdoId()
 
     query =
-      pub_id: pub_id
+      sub_id: sub_id
       parent: -1
     if not _.isEmpty(excluded_item_keys = $(".ai-wizard-item-checkbox:not(.checked)").map((i, el) -> $(el).data("key")).get())
       query.key =
@@ -172,7 +172,7 @@ Template.ai_wizard_tooltip.events
       delete template_item.parent
       delete template_item._id
       delete template_item.key
-      delete template_item.pub_id
+      delete template_item.sub_id
       return template_item
     recursiveBulkCreateTasks = (path, template_items_arr) ->
       # template_item_keys is to keep track of the corresponding template item id for each created task
@@ -190,7 +190,7 @@ Template.ai_wizard_tooltip.events
           created_task_path = created_task_id_and_path[1]
           corresponding_template_item_key = template_item_keys[i]
           child_query =
-            pub_id: pub_id
+            sub_id: sub_id
             parent: corresponding_template_item_key
           if not _.isEmpty excluded_item_keys
             child_query.key =
@@ -212,6 +212,6 @@ Template.ai_wizard_tooltip.events
 
 Template.ai_wizard_item.helpers
   childTemplate: ->
-    return APP.collections.AIResponse.find({pub_id: @pub_id, parent: @key}).fetch()
+    return APP.collections.AIResponse.find({sub_id: @sub_id, parent: @key}).fetch()
 
   unchecked: -> @key in prev_excluded_item_keys
