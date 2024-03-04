@@ -171,8 +171,7 @@ _.extend JustDoProjectsTemplates.prototype,
     check user_id, String
 
     req = @_generateProjectTitleReq msg
-    request_id = APP.justdo_ai_kit.openai.createChatCompletion req, user_id
-    res = await APP.justdo_ai_kit.openai.getRequest(request_id)
+    res = await APP.justdo_ai_kit.openai.createChatCompletion req, user_id
 
     await return res?.choices?[0]?.message?.content
 
