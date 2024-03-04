@@ -277,6 +277,14 @@ GridControl.installFormatter "textWithTreeControls",
             <i class="fa fa-fw fa-play-circle-o jdt-play jdt-grid-icon slick-prevent-edit" title="#{TAPi18n.__ "tree_control_tooltip_start_time_tracking"}" aria-hidden="true"></i>
         """
 
+    tree_control += """
+      <div class="task-ai-wizard" jd-tt="ai-wizard-tooltip" onmousedown="event.stopImmediatePropagation()">
+        <div class="task-ai-wizard-content">
+          <svg class="jd-icon text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#jd-ai"></use></svg>
+        </div>
+      </div>
+    """
+
     if @getCurrentColumnData("meetings_plugin_enabled") and not doc._type?
       if doc[MeetingsManagerPlugin.task_meetings_cache_field_id]?
         meeting_ids = new Set(doc[MeetingsManagerPlugin.task_meetings_cache_field_id])
@@ -397,15 +405,6 @@ GridControl.installFormatter "textWithTreeControls",
       tree_control += """
           <i class="fa fa-fw fa-archive slick-prevent-edit" title="#{TAPi18n.__ "tree_control_tooltip_task_is_archived"}" aria-hidden="true"></i>
       """
-
-    tree_control += """
-      <div class="task-ai-wizard" jd-tt="ai-wizard-tooltip" onmousedown="event.stopImmediatePropagation()">
-        <div class="task-ai-wizard-content">
-          <svg class="jd-icon text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#jd-ai"></use></svg>
-        </div>
-      </div>
-    """
-
 
     tree_control += """
       <svg class="jd-icon jd-icon-context-menu ongrid-jd-icon jd-c-pointer text-secondary slick-prevent-edit">
