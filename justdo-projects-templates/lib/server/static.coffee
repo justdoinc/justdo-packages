@@ -2,6 +2,7 @@ _.extend JustDoProjectsTemplates,
   ai_requests:
     stream_project_template:
       api_provider: "openai"
+      streamed_response_format: "2d_array"
       requestGeneratorOptionsSchema: new SimpleSchema
         msg:
           type: String
@@ -182,55 +183,37 @@ _.extend JustDoProjectsTemplates,
           _recursiveParseAndPublishTemplateTask.call @, template_task, -1
         
         return
-      streamedResponsePublisher: (res_data, req_options, sub_id) ->
-        _parseStreamedTasks = (task_arr, sub_id) ->
-          states = ["pending", "in-progress", "done", "will-not-do", "on-hold", "duplicate", "nil"]          
-          [
-            title
-            start_date_offset
-            end_date_offset
-            due_date_offset
-            state_idx
-            key
-            parent_task_key
-          ] = task_arr
+      streamedResponseParser: (parsed_array, req_options, sub_id) ->
+        states = ["pending", "in-progress", "done", "will-not-do", "on-hold", "duplicate", "nil"]          
+        [
+          title
+          start_date_offset
+          end_date_offset
+          due_date_offset
+          state_idx
+          key
+          parent_task_key
+        ] = parsed_array
 
-          fields = 
-            _id: "#{key}_#{sub_id}"
-            key: key
-            sub_id: sub_id
-            parent: parent_task_key
-            title: title
-            start_date: if _.isNumber(start_date_offset) then moment().add(start_date_offset, 'days').format("YYYY-MM-DD") else null
-            end_date: if _.isNumber(end_date_offset) then moment().add(end_date_offset, 'days').format("YYYY-MM-DD") else null
-            due_date: if _.isNumber(due_date_offset) then moment().add(due_date_offset, 'days').format("YYYY-MM-DD") else null
-            # state: if (state_idx >= 0) then states[state_idx] else "nil"
-            # Uncomment the line above and remove the line below once the AI model is updated to return more variety of states,
-            # instead just in-progress.
-            state: "pending"
+        fields = 
+          _id: "#{key}_#{sub_id}"
+          key: key
+          sub_id: sub_id
+          parent: parent_task_key
+          title: title
+          start_date: if _.isNumber(start_date_offset) then moment().add(start_date_offset, 'days').format("YYYY-MM-DD") else null
+          end_date: if _.isNumber(end_date_offset) then moment().add(end_date_offset, 'days').format("YYYY-MM-DD") else null
+          due_date: if _.isNumber(due_date_offset) then moment().add(due_date_offset, 'days').format("YYYY-MM-DD") else null
+          # state: if (state_idx >= 0) then states[state_idx] else "nil"
+          # Uncomment the line above and remove the line below once the AI model is updated to return more variety of states,
+          # instead just in-progress.
+          state: "pending"
 
-          return fields
-
-        if res_data.intermediate_res.includes "]"
-          # Replace double brackets with single brackets
-          res_data.intermediate_res = res_data.intermediate_res.replace /\[\s*\[/g, "["
-          res_data.intermediate_res = res_data.intermediate_res.replace /\]\s*\]/g, "]"
-
-          # When the intermediate_res contains a complete task, parse and publish the task. Keep the remaining tokens in intermediate_res for future chunks.
-          [finished_intermediate_res, incomplete_intermediate_res] = res_data.intermediate_res.split(/],?/)
-
-          # Add back the missing bracket from .split()
-          finished_intermediate_res += "]"
-
-          task_arr = JSON.parse finished_intermediate_res
-          task = _parseStreamedTasks task_arr, sub_id
-          @added "ai_response", task._id, task
-          res_data.intermediate_res = incomplete_intermediate_res
-
-        return
+        return fields
 
     stream_child_tasks:
       api_provider: "openai"
+      streamed_response_format: "2d_array"
       requestGeneratorOptionsSchema: new SimpleSchema
         project: 
           type: String
@@ -403,32 +386,15 @@ _.extend JustDoProjectsTemplates,
           "presence_penalty": 0,
           "frequency_penalty": 0,
         return req
-      streamedResponsePublisher: (res_data, req_options, sub_id) ->
-        _parseStreamedTasks = (task_arr, sub_id) ->
-          [title, key, parent_task_key] = task_arr
+      streamedResponseParser: (parsed_array, req_options, sub_id) ->
+        [title, key, parent_task_key] = parsed_array
 
-          fields = 
-            _id: "#{key}_#{sub_id}"
-            key: key
-            sub_id: sub_id
-            parent: parent_task_key
-            title: title
-            state: "pending"
+        fields = 
+          _id: "#{key}_#{sub_id}"
+          key: key
+          sub_id: sub_id
+          parent: parent_task_key
+          title: title
+          state: "pending"
 
-          return fields
-          
-        if res_data.intermediate_res.includes "]"
-          # Replace double brackets with single brackets
-          res_data.intermediate_res = res_data.intermediate_res.replace /\[\s*\[/g, "["
-          res_data.intermediate_res = res_data.intermediate_res.replace /\]\s*\]/g, "]"
-
-          # When the intermediate_res contains a complete task, parse and publish the task. Keep the remaining tokens in intermediate_res for future chunks.
-          [finished_intermediate_res, incomplete_intermediate_res] = res_data.intermediate_res.split(/],?/)
-
-          # Add back the missing bracket from .split()
-          finished_intermediate_res += "]"
-
-          task_arr = JSON.parse finished_intermediate_res
-          task = _parseStreamedTasks task_arr, sub_id
-          @added "ai_response", task._id, task
-          res_data.intermediate_res = incomplete_intermediate_res
+        return fields
