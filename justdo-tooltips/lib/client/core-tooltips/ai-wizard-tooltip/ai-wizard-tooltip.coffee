@@ -61,6 +61,7 @@ Template.ai_wizard_tooltip.onCreated ->
 
     sub_id = Random.id()
     tpl.sub_id_rv.set sub_id
+    prev_sub_id = sub_id
     options = 
       sub_id: sub_id
       template_id: "stream_child_tasks"
