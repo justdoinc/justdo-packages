@@ -398,3 +398,118 @@ _.extend JustDoProjectsTemplates,
           state: "pending"
 
         return fields
+
+    generate_project_title:
+      api_provider: "openai"
+      requestGeneratorOptionsSchema: new SimpleSchema
+        msg:
+          type: String
+          min: 1
+          max: 4096
+      requestGenerator: (template_data) ->
+        {msg} = template_data
+        req = 
+          "model": JustDoProjectsTemplates.openai_template_generation_model,
+          "messages": [
+            {
+              "role": "system",
+              "content": """
+                You are a project title generator.
+                Summerize user input to a few words that will be used in a project's title. 
+                Treat the word "JustDo" in any user input as the same meaning as project, and do not include them in the response..
+                Ensure to follow user's input language when generating response.
+              """
+            },
+            {
+              "role" : "user",
+              "content" : "I'd like to manage a corner store"
+            },
+            {
+              "role" : "assistant",
+              "content" : "Corner store management"
+            },
+            {
+              "role" : "user",
+              "content" : "管理醫院"
+            },
+            {
+              "role" : "assistant",
+              "content" : "醫院管理"
+            },
+            {
+              "role" : "user",
+              "content" : "為科技公司建立JustDo"
+            },
+            {
+              "role" : "assistant",
+              "content" : "科技公司"
+            },
+            {
+              "role" : "user",
+              "content" : "I'd like to manage a tech company that has about 10 employees"
+            },
+            {
+              "role" : "assistant",
+              "content" : "Tech startup management"
+            },
+            {
+              "role" : "user",
+              "content" : "科技公司"
+            },
+            {
+              "role" : "assistant",
+              "content" : "科技公司"
+            },
+            {
+              "role" : "user",
+              "content" : "Create a project for an IT company"
+            },
+            {
+              "role" : "assistant",
+              "content" : "IT Firm"
+            },
+            {
+              "role" : "user",
+              "content" : "Create project for Real Estate company"
+            },
+            {
+              "role" : "assistant",
+              "content" : "Home Builders Inc."
+            },
+            {
+              "role" : "user",
+              "content" : "Create project for Movie Production company"
+            },
+            {
+              "role" : "assistant",
+              "content" : "Movie Production"
+            },
+            {
+              "role" : "user",
+              "content" : "診所"
+            },
+            {
+              "role" : "assistant",
+              "content" : "醫療診所"
+            },
+            {
+              "role" : "user",
+              "content" : "ניהול מקלט לבעלי חיים"
+            },
+            {
+              "role" : "assistant",
+              "content" : "מקלט לבעלי חיים"
+            },
+            {
+              "role": "user",
+              "content": msg.trim()
+            }
+          ],
+          "temperature": 1,
+          "top_p": 1,
+          "n": 1,
+          "max_tokens": 128,
+          "presence_penalty": 0,
+          "frequency_penalty": 0,
+        return req
+        
