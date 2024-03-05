@@ -63,8 +63,8 @@ Template.ai_wizard_tooltip.onCreated ->
     tpl.sub_id_rv.set sub_id
     options = 
       sub_id: sub_id
-      req_template_id: "stream_child_tasks"
-      req_options:
+      template_id: "stream_child_tasks"
+      template_data:
         project: JD.activeJustdo({title: 1})?.title
         target_task: JD.activeItem({title: 1})?.title
         parents: parent_titles

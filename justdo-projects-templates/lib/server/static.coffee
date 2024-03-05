@@ -8,8 +8,8 @@ _.extend JustDoProjectsTemplates,
           type: String
           min: 1
           max: 4096
-      requestGenerator: (req_options) ->
-        {msg} = req_options
+      requestGenerator: (template_data) ->
+        {msg} = template_data
 
         req = 
           "model": JustDoProjectsTemplates.openai_template_generation_model,
@@ -137,10 +137,10 @@ _.extend JustDoProjectsTemplates,
           "presence_penalty": 0,
           "frequency_penalty": 0,
         return req
-      cachedResponseCondition: (req_options, sub_id, user_id) ->
-        return APP.justdo_projects_templates.getTemplateById(req_options.cache_token)?
-      cachedResponsePublisher: (req_options, sub_id, user_id) ->
-        template_obj = APP.justdo_projects_templates.getTemplateById(req_options.cache_token)
+      cachedResponseCondition: (template_data, sub_id, user_id) ->
+        return APP.justdo_projects_templates.getTemplateById(template_data.cache_token)?
+      cachedResponsePublisher: (template_data, sub_id, user_id) ->
+        template_obj = APP.justdo_projects_templates.getTemplateById(template_data.cache_token)
         key = 0
 
         _recursiveParseAndPublishTemplateTask = (template_task, parent) ->
@@ -183,7 +183,7 @@ _.extend JustDoProjectsTemplates,
           _recursiveParseAndPublishTemplateTask.call @, template_task, -1
         
         return
-      streamedResponseParser: (parsed_array, req_options, sub_id) ->
+      streamedResponseParser: (parsed_array, template_data, sub_id) ->
         states = ["pending", "in-progress", "done", "will-not-do", "on-hold", "duplicate", "nil"]          
         [
           title
@@ -386,7 +386,7 @@ _.extend JustDoProjectsTemplates,
           "presence_penalty": 0,
           "frequency_penalty": 0,
         return req
-      streamedResponseParser: (parsed_array, req_options, sub_id) ->
+      streamedResponseParser: (parsed_array, template_data, sub_id) ->
         [title, key, parent_task_key] = parsed_array
 
         fields = 

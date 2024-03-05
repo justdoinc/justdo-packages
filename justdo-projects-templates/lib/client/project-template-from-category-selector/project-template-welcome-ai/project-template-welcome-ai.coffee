@@ -43,8 +43,8 @@ Template.project_template_welcome_ai.onCreated ->
     tpl.sub_id_rv.set sub_id
     options = 
       sub_id: sub_id
-      req_template_id: "stream_project_template"
-      req_options: 
+      template_id: "stream_project_template"
+      template_data: 
         msg: request.msg
       cache_token: request.cache_token
       subOnReady: -> 

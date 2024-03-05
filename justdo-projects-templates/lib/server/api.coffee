@@ -54,8 +54,8 @@ _.extend JustDoProjectsTemplates.prototype,
     if not APP.justdo_ai_kit?
       return
     
-    for req_template_id, req_template_def of JustDoProjectsTemplates.ai_requests
-      options = _.extend {template_id: req_template_id}, req_template_def
+    for template_id, req_template_def of JustDoProjectsTemplates.ai_requests
+      options = _.extend {template_id: template_id}, req_template_def
       APP.justdo_ai_kit.registerRequestTemplate options
     
     return
