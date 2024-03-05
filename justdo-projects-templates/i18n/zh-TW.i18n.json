@@ -13,8 +13,8 @@
   "ai_wizard_send": "發送",
   "ai_wizard_input_placeholder": "輸入...",
 
-  "ai_wizard_create_a_project_for_an": "為__purpose__建立專案",
-  "ai_wizard_create_project_for": "為__purpose__建立專案",
+  "ai_wizard_create_a_project_for_an": "__purpose__",
+  "ai_wizard_create_project_for": "__purpose__",
 
   "ai_wizard_what_kind_of_project_do_you_want_to_create": "您想創建什麼樣的專案?",
 
