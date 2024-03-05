@@ -13,10 +13,10 @@
   "ai_wizard_send": "發送",
   "ai_wizard_input_placeholder": "輸入...",
 
-  "ai_wizard_create_a_project_for_an": "為__purpose__建立JustDo",
-  "ai_wizard_create_project_for": "為__purpose__建立JustDo",
+  "ai_wizard_create_a_project_for_an": "為__purpose__建立專案",
+  "ai_wizard_create_project_for": "為__purpose__建立專案",
 
-  "ai_wizard_what_kind_of_project_do_you_want_to_create": "您想創建什麼樣的JustDo?",
+  "ai_wizard_what_kind_of_project_do_you_want_to_create": "您想創建什麼樣的專案?",
 
   "ai_wizard_it_company_html": "<span>科技公司</span>",
   "ai_wizard_real_estate_company_html": "<span>房地產公司</span>",

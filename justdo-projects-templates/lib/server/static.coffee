@@ -416,7 +416,7 @@ _.extend JustDoProjectsTemplates,
               "content": """
                 You are a project title generator.
                 Summerize user input to a few words that will be used in a project's title. 
-                Treat the word "JustDo" in any user input as the same meaning as project, and do not include them in the response..
+                Treat the word "JustDo" in any user input as the same meaning as project, and do not include them in the response.
                 Ensure to follow user's input language when generating response.
               """
             },
@@ -438,7 +438,7 @@ _.extend JustDoProjectsTemplates,
             },
             {
               "role" : "user",
-              "content" : "為科技公司建立JustDo"
+              "content" : "為科技公司建立專案"
             },
             {
               "role" : "assistant",
