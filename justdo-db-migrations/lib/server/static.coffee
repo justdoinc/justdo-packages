@@ -138,25 +138,20 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
           query_options.jd_analytics_skip_logging = true
 
         query_options.limit = options.batch_size
-        return options.collection.find(query, query_options)
+        res =
+          cursor: options.collection.find(query, query_options)
+          count: -> options.collection.find(query, _.omit(query_options, "limit")).count()
+        
+        return res
       
-      getCursorWithoutLimit = ->
-        {query, query_options} = options.queryGenerator()
-
-        if query_options?.jd_analytics_skip_logging isnt false
-          query_options.jd_analytics_skip_logging = true
-
-        delete query_options.limit # Ensure limit is not set for use with .count()
-        return options.collection.find(query, query_options)
-
       scriptWrapper = ->
-        pending_migration_set_cursor = getCursor()
-        pending_migration_set_without_limit_cursor = getCursorWithoutLimit()
+        cursor_res = getCursor()
+        pending_migration_set_cursor = cursor_res.cursor
 
         # The two var below are solely for logging progress
         num_processed = 0
         if options.mark_as_completed_upon_batches_exhaustion
-          initial_affected_docs_count = pending_migration_set_without_limit_cursor.count()
+          initial_affected_docs_count = cursor_res.count()
           @logProgress "Total documents to be updated: #{initial_affected_docs_count}."
           expected_batches = Math.ceil(initial_affected_docs_count / options.batch_size)
           @logProgress "Expected batches: #{expected_batches}."
@@ -203,9 +198,10 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
             return
 
           if not options.static_query
-            pending_migration_set_cursor = getCursor()
+            cursor_res = getCursor()
+            pending_migration_set_cursor = cursor_res.cursor
 
-          if pending_migration_set_without_limit_cursor.count() == 0
+          if cursor_res.count() == 0
             if options.mark_as_completed_upon_batches_exhaustion
               @markAsCompleted()
 
