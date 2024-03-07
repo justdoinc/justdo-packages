@@ -206,6 +206,7 @@ Template.ai_wizard_tooltip.events
           template_items = APP.collections.AIResponse.find(child_query).fetch()
           if _.isEmpty (template_items = APP.collections.AIResponse.find(child_query).fetch())
             grid_control.once "rebuild_ready", (items_ids_with_changed_children) ->
+              grid_control.forceItemsPassCurrentFilter GridData.helpers.getPathItemId created_task_path
               grid_data.expandPath created_task_path
               return
           else
