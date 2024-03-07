@@ -223,7 +223,7 @@ Template.project_template_welcome_ai.events
           APP.collections.AIResponse._collection.remove({sub_id: sub_id, key: corresponding_template_item_key})
 
           if _.isEmpty (child_template_items = APP.collections.AIResponse.find(child_query).fetch())
-            APP.justdo_ai_kit.postNewProjectTemplateCreationCallback sub_id
+            APP.justdo_ai_kit.postNewProjectTemplateCreationCallback sub_id, created_task_path
           else
             recursiveBulkCreateTasks created_task_path, child_template_items
         
