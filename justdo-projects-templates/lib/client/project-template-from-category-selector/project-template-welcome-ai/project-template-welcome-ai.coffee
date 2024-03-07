@@ -52,7 +52,7 @@ Template.project_template_welcome_ai.onCreated ->
         tpl.unlockInput()
         return
 
-    APP.justdo_ai_kit.createStreamRequestAndSubscribeToResponse options
+    APP.justdo_ai_kit.create2DArrayStreamRequestAndSubscribeToResponse options
     tpl.showDropdown()
 
   return

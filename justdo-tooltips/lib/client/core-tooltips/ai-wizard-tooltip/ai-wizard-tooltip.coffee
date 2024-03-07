@@ -72,7 +72,7 @@ Template.ai_wizard_tooltip.onCreated ->
         siblings: sibling_titles
         children: children_titles
       subOnReady: -> tpl.is_loading_rv.set false
-    APP.justdo_ai_kit.createStreamRequestAndSubscribeToResponse options
+    APP.justdo_ai_kit.create2DArrayStreamRequestAndSubscribeToResponse options
 
     return
 
