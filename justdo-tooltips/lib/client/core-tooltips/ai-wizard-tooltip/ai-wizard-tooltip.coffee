@@ -72,6 +72,12 @@ Template.ai_wizard_tooltip.onCreated ->
         siblings: sibling_titles
         children: children_titles
       subOnReady: -> tpl.is_loading_rv.set false
+      subOnStop: (err) ->
+        if err?
+          JustdoSnackbar.show
+            text: TAPi18n.__ "stream_response_generic_err"
+          tpl.is_loading_rv.set false
+        return
     APP.justdo_ai_kit.create2DArrayStreamRequestAndSubscribeToResponse options
 
     return

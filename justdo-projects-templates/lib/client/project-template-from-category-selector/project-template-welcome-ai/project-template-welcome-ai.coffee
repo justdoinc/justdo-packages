@@ -51,6 +51,13 @@ Template.project_template_welcome_ai.onCreated ->
         tpl.is_loading_rv.set false
         tpl.unlockInput()
         return
+      subOnStop: (err) ->
+        if err?
+          JustdoSnackbar.show
+            text: TAPi18n.__ "stream_response_generic_err"
+          tpl.is_loading_rv.set false
+          tpl.unlockInput()
+        return
 
     APP.justdo_ai_kit.create2DArrayStreamRequestAndSubscribeToResponse options
     tpl.showDropdown()
