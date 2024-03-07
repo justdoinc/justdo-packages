@@ -187,6 +187,9 @@ Package.onUse(function (api) {
   api.addFiles("i18n/justdo-accounts/en.i18n.json", both);
   api.addFiles("i18n/justdo-accounts/zh-TW.i18n.json", both);
   api.addFiles("i18n/justdo-accounts/vi.i18n.json", both);
+  api.addFiles("i18n/justdo-ai-kit/en.i18n.json", both);
+  api.addFiles("i18n/justdo-ai-kit/zh-TW.i18n.json", both);
+  api.addFiles("i18n/justdo-ai-kit/vi.i18n.json", both);
 
   api.addFiles("lib/both/app-integration.coffee", both);
   // Note: app-integration need to load last, so immediateInit procedures in
