@@ -174,6 +174,7 @@ Template.ai_wizard_tooltip.events
         $nin: excluded_item_keys
 
     grid_data = APP.modules.project_page.gridData()
+    grid_control = grid_data.grid_control
     transformTemplateItemToTaskDoc = (template_item) ->
       template_item.project_id = project_id
       delete template_item.parent
@@ -185,7 +186,6 @@ Template.ai_wizard_tooltip.events
       # template_item_keys is to keep track of the corresponding template item id for each created task
       template_item_keys = _.map template_items_arr, (item) -> item.key
       items_to_add = _.map template_items_arr, (item) -> transformTemplateItemToTaskDoc item
-      path = "/" + JD.activeItemId() + path
 
       grid_data.bulkAddChild path, items_to_add, (err, created_task_ids) ->
         if err?
@@ -204,14 +204,19 @@ Template.ai_wizard_tooltip.events
               $nin: excluded_item_keys
 
           template_items = APP.collections.AIResponse.find(child_query).fetch()
-          recursiveBulkCreateTasks created_task_path, template_items
+          if _.isEmpty (template_items = APP.collections.AIResponse.find(child_query).fetch())
+            grid_control.once "rebuild_ready", (items_ids_with_changed_children) ->
+              grid_data.expandPath created_task_path
+              return
+          else
+            recursiveBulkCreateTasks created_task_path, template_items
 
       return
 
     if _.isEmpty(template_items = APP.collections.AIResponse.find(query).fetch())
       return
 
-    recursiveBulkCreateTasks("/", template_items)
+    recursiveBulkCreateTasks(JD.activePath(), template_items)
 
     $(".jd-tt-ai-wizard-tooltip-container").remove()
 
