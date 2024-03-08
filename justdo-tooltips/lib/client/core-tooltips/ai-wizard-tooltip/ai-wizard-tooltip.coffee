@@ -159,7 +159,7 @@ Template.ai_wizard_tooltip.events
     return
 
   "click .ai-wizard-stop": (e, tpl) ->
-    APP.justdo_ai_kit.stopStreamAndKillPublication tpl.sub_id_rv.get()
+    APP.justdo_ai_kit.stopStream tpl.sub_id_rv.get()
     return
 
   "click .ai-wizard-create": (e, tpl) ->

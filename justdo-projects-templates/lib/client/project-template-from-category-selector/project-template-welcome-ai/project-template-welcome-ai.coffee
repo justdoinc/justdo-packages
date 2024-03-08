@@ -288,7 +288,7 @@ Template.project_template_welcome_ai.events
     return
 
   "click .welcome-ai-stop-generation": (e, tpl) ->
-    APP.justdo_ai_kit.stopStreamAndKillPublication tpl.sub_id_rv.get()
+    APP.justdo_ai_kit.stopStream tpl.sub_id_rv.get()
     tpl.unlockInput()
     $(".welcome-ai-input").focus()
     return
