@@ -257,9 +257,9 @@ Template.project_template_welcome_ai.events
       parent: -1
 
     # In case the resnpose has only 1 root task, use the child tasks as root tasks.
-    if stream_handler.find({query}).count() is 1
+    if stream_handler.find(query).count() is 1
+      stream_handler.remove query
       query.parent = 0
-      stream_handler.remove {key: 0}
     
     if not _.isEmpty(excluded_item_keys = $(".welcome-ai-result-item-checkbox:not(.checked)").map((i, el) -> $(el).data("key")).get())
       query.key =
