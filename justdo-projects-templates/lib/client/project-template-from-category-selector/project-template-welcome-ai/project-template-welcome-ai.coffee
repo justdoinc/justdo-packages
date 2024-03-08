@@ -191,6 +191,40 @@ Template.project_template_welcome_ai.events
       parent: -1
 
     grid_data = APP.modules.project_page.gridData()
+    grid_control = grid_data.grid_control
+    postNewProjectTemplateCreationCallback = (sub_id, created_task_path) ->
+      if not (project_id = JD.activeJustdoId())?
+        return
+
+      if _.isString created_task_path
+        grid_control.once "rebuild_ready", ->
+          grid_control.forceItemsPassCurrentFilter GridData.helpers.getPathItemId created_task_path
+          grid_data.expandPath created_task_path
+          return
+      
+      # If not all tasks are created, return here.
+      if APP.justdo_ai_kit.response_collection.find({sub_id}).count() isnt 0
+        return
+
+      APP.justdo_ai_kit.stopAndDeleteSubHandle sub_id
+      
+      cur_proj = -> APP.modules.project_page.curProj()
+
+      if cur_proj().isCustomFeatureEnabled JustdoPlanningUtilities.project_custom_feature_id
+        gc.setView JustDoProjectsTemplates.template_grid_views.gantt
+
+        APP.justdo_planning_utilities.on "changes-queue-processed", ->
+          if (first_task_id = APP.collections.Tasks.findOne({project_id}, {fields: {_id: 1}, sort: {seqId: 1}})?._id)
+            task_info = APP.justdo_planning_utilities.task_id_to_info[first_task_id]
+            {earliest_child_start_time, latest_child_end_time} = task_info
+            if earliest_child_start_time? and latest_child_end_time?
+              # Set the date range presented in the gantt
+              APP.justdo_planning_utilities.setEpochRange [earliest_child_start_time, latest_child_end_time]
+
+          return
+      
+      return
+
     transformTemplateItemToTaskDoc = (template_item) ->
       template_item.project_id = project_id
       delete template_item.parent
@@ -223,7 +257,7 @@ Template.project_template_welcome_ai.events
           APP.collections.AIResponse._collection.remove({sub_id: sub_id, key: corresponding_template_item_key})
 
           if _.isEmpty (child_template_items = APP.collections.AIResponse.find(child_query).fetch())
-            APP.justdo_ai_kit.postNewProjectTemplateCreationCallback sub_id, created_task_path
+            postNewProjectTemplateCreationCallback sub_id, created_task_path
           else
             recursiveBulkCreateTasks created_task_path, child_template_items
         
