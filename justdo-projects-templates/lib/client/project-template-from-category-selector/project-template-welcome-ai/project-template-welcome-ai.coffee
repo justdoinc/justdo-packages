@@ -1,5 +1,5 @@
 Template.project_template_welcome_ai.onCreated ->
-  @sub_id_rv = new ReactiveVar ""
+  @stream_handler_rv = new ReactiveVar {}
   @is_loading_rv = new ReactiveVar false
   # Store the request sent for template generation, for use with project title generation
   @sent_request = ""
@@ -12,9 +12,9 @@ Template.project_template_welcome_ai.onCreated ->
     return
 
   @isResponseExists = ->
-    if _.isEmpty(sub_id = @sub_id_rv.get())
+    if _.isEmpty(stream_handler = @stream_handler_rv.get())
       return false
-    return APP.collections.AIResponse.findOne({sub_id: sub_id, parent: -1}, {fields: {_id: 1}})?
+    return stream_handler.findOne({parent: -1}, {fields: {_id: 1}})?
 
   @showDropdown = -> $(".welcome-ai-dropdown").addClass "show"
   @hideDropdown = -> $(".welcome-ai-dropdown").removeClass "show"
@@ -25,10 +25,6 @@ Template.project_template_welcome_ai.onCreated ->
 
     return
 
-  @removeAllItemsWithPubIdInMiniMongo = (sub_id) ->
-    APP.collections.AIResponse._collection.remove({sub_id: sub_id})
-    return
-
   @sendRequestToOpenAI = (request) ->
     tpl = @
 
@@ -36,13 +32,10 @@ Template.project_template_welcome_ai.onCreated ->
     @is_loading_rv.set true
     @lockInput()
     
-    if (old_sub_id = tpl.sub_id_rv.get())?
-      APP.justdo_ai_kit.stopAndDeleteSubHandle old_sub_id
+    if not _.isEmpty(old_stream_handler = tpl.stream_handler_rv.get())
+      old_stream_handler.stopSubscription()
 
-    sub_id = Random.id()
-    tpl.sub_id_rv.set sub_id
     options = 
-      sub_id: sub_id
       template_id: "stream_project_template"
       template_data: 
         msg: request.msg
@@ -59,7 +52,8 @@ Template.project_template_welcome_ai.onCreated ->
           tpl.unlockInput()
         return
 
-    APP.justdo_ai_kit.createStreamRequestAndSubscribeToResponse options
+    stream_handler = APP.justdo_ai_kit.createStreamRequestAndSubscribeToResponse options
+    tpl.stream_handler_rv.set stream_handler
     tpl.showDropdown()
 
   return
@@ -80,10 +74,10 @@ Template.project_template_welcome_ai.helpers
 
   rootTemplate: ->
     tpl = Template.instance()
-    if _.isEmpty(sub_id = tpl.sub_id_rv.get())
+    if _.isEmpty(stream_handler = tpl.stream_handler_rv.get())
       return
 
-    if not _.isEmpty(root_tasks = APP.collections.AIResponse.find({sub_id: sub_id, parent: -1}).fetch())
+    if not _.isEmpty(root_tasks = stream_handler.find({parent: -1}).fetch())
       tpl.showDropdown()
 
     return root_tasks
@@ -183,16 +177,12 @@ Template.project_template_welcome_ai.events
         APP.collections.Projects.update JD.activeJustdoId(), {$set: {title}}
         return
 
-    sub_id = tpl.sub_id_rv.get()
+    stream_handler = tpl.stream_handler_rv.get()
     project_id = JD.activeJustdoId()
-
-    query =
-      sub_id: sub_id
-      parent: -1
-
     grid_data = APP.modules.project_page.gridData()
-    grid_control = grid_data.grid_control
-    postNewProjectTemplateCreationCallback = (sub_id, created_task_path) ->
+    postNewProjectTemplateCreationCallback = (created_task_path) ->
+      grid_control = grid_data.grid_control
+
       if not (project_id = JD.activeJustdoId())?
         return
 
@@ -203,10 +193,10 @@ Template.project_template_welcome_ai.events
           return
       
       # If not all tasks are created, return here.
-      if APP.justdo_ai_kit.response_collection.find({sub_id}).count() isnt 0
+      if stream_handler.find().count() isnt 0
         return
 
-      APP.justdo_ai_kit.stopAndDeleteSubHandle sub_id
+      stream_handler.stopSubscription()
       
       cur_proj = -> APP.modules.project_page.curProj()
 
@@ -224,7 +214,6 @@ Template.project_template_welcome_ai.events
           return
       
       return
-
     transformTemplateItemToTaskDoc = (template_item) ->
       template_item.project_id = project_id
       delete template_item.parent
@@ -247,17 +236,16 @@ Template.project_template_welcome_ai.events
           created_task_path = created_task_id_and_path[1]
           corresponding_template_item_key = template_item_keys[i]
           child_query =
-            sub_id: sub_id
             parent: corresponding_template_item_key
           if not _.isEmpty excluded_item_keys
             child_query.key =
               $nin: excluded_item_keys
 
           # Remove created tasks from AIResponse collection
-          APP.collections.AIResponse._collection.remove({sub_id: sub_id, key: corresponding_template_item_key})
+          stream_handler.remove({key: corresponding_template_item_key})
 
-          if _.isEmpty (child_template_items = APP.collections.AIResponse.find(child_query).fetch())
-            postNewProjectTemplateCreationCallback sub_id, created_task_path
+          if _.isEmpty (child_template_items = stream_handler.find(child_query).fetch())
+            postNewProjectTemplateCreationCallback created_task_path
           else
             recursiveBulkCreateTasks created_task_path, child_template_items
         
@@ -265,16 +253,19 @@ Template.project_template_welcome_ai.events
 
       return
     
+    query =
+      parent: -1
+
     # In case the resnpose has only 1 root task, use the child tasks as root tasks.
-    if APP.collections.AIResponse.find(query).count() is 1
+    if stream_handler.find({query}).count() is 1
       query.parent = 0
-      APP.collections.AIResponse._collection.remove {sub_id: sub_id, key: 0}
+      stream_handler.remove {key: 0}
     
     if not _.isEmpty(excluded_item_keys = $(".welcome-ai-result-item-checkbox:not(.checked)").map((i, el) -> $(el).data("key")).get())
       query.key =
         $nin: excluded_item_keys
     
-    if _.isEmpty(template_items = APP.collections.AIResponse.find(query).fetch())
+    if _.isEmpty(template_items = stream_handler.find(query).fetch())
       return
 
     # Top level tasks' state should always be nil
@@ -288,11 +279,17 @@ Template.project_template_welcome_ai.events
     return
 
   "click .welcome-ai-stop-generation": (e, tpl) ->
-    APP.justdo_ai_kit.stopStream tpl.sub_id_rv.get()
+    tpl.stream_handler_rv.get().stopStream()
     tpl.unlockInput()
     $(".welcome-ai-input").focus()
     return
 
+Template.project_template_welcome_ai_task_item.onCreated ->
+  @parentTemplateInstance = -> Blaze.getView("Template.project_template_welcome_ai").templateInstance()
+  return
+
 Template.project_template_welcome_ai_task_item.helpers
   childTemplate: ->
-    return APP.collections.AIResponse.find({sub_id: @sub_id, parent: @key}).fetch()
+    tpl = Template.instance()
+    parent_tpl = tpl.parentTemplateInstance()
+    return parent_tpl.stream_handler_rv.get().find({parent: @key}).fetch()

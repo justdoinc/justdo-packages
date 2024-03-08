@@ -3,18 +3,19 @@ APP.justdo_tooltips.registerTooltip
   template: "ai_wizard_tooltip"
 
 prev_task_id = ""
-prev_sub_id = ""
+prev_stream_handler = {}
 prev_excluded_item_keys = []
 
 Template.ai_wizard_tooltip.onCreated ->
   tpl = @
-  tpl.sub_id_rv = new ReactiveVar prev_sub_id
+  tpl.stream_handler_rv = new ReactiveVar prev_stream_handler
   tpl.is_loading_rv = new ReactiveVar false
 
   tpl.isResponseExists = ->
-    if _.isEmpty(sub_id = @sub_id_rv.get())
+    if _.isEmpty(stream_handler = @stream_handler_rv.get())
       return false
-    return APP.collections.AIResponse.findOne({sub_id: sub_id, parent: -1}, {fields: {_id: 1}})?
+
+    return stream_handler.findOne({parent: -1}, {fields: {_id: 1}})?
 
   tpl.streamTemplateFromOpenAi = ->
     active_path = JD.activePath()
@@ -55,15 +56,10 @@ Template.ai_wizard_tooltip.onCreated ->
     children_titles = APP.collections.Tasks.find({"parents.#{active_task_id}": {$ne: null}}, {fields: {title: 1}, limit: child_or_sibling_limit}).map (task) -> task.title
     
     tpl.is_loading_rv.set true
-    if not _.isEmpty(old_sub_id = tpl.sub_id_rv.get())
-      APP.justdo_ai_kit.stopAndDeleteSubHandle old_sub_id
-      tpl.removeAllItemsWithPubIdInMiniMongo old_sub_id
+    if not _.isEmpty(old_stream_handler = tpl.stream_handler_rv.get())
+      old_stream_handler.stopSubscription()
 
-    sub_id = Random.id()
-    tpl.sub_id_rv.set sub_id
-    prev_sub_id = sub_id
     options = 
-      sub_id: sub_id
       template_id: "stream_child_tasks"
       template_data:
         project: JD.activeJustdo({title: 1})?.title
@@ -78,20 +74,24 @@ Template.ai_wizard_tooltip.onCreated ->
             text: TAPi18n.__ "stream_response_generic_err"
           tpl.is_loading_rv.set false
         return
-    APP.justdo_ai_kit.createStreamRequestAndSubscribeToResponse options
 
-    return
-
-  tpl.removeAllItemsWithPubIdInMiniMongo = (sub_id) ->
-    APP.collections.AIResponse._collection.remove({sub_id: sub_id})
+    stream_handler = APP.justdo_ai_kit.createStreamRequestAndSubscribeToResponse options
+    tpl.stream_handler_rv.set stream_handler
+    prev_stream_handler = stream_handler
+    
     return
 
   tpl.autorun ->
-    APP.collections.AIResponse.find().fetch()
+    if _.isEmpty(stream_handler = tpl.stream_handler_rv.get())
+      return
+
+    stream_handler.find({}, {fields: {_id: 1}}).fetch() # for reactivity
     $(".ai-wizard-list").animate(scrollTop: $(".ai-wizard-list").prop("scrollHeight"), 100)
+    return
 
   if (task_id = JD.activeItemId()) isnt prev_task_id
-    tpl.removeAllItemsWithPubIdInMiniMongo  tpl.sub_id_rv.get()
+    if not _.isEmpty(prev_stream_handler = tpl.stream_handler_rv.get())
+      prev_stream_handler.stopSubscription()
     tpl.streamTemplateFromOpenAi()
     prev_task_id = task_id
     prev_excluded_item_keys = []
@@ -109,10 +109,10 @@ Template.ai_wizard_tooltip.helpers
 
   rootTemplate: ->
     tpl = Template.instance()
-    if _.isEmpty(sub_id = tpl.sub_id_rv.get())
+    if _.isEmpty(stream_handler = tpl.stream_handler_rv.get())
       return
 
-    root_tasks = APP.collections.AIResponse.find({sub_id: sub_id, parent: -1}).fetch()
+    root_tasks = stream_handler.find({parent: -1}).fetch()
 
     return root_tasks
   
@@ -159,15 +159,15 @@ Template.ai_wizard_tooltip.events
     return
 
   "click .ai-wizard-stop": (e, tpl) ->
-    APP.justdo_ai_kit.stopStream tpl.sub_id_rv.get()
+    stream_handler = tpl.stream_handler_rv.get()
+    stream_handler.stopStream()
     return
 
   "click .ai-wizard-create": (e, tpl) ->
-    sub_id = tpl.sub_id_rv.get()
+    stream_handler = tpl.stream_handler_rv.get()
     project_id = JD.activeJustdoId()
 
     query =
-      sub_id: sub_id
       parent: -1
     if not _.isEmpty(excluded_item_keys = $(".ai-wizard-item-checkbox:not(.checked)").map((i, el) -> $(el).data("key")).get())
       query.key =
@@ -197,14 +197,13 @@ Template.ai_wizard_tooltip.events
           created_task_path = created_task_id_and_path[1]
           corresponding_template_item_key = template_item_keys[i]
           child_query =
-            sub_id: sub_id
             parent: corresponding_template_item_key
           if not _.isEmpty excluded_item_keys
             child_query.key =
               $nin: excluded_item_keys
 
-          template_items = APP.collections.AIResponse.find(child_query).fetch()
-          if _.isEmpty (template_items = APP.collections.AIResponse.find(child_query).fetch())
+          template_items = stream_handler.find(child_query).fetch()
+          if _.isEmpty (template_items = stream_handler.find(child_query).fetch())
             grid_control.once "rebuild_ready", (items_ids_with_changed_children) ->
               grid_control.forceItemsPassCurrentFilter GridData.helpers.getPathItemId created_task_path
               grid_data.expandPath created_task_path
@@ -214,7 +213,7 @@ Template.ai_wizard_tooltip.events
 
       return
 
-    if _.isEmpty(template_items = APP.collections.AIResponse.find(query).fetch())
+    if _.isEmpty(template_items = stream_handler.find(query).fetch())
       return
 
     recursiveBulkCreateTasks(JD.activePath(), template_items)
@@ -223,8 +222,13 @@ Template.ai_wizard_tooltip.events
 
     return
 
+Template.ai_wizard_item.onCreated ->
+  @parentTemplateInstance = -> Blaze.getView("Template.ai_wizard_tooltip").templateInstance()
+  return
+
 Template.ai_wizard_item.helpers
   childTemplate: ->
-    return APP.collections.AIResponse.find({sub_id: @sub_id, parent: @key}).fetch()
+    stream_handler = Template.instance().parentTemplateInstance().stream_handler_rv.get()
+    return stream_handler.find({parent: @key}).fetch()
 
   unchecked: -> @key in prev_excluded_item_keys
