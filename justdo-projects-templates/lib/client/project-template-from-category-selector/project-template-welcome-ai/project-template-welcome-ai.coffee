@@ -3,6 +3,8 @@ Template.project_template_welcome_ai.onCreated ->
   @is_loading_rv = new ReactiveVar false
   # Store the request sent for template generation, for use with project title generation
   @sent_request = ""
+  # If this template is destroyed NOT because of creating items, stop the subscription and remove items from minimongo.
+  @close_due_to_create_items = false
 
   @lockInput = ->
     $(".welcome-ai-input").prop "disabled", true
@@ -274,6 +276,7 @@ Template.project_template_welcome_ai.events
       return item
     recursiveBulkCreateTasks("/", template_items)
 
+    tpl.close_due_to_create_items = true
     tpl.bootbox_dialog.modal "hide"
 
     return
@@ -283,6 +286,11 @@ Template.project_template_welcome_ai.events
     tpl.unlockInput()
     $(".welcome-ai-input").focus()
     return
+
+Template.project_template_welcome_ai.onDestroyed ->
+  if not @close_due_to_create_items
+    @stream_handler_rv.get().stopSubscription()
+  return
 
 Template.project_template_welcome_ai_task_item.onCreated ->
   @parentTemplateInstance = -> Blaze.getView("Template.project_template_welcome_ai").templateInstance()
