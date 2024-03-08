@@ -78,7 +78,7 @@ Template.ai_wizard_tooltip.onCreated ->
             text: TAPi18n.__ "stream_response_generic_err"
           tpl.is_loading_rv.set false
         return
-    APP.justdo_ai_kit.create2DArrayStreamRequestAndSubscribeToResponse options
+    APP.justdo_ai_kit.createStreamRequestAndSubscribeToResponse options
 
     return
 
