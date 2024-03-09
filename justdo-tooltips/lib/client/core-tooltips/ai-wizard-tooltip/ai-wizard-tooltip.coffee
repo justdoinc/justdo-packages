@@ -2,7 +2,7 @@ APP.justdo_tooltips.registerTooltip
   id: "ai-wizard-tooltip"
   template: "ai_wizard_tooltip"
 
-prev_task_id = ""
+prev_task_doc = {}
 prev_stream_handler = {}
 prev_excluded_item_keys = []
 
@@ -89,7 +89,8 @@ Template.ai_wizard_tooltip.onCreated ->
     $(".ai-wizard-list").animate(scrollTop: $(".ai-wizard-list").prop("scrollHeight"), 100)
     return
 
-  if (task_id = JD.activeItemId()) isnt prev_task_id
+  active_task = JD.activeItem({title: 1})
+  if (active_task._id isnt prev_task_doc._id) or (active_task.title isnt prev_task_doc.title)
     if not _.isEmpty(prev_stream_handler = tpl.stream_handler_rv.get())
       prev_stream_handler.stopSubscription()
     tpl.streamTemplateFromOpenAi()
