@@ -97,9 +97,5 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/core-tooltips/add-new-member-dialog-info/add-new-member-dialog-info.sass", client);
   api.addFiles("lib/client/core-tooltips/add-new-member-dialog-info/add-new-member-dialog-info.coffee", client);
 
-  api.addFiles("lib/client/core-tooltips/ai-wizard-tooltip/ai-wizard-tooltip.html", client);
-  api.addFiles("lib/client/core-tooltips/ai-wizard-tooltip/ai-wizard-tooltip.sass", client);
-  api.addFiles("lib/client/core-tooltips/ai-wizard-tooltip/ai-wizard-tooltip.coffee", client);
-
   api.export("JustdoTooltips", client);
 });
