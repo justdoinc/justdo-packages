@@ -18,19 +18,21 @@ _.extend JustdoNewProjectTemplates.prototype,
       target_task: "/"
     APP.justdo_projects_templates.showTemplatesFromCategoriesPicker options
     return
-
-  setupShowFirstJustDoTemplatePickerForNewUserHook: ->
-    APP.projects.once "post-reg-init-completed", (init_report) =>        
-      if (init_report.first_project_created isnt false) and @isUserCampaignAllowPickerToShow()
-        Tracker.autorun (computation) =>
-          if not (gc = APP.modules.project_page.gridControl(true))?
-            return
-
-          if not (grid_ready = gc.ready?.get?())
-            return
-
-          @showFirstJustDoTemplatePicker()
-          computation.stop()
+  
+  _showFirstJustDoTemplatePickerForNewUserHandler: (init_report) ->
+    if (init_report.first_project_created isnt false) and APP.justdo_new_project_templates.isUserCampaignAllowPickerToShow()
+      Tracker.autorun (computation) ->
+        if not (gc = APP.modules.project_page.gridControl(true))?
           return
-      return
+
+        if not (grid_ready = gc.ready?.get?())
+          return
+
+        APP.justdo_new_project_templates.showFirstJustDoTemplatePicker()
+        computation.stop()
+        return
     return
+
+  setupShowFirstJustDoTemplatePickerForNewUserHook: -> APP.projects.once "post-reg-init-completed", @_showFirstJustDoTemplatePickerForNewUserHandler
+
+  unsetShowFirstJustDoTemplatePickerForNewUserHook: -> APP.projects.off "post-reg-init-completed", @_showFirstJustDoTemplatePickerForNewUserHandler
