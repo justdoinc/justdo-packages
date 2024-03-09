@@ -93,13 +93,20 @@ Template.ai_wizard_tooltip.onCreated ->
   if (active_task._id isnt prev_task_doc._id) or (active_task.title isnt prev_task_doc.title)
     if not _.isEmpty(prev_stream_handler = tpl.stream_handler_rv.get())
       prev_stream_handler.stopSubscription()
-    tpl.streamTemplateFromOpenAi()
-    prev_task_id = task_id
+    
+    prev_task_doc = active_task
     prev_excluded_item_keys = []
+
+    if _.isEmpty active_task.title
+      return
+
+    tpl.streamTemplateFromOpenAi()
 
   return
 
 Template.ai_wizard_tooltip.helpers
+  taskHasTitle: -> JD.activeItem({title: 1})?.title?
+
   isLoading: ->
     tpl = Template.instance()
     return tpl.is_loading_rv.get()

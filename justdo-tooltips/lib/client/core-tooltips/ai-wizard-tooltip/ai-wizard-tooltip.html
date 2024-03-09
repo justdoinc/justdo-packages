@@ -1,25 +1,31 @@
 <template name="ai_wizard_tooltip">
   <div class="ai-wizard-tooltip shadow-lg">
-    <div class="ai-wizard-list">
-      {{#if isResponseExists}}
-        {{#each rootTemplate}}
-          {{> ai_wizard_item}}
-        {{/each}}
-      {{else}}
-        {{#if isLoading}}
-          <div class="ai-wizard-loader-wrapper">
-            <div class="loader">
-              <div class="double-bounce1 bg-primary"></div>
-              <div class="double-bounce2 bg-primary"></div>
+    {{#if taskHasTitle}}
+      <div class="ai-wizard-list">
+        {{#if isResponseExists}}
+          {{#each rootTemplate}}
+            {{> ai_wizard_item}}
+          {{/each}}
+        {{else}}
+          {{#if isLoading}}
+            <div class="ai-wizard-loader-wrapper">
+              <div class="loader">
+                <div class="double-bounce1 bg-primary"></div>
+                <div class="double-bounce2 bg-primary"></div>
+              </div>
             </div>
-          </div>
+          {{/if}}
         {{/if}}
-      {{/if}}
-    </div>
-    <div class="ai-wizard-footer">
-      <div class="btn btn-sm btn-light {{#if isLoading}}ai-wizard-stop{{else}}ai-wizard-generate{{/if}}">{{#if isLoading}}{{ucFirst (_ "stop")}}{{else}}{{ucFirst (_ "regenerate")}}{{/if}}</div>
-      <div class="ai-wizard-create btn btn-sm btn-primary {{#if isLoading}}disabled{{/if}}">{{_ "create"}}</div>
-    </div>
+      </div>
+      <div class="ai-wizard-footer">
+        <div class="btn btn-sm btn-light {{#if isLoading}}ai-wizard-stop{{else}}ai-wizard-generate{{/if}}">{{#if isLoading}}{{ucFirst (_ "stop")}}{{else}}{{ucFirst (_ "regenerate")}}{{/if}}</div>
+        <div class="ai-wizard-create btn btn-sm btn-primary {{#if isLoading}}disabled{{/if}}">{{_ "create"}}</div>
+      </div>
+    {{else}}
+      <div class="ai-wizard-no-title">
+        <span class="text-secondary">{{_ "subtask_generation_parent_has_no_title_err"}}</span>
+      </div>
+    {{/if}}
   </div>
 </template>
 
