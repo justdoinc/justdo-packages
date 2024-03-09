@@ -64,10 +64,6 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
-  api.addFiles("lib/client/project-template-from-category-selector/project-template-welcome-ai/project-template-welcome-ai.sass", client);
-  api.addFiles("lib/client/project-template-from-category-selector/project-template-welcome-ai/project-template-welcome-ai.html", client);
-  api.addFiles("lib/client/project-template-from-category-selector/project-template-welcome-ai/project-template-welcome-ai.coffee", client);
-
   api.addFiles("lib/client/project-template-from-category-selector/demo-html-template/demo-html-template.sass", client);
   api.addFiles("lib/client/project-template-from-category-selector/demo-html-template/demo-html-template.html", client);
   api.addFiles("lib/client/project-template-from-category-selector/demo-html-template/demo-html-template.coffee", client);
