@@ -18,9 +18,6 @@ _.extend JustDoProjectsTemplates.prototype,
     # Defined in collections-indexes.coffee
     @_ensureIndexesExists()
 
-    # Defined below
-    @_registerAIRequestTemplates()
-
     return
 
   createSubtreeFromTemplateUnsafe: (options) ->
@@ -48,16 +45,6 @@ _.extend JustDoProjectsTemplates.prototype,
 
     @logger.debug "Destroyed"
 
-    return
-  
-  _registerAIRequestTemplates: ->
-    if not APP.justdo_ai_kit?
-      return
-    
-    for template_id, req_template_def of JustDoProjectsTemplates.ai_requests
-      options = _.extend {template_id: template_id}, req_template_def
-      APP.justdo_ai_kit.registerRequestTemplate options
-    
     return
 
   generateProjectTitleFromOpenAiMethodHandler: (msg, user_id) ->
