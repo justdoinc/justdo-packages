@@ -21,9 +21,4 @@ _.extend JustDoProjectsTemplates.prototype,
 
         return APP.justdo_projects_templates.createSubtreeFromTemplateUnsafe options
 
-      generateProjectTitleFromOpenAi: (msg) ->
-        check msg, String
-        check @userId, String
-        return self.generateProjectTitleFromOpenAiMethodHandler msg, @userId
-
     return

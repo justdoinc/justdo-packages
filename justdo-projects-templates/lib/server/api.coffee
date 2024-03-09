@@ -47,18 +47,6 @@ _.extend JustDoProjectsTemplates.prototype,
 
     return
 
-  generateProjectTitleFromOpenAiMethodHandler: (msg, user_id) ->
-    check msg, String
-    check user_id, String
-    
-    template_id = "generate_project_title"
-    template_data = 
-      msg: msg
-
-    res = await APP.justdo_ai_kit.openai.createChatCompletion template_id, template_data, user_id
-
-    await return res?.choices?[0]?.message?.content
-
 getFromTemplateOnly = (key) ->
   return @template[key]
 
