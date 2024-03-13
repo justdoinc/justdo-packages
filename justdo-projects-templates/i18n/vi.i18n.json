@@ -3,22 +3,6 @@
 
   "project_templates_blank_label": "Trống",
 
-  "project_templates_task_title_my_first_task": "Tác vụ không có tiêu đề",
+  "project_templates_task_title_my_first_task": "Tác vụ không có tiêu đề"
 
-  "ai_wizard_title": "AI Phù Thủy",
-  "ai_wizard_bot_name": "Bot JustDo",
-  "ai_wizard_welcome_msg": "Xin chào, hãy kể cho tôi về dự án của bạn và tôi sẽ giúp bạn tạo ra một JustDo",
-  "ai_wizard_waiting_for_template_msg": "Đang tạo một mẫu dựa trên yêu cầu của bạn...Nó sẽ mất ít hơn một phút.",
-  "ai_wizard_error_msg": "Do nhu cầu cao, chúng tôi không thể xử lý yêu cầu của bạn ngay bây giờ :( Vui lòng chọn một mẫu từ bộ chọn.",
-  "ai_wizard_send": "Gửi",
-  "ai_wizard_input_placeholder": "Tin nhắn...",
-
-  "ai_wizard_create_a_project_for_an": "Tạo một dự án cho một __purpose__",
-  "ai_wizard_create_project_for": "Tạo dự án cho __purpose__",
-
-  "ai_wizard_what_kind_of_project_do_you_want_to_create": "Bạn muốn tạo dự án loại nào?",
-
-  "ai_wizard_it_company_html": "<span>Công ty Công nghệ</span>",
-  "ai_wizard_real_estate_company_html": "<span>Công ty Bất động sản</span>",
-  "ai_wizard_movie_production_company_html": "<span>Công ty Sản xuất Phim</span>"
 }
