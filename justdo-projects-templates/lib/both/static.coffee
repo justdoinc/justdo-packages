@@ -38,5 +38,3 @@ _.extend JustDoProjectsTemplates,
           "filter":null
         }
       ]
-  
-  openai_template_generation_model: "gpt-3.5-turbo-0125"
