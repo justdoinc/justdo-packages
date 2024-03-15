@@ -1,7 +1,7 @@
 APP.justdo_news.registerNews "news",
   _id: "v5-06"
-  title: "v5.06"
-  aliases: ["v5-06-x"]
+  title: "JustDo AI"
+  aliases: ["justdo-ai"]
   date: "2024-03-08"
   templates: [
     {
