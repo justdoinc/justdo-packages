@@ -10,7 +10,7 @@ APP.justdo_news.registerNews "news",
       template_data: {
         news_array: [
           {
-            "title": "The Getting Started prompt"
+            "title": "The Getting Started Prompt"
             "subtitle": "Instantly generate project templates from brief descriptions with our new AI capability. Available only on JustDo.com"
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v5-06/assets/1.jpeg"
           },
