@@ -1288,7 +1288,9 @@ _.extend Projects.prototype,
     if not @projects_collection.findOne({"members.user_id": user_id})?
       options = {}
       @emit "pre-create-first-project-for-new-user", user, options
-      initiation_report.first_project_created = @createNewProject(options, user_id)
+      created_project_id = @createNewProject(options, user_id)
+      initiation_report.first_project_created = created_project_id
+      @emit "post-create-first-project-for-new-user", user, created_project_id, options
 
     Meteor.users.update user_id, {$set: {"justdo_projects.post_reg_init": true}}
 
