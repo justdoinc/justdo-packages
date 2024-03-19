@@ -27,7 +27,13 @@ _.extend JustdoNewProjectTemplates.prototype,
     # we'll need to remove it.
     APP.projects.on "pre-create-first-project-for-new-user", (new_user_doc, create_new_project_options) =>
       user_campaign_id = new_user_doc.promoters?.referring_campaign_id
-      if @isUserCampaignAllowPickerToShow user_campaign_id
+      
+      if APP.justdo_promoters_campaigns?
+        is_new_project_template_picker_allowed_to_show = APP.justdo_promoters_campaigns.isUserCampaignAllowNewProjectTemplatePickerToShow user_campaign_id
+      else
+        is_new_project_template_picker_allowed_to_show = true
+      
+      if is_new_project_template_picker_allowed_to_show
         create_new_project_options.init_first_task = false
       return
 

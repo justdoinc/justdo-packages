@@ -20,7 +20,12 @@ _.extend JustdoNewProjectTemplates.prototype,
     return
   
   _showFirstJustDoTemplatePickerForNewUserHandler: (init_report) ->
-    if (init_report.first_project_created isnt false) and APP.justdo_new_project_templates.isUserCampaignAllowPickerToShow()
+    if APP.justdo_promoters_campaigns?
+      is_new_project_template_picker_allowed_to_show = APP.justdo_promoters_campaigns.isUserCampaignAllowNewProjectTemplatePickerToShow user_campaign_id
+    else
+      is_new_project_template_picker_allowed_to_show = true
+
+    if (init_report.first_project_created isnt false) and is_new_project_template_picker_allowed_to_show
       Tracker.autorun (computation) ->
         if not (gc = APP.modules.project_page.gridControl(true))?
           return
