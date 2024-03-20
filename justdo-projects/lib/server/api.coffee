@@ -1273,6 +1273,8 @@ _.extend Projects.prototype,
   postRegInit: (user_id) ->
     @requireLogin(user_id)
 
+    self = @
+
     if not (user = Meteor.users.findOne({_id: user_id}))?
       throw @_error "user-not-exists"
 
@@ -1296,6 +1298,48 @@ _.extend Projects.prototype,
       initiation_report.first_project_created = created_project_id
       @emit "post-create-first-project-for-new-user", user, created_project_id, options
 
+      if not _.isEmpty first_jd
+        grid_data = @_grid_data_com
+        # Create tasks for first justdo
+        if not _.isEmpty(justdo_tasks = first_jd?.justdo_tasks)
+          root_tasks = _.filter justdo_tasks, (item) -> item.data.parent is -1
+          # If there's only 1 root task, discard it and use its child to be the root tasks
+          if _.size(root_tasks) <= 1
+            root_tasks = _.filter justdo_tasks, (item) -> item.data.parent is 0
+          
+          if _.isEmpty root_tasks
+            return
+
+          recursiveBulkCreateTasks = (path, template_items_arr) ->
+            # template_item_keys is to keep track of the corresponding template item id for each created task
+            template_item_keys = _.map template_items_arr, (item) -> item.key
+            items_to_add = _.map template_items_arr, (item) ->
+              item.data.project_id = created_project_id
+              return item.data
+            
+            try
+              created_task_ids = grid_data.bulkAddChild path, items_to_add, user_id
+            catch err
+              self.logger.error "Failed to create first justdo tasks", err
+            
+            for created_task_id, i in created_task_ids
+              created_task_path = GridData.helpers.getPathArray(path)
+              created_task_path.push(created_task_id)
+              created_task_path = GridData.helpers.joinPathArray created_task_path
+              corresponding_template_item_key = template_item_keys[i]
+
+              child_tasks = _.filter justdo_tasks, (item) -> item.data.parent is corresponding_template_item_key
+              if not _.isEmpty child_tasks
+                recursiveBulkCreateTasks created_task_path, child_tasks
+
+            return
+          
+          # Top level tasks' state should always be nil
+          root_tasks = _.map root_tasks, (item) -> 
+            item.state = "nil"
+            return item
+          recursiveBulkCreateTasks("/", root_tasks)
+          
     Meteor.users.update user_id, {$set: {"justdo_projects.post_reg_init": true}}
 
     return initiation_report
