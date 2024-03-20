@@ -1288,6 +1288,10 @@ _.extend Projects.prototype,
     if not @projects_collection.findOne({"members.user_id": user_id})?
       options = {}
       @emit "pre-create-first-project-for-new-user", user, options
+      
+      if not _.isEmpty(first_jd = user.justdo_projects?.first_jd)
+        options.init_first_task = false
+
       created_project_id = @createNewProject(options, user_id)
       initiation_report.first_project_created = created_project_id
       @emit "post-create-first-project-for-new-user", user, created_project_id, options
