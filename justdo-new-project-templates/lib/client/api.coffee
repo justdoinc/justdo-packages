@@ -20,13 +20,31 @@ _.extend JustdoNewProjectTemplates.prototype,
     return
   
   _showFirstJustDoTemplatePickerForNewUserHandler: (init_report) ->
+    self = @
+
     if APP.justdo_promoters_campaigns?
-      is_new_project_template_picker_allowed_to_show = APP.justdo_promoters_campaigns.isUserCampaignAllowNewProjectTemplatePickerToShow user_campaign_id
+      is_new_project_template_picker_allowed_to_show = APP.justdo_promoters_campaigns.isUserCampaignAllowNewProjectTemplatePickerToShow()
     else
       is_new_project_template_picker_allowed_to_show = true
 
-    if (init_report.first_project_created isnt false) and is_new_project_template_picker_allowed_to_show
+    if _.isString(first_project_id = init_report.first_project_created) and is_new_project_template_picker_allowed_to_show
       Tracker.autorun (computation) ->
+        active_justdo = JD.activeJustdo {lastTaskSeqId: 1}
+
+        if not (project_id = active_justdo?._id)?
+          return
+        
+        # Unlikely to happen, but in case someone created a project then immidiately go to another project, stop this computation.
+        if project_id isnt first_project_id
+          computation.stop()
+          return
+        
+        # If project is already created with tasks, do not show the picker
+        # (First task upon project creation is handled above)
+        if active_justdo?.lastTaskSeqId isnt 0
+          computation.stop()
+          return
+
         if not (gc = APP.modules.project_page.gridControl(true))?
           return
 
@@ -36,6 +54,7 @@ _.extend JustdoNewProjectTemplates.prototype,
         APP.justdo_new_project_templates.showFirstJustDoTemplatePicker()
         computation.stop()
         return
+        
     return
 
   setupShowFirstJustDoTemplatePickerForNewUserHook: -> APP.projects.once "post-reg-init-completed", @_showFirstJustDoTemplatePickerForNewUserHandler
