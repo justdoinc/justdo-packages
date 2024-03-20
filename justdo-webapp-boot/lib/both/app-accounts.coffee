@@ -9,6 +9,15 @@ APP.getEnv (env) ->
       "justdo_projects.post_reg_init": false
       "justdo_projects.daily_email_projects_array": []
 
+  # The decision to edit the justdo_projects fields here and not in the justdo-projects packages
+  # is because the justdo-projects package is not loaded in the landing app, and we want to avoid
+  # having to load it just for this. 
+  APP.accounts.on "before-create-user-extra-fields-update", (extra_fields, options) ->
+    if not _.isEmpty(first_jd = options.first_jd)
+      extra_fields["justdo_projects.first_jd"] = first_jd
+      
+    return
+    
   APP.emit "app-accounts-ready"
 
   return

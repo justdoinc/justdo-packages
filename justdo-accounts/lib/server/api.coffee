@@ -266,8 +266,9 @@ _.extend JustdoAccounts.prototype,
       @signLegalDocs(signed_legal_docs, created_user_id)
 
     extra_fields = _.extend {}, @options.new_accounts_custom_fields
-    if not _.isEmpty(first_jd = options.first_jd)
-      extra_fields["justdo_projects.first_jd"] = first_jd
+    @emit "before-create-user-extra-fields-update", extra_fields, options
+    # Hooks to "before-create-user-extra-fields-update" can modify extra_fields
+    # in accordance with the options passed to createUser.
 
     check options.users_allowed_to_edit_pre_enrollment, Match.Maybe([String])
     if options.users_allowed_to_edit_pre_enrollment? and not _.isEmpty(options.users_allowed_to_edit_pre_enrollment)
