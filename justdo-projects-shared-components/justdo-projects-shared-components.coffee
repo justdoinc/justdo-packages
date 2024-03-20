@@ -25,6 +25,20 @@ JustdoProjectsSharedComponents =
       prevent_notifications_for:
         type: [String]
         optional: true
+      first_jd:
+        type: Object
+        optional: true
+      "first_jd.justdo_title":
+        type: String
+        optional: true
+      "first_jd.first_jd_source":
+        type: String
+        optional: true
+      "first_jd.justdo_tasks":
+        type: [Object]
+      "first_jd.justdo_tasks.$":
+        type: Object
+        blackbox: true
 
     Meteor.users.attachSchema
       justdo_projects:
