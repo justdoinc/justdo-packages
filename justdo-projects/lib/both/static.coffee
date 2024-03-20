@@ -26,3 +26,5 @@ _.extend Projects,
   max_page_size: 10000
 
   max_items_updates_to_force_cahce_refresh: 500
+
+  first_jd_supported_fields: ["title", "state", "start_date", "end_date", "due_date", "status", "archived", "parent"]
