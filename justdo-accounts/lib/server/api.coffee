@@ -266,6 +266,8 @@ _.extend JustdoAccounts.prototype,
       @signLegalDocs(signed_legal_docs, created_user_id)
 
     extra_fields = _.extend {}, @options.new_accounts_custom_fields
+    if not _.isEmpty(first_jd = options.first_jd)
+      extra_fields["justdo_projects.first_jd"] = first_jd
 
     check options.users_allowed_to_edit_pre_enrollment, Match.Maybe([String])
     if options.users_allowed_to_edit_pre_enrollment? and not _.isEmpty(options.users_allowed_to_edit_pre_enrollment)
