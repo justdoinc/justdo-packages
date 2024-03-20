@@ -31,6 +31,8 @@ _.extend JustdoTasksCollectionsManager.prototype,
         "p:rp:b:work-hours_e"
       ]
 
+    date_string_regex = /^\d{4}-\d{2}-\d{2}$/
+
     Schema =
       title:
         label: "Subject"
@@ -45,6 +47,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
         type: String
         optional: true
+        max: 1000
 
         grid_column_editor: "TextareaWithTreeControlsEditor"
 
@@ -365,6 +368,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
         type: String
         optional: true
+        regEx: date_string_regex
 
         grid_column_filter_settings:
           type: "unicode-dates-filter"
@@ -409,6 +413,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
         type: String
         optional: true
+        regEx: date_string_regex
 
         grid_column_filter_settings:
           type: "unicode-dates-filter"
@@ -458,6 +463,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
         type: String
         optional: true
+        regEx: date_string_regex
 
         grid_column_filter_settings:
           type: "unicode-dates-filter"
