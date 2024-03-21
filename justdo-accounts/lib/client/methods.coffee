@@ -46,7 +46,14 @@ _.extend JustdoAccounts.prototype,
 
     @emit "user-signup", options
 
-    Meteor.call "justdoAccountsCreateUser", options, cb
+    Meteor.call "justdoAccountsCreateUser", options, (err, created_user_id) =>
+      if not err?
+        @emit "user-signup-success", created_user_id
+
+      if _.isFunction cb
+        cb err, created_user_id
+
+      return
 
   signLegalDocs: (legal_docs, cb) ->
     Meteor.call "signLegalDocs", legal_docs, cb
