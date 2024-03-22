@@ -1314,7 +1314,7 @@ _.extend Projects.prototype,
             # template_item_keys is to keep track of the corresponding template item id for each created task
             template_item_keys = _.map template_items_arr, (item) -> item.key
             items_to_add = _.map template_items_arr, (item) ->
-              item.data = _.pick item.data, ...Projects.first_jd_supported_fields
+              item.data = _.pick item.data, ...Projects.jd_creation_request_supported_fields
               item.data.project_id = created_project_id
               return item.data
             

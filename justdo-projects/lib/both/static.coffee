@@ -27,6 +27,6 @@ _.extend Projects,
 
   max_items_updates_to_force_cahce_refresh: 500
 
-  # first_jd allows task creation from unregistered users, therefore opens a vector for attacking.
-  # first_jd_supported_fields limits the fields we pick from first_jd.justdo_tasks to reduce the attack surface.
-  first_jd_supported_fields: ["title", "state", "start_date", "end_date", "due_date", "status", "archived", "parent"]
+  # first_jd/jd_creation_request allows task creation from unregistered users, therefore opens a vector for attacking.
+  # jd_creation_request_supported_fields limits the fields we pick from first_jd.justdo_tasks to reduce the attack surface.
+  jd_creation_request_supported_fields: ["title", "state", "start_date", "end_date", "due_date", "status", "archived", "parent"]
