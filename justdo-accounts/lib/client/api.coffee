@@ -303,6 +303,18 @@ _.extend JustdoAccounts.prototype,
     
     return pre_register_id
 
+  setJdCreationRequest: (jd_creation_request) ->
+    jd_creation_request = _.extend {}, jd_creation_request, {pre_register_id: @getPreRegisterId()}
+    @jd_creation_request = jd_creation_request
+    return
+  
+  getJdCreationRequest: ->
+    return @jd_creation_request
+  
+  clearJdCreationRequest: ->
+    @jd_creation_request = null
+    return
+
   destroy: ->
     if @destroyed
       @logger.debug "Destroyed already"

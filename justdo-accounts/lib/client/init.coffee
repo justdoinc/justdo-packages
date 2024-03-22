@@ -11,6 +11,9 @@ _.extend JustdoAccounts.prototype,
         @syncUserTimezone()
 
     @pre_register_id = ""
+
+    @jd_creation_request = null
+
     return
 
   _deferredInit: ->
