@@ -31,7 +31,7 @@ JustdoProjectsSharedComponents =
       "first_jd.justdo_title":
         type: String
         optional: true
-      "first_jd.first_jd_source":
+      "first_jd.source":
         type: String
         optional: true
       "first_jd.justdo_tasks":
