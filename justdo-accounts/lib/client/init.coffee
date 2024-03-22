@@ -10,6 +10,7 @@ _.extend JustdoAccounts.prototype,
       if login_state_sym == "logged-in"
         @syncUserTimezone()
 
+    @pre_register_id = ""
     return
 
   _deferredInit: ->

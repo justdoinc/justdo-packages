@@ -291,6 +291,18 @@ _.extend JustdoAccounts.prototype,
     APP.justdo_files.removeUserAvatar()
     return
 
+  getPreRegisterId: ->
+    if Meteor.userId()?
+      # As of writing, logged-in user doesn't need pre_register_id.
+      # If this changes, remove this throw.
+      throw @_error "login-already"
+    
+    if _.isEmpty(pre_register_id = @pre_register_id)
+      pre_register_id = Random.id()
+      @pre_register_id = pre_register_id
+    
+    return pre_register_id
+
   destroy: ->
     if @destroyed
       @logger.debug "Destroyed already"
