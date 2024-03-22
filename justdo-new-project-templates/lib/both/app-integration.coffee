@@ -5,6 +5,7 @@ APP.getEnv (env) ->
   options =
     projects_collection: APP.collections.Projects
     tasks_collection: APP.collections.Tasks
+    app_type: JustdoHelpers.getClientType env
 
   APP.justdo_new_project_templates = new JustdoNewProjectTemplates(options)
 

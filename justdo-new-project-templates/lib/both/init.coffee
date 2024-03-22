@@ -4,12 +4,16 @@ options_schema =
   both:
     projects_collection:
       type: "skip-type-check"
-      optional: false
+      optional: true
       bind_to_instance: true
 
     tasks_collection:
       type: "skip-type-check"
-      optional: false
+      optional: true
+      bind_to_instance: true
+    
+    app_type:
+      type: String
       bind_to_instance: true
 
 # options_schema
