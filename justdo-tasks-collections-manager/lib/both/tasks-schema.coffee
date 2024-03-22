@@ -47,7 +47,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
         type: String
         optional: true
-        max: 1000
+        max: 2000
 
         grid_column_editor: "TextareaWithTreeControlsEditor"
 
