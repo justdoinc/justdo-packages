@@ -30,3 +30,5 @@ _.extend Projects,
   # first_jd/jd_creation_request allows task creation from unregistered users, therefore opens a vector for attacking.
   # jd_creation_request_supported_fields limits the fields we pick from first_jd.justdo_tasks to reduce the attack surface.
   jd_creation_request_supported_fields: ["title", "state", "start_date", "end_date", "due_date", "status", "archived", "parent"]
+  
+  jd_creation_request_max_tasks: 200

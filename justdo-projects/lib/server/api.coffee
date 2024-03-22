@@ -1302,6 +1302,9 @@ _.extend Projects.prototype,
         grid_data = @_grid_data_com
         # Create tasks for first justdo
         if not _.isEmpty(justdo_tasks = first_jd?.justdo_tasks)
+          # Ensure amount of tasks created doesn't exceed jd_creation_request_max_tasks
+          justdo_tasks = justdo_tasks.slice 0, Projects.jd_creation_request_max_tasks
+
           root_tasks = _.filter justdo_tasks, (item) -> item.data.parent is -1
           # If there's only 1 root task, discard it and use its child to be the root tasks
           if _.size(root_tasks) <= 1
