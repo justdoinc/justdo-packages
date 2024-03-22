@@ -57,6 +57,10 @@ _.extend JustdoNewProjectTemplates.prototype,
         
     return
 
-  setupShowFirstJustDoTemplatePickerForNewUserHook: -> APP.projects.once "post-reg-init-completed", @_showFirstJustDoTemplatePickerForNewUserHandler
+  setupShowFirstJustDoTemplatePickerForNewUserHook: -> 
+    if @app_type is "web-app"
+      APP.projects.once "post-reg-init-completed", @_showFirstJustDoTemplatePickerForNewUserHandler
+      
+    return
 
   unsetShowFirstJustDoTemplatePickerForNewUserHook: -> APP.projects.off "post-reg-init-completed", @_showFirstJustDoTemplatePickerForNewUserHandler
