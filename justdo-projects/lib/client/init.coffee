@@ -16,4 +16,7 @@ _.extend Projects.prototype,
     # Defined in drawer-menu-items.coffee
     @_registerDrawerPlaceholders()
 
+    # Defined in api.coffee
+    @_setupEventHooks()
+
     return

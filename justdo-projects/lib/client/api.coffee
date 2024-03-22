@@ -241,3 +241,33 @@ _.extend Projects.prototype,
     key = @getBrowserCacheInitPayloadLastSyncIdLocalStorageKey(project_id)
     
     return amplify.store(key)
+
+  _setupEventHooks: ->
+    @once "post-reg-init-completed", (initiation_report) ->
+      if not (first_project_id = initiation_report.first_project_created)?
+        return
+
+      Tracker.autorun (computation) =>
+        if not (active_project = JD.activeJustdo({lastTaskSeqId: 1}))?
+          return
+        
+        # Unlikely to happen, but in case someone immidiately go to another project, stop this computation.
+        if (active_project_id = active_project._id) isnt first_project_id
+          computation.stop()
+          return
+        
+        # We need the grid to be ready
+        if not (gc = APP.modules.project_page.gridControl(true))?
+          return
+        if not (grid_ready = gc.ready?.get?())
+          return
+        
+        # Ensure all tasks are available on the client side
+        if not APP.collections.Tasks.findOne({project_id: active_project_id, seqId: active_project.lastTaskSeqId}, {fields: {_id: 1}})?
+          return
+        
+        gc.expandDepth()
+        computation.stop()
+        return
+
+      return
