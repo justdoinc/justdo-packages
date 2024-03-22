@@ -1347,8 +1347,8 @@ _.extend Projects.prototype,
         # Set title of the first justdo
         if not _.isEmpty(justdo_title = first_jd?.justdo_title)
           @projects_collection.update created_project_id, {$set: {title: justdo_title}}
-        else
-          @emit "post-create-first-jd-tasks", user, created_project_id, first_jd
+          
+        @emit "post-create-first-jd-tasks", user, created_project_id, first_jd
 
     Meteor.users.update user_id, {$set: {"justdo_projects.post_reg_init": true}}
 
