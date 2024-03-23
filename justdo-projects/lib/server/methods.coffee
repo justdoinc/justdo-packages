@@ -166,5 +166,4 @@ _.extend Projects.prototype,
         return projects_object.getRootTasksAndProjects project_id, options, @userId
 
       handleJdCreationRequest: ->
-        projects_object.handleJdCreationRequest @userId
-        return
+        return projects_object.handleJdCreationRequest @userId
