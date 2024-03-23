@@ -11,6 +11,7 @@ _.extend JustdoAccounts.prototype,
         @syncUserTimezone()
 
     @pending_jd_creation_request = null
+    @_setupEventHooks()
 
     return
 

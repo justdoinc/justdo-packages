@@ -317,6 +317,25 @@ _.extend JustdoAccounts.prototype,
     @pending_jd_creation_request = null
     return
 
+  _setupEventHooks: ->
+    app_type = JustdoHelpers.getClientType env
+
+    if app_type is "landing-app"
+      Accounts.onLogin (login_info) =>
+        # If the user is already logged in in the landing app, setPendingJdCreationRequest will handle the rest
+        if login_info.type is "resume"
+          return
+        
+        # Note that this onLogin hook will also be triggered when the user creates and account (because we call Meteor.loginWithPassword in createAccount cb)
+        # But since we also call clearPendingJdCreationRequest in the cb (check client/methods.coffee), not special treatment is required here.
+        if (pending_jd_creation_request = @getPendingJdCreationRequest())?
+          @setJdCreationRequest pending_jd_creation_request
+          @clearPendingJdCreationRequest()
+
+        return
+
+    return
+
   destroy: ->
     if @destroyed
       @logger.debug "Destroyed already"
