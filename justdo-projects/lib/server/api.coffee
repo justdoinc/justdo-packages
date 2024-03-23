@@ -1627,3 +1627,45 @@ _.extend Projects.prototype,
     Meteor.users.update user_id, modifier
 
     return
+
+  # This method is accessible to the client-side to handle ONLY jd_creation_request for existing users
+  # first_jd for new users is handled in the postRegInit method. Search _handleJdCreationRequest for more info
+  handleJdCreationRequest: (user_id) ->
+    @requireLogin user_id
+
+    query_options = 
+      fields: 
+        "justdo_projects.jd_creation_request": 1
+    jd_creation_req = Meteor.users.findOne(user_id, query_options)?.justdo_projects?.jd_creation_request
+
+    if _.isEmpty jd_creation_req
+      return
+    
+    create_project_options = 
+      init_first_task: false
+
+    if APP.justdo_orgs?
+      query = 
+        "members.user_id": user_id
+        "members.is_admin": true
+      query_options =
+        fields:
+          _id: 1
+      org_ids_user_is_admin_of = APP.collections.Orgs.find(query, query_options).map (org_doc) -> org_doc._id
+
+      if _.isEmpty org_ids_user_is_admin_of
+        create_org_options = 
+          name: APP.justdo_i18n.tr "jd_creation_request_generated_org_name", {}, user_id
+          url_name: "jd-creation-org-#{user_id.slice(0, 6).toLowerCase()}"
+
+        org_id = APP.justdo_orgs.createOrg create_org_options, user_id
+      else
+        org_id = org_ids_user_is_admin_of[0]
+      
+      create_project_options.org_id = org_id
+      
+    project_id = APP.justdo_projects.createNewProject create_project_options, user_id
+
+    @_handleJdCreationRequest jd_creation_req, project_id, user_id
+
+    return project_id

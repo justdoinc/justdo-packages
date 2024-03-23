@@ -68,3 +68,13 @@ _.extend Projects.prototype,
     Meteor.call "getRootTasksAndProjects", project_id, options, cb
 
     return
+
+  handleJdCreationRequest: (cb) ->
+    if not Meteor.userId()?
+      @logger.error("Login required to handle JD creation request")
+
+    Meteor.call "handleJdCreationRequest", (err, created_project_id) ->
+      cb(err, created_project_id)
+      return
+    
+    return
