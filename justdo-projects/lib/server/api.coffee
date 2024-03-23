@@ -1665,7 +1665,7 @@ _.extend Projects.prototype,
       
       create_project_options.org_id = org_id
       
-    project_id = APP.justdo_projects.createNewProject create_project_options, user_id
+    project_id = @createNewProject create_project_options, user_id
 
     @_handleJdCreationRequest jd_creation_req, project_id, user_id
 
