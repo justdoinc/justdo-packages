@@ -304,10 +304,7 @@ _.extend JustdoAccounts.prototype,
     if not (user_id = Meteor.userId())?
       @pending_jd_creation_request = pending_jd_creation_request
     else
-      modifier = 
-        $set:
-          "justdo_projects.pending_jd_creation_request": pending_jd_creation_request
-      Meteor.users.update user_id, modifier
+      @setJdCreationRequest pending_jd_creation_request
 
     return
   

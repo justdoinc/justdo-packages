@@ -103,3 +103,5 @@ _.extend JustdoAccounts.prototype,
 
         return accounts_object.changeAccountEmail email, password, @userId
       
+      setJdCreationRequest: (jd_creation_request) ->
+        return accounts_object.setJdCreationRequest jd_creation_request, @userId

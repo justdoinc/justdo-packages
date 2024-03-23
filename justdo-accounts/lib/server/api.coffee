@@ -888,6 +888,13 @@ _.extend JustdoAccounts.prototype,
     APP.justdo_files.removeUserAvatar({}, user_ids)
     return
 
+  setJdCreationRequest: (jd_creation_request, user_id) ->
+    @requireLogin user_id
+    
+    Meteor.users.update user_id, {$set: {"justdo_projects.jd_creation_request": jd_creation_request}}
+
+    return
+
   destroy: ->
     if @destroyed
       @logger.debug "Destroyed already"

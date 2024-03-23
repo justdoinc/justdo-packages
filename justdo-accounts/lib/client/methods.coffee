@@ -93,3 +93,6 @@ _.extend JustdoAccounts.prototype,
 
   changeAccountEmail: (email, password, cb) ->
     Meteor.call "changeAccountEmail", email, password, cb
+
+  setJdCreationRequest: (jd_creation_request, cb) ->
+    Meteor.call "setJdCreationRequest", jd_creation_request, cb
