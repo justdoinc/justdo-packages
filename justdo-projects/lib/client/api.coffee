@@ -243,8 +243,8 @@ _.extend Projects.prototype,
     return amplify.store(key)
 
   _setupEventHooks: ->
-    @once "post-reg-init-completed", (initiation_report) ->
-      if not (first_project_id = initiation_report.first_project_created)?
+    _postCreateProjectFromJdCreationRequestCb = (created_project_id) =>
+      if not created_project_id?
         return
 
       Tracker.autorun (computation) =>
@@ -252,7 +252,7 @@ _.extend Projects.prototype,
           return
         
         # Unlikely to happen, but in case someone immidiately go to another project, stop this computation.
-        if (active_project_id = active_project._id) isnt first_project_id
+        if (active_project_id = active_project._id) isnt created_project_id
           computation.stop()
           return
         
@@ -271,3 +271,9 @@ _.extend Projects.prototype,
         return
 
       return
+
+    @once "post-reg-init-completed", (initiation_report) -> _postCreateProjectFromJdCreationRequestCb initiation_report?.first_project_created
+
+    @once "post-handle-jd-creation-request", _postCreateProjectFromJdCreationRequestCb
+
+    return
