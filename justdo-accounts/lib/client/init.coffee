@@ -10,7 +10,7 @@ _.extend JustdoAccounts.prototype,
       if login_state_sym == "logged-in"
         @syncUserTimezone()
 
-    @jd_creation_request = null
+    @pending_jd_creation_request = null
 
     return
 

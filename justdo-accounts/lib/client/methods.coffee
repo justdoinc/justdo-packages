@@ -44,14 +44,14 @@ _.extend JustdoAccounts.prototype,
     # Replace password with the hashed password.
     options.password = Accounts._hashPassword(options.password)
 
-    if (jd_creation_request = @getJdCreationRequest())?
-      options.first_jd = jd_creation_request
+    if (pending_jd_creation_request = @getPendingJdCreationRequest())?
+      options.first_jd = pending_jd_creation_request
 
     @emit "user-signup", options
 
     Meteor.call "justdoAccountsCreateUser", options, (err, created_user_id) =>
       if not err?
-        @clearJdCreationRequest()
+        @clearPendingJdCreationRequest()
         @emit "user-signup-success", created_user_id
 
       if _.isFunction cb

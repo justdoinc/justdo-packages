@@ -298,24 +298,24 @@ _.extend JustdoAccounts.prototype,
     
     return pre_register_id
 
-  setJdCreationRequest: (jd_creation_request) ->
-    jd_creation_request = _.extend {}, jd_creation_request, {pre_register_id: @getPreRegisterId()}
+  setPendingJdCreationRequest: (pending_jd_creation_request) ->
+    pending_jd_creation_request = _.extend {}, pending_jd_creation_request, {pre_register_id: @getPreRegisterId()}
 
     if not (user_id = Meteor.userId())?
-      @jd_creation_request = jd_creation_request
+      @pending_jd_creation_request = pending_jd_creation_request
     else
       modifier = 
         $set:
-          "justdo_projects.jd_creation_request": jd_creation_request
+          "justdo_projects.pending_jd_creation_request": pending_jd_creation_request
       Meteor.users.update user_id, modifier
 
     return
   
-  getJdCreationRequest: ->
-    return @jd_creation_request
+  getPendingJdCreationRequest: ->
+    return @pending_jd_creation_request
   
-  clearJdCreationRequest: ->
-    @jd_creation_request = null
+  clearPendingJdCreationRequest: ->
+    @pending_jd_creation_request = null
     return
 
   destroy: ->
