@@ -292,14 +292,9 @@ _.extend JustdoAccounts.prototype,
     return
 
   getPreRegisterId: ->
-    if Meteor.userId()?
-      # As of writing, logged-in user doesn't need pre_register_id.
-      # If this changes, remove this throw.
-      throw @_error "login-already"
-    
-    if _.isEmpty(pre_register_id = @pre_register_id)
+    if _.isEmpty(pre_register_id = ampify.store("pre_register_id"))
       pre_register_id = Random.id()
-      @pre_register_id = pre_register_id
+      amplify.store "pre_register_id", pre_register_id
     
     return pre_register_id
 
