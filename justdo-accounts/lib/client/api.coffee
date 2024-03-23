@@ -300,7 +300,15 @@ _.extend JustdoAccounts.prototype,
 
   setJdCreationRequest: (jd_creation_request) ->
     jd_creation_request = _.extend {}, jd_creation_request, {pre_register_id: @getPreRegisterId()}
-    @jd_creation_request = jd_creation_request
+
+    if not (user_id = Meteor.userId())?
+      @jd_creation_request = jd_creation_request
+    else
+      modifier = 
+        $set:
+          "justdo_projects.jd_creation_request": jd_creation_request
+      Meteor.users.update user_id, modifier
+
     return
   
   getJdCreationRequest: ->
