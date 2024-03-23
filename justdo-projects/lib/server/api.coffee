@@ -1297,58 +1297,8 @@ _.extend Projects.prototype,
       created_project_id = @createNewProject(options, user_id)
       initiation_report.first_project_created = created_project_id
       @emit "post-create-first-project-for-new-user", user, created_project_id, options
-
-      if not _.isEmpty first_jd
-        grid_data = @_grid_data_com
-        # Create tasks for first justdo
-        if not _.isEmpty(justdo_tasks = first_jd?.justdo_tasks)
-          # Ensure amount of tasks created doesn't exceed jd_creation_request_max_tasks
-          justdo_tasks = justdo_tasks.slice 0, Projects.jd_creation_request_max_tasks
-
-          root_tasks = _.filter justdo_tasks, (item) -> item.data.parent is -1
-          # If there's only 1 root task, discard it and use its child to be the root tasks
-          if _.size(root_tasks) <= 1
-            root_tasks = _.filter justdo_tasks, (item) -> item.data.parent is 0
-          
-          if _.isEmpty root_tasks
-            return
-
-          recursiveBulkCreateTasks = (path, template_items_arr) ->
-            # template_item_keys is to keep track of the corresponding template item id for each created task
-            template_item_keys = _.map template_items_arr, (item) -> item.key
-            items_to_add = _.map template_items_arr, (item) ->
-              item.data = _.pick item.data, ...Projects.jd_creation_request_supported_fields
-              item.data.project_id = created_project_id
-              return item.data
-            
-            try
-              created_task_ids = grid_data.bulkAddChild path, items_to_add, user_id
-            catch err
-              self.logger.error "Failed to create first justdo tasks", err
-            
-            for created_task_id, i in created_task_ids
-              created_task_path = GridData.helpers.getPathArray(path)
-              created_task_path.push(created_task_id)
-              created_task_path = GridData.helpers.joinPathArray created_task_path
-              corresponding_template_item_key = template_item_keys[i]
-
-              child_tasks = _.filter justdo_tasks, (item) -> item.data.parent is corresponding_template_item_key
-              if not _.isEmpty child_tasks
-                recursiveBulkCreateTasks created_task_path, child_tasks
-
-            return
-          
-          # Top level tasks' state should always be nil
-          root_tasks = _.map root_tasks, (item) -> 
-            item.state = "nil"
-            return item
-          recursiveBulkCreateTasks("/", root_tasks)
-          
-        # Set title of the first justdo
-        if not _.isEmpty(justdo_title = first_jd?.justdo_title)
-          @projects_collection.update created_project_id, {$set: {title: justdo_title}}
-          
-        @emit "post-create-first-jd-tasks", user, created_project_id, first_jd
+      if (first_jd = user.justdo_projects?.first_jd)?
+        @_handleJdCreationRequest first_jd, created_project_id, user_id,
 
     Meteor.users.update user_id, {$set: {"justdo_projects.post_reg_init": true}}
 
@@ -1612,3 +1562,68 @@ _.extend Projects.prototype,
 
     return APP.collections.Tasks.find({project_id, users: user_id, $or: [{"parents2.parent": "0"}, {"p:dp:is_project": true, "p:dp:is_archived_project": {$ne: true}}]}, {fields: options.fields}).fetch()
   
+  # This method handles only the creation of tasks and updates the project title
+  # from first_jd/jd_creation_request
+  _handleJdCreationRequest: (jd_creation_req, project_id, user_id) ->
+    if _.isEmpty jd_creation_req
+      return
+
+    grid_data = @_grid_data_com
+    # Create tasks for first justdo
+    if not _.isEmpty(justdo_tasks = jd_creation_req?.justdo_tasks)
+      # Ensure amount of tasks created doesn't exceed jd_creation_request_max_tasks
+      justdo_tasks = justdo_tasks.slice 0, Projects.jd_creation_request_max_tasks
+
+      root_tasks = _.filter justdo_tasks, (item) -> item.data.parent is -1
+      # If there's only 1 root task, discard it and use its child to be the root tasks
+      if _.size(root_tasks) <= 1
+        root_tasks = _.filter justdo_tasks, (item) -> item.data.parent is 0
+      
+      if _.isEmpty root_tasks
+        return
+
+      recursiveBulkCreateTasks = (path, template_items_arr) ->
+        # template_item_keys is to keep track of the corresponding template item id for each created task
+        template_item_keys = _.map template_items_arr, (item) -> item.key
+        items_to_add = _.map template_items_arr, (item) ->
+          item.data = _.pick item.data, ...Projects.jd_creation_request_supported_fields
+          item.data.project_id = project_id
+          return item.data
+        
+        try
+          created_task_ids = grid_data.bulkAddChild path, items_to_add, user_id
+        catch err
+          self.logger.error "Failed to create first justdo tasks", err
+        
+        for created_task_id, i in created_task_ids
+          created_task_path = GridData.helpers.getPathArray(path)
+          created_task_path.push(created_task_id)
+          created_task_path = GridData.helpers.joinPathArray created_task_path
+          corresponding_template_item_key = template_item_keys[i]
+
+          child_tasks = _.filter justdo_tasks, (item) -> item.data.parent is corresponding_template_item_key
+          if not _.isEmpty child_tasks
+            recursiveBulkCreateTasks created_task_path, child_tasks
+
+        return
+      
+      # Top level tasks' state should always be nil
+      root_tasks = _.map root_tasks, (item) -> 
+        item.state = "nil"
+        return item
+      recursiveBulkCreateTasks("/", root_tasks)
+      
+    # Set title of the first justdo
+    if not _.isEmpty(justdo_title = jd_creation_req?.justdo_title)
+      @projects_collection.update project_id, {$set: {title: justdo_title}}
+      
+    @emit "post-handle-jd-creation-request", jd_creation_req, project_id, user_id
+
+    # Clear the jd_creation_request field after creating the project
+    # Note that this update will not affect first_jd
+    modifier = 
+      $set:
+        "justdo_projects.jd_creation_request": null
+    Meteor.users.update user_id, modifier
+
+    return
