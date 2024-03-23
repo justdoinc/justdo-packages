@@ -15,6 +15,19 @@ JustdoProjectsSharedComponents =
     return
 
   attachUserProfileCollectionSchema: ->
+    jd_creation_request_simple_schema = new SimpleSchema
+      justdo_title:
+        type: String
+        optional: true
+      source:
+        type: String
+        optional: true
+      justdo_tasks:
+        type: [Object]
+      "justdo_tasks.$":
+        type: Object
+        blackbox: true
+
     user_justdo_projects_simple_schema = new SimpleSchema
       post_reg_init:
         type: Boolean
@@ -26,19 +39,11 @@ JustdoProjectsSharedComponents =
         type: [String]
         optional: true
       first_jd:
-        type: Object
+        type: @jd_creation_request_simple_schema
         optional: true
-      "first_jd.justdo_title":
-        type: String
+      jd_creation_request:
+        type: @jd_creation_request_simple_schema
         optional: true
-      "first_jd.source":
-        type: String
-        optional: true
-      "first_jd.justdo_tasks":
-        type: [Object]
-      "first_jd.justdo_tasks.$":
-        type: Object
-        blackbox: true
 
     Meteor.users.attachSchema
       justdo_projects:
