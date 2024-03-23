@@ -299,9 +299,10 @@ _.extend JustdoAccounts.prototype,
     return pre_register_id
 
   setPendingJdCreationRequest: (pending_jd_creation_request) ->
-    pending_jd_creation_request = _.extend {}, pending_jd_creation_request, {pre_register_id: @getPreRegisterId()}
+    pending_jd_creation_request = _.extend {}, pending_jd_creation_request
 
     if not (user_id = Meteor.userId())?
+      pending_jd_creation_request.pre_register_id = @getPreRegisterId()
       @pending_jd_creation_request = pending_jd_creation_request
     else
       @setJdCreationRequest pending_jd_creation_request
