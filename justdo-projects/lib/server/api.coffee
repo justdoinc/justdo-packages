@@ -1573,7 +1573,9 @@ _.extend Projects.prototype,
     # Create tasks for first justdo
     if not _.isEmpty(justdo_tasks = jd_creation_req?.justdo_tasks)
       # Ensure amount of tasks created doesn't exceed jd_creation_request_max_tasks
-      justdo_tasks = justdo_tasks.slice 0, Projects.jd_creation_request_max_tasks
+      if _.size(justdo_tasks) > Projects.jd_creation_request_max_tasks
+        justdo_tasks = justdo_tasks.slice 0, Projects.jd_creation_request_max_tasks
+        console.warn "#{user_id}'s jd_creation_request has #{_.size justdo_tasks} tasks, which exceeded #{Projects.jd_creation_request_max_tasks} tasks limit. Only the first #{Projects.jd_creation_request_max_tasks} tasks will be created."
 
       root_tasks = _.filter justdo_tasks, (item) -> item.data.parent is -1
       # If there's only 1 root task, discard it and use its child to be the root tasks
