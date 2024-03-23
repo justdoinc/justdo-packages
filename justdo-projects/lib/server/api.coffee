@@ -1297,8 +1297,9 @@ _.extend Projects.prototype,
       created_project_id = @createNewProject(options, user_id)
       initiation_report.first_project_created = created_project_id
       @emit "post-create-first-project-for-new-user", user, created_project_id, options
+
       if (first_jd = user.justdo_projects?.first_jd)?
-        @_handleJdCreationRequest first_jd, created_project_id, user_id,
+        @_handleJdCreationRequest first_jd, created_project_id, user_id
 
     Meteor.users.update user_id, {$set: {"justdo_projects.post_reg_init": true}}
 
