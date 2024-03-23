@@ -39,10 +39,10 @@ JustdoProjectsSharedComponents =
         type: [String]
         optional: true
       first_jd:
-        type: @jd_creation_request_simple_schema
+        type: jd_creation_request_simple_schema
         optional: true
       jd_creation_request:
-        type: @jd_creation_request_simple_schema
+        type: jd_creation_request_simple_schema
         optional: true
 
     Meteor.users.attachSchema
