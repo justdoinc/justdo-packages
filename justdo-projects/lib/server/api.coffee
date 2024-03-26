@@ -1613,6 +1613,9 @@ _.extend Projects.prototype,
       # Top level tasks' state should always be nil
       root_tasks = _.map root_tasks, (item) -> 
         item.state = "nil"
+        delete item.start_date
+        delete item.end_date
+        delete item.due_date
         return item
       recursiveBulkCreateTasks("/", root_tasks)
       
