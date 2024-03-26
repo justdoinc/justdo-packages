@@ -248,7 +248,7 @@ _.extend Projects.prototype,
         return
 
       Tracker.autorun (computation) =>
-        if not (active_project = JD.activeJustdo({lastTaskSeqId: 1}))?
+        if not (active_project = JD.activeJustdo({lastTaskSeqId: 1, "conf.custom_features": 1}))?
           return
         
         # Unlikely to happen, but in case someone immidiately go to another project, stop this computation.
@@ -267,6 +267,29 @@ _.extend Projects.prototype,
           return
         
         gc.expandDepth()
+
+        if "justdo_planning_utilities" in active_project.conf.custom_features
+          APP.justdo_planning_utilities.on "changes-queue-processed", ->
+            if not (first_root_task_id = APP.collections.Tasks.findOne({project_id: active_project_id, seqId: 1}, {fields: {_id: 1}})?._id)?
+              return
+
+            # Note that @off is releasing this event later on once all the conditions are met
+            if not (task_info = APP.justdo_planning_utilities.task_id_to_info[first_root_task_id])?
+              return
+            {earliest_child_start_time, latest_child_end_time} = task_info
+            if (not earliest_child_start_time?) or (not latest_child_end_time?)
+              return
+            
+            # Set the date range presented in the gantt
+            APP.justdo_planning_utilities.setEpochRange [earliest_child_start_time, latest_child_end_time]
+
+            grid_view = JustDoProjectsTemplates.template_grid_views.gantt
+            gc.setView grid_view
+
+            # Release the event
+            @off()
+            return
+
         computation.stop()
         return
 
