@@ -48,7 +48,6 @@ _.extend JustdoAccounts.prototype,
 
     Meteor.call "justdoAccountsCreateUser", options, (err, created_user_id) =>
       if not err?
-        @clearPendingJdCreationRequest()
         @emit "user-signup-success", created_user_id
 
       if _.isFunction cb
