@@ -1655,14 +1655,16 @@ _.extend Projects.prototype,
     if _.isEmpty jd_creation_req
       return
     
-      query = 
-        "members.user_id": user_id
-        "members.is_admin": true
     if not project_id?
       create_project_options = 
         init_first_task: false
 
       if APP.justdo_orgs?
+        query = 
+          members:
+            $elemMatch:
+              user_id: user_id
+              is_admin: true
         query_options =
           fields:
             _id: 1
