@@ -1291,15 +1291,22 @@ _.extend Projects.prototype,
       options = {}
       @emit "pre-create-first-project-for-new-user", user, options
       
-      if not _.isEmpty(first_jd = user.justdo_projects?.first_jd)
+      if not _.isEmpty(jd_creation_request = user.justdo_projects?.jd_creation_request)
         options.init_first_task = false
 
       created_project_id = @createNewProject(options, user_id)
       initiation_report.first_project_created = created_project_id
       @emit "post-create-first-project-for-new-user", user, created_project_id, options
 
-      if (first_jd = user.justdo_projects?.first_jd)?
-        @_handleJdCreationRequest first_jd, created_project_id, user_id
+      if jd_creation_request?
+        # We set the first jd_creation_request of new user to be the first_jd
+        # so that it will be kept for analytic purpose.
+        # Subsequent jd_creation_request will be removed by _handleJdCreationRequest after handling.
+        modifier =
+          $set:
+            "justdo_projects.first_jd": jd_creation_request
+        Meteor.users.update user_id, modifier
+        @_handleJdCreationRequest jd_creation_request, created_project_id, user_id
 
     Meteor.users.update user_id, {$set: {"justdo_projects.post_reg_init": true}}
 
