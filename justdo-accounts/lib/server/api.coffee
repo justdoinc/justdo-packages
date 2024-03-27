@@ -233,7 +233,7 @@ _.extend JustdoAccounts.prototype,
 
       created_user_id = Accounts.createUser options
 
-      APP.emit("after-create-user", {email: options.email, created_user_id: created_user_id, inviting_user_id: inviting_user_id, first_jd: options.first_jd})
+      APP.emit("after-create-user", {email: options.email, created_user_id: created_user_id, inviting_user_id: inviting_user_id})
     else
       if @userCompletedRegistration(user_obj) or user_obj.is_proxy
         # If the user already completed the registration process using
