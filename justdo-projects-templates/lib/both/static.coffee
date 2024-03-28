@@ -11,7 +11,7 @@ _.extend JustDoProjectsTemplates,
       ,
         {
           "field":"status",
-          "width":122,
+          "width":240,
           "filter":null
         }
       ,
