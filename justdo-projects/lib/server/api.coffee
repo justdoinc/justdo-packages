@@ -1650,7 +1650,9 @@ _.extend Projects.prototype,
       query_options = 
         fields: 
           "justdo_projects.jd_creation_request": 1
-      jd_creation_req = Meteor.users.findOne(user_id, query_options)?.justdo_projects?.jd_creation_request
+          "profile": 1
+      user = Meteor.users.findOne(user_id, query_options)
+      jd_creation_req = user?.justdo_projects?.jd_creation_request
 
     if _.isEmpty jd_creation_req
       return
@@ -1672,8 +1674,8 @@ _.extend Projects.prototype,
 
         if _.isEmpty org_ids_user_is_admin_of
           create_org_options = 
-            name: APP.justdo_i18n.tr "jd_creation_request_generated_org_name", {}, user_id
-            url_name: "jd-creation-org-#{user_id.slice(0, 6).toLowerCase()}"
+            name: APP.justdo_i18n.tr "default_org_name_with_user_name", {user_name: user.profile.first_name}, user
+            url_name: "org-#{user_id.slice(0, 6).toLowerCase()}"
 
           org_id = APP.justdo_orgs.createOrg create_org_options, user_id
         else
