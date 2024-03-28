@@ -10,6 +10,18 @@ _.extend JustDoProjectsTemplates,
         }
       ,
         {
+          "field":"status",
+          "width":122,
+          "filter":null
+        }
+      ,
+        {
+          "field":"state",
+          "width":122,
+          "filter":null
+        }
+      ,
+        {
           "field":"justdo_grid_gantt",
           "width":633
         }
@@ -28,12 +40,6 @@ _.extend JustDoProjectsTemplates,
       ,
         {
           "field":"due_date",
-          "width":122,
-          "filter":null
-        }
-      ,
-        {
-          "field":"state",
           "width":122,
           "filter":null
         }
