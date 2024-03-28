@@ -219,10 +219,13 @@ _.extend JustdoAccounts.prototype,
     if not options.email? or not JustdoHelpers.common_regexps.email.test(options.email)
       throw @_error("invalid-email")
 
-    # Upon enrolment, if user has default avatar, generate initials avatar.
-    default_avatar_url = JustdoAvatar.showUserAvatarOrFallback()
-    if (not profile.profile_pic?) or (profile.profile_pic is default_avatar_url)
+    if not profile.profile_pic?
       profile.profile_pic = JustdoAvatar.showUserAvatarOrFallback options
+    
+    # If the profile pic is the default avatar, we don't want to save it.
+    default_avatar_url = JustdoAvatar.showUserAvatarOrFallback()
+    if profile.profile_pic is default_avatar_url
+      delete profile.profile_pic
 
     if (signed_legal_docs = options.signed_legal_docs)?
       @requireLegalDocsExist(signed_legal_docs)
