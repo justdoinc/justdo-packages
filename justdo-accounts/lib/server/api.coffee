@@ -785,11 +785,13 @@ _.extend JustdoAccounts.prototype,
       )
     data = cleaned_val
 
+    name_changed = false
     email_changed = false
     update = {$set: {}}
     for prop, val of data
       if prop in ["first_name", "last_name"]
         if user.profile[prop] != data[prop]
+          name_changed = true
           update["$set"]["profile.#{prop}"] = data[prop]
       else if prop == "email"
         if user.emails[0].address != data.email
@@ -803,6 +805,12 @@ _.extend JustdoAccounts.prototype,
             throw @_error "user-already-exists", "User with email #{data.email} is already registered."
       else
         console.warn "JustdoAccounts.editPreEnrollmentUserData: unhandled prop: #{prop}"
+
+    if (name_changed or email_changed) and JustdoAvatar.isUserAvatarBase64Svg user
+      email = data.email or JustdoHelpers.getUserMainEmail user
+      first_name = data.first_name or user.profile.first_name
+      last_name = data.last_name or user.profile.last_name
+      update["$set"]["profile.profile_pic"] = JustdoAvatar.getInitialsSvg email, first_name, last_name
 
     result = {email_changed}
 
