@@ -374,7 +374,13 @@ APP.executeAfterAppLibCode ->
 
   Template.enrollment_pending_member.events
     "click .edit-enrolled": (e, tpl) ->
-      ProjectPageDialogs.editEnrolledMember @user_id, {add_as_guest: tpl.data.is_guest}
+      user_id = @user_id
+      ProjectPageDialogs.editEnrolledMember user_id, {add_as_guest: tpl.data.is_guest}, (err, res) =>
+        if err?
+          return
+
+        tpl.$(".display-name").text JustdoHelpers.displayName user_id
+        return
 
       $(".dropdown-menu.show").removeClass("show") # Hide the dropdown, since after editing, the user will have to-reopen the dropdown for the user new details to show (it'll look like a bug if we won't do it).
 
