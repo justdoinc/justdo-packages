@@ -378,10 +378,11 @@ APP.executeAfterAppLibCode ->
       ProjectPageDialogs.editEnrolledMember user_id, {add_as_guest: tpl.data.is_guest}, (err, res) =>
         if err?
           return
+        
+        user = Meteor.users.findOne user_id, {fields: {profile: 1, emails: 1}}
+        tpl.$(".display-name").text JustdoHelpers.displayName user
+        tpl.$(".justdo-avatar").attr "src", JustdoAvatar.showUserAvatarOrFallback user
 
-        tpl.$(".display-name").text JustdoHelpers.displayName user_id
         return
-
-      $(".dropdown-menu.show").removeClass("show") # Hide the dropdown, since after editing, the user will have to-reopen the dropdown for the user new details to show (it'll look like a bug if we won't do it).
 
       return
