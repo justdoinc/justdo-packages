@@ -134,7 +134,7 @@ ProjectPageDialogs.addMemberToCurrentProject = (email, invited_members_dialog_op
 # ProjectPageDialogs.editEnrolledMember
 #
 
-ProjectPageDialogs.editEnrolledMember = (user_id, invited_members_dialog_options) ->
+ProjectPageDialogs.editEnrolledMember = (user_id, invited_members_dialog_options, callback) ->
   # At the moment, we assume this method is called from a project page on which
   # user_id is Awaiting Registration.
   #
@@ -171,7 +171,7 @@ ProjectPageDialogs.editEnrolledMember = (user_id, invited_members_dialog_options
 
     return
 
-  processEditRequest = (options) ->
+  processEditRequest = (options, cb) ->
     options = _.extend {force_enrollment_email_resend: false}, options
 
     if email_is_valid_rv.get() and first_name_is_valid_rv.get() and last_name_is_valid_rv.get()
@@ -181,6 +181,7 @@ ProjectPageDialogs.editEnrolledMember = (user_id, invited_members_dialog_options
             message: err.reason
             className: "bootbox-new-design members-management-alerts"
             closeButton: false
+          cb? err
 
           return
 
@@ -191,6 +192,8 @@ ProjectPageDialogs.editEnrolledMember = (user_id, invited_members_dialog_options
             return
         else
           dialog.data("bs.modal").hide()
+
+        cb? null, result
 
         return
 
@@ -224,7 +227,7 @@ ProjectPageDialogs.editEnrolledMember = (user_id, invited_members_dialog_options
         Tracker.flush() # So input validation checks in Template autorun will run following submit_attempted_rv change
 
         if user_allowed_to_edit
-          processEditRequest({force_enrollment_email_resend: true})
+          processEditRequest({force_enrollment_email_resend: true}, callback)
         else
           resendEnrollmentEmail ->
             dialog.data("bs.modal").hide()
@@ -243,7 +246,7 @@ ProjectPageDialogs.editEnrolledMember = (user_id, invited_members_dialog_options
 
         Tracker.flush() # So input validation checks in Template autorun will run following submit_attempted_rv change
 
-        processEditRequest({force_enrollment_email_resend: false})
+        processEditRequest({force_enrollment_email_resend: false}, callback)
 
         return false
 
