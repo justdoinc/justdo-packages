@@ -2,6 +2,8 @@ JustdoAvatar = {}
 
 is_alphanumeric_reg = /^[a-z0-9]/i
 
+base64_svg_prefix = "data:image/svg+xml;base64,"
+
 extractUserAvatarParams = (user_doc) ->
   email = user_doc.emails?[0]?.address
   profile = user_doc.profile
@@ -15,6 +17,15 @@ extractUserAvatarParams = (user_doc) ->
   return {profile_pic, email, first_name, last_name, options}
 
 _.extend JustdoAvatar,
+  getBase64SvgPrefix: ->
+    return base64_svg_prefix
+  
+  isUserAvatarBase64Svg: (user) ->
+    if _.isString user
+      user = Meteor.users.findOne user, {fields: {"profile.profile_pic": 1}}
+      
+    return user.profile?.profile_pic?.startsWith(base64_svg_prefix)
+
   # check if an avatar exists, if not generate initials avatar, fallback to anonymous for non English inputs
   showAvatarOrFallback: (avatar_url, email, first_name, last_name, options) ->
     if avatar_url?
@@ -129,4 +140,4 @@ _.extend JustdoAvatar,
     if Meteor.isClient
       base_64_svg = window.btoa(unescape(encodeURIComponent(svg)))
 
-    return "data:image/svg+xml;base64,#{base_64_svg}"
+    return "#{@getBase64SvgPrefix()}#{base_64_svg}"
