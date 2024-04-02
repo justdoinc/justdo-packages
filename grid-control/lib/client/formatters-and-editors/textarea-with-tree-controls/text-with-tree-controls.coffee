@@ -279,7 +279,7 @@ GridControl.installFormatter "textWithTreeControls",
 
     if APP.justdo_ai_kit?
       tree_control += """
-        <div class="task-ai-wizard" jd-tt="ai-wizard-tooltip" onmousedown="event.stopImmediatePropagation()">
+        <div class="task-ai-wizard" onclick="APP.justdo_ai_kit.renderAiWizardTooltip(event)">
           <div class="task-ai-wizard-content">
             <svg class="jd-icon text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#jd-ai"></use></svg>
           </div>
