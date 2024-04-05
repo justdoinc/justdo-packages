@@ -248,4 +248,11 @@ _.extend PACK.Formatters.textWithTreeControls,
 
         return
     }
+    {
+      args: ['click', '.task-ai-wizard']
+      handler: (e) ->
+        APP.justdo_ai_kit.renderAiWizardTooltip(e)
+
+        return
+    }
   ]
