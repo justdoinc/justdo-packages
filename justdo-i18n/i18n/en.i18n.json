@@ -31,5 +31,6 @@
   "updated_with_time": "Updated __time__",
   "stop": "Stop",
   "generate": "Generate",
-  "regenerate": "Regenerate"
+  "regenerate": "Regenerate",
+  "undo": "Undo"
 }

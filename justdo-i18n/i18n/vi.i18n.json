@@ -26,5 +26,6 @@
   "updated_with_time": "Đã cập nhật __time__",
   "stop": "Dừng",
   "generate": "Tạo",
-  "regenerate": "Tạo lại"
+  "regenerate": "Tạo lại",
+  "undo": "Hoàn tác"
 }

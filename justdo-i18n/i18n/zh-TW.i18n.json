@@ -31,5 +31,6 @@
   "updated_with_time": "最後更新於__time__",
   "stop": "停止",
   "generate": "生產",
-  "regenerate": "重新生成"
+  "regenerate": "重新生成",
+  "undo": "復原"
 }
