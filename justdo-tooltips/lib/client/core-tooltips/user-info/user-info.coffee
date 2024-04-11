@@ -74,7 +74,7 @@ Template.user_info_tooltip.helpers
             </rect>
         """
 
-      return "#{JustdoAvatar.base64_svg_prefix}#{window.btoa(unescape(encodeURIComponent($svg.get(0).outerHTML)))}"
+      return "#{JustdoAvatar.getBase64SvgPrefix()}#{window.btoa(unescape(encodeURIComponent($svg.get(0).outerHTML)))}"
 
     # Request a larger avatar from gravatar.
     if avatar.includes "gravatar"
