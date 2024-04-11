@@ -19,12 +19,6 @@ extractUserAvatarParams = (user_doc) ->
 _.extend JustdoAvatar,
   getBase64SvgPrefix: ->
     return base64_svg_prefix
-  
-  isUserAvatarBase64Svg: (user) ->
-    if _.isString user
-      user = Meteor.users.findOne user, {fields: {"profile.profile_pic": 1}}
-      
-    return user.profile?.profile_pic?.startsWith(base64_svg_prefix)
 
   # check if an avatar exists, if not generate initials avatar, fallback to anonymous for non English inputs
   showAvatarOrFallback: (avatar_url, email, first_name, last_name, options) ->
@@ -142,14 +136,20 @@ _.extend JustdoAvatar,
 
     return "#{@getBase64SvgPrefix()}#{base_64_svg}"
 
+  isUserAvatarBase64Svg: (user) ->
+    if _.isString user
+      user = Meteor.users.findOne user, {fields: {"profile.profile_pic": 1}}
+      
+    return @isAvatarBase64Svg user?.profile?.profile_pic
+
   isAvatarBase64Svg: (avatar_url) ->
-    return avatar_url?.substr(0, @base64_svg_prefix.length) is @base64_svg_prefix
+    return avatar_url?.startsWith @getBase64SvgPrefix() 
 
   base64SvgAvatarToElement: (avatar_url) ->
     if not @isAvatarBase64Svg avatar_url
       return
     
-    avatar_url = avatar_url.replace @base64_svg_prefix, ""
+    avatar_url = avatar_url.replace @getBase64SvgPrefix(), ""
 
     $svg = $(window.atob(avatar_url))
     return $svg
