@@ -1,11 +1,11 @@
 <template name="user_info_tooltip">
   <div class="avatar-container" style="background-image: url('{{userAvatar}}'); background-size: cover;"></div>
   <div class="info">
-    <div class="name">
-      {{#with userDoc}}
-        {{> display_name_with_graphic_unverified_warning}}
-      {{/with}}
-    </div>
+    {{#with userDoc}}
+      <div class="name" title="{{displayName}}">
+          {{> display_name_with_graphic_unverified_warning}}
+      </div>
+    {{/with}}
     {{#each getUserTooltipActionItems}}
       {{#if template}}
         {{> Template.dynamic template=template data=templateData}}
