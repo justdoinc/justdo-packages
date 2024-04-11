@@ -90,18 +90,6 @@ Template.user_info_tooltip.helpers
   showEmail: ->
     return true
   
-  isMessageButtonsAllowedToShow: ->
-    tpl = Template.instance()
-    user_id = tpl.user_rv.get()._id
-
-    is_user_performing_user = user_id is Meteor.userId()
-    is_user_bot = APP.justdo_chat.isBotUserId(user_id)
-    is_user_proxy = APP.justdo_site_admins.isProxyUser(user_id)
-    return (not is_user_performing_user) and (not is_user_bot) and (not is_user_proxy)
-  
-  isCreateGroupAllowedToShow: ->
-    return JD.activeJustdoId()?
-
   getUserTooltipBottomItems: -> JD.getPlaceholderItems "user-info-tooltip-bottom"
 
 Template.user_info_tooltip_project_membership_info.onCreated ->
