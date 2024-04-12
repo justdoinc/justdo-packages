@@ -43,22 +43,12 @@ _.extend JustdoChat.prototype,
     # For channel types that requested it in their config, add index for their
     # augmented fields.
     for channel_type, channel_type_conf of share.channel_types_conf
-      if not channel_type_conf.add_index_for_augmented_fields
+      if _.isEmpty (channel_augmented_fields_indexes =  channel_type_conf.channel_augmented_fields_indexes)
         continue
 
-      #
-      # Ensure channel identifier fields index for each one of the channel type identifiers
-      #
-      channel_augmented_keys =
-        channel_type_conf.channel_augmented_fields_simple_schema._schemaKeys
-
-      channel_augmented_fields_definition_obj = {}
-
-      for key in channel_augmented_keys
-        channel_augmented_fields_definition_obj[key] = 1
-
-      # CHANNEL_AUGMENTED_FIELDS_INDEX
-      @channels_collection.rawCollection().createIndex(channel_augmented_fields_definition_obj)
+      for index in channel_augmented_fields_indexes
+        # CHANNEL_AUGMENTED_FIELDS_INDEX
+        @channels_collection.rawCollection().createIndex(index)
 
     # MESSAGES_FETCHING_INDEX
     @messages_collection.rawCollection().createIndex({channel_id: 1, createdAt: -1})

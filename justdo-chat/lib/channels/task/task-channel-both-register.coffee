@@ -17,11 +17,13 @@ JustdoChat.registerChannelType
       label: "Project id"
 
       type: String
-
-  # If set to true, an mongodb index will be added with all the keys specified under
-  # channel_augmented_fields_simple_schema see collections-indexes.coffee
-  add_index_for_augmented_fields: true
-
+  # Add augmented field indexes to the channel collection
+  # Note that channel_augmented_fields_indexes should hold an array of index declearations
+  channel_augmented_fields_indexes: [
+    {
+      project_id: 1
+    }
+  ]
   # Read comment for publication jdcSubscribedChannelsRecentActivity under publications.coffee
   # to learn about recent_activity_supplementary_pseudo_collections purpose.
   #
