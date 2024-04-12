@@ -32,6 +32,8 @@ _.extend JustdoChat.prototype,
       channel_identifier_index_definition_obj = {}
 
       for key in channel_identifier_keys
+        if JustdoChat.positional_operator_regex.test key
+          continue
         channel_identifier_index_definition_obj[key] = 1
 
       index_options = {}

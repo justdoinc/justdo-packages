@@ -46,6 +46,9 @@ _.extend JustdoChat.prototype,
       return identifying_fields
 
     identifying_fields = share.channel_types_conf[type].channel_identifier_fields_simple_schema._schemaKeys
+    # Replace all occurances of ".$" or ".$.subfield"
+    # Read the comment in static-settings.coffee about positional_operator_regex for more info
+    identifying_fields = _.filter identifying_fields, (field_id) -> not JustdoChat.positional_operator_regex.test field_id
 
     @_getTypeIdentifiyingFields_cached_result[type] = identifying_fields
 
@@ -58,6 +61,9 @@ _.extend JustdoChat.prototype,
       return augmented_fields
 
     augmented_fields = share.channel_types_conf[type].channel_augmented_fields_simple_schema._schemaKeys
+    # Replace all occurances of ".$" or ".$.subfield"
+    # Read the comment in static-settings.coffee about positional_operator_regex for more info
+    augmented_fields = _.filter augmented_fields, (field_id) -> not JustdoChat.positional_operator_regex.test field_id
 
     @_getTypeAugmentedFields_cached_result[type] = augmented_fields
 

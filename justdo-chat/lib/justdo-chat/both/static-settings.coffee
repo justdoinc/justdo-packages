@@ -17,3 +17,11 @@ _.extend JustdoChat,
   tasks_chat_channel_last_message_from_field_id: "p:chat:last_message_from"
   tasks_chat_channel_last_message_date_field_id: "p:chat:last_message_date"
 
+  # As of MongoDB 4.4, it's 
+  # 1. illegal to specify positional operator in the middle of a path.
+  #    Positional projection may only be used at the end, for example: a.b.$.
+  #    If the query previously used a form like a.b.$.d, remove the parts following the '$' and the results will be equivalent.
+  # 2. illegal to project an embedded document with any of the embedded document’s fields (e.g. {"a.b": 1, "a.b.$": 1}).")
+  # This regex used to detect and replace these cases.
+  positional_operator_regex: /\.\$(\..*)?/
+
