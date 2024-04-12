@@ -15,6 +15,7 @@ Package.onUse(function (api) {
   api.use("coffeescript", both);
   api.use("underscore", both);
   api.use("mongo", both);
+  api.use("check", both);
 
   // Uncomment if you want to use NPM peer dependencies using
   // checkNpmVersions.
@@ -65,6 +66,7 @@ Package.onUse(function (api) {
   api.use("matb33:collection-hooks@0.8.4", both);
 
   api.use("justdoinc:justdo-linkify", client);
+  api.use("justdoinc:jd-api", both);
 
   api.use("reactive-var", both);
   api.use("tracker", both);
@@ -181,17 +183,19 @@ Package.onUse(function (api) {
   api.addFiles("lib/ui/bottom-windows/extra-windows-button.sass", client);
   api.addFiles("lib/ui/bottom-windows/extra-windows-button.coffee", client);
 
-  api.addFiles("lib/ui/bottom-windows/task/vars.scss", client);
-  api.addFiles("lib/ui/bottom-windows/task/common.sass", client);
-  api.addFiles("lib/ui/bottom-windows/task/common.coffee", client);
 
+  api.addFiles("lib/ui/bottom-windows/task/common.coffee", client);
+  api.addFiles("lib/ui/bottom-windows/task/bottom-window-header.html", client);
+  api.addFiles("lib/ui/bottom-windows/task/bottom-window-header.coffee", client);
   api.addFiles("lib/ui/bottom-windows/task/task-minimized.sass", client);
   api.addFiles("lib/ui/bottom-windows/task/task-minimized.html", client);
   api.addFiles("lib/ui/bottom-windows/task/task-minimized.coffee", client);
 
-  api.addFiles("lib/ui/bottom-windows/task/task-open.sass", client);
-  api.addFiles("lib/ui/bottom-windows/task/task-open.html", client);
-  api.addFiles("lib/ui/bottom-windows/task/task-open.coffee", client);
+  api.addFiles("lib/ui/bottom-windows/common/vars.scss", client);
+  api.addFiles("lib/ui/bottom-windows/common/common.sass", client);
+  api.addFiles("lib/ui/bottom-windows/common/bottom-window-open.sass", client);
+  api.addFiles("lib/ui/bottom-windows/common/bottom-window-open.html", client);
+  api.addFiles("lib/ui/bottom-windows/common/bottom-window-open.coffee", client);
 
   api.addFiles("lib/ui/bottom-windows/fix-unclickable-area-under-chat-windows.sass", client);
 

@@ -283,21 +283,28 @@ _.extend JustdoChatBottomWindowsManager.prototype,
     return
 
   _getWindowDefForBottomWindowChannelDoc: (bottom_window_channel) ->
-      open_template = "chat_bottom_windows_task_open"
     if (channel_type = bottom_window_channel.channel_type) is "task"
+      open_template = "chat_bottom_windows_open"
       min_template = undefined # If one day, instead of showing the minimized chat windows in the Extra Windows button, you'd want to show it as an actual minimized button in the tray use "chat_bottom_windows_task_min" instead of undefined.
 
-      template_data = 
+      template_data =
+        channel_type: "task"
+        channel_identifier: 
+          task_id: bottom_window_channel.task_id
         project_id: bottom_window_channel.project_id
         task_id: bottom_window_channel.task_id
+        header_template: "task_channel_chat_bottom_windows_header"
+        channelObjectGenerator: -> 
+          return share.generateClientChannelObjectForTaskBottomWindowTemplates(bottom_window_channel.task_id)
 
       channel_conf =
         tasks_collection: APP.justdo_chat.bottom_windows_supplementary_pseudo_collections.tasks
         task_id: bottom_window_channel.task_id
 
-      channel_object =
-        @justdo_chat.generateClientChannelObject channel_type, channel_conf
 
+    channel_object =
+      @justdo_chat.generateClientChannelObject channel_type, channel_conf
+    
     window_def = {
       id: channel_object._getChannelSerializedIdentifier()
       type: channel_type
@@ -320,9 +327,7 @@ _.extend JustdoChatBottomWindowsManager.prototype,
       if not _.isEmpty(task_doc.title)
         title += "<b>:</b> #{JustdoHelpers.ellipsis(task_doc.title, 80)}"
 
-      return title
-
-    return ""
+    return title or ""
 
   getExtraWindows: ->
     # Returns the windows defs of the windows that belongs in the extra windows button.

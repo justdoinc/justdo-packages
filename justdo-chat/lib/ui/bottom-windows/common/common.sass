@@ -1,0 +1,50 @@
+@import "{justdoinc:justdo-chat}/lib/ui/bottom-windows/common/vars.scss"
+
+.chat-window
+  position: absolute
+  width: 100%
+  background: #FFFFFF
+  border-radius: 10px 10px 0px 0px
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175)
+  transition: box-shadow 0.32s linear
+
+  .chat-header
+    border-radius: 8px 8px 0px 0px
+    position: relative
+
+  &.window-unread
+    animation: unread-chat-window 2s infinite
+
+  .close-chat, .minimize-chat
+    opacity: 0.25
+    color: black
+    width: 20px
+    height: 20px
+    stroke-width: 2.5px
+    cursor: pointer
+    &:hover
+      background-color: rgba(0, 0, 0, 0.08)
+      transform: scale(1.05)
+
+  .close-chat
+    margin-left: 2px
+
+  .header-title
+    user-select: none
+    font-weight: 500
+    overflow: hidden
+    text-overflow: ellipsis
+    white-space: nowrap
+    color: black
+
+  .chat-header-control
+    display: flex
+    align-items: center
+    flex-shrink: 0
+
+.window-active
+  &.window-unread
+    animation: unread-chat-window 2s infinite
+
+  .close-chat, .minimize-chat
+    opacity: 1

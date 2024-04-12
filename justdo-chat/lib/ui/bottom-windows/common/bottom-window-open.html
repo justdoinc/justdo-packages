@@ -1,0 +1,11 @@
+<template name="chat_bottom_windows_open">
+  <div class="open-chat-window-container jdc-basic-design">
+    <div class="chat-window open-chat-window {{#if isFocused}}window-active{{/if}} {{#if hasUnreadMessages}}window-unread{{/if}}">
+      {{#with getHeaderTemplate}}
+        {{> Template.dynamic template=this data=getDataForHeaderTemplate}}
+      {{/with}}
+      {{> common_chat_messages_board getChannelObject=getChannelObject request_authors_details=true messages_authors_collection=getMessagesAuthorsCollection}}
+      {{> common_chat_message_editor getChannelObject=getChannelObject}}
+    </div>
+  </div>
+</template>
