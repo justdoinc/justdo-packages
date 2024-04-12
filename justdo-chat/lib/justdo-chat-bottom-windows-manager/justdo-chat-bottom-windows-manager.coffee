@@ -156,7 +156,7 @@ _.extend JustdoChatBottomWindowsManager.prototype,
     @bottom_windows_wireframe = new BottomWindowsWireframe
       right_margin: 30
       left_margin: 30
-      open_window_width: 328
+      open_window_width: 340
       min_window_width: 120
       width_between_windows: 8
       width_between_windows_to_extra_windows_button: 10
@@ -187,7 +187,7 @@ _.extend JustdoChatBottomWindowsManager.prototype,
 
     # XXX at the moment, we just use the put_first: true option, in the future,
     # we will probably need a more sufisticated sorting algorithm, putting current requested
-    # window on the far right position, is the easiest to implement 
+    # window on the far right position, is the easiest to implement
     options = _.extend {put_first: true, onComplete: undefined}, options # if put_first is false, we put last.
 
     if options.put_first
@@ -206,9 +206,10 @@ _.extend JustdoChatBottomWindowsManager.prototype,
 
     if _.isFunction options.onComplete
       onComplete = =>
-        channel_conf =
-          tasks_collection: APP.justdo_chat.bottom_windows_supplementary_pseudo_collections.tasks
-          task_id: channel_identifier.task_id
+        if channel_type is "task"
+          channel_conf =
+            tasks_collection: APP.justdo_chat.bottom_windows_supplementary_pseudo_collections.tasks
+            task_id: channel_identifier.task_id
 
         channel_object =
           @justdo_chat.generateClientChannelObject channel_type, channel_conf
@@ -221,8 +222,8 @@ _.extend JustdoChatBottomWindowsManager.prototype,
 
           if windows_arrangement?
             for window_arrangement_def in windows_arrangement
-              if window_arrangement_def.id == serialized_identifier
-                if window_arrangement_def.rendered_state == "open"
+              if window_arrangement_def.id is serialized_identifier
+                if window_arrangement_def.rendered_state is "open"
                   options.onComplete(window_arrangement_def)
 
                   c.stop()
@@ -282,8 +283,8 @@ _.extend JustdoChatBottomWindowsManager.prototype,
     return
 
   _getWindowDefForBottomWindowChannelDoc: (bottom_window_channel) ->
-    if (channel_type = bottom_window_channel.channel_type) == "task"
       open_template = "chat_bottom_windows_task_open"
+    if (channel_type = bottom_window_channel.channel_type) is "task"
       min_template = undefined # If one day, instead of showing the minimized chat windows in the Extra Windows button, you'd want to show it as an actual minimized button in the tray use "chat_bottom_windows_task_min" instead of undefined.
 
       template_data = 
@@ -310,7 +311,7 @@ _.extend JustdoChatBottomWindowsManager.prototype,
     return window_def
 
   _getWindowDefTitle: (window_def) ->
-    if window_def.type == "task"
+    if window_def.type is "task"
       task_doc =
         APP.justdo_chat.bottom_windows_supplementary_pseudo_collections.tasks.findOne(window_def.data.task_id)
 
