@@ -1,41 +1,63 @@
-@import "{justdoinc:justdo-chat}/lib/ui/common-components/vars.scss";
+@import "{justdoinc:justdo-chat}/lib/ui/common-components/vars.scss"
 
 .messages-board-viewport
   .messages-board
-    position: relative
-
+    padding-bottom: 8px
+    
 .jdc-basic-design
+  .message-date-seperator
+    display: flex
+    justify-content: center
+    padding: 8px 0
   .message-card
-    position: relative
-    font-size: 14px
-    padding: 8px 5px
-    border-bottom: 1px dashed rgba(0, 0, 0, 0.12)
-    transition: background-color 1s ease-in
+    display: flex
+    &.bot-log-message
+      justify-content: center
 
-    &:last-child
-      border-bottom: 0 none
+      .message-body
+        text-align: center
 
     .author
-      font-weight: 600
+      font-weight: 550
+      margin-right: 20px
 
     .date
-      float: right
-      color: #686666
-      font-size: 12px
+      color: #8DA4C2
+      font-size: 10px
 
     .avatar
-      position: absolute
-
-      margin-top: 1px
-
       img
-        width: 33px
-        height: 33px
+        width: 28px
+        height: 28px
 
     .message-container
-      margin-left: 39px
+      background-color: #F1F5FA
+      color: black
+      padding: 4px 8px
+      border-radius: 8px
+      margin-left: 6px
+
+    .message-header
+      display: flex
+      align-items: center
+      justify-content: space-between
 
     .message-body
       word-wrap: break-word
-
       text-align: left
+
+  .message-card + .message-card
+    margin-top: 8px
+
+  .message-card.my-message
+    flex-direction: row-reverse
+
+    .message-container
+      background-color: #2F80ED
+      color: white
+
+      .message-header
+        justify-content: flex-end
+
+    .date
+      color: rgba(255, 255, 255, 0.5)

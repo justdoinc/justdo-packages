@@ -63,6 +63,8 @@ Template.common_chat_messages_board.onCreated ->
 
     return
 
+  # To display date seperators between messages.
+  @prev_msg_date = null
   return
 
 Template.common_chat_messages_board.onDestroyed ->
@@ -80,6 +82,24 @@ Template.common_chat_messages_board.helpers
       return cursor.fetch()
 
     return []
+  
+  showMsgSeperatorWithDate: (index) ->
+    tpl = Template.instance()
+
+    # If this is the first message, always show the date seperator
+    if index is 0
+      tpl.prev_msg_date = moment(@createdAt)
+      return true
+
+    cur_msg_date = moment(@createdAt)
+    should_show_date = not tpl.prev_msg_date.isSame(cur_msg_date, "day")
+
+    tpl.prev_msg_date = cur_msg_date
+
+    return should_show_date
+    
+  isBotLogMessage: ->
+    return @author is "bot:log"
 
 Template.common_chat_messages_board.events
   "scroll .messages-board-viewport": (e, tpl) ->
@@ -97,6 +117,31 @@ Template.common_chat_messages_board.events
           return
 
     return
+
+Template.chat_message_date_seperator.helpers
+  formatMsgDate: (date) ->
+    moment_date = moment(date)
+    # sameElse formats all the dates less/more than a week from today. Default format is "DD/MM/YYYY"
+    # In those cases we use user preferred date format instead.
+    date_string = moment_date.calendar(null, {sameElse: JustdoHelpers.getUserPreferredDateFormat()})
+    if APP.justdo_i18n.getLang() is JustdoI18n.default_lang
+      # Vi and Zh-TW's day of week is already without time.
+      # For En (default_lang), date_string could be something like "Last Friday at 12:00 AM", "Today at 12:00 AM", etc
+      # This is to remove the "Last " prefix and the time, leaving only the day of week. 
+      date_string = date_string.replace(/\sat.+$/, "").replace("Last ", "")
+    
+    # If date_string is day of week (Monday, Friday, etc.), add the date after it in user prefrred format.
+    today = moment()
+    yesterday = today.clone().subtract(1, "days")
+    user_preferred_date = moment_date.format(JustdoHelpers.getUserPreferredDateFormat())
+    if (date_string isnt user_preferred_date) and (not moment_date.isSame(today, "day")) and (not moment_date.isSame(yesterday, "day"))
+      date_string = "#{date_string} #{user_preferred_date}"
+
+    return date_string
+
+Template.bot_log_chat_messages_board_message_card.helpers
+  body: ->
+    return APP.justdo_chat.renderDataMessage(@data, @author)
 
 Template.common_chat_messages_board_message_card.helpers
   authorDoc: ->
@@ -118,6 +163,25 @@ Template.common_chat_messages_board_message_card.helpers
     body = APP.justdo_chat.linkTaskId(body)
 
     return JustdoHelpers.xssGuard body, {allow_html_parsing: true, enclosing_char: ""}
+
+  myMessage: ->
+    return @author is Meteor.userId()
+
+  shouldShowAvatar: ->
+    tpl = Template.instance()
+    channel_obj = tpl.closestInstance("common_chat_messages_board")?.data?.getChannelObject()
+
+    is_msg_from_current_user = @author is Meteor.userId()
+    is_msg_from_dm_channel = channel_obj?.channel_type is "user"
+    return (not is_msg_from_current_user) and (not is_msg_from_dm_channel)
+  
+  shouldShowAuthorName: ->
+    tpl = Template.instance()
+    channel_obj = tpl.closestInstance("common_chat_messages_board")?.data?.getChannelObject()
+
+    is_msg_from_performing_user = @author is Meteor.userId()
+    is_msg_from_dm_channel = channel_obj?.channel_type is "user"
+    return (not is_msg_from_performing_user) and (not is_msg_from_dm_channel)
 
 Template.common_chat_messages_board_message_card.onRendered ->
   $message_card = @$(".message-card")

@@ -2,19 +2,49 @@
   <div class="messages-board-viewport">
     <div class="messages-board">
       {{#each messages}}
-        {{> common_chat_messages_board_message_card}}
+        {{#if showMsgSeperatorWithDate @index}}
+          {{> chat_message_date_seperator}}
+        {{/if}}
+
+        {{#if isBotLogMessage}}
+          {{> bot_log_chat_messages_board_message_card}}
+        {{else}}
+          {{> common_chat_messages_board_message_card}}
+        {{/if}}
       {{/each}}
     </div>
   </div>
 </template>
 
+<template name="chat_message_date_seperator">
+  <div class="message-date-seperator">
+    <small class="text-secondary">{{formatMsgDate createdAt}}</small>
+  </div>
+</template>
+
+<template name="bot_log_chat_messages_board_message_card">
+  <div class="message-card bot-log-message">
+    <div class="message-container">
+      <div dir="auto" class="message-body">
+        {{{body}}}
+      </div>
+    </div>
+  </div>
+</template>
+
 <template name="common_chat_messages_board_message_card">
-  <div class="message-card">
-    <div class="avatar">{{#with authorDoc}}{{> justdo_avatar}}{{/with}}</div>
+  <div class="message-card {{#if myMessage}}my-message{{/if}}">
+    {{#if shouldShowAvatar}}
+      <div class="avatar">{{#with authorDoc}}{{> justdo_avatar}}{{/with}}</div>
+    {{/if}}
     <div class="message-container">
       <div class="message-header">
-        <span class="author">{{> display_name_with_graphic_unverified_warning authorDoc}}</span>
-        <span class="date" title="{{userDateFormat createdAt}}">{{friendlyDateFormat createdAt}}</span>
+        {{#if shouldShowAuthorName}}
+          <span class="author">
+              {{> display_name_with_graphic_unverified_warning authorDoc}}
+          </span>
+        {{/if}}
+        <span class="date" title="{{userDateFormat createdAt}}">{{friendlyTimeFormat createdAt false}}</span>
       </div>
       <div dir="auto" class="message-body">
         {{{body}}}
