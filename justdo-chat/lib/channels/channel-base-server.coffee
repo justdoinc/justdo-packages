@@ -600,6 +600,10 @@ _.extend ChannelBaseServer.prototype,
       type: [String]
 
       optional: true
+    skip_add_sender_as_subscribers:
+      # If set to true, the sender of the message won't be added as a subscriber to the channel.
+      type: Boolean
+      optional: true
 
   sendMessage: (message_obj, message_type="txt", options) ->
     # Message type can be either txt or data
@@ -659,7 +663,7 @@ _.extend ChannelBaseServer.prototype,
 
     channel_doc = @getChannelDocNonReactive()
 
-    if not @justdo_chat.isBotUserId(@performing_user)
+    if (not @justdo_chat.isBotUserId(@performing_user)) and not options.skip_add_sender_as_subscribers
       # Note, if user is already subscribed, @manageSubscribers() will simply ignore the call.
       # Thanks to the channel doc caching, this won't @_cached_channel_doc result in addition
       # requests to the db.
