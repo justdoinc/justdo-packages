@@ -552,7 +552,7 @@ _.extend ChannelBaseServer.prototype,
       @findAndModifyChannelDoc
         update: query
 
-    return
+    return {added: update.add, removed: update.remove}
 
   setChannelUnreadState: (unread) ->
     check unread, Boolean
