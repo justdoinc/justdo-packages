@@ -432,8 +432,14 @@ _.extend ChannelBaseServer.prototype,
       defaultValue: []
 
       optional: true # [user_id_1, user_id_2, ...]
+  
+  _manageSubscribersOptionsObjectSchema: new SimpleSchema
+    # IMPORTANT! If you set this to true, you must ensure that the users you add are permitted to subscribe to this channel!
+    ignore_remove_non_permitted_users:
+      type: Boolean
+      optional: true
 
-  manageSubscribers: (update) ->
+  manageSubscribers: (update, options) ->
     # update should be of the following structure
     #
     # {
@@ -443,7 +449,7 @@ _.extend ChannelBaseServer.prototype,
     #
     # IMPORTANT:
     # Added subscribers that are already subscribed are completely ignored.
-    # Removed subscribers that aren't subscried are completely ignored.
+    # Removed subscribers that aren't subscribed are completely ignored.
     #
     # If same user id is in both add and in remove, invalid-argument will be thrown
     #
@@ -468,6 +474,14 @@ _.extend ChannelBaseServer.prototype,
         {self: @, throw_on_error: true}
       )
     update = cleaned_val
+
+    {cleaned_val} = 
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_manageSubscribersOptionsObjectSchema,
+        options or {},
+        {self: @, throw_on_error: true}
+      )
+    options = cleaned_val
 
     if _.intersection(update.add, update.remove).length != 0
       throw @_error "invalid-argument", "Can't add and remove same user id"

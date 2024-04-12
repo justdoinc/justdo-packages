@@ -213,8 +213,12 @@ _.extend ChannelBaseClient.prototype,
 
     return
 
-  manageSubscribers: (update, cb) ->
-    @justdo_chat.manageSubscribers @channel_type, @getChannelIdentifier(), update, =>
+  manageSubscribers: (update, options, cb) ->
+    if _.isFunction options
+      # options is optional
+      cb = options
+      options = {}
+    @justdo_chat.manageSubscribers @channel_type, @getChannelIdentifier(), update, options, =>
       JustdoHelpers.callCb cb
 
       return

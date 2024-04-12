@@ -25,8 +25,11 @@ _.extend JustdoChat.prototype,
 
     Meteor.call "jdcMarkAllChannelsAsRead", cb
 
-  manageSubscribers: (channel_type, channel_identifier, update, cb) ->
-    Meteor.call "jdcManageSubscribers", channel_type, channel_identifier, update, cb
+  manageSubscribers: (channel_type, channel_identifier, update, options, cb) ->
+    if _.isFunction options
+      cb = options
+      options = {}
+    Meteor.call "jdcManageSubscribers", channel_type, channel_identifier, update, options, cb
 
   #
   # Bottom windows
