@@ -404,6 +404,7 @@ _.extend JustdoChat.prototype,
 
         # pick identifying fields
         channel_identifying_fields = _.pick data, self.getTypeIdentifiyingFields(channel_type)
+        channel_identifying_fields._id = channel_id
 
         try
           channel_obj = self.generateServerChannelObject(channel_type, channel_identifying_fields, user_id)
@@ -750,6 +751,7 @@ _.extend JustdoChat.prototype,
 
         # pick identifying fields
         channel_identifying_fields = _.pick data, self.getTypeIdentifiyingFields(channel_type)
+        channel_identifying_fields._id = channel_id
 
         try
           channel_obj = self.generateServerChannelObject(channel_type, channel_identifying_fields, user_id)
