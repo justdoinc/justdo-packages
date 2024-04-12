@@ -229,9 +229,6 @@ _.extend ChannelBaseServer.prototype,
       @logger.info "@findAndModifyChannelDoc: conf.update not provided"
 
       return
-    
-    if update.$setOnInsert?
-      update.$setOnInsert._id = Random.id()
 
     #
     # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
@@ -239,6 +236,9 @@ _.extend ChannelBaseServer.prototype,
     #
 
     query = @channel_identifier
+    if update.$setOnInsert?
+      update.$setOnInsert._id = query._id or Random.id()
+
     options =
       upsert: upsert
       returnDocument: "after"
@@ -357,7 +357,7 @@ _.extend ChannelBaseServer.prototype,
     # First, assume that an entry for a bottom window for the performing user exists already
     # for that channel, and update it with the new window_settings.
     #
-    # If we get nModified == 0, it means, that an entry didn't exist, in such a case we push
+    # If we get Modified == 0, it means, that an entry didn't exist, in such a case we push
     # a new entry.
     #
     update_existing_bottom_window_query = _.extend {}, @channel_identifier,
