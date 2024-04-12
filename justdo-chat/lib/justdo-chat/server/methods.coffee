@@ -38,7 +38,7 @@ _.extend JustdoChat.prototype,
 
         return self.markAllChannelsAsRead(@userId)
 
-      jdcManageSubscribers: (channel_type, channel_identifier, update) ->
+      jdcManageSubscribers: (channel_type, channel_identifier, update, options={}) ->
         # Security note:
         #
         # channel_type is checked thoroughly by @generateServerChannelObject
@@ -48,10 +48,11 @@ _.extend JustdoChat.prototype,
         self.requireAllowedChannelType(channel_type)
         check channel_identifier, Object
         check update, Object
+        check options, Match.Maybe Object
 
         channel_obj = self.generateServerChannelObject(channel_type, channel_identifier, @userId)
 
-        return channel_obj.manageSubscribers(update)
+        return channel_obj.manageSubscribers(update, options)
 
       jdcSetBottomWindow: (channel_type, channel_identifier, window_settings) ->
         # Security note:
