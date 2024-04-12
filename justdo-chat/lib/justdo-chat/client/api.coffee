@@ -40,7 +40,8 @@ _.extend JustdoChat.prototype,
     for channel_type, channel_type_conf of share.channel_types_conf
       if (sup_pseudo_cols = channel_type_conf.recent_activity_supplementary_pseudo_collections)?
         for col_id, col_name of sup_pseudo_cols
-          @recent_activity_supplementary_pseudo_collections[col_id] = new Mongo.Collection(col_name)
+          if not @recent_activity_supplementary_pseudo_collections[col_id]?
+            @recent_activity_supplementary_pseudo_collections[col_id] = new Mongo.Collection(col_name)
 
     return
 
@@ -50,7 +51,8 @@ _.extend JustdoChat.prototype,
     for channel_type, channel_type_conf of share.channel_types_conf
       if (sup_pseudo_cols = channel_type_conf.bottom_windows_supplementary_pseudo_collections)?
         for col_id, col_name of sup_pseudo_cols
-          @bottom_windows_supplementary_pseudo_collections[col_id] = new Mongo.Collection(col_name)
+          if not @bottom_windows_supplementary_pseudo_collections[col_id]?
+            @bottom_windows_supplementary_pseudo_collections[col_id] = new Mongo.Collection(col_name)
 
     return
 
