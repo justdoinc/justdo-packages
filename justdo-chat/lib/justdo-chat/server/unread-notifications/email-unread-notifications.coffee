@@ -21,39 +21,43 @@ JustdoChat.registerUnreadChannelsNotificationsManager
       console.warn "JustdoChat: email-unread-notifications: unsupported channel type for emails notification: #{channel_type}"
 
       return
-
-    task_doc = channel_obj.getIdentifierTaskDoc() # Cached, don't worry
-
-    if not job_storage.projects_docs_cache?
-      job_storage.projects_docs_cache = {}
-
-    # Multiple task channels might share the same project, we don't want it to be queryied more than once.
-    # hence, we keep it in the job_storage to request it only once for this job run.
-    if (project_id = channel_obj.getIdentifierProjectId()) of job_storage.projects_docs_cache
-      project_doc = job_storage.projects_docs_cache[project_id]
-    else
-      project_doc = channel_obj.getIdentifierProjectDoc()
-
-      job_storage.projects_docs_cache[project_id] = project_doc
-
+    
     base_url = JustdoHelpers.getProdUrl("web-app")
 
-    template_data =
-      user: user
-      project_doc: project_doc
-      task_doc: task_doc
+        
+    if channel_type is "task"
+      task_doc = channel_obj.getIdentifierTaskDoc() # Cached, don't worry
 
-      read_link: "#{base_url}/p/#{project_id}#&t=main&p=/#{task_doc._id}/&ref=chat-mail"
+      if not job_storage.projects_docs_cache?
+        job_storage.projects_docs_cache = {}
 
-      unsubscribe_link: "#{base_url}/#?hr-id=unsubscribe-c-iv-unread-emails-notifications"
+      # Multiple task channels might share the same project, we don't want it to be queryied more than once.
+      # hence, we keep it in the job_storage to request it only once for this job run.
+      if (project_id = channel_obj.getIdentifierProjectId()) of job_storage.projects_docs_cache
+        project_doc = job_storage.projects_docs_cache[project_id]
+      else
+        project_doc = channel_obj.getIdentifierProjectDoc()
+
+        job_storage.projects_docs_cache[project_id] = project_doc
+
+      # subject = "New messages are waiting under #{project_doc.title} - ##{task_doc.seqId}: #{JustdoHelpers.ellipsis(task_doc.title or "", 60)}"
+      subject = APP.justdo_i18n.tr "unread_task_chat_notification_subject", {}, user
+      template = "notifications-iv-unread-chat"
+      template_data =
+        user: user
+        project_doc: project_doc
+        task_doc: task_doc
+
+        read_link: "#{base_url}/p/#{project_id}#&t=main&p=/#{task_doc._id}/&ref=chat-mail"
+
+        unsubscribe_link: "#{base_url}/#?hr-id=unsubscribe-c-iv-unread-emails-notifications"
 
     to = user.emails[0].address
 
     JustdoEmails.buildAndSend
-      template: "notifications-iv-unread-chat"
+      template: template
       template_data: template_data
       to: to
-      subject: "New chat messages are waiting for you"
-      # subject: "New messages are waiting under #{project_doc.title} - ##{task_doc.seqId}: #{JustdoHelpers.ellipsis(task_doc.title or "", 60)}"
+      subject: subject
 
     return
