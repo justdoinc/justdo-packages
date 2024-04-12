@@ -1084,6 +1084,18 @@ _.extend JustdoChat.prototype,
             en:
               "An email '{{subject}}' received for this task from {{sender}} . Check the task bottom sheet for more details."
 
+        # i18n messages are rendered using i18n_key and optional i18n_options.
+        # Therefore rec_msgs_templates, rec_andr_msgs_templates_pre and rec_andr_msgs_templates_post doesn't exist.
+        "i18n-message":
+          data_schema:
+            i18n_key:
+              type: String
+            
+            i18n_options:
+              type: Object
+              blackbox: true
+              optional: true
+
     return
 
   _registerBot: (bot_id, bot_def) ->

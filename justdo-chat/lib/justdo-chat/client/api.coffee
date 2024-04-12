@@ -526,14 +526,24 @@ _.extend JustdoChat.prototype,
     return subscribed_unread_channels_count_doc.count
 
   renderDataMessage: (data, bot) ->
+    data = _.extend {}, data
+
     if (bot_info = APP.collections.JDChatBotsInfo.findOne({_id: bot}))?
-      if (en_msg_template = bot_info.msgs_types?[data.type]?.rec_msgs_templates.en)?
-        return en_msg_template.replace /{{(.*?)}}/g, (m, placeholder) ->
+      # If msg is from bot and type is i18n-message, return msg based on i18n_key and i18n_options
+      if data.type is "i18n-message"
+        return TAPi18n.__ data.i18n_key, data.i18n_options
+      
+      # If msg is from bot and type isn't i18n-message, return the en message and replace any placeholders with variables inside data
+      if (en_msg_temlate = bot_info.msgs_types?[data.type]?.rec_msgs_templates.en)?
+        return en_msg_temlate.replace /{{(.*?)}}/g, (m, placeholder) ->
           if (val = data[placeholder])?
+            if _.isArray val
+              val = val.join ", "
             return val
           else
             return ""
 
+    # Return as-is if message isn't from bot.
     return data
 
   linkTaskId: (msg_body) ->
