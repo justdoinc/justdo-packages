@@ -56,7 +56,7 @@ Package.onUse(function (api) {
 
   api.use("meteorspark:app@0.3.0", both);
   api.use("justdoinc:justdo-webapp-boot@1.0.0", both);
-  api.use("justdoinc:justdo-ddp-extensions@1.0.0", both);
+  api.use("justdoinc:justdo-ddp-extensions@1.0.0", both, {weak: true});
 
   api.addFiles('lib/globals.js', both);
 
