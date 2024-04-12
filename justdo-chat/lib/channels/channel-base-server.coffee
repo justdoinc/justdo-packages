@@ -486,8 +486,10 @@ _.extend ChannelBaseServer.prototype,
     if _.intersection(update.add, update.remove).length != 0
       throw @_error "invalid-argument", "Can't add and remove same user id"
 
-    # Get rid of user ids of users that are not permitted to subscribe
-    update.add = @removeNonPermittedUsers(update.add)
+    if not options.ignore_remove_non_permitted_users
+      # Get rid of user ids of users that are not permitted to subscribe
+      update.add = @removeNonPermittedUsers(update.add)
+
     update.add = _.uniq update.add
 
     channel_doc = @getChannelDocNonReactive()
