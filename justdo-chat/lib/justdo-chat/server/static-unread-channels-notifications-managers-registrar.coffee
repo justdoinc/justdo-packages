@@ -300,7 +300,7 @@ _.extend JustdoChat,
               need_fetch_from_db.push user_id
 
           if not _.isEmpty need_fetch_from_db
-            for user_doc in APP.accounts.fetchPublicBasicUsersInfo(need_fetch_from_db, {additional_fields: {"#{conf.user_configuration_field}": 1}})
+            for user_doc in APP.accounts.fetchPublicBasicUsersInfo(need_fetch_from_db, {additional_fields: {"#{conf.user_configuration_field}": 1, "profile.lang": 1}})
               _users_docs_cache[user_doc._id] = user_doc
 
               yield user_doc
@@ -311,7 +311,7 @@ _.extend JustdoChat,
           if user_id of _users_docs_cache
             return _users_docs_cache[user_id]
 
-          user_doc = APP.accounts.findOnePublicBasicUserInfo(user_id, {additional_fields: {"#{conf.user_configuration_field}": 1}})
+          user_doc = APP.accounts.findOnePublicBasicUserInfo(user_id, {additional_fields: {"#{conf.user_configuration_field}": 1, "profile.lang": 1}})
 
           _users_docs_cache[user_id] = user_doc
 
@@ -474,18 +474,18 @@ _.extend JustdoChat,
                   conf.sendNotificationCb notification_obj
                 catch e
                   try
-                    console.warn "justdo-chat: failed to send notification, retry 2/3", e, {user_id: user._id, channel_id: channel_obj.getChannelDocNonReactive()._id}
+                    console.warn "justdo-chat: failed to send notification, retry 2/3", e, {user_id: user_id, channel_id: channel_obj.getChannelDocNonReactive()._id}
 
                     conf.sendNotificationCb notification_obj
                   catch e
                     try
-                      console.warn "justdo-chat: failed to send notification, retry 3/3", e, {user_id: user._id, channel_id: channel_obj.getChannelDocNonReactive()._id}
+                      console.warn "justdo-chat: failed to send notification, retry 3/3", e, {user_id: user_id, channel_id: channel_obj.getChannelDocNonReactive()._id}
 
                       conf.sendNotificationCb notification_obj
                     catch e
                       notifications_sent -= 1
                       notifications_failed += 1
-                      failed_for_subscribers[user._id] = true
+                      failed_for_subscribers[user_id] = true
                       console.error "justdo-chat: failed to send notification, skipping specific notification and continuing the batch.", e
 
           #
