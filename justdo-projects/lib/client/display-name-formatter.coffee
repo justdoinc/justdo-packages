@@ -27,7 +27,6 @@ GridControl.installFormatter "display_name_formatter",
                   height: #{icon_width}px;">
           <img src="#{JustdoAvatar.showUserAvatarOrFallback(user_doc)}"
                 class="grid-tree-control-user-img slick-prevent-edit"
-                alt="#{display_name}"
                 jd-tt="user-info?id=#{user_doc._id}"
                 style="
                       width: #{icon_width}px;
