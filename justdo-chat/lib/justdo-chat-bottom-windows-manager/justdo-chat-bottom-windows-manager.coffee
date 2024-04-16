@@ -326,6 +326,8 @@ _.extend JustdoChatBottomWindowsManager.prototype,
 
       if not _.isEmpty(task_doc.title)
         title += "<b>:</b> #{JustdoHelpers.ellipsis(task_doc.title, 80)}"
+    else
+      console.warn "Unknown window_def.type: #{window_def.type}"
 
     return title or ""
 
