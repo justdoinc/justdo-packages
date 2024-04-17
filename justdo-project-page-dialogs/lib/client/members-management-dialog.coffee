@@ -230,15 +230,6 @@ APP.executeAfterAppLibCode ->
 
     return
 
-  hasSubSubTasks = (task_id) ->
-    if not (grid_data_core = APP.modules.project_page.gridData()?._grid_data_core)
-      return false
-    for i, subtask_id of grid_data_core.tree_structure[task_id]
-      if grid_data_core.tree_structure[subtask_id]?
-        return true
-
-    return false
-
   getDescendantsCount = (task_path) ->
     if not (grid_data = APP.modules.project_page.gridData())?
       return 0
@@ -639,9 +630,11 @@ APP.executeAfterAppLibCode ->
 
             task_id = JD.activeItemId()
             task_path = JD.activePath()
-            tasks_count = getDescendantsCount(task_path) + 1
+            task_count = 1 # The task itself
+            if cascade.get()
+              tasks_count = getDescendantsCount(task_path) + 1
 
-            has_sub_sub_tasks_and_more_then_confirm_task_count = cascade.get() == true and hasSubSubTasks(task_id) and tasks_count > ProjectPageDialogs.EDIT_MEMBER_CONFIRM_TASK_COUNT
+            has_sub_sub_tasks_and_more_then_confirm_task_count = tasks_count > ProjectPageDialogs.EDIT_MEMBER_CONFIRM_TASK_COUNT
             crossed_immediate_execution_threshold = tasks_count > JustdoDbMigrations.batched_collection_updates_immediate_process_threshold_docs
 
             if has_sub_sub_tasks_and_more_then_confirm_task_count or crossed_immediate_execution_threshold
