@@ -46,8 +46,17 @@ _.extend JustdoChat.prototype,
       return identifying_fields
 
     identifying_fields = share.channel_types_conf[type].channel_identifier_fields_simple_schema._schemaKeys
-    # Replace all occurances of ".$" or ".$.subfield"
-    # Read the comment in static-settings.coffee about positional_operator_regex for more info
+    # Replace all occurances of ".$" or ".$.subfield" since they are illegal in MongoDB 4.4 (Read the comment in static-settings.coffee about positional_operator_regex for more info)
+    # Example:
+    #   channel_identifier_fields_simple_schema: new SimpleSchema
+    #     user_ids:
+    #       type: [String]
+    #       minCount: 2
+    #       maxCount: 2
+    # Will result in identifying_fields=["user_ids", "user_ids.$"]
+    # But we 
+    #  1. actually only need user_ids,
+    #  2. can't use user_ids and user_ids.$ together
     identifying_fields = _.filter identifying_fields, (field_id) -> not JustdoChat.positional_operator_regex.test field_id
 
     @_getTypeIdentifiyingFields_cached_result[type] = identifying_fields
@@ -61,8 +70,8 @@ _.extend JustdoChat.prototype,
       return augmented_fields
 
     augmented_fields = share.channel_types_conf[type].channel_augmented_fields_simple_schema._schemaKeys
-    # Replace all occurances of ".$" or ".$.subfield"
-    # Read the comment in static-settings.coffee about positional_operator_regex for more info
+    # Replace all occurances of ".$" or ".$.subfield" since they are illegal in MongoDB 4.4 (Read the comment in static-settings.coffee about positional_operator_regex for more info)
+    # Scroll above in side comment of getTypeIdentifiyingFields for example
     augmented_fields = _.filter augmented_fields, (field_id) -> not JustdoChat.positional_operator_regex.test field_id
 
     @_getTypeAugmentedFields_cached_result[type] = augmented_fields

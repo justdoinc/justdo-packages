@@ -435,10 +435,11 @@ _.extend ChannelBaseServer.prototype,
   
   _manageSubscribersOptionsObjectSchema: new SimpleSchema
     # IMPORTANT! If you set this to true, you must ensure that the users you add are permitted to subscribe to this channel!
-    ignore_remove_non_permitted_users:
+    skip_remove_non_permitted_users:
       type: Boolean
       optional: true
-
+      defaultValue: false
+      
   manageSubscribers: (update, options) ->
     # update should be of the following structure
     #
@@ -462,10 +463,12 @@ _.extend ChannelBaseServer.prototype,
     # If added user id is not the performing user:
     #   If channel has messages: unread = true
     #   else: unread = false
+    # 
+    # Returns actual added/removed user ids after excluding existing user and non-permitted user
 
     if not update? or _.isEmpty(update)
       # Nothing to do
-      return
+      return {added: [], removed: []}
 
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
@@ -486,7 +489,7 @@ _.extend ChannelBaseServer.prototype,
     if _.intersection(update.add, update.remove).length != 0
       throw @_error "invalid-argument", "Can't add and remove same user id"
 
-    if not options.ignore_remove_non_permitted_users
+    if not options.skip_remove_non_permitted_users
       # Get rid of user ids of users that are not permitted to subscribe
       update.add = @removeNonPermittedUsers(update.add)
 
@@ -503,7 +506,7 @@ _.extend ChannelBaseServer.prototype,
     # See if after all that, there's still work to do
     if _.isEmpty(update.add) and _.isEmpty(update.remove)
       # Nothing to do
-      return
+      return {added: [], removed: []}
 
     # Build query
     add_query_items = []
@@ -663,7 +666,7 @@ _.extend ChannelBaseServer.prototype,
 
     channel_doc = @getChannelDocNonReactive()
 
-    if (not @justdo_chat.isBotUserId(@performing_user)) and not options.skip_add_sender_as_subscribers
+    if (not options.skip_add_sender_as_subscribers) and (not @justdo_chat.isBotUserId(@performing_user)) 
       # Note, if user is already subscribed, @manageSubscribers() will simply ignore the call.
       # Thanks to the channel doc caching, this won't @_cached_channel_doc result in addition
       # requests to the db.
