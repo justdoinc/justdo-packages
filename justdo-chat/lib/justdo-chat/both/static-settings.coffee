@@ -1,11 +1,16 @@
+jdc_recent_activity_supplementary_pseudo_collections_prefix = "JDChatRecentActivity"
+jdc_bottom_windows_supplementary_pseudo_collections = "JDChatBottomWindows"
+
 _.extend JustdoChat,
   jdc_info_pseudo_collection_name: "JDChatInfo"
 
-  jdc_recent_activity_channels_collection_name: "JDChatRecentActivityChannels"
-  jdc_recent_activity_messages_collection_name: "JDChatRecentActivityMessages"
-  jdc_recent_activity_authors_details_collection_name: "JDChatRecentActivityAuthorsDetails"
+  jdc_recent_activity_supplementary_pseudo_collections_prefix: jdc_recent_activity_supplementary_pseudo_collections_prefix
+  jdc_recent_activity_channels_collection_name: "#{jdc_recent_activity_supplementary_pseudo_collections_prefix}Channels"
+  jdc_recent_activity_messages_collection_name: "#{jdc_recent_activity_supplementary_pseudo_collections_prefix}Messages"
+  jdc_recent_activity_authors_details_collection_name: "#{jdc_recent_activity_supplementary_pseudo_collections_prefix}AuthorsDetails"
 
-  jdc_bottom_windows_channels_collection_name: "JDChatBottomWindowsChannels"
+  jdc_bottom_windows_supplementary_pseudo_collections: jdc_bottom_windows_supplementary_pseudo_collections
+  jdc_bottom_windows_channels_collection_name: "#{jdc_bottom_windows_supplementary_pseudo_collections}Channels"
 
   jdc_channel_messages_authors_details_collection_name: "JDChatChannelMessagesAuthorsDetails"
 

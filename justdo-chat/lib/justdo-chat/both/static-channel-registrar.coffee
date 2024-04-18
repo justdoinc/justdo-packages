@@ -27,7 +27,7 @@ _.extend JustdoChat,
       recent_activity_supplementary_pseudo_collections = _.extend {}, recent_activity_supplementary_pseudo_collections # shallow copy
 
       for col_id, col_name of recent_activity_supplementary_pseudo_collections
-        recent_activity_supplementary_pseudo_collections[col_id] = "JDChatRecentActivity" + col_name # add the common prefix
+        recent_activity_supplementary_pseudo_collections[col_id] = JustdoChat.jdc_recent_activity_supplementary_pseudo_collections_prefix + col_name # add the common prefix
       conf.recent_activity_supplementary_pseudo_collections = recent_activity_supplementary_pseudo_collections
 
     #
@@ -37,7 +37,7 @@ _.extend JustdoChat,
       bottom_windows_supplementary_pseudo_collections = _.extend {}, bottom_windows_supplementary_pseudo_collections # shallow copy
 
       for col_id, col_name of bottom_windows_supplementary_pseudo_collections
-        bottom_windows_supplementary_pseudo_collections[col_id] = "JDChatBottomWindows" + col_name # add the common prefix
+        bottom_windows_supplementary_pseudo_collections[col_id] = JustdoChat.jdc_bottom_windows_supplementary_pseudo_collections + col_name # add the common prefix
       conf.bottom_windows_supplementary_pseudo_collections = bottom_windows_supplementary_pseudo_collections
 
     share.channel_types.push channel_type
