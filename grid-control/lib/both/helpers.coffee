@@ -1,0 +1,1 @@
+PACK.helpers = _.extend {}, JustdoHelpers # Init with all JustdoHelpers

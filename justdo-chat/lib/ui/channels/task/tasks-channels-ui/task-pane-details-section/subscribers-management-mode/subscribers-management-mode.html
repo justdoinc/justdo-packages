@@ -1,0 +1,24 @@
+<template name="task_pane_chat_section_subscribers_management">
+  <div class="subscribers-management-header">
+    <h2>Subscribers Management</h2>
+    <div>
+      <div class="sm-btn sm-cancel">Cancel</div>
+      <div class="sm-btn sm-save">Save</div>
+    </div>
+  </div>
+  <div class="subscribers-search-wrapper">
+    <input class="subscribers-search form-control form-control-sm" type="text" placeholder="Members">
+    {{#if showSearchClearButton}}
+      <svg class="jd-icon subscribers-search-x"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+    {{/if}}
+  </div>
+  <div class="users-board">
+    {{#each taskMembers}}
+      <div class="user-card">
+        {{> justdo_avatar}} <div class="user-name">{{> display_name_with_graphic_unverified_warning}}</div>
+
+        <div user-id="{{_id}}" class="subscribe-state {{#if isSubscriber}}subscribed{{else}}unsubscribed{{/if}}"></div>
+      </div>
+    {{/each}}
+  </div>
+</template>

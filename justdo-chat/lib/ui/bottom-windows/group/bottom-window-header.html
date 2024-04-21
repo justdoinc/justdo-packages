@@ -1,0 +1,14 @@
+<template name="group_channel_chat_bottom_windows_header">
+  <div class="chat-header group-channel">
+    <div href="#" class="header-title {{#if isChannelProjectDocExists}}jd-c-pointer{{/if}}">
+      <span class="header-avatar">
+        <img class="justdo-avatar" src="{{avatar}}"/>
+      </span>
+      {{title}}
+    </div>
+    <div class="chat-header-control">
+      <svg class="jd-icon minimize-chat" title="Minimize Chat"><use xlink:href="/layout/icons-feather-sprite.svg#minus"></use></svg>
+      <svg class="jd-icon close-chat" title="Close Chat"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+    </div>
+  </div>
+</template>

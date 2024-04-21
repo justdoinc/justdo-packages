@@ -1,0 +1,50 @@
+<template name="grid_control_search_dropdown">
+  <div class="search-dropdown">
+    {{#if result_tasks}}
+      <div class="search-dropdown-nav">
+        <div class="search-dropdown-nav-link tasks text-primary active">
+          Tasks ({{resultTasksCount}})
+          <div class="search-dropdown-nav-indicator bg-primary"></div>
+        </div>
+        <div class="search-dropdown-nav-link chats text-primary">
+          Chats (0)
+          <div class="search-dropdown-nav-indicator bg-primary"></div>
+        </div>
+      </div>
+      {{#if filters}}
+        <div class="search-dropdown-filters">
+          {{#each filters}}
+            <div class="filter-item bg-primary">
+              {{title}}: {{value}}
+              <svg class="filter-item-remove jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+            </div>
+          {{/each}}
+        </div>
+      {{/if}}
+      <div class="search-result-list">
+        {{#each result_tasks}}
+          <div class="search-result-item">
+            <div class="task-title">
+              <span class="task-seq-id">Task #{{{seqId}}}:</span> {{{title}}}
+            </div>
+            <div class="task-info">
+              {{#if state}}
+                <span class="task-info-state">State: </span>{{{state}}}
+              {{/if}}
+              {{#if $and state note}}
+                <br>
+              {{/if}}
+              {{#if note}}
+                <span class="task-info-note">Note: </span>{{{note}}}
+              {{/if}}
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    {{else}}
+      <div class="search-result-empty">
+        No results were found for your search
+      </div>
+    {{/if}}
+  </div>
+</template>

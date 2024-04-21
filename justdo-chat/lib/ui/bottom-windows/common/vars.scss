@@ -1,0 +1,17 @@
+// We use scss, and not sass here, since we have a bug interfering with sass files @import
+$chat-window-header-height: 31px;
+
+@keyframes unread-chat-window {
+  0% {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px rgba(10, 133, 212, 1)
+  }
+  50% {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px rgba(10, 133, 212, 1)
+  }
+  51% {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px rgba(10, 133, 212, 0.25)
+  }
+  100% {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px rgba(10, 133, 212, 0.25)
+  }
+}

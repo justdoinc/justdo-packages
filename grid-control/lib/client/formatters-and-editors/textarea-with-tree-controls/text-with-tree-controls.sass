@@ -1,0 +1,299 @@
+.text-tree-control
+  position: relative
+  width: 100%
+  height: 100%
+
+.grid-tree-control-text
+  text-align: left
+
+.grid-tree-control-activation-area
+  position: absolute
+  top: 0
+  bottom: 0
+  left: 0
+  background-color: transparent
+
+.grid-tree-control-toggle
+  display: none
+  height: 12px
+  width: 16px
+  position: absolute
+  top: 10px
+  padding-left: 4px
+
+  .slick-row:first-child &, .slick-row.f-first &
+    top: 10px
+
+.grid-tree-control-toggle
+  // .collapse is part of the bs4 framework, hence, we can't use the same name.
+  &._collapse, &.expand
+    display: flex
+
+    .f-leaf &
+      // If is a leaf under current filter
+      display: none
+
+    .f-leaf.sortable-new-level-mode-parent &
+      display: block
+
+  svg
+    pointer-events: none
+    stroke: currentColor
+    stroke-linecap: round
+    stroke-linejoin: round
+    stroke-width: 3
+    fill: none
+    width: 100%
+    height: 100%
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 0px 6px rgba(0, 0, 0, 0.1)
+    transition: all 0.2s linear
+    background-color: white
+    border-radius: 2px
+    border: 1px solid #546e7a
+    color: #546e7a
+    &:hover
+      transform: scale(1.1)
+
+  .sortable-new-level-mode-parent &, .f-leaf.sortable-new-level-mode-parent &
+    // for case without filter it's a leaf
+    display: block
+
+  &._collapse
+    cursor: zoom-in
+
+  &.expand
+    cursor: zoom-out
+
+.sortable-new-level-mode-parent .grid-tree-control-toggle
+  display: flex
+
+.grid-tree-control-task-id
+  position: absolute
+  font-size: 12px
+  font-weight: normal
+  padding: 0px 4px
+  top: 6px
+  width: 25px
+  box-sizing: content-box
+  background-color: rgb(238, 239, 242)
+  color: #525F7F
+  border: 1px solid rgba(82, 95, 127, 0.2)
+  opacity: 1
+  border-radius: 3px
+  text-align: center
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08)
+
+  .slick-row:first-child &, .slick-row.f-first &
+    top: 6px
+
+.grid-tree-control-task-favorite
+  width: 15px
+  height: 15px
+  position: absolute
+  right: -8px
+  top: -6px
+  display: flex
+  cursor: default
+  svg
+    stroke-linecap: round
+    stroke-linejoin: round
+    fill: #FF8A00
+    width: 100%
+    height: 100%
+    padding: 0px
+    stroke: white
+    stroke-width: 2px
+
+.grid-tree-control-user,
+.grid-tree-control-user-display-only
+  position: absolute
+  top: 2px
+  img
+    width: inherit
+    border-radius: 90px
+
+.grid-tree-control-user
+  cursor: pointer
+
+  .transfer-owner
+    width: 14px
+    height: 14px
+    position: absolute
+    right: -2px
+    bottom: 1px
+    display: flex
+    svg
+      stroke: currentColor
+      stroke-linecap: round
+      stroke-linejoin: round
+      fill: none
+      width: 100%
+      height: 100%
+      padding: 1px
+      background-color: white
+      border-radius: 2px
+      box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2), 0px 0px 6px rgba(0, 0, 0, 0.2)
+      transition: all 0.2s linear
+      &:hover
+        transform: scale(1.05)
+
+  .transfer-non-related svg
+    color: #353A3F
+    border: 1px solid #353A3F
+    stroke-width: 3
+
+  .transfer-to-me svg
+    color: red
+    border: 1px solid red
+    stroke-width: 3
+
+  .transfer-from-me svg
+    color: #2F80ED
+    border: 1px solid #2F80ED
+    stroke-width: 3
+
+  .transfer-no-owner svg
+    color: #353A3F
+    border: 1px solid #353A3F
+    stroke-width: 5
+
+.grid-tree-control-user-img
+  transition: transform 0.2s linear, box-shadow 0.2s linear
+
+  &:hover
+    transform: scale(0.95)
+    box-shadow: 0 0 0 3px rgb(225, 225, 225)
+
+.grid-tree-control-item-icons
+  float: right
+  display: flex
+  align-items: center
+  font-size: 14px
+
+  .fa
+    cursor: pointer
+    height: 20px
+    display: flex
+    align-items: center
+    &.fa-archive
+      cursor: default
+
+.jd-icon.ongrid-jd-icon
+  padding: 0
+  width: 14px
+  height: 20px
+  border-radius: 2px
+  transition: opacity 0.2s linear
+  margin-top: 1px
+
+  &.jd-icon-context-menu
+    opacity: 0.4
+
+.slick-cell.active,
+.text-tree-control:hover
+  .jd-icon-context-menu
+    opacity: 1
+
+.grid-tree-control-priority
+  width: 6px
+  height: auto
+  position: absolute
+  border-radius: 1px
+  top: 3px
+  bottom: 3px
+  outline: 3px solid white
+  border: none
+
+.jdt-play
+  visibility: hidden
+
+  .text-tree-control:hover &
+    visibility: visible
+
+.jdt-stop
+  color: red
+
+.chat-messages
+  display: inline-block
+  position: relative
+
+.chat-messages-new,.description-new-updates, .has-unread-emails
+  color: #0170d5
+
+.task-is-archived-project
+  color: #9c9c9c
+
+.resource_planner
+  color: #9c9c9c
+
+  &.task-planned-or-executed-by-current-user
+    color: inherit
+
+.task-meetings
+  position: relative
+  top: -2px
+  stroke-width: 2
+  height: 15px
+  width: 19px
+  stroke: currentColor
+  fill: none
+
+.slick-row
+  .hl // hierarchy-line
+    position: absolute
+    background-color: #c8cfd2
+    width: 1px
+
+    top: 0
+    bottom: 0
+
+    &.hl-f // hierarchy-line-first
+      top: 22px
+
+  &.f-leaf
+    .hl.hl-f
+      display: none
+
+.task-ai-wizard
+  background-color: white
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2)
+  border-radius: 6px
+  cursor: pointer
+  transition: all 0.2s ease-in-out
+  pointer-events: none
+  user-select: none
+  transform: scale(0)
+  padding: 2px
+  overflow: hidden
+  opacity: 0
+  margin: 0 4px
+  &:hover
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2)
+  &:active
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12)
+    .jd-icon
+      padding: 1px
+
+.task-ai-wizard-content
+  display: flex
+  align-items: center
+  justify-content: center
+  width: 16px
+  height: 16px
+  border-radius: 4px
+  background-color: white
+  .jd-icon
+    width: 12px
+    height: 12px
+    stroke-width: 0
+    padding: 0
+    transform: scale(1)
+
+.slick-row.active:not(.multi-selected)
+  .task-ai-wizard
+    transform: scale(1)
+    opacity: 1
+    pointer-events: all
+    overflow: visible
+    width: auto
+    background: linear-gradient(to right, #1EB2F2, #C660EA)

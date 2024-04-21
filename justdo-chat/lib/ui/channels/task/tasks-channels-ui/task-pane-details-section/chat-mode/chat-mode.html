@@ -1,0 +1,30 @@
+<template name="task_pane_chat_section_chat">
+  <div class="chat-header">
+    <div class="main-block">
+      <h2 class="d-inline-block">{{_ "chat_label"}}</h2>
+      {{#if isSubscriptionReadyChannelExistsAndNotEmptyOrHasSubscribers}}
+        <div class="user-subscription-toggle {{#if isSubscribedToChannel}}subscribed{{/if}}" title="{{#if isSubscribedToChannel}}You will receive notifications from this chat, click to unsubscribe{{else}}Subscribe to notifications from this chat{{/if}}"></div>
+      {{/if}}
+      <span class="subscribers-names">
+        {{subscribersDisplayNames}}
+      </span>
+    </div>
+
+    <div class="action-block">
+      <div class="subscribers-management-button-block text-primary">
+        <div class="subscribers-management"><i class="fa fa-user"></i> {{#if isSubscriptionReady}}{{subscribersCount}}{{else}}&nbsp;&nbsp;&nbsp;{{/if}}</div>
+      </div>
+      <div class="open-chat-in-window-container" title="Open chat in a window">
+        <div class="open-chat-in-window text-primary">
+          <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#external-link"/></svg>
+        </div>
+      </div>
+      <div class="maximize-chat text-primary">
+        <svg class="jd-icon maximize-chat-icon"><use xlink:href="/layout/icons-feather-sprite.svg#maximize-2"/></svg>
+        <svg class="jd-icon minimize-chat-icon"><use xlink:href="/layout/icons-feather-sprite.svg#minimize-2"/></svg>
+      </div>
+    </div>
+  </div>
+  {{> common_chat_messages_board getChannelObject=getTaskChatObject}}
+  {{> common_chat_message_editor getChannelObject=getTaskChatObject}}
+</template>

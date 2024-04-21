@@ -1,0 +1,38 @@
+#project-search-comp-container
+  position: relative
+  .search-prev,
+  .search-next
+    display: none
+
+  .search-input
+    width: 185px
+
+  .grid-control-search-btn
+    top: 0
+    bottom: 0
+    right: 0
+
+  .clear-button
+    display: none
+    margin-right: 4px
+    &:hover
+      background-color: unset
+
+  .search-info-container
+    font-size: 10px
+    display: none
+
+#project-search-comp-container.input-not-empty
+  .clear-button
+    display: block
+
+#project-search-comp-container.results-found
+  .search-info-container
+    display: block
+
+$search-result-background-color: #fff7af
+.search-result
+  background-color: $search-result-background-color
+
+  .frozen
+    background-color: $search-result-background-color

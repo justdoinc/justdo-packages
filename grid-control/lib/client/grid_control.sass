@@ -1,0 +1,188 @@
+.slickgrid,
+.slickgrid *,
+.slick-header-column
+    box-sizing: content-box
+    -moz-box-sizing: content-box
+    -webkit-box-sizing: content-box
+    -ms-box-sizing: content-box
+
+.slick-header.ui-state-default, .slick-header-column
+  border-right: none
+  background: #F8F8F8
+
+.slick-header-column
+  font-weight: 600
+  color: #000000
+  text-transform: uppercase
+  font-size: 12px
+  padding-top: 2px
+  border-right: 1px dotted gainsboro
+
+.not-multi-select .slick-row.active
+  background: rgb(255, 237, 219) none
+
+.slick-cell.cell-handle
+  background: url('/packages/stem-capital_grid-control/lib/client/media/cell-handle.png') no-repeat center center
+
+.slick-loading-indicator
+  display: inline-block
+  background: url('/packages/stem-capital_grid-control/lib/client/media/loader.gif') no-repeat center center
+  width: 5px
+  height: 16px
+  visibility: hidden
+  vertical-align: bottom
+  margin-right: 3px
+  opacity: .85
+
+  .slick-state-not-ready &, .slick-state-ops-lock &
+    visibility: visible
+
+// Reimplement slick borders style in a way that serves the following
+// 1. Avoid redundant space occupyed by transparent borders
+// 2. Each cell has a top border instead of bottom border - allow us
+//    to cancel the border of following active row with the css + selector
+//    to improve look.
+$row-min-height: 32px
+$horizontal-borders-colors: rgba(195, 195, 195, 0.65)
+$vertical-borders-colors: $horizontal-borders-colors
+$active-row-border-color: #805206
+$active-row-background-color: #d7e3f6
+$active-editable-background-color: #ccd7f2
+$section-items-background-color: #f8f8f8
+$active-section-items-background-color: #e8edf4
+$row-border-style: 1px dashed $horizontal-borders-colors
+$row-right-border-style: 1px dashed $vertical-borders-colors
+$row-hidden-border-style: 1px solid transparent
+// Option 1
+$active-shadow-color-h: #A04BA2
+$active-shadow-color-v: rgba(160, 75, 162, 0.82)
+// Option 2
+// $active-shadow-color-h: #D8361A
+// $active-shadow-color-v: rgba(216, 54, 26, 0.67)
+// Header cells paddings dictates the default editor/formatter
+// horizontal paddings
+
+$standard-cell-padding-top: 5px
+$standard-cell-padding-bottom: 3px
+
+.slick-row
+  // Define borders in the row level
+  border-top: $row-border-style
+
+  &:first-child, &.f-first
+    // Keep occupying the space, so when it'll be active, the
+    // active border won't look like pushing content down
+    border-top-color: transparent
+
+    // Cancel the padding we get from hidden border-top
+    .grid-formatter, .grid-editor
+      padding-top: ($standard-cell-padding-top + 1)
+
+  &:last-child, &.f-last
+    // Last item border
+    border-bottom: $row-border-style
+
+.not-multi-select
+  .slick-row
+    &.active
+      background-color: $active-row-background-color
+
+.grid-control
+  .grid-formatter, .grid-editor
+    // Don't use margin instead of padding as it'll cause wrong
+    // calculation of the meaning of width: 100%
+    padding: $standard-cell-padding-top 5px $standard-cell-padding-bottom
+    overflow: hidden
+    min-height: $row-min-height
+
+  .grid-formatter.key-val-formatter
+    padding: 4px
+    .key-val-wrapper
+      border-radius: 3px
+      line-height: 100%
+      padding: 4px
+      display: flex
+      align-items: center
+
+
+
+  .slick-cell
+    // Cancel all transparent borders
+    border: 0 none
+    border-right: $row-right-border-style
+
+  // Improve style structure for our needs
+  .slick-cell
+    // If multi-line shift content to the top
+    vertical-align: top
+    // paddings are up to the formatters/editors to define
+    padding: 0
+
+    &.editable
+      background-color: rgba(37, 48, 186, 0.12)
+      z-index: 100
+    //   // Cancel borders
+    //   border-right-width: 0
+    //   box-shadow: inset 2px 0px 2px -1px $active-shadow-color-v, inset -2px 0px 3px -1px $active-shadow-color-v
+
+  .tree-control-input
+    outline: 0 none
+
+  .tree-control-textarea, .textarea-editor textarea
+    // Occupy all the height available, and nothing more, fix an issue with firefox
+    height: $row-min-height - $standard-cell-padding-top - $standard-cell-padding-bottom
+
+  .selector-editor
+    button
+      height: $row-min-height
+
+.slick-row.archived
+  color: #4c4c4c
+
+// Rules for rows that get occupied with a single cell with colspan set to "*"
+.full-row-colspan
+  position: static
+  display: table
+  width: 100%
+
+  .grid-tree-control-item-icons
+    display: none
+
+.frozen-columns-mode
+  .frozen
+    position: sticky
+    top: 0 !important
+    left: 0 !important
+    z-index: 101 // 100 is the z-index of active cells
+    background-color: white
+
+  .full-row-colspan
+    .frozen
+      z-index: 0 // fixed issue #10748
+
+  #grid-control-mux & .type-section-item
+    display: flex
+
+    background-color: $section-items-background-color
+
+    .frozen
+      border-right: 0 none
+
+      background-color: $section-items-background-color
+
+  #grid-control-mux &.not-multi-select .type-section-item
+    &.active
+      background-color: $active-section-items-background-color
+
+    .frozen
+      &.active
+        background-color: $active-section-items-background-color
+
+.not-multi-select
+  &.frozen-columns-mode
+    .active
+      .frozen
+        background-color: $active-row-background-color
+
+        &.editable
+          background-color: $active-editable-background-color
