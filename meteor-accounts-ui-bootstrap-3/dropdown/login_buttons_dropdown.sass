@@ -1,0 +1,36 @@
+#login-dropdown-list
+  .dropdown-info-btn
+    .dropdown-info-divider
+      width: 1px
+      opacity: 0.2
+
+  label
+    font-size: 14px
+    margin-bottom: 0.25rem
+
+  .user-dropdown-toggle
+    user-select: none
+    transition: box-shadow 0.15s ease-in-out
+    &:hover
+      box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.08)
+    &:active
+      box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.12)
+    img
+      width: 33px
+      height: 33px
+
+  .dropdown-avatar
+    margin-right: 1.5rem
+
+  .dropdown-menu
+    &.settings
+      .dropdown-avatar
+        margin-right: 0rem
+      .dropdown-info-name
+        padding-top: 0.5rem
+      .dropdown-info
+        text-align: center
+    .dropdown-content
+      height: auto
+      max-height: calc(100vh - 60px)
+      overflow: auto

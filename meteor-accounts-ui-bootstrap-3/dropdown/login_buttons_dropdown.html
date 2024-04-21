@@ -1,0 +1,146 @@
+<!--           -->
+<!-- LOGGED IN -->
+<!--           -->
+<template name="_loginButtonsLoggedInDropdown">
+  <div id="login-dropdown-list" class="dropdown">
+    <div class="user-dropdown-toggle ml-2 jd-c-pointer rounded-circle" data-toggle="dropdown">
+      {{#with userAvatarFields}}
+        {{> justdo_avatar_no_tooltip}}
+      {{/with}}
+    </div>
+    <div class="dropdown-menu dropdown-menu-right animate slideIn shadow-lg border-0 p-0 {{#if inSettingsEditingFlow}}settings{{/if}}">
+      <div class="dropdown-content d-flex p-4 {{#if inSettingsEditingFlow}}flex-column{{/if}}">
+      {{#if inMessageOnlyFlow}}
+        {{> _loginButtonsMessages}}
+      {{else}}
+        {{#if inSettingsEditingFlow}}
+          {{#if inChangePasswordFlow}}
+            <div class="return-arrow login-buttons-exit-change-password">
+              <svg class="jd-icon jd-c-pointer text-body"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-left"/></svg>
+            </div>
+          {{else}}
+            <div class="return-arrow login-buttons-exit-global-settings position-relative">
+              <svg class="jd-icon jd-c-pointer text-body position-absolute"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-left"/></svg>
+            </div>
+          {{/if}}
+        {{/if}}
+
+        {{> _loginDropdownAvatarArea}}
+
+        {{#if inChangePasswordFlow}}
+          <div class="dropdown-info mb-3">
+            {{> _loginDropdownNameAndEmailArea}}
+          </div>
+
+          {{> _loginButtonsChangePassword}}
+        {{else}}
+          <div class="dropdown-info">
+            {{> _loginDropdownNameAndEmailArea}}
+
+            <div class="actions-buttons-container">
+              {{#if inSettingsEditingFlow}}
+                {{> login_buttons_open_edit_email_btn}}
+
+                {{> login_buttons_open_change_password_btn}}
+
+                {{#if $not userHasProfilePic}}
+                   {{> _loginDropdownEditAvatarColorsBtn}}
+                {{/if}}
+              {{else}}
+                {{> _loginButtonsLoggedInDropdownActions}}
+              {{/if}}
+            </div>
+          </div>
+
+          {{#if inSettingsEditingFlow}}
+            {{> user_config_dialog}}
+          {{/if}}
+        {{/if}}
+      {{/if}}
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="_loginButtonsLoggedInDropdownActions">
+  {{#if additionalLoggedInDropdownActions}}
+    {{> _loginButtonsAdditionalLoggedInDropdownActions}}
+  {{/if}}
+
+  <div class="dropdown-info-btn d-flex mt-1 mb-3">
+    <a href="#" class="info-btn-settings login-buttons-global-settings text-nowrap">Account Preferences</a>
+    <div class="dropdown-info-divider bg-primary my-1 mx-2"></div>
+    <a href="{{landingAppRootUrl}}/privacy-policy" class="info-btn-privacy" target="_blank">Privacy</a>
+    <div class="dropdown-info-divider bg-primary my-1 mx-2"></div>
+    <a href="{{landingAppRootUrl}}/terms-and-conditions" class="info-btn-terms" target="_blank">Terms</a>
+  </div>
+
+  <div class="mt-2 d-flex">
+    {{#if isAffiliate}}
+      <button class="btn btn-sm btn-primary shadow-sm affiliates-console-btn mr-1">Promoter Console</button>
+    {{/if}}
+
+    <button class="btn btn-sm btn-light" id="login-buttons-logout">
+      {{i18n 'loginButtonsLoggedInDropdownActions.signOut'}}
+    </button>
+  </div>
+</template>
+
+<template name="_loginButtonsChangePassword">
+  {{> _loginButtonsMessages}}
+  {{#each fields}}
+    {{> _loginButtonsFormField}}
+  {{/each}}
+  <button class="btn btn-block btn-primary mt-3" id="login-buttons-do-change-password">{{i18n 'loginButtonsChangePassword.submit'}}</button>
+  <!-- <button class="btn btn-block btn-default" id="login-buttons-cancel-change-password">{{i18n 'loginButtonsChangePassword.cancel'}}</button> -->
+</template>
+
+
+<template name="_loginButtonsFormField">
+  {{#if visible}}
+  <div class="form-group mb-1">
+    <!-- TODO: Implement more input types -->
+    {{#if equals inputType "checkbox"}}
+      <div class="checkbox">
+        <label><input type="checkbox" id="login-{{fieldName}}" name="login-{{fieldName}}" value="true">
+        {{{fieldLabel}}}</label>
+      </div>
+    {{/if}}
+
+    {{#if equals inputType "select"}}
+      <div class="select-dropdown">
+      {{#if showFieldLabel}}
+        <label>{{fieldLabel}}</label><br>
+      {{/if}}
+      <select id="login-{{fieldName}}" >
+        {{#if empty}}
+          <option value="">{{empty}}</option>
+        {{/if}}
+        {{#each data}}
+          <option value="{{value}}">{{label}}</option>
+        {{/each}}
+      </select>
+      </div>
+    {{/if}}
+
+    {{#if equals inputType "radio"}}
+      <div class="radio">
+        {{#if showFieldLabel}}
+        <label>{{fieldLabel}}</label><br>
+        {{/if}}
+        {{#each data}}
+          <label><input type="radio" id="login-{{../fieldName}}-{{id}}" name="login-{{../fieldName}}" value="{{value}}" {{checked}}> {{label}}</label>
+          {{#if equals ../radioLayout 'vertical'}}
+            <br>
+          {{/if}}
+        {{/each}}
+      </div>
+    {{/if}}
+
+    {{#if inputTextual}}
+      <label for="login-{{fieldName}}">{{fieldLabel}}</label>
+      <input id="login-{{fieldName}}" type="{{inputType}}" class="form-control form-control-sm" />
+    {{/if}}
+    </div>
+  {{/if}}
+</template>

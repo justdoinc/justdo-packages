@@ -1,0 +1,26 @@
+_.extend JustdoHelpers,
+  reportOptimizationIssue: JustdoCoreHelpers.reportOptimizationIssue
+
+  reportSameTickStatsOptimizationIssue: JustdoCoreHelpers.reportSameTickStatsOptimizationIssue
+
+  _getSameTickStatsObject: JustdoCoreHelpers._getSameTickStatsObject
+
+  _getSameTickStatsTrimmedKey: JustdoCoreHelpers._getSameTickStatsTrimmedKey
+
+  _getSameTickStatsTrimmedVal: JustdoCoreHelpers._getSameTickStatsTrimmedVal
+
+  _getSameTickStatsThresholdDefForKey: JustdoCoreHelpers._getSameTickStatsThresholdDefForKey
+
+  _sameTickStatsCheckThresholds: JustdoCoreHelpers._sameTickStatsCheckThresholds
+
+  sameTickStatsGetVal: JustdoCoreHelpers.sameTickStatsGetVal
+
+  sameTickStatsSetVal: JustdoCoreHelpers.sameTickStatsSetVal
+
+  sameTickStatsInc: JustdoCoreHelpers.sameTickStatsInc
+
+  sameTickStatsPushToArray: JustdoCoreHelpers.sameTickStatsPushToArray
+
+  sameTickStatsAddToDict: JustdoCoreHelpers.sameTickStatsAddToDict
+
+  stats_thresholds: JustdoCoreHelpers.stats_thresholds

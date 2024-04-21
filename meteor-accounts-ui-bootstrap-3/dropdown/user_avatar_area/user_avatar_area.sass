@@ -1,0 +1,78 @@
+input[type="file"]
+  display: none
+
+.dropdown-avatar
+  .dropdown-user-avatar
+    width: 95px
+    height: 95px
+    background-color: #cecece
+    border-radius: 100%
+    position: relative
+    overflow: hidden
+    background-size: 95px 95px
+
+    .dropdown-user-avatar-loading-indicator
+      display: none
+
+    .avatar-edit
+      position: absolute
+      bottom: -30px
+      background: rgba(0, 0, 0, 0.5)
+      color: white
+      font-size: 13px
+      line-height: 25px
+      width: 100%
+      height: 30px
+      text-align: center
+      cursor: pointer
+      transition: bottom .2s ease-in-out
+
+  .avatar-remove
+    width: 24px
+    height: 24px
+    position: absolute
+    top: 15px
+    right: 6px
+    padding: 4px
+    stroke-width: 2
+    border-radius: 100%
+    cursor: pointer
+    background: rgba(0, 0, 0, 0.5)
+    display: none
+    &:hover
+      background: rgba(0, 0, 0, 0.5)
+      stroke: white
+
+  &:hover
+    .avatar-edit
+      bottom: 0px
+    .avatar-remove
+      display: block
+
+//
+// Upload disabled state
+//
+.dropdown-user-avatar.disable-avatar-upload
+  cursor: default
+
+//
+// Upload process state
+//
+.dropdown-avatar.loading
+  cursor: default
+
+  .dropdown-user-avatar
+    cursor: default
+
+  .dropdown-user-avatar-loading-indicator
+    display: block
+    width: 100%
+    height: 100%
+    background-color: rgba(2, 10, 37, 0.6)
+    text-align: center
+    padding-top: 37px
+    color: #e5e5e5
+    font-weight: bold
+
+  .avatar-edit, .avatar-remove
+    display: none

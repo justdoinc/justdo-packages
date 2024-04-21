@@ -1,0 +1,47 @@
+<template name="tutorial">
+    {{#with tutorialManager}}
+    <div class="spotlight"></div>
+    {{! Note the canonical BS3 div.modal wrapper is omitted here because it's actually NOT modal }}
+    <div class="modal-dialog tutorial-dialog positioned">
+        <div class="modal-content">
+            <div class="modal-body">
+              <div class="pull-right">
+                <button class="btn btn-link action-tutorial-finish tutorial-close-button" disabled={{finishPending}} title="Close tutorial">
+                    <i class="fa fa-times fa-lg"></i>
+                </button>
+              </div>
+                {{> content }}
+            </div>
+            <div class="modal-footer compact">
+                <span class="muted pull-left drag-to-reposition-message">
+                    <span class="fa fa-arrows"></span> drag here to reposition
+                </span>
+                {{> _tutorial_buttons}}
+            </div>
+        </div>
+    </div>
+    {{/with}}
+</template>
+
+<template name="_tutorial_buttons">
+    <div class="btn-group">
+        {{#if prevEnabled}}
+        <button class="btn btn-warning action-tutorial-back">
+            <i class="fa fa-arrow-left"></i> Back
+        </button>
+        {{/if}}
+
+        {{#if nextEnabled}}
+        <button class="btn btn-primary action-tutorial-next">
+            Next <i class="fa fa-arrow-right"></i>
+        </button>
+        {{/if}}
+
+        {{#if finishEnabled}}
+          <button class="btn btn-success action-tutorial-finish" disabled={{finishPending}}>
+              {{#unless finishPending}}Finish{{else}}Loading...{{/unless}}
+              <i class="fa fa-ok"></i>
+          </button>
+        {{/if}}
+    </div>
+</template>

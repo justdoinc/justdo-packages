@@ -1,0 +1,35 @@
+<template name="_loginDropdownAvatarArea">
+  {{#with currentUserAvatarFields}}
+    <div class="dropdown-avatar d-flex justify-content-center align-items-center">
+      <div class="dropdown-user-avatar {{#if $not avatarUploadAllowed}}disable-avatar-upload{{/if}}" style="background-image: url('{{getProfilePic}}')">
+        {{#if avatarUploadUsingFilestackAllowed}}
+          <span class="avatar-edit upload-new-profile-pic">
+            {{#if userHasProfilePic}}
+              Change
+            {{else}}
+              Upload
+            {{/if}}
+          </span>
+        {{else if avatarUploadUsingJustdoFilesAllowed}}
+          <label for="upload-new-profile-pic-with-justdo-files">
+            <span class="avatar-edit">
+              {{#if userHasProfilePic}}
+                Change
+              {{else}}
+                Upload
+              {{/if}}
+            </span>
+          </label>
+          <input id="upload-new-profile-pic-with-justdo-files" class="upload-new-profile-pic-with-justdo-files" type="file" />
+        {{/if}}
+        <div class="dropdown-user-avatar-loading-indicator">
+          Uploading
+        </div>
+        {{#if userHasProfilePic}}
+          {{!-- Note that we allow removing profile pic even if upload is disabled --}}
+          <svg class="avatar-remove remove-profile-pic jd-icon jd-c-pointer text-white"><use xlink:href="/layout/icons-feather-sprite.svg#trash-2"/></svg>
+        {{/if}}
+      </div>
+    </div>
+  {{/with}}
+</template>

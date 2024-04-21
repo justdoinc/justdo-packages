@@ -1,0 +1,1 @@
+JustdoHelpers.FlushManager = JustdoCoreHelpers.FlushManager
