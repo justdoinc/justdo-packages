@@ -39,7 +39,7 @@
     {{#if shouldShowAvatar}}
       <div class="avatar">{{#with authorDoc}}{{> justdo_avatar}}{{/with}}</div>
     {{/if}}
-    <div class="message-container">
+    <div class="message-container {{#if myMessage}}bg-primary{{/if}}">
       <div class="message-header">
         {{#if shouldShowAuthorName}}
           <span class="author">
