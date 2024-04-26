@@ -1,19 +1,21 @@
 <template name="common_chat_messages_board">
-  <div class="messages-board-viewport">
-    <div class="messages-board">
-      {{#each messages}}
-        {{#if showMsgSeperatorWithDate @index}}
-          {{> chat_message_date_seperator}}
-        {{/if}}
+  {{#if messages}}
+    <div class="messages-board-viewport">
+      <div class="messages-board">
+        {{#each messages}}
+          {{#if showMsgSeperatorWithDate @index}}
+            {{> chat_message_date_seperator}}
+          {{/if}}
 
-        {{#if isBotLogMessage}}
-          {{> bot_log_chat_messages_board_message_card}}
-        {{else}}
-          {{> common_chat_messages_board_message_card}}
-        {{/if}}
-      {{/each}}
+          {{#if isBotLogMessage}}
+            {{> bot_log_chat_messages_board_message_card}}
+          {{else}}
+            {{> common_chat_messages_board_message_card}}
+          {{/if}}
+        {{/each}}
+      </div>
     </div>
-  </div>
+  {{/if}}
 </template>
 
 <template name="chat_message_date_seperator">
