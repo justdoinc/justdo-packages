@@ -20,6 +20,13 @@ Template.chat_bottom_windows_open.onRendered ->
 
     return
 
+  $window_container.click =>
+    if not $window_container.hasClass "active"
+      $(".window-container").removeClass "active"
+      $window_container.addClass "active"
+
+    return
+
   @blurCb = (e) =>
     if $(e.target).closest(".window-container").get(0) != $window_container.get(0)
       @channel_obj.exitFocusMode()
@@ -66,20 +73,20 @@ Template.chat_bottom_windows_open.helpers
     tpl = Template.instance()
 
     return tpl.header_template
-  
+
   getDataForHeaderTemplate: ->
     tpl = Template.instance()
 
     return _.extend {}, tpl.data, {channel_obj: tpl.channel_obj}
 
-  getTitleUrl: -> 
+  getTitleUrl: ->
     tpl = Template.instance()
     return tpl.titleUrlGenerator?() or "#"
 
   getTooltip: ->
     tpl = Template.instance()
     return tpl.tooltipGenerator?() or ""
-  
+
   getTitle: ->
     tpl = Template.instance()
     return tpl.titleGenerator() or ""
@@ -107,7 +114,7 @@ Template.chat_bottom_windows_open.events
     APP.justdo_chat._justdo_chat_bottom_windows_manager.removeWindow tpl.channel_type, tpl.channel_identifier
 
     return
-    
+
   "click .minimize-chat": (e, tpl) ->
     APP.justdo_chat._justdo_chat_bottom_windows_manager.minimizeWindow tpl.channel_type, tpl.channel_identifier
 

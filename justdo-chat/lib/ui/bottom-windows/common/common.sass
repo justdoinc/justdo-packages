@@ -11,12 +11,13 @@
   .chat-header
     border-radius: 8px 8px 0px 0px
     position: relative
+    opacity: 0.35
+    transition: opacity 0.32s
 
   &.window-unread
     animation: unread-chat-window 2s infinite
 
   .close-chat, .minimize-chat
-    opacity: 0.25
     color: black
     width: 20px
     height: 20px
@@ -43,8 +44,9 @@
     flex-shrink: 0
 
 .window-active
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.32)
   &.window-unread
     animation: unread-chat-window 2s infinite
 
-  .close-chat, .minimize-chat
+  .chat-header
     opacity: 1
