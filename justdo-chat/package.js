@@ -174,6 +174,10 @@ Package.onUse(function (api) {
   api.addFiles("lib/ui/channels/task/tasks-channels-ui/task-pane-details-section/chat-section.html", client);
   api.addFiles("lib/ui/channels/task/tasks-channels-ui/task-pane-details-section/chat-section.coffee", client);
 
+  // User channel
+  api.addFiles("lib/ui/channels/user/placeholder-items/placeholder-items.html", client); 
+  api.addFiles("lib/ui/channels/user/placeholder-items/placeholder-items.coffee", client); 
+
   // Recent channels activity
   api.addFiles("lib/ui/recent-activity-dropdown/recent-activity-dropdown/user-channels-items/user-channels-items.html", client);
   api.addFiles("lib/ui/recent-activity-dropdown/recent-activity-dropdown/user-channels-items/user-channels-items.coffee", client);
