@@ -301,6 +301,21 @@ _.extend JustdoChatBottomWindowsManager.prototype,
         tasks_collection: APP.justdo_chat.bottom_windows_supplementary_pseudo_collections.tasks
         task_id: bottom_window_channel.task_id
 
+    if channel_type is "user"
+      open_template = "chat_bottom_windows_open"
+      min_template = undefined
+
+      user_ids = bottom_window_channel.user_ids
+      receiving_user_id = _.find user_ids, (user_id) -> user_id isnt Meteor.userId()
+      template_data = 
+        channel_type: "user"
+        channel_identifier: 
+          user_ids: user_ids
+        receiving_user_id: receiving_user_id
+        header_template: "user_channel_chat_bottom_windows_header"
+        channelObjectGenerator: -> APP.justdo_chat.generateClientUserChatChannel receiving_user_id, {open_bottom_window: false}
+      
+      channel_conf = {user_ids}
 
     channel_object =
       @justdo_chat.generateClientChannelObject channel_type, channel_conf
@@ -326,6 +341,12 @@ _.extend JustdoChatBottomWindowsManager.prototype,
 
       if not _.isEmpty(task_doc.title)
         title += "<b>:</b> #{JustdoHelpers.ellipsis(task_doc.title, 80)}"
+    
+    else if window_def.type is "user"
+      receiving_user_id = _.find window_def.data.channel_identifier.user_ids, (user_id) -> user_id isnt Meteor.userId()
+      receiving_user_doc = Meteor.users.findOne(receiving_user_id, {fields: JustdoAvatar.avatar_required_fields})
+      avatar_html = JustdoAvatar.getAvatarHtml receiving_user_doc
+      title = "#{avatar_html} <b>#{JustdoHelpers.displayName receiving_user_id}</b>"
     else
       console.warn "Unknown window_def.type: #{window_def.type}"
 
