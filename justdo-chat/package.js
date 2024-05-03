@@ -197,6 +197,10 @@ Package.onUse(function (api) {
   api.addFiles("lib/ui/bottom-windows/extra-windows-button.coffee", client);
 
 
+  api.addFiles("lib/ui/bottom-windows/user/bottom-window-header.sass", client);
+  api.addFiles("lib/ui/bottom-windows/user/bottom-window-header.html", client);
+  api.addFiles("lib/ui/bottom-windows/user/bottom-window-header.coffee", client);
+
   api.addFiles("lib/ui/bottom-windows/task/common.coffee", client);
   api.addFiles("lib/ui/bottom-windows/task/bottom-window-header.html", client);
   api.addFiles("lib/ui/bottom-windows/task/bottom-window-header.coffee", client);

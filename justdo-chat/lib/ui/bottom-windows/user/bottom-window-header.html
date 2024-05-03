@@ -1,0 +1,14 @@
+<template name="user_channel_chat_bottom_windows_header">
+  <div class="chat-header user-channel">
+    {{#with receivingUserDoc}}
+      <span class="header-title">
+        <span class="header-avatar">{{> justdo_avatar}}</span>
+        <span class="display-name">{{> display_name_with_graphic_unverified_warning}}</span>
+        </span>
+    {{/with}}
+    <div class="chat-header-control">
+      <svg class="jd-icon minimize-chat" title="Minimize Chat"><use xlink:href="/layout/icons-feather-sprite.svg#minus"></use></svg>
+      <svg class="jd-icon close-chat" title="Close Chat"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+    </div>
+  </div>
+</template>
