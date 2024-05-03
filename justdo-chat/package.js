@@ -135,6 +135,12 @@ Package.onUse(function (api) {
   api.addFiles("lib/channels/task/task-channel-server-constructor.coffee", server);
   api.addFiles("lib/channels/task/task-channel-server-register.coffee", server);
 
+
+  // User
+  api.addFiles("lib/channels/user/user-channel-both-register.coffee", both)
+  api.addFiles("lib/channels/user/user-channel-client-constructor.coffee", client)
+  api.addFiles("lib/channels/user/user-channel-server-constructor.coffee", server)
+
   //
   // UI
   //
