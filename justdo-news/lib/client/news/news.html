@@ -1,38 +1,40 @@
 <template name="news">
-  <div class="news">
-    {{#if showNavigationBar}}
-      <div class="news-navigation container">
-        {{#if showDropdownButton}}
-          <div class="versions-dropdown dropdown">
-            <div class="versions-dropdown-btn" data-toggle="{{showDropdown}}" aria-haspopup="true" aria-expanded="false">
-              {{getActiveNewsTitle}}
+  <div class="container">
+    <div class="news">
+      {{#if showNavigationBar}}
+        <div class="news-navigation container">
+          {{#if showDropdownButton}}
+            <div class="versions-dropdown dropdown">
+              <div class="versions-dropdown-btn" data-toggle="{{showDropdown}}" aria-haspopup="true" aria-expanded="false">
+                {{getActiveNewsTitle}}
+                {{#if showDropdown}}
+                  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"></use></svg>
+                {{else}}
+                  <svg class="jd-icon"></svg>
+                {{/if}}
+              </div>
               {{#if showDropdown}}
-                <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"></use></svg>
-              {{else}}
-                <svg class="jd-icon"></svg>
+                <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
+                  {{#each otherNews}}
+                    <li><a class="dropdown-item {{isNewsActive}}" data-news_id="{{_id}}">{{title}}</a></li>
+                  {{/each}}
+                </ul>
               {{/if}}
             </div>
-            {{#if showDropdown}}
-              <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
-                {{#each otherNews}}
-                  <li><a class="dropdown-item {{isNewsActive}}" data-news_id="{{_id}}">{{title}}</a></li>
-                {{/each}}
-              </ul>
-            {{/if}}
-          </div>
-        {{/if}}
+          {{/if}}
 
-        {{#with activeNews}}
-          {{#each templates}}
-            <div class="news-navigation-item {{isTabActive _id}}" data-tab_id="{{_id}}">{{name}}</div>
-          {{/each}}
-        {{/with}}
-      </div>
-    {{/if}}
+          {{#with activeNews}}
+            {{#each templates}}
+              <div class="news-navigation-item {{isTabActive _id}}" data-tab_id="{{_id}}">{{name}}</div>
+            {{/each}}
+          {{/with}}
+        </div>
+      {{/if}}
 
-    {{#with getActiveNewsTemplate}}
-      {{> Template.dynamic template=template_name data=template_data}}
-    {{/with}}
+      {{#with getActiveNewsTemplate}}
+        {{> Template.dynamic template=template_name data=template_data}}
+      {{/with}}
 
+    </div>
   </div>
 </template>
