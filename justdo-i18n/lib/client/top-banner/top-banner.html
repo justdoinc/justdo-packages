@@ -4,7 +4,7 @@
       <div class="top-banner-content">
         <div class="language-suggestion">
           {{#with defaultLang}}
-            {{_ "show_this_page_in"}}<span class="set-default-lang" data-lang-tag="{{_id}}">{{name}}</span>?
+            {{{xssGuard(_ "show_this_page_in" default_lang_tag=_id default_lang_name=name)}}}
           {{/with}}
         </div>
       </div>
