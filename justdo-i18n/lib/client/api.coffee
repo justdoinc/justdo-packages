@@ -61,15 +61,14 @@ _.extend JustdoI18n.prototype,
       if not (JustdoHelpers.getClientType(env) is "web-app")
         return
 
-      if env.LANDING_PAGE_TYPE is "marketing" # IMPORTANT! if you remove this line, remove a similar condition in the landing app.
-        APP.modules.main.user_config_ui.registerConfigSection "langs-selector",
-          title: "Languages"
-          priority: 50
+      APP.modules.main.user_config_ui.registerConfigSection "langs-selector",
+        title: "Languages"
+        priority: 50
 
-        APP.modules.main.user_config_ui.registerConfigTemplate "langs-selector-dropdown",
-          section: "langs-selector"
-          template: "user_preference_lang_dropdown"
-          priority: 100
+      APP.modules.main.user_config_ui.registerConfigTemplate "langs-selector-dropdown",
+        section: "langs-selector"
+        template: "user_preference_lang_dropdown"
+        priority: 100
 
       return
 
