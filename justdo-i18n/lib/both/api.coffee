@@ -120,3 +120,6 @@ _.extend JustdoI18n.prototype,
     
     i18n_options.lang = lang
     return @getI18nTextOrFallback i18n_options
+
+  isLangRtl: (lang) ->
+    return lang in JustdoI18n.supported_rtl_langs

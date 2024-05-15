@@ -3,6 +3,7 @@ _.extend JustdoI18n,
   default_lang: "en"
   amplify_lang_key: "lang"
   amplify_hide_top_banner_key: "hide_top_banner"
+  supported_rtl_langs: ["he", "ar"] # RTL will be enabled for these languages
   # The following locale confs are taken directly from https://github.com/moment/moment/tree/develop/locale
   moment_locale_confs:
     vi:

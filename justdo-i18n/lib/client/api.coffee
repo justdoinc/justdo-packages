@@ -112,3 +112,6 @@ _.extend JustdoI18n.prototype,
       return vimeo_lang_tag
       
     return lang_tag
+  
+  isRtlOn: ->
+    return @isLangRtl @getLang()
