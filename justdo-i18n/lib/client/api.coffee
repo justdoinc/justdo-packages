@@ -83,6 +83,8 @@ _.extend JustdoI18n.prototype,
     
     Template.registerHelper "isRtl", => @isRtl()
 
+    Template.registerHelper "isForceLtrForRoute", (route_name) => @isForceLtrForRoute route_name
+
   setLang: (lang, options) ->
     # options:
     #   save_to_local_storage: Boolean (optional) - Saves lang to local storage. Has no affect if current user is logged in.
