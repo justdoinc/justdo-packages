@@ -77,6 +77,8 @@ _.extend JustdoI18n.prototype,
   _registerGlobalTemplateHelpers: ->
     Template.registerHelper "getI18nTextOrFallback", (options) =>
       return @getI18nTextOrFallback options
+    
+    Template.registerHelper "isRtl", => @isRtl()
 
   setLang: (lang, options) ->
     # options:
@@ -113,5 +115,5 @@ _.extend JustdoI18n.prototype,
       
     return lang_tag
   
-  isRtlOn: ->
+  isRtl: ->
     return @isLangRtl @getLang()
