@@ -81,9 +81,7 @@ _.extend JustdoI18n.prototype,
     Template.registerHelper "getI18nTextOrFallback", (options) =>
       return @getI18nTextOrFallback options
     
-    Template.registerHelper "isRtl", => @isRtl()
-
-    Template.registerHelper "isForceLtrForRoute", (route_name) => @isForceLtrForRoute route_name
+    Template.registerHelper "isRtl", (route_name) => @isRtl route_name
 
   setLang: (lang, options) ->
     # options:
@@ -120,7 +118,11 @@ _.extend JustdoI18n.prototype,
       
     return lang_tag
   
-  isRtl: ->
+  isRtl: (route_name) ->
+    @force_rtl_routes_dep.depend()
+    if @force_rtl_routes.has route_name
+      return false
+
     return @isLangRtl @getLang()
 
   forceLtrForRoute: (route_name, is_enable) ->
@@ -132,8 +134,3 @@ _.extend JustdoI18n.prototype,
     @force_rtl_routes_dep.changed()
     
     return
-  
-  isForceLtrForRoute: (route_name) ->
-    @force_rtl_routes_dep.depend()
-    return @force_rtl_routes.has route_name
-  
