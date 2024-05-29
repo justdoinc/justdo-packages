@@ -1,5 +1,6 @@
 _.extend JustdoI18n.prototype,
   _immediateInit: ->
+    @_setupRedirectRules()
     return
 
   _deferredInit: ->
@@ -20,6 +21,36 @@ _.extend JustdoI18n.prototype,
 
     @_setupHandlebarsHelper()
 
+    return
+  
+  _setupRedirectRules: ->
+    env = process.env
+
+    if JustdoHelpers.getClientType(env) is "landing-app"
+      WebApp.connectHandlers.use "/lang", (req, res, next) =>
+        [url_lang, path] = _.filter req.url.split("/"), (url_segment) -> not _.isEmpty url_segment
+        lang_tag = @getLangTagIfSupported url_lang
+        path = path or ""
+        path = "/#{path}"
+
+        # Redirect to url without /lang/:lang_tag if lang_tag is default_lang
+        if lang_tag is JustdoI18n.default_lang
+          res.writeHead 301,
+            Location: "#{path}"
+          res.end()
+          return
+
+        # Redirect to the proper /lang/:lang_tag if lang_tag is supported but case mismatches (e.g. zh-tw > zh-TW)
+        if lang_tag? and (lang_tag isnt url_lang)
+          res.writeHead 301,
+            Location: req.originalUrl.replace url_lang, lang_tag
+          res.end()
+          return
+
+        next()
+
+        return
+      
     return
 
   _setupHandlebarsHelper: ->

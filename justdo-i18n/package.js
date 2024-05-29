@@ -60,6 +60,7 @@ Package.onUse(function (api) {
 
   api.use("reactive-var", both);
   api.use("tracker", client);
+  api.use("webapp", server);
   api.use("astrocoders:handlebars-server@1.0.3", server);
 
   api.addFiles("lib/both/analytics.coffee", both);
