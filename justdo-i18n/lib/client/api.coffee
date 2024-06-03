@@ -176,26 +176,6 @@ _.extend JustdoI18n.prototype,
 
     return @isLangRtl @getLang()
 
-  forceLtrForRoute: (route_name, is_enable) ->
-    if (not _.isString route_name) or _.isEmpty route_name
-      @logger.error "forceLtrForRoute: route_name must be a non-empty string. Received #{route_name}"
-      return
-
-    old_force_rtl_routes = new Set @force_rtl_routes
-
-    if (is_enable is true) or not is_enable?
-      @force_rtl_routes.add route_name
-    else
-      @force_rtl_routes.delete route_name
-
-    is_same_size_after_change = old_force_rtl_routes.size is @force_rtl_routes.size
-    is_same_content_after_change = _.every old_force_rtl_routes.values(), (value) => @force_rtl_routes.has value
-
-    if (not is_same_size_after_change) or (not is_same_content_after_change)
-      @force_rtl_routes_dep.changed()
-    
-    return
-
   i18nPath: (path, lang) ->
     if not path?
       path = "/"
