@@ -129,6 +129,12 @@ _.extend JustdoI18n.prototype,
 
     return lang in JustdoI18n.supported_rtl_langs
 
+  getI18nPathDef: (path) -> 
+    return APP.landing_page?.route_definition_by_path?[path]
+
+  isPathI18nAble: (path) -> 
+    return @getI18nPathDef(path)?
+
   disableRtlSupport: ->
     # When the app doesn't support RTL properly, it is likely that you would want to disable
     # cases where we modify the UI for RTL languages.
