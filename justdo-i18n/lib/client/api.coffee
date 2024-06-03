@@ -97,12 +97,22 @@ _.extend JustdoI18n.prototype,
         amplify.store JustdoI18n.amplify_lang_key, lang
     return
   
+  getUrlLang: ->
+    url_lang = Router.current()?.params?.lang or JustdoI18n.default_lang
+    if (lang_tag = @getLangTagIfSupported url_lang)?
+      return lang_tag
+
+    return
+
   getLang: ->
-    if Meteor.user({fields: {"profile.lang": 1}})?
-      return @getUserLang() or JustdoI18n.default_lang
+    if (url_lang = @getUrlLang())? and url_lang isnt JustdoI18n.default_lang
+      return url_lang
 
     if (lang = @lang_rv.get())?
       return lang
+
+    if Meteor.user({fields: {"profile.lang": 1}})?
+      return @getUserLang() or JustdoI18n.default_lang
 
     if (campaign_lang = APP.justdo_promoters_campaigns?.getCampaignDoc()?.lang)?
       return campaign_lang
