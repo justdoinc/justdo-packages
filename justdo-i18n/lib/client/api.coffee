@@ -17,6 +17,8 @@ _.extend JustdoI18n.prototype,
       moment.locale lang.toLowerCase()
       return
 
+    @_setupLandingPageTracker()
+
     @_setupBeforeUserSignUpHook()
 
     @_setupPlaceholderItems()
@@ -84,6 +86,36 @@ _.extend JustdoI18n.prototype,
     Template.registerHelper "isRtl", (route_name) => @isRtl route_name
 
     Template.registerHelper "i18nCurrentPagePath", (lang) => @i18nCurrentPagePath lang
+
+  _setupLandingPageTracker: ->
+    if JustdoHelpers.getClientType(env) isnt "landing-app"
+      return
+
+    if not @set_lang_from_url_lang_tracker?
+      @set_lang_from_url_lang_tracker = Tracker.autorun =>
+        if (lang = @lang_rv.get())?
+          return
+        
+        user_or_campaign_lang = @getUserLang() or APP.justdo_promoters_campaigns?.getCampaignDoc()?.lang
+        if user_or_campaign_lang? and (user_or_campaign_lang isnt lang)
+          @setLang user_or_campaign_lang, {skip_set_user_lang: true}
+
+        return
+    
+    if not @set_url_lang_from_active_lang_tracker?
+      @set_url_lang_from_active_lang_tracker = Tracker.autorun =>
+        lang = @getLang()
+        if (i18n_path = @i18nCurrentPagePath lang)?
+          Router.go i18n_path
+
+        return
+      
+    @onDestroy =>
+      @set_lang_from_url_lang_tracker?.stop?()
+      @set_url_lang_from_active_lang_tracker?.stop?()
+      return
+    
+    return
 
   setLang: (lang, options) ->
     # options:
@@ -156,7 +188,7 @@ _.extend JustdoI18n.prototype,
     if (not is_same_size_after_change) or (not is_same_content_after_change)
       @force_rtl_routes_dep.changed()
     
-    return    return
+    return
 
   i18nPath: (path, lang) ->
     if not path?
