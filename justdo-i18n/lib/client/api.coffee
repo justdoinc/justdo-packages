@@ -211,6 +211,6 @@ _.extend JustdoI18n.prototype,
 
     path = router.route.path()
     if router.params?.path?
-      path = "/lang/#{router.params.path}"
+      path = "/#{router.params.path}"
     
     return @i18nPath path, lang
