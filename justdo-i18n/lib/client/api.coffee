@@ -88,7 +88,8 @@ _.extend JustdoI18n.prototype,
   setLang: (lang, options) ->
     # options:
     #   save_to_local_storage: Boolean (optional) - Saves lang to local storage. Has no affect if current user is logged in.
-    if Meteor.user()?
+    #   skip_set_user_lang: Boolean (optional) - Do not set user's lang. Only has effect if it's true.
+    if Meteor.user()? and (options.skip_set_user_lang isnt true)
       @setUserLang lang
     else
       @lang_rv.set lang
