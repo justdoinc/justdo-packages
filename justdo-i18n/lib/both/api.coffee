@@ -86,6 +86,13 @@ _.extend JustdoI18n.prototype,
   getSupportedLanguages: ->
     return TAPi18n.getLanguages()
   
+  # If lang_tag is supported, return it in the correct case (e.g. zh-tw > zh-TW).
+  # Else return undefined.
+  getLangTagIfSupported: (lang_tag) ->
+    lower_case_lang_tag = lang_tag.toLowerCase()
+    supported_languages = _.keys @getSupportedLanguages()
+    return _.find supported_languages, (supported_lang_tag) -> supported_lang_tag.toLowerCase() is lower_case_lang_tag
+  
   getI18nTextOrFallback: (options) ->
     # Object params passed from template helper will be encapsulated inside hash
     if options.hash?
