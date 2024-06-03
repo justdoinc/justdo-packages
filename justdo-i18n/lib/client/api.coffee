@@ -104,8 +104,14 @@ _.extend JustdoI18n.prototype,
     
     if not @set_url_lang_from_active_lang_tracker?
       @set_url_lang_from_active_lang_tracker = Tracker.autorun =>
-        lang = @getLang()
-        if (i18n_path = @i18nCurrentPagePath lang)?
+        if not (router = Router.current())?
+          return
+          
+        cur_path = router.route.path()
+        if router.params?.path?
+          cur_path = "/lang/#{router.params.path}"
+
+        if (@isPathI18nAble cur_path) and (i18n_path = @i18nPath cur_path)?
           Router.go i18n_path
 
         return
