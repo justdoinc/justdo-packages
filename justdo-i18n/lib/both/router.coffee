@@ -8,10 +8,10 @@ _.extend JustdoI18n.prototype,
       router_this.render "not_found"
       return
 
-    if (route_def = APP.landing_page.route_definition_by_path[path])?
+    if (route_def = @getI18nPathDef path)?
       route_def.action.call router_this
     else
-      router_this.redirect path
+      Router.go path
 
     return
 
