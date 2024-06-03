@@ -194,11 +194,8 @@ _.extend JustdoI18n.prototype,
   i18nCurrentPagePath: (lang) ->
     if not (router = Router.current())?
       return
-    
-    cur_route_name = router.route.getName()
-    cur_route_params = router.getParams()
-    path = Router.path cur_route_name, cur_route_params
 
+    path = router.route.path()
     if router.params?.path?
       path = "/#{router.params.path}"
     
