@@ -1,6 +1,10 @@
 _.extend JustdoI18n.prototype,
   _immediateInit: ->
-    @_setupRedirectRules()
+    env = process.env
+
+    if JustdoHelpers.getClientType(env) is "landing-app"
+      @_setupLandingAppRedirectRules()
+
     return
 
   _deferredInit: ->
@@ -23,35 +27,39 @@ _.extend JustdoI18n.prototype,
 
     return
   
-  _setupRedirectRules: ->
-    env = process.env
+  _setupLandingAppRedirectRules: ->
+    WebApp.connectHandlers.use "/lang", (req, res, next) =>
+      # Important: this isn't iron-router, this is the WebApp layer, happens before the iron-router.
+      #
+      # This handler will have no effect in case there's no need to redirect
+      #
+      # It takes care of the following cases:
+      #
+      #   1. Redirecting to the default language if the language tag is the default one (/en/pricing -> /pricing)
+      #   2. Redirecting to the proper language tag if the language tag is supported but case mismatches (e.g. /zh-tw/pricing -> /zh-TW/pricing)
 
-    if JustdoHelpers.getClientType(env) is "landing-app"
-      WebApp.connectHandlers.use "/lang", (req, res, next) =>
-        [url_lang, path] = _.filter req.url.split("/"), (url_segment) -> not _.isEmpty url_segment
-        lang_tag = @getLangTagIfSupported url_lang
-        path = path or ""
-        path = "/#{path}"
+      [url_lang, path] = _.filter req.url.split("/"), (url_segment) -> not _.isEmpty url_segment
+      lang_tag = @getLangTagIfSupported url_lang
+      path = path or ""
+      path = "/#{path}"
 
-        # Redirect to url without /lang/:lang_tag if lang_tag is default_lang
-        if lang_tag is JustdoI18n.default_lang
-          res.writeHead 301,
-            Location: "#{path}"
-          res.end()
-          return
-
-        # Redirect to the proper /lang/:lang_tag if lang_tag is supported but case mismatches (e.g. zh-tw > zh-TW)
-        if lang_tag? and (lang_tag isnt url_lang)
-          res.writeHead 301,
-            Location: req.originalUrl.replace url_lang, lang_tag
-          res.end()
-          return
-
-        next()
-
+      # Redirect to url without /lang/:lang_tag if lang_tag is default_lang
+      if lang_tag is JustdoI18n.default_lang
+        res.writeHead 301,
+          Location: "#{path}"
+        res.end()
         return
-      
-    return
+
+      # Redirect to the proper /lang/:lang_tag if lang_tag is supported but case mismatches (e.g. zh-tw > zh-TW)
+      if lang_tag? and (lang_tag isnt url_lang)
+        res.writeHead 301,
+          Location: req.originalUrl.replace url_lang, lang_tag
+        res.end()
+        return
+
+      next()
+
+      return
 
   _setupHandlebarsHelper: ->
     OriginalHandlebars.registerHelper "_", (key, args...) ->
