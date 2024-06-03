@@ -7,6 +7,8 @@ _.extend JustdoI18n.prototype,
     if not (lang_tag = @getLangTagIfSupported url_lang)?
       router_this.render "not_found"
       return
+    
+    @setLang lang_tag, {save_to_local_storage: true, skip_set_user_lang: true}
 
     if (route_def = @getI18nPathDef path)?
       route_def.action.call router_this
