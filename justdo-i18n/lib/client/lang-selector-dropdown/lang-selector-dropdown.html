@@ -7,7 +7,7 @@
 
     <div class="dropdown-menu shadow-lg border-0">
       {{#each supportedLangs}}
-        <div class="dropdown-item" data-lang-tag="{{_id}}">{{name}}</div>
+        <a href="{{i18nCurrentPagePath _id}}" class="dropdown-item" data-lang-tag="{{_id}}" >{{name}}</a>
       {{/each}}
     </div>
   </div>

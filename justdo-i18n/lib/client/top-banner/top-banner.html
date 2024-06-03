@@ -2,11 +2,11 @@
   {{#if showTopBanner}}
     <div class="top-banner">
       <div class="top-banner-content">
-        <div class="language-suggestion">
-          {{#with defaultLang}}
+        {{#with defaultLang}}
+          <a href="{{i18nCurrentPagePath _id}}" class="language-suggestion">
             {{{xssGuard(_ "show_this_page_in" default_lang_tag=_id default_lang_name=name)}}}
-          {{/with}}
-        </div>
+          </a>
+        {{/with}}
       </div>
       <svg class="jd-icon text-white top-banner-close"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
     </div>
