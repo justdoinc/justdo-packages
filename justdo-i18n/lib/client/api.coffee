@@ -83,6 +83,8 @@ _.extend JustdoI18n.prototype,
     
     Template.registerHelper "isRtl", (route_name) => @isRtl route_name
 
+    Template.registerHelper "i18nCurrentPagePath", (lang) => @i18nCurrentPagePath lang
+
   setLang: (lang, options) ->
     # options:
     #   save_to_local_storage: Boolean (optional) - Saves lang to local storage. Has no affect if current user is logged in.
@@ -143,4 +145,29 @@ _.extend JustdoI18n.prototype,
     if (not is_same_size_after_change) or (not is_same_content_after_change)
       @force_rtl_routes_dep.changed()
     
-    return
+    return    return
+
+  i18nPath: (path, lang) ->
+    if not path?
+      path = "/"
+
+    if not lang?
+      lang = APP.justdo_i18n.getLang()
+    
+    if not (lang = @getLangTagIfSupported lang)?
+      return path
+
+    if (lang is JustdoI18n.default_lang) or (not @isPathI18nAble path)
+      return path or "/"
+
+    return "/lang/#{lang}#{path or ""}"
+    
+  i18nCurrentPagePath: (lang) ->
+    if not (router = Router.current())?
+      return
+
+    path = router.route.path()
+    if router.params?.path?
+      path = "/lang/#{router.params.path}"
+    
+    return @i18nPath path, lang
