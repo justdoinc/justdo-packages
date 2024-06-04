@@ -106,6 +106,10 @@ _.extend JustdoI18n.prototype,
       @set_url_lang_from_active_lang_tracker = Tracker.autorun =>
         if not (router = Router.current())?
           return
+        
+        # If lang is already specified in the url, do nothing.
+        if @getUrlLang()?
+          return
           
         cur_path = @getOriginalCurrentPath()
 
@@ -133,15 +137,16 @@ _.extend JustdoI18n.prototype,
         amplify.store JustdoI18n.amplify_lang_key, lang
     return
   
+  # Note: This method will never return JustdoI18n.default_lang,
+  # because when /lang/#{JustdoI18n.default_lang} is accessed, it will redirect to /
   getUrlLang: ->
-    url_lang = Router.current()?.params?.lang or JustdoI18n.default_lang
-    if (lang_tag = @getLangTagIfSupported url_lang)?
-      return lang_tag
-
-    return
+    if not (url_lang = Router.current()?.params?.lang)?
+      return
+      
+    return url_lang
 
   getLang: ->
-    if (url_lang = @getUrlLang())? and url_lang isnt JustdoI18n.default_lang
+    if (url_lang = @getUrlLang())?
       return url_lang
 
     if (lang = @lang_rv.get())?
@@ -201,7 +206,9 @@ _.extend JustdoI18n.prototype,
     if not (router = Router.current())?
       return
     
-    cur_route_name = router.route.getName()
+    if not (cur_route_name = router.route?.getName())?
+      return
+      
     # If current route is not i18n_path, generate path using route name and params
     if cur_route_name.startsWith "i18n_path"
       if cur_route_name is "i18n_path_main_page"
@@ -209,8 +216,8 @@ _.extend JustdoI18n.prototype,
       
       return "/#{router.getParams().path}"
 
-    cur_route_name = Router.current().route.getName()
-    cur_route_params = Router.current().getParams()
+    cur_route_name = router.route?.getName()
+    cur_route_params = router.getParams()
     path = Router.path cur_route_name, cur_route_params
 
     return path
