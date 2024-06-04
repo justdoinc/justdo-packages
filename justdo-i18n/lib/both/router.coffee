@@ -25,9 +25,11 @@ _.extend JustdoI18n.prototype,
       Router.route "/lang/:lang", ->
         self._langRouteHandler @
         return
+      , {name: "i18n_path_main_page"}
 
       Router.route "/lang/:lang/:path", ->
         self._langRouteHandler @
         return
+      , {name: "i18n_path"}
 
     return
