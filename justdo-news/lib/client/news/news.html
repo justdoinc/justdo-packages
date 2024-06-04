@@ -16,7 +16,7 @@
               {{#if showDropdown}}
                 <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
                   {{#each otherNews}}
-                    <li><a class="dropdown-item {{isNewsActive}}" data-news_id="{{_id}}">{{title}}</a></li>
+                    <li><a href="{{getNewsPath}}" class="dropdown-item {{isNewsActive}}" data-news_id="{{_id}}">{{title}}</a></li>
                   {{/each}}
                 </ul>
               {{/if}}
@@ -25,7 +25,7 @@
 
           {{#with activeNews}}
             {{#each templates}}
-              <div class="news-navigation-item {{isTabActive _id}}" data-tab_id="{{_id}}">{{name}}</div>
+              <a href="{{getNewsTabPath}}" class="news-navigation-item {{isTabActive _id}}" data-tab_id="{{_id}}">{{name}}</a>
             {{/each}}
           {{/with}}
         </div>

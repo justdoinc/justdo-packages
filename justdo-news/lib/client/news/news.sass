@@ -38,10 +38,11 @@
     .dropdown-menu
       li
         cursor: pointer
-        .dropdown-item:active,
-        .dropdown-item.active
-          font-weight: bold
-          background-color: #f8f9fa
+        .dropdown-item
+          color: inherit
+          &:active, &.active
+            font-weight: bold
+            background-color: #f8f9fa
 
   .versions-dropdown-btn
     background: linear-gradient(90deg, #027bff 0%, #07A6FF 100%)
@@ -68,6 +69,7 @@
     font-size: 16px
     &:hover
       color: rgba(49, 69, 99, 1)
+      text-decoration: none
     &.active
       font-weight: bold
       color: black

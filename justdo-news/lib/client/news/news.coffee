@@ -37,6 +37,11 @@ Template.news.onCreated ->
 
       return
 
+  @isRouterNavigation = -> @router_navigation and @register_news_routes
+
+  @getNewsPath = (template_name, template_data) ->
+    return Router.path template_name, template_data
+
   return
 
 Template.news.onRendered ->
@@ -112,17 +117,36 @@ Template.news.helpers
     template.template_data.date = news_doc.date
     return template
 
+  getNewsPath: ->
+    tpl = Template.instance()
+    if not tpl.isRouterNavigation()
+      return
+    
+    active_category = tpl.active_category_rv.get()
+    template_name = "#{active_category.replaceAll "-", "_"}_page_with_news_id"
+    news_id = @_id
+
+    return tpl.getNewsPath template_name, {news_category: active_category, news_id: news_id}
+  
+  getNewsTabPath: ->
+    tpl = Template.instance()
+    if not tpl.isRouterNavigation()
+      return
+
+    active_category = tpl.active_category_rv.get()
+    template_name = "#{active_category.replaceAll "-", "_"}_page_with_news_id_and_template"
+    news_id = tpl.active_news_id_rv.get()
+    news_template = @_id
+
+    return tpl.getNewsPath template_name, {news_category: active_category, news_id: news_id, news_template: news_template}
+
 Template.news.events
   "click .news-navigation-item": (e, tpl) ->
     active_category = tpl.active_category_rv.get()
     tab_id = $(e.target).closest(".news-navigation-item").data "tab_id"
 
-    if tpl.router_navigation and tpl.register_news_routes
-      Router.go "#{active_category.replaceAll "-", "_"}_page_with_news_id_and_template",
-        news_category: active_category
-        news_id: tpl.active_news_id_rv.get()
-        news_template: tab_id
-    else
+    # If router navigation is enabled, the href will take care of showing the correct content.
+    if not tpl.isRouterNavigation()
       tpl.active_news_tab_rv.set tab_id
 
     return
@@ -131,11 +155,8 @@ Template.news.events
     active_category = tpl.active_category_rv.get()
     news_id = $(e.target).closest(".dropdown-item").data("news_id")
 
-    if tpl.router_navigation and tpl.register_news_routes
-      Router.go "#{active_category.replaceAll "-", "_"}_page_with_news_id",
-        news_category: active_category
-        news_id: news_id
-    else
+    # If router navigation is enabled, the href will take care of showing the correct content.
+    if not tpl.isRouterNavigation()
       tpl.active_news_id_rv.set news_id
 
     return
