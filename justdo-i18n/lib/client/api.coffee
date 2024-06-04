@@ -187,7 +187,7 @@ _.extend JustdoI18n.prototype,
     if (lang is JustdoI18n.default_lang) or (not @isPathI18nAble path)
       return path or "/"
 
-    return "/lang/#{lang}#{path or ""}"
+    return "/lang/#{lang}#{if path is "/" then "" else path}"
     
   i18nCurrentPagePath: (lang) ->
     if not (router = Router.current())?
