@@ -39,6 +39,10 @@ _.extend JustdoI18n.prototype,
       #   2. Redirecting to the proper language tag if the language tag is supported but case mismatches (e.g. /zh-tw/pricing -> /zh-TW/pricing)
 
       url_segments = _.filter req.url.split("/"), (url_segment) -> not _.isEmpty url_segment
+      if _.isEmpty url_segments
+        next()
+        return
+
       url_lang = url_segments.shift()
       lang_tag = @getLangTagIfSupported url_lang
       path = "/#{url_segments.join "/"}"
