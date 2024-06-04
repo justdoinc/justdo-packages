@@ -107,9 +107,7 @@ _.extend JustdoI18n.prototype,
         if not (router = Router.current())?
           return
           
-        cur_path = router.route.path()
-        if router.params?.path?
-          cur_path = "/lang/#{router.params.path}"
+        cur_path = @getOriginalCurrentPath()
 
         if (@isPathI18nAble cur_path) and (i18n_path = @i18nPath cur_path)?
           Router.go i18n_path
@@ -195,8 +193,24 @@ _.extend JustdoI18n.prototype,
     if not (router = Router.current())?
       return
 
-    path = router.route.path()
-    if router.params?.path?
-      path = "/#{router.params.path}"
+    path = @getOriginalCurrentPath()
     
     return @i18nPath path, lang
+
+  getOriginalCurrentPath: ->
+    if not (router = Router.current())?
+      return
+    
+    cur_route_name = router.route.getName()
+    # If current route is not i18n_path, generate path using route name and params
+    if cur_route_name.startsWith "i18n_path"
+      if cur_route_name is "i18n_path_main_page"
+        return "/"
+      
+      return "/#{router.getParams().path}"
+
+    cur_route_name = Router.current().route.getName()
+    cur_route_params = Router.current().getParams()
+    path = Router.path cur_route_name, cur_route_params
+
+    return path
