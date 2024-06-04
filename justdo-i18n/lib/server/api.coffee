@@ -38,10 +38,10 @@ _.extend JustdoI18n.prototype,
       #   1. Redirecting to the default language if the language tag is the default one (/en/pricing -> /pricing)
       #   2. Redirecting to the proper language tag if the language tag is supported but case mismatches (e.g. /zh-tw/pricing -> /zh-TW/pricing)
 
-      [url_lang, path] = _.filter req.url.split("/"), (url_segment) -> not _.isEmpty url_segment
+      url_segments = _.filter req.url.split("/"), (url_segment) -> not _.isEmpty url_segment
+      url_lang = url_segments.shift()
       lang_tag = @getLangTagIfSupported url_lang
-      path = path or ""
-      path = "/#{path}"
+      path = "/#{url_segments.join "/"}"
 
       # Redirect to url without /lang/:lang_tag if lang_tag is default_lang
       if lang_tag is JustdoI18n.default_lang
