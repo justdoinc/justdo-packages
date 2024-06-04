@@ -84,7 +84,9 @@
     // dialog container
     container: "body",
     // focused element
-    focused_element: ".btn-primary:first"
+    focused_element: ".btn-primary:first",
+    // rtl support
+    rtl: false
   };
 
   // our public object; augmented after our private API
@@ -607,6 +609,11 @@
     });
 
     body.find(".bootbox-body").html(options.message);
+
+    if (options.rtl === true) {
+      dialog.addClass("right-to-left");
+      dialog.attr("dir", "rtl");
+    }
 
     if (options.animate === true) {
       dialog.addClass("fade");
