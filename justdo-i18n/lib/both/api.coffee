@@ -130,5 +130,19 @@ _.extend JustdoI18n.prototype,
     return lang in JustdoI18n.supported_rtl_langs
 
   disableRtlSupport: ->
+    # When the app doesn't support RTL properly, it is likely that you would want to disable
+    # cases where we modify the UI for RTL languages.
+    #
+    # An example for this are dialogs that are positioned differently for RTL languages.
+    # The bootbox package adds the rtl and right-to-left classes when it detects based
+    # on justdo-i18n that the current language is rtl. But, if the dialog weren't prepared
+    # to be in RTL, it might look bad.
+    #
+    # For situations like this, you can call this method early on in your app's lifecycle.
+    #
+    # This will ensure that even if the language is RTL, RTL-specific modifications won't be made
+    # to the DOM by justdo-i18n and other packages that depend on it.
+
     @disable_rtl_support_rv.set true
+    
     return
