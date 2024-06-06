@@ -12,8 +12,17 @@ _.extend JustdoI18n.prototype,
 
       TAPi18n.setLanguage lang
       i18n?.setLanguage lang
+
+      # On the initial load, bootbox might not be loaded yet, try to set it again after app accounts are ready
+      # (which is quite late in the init process)
+      APP.executeAfterAppAccountsReady =>
+        # The hooks will be called in the order they were added, so don't worry
+        # about later changes to lang being overriden by prior calls where lang
+        # isn't determined yet
+        bootbox?.setLocale lang.replaceAll("-", "_")
+        return
+      
       jQuery.datepicker?.setDefaults jQuery.datepicker.regional[lang]
-      bootbox.setLocale lang.replaceAll("-", "_")
       moment.locale lang.toLowerCase()
       return
 
@@ -54,11 +63,12 @@ _.extend JustdoI18n.prototype,
     return
 
   _setupBeforeUserSignUpHook: ->
-    APP.accounts.on "user-signup", (options) =>
-      if (lang = @getLang())?
-        options.profile.lang = lang
+    APP.once "app-accounts-ready", =>
+      APP.accounts.on "user-signup", (options) =>
+        if (lang = @getLang())?
+          options.profile.lang = lang
+        return
       return
-      
     return
 
   _setupPlaceholderItems: ->
