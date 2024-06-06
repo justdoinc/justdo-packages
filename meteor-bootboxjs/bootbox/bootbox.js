@@ -608,10 +608,18 @@
 
     body.find(".bootbox-body").html(options.message);
 
-    if (APP.justdo_i18n != null? APP.justdo_i18n.isRtl(): void 0) {
+    // The following resulted from the following coffeescript code:
+    // if APP.justdo_i18n?.isRtl()
+    //   dialog.addClass("right-to-left")
+    //   dialog.attr("dir", "rtl")
+    // START
+    var ref;
+
+    if ((ref = APP.justdo_i18n) != null ? ref.isRtl() : void 0) {
       dialog.addClass("right-to-left");
       dialog.attr("dir", "rtl");
     }
+    // END
 
     if (options.animate === true) {
       dialog.addClass("fade");
