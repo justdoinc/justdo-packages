@@ -4,6 +4,8 @@ _.extend JustdoI18n.prototype,
 
     # Add here code that should run, in the Server and Client, during the JS
     # tick in which we create the object instance.
+
+    @disable_rtl_support_rv = new ReactiveVar false
   
     @_setupI18nextPluralRule()
     @_replaceDefaultLanguageNames()
@@ -122,4 +124,11 @@ _.extend JustdoI18n.prototype,
     return @getI18nTextOrFallback i18n_options
 
   isLangRtl: (lang) ->
+    if @disable_rtl_support_rv.get()
+      return false
+
     return lang in JustdoI18n.supported_rtl_langs
+
+  disableRtlSupport: ->
+    @disable_rtl_support_rv.set true
+    return
