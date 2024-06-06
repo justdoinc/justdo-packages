@@ -10,6 +10,7 @@ Package.onUse(function (api) {
   api.use('fourseven:scss@3.2.0', client);
 
   api.use("justdoinc:justdo-helpers@1.0.0", client);
+  api.use("justdoinc:justdo-i18n@1.0.0", client, {weak: true});
 
   api.use('jquery', 'client');
   api.use('twbs:bootstrap@3.3.4', 'client', {weak: true});

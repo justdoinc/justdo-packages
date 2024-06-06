@@ -84,9 +84,7 @@
     // dialog container
     container: "body",
     // focused element
-    focused_element: ".btn-primary:first",
-    // rtl support
-    rtl: false
+    focused_element: ".btn-primary:first"
   };
 
   // our public object; augmented after our private API
@@ -610,7 +608,7 @@
 
     body.find(".bootbox-body").html(options.message);
 
-    if (options.rtl === true) {
+    if (APP.justdo_i18n != null? APP.justdo_i18n.isRtl(): void 0) {
       dialog.addClass("right-to-left");
       dialog.attr("dir", "rtl");
     }
