@@ -5,6 +5,8 @@ _.extend JustdoI18nRoutes.prototype,
     # Add here code that should run, in the Server and Client, during the JS
     # tick in which we create the object instance.
 
+    @i18n_routes = {}
+
     @setupRouter()
 
     return
@@ -28,7 +30,18 @@ _.extend JustdoI18nRoutes.prototype,
     return _.find supported_languages, (supported_lang_tag) -> supported_lang_tag.toLowerCase() is lower_case_lang_tag
 
   getI18nPathDef: (path) -> 
-    return APP.landing_page?.route_definition_by_path?[path]
+    return @i18n_routes[path]
 
   isPathI18nAble: (path) -> 
     return @getI18nPathDef(path)?
+  
+  registerRoute: (route_path, routingFunction) ->
+    if _.has @i18n_routes, route_path
+      throw new @_error "not-supported", "Route #{route_path} is already registered."
+    
+    if not _.isFunction routingFunction
+      throw new @_error "invalid-argument", "routingFunction must be a function."
+
+    @i18n_routes[route_path] = {routingFunction}
+
+    return

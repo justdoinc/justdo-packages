@@ -12,7 +12,7 @@ _.extend JustdoI18nRoutes.prototype,
       APP.justdo_i18n.setLang lang_tag, {save_to_local_storage: true, skip_set_user_lang: true}
 
     if (route_def = @getI18nPathDef path)?
-      route_def.action.call router_this
+      route_def.routingFunction.call router_this
     else
       Router.go path
 
