@@ -35,13 +35,44 @@ _.extend JustdoI18nRoutes.prototype,
   isPathI18nAble: (path) -> 
     return @getI18nPathDef(path)?
   
-  registerRoute: (route_path, routingFunction) ->
-    if _.has @i18n_routes, route_path
-      throw new @_error "not-supported", "Route #{route_path} is already registered."
-    
-    if not _.isFunction routingFunction
-      throw new @_error "invalid-argument", "routingFunction must be a function."
+  _registerRoutesItemSchema: new SimpleSchema
+    path: 
+      type: String
+    routingFunction:
+      type: Function
+    route_options:
+      type: Object
+      blackbox: true
+      optional: true
+  registerRoutes: (routes) ->
+    if not _.isArray routes
+      routes = [routes]
 
-    @i18n_routes[route_path] = {routingFunction}
+    cleaned_routes = []
+
+    for route in routes
+      {cleaned_val} = JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_registerRoutesItemSchema,
+        route,
+        {self: @, throw_on_error: true}
+      )
+      route = cleaned_val
+      cleaned_routes.push route
+      
+      if _.has @i18n_routes, route.path
+        throw new @_error "not-supported", "Route #{route.path} is already registered."
+    
+    for route in cleaned_routes
+      do (route) =>
+        # Register regular route
+        Router.route route.path, -> 
+          route.routingFunction.call @
+          return
+        , route.route_options or {}
+
+        # Mark route is i18n-ready so /lang/:lang will work
+        @i18n_routes[route.path] = {routingFunction: route.routingFunction, route_options: route.route_options}
+
+        return
 
     return
