@@ -104,7 +104,7 @@ _.extend JustdoI18nRoutes.prototype,
 
     return path
 
-  getCurrentRouteNameWithoutLangPrefix: ->
+  getCurrentRouteName: ->
     if not (router = Router.current())?
       return
     
