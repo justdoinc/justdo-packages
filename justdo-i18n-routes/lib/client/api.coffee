@@ -103,3 +103,17 @@ _.extend JustdoI18nRoutes.prototype,
     path = Router.path cur_route_name, cur_route_params
 
     return path
+
+  getCurrentRouteNameWithoutLangPrefix: ->
+    if not (router = Router.current())?
+      return
+    
+    if not (cur_route_name = router.route?.getName())?
+      return
+    
+    if not cur_route_name.startsWith "i18n_path"
+      return cur_route_name
+    
+    cur_path_without_lang_prefix = "/#{router.getParams().path or ""}"
+
+    return Router.routes._byPath[cur_path_without_lang_prefix]?.getName()
