@@ -39,7 +39,7 @@ _.extend JustdoI18nRoutes.prototype,
         if @getUrlLang()?
           return
           
-        cur_path = @getOriginalCurrentPath()
+        cur_path = @getCurrentPath()
 
         if (@isPathI18nAble cur_path) and (i18n_path = @i18nPath cur_path)?
           Router.go i18n_path
@@ -80,11 +80,11 @@ _.extend JustdoI18nRoutes.prototype,
     if not (router = Router.current())?
       return
 
-    path = @getOriginalCurrentPath()
+    path = @getCurrentPath()
     
     return @i18nPath path, lang
 
-  getOriginalCurrentPath: ->
+  getCurrentPath: ->
     if not (router = Router.current())?
       return
     
