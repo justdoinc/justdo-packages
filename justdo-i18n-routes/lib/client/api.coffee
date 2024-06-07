@@ -111,4 +111,4 @@ _.extend JustdoI18nRoutes.prototype,
     if router.params?.path?
       return "/#{router.params.path}"
 
-    return
+    return router.route?.path()
