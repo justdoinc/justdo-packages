@@ -103,12 +103,3 @@ _.extend JustdoI18nRoutes.prototype,
     path = Router.path cur_route_name, cur_route_params
 
     return path
-
-  getOriginalPathIfCurrentPathIsI18n: ->
-    if not (router = Router.current())?
-      return
-    
-    if router.params?.path?
-      return "/#{router.params.path}"
-
-    return router.route?.path()
