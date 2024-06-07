@@ -12,10 +12,10 @@ _.extend JustdoI18nRoutes.prototype,
 
   _registerGlobalTemplateHelpers: ->
     Template.registerHelper "i18nCurrentPagePath", (lang) => @i18nCurrentPagePath lang
-    Template.registerHelper "i18nPathFor", (options) -> 
-      console.log options
-      APP.justdo_i18n_routes.i18nPath(path) or path
-      return
+    Template.registerHelper "i18nRoute", (options) -> 
+      path = Blaze._globalHelpers.pathFor options
+      return APP.justdo_i18n_routes.i18nPath(path) or path
+
     return
 
   _setupLangUrlTracker: ->
