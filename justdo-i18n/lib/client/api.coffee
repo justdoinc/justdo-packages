@@ -138,12 +138,3 @@ _.extend JustdoI18n.prototype,
       return false
 
     return @isLangRtl @getLang()
-
-  getOriginalPathIfCurrentPathIsI18n: ->
-    if not (router = Router.current())?
-      return
-    
-    if router.params?.path?
-      return "/#{router.params.path}"
-
-    return 

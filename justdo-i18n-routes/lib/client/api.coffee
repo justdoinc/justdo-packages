@@ -12,7 +12,10 @@ _.extend JustdoI18nRoutes.prototype,
 
   _registerGlobalTemplateHelpers: ->
     Template.registerHelper "i18nCurrentPagePath", (lang) => @i18nCurrentPagePath lang
-    
+    Template.registerHelper "i18nPathFor", (options) -> 
+      console.log options
+      APP.justdo_i18n_routes.i18nPath(path) or path
+      return
     return
 
   _setupLangUrlTracker: ->
@@ -100,3 +103,12 @@ _.extend JustdoI18nRoutes.prototype,
     path = Router.path cur_route_name, cur_route_params
 
     return path
+
+  getOriginalPathIfCurrentPathIsI18n: ->
+    if not (router = Router.current())?
+      return
+    
+    if router.params?.path?
+      return "/#{router.params.path}"
+
+    return
