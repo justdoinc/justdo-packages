@@ -46,6 +46,7 @@ Package.onUse(function (api) {
   api.use("meteorspark:logger@0.3.0", both);
   api.use("justdoinc:justdo-helpers@1.0.0", both);
   api.use("iron:router@1.1.2", both);
+  api.use("justdoinc:justdo-i18n@1.0.0", both);
 
   api.use("justdoinc:justdo-analytics@1.0.0", both);
 
@@ -53,6 +54,7 @@ Package.onUse(function (api) {
 
   api.use("reactive-var", both);
   api.use("tracker", client);
+  api.use("webapp", server);
 
   api.addFiles("lib/both/analytics.coffee", both);
 
