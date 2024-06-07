@@ -4,8 +4,8 @@ _.extend JustdoI18n.prototype,
 
     @lang_rv = new ReactiveVar amplify.store JustdoI18n.amplify_lang_key
 
-    @force_rtl_routes = new Set()
-    @force_rtl_routes_dep = new Tracker.Dependency()
+    @force_ltr_routes = new Set()
+    @force_ltr_routes_dep = new Tracker.Dependency()
 
     @tap_i18n_set_lang_tracker = Tracker.autorun =>
       lang = @getLang()
@@ -183,8 +183,8 @@ _.extend JustdoI18n.prototype,
     return lang_tag
   
   isRtl: (route_name) ->
-    @force_rtl_routes_dep.depend()
-    if @force_rtl_routes.has route_name
+    @force_ltr_routes_dep.depend()
+    if @force_ltr_routes.has route_name
       return false
 
     return @isLangRtl @getLang()

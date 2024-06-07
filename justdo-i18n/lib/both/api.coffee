@@ -130,26 +130,20 @@ _.extend JustdoI18n.prototype,
     i18n_options.lang = lang
     return @getI18nTextOrFallback i18n_options
 
-  forceLtrForRoute: (route_name, is_enable) ->
+  forceLtrForRoute: (route_name) ->
     if Meteor.isServer
       return
       
     if (not _.isString route_name) or _.isEmpty route_name
       @logger.error "forceLtrForRoute: route_name must be a non-empty string. Received #{route_name}"
       return
+    
+    if @force_ltr_routes.has route_name
+      return
 
-    old_force_rtl_routes = new Set @force_rtl_routes
+    @force_ltr_routes.add route_name
 
-    if (is_enable is true) or not is_enable?
-      @force_rtl_routes.add route_name
-    else
-      @force_rtl_routes.delete route_name
-
-    is_same_size_after_change = old_force_rtl_routes.size is @force_rtl_routes.size
-    is_same_content_after_change = _.every old_force_rtl_routes.values(), (value) => @force_rtl_routes.has value
-
-    if (not is_same_size_after_change) or (not is_same_content_after_change)
-      @force_rtl_routes_dep.changed()
+    @force_ltr_routes_dep.changed()
     
     return
 
