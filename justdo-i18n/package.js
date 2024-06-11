@@ -93,9 +93,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/methods.coffee", client);
   
   // Always after templates
-  api.addFiles("i18n/en.i18n.json", both);
-  api.addFiles("i18n/vi.i18n.json", both);
-  api.addFiles("i18n/zh-TW.i18n.json", both);
+  api.addFiles("i18n/justdo-i18n/en.i18n.json", both);
+  api.addFiles("i18n/justdo-i18n/vi.i18n.json", both);
+  api.addFiles("i18n/justdo-i18n/zh-TW.i18n.json", both);
   api.addFiles("i18n/justdo-i18n/justdo-i18n.en.i18n.json", both);
   api.addFiles("i18n/justdo-i18n/justdo-i18n.vi.i18n.json", both);
   api.addFiles("i18n/errors/errors.en.i18n.json", both);
