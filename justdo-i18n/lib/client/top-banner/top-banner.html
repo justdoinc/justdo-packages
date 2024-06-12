@@ -4,7 +4,7 @@
       <div class="top-banner-content">
         {{#with defaultLang}}
           <a href="{{i18nCurrentPagePath _id}}" class="language-suggestion" dir="{{#if isRtl}}rtl{{/if}}">
-            {{{_ "show_this_page_in" default_lang_tag=_id default_lang_name="English"}}}
+            {{{xssGuard(_ "show_this_page_in" default_lang_tag=_id default_lang_name="English")}}}
           </a>
         {{/with}}
       </div>
