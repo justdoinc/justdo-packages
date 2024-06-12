@@ -10,25 +10,25 @@ _.extend JustdoI18n.prototype,
     @force_ltr_routes = new Set()
     @force_ltr_routes_dep = new Tracker.Dependency()
 
-    # On the initial load, bootbox and justdo-i18n-routes (if enabled) might not be loaded yet, try to set it again after app accounts are ready
-    # (which is quite late in the init process)
-    # The hooks will be called in the order they were added, so don't worry
-    # about later changes to lang being overriden by prior calls where lang
-    # isn't determined yet
-    APP.executeAfterAppAccountsReady =>
-      @tap_i18n_set_lang_tracker = Tracker.autorun =>
-        lang = @getLang()
 
-        TAPi18n.setLanguage lang
-        i18n?.setLanguage lang
+    @tap_i18n_set_lang_tracker = Tracker.autorun =>
+      lang = @getLang()
 
+      TAPi18n.setLanguage lang
+      i18n?.setLanguage lang
 
-        bootbox?.setLocale lang.replaceAll("-", "_")
+      # On the initial load, bootbox might not be loaded yet, try to set it again after app accounts are ready
+      # (which is quite late in the init process)
+      # The hooks will be called in the order they were added, so don't worry
+      # about later changes to lang being overriden by prior calls where lang
+      # isn't determined yet
+      APP.executeAfterAppAccountsReady =>
+        bootbox.setLocale lang.replaceAll("-", "_")
         return
-      
-        jQuery.datepicker?.setDefaults jQuery.datepicker.regional[lang]
-        moment.locale lang.toLowerCase()
-        return
+    
+      jQuery.datepicker?.setDefaults jQuery.datepicker.regional[lang]
+      moment.locale lang.toLowerCase()
+      return
 
     @_setupBeforeUserSignUpHook()
 
