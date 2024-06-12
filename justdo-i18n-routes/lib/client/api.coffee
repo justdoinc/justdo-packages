@@ -2,6 +2,8 @@ _.extend JustdoI18nRoutes.prototype,
   _immediateInit: ->
     @_registerGlobalTemplateHelpers()
     @_setupLangUrlTracker()
+    @_registerHandlers()
+
     return
 
   _deferredInit: ->
@@ -55,6 +57,11 @@ _.extend JustdoI18nRoutes.prototype,
       @set_url_lang_from_active_lang_tracker?.stop?()
       return
     
+    return
+
+  _registerHandlers: ->
+    APP.justdo_i18n.registerHighPriorityGetLangHandler "get_url_lang_handler", @getUrlLang
+
     return
 
   # Note: This method will never return JustdoI18n.default_lang,
