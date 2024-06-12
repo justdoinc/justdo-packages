@@ -19,8 +19,9 @@ _.extend JustdoI18nRoutes.prototype,
     return
 
   _setupLangUrlTracker: ->
-    if not @set_lang_from_url_lang_tracker?
-      @set_lang_from_url_lang_tracker = Tracker.autorun =>
+    if not @set_lang_from_user_or_campaign_lang_tracker?
+      # This tracker sets lang from user or campaign lang, in case there is no lang set yet.
+      @set_lang_from_user_or_campaign_lang_tracker = Tracker.autorun =>
         if (lang = APP.justdo_i18n.lang_rv.get())?
           return
         
@@ -31,6 +32,9 @@ _.extend JustdoI18nRoutes.prototype,
         return
     
     if not @set_url_lang_from_active_lang_tracker?
+      # This tracker handles the following cases:
+      # 1. If there's no url lang, get current lang and redirect user to the same page with lang prefix. (e.g. /lang/he/pricing)
+      # 2. If the current page doesn't support i18n, redirect user to the same page without lang prefix. (e.g. /privacy-policy)
       @set_url_lang_from_active_lang_tracker = Tracker.autorun =>
         if not (router = Router.current())?
           return
@@ -47,7 +51,7 @@ _.extend JustdoI18nRoutes.prototype,
         return
       
     @onDestroy =>
-      @set_lang_from_url_lang_tracker?.stop?()
+      @set_lang_from_user_or_campaign_lang_tracker?.stop?()
       @set_url_lang_from_active_lang_tracker?.stop?()
       return
     
