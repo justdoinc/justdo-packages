@@ -100,14 +100,27 @@ _.extend JustdoI18n.prototype,
     if Meteor.user()? and (options?.skip_set_user_lang isnt true)
       @setUserLang lang
     else
-      @lang_rv.set lang
+      @setForcedRuntimeLang(lang)
       if options?.save_to_local_storage
         amplify.store JustdoI18n.amplify_lang_key, lang
     return
 
+  setForcedRuntimeLang: (lang) ->
+    @lang_rv.set lang
+
+    return
+
+  clearForcedRuntimeLang: ->
+    @lang_rv.set null
+
+    return
+
+  _getForcedRuntimeLang: ->
+    return @lang_rv.get()
+
   getLang: ->
-    if (lang = @lang_rv.get())?
-      return lang
+    if (runtime_lang = @_getForcedRuntimeLang())?
+      return runtime_lang
 
     if Meteor.user({fields: {"profile.lang": 1}})?
       return @getUserLang() or JustdoI18n.default_lang
