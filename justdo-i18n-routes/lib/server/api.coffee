@@ -76,4 +76,17 @@ _.extend JustdoI18nRoutes.prototype,
 
     url_lang = url_segments.shift()
     lang_tag = @getLangTagIfSupported url_lang
-    return lang_tag
+  
+  getPathWithoutLangPrefix: (url) ->
+    url_segments = _.filter url.split("/"), (url_segment) -> not _.isEmpty url_segment
+
+    if _.isEmpty url_segments
+      return "/"
+    
+    if url_segments.shift() isnt "lang"
+      return url
+    
+    if not (lang_tag = url_segments.shift())?
+      return
+    
+    return "/#{url_segments.join "/"}"
