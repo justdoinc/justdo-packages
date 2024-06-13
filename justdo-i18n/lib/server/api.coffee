@@ -1,5 +1,6 @@
 _.extend JustdoI18n.prototype,
   _immediateInit: ->
+    @langs_to_preload_predicates = []
     return
 
   _deferredInit: ->
@@ -20,6 +21,8 @@ _.extend JustdoI18n.prototype,
 
     @_setupHandlebarsHelper()
 
+    @_setupConnectHandlers()
+
     return
   
   _setupHandlebarsHelper: ->
@@ -30,6 +33,19 @@ _.extend JustdoI18n.prototype,
       
       return TAPi18n.__ key, options
     return
+
+  _setupConnectHandlers: ->
+    WebApp.connectHandlers.use "/", (req, res, next) =>
+      langs_to_preload = @getLangsToPreload req
+      if (user_lang = @getUserLangFromMeteorLoginTokenCookie req)?
+        langs_to_preload.push user_lang
+      
+      langs_to_preload = _.uniq langs_to_preload
+      console.log langs_to_preload
+
+      next()
+
+      return
 
   tr: (key, options, user) ->
     # If user isn't provided, we use Meteor.user().
@@ -58,3 +74,23 @@ _.extend JustdoI18n.prototype,
     # Forcing translation of key to JustdoI18n.default_lang even if we have
     # Meteor.user() available
     return @tr(key, options, {profile: {lang: JustdoI18n.default_lang}})
+
+  getUserLangFromMeteorLoginTokenCookie: (req) ->
+    return JustdoHelpers.getUserObjFromMeteorLoginTokenCookie(req, {fields: {"profile.lang": 1}})?.profile?.lang
+  
+  registerLangsToPreloadPredicate: (predicate) ->
+    @langs_to_preload_predicates.push predicate
+    return
+  
+  getLangsToPreload: (req) ->
+    langs_to_preload = []
+
+    for predicate in @langs_to_preload_predicates
+      langs = predicate req
+      if not _.isEmpty langs
+        if _.isString langs
+          langs_to_preload.push langs
+        if _.isArray langs
+          langs_to_preload = langs_to_preload.concat langs
+    
+    return langs_to_preload

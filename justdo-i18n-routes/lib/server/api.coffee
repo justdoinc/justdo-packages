@@ -1,6 +1,8 @@
 _.extend JustdoI18nRoutes.prototype,
   _immediateInit: ->
     @_setupLangRedirectRules()
+    @_setupPreloadLangsPredicate()
+
     return
 
   _deferredInit: ->
@@ -58,3 +60,20 @@ _.extend JustdoI18nRoutes.prototype,
       next()
 
       return
+
+  _setupPreloadLangsPredicate: ->
+    APP.justdo_i18n.registerLangsToPreloadPredicate (req) => @getUrlLang req
+    return
+
+  getUrlLang: (req) ->
+    url_segments = _.filter req.url.split("/"), (url_segment) -> not _.isEmpty url_segment
+
+    if _.isEmpty url_segments
+      return
+
+    if url_segments.shift() isnt "lang"
+      return
+
+    url_lang = url_segments.shift()
+    lang_tag = @getLangTagIfSupported url_lang
+    return lang_tag
