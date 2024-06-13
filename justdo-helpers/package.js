@@ -123,6 +123,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/users.coffee", server);
   api.addFiles("lib/server/tasks-generator.coffee", server);
   api.addFiles("lib/server/url.coffee", server);
+  api.addFiles("lib/server/iron-router.coffee", server);
 
   api.export("JustdoHelpers", both);
 });
