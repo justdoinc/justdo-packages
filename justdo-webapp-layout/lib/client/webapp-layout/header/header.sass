@@ -247,12 +247,6 @@ nav.navbar
 // CSS Fixes for RTL Layout
 body.right-to-left
   direction: rtl
-  .drawer-icon .jd-icon
-    padding: 0.6rem 0 0.6rem 0.6rem
-  .drawer
-    transform: translateX(312px)
-  .drawer-open .drawer
-    transform: translateX(0px)
   .user-dropdown-toggle
     margin-left: unset !important
     margin-right: 8px
@@ -330,3 +324,23 @@ body.right-to-left
       padding-left: unset
       border-right: 2px solid #dbe0e6
       padding-right: 8px
+
+  .dropdown-orgs
+    .org-list
+      text-align: right
+    .dropdown-btn
+      border-radius: 0px 4px 4px 0px !important
+    .org-settings-btn
+      border-radius: 4px 0px 0px 4px
+      border-left: 1px solid #dee2e6
+      border-right: 0
+  .drawer-icon .jd-icon
+    padding: 0.6rem 0 0.6rem 0.6rem
+  .drawer-open .drawer
+    transform: translateX(0px)
+  .drawer
+    transform: translateX(312px)
+    .projects-wrapper
+      text-align: right
+      .list-group
+        padding-right: 0
