@@ -40,7 +40,6 @@ _.extend JustdoI18nRoutes.prototype,
         return
       
     @onDestroy =>
-      @set_lang_from_user_or_campaign_lang_tracker?.stop?()
       @set_url_lang_from_active_lang_tracker?.stop?()
       return
     
