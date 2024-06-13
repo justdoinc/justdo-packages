@@ -2,7 +2,6 @@ _.extend JustdoI18nRoutes.prototype,
   _immediateInit: ->
     @_registerGlobalTemplateHelpers()
     @_setupLangUrlTracker()
-    @_registerHandlers()
 
     return
 
@@ -21,18 +20,6 @@ _.extend JustdoI18nRoutes.prototype,
     return
 
   _setupLangUrlTracker: ->
-    if not @set_lang_from_user_or_campaign_lang_tracker?
-      # If lang_rv isn't set, this tracker sets lang_rv from user or campaign lang to trigger reactivity.
-      @set_lang_from_user_or_campaign_lang_tracker = Tracker.autorun =>
-        if (lang = APP.justdo_i18n.lang_rv.get())?
-          return
-        
-        user_or_campaign_lang = APP.justdo_i18n.getUserLang() or APP.justdo_promoters_campaigns?.getCampaignDoc()?.lang
-        if user_or_campaign_lang? and (user_or_campaign_lang isnt lang)
-          APP.justdo_i18n.setLang user_or_campaign_lang, {skip_set_user_lang: true}
-
-        return
-    
     if not @set_url_lang_from_active_lang_tracker?
       # This tracker handles the following cases:
       # 1. If there's no url lang, get current lang and redirect user to the same page with lang prefix. (e.g. /lang/he/pricing)
@@ -57,11 +44,6 @@ _.extend JustdoI18nRoutes.prototype,
       @set_url_lang_from_active_lang_tracker?.stop?()
       return
     
-    return
-
-  _registerHandlers: ->
-    APP.justdo_i18n.registerHighPriorityGetLangHandler "get_url_lang_handler", @getUrlLang
-
     return
 
   # Note: This method will never return JustdoI18n.default_lang,

@@ -1,15 +1,11 @@
 _.extend JustdoI18n.prototype,
   _immediateInit: ->
     @_setupDatepickerLocales()
-    
-    @get_lang_registry = {}
-    JustdoHelpers.setupPlaceholdersReactiveListRegistry @get_lang_registry
 
     @lang_rv = new ReactiveVar amplify.store JustdoI18n.amplify_lang_key
 
     @force_ltr_routes = new Set()
     @force_ltr_routes_dep = new Tracker.Dependency()
-
 
     @tap_i18n_set_lang_tracker = Tracker.autorun =>
       lang = @getLang()
@@ -110,10 +106,6 @@ _.extend JustdoI18n.prototype,
     return
 
   getLang: ->
-    for item in @get_lang_registry.getPlaceholderItems "getLangHighPriority"
-      if (handler_lang = item.handler?())?
-        return handler_lang
-
     if (lang = @lang_rv.get())?
       return lang
 
@@ -143,16 +135,3 @@ _.extend JustdoI18n.prototype,
       return false
 
     return @isLangRtl @getLang()
-  
-  # Handlers registered via this method will be used in getLang,
-  # and the first handler that returns a non-empty value will be used.
-  # The handlers will be processed first before any other lang checking logics (see getLang for details)
-  registerHighPriorityGetLangHandler: (item_id, handler) ->
-    if not _.isFunction handler
-      throw @_error "invalid-argument", "handler must be a function"
-    @get_lang_registry.registerPlaceholderItem item_id,
-      domain: "getLangHighPriority"
-      data:
-        handler: handler
-
-    return
