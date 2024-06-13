@@ -22,7 +22,7 @@ _.extend JustdoI18nRoutes.prototype,
 
   _setupLangUrlTracker: ->
     if not @set_lang_from_user_or_campaign_lang_tracker?
-      # This tracker sets lang from user or campaign lang, in case there is no lang set yet.
+      # If lang_rv isn't set, this tracker sets lang_rv from user or campaign lang to trigger reactivity.
       @set_lang_from_user_or_campaign_lang_tracker = Tracker.autorun =>
         if (lang = APP.justdo_i18n.lang_rv.get())?
           return
