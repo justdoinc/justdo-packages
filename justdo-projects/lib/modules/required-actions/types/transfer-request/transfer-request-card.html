@@ -1,6 +1,6 @@
 <template name="required_action_card_transfer_request">
-  <div class="card-with-avatar d-flex">
-    <div class="mr-2">
+  <div class="card-with-avatar">
+    <div class="card-with-avatar-content">
       <div class="card-avatar">
         {{#with current_owner_doc}}
           {{> justdo_avatar}}
@@ -27,7 +27,7 @@
         {{/if}}
       {{else}}
         <div class="card-actions d-flex">
-          <button type="button" class="pre-reject btn btn-sm btn-danger mr-1">Reject</button>
+          <button type="button" class="pre-reject btn btn-sm btn-danger">Reject</button>
           <button type="button" class="accept btn btn-sm btn-primary">Accept</button>
         </div>
       {{/if}}

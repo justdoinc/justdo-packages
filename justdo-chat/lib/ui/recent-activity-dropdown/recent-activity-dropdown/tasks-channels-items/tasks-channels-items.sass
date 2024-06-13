@@ -1,5 +1,5 @@
 .recent-activity-item
-  border-bottom: 1px dashed rgba(0, 0, 0, 0.12)
+  border-bottom: 1px dashed #f1f1f1
   cursor: pointer
   position: relative
   &:hover
@@ -23,11 +23,18 @@
     left: 0
     opacity: 0
 
+  .item-header
+    justify-content: space-between
+
+  .item-body
+    justify-content: space-between
+    align-items: center
+
   .main-block
-    font-size: 14px
     overflow: hidden
     text-overflow: ellipsis
     white-space: nowrap
+    padding-right: 16px
 
   .last-author
     font-weight: 600
@@ -35,6 +42,7 @@
   .task-details
     text-overflow: ellipsis
     overflow: hidden
+    white-space: nowrap
 
   .read-indicator
     width: 8px

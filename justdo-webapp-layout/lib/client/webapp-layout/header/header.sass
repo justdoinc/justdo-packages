@@ -87,6 +87,7 @@ nav.navbar
   z-index: 1030
   transform: translateX(-312px)
   transition: transform .35s cubic-bezier(0.24,1,0.32,1)
+  opacity: 0
   .drawer-header
     height: 45px
     display: flex
@@ -176,6 +177,7 @@ nav.navbar
   .drawer
     transform: translateX(0px)
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15)
+    opacity: 1
   .drawer-backdrop
     display: block
 
@@ -240,3 +242,91 @@ nav.navbar
   height: 17px
   display: inline-block
   vertical-align: text-top
+
+
+// CSS Fixes for RTL Layout
+body.right-to-left
+  direction: rtl
+  .drawer-icon .jd-icon
+    padding: 0.6rem 0 0.6rem 0.6rem
+  .drawer
+    transform: translateX(312px)
+  .drawer-open .drawer
+    transform: translateX(0px)
+  .user-dropdown-toggle
+    margin-left: unset !important
+    margin-right: 8px
+  .required-actions-count,
+  .unread-count
+    right: unset
+    left: -3px
+  .dropdown-menu
+    right: auto
+    left: 0 !important
+  #login-dropdown-list
+    .dropdown-avatar
+      margin-right: unset
+      margin-left: 1.5rem
+    .avatar-remove
+      right: unset
+      left: 6px
+    .col-sm-6
+      padding-right: 0
+      padding-left: 3px
+      &:last-child
+        padding-left: 0
+        padding-right: 3px
+    .controller-template-default-toggle
+      text-align: right
+    .jd-icon-user-settings
+      margin-right: unset !important
+      margin-left: 8px
+  .dropdown-menu.settings
+    .dropdown-avatar
+      margin: 0px !important
+    label
+      width: 100%
+      text-align: right
+  .nav-tutorials
+    .tutorial-icon
+      margin-right: unset
+      margin-left: 8px
+    .tutorial-item
+      padding: 4px 4px 4px 8px
+    .tutorial-body
+      text-align: right
+    .tutorial-instruction-btn
+      .skip
+        margin-right: unset
+        margin-left: 8px
+    .tutorial-instruction
+      right: -440px
+      left: unset
+    .tutorial-item.welcome .tutorial-instruction
+      right: -540px
+      left: unset
+    .dropdown-item
+      .jd-icon-dropdown
+        margin-right: unset
+        margin-left: 12px
+  .recent-activity-dropdown
+    .main-block
+      padding-left: 16px
+      padding-right: unset
+  .required-actions-cards-area
+    .card-with-avatar-content
+      margin-left: 12px
+      margin-right: unset
+      text-align: right
+    .card-details
+      margin-left: unset
+      margin-right: 40px
+    .card-actions
+      button + button
+        margin-left: unset
+        margin-right: 4px
+    .reject-message-box
+      border-left: unset
+      padding-left: unset
+      border-right: 2px solid #dbe0e6
+      padding-right: 8px

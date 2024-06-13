@@ -1,6 +1,6 @@
 <template name="required_action_card_ownership_transfer_rejected">
-  <div class="card-with-avatar d-flex">
-    <div class="mr-2">
+  <div class="card-with-avatar">
+    <div class="card-with-avatar-content">
       <div class="card-avatar">
         {{#with rejecting_user_obj}}
           {{> justdo_avatar}}
@@ -10,7 +10,7 @@
         {{#with rejecting_user_obj}}{{displayName}}{{/with}} rejected your ownership transfer request for task
         <a href="{{taskURL}}" class="task-link text-primary"><strong>{{#with getActionProject}}{{#if title}}{{title}}{{else}}Untitled JustDo{{/if}}{{/with}}:</strong> #{{seqId}} - {{cutString title 80}}</a>
         {{#if reject_ownership_message}}
-          <div class="reject-message-box my-1 pl-2">
+          <div class="reject-message-box my-1">
             {{#if showAll}}
               {{nl2br reject_ownership_message}}
             {{else}}
