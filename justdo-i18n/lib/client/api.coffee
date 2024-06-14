@@ -7,6 +7,10 @@ _.extend JustdoI18n.prototype,
     @force_ltr_routes = new Set()
     @force_ltr_routes_dep = new Tracker.Dependency()
 
+    # XXX The APP.executeAfterAppClientCode wrap is necessary because on the first page load,
+    # XXX TAPi18n's list of supported languages may not be fully initialized as specified in project-tap.i18n.
+    # XXX Therefore we wrap the tracker with APP.executeAfterAppClientCode to give extra time for TAPi18n to be fully initialized.
+    # XXX Once that issue is resolved, we can remove the APP.executeAfterAppClientCode wrap.
     APP.executeAfterAppClientCode =>
       prev_lang = JustdoI18n.default_lang
       @tap_i18n_set_lang_tracker = Tracker.autorun =>
