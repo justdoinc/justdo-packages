@@ -20,7 +20,7 @@ Template.top_banner.helpers
 Template.top_banner.events
   "click .language-suggestion": (e, tpl) ->
     lang_tag = @_id
-    APP.justdo_i18n.setLang JustdoI18n.default_lang, {save_to_local_storage: true, skip_set_user_lang: true}
+    APP.justdo_i18n.setLang JustdoI18n.default_lang, {skip_set_user_lang: true}
     APP.justdo_google_analytics?.sendEvent "set-lang-top-banner-#{lang_tag}"
     return
   

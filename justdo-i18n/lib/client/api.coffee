@@ -102,14 +102,14 @@ _.extend JustdoI18n.prototype,
 
   setLang: (lang, options) ->
     # options:
-    #   save_to_local_storage: Boolean (optional) - Saves lang to local storage. Has no affect if current user is logged in.
     #   skip_set_user_lang: Boolean (optional) - Do not set user's lang. Only has effect if it's true.
+
+    @setForcedRuntimeLang(lang)
+
     if Meteor.user()? and (options?.skip_set_user_lang isnt true)
       @setUserLang lang
     else
-      @setForcedRuntimeLang(lang)
-      if options?.save_to_local_storage
-        amplify.store JustdoI18n.amplify_lang_key, lang
+      amplify.store JustdoI18n.amplify_lang_key, lang
     return
 
   setForcedRuntimeLang: (lang) ->

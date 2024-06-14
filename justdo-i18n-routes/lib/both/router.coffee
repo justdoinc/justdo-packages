@@ -9,7 +9,7 @@ _.extend JustdoI18nRoutes.prototype,
       return
     
     if Meteor.isClient
-      APP.justdo_i18n.setLang lang_tag, {save_to_local_storage: true, skip_set_user_lang: true}
+      APP.justdo_i18n.setLang lang_tag, {skip_set_user_lang: true}
 
     if (route_def = @getI18nPathDef path)?
       route_def.routingFunction.call router_this
