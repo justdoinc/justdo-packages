@@ -23,7 +23,7 @@ _.extend JustdoI18n.prototype,
 
     @_setupHandlebarsHelper()
 
-    @_setupConnectHandlers()
+    @_setupWebappConnectHandlers()
 
     return
   
@@ -44,7 +44,7 @@ _.extend JustdoI18n.prototype,
 
     return
 
-  _setupConnectHandlers: ->
+  _setupWebappConnectHandlers: ->
     WebApp.connectHandlers.use "/", (req, res, next) =>
       # If we don't get route_name, it means the req.url isn't a registered route in Iron Router (e.g. /tap-i18n/all.json, static asset requests, etc)
       # In that case we don't need to do anything.
