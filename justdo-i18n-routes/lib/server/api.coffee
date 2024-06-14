@@ -1,7 +1,7 @@
 _.extend JustdoI18nRoutes.prototype,
   _immediateInit: ->
     @_setupLangRedirectRules()
-    @_setupPreloadLangsPredicate()
+    @_setupPreloadLangsDetectors()
 
     return
 
@@ -61,7 +61,7 @@ _.extend JustdoI18nRoutes.prototype,
 
       return
 
-  _setupPreloadLangsPredicate: ->
+  _setupPreloadLangsDetectors: ->
     APP.justdo_i18n.registerLangsToPreloadDetector (req) => @getUrlLang req
     return
 
