@@ -53,7 +53,11 @@ _.extend JustdoI18n.prototype,
         return
 
       langs_to_preload = @getLangsToPreload req
-      console.log langs_to_preload
+      # console.log langs_to_preload
+
+      # req.dynamicHead = req.dynamicHead or ""
+      # if (cdn_domain = JustdoHelpers.getCDNDomain())?
+      #   req.dynamicHead += """<script>CDN = "#{cdn_domain}"</script>"""
 
       next()
 
