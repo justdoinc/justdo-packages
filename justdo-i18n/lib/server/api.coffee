@@ -1,6 +1,8 @@
 _.extend JustdoI18n.prototype,
   _immediateInit: ->
-    @langs_to_preload_predicates = []
+    @langs_to_preload_detectors = []
+    @_registerDefaultLangsToPreloadDetectors()
+
     return
 
   _deferredInit: ->
@@ -33,6 +35,14 @@ _.extend JustdoI18n.prototype,
       
       return TAPi18n.__ key, options
     return
+  
+  _registerDefaultLangsToPreloadDetectors: ->
+    @registerLangsToPreloadDetector (req) =>
+      if (user_lang = @getUserLangFromMeteorLoginTokenCookie req)?
+        return user_lang
+      return
+
+    return
 
   _setupConnectHandlers: ->
     WebApp.connectHandlers.use "/", (req, res, next) =>
@@ -42,10 +52,6 @@ _.extend JustdoI18n.prototype,
         return
 
       langs_to_preload = @getLangsToPreload req
-      if (user_lang = @getUserLangFromMeteorLoginTokenCookie req)?
-        langs_to_preload.push user_lang
-      
-      langs_to_preload = _.uniq langs_to_preload
       console.log langs_to_preload
 
       next()
@@ -83,19 +89,19 @@ _.extend JustdoI18n.prototype,
   getUserLangFromMeteorLoginTokenCookie: (req) ->
     return JustdoHelpers.getUserObjFromMeteorLoginTokenCookie(req, {fields: {"profile.lang": 1}})?.profile?.lang
   
-  registerLangsToPreloadPredicate: (predicate) ->
-    @langs_to_preload_predicates.push predicate
+  registerLangsToPreloadDetector: (detector) ->
+    @langs_to_preload_detectors.push detector
     return
   
   getLangsToPreload: (req) ->
     langs_to_preload = []
 
-    for predicate in @langs_to_preload_predicates
-      langs = predicate req
+    for detector in @langs_to_preload_detectors
+      langs = detector req
       if not _.isEmpty langs
         if _.isString langs
           langs_to_preload.push langs
         if _.isArray langs
           langs_to_preload = langs_to_preload.concat langs
     
-    return langs_to_preload
+    return _.uniq langs_to_preload

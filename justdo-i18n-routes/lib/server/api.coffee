@@ -62,7 +62,7 @@ _.extend JustdoI18nRoutes.prototype,
       return
 
   _setupPreloadLangsPredicate: ->
-    APP.justdo_i18n.registerLangsToPreloadPredicate (req) => @getUrlLang req
+    APP.justdo_i18n.registerLangsToPreloadDetector (req) => @getUrlLang req
     return
 
   getUrlLang: (req) ->
