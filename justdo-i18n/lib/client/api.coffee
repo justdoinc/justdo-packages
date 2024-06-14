@@ -2,7 +2,7 @@ _.extend JustdoI18n.prototype,
   _immediateInit: ->
     @_setupDatepickerLocales()
 
-    @lang_rv = new ReactiveVar amplify.store JustdoI18n.amplify_lang_key
+    @forced_runtime_lang_rv = new ReactiveVar amplify.store JustdoI18n.amplify_lang_key
 
     @force_ltr_routes = new Set()
     @force_ltr_routes_dep = new Tracker.Dependency()
@@ -106,17 +106,17 @@ _.extend JustdoI18n.prototype,
     return
 
   setForcedRuntimeLang: (lang) ->
-    @lang_rv.set lang
+    @forced_runtime_lang_rv.set lang
 
     return
 
   clearForcedRuntimeLang: ->
-    @lang_rv.set null
+    @forced_runtime_lang_rv.set null
 
     return
 
   _getForcedRuntimeLang: ->
-    return @lang_rv.get()
+    return @forced_runtime_lang_rv.get()
 
   getLang: ->
     if (runtime_lang = @_getForcedRuntimeLang())?
