@@ -21,9 +21,9 @@ _.extend JustdoI18nRoutes.prototype,
 
   _setupLangUrlTracker: ->
     if not @set_url_lang_from_active_lang_tracker?
-      # This tracker handles the following cases:
-      # 1. If there's no url lang, get current lang and redirect user to the same page with lang prefix. (e.g. /lang/he/pricing)
-      # 2. If the current page doesn't support i18n, redirect user to the same page without lang prefix. (e.g. /privacy-policy)
+      # This tracker redirects user back to the page with the correct lang prefix
+      # e.g. If user entered "/pricing", and the active lang is not default lang due to user_doc or campaign, 
+      # it will redirect to "/lang/active_lang/pricing" so that lang router can handle it.
       @set_url_lang_from_active_lang_tracker = Tracker.autorun =>
         if not (router = Router.current())?
           return
