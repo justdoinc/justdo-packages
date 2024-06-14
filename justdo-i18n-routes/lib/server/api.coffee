@@ -36,7 +36,7 @@ _.extend JustdoI18nRoutes.prototype,
 
       processed_lang_details = @getStrippedPathAndLangFromReq(req)
 
-      if not processed_lang_details.lang?
+      if not processed_lang_details.lang_tag?
         next()
         return
 
@@ -85,11 +85,11 @@ _.extend JustdoI18nRoutes.prototype,
 
     original_url = req.originalUrl
 
-    if not original_url.startsWith(JustdoI18n.langs_url_prefix)
+    if not original_url.startsWith(JustdoI18nRoutes.langs_url_prefix)
       return {processed_path: original_url, lang_tag: undefined}
 
     # We got a lang prefixed original_url
-    url_without_lang_prefix = original_url.substr JustdoI18n.langs_url_prefix.length
+    url_without_lang_prefix = original_url.substr JustdoI18nRoutes.langs_url_prefix.length
     url_segments = _.filter url_without_lang_prefix.split("/"), (url_segment) -> not _.isEmpty url_segment
 
     if _.isEmpty url_segments
