@@ -28,7 +28,7 @@ _.extend JustdoI18nRoutes.prototype,
         if not (router = Router.current())?
           return
         
-        # If lang is already specified in the url, do nothing.
+        # If lang is already specified in the url, do nothing (the lang router will handle calling setLang based on the url lang).
         if @getUrlLang()?
           return
           
