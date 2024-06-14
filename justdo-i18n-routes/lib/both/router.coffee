@@ -21,12 +21,12 @@ _.extend JustdoI18nRoutes.prototype,
   setupRouter: ->
     self = @
 
-    Router.route "/lang/:lang", ->
+    Router.route "#{JustdoI18nRoutes.langs_url_prefix}/:lang", ->
       self._langRouteHandler @
       return
     , {name: "i18n_path_main_page"}
 
-    Router.route "/lang/:lang/:path", ->
+    Router.route "#{JustdoI18nRoutes.langs_url_prefix}/:lang/:path", ->
       self._langRouteHandler @
       return
     , {name: "i18n_path"}

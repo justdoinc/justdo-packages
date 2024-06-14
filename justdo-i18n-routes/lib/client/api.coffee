@@ -23,7 +23,7 @@ _.extend JustdoI18nRoutes.prototype,
     if not @set_url_lang_from_active_lang_tracker?
       # This tracker redirects user back to the page with the correct lang prefix
       # e.g. If user entered "/pricing", and the active lang is not default lang due to user_doc or campaign, 
-      # it will redirect to "/lang/active_lang/pricing" so that lang router can handle it.
+      # it will redirect to "#{JustdoI18nRoutes.langs_url_prefix}/active_lang/pricing" so that lang router can handle it.
       @set_url_lang_from_active_lang_tracker = Tracker.autorun =>
         if not (router = Router.current())?
           return
@@ -46,7 +46,7 @@ _.extend JustdoI18nRoutes.prototype,
     return
 
   # Note: This method will never return JustdoI18n.default_lang,
-  # because when /lang/#{JustdoI18n.default_lang} is accessed, it will redirect to /
+  # because when #{JustdoI18nRoutes.langs_url_prefix}/#{JustdoI18n.default_lang} is accessed, it will redirect to /
   getUrlLang: ->
     if not (url_lang = Router.current()?.params?.lang)?
       return
@@ -66,7 +66,7 @@ _.extend JustdoI18nRoutes.prototype,
     if (lang is JustdoI18n.default_lang) or (not @isPathI18nAble path)
       return path or "/"
 
-    return "/lang/#{lang}#{if path is "/" then "" else path}"
+    return "#{JustdoI18nRoutes.langs_url_prefix}/#{lang}#{if path is "/" then "" else path}"
     
   i18nCurrentPagePath: (lang) ->
     if not (router = Router.current())?

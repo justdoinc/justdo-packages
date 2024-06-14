@@ -70,7 +70,7 @@ _.extend JustdoI18nRoutes.prototype,
           return
         , route.route_options or {}
 
-        # Mark route is i18n-ready so /lang/:lang will work
+        # Mark route is i18n-ready so #{JustdoI18nRoutes.langs_url_prefix}/:lang will work
         @i18n_routes[route.path] = {routingFunction: route.routingFunction, route_options: route.route_options}
 
         return
