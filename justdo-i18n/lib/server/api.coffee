@@ -46,7 +46,6 @@ _.extend JustdoI18n.prototype,
 
   _setupConnectHandlers: ->
     WebApp.connectHandlers.use "/", (req, res, next) =>
-      # Do not send the title and description for non-registered routes (e.g. /tap-i18n/all.json)
       if not (route_name = JustdoHelpers.getRouteNameFromPath req.url)?
         next()
         return
