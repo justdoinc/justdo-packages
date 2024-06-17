@@ -12,14 +12,9 @@ _.extend JustdoI18n.prototype,
     # XXX Therefore we wrap the tracker with APP.executeAfterAppClientCode to give extra time for TAPi18n to be fully initialized.
     # XXX Once that issue is resolved, we can remove the APP.executeAfterAppClientCode wrap.
     APP.executeAfterAppClientCode =>
-      prev_lang = JustdoI18n.default_lang
       @tap_i18n_set_lang_tracker = Tracker.autorun =>
         lang = @getLang()
-        if lang is prev_lang
-          return
         
-        prev_lang = lang
-
         TAPi18n.setLanguage lang
         i18n?.setLanguage lang
 
