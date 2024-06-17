@@ -1,7 +1,5 @@
 _.extend JustdoI18n.prototype,
   _immediateInit: ->
-    @_setupDatepickerLocales()
-
     @forced_runtime_lang_rv = new ReactiveVar amplify.store JustdoI18n.amplify_lang_key
 
     @force_ltr_routes = new Set()
@@ -47,23 +45,6 @@ _.extend JustdoI18n.prototype,
     if @destroyed
       return
 
-    return
-  
-  _setupDatepickerLocales: ->
-    if not jQuery.datepicker?
-      @logger.info "_setupDatepickerLocales: jQuery.datepicker is undefined skipping"
-
-      return
-    
-    supported_languages = _.without _.keys(@getSupportedLanguages()), "en"
-
-    for lang in supported_languages
-      if not (locale_conf = JustdoI18n.jquery_ui_datepicker_locale_confs[lang])?
-        console.warn "Can't find jQuery UI Datepicker locale conf for language #{lang}"
-        continue
-
-      jQuery.datepicker.regional[lang] = locale_conf
-    
     return
 
   _setupBeforeUserSignUpHook: ->
