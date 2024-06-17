@@ -10,7 +10,6 @@ _.extend JustdoI18n.prototype,
     @_setupI18nextPluralRule()
     @_replaceDefaultLanguageNames()
     @setupRouter()
-    @_setupMomentLocales()
 
     return
 
@@ -33,19 +32,6 @@ _.extend JustdoI18n.prototype,
 
   _replaceDefaultLanguageNames: ->
     TAPi18n.languages_names["zh-TW"] = ["Chinese (Traditional)", "繁體中文"]
-    return
-  
-  _setupMomentLocales: ->
-    supported_languages = _.without _.keys(@getSupportedLanguages()), "en"
-
-    for lang in supported_languages
-      lang = lang.toLowerCase()
-      if not (locale_conf = JustdoI18n.moment_locale_confs[lang])?
-        console.warn "Can't find Moment.js locale conf for language #{lang}"
-        continue
-
-      moment.defineLocale lang, locale_conf
-
     return
 
   getUserLang: (user) ->
