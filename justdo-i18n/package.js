@@ -61,6 +61,7 @@ Package.onUse(function (api) {
 
   api.use("reactive-var", both);
   api.use("tracker", client);
+  api.use('mizzao:jquery-ui', client);
   api.use("astrocoders:handlebars-server@1.0.3", server);
   api.use("webapp", server);
 
@@ -192,6 +193,15 @@ Package.onUse(function (api) {
   api.addFiles("i18n/justdo-emails/en.i18n.json", both);
 
   api.addFiles("lib/both/app-integration.coffee", both);
+
+  api.addFiles("lib/client/jquery-ui-datepicker-i18n/datepicker-ar.js", client);
+  api.addFiles("lib/client/jquery-ui-datepicker-i18n/datepicker-he.js", client);
+  api.addFiles("lib/client/jquery-ui-datepicker-i18n/datepicker-ko.js", client);
+  api.addFiles("lib/client/jquery-ui-datepicker-i18n/datepicker-ru.js", client);
+  api.addFiles("lib/client/jquery-ui-datepicker-i18n/datepicker-vi.js", client);
+  api.addFiles("lib/client/jquery-ui-datepicker-i18n/datepicker-zh-TW.js", client);
+
+
   // Note: app-integration need to load last, so immediateInit procedures in
   // the server will have the access to the apis loaded after the init.coffee
   // file. 
