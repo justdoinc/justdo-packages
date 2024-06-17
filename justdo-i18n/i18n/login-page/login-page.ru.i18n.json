@@ -14,7 +14,7 @@
   "login_please_approve_the_following_to_continue": "Пожалуйста, примите следующие условия, чтобы продолжить",
   "login_pick_a_password": "Придумайте пароль",
   "login_retype_password": "Повторите пароль",
-  "login_i_agree_to_tc_and_pp_html": "Я согласен с <a href=\"\" class=\"terms-conditions-modal\">Условиями использования</a> и <a href=\"\" class=\"privacy-policy-modal\">Политикой конфиденциальности</a> JustDo",
+  "login_i_agree_to_tc_and_pp_html": "Я согласен с <a href=\"/terms-and-conditions\" class=\"terms-conditions-modal\">Условиями использования</a> и <a href=\"/privacy-policy\" class=\"privacy-policy-modal\">Политикой конфиденциальности</a> JustDo",
   "privacy-policy": "Политика конфиденциальности",
   "terms-and-conditions": "Условия использования",
   "login_i_agree_to_custom_tc_html": "Я прочитал и согласен с <a href=\"__doc_landing_page_address__\">__doc_readable_name__ JustDo</a>.",

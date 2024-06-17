@@ -14,7 +14,7 @@
   "login_please_approve_the_following_to_continue": "請同意下列條款",
   "login_pick_a_password": "請輸入密碼",
   "login_retype_password": "重新輸入密碼",
-  "login_i_agree_to_tc_and_pp_html": "我同意JustDo的<a href=\"\" class=\"terms-conditions-modal\">服務條款</a>及<a href=\"\" class=\"privacy-policy-modal\">私隱政策</a>",
+  "login_i_agree_to_tc_and_pp_html": "我同意JustDo的<a href=\"/terms-and-conditions\" class=\"terms-conditions-modal\">服務條款</a>及<a href=\"/privacy-policy\" class=\"privacy-policy-modal\">私隱政策</a>",
   "privacy-policy": "私隱政策",
   "terms-and-conditions": "服務條款",
   "login_i_agree_to_custom_tc_html": "我同意<a href=\"__doc_landing_page_address__\">JustDo的__doc_readable_name__</a>.",
