@@ -52,12 +52,15 @@ _.extend JustdoI18n.prototype,
         next()
         return
 
-      langs_to_preload = @getLangsToPreload req
-      # console.log langs_to_preload
+      if _.isEmpty(langs_to_preload = @getLangsToPreload req)
+        next()
+        return
+      
+      req.dynamicHead = req.dynamicHead or ""
 
-      # req.dynamicHead = req.dynamicHead or ""
-      # if (cdn_domain = JustdoHelpers.getCDNDomain())?
-      #   req.dynamicHead += """<script>CDN = "#{cdn_domain}"</script>"""
+      req.dynamicHead += """
+        <script>TAP_I18N_PRELOADED_LANGS = #{JSON.stringify langs_to_preload};</script>
+      """
 
       next()
 
