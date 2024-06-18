@@ -8,7 +8,9 @@ _.extend JustdoI18n.prototype,
     @disable_rtl_support_rv = new ReactiveVar false
   
     @_setupI18nextPluralRule()
-    @_replaceDefaultLanguageNames()
+    APP.executeAfterAppLibCode =>
+      # If called before the app is ready, TAPi18n may not be fully initialized yet and our custom language names will be overrided.
+      @_replaceDefaultLanguageNames()
     @setupRouter()
 
     return
