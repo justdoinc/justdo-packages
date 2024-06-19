@@ -66,6 +66,8 @@ _.extend JustdoI18nRoutes.prototype,
     
     for route in cleaned_routes
       do (route) =>
+        route_name = route.route_options.name
+        
         # Register regular route
         Router.route route.path, -> 
           route.routingFunction.call @

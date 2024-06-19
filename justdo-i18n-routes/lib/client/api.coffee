@@ -33,8 +33,9 @@ _.extend JustdoI18nRoutes.prototype,
           return
           
         cur_path = @getCurrentPathWithoutLangPrefix()
+        cur_route_name = @getCurrentRouteName()
 
-        if (@isRouteI18nAble cur_path) and (i18n_path = @i18nPath cur_path)?
+        if (@isRouteI18nAble cur_route_name) and (i18n_path = @i18nPath cur_path)?
           Router.go i18n_path
 
         return
@@ -62,8 +63,9 @@ _.extend JustdoI18nRoutes.prototype,
     
     if not (lang = @getLangTagIfSupported lang)?
       return path
-
-    if (lang is JustdoI18n.default_lang) or (not @isRouteI18nAble path)
+    
+    route_name = JustdoHelpers.getRouteNameFromPath path
+    if (lang is JustdoI18n.default_lang) or (not @isRouteI18nAble route_name)
       return path or "/"
 
     return "#{JustdoI18nRoutes.langs_url_prefix}/#{lang}#{if path is "/" then "" else path}"
