@@ -43,7 +43,6 @@ _.extend JustdoI18nRoutes.prototype,
     route_options:
       type: Object
       blackbox: true
-      optional: true
   registerRoutes: (routes) ->
     if not _.isArray routes
       routes = [routes]
@@ -58,9 +57,12 @@ _.extend JustdoI18nRoutes.prototype,
       )
       route = cleaned_val
       cleaned_routes.push route
+    
+      if not (route_name = route.route_options.name)?
+        throw @_error "missing-argument": "registerRoutes: route_options.route_name is required."
       
-      if _.has @i18n_routes, route.path
-        throw new @_error "not-supported", "Route #{route.path} is already registered."
+      if _.has @i18n_routes, route_name
+        throw @_error "not-supported", "registerRoutes: Route #{route_name} is already registered."
     
     for route in cleaned_routes
       do (route) =>
@@ -71,7 +73,7 @@ _.extend JustdoI18nRoutes.prototype,
         , route.route_options or {}
 
         # Mark route is i18n-ready so #{JustdoI18nRoutes.langs_url_prefix}/:lang will work
-        @i18n_routes[route.path] = {routingFunction: route.routingFunction, route_options: route.route_options}
+        @i18n_routes[route_name] = {routingFunction: route.routingFunction, route_options: route.route_options}
 
         return
 
