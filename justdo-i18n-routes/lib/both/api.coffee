@@ -29,11 +29,11 @@ _.extend JustdoI18nRoutes.prototype,
     supported_languages = _.keys APP.justdo_i18n.getSupportedLanguages()
     return _.find supported_languages, (supported_lang_tag) -> supported_lang_tag.toLowerCase() is lower_case_lang_tag
 
-  getI18nPathDef: (path) -> 
-    return @i18n_routes[path]
+  getI18nRouteDef: (route_name) -> 
+    return @i18n_routes[route_name]
 
-  isPathI18nAble: (path) -> 
-    return @getI18nPathDef(path)?
+  isRouteI18nAble: (route_name) -> 
+    return @getI18nRouteDef(route_name)?
   
   _registerRoutesItemSchema: new SimpleSchema
     path: 

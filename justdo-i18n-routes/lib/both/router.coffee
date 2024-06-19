@@ -3,6 +3,7 @@ _.extend JustdoI18nRoutes.prototype,
     url_lang = router_this.params.lang
     path = router_this.params.path or ""
     path = "/#{path}"
+    route_name = JustdoHelpers.getRouteNameFromPath path
 
     if not (lang_tag = @getLangTagIfSupported url_lang)?
       router_this.render "not_found"
@@ -11,7 +12,7 @@ _.extend JustdoI18nRoutes.prototype,
     if Meteor.isClient
       APP.justdo_i18n.setLang lang_tag, {skip_set_user_lang: true}
 
-    if (route_def = @getI18nPathDef path)?
+    if (route_def = @getI18nRouteDef route_name)?
       route_def.routingFunction.call router_this
     else
       Router.go path
