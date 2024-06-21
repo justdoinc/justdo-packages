@@ -44,7 +44,7 @@ _.extend JustdoI18nRoutes.prototype,
 
         return
 
-    Router.route "#{JustdoI18nRoutes.langs_url_prefix}/:lang/:path", ->
+    Router.route "#{JustdoI18nRoutes.langs_url_prefix}/:lang/:path(.+)", ->
       self._langRouteHandler @
       return
     ,
