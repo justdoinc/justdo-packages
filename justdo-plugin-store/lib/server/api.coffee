@@ -22,3 +22,8 @@ _.extend JustdoPluginStore.prototype,
     @_ensureIndexesExists()
 
     return
+  
+  getAllCategories: -> share.store_db.categories
+
+  getAllPlugins: -> share.store_db.plugins
+
