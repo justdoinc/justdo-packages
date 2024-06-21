@@ -25,8 +25,12 @@ _.extend JustdoNews.prototype,
 
     if @register_news_routes
       for route_path, {routingFunction, route_options} of @_generateRouteFunctionForNewsCategory category
-        Router.route route_path, routingFunction, route_options
-
+        if APP.justdo_i18n_routes?
+          # Register i18n route for news
+          APP.justdo_i18n_routes?.registerRoutes {path: route_path, routingFunction: routingFunction, route_options: route_options}
+        else
+          Router.route route_path, routingFunction, route_options
+        
     if Meteor.isClient
       @category_dep.changed()
 
