@@ -11,18 +11,6 @@ _.extend JustdoNews.prototype,
   getActiveCategetoryByRootPath: ->
     return Router?.current()?.route?._path?.match(JustdoNews.root_path_regex)?[0]?.replace "/", ""
 
-  getAllNewsByCategory: (category) ->
-    @category_dep.depend()
-    @news_dep.depend()
-    if _.has @news, category
-      return JSON.parse(JSON.stringify(@news[category]))
-    return []
-
-  getMostRecentNewsIdUnderCategory: (category) ->
-    @category_dep.depend()
-    @news_dep.depend()
-    return @news[category]?[0]?._id
-
   getNewsIdIfExists: (category, news_id_or_alias) ->
     news_doc = @getNewsByIdOrAlias category, news_id_or_alias
     return news_doc?._id

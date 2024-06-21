@@ -32,6 +32,22 @@ _.extend JustdoNews.prototype,
 
     return
 
+  getAllNewsByCategory: (category) ->
+    if Meteor.isClient
+      @category_dep.depend()
+      @news_dep.depend()
+
+    if _.has @news, category
+      return JSON.parse(JSON.stringify(@news[category]))
+    return []
+
+  getMostRecentNewsIdUnderCategory: (category) ->
+    if Meteor.isClient
+      @category_dep.depend()
+      @news_dep.depend()
+
+    return @news[category]?[0]?._id
+
   _generateRouteFunctionForNewsCategory: (category) ->
     underscored_category = category.replace /-/g, "_"
 
