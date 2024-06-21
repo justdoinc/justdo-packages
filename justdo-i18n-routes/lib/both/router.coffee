@@ -24,11 +24,44 @@ _.extend JustdoI18nRoutes.prototype,
     Router.route "#{JustdoI18nRoutes.langs_url_prefix}/:lang", ->
       self._langRouteHandler @
       return
-    , {name: "i18n_path_main_page"}
+    , 
+      name: "i18n_path_main_page"
+      postMapGenerator: (sitemap) ->
+        # This postMapGenerator only yield the main page route for each supported language
+        for map_obj in sitemap
+          if (map_obj.url is "/") and (map_obj.route.options?.translatable is true)
+            map_obj.translations = []
+
+            for lang_tag of APP.justdo_i18n.getSupportedLanguages()
+              if lang_tag is JustdoI18n.default_lang
+                continue
+              
+              translated_map_obj = _.extend {}, map_obj,
+                url: "/lang/#{lang_tag}"
+                lang: lang_tag
+              map_obj.translations.push translated_map_obj
+
+        return
 
     Router.route "#{JustdoI18nRoutes.langs_url_prefix}/:lang/:path", ->
       self._langRouteHandler @
       return
-    , {name: "i18n_path"}
+    ,
+      name: "i18n_path"
+      postMapGenerator: (sitemap) ->
+        for map_obj in sitemap
+          if (map_obj.route.options?.translatable is true) and (map_obj.url isnt "/")
+            map_obj.translations = []
+
+            for lang_tag of APP.justdo_i18n.getSupportedLanguages()
+              if lang_tag is JustdoI18n.default_lang
+                continue
+
+              translated_map_obj = _.extend {}, map_obj,
+                url: "/lang/#{lang_tag}#{map_obj.url}"
+                lang: lang_tag
+              map_obj.translations.push translated_map_obj
+        
+        return
 
     return
