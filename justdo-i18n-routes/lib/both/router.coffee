@@ -13,6 +13,9 @@ _.extend JustdoI18nRoutes.prototype,
       APP.justdo_i18n.setLang lang_tag, {skip_set_user_lang: true}
 
     if (route_def = @getI18nRouteDef route_name)?
+      path_params = Router.routes[route_name].params path
+      router_this.setParams _.extend router_this.getParams(), path_params
+      console.log path_params
       route_def.routingFunction.call router_this
     else
       Router.go path
