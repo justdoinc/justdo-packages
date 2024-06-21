@@ -40,7 +40,10 @@ Template.news.onCreated ->
   @isRouterNavigation = -> @router_navigation and @register_news_routes
 
   @getNewsPath = (template_name, template_data) ->
-    return Router.path template_name, template_data
+    news_path = Router.path template_name, template_data
+    news_path = APP.justdo_i18n_routes?.i18nPath(news_path) or news_path
+
+    return news_path
 
   return
 
