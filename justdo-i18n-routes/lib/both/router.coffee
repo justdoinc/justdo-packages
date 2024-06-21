@@ -51,7 +51,7 @@ _.extend JustdoI18nRoutes.prototype,
       postMapGenerator: (sitemap) ->
         for map_obj in sitemap
           if (map_obj.route.options?.translatable is true) and (map_obj.url isnt "/")
-            map_obj.translations = []
+            translations = []
 
             for lang_tag of APP.justdo_i18n.getSupportedLanguages()
               if lang_tag is JustdoI18n.default_lang
@@ -60,7 +60,13 @@ _.extend JustdoI18nRoutes.prototype,
               translated_map_obj = _.extend {}, map_obj,
                 url: "/lang/#{lang_tag}#{map_obj.url}"
                 lang: lang_tag
-              map_obj.translations.push translated_map_obj
+
+              if map_obj.canonical_to?
+                translated_map_obj.canonical_to = "/lang/#{lang_tag}#{map_obj.canonical_to}" # Reminder: map_obj.canonical_to is normalized by JustdoHelpers.getNormalisedUrlPathname
+                
+              translations.push translated_map_obj
+            
+            map_obj.translations = translations
         
         return
 
