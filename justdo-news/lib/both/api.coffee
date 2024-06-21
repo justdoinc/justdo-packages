@@ -61,6 +61,12 @@ _.extend JustdoNews.prototype,
           return
         route_options:
           name: "#{underscored_category}_page"
+          mapGenerator: ->
+            ret = 
+              url: "/#{category}"
+              canonical_to: "/#{category}/#{self.getMostRecentNewsIdUnderCategory category}"
+            yield ret
+            return
       "/#{category}/:news_id":
         routingFunction: ->
           APP.justdo_i18n?.forceLtrForRoute "#{underscored_category}_page_with_news_id"
@@ -75,6 +81,12 @@ _.extend JustdoNews.prototype,
           return
         route_options:
           name: "#{underscored_category}_page_with_news_id"
+          mapGenerator: ->
+            for news_doc in self.getAllNewsByCategory category
+              ret = 
+                url: "/#{category}/#{news_doc._id}"
+              yield ret
+            return
       "/#{category}/:news_id/:news_template":
         route_name: "#{underscored_category}_page_with_news_id_and_template"
         routingFunction: ->
@@ -94,6 +106,14 @@ _.extend JustdoNews.prototype,
           return
         route_options:
           name: "#{underscored_category}_page_with_news_id_and_template"
+          mapGenerator: ->
+            for news_doc in self.getAllNewsByCategory category
+              for template_obj in news_doc.templates
+                if (news_template_id = template_obj._id) isnt "main"
+                  ret = 
+                    url: "/#{category}/#{news_doc._id}/#{news_template_id}"
+                  yield ret
+            return
 
     return routes
 
