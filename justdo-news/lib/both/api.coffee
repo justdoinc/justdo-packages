@@ -24,8 +24,8 @@ _.extend JustdoNews.prototype,
     @news[category] = []
 
     if @register_news_routes
-      for route_path, {route_name, routingFunction} of @_generateRouteFunctionForNewsCategory category
-        Router.route route_path, routingFunction, {name: route_name}
+      for route_path, {routingFunction, route_options} of @_generateRouteFunctionForNewsCategory category
+        Router.route route_path, routingFunction, route_options
 
     if Meteor.isClient
       @category_dep.changed()
@@ -49,29 +49,32 @@ _.extend JustdoNews.prototype,
     return @news[category]?[0]?._id
 
   _generateRouteFunctionForNewsCategory: (category) ->
+    self = @
     underscored_category = category.replace /-/g, "_"
 
     routes =
       "/#{category}":
-        route_name: "#{underscored_category}_page"
         routingFunction: ->
           APP.justdo_i18n?.forceLtrForRoute "#{underscored_category}_page"
 
-          APP.justdo_news.redirectToMostRecentNewsPageByCategoryOrFallback category
+          self.redirectToMostRecentNewsPageByCategoryOrFallback category
           return
+        route_options:
+          name: "#{underscored_category}_page"
       "/#{category}/:news_id":
-        route_name: "#{underscored_category}_page_with_news_id"
         routingFunction: ->
           APP.justdo_i18n?.forceLtrForRoute "#{underscored_category}_page_with_news_id"
 
           news_id = @params.news_id.toLowerCase()
 
-          if not APP.justdo_news.getNewsIdIfExists(category, news_id)?
-            APP.justdo_news.redirectToMostRecentNewsPageByCategoryOrFallback category
+          if not self.getNewsIdIfExists(category, news_id)?
+            self.redirectToMostRecentNewsPageByCategoryOrFallback category
 
           @render "news"
           @layout "single_frame_layout"
           return
+        route_options:
+          name: "#{underscored_category}_page_with_news_id"
       "/#{category}/:news_id/:news_template":
         route_name: "#{underscored_category}_page_with_news_id_and_template"
         routingFunction: ->
@@ -83,12 +86,14 @@ _.extend JustdoNews.prototype,
           if news_template is "main"
             @redirect "/#{category}/#{news_id}"
 
-          if not APP.justdo_news.getNewsTemplateIfExists(category, news_id, news_template)?
-            APP.justdo_news.redirectToMostRecentNewsPageByCategoryOrFallback category
+          if not self.getNewsTemplateIfExists(category, news_id, news_template)?
+            self.redirectToMostRecentNewsPageByCategoryOrFallback category
 
           @render "news"
           @layout "single_frame_layout"
           return
+        route_options:
+          name: "#{underscored_category}_page_with_news_id_and_template"
 
     return routes
 
