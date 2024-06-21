@@ -36,7 +36,7 @@ _.extend JustdoI18nRoutes.prototype,
     return @getI18nPathDef(path)?
   
   _registerRoutesItemSchema: new SimpleSchema
-    url: 
+    path: 
       type: String
     routingFunction:
       type: Function
@@ -59,19 +59,19 @@ _.extend JustdoI18nRoutes.prototype,
       route = cleaned_val
       cleaned_routes.push route
       
-      if _.has @i18n_routes, route.url
-        throw new @_error "not-supported", "Route #{route.url} is already registered."
+      if _.has @i18n_routes, route.path
+        throw new @_error "not-supported", "Route #{route.path} is already registered."
     
     for route in cleaned_routes
       do (route) =>
         # Register regular route
-        Router.route route.url, -> 
+        Router.route route.path, -> 
           route.routingFunction.call @
           return
         , route.route_options or {}
 
         # Mark route is i18n-ready so #{JustdoI18nRoutes.langs_url_prefix}/:lang will work
-        @i18n_routes[route.url] = {routingFunction: route.routingFunction, route_options: route.route_options}
+        @i18n_routes[route.path] = {routingFunction: route.routingFunction, route_options: route.route_options}
 
         return
 
