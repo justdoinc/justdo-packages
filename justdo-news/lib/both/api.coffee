@@ -65,6 +65,7 @@ _.extend JustdoNews.prototype,
           return
         route_options:
           name: "#{underscored_category}_page"
+          translatable: true
           mapGenerator: ->
             ret = 
               url: "/#{category}"
@@ -85,6 +86,7 @@ _.extend JustdoNews.prototype,
           return
         route_options:
           name: "#{underscored_category}_page_with_news_id"
+          translatable: true
           mapGenerator: ->
             for news_doc in self.getAllNewsByCategory category
               ret = 
@@ -92,7 +94,6 @@ _.extend JustdoNews.prototype,
               yield ret
             return
       "/#{category}/:news_id/:news_template":
-        route_name: "#{underscored_category}_page_with_news_id_and_template"
         routingFunction: ->
           APP.justdo_i18n?.forceLtrForRoute "#{underscored_category}_page_with_news_id_and_template"
 
@@ -110,6 +111,7 @@ _.extend JustdoNews.prototype,
           return
         route_options:
           name: "#{underscored_category}_page_with_news_id_and_template"
+          translatable: true
           mapGenerator: ->
             for news_doc in self.getAllNewsByCategory category
               for template_obj in news_doc.templates
