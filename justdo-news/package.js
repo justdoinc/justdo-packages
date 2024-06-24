@@ -56,6 +56,7 @@ Package.onUse(function (api) {
 
   api.use("reactive-var", both);
   api.use("tracker", client);
+  api.use("webapp", server);
 
   api.addFiles("lib/both/analytics.coffee", both);
 
