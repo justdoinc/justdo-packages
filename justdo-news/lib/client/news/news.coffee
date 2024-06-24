@@ -73,7 +73,7 @@ Template.news.onRendered ->
 Template.news.helpers
   getActiveNewsTitle: ->
     tpl = Template.instance()
-    return APP.justdo_news.getNewsByIdOrAlias(tpl.active_category_rv.get(), tpl.active_news_id_rv.get())?.title
+    return TAPi18n.__ APP.justdo_news.getNewsByIdOrAlias(tpl.active_category_rv.get(), tpl.active_news_id_rv.get())?.title
 
   showNavigationBar: ->
     tpl = Template.instance()

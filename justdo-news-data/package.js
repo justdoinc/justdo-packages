@@ -54,7 +54,9 @@ Package.onUse(function (api) {
   api.use("meteorspark:app@0.3.0", both);
   api.use("justdoinc:justdo-webapp-boot@1.0.0", both);
   api.use("justdoinc:justdo-news@1.0.0", both);
-
+  api.use("tap:i18n", both);
+  api.use("justdoinc:justdo-i18n@1.0.0", both);
+  
   api.addFiles("lib/both/news-category-registrar.coffee", both);
 
   api.addFiles("lib/client/news-common.sass", client);

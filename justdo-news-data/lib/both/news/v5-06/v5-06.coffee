@@ -1,6 +1,6 @@
 APP.justdo_news.registerNews "news",
   _id: "justdo-ai"
-  title: "JustDo AI"
+  title: "v5_06_news_title"
   aliases: ["justdo-ai"]
   date: "2024-03-15"
   templates: [
@@ -10,17 +10,17 @@ APP.justdo_news.registerNews "news",
       template_data: {
         news_array: [
           {
-            "title": "The Getting Started Prompt"
-            "subtitle": "Instantly generate project templates from brief descriptions with our new AI capability. Available only on JustDo.com"
+            "title": "v5_06_news_main_array_item_1_title"
+            "subtitle": "v5_06_news_main_array_item_1_subtitle"
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v5-06/assets/1.jpeg"
           },
           {
-            "title": "The DoPilot"
-            "subtitle": "Discover the new AI-powered feature designed to instantly offer personalized recommendations for every task you encounter."
+            "title": "v5_06_news_main_array_item_2_title"
+            "subtitle": "v5_06_news_main_array_item_2_subtitle"
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v5-06/assets/2.jpeg"
           }
         ]
       }
-      name: "What's new"
+      name: "v5_06_news_main_name"
     }
   ]
