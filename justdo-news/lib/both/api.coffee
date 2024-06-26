@@ -56,6 +56,22 @@ _.extend JustdoNews.prototype,
     self = @
     underscored_category = category.replace /-/g, "_"
 
+    metadata =
+      title_i18n: (lang, req) ->
+        if Meteor.isClient
+          news_id = Router.current()?.getParams()?.news_id
+        if Meteor.isServer
+          {news_id} = self.getNewsParamFromReq req
+
+        return TAPi18n.__ "#{news_id.replace /-/g, "_"}_news_page_title", null, lang
+      description_i18n: (lang, req) ->
+        if Meteor.isClient
+          news_id = Router.current()?.getParams()?.news_id
+        if Meteor.isServer
+          {news_id} = self.getNewsParamFromReq req
+
+        return TAPi18n.__ "#{news_id.replace /-/g, "_"}_news_page_description", null, lang
+
     routes =
       "/#{category}":
         routingFunction: ->
@@ -93,6 +109,8 @@ _.extend JustdoNews.prototype,
                 url: "/#{category}/#{news_doc._id}"
               yield ret
             return
+          metadata: metadata
+
       "/#{category}/:news_id/:news_template":
         routingFunction: ->
           APP.justdo_i18n?.forceLtrForRoute "#{underscored_category}_page_with_news_id_and_template"
@@ -120,6 +138,7 @@ _.extend JustdoNews.prototype,
                     url: "/#{category}/#{news_doc._id}/#{news_template_id}"
                   yield ret
             return
+          metadata: metadata
 
     return routes
 
