@@ -1,0 +1,13 @@
+{
+  "v3_142_news_title": "v3.142",
+  "v3_142_news_main_name": "What's new",
+  "v3_142_news_main_array_item_1_title": "Introduce the Chinese translation",
+  "v3_142_news_main_array_item_1_subtitle": "Available only on JustDo.com",
+  "v3_142_news_main_array_item_2_title": "Set states for multiple items at once",
+  "v3_142_news_main_array_item_2_subtitle": "This update allows for a more efficient workflow. You can now apply state changes to several items in a single action. In addition to setting states, this feature can be used to update various other option fields in bulk. Including your JustDo's custom fields and plugins fields.",
+  "v3_142_news_features_name": "Other Updates",
+  "v3_142_news_features_title": "Improvements",
+  "v3_142_news_features_update_items": [
+    "1. Introducing 'Select All' and 'Deselect All' buttons to our Task Copy feature - making field selection faster and simpler."
+  ]
+}

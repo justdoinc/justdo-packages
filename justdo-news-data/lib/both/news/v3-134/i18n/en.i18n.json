@@ -1,0 +1,17 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "What's new",
+  "v3_134_news_main_array_item_1_title": "Archiving",
+  "v3_134_news_main_array_item_1_subtitle": "When there are new projects and new activities you need to work on, you need to put the old ones aside and focus on the new ones. Now you can archive those projects and tasks, removing them from your day to day view, while still having the ability to access them as needed and even unarchive.",
+  "v3_134_news_main_array_item_2_title": "Multi select options field",
+  "v3_134_news_main_array_item_2_subtitle": "In addition to the “Options” custom field you now have the “Multi Options” type. This option allows you to create a list of predefined options from which users can select multiple values per each individual task.",
+  "v3_134_news_main_array_item_3_title": "Task's Owner and Pending Owner fields + filter",
+  "v3_134_news_main_array_item_3_subtitle": "You now have the ability to incorporate additional fields that display both the Task Owner and Pending Owner of tasks. This update empowers you to efficiently filter your task tree based on these criteria, providing a more streamlined and personalized task management experience.",
+  "v3_134_news_features_name": "Other Updates",
+  "v3_134_news_features_title": "Improvements",
+  "v3_134_news_features_update_items": [
+    "1. Emails - Files smaller than 150x150 pixels are not added to files.",
+    "2. Emails - Show only last 20 emails, plus “load more”.",
+    "3. Removal of extensions and “store” button."
+  ]
+}

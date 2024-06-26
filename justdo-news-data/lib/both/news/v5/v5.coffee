@@ -1,6 +1,6 @@
 APP.justdo_news.registerNews "news",
   _id: "v5-0"
-  title: "v5.0"
+  title: "v5_news_title"
   aliases: ["v5-0-x"]
   date: "2024-02-15"
   templates: [
@@ -10,29 +10,27 @@ APP.justdo_news.registerNews "news",
       template_data: {
         news_array: [
           {
-            "title": "New search dropdown"
-            "subtitle": "The new search dropdown instantly displays results, speeding up and simplifying searches."
+            "title": "v5_news_main_array_item_1_title"
+            "subtitle": "v5_news_main_array_item_1_subtitle"
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v5/assets/1.jpg"
           },
           {
-            "title": "Introduce the Solid Orange theme"
+            "title": "v5_news_main_array_item_2_title"
             "subtitle": ""
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v5/assets/2.jpg"
           }
         ]
       }
-      name: "What's new"
+      name: "v5_news_main_name"
     }
     ,
     {
       _id: "features"
       template_name: "version_release_features"
       template_data: {
-        title: "Improvements"
-        update_items: [
-          "1. Smart numbers: improve numbers rounding and formatting."
-        ]
+        title: "v5_news_features_title"
+        update_items: "v5_news_features_update_items"
       }
-      name: "Other Updates"
+      name: "v5_news_features_name"
     }
   ]

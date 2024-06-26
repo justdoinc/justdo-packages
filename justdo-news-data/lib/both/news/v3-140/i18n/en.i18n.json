@@ -1,0 +1,22 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "What's new",
+  "v3_140_news_main_array_item_1_title": "Tab switcher design updated",
+  "v3_140_news_main_array_item_1_subtitle": "Design now indicates better when a tab is active.",
+  "v3_140_news_main_array_item_2_title": "Introduce the Solid Purple theme",
+  "v3_140_news_main_array_item_3_title": "Simplify users invite",
+  "v3_140_news_main_array_item_4_title": "Improve JustDo members management",
+  "v3_140_news_main_array_item_4_subtitle": "Select to remove multiple users at the same time.",
+  "v3_140_news_main_array_item_5_title": "Support video preview in JustDo files",
+  "v3_140_news_main_array_item_6_title": "Show the user avatar in the Owner/Pending Owner columns",
+  "v3_140_news_features_name": "Other Updates",
+  "v3_140_news_features_title": "Improvements",
+  "v3_140_news_features_update_items": [
+    "1. Color of secondary buttons changed from dark gray to light gray",
+    "2. Classic themes removed",
+    "3. Support sorting child tasks by the Follow Up field",
+    "4. A new modern font is now in use to better support non-english languages",
+    "5. Added the ability to hide the sidebar in the Site Admin",
+    "6. Design improvements to the reject ownership dialog (incl. ability to confirm submission with ctrl+enter)"
+  ]
+}

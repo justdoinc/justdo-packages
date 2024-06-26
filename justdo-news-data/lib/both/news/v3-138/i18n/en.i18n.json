@@ -1,0 +1,16 @@
+{
+  "v3_138_news_title": "v3.138",
+  "v3_138_news_main_name": "What's new",
+  "v3_138_news_main_array_item_1_title": "Revamped JustDo Members Invitation Window",
+  "v3_138_news_main_array_item_1_subtitle": "Expanding on our existing invitation functionality, we have added a new feature that allows you to select all tasks with just a click when adding new users. For a more efficient setup process for large projects.",
+  "v3_138_news_main_array_item_2_title": "Improved File Preview Navigation",
+  "v3_138_news_main_array_item_2_subtitle": "We believe in the importance of seamless navigation. That's why we've implemented keyboard navigation in file previews. Now you can easily move through your files using just your keyboard, making reviewing and editing an even smoother process.",
+  "v3_138_news_main_array_item_3_title": "Sleek Design Upgrade",
+  "v3_138_news_main_array_item_3_subtitle": "To enhance the visual experience, we've switched to a modern curvy design for our buttons and inputs",
+  "v3_138_news_features_name": "Other Updates",
+  "v3_138_news_features_title": "Improvements",
+  "v3_138_news_features_update_items": [
+    "1. Loading Indicators for Chat Recent Activity",
+    "2. Site admins with unverified email will lose access to the Site Admin Page"
+  ]
+}
