@@ -31,10 +31,9 @@ _.extend JustdoNews.prototype,
       res.end()
       return
     WebApp.connectHandlers.use (req, res, next) =>
-      url = APP.justdo_i18n_routes?.getPathWithoutLangPrefix(req.url) or req.url
       lang = APP.justdo_i18n_routes?.getUrlLangFromReq(req)
 
-      [news_category, news_id, news_template] = _.filter url.split("/"), (url_segment) -> not _.isEmpty url_segment
+      {news_category, news_id, news_template} = @getNewsParamFromReq req
 
       # If news_category isn't registered, skip.
       # Note that this is a middleware. news_category could be any path (not just /news)
@@ -66,3 +65,8 @@ _.extend JustdoNews.prototype,
       return
 
     return
+
+  getNewsParamFromReq: (req) ->
+    url = APP.justdo_i18n_routes?.getPathWithoutLangPrefix(req.url) or req.url
+    [news_category, news_id, news_template] = _.filter url.split("/"), (url_segment) -> not _.isEmpty url_segment
+    return {news_category, news_id, news_template}
