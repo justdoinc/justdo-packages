@@ -1,7 +1,7 @@
 Template.version_release_news.helpers
   date: ->
     tpl = Template.instance()
-    APP.justdo_i18n.getLang() # For reactivity
+    APP.justdo_i18n.getLang() # For reactivity (following a change of a languge, we update moment according to the new language, so for the following line to be reactive, we need to call APP.justdo_i18n.getLang())
     date = moment(@date, "YYYY-MM-DD")
     format_string = "L"
     if Meteor.user()?
