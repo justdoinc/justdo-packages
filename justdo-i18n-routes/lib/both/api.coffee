@@ -80,3 +80,22 @@ _.extend JustdoI18nRoutes.prototype,
         return
 
     return
+
+  i18nPath: (path, lang) ->
+    if not path?
+      path = "/"
+
+    if not lang?
+      if Meteor.isClient
+        lang = APP.justdo_i18n.getLang()
+      if Meteor.isServer
+        throw @_error "missing-argument", "i18nPath: lang is required."
+    
+    if not (lang = @getLangTagIfSupported lang)?
+      return path
+    
+    route_name = JustdoHelpers.getRouteNameFromPath path
+    if (lang is JustdoI18n.default_lang) or (not @isRouteI18nAble route_name)
+      return path or "/"
+
+    return "#{JustdoI18nRoutes.langs_url_prefix}/#{lang}#{if path is "/" then "" else path}"

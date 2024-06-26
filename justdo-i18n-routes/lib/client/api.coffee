@@ -53,22 +53,6 @@ _.extend JustdoI18nRoutes.prototype,
       return
       
     return url_lang
-
-  i18nPath: (path, lang) ->
-    if not path?
-      path = "/"
-
-    if not lang?
-      lang = APP.justdo_i18n.getLang()
-    
-    if not (lang = @getLangTagIfSupported lang)?
-      return path
-    
-    route_name = JustdoHelpers.getRouteNameFromPath path
-    if (lang is JustdoI18n.default_lang) or (not @isRouteI18nAble route_name)
-      return path or "/"
-
-    return "#{JustdoI18nRoutes.langs_url_prefix}/#{lang}#{if path is "/" then "" else path}"
     
   i18nCurrentPagePath: (lang) ->
     if not (router = Router.current())?
