@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "גרסה 3.136",
+  "v3_136_news_main_name": "מה חדש",
+  "v3_136_news_main_array_item_1_title": "עמוד נחיתה חדש",
+  "v3_136_news_main_array_item_1_subtitle": "מציגים את עמוד הנחיתה המרענן שלנו 🎉",
+  "v3_136_news_main_array_item_2_title": "מצבים מותאמים אישית",
+  "v3_136_news_main_array_item_2_subtitle": "שפרו את יעילות זרימת העבודה שלכם עם התוספת האחרונה שלנו - מצבים מותאמים אישית. התאימו את מצבי המשימות לצרכים הייחודיים של הפרויקט שלכם ועקבו אחר ההתקדמות בדיוק רב יותר.",
+  "v3_136_news_main_array_item_3_title": "הישארו מעודכנים עם מחוון דואר אלקטרוני שלא נקרא על הרשת",
+  "v3_136_news_main_array_item_3_subtitle": "לעולם לא תפספסו עדכונים חשובים שוב! מחוון הדואר האלקטרוני שלא נקרא על הרשת החדש שלנו מעדכן אתכם על הודעות דואר אלקטרוני שלא נקראו בתוך משימות, ומבטיח תקשורת יעילה ופעולה מהירה.",
+  "v3_136_news_main_array_item_4_title": "מסננים משופרים לתיבת הדו-שיח להוספה מהירה",
+  "v3_136_news_main_array_item_4_subtitle": "הגבירו את הפרודוקטיביות שלכם עם המסננים החדשים שלנו עבור בורר היעד והבעלים של תיבת ההוספה המהירה. ייעלו את יצירת המשימות על ידי מציאת היעד והבעלים המתאימים בקלות.",
+  "v3_136_news_features_name": "עדכונים נוספים",
+  "v3_136_news_features_title": "שיפורים",
+  "v3_136_news_features_update_items": [
+    "1. שיפור ביצועים לפעולות הכוללות עדכונים ליותר מ-1000 משימות, בפרט, שינוי חברי משימות של תת-עץ הגדול מ-1000 משתמשים.",
+    "2. לשונית פעילות: תיקון יומן הפעילות שלא הוצג נכון אם זו הוספת הורה וההורה הוסר <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>וידאו</a>.",
+    "3. העלאת אווטארים לסביבות המשתמשות בקבצי JustDo.",
+    "4. הצגת מושג הארגונים: יחידה לוגית אופציונלית מעל JustDos.",
+    "5. MailDo: כאשר מתקבל דואר אלקטרוני, בעל המשימה כעת מבטל השתקה אוטומטית בצ'אט."
+  ],
+  "v3_136_news_page_title": "JustDo גרסה 3.136: עמוד נחיתה חדש, מצבים מותאמים אישית, מסננים משופרים ועוד",
+  "v3_136_news_page_description": "גרסה 3.136 של JustDo מציגה עמוד נחיתה מרענן, מצבים מותאמים אישית חזקים למשימות, מסננים משופרים להוספת משימות מהירה יותר, ושדרוגי ביצועים חשובים."
+}
