@@ -44,14 +44,20 @@ _.extend JustdoNews.prototype,
       
       # By this point we know news_category exists and is valid.
       
-      # If there's no news_id or news_id isn't registered under news_category, redirect to the most recent news under the category
-      if (_.isEmpty news_id) or not (news_doc = @getNewsByIdOrAlias news_category, news_id)?
+      # If there's no news_id, redirect to the most recent news under the category
+      if _.isEmpty news_id
         redirectToNewsUrl res, news_category, most_recent_news_id, lang
         return
       
-      # If news_template is invalid, redirect to the most recent news under the category
-      if (not _.isEmpty news_template) and not (news_template = _.find(news_doc.templates, (template) -> template._id is news_template))?
-        redirectToNewsUrl res, news_category, most_recent_news_id, lang
+      # If news_id or news_template is invalid, return 404
+      news_doc = @getNewsByIdOrAlias news_category, news_id
+      is_news_id_invalid = not news_doc?
+      # If news_template isn't provided in the url, we don't care if it's valid or not.
+      is_news_template_invalid = news_template? and not _.find(news_doc.templates, (template) -> template._id is news_template)?
+      if is_news_id_invalid or is_news_template_invalid
+        res.writeHead 404
+        # XXX We should probably return a nicely-styled static 404 page here, like the one on Youtube
+        res.end "404 Not Found"
         return
 
       # Everything is valid. Continue.
