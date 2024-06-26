@@ -49,10 +49,13 @@ _.extend JustdoNews.prototype,
         return
       
       # If news_id or news_template is invalid, return 404
-      news_doc = @getNewsByIdOrAlias news_category, news_id
-      is_news_id_invalid = not news_doc?
-      # If news_template isn't provided in the url, we don't care if it's valid or not.
-      is_news_template_invalid = news_template? and not _.find(news_doc.templates, (template) -> template._id is news_template)?
+      is_news_id_invalid = true
+      if (news_doc = @getNewsByIdOrAlias news_category, news_id)?
+        is_news_id_invalid = false
+
+        # The template is the last part of the url (e.g. other-updates here: /news/justdo-ai/other-updates )
+        # If news_template isn't provided in the url, we don't care if it's valid or not.
+        is_news_template_invalid = news_template? and not _.find(news_doc.templates, (template) -> template._id is news_template)?
       if is_news_id_invalid or is_news_template_invalid
         res.writeHead 404
         # XXX We should probably return a nicely-styled static 404 page here, like the one on Youtube
