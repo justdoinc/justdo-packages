@@ -63,10 +63,19 @@ _.extend JustdoHelpers,
   getUserMainEmail: (user_obj) ->
     return user_obj?.emails?[0]?.address
 
-  getUserPreferredDateFormat: ->
+  getUserPreferredDateFormat: (fallback_format) ->
+    # If you provide a fallback_format, it will be used if the user has no preferred date format
+    # If fallback_format is undefined/null, we will use the default_date_format from the schema
+
     # Reactive resource!
-    if (preferred_date_format = Meteor.users.findOne(Meteor.userId(), {fields: {'profile.date_format': 1}})?.profile?.date_format)?
+    if (preferred_date_format = Meteor.user({fields: {'profile.date_format': 1}})?.profile?.date_format)?
       return preferred_date_format
+
+    if fallback_format?
+      if Meteor.isClient and APP.justdo_i18n?
+        APP.justdo_i18n.getLang() # For reactivity (following a change of a languge, justdo-i18n updates moment according to the new language, so for the following line to be reactive, we need to call APP.justdo_i18n.getLang())
+      
+      return fallback_format
 
     if (default_date_format = JustdoHelpers.getCollectionSchemaForField(Meteor.users, "profile.date_format").defaultValue)?
       return default_date_format
