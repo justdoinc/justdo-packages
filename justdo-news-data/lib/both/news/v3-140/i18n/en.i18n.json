@@ -18,5 +18,7 @@
     "4. A new modern font is now in use to better support non-english languages",
     "5. Added the ability to hide the sidebar in the Site Admin",
     "6. Design improvements to the reject ownership dialog (incl. ability to confirm submission with ctrl+enter)"
-  ]
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Design Updates, Simplified User Invites & More", 
+  "v3_140_news_page_description": "JustDo v3.140 delivers design refinements, improved user invitation workflows, enhanced video support, and multiple usability enhancements."
 }

@@ -13,5 +13,7 @@
     "1. Emails - Files smaller than 150x150 pixels are not added to files.",
     "2. Emails - Show only last 20 emails, plus “load more”.",
     "3. Removal of extensions and “store” button."
-  ]
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Project Archiving, Multi-Select Options & More",
+  "v3_134_news_page_description": "Discover the power of project archiving, the flexibility of multi-select option fields, and improved task ownership management in JustDo v3.134."
 }

@@ -7,5 +7,7 @@
   "v3_133_news_features_title": "Improvements",
   "v3_133_news_features_update_items": [
     "1. MailDo: When an email is received, the task owner is now automatically unmuted in the chat."
-  ]
+  ],
+  "v3_133_news_page_title": "JustDo v3.133: Streamlined Task Creation & Email Enhancements",
+  "v3_133_news_page_description": "JustDo v3.133 introduces filters for faster task creation and improvements to handling long emails for smoother workflows."
 }

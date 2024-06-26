@@ -9,5 +9,7 @@
   "v3_142_news_features_title": "Improvements",
   "v3_142_news_features_update_items": [
     "1. Introducing 'Select All' and 'Deselect All' buttons to our Task Copy feature - making field selection faster and simpler."
-  ]
+  ],
+  "v3_142_news_page_title": "JustDo v3.142: Chinese Translation, Bulk State Updates & More",
+  "v3_142_news_page_description": "JustDo v3.142 introduces Chinese language support, the ability to set states for multiple items at once, and enhancements to task copying."
 }

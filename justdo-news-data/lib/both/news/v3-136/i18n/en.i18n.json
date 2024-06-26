@@ -17,5 +17,7 @@
     "3. Upload avatars for environments that use JustDo files.",
     "4. Introduced the Organizations concept: an optional logic unit above JustDos.",
     "5. MailDo: When an email is received, the task owner is now automatically unmuted in the chat."
-  ]
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: New Landing Page, Custom States, Enhanced Filters & More",
+  "v3_136_news_page_description": "JustDo v3.136 introduces a refreshed landing page, powerful custom states for tasks, enhanced filters for quicker task adding, and important performance upgrades."
 }
