@@ -19,12 +19,15 @@ _.extend JustdoNews.prototype,
     return
 
   _setupConnectHandlers: ->
+    if not @register_news_routes
+      return
+    
     redirectToNewsUrl = (res, category, news_id, lang) ->
       url = "/#{category}/#{news_id}"
       if lang?
-        url = "/#{JustdoI18nRoutes.langs_url_prefix}/#{lang}#{url}"
+        url = "#{JustdoI18nRoutes.langs_url_prefix}/#{lang}#{url}"
       res.writeHead 302,
-        Location: "/#{category}/#{news_id}"
+        Location: url
       res.end()
       return
     WebApp.connectHandlers.use (req, res, next) =>
@@ -34,7 +37,7 @@ _.extend JustdoNews.prototype,
       [news_category, news_id, news_template] = _.filter url.split("/"), (url_segment) -> not _.isEmpty url_segment
 
       # If news_category isn't registered, skip.
-      # Note that this is a middleware. news_category could be any valid paths.
+      # Note that this is a middleware. news_category could be any path (not just /news)
       if not (most_recent_news_id = @getMostRecentNewsIdUnderCategory news_category)
         next()
         return
