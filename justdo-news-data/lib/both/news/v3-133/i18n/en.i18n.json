@@ -1,0 +1,11 @@
+{
+  "v3_133_news_title": "v3.133",
+  "v3_133_news_main_name": "What's new",
+  "v3_133_news_main_array_item_1_title": "Add filter to the quick add bootbox destination selector and owner selector",
+  "v3_133_news_main_array_item_1_subtitle": "Load more button long emails improvements",
+  "v3_133_news_features_name": "Other Updates",
+  "v3_133_news_features_title": "Improvements",
+  "v3_133_news_features_update_items": [
+    "1. MailDo: When an email is received, the task owner is now automatically unmuted in the chat."
+  ]
+}
