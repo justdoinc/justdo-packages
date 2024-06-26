@@ -25,7 +25,7 @@ _.extend JustdoNews.prototype,
     redirectToNewsUrl = (res, category, news_id, lang) ->
       url = "/#{category}/#{news_id}"
       if lang?
-        url = "#{JustdoI18nRoutes.langs_url_prefix}/#{lang}#{url}"
+        url = APP.justdo_i18n_routes.i18nPath url, lang
       res.writeHead 302,
         Location: url
       res.end()
