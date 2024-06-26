@@ -37,7 +37,9 @@ _.extend JustdoI18nRoutes.prototype,
       processed_lang_details = @getStrippedPathAndLangFromReq(req)
 
       if not processed_lang_details.lang_tag?
-        next()
+        res.writeHead 404
+        # XXX We should probably return a nicely-styled static 404 page here, like the one on Youtube
+        res.end "404 Not Found"
         return
 
       if processed_lang_details.original_lang_tag?
