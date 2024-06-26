@@ -44,7 +44,7 @@ _.extend JustdoI18nRoutes.prototype,
                 continue
               
               translated_map_obj = _.extend {}, map_obj,
-                url: "/lang/#{lang_tag}"
+                url: self.i18nPath "/", lang_tag
                 lang: lang_tag
               map_obj.translations.push translated_map_obj
 
@@ -65,11 +65,12 @@ _.extend JustdoI18nRoutes.prototype,
                 continue
 
               translated_map_obj = _.extend {}, map_obj,
-                url: "/lang/#{lang_tag}#{map_obj.url}"
+                url: self.i18nPath map_obj.url, lang_tag
                 lang: lang_tag
 
               if map_obj.canonical_to?
-                translated_map_obj.canonical_to = "/lang/#{lang_tag}#{map_obj.canonical_to}" # Reminder: map_obj.canonical_to is normalized by JustdoHelpers.getNormalisedUrlPathname
+                # Reminder: map_obj.canonical_to is normalized by JustdoHelpers.getNormalisedUrlPathname
+                translated_map_obj.canonical_to = self.i18nPath map_obj.canonical_to, lang_tag
                 
               translations.push translated_map_obj
             
