@@ -62,15 +62,19 @@ _.extend JustdoNews.prototype,
           news_id = Router.current()?.getParams()?.news_id
         if Meteor.isServer
           {news_id} = self.getNewsParamFromReq req
+        
+        fallback_title = APP.justdo_seo.getDefaultPageTitle lang
 
-        return TAPi18n.__ "#{news_id.replace /-/g, "_"}_news_page_title", null, lang
+        return APP.justdo_i18n.getI18nTextOrFallback {i18n_key: "#{news_id.replace /-/g, "_"}_news_page_title", fallback_text: fallback_title, lang: lang}
       description_i18n: (lang, req) ->
         if Meteor.isClient
           news_id = Router.current()?.getParams()?.news_id
         if Meteor.isServer
           {news_id} = self.getNewsParamFromReq req
+        
+        fallback_description = APP.justdo_seo.getDefaultPageDescription lang
 
-        return TAPi18n.__ "#{news_id.replace /-/g, "_"}_news_page_description", null, lang
+        return APP.justdo_i18n.getI18nTextOrFallback {i18n_key: "#{news_id.replace /-/g, "_"}_news_page_description", fallback_text: fallback_description, lang: lang}
 
     routes =
       "/#{category}":
