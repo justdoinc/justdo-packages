@@ -1,12 +1,12 @@
 {
-  "v5_news_title": "v5.0",
-  "v5_news_main_name": "What's new",
-  "v5_news_main_array_item_1_title": "New search dropdown",
-  "v5_news_main_array_item_1_subtitle": "The new search dropdown instantly displays results, speeding up and simplifying searches.",
-  "v5_news_main_array_item_2_title": "Introduce the Solid Orange theme",
-  "v5_news_features_name": "Other Updates",
-  "v5_news_features_title": "Improvements",
-  "v5_news_features_update_items": [
+  "v5_0_news_title": "v5.0",
+  "v5_0_news_main_name": "What's new",
+  "v5_0_news_main_array_item_1_title": "New search dropdown",
+  "v5_0_news_main_array_item_1_subtitle": "The new search dropdown instantly displays results, speeding up and simplifying searches.",
+  "v5_0_news_main_array_item_2_title": "Introduce the Solid Orange theme",
+  "v5_0_news_features_name": "Other Updates",
+  "v5_0_news_features_title": "Improvements",
+  "v5_0_news_features_update_items": [
     "1. Smart numbers: improve numbers rounding and formatting."
   ],
   "v5_news_page_title": "JustDo v5.0: Enhanced Search, New Theme & More",
