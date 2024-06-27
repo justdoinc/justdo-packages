@@ -22,10 +22,23 @@ _.extend JustdoI18n.prototype,
         # about later changes to lang being overriden by prior calls where lang
         # isn't determined yet
         
+        # Bootbox will fallback to en if the language is not supported
         bootbox.setLocale lang.replaceAll("-", "_")
-      
-        jQuery.datepicker?.setDefaults jQuery.datepicker.regional[lang]
-        moment.locale lang.toLowerCase()
+
+        # Datepicker doesn't have a fallback mechanism, so we need to check if the language is supported
+        # and use the default language if it's not
+        if (datepicker = jQuery.datepicker)?
+          locale_config = jQuery.datepicker.regional[lang] or jQuery.datepicker.regional[JustdoI18n.default_lang]
+          datepicker.setDefaults locale_config
+
+        # Moment.js doesn't have a fallback mechanism, so we need to check if the language is supported
+        # and use the default language if it's not
+        moment_lang = lang.toLowerCase()
+        if moment_lang in moment.locales()
+          moment.locale moment_lang
+        else
+          moment.locale JustdoI18n.default_lang
+
         $("html").attr "lang", lang
         return
       
