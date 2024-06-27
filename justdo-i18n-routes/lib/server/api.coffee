@@ -2,6 +2,7 @@ _.extend JustdoI18nRoutes.prototype,
   _immediateInit: ->
     @_setupLangRedirectRules()
     @_setupPreloadLangsDetectors()
+    @_setupHtmlAttrHook()
 
     return
 
@@ -60,6 +61,15 @@ _.extend JustdoI18nRoutes.prototype,
       next()
 
       return
+    return
+
+  _setupHtmlAttrHook: ->
+    WebApp.addHtmlAttributeHook (req) =>
+      # The req obj we receive here is different from the one in the connectHandlers, so we manually construct the param for getUrlLangFromReq.
+      lang = @getUrlLangFromReq({originalUrl: req.path}) or JustdoI18n.default_lang
+      return {lang}
+
+    return
 
   _setupPreloadLangsDetectors: ->
     APP.justdo_i18n.registerLangsToPreloadDetector (req) => @getUrlLangFromReq req
