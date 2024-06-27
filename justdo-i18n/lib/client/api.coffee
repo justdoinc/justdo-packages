@@ -26,6 +26,7 @@ _.extend JustdoI18n.prototype,
       
         jQuery.datepicker?.setDefaults jQuery.datepicker.regional[lang]
         moment.locale lang.toLowerCase()
+        $("html").attr "lang", lang
         return
       
       return
