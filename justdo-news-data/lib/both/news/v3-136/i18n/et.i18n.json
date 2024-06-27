@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Mis on uut",
+  "v3_136_news_main_array_item_1_title": "Uus avaleht",
+  "v3_136_news_main_array_item_1_subtitle": "Tutvustame meie uuendatud avalehte 🎉",
+  "v3_136_news_main_array_item_2_title": "Kohandatud olekud",
+  "v3_136_news_main_array_item_2_subtitle": "Suurendage oma töövoo tõhusust meie uusima lisandusega - kohandatud olekutega. Kohandage ülesannete olekuid vastavalt oma projekti vajadustele ja jälgige edenemist suurema täpsusega.",
+  "v3_136_news_main_array_item_3_title": "Olge informeeritud võrgustikul oleva lugemata e-kirjade näidikuga",
+  "v3_136_news_main_array_item_3_subtitle": "Ärge kunagi enam jääge olulistest uuendustest ilma! Meie uus võrgustikul olev lugemata e-kirjade näidik hoiab teid kursis lugemata e-kirjadega ülesannete sees, tagades tõhusa suhtluse ja kiire tegutsemise.",
+  "v3_136_news_main_array_item_4_title": "Täiustatud filtrid kiirlisamise dialoogile",
+  "v3_136_news_main_array_item_4_subtitle": "Suurendage oma produktiivsust meie uute filtritega kiirlisamise bootboxi sihtkoha ja omaniku valija jaoks. Lihtsustage ülesannete loomist, leides õige sihtkoha ja omaniku hõlpsasti.",
+  "v3_136_news_features_name": "Muud uuendused",
+  "v3_136_news_features_title": "Täiustused",
+  "v3_136_news_features_update_items": [
+    "1. Jõudluse paranemine operatsioonidel, mis hõlmavad rohkem kui 1000 ülesande uuendamist, eriti üle 1000 kasutajaga alamstruktuuri ülesannete liikmete muutmisel.",
+    "2. Tegevuste vahekaart: Parandatud tegevuslogide korrektne kuvamine, kui tegemist on vanema lisamisega ja vanem on eemaldatud <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>video</a>.",
+    "3. Avataride üleslaadimine keskkondades, mis kasutavad JustDo faile.",
+    "4. Tutvustatud organisatsioonide kontseptsiooni: valikuline loogikaüksus JustDo-de kohal.",
+    "5. MailDo: Kui e-kiri on vastu võetud, eemaldatakse ülesande omanikult nüüd automaatselt vestluse vaigistus."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Uus avaleht, kohandatud olekud, täiustatud filtrid ja palju muud",
+  "v3_136_news_page_description": "JustDo v3.136 tutvustab uuendatud avalehte, võimsaid kohandatud olekuid ülesannetele, täiustatud filtreid kiirema ülesannete lisamise jaoks ja olulisi jõudluse täiustusi."
+}

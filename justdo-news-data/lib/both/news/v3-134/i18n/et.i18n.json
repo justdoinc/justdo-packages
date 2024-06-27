@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Mis on uut",
+  "v3_134_news_main_array_item_1_title": "Arhiveerimine",
+  "v3_134_news_main_array_item_1_subtitle": "Kui teil on uusi projekte ja tegevusi, millega peate tegelema, peate vanad kõrvale panema ja keskenduma uutele. Nüüd saate need projektid ja ülesanded arhiveerida, eemaldades need oma igapäevasest vaatest, säilitades siiski võimaluse neile vajadusel ligi pääseda ja isegi arhiivist taastada.",
+  "v3_134_news_main_array_item_2_title": "Mitme valiku võimalusega väli",
+  "v3_134_news_main_array_item_2_subtitle": "Lisaks \"Valikud\" kohandatud väljale on nüüd olemas \"Mitu valikut\" tüüp. See võimaldab luua eelnevalt määratletud valikute loendi, millest kasutajad saavad valida mitu väärtust iga üksiku ülesande kohta.",
+  "v3_134_news_main_array_item_3_title": "Ülesande omaniku ja ootel omaniku väljad + filter",
+  "v3_134_news_main_array_item_3_subtitle": "Teil on nüüd võimalus lisada täiendavaid välju, mis kuvavad nii ülesande omanikku kui ka ootel omanikku. See uuendus võimaldab teil tõhusalt filtreerida oma ülesannete puud nende kriteeriumide alusel, pakkudes sujuvamat ja personaalsemat ülesannete haldamise kogemust.",
+  "v3_134_news_features_name": "Muud uuendused",
+  "v3_134_news_features_title": "Täiustused",
+  "v3_134_news_features_update_items": [
+    "1. E-kirjad - Väiksemaid faile kui 150x150 pikslit failidesse ei lisata.",
+    "2. E-kirjad - Kuvatakse ainult viimased 20 e-kirja, lisaks \"laadi rohkem\" nupp.",
+    "3. Laienduste ja \"poe\" nupu eemaldamine."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Projektide arhiveerimine, mitme valiku võimalused ja palju muud",
+  "v3_134_news_page_description": "Avastage projektide arhiveerimise võimsus, mitme valiku võimalustega väljade paindlikkus ja täiustatud ülesannete omandiõiguse haldamine JustDo v3.134-s."
+}

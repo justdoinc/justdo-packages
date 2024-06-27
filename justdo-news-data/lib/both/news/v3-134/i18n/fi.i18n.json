@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Mitä uutta",
+  "v3_134_news_main_array_item_1_title": "Arkistointi",
+  "v3_134_news_main_array_item_1_subtitle": "Kun sinulla on uusia projekteja ja tehtäviä, joihin sinun täytyy keskittyä, vanhat on hyvä siirtää syrjään. Nyt voit arkistoida nämä projektit ja tehtävät, poistaen ne päivittäisestä näkymästäsi, mutta säilyttäen mahdollisuuden tarkastella niitä tarvittaessa ja jopa palauttaa ne arkistosta.",
+  "v3_134_news_main_array_item_2_title": "Monivalintavaihtoehtojen kenttä",
+  "v3_134_news_main_array_item_2_subtitle": "\"Vaihtoehdot\"-mukautetun kentän lisäksi sinulla on nyt käytössäsi \"Monivalinnat\"-tyyppi. Tämä vaihtoehto mahdollistaa ennalta määritellyn vaihtoehtojen listan luomisen, josta käyttäjät voivat valita useita arvoja jokaiselle yksittäiselle tehtävälle.",
+  "v3_134_news_main_array_item_3_title": "Tehtävän omistaja ja odottava omistaja -kentät + suodatin",
+  "v3_134_news_main_array_item_3_subtitle": "Sinulla on nyt mahdollisuus lisätä uusia kenttiä, jotka näyttävät sekä tehtävän omistajan että odottavan omistajan. Tämä päivitys antaa sinulle mahdollisuuden suodattaa tehtäväpuuta tehokkaasti näiden kriteerien perusteella, tarjoten entistä sujuvamman ja henkilökohtaisemman tehtävienhallinnan kokemuksen.",
+  "v3_134_news_features_name": "Muut päivitykset",
+  "v3_134_news_features_title": "Parannukset",
+  "v3_134_news_features_update_items": [
+    "1. Sähköpostit - Alle 150x150 pikselin kokoisia tiedostoja ei lisätä tiedostoihin.",
+    "2. Sähköpostit - Näytetään vain 20 viimeisintä sähköpostia sekä \"lataa lisää\"-painike.",
+    "3. Laajennusten ja \"kauppa\"-painikkeen poisto."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Projektien arkistointi, monivalintavaihtoehdot ja paljon muuta",
+  "v3_134_news_page_description": "Tutustu projektien arkistoinnin tehoon, monivalintavaihtoehtojen joustavuuteen ja parannettuun tehtävien omistajuuden hallintaan JustDo v3.134:ssä."
+}

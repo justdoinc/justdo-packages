@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "新功能",
+  "v3_140_news_main_array_item_1_title": "更新標籤切換器設計",
+  "v3_140_news_main_array_item_1_subtitle": "設計現在更清楚地顯示哪個標籤處於活動狀態。",
+  "v3_140_news_main_array_item_2_title": "引入純紫色主題",
+  "v3_140_news_main_array_item_3_title": "簡化用戶邀請流程",
+  "v3_140_news_main_array_item_4_title": "改進專案成員管理",
+  "v3_140_news_main_array_item_4_subtitle": "可同時選擇移除多個用戶。",
+  "v3_140_news_main_array_item_5_title": "支援專案文件中的視頻預覽",
+  "v3_140_news_main_array_item_6_title": "在擁有者/待定擁有者欄位中顯示用戶頭像",
+  "v3_140_news_features_name": "其他更新",
+  "v3_140_news_features_title": "改進",
+  "v3_140_news_features_update_items": [
+    "1. 次要按鈕的顏色從深灰色改為淺灰色",
+    "2. 移除經典主題",
+    "3. 支援根據跟進欄位排序子任務",
+    "4. 採用新的現代字體，更好地支援非英語語言",
+    "5. 在網站管理員中新增隱藏側邊欄的功能",
+    "6. 改進拒絕所有權對話框的設計（包括使用 ctrl+enter 確認提交的功能）"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140：設計更新、簡化用戶邀請等",
+  "v3_140_news_page_description": "JustDo v3.140 帶來設計優化、改進的用戶邀請流程、增強的視頻支援，以及多項可用性提升。"
+}

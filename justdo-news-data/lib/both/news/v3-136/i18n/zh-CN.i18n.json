@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "新功能",
+  "v3_136_news_main_array_item_1_title": "全新登陆页面",
+  "v3_136_news_main_array_item_1_subtitle": "隆重推出我们焕然一新的登陆页面 🎉",
+  "v3_136_news_main_array_item_2_title": "自定义状态",
+  "v3_136_news_main_array_item_2_subtitle": "通过我们最新添加的自定义状态功能提高工作流效率。根据您独特的项目需求定制任务状态，更精确地跟踪进度。",
+  "v3_136_news_main_array_item_3_title": "网格上未读邮件指示器",
+  "v3_136_news_main_array_item_3_subtitle": "再也不会错过重要更新！我们新的网格上未读邮件指示器让您随时了解任务中的未读邮件，确保高效沟通和及时行动。",
+  "v3_136_news_main_array_item_4_title": "快速添加对话框的增强筛选功能",
+  "v3_136_news_main_array_item_4_subtitle": "通过我们新增的快速添加引导框目标和所有者选择器筛选功能提高您的工作效率。轻松找到正确的目标和所有者，简化任务创建过程。",
+  "v3_136_news_features_name": "其他更新",
+  "v3_136_news_features_title": "改进",
+  "v3_136_news_features_update_items": [
+    "1. 改善涉及更新超过1000个任务的操作性能，特别是更改超过1000个用户的子树任务成员。",
+    "2. 活动标签：修复了当涉及父级添加且父级被删除时活动日志显示不正确的问题 <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>视频</a>。",
+    "3. 为使用JustDo文件的环境上传头像。",
+    "4. 引入组织（Organizations）概念：JustDo看板之上的可选逻辑单元。",
+    "5. MailDo（邮件处理）：当收到邮件时，任务所有者现在会在聊天中自动取消静音。"
+  ],
+  "v3_136_news_page_title": "JustDo v3.136：全新登陆页面、自定义状态、增强筛选功能等",
+  "v3_136_news_page_description": "JustDo v3.136推出了焕然一新的登陆页面、强大的任务自定义状态、更快速的任务添加增强筛选功能，以及重要的性能升级。"
+}

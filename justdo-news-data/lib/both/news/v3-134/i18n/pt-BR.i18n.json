@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Novidades",
+  "v3_134_news_main_array_item_1_title": "Arquivamento",
+  "v3_134_news_main_array_item_1_subtitle": "Quando há novos projetos e novas atividades em que você precisa trabalhar, é necessário deixar os antigos de lado e focar nos novos. Agora você pode arquivar esses projetos e tarefas, removendo-os da sua visualização diária, mas ainda mantendo a capacidade de acessá-los conforme necessário e até mesmo desarquivá-los.",
+  "v3_134_news_main_array_item_2_title": "Campo de opções com seleção múltipla",
+  "v3_134_news_main_array_item_2_subtitle": "Além do campo personalizado \"Opções\", agora você tem o tipo \"Múltiplas Opções\". Esta opção permite que você crie uma lista de opções predefinidas das quais os usuários podem selecionar vários valores para cada tarefa individual.",
+  "v3_134_news_main_array_item_3_title": "Campos de Proprietário e Proprietário Pendente da tarefa + filtro",
+  "v3_134_news_main_array_item_3_subtitle": "Agora você tem a capacidade de incorporar campos adicionais que exibem tanto o Proprietário da Tarefa quanto o Proprietário Pendente das tarefas. Esta atualização permite que você filtre eficientemente sua árvore de tarefas com base nesses critérios, proporcionando uma experiência de gerenciamento de tarefas mais simplificada e personalizada.",
+  "v3_134_news_features_name": "Outras Atualizações",
+  "v3_134_news_features_title": "Melhorias",
+  "v3_134_news_features_update_items": [
+    "1. E-mails - Arquivos menores que 150x150 pixels não são adicionados aos arquivos.",
+    "2. E-mails - Mostra apenas os últimos 20 e-mails, mais opção \"carregar mais\".",
+    "3. Remoção de extensões e botão \"loja\"."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Arquivamento de Projetos, Opções de Múltipla Seleção e Mais",
+  "v3_134_news_page_description": "Descubra o poder do arquivamento de projetos, a flexibilidade dos campos de opções de múltipla seleção e o gerenciamento aprimorado de propriedade de tarefas no JustDo v3.134."
+}

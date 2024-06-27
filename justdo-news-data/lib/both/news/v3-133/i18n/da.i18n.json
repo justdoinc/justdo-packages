@@ -1,0 +1,13 @@
+{
+  "v3_133_news_title": "v3.133",
+  "v3_133_news_main_name": "Nyheder",
+  "v3_133_news_main_array_item_1_title": "Tilføj filter til hurtig-tilføj bootbox destinationsvælger og ejervælger",
+  "v3_133_news_main_array_item_1_subtitle": "Indlæs mere-knap forbedringer for lange e-mails",
+  "v3_133_news_features_name": "Andre opdateringer",
+  "v3_133_news_features_title": "Forbedringer",
+  "v3_133_news_features_update_items": [
+    "1. MailDo: Når en e-mail modtages, bliver opgaveejeren nu automatisk unmuted i chatten."
+  ],
+  "v3_133_news_page_title": "JustDo v3.133: Strømlinet opgaveoprettelse og e-mail-forbedringer",
+  "v3_133_news_page_description": "JustDo v3.133 introducerer filtre for hurtigere opgaveoprettelse og forbedringer i håndteringen af lange e-mails for mere gnidningsfrie arbejdsgange."
+}

@@ -1,0 +1,13 @@
+{
+  "v3_133_news_title": "v3.133",
+  "v3_133_news_main_name": "Nyheter",
+  "v3_133_news_main_array_item_1_title": "Lägg till filter i snabbläggningsrutan för destinationsväljare och ägarväljare",
+  "v3_133_news_main_array_item_1_subtitle": "Förbättringar för \"Ladda mer\"-knappen för långa e-postmeddelanden",
+  "v3_133_news_features_name": "Andra uppdateringar",
+  "v3_133_news_features_title": "Förbättringar",
+  "v3_133_news_features_update_items": [
+    "1. MailDo: När ett e-postmeddelande tas emot, aktiveras nu automatiskt ljudet för uppgiftsägaren i chatten."
+  ],
+  "v3_133_news_page_title": "JustDo v3.133: Effektivare uppgiftsskapande och e-postförbättringar",
+  "v3_133_news_page_description": "JustDo v3.133 introducerar filter för snabbare uppgiftsskapande och förbättringar i hanteringen av långa e-postmeddelanden för smidigare arbetsflöden."
+}

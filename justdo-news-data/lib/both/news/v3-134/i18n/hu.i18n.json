@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Újdonságok",
+  "v3_134_news_main_array_item_1_title": "Archiválás",
+  "v3_134_news_main_array_item_1_subtitle": "Amikor új projektek és új tevékenységek jelennek meg, amelyeken dolgoznod kell, félre kell tenned a régieket, hogy az újakra koncentrálhass. Most már archiválhatod ezeket a projekteket és feladatokat, eltávolítva őket a mindennapi nézetedből, miközben továbbra is hozzáférhetsz hozzájuk szükség esetén, és akár vissza is állíthatod őket.",
+  "v3_134_news_main_array_item_2_title": "Többszörös választási lehetőségek mező",
+  "v3_134_news_main_array_item_2_subtitle": "A \"Választási lehetőségek\" egyedi mező mellett most már elérhető a \"Többszörös választási lehetőségek\" típus is. Ez az opció lehetővé teszi, hogy előre meghatározott lehetőségek listáját hozd létre, amelyekből a felhasználók több értéket is kiválaszthatnak minden egyes feladathoz.",
+  "v3_134_news_main_array_item_3_title": "Feladat tulajdonosa és függőben lévő tulajdonos mezők + szűrő",
+  "v3_134_news_main_array_item_3_subtitle": "Most már lehetőséged van további mezők beépítésére, amelyek mind a feladat tulajdonosát, mind a függőben lévő tulajdonosát megjelenítik. Ez a frissítés lehetővé teszi, hogy hatékonyan szűrd a feladatfádat ezek alapján a kritériumok alapján, így személyre szabottabb és áttekinthetőbb feladatkezelési élményt nyújtva.",
+  "v3_134_news_features_name": "Egyéb frissítések",
+  "v3_134_news_features_title": "Fejlesztések",
+  "v3_134_news_features_update_items": [
+    "1. E-mailek - A 150x150 pixelnél kisebb fájlok nem kerülnek hozzáadásra a fájlokhoz.",
+    "2. E-mailek - Csak az utolsó 20 e-mail megjelenítése, plusz \"továbbiak betöltése\" opció.",
+    "3. A bővítmények és a \"tárolás\" gomb eltávolítása."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Projekt archiválás, többszörös választási lehetőségek és egyebek",
+  "v3_134_news_page_description": "Fedezd fel a projekt archiválás erejét, a többszörös választási lehetőségek mezők rugalmasságát, és a fejlesztett feladattulajdonos-kezelést a JustDo v3.134-ben."
+}

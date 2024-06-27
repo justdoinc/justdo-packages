@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Nyheter",
+  "v3_134_news_main_array_item_1_title": "Arkivering",
+  "v3_134_news_main_array_item_1_subtitle": "När det finns nya projekt och aktiviteter som du behöver arbeta med, måste du lägga de gamla åt sidan och fokusera på de nya. Nu kan du arkivera dessa projekt och uppgifter, ta bort dem från din dagliga vy, samtidigt som du fortfarande har möjlighet att komma åt dem vid behov och till och med avarkivera dem.",
+  "v3_134_news_main_array_item_2_title": "Flervalsfält för alternativ",
+  "v3_134_news_main_array_item_2_subtitle": "Förutom det anpassade fältet \"Alternativ\" har du nu typen \"Flera alternativ\". Detta alternativ låter dig skapa en lista med fördefinierade val från vilka användare kan välja flera värden för varje enskild uppgift.",
+  "v3_134_news_main_array_item_3_title": "Uppgiftens ägare och väntande ägare-fält + filter",
+  "v3_134_news_main_array_item_3_subtitle": "Du har nu möjlighet att inkludera ytterligare fält som visar både uppgiftens ägare och väntande ägare. Denna uppdatering ger dig möjlighet att effektivt filtrera din uppgiftsstruktur baserat på dessa kriterier, vilket ger en mer effektiv och personlig uppgiftshanteringsupplevelse.",
+  "v3_134_news_features_name": "Andra uppdateringar",
+  "v3_134_news_features_title": "Förbättringar",
+  "v3_134_news_features_update_items": [
+    "1. E-post - Filer mindre än 150x150 pixlar läggs inte till i filer.",
+    "2. E-post - Visa endast de senaste 20 e-postmeddelandena, plus \"ladda fler\".",
+    "3. Borttagning av tillägg och \"lagra\"-knappen."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Projektarkivering, flervals-alternativ och mer",
+  "v3_134_news_page_description": "Upptäck kraften i projektarkivering, flexibiliteten i flervals-alternativfält och förbättrad hantering av uppgiftsägarskap i JustDo v3.134."
+}

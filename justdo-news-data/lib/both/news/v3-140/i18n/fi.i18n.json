@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Uutiset",
+  "v3_140_news_main_array_item_1_title": "Välilehtien vaihtonäkymän ulkoasu päivitetty",
+  "v3_140_news_main_array_item_1_subtitle": "Ulkoasu näyttää nyt selkeämmin, milloin välilehti on aktiivinen.",
+  "v3_140_news_main_array_item_2_title": "Uusi Solid Purple -teema esitelty",
+  "v3_140_news_main_array_item_3_title": "Käyttäjien kutsuminen yksinkertaistettu",
+  "v3_140_news_main_array_item_4_title": "JustDo-jäsenten hallintaa parannettu",
+  "v3_140_news_main_array_item_4_subtitle": "Voit nyt valita ja poistaa useita käyttäjiä samanaikaisesti.",
+  "v3_140_news_main_array_item_5_title": "Videoiden esikatselu JustDo-tiedostoissa",
+  "v3_140_news_main_array_item_6_title": "Käyttäjän avatar näytetään Omistaja/Odottava omistaja -sarakkeissa",
+  "v3_140_news_features_name": "Muut päivitykset",
+  "v3_140_news_features_title": "Parannukset",
+  "v3_140_news_features_update_items": [
+    "1. Toissijaisten painikkeiden väri muutettu tummasta harmaasta vaaleaan harmaaseen",
+    "2. Klassiset teemat poistettu",
+    "3. Tuki alatehtävien lajittelulle Seuranta-kentän mukaan",
+    "4. Uusi moderni fontti otettu käyttöön tukemaan paremmin muita kuin englanninkielisiä kieliä",
+    "5. Lisätty mahdollisuus piilottaa sivupalkki Sivuston ylläpidossa",
+    "6. Parannuksia omistajuuden hylkäämisen valintaikkunaan (mukaan lukien mahdollisuus vahvistaa lähetys ctrl+enter-näppäinyhdistelmällä)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Ulkoasun päivityksiä, yksinkertaistettu käyttäjien kutsuminen ja paljon muuta",
+  "v3_140_news_page_description": "JustDo v3.140 tuo mukanaan ulkoasun parannuksia, kehittyneitä käyttäjien kutsumistyönkulkuja, parannettua videotukea ja useita käytettävyysparannuksia."
+}

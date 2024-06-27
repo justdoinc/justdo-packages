@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Co je nového",
+  "v3_140_news_main_array_item_1_title": "Aktualizován design přepínače záložek",
+  "v3_140_news_main_array_item_1_subtitle": "Design nyní lépe indikuje, kdy je záložka aktivní.",
+  "v3_140_news_main_array_item_2_title": "Představení tématu Sytá fialová",
+  "v3_140_news_main_array_item_3_title": "Zjednodušení pozvání uživatelů",
+  "v3_140_news_main_array_item_4_title": "Vylepšení správy členů JustDo",
+  "v3_140_news_main_array_item_4_subtitle": "Možnost vybrat a odstranit více uživatelů najednou.",
+  "v3_140_news_main_array_item_5_title": "Podpora náhledu videa v souborech JustDo",
+  "v3_140_news_main_array_item_6_title": "Zobrazení avataru uživatele ve sloupcích Vlastník/Čekající vlastník",
+  "v3_140_news_features_name": "Další aktualizace",
+  "v3_140_news_features_title": "Vylepšení",
+  "v3_140_news_features_update_items": [
+    "1. Barva sekundárních tlačítek změněna z tmavě šedé na světle šedou",
+    "2. Klasická témata odstraněna",
+    "3. Podpora řazení podúkolů podle pole Follow Up (Následné kroky)",
+    "4. Nové moderní písmo pro lepší podporu neanglických jazyků",
+    "5. Přidána možnost skrýt postranní panel v Administraci webu",
+    "6. Vylepšení designu dialogu pro odmítnutí vlastnictví (včetně možnosti potvrdit odeslání pomocí ctrl+enter)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Aktualizace designu, zjednodušené pozvánky uživatelů a další",
+  "v3_140_news_page_description": "JustDo v3.140 přináší vylepšení designu, vylepšené postupy pro pozvání uživatelů, lepší podporu videa a řadu vylepšení použitelnosti."
+}

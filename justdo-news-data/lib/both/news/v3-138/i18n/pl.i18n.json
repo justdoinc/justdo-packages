@@ -1,0 +1,18 @@
+{
+  "v3_138_news_title": "v3.138",
+  "v3_138_news_main_name": "Co nowego",
+  "v3_138_news_main_array_item_1_title": "Odświeżone okno zapraszania członków JustDo",
+  "v3_138_news_main_array_item_1_subtitle": "Rozszerzając naszą istniejącą funkcjonalność zapraszania, dodaliśmy nową funkcję, która pozwala na zaznaczenie wszystkich zadań jednym kliknięciem podczas dodawania nowych użytkowników. Dla bardziej efektywnego procesu konfiguracji dużych projektów.",
+  "v3_138_news_main_array_item_2_title": "Ulepszona nawigacja podglądu plików",
+  "v3_138_news_main_array_item_2_subtitle": "Wierzymy w znaczenie płynnej nawigacji. Dlatego zaimplementowaliśmy nawigację za pomocą klawiatury w podglądach plików. Teraz możesz łatwo poruszać się po plikach używając tylko klawiatury, co sprawia, że proces przeglądania i edycji jest jeszcze bardziej płynny.",
+  "v3_138_news_main_array_item_3_title": "Elegancka aktualizacja designu",
+  "v3_138_news_main_array_item_3_subtitle": "Aby poprawić wrażenia wizualne, przeszliśmy na nowoczesny, zaokrąglony design naszych przycisków i pól wejściowych.",
+  "v3_138_news_features_name": "Inne aktualizacje",
+  "v3_138_news_features_title": "Ulepszenia",
+  "v3_138_news_features_update_items": [
+    "1. Wskaźniki ładowania dla ostatniej aktywności w czacie",
+    "2. Administratorzy strony z niezweryfikowanym adresem e-mail stracą dostęp do Strony Administratora"
+  ],
+  "v3_138_news_page_title": "JustDo v3.138: Odświeżone zaproszenia, nawigacja plików, design i więcej",
+  "v3_138_news_page_description": "Doświadcz ulepszonych zaproszeń użytkowników, płynniejszej nawigacji podglądu plików, eleganckiej aktualizacji designu i więcej w JustDo v3.138."
+}

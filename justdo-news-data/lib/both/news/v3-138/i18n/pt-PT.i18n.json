@@ -1,0 +1,18 @@
+{
+  "v3_138_news_title": "v3.138",
+  "v3_138_news_main_name": "Novidades",
+  "v3_138_news_main_array_item_1_title": "Janela de Convite para Membros do JustDo Renovada",
+  "v3_138_news_main_array_item_1_subtitle": "Expandindo a nossa funcionalidade de convite existente, adicionámos uma nova funcionalidade que permite selecionar todas as tarefas com apenas um clique ao adicionar novos utilizadores. Para um processo de configuração mais eficiente em projetos grandes.",
+  "v3_138_news_main_array_item_2_title": "Navegação Melhorada na Pré-visualização de Ficheiros",
+  "v3_138_news_main_array_item_2_subtitle": "Acreditamos na importância de uma navegação fluida. Por isso, implementámos a navegação por teclado nas pré-visualizações de ficheiros. Agora pode facilmente navegar pelos seus ficheiros usando apenas o teclado, tornando o processo de revisão e edição ainda mais suave.",
+  "v3_138_news_main_array_item_3_title": "Atualização de Design Elegante",
+  "v3_138_news_main_array_item_3_subtitle": "Para melhorar a experiência visual, mudámos para um design moderno e curvilíneo para os nossos botões e campos de entrada",
+  "v3_138_news_features_name": "Outras Atualizações",
+  "v3_138_news_features_title": "Melhorias",
+  "v3_138_news_features_update_items": [
+    "1. Indicadores de Carregamento para Atividade Recente no Chat",
+    "2. Administradores do site com e-mail não verificado perderão acesso à Página de Administração do Site"
+  ],
+  "v3_138_news_page_title": "JustDo v3.138: Convites Renovados, Navegação de Ficheiros, Design e Mais",
+  "v3_138_news_page_description": "Experimente convites de utilizadores melhorados, navegação mais suave na pré-visualização de ficheiros, uma atualização de design elegante e muito mais no JustDo v3.138."
+}

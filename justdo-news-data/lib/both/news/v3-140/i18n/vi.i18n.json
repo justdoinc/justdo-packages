@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Có gì mới",
+  "v3_140_news_main_array_item_1_title": "Cập nhật thiết kế bộ chuyển đổi tab",
+  "v3_140_news_main_array_item_1_subtitle": "Thiết kế giờ đây hiển thị rõ ràng hơn khi một tab đang hoạt động.",
+  "v3_140_news_main_array_item_2_title": "Giới thiệu chủ đề Tím Đậm",
+  "v3_140_news_main_array_item_3_title": "Đơn giản hóa việc mời người dùng",
+  "v3_140_news_main_array_item_4_title": "Cải thiện quản lý thành viên JustDo",
+  "v3_140_news_main_array_item_4_subtitle": "Chọn để xóa nhiều người dùng cùng một lúc.",
+  "v3_140_news_main_array_item_5_title": "Hỗ trợ xem trước video trong tệp JustDo",
+  "v3_140_news_main_array_item_6_title": "Hiển thị ảnh đại diện người dùng trong cột Chủ sở hữu/Chủ sở hữu đang chờ xử lý",
+  "v3_140_news_features_name": "Các cập nhật khác",
+  "v3_140_news_features_title": "Cải tiến",
+  "v3_140_news_features_update_items": [
+    "1. Màu sắc của các nút thứ cấp đã thay đổi từ xám đậm sang xám nhạt",
+    "2. Đã loại bỏ các chủ đề cổ điển",
+    "3. Hỗ trợ sắp xếp các công việc con theo trường Theo dõi",
+    "4. Sử dụng một font chữ hiện đại mới để hỗ trợ tốt hơn các ngôn ngữ không phải tiếng Anh",
+    "5. Thêm khả năng ẩn thanh bên trong Quản trị viên Trang",
+    "6. Cải thiện thiết kế của hộp thoại từ chối quyền sở hữu (bao gồm khả năng xác nhận gửi bằng ctrl+enter)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Cập nhật Thiết kế, Đơn giản hóa Mời Người dùng & Nhiều hơn nữa",
+  "v3_140_news_page_description": "JustDo v3.140 mang đến các cải tiến về thiết kế, quy trình mời người dùng được cải thiện, hỗ trợ video nâng cao và nhiều cải tiến về khả năng sử dụng."
+}

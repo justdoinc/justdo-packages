@@ -1,0 +1,18 @@
+{
+  "v3_138_news_title": "v3.138",
+  "v3_138_news_main_name": "Što je novo",
+  "v3_138_news_main_array_item_1_title": "Redizajnirani prozor za pozivanje članova JustDo ploče",
+  "v3_138_news_main_array_item_1_subtitle": "Proširujući postojeću funkcionalnost pozivanja, dodali smo novu značajku koja vam omogućuje odabir svih zadataka jednim klikom prilikom dodavanja novih korisnika. Za učinkovitiji proces postavljanja velikih projekata.",
+  "v3_138_news_main_array_item_2_title": "Poboljšana navigacija pregleda datoteka",
+  "v3_138_news_main_array_item_2_subtitle": "Vjerujemo u važnost nesmetane navigacije. Zato smo implementirali navigaciju tipkovnicom u pregledu datoteka. Sada se možete lako kretati kroz vaše datoteke koristeći samo tipkovnicu, čineći proces pregledavanja i uređivanja još glađim.",
+  "v3_138_news_main_array_item_3_title": "Elegantno poboljšanje dizajna",
+  "v3_138_news_main_array_item_3_subtitle": "Kako bismo poboljšali vizualno iskustvo, prešli smo na moderan zakrivljeni dizajn za naše gumbe i polja za unos",
+  "v3_138_news_features_name": "Ostala ažuriranja",
+  "v3_138_news_features_title": "Poboljšanja",
+  "v3_138_news_features_update_items": [
+    "1. Indikatori učitavanja za nedavnu aktivnost chata",
+    "2. Administratori stranice s nepotvrđenom e-poštom izgubit će pristup stranici za administraciju"
+  ],
+  "v3_138_news_page_title": "JustDo v3.138: Redizajnirani pozivi, navigacija datoteka, dizajn i više",
+  "v3_138_news_page_description": "Doživite poboljšane pozivnice za korisnike, glađe navigiranje pregledom datoteka, elegantno unapređenje dizajna i više u JustDo v3.138."
+}

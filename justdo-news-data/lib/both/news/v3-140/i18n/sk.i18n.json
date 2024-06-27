@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Čo je nové",
+  "v3_140_news_main_array_item_1_title": "Aktualizovaný dizajn prepínača kariet",
+  "v3_140_news_main_array_item_1_subtitle": "Dizajn teraz lepšie indikuje, keď je karta aktívna.",
+  "v3_140_news_main_array_item_2_title": "Predstavenie témy Solid Purple",
+  "v3_140_news_main_array_item_3_title": "Zjednodušenie pozvania používateľov",
+  "v3_140_news_main_array_item_4_title": "Vylepšenie správy členov JustDo tabule",
+  "v3_140_news_main_array_item_4_subtitle": "Možnosť vybrať a odstrániť viacerých používateľov naraz.",
+  "v3_140_news_main_array_item_5_title": "Podpora náhľadu videa v súboroch JustDo",
+  "v3_140_news_main_array_item_6_title": "Zobrazenie avataru používateľa v stĺpcoch Vlastník/Čakajúci vlastník",
+  "v3_140_news_features_name": "Ďalšie aktualizácie",
+  "v3_140_news_features_title": "Vylepšenia",
+  "v3_140_news_features_update_items": [
+    "1. Farba sekundárnych tlačidiel zmenená z tmavosivej na svetlosivú",
+    "2. Klasické témy odstránené",
+    "3. Podpora triedenia podúloh podľa poľa Následná kontrola (Follow Up)",
+    "4. Nové moderné písmo pre lepšiu podporu neanglických jazykov",
+    "5. Pridaná možnosť skryť bočný panel v administrácii stránky",
+    "6. Vylepšenia dizajnu dialógového okna na odmietnutie vlastníctva (vrátane možnosti potvrdiť odoslanie pomocou ctrl+enter)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Aktualizácie dizajnu, zjednodušené pozývanie používateľov a ďalšie",
+  "v3_140_news_page_description": "JustDo v3.140 prináša vylepšenia dizajnu, vylepšené postupy pri pozývaní používateľov, rozšírenú podporu videa a viaceré vylepšenia použiteľnosti."
+}

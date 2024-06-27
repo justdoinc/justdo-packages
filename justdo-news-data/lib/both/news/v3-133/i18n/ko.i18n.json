@@ -1,0 +1,13 @@
+{
+  "v3_133_news_title": "v3.133",
+  "v3_133_news_main_name": "새로운 기능",
+  "v3_133_news_main_array_item_1_title": "빠른 추가 대화상자의 목적지 선택기와 소유자 선택기에 필터 추가",
+  "v3_133_news_main_array_item_1_subtitle": "긴 이메일에 대한 '더 보기' 버튼 개선",
+  "v3_133_news_features_name": "기타 업데이트",
+  "v3_133_news_features_title": "개선 사항",
+  "v3_133_news_features_update_items": [
+    "1. MailDo(메일두): 이메일을 받으면 이제 작업 소유자가 채팅에서 자동으로 음소거 해제됩니다."
+  ],
+  "v3_133_news_page_title": "JustDo v3.133: 간소화된 작업 생성 및 이메일 기능 향상",
+  "v3_133_news_page_description": "JustDo v3.133은 더 빠른 작업 생성을 위한 필터와 원활한 워크플로우를 위한 긴 이메일 처리 개선 기능을 도입했습니다."
+}

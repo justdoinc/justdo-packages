@@ -1,0 +1,18 @@
+{
+  "v3_138_news_title": "v3.138",
+  "v3_138_news_main_name": "Apa yang baru",
+  "v3_138_news_main_array_item_1_title": "Pembaruan Jendela Undangan Anggota JustDo",
+  "v3_138_news_main_array_item_1_subtitle": "Memperluas fungsionalitas undangan yang sudah ada, kami telah menambahkan fitur baru yang memungkinkan Anda memilih semua tugas hanya dengan satu klik saat menambahkan pengguna baru. Untuk proses penyiapan yang lebih efisien pada proyek besar.",
+  "v3_138_news_main_array_item_2_title": "Peningkatan Navigasi Pratinjau File",
+  "v3_138_news_main_array_item_2_subtitle": "Kami percaya pentingnya navigasi yang lancar. Itulah mengapa kami telah menerapkan navigasi keyboard dalam pratinjau file. Sekarang Anda dapat dengan mudah berpindah antar file hanya menggunakan keyboard, membuat proses peninjauan dan pengeditan menjadi lebih lancar.",
+  "v3_138_news_main_array_item_3_title": "Peningkatan Desain yang Elegan",
+  "v3_138_news_main_array_item_3_subtitle": "Untuk meningkatkan pengalaman visual, kami telah beralih ke desain melengkung modern untuk tombol dan input kami",
+  "v3_138_news_features_name": "Pembaruan Lainnya",
+  "v3_138_news_features_title": "Peningkatan",
+  "v3_138_news_features_update_items": [
+    "1. Indikator Pemuatan untuk Aktivitas Terbaru Obrolan",
+    "2. Admin situs dengan email yang belum diverifikasi akan kehilangan akses ke Halaman Admin Situs"
+  ],
+  "v3_138_news_page_title": "JustDo v3.138: Pembaruan Undangan, Navigasi File, Desain & Lainnya",
+  "v3_138_news_page_description": "Rasakan peningkatan undangan pengguna, navigasi pratinjau file yang lebih lancar, peningkatan desain yang elegan, dan banyak lagi di JustDo v3.138."
+}

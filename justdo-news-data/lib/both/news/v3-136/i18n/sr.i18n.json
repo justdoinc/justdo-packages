@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Šta je novo",
+  "v3_136_news_main_array_item_1_title": "Nova početna stranica",
+  "v3_136_news_main_array_item_1_subtitle": "Predstavljamo našu osveženu početnu stranicu 🎉",
+  "v3_136_news_main_array_item_2_title": "Prilagođena stanja",
+  "v3_136_news_main_array_item_2_subtitle": "Poboljšajte efikasnost vašeg radnog toka sa našim najnovijim dodatkom - Prilagođenim stanjima. Prilagodite stanja zadataka prema jedinstvenim potrebama vašeg projekta i pratite napredak sa većom preciznošću.",
+  "v3_136_news_main_array_item_3_title": "Budite informisani sa indikatorom nepročitanih e-poruka na mreži",
+  "v3_136_news_main_array_item_3_subtitle": "Nikada više ne propustite važne novosti! Naš novi indikator nepročitanih e-poruka na mreži vas obaveštava o nepročitanim e-porukama unutar zadataka, osiguravajući efikasnu komunikaciju i brzo delovanje.",
+  "v3_136_news_main_array_item_4_title": "Poboljšani filteri za dijalog brzog dodavanja",
+  "v3_136_news_main_array_item_4_subtitle": "Povećajte svoju produktivnost sa našim novododatim filterima za selektor odredišta i vlasnika u dijalogu brzog dodavanja (Quick Add Bootbox). Pojednostavite kreiranje zadataka pronalaženjem pravog odredišta i vlasnika sa lakoćom.",
+  "v3_136_news_features_name": "Ostala ažuriranja",
+  "v3_136_news_features_title": "Poboljšanja",
+  "v3_136_news_features_update_items": [
+    "1. Poboljšanje performansi za operacije koje uključuju ažuriranja više od 1000 zadataka, posebno pri promeni članova zadataka podstabla većeg od 1000 korisnika.",
+    "2. Kartica aktivnosti: Popravka nepravilnog prikazivanja dnevnika aktivnosti ako je dodavanje nadređenog, a nadređeni je uklonjen <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>video</a>.",
+    "3. Otpremanje avatara za okruženja koja koriste JustDo datoteke.",
+    "4. Uveden koncept Organizacija: opcionalna logička jedinica iznad JustDo table.",
+    "5. MailDo: Kada se primi e-poruka, vlasnik zadatka se sada automatski uključuje u ćaskanje."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Nova početna stranica, prilagođena stanja, poboljšani filteri i još mnogo toga",
+  "v3_136_news_page_description": "JustDo v3.136 uvodi osveženu početnu stranicu, moćna prilagođena stanja za zadatke, poboljšane filtere za brže dodavanje zadataka i važna unapređenja performansi."
+}

@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Nouveautés",
+  "v3_134_news_main_array_item_1_title": "Archivage",
+  "v3_134_news_main_array_item_1_subtitle": "Lorsque vous avez de nouveaux projets et de nouvelles activités sur lesquels travailler, vous devez mettre de côté les anciens et vous concentrer sur les nouveaux. Désormais, vous pouvez archiver ces projets et tâches, les retirant de votre vue quotidienne, tout en conservant la possibilité d'y accéder au besoin et même de les désarchiver.",
+  "v3_134_news_main_array_item_2_title": "Champ d'options à sélection multiple",
+  "v3_134_news_main_array_item_2_subtitle": "En plus du champ personnalisé \"Options\", vous disposez maintenant du type \"Options multiples\". Cette option vous permet de créer une liste d'options prédéfinies parmi lesquelles les utilisateurs peuvent sélectionner plusieurs valeurs pour chaque tâche individuelle.",
+  "v3_134_news_main_array_item_3_title": "Champs Propriétaire et Propriétaire en attente de la tâche + filtre",
+  "v3_134_news_main_array_item_3_subtitle": "Vous avez maintenant la possibilité d'incorporer des champs supplémentaires qui affichent à la fois le Propriétaire de la tâche et le Propriétaire en attente des tâches. Cette mise à jour vous permet de filtrer efficacement votre arborescence de tâches selon ces critères, offrant une expérience de gestion des tâches plus rationalisée et personnalisée.",
+  "v3_134_news_features_name": "Autres mises à jour",
+  "v3_134_news_features_title": "Améliorations",
+  "v3_134_news_features_update_items": [
+    "1. Emails - Les fichiers inférieurs à 150x150 pixels ne sont pas ajoutés aux fichiers.",
+    "2. Emails - Afficher uniquement les 20 derniers emails, plus un bouton \"Charger plus\".",
+    "3. Suppression des extensions et du bouton \"store\"."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134 : Archivage de projets, Options à sélection multiple et plus encore",
+  "v3_134_news_page_description": "Découvrez la puissance de l'archivage de projets, la flexibilité des champs d'options à sélection multiple et une gestion améliorée de la propriété des tâches dans JustDo v3.134."
+}

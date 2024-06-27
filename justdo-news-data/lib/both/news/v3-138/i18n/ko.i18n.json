@@ -1,0 +1,18 @@
+{
+  "v3_138_news_title": "v3.138",
+  "v3_138_news_main_name": "새로운 기능",
+  "v3_138_news_main_array_item_1_title": "JustDo 멤버 초대 창 개선",
+  "v3_138_news_main_array_item_1_subtitle": "기존의 초대 기능을 확장하여 새 사용자를 추가할 때 클릭 한 번으로 모든 작업을 선택할 수 있는 새로운 기능을 추가했습니다. 대규모 프로젝트의 더 효율적인 설정 과정을 위한 기능입니다.",
+  "v3_138_news_main_array_item_2_title": "파일 미리보기 탐색 개선",
+  "v3_138_news_main_array_item_2_subtitle": "원활한 탐색의 중요성을 인식하고 있습니다. 그래서 파일 미리보기에 키보드 탐색 기능을 구현했습니다. 이제 키보드만으로 쉽게 파일을 탐색할 수 있어 검토와 편집 과정이 더욱 원활해졌습니다.",
+  "v3_138_news_main_array_item_3_title": "세련된 디자인 업그레이드",
+  "v3_138_news_main_array_item_3_subtitle": "시각적 경험을 향상시키기 위해 버튼과 입력 필드에 현대적인 곡선 디자인을 적용했습니다.",
+  "v3_138_news_features_name": "기타 업데이트",
+  "v3_138_news_features_title": "개선 사항",
+  "v3_138_news_features_update_items": [
+    "1. 채팅 최근 활동에 대한 로딩 표시기",
+    "2. 이메일 인증이 되지 않은 사이트 관리자는 사이트 관리 페이지에 대한 접근 권한을 잃게 됩니다"
+  ],
+  "v3_138_news_page_title": "JustDo v3.138: 초대 기능 개선, 파일 탐색, 디자인 업그레이드 등",
+  "v3_138_news_page_description": "JustDo v3.138에서 개선된 사용자 초대, 더 원활한 파일 미리보기 탐색, 세련된 디자인 업그레이드 등을 경험해보세요."
+}

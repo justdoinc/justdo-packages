@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Kaj je novega",
+  "v3_134_news_main_array_item_1_title": "Arhiviranje",
+  "v3_134_news_main_array_item_1_subtitle": "Ko se pojavijo novi projekti in nove aktivnosti, na katerih morate delati, morate stare potisniti ob stran in se osredotočiti na nove. Zdaj lahko arhivirate te projekte in naloge ter jih odstranite iz vsakodnevnega pogleda, vendar še vedno ohranite možnost dostopa do njih po potrebi in celo razarhiviranja.",
+  "v3_134_news_main_array_item_2_title": "Polje z več izbirnimi možnostmi",
+  "v3_134_news_main_array_item_2_subtitle": "Poleg polja po meri \"Možnosti\" (Options) imate zdaj na voljo tudi tip \"Več možnosti\" (Multi Options). Ta možnost vam omogoča ustvarjanje seznama vnaprej določenih možnosti, med katerimi lahko uporabniki izberejo več vrednosti za vsako posamezno nalogo.",
+  "v3_134_news_main_array_item_3_title": "Polja Lastnik naloge in Čakajoči lastnik + filter",
+  "v3_134_news_main_array_item_3_subtitle": "Zdaj imate možnost vključiti dodatna polja, ki prikazujejo tako Lastnika naloge kot Čakajočega lastnika nalog. Ta posodobitev vam omogoča učinkovito filtriranje drevesa nalog na podlagi teh kriterijev, kar zagotavlja bolj optimizirano in prilagojeno izkušnjo upravljanja nalog.",
+  "v3_134_news_features_name": "Druge posodobitve",
+  "v3_134_news_features_title": "Izboljšave",
+  "v3_134_news_features_update_items": [
+    "1. E-pošta - Datoteke, manjše od 150x150 slikovnih pik, niso dodane med datoteke.",
+    "2. E-pošta - Prikaže se samo zadnjih 20 e-sporočil, plus gumb \"naloži več\".",
+    "3. Odstranitev razširitev in gumba \"shrani\"."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Arhiviranje projektov, Več izbirnih možnosti in še več",
+  "v3_134_news_page_description": "Odkrijte moč arhiviranja projektov, fleksibilnost polj z več izbirnimi možnostmi in izboljšano upravljanje lastništva nalog v JustDo v3.134."
+}

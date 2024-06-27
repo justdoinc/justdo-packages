@@ -1,0 +1,13 @@
+{
+  "v3_133_news_title": "v3.133",
+  "v3_133_news_main_name": "Apa yang baru",
+  "v3_133_news_main_array_item_1_title": "Tambahkan filter ke pemilih tujuan bootbox tambah cepat dan pemilih pemilik",
+  "v3_133_news_main_array_item_1_subtitle": "Perbaikan tombol 'Muat lebih banyak' untuk email panjang",
+  "v3_133_news_features_name": "Pembaruan Lainnya",
+  "v3_133_news_features_title": "Perbaikan",
+  "v3_133_news_features_update_items": [
+    "1. MailDo: Saat email diterima, pemilik tugas sekarang secara otomatis diaktifkan suaranya dalam obrolan."
+  ],
+  "v3_133_news_page_title": "JustDo v3.133: Pembuatan Tugas yang Dipersingkat & Peningkatan Email",
+  "v3_133_news_page_description": "JustDo v3.133 memperkenalkan filter untuk pembuatan tugas yang lebih cepat dan perbaikan dalam menangani email panjang untuk alur kerja yang lebih lancar."
+}

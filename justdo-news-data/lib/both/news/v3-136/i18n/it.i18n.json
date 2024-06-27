@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Novità",
+  "v3_136_news_main_array_item_1_title": "Nuova pagina di destinazione",
+  "v3_136_news_main_array_item_1_subtitle": "Presentazione della nostra rinnovata pagina di destinazione 🎉",
+  "v3_136_news_main_array_item_2_title": "Stati personalizzati",
+  "v3_136_news_main_array_item_2_subtitle": "Migliora l'efficienza del tuo flusso di lavoro con la nostra ultima aggiunta - Stati Personalizzati. Personalizza gli stati delle attività per adattarli alle esigenze uniche del tuo progetto e traccia i progressi con maggiore precisione.",
+  "v3_136_news_main_array_item_3_title": "Resta informato con l'indicatore di email non lette sulla griglia",
+  "v3_136_news_main_array_item_3_subtitle": "Non perdere più aggiornamenti importanti! Il nostro nuovo indicatore di email non lette sulla griglia ti tiene informato sulle email non lette all'interno delle attività, garantendo una comunicazione efficiente e un'azione tempestiva.",
+  "v3_136_news_main_array_item_4_title": "Filtri migliorati per la finestra di dialogo Aggiunta Rapida",
+  "v3_136_news_main_array_item_4_subtitle": "Aumenta la tua produttività con i nostri nuovi filtri per il selettore di Destinazione e Proprietario nella finestra di dialogo Aggiunta Rapida (Quick Add Bootbox). Semplifica la creazione delle attività trovando la destinazione e il proprietario giusti con facilità.",
+  "v3_136_news_features_name": "Altri aggiornamenti",
+  "v3_136_news_features_title": "Miglioramenti",
+  "v3_136_news_features_update_items": [
+    "1. Miglioramento delle prestazioni per le operazioni che coinvolgono aggiornamenti di oltre 1000 attività, in particolare, la modifica dei membri delle attività di un sotto-albero con più di 1000 utenti.",
+    "2. Scheda Attività: Correzione del registro attività che non veniva mostrato correttamente in caso di aggiunta di un'attività genitore e successiva rimozione del genitore <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>video</a>.",
+    "3. Caricamento degli avatar per gli ambienti che utilizzano i file JustDo.",
+    "4. Introduzione del concetto di Organizzazioni: un'unità logica opzionale sopra i JustDo.",
+    "5. MailDo: Quando viene ricevuta un'email, il proprietario dell'attività viene ora automaticamente riattivato nella chat."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Nuova pagina di destinazione, Stati personalizzati, Filtri migliorati e altro",
+  "v3_136_news_page_description": "JustDo v3.136 introduce una pagina di destinazione rinnovata, potenti stati personalizzati per le attività, filtri migliorati per un'aggiunta più rapida delle attività e importanti aggiornamenti delle prestazioni."
+}

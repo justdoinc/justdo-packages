@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Yenilikler",
+  "v3_140_news_main_array_item_1_title": "Sekme değiştirici tasarımı güncellendi",
+  "v3_140_news_main_array_item_1_subtitle": "Tasarım artık bir sekmenin aktif olduğunu daha iyi gösteriyor.",
+  "v3_140_news_main_array_item_2_title": "Koyu Mor tema tanıtıldı",
+  "v3_140_news_main_array_item_3_title": "Kullanıcı davetleri basitleştirildi",
+  "v3_140_news_main_array_item_4_title": "JustDo üye yönetimi iyileştirildi",
+  "v3_140_news_main_array_item_4_subtitle": "Aynı anda birden fazla kullanıcıyı kaldırmak için seçim yapabilirsiniz.",
+  "v3_140_news_main_array_item_5_title": "JustDo dosyalarında video önizleme desteği",
+  "v3_140_news_main_array_item_6_title": "Sahip/Bekleyen Sahip sütunlarında kullanıcı avatarı gösterimi",
+  "v3_140_news_features_name": "Diğer Güncellemeler",
+  "v3_140_news_features_title": "İyileştirmeler",
+  "v3_140_news_features_update_items": [
+    "1. İkincil düğmelerin rengi koyu griden açık griye değiştirildi",
+    "2. Klasik temalar kaldırıldı",
+    "3. Alt görevlerin Takip (Follow Up) alanına göre sıralanması destekleniyor",
+    "4. İngilizce dışındaki dilleri daha iyi desteklemek için yeni modern bir yazı tipi kullanılmaya başlandı",
+    "5. Site Yöneticisinde kenar çubuğunu gizleme özelliği eklendi",
+    "6. Sahiplik reddetme diyaloğunda tasarım iyileştirmeleri (ctrl+enter ile gönderimi onaylama yeteneği dahil)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Tasarım Güncellemeleri, Basitleştirilmiş Kullanıcı Davetleri ve Daha Fazlası",
+  "v3_140_news_page_description": "JustDo v3.140, tasarım iyileştirmeleri, geliştirilmiş kullanıcı davet iş akışları, gelişmiş video desteği ve birçok kullanılabilirlik iyileştirmesi sunuyor."
+}

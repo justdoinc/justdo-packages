@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Wat is er nieuw",
+  "v3_140_news_main_array_item_1_title": "Ontwerp tabbladwisselaar bijgewerkt",
+  "v3_140_news_main_array_item_1_subtitle": "Ontwerp geeft nu beter aan wanneer een tabblad actief is.",
+  "v3_140_news_main_array_item_2_title": "Introductie van het Solid Purple thema",
+  "v3_140_news_main_array_item_3_title": "Vereenvoudiging van gebruikersuitnodigingen",
+  "v3_140_news_main_array_item_4_title": "Verbetering van JustDo ledenbeheer",
+  "v3_140_news_main_array_item_4_subtitle": "Selecteer om meerdere gebruikers tegelijkertijd te verwijderen.",
+  "v3_140_news_main_array_item_5_title": "Ondersteuning voor videovoorvertoning in JustDo bestanden",
+  "v3_140_news_main_array_item_6_title": "Toon de gebruikersavatar in de kolommen Eigenaar/In afwachting van eigenaar",
+  "v3_140_news_features_name": "Andere updates",
+  "v3_140_news_features_title": "Verbeteringen",
+  "v3_140_news_features_update_items": [
+    "1. Kleur van secundaire knoppen gewijzigd van donkergrijs naar lichtgrijs",
+    "2. Klassieke thema's verwijderd",
+    "3. Ondersteuning voor het sorteren van subtaken op basis van het Follow Up veld",
+    "4. Een nieuw modern lettertype wordt nu gebruikt voor betere ondersteuning van niet-Engelse talen",
+    "5. Mogelijkheid toegevoegd om de zijbalk te verbergen in de Site Admin",
+    "6. Ontwerpverbeteringen aan het dialoogvenster voor het afwijzen van eigenaarschap (inclusief de mogelijkheid om inzending te bevestigen met ctrl+enter)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Ontwerpupdates, vereenvoudigde gebruikersuitnodigingen en meer",
+  "v3_140_news_page_description": "JustDo v3.140 levert ontwerpverfijningen, verbeterde workflows voor gebruikersuitnodigingen, verbeterde video-ondersteuning en meerdere gebruiksvriendelijkheidsverbeteringen."
+}

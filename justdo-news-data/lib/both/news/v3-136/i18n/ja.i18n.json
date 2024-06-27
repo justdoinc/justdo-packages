@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "新機能",
+  "v3_136_news_main_array_item_1_title": "新しいランディングページ",
+  "v3_136_news_main_array_item_1_subtitle": "リニューアルされたランディングページの紹介 🎉",
+  "v3_136_news_main_array_item_2_title": "カスタムステータス",
+  "v3_136_news_main_array_item_2_subtitle": "最新の追加機能であるカスタムステータスで、ワークフローの効率性を向上させましょう。プロジェクトのニーズに合わせてタスクの状態をカスタマイズし、進捗をより正確に追跡できます。",
+  "v3_136_news_main_array_item_3_title": "グリッド上の未読メール表示機能",
+  "v3_136_news_main_array_item_3_subtitle": "重要な更新を見逃すことはもうありません！新しいグリッド上の未読メール表示機能により、タスク内の未読メールを把握し、効率的なコミュニケーションと迅速な対応を確保します。",
+  "v3_136_news_main_array_item_4_title": "クイック追加ダイアログの拡張フィルター",
+  "v3_136_news_main_array_item_4_subtitle": "クイック追加ブートボックス（Quick Add Bootbox）の宛先と担当者セレクターに新しく追加されたフィルターで生産性を向上させましょう。適切な宛先と担当者を簡単に見つけ、タスクの作成を効率化します。",
+  "v3_136_news_features_name": "その他の更新",
+  "v3_136_news_features_title": "改善点",
+  "v3_136_news_features_update_items": [
+    "1. 1000以上のタスクの更新を含む操作のパフォーマンス改善、特に1000人以上のユーザーを含むサブツリーのタスクメンバーの変更。",
+    "2. アクティビティタブ：親タスクの追加で、親タスクが削除された場合にアクティビティログが正しく表示されない問題を修正 <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>動画</a>。",
+    "3. JustDoファイルを使用する環境でのアバターのアップロード。",
+    "4. 組織（Organizations）の概念を導入：JustDoボード上のオプションの論理ユニット。",
+    "5. MailDo：メールを受信した際、タスクの担当者がチャットで自動的にミュート解除されるようになりました。"
+  ],
+  "v3_136_news_page_title": "JustDo v3.136：新ランディングページ、カスタムステータス、拡張フィルターなど",
+  "v3_136_news_page_description": "JustDo v3.136では、リニューアルされたランディングページ、タスクのための強力なカスタムステータス、より迅速なタスク追加のための拡張フィルター、そして重要なパフォーマンスアップグレードが導入されました。"
+}

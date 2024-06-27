@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Yenilikler",
+  "v3_136_news_main_array_item_1_title": "Yeni karşılama sayfası",
+  "v3_136_news_main_array_item_1_subtitle": "Yenilenen Karşılama Sayfamızı Tanıtıyoruz 🎉",
+  "v3_136_news_main_array_item_2_title": "Özel durumlar",
+  "v3_136_news_main_array_item_2_subtitle": "En son eklentimiz olan Özel Durumlar ile iş akışı verimliliğinizi artırın. Görev durumlarını benzersiz proje ihtiyaçlarınıza göre uyarlayın ve ilerlemeyi daha hassas bir şekilde takip edin.",
+  "v3_136_news_main_array_item_3_title": "Izgara Üzerinde Okunmamış E-posta Göstergesi ile Bilgi Sahibi Olun",
+  "v3_136_news_main_array_item_3_subtitle": "Artık önemli güncellemeleri asla kaçırmayın! Yeni Izgara Üzerinde Okunmamış E-posta Göstergemiz, görevler içindeki okunmamış e-postalar hakkında sizi bilgilendirir, etkili iletişim ve hızlı eylem sağlar.",
+  "v3_136_news_main_array_item_4_title": "Hızlı Ekleme Diyaloğu için Geliştirilmiş Filtreler",
+  "v3_136_news_main_array_item_4_subtitle": "Hızlı Ekleme Bootbox Hedefi ve Sahibi Seçici için yeni eklenen filtrelerimizle üretkenliğinizi artırın. Doğru hedefi ve sahibi kolayca bularak görev oluşturmayı optimize edin.",
+  "v3_136_news_features_name": "Diğer Güncellemeler",
+  "v3_136_news_features_title": "İyileştirmeler",
+  "v3_136_news_features_update_items": [
+    "1. 1000'den fazla görevi içeren işlemler için performans iyileştirmesi, özellikle 1000'den fazla kullanıcıya sahip bir alt ağacın görev üyelerini değiştirme konusunda.",
+    "2. Etkinlik sekmesi: Eğer bir üst öğe ekleme ise ve üst öğe kaldırılmışsa, etkinlik günlüğünün doğru gösterilmemesi sorunu düzeltildi <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>video</a>.",
+    "3. JustDo dosyalarını kullanan ortamlar için avatar yükleme.",
+    "4. Organizasyonlar kavramı tanıtıldı: JustDo'ların üzerinde isteğe bağlı bir mantık birimi.",
+    "5. MailDo: Bir e-posta alındığında, görev sahibinin sohbetteki sessizliği artık otomatik olarak kaldırılıyor."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Yeni Karşılama Sayfası, Özel Durumlar, Geliştirilmiş Filtreler ve Daha Fazlası",
+  "v3_136_news_page_description": "JustDo v3.136, yenilenmiş bir karşılama sayfası, görevler için güçlü özel durumlar, daha hızlı görev ekleme için geliştirilmiş filtreler ve önemli performans yükseltmeleri sunuyor."
+}

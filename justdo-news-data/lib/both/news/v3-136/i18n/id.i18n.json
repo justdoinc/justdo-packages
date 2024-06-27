@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Apa yang baru",
+  "v3_136_news_main_array_item_1_title": "Halaman beranda baru",
+  "v3_136_news_main_array_item_1_subtitle": "Memperkenalkan Halaman Beranda Kami yang Disegarkan 🎉",
+  "v3_136_news_main_array_item_2_title": "Status kustom",
+  "v3_136_news_main_array_item_2_subtitle": "Tingkatkan efisiensi alur kerja Anda dengan tambahan terbaru kami - Status Kustom. Sesuaikan status tugas untuk memenuhi kebutuhan unik proyek Anda dan lacak kemajuan dengan presisi lebih tinggi.",
+  "v3_136_news_main_array_item_3_title": "Tetap Terinformasi dengan Indikator Email Belum Dibaca di Grid",
+  "v3_136_news_main_array_item_3_subtitle": "Jangan pernah lewatkan pembaruan penting lagi! Indikator Email Belum Dibaca di Grid baru kami memberi tahu Anda tentang email yang belum dibaca dalam tugas, memastikan komunikasi yang efisien dan tindakan yang cepat.",
+  "v3_136_news_main_array_item_4_title": "Filter yang Ditingkatkan untuk Dialog Tambah Cepat",
+  "v3_136_news_main_array_item_4_subtitle": "Tingkatkan produktivitas Anda dengan filter baru kami untuk Pemilih Tujuan dan Pemilik Bootbox Tambah Cepat. Sederhanakan pembuatan tugas dengan mudah menemukan tujuan dan pemilik yang tepat.",
+  "v3_136_news_features_name": "Pembaruan Lainnya",
+  "v3_136_news_features_title": "Perbaikan",
+  "v3_136_news_features_update_items": [
+    "1. Peningkatan kinerja untuk operasi yang melibatkan pembaruan lebih dari 1000 tugas, khususnya, mengubah anggota tugas dari sub-pohon yang lebih besar dari 1000 pengguna.",
+    "2. Tab aktivitas: Perbaikan log aktivitas yang tidak ditampilkan dengan benar jika itu adalah penambahan induk dan induk dihapus <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>video</a>.",
+    "3. Unggah avatar untuk lingkungan yang menggunakan file JustDo.",
+    "4. Memperkenalkan konsep Organisasi: unit logika opsional di atas JustDo.",
+    "5. MailDo: Ketika email diterima, pemilik tugas sekarang secara otomatis disuarakan kembali dalam obrolan."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Halaman Beranda Baru, Status Kustom, Filter yang Ditingkatkan & Lainnya",
+  "v3_136_news_page_description": "JustDo v3.136 memperkenalkan halaman beranda yang disegarkan, status kustom yang kuat untuk tugas, filter yang ditingkatkan untuk penambahan tugas lebih cepat, dan peningkatan kinerja penting."
+}

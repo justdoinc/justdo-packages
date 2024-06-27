@@ -1,0 +1,15 @@
+{
+  "v3_142_news_title": "v3.142",
+  "v3_142_news_main_name": "Újdonságok",
+  "v3_142_news_main_array_item_1_title": "Kínai fordítás bevezetése",
+  "v3_142_news_main_array_item_1_subtitle": "Csak a JustDo.com oldalon elérhető",
+  "v3_142_news_main_array_item_2_title": "Több elem állapotának egyszerre történő beállítása",
+  "v3_142_news_main_array_item_2_subtitle": "Ez a frissítés hatékonyabb munkafolyamatot tesz lehetővé. Mostantól egyetlen művelettel több elemen is végrehajthat állapotváltozásokat. Az állapotok beállításán túl ez a funkció használható különböző egyéb opciómezők tömeges frissítésére is. Beleértve a JustDo tábla egyéni mezőit és a bővítmények mezőit is.",
+  "v3_142_news_features_name": "Egyéb frissítések",
+  "v3_142_news_features_title": "Fejlesztések",
+  "v3_142_news_features_update_items": [
+    "1. Bevezetjük a 'Összes kijelölése' és 'Kijelölés megszüntetése' gombokat a Feladat másolás funkciónkhoz - gyorsabbá és egyszerűbbé téve a mezők kiválasztását."
+  ],
+  "v3_142_news_page_title": "JustDo v3.142: Kínai fordítás, tömeges állapotfrissítések és egyebek",
+  "v3_142_news_page_description": "A JustDo v3.142 bevezeti a kínai nyelvi támogatást, a több elem állapotának egyszerre történő beállítását, valamint fejlesztéseket a feladatok másolásában."
+}

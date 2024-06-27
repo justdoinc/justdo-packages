@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Kas naujo",
+  "v3_134_news_main_array_item_1_title": "Archyvavimas",
+  "v3_134_news_main_array_item_1_subtitle": "Kai atsiranda naujų projektų ir veiklų, kuriomis turite užsiimti, jums reikia atidėti senuosius ir susitelkti į naujus. Dabar galite archyvuoti tuos projektus ir užduotis, pašalindami juos iš kasdienio vaizdo, tačiau vis tiek turėdami galimybę prieiti prie jų pagal poreikį ir net išarchyvuoti.",
+  "v3_134_news_main_array_item_2_title": "Kelių pasirinkimų laukas",
+  "v3_134_news_main_array_item_2_subtitle": "Be „Parinktys\" pasirinktinio lauko, dabar turite „Kelios parinktys\" tipą. Ši parinktis leidžia sukurti iš anksto nustatytų pasirinkimų sąrašą, iš kurio vartotojai gali pasirinkti kelias reikšmes kiekvienai atskirai užduočiai.",
+  "v3_134_news_main_array_item_3_title": "Užduoties savininko ir laukiančio savininko laukai + filtras",
+  "v3_134_news_main_array_item_3_subtitle": "Dabar turite galimybę įtraukti papildomus laukus, kurie rodo tiek užduoties savininką, tiek laukiantį savininką. Šis atnaujinimas suteikia jums galimybę efektyviai filtruoti užduočių medį pagal šiuos kriterijus, užtikrinant labiau optimizuotą ir personalizuotą užduočių valdymo patirtį.",
+  "v3_134_news_features_name": "Kiti atnaujinimai",
+  "v3_134_news_features_title": "Patobulinimai",
+  "v3_134_news_features_update_items": [
+    "1. El. laiškai - Failai, mažesni nei 150x150 pikselių, nėra pridedami prie failų.",
+    "2. El. laiškai - Rodyti tik paskutinius 20 el. laiškų, plius „įkelti daugiau\".",
+    "3. Plėtinių ir „parduotuvės\" mygtuko pašalinimas."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Projektų archyvavimas, kelių pasirinkimų parinktys ir daugiau",
+  "v3_134_news_page_description": "Atraskite projektų archyvavimo galią, kelių pasirinkimų laukų lankstumą ir patobulintą užduočių nuosavybės valdymą JustDo v3.134 versijoje."
+}

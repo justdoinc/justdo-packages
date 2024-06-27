@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Kas jauns",
+  "v3_140_news_main_array_item_1_title": "Atjaunināts cilņu pārslēdzēja dizains",
+  "v3_140_news_main_array_item_1_subtitle": "Dizains tagad labāk norāda, kad cilne ir aktīva.",
+  "v3_140_news_main_array_item_2_title": "Ieviesta vienkrāsaina violetā tēma",
+  "v3_140_news_main_array_item_3_title": "Vienkāršota lietotāju uzaicināšana",
+  "v3_140_news_main_array_item_4_title": "Uzlabota JustDo dalībnieku pārvaldība",
+  "v3_140_news_main_array_item_4_subtitle": "Izvēlieties, lai vienlaikus noņemtu vairākus lietotājus.",
+  "v3_140_news_main_array_item_5_title": "Atbalsts video priekšskatījumam JustDo failos",
+  "v3_140_news_main_array_item_6_title": "Lietotāja avatāra attēlošana īpašnieka/gaidāmā īpašnieka kolonnās",
+  "v3_140_news_features_name": "Citi atjauninājumi",
+  "v3_140_news_features_title": "Uzlabojumi",
+  "v3_140_news_features_update_items": [
+    "1. Sekundāro pogu krāsa mainīta no tumši pelēkas uz gaiši pelēku",
+    "2. Klasiskās tēmas noņemtas",
+    "3. Atbalsts bērnu uzdevumu kārtošanai pēc turpmākās rīcības lauka",
+    "4. Tiek izmantots jauns moderns fonts, lai labāk atbalstītu ne-angļu valodas",
+    "5. Pievienota iespēja paslēpt sānjoslu vietnes administrēšanā",
+    "6. Uzlabots īpašumtiesību noraidīšanas dialoga dizains (ieskaitot iespēju apstiprināt iesniegšanu ar ctrl+enter)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Dizaina atjauninājumi, vienkāršota lietotāju uzaicināšana un citi uzlabojumi",
+  "v3_140_news_page_description": "JustDo v3.140 piedāvā dizaina uzlabojumus, uzlabotus lietotāju uzaicināšanas darbplūsmas, uzlabotu video atbalstu un vairākus lietojamības uzlabojumus."
+}

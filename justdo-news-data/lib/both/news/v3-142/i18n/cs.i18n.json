@@ -1,0 +1,15 @@
+{
+  "v3_142_news_title": "v3.142",
+  "v3_142_news_main_name": "Co je nového",
+  "v3_142_news_main_array_item_1_title": "Zavedení čínského překladu",
+  "v3_142_news_main_array_item_1_subtitle": "Dostupné pouze na JustDo.com",
+  "v3_142_news_main_array_item_2_title": "Nastavení stavů pro více položek najednou",
+  "v3_142_news_main_array_item_2_subtitle": "Tato aktualizace umožňuje efektivnější pracovní postup. Nyní můžete aplikovat změny stavu na několik položek v jedné akci. Kromě nastavení stavů lze tuto funkci použít k hromadné aktualizaci různých dalších volitelných polí. Včetně vlastních polí a polí pluginů vašeho JustDo (JustDo Board).",
+  "v3_142_news_features_name": "Další aktualizace",
+  "v3_142_news_features_title": "Vylepšení",
+  "v3_142_news_features_update_items": [
+    "1. Zavedení tlačítek 'Vybrat vše' a 'Zrušit výběr všech' do naší funkce kopírování úkolů - pro rychlejší a jednodušší výběr polí."
+  ],
+  "v3_142_news_page_title": "JustDo v3.142: Čínský překlad, hromadné aktualizace stavů a další",
+  "v3_142_news_page_description": "JustDo v3.142 zavádí podporu čínštiny, možnost nastavit stavy pro více položek najednou a vylepšení kopírování úkolů."
+}

@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Újdonságok",
+  "v3_136_news_main_array_item_1_title": "Új kezdőlap",
+  "v3_136_news_main_array_item_1_subtitle": "Bemutatjuk a felfrissített kezdőlapunkat 🎉",
+  "v3_136_news_main_array_item_2_title": "Egyéni állapotok",
+  "v3_136_news_main_array_item_2_subtitle": "Növelje munkafolyamatának hatékonyságát legújabb kiegészítésünkkel - az Egyéni Állapotokkal. Szabja testre a feladatok állapotait a projekt egyedi igényeihez, és kövesse nyomon a haladást nagyobb pontossággal.",
+  "v3_136_news_main_array_item_3_title": "Maradjon tájékozott a rácson megjelenő olvasatlan e-mail jelzővel",
+  "v3_136_news_main_array_item_3_subtitle": "Soha többé ne maradjon le fontos frissítésekről! Új, rácson megjelenő olvasatlan e-mail jelzőnk tájékoztatja Önt a feladatokhoz kapcsolódó olvasatlan e-mailekről, biztosítva a hatékony kommunikációt és az azonnali cselekvést.",
+  "v3_136_news_main_array_item_4_title": "Továbbfejlesztett szűrők a gyors hozzáadás párbeszédablakhoz",
+  "v3_136_news_main_array_item_4_subtitle": "Növelje produktivitását az újonnan hozzáadott szűrőkkel a Gyors Hozzáadás Bootbox Célhely és Tulajdonos Kiválasztóhoz. Egyszerűsítse a feladatok létrehozását a megfelelő célhely és tulajdonos könnyű megtalálásával.",
+  "v3_136_news_features_name": "Egyéb frissítések",
+  "v3_136_news_features_title": "Fejlesztések",
+  "v3_136_news_features_update_items": [
+    "1. Teljesítmény javítás az 1000-nél több feladatot érintő műveleteknél, különösen az 1000 felhasználónál nagyobb részfa feladatainak tagjainak módosításánál.",
+    "2. Tevékenység fül: Javítva a tevékenységnapló helytelen megjelenítése, ha szülő hozzáadásról van szó, és a szülő eltávolításra kerül <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>videó</a>.",
+    "3. Avatárok feltöltése a JustDo fájlokat használó környezetekben.",
+    "4. Bevezettük a Szervezetek koncepcióját: egy opcionális logikai egység a JustDo táblák felett.",
+    "5. MailDo (E-mail kezelő): Amikor e-mail érkezik, a feladat tulajdonosa most automatikusan visszakapcsolódik a csevegésbe."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Új kezdőlap, egyéni állapotok, továbbfejlesztett szűrők és még sok más",
+  "v3_136_news_page_description": "A JustDo v3.136 bemutatja a felfrissített kezdőlapot, hatékony egyéni állapotokat a feladatokhoz, továbbfejlesztett szűrőket a gyorsabb feladat hozzáadáshoz és fontos teljesítmény fejlesztéseket."
+}

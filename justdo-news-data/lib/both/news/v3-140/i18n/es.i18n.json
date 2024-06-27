@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Novedades",
+  "v3_140_news_main_array_item_1_title": "Diseño del cambiador de pestañas actualizado",
+  "v3_140_news_main_array_item_1_subtitle": "El diseño ahora indica mejor cuándo una pestaña está activa.",
+  "v3_140_news_main_array_item_2_title": "Introducción del tema Morado Sólido",
+  "v3_140_news_main_array_item_3_title": "Simplificación de la invitación de usuarios",
+  "v3_140_news_main_array_item_4_title": "Mejora en la gestión de miembros de JustDo",
+  "v3_140_news_main_array_item_4_subtitle": "Selecciona para eliminar varios usuarios al mismo tiempo.",
+  "v3_140_news_main_array_item_5_title": "Soporte de vista previa de video en archivos de JustDo",
+  "v3_140_news_main_array_item_6_title": "Mostrar el avatar del usuario en las columnas de Propietario/Propietario Pendiente",
+  "v3_140_news_features_name": "Otras actualizaciones",
+  "v3_140_news_features_title": "Mejoras",
+  "v3_140_news_features_update_items": [
+    "1. El color de los botones secundarios cambió de gris oscuro a gris claro",
+    "2. Temas clásicos eliminados",
+    "3. Soporte para ordenar tareas secundarias por el campo de Seguimiento",
+    "4. Se utiliza una nueva fuente moderna para un mejor soporte de idiomas no ingleses",
+    "5. Se agregó la capacidad de ocultar la barra lateral en la Administración del Sitio",
+    "6. Mejoras de diseño en el diálogo de rechazo de propiedad (incluida la capacidad de confirmar el envío con ctrl+enter)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Actualizaciones de diseño, invitaciones de usuario simplificadas y más",
+  "v3_140_news_page_description": "JustDo v3.140 ofrece mejoras de diseño, flujos de trabajo de invitación de usuarios mejorados, soporte de video mejorado y múltiples mejoras de usabilidad."
+}

@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "新機能",
+  "v3_140_news_main_array_item_1_title": "タブ切り替えのデザインを更新",
+  "v3_140_news_main_array_item_1_subtitle": "アクティブなタブがより明確に表示されるようになりました。",
+  "v3_140_news_main_array_item_2_title": "ソリッドパープルテーマの導入",
+  "v3_140_news_main_array_item_3_title": "ユーザー招待の簡素化",
+  "v3_140_news_main_array_item_4_title": "JustDoメンバー管理の改善",
+  "v3_140_news_main_array_item_4_subtitle": "複数のユーザーを同時に選択して削除できるようになりました。",
+  "v3_140_news_main_array_item_5_title": "JustDoファイルでのビデオプレビューのサポート",
+  "v3_140_news_main_array_item_6_title": "所有者/保留中の所有者列にユーザーアバターを表示",
+  "v3_140_news_features_name": "その他のアップデート",
+  "v3_140_news_features_title": "改善点",
+  "v3_140_news_features_update_items": [
+    "1. セカンダリーボタンの色がダークグレーからライトグレーに変更",
+    "2. クラシックテーマの削除",
+    "3. 子タスクのフォローアップフィールドによるソートをサポート",
+    "4. 非英語言語のサポートを向上させるための新しいモダンフォントの導入",
+    "5. サイト管理者でサイドバーを非表示にする機能を追加",
+    "6. 所有権拒否ダイアログのデザイン改善（Ctrl+Enterでの確認提出機能を含む）"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: デザイン更新、ユーザー招待の簡素化など",
+  "v3_140_news_page_description": "JustDo v3.140では、デザインの改良、ユーザー招待ワークフローの改善、ビデオサポートの強化、そして多数のユーザビリティ向上が実現しました。"
+}

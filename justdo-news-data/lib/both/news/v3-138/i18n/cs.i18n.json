@@ -1,0 +1,18 @@
+{
+  "v3_138_news_title": "v3.138",
+  "v3_138_news_main_name": "Co je nového",
+  "v3_138_news_main_array_item_1_title": "Přepracované okno pro pozvánky členů JustDo",
+  "v3_138_news_main_array_item_1_subtitle": "Rozšířili jsme naši stávající funkci pozvánek o novou možnost, která vám umožňuje jedním kliknutím vybrat všechny úkoly při přidávání nových uživatelů. Pro efektivnější nastavení velkých projektů.",
+  "v3_138_news_main_array_item_2_title": "Vylepšená navigace v náhledu souborů",
+  "v3_138_news_main_array_item_2_subtitle": "Věříme v důležitost plynulé navigace. Proto jsme implementovali klávesovou navigaci v náhledech souborů. Nyní můžete snadno procházet své soubory pouze pomocí klávesnice, což dělá proces kontroly a úprav ještě plynulejším.",
+  "v3_138_news_main_array_item_3_title": "Elegantní vylepšení designu",
+  "v3_138_news_main_array_item_3_subtitle": "Pro zlepšení vizuálního zážitku jsme přešli na moderní zaoblený design našich tlačítek a vstupních polí.",
+  "v3_138_news_features_name": "Další aktualizace",
+  "v3_138_news_features_title": "Vylepšení",
+  "v3_138_news_features_update_items": [
+    "1. Indikátory načítání pro nedávnou aktivitu v chatu",
+    "2. Administrátoři webu s neověřeným e-mailem ztratí přístup ke stránce správce webu"
+  ],
+  "v3_138_news_page_title": "JustDo v3.138: Přepracované pozvánky, navigace v souborech, vylepšení designu a další",
+  "v3_138_news_page_description": "Vyzkoušejte vylepšené pozvánky uživatelů, plynulejší navigaci v náhledu souborů, elegantní vylepšení designu a další v JustDo v3.138."
+}

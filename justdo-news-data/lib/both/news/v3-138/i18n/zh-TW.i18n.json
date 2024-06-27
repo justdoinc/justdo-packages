@@ -1,0 +1,18 @@
+{
+  "v3_138_news_title": "v3.138",
+  "v3_138_news_main_name": "新功能",
+  "v3_138_news_main_array_item_1_title": "重新設計的專案成員邀請視窗",
+  "v3_138_news_main_array_item_1_subtitle": "在現有邀請功能的基礎上，我們新增了一個功能，讓您在添加新用戶時只需點擊一下就可以選擇所有任務。這對於大型專案的設置過程更加高效。",
+  "v3_138_news_main_array_item_2_title": "改進的檔案預覽導航",
+  "v3_138_news_main_array_item_2_subtitle": "我們相信順暢導航的重要性。因此，我們在檔案預覽中實施了鍵盤導航。現在您可以僅使用鍵盤輕鬆瀏覽檔案，使檢閱和編輯過程更加流暢。",
+  "v3_138_news_main_array_item_3_title": "時尚設計升級",
+  "v3_138_news_main_array_item_3_subtitle": "為了提升視覺體驗，我們將按鈕和輸入框改為現代圓潤設計",
+  "v3_138_news_features_name": "其他更新",
+  "v3_138_news_features_title": "改進",
+  "v3_138_news_features_update_items": [
+    "1. 聊天最近活動的載入指示器",
+    "2. 未驗證電子郵件的網站管理員將失去網站管理頁面的訪問權限"
+  ],
+  "v3_138_news_page_title": "JustDo v3.138：重新設計的邀請功能、檔案導航、設計升級等",
+  "v3_138_news_page_description": "在 JustDo v3.138 中體驗改進的用戶邀請、更流暢的檔案預覽導航、時尚設計升級等功能。"
+}

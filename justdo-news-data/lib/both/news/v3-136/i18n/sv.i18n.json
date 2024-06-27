@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Nyheter",
+  "v3_136_news_main_array_item_1_title": "Ny landningssida",
+  "v3_136_news_main_array_item_1_subtitle": "Introduktion av vår uppdaterade landningssida 🎉",
+  "v3_136_news_main_array_item_2_title": "Anpassade statusar",
+  "v3_136_news_main_array_item_2_subtitle": "Öka effektiviteten i ditt arbetsflöde med vårt senaste tillägg - Anpassade statusar. Skräddarsy uppgiftsstatusar för att passa dina unika projektbehov och följ framsteg med större precision.",
+  "v3_136_news_main_array_item_3_title": "Håll dig informerad med On-Grid-indikator för olästa e-postmeddelanden",
+  "v3_136_news_main_array_item_3_subtitle": "Missa aldrig viktiga uppdateringar igen! Vår nya On-Grid-indikator för olästa e-postmeddelanden håller dig informerad om olästa e-postmeddelanden inom uppgifter, vilket säkerställer effektiv kommunikation och snabba åtgärder.",
+  "v3_136_news_main_array_item_4_title": "Förbättrade filter för snabbläggsdialogen",
+  "v3_136_news_main_array_item_4_subtitle": "Öka din produktivitet med våra nyligen tillagda filter för Snabblägg Bootbox-destination och ägarväljare. Effektivisera uppgiftsskapandet genom att enkelt hitta rätt destination och ägare.",
+  "v3_136_news_features_name": "Andra uppdateringar",
+  "v3_136_news_features_title": "Förbättringar",
+  "v3_136_news_features_update_items": [
+    "1. Prestandaförbättring för operationer som involverar uppdateringar av mer än 1000 uppgifter, särskilt vid ändring av uppgiftsmedlemmar i ett underträd större än 1000 användare.",
+    "2. Aktivitetsflik: Åtgärdat problem där aktivitetsloggen inte visades korrekt om det var en förälder-tillägg och föräldern togs bort <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>video</a>.",
+    "3. Ladda upp avatarer för miljöer som använder JustDo-filer.",
+    "4. Introducerat konceptet Organisationer: en valfri logisk enhet ovanför JustDos.",
+    "5. MailDo: När ett e-postmeddelande tas emot, avaktiveras nu automatiskt ljudet för uppgiftsägaren i chatten."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Ny landningssida, anpassade statusar, förbättrade filter och mer",
+  "v3_136_news_page_description": "JustDo v3.136 introducerar en uppdaterad landningssida, kraftfulla anpassade statusar för uppgifter, förbättrade filter för snabbare uppgiftsläggning och viktiga prestandauppgraderingar."
+}

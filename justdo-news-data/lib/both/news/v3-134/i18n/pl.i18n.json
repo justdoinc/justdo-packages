@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Co nowego",
+  "v3_134_news_main_array_item_1_title": "Archiwizacja",
+  "v3_134_news_main_array_item_1_subtitle": "Gdy pojawiają się nowe projekty i nowe zadania, nad którymi musisz pracować, potrzebujesz odłożyć na bok stare i skupić się na nowych. Teraz możesz archiwizować te projekty i zadania, usuwając je z codziennego widoku, zachowując jednocześnie możliwość dostępu do nich w razie potrzeby, a nawet przywrócenia z archiwum.",
+  "v3_134_news_main_array_item_2_title": "Pole opcji wielokrotnego wyboru",
+  "v3_134_news_main_array_item_2_subtitle": "Oprócz niestandardowego pola \"Opcje\" masz teraz typ \"Wiele opcji\". Ta opcja pozwala na utworzenie listy predefiniowanych opcji, z których użytkownicy mogą wybrać wiele wartości dla każdego pojedynczego zadania.",
+  "v3_134_news_main_array_item_3_title": "Pola Właściciela zadania i Oczekującego właściciela + filtr",
+  "v3_134_news_main_array_item_3_subtitle": "Masz teraz możliwość dodania dodatkowych pól, które wyświetlają zarówno Właściciela zadania, jak i Oczekującego właściciela zadań. Ta aktualizacja umożliwia efektywne filtrowanie drzewa zadań na podstawie tych kryteriów, zapewniając bardziej usprawnione i spersonalizowane doświadczenie zarządzania zadaniami.",
+  "v3_134_news_features_name": "Inne aktualizacje",
+  "v3_134_news_features_title": "Ulepszenia",
+  "v3_134_news_features_update_items": [
+    "1. E-maile - Pliki mniejsze niż 150x150 pikseli nie są dodawane do plików.",
+    "2. E-maile - Pokazuj tylko ostatnie 20 e-maili, plus przycisk \"załaduj więcej\".",
+    "3. Usunięcie rozszerzeń i przycisku \"sklep\"."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Archiwizacja projektów, Opcje wielokrotnego wyboru i więcej",
+  "v3_134_news_page_description": "Odkryj moc archiwizacji projektów, elastyczność pól opcji wielokrotnego wyboru i ulepszone zarządzanie własnością zadań w JustDo v3.134."
+}

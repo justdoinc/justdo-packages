@@ -1,0 +1,15 @@
+{
+  "v3_142_news_title": "v3.142",
+  "v3_142_news_main_name": "Co nowego",
+  "v3_142_news_main_array_item_1_title": "Wprowadzenie tłumaczenia na język chiński",
+  "v3_142_news_main_array_item_1_subtitle": "Dostępne tylko na JustDo.com",
+  "v3_142_news_main_array_item_2_title": "Ustawianie stanów dla wielu elementów jednocześnie",
+  "v3_142_news_main_array_item_2_subtitle": "Ta aktualizacja umożliwia bardziej efektywny przepływ pracy. Możesz teraz zastosować zmiany stanu do kilku elementów w jednej akcji. Oprócz ustawiania stanów, funkcja ta może być używana do hurtowej aktualizacji różnych innych pól opcji. Dotyczy to również niestandardowych pól JustDo i pól wtyczek.",
+  "v3_142_news_features_name": "Inne aktualizacje",
+  "v3_142_news_features_title": "Ulepszenia",
+  "v3_142_news_features_update_items": [
+    "1. Wprowadzenie przycisków 'Zaznacz wszystko' i 'Odznacz wszystko' do naszej funkcji kopiowania zadań - ułatwiając i przyspieszając wybór pól."
+  ],
+  "v3_142_news_page_title": "JustDo v3.142: Tłumaczenie na chiński, hurtowe aktualizacje stanów i więcej",
+  "v3_142_news_page_description": "JustDo v3.142 wprowadza wsparcie dla języka chińskiego, możliwość ustawiania stanów dla wielu elementów jednocześnie oraz ulepszenia w kopiowaniu zadań."
+}

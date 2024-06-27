@@ -1,0 +1,15 @@
+{
+  "v3_142_news_title": "v3.142",
+  "v3_142_news_main_name": "最新消息",
+  "v3_142_news_main_array_item_1_title": "推出中文翻譯",
+  "v3_142_news_main_array_item_1_subtitle": "僅適用於JustDo.com",
+  "v3_142_news_main_array_item_2_title": "一次設定多個項目的狀態",
+  "v3_142_news_main_array_item_2_subtitle": "這次更新可提高工作流程效率。你現在可以在一個動作中對多個項目進行狀態變更。除了設定狀態外，此功能還可用於批量更新其他各種選項欄位，包括你的專案自訂欄位和插件欄位。",
+  "v3_142_news_features_name": "其他更新",
+  "v3_142_news_features_title": "改進",
+  "v3_142_news_features_update_items": [
+    "1. 在任務複製功能中引入「全選」和「取消全選」按鈕 - 使欄位選擇更快速、更簡單。"
+  ],
+  "v3_142_news_page_title": "JustDo v3.142：中文翻譯、批量狀態更新等",
+  "v3_142_news_page_description": "JustDo v3.142 推出中文語言支援、一次設定多個項目狀態的功能，以及任務複製的增強功能。"
+}

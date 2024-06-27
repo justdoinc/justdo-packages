@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Yenilikler",
+  "v3_134_news_main_array_item_1_title": "Arşivleme",
+  "v3_134_news_main_array_item_1_subtitle": "Yeni projeler ve üzerinde çalışmanız gereken yeni aktiviteler olduğunda, eskileri bir kenara bırakıp yenilere odaklanmanız gerekir. Artık bu projeleri ve görevleri arşivleyebilir, günlük görünümünüzden kaldırabilir, aynı zamanda gerektiğinde erişebilir ve hatta arşivden çıkarabilirsiniz.",
+  "v3_134_news_main_array_item_2_title": "Çoklu seçenek alanı",
+  "v3_134_news_main_array_item_2_subtitle": "\"Seçenekler\" özel alanına ek olarak artık \"Çoklu Seçenekler\" türüne de sahipsiniz. Bu seçenek, kullanıcıların her bir görev için birden fazla değer seçebileceği önceden tanımlanmış bir seçenek listesi oluşturmanıza olanak tanır.",
+  "v3_134_news_main_array_item_3_title": "Görevin Sahibi ve Bekleyen Sahip alanları + filtre",
+  "v3_134_news_main_array_item_3_subtitle": "Artık görevlerin hem Görev Sahibini hem de Bekleyen Sahibini gösteren ek alanlar ekleme yeteneğine sahipsiniz. Bu güncelleme, görev ağacınızı bu kriterlere göre verimli bir şekilde filtrelemenizi sağlayarak, daha düzenli ve kişiselleştirilmiş bir görev yönetimi deneyimi sunuyor.",
+  "v3_134_news_features_name": "Diğer Güncellemeler",
+  "v3_134_news_features_title": "İyileştirmeler",
+  "v3_134_news_features_update_items": [
+    "1. E-postalar - 150x150 pikselden küçük dosyalar, dosyalara eklenmez.",
+    "2. E-postalar - Yalnızca son 20 e-postayı göster, artı \"daha fazla yükle\" seçeneği.",
+    "3. Uzantıların ve \"mağaza\" düğmesinin kaldırılması."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Proje Arşivleme, Çoklu Seçenek Alanları ve Daha Fazlası",
+  "v3_134_news_page_description": "JustDo v3.134'te proje arşivlemenin gücünü, çoklu seçenek alanlarının esnekliğini ve geliştirilmiş görev sahipliği yönetimini keşfedin."
+}

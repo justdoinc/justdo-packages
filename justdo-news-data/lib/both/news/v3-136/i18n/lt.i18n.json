@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Kas naujo",
+  "v3_136_news_main_array_item_1_title": "Naujas pagrindinis puslapis",
+  "v3_136_news_main_array_item_1_subtitle": "Pristatome mūsų atnaujintą pagrindinį puslapį 🎉",
+  "v3_136_news_main_array_item_2_title": "Pasirinktinės būsenos",
+  "v3_136_news_main_array_item_2_subtitle": "Padidinkite savo darbo eigos efektyvumą su mūsų naujausiu papildymu - Pasirinktinėmis būsenomis. Pritaikykite užduočių būsenas savo unikalių projektų poreikiams ir sekite pažangą su didesniu tikslumu.",
+  "v3_136_news_main_array_item_3_title": "Būkite informuoti su neperskaitytų el. laiškų indikatoriumi tinklelyje",
+  "v3_136_news_main_array_item_3_subtitle": "Niekada daugiau nepraleiskite svarbių atnaujinimų! Mūsų naujas neperskaitytų el. laiškų indikatorius tinklelyje informuoja jus apie neperskaitytus el. laiškus užduotyse, užtikrinant efektyvų bendravimą ir greitą veiksmą.",
+  "v3_136_news_main_array_item_4_title": "Patobulinti filtrai greitam pridėjimo dialogui",
+  "v3_136_news_main_array_item_4_subtitle": "Padidinkite savo produktyvumą su mūsų naujai pridėtais filtrais greito pridėjimo dialogo (Quick Add Bootbox) paskirties vietos ir savininko pasirinkimui. Supaprastinkite užduočių kūrimą, lengvai rasdami tinkamą paskirties vietą ir savininką.",
+  "v3_136_news_features_name": "Kiti atnaujinimai",
+  "v3_136_news_features_title": "Patobulinimai",
+  "v3_136_news_features_update_items": [
+    "1. Patobulintas veikimas operacijoms, kurios apima daugiau nei 1000 užduočių atnaujinimų, ypač keičiant užduočių narius pomedyje, didesniam nei 1000 vartotojų.",
+    "2. Veiklos skirtukas: Ištaisyta veiklos žurnalo rodymo klaida, kai tai yra tėvinio elemento pridėjimas ir tėvinis elementas yra pašalintas <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>vaizdo įrašas</a>.",
+    "3. Avatarų įkėlimas aplinkoms, kurios naudoja JustDo failus.",
+    "4. Pristatyta Organizacijų koncepcija: pasirinktinis loginis vienetas virš JustDo lentos.",
+    "5. MailDo (Pašto funkcija): Kai gaunamas el. laiškas, užduoties savininko garsas dabar automatiškai įjungiamas pokalbių skiltyje."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Naujas pagrindinis puslapis, pasirinktinės būsenos, patobulinti filtrai ir daugiau",
+  "v3_136_news_page_description": "JustDo v3.136 pristato atnaujintą pagrindinį puslapį, galingas pasirinktines užduočių būsenas, patobulintus filtrus greitesniam užduočių pridėjimui ir svarbius veikimo patobulinimus."
+}

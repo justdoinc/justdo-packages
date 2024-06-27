@@ -1,0 +1,18 @@
+{
+  "v3_138_news_title": "v3.138",
+  "v3_138_news_main_name": "Kaj je novega",
+  "v3_138_news_main_array_item_1_title": "Prenovljeno okno za povabila članov JustDo",
+  "v3_138_news_main_array_item_1_subtitle": "Z nadgradnjo naše obstoječe funkcionalnosti povabil smo dodali novo funkcijo, ki vam omogoča, da z enim klikom izberete vse naloge pri dodajanju novih uporabnikov. Za učinkovitejši proces nastavitve pri večjih projektih.",
+  "v3_138_news_main_array_item_2_title": "Izboljšana navigacija predogleda datotek",
+  "v3_138_news_main_array_item_2_subtitle": "Verjamemo v pomembnost nemotene navigacije. Zato smo implementirali navigacijo s tipkovnico v predogledih datotek. Zdaj se lahko enostavno premikate med datotekami samo s tipkovnico, kar naredi pregledovanje in urejanje še bolj tekoče.",
+  "v3_138_news_main_array_item_3_title": "Elegantna nadgradnja oblikovanja",
+  "v3_138_news_main_array_item_3_subtitle": "Za izboljšanje vizualne izkušnje smo prešli na sodoben zaobljen dizajn za naše gumbe in vnosna polja",
+  "v3_138_news_features_name": "Druge posodobitve",
+  "v3_138_news_features_title": "Izboljšave",
+  "v3_138_news_features_update_items": [
+    "1. Indikatorji nalaganja za nedavno aktivnost klepeta",
+    "2. Skrbniki strani z nepotrjenim e-poštnim naslovom bodo izgubili dostop do strani za skrbnike"
+  ],
+  "v3_138_news_page_title": "JustDo v3.138: Prenovljena povabila, navigacija datotek, oblikovanje in več",
+  "v3_138_news_page_description": "Izkusite izboljšana uporabniška povabila, bolj tekočo navigacijo predogleda datotek, elegantno nadgradnjo oblikovanja in še več v JustDo v3.138."
+}

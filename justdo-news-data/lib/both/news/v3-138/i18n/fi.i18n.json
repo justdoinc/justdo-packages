@@ -1,0 +1,18 @@
+{
+  "v3_138_news_title": "v3.138",
+  "v3_138_news_main_name": "Uutiset",
+  "v3_138_news_main_array_item_1_title": "Uudistettu JustDo-jäsenten kutsumisikkuna",
+  "v3_138_news_main_array_item_1_subtitle": "Laajensimme olemassa olevaa kutsutoimintoa lisäämällä uuden ominaisuuden, joka mahdollistaa kaikkien tehtävien valitsemisen yhdellä klikkauksella uusia käyttäjiä lisättäessä. Tämä tehostaa suurten projektien määritysprosessia.",
+  "v3_138_news_main_array_item_2_title": "Parannettu tiedostojen esikatselun navigointi",
+  "v3_138_news_main_array_item_2_subtitle": "Uskomme sujuvan navigoinnin tärkeyteen. Siksi olemme toteuttaneet näppäimistönavigoinnin tiedostojen esikatselussa. Nyt voit helposti selata tiedostojasi pelkän näppäimistön avulla, mikä tekee tarkastelusta ja muokkaamisesta entistä sujuvampaa.",
+  "v3_138_news_main_array_item_3_title": "Tyylikäs ulkoasupäivitys",
+  "v3_138_news_main_array_item_3_subtitle": "Visuaalisen kokemuksen parantamiseksi olemme siirtyneet moderniin kaarevaan muotoiluun painikkeissa ja syöttökentissä",
+  "v3_138_news_features_name": "Muut päivitykset",
+  "v3_138_news_features_title": "Parannukset",
+  "v3_138_news_features_update_items": [
+    "1. Latausilmaisimet chatin viimeaikaiselle toiminnalle",
+    "2. Sivuston ylläpitäjät, joiden sähköpostia ei ole vahvistettu, menettävät pääsyn ylläpitosivulle"
+  ],
+  "v3_138_news_page_title": "JustDo v3.138: Uudistetut kutsut, tiedostojen navigointi, ulkoasupäivitys ja muuta",
+  "v3_138_news_page_description": "Koe paranneltu käyttäjien kutsuminen, sujuvampi tiedostojen esikatselun navigointi, tyylikäs ulkoasupäivitys ja paljon muuta JustDo v3.138:ssa."
+}

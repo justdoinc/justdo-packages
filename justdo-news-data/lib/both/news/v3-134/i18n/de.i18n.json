@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Was ist neu",
+  "v3_134_news_main_array_item_1_title": "Archivierung",
+  "v3_134_news_main_array_item_1_subtitle": "Wenn es neue Projekte und neue Aktivitäten gibt, an denen Sie arbeiten müssen, müssen Sie die alten beiseite legen und sich auf die neuen konzentrieren. Jetzt können Sie diese Projekte und Aufgaben archivieren, sie aus Ihrer täglichen Ansicht entfernen und trotzdem bei Bedarf darauf zugreifen und sie sogar wieder aus dem Archiv holen.",
+  "v3_134_news_main_array_item_2_title": "Mehrfachauswahl-Optionsfeld",
+  "v3_134_news_main_array_item_2_subtitle": "Zusätzlich zum \"Optionen\"-Benutzerdefiniertes Feld haben Sie jetzt den Typ \"Mehrfachoptionen\". Diese Option ermöglicht es Ihnen, eine Liste vordefinierter Optionen zu erstellen, aus denen Benutzer mehrere Werte pro einzelner Aufgabe auswählen können.",
+  "v3_134_news_main_array_item_3_title": "Aufgabenbesitzer- und Anstehender-Besitzer-Felder + Filter",
+  "v3_134_news_main_array_item_3_subtitle": "Sie haben jetzt die Möglichkeit, zusätzliche Felder einzubeziehen, die sowohl den Aufgabenbesitzer als auch den anstehenden Besitzer von Aufgaben anzeigen. Dieses Update ermöglicht es Ihnen, Ihren Aufgabenbaum effizient nach diesen Kriterien zu filtern und bietet so eine optimierte und personalisierte Aufgabenverwaltung.",
+  "v3_134_news_features_name": "Weitere Updates",
+  "v3_134_news_features_title": "Verbesserungen",
+  "v3_134_news_features_update_items": [
+    "1. E-Mails - Dateien kleiner als 150x150 Pixel werden nicht zu den Dateien hinzugefügt.",
+    "2. E-Mails - Zeige nur die letzten 20 E-Mails, plus \"Mehr laden\".",
+    "3. Entfernung von Erweiterungen und \"Speichern\"-Schaltfläche."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Projektarchivierung, Mehrfachauswahl-Optionen & mehr",
+  "v3_134_news_page_description": "Entdecken Sie die Leistungsfähigkeit der Projektarchivierung, die Flexibilität von Mehrfachauswahl-Optionsfeldern und verbesserte Aufgabenbesitzer-Verwaltung in JustDo v3.134."
+}

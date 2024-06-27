@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Nyheter",
+  "v3_140_news_main_array_item_1_title": "Uppdaterad design för flikväxlaren",
+  "v3_140_news_main_array_item_1_subtitle": "Designen visar nu tydligare när en flik är aktiv.",
+  "v3_140_news_main_array_item_2_title": "Introduktion av temat Solid Purple",
+  "v3_140_news_main_array_item_3_title": "Förenklad användarinbjudan",
+  "v3_140_news_main_array_item_4_title": "Förbättrad hantering av JustDo-medlemmar",
+  "v3_140_news_main_array_item_4_subtitle": "Välj för att ta bort flera användare samtidigt.",
+  "v3_140_news_main_array_item_5_title": "Stöd för förhandsgranskning av video i JustDo-filer",
+  "v3_140_news_main_array_item_6_title": "Visa användarens avatar i kolumnerna Ägare/Väntande ägare",
+  "v3_140_news_features_name": "Andra uppdateringar",
+  "v3_140_news_features_title": "Förbättringar",
+  "v3_140_news_features_update_items": [
+    "1. Färgen på sekundära knappar ändrad från mörkgrå till ljusgrå",
+    "2. Klassiska teman borttagna",
+    "3. Stöd för sortering av underuppgifter efter fältet Uppföljning",
+    "4. Ett nytt modernt typsnitt används nu för bättre stöd av icke-engelska språk",
+    "5. Lagt till möjligheten att dölja sidofältet i Webbplatsadministratören",
+    "6. Designförbättringar i dialogrutan för att avvisa ägarskap (inkl. möjlighet att bekräfta inlämning med ctrl+enter)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Designuppdateringar, förenklad användarinbjudan och mer",
+  "v3_140_news_page_description": "JustDo v3.140 levererar designförbättringar, förbättrade arbetsflöden för användarinbjudningar, förbättrat videostöd och flera användbarhetsfö rbättringar."
+}

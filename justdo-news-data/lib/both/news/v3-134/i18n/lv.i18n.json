@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Kas jauns",
+  "v3_134_news_main_array_item_1_title": "Arhivēšana",
+  "v3_134_news_main_array_item_1_subtitle": "Kad ir jauni projekti un jaunas aktivitātes, ar kurām jāstrādā, jums ir jāatliek malā vecās un jākoncentrējas uz jaunajām. Tagad jūs varat arhivēt šos projektus un uzdevumus, izņemot tos no jūsu ikdienas skata, vienlaikus saglabājot iespēju piekļūt tiem pēc nepieciešamības un pat atarhivēt.",
+  "v3_134_news_main_array_item_2_title": "Vairāku izvēļu opciju lauks",
+  "v3_134_news_main_array_item_2_subtitle": "Papildus \"Opciju\" pielāgotajam laukam tagad ir pieejams \"Vairāku opciju\" tips. Šī opcija ļauj izveidot iepriekš definētu opciju sarakstu, no kura lietotāji var izvēlēties vairākas vērtības katram atsevišķam uzdevumam.",
+  "v3_134_news_main_array_item_3_title": "Uzdevuma īpašnieka un gaidāmā īpašnieka lauki + filtrs",
+  "v3_134_news_main_array_item_3_subtitle": "Tagad jums ir iespēja iekļaut papildu laukus, kas attēlo gan uzdevuma īpašnieku, gan gaidāmo īpašnieku. Šis atjauninājums ļauj jums efektīvi filtrēt jūsu uzdevumu koku, balstoties uz šiem kritērijiem, nodrošinot racionalizētāku un personalizētāku uzdevumu pārvaldības pieredzi.",
+  "v3_134_news_features_name": "Citi atjauninājumi",
+  "v3_134_news_features_title": "Uzlabojumi",
+  "v3_134_news_features_update_items": [
+    "1. E-pasti - Faili, kas mazāki par 150x150 pikseļiem, netiek pievienoti failiem.",
+    "2. E-pasti - Rādīt tikai pēdējos 20 e-pastus, plus \"Ielādēt vairāk\".",
+    "3. Paplašinājumu un \"veikala\" (store) pogas noņemšana."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Projektu arhivēšana, vairāku izvēļu opcijas un vēl",
+  "v3_134_news_page_description": "Atklājiet projektu arhivēšanas spēku, vairāku izvēļu opciju lauku elastību un uzlabotu uzdevumu īpašumtiesību pārvaldību JustDo v3.134 versijā."
+}

@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Što je novo",
+  "v3_134_news_main_array_item_1_title": "Arhiviranje",
+  "v3_134_news_main_array_item_1_subtitle": "Kada imate nove projekte i nove aktivnosti na kojima trebate raditi, morate staviti stare sa strane i usredotočiti se na nove. Sada možete arhivirati te projekte i zadatke, uklanjajući ih iz svakodnevnog prikaza, dok i dalje imate mogućnost pristupiti im po potrebi i čak ih vratiti iz arhive.",
+  "v3_134_news_main_array_item_2_title": "Polje za višestruki odabir opcija",
+  "v3_134_news_main_array_item_2_subtitle": "Uz postojeće polje \"Opcije\", sada imate i tip \"Višestruke opcije\". Ova opcija vam omogućuje stvaranje popisa unaprijed definiranih opcija iz kojih korisnici mogu odabrati više vrijednosti za svaki pojedinačni zadatak.",
+  "v3_134_news_main_array_item_3_title": "Polja vlasnika zadatka i polja vlasnika na čekanju + filter",
+  "v3_134_news_main_array_item_3_subtitle": "Sada imate mogućnost uključiti dodatna polja koja prikazuju i vlasnika zadatka i vlasnika na čekanju za zadatke. Ovo ažuriranje vam omogućuje učinkovito filtriranje stabla zadataka na temelju ovih kriterija, pružajući efikasnije i personalizirano iskustvo upravljanja zadacima.",
+  "v3_134_news_features_name": "Ostala ažuriranja",
+  "v3_134_news_features_title": "Poboljšanja",
+  "v3_134_news_features_update_items": [
+    "1. E-pošta - Datoteke manje od 150x150 piksela ne dodaju se u datoteke.",
+    "2. E-pošta - Prikazuje se samo posljednjih 20 e-poruka, plus opcija \"učitaj više\".",
+    "3. Uklanjanje proširenja i gumba \"trgovina\"."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Arhiviranje projekata, Višestruki odabir opcija i više",
+  "v3_134_news_page_description": "Otkrijte snagu arhiviranja projekata, fleksibilnost polja s višestrukim odabirom opcija i poboljšano upravljanje vlasništvom nad zadacima u JustDo v3.134."
+}

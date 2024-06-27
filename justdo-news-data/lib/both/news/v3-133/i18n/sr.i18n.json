@@ -1,0 +1,13 @@
+{
+  "v3_133_news_title": "v3.133",
+  "v3_133_news_main_name": "Šta je novo",
+  "v3_133_news_main_array_item_1_title": "Dodavanje filtera za brzi odabir odredišta i vlasnika u bootbox-u",
+  "v3_133_news_main_array_item_1_subtitle": "Poboljšanja dugmeta 'Učitaj više' za duge e-poruke",
+  "v3_133_news_features_name": "Ostala ažuriranja",
+  "v3_133_news_features_title": "Poboljšanja",
+  "v3_133_news_features_update_items": [
+    "1. MailDo: Kada se primi e-poruka, vlasnik zadatka se sada automatski uključuje u ćaskanje."
+  ],
+  "v3_133_news_page_title": "JustDo v3.133: Pojednostavljeno kreiranje zadataka i unapređenja e-pošte",
+  "v3_133_news_page_description": "JustDo v3.133 uvodi filtere za brže kreiranje zadataka i poboljšanja u rukovanju dugim e-porukama za efikasniji radni tok."
+}

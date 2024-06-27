@@ -1,0 +1,18 @@
+{
+  "v3_138_news_title": "v3.138",
+  "v3_138_news_main_name": "Nouveautés",
+  "v3_138_news_main_array_item_1_title": "Fenêtre d'invitation des membres JustDo remaniée",
+  "v3_138_news_main_array_item_1_subtitle": "En plus de notre fonctionnalité d'invitation existante, nous avons ajouté une nouvelle option qui vous permet de sélectionner toutes les tâches en un seul clic lors de l'ajout de nouveaux utilisateurs. Pour un processus de configuration plus efficace pour les grands projets.",
+  "v3_138_news_main_array_item_2_title": "Navigation améliorée dans l'aperçu des fichiers",
+  "v3_138_news_main_array_item_2_subtitle": "Nous croyons en l'importance d'une navigation fluide. C'est pourquoi nous avons implémenté la navigation au clavier dans les aperçus de fichiers. Vous pouvez maintenant facilement parcourir vos fichiers en utilisant uniquement votre clavier, rendant le processus de révision et d'édition encore plus fluide.",
+  "v3_138_news_main_array_item_3_title": "Mise à niveau élégante du design",
+  "v3_138_news_main_array_item_3_subtitle": "Pour améliorer l'expérience visuelle, nous sommes passés à un design moderne et arrondi pour nos boutons et champs de saisie.",
+  "v3_138_news_features_name": "Autres mises à jour",
+  "v3_138_news_features_title": "Améliorations",
+  "v3_138_news_features_update_items": [
+    "1. Indicateurs de chargement pour l'activité récente du chat",
+    "2. Les administrateurs du site avec une adresse e-mail non vérifiée perdront l'accès à la page d'administration du site"
+  ],
+  "v3_138_news_page_title": "JustDo v3.138 : Invitations remaniées, navigation dans les fichiers, design et plus",
+  "v3_138_news_page_description": "Découvrez des invitations d'utilisateurs améliorées, une navigation plus fluide dans l'aperçu des fichiers, une mise à niveau élégante du design et plus encore dans JustDo v3.138."
+}

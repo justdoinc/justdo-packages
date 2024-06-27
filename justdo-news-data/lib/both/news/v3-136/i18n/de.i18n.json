@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Was ist neu",
+  "v3_136_news_main_array_item_1_title": "Neue Landingpage",
+  "v3_136_news_main_array_item_1_subtitle": "Wir präsentieren unsere überarbeitete Landingpage 🎉",
+  "v3_136_news_main_array_item_2_title": "Benutzerdefinierte Zustände",
+  "v3_136_news_main_array_item_2_subtitle": "Steigern Sie die Effizienz Ihres Workflows mit unserer neuesten Ergänzung - Benutzerdefinierte Zustände. Passen Sie Aufgabenzustände an Ihre individuellen Projektanforderungen an und verfolgen Sie den Fortschritt mit größerer Präzision.",
+  "v3_136_news_main_array_item_3_title": "Bleiben Sie informiert mit dem On-Grid-Indikator für ungelesene E-Mails",
+  "v3_136_news_main_array_item_3_subtitle": "Verpassen Sie nie wieder wichtige Updates! Unser neuer On-Grid-Indikator für ungelesene E-Mails hält Sie über ungelesene E-Mails innerhalb von Aufgaben auf dem Laufenden und gewährleistet so eine effiziente Kommunikation und promptes Handeln.",
+  "v3_136_news_main_array_item_4_title": "Verbesserte Filter für den Schnellhinzufügen-Dialog",
+  "v3_136_news_main_array_item_4_subtitle": "Steigern Sie Ihre Produktivität mit unseren neu hinzugefügten Filtern für die Schnellhinzufügen-Bootbox Ziel- und Besitzerauswahl. Optimieren Sie die Aufgabenerstellung, indem Sie das richtige Ziel und den richtigen Besitzer mühelos finden.",
+  "v3_136_news_features_name": "Weitere Updates",
+  "v3_136_news_features_title": "Verbesserungen",
+  "v3_136_news_features_update_items": [
+    "1. Leistungsverbesserung für Vorgänge, die Aktualisierungen von mehr als 1.000 Aufgaben betreffen, insbesondere beim Ändern von Aufgabenmitgliedern eines Teilbaums mit mehr als 1.000 Benutzern.",
+    "2. Aktivitäts-Tab: Behebung der fehlerhaften Anzeige des Aktivitätsprotokolls, wenn es sich um eine übergeordnete Hinzufügung handelt und das übergeordnete Element entfernt wurde <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>Video</a>.",
+    "3. Hochladen von Avataren für Umgebungen, die JustDo-Dateien verwenden.",
+    "4. Einführung des Konzepts der Organisationen: eine optionale logische Einheit oberhalb von JustDos.",
+    "5. MailDo: Wenn eine E-Mail empfangen wird, wird der Aufgabenbesitzer jetzt automatisch im Chat entstummt."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Neue Landingpage, Benutzerdefinierte Zustände, Verbesserte Filter und mehr",
+  "v3_136_news_page_description": "JustDo v3.136 führt eine überarbeitete Landingpage ein, leistungsstarke benutzerdefinierte Zustände für Aufgaben, verbesserte Filter für schnelleres Hinzufügen von Aufgaben und wichtige Leistungsverbesserungen."
+}

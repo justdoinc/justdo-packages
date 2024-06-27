@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Ce este nou",
+  "v3_136_news_main_array_item_1_title": "Pagină de întâmpinare nouă",
+  "v3_136_news_main_array_item_1_subtitle": "Prezentăm pagina noastră de întâmpinare reîmprospătată 🎉",
+  "v3_136_news_main_array_item_2_title": "Stări personalizate",
+  "v3_136_news_main_array_item_2_subtitle": "Îmbunătățiți eficiența fluxului de lucru cu cea mai recentă adăugare - Stări Personalizate. Adaptați stările sarcinilor pentru a se potrivi nevoilor unice ale proiectului dvs. și urmăriți progresul cu o precizie mai mare.",
+  "v3_136_news_main_array_item_3_title": "Rămâneți informat cu Indicatorul de E-mailuri Necitite pe Grilă",
+  "v3_136_news_main_array_item_3_subtitle": "Nu mai ratați actualizări importante! Noul nostru Indicator de E-mailuri Necitite pe Grilă vă ține la curent cu e-mailurile necitite din cadrul sarcinilor, asigurând o comunicare eficientă și acțiuni prompte.",
+  "v3_136_news_main_array_item_4_title": "Filtre îmbunătățite pentru Dialogul de Adăugare Rapidă",
+  "v3_136_news_main_array_item_4_subtitle": "Creșteți-vă productivitatea cu noile noastre filtre pentru Selectorul de Destinație și Proprietar din Dialogul de Adăugare Rapidă (Quick Add Bootbox). Simplificați crearea de sarcini găsind destinația și proprietarul potrivit cu ușurință.",
+  "v3_136_news_features_name": "Alte Actualizări",
+  "v3_136_news_features_title": "Îmbunătățiri",
+  "v3_136_news_features_update_items": [
+    "1. Îmbunătățirea performanței pentru operațiunile care implică actualizări a peste 1000 de sarcini, în special, schimbarea membrilor sarcinilor unui sub-arbore mai mare de 1000 de utilizatori.",
+    "2. Fila de activitate: Rezolvarea problemei cu jurnalul de activitate care nu se afișa corect dacă era o adăugare de părinte și părintele era eliminat <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>video</a>.",
+    "3. Încărcarea avatarurilor pentru mediile care utilizează fișiere JustDo.",
+    "4. Introducerea conceptului de Organizații: o unitate logică opțională deasupra JustDos.",
+    "5. MailDo: Când se primește un e-mail, proprietarul sarcinii este acum automat reactivat în chat."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Pagină de întâmpinare nouă, Stări personalizate, Filtre îmbunătățite și multe altele",
+  "v3_136_news_page_description": "JustDo v3.136 introduce o pagină de întâmpinare reîmprospătată, stări personalizate puternice pentru sarcini, filtre îmbunătățite pentru adăugarea mai rapidă a sarcinilor și actualizări importante de performanță."
+}

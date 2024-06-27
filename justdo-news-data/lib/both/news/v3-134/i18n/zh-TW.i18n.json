@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "新功能",
+  "v3_134_news_main_array_item_1_title": "歸檔功能",
+  "v3_134_news_main_array_item_1_subtitle": "當有新的專案和新的活動需要處理時，您需要將舊的擱置一旁，專注於新的工作。現在您可以歸檔這些專案和任務，將它們從日常視圖中移除，同時仍能在需要時存取它們，甚至可以取消歸檔。",
+  "v3_134_news_main_array_item_2_title": "多選項欄位",
+  "v3_134_news_main_array_item_2_subtitle": "除了「選項」自定義欄位外，現在還有「多選項」類型。此選項允許您創建一個預定義選項列表，用戶可以為每個任務選擇多個值。",
+  "v3_134_news_main_array_item_3_title": "任務負責人和待定負責人欄位 + 篩選器",
+  "v3_134_news_main_array_item_3_subtitle": "現在您可以添加顯示任務負責人和待定負責人的額外欄位。此更新使您能夠基於這些條件有效地篩選您的任務樹，提供更簡化和個性化的任務管理體驗。",
+  "v3_134_news_features_name": "其他更新",
+  "v3_134_news_features_title": "改進",
+  "v3_134_news_features_update_items": [
+    "1. 電子郵件 - 小於150x150像素的檔案不會被添加到檔案中。",
+    "2. 電子郵件 - 只顯示最後20封郵件，並提供「載入更多」選項。",
+    "3. 移除擴展功能和「商店」按鈕。"
+  ],
+  "v3_134_news_page_title": "JustDo v3.134：專案歸檔、多選項欄位等更多功能",
+  "v3_134_news_page_description": "探索JustDo v3.134中專案歸檔的強大功能、多選項欄位的靈活性以及改進的任務擁有權管理。"
+}

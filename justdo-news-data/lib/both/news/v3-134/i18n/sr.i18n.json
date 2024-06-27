@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Šta je novo",
+  "v3_134_news_main_array_item_1_title": "Arhiviranje",
+  "v3_134_news_main_array_item_1_subtitle": "Kada imate nove projekte i nove aktivnosti na kojima treba da radite, potrebno je da stare ostavite po strani i fokusirate se na nove. Sada možete arhivirati te projekte i zadatke, uklanjajući ih iz svakodnevnog pregleda, dok i dalje imate mogućnost da im pristupite po potrebi i čak ih vratite iz arhive.",
+  "v3_134_news_main_array_item_2_title": "Polje za višestruki izbor opcija",
+  "v3_134_news_main_array_item_2_subtitle": "Pored prilagođenog polja \"Opcije\", sada imate i tip \"Višestruke opcije\". Ova opcija vam omogućava da kreirate listu unapred definisanih opcija iz kojih korisnici mogu izabrati više vrednosti za svaki pojedinačni zadatak.",
+  "v3_134_news_main_array_item_3_title": "Polja Vlasnik zadatka i Čekajući vlasnika + filter",
+  "v3_134_news_main_array_item_3_subtitle": "Sada imate mogućnost da uključite dodatna polja koja prikazuju i Vlasnika zadatka i Čekajućeg vlasnika zadataka. Ovo ažuriranje vam omogućava da efikasno filtrirate stablo zadataka prema ovim kriterijumima, pružajući vam efikasnije i personalizovano iskustvo upravljanja zadacima.",
+  "v3_134_news_features_name": "Ostala ažuriranja",
+  "v3_134_news_features_title": "Poboljšanja",
+  "v3_134_news_features_update_items": [
+    "1. Imejlovi - Fajlovi manji od 150x150 piksela se ne dodaju u fajlove.",
+    "2. Imejlovi - Prikazuje se samo poslednjih 20 imejlova, plus dugme \"učitaj još\".",
+    "3. Uklanjanje ekstenzija i dugmeta \"prodavnica\"."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Arhiviranje projekata, Višestruki izbor opcija i još mnogo toga",
+  "v3_134_news_page_description": "Otkrijte moć arhiviranja projekata, fleksibilnost polja sa višestrukim izborom opcija i unapređeno upravljanje vlasništvom nad zadacima u JustDo v3.134."
+}

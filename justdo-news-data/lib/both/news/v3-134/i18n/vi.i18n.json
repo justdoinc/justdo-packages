@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Có gì mới",
+  "v3_134_news_main_array_item_1_title": "Lưu trữ",
+  "v3_134_news_main_array_item_1_subtitle": "Khi có các dự án và hoạt động mới cần làm việc, bạn cần gác những việc cũ sang một bên và tập trung vào những việc mới. Giờ đây, bạn có thể lưu trữ các dự án và nhiệm vụ đó, loại bỏ chúng khỏi góc nhìn hàng ngày của bạn, nhưng vẫn có khả năng truy cập khi cần và thậm chí hủy lưu trữ.",
+  "v3_134_news_main_array_item_2_title": "Trường tùy chọn đa lựa chọn",
+  "v3_134_news_main_array_item_2_subtitle": "Bên cạnh trường tùy chỉnh \"Tùy chọn\", bạn giờ đây có thêm loại \"Đa tùy chọn\". Tùy chọn này cho phép bạn tạo một danh sách các lựa chọn được định nghĩa trước, từ đó người dùng có thể chọn nhiều giá trị cho mỗi nhiệm vụ riêng lẻ.",
+  "v3_134_news_main_array_item_3_title": "Trường Chủ sở hữu nhiệm vụ và Chủ sở hữu đang chờ xử lý + bộ lọc",
+  "v3_134_news_main_array_item_3_subtitle": "Bạn giờ đây có khả năng kết hợp các trường bổ sung hiển thị cả Chủ sở hữu nhiệm vụ và Chủ sở hữu đang chờ xử lý của các nhiệm vụ. Bản cập nhật này giúp bạn lọc cây nhiệm vụ một cách hiệu quả dựa trên các tiêu chí này, mang lại trải nghiệm quản lý nhiệm vụ được cá nhân hóa và hợp lý hơn.",
+  "v3_134_news_features_name": "Các cập nhật khác",
+  "v3_134_news_features_title": "Cải tiến",
+  "v3_134_news_features_update_items": [
+    "1. Email - Các tệp tin nhỏ hơn 150x150 pixel không được thêm vào tệp tin.",
+    "2. Email - Chỉ hiển thị 20 email gần nhất, cùng với nút \"tải thêm\".",
+    "3. Loại bỏ các tiện ích mở rộng và nút \"cửa hàng\"."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Lưu trữ dự án, Tùy chọn đa lựa chọn và hơn thế nữa",
+  "v3_134_news_page_description": "Khám phá sức mạnh của việc lưu trữ dự án, tính linh hoạt của trường tùy chọn đa lựa chọn và cải tiến quản lý quyền sở hữu nhiệm vụ trong JustDo v3.134."
+}

@@ -1,0 +1,18 @@
+{
+  "v3_138_news_title": "v3.138",
+  "v3_138_news_main_name": "Újdonságok",
+  "v3_138_news_main_array_item_1_title": "Megújult JustDo Tagok Meghívása Ablak",
+  "v3_138_news_main_array_item_1_subtitle": "A meglévő meghívási funkcióinkat bővítve hozzáadtunk egy új funkciót, amely lehetővé teszi az összes feladat kiválasztását egyetlen kattintással új felhasználók hozzáadásakor. Ez hatékonyabb beállítási folyamatot biztosít a nagyobb projektek esetén.",
+  "v3_138_news_main_array_item_2_title": "Fejlesztett Fájl Előnézet Navigáció",
+  "v3_138_news_main_array_item_2_subtitle": "Hiszünk a zökkenőmentes navigáció fontosságában. Ezért billentyűzetes navigációt vezettünk be a fájl előnézetekben. Most már könnyen mozoghat a fájlok között csak a billentyűzetét használva, így az áttekintés és szerkesztés folyamata még gördülékenyebb lett.",
+  "v3_138_news_main_array_item_3_title": "Elegáns Dizájn Frissítés",
+  "v3_138_news_main_array_item_3_subtitle": "A vizuális élmény fokozása érdekében modern, íves dizájnra váltottunk a gomboknál és beviteli mezőknél",
+  "v3_138_news_features_name": "Egyéb Frissítések",
+  "v3_138_news_features_title": "Fejlesztések",
+  "v3_138_news_features_update_items": [
+    "1. Betöltésjelzők a Csevegés Legutóbbi Aktivitásához",
+    "2. A nem megerősített e-mail címmel rendelkező oldal adminisztrátorok elveszítik hozzáférésüket az Oldal Admin Felülethez"
+  ],
+  "v3_138_news_page_title": "JustDo v3.138: Megújult Meghívók, Fájl Navigáció, Dizájn és Egyebek",
+  "v3_138_news_page_description": "Tapasztalja meg a fejlesztett felhasználói meghívásokat, a gördülékenyebb fájl előnézet navigációt, az elegáns dizájn frissítést és még sok mást a JustDo v3.138-ban."
+}

@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Kaj je novega",
+  "v3_140_news_main_array_item_1_title": "Posodobljena zasnova preklopnika zavihkov",
+  "v3_140_news_main_array_item_1_subtitle": "Zasnova zdaj bolje prikazuje, kdaj je zavihek aktiven.",
+  "v3_140_news_main_array_item_2_title": "Predstavitev teme Intenzivno vijolična",
+  "v3_140_news_main_array_item_3_title": "Poenostavitev vabljenja uporabnikov",
+  "v3_140_news_main_array_item_4_title": "Izboljšano upravljanje članov JustDo table",
+  "v3_140_news_main_array_item_4_subtitle": "Izberite in odstranite več uporabnikov hkrati.",
+  "v3_140_news_main_array_item_5_title": "Podpora za predogled videa v datotekah JustDo",
+  "v3_140_news_main_array_item_6_title": "Prikaz avatarja uporabnika v stolpcih Lastnik/Čakajoči lastnik",
+  "v3_140_news_features_name": "Druge posodobitve",
+  "v3_140_news_features_title": "Izboljšave",
+  "v3_140_news_features_update_items": [
+    "1. Barva sekundarnih gumbov spremenjena iz temno sive v svetlo sivo",
+    "2. Klasične teme odstranjene",
+    "3. Podpora za razvrščanje podrejenih nalog po polju Sledenje",
+    "4. Nova sodobna pisava za boljšo podporo neangleškim jezikom",
+    "5. Dodana možnost skrivanja stranske vrstice v skrbništvu spletnega mesta",
+    "6. Izboljšave oblikovanja pogovornega okna za zavrnitev lastništva (vključno z možnostjo potrditve oddaje s ctrl+enter)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Posodobitve oblikovanja, poenostavljeno vabljenje uporabnikov in več",
+  "v3_140_news_page_description": "JustDo v3.140 prinaša izboljšave oblikovanja, izboljšane poteke dela za vabljenje uporabnikov, izboljšano podporo za video in številne izboljšave uporabnosti."
+}

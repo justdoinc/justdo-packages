@@ -1,0 +1,13 @@
+{
+  "v3_133_news_title": "v3.133",
+  "v3_133_news_main_name": "新功能",
+  "v3_133_news_main_array_item_1_title": "在快速添加对话框的目标选择器和所有者选择器中添加筛选功能",
+  "v3_133_news_main_array_item_1_subtitle": "加载更多按钮长邮件改进",
+  "v3_133_news_features_name": "其他更新",
+  "v3_133_news_features_title": "改进",
+  "v3_133_news_features_update_items": [
+    "1. MailDo（邮件处理）：当收到邮件时，任务所有者现在会在聊天中自动取消静音。"
+  ],
+  "v3_133_news_page_title": "JustDo v3.133：简化任务创建和邮件处理增强",
+  "v3_133_news_page_description": "JustDo v3.133 引入了筛选功能，加快任务创建速度，并改进了长邮件处理，使工作流程更加顺畅。"
+}

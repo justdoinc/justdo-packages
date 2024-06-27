@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Apa yang baru",
+  "v3_140_news_main_array_item_1_title": "Desain pengalih tab diperbarui",
+  "v3_140_news_main_array_item_1_subtitle": "Desain sekarang menunjukkan dengan lebih baik ketika tab aktif.",
+  "v3_140_news_main_array_item_2_title": "Memperkenalkan tema Ungu Solid",
+  "v3_140_news_main_array_item_3_title": "Menyederhanakan undangan pengguna",
+  "v3_140_news_main_array_item_4_title": "Meningkatkan manajemen anggota JustDo",
+  "v3_140_news_main_array_item_4_subtitle": "Pilih untuk menghapus beberapa pengguna sekaligus.",
+  "v3_140_news_main_array_item_5_title": "Mendukung pratinjau video di file JustDo",
+  "v3_140_news_main_array_item_6_title": "Menampilkan avatar pengguna di kolom Pemilik/Calon Pemilik",
+  "v3_140_news_features_name": "Pembaruan Lainnya",
+  "v3_140_news_features_title": "Perbaikan",
+  "v3_140_news_features_update_items": [
+    "1. Warna tombol sekunder diubah dari abu-abu gelap menjadi abu-abu terang",
+    "2. Tema klasik dihapus",
+    "3. Mendukung pengurutan tugas anak berdasarkan bidang Tindak Lanjut",
+    "4. Font modern baru kini digunakan untuk mendukung bahasa non-Inggris dengan lebih baik",
+    "5. Menambahkan kemampuan untuk menyembunyikan sidebar di Admin Situs",
+    "6. Perbaikan desain pada dialog penolakan kepemilikan (termasuk kemampuan untuk mengonfirmasi pengiriman dengan ctrl+enter)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Pembaruan Desain, Penyederhanaan Undangan Pengguna & Lainnya",
+  "v3_140_news_page_description": "JustDo v3.140 menghadirkan penyempurnaan desain, alur kerja undangan pengguna yang lebih baik, dukungan video yang ditingkatkan, dan berbagai peningkatan kegunaan."
+}

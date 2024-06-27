@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Kas jauns",
+  "v3_136_news_main_array_item_1_title": "Jauna sākumlapa",
+  "v3_136_news_main_array_item_1_subtitle": "Iepazīstinām ar mūsu atsvaidzināto sākumlapu 🎉",
+  "v3_136_news_main_array_item_2_title": "Pielāgoti stāvokļi",
+  "v3_136_news_main_array_item_2_subtitle": "Uzlabojiet sava darba plūsmas efektivitāti ar mūsu jaunāko papildinājumu - Pielāgotiem stāvokļiem. Pielāgojiet uzdevumu stāvokļus atbilstoši jūsu unikālajām projekta vajadzībām un sekojiet progresam ar lielāku precizitāti.",
+  "v3_136_news_main_array_item_3_title": "Esiet informēti ar nelasīto e-pastu indikatoru režģī",
+  "v3_136_news_main_array_item_3_subtitle": "Nekad vairs nepalaidiet garām svarīgus atjauninājumus! Mūsu jaunais nelasīto e-pastu indikators režģī informē jūs par nelasītiem e-pastiem uzdevumos, nodrošinot efektīvu saziņu un tūlītēju rīcību.",
+  "v3_136_news_main_array_item_4_title": "Uzlaboti filtri ātrās pievienošanas dialoglodziņam",
+  "v3_136_news_main_array_item_4_subtitle": "Palieliniet savu produktivitāti ar mūsu jaunajiem filtriem ātrās pievienošanas Bootbox galamērķa un īpašnieka atlasītājam. Optimizējiet uzdevumu izveidi, viegli atrodot pareizo galamērķi un īpašnieku.",
+  "v3_136_news_features_name": "Citi atjauninājumi",
+  "v3_136_news_features_title": "Uzlabojumi",
+  "v3_136_news_features_update_items": [
+    "1. Veiktspējas uzlabojums operācijām, kas ietver vairāk nekā 1000 uzdevumu atjauninājumus, īpaši mainot uzdevumu dalībniekus apakškokā, kas lielāks par 1000 lietotājiem.",
+    "2. Aktivitāšu cilne: Labots aktivitāšu žurnāla nepareizs attēlojums, ja tā ir vecāka pievienošana un vecāks ir noņemts <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>video</a>.",
+    "3. Avatāru augšupielāde vidēm, kas izmanto JustDo failus.",
+    "4. Ieviests Organizāciju koncepts: papildu loģikas vienība virs JustDo dēļiem.",
+    "5. MailDo: Kad e-pasts tiek saņemts, uzdevuma īpašniekam tiek automātiski atslēgts klusums čatā."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Jauna sākumlapa, pielāgoti stāvokļi, uzlaboti filtri un vairāk",
+  "v3_136_news_page_description": "JustDo v3.136 ievieš atsvaidzinātu sākumlapu, jaudīgus pielāgotus stāvokļus uzdevumiem, uzlabotus filtrus ātrākai uzdevumu pievienošanai un svarīgus veiktspējas uzlabojumus."
+}

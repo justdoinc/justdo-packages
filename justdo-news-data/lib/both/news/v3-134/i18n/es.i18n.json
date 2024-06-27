@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Novedades",
+  "v3_134_news_main_array_item_1_title": "Archivado",
+  "v3_134_news_main_array_item_1_subtitle": "Cuando hay nuevos proyectos y actividades en las que necesitas trabajar, es necesario dejar de lado las antiguas y enfocarte en las nuevas. Ahora puedes archivar esos proyectos y tareas, quitándolos de tu vista diaria, pero manteniendo la capacidad de acceder a ellos según sea necesario e incluso desarchivarlos.",
+  "v3_134_news_main_array_item_2_title": "Campo de opciones múltiples",
+  "v3_134_news_main_array_item_2_subtitle": "Además del campo personalizado \"Opciones\", ahora tienes el tipo \"Opciones múltiples\". Esta opción te permite crear una lista de opciones predefinidas de las cuales los usuarios pueden seleccionar múltiples valores para cada tarea individual.",
+  "v3_134_news_main_array_item_3_title": "Campos de Propietario de tarea y Propietario pendiente + filtro",
+  "v3_134_news_main_array_item_3_subtitle": "Ahora tienes la capacidad de incorporar campos adicionales que muestran tanto el Propietario de la tarea como el Propietario pendiente de las tareas. Esta actualización te permite filtrar eficientemente tu árbol de tareas basándote en estos criterios, proporcionando una experiencia de gestión de tareas más simplificada y personalizada.",
+  "v3_134_news_features_name": "Otras actualizaciones",
+  "v3_134_news_features_title": "Mejoras",
+  "v3_134_news_features_update_items": [
+    "1. Correos electrónicos - Los archivos menores de 150x150 píxeles no se añaden a los archivos.",
+    "2. Correos electrónicos - Mostrar solo los últimos 20 correos, más \"cargar más\".",
+    "3. Eliminación de extensiones y botón de \"tienda\"."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Archivado de proyectos, Opciones múltiples y más",
+  "v3_134_news_page_description": "Descubre el poder del archivado de proyectos, la flexibilidad de los campos de opciones múltiples y la gestión mejorada de propiedad de tareas en JustDo v3.134."
+}

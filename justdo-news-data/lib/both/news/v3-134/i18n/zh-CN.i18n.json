@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "新功能",
+  "v3_134_news_main_array_item_1_title": "归档",
+  "v3_134_news_main_array_item_1_subtitle": "当有新项目和新活动需要处理时，您需要把旧的搁置一边，专注于新的。现在您可以归档这些项目和任务，将它们从日常视图中移除，同时仍然能够在需要时访问它们，甚至可以取消归档。",
+  "v3_134_news_main_array_item_2_title": "多选选项字段",
+  "v3_134_news_main_array_item_2_subtitle": "除了\"选项\"自定义字段外，现在您还可以使用\"多选选项\"类型。此选项允许您创建一个预定义选项列表，用户可以为每个单独的任务选择多个值。",
+  "v3_134_news_main_array_item_3_title": "任务所有者和待定所有者字段 + 过滤器",
+  "v3_134_news_main_array_item_3_subtitle": "现在您可以添加显示任务所有者和待定所有者的额外字段。此更新使您能够根据这些标准高效地过滤任务树，提供更精简和个性化的任务管理体验。",
+  "v3_134_news_features_name": "其他更新",
+  "v3_134_news_features_title": "改进",
+  "v3_134_news_features_update_items": [
+    "1. 电子邮件 - 小于150x150像素的文件不会被添加到文件中。",
+    "2. 电子邮件 - 只显示最后20封邮件，并有\"加载更多\"选项。",
+    "3. 移除扩展和\"商店\"按钮。"
+  ],
+  "v3_134_news_page_title": "JustDo v3.134：项目归档、多选选项等更多功能",
+  "v3_134_news_page_description": "在JustDo v3.134中，探索项目归档的强大功能、多选选项字段的灵活性以及改进的任务所有权管理。"
+}

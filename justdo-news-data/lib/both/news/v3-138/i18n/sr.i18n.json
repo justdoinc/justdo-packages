@@ -1,0 +1,18 @@
+{
+  "v3_138_news_title": "v3.138",
+  "v3_138_news_main_name": "Šta je novo",
+  "v3_138_news_main_array_item_1_title": "Redizajniran prozor za pozivanje članova u JustDo",
+  "v3_138_news_main_array_item_1_subtitle": "Proširujući našu postojeću funkcionalnost pozivanja, dodali smo novu opciju koja vam omogućava da jednim klikom izaberete sve zadatke prilikom dodavanja novih korisnika. Za efikasniji proces podešavanja velikih projekata.",
+  "v3_138_news_main_array_item_2_title": "Poboljšana navigacija pregleda fajlova",
+  "v3_138_news_main_array_item_2_subtitle": "Verujemo u važnost nesmetane navigacije. Zato smo implementirali navigaciju pomoću tastature u pregledu fajlova. Sada se možete lako kretati kroz vaše fajlove koristeći samo tastaturu, čineći proces pregledanja i uređivanja još jednostavnijim.",
+  "v3_138_news_main_array_item_3_title": "Elegantno unapređenje dizajna",
+  "v3_138_news_main_array_item_3_subtitle": "Da bismo poboljšali vizuelno iskustvo, prešli smo na moderan zaobljeni dizajn za naše dugmad i polja za unos",
+  "v3_138_news_features_name": "Ostala ažuriranja",
+  "v3_138_news_features_title": "Poboljšanja",
+  "v3_138_news_features_update_items": [
+    "1. Indikatori učitavanja za nedavne aktivnosti u ćaskanju",
+    "2. Administratori sajta sa nepotvrđenom e-poštom izgubiće pristup stranici za administraciju sajta"
+  ],
+  "v3_138_news_page_title": "JustDo v3.138: Redizajnirani pozivi, navigacija fajlovima, unapređenje dizajna i još mnogo toga",
+  "v3_138_news_page_description": "Doživite poboljšane pozive korisnika, jednostavniju navigaciju pregleda fajlova, elegantno unapređenje dizajna i još mnogo toga u JustDo v3.138."
+}

@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "አዲስ ነገር ምንድን ነው",
+  "v3_140_news_main_array_item_1_title": "የታብ መቀያየሪያ ዲዛይን ዘምኗል",
+  "v3_140_news_main_array_item_1_subtitle": "ዲዛይኑ አሁን ታብ ንቁ መሆኑን በተሻለ ሁኔታ ያሳያል።",
+  "v3_140_news_main_array_item_2_title": "ጠንካራ ወይን ጠጅ ቀለም ጭብጥ (Solid Purple theme) ማስተዋወቅ",
+  "v3_140_news_main_array_item_3_title": "የተጠቃሚዎችን ግብዣ ማቅለል",
+  "v3_140_news_main_array_item_4_title": "የJustDo አባላት አስተዳደርን ማሻሻል",
+  "v3_140_news_main_array_item_4_subtitle": "በአንድ ጊዜ ብዙ ተጠቃሚዎችን ለማስወገድ ይምረጡ።",
+  "v3_140_news_main_array_item_5_title": "በJustDo ፋይሎች ውስጥ የቪዲዮ ቅድመ ዕይታን መደገፍ",
+  "v3_140_news_main_array_item_6_title": "በባለቤት/በመጠባበቅ ላይ ያለ ባለቤት ዓምዶች ውስጥ የተጠቃሚ አምሳያን ማሳየት",
+  "v3_140_news_features_name": "ሌሎች ዝማኔዎች",
+  "v3_140_news_features_title": "ማሻሻያዎች",
+  "v3_140_news_features_update_items": [
+    "1. የሁለተኛ ደረጃ አዝራሮች ቀለም ከጨለማ ግራጫ ወደ ቀላል ግራጫ ተለውጧል",
+    "2. የክላሲክ ጭብጦች (Classic themes) ተወግደዋል",
+    "3. የልጅ ተግባራትን በክትትል (Follow Up) መስክ መደርደርን መደገፍ",
+    "4. እንግሊዝኛ ያልሆኑ ቋንቋዎችን በተሻለ ሁኔታ ለመደገፍ አዲስ ዘመናዊ የጽሑፍ ቅርጽ (font) አሁን በጥቅም ላይ ውሏል",
+    "5. በጣቢያ አስተዳዳሪ ውስጥ ጎን ሰሌዳን (sidebar) የመደበቅ ችሎታ ተጨምሯል",
+    "6. የባለቤትነትን የመከልከል ንግግር ሳጥን (reject ownership dialog) ዲዛይን ማሻሻያዎች (ctrl+enter በመጫን ግብአትን የማረጋገጥ ችሎታን ጨምሮ)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: የዲዛይን ዝማኔዎች፣ የተቀለለ የተጠቃሚ ግብዣዎች እና ሌሎች",
+  "v3_140_news_page_description": "JustDo v3.140 የዲዛይን ማሻሻያዎችን፣ የተሻሻሉ የተጠቃሚ ግብዣ አሰራሮችን፣ የተሻሻለ የቪዲዮ ድጋፍ እና ብዙ የአጠቃቀም ማሻሻያዎችን ያቀርባል።"
+}

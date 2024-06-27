@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Novidades",
+  "v3_134_news_main_array_item_1_title": "Arquivamento",
+  "v3_134_news_main_array_item_1_subtitle": "Quando há novos projetos e novas atividades em que precisa de trabalhar, é necessário colocar de lado as antigas e concentrar-se nas novas. Agora pode arquivar esses projetos e tarefas, removendo-os da sua vista diária, mantendo ainda a capacidade de aceder a eles conforme necessário e até mesmo desarquivá-los.",
+  "v3_134_news_main_array_item_2_title": "Campo de opções múltiplas",
+  "v3_134_news_main_array_item_2_subtitle": "Para além do campo personalizado \"Opções\", agora tem o tipo \"Opções Múltiplas\". Esta opção permite-lhe criar uma lista de opções predefinidas a partir das quais os utilizadores podem selecionar vários valores para cada tarefa individual.",
+  "v3_134_news_main_array_item_3_title": "Campos de Proprietário e Proprietário Pendente da Tarefa + filtro",
+  "v3_134_news_main_array_item_3_subtitle": "Agora tem a capacidade de incorporar campos adicionais que mostram tanto o Proprietário da Tarefa como o Proprietário Pendente das tarefas. Esta atualização permite-lhe filtrar eficientemente a sua árvore de tarefas com base nestes critérios, proporcionando uma experiência de gestão de tarefas mais simplificada e personalizada.",
+  "v3_134_news_features_name": "Outras Atualizações",
+  "v3_134_news_features_title": "Melhorias",
+  "v3_134_news_features_update_items": [
+    "1. E-mails - Ficheiros menores que 150x150 pixels não são adicionados aos ficheiros.",
+    "2. E-mails - Mostrar apenas os últimos 20 e-mails, mais opção \"carregar mais\".",
+    "3. Remoção de extensões e botão \"loja\"."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Arquivamento de Projetos, Opções Múltiplas e Mais",
+  "v3_134_news_page_description": "Descubra o poder do arquivamento de projetos, a flexibilidade dos campos de opções múltiplas e uma gestão melhorada da propriedade das tarefas no JustDo v3.134."
+}

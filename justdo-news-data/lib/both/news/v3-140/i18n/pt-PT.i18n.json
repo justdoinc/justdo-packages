@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Novidades",
+  "v3_140_news_main_array_item_1_title": "Design do seletor de separadores atualizado",
+  "v3_140_news_main_array_item_1_subtitle": "O design agora indica melhor quando um separador está ativo.",
+  "v3_140_news_main_array_item_2_title": "Introdução do tema Roxo Sólido",
+  "v3_140_news_main_array_item_3_title": "Simplificação do convite de utilizadores",
+  "v3_140_news_main_array_item_4_title": "Melhoria na gestão de membros do JustDo",
+  "v3_140_news_main_array_item_4_subtitle": "Selecione para remover vários utilizadores ao mesmo tempo.",
+  "v3_140_news_main_array_item_5_title": "Suporte para pré-visualização de vídeo nos ficheiros do JustDo",
+  "v3_140_news_main_array_item_6_title": "Exibição do avatar do utilizador nas colunas Proprietário/Proprietário Pendente",
+  "v3_140_news_features_name": "Outras Atualizações",
+  "v3_140_news_features_title": "Melhorias",
+  "v3_140_news_features_update_items": [
+    "1. Cor dos botões secundários alterada de cinzento escuro para cinzento claro",
+    "2. Temas clássicos removidos",
+    "3. Suporte para ordenação de tarefas secundárias pelo campo de Acompanhamento",
+    "4. Um novo tipo de letra moderno está agora em uso para melhor suportar idiomas não ingleses",
+    "5. Adicionada a capacidade de ocultar a barra lateral na Administração do Site",
+    "6. Melhorias no design da caixa de diálogo de rejeição de propriedade (incluindo a capacidade de confirmar a submissão com ctrl+enter)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Atualizações de Design, Convites de Utilizadores Simplificados e Mais",
+  "v3_140_news_page_description": "O JustDo v3.140 oferece refinamentos de design, fluxos de trabalho de convite de utilizadores melhorados, suporte aprimorado para vídeo e várias melhorias de usabilidade."
+}

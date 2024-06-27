@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Quoi de neuf",
+  "v3_136_news_main_array_item_1_title": "Nouvelle page d'accueil",
+  "v3_136_news_main_array_item_1_subtitle": "Découvrez notre page d'accueil rafraîchie 🎉",
+  "v3_136_news_main_array_item_2_title": "États personnalisés",
+  "v3_136_news_main_array_item_2_subtitle": "Améliorez l'efficacité de votre flux de travail avec notre dernière nouveauté - les États Personnalisés. Adaptez les états des tâches à vos besoins spécifiques et suivez les progrès avec une plus grande précision.",
+  "v3_136_news_main_array_item_3_title": "Restez informé avec l'indicateur d'e-mails non lus sur la grille",
+  "v3_136_news_main_array_item_3_subtitle": "Ne manquez plus jamais de mises à jour importantes ! Notre nouvel indicateur d'e-mails non lus sur la grille vous tient informé des e-mails non lus dans les tâches, assurant une communication efficace et une action rapide.",
+  "v3_136_news_main_array_item_4_title": "Filtres améliorés pour la boîte de dialogue d'ajout rapide",
+  "v3_136_news_main_array_item_4_subtitle": "Augmentez votre productivité avec nos nouveaux filtres pour le sélecteur de destination et de propriétaire dans la boîte de dialogue d'ajout rapide. Simplifiez la création de tâches en trouvant facilement la bonne destination et le bon propriétaire.",
+  "v3_136_news_features_name": "Autres mises à jour",
+  "v3_136_news_features_title": "Améliorations",
+  "v3_136_news_features_update_items": [
+    "1. Amélioration des performances pour les opérations impliquant des mises à jour de plus de 1000 tâches, en particulier le changement des membres des tâches d'un sous-arbre de plus de 1000 utilisateurs.",
+    "2. Onglet Activité : Correction de l'affichage incorrect du journal d'activité s'il s'agit d'un ajout parent et que le parent est supprimé <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>vidéo</a>.",
+    "3. Téléchargement d'avatars pour les environnements utilisant les fichiers JustDo.",
+    "4. Introduction du concept d'Organisations : une unité logique optionnelle au-dessus des JustDos (tableaux JustDo).",
+    "5. MailDo : Lorsqu'un e-mail est reçu, le propriétaire de la tâche est maintenant automatiquement réactivé dans le chat."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136 : Nouvelle page d'accueil, États personnalisés, Filtres améliorés et plus",
+  "v3_136_news_page_description": "JustDo v3.136 introduit une page d'accueil rafraîchie, des états personnalisés puissants pour les tâches, des filtres améliorés pour un ajout de tâches plus rapide et d'importantes mises à niveau de performance."
+}

@@ -1,0 +1,15 @@
+{
+  "v3_142_news_title": "v3.142",
+  "v3_142_news_main_name": "Nyheter",
+  "v3_142_news_main_array_item_1_title": "Introduktion av kinesisk översättning",
+  "v3_142_news_main_array_item_1_subtitle": "Tillgängligt endast på JustDo.com",
+  "v3_142_news_main_array_item_2_title": "Ställ in status för flera objekt samtidigt",
+  "v3_142_news_main_array_item_2_subtitle": "Denna uppdatering möjliggör ett effektivare arbetsflöde. Du kan nu tillämpa statusändringar på flera objekt i en enda åtgärd. Utöver att ställa in status kan denna funktion användas för att uppdatera olika andra alternativfält i bulk. Detta inkluderar anpassade fält och plugin-fält i din JustDo-tavla.",
+  "v3_142_news_features_name": "Andra uppdateringar",
+  "v3_142_news_features_title": "Förbättringar",
+  "v3_142_news_features_update_items": [
+    "1. Introduktion av knapparna 'Markera alla' och 'Avmarkera alla' i vår funktion för uppgiftskopiering - vilket gör fältval snabbare och enklare."
+  ],
+  "v3_142_news_page_title": "JustDo v3.142: Kinesisk översättning, massuppdatering av status och mer",
+  "v3_142_news_page_description": "JustDo v3.142 introducerar stöd för kinesiska, möjligheten att ställa in status för flera objekt samtidigt, samt förbättringar i uppgiftskopiering."
+}

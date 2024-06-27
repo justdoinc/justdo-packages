@@ -1,0 +1,16 @@
+{
+  "v3_142_news_title": "v3.142",
+  "v3_142_news_main_name": "新功能",
+  "v3_142_news_main_array_item_1_title": "引入中文翻译",
+  "v3_142_news_main_array_item_1_subtitle": "仅在 JustDo.com 上可用",
+  "v3_142_news_main_array_item_2_title": "一次性为多个项目设置状态",
+  "v3_142_news_main_array_item_2_subtitle": "此更新可实现更高效的工作流程。您现在可以在一个操作中对多个项目应用状态更改。除了设置状态外，此功能还可用于批量更新各种其他选项字段，包括您的 JustDo 看板的自定义字段和插件字段。",
+  "v3_142_news_features_name": "其他更新",
+  "v3_142_news_features_title": "改进",
+  "v3_142_news_features_update_items": [
+    "1. 在任务复制功能中引入\"全选\"和\"取消全选\"按钮 - 使字段选择更快速、更简单。"
+  ],
+  "v3_142_news_page_title": "JustDo v3.142：中文翻译、批量状态更新等",
+  "v3_142_news_page_description": "JustDo v3.142 引入中文语言支持，能够一次性为多个项目设置状态，并增强了任务复制功能。"
+}
+

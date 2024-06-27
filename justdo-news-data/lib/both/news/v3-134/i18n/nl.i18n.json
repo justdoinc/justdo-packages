@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Wat is er nieuw",
+  "v3_134_news_main_array_item_1_title": "Archiveren",
+  "v3_134_news_main_array_item_1_subtitle": "Wanneer er nieuwe projecten en activiteiten zijn waaraan je moet werken, moet je de oude opzij zetten en je concentreren op de nieuwe. Nu kun je deze projecten en taken archiveren, waardoor ze uit je dagelijkse overzicht verdwijnen, terwijl je nog steeds toegang hebt tot ze wanneer nodig en ze zelfs kunt dearchiveren.",
+  "v3_134_news_main_array_item_2_title": "Meerkeuze optieveld",
+  "v3_134_news_main_array_item_2_subtitle": "Naast het \"Opties\" aangepaste veld heb je nu het \"Meerdere Opties\" type. Deze optie stelt je in staat om een lijst met voorgedefinieerde opties te maken waaruit gebruikers meerdere waarden kunnen selecteren voor elke individuele taak.",
+  "v3_134_news_main_array_item_3_title": "Taakeigenaar en Wachtende Eigenaar velden + filter",
+  "v3_134_news_main_array_item_3_subtitle": "Je hebt nu de mogelijkheid om extra velden toe te voegen die zowel de Taakeigenaar als de Wachtende Eigenaar van taken weergeven. Deze update stelt je in staat om efficiënt je takenlijst te filteren op basis van deze criteria, wat zorgt voor een gestroomlijnde en gepersonaliseerde taakbeheerervaring.",
+  "v3_134_news_features_name": "Andere Updates",
+  "v3_134_news_features_title": "Verbeteringen",
+  "v3_134_news_features_update_items": [
+    "1. E-mails - Bestanden kleiner dan 150x150 pixels worden niet toegevoegd aan bestanden.",
+    "2. E-mails - Toon alleen de laatste 20 e-mails, plus \"laad meer\".",
+    "3. Verwijdering van extensies en \"opslaan\" knop."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Project Archivering, Meerkeuze Opties & Meer",
+  "v3_134_news_page_description": "Ontdek de kracht van project archivering, de flexibiliteit van meerkeuze optievelden, en verbeterd taakeigenaarschapsbeheer in JustDo v3.134."
+}

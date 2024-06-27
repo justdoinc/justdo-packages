@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Novidades",
+  "v3_136_news_main_array_item_1_title": "Nova página inicial",
+  "v3_136_news_main_array_item_1_subtitle": "Apresentando Nossa Página Inicial Renovada 🎉",
+  "v3_136_news_main_array_item_2_title": "Estados personalizados",
+  "v3_136_news_main_array_item_2_subtitle": "Aumente a eficiência do seu fluxo de trabalho com nossa mais recente adição - Estados Personalizados. Adapte os estados das tarefas às necessidades únicas do seu projeto e acompanhe o progresso com maior precisão.",
+  "v3_136_news_main_array_item_3_title": "Mantenha-se informado com o Indicador de E-mails Não Lidos na Grade",
+  "v3_136_news_main_array_item_3_subtitle": "Nunca mais perca atualizações importantes! Nosso novo Indicador de E-mails Não Lidos na Grade mantém você informado sobre e-mails não lidos dentro das tarefas, garantindo comunicação eficiente e ação rápida.",
+  "v3_136_news_main_array_item_4_title": "Filtros Aprimorados para o Diálogo de Adição Rápida",
+  "v3_136_news_main_array_item_4_subtitle": "Aumente sua produtividade com nossos novos filtros para o Seletor de Destino e Proprietário no Bootbox de Adição Rápida. Simplifique a criação de tarefas encontrando o destino e o proprietário certos com facilidade.",
+  "v3_136_news_features_name": "Outras Atualizações",
+  "v3_136_news_features_title": "Melhorias",
+  "v3_136_news_features_update_items": [
+    "1. Melhoria de desempenho para operações que envolvem atualizações em mais de 1000 tarefas, em particular, alteração de membros de tarefas de uma subárvore maior que 1000 usuários.",
+    "2. Aba de atividades: Correção do registro de atividades não exibindo corretamente se for uma adição de pai e o pai for removido <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>vídeo</a>.",
+    "3. Upload de avatares para ambientes que usam arquivos JustDo.",
+    "4. Introdução do conceito de Organizações: uma unidade lógica opcional acima dos JustDos (quadros JustDo).",
+    "5. MailDo: Quando um e-mail é recebido, o proprietário da tarefa agora é automaticamente desmutado no chat."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Nova Página Inicial, Estados Personalizados, Filtros Aprimorados e Mais",
+  "v3_136_news_page_description": "O JustDo v3.136 introduz uma página inicial renovada, poderosos estados personalizados para tarefas, filtros aprimorados para adição mais rápida de tarefas e importantes atualizações de desempenho."
+}

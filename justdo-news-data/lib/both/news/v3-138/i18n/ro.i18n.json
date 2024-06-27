@@ -1,0 +1,18 @@
+{
+  "v3_138_news_title": "v3.138",
+  "v3_138_news_main_name": "Ce este nou",
+  "v3_138_news_main_array_item_1_title": "Fereastră de invitație a membrilor JustDo reproiectată",
+  "v3_138_news_main_array_item_1_subtitle": "Extinzând funcționalitatea existentă de invitare, am adăugat o nouă caracteristică care vă permite să selectați toate sarcinile cu un singur clic atunci când adăugați noi utilizatori. Pentru un proces de configurare mai eficient pentru proiecte mari.",
+  "v3_138_news_main_array_item_2_title": "Navigare îmbunătățită pentru previzualizarea fișierelor",
+  "v3_138_news_main_array_item_2_subtitle": "Credem în importanța unei navigări fără probleme. De aceea, am implementat navigarea cu tastatura în previzualizările fișierelor. Acum puteți naviga ușor prin fișierele dvs. folosind doar tastatura, făcând procesul de revizuire și editare și mai fluent.",
+  "v3_138_news_main_array_item_3_title": "Actualizare elegantă a design-ului",
+  "v3_138_news_main_array_item_3_subtitle": "Pentru a îmbunătăți experiența vizuală, am trecut la un design modern curbat pentru butoanele și câmpurile noastre de introducere",
+  "v3_138_news_features_name": "Alte actualizări",
+  "v3_138_news_features_title": "Îmbunătățiri",
+  "v3_138_news_features_update_items": [
+    "1. Indicatori de încărcare pentru activitatea recentă din chat",
+    "2. Administratorii site-ului cu e-mail neverificat vor pierde accesul la pagina de administrare a site-ului"
+  ],
+  "v3_138_news_page_title": "JustDo v3.138: Invitații reproiectate, navigare în fișiere, design și multe altele",
+  "v3_138_news_page_description": "Experimentați invitații de utilizatori îmbunătățite, o navigare mai fluidă în previzualizarea fișierelor, o actualizare elegantă a design-ului și multe altele în JustDo v3.138."
+}

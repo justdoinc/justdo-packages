@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Neuigkeiten",
+  "v3_140_news_main_array_item_1_title": "Tab-Wechsler-Design aktualisiert",
+  "v3_140_news_main_array_item_1_subtitle": "Das Design zeigt nun besser an, wann ein Tab aktiv ist.",
+  "v3_140_news_main_array_item_2_title": "Einführung des Solid Purple Themes",
+  "v3_140_news_main_array_item_3_title": "Vereinfachung der Benutzereinladung",
+  "v3_140_news_main_array_item_4_title": "Verbesserung der JustDo-Mitgliederverwaltung",
+  "v3_140_news_main_array_item_4_subtitle": "Wählen Sie mehrere Benutzer gleichzeitig zum Entfernen aus.",
+  "v3_140_news_main_array_item_5_title": "Unterstützung der Videovorschau in JustDo-Dateien",
+  "v3_140_news_main_array_item_6_title": "Anzeige des Benutzer-Avatars in den Spalten Besitzer/Ausstehender Besitzer",
+  "v3_140_news_features_name": "Weitere Updates",
+  "v3_140_news_features_title": "Verbesserungen",
+  "v3_140_news_features_update_items": [
+    "1. Farbe der sekundären Schaltflächen von dunkelgrau zu hellgrau geändert",
+    "2. Klassische Themes entfernt",
+    "3. Unterstützung der Sortierung von Unteraufgaben nach dem Follow-Up-Feld",
+    "4. Eine neue moderne Schriftart wird nun verwendet, um nicht-englische Sprachen besser zu unterstützen",
+    "5. Hinzufügung der Möglichkeit, die Seitenleiste in der Site-Administration auszublenden",
+    "6. Design-Verbesserungen im Dialog zur Ablehnung der Eigentümerschaft (einschließlich der Möglichkeit, die Eingabe mit Strg+Enter zu bestätigen)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Design-Updates, vereinfachte Benutzereinladungen & mehr",
+  "v3_140_news_page_description": "JustDo v3.140 bietet Design-Verfeinerungen, verbesserte Workflows für Benutzereinladungen, erweiterte Videounterstützung und mehrere Verbesserungen der Benutzerfreundlichkeit."
+}

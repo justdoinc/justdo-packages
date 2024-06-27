@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "新功能",
+  "v3_136_news_main_array_item_1_title": "全新首頁",
+  "v3_136_news_main_array_item_1_subtitle": "介紹我們全新設計的首頁 🎉",
+  "v3_136_news_main_array_item_2_title": "自訂狀態",
+  "v3_136_news_main_array_item_2_subtitle": "透過我們最新的功能 - 自訂狀態，提升您的工作流程效率。根據您獨特的專案需求量身定制任務狀態，更精確地追蹤進度。",
+  "v3_136_news_main_array_item_3_title": "網格上未讀電子郵件指示器",
+  "v3_136_news_main_array_item_3_subtitle": "再也不會錯過重要更新！我們新的網格上未讀電子郵件指示器能讓您隨時了解任務中的未讀郵件，確保高效溝通和及時行動。",
+  "v3_136_news_main_array_item_4_title": "快速新增對話框的強化篩選功能",
+  "v3_136_news_main_array_item_4_subtitle": "透過我們新增的快速新增對話框目的地和負責人選擇器篩選功能，提升您的生產力。輕鬆找到正確的目的地和負責人，簡化任務創建過程。",
+  "v3_136_news_features_name": "其他更新",
+  "v3_136_news_features_title": "改進",
+  "v3_136_news_features_update_items": [
+    "1. 改善涉及超過1000個任務更新的操作性能，特別是更改超過1000個用戶的子樹任務成員。",
+    "2. 活動頁籤：修復當添加父任務且該父任務被移除時，活動日誌顯示不正確的問題 <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>影片</a>。",
+    "3. 為使用JustDo檔案的環境上傳頭像。",
+    "4. 引入組織（Organizations）概念：專案（JustDos）之上的可選邏輯單位。",
+    "5. MailDo：當收到電子郵件時，任務負責人現在會自動在聊天中取消靜音。"
+  ],
+  "v3_136_news_page_title": "JustDo v3.136：全新首頁、自訂狀態、強化篩選功能等更多新特性",
+  "v3_136_news_page_description": "JustDo v3.136 推出全新設計的首頁、強大的任務自訂狀態、更快速的任務添加篩選功能，以及重要的性能升級。"
+}

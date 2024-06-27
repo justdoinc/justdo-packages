@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "新功能",
+  "v3_140_news_main_array_item_1_title": "标签切换器设计更新",
+  "v3_140_news_main_array_item_1_subtitle": "设计现在更好地指示标签何时处于活动状态。",
+  "v3_140_news_main_array_item_2_title": "引入实心紫色主题",
+  "v3_140_news_main_array_item_3_title": "简化用户邀请",
+  "v3_140_news_main_array_item_4_title": "改进JustDo成员管理",
+  "v3_140_news_main_array_item_4_subtitle": "可同时选择并移除多个用户。",
+  "v3_140_news_main_array_item_5_title": "支持JustDo文件中的视频预览",
+  "v3_140_news_main_array_item_6_title": "在所有者/待定所有者列中显示用户头像",
+  "v3_140_news_features_name": "其他更新",
+  "v3_140_news_features_title": "改进",
+  "v3_140_news_features_update_items": [
+    "1. 次要按钮的颜色从深灰色改为浅灰色",
+    "2. 移除经典主题",
+    "3. 支持按跟进字段对子任务进行排序",
+    "4. 采用新的现代字体，以更好地支持非英语语言",
+    "5. 在站点管理中添加隐藏侧边栏的功能",
+    "6. 改进拒绝所有权对话框的设计（包括使用ctrl+enter确认提交的功能）"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140：设计更新、简化用户邀请等",
+  "v3_140_news_page_description": "JustDo v3.140带来设计优化、改进的用户邀请流程、增强的视频支持和多项可用性增强。"
+}

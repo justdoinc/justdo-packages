@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Újdonságok",
+  "v3_140_news_main_array_item_1_title": "Fülváltó dizájn frissítve",
+  "v3_140_news_main_array_item_1_subtitle": "A dizájn most jobban jelzi, amikor egy fül aktív.",
+  "v3_140_news_main_array_item_2_title": "Bemutatjuk a Tömör Lila témát",
+  "v3_140_news_main_array_item_3_title": "Felhasználók meghívásának egyszerűsítése",
+  "v3_140_news_main_array_item_4_title": "JustDo tagok kezelésének fejlesztése",
+  "v3_140_news_main_array_item_4_subtitle": "Több felhasználó egyidejű kiválasztása eltávolításhoz.",
+  "v3_140_news_main_array_item_5_title": "Videó előnézet támogatása a JustDo fájlokban",
+  "v3_140_news_main_array_item_6_title": "Felhasználói avatar megjelenítése a Tulajdonos/Függő Tulajdonos oszlopokban",
+  "v3_140_news_features_name": "Egyéb frissítések",
+  "v3_140_news_features_title": "Fejlesztések",
+  "v3_140_news_features_update_items": [
+    "1. A másodlagos gombok színe sötétszürkéről világosszürkére változott",
+    "2. Klasszikus témák eltávolítva",
+    "3. Gyermek feladatok rendezésének támogatása a Nyomon követés mező szerint",
+    "4. Új modern betűtípus használata a nem angol nyelvek jobb támogatásához",
+    "5. Oldalsáv elrejtésének lehetősége hozzáadva a Site Admin-ban",
+    "6. Tulajdonjog elutasítása párbeszédablak dizájn fejlesztései (beleértve a ctrl+enter billentyűkombinációval történő megerősítés lehetőségét)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Dizájn frissítések, egyszerűsített felhasználói meghívók és még több",
+  "v3_140_news_page_description": "A JustDo v3.140 dizájn finomításokat, fejlesztett felhasználói meghívási folyamatokat, bővített videó támogatást és számos használhatósági fejlesztést kínál."
+}

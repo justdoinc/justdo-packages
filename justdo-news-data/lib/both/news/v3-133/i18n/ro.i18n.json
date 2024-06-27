@@ -1,0 +1,13 @@
+{
+  "v3_133_news_title": "v3.133",
+  "v3_133_news_main_name": "Ce e nou",
+  "v3_133_news_main_array_item_1_title": "Adăugare filtru pentru selectorul de destinație și selectorul de proprietar în caseta de dialog de adăugare rapidă",
+  "v3_133_news_main_array_item_1_subtitle": "Îmbunătățiri pentru butonul de încărcare mai mult pentru e-mailuri lungi",
+  "v3_133_news_features_name": "Alte actualizări",
+  "v3_133_news_features_title": "Îmbunătățiri",
+  "v3_133_news_features_update_items": [
+    "1. MailDo: Când se primește un e-mail, proprietarul sarcinii este acum automat reactivat în chat."
+  ],
+  "v3_133_news_page_title": "JustDo v3.133: Crearea simplificată a sarcinilor și îmbunătățiri pentru e-mailuri",
+  "v3_133_news_page_description": "JustDo v3.133 introduce filtre pentru crearea mai rapidă a sarcinilor și îmbunătățiri în gestionarea e-mailurilor lungi pentru fluxuri de lucru mai line."
+}

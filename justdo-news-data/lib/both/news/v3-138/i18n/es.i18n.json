@@ -1,0 +1,18 @@
+{
+  "v3_138_news_title": "v3.138",
+  "v3_138_news_main_name": "Novedades",
+  "v3_138_news_main_array_item_1_title": "Ventana de invitación de miembros de JustDo renovada",
+  "v3_138_news_main_array_item_1_subtitle": "Ampliando nuestra funcionalidad de invitación existente, hemos añadido una nueva característica que te permite seleccionar todas las tareas con un solo clic al añadir nuevos usuarios. Para un proceso de configuración más eficiente en proyectos grandes.",
+  "v3_138_news_main_array_item_2_title": "Navegación mejorada en la vista previa de archivos",
+  "v3_138_news_main_array_item_2_subtitle": "Creemos en la importancia de una navegación fluida. Por eso, hemos implementado la navegación por teclado en las vistas previas de archivos. Ahora puedes moverte fácilmente por tus archivos usando solo el teclado, haciendo que el proceso de revisión y edición sea aún más sencillo.",
+  "v3_138_news_main_array_item_3_title": "Actualización de diseño elegante",
+  "v3_138_news_main_array_item_3_subtitle": "Para mejorar la experiencia visual, hemos cambiado a un diseño moderno y curvo para nuestros botones y campos de entrada",
+  "v3_138_news_features_name": "Otras actualizaciones",
+  "v3_138_news_features_title": "Mejoras",
+  "v3_138_news_features_update_items": [
+    "1. Indicadores de carga para la actividad reciente del chat",
+    "2. Los administradores del sitio con correo electrónico no verificado perderán acceso a la página de administración del sitio"
+  ],
+  "v3_138_news_page_title": "JustDo v3.138: Invitaciones renovadas, navegación de archivos, diseño y más",
+  "v3_138_news_page_description": "Experimenta invitaciones de usuarios mejoradas, navegación más fluida en la vista previa de archivos, una actualización de diseño elegante y más en JustDo v3.138."
+}

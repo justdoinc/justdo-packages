@@ -1,0 +1,13 @@
+{
+  "v3_133_news_title": "v3.133",
+  "v3_133_news_main_name": "最新消息",
+  "v3_133_news_main_array_item_1_title": "在快速新增對話框的目的地選擇器和負責人選擇器中加入篩選功能",
+  "v3_133_news_main_array_item_1_subtitle": "改善載入更多按鈕在處理長郵件時的表現",
+  "v3_133_news_features_name": "其他更新",
+  "v3_133_news_features_title": "改進",
+  "v3_133_news_features_update_items": [
+    "1. MailDo（郵件處理）：當收到電子郵件時，任務負責人現在會在聊天中自動取消靜音。"
+  ],
+  "v3_133_news_page_title": "JustDo v3.133：簡化任務創建和郵件處理增強",
+  "v3_133_news_page_description": "JustDo v3.133 引入了篩選功能以加快任務創建，並改進了長郵件處理，使工作流程更加順暢。"
+}

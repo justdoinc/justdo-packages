@@ -1,0 +1,15 @@
+{
+  "v3_142_news_title": "v3.142",
+  "v3_142_news_main_name": "Novidades",
+  "v3_142_news_main_array_item_1_title": "Introdução da tradução para o chinês",
+  "v3_142_news_main_array_item_1_subtitle": "Disponível apenas no JustDo.com",
+  "v3_142_news_main_array_item_2_title": "Definir estados para vários itens de uma vez",
+  "v3_142_news_main_array_item_2_subtitle": "Esta atualização permite um fluxo de trabalho mais eficiente. Agora é possível aplicar mudanças de estado a vários itens em uma única ação. Além de definir estados, este recurso pode ser usado para atualizar vários outros campos de opções em massa. Incluindo campos personalizados do seu JustDo e campos de plugins.",
+  "v3_142_news_features_name": "Outras Atualizações",
+  "v3_142_news_features_title": "Melhorias",
+  "v3_142_news_features_update_items": [
+    "1. Introdução dos botões 'Selecionar Todos' e 'Desmarcar Todos' em nosso recurso de Cópia de Tarefas - tornando a seleção de campos mais rápida e simples."
+  ],
+  "v3_142_news_page_title": "JustDo v3.142: Tradução para o Chinês, Atualizações de Estado em Massa e Mais",
+  "v3_142_news_page_description": "O JustDo v3.142 introduz suporte ao idioma chinês, a capacidade de definir estados para vários itens de uma vez e melhorias na cópia de tarefas."
+}

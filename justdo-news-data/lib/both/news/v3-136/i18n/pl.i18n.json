@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Co nowego",
+  "v3_136_news_main_array_item_1_title": "Nowa strona główna",
+  "v3_136_news_main_array_item_1_subtitle": "Przedstawiamy naszą odświeżoną stronę główną 🎉",
+  "v3_136_news_main_array_item_2_title": "Niestandardowe stany",
+  "v3_136_news_main_array_item_2_subtitle": "Zwiększ efektywność swojego przepływu pracy dzięki naszemu najnowszemu dodatkowi - Niestandardowym Stanom. Dostosuj stany zadań do unikalnych potrzeb projektu i śledź postępy z większą precyzją.",
+  "v3_136_news_main_array_item_3_title": "Bądź na bieżąco dzięki wskaźnikowi nieprzeczytanych e-maili na siatce",
+  "v3_136_news_main_array_item_3_subtitle": "Nigdy więcej nie przegap ważnych aktualizacji! Nasz nowy wskaźnik nieprzeczytanych e-maili na siatce informuje Cię o nieprzeczytanych wiadomościach w zadaniach, zapewniając efektywną komunikację i szybkie działanie.",
+  "v3_136_news_main_array_item_4_title": "Ulepszone filtry dla okna szybkiego dodawania",
+  "v3_136_news_main_array_item_4_subtitle": "Zwiększ swoją produktywność dzięki nowo dodanym filtrom dla selektora miejsca docelowego i właściciela w oknie szybkiego dodawania (Quick Add Bootbox). Usprawnij tworzenie zadań, łatwo znajdując odpowiednie miejsce docelowe i właściciela.",
+  "v3_136_news_features_name": "Inne aktualizacje",
+  "v3_136_news_features_title": "Ulepszenia",
+  "v3_136_news_features_update_items": [
+    "1. Poprawa wydajności dla operacji obejmujących aktualizacje ponad 1000 zadań, w szczególności przy zmianie członków zadań w poddrzewie większym niż 1000 użytkowników.",
+    "2. Zakładka aktywności: Naprawiono błąd niepoprawnego wyświetlania dziennika aktywności w przypadku dodania elementu nadrzędnego i jego późniejszego usunięcia <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>wideo</a>.",
+    "3. Dodano możliwość przesyłania awatarów dla środowisk korzystających z plików JustDo.",
+    "4. Wprowadzono koncepcję Organizacji: opcjonalną jednostkę logiczną powyżej tablic JustDo.",
+    "5. MailDo: Gdy otrzymywany jest e-mail, właściciel zadania jest teraz automatycznie odwyciszany na czacie."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Nowa strona główna, niestandardowe stany, ulepszone filtry i więcej",
+  "v3_136_news_page_description": "JustDo v3.136 wprowadza odświeżoną stronę główną, potężne niestandardowe stany dla zadań, ulepszone filtry dla szybszego dodawania zadań oraz ważne ulepszenia wydajności."
+}

@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "새로운 기능",
+  "v3_140_news_main_array_item_1_title": "탭 전환기 디자인 업데이트",
+  "v3_140_news_main_array_item_1_subtitle": "디자인이 활성 탭을 더 명확하게 표시합니다.",
+  "v3_140_news_main_array_item_2_title": "솔리드 퍼플 테마 도입",
+  "v3_140_news_main_array_item_3_title": "사용자 초대 간소화",
+  "v3_140_news_main_array_item_4_title": "JustDo 멤버 관리 개선",
+  "v3_140_news_main_array_item_4_subtitle": "여러 사용자를 동시에 선택하여 제거할 수 있습니다.",
+  "v3_140_news_main_array_item_5_title": "JustDo 파일에서 비디오 미리보기 지원",
+  "v3_140_news_main_array_item_6_title": "소유자/대기 중인 소유자 열에 사용자 아바타 표시",
+  "v3_140_news_features_name": "기타 업데이트",
+  "v3_140_news_features_title": "개선 사항",
+  "v3_140_news_features_update_items": [
+    "1. 보조 버튼의 색상이 진한 회색에서 연한 회색으로 변경되었습니다",
+    "2. 클래식 테마가 제거되었습니다",
+    "3. 후속 조치 필드로 하위 작업 정렬 지원",
+    "4. 비영어권 언어를 더 잘 지원하기 위해 새로운 현대적인 글꼴을 사용합니다",
+    "5. 사이트 관리자에서 사이드바를 숨길 수 있는 기능 추가",
+    "6. 소유권 거부 대화 상자의 디자인 개선 (ctrl+enter로 제출 확인 기능 포함)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: 디자인 업데이트, 간소화된 사용자 초대 등",
+  "v3_140_news_page_description": "JustDo v3.140은 디자인 개선, 향상된 사용자 초대 워크플로우, 개선된 비디오 지원 및 다양한 사용성 개선을 제공합니다."
+}

@@ -1,0 +1,15 @@
+{
+  "v3_142_news_title": "v3.142",
+  "v3_142_news_main_name": "새로운 기능",
+  "v3_142_news_main_array_item_1_title": "중국어 번역 도입",
+  "v3_142_news_main_array_item_1_subtitle": "JustDo.com에서만 사용 가능",
+  "v3_142_news_main_array_item_2_title": "여러 항목의 상태를 한 번에 설정",
+  "v3_142_news_main_array_item_2_subtitle": "이 업데이트로 더욱 효율적인 워크플로우가 가능해졌습니다. 이제 한 번의 작업으로 여러 항목의 상태를 변경할 수 있습니다. 상태 설정 외에도 이 기능을 사용하여 다양한 다른 옵션 필드를 일괄적으로 업데이트할 수 있습니다. JustDo의 사용자 정의 필드와 플러그인 필드도 포함됩니다.",
+  "v3_142_news_features_name": "기타 업데이트",
+  "v3_142_news_features_title": "개선 사항",
+  "v3_142_news_features_update_items": [
+    "1. 작업 복사 기능에 '전체 선택' 및 '전체 선택 해제' 버튼 도입 - 필드 선택을 더 빠르고 간단하게 만듭니다."
+  ],
+  "v3_142_news_page_title": "JustDo v3.142: 중국어 번역, 일괄 상태 업데이트 등",
+  "v3_142_news_page_description": "JustDo v3.142는 중국어 지원, 여러 항목의 상태를 한 번에 설정하는 기능, 그리고 작업 복사 기능 개선을 도입합니다."
+}

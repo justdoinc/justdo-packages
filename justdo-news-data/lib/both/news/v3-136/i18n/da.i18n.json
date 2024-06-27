@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Nyheder",
+  "v3_136_news_main_array_item_1_title": "Ny landingsside",
+  "v3_136_news_main_array_item_1_subtitle": "Præsentation af vores fornyede landingsside 🎉",
+  "v3_136_news_main_array_item_2_title": "Brugerdefinerede tilstande",
+  "v3_136_news_main_array_item_2_subtitle": "Forøg din arbejdsgangs effektivitet med vores seneste tilføjelse - Brugerdefinerede tilstande. Skræddersy opgavetilstande til at passe til dine unikke projektbehov og følg fremskridt med større præcision.",
+  "v3_136_news_main_array_item_3_title": "Hold dig informeret med On-Grid indikator for ulæste e-mails",
+  "v3_136_news_main_array_item_3_subtitle": "Gå aldrig glip af vigtige opdateringer igen! Vores nye On-Grid indikator for ulæste e-mails holder dig informeret om ulæste e-mails inden for opgaver, hvilket sikrer effektiv kommunikation og hurtig handling.",
+  "v3_136_news_main_array_item_4_title": "Forbedrede filtre til Hurtig Tilføj-dialogen",
+  "v3_136_news_main_array_item_4_subtitle": "Boost din produktivitet med vores nyligt tilføjede filtre til Hurtig Tilføj Bootbox Destination og Ejer Vælger. Strømlin oprettelsen af opgaver ved at finde den rette destination og ejer med lethed.",
+  "v3_136_news_features_name": "Andre opdateringer",
+  "v3_136_news_features_title": "Forbedringer",
+  "v3_136_news_features_update_items": [
+    "1. Ydelsesforbedring for operationer, der involverer opdateringer til mere end 1.000 opgaver, især ændring af opgavemedlemmer i et undertræ større end 1.000 brugere.",
+    "2. Aktivitetsfane: Rettelse af aktivitetsloggen, der ikke vises korrekt, hvis det er en forælder-tilføjelse, og forælderen er fjernet <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>video</a>.",
+    "3. Upload avatarer for miljøer, der bruger JustDo-filer.",
+    "4. Introduceret konceptet Organisationer: en valgfri logisk enhed over JustDos.",
+    "5. MailDo: Når en e-mail modtages, bliver opgaveejeren nu automatisk umuted i chatten."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Ny landingsside, brugerdefinerede tilstande, forbedrede filtre og mere",
+  "v3_136_news_page_description": "JustDo v3.136 introducerer en fornyet landingsside, kraftfulde brugerdefinerede tilstande for opgaver, forbedrede filtre til hurtigere tilføjelse af opgaver og vigtige ydelsesforbedringer."
+}

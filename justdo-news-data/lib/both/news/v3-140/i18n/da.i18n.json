@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Nyheder",
+  "v3_140_news_main_array_item_1_title": "Opdateret design af faneblads-skifter",
+  "v3_140_news_main_array_item_1_subtitle": "Designet indikerer nu tydeligere, når en fane er aktiv.",
+  "v3_140_news_main_array_item_2_title": "Introducerer det Solid Purple tema",
+  "v3_140_news_main_array_item_3_title": "Forenklet brugerinvitation",
+  "v3_140_news_main_array_item_4_title": "Forbedret håndtering af JustDo-medlemmer",
+  "v3_140_news_main_array_item_4_subtitle": "Vælg at fjerne flere brugere på samme tid.",
+  "v3_140_news_main_array_item_5_title": "Understøttelse af videoforhåndsvisning i JustDo-filer",
+  "v3_140_news_main_array_item_6_title": "Vis brugeravatar i Ejer/Afventende Ejer-kolonnerne",
+  "v3_140_news_features_name": "Andre opdateringer",
+  "v3_140_news_features_title": "Forbedringer",
+  "v3_140_news_features_update_items": [
+    "1. Farven på sekundære knapper er ændret fra mørkegrå til lysegrå",
+    "2. Klassiske temaer er fjernet",
+    "3. Understøttelse af sortering af underopgaver efter Opfølgningsfeltet",
+    "4. En ny moderne skrifttype er nu i brug for bedre at understøtte ikke-engelske sprog",
+    "5. Tilføjet mulighed for at skjule sidepanelet i Site Admin",
+    "6. Designforbedringer til dialogboksen for afvisning af ejerskab (inkl. mulighed for at bekræfte indsendelse med ctrl+enter)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Designopdateringer, Forenklet Brugerinvitation og Mere",
+  "v3_140_news_page_description": "JustDo v3.140 leverer designforbedringer, forbedrede arbejdsgange for brugerinvitation, forbedret videounderstøttelse og flere brugervenlighed forbedringer."
+}

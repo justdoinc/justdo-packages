@@ -1,0 +1,18 @@
+{
+  "v3_138_news_title": "v3.138",
+  "v3_138_news_main_name": "新功能",
+  "v3_138_news_main_array_item_1_title": "重新设计的JustDo成员邀请窗口",
+  "v3_138_news_main_array_item_1_subtitle": "在现有邀请功能的基础上，我们增加了一个新特性，允许您在添加新用户时只需点击一下即可选择所有任务。这为大型项目提供了更高效的设置流程。",
+  "v3_138_news_main_array_item_2_title": "改进的文件预览导航",
+  "v3_138_news_main_array_item_2_subtitle": "我们相信无缝导航的重要性。因此，我们在文件预览中实现了键盘导航。现在您可以仅使用键盘轻松浏览文件，使审阅和编辑过程更加流畅。",
+  "v3_138_news_main_array_item_3_title": "时尚设计升级",
+  "v3_138_news_main_array_item_3_subtitle": "为了提升视觉体验，我们将按钮和输入框更换为现代化的圆润设计。",
+  "v3_138_news_features_name": "其他更新",
+  "v3_138_news_features_title": "改进",
+  "v3_138_news_features_update_items": [
+    "1. 聊天最近活动的加载指示器",
+    "2. 未验证邮箱的网站管理员将失去对网站管理页面的访问权限"
+  ],
+  "v3_138_news_page_title": "JustDo v3.138：重新设计的邀请功能、文件导航、设计升级等",
+  "v3_138_news_page_description": "在JustDo v3.138中体验改进的用户邀请、更流畅的文件预览导航、时尚的设计升级等功能。"
+}

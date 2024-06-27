@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Novedades",
+  "v3_136_news_main_array_item_1_title": "Nueva página de inicio",
+  "v3_136_news_main_array_item_1_subtitle": "Presentamos nuestra página de inicio renovada 🎉",
+  "v3_136_news_main_array_item_2_title": "Estados personalizados",
+  "v3_136_news_main_array_item_2_subtitle": "Mejora la eficiencia de tu flujo de trabajo con nuestra última adición: Estados Personalizados. Adapta los estados de las tareas a las necesidades únicas de tu proyecto y realiza un seguimiento del progreso con mayor precisión.",
+  "v3_136_news_main_array_item_3_title": "Mantente informado con el Indicador de Correos Electrónicos No Leídos en la Cuadrícula",
+  "v3_136_news_main_array_item_3_subtitle": "¡Nunca más te pierdas actualizaciones importantes! Nuestro nuevo Indicador de Correos Electrónicos No Leídos en la Cuadrícula te mantiene informado sobre los correos no leídos dentro de las tareas, asegurando una comunicación eficiente y una acción rápida.",
+  "v3_136_news_main_array_item_4_title": "Filtros mejorados para el Diálogo de Adición Rápida",
+  "v3_136_news_main_array_item_4_subtitle": "Aumenta tu productividad con nuestros filtros recién agregados para el Selector de Destino y Propietario en el Bootbox de Adición Rápida. Agiliza la creación de tareas encontrando el destino y el propietario adecuados con facilidad.",
+  "v3_136_news_features_name": "Otras actualizaciones",
+  "v3_136_news_features_title": "Mejoras",
+  "v3_136_news_features_update_items": [
+    "1. Mejora de rendimiento para operaciones que involucran actualizaciones de más de 1000 tareas, en particular, cambiar los miembros de tareas de un subárbol de más de 1000 usuarios.",
+    "2. Pestaña de actividad: Corrección del registro de actividad que no se mostraba correctamente si era una adición de padre y el padre se eliminaba <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>video</a>.",
+    "3. Carga de avatares para entornos que utilizan archivos JustDo.",
+    "4. Introducción del concepto de Organizaciones: una unidad lógica opcional por encima de los JustDos (tableros JustDo).",
+    "5. MailDo: Cuando se recibe un correo electrónico, el propietario de la tarea ahora se desmutea automáticamente en el chat."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Nueva página de inicio, Estados personalizados, Filtros mejorados y más",
+  "v3_136_news_page_description": "JustDo v3.136 introduce una página de inicio renovada, poderosos estados personalizados para tareas, filtros mejorados para una adición de tareas más rápida e importantes mejoras de rendimiento."
+}

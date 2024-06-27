@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Novità",
+  "v3_140_news_main_array_item_1_title": "Design del selettore di schede aggiornato",
+  "v3_140_news_main_array_item_1_subtitle": "Il design ora indica meglio quando una scheda è attiva.",
+  "v3_140_news_main_array_item_2_title": "Introduzione del tema Viola Solido",
+  "v3_140_news_main_array_item_3_title": "Semplificazione dell'invito degli utenti",
+  "v3_140_news_main_array_item_4_title": "Miglioramento della gestione dei membri di JustDo",
+  "v3_140_news_main_array_item_4_subtitle": "Seleziona per rimuovere più utenti contemporaneamente.",
+  "v3_140_news_main_array_item_5_title": "Supporto per l'anteprima video nei file JustDo",
+  "v3_140_news_main_array_item_6_title": "Visualizzazione dell'avatar utente nelle colonne Proprietario/Proprietario in attesa",
+  "v3_140_news_features_name": "Altri aggiornamenti",
+  "v3_140_news_features_title": "Miglioramenti",
+  "v3_140_news_features_update_items": [
+    "1. Colore dei pulsanti secondari cambiato da grigio scuro a grigio chiaro",
+    "2. Temi classici rimossi",
+    "3. Supporto per l'ordinamento delle attività figlie per il campo Follow Up",
+    "4. Utilizzo di un nuovo font moderno per supportare meglio le lingue non inglesi",
+    "5. Aggiunta la possibilità di nascondere la barra laterale nell'Admin del sito",
+    "6. Miglioramenti al design della finestra di dialogo per rifiutare la proprietà (inclusa la possibilità di confermare l'invio con ctrl+invio)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Aggiornamenti di design, Inviti utente semplificati e altro",
+  "v3_140_news_page_description": "JustDo v3.140 offre perfezionamenti del design, flussi di lavoro migliorati per l'invito degli utenti, supporto video avanzato e numerosi miglioramenti di usabilità."
+}

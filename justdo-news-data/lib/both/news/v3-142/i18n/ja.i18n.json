@@ -1,0 +1,15 @@
+{
+  "v3_142_news_title": "v3.142",
+  "v3_142_news_main_name": "新機能",
+  "v3_142_news_main_array_item_1_title": "中国語翻訳の導入",
+  "v3_142_news_main_array_item_1_subtitle": "JustDo.comでのみ利用可能",
+  "v3_142_news_main_array_item_2_title": "複数のアイテムの状態を一度に設定",
+  "v3_142_news_main_array_item_2_subtitle": "この更新により、より効率的なワークフローが可能になります。複数のアイテムの状態変更を一回のアクションで適用できるようになりました。状態の設定に加えて、この機能は他の様々なオプションフィールドを一括で更新するのにも使用できます。JustDoボードのカスタムフィールドやプラグインフィールドも含まれます。",
+  "v3_142_news_features_name": "その他の更新",
+  "v3_142_news_features_title": "改善点",
+  "v3_142_news_features_update_items": [
+    "1. タスクコピー機能に「すべて選択」と「すべて選択解除」ボタンを導入 - フィールド選択がより速く簡単になりました。"
+  ],
+  "v3_142_news_page_title": "JustDo v3.142: 中国語翻訳、一括状態更新など",
+  "v3_142_news_page_description": "JustDo v3.142では、中国語サポートの導入、複数アイテムの一括状態設定機能、およびタスクコピーの機能強化が行われました。"
+}

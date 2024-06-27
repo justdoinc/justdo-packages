@@ -1,0 +1,18 @@
+{
+  "v3_138_news_title": "v3.138",
+  "v3_138_news_main_name": "Nyheter",
+  "v3_138_news_main_array_item_1_title": "Omarbetad inbjudningsfönster för JustDo-medlemmar",
+  "v3_138_news_main_array_item_1_subtitle": "Vi har utökat vår befintliga inbjudningsfunktion med en ny funktion som låter dig välja alla uppgifter med ett enda klick när du lägger till nya användare. För en mer effektiv uppsättningsprocess för stora projekt.",
+  "v3_138_news_main_array_item_2_title": "Förbättrad filförhandsgranskningsnavigering",
+  "v3_138_news_main_array_item_2_subtitle": "Vi tror på vikten av smidig navigation. Därför har vi implementerat tangentbordsnavigering i filförhandsgranskningar. Nu kan du enkelt bläddra genom dina filer med bara tangentbordet, vilket gör granskning och redigering till en ännu smidigare process.",
+  "v3_138_news_main_array_item_3_title": "Snygg designuppgradering",
+  "v3_138_news_main_array_item_3_subtitle": "För att förbättra den visuella upplevelsen har vi bytt till en modern kurvig design för våra knappar och inmatningsfält",
+  "v3_138_news_features_name": "Andra uppdateringar",
+  "v3_138_news_features_title": "Förbättringar",
+  "v3_138_news_features_update_items": [
+    "1. Laddningsindikatorer för chattens senaste aktivitet",
+    "2. Webbplatsadministratörer med overifierad e-post kommer att förlora åtkomst till webbplatsadministratörssidan"
+  ],
+  "v3_138_news_page_title": "JustDo v3.138: Omarbetade inbjudningar, filnavigering, design och mer",
+  "v3_138_news_page_description": "Upplev förbättrade användarinbjudningar, smidigare filförhandsgranskningsnavigering, en snygg designuppgradering och mer i JustDo v3.138."
+}

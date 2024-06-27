@@ -1,0 +1,13 @@
+{
+  "v3_133_news_title": "v3.133",
+  "v3_133_news_main_name": "Novedades",
+  "v3_133_news_main_array_item_1_title": "Agregar filtro al selector de destino y propietario en el cuadro de diálogo de adición rápida",
+  "v3_133_news_main_array_item_1_subtitle": "Mejoras en el botón 'Cargar más' para correos electrónicos largos",
+  "v3_133_news_features_name": "Otras actualizaciones",
+  "v3_133_news_features_title": "Mejoras",
+  "v3_133_news_features_update_items": [
+    "1. MailDo: Cuando se recibe un correo electrónico, el propietario de la tarea ahora se desmutea automáticamente en el chat."
+  ],
+  "v3_133_news_page_title": "JustDo v3.133: Creación de tareas simplificada y mejoras en el manejo de correos electrónicos",
+  "v3_133_news_page_description": "JustDo v3.133 introduce filtros para una creación de tareas más rápida y mejoras en el manejo de correos electrónicos largos para flujos de trabajo más fluidos."
+}

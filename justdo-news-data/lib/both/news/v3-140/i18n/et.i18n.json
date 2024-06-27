@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Mis on uut",
+  "v3_140_news_main_array_item_1_title": "Vahekaardi vahetaja disain uuendatud",
+  "v3_140_news_main_array_item_1_subtitle": "Disain näitab nüüd paremini, millal vahekaart on aktiivne.",
+  "v3_140_news_main_array_item_2_title": "Tutvustame Solid Purple teemat",
+  "v3_140_news_main_array_item_3_title": "Kasutajate kutsumine lihtsustatud",
+  "v3_140_news_main_array_item_4_title": "JustDo liikmete haldamise parandamine",
+  "v3_140_news_main_array_item_4_subtitle": "Vali mitme kasutaja korraga eemaldamiseks.",
+  "v3_140_news_main_array_item_5_title": "Video eelvaate tugi JustDo failides",
+  "v3_140_news_main_array_item_6_title": "Kasutaja avatari kuvamine Omaniku/Ootel Omaniku veergudes",
+  "v3_140_news_features_name": "Muud uuendused",
+  "v3_140_news_features_title": "Täiustused",
+  "v3_140_news_features_update_items": [
+    "1. Teiseste nuppude värv muudeti tumehallilt helehalliks",
+    "2. Klassikalised teemad eemaldatud",
+    "3. Tugi alamülesannete sorteerimiseks Järelkontrolli (Follow Up) välja järgi",
+    "4. Kasutusel on uus kaasaegne font, mis toetab paremini mitte-ingliskeelseid keeli",
+    "5. Lisatud võimalus peita külgriba Saidi Administreerimises (Site Admin)",
+    "6. Omandiõigusest loobumise dialoogi disaini parandused (sh võimalus kinnitada esitamist ctrl+enter abil)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Disaini uuendused, lihtsustatud kasutajate kutsumine ja palju muud",
+  "v3_140_news_page_description": "JustDo v3.140 toob kaasa disaini täiustused, parandatud kasutajate kutsumise töövood, täiustatud video toe ja mitmeid kasutatavuse parandusi."
+}

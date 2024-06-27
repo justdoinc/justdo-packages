@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Uutiset",
+  "v3_136_news_main_array_item_1_title": "Uusi laskeutumissivu",
+  "v3_136_news_main_array_item_1_subtitle": "Esittelyssä uudistettu laskeutumissivumme 🎉",
+  "v3_136_news_main_array_item_2_title": "Mukautetut tilat",
+  "v3_136_news_main_array_item_2_subtitle": "Tehosta työnkulkuasi uusimmalla lisäyksellämme - Mukautetuilla tiloilla. Räätälöi tehtävien tilat vastaamaan projektisi ainutlaatuisia tarpeita ja seuraa edistymistä tarkemmin.",
+  "v3_136_news_main_array_item_3_title": "Pysy ajan tasalla ruudukossa näkyvällä lukemattomien sähköpostien ilmaisimella",
+  "v3_136_news_main_array_item_3_subtitle": "Älä koskaan enää missaa tärkeitä päivityksiä! Uusi ruudukossa näkyvä lukemattomien sähköpostien ilmaisin pitää sinut ajan tasalla tehtäviin liittyvistä lukemattomista sähköposteista, varmistaen tehokkaan viestinnän ja nopean toiminnan.",
+  "v3_136_news_main_array_item_4_title": "Parannetut suodattimet Pika-lisäys-valintaikkunaan",
+  "v3_136_news_main_array_item_4_subtitle": "Tehosta tuottavuuttasi uusilla suodattimilla Pika-lisäys-valintaikkunan Kohde- ja Omistaja-valitsimiin. Virtaviivaista tehtävien luomista löytämällä oikea kohde ja omistaja helposti.",
+  "v3_136_news_features_name": "Muut päivitykset",
+  "v3_136_news_features_title": "Parannukset",
+  "v3_136_news_features_update_items": [
+    "1. Suorituskyvyn parannus operaatioille, jotka koskevat yli 1000 tehtävän päivitystä, erityisesti muutettaessa yli 1000 käyttäjän alipuun tehtävien jäseniä.",
+    "2. Toimintavälilehti: Korjattu toimintalokin virheellinen näyttö, jos kyseessä on ylemmän tason lisäys ja ylempi taso on poistettu <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>video</a>.",
+    "3. Avatarin lataus ympäristöissä, jotka käyttävät JustDo-tiedostoja.",
+    "4. Esitelty Organisaatiot-konsepti: valinnainen looginen yksikkö JustDo-taulujen yläpuolella.",
+    "5. MailDo: Kun sähköposti vastaanotetaan, tehtävän omistajan mykistys poistetaan nyt automaattisesti chatissa."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Uusi laskeutumissivu, mukautetut tilat, parannetut suodattimet ja muuta",
+  "v3_136_news_page_description": "JustDo v3.136 esittelee uudistetun laskeutumissivun, tehokkaat mukautetut tilat tehtäville, parannetut suodattimet nopeampaan tehtävien lisäämiseen ja tärkeitä suorituskykyparannuksia."
+}

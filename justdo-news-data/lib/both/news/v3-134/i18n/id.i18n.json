@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Apa yang baru",
+  "v3_134_news_main_array_item_1_title": "Pengarsipan",
+  "v3_134_news_main_array_item_1_subtitle": "Ketika ada proyek dan aktivitas baru yang perlu Anda kerjakan, Anda perlu menyingkirkan yang lama dan fokus pada yang baru. Sekarang Anda dapat mengarsipkan proyek dan tugas tersebut, menghapusnya dari tampilan sehari-hari Anda, namun tetap memiliki kemampuan untuk mengaksesnya sesuai kebutuhan dan bahkan membatalkan pengarsipan.",
+  "v3_134_news_main_array_item_2_title": "Bidang opsi multi-pilih",
+  "v3_134_news_main_array_item_2_subtitle": "Selain bidang kustom \"Opsi\", sekarang Anda memiliki tipe \"Multi Opsi\". Opsi ini memungkinkan Anda membuat daftar pilihan yang telah ditentukan sebelumnya di mana pengguna dapat memilih beberapa nilai untuk setiap tugas individual.",
+  "v3_134_news_main_array_item_3_title": "Bidang Pemilik Tugas dan Pemilik Tertunda + filter",
+  "v3_134_news_main_array_item_3_subtitle": "Sekarang Anda memiliki kemampuan untuk menambahkan bidang tambahan yang menampilkan baik Pemilik Tugas maupun Pemilik Tertunda dari tugas-tugas. Pembaruan ini memungkinkan Anda untuk memfilter pohon tugas Anda secara efisien berdasarkan kriteria ini, memberikan pengalaman manajemen tugas yang lebih efisien dan personal.",
+  "v3_134_news_features_name": "Pembaruan Lainnya",
+  "v3_134_news_features_title": "Perbaikan",
+  "v3_134_news_features_update_items": [
+    "1. Email - File yang lebih kecil dari 150x150 piksel tidak ditambahkan ke file.",
+    "2. Email - Hanya menampilkan 20 email terakhir, ditambah tombol \"muat lebih banyak\".",
+    "3. Penghapusan ekstensi dan tombol \"simpan\"."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Pengarsipan Proyek, Opsi Multi-Pilih & Lainnya",
+  "v3_134_news_page_description": "Temukan kekuatan pengarsipan proyek, fleksibilitas bidang opsi multi-pilih, dan peningkatan manajemen kepemilikan tugas di JustDo v3.134."
+}

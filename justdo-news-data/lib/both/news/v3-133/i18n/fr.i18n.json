@@ -1,0 +1,13 @@
+{
+  "v3_133_news_title": "v3.133",
+  "v3_133_news_main_name": "Quoi de neuf",
+  "v3_133_news_main_array_item_1_title": "Ajout d'un filtre au sélecteur de destination et au sélecteur de propriétaire dans la boîte de dialogue d'ajout rapide",
+  "v3_133_news_main_array_item_1_subtitle": "Améliorations du bouton \"Charger plus\" pour les longs e-mails",
+  "v3_133_news_features_name": "Autres mises à jour",
+  "v3_133_news_features_title": "Améliorations",
+  "v3_133_news_features_update_items": [
+    "1. MailDo : Lorsqu'un e-mail est reçu, le propriétaire de la tâche est maintenant automatiquement réactivé dans le chat."
+  ],
+  "v3_133_news_page_title": "JustDo v3.133 : Création de tâches simplifiée et améliorations de la gestion des e-mails",
+  "v3_133_news_page_description": "JustDo v3.133 introduit des filtres pour une création de tâches plus rapide et des améliorations dans la gestion des longs e-mails pour des flux de travail plus fluides."
+}

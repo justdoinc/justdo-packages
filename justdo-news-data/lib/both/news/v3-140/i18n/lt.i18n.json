@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Kas naujo",
+  "v3_140_news_main_array_item_1_title": "Atnaujintas skirtukų perjungiklio dizainas",
+  "v3_140_news_main_array_item_1_subtitle": "Dizainas dabar geriau nurodo, kada skirtukas yra aktyvus.",
+  "v3_140_news_main_array_item_2_title": "Pristatyta vientisa violetinė tema",
+  "v3_140_news_main_array_item_3_title": "Supaprastintas vartotojų pakvietimas",
+  "v3_140_news_main_array_item_4_title": "Patobulinta JustDo narių valdymo sistema",
+  "v3_140_news_main_array_item_4_subtitle": "Galima pasirinkti ir pašalinti kelis vartotojus vienu metu.",
+  "v3_140_news_main_array_item_5_title": "Vaizdo įrašų peržiūra JustDo failuose",
+  "v3_140_news_main_array_item_6_title": "Vartotojo avataro rodymas Savininko/Laukiančio savininko stulpeliuose",
+  "v3_140_news_features_name": "Kiti atnaujinimai",
+  "v3_140_news_features_title": "Patobulinimai",
+  "v3_140_news_features_update_items": [
+    "1. Antrinių mygtukų spalva pakeista iš tamsiai pilkos į šviesiai pilką",
+    "2. Pašalintos klasikinės temos",
+    "3. Pridėta galimybė rūšiuoti antrines užduotis pagal Tolesnių veiksmų lauką",
+    "4. Naudojamas naujas modernus šriftas, geriau palaikantis ne anglų kalbas",
+    "5. Pridėta galimybė paslėpti šoninę juostą Svetainės administravimo srityje",
+    "6. Patobulinta atsisakymo perimti nuosavybę dialogo lango išvaizda (įskaitant galimybę patvirtinti pateikimą naudojant ctrl+enter)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Dizaino atnaujinimai, supaprastintas vartotojų kvietimas ir daugiau",
+  "v3_140_news_page_description": "JustDo v3.140 versija pateikia dizaino patobulinimus, pagerintus vartotojų kvietimo darbo srautus, išplėstą vaizdo įrašų palaikymą ir daugybę naudojimo patobulinimu."
+}

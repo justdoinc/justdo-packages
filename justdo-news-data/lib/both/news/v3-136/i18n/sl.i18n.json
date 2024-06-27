@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Kaj je novega",
+  "v3_136_news_main_array_item_1_title": "Nova vstopna stran",
+  "v3_136_news_main_array_item_1_subtitle": "Predstavljamo našo prenovljeno vstopno stran 🎉",
+  "v3_136_news_main_array_item_2_title": "Prilagojeni statusi",
+  "v3_136_news_main_array_item_2_subtitle": "Izboljšajte učinkovitost svojega delovnega procesa z našo najnovejšo dodatno funkcijo - Prilagojenimi statusi. Prilagodite statuse nalog svojim edinstvenim potrebam projekta in natančneje spremljajte napredek.",
+  "v3_136_news_main_array_item_3_title": "Ostanite obveščeni z indikatorjem neprebranih e-poštnih sporočil na mreži",
+  "v3_136_news_main_array_item_3_subtitle": "Nikoli več ne zamudite pomembnih posodobitev! Naš novi indikator neprebranih e-poštnih sporočil na mreži vas obvešča o neprebranih e-poštnih sporočilih znotraj nalog, kar zagotavlja učinkovito komunikacijo in takojšnje ukrepanje.",
+  "v3_136_news_main_array_item_4_title": "Izboljšani filtri za pogovorno okno za hitro dodajanje",
+  "v3_136_news_main_array_item_4_subtitle": "Povečajte svojo produktivnost z našimi na novo dodanimi filtri za izbiro destinacije in lastnika v pogovornem oknu za hitro dodajanje (Quick Add Bootbox). Poenostavite ustvarjanje nalog z lažjim iskanjem prave destinacije in lastnika.",
+  "v3_136_news_features_name": "Druge posodobitve",
+  "v3_136_news_features_title": "Izboljšave",
+  "v3_136_news_features_update_items": [
+    "1. Izboljšana zmogljivost za operacije, ki vključujejo posodobitve več kot 1000 nalog, zlasti pri spreminjanju članov nalog v poddrevesu z več kot 1000 uporabniki.",
+    "2. Zavihek Aktivnosti: Popravek napake, kjer se dnevnik aktivnosti ni pravilno prikazoval, če je šlo za dodajanje nadrejene naloge in je bila ta nato odstranjena <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>video</a>.",
+    "3. Nalaganje avatarjev za okolja, ki uporabljajo JustDo datoteke.",
+    "4. Uvedba koncepta Organizacij: izbirna logična enota nad JustDos (JustDo tabelami).",
+    "5. MailDo: Ko je prejeto e-poštno sporočilo, je lastnik naloge zdaj samodejno vključen nazaj v klepet."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Nova vstopna stran, prilagojeni statusi, izboljšani filtri in več",
+  "v3_136_news_page_description": "JustDo v3.136 predstavlja prenovljeno vstopno stran, zmogljive prilagojene statuse za naloge, izboljšane filtre za hitrejše dodajanje nalog in pomembne nadgradnje zmogljivosti."
+}

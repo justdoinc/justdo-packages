@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Novità",
+  "v3_134_news_main_array_item_1_title": "Archiviazione",
+  "v3_134_news_main_array_item_1_subtitle": "Quando ci sono nuovi progetti e nuove attività su cui lavorare, è necessario mettere da parte quelli vecchi e concentrarsi sui nuovi. Ora puoi archiviare quei progetti e compiti, rimuovendoli dalla tua vista quotidiana, mantenendo comunque la possibilità di accedervi quando necessario e persino di riportarli dall'archivio.",
+  "v3_134_news_main_array_item_2_title": "Campo opzioni multi-selezione",
+  "v3_134_news_main_array_item_2_subtitle": "Oltre al campo personalizzato \"Opzioni\", ora hai il tipo \"Opzioni Multiple\". Questa opzione ti permette di creare una lista di opzioni predefinite da cui gli utenti possono selezionare più valori per ogni singolo compito.",
+  "v3_134_news_main_array_item_3_title": "Campi Proprietario del Compito e Proprietario in Sospeso + filtro",
+  "v3_134_news_main_array_item_3_subtitle": "Ora hai la possibilità di incorporare campi aggiuntivi che mostrano sia il Proprietario del Compito che il Proprietario in Sospeso dei compiti. Questo aggiornamento ti permette di filtrare efficacemente l'albero dei compiti in base a questi criteri, offrendo un'esperienza di gestione dei compiti più ottimizzata e personalizzata.",
+  "v3_134_news_features_name": "Altri Aggiornamenti",
+  "v3_134_news_features_title": "Miglioramenti",
+  "v3_134_news_features_update_items": [
+    "1. Email - I file più piccoli di 150x150 pixel non vengono aggiunti ai file.",
+    "2. Email - Mostra solo le ultime 20 email, più il pulsante \"carica altro\".",
+    "3. Rimozione delle estensioni e del pulsante \"store\"."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Archiviazione Progetti, Opzioni Multi-Selezione e Altro",
+  "v3_134_news_page_description": "Scopri la potenza dell'archiviazione dei progetti, la flessibilità dei campi opzione multi-selezione e la gestione migliorata della proprietà dei compiti in JustDo v3.134."
+}

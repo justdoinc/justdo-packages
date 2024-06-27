@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Nouveautés",
+  "v3_140_news_main_array_item_1_title": "Design du sélecteur d'onglets mis à jour",
+  "v3_140_news_main_array_item_1_subtitle": "Le design indique maintenant plus clairement quand un onglet est actif.",
+  "v3_140_news_main_array_item_2_title": "Introduction du thème Violet Solide",
+  "v3_140_news_main_array_item_3_title": "Simplification de l'invitation des utilisateurs",
+  "v3_140_news_main_array_item_4_title": "Amélioration de la gestion des membres JustDo",
+  "v3_140_news_main_array_item_4_subtitle": "Sélectionnez pour supprimer plusieurs utilisateurs en même temps.",
+  "v3_140_news_main_array_item_5_title": "Prise en charge de l'aperçu vidéo dans les fichiers JustDo",
+  "v3_140_news_main_array_item_6_title": "Affichage de l'avatar de l'utilisateur dans les colonnes Propriétaire/Propriétaire en attente",
+  "v3_140_news_features_name": "Autres mises à jour",
+  "v3_140_news_features_title": "Améliorations",
+  "v3_140_news_features_update_items": [
+    "1. Changement de la couleur des boutons secondaires du gris foncé au gris clair",
+    "2. Suppression des thèmes classiques",
+    "3. Prise en charge du tri des tâches enfants par le champ de suivi",
+    "4. Utilisation d'une nouvelle police moderne pour mieux prendre en charge les langues non anglaises",
+    "5. Ajout de la possibilité de masquer la barre latérale dans l'administration du site",
+    "6. Améliorations du design de la boîte de dialogue de rejet de propriété (y compris la possibilité de confirmer la soumission avec ctrl+entrée)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140 : Mises à jour du design, invitations d'utilisateurs simplifiées et plus encore",
+  "v3_140_news_page_description": "JustDo v3.140 apporte des améliorations de design, des flux de travail d'invitation d'utilisateurs améliorés, une meilleure prise en charge vidéo et de nombreuses améliorations d'utilisabilité."
+}

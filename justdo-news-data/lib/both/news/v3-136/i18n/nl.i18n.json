@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Wat is er nieuw",
+  "v3_136_news_main_array_item_1_title": "Nieuwe landingspagina",
+  "v3_136_news_main_array_item_1_subtitle": "Introductie van onze vernieuwde landingspagina 🎉",
+  "v3_136_news_main_array_item_2_title": "Aangepaste statussen",
+  "v3_136_news_main_array_item_2_subtitle": "Verhoog de efficiëntie van uw workflow met onze nieuwste toevoeging - Aangepaste statussen. Pas taakstatussen aan naar uw unieke projectbehoeften en volg de voortgang met grotere precisie.",
+  "v3_136_news_main_array_item_3_title": "Blijf geïnformeerd met de indicator voor ongelezen e-mails op het raster",
+  "v3_136_news_main_array_item_3_subtitle": "Mis nooit meer belangrijke updates! Onze nieuwe indicator voor ongelezen e-mails op het raster houdt u op de hoogte van ongelezen e-mails binnen taken, waardoor efficiënte communicatie en snelle actie worden gewaarborgd.",
+  "v3_136_news_main_array_item_4_title": "Verbeterde filters voor snel toevoegen dialoog",
+  "v3_136_news_main_array_item_4_subtitle": "Verhoog uw productiviteit met onze nieuw toegevoegde filters voor de Snel Toevoegen Bootbox Bestemming en Eigenaar Selector. Stroomlijn het aanmaken van taken door eenvoudig de juiste bestemming en eigenaar te vinden.",
+  "v3_136_news_features_name": "Andere updates",
+  "v3_136_news_features_title": "Verbeteringen",
+  "v3_136_news_features_update_items": [
+    "1. Prestatieverbetering voor operaties die updates van meer dan 1000 taken omvatten, in het bijzonder het wijzigen van taakleden van een substructuur groter dan 1000 gebruikers.",
+    "2. Activiteitentabblad: Probleem opgelost waarbij het activiteitenlogboek niet correct werd weergegeven als het een bovenliggende toevoeging betrof en de bovenliggende taak was verwijderd <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>video</a>.",
+    "3. Upload avatars voor omgevingen die JustDo-bestanden gebruiken.",
+    "4. Introductie van het concept Organisaties: een optionele logische eenheid boven JustDos.",
+    "5. MailDo: Wanneer een e-mail wordt ontvangen, wordt de taakeigenaar nu automatisch gedempt in de chat."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Nieuwe landingspagina, aangepaste statussen, verbeterde filters en meer",
+  "v3_136_news_page_description": "JustDo v3.136 introduceert een vernieuwde landingspagina, krachtige aangepaste statussen voor taken, verbeterde filters voor sneller toevoegen van taken, en belangrijke prestatieverbeteringen."
+}

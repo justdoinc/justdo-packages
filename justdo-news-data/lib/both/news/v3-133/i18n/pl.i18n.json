@@ -1,0 +1,13 @@
+{
+  "v3_133_news_title": "v3.133",
+  "v3_133_news_main_name": "Co nowego",
+  "v3_133_news_main_array_item_1_title": "Dodano filtr do szybkiego wyboru miejsca docelowego i wyboru właściciela",
+  "v3_133_news_main_array_item_1_subtitle": "Ulepszenia przycisku 'Wczytaj więcej' dla długich wiadomości e-mail",
+  "v3_133_news_features_name": "Inne aktualizacje",
+  "v3_133_news_features_title": "Ulepszenia",
+  "v3_133_news_features_update_items": [
+    "1. MailDo: Gdy e-mail zostanie odebrany, właściciel zadania jest teraz automatycznie odmutowany na czacie."
+  ],
+  "v3_133_news_page_title": "JustDo v3.133: Usprawnione tworzenie zadań i ulepszenia obsługi e-maili",
+  "v3_133_news_page_description": "JustDo v3.133 wprowadza filtry dla szybszego tworzenia zadań oraz usprawnienia w obsłudze długich e-maili dla płynniejszego przepływu pracy."
+}

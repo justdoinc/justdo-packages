@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Čo je nové",
+  "v3_136_news_main_array_item_1_title": "Nová úvodná stránka",
+  "v3_136_news_main_array_item_1_subtitle": "Predstavujeme našu obnovenú úvodnú stránku 🎉",
+  "v3_136_news_main_array_item_2_title": "Vlastné stavy",
+  "v3_136_news_main_array_item_2_subtitle": "Zvýšte efektivitu svojho pracovného postupu s našou najnovšou funkciou - Vlastné stavy. Prispôsobte si stavy úloh podľa jedinečných potrieb vášho projektu a sledujte pokrok s väčšou presnosťou.",
+  "v3_136_news_main_array_item_3_title": "Buďte informovaní s indikátorom neprečítaných e-mailov v mriežke",
+  "v3_136_news_main_array_item_3_subtitle": "Už nikdy nepremeškajte dôležité aktualizácie! Náš nový indikátor neprečítaných e-mailov v mriežke vás informuje o neprečítaných e-mailoch v rámci úloh, čo zabezpečuje efektívnu komunikáciu a okamžitú akciu.",
+  "v3_136_news_main_array_item_4_title": "Vylepšené filtre pre dialógové okno rýchleho pridávania",
+  "v3_136_news_main_array_item_4_subtitle": "Zvýšte svoju produktivitu s našimi novo pridanými filtrami pre výber cieľa a vlastníka v dialógovom okne rýchleho pridávania (Quick Add Bootbox). Zjednodušte vytváranie úloh ľahkým nájdením správneho cieľa a vlastníka.",
+  "v3_136_news_features_name": "Ďalšie aktualizácie",
+  "v3_136_news_features_title": "Vylepšenia",
+  "v3_136_news_features_update_items": [
+    "1. Zlepšenie výkonu pri operáciách, ktoré zahŕňajú aktualizácie viac ako 1000 úloh, najmä pri zmene členov úloh v podstrome väčšom ako 1000 používateľov.",
+    "2. Karta aktivít: Oprava nesprávneho zobrazenia protokolu aktivít, ak ide o pridanie nadriadenej úlohy a tá je odstránená <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>video</a>.",
+    "3. Nahrávanie avatárov pre prostredia, ktoré používajú JustDo súbory.",
+    "4. Zavedenie konceptu Organizácií: voliteľná logická jednotka nad JustDos.",
+    "5. MailDo: Keď je prijatý e-mail, vlastník úlohy je teraz automaticky odtlmený v chate."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Nová úvodná stránka, vlastné stavy, vylepšené filtre a ďalšie",
+  "v3_136_news_page_description": "JustDo v3.136 prináša obnovenú úvodnú stránku, výkonné vlastné stavy pre úlohy, vylepšené filtre pre rýchlejšie pridávanie úloh a dôležité vylepšenia výkonu."
+}

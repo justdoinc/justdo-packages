@@ -1,0 +1,15 @@
+{
+  "v3_142_news_title": "v3.142",
+  "v3_142_news_main_name": "Šta je novo",
+  "v3_142_news_main_array_item_1_title": "Uvođenje kineskog prevoda",
+  "v3_142_news_main_array_item_1_subtitle": "Dostupno samo na JustDo.com",
+  "v3_142_news_main_array_item_2_title": "Postavljanje stanja za više stavki odjednom",
+  "v3_142_news_main_array_item_2_subtitle": "Ovo ažuriranje omogućava efikasniji radni tok. Sada možete primeniti promene stanja na nekoliko stavki u jednoj akciji. Pored postavljanja stanja, ova funkcija se može koristiti za ažuriranje različitih drugih opcionalnih polja u grupi. Uključujući prilagođena polja vašeg JustDo-a (JustDo table) i polja dodataka.",
+  "v3_142_news_features_name": "Ostala ažuriranja",
+  "v3_142_news_features_title": "Poboljšanja",
+  "v3_142_news_features_update_items": [
+    "1. Uvođenje dugmadi 'Izaberi sve' i 'Poništi sve izbore' u našu funkciju kopiranja zadataka - čineći izbor polja bržim i jednostavnijim."
+  ],
+  "v3_142_news_page_title": "JustDo v3.142: Kineski prevod, grupno ažuriranje stanja i više",
+  "v3_142_news_page_description": "JustDo v3.142 uvodi podršku za kineski jezik, mogućnost postavljanja stanja za više stavki odjednom i poboljšanja u kopiranju zadataka."
+}

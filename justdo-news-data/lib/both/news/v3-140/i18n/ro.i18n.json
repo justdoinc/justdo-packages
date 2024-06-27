@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Ce este nou",
+  "v3_140_news_main_array_item_1_title": "Design-ul comutatorului de file actualizat",
+  "v3_140_news_main_array_item_1_subtitle": "Design-ul indică acum mai bine când o filă este activă.",
+  "v3_140_news_main_array_item_2_title": "Introducerea temei Violet Solid",
+  "v3_140_news_main_array_item_3_title": "Simplificarea invitațiilor pentru utilizatori",
+  "v3_140_news_main_array_item_4_title": "Îmbunătățirea gestionării membrilor JustDo",
+  "v3_140_news_main_array_item_4_subtitle": "Selectați pentru a elimina mai mulți utilizatori în același timp.",
+  "v3_140_news_main_array_item_5_title": "Suport pentru previzualizarea videoclipurilor în fișierele JustDo",
+  "v3_140_news_main_array_item_6_title": "Afișarea avatarului utilizatorului în coloanele Proprietar/Proprietar în așteptare",
+  "v3_140_news_features_name": "Alte actualizări",
+  "v3_140_news_features_title": "Îmbunătățiri",
+  "v3_140_news_features_update_items": [
+    "1. Culoarea butoanelor secundare s-a schimbat de la gri închis la gri deschis",
+    "2. Temele clasice au fost eliminate",
+    "3. Suport pentru sortarea sarcinilor copil după câmpul Follow Up (Urmărire)",
+    "4. Un nou font modern este acum utilizat pentru a sprijini mai bine limbile non-engleze",
+    "5. Adăugarea posibilității de a ascunde bara laterală în Administrarea Site-ului",
+    "6. Îmbunătățiri de design pentru dialogul de respingere a proprietății (inclusiv abilitatea de a confirma trimiterea cu ctrl+enter)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Actualizări de design, Invitații de utilizatori simplificate și multe altele",
+  "v3_140_news_page_description": "JustDo v3.140 aduce îmbunătățiri de design, fluxuri de lucru îmbunătățite pentru invitarea utilizatorilor, suport video îmbunătățit și multiple îmbunătățiri de utilizare."
+}

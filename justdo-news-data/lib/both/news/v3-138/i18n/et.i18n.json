@@ -1,0 +1,18 @@
+{
+  "v3_138_news_title": "v3.138",
+  "v3_138_news_main_name": "Mis on uut",
+  "v3_138_news_main_array_item_1_title": "Uuendatud JustDo liikmete kutsumise aken",
+  "v3_138_news_main_array_item_1_subtitle": "Täiendades olemasolevat kutsumise funktsionaalsust, oleme lisanud uue võimaluse, mis lubab teil ühe klõpsuga valida kõik ülesanded uute kasutajate lisamisel. Suurte projektide tõhusamaks seadistamiseks.",
+  "v3_138_news_main_array_item_2_title": "Täiustatud failide eelvaate navigeerimine",
+  "v3_138_news_main_array_item_2_subtitle": "Usume sujuva navigeerimise olulisusesse. Seepärast oleme lisanud klaviatuuri navigeerimise failide eelvaates. Nüüd saate lihtsalt liikuda oma failides, kasutades ainult klaviatuuri, muutes ülevaatamise ja redigeerimise veelgi sujuvamaks protsessiks.",
+  "v3_138_news_main_array_item_3_title": "Stiilne disaini uuendus",
+  "v3_138_news_main_array_item_3_subtitle": "Visuaalse kogemuse parandamiseks oleme nuppudele ja sisendväljadele lisanud kaasaegse kaarjama disaini",
+  "v3_138_news_features_name": "Muud uuendused",
+  "v3_138_news_features_title": "Täiustused",
+  "v3_138_news_features_update_items": [
+    "1. Laadimise indikaatorid vestluse hiljutisele tegevusele",
+    "2. Kinnitamata e-posti aadressiga saidi administraatorid kaotavad juurdepääsu saidi administreerimise lehele"
+  ],
+  "v3_138_news_page_title": "JustDo v3.138: Uuendatud kutsed, failide navigeerimine, disain ja palju muud",
+  "v3_138_news_page_description": "Koge täiustatud kasutajate kutsumist, sujuvamat failide eelvaate navigeerimist, stiilset disaini uuendust ja palju muud JustDo versioonis 3.138."
+}

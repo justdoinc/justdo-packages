@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Co nowego",
+  "v3_140_news_main_array_item_1_title": "Zaktualizowany wygląd przełącznika kart",
+  "v3_140_news_main_array_item_1_subtitle": "Nowy design lepiej wskazuje, która karta jest aktywna.",
+  "v3_140_news_main_array_item_2_title": "Wprowadzenie motywu Solid Purple",
+  "v3_140_news_main_array_item_3_title": "Uproszczenie zapraszania użytkowników",
+  "v3_140_news_main_array_item_4_title": "Ulepszenie zarządzania członkami JustDo",
+  "v3_140_news_main_array_item_4_subtitle": "Możliwość wyboru i usunięcia wielu użytkowników jednocześnie.",
+  "v3_140_news_main_array_item_5_title": "Obsługa podglądu wideo w plikach JustDo",
+  "v3_140_news_main_array_item_6_title": "Wyświetlanie awatara użytkownika w kolumnach Właściciel/Oczekujący Właściciel",
+  "v3_140_news_features_name": "Inne aktualizacje",
+  "v3_140_news_features_title": "Ulepszenia",
+  "v3_140_news_features_update_items": [
+    "1. Zmieniono kolor drugorzędnych przycisków z ciemnoszarego na jasnoszary",
+    "2. Usunięto klasyczne motywy",
+    "3. Dodano wsparcie dla sortowania zadań podrzędnych według pola Follow Up (Kontynuacja)",
+    "4. Wprowadzono nową, nowoczesną czcionkę, która lepiej obsługuje języki inne niż angielski",
+    "5. Dodano możliwość ukrycia paska bocznego w panelu administracyjnym witryny",
+    "6. Ulepszenia w wyglądzie okna dialogowego odrzucenia własności (w tym możliwość potwierdzenia przesłania za pomocą ctrl+enter)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Aktualizacje wyglądu, uproszczone zapraszanie użytkowników i więcej",
+  "v3_140_news_page_description": "JustDo v3.140 wprowadza udoskonalenia w wyglądzie, ulepszone procesy zapraszania użytkowników, rozszerzoną obsługę wideo i wiele usprawnień użyteczności."
+}

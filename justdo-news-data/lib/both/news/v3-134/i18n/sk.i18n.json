@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Čo je nové",
+  "v3_134_news_main_array_item_1_title": "Archivácia",
+  "v3_134_news_main_array_item_1_subtitle": "Keď máte nové projekty a nové aktivity, na ktorých potrebujete pracovať, musíte odložiť staré a sústrediť sa na nové. Teraz môžete tieto projekty a úlohy archivovať, čím ich odstránite z každodenného zobrazenia, ale stále máte možnosť k nim pristupovať podľa potreby a dokonca ich aj obnovovať z archívu.",
+  "v3_134_news_main_array_item_2_title": "Pole s viacnásobným výberom možností",
+  "v3_134_news_main_array_item_2_subtitle": "Okrem vlastného poľa \"Možnosti\" máte teraz k dispozícii typ \"Viacnásobné možnosti\". Táto možnosť vám umožňuje vytvoriť zoznam vopred definovaných možností, z ktorých môžu používatelia vybrať viacero hodnôt pre každú jednotlivú úlohu.",
+  "v3_134_news_main_array_item_3_title": "Polia Vlastník úlohy a Čakajúci vlastník + filter",
+  "v3_134_news_main_array_item_3_subtitle": "Teraz máte možnosť zahrnúť ďalšie polia, ktoré zobrazujú Vlastníka úlohy aj Čakajúceho vlastníka úloh. Táto aktualizácia vám umožňuje efektívne filtrovať strom úloh na základe týchto kritérií, čo poskytuje efektívnejšiu a personalizovanejšiu skúsenosť so správou úloh.",
+  "v3_134_news_features_name": "Ďalšie aktualizácie",
+  "v3_134_news_features_title": "Vylepšenia",
+  "v3_134_news_features_update_items": [
+    "1. E-maily - Súbory menšie ako 150x150 pixelov sa nepridávajú do súborov.",
+    "2. E-maily - Zobrazenie len posledných 20 e-mailov plus tlačidlo \"načítať viac\".",
+    "3. Odstránenie rozšírení a tlačidla \"obchod\"."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Archivácia projektov, Viacnásobný výber možností a ďalšie",
+  "v3_134_news_page_description": "Objavte silu archivácie projektov, flexibilitu polí s viacnásobným výberom možností a vylepšené riadenie vlastníctva úloh v JustDo v3.134."
+}

@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Nyheder",
+  "v3_134_news_main_array_item_1_title": "Arkivering",
+  "v3_134_news_main_array_item_1_subtitle": "Når der er nye projekter og nye aktiviteter, du skal arbejde med, er det nødvendigt at lægge de gamle til side og fokusere på de nye. Nu kan du arkivere disse projekter og opgaver, fjerne dem fra din daglige visning, mens du stadig har mulighed for at tilgå dem efter behov og endda ophæve arkiveringen.",
+  "v3_134_news_main_array_item_2_title": "Valgmuligheder med flere valg",
+  "v3_134_news_main_array_item_2_subtitle": "Ud over det brugerdefinerede felt \"Valgmuligheder\" har du nu typen \"Flere valgmuligheder\". Denne mulighed giver dig mulighed for at oprette en liste med foruddefinerede valgmuligheder, hvorfra brugere kan vælge flere værdier for hver enkelt opgave.",
+  "v3_134_news_main_array_item_3_title": "Opgavens ejer og afventende ejer felter + filter",
+  "v3_134_news_main_array_item_3_subtitle": "Du har nu mulighed for at inkorporere yderligere felter, der viser både opgavens ejer og afventende ejer. Denne opdatering giver dig mulighed for effektivt at filtrere dit opgavetræ baseret på disse kriterier, hvilket giver en mere strømlinet og personlig oplevelse af opgavestyring.",
+  "v3_134_news_features_name": "Andre opdateringer",
+  "v3_134_news_features_title": "Forbedringer",
+  "v3_134_news_features_update_items": [
+    "1. E-mails - Filer mindre end 150x150 pixels tilføjes ikke til filer.",
+    "2. E-mails - Vis kun de sidste 20 e-mails, plus \"indlæs flere\".",
+    "3. Fjernelse af udvidelser og \"gem\"-knap."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Projektarkivering, valgmuligheder med flere valg og mere",
+  "v3_134_news_page_description": "Opdag kraften i projektarkivering, fleksibiliteten i valgmuligheder med flere valg og forbedret styring af opgaveejerskab i JustDo v3.134."
+}

@@ -1,0 +1,18 @@
+{
+  "v3_138_news_title": "v3.138",
+  "v3_138_news_main_name": "Čo je nové",
+  "v3_138_news_main_array_item_1_title": "Prepracované okno pre pozývanie členov JustDo",
+  "v3_138_news_main_array_item_1_subtitle": "Rozšírili sme našu existujúcu funkciu pozývania o novú možnosť, ktorá vám umožňuje jedným kliknutím vybrať všetky úlohy pri pridávaní nových používateľov. Pre efektívnejší proces nastavovania veľkých projektov.",
+  "v3_138_news_main_array_item_2_title": "Vylepšená navigácia v náhľade súborov",
+  "v3_138_main_array_item_2_subtitle": "Veríme v dôležitosť plynulej navigácie. Preto sme implementovali navigáciu pomocou klávesnice v náhľadoch súborov. Teraz môžete jednoducho prechádzať súbormi len pomocou klávesnice, čo robí proces prezerania a úprav ešte plynulejším.",
+  "v3_138_news_main_array_item_3_title": "Elegantná modernizácia dizajnu",
+  "v3_138_news_main_array_item_3_subtitle": "Pre vylepšenie vizuálneho zážitku sme prešli na moderný zaoblený dizajn našich tlačidiel a vstupných polí.",
+  "v3_138_news_features_name": "Ďalšie aktualizácie",
+  "v3_138_news_features_title": "Vylepšenia",
+  "v3_138_news_features_update_items": [
+    "1. Indikátory načítavania pre nedávnu aktivitu v chate",
+    "2. Administrátori stránky s neovereným e-mailom stratia prístup k stránke správcu"
+  ],
+  "v3_138_news_page_title": "JustDo v3.138: Prepracované pozvánky, navigácia súborov, dizajn a ďalšie",
+  "v3_138_news_page_description": "Zažite vylepšené pozývanie používateľov, plynulejšiu navigáciu v náhľade súborov, elegantný upgrade dizajnu a ďalšie v JustDo v3.138."
+}

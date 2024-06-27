@@ -1,0 +1,15 @@
+{
+  "v3_142_news_title": "v3.142",
+  "v3_142_news_main_name": "Ce este nou",
+  "v3_142_news_main_array_item_1_title": "Introducerea traducerii în chineză",
+  "v3_142_news_main_array_item_1_subtitle": "Disponibil doar pe JustDo.com",
+  "v3_142_news_main_array_item_2_title": "Setați stări pentru mai multe elemente simultan",
+  "v3_142_news_main_array_item_2_subtitle": "Această actualizare permite un flux de lucru mai eficient. Acum puteți aplica modificări de stare pentru mai multe elemente într-o singură acțiune. Pe lângă setarea stărilor, această funcție poate fi utilizată pentru a actualiza în bloc diverse alte câmpuri de opțiuni. Inclusiv câmpurile personalizate ale JustDo-ului dvs. și câmpurile plugin-urilor.",
+  "v3_142_news_features_name": "Alte actualizări",
+  "v3_142_news_features_title": "Îmbunătățiri",
+  "v3_142_news_features_update_items": [
+    "1. Introducerea butoanelor 'Selectează tot' și 'Deselectează tot' în funcția noastră de Copiere Sarcini - făcând selecția câmpurilor mai rapidă și mai simplă."
+  ],
+  "v3_142_news_page_title": "JustDo v3.142: Traducere în chineză, Actualizări de stare în bloc și altele",
+  "v3_142_news_page_description": "JustDo v3.142 introduce suport pentru limba chineză, abilitatea de a seta stări pentru mai multe elemente simultan și îmbunătățiri la copierea sarcinilor."
+}
