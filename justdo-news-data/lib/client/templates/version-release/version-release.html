@@ -1,5 +1,7 @@
 <template name="version_release_news">
-  <h1 class="title">{{_ h1}}</h1>
+  {{#if h1}}
+    <h1 class="title">{{_ h1}}</h1>
+  {{/if}}
   <div class="date">{{date}}</div>
   <div class="news-content">
     {{#each news_array}}
@@ -9,7 +11,9 @@
 </template>
 
 <template name="version_release_features">
-  <h1 class="title">{{_ h1}}</h1>
+  {{#if h1}}
+    <h1 class="title">{{_ h1}}</h1>
+  {{/if}}
   <div class="updates-content">
     {{> updates_card}}
   </div>
