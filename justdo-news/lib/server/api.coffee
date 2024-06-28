@@ -80,6 +80,11 @@ _.extend JustdoNews.prototype,
     return
 
   getNewsParamFromReq: (req) ->
+    # Attempt to remove the lang prefix from the url if justdo_i18n_routes exists
     url = APP.justdo_i18n_routes?.getPathWithoutLangPrefix(req.url) or req.url
+    
+    # Remove the search part of the url
+    url = JustdoHelpers.getNormalisedUrlPathnameWithoutSearchPart url
+
     [news_category, news_id, news_template] = _.filter url.split("/"), (url_segment) -> not _.isEmpty url_segment
     return {news_category, news_id, news_template}
