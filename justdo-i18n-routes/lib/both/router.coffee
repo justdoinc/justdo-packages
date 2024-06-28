@@ -17,8 +17,12 @@ _.extend JustdoI18nRoutes.prototype,
       # and append to the existing list of params.
       # This is necessary because the route handler of the original path
       # is the one that knows how to parse the parameters, and will acutally use the params.
+      current_params = router_this.getParams()
       path_params = Router.routes[route_name].params path
-      router_this.setParams _.extend router_this.getParams(), path_params
+      for key, value of path_params
+        if key not in ["lang", "path", "hash", "query"]
+          current_params[key] = value
+      router_this.setParams current_params
       route_def.routingFunction.call router_this
     else
       Router.go path
