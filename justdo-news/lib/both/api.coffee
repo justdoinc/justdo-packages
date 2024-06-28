@@ -220,5 +220,10 @@ _.extend JustdoNews.prototype,
     return _.find @news[category], (news) -> 
       news_aliases = news.aliases or []
       return (news._id is news_id_or_alias) or (news_id_or_alias in news_aliases)
+    
+  getNewsTemplateIfExists: (category, news_id_or_alias, template_name) ->
+    if not (news = @getNewsByIdOrAlias category, news_id_or_alias)
+      return
+    return _.find news.templates, (template_obj) -> template_obj._id is template_name
 
   getAllRegisteredCategories: -> _.keys @news
