@@ -78,7 +78,7 @@ _.extend JustdoI18nRoutes.prototype,
 
     cur_route_name = router.route?.getName()
     cur_route_params = router.getParams()
-    path = Router.path cur_route_name, cur_route_params
+    path = Router.path cur_route_name, cur_route_params, {query: cur_route_params.query, hash: cur_route_params.hash}
 
     return path
 
