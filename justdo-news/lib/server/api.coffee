@@ -21,16 +21,17 @@ _.extend JustdoNews.prototype,
   _setupConnectHandlers: ->
     if not @register_news_routes
       return
-    
-    redirectToNewsUrl = (res, category, news_id, lang) ->
-      url = "/#{category}/#{news_id}"
-      if lang?
-        url = APP.justdo_i18n_routes.i18nPath url, lang
-      res.writeHead 302,
-        Location: url
+
+    URL = JustdoHelpers.getURL()
+
+    redirectToNewsUrl = (http_code, url_obj, res) ->
+      res.writeHead http_code,
+        Location: url_obj
       res.end()
       return
     WebApp.connectHandlers.use (req, res, next) =>
+      # The construction of url_obj is necessary to keep the search params and other parts of the url intact when redirecting
+      url_obj = new URL req.url, JustdoHelpers.getRootUrl()
       lang = APP.justdo_i18n_routes?.getUrlLangFromReq(req)
 
       {news_category, news_id, news_template} = @getNewsParamFromReq req
@@ -45,7 +46,12 @@ _.extend JustdoNews.prototype,
       
       # If there's no news_id, redirect to the most recent news under the category
       if _.isEmpty news_id
-        redirectToNewsUrl res, news_category, most_recent_news_id, lang
+        redirect_url = "/#{news_category}/#{most_recent_news_id}"
+        if lang?
+          redirect_url = APP.justdo_i18n_routes.i18nPath redirect_url, lang
+
+        url_obj.pathname = redirect_url
+        redirectToNewsUrl 302, url_obj, res
         return
       
       # If news_id or news_template is invalid, return 404
@@ -64,12 +70,12 @@ _.extend JustdoNews.prototype,
       
       # If the news_id is default, redirect to the path without news_template
       if news_template is JustdoNews.default_news_template
-        url = "/#{news_category}/#{news_id}"
+        redirect_url = "/#{news_category}/#{news_id}"
         if lang?
-          url = APP.justdo_i18n_routes.i18nPath url, lang
-        res.writeHead 301,
-          Location: url
-        res.end()
+          redirect_url = APP.justdo_i18n_routes.i18nPath redirect_url, lang
+          
+        url_obj.pathname = redirect_url
+        redirectToNewsUrl 301, url_obj, res
         return
 
       # Everything is valid. Continue.
