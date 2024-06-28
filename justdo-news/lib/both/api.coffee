@@ -60,21 +60,31 @@ _.extend JustdoNews.prototype,
       title_i18n: (lang, req) ->
         if Meteor.isClient
           news_id = Router.current()?.getParams()?.news_id
+          news_template = Router.current()?.getParams()?.news_template
         if Meteor.isServer
-          {news_id} = self.getNewsParamFromReq req
-        
+          {news_id, new_template} = self.getNewsParamFromReq req
+
+        if not news_template?
+          news_template = JustdoNews.default_news_template
+
+        news_template_doc = self.getNewsTemplateIfExists category, news_id, news_template
         fallback_title = APP.justdo_seo.getDefaultPageTitle lang
 
-        return APP.justdo_i18n.getI18nTextOrFallback {i18n_key: "#{news_id.replace /-/g, "_"}_news_page_title", fallback_text: fallback_title, lang: lang}
+        return APP.justdo_i18n.getI18nTextOrFallback {i18n_key: news_template_doc.page_title, fallback_text: fallback_title, lang: lang}
       description_i18n: (lang, req) ->
         if Meteor.isClient
           news_id = Router.current()?.getParams()?.news_id
+          news_template = Router.current()?.getParams()?.news_template
         if Meteor.isServer
-          {news_id} = self.getNewsParamFromReq req
-        
+          {news_id, new_template} = self.getNewsParamFromReq req
+
+        if not news_template?
+          news_template = JustdoNews.default_news_template
+
+        news_template_doc = self.getNewsTemplateIfExists category, news_id, news_template
         fallback_description = APP.justdo_seo.getDefaultPageDescription lang
 
-        return APP.justdo_i18n.getI18nTextOrFallback {i18n_key: "#{news_id.replace /-/g, "_"}_news_page_description", fallback_text: fallback_description, lang: lang}
+        return APP.justdo_i18n.getI18nTextOrFallback {i18n_key: news_template_doc.page_description, fallback_text: fallback_description, lang: lang}
 
     routes =
       "/#{category}":
