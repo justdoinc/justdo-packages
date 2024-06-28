@@ -121,7 +121,13 @@ Template.news.helpers
     
     if not template.template_data?
       template.template_data = {}
-    template.template_data.date = news_doc.date
+    
+    _.extend template.template_data,
+      date: news_doc.date
+      page_title: template.page_title
+      page_description: template.page_description
+      h1: template.h1
+
     return template
 
   getNewsPath: ->
