@@ -5,7 +5,7 @@ Template.news.onCreated ->
 
   @active_news_id_rv = new ReactiveVar(@data?.news_id or most_recent_news_id)
 
-  @active_news_tab_rv = new ReactiveVar(@data?.tab_id or "main")
+  @active_news_tab_rv = new ReactiveVar(@data?.tab_id or JustdoNews.default_news_template)
 
   @show_navigation_bar = @data?.show_navigation_bar
   if not @show_navigation_bar?
@@ -33,7 +33,7 @@ Template.news.onCreated ->
 
       params = Router.current()?.params
       @active_news_id_rv.set params?.news_id
-      @active_news_tab_rv.set params?.news_template or "main"
+      @active_news_tab_rv.set params?.news_template or JustdoNews.default_news_template
 
       return
 

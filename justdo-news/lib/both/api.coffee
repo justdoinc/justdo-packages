@@ -122,7 +122,7 @@ _.extend JustdoNews.prototype,
           news_id = @params.news_id.toLowerCase()
           news_template = @params.news_template
 
-          if news_template is "main"
+          if news_template is JustdoNews.default_news_template
             @redirect "/#{category}/#{news_id}"
 
           if not self.getNewsTemplateIfExists(category, news_id, news_template)?
@@ -137,7 +137,7 @@ _.extend JustdoNews.prototype,
           mapGenerator: ->
             for news_doc in self.getAllNewsByCategory category
               for template_obj in news_doc.templates
-                if (news_template_id = template_obj._id) isnt "main"
+                if (news_template_id = template_obj._id) isnt JustdoNews.default_news_template
                   ret = 
                     url: "/#{category}/#{news_doc._id}/#{news_template_id}"
                   yield ret
@@ -197,7 +197,7 @@ _.extend JustdoNews.prototype,
         {self: @, throw_on_error: true}
       )
     news_obj = cleaned_val
-    if not (_.find news_obj?.templates, (template_obj) -> template_obj._id is "main")?
+    if not (_.find news_obj?.templates, (template_obj) -> template_obj._id is JustdoNews.default_news_template)?
       throw @_error "no-main-template"
 
     if not _.has @news, category
