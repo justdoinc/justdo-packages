@@ -22,6 +22,9 @@ APP.justdo_news.registerNews "news",
         ]
       }
       name: "v3_142_news_main_name"
+      page_title: "v3_142_news_page_title"
+      page_description: "v3_142_news_page_description"
+      h1: "v3_142_news_page_title"
     },
     {
       _id: "features"
@@ -31,5 +34,8 @@ APP.justdo_news.registerNews "news",
         update_items: "v3_142_news_features_update_items"
       }
       name: "v3_142_news_features_name"
+      page_title: "v3_142_news_page_title"
+      page_description: "v3_142_news_page_description"
+      h1: "v3_142_news_page_title"
     }
   ]

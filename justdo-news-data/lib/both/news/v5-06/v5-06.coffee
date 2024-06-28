@@ -22,5 +22,8 @@ APP.justdo_news.registerNews "news",
         ]
       }
       name: "justdo_ai_news_main_name"
+      page_title: "justdo_ai_news_page_title"
+      page_description: "justdo_ai_news_page_description"
+      h1: "justdo_ai_news_page_title"
     }
   ]
