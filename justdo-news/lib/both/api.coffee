@@ -161,6 +161,18 @@ _.extend JustdoNews.prototype,
       type: Object
       blackbox: true
       optional: true
+    page_title:
+      label: "Template Page Title"
+      type: String
+      optional: true
+    page_description:
+      label: "Template Page Description"
+      type: String
+      optional: true
+    h1:
+      label: "Template H1"
+      type: String
+      optional: true
   _registerNewsSchema: new SimpleSchema
     _id:
       label: "News ID"
