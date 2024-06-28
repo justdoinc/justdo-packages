@@ -61,6 +61,16 @@ _.extend JustdoNews.prototype,
         # XXX We should probably return a nicely-styled static 404 page here, like the one on Youtube
         res.end "404 Not Found"
         return
+      
+      # If the news_id is an alias, redirect to the actual news
+      if news_template is JustdoNews.default_news_template
+        url = "/#{news_category}/#{news_id}"
+        if lang?
+          url = APP.justdo_i18n_routes.i18nPath url, lang
+        res.writeHead 301,
+          Location: url
+        res.end()
+        return
 
       # Everything is valid. Continue.
       next()
