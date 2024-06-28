@@ -40,6 +40,10 @@ Template.news.onCreated ->
   @isRouterNavigation = -> @router_navigation and @register_news_routes
 
   @getNewsPath = (template_name, template_data) ->
+    # If the news_template is the default template, we don't need to include it in the path.
+    if template_data.news_template is JustdoNews.default_news_template
+      template_name = template_name.replace "_with_news_id_and_template", "_with_news_id"
+
     news_path = Router.path template_name, template_data
     news_path = APP.justdo_i18n_routes?.i18nPath(news_path) or news_path
 
