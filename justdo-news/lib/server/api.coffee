@@ -62,7 +62,7 @@ _.extend JustdoNews.prototype,
         res.end "404 Not Found"
         return
       
-      # If the news_id is an alias, redirect to the actual news
+      # If the news_id is default, redirect to the path without news_template
       if news_template is JustdoNews.default_news_template
         url = "/#{news_category}/#{news_id}"
         if lang?
