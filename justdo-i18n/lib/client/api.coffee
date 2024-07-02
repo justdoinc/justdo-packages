@@ -5,6 +5,17 @@ _.extend JustdoI18n.prototype,
     @force_ltr_routes = new Set()
     @force_ltr_routes_dep = new Tracker.Dependency()
 
+    # Use of new Map() instead of {} because it maintains the order of insertion
+    @cur_page_i18n_keys = new Map()
+    prev_path = Iron.Location.get().path
+    # This tracker is to clear cur_page_i18n_keys from the previous page when the page changes.
+    @cur_page_i18n_keys_tracker = Tracker.autorun =>
+      cur_path = Iron.Location.get().path
+      if prev_path isnt cur_path
+        @_clearCurPageI18nKeys()
+        prev_path = cur_path  
+      return
+
     # XXX The APP.executeAfterAppClientCode wrap is necessary because on the first page load,
     # XXX TAPi18n's list of supported languages may not be fully initialized as specified in project-tap.i18n.
     # XXX Therefore we wrap the tracker with APP.executeAfterAppClientCode to give extra time for TAPi18n to be fully initialized.
@@ -48,9 +59,11 @@ _.extend JustdoI18n.prototype,
 
     @_setupPlaceholderItems()
     @_registerGlobalTemplateHelpers()
+    @_overrideTapI18nHelper()
 
     @onDestroy =>
       @tap_i18n_set_lang_tracker?.stop?()
+      @cur_page_i18n_keys_tracker?.stop?()
       return
 
     return
@@ -93,6 +106,59 @@ _.extend JustdoI18n.prototype,
       return @getI18nTextOrFallback options
     
     Template.registerHelper "isRtl", (route_name) => @isRtl route_name
+
+  _overrideTapI18nHelper: ->
+    # This is to override TAPi18n.__ and the {{_}} helpers to gather all the i18n keys used in the page, and which template uses the key, to @cur_page_i18n_keys.
+    # @cur_page_i18n_keys is used in getProofreaderDoc.
+    self = @
+
+    # This is a hack to allow us overriding the "_" helper in templates, 
+    # so that we can gather all the i18n keys used in the current page by the order they are used,
+    # and which template uses the key.
+    # Blaze.de/registerHelper cannot be used because TAPi18n will register the helper again and override our override.
+    originalRegisterHelper = Blaze.registerHelper
+    Blaze.registerHelper = (name, func) ->
+      if name is "_"
+        overriden_func = (key, ...args) ->
+          lang = Tracker.nonreactive -> self.getLang()
+          template = Template.instance().view.name.replace "Template.", ""
+          self._addCurPageI18nKeys key, template
+
+          return func key, ...args 
+          
+        return originalRegisterHelper name, overriden_func
+      
+      return originalRegisterHelper name, func
+    
+    # This override is to allow us to gather all the i18n keys used in the current page with TAPi18n.__ by the order they are used,
+    # and potentially which template uses the key.
+    originalTapI18nHelper = TAPi18n.__
+    TAPi18n.__ = (key, options, lang_tag) ->
+      # If TAPi18n.__ is called inside a template helper, we can get the template name from the template instance.
+      template = Template.instance()?.view?.name.replace "Template.", ""
+      self._addCurPageI18nKeys key, template
+
+      return originalTapI18nHelper key, options, lang_tag
+
+  _addCurPageI18nKeys: (i18n_key, template) -> 
+    is_i18n_key_logged = @cur_page_i18n_keys.has i18n_key
+    is_logged_i18n_key_has_template = @cur_page_i18n_keys.get(i18n_key)?
+    
+    # If the key is not logged, log it
+    if not is_i18n_key_logged
+      @cur_page_i18n_keys.set i18n_key, template
+      return
+    
+    # If the key is logged but the template is not, log the template
+    if template? and not is_logged_i18n_key_has_template
+      @cur_page_i18n_keys.set i18n_key, template
+      return
+
+    return
+    
+  _getCurPageI18nKeys: -> @cur_page_i18n_keys
+
+  _clearCurPageI18nKeys: -> @cur_page_i18n_keys.clear()
 
   setLang: (lang, options) ->
     # options:
