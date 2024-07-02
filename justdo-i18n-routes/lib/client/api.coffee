@@ -90,4 +90,4 @@ _.extend JustdoI18nRoutes.prototype,
     
     cur_path_without_lang_prefix = "/#{router.getParams().path or ""}"
 
-    return Router.routes._byPath[cur_path_without_lang_prefix]?.getName()
+    return JustdoHelpers.getRouteNameFromPath cur_path_without_lang_prefix
