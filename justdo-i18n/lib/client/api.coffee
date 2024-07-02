@@ -215,3 +215,98 @@ _.extend JustdoI18n.prototype,
       return false
 
     return @isLangRtl @getLang()
+
+  ###
+    Generates a CSV document for proofreading translations.
+
+    The document includes translations based on the current language, suggested fixes,
+    original English text, and unique identifiers for each translation key.
+
+    @param {Object} [options] - Optional parameters for customizing the output.
+    @param {Array<string>} [options.exclude_templates] - An array of template names to exclude from the output.
+    @param {Array<string|RegExp>} [options.include_keys] - An array of strings or regular expressions to filter the keys included in the output.
+
+    @example
+      # Download a proofreading document for all translations used in current page.
+      APP.justdo_i18n.getProofreaderDoc()
+
+    @example
+      # Download a proofreading document excluding translations used from the header, footer, and main_menu templates.
+      APP.justdo_i18n.getProofreaderDoc exclude_templates: ["header", "footer", "main_menu"]
+
+    @example
+      # Download a proofreading document including translations with keys matching specific patterns, on top of all translations used in current page
+      APP.justdo_i18n.getProofreaderDoc include_keys: ["ai_wizard_input_examples", /main_page.*/]
+  ###
+  getProofreaderDoc: (options) ->
+    cur_route_name = APP.justdo_i18n_routes?.getCurrentRouteName() or Router.current().route.getName()
+
+    default_lang = JustdoI18n.default_lang
+    default_lang_name = TAPi18n.getLanguages()[default_lang].name
+
+    lang = @getLang()
+    lang_name = TAPi18n.getLanguages()[lang].name
+
+    file_name = "#{cur_route_name}-#{lang}.csv"
+
+    header_row = [lang_name, "Suggested fix", default_lang_name, "Key"]
+    csv_rows = [header_row]
+
+    pushKeyToCsvRows = (key, template) ->
+      if options?.excluded_templates? and (template in options.excluded_templates)
+        return
+
+      default_lang_string = TAPi18n.__ key, {}, default_lang
+      translated_string = TAPi18n.__ key, {}, lang
+
+      # Values inside i18n files can be an array. 
+      # If it is, default_lang_string and translated_string will be a string of the array joined by "\n".
+      # Therefore to check whether the original value is an array, 
+      # we'll have to access the original value from the i18n files directly via TAPi18next.options.resStore. 
+      if _.isArray (default_lang_array = TAPi18next.options.resStore[default_lang].project[key])
+        translated_array = TAPi18next.options.resStore[lang].project[key]
+        for default_lang_array_element, i in default_lang_array
+          translated_array_element = translated_array[i]
+          csv_rows.push [translated_array_element, "", default_lang_array_element, key + "[" + i + "]"]
+      else
+        csv_rows.push [translated_string, "", default_lang_string, key]
+
+      return
+
+    # Include i18n keys that are used in the current page without those used by templates in the list of excluded_templates
+    @_getCurPageI18nKeys().forEach (template, key) -> pushKeyToCsvRows key, template
+    
+    if _.isArray options?.include_keys
+      for include_key in options.include_keys
+        if _.isString include_key
+          pushKeyToCsvRows include_key
+        else if _.isRegExp include_key
+          for key of TAPi18next.options.resStore[lang].project
+            if include_key.test key
+              pushKeyToCsvRows key
+    
+    # Below are heavily influenced by exportCSV under justdo-print-grid package.
+    # universalBOM needs to force Excel use UTF-8 for CSV
+    universalBOM = "\uFEFF"
+    csv_string = universalBOM
+    new_line = "\u000d\n"
+    for row in csv_rows
+      csv_string += _.map(row, (val) -> "\"" + String(val or "").replace(/"/g, "\"\"") + "\"").join(",") + new_line
+  
+    if window.Blob && window.navigator.msSaveOrOpenBlob
+      csv_blob_obj = new Blob([csv_string])
+
+      window.navigator.msSaveOrOpenBlob(csv_blob_obj, file_name)
+    else
+      # Create invisible link to set file name
+      encoded_uri = "data:text/csv;charset=utf-8," + encodeURIComponent(csv_string)
+      download_link = document.createElement("a")
+      download_link.target = '_blank'
+      download_link.href = encoded_uri
+      download_link.download = file_name
+
+      document.body.appendChild(download_link)
+      download_link.click()
+      document.body.removeChild(download_link)
+
+    return
