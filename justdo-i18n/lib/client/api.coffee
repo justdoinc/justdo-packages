@@ -7,13 +7,10 @@ _.extend JustdoI18n.prototype,
 
     # Use of new Map() instead of {} because it maintains the order of insertion
     @cur_page_i18n_keys = new Map()
-    prev_path = Iron.Location.get().path
     # This tracker is to clear cur_page_i18n_keys from the previous page when the page changes.
     @cur_page_i18n_keys_tracker = Tracker.autorun =>
-      cur_path = Iron.Location.get().path
-      if prev_path isnt cur_path
-        @_clearCurPageI18nKeys()
-        prev_path = cur_path  
+      Router.current() # For reactivity. We want to clear cur_page_i18n_keys when the page changes.
+      @_clearCurPageI18nKeys()
       return
     @onDestroy =>
       @cur_page_i18n_keys_tracker?.stop?()
