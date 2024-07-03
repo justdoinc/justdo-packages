@@ -245,7 +245,7 @@ _.extend JustdoI18n.prototype,
 
     lang = @getLang()
 
-    file_name = "#{cur_route_name}-#{lang}.csv"
+    file_name = "#{cur_route_name}.#{lang}.csv"
 
     header_row = ["Translation", default_lang_name, "Key"]
     csv_rows = [header_row]
