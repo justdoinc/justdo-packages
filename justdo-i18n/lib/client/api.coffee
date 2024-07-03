@@ -277,13 +277,14 @@ _.extend JustdoI18n.prototype,
     # Include i18n keys that are used in the current page without those used by templates in the list of excluded_templates
     @_getCurPageI18nKeys().forEach (templates_set, key) -> pushKeyToCsvRows key, templates_set
     
+    isKeyAlreadyAdded = (key) => @_getCurPageI18nKeys().has key
     if _.isArray options?.include_keys
       for include_key in options.include_keys
-        if _.isString include_key
+        if (not isKeyAlreadyAdded include_key) and (_.isString include_key)
           pushKeyToCsvRows include_key
         else if _.isRegExp include_key
           for key of TAPi18next.options.resStore[lang].project
-            if include_key.test key
+            if (not isKeyAlreadyAdded key) and (include_key.test key)
               pushKeyToCsvRows key
     
     # Below are heavily influenced by exportCSV under justdo-print-grid package.
