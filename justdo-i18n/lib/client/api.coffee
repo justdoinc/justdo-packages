@@ -215,26 +215,31 @@ _.extend JustdoI18n.prototype,
 
     return @isLangRtl @getLang()
 
-    # Generates a CSV document for proofreading translations.
+  # Generates a CSV document for proofreading translations.
 
-    # The document includes translations based on the current language, suggested fixes,
-    # original English text, and unique identifiers for each translation key.
+  # The document includes translations based on the current language, suggested fixes,
+  # original English text, and unique identifiers for each translation key.
 
-    # @param {Object} [options] - Optional parameters for customizing the output.
-    # @param {Array<string>} [options.exclude_templates] - An array of template names to exclude from the output.
-    # @param {Array<string|RegExp>} [options.include_keys] - An array of strings or regular expressions to filter the keys included in the output.
+  # @param {Object} [options] - Optional parameters for customizing the output.
+  # @param {Array<string>} [options.exclude_templates] - An array of template names to exclude from the output.
+  # @param {Array<string|RegExp>} [options.include_keys] - An array of strings or regular expressions to filter the keys included in the output.
+  # @param {Array<string|RegExp>} [options.exclude_keys] - An array of translation keys to exclude from the output.
 
-    # @example
-    #   Download a proofreading document for all translations used in current page.
-    #   APP.justdo_i18n.getProofreaderDoc()
+  # @example
+  #   Download a proofreading document for all translations used in current page.
+  #   APP.justdo_i18n.getProofreaderDoc()
 
-    # @example
-    #   Download a proofreading document excluding translations used from the header, footer, and main_menu templates.
-    #   APP.justdo_i18n.getProofreaderDoc exclude_templates: ["header", "footer", "main_menu"]
+  # @example
+  #   Download a proofreading document excluding translations used from the header, footer, and main_menu templates.
+  #   APP.justdo_i18n.getProofreaderDoc exclude_templates: ["header", "footer", "main_menu"]
 
-    # @example
-    #   Download a proofreading document including translations with keys matching specific patterns, on top of all translations used in current page
-    #   APP.justdo_i18n.getProofreaderDoc include_keys: ["ai_wizard_input_examples", /main_page.*/]
+  # @example
+  #   Download a proofreading document including translations with keys matching specific patterns, on top of all translations used in current page
+  #   APP.justdo_i18n.getProofreaderDoc include_keys: ["ai_wizard_input_examples", /main_page.*/]
+
+  # @example
+  #   Download a proofreading document excluding translations with specific keys.
+  #   APP.justdo_i18n.getProofreaderDoc exclude_keys: ["key1", "key2"]
   getProofreaderDoc: (options) ->
     cur_route_name = APP.justdo_i18n_routes?.getCurrentRouteName() or Router.current().route.getName()
 
@@ -249,6 +254,14 @@ _.extend JustdoI18n.prototype,
     csv_rows = [header_row]
 
     pushKeyToCsvRows = (key, templates_set) ->
+      # Check whether the key is excluded
+      if options?.exclude_keys?
+        should_key_be_excluded = false
+        for exclude_key in options.exclude_keys
+          if (exclude_key is key) or (exclude_key.test?(key))
+            return
+    
+      # Check whether the key is used only by excluded templates
       if (options?.excluded_templates?) and (templates_set instanceof Set)
         templates = _.map Array.from(templates_set), (template_name) -> template_name.replace "Template.", ""
 
