@@ -15,6 +15,9 @@ _.extend JustdoI18n.prototype,
         @_clearCurPageI18nKeys()
         prev_path = cur_path  
       return
+    @onDestroy =>
+      @cur_page_i18n_keys_tracker?.stop?()
+      return
 
     # XXX The APP.executeAfterAppClientCode wrap is necessary because on the first page load,
     # XXX TAPi18n's list of supported languages may not be fully initialized as specified in project-tap.i18n.
@@ -52,7 +55,10 @@ _.extend JustdoI18n.prototype,
 
         $("html").attr "lang", lang
         return
-      
+      @onDestroy =>
+        @tap_i18n_set_lang_tracker?.stop?()
+        return
+
       return
 
     @_setupBeforeUserSignUpHook()
@@ -60,11 +66,6 @@ _.extend JustdoI18n.prototype,
     @_setupPlaceholderItems()
     @_registerGlobalTemplateHelpers()
     @_overrideTapI18nHelper()
-
-    @onDestroy =>
-      @tap_i18n_set_lang_tracker?.stop?()
-      @cur_page_i18n_keys_tracker?.stop?()
-      return
 
     return
 
