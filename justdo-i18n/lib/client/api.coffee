@@ -142,17 +142,16 @@ _.extend JustdoI18n.prototype,
 
   _addCurPageI18nKeys: (i18n_key, template) -> 
     is_i18n_key_logged = @cur_page_i18n_keys.has i18n_key
-    is_logged_i18n_key_has_template = @cur_page_i18n_keys.get(i18n_key)?
     
     # If the key is not logged, log it
     if not is_i18n_key_logged
-      @cur_page_i18n_keys.set i18n_key, template
-      return
-    
-    # If the key is logged but the template is not, log the template
-    if template? and not is_logged_i18n_key_has_template
-      @cur_page_i18n_keys.set i18n_key, template
-      return
+      @cur_page_i18n_keys.set i18n_key, new Set()
+
+    # If template exists, add it to the set of templates that use the key
+    if template?
+      templates_set = @cur_page_i18n_keys.get i18n_key
+      templates_set.add template
+      @cur_page_i18n_keys.set i18n_key, templates_set
 
     return
     
@@ -243,16 +242,20 @@ _.extend JustdoI18n.prototype,
     default_lang_name = TAPi18n.getLanguages()[default_lang].name
 
     lang = @getLang()
-    lang_name = TAPi18n.getLanguages()[lang].name
 
     file_name = "#{cur_route_name}-#{lang}.csv"
 
     header_row = ["Translation", default_lang_name, "Key"]
     csv_rows = [header_row]
 
-    pushKeyToCsvRows = (key, template) ->
-      if options?.excluded_templates? and (template.replace("Template.", "") in options.excluded_templates)
-        return
+    pushKeyToCsvRows = (key, templates_set) ->
+      if (options?.excluded_templates?) and (templates_set instanceof Set)
+        templates = _.map Array.from(templates_set), (template_name) -> template_name.replace "Template.", ""
+
+        if not _.isEmpty templates
+          is_key_used_only_by_excluded_template = _.isEmpty _.difference templates, options.excluded_templates
+          if is_key_used_only_by_excluded_template
+            return
 
       default_lang_string = TAPi18n.__ key, {}, default_lang
       translated_string = TAPi18n.__ key, {}, lang
@@ -272,7 +275,7 @@ _.extend JustdoI18n.prototype,
       return
 
     # Include i18n keys that are used in the current page without those used by templates in the list of excluded_templates
-    @_getCurPageI18nKeys().forEach (template, key) -> pushKeyToCsvRows key, template
+    @_getCurPageI18nKeys().forEach (templates_set, key) -> pushKeyToCsvRows key, templates_set
     
     if _.isArray options?.include_keys
       for include_key in options.include_keys
