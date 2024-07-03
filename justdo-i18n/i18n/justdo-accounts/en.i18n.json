@@ -1,9 +1,9 @@
 {
-  "password-must": "Password must:",
-  "too-short": "Consist of at least %d characters",
-  "missing-number": "Have at least one number",
-  "missing-special-sign": "Have at least one special character",
-  "atleast-one-lowercase": "Have at least one lower case English letter",
-  "atleast-one-uppercase": "Have at least one capital English letter",
-  "too-similar": "Not include your name, or parts of your email"
+  "password_requirements_password_must": "Password must:",
+  "password_requirements_too_short": "Consist of at least %d characters",
+  "password_requirements_missing_number": "Have at least one number",
+  "password_requirements_special_sign": "Have at least one special character",
+  "password_requirements_atleast_one_lowercase": "Have at least one lower case English letter",
+  "password_requirements_atleast_one_uppercase": "Have at least one capital English letter",
+  "password_requirements_too_similar": "Not include your name, or parts of your email"
 }
