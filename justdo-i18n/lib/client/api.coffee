@@ -120,7 +120,6 @@ _.extend JustdoI18n.prototype,
     Blaze.registerHelper = (name, func) ->
       if name is "_"
         overriden_func = (key, ...args) ->
-          lang = Tracker.nonreactive -> self.getLang()
           template = Template.instance().view.name.replace "Template.", ""
           self._addCurPageI18nKeys key, template
 
