@@ -245,7 +245,7 @@ _.extend JustdoI18n.prototype,
 
     file_name = "#{cur_route_name}-#{lang}.csv"
 
-    header_row = [lang_name, "Suggested fix", default_lang_name, "Key"]
+    header_row = ["Translation", default_lang_name, "Key"]
     csv_rows = [header_row]
 
     pushKeyToCsvRows = (key, template) ->
@@ -263,9 +263,9 @@ _.extend JustdoI18n.prototype,
         translated_array = TAPi18next.options.resStore[lang].project[key]
         for default_lang_array_element, i in default_lang_array
           translated_array_element = translated_array[i]
-          csv_rows.push [translated_array_element, "", default_lang_array_element, key + "[" + i + "]"]
+          csv_rows.push [translated_array_element, default_lang_array_element, key + "[" + i + "]"]
       else
-        csv_rows.push [translated_string, "", default_lang_string, key]
+        csv_rows.push [translated_string, default_lang_string, key]
 
       return
 
