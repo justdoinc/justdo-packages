@@ -121,6 +121,7 @@ _.extend JustdoI18n.prototype,
     Blaze.registerHelper = (name, func) ->
       if name is "_"
         overriden_func = (key, ...args) ->
+          template = Template.instance().view.name
           self._addCurPageI18nKeys key, template
 
           return func key, ...args 
@@ -134,6 +135,7 @@ _.extend JustdoI18n.prototype,
     originalTapI18nHelper = TAPi18n.__
     TAPi18n.__ = (key, options, lang_tag) ->
       # If TAPi18n.__ is called inside a template helper, we can get the template name from the template instance.
+      template = Template.instance()?.view?.name
       self._addCurPageI18nKeys key, template
 
       return originalTapI18nHelper key, options, lang_tag
