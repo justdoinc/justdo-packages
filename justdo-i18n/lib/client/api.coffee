@@ -293,7 +293,7 @@ _.extend JustdoI18n.prototype,
         if (not isKeyAlreadyAdded include_key) and (_.isString include_key)
           pushKeyToCsvRows include_key
         else if _.isRegExp include_key
-          for key of TAPi18next.options.resStore[lang].project
+          for key of TAPi18next.options.resStore[default_lang].project
             if (not isKeyAlreadyAdded key) and (include_key.test key)
               pushKeyToCsvRows key
     
