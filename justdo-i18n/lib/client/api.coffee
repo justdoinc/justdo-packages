@@ -121,7 +121,6 @@ _.extend JustdoI18n.prototype,
     Blaze.registerHelper = (name, func) ->
       if name is "_"
         overriden_func = (key, ...args) ->
-          template = Template.instance().view.name.replace "Template.", ""
           self._addCurPageI18nKeys key, template
 
           return func key, ...args 
@@ -135,7 +134,6 @@ _.extend JustdoI18n.prototype,
     originalTapI18nHelper = TAPi18n.__
     TAPi18n.__ = (key, options, lang_tag) ->
       # If TAPi18n.__ is called inside a template helper, we can get the template name from the template instance.
-      template = Template.instance()?.view?.name.replace "Template.", ""
       self._addCurPageI18nKeys key, template
 
       return originalTapI18nHelper key, options, lang_tag
@@ -251,7 +249,7 @@ _.extend JustdoI18n.prototype,
     csv_rows = [header_row]
 
     pushKeyToCsvRows = (key, template) ->
-      if options?.excluded_templates? and (template in options.excluded_templates)
+      if options?.excluded_templates? and (template.replace("Template.", "") in options.excluded_templates)
         return
 
       default_lang_string = TAPi18n.__ key, {}, default_lang
