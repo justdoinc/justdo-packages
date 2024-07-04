@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "מחובר",
+  "meteor_status_connecting": "מתחבר...",
+  "meteor_status_failed": "החיבור לשרת נכשל",
+  "meteor_status_waiting": "ממתין לחיבור לשרת,",
+  "meteor_status_offline": "מצב לא מקוון.",
+  "meteor_status_reconnect_in": "מנסה שוב בעוד שנייה...",
+  "meteor_status_reconnect_in_plural": "מנסה שוב בעוד __count__ שניות...",
+  "meteor_status_try_now_waiting": "נסה עכשיו",
+  "meteor_status_try_now_offline": "התחבר שוב"
+}

@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "אנא הכנס את שמך",
+  "err_first_name_too_long": "השם הפרטי לא יכול לעלות על 30 תווים",
+  "err_last_name_too_long": "שם המשפחה לא יכול לעלות על 30 תווים",
+  "err_last_name_empty": "אנא הכנס את שם המשפחה שלך",
+  "err_email_invalid": "אנא הכנס כתובת דואר אלקטרוני תקינה",
+  "err_email_empty": "אנא הכנס את כתובת הדואר האלקטרוני שלך",
+  "err_password_empty": "אנא הכנס את הסיסמה שלך",
+  "err_incorrect_password": "סיסמה שגויה. לאיפוס הסיסמה, ניתן ללחוץ על כפתור \"שכחת סיסמה?\"",
+  "err_no_password_set": "להגדרת הסיסמה שלך, אנא לחץ על כפתור \"שכחת סיסמה?\"",
+  "err_password_too_similar": "הסיסמה דומה מדי לשם הפרטי, שם המשפחה או כתובת הדואר האלקטרוני שלך",
+  "err_retype_password_empty": "אנא הקלד את הסיסמה שוב",
+  "err_retype_password_not_match": "הסיסמאות אינן תואמות",
+  "err_agree_ts_and_pp_missing": "עליך לקרוא ולהסכים לתנאי השימוש ומדיניות הפרטיות שלנו כדי להמשיך",
+  "err_cant_login": "לא ניתן להתחבר"
+}

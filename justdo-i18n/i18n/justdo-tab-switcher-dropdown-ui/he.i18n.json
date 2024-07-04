@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "החלף תצוגה",
+  "tab_switcher_dropdown_search_placeholder": "תצוגות",
+  "tab_switcher_main_view_label": "תצוגה ראשית",
+  "tab_switcher_my_favorites_label": "המועדפים שלי",
+  "tab_switcher_my_due_list_label": "רשימת המשימות שלי",
+  "tab_switcher_recently_label": "לאחרונה",
+  "tab_switcher_recently_completed_label": "הושלמו",
+  "tab_switcher_recently_updated_label": "עודכנו",
+  "tab_switcher_recently_created_label": "נוצרו",
+  "tab_switcher_miscellaneous_label": "שונות",
+  "tab_switcher_task_ownershipt_transfers_label": "העברות בעלות על משימות",
+  "tab_switcher_ticket_queues_label": "תורי כרטיסים",
+  "tab_switcher_members_due_lists_label": "רשימות משימות של חברים",
+  "tab_switcher_all_members_due_list_label": "רשימת משימות של כל החברים",
+  "tab_switcher_projects_section_label": "פרויקטים",
+  "tab_switcher_projects_label": "פרויקטים"
+}

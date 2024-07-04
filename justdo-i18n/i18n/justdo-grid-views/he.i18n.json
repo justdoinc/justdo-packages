@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "תצוגות רשת",
+  "grid_views_search_placeholder": "חיפוש תצוגות",
+  "grid_views_no_view_label": "אין תצוגות",
+  "grid_views_add_current_view_label": "הוסף תצוגה נוכחית",
+  "grid_views_rename_label": "שינוי שם",
+  "grid_views_update_label": "עדכון",
+  "grid_views_remove_label": "הסרה",
+  "grid_views_share_label": "שיתוף",
+  "grid_views_unshare_label": "ביטול שיתוף",
+  "grid_views_shared_label": "משותף"
+}

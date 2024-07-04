@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "הסר משימות",
+  "remove_from_parent_label": "הסר מהמשימה ההורה",
+  "remove_with_subtree_label": "הסר עם תת-העץ",
+  "archive_task_label": "ארכב משימה",
+  "unarchive_task_label": "בטל ארכוב משימה",
+  "reorder_children_by_label": "סדר מחדש משימות משנה לפי",
+  "zoom_in_label": "הגדל תצוגה",
+  "projects_label": "פרויקטים",
+  "set_as_a_project_label": "הגדר כפרויקט",
+  "unset_as_a_project_label": "בטל הגדרה כפרויקט",
+  "close_project_label": "סגור פרויקט",
+  "repoen_project_label": "פתח מחדש פרויקט",
+  "add_to_project_label": "הוסף לפרויקט",
+  "apply_value_to_subtree": "החל __value__ על תת-העץ",
+  "bulk_set_options_label": "הגדר"
+}

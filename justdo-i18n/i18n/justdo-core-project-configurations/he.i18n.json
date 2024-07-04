@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "מצבים פעילים",
+  "project_configurations_no_active_states_label": "אין מצבים פעילים",
+  "project_configurations_hidden_states_label": "מצבים מוסתרים",
+  "project_configurations_no_hidden_states_label": "אין מצבים מוסתרים",
+  "project_configurations_type_state_name_placeholder": "הקלד שם מצב",
+  "project_configurations_default_title_for_this_state_label": "כותרת ברירת מחדל למצב זה",
+  "project_configurations_restore_state_label": "שחזר מצב",
+  "project_configurations_create_extended_state_label": "צור מצב מורחב",
+  "project_configurations_hide_state": "הסתר מצב",
+  "project_configurations_remove_extended_state": "הסר מצב מורחב",
+  "new_custom_state_default_title": "__state__ - מורחב"
+}

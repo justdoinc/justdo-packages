@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "הסיסמה חייבת:",
+  "password_requirements_too_short": "להכיל לפחות %d תווים",
+  "password_requirements_missing_number": "לכלול לפחות ספרה אחת",
+  "password_requirements_special_sign": "לכלול לפחות תו מיוחד אחד",
+  "password_requirements_atleast_one_lowercase": "לכלול לפחות אות קטנה אחת באנגלית",
+  "password_requirements_atleast_one_uppercase": "לכלול לפחות אות גדולה אחת באנגלית",
+  "password_requirements_too_similar": "לא לכלול את שמך או חלקים מהאימייל שלך"
+}
