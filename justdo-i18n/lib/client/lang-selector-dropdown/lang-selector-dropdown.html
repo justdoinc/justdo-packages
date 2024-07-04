@@ -4,11 +4,16 @@
       <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#globe"></use></svg>
       {{activeLanguage}}
     </button>
-
-    <div class="dropdown-menu shadow-lg border-0">
-      {{#each supportedLangs}}
-        <a href="{{i18nCurrentPagePath _id}}" class="dropdown-item" data-lang-tag="{{_id}}" >{{name}}</a>
-      {{/each}}
+    <div class="dropdown-menu shadow-lg border-0 {{#if isRtl}}dropdown-menu-right{{else}}dropdown-menu-left{{/if}}">
+      <div class="dropdown-content-wrapper">
+        {{#each supportedLangs}}
+          <div class="dropdown-items-wrapper">
+            {{#each this}}
+              <a href="{{i18nCurrentPagePath _id}}" class="dropdown-item" data-lang-tag="{{_id}}" >{{name}}</a>
+            {{/each}}
+          </div>
+        {{/each}}
+      </div>
     </div>
   </div>
 </template>

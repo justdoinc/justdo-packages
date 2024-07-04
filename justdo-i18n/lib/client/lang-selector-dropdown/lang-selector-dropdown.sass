@@ -16,7 +16,16 @@
     border-radius: 4px
     top: -4px !important
     font-size: 13px
-    max-height: 380px
+    max-height: 440px
     overflow: auto
+  .dropdown-content-wrapper
+    display: flex
+    flex-direction: row
+  .dropdown-items-wrapper
+    padding: 2px
   .dropdown-item
     cursor: pointer
+
+@media (max-width: 992px)
+  .dropdown-content-wrapper
+    flex-direction: column !important
