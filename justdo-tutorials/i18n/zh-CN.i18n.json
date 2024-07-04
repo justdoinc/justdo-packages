@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "为您的JustDo设置标题",
+  "set_justdo_name_subtitle": "只需点击标题即可进入编辑模式",
+  "create_first_task_title": "创建您的首个任务",
+  "create_first_task_subtitle": "要创建任务，您可以使用工具栏上的按钮，或使用键盘快捷键ALT+ENTER / ALT+SHIFT+ENTER",
+  "invite_members_title": "邀请团队成员",
+  "invite_members_subtitle": "邀请您的团队成员加入并在您的新JustDo中协作",
+  "import_tasks_title": "导入任务",
+  "import_tasks_subtitle": "您可以通过我们的电子表格导入功能将现有任务和数据转移到JustDo，并无缝继续您的工作",
+  "customize_columns_title": "自定义您的视图",
+  "customize_columns_subtitle": "通过添加/移除列、按状态筛选任务等方式，控制您在网格上看到的内容！",
+  "get_free_support_title": "获取免费支持",
+  "get_free_support_subtitle": "与JustDo团队进行一对一支持会话",
+  "request": "申请",
+  "free_support_request_received": "已收到，我们将尽快通过电子邮件与您联系",
+  "tutorials_recent_product_updates": "最新产品更新",
+  "tutorials_justdo_quick_start": "JustDo快速入门",
+  "tutorials_justdo_advanced_features": "JustDo高级功能",
+  "tutorials_justdo_support_center": "JustDo支持中心"
+}

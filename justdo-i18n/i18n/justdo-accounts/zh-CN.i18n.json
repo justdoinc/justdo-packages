@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "密码必须：",
+  "password_requirements_too_short": "至少包含%d个字符",
+  "password_requirements_missing_number": "包含至少一个数字",
+  "password_requirements_special_sign": "包含至少一个特殊字符",
+  "password_requirements_atleast_one_lowercase": "包含至少一个小写英文字母",
+  "password_requirements_atleast_one_uppercase": "包含至少一个大写英文字母",
+  "password_requirements_too_similar": "不包含您的姓名或电子邮件的部分内容"
+}

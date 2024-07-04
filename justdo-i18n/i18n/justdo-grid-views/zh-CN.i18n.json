@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "网格视图",
+  "grid_views_search_placeholder": "搜索视图",
+  "grid_views_no_view_label": "无视图",
+  "grid_views_add_current_view_label": "添加当前视图",
+  "grid_views_rename_label": "重命名",
+  "grid_views_update_label": "更新",
+  "grid_views_remove_label": "删除",
+  "grid_views_share_label": "分享",
+  "grid_views_unshare_label": "取消分享",
+  "grid_views_shared_label": "已分享"
+}

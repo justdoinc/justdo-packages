@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "请输入您的名字",
+  "err_first_name_too_long": "名字不应超过30个字符",
+  "err_last_name_too_long": "姓氏不应超过30个字符",
+  "err_last_name_empty": "请输入您的姓氏",
+  "err_email_invalid": "请输入有效的电子邮件地址",
+  "err_email_empty": "请输入您的电子邮件",
+  "err_password_empty": "请输入您的密码",
+  "err_incorrect_password": "密码不正确。如需重置密码，请点击\"忘记密码？\"按钮。",
+  "err_no_password_set": "要设置密码，请点击\"忘记密码？\"按钮。",
+  "err_password_too_similar": "密码与您的名字、姓氏或电子邮件过于相似",
+  "err_retype_password_empty": "请重新输入您的密码",
+  "err_retype_password_not_match": "两次输入的密码不匹配",
+  "err_agree_ts_and_pp_missing": "您需要阅读并同意我们的使用条款和隐私政策才能继续",
+  "err_cant_login": "无法登录"
+}

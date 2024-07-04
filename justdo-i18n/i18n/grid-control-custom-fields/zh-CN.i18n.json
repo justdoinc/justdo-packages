@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "自定义字段",
+  "grid_control_custom_fields_sort_by_name_label": "按名称排序",
+  "grid_control_custom_fields_new_custom_field_label": "新建自定义字段",
+  "grid_control_custom_fields_no_custom_fields_label": "无自定义字段",
+  "grid_control_custom_fields_label_placeholder": "标签",
+  "grid_control_custom_fields_text_label": "文本",
+  "grid_control_custom_fields_number_label": "数字",
+  "grid_control_custom_fields_date_label": "日期",
+  "grid_control_custom_fields_select_label": "选项",
+  "grid_control_custom_fields_multi_select_label": "多选项",
+  "grid_control_custom_fields_smart_numbers_label": "智能数字",
+  "grid_control_custom_fields_unknown_type_label": "未知类型",
+  "grid_control_custom_fields_disabled_field_label": "已禁用字段"
+}

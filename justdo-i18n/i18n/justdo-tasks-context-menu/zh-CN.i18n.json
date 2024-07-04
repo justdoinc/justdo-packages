@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "移除任务",
+  "remove_from_parent_label": "从父级移除",
+  "remove_with_subtree_label": "移除子树",
+  "archive_task_label": "归档任务",
+  "unarchive_task_label": "取消归档任务",
+  "reorder_children_by_label": "重新排序子项按",
+  "zoom_in_label": "放大",
+  "projects_label": "项目",
+  "set_as_a_project_label": "设为项目",
+  "unset_as_a_project_label": "取消设为项目",
+  "close_project_label": "关闭项目",
+  "repoen_project_label": "重新打开项目",
+  "add_to_project_label": "添加到项目",
+  "apply_value_to_subtree": "将__value__应用到子树",
+  "bulk_set_options_label": "批量设置"
+}

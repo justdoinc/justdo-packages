@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "切换视图",
+  "tab_switcher_dropdown_search_placeholder": "视图",
+  "tab_switcher_main_view_label": "主视图",
+  "tab_switcher_my_favorites_label": "我的收藏",
+  "tab_switcher_my_due_list_label": "我的待办列表",
+  "tab_switcher_recently_label": "最近",
+  "tab_switcher_recently_completed_label": "已完成",
+  "tab_switcher_recently_updated_label": "已更新",
+  "tab_switcher_recently_created_label": "新创建",
+  "tab_switcher_miscellaneous_label": "其他",
+  "tab_switcher_task_ownershipt_transfers_label": "任务所有权转移",
+  "tab_switcher_ticket_queues_label": "工单队列",
+  "tab_switcher_members_due_lists_label": "成员待办列表",
+  "tab_switcher_all_members_due_list_label": "所有成员待办列表",
+  "tab_switcher_projects_section_label": "项目",
+  "tab_switcher_projects_label": "项目"
+}

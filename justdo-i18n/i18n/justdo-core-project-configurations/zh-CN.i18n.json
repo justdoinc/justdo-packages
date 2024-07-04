@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "活跃状态",
+  "project_configurations_no_active_states_label": "没有活跃状态",
+  "project_configurations_hidden_states_label": "隐藏状态",
+  "project_configurations_no_hidden_states_label": "没有隐藏状态",
+  "project_configurations_type_state_name_placeholder": "输入状态名称",
+  "project_configurations_default_title_for_this_state_label": "此状态的默认标题",
+  "project_configurations_restore_state_label": "恢复状态",
+  "project_configurations_create_extended_state_label": "创建扩展状态",
+  "project_configurations_hide_state": "隐藏状态",
+  "project_configurations_remove_extended_state": "移除扩展状态",
+  "new_custom_state_default_title": "__state__ - 扩展"
+}

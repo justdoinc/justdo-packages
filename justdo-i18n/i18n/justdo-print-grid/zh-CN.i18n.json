@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "打印JustDo看板",
+  "print_dropdown_entire_justdo": "整个JustDo看板",
+  "print_dropdown_visible_tasks": "可见任务",
+  "print_dropdown_print_current_task": "打印当前任务",
+  "print_dropdown_all_child_tasks": "所有子任务",
+  "print_dropdown_visible_child_tasks": "可见子任务",
+  "print_dropdown_download": "下载",
+  "print_dropdown_download_as_png": "下载为PNG格式",
+  "print_grid_columns_settings_label": "列设置",
+  "print_grid_columns_options_label": "列选项",
+  "print_grid_print": "打印",
+  "print_grid_export_csv": "导出CSV",
+  "print_grid_select_all": "全选",
+  "print_grid_apply": "应用"
+}

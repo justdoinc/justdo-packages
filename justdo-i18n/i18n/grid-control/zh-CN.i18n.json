@@ -1,0 +1,18 @@
+{
+  "add_column_label": "添加列",
+  "hide_column_label": "隐藏列",
+  "freeze_column_label": "冻结列",
+  "unfreeze_column_label": "解冻列",
+  "tree_control_tooltip_gantt_milestone": "甘特图里程碑",
+  "tree_control_tooltip_buffer_task": "缓冲任务",
+  "tree_control_tooltip_Meetings": "会议",
+  "tree_control_tooltip_start_time_tracking": "开始处理此任务",
+  "tree_control_tooltip_stop_time_tracking": "您正在处理此任务，点击停止并记录工作时间",
+  "tree_control_tooltip_resources": "资源",
+  "tree_control_tooltip_description": "任务描述",
+  "tree_control_tooltip_chat_messages": "聊天消息",
+  "tree_control_tooltip_files_count": "__files_count__ 个文件",
+  "tree_control_tooltip_emails_count": "__emails_count__ 封电子邮件",
+  "tree_control_tooltip_task_is_a_project": "任务是一个项目",
+  "tree_control_tooltip_task_is_archived": "任务已归档"
+}

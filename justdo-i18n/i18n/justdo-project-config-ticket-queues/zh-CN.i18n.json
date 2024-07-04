@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "工单队列",
+  "project_config_ticket_queues_new_ticket_queue_label": "新建工单队列",
+  "project_config_ticket_queues_enter_task_number_label": "输入任务编号",
+  "project_config_ticket_queues_no_ticket_queues_label": "无工单队列",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "您无法删除此工单队列，因为您不是其任务的成员"
+}
