@@ -5,7 +5,7 @@
     "unread_group_chat_notification_subject": "New messages from __channel_title__ are waiting for you",
     "unread_group_chat_notification_title_html": "New messages from <span style=\"font-weight: bold;\">__channel_title__</span> are waiting for you!",
     "open_in_justdo": "Open in JustDo",
-    "unsubscribe_from_justdo": "Unsubscribe from JustDo.",
-    "unsubscribe_from_project": "Unsubscribe from the __project_title__ JustDo",
+    "unsubscribe_from_justdo": "Unsubscribe from all update notifications from JustDo",
+    "unsubscribe_from_project": "Unsubscribe from updates for __project_title__",
     "reply_email_for_support": "Having any issues? Reply to this email for support."
 }

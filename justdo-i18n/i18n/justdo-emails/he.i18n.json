@@ -5,7 +5,7 @@
   "unread_group_chat_notification_subject": "הודעות חדשות מ-__channel_title__ ממתינות לך",
   "unread_group_chat_notification_title_html": "הודעות חדשות מ-<span style=\"font-weight: bold;\">__channel_title__</span> ממתינות לך!",
   "open_in_justdo": "פתח ב-JustDo",
-  "unsubscribe_from_justdo": "בטל הרשמה מ-JustDo",
-  "unsubscribe_from_project": "בטל הרשמה מלוח __project_title__ של JustDo",
+  "unsubscribe_from_justdo": "הפסק לקבל את כל העדכונים מ-JustDo",
+  "unsubscribe_from_project": "הפסק לקבל עדכונים מ: __project_title__",
   "reply_email_for_support": "נתקלת בבעיות? השב לאימייל זה לקבלת תמיכה."
 }
