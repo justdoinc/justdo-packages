@@ -196,26 +196,29 @@ _.extend JustdoI18n.prototype,
     # Always show the header
     worksheet.row(row_i).freeze()
 
-    base_cell_style =
+    # Create cell style & write row
+    ltr_cell_style =
       alignment:
         wrapText: true
         vertical: "top"
-    # Create cell style & write row
-    cell_style = workbook.createStyle base_cell_style
-    rtl_cell_style = workbook.createStyle _.extend {}, base_cell_style,
+    
+    rtl_cell_style =
       alignment:
+        wrapText: true
+        vertical: "top"
         horizontal: "right"
+        readingOrder: "rightToLeft"
 
     _writeRow = (translated_string, default_lang_string, key) =>
       worksheet.cell (row_i += 1), 1
         .string translated_string
-        .style if (@isLangRtl lang) then rtl_cell_style else cell_style
+        .style if (@isLangRtl lang) then rtl_cell_style else ltr_cell_style
       worksheet.cell row_i, 2
         .string default_lang_string
-        .style cell_style
+        .style ltr_cell_style
       worksheet.cell row_i, 3
         .string key
-        .style cell_style
+        .style ltr_cell_style
       return
 
     added_keys = new Set()
