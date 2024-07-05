@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Umeunganishwa",
+  "meteor_status_connecting": "Inaunganisha...",
+  "meteor_status_failed": "Muunganisho wa seva umeshindwa",
+  "meteor_status_waiting": "Inasubiri muunganisho wa seva,",
+  "meteor_status_offline": "Hali ya nje ya mtandao.",
+  "meteor_status_reconnect_in": "inajaribu tena baada ya sekunde moja...",
+  "meteor_status_reconnect_in_plural": "inajaribu tena baada ya sekunde __count__...",
+  "meteor_status_try_now_waiting": "Jaribu sasa",
+  "meteor_status_try_now_offline": "Unganisha tena"
+}

@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Kapcsolódva",
+  "meteor_status_connecting": "Kapcsolódás...",
+  "meteor_status_failed": "A szerverkapcsolat sikertelen",
+  "meteor_status_waiting": "Várakozás a szerverkapcsolatra,",
+  "meteor_status_offline": "Offline mód.",
+  "meteor_status_reconnect_in": "újrapróbálkozás egy másodperc múlva...",
+  "meteor_status_reconnect_in_plural": "újrapróbálkozás __count__ másodperc múlva...",
+  "meteor_status_try_now_waiting": "Próbálja most",
+  "meteor_status_try_now_offline": "Újrakapcsolódás"
+}

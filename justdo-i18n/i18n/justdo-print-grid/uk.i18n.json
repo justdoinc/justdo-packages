@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "Друк JustDo",
+  "print_dropdown_entire_justdo": "Весь JustDo",
+  "print_dropdown_visible_tasks": "Видимі завдання",
+  "print_dropdown_print_current_task": "Друкувати поточне завдання",
+  "print_dropdown_all_child_tasks": "Усі підзавдання",
+  "print_dropdown_visible_child_tasks": "Видимі підзавдання",
+  "print_dropdown_download": "Завантажити",
+  "print_dropdown_download_as_png": "Завантажити як PNG",
+  "print_grid_columns_settings_label": "Налаштування стовпців",
+  "print_grid_columns_options_label": "Параметри стовпців",
+  "print_grid_print": "Друк",
+  "print_grid_export_csv": "Експорт CSV",
+  "print_grid_select_all": "Вибрати все",
+  "print_grid_apply": "Застосувати"
+}

@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "ตั้งชื่อให้ JustDo ของคุณ",
+  "set_justdo_name_subtitle": "เพียงแค่คลิกที่ชื่อเพื่อเข้าสู่โหมดแก้ไข",
+  "create_first_task_title": "สร้างงานแรกของคุณ",
+  "create_first_task_subtitle": "ในการสร้างงาน คุณสามารถใช้ปุ่มบนแถบเครื่องมือ หรือใช้ปุ่มลัด ALT+ENTER / ALT+SHIFT+ENTER",
+  "invite_members_title": "เชิญสมาชิกทีม",
+  "invite_members_subtitle": "เชิญสมาชิกทีมของคุณเข้าร่วมและทำงานร่วมกันใน JustDo ใหม่ของคุณ",
+  "import_tasks_title": "นำเข้างาน",
+  "import_tasks_subtitle": "คุณสามารถโอนงานและข้อมูลที่มีอยู่ไปยัง JustDo และทำงานต่อได้อย่างราบรื่นด้วยฟังก์ชันนำเข้าสเปรดชีต",
+  "customize_columns_title": "ปรับแต่งมุมมองของคุณ",
+  "customize_columns_subtitle": "ควบคุมสิ่งที่คุณเห็นบนตาราง (Grid) โดยการเพิ่ม/ลบคอลัมน์ กรองงานตามสถานะ และอื่นๆ อีกมากมาย!",
+  "get_free_support_title": "รับการสนับสนุนฟรี",
+  "get_free_support_subtitle": "การสนับสนุนแบบตัวต่อตัวกับทีม JustDo",
+  "request": "ขอรับบริการ",
+  "free_support_request_received": "ได้รับคำขอแล้ว เราจะติดต่อกลับทางอีเมลในเร็วๆ นี้",
+  "tutorials_recent_product_updates": "การอัพเดทผลิตภัณฑ์ล่าสุด",
+  "tutorials_justdo_quick_start": "เริ่มต้นใช้งาน JustDo อย่างรวดเร็ว",
+  "tutorials_justdo_advanced_features": "คุณสมบัติขั้นสูงของ JustDo",
+  "tutorials_justdo_support_center": "ศูนย์ช่วยเหลือ JustDo"
+}

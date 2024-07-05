@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Користувацькі поля",
+  "grid_control_custom_fields_sort_by_name_label": "Сортувати за назвою",
+  "grid_control_custom_fields_new_custom_field_label": "Нове користувацьке поле",
+  "grid_control_custom_fields_no_custom_fields_label": "Немає користувацьких полів",
+  "grid_control_custom_fields_label_placeholder": "мітка",
+  "grid_control_custom_fields_text_label": "Текст",
+  "grid_control_custom_fields_number_label": "Число",
+  "grid_control_custom_fields_date_label": "Дата",
+  "grid_control_custom_fields_select_label": "Варіанти вибору",
+  "grid_control_custom_fields_multi_select_label": "Множинний вибір",
+  "grid_control_custom_fields_smart_numbers_label": "Розумні числа",
+  "grid_control_custom_fields_unknown_type_label": "Невідомий тип",
+  "grid_control_custom_fields_disabled_field_label": "Вимкнене поле"
+}

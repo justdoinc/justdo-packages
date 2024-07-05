@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Vaihda näkymää",
+  "tab_switcher_dropdown_search_placeholder": "Näkymät",
+  "tab_switcher_main_view_label": "Päänäkymä",
+  "tab_switcher_my_favorites_label": "Omat suosikit",
+  "tab_switcher_my_due_list_label": "Oma eräpäivälista",
+  "tab_switcher_recently_label": "Äskettäin",
+  "tab_switcher_recently_completed_label": "Valmistuneet",
+  "tab_switcher_recently_updated_label": "Päivitetyt",
+  "tab_switcher_recently_created_label": "Luodut",
+  "tab_switcher_miscellaneous_label": "Sekalaiset",
+  "tab_switcher_task_ownershipt_transfers_label": "Tehtävien omistajuuden siirrot",
+  "tab_switcher_ticket_queues_label": "Tikettien jonot",
+  "tab_switcher_members_due_lists_label": "Jäsenten eräpäivälistat",
+  "tab_switcher_all_members_due_list_label": "Kaikkien jäsenten eräpäivälista",
+  "tab_switcher_projects_section_label": "Projektit",
+  "tab_switcher_projects_label": "Projektit"
+}

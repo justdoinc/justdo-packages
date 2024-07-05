@@ -1,0 +1,11 @@
+{
+  "email_greeting_with_name": "Habari __name__, ",
+  "unread_task_chat_notification_subject": "Ujumbe mpya wa gumzo unakusubiri",
+  "unread_task_chat_notification_title": "Ujumbe mpya wa gumzo unakusubiri katika kazi ifuatayo:",
+  "unread_group_chat_notification_subject": "Ujumbe mpya kutoka __channel_title__ unakusubiri",
+  "unread_group_chat_notification_title_html": "Ujumbe mpya kutoka <span style=\"font-weight: bold;\">__channel_title__</span> unakusubiri!",
+  "open_in_justdo": "Fungua katika JustDo",
+  "unsubscribe_from_justdo": "Jitoe kwenye arifa zote za sasisho kutoka JustDo",
+  "unsubscribe_from_project": "Jitoe kwenye sasisho za __project_title__",
+  "reply_email_for_support": "Una tatizo lolote? Jibu barua pepe hii kwa msaada."
+}

@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "ተገናኝቷል",
+  "meteor_status_connecting": "እየተገናኘ ነው...",
+  "meteor_status_failed": "የሰርቨር ግንኙነት አልተሳካም",
+  "meteor_status_waiting": "ለሰርቨር ግንኙነት እየጠበቀ ነው፣",
+  "meteor_status_offline": "ከመስመር ውጭ ሁኔታ።",
+  "meteor_status_reconnect_in": "በአንድ ሰከንድ ውስጥ እንደገና እየሞከረ ነው...",
+  "meteor_status_reconnect_in_plural": "በ__count__ ሰከንዶች ውስጥ እንደገና እየሞከረ ነው...",
+  "meteor_status_try_now_waiting": "አሁን ሞክር",
+  "meteor_status_try_now_offline": "እንደገና ተገናኝ"
+}

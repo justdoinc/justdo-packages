@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "JustDo'nuz için bir başlık belirleyin",
+  "set_justdo_name_subtitle": "Düzenleme moduna girmek için başlığa tıklamanız yeterli",
+  "create_first_task_title": "İlk görevlerinizi oluşturun",
+  "create_first_task_subtitle": "Görev oluşturmak için araç çubuğundaki düğmeleri kullanabilir veya ALT+ENTER / ALT+SHIFT+ENTER klavye kısayollarını kullanabilirsiniz",
+  "invite_members_title": "Ekip üyelerini davet edin",
+  "invite_members_subtitle": "Ekip üyelerinizi yeni JustDo'nuza katılmaya ve işbirliği yapmaya davet edin",
+  "import_tasks_title": "Görevleri içe aktarın",
+  "import_tasks_subtitle": "Mevcut görevlerinizi ve verilerinizi JustDo'ya aktarabilir ve elektronik tablo içe aktarma işlevimizle sorunsuz bir şekilde devam edebilirsiniz",
+  "customize_columns_title": "Görünümünüzü özelleştirin",
+  "customize_columns_subtitle": "Sütunlar ekleyerek/kaldırarak, görevleri durumlarına göre filtreleyerek ve daha fazlasıyla tabloda (Grid) ne gördüğünüzü kontrol edin!",
+  "get_free_support_title": "Ücretsiz destek alın",
+  "get_free_support_subtitle": "JustDo ekibiyle bire bir destek oturumu",
+  "request": "Talep et",
+  "free_support_request_received": "Alındı, kısa süre içinde e-posta ile size geri döneceğiz",
+  "tutorials_recent_product_updates": "Son Ürün Güncellemeleri",
+  "tutorials_justdo_quick_start": "JustDo Hızlı Başlangıç",
+  "tutorials_justdo_advanced_features": "JustDo Gelişmiş Özellikler",
+  "tutorials_justdo_support_center": "JustDo Destek Merkezi"
+}

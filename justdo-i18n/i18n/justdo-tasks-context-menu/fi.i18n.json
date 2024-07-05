@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Poista tehtävät",
+  "remove_from_parent_label": "Poista ylemmältä tasolta",
+  "remove_with_subtree_label": "Poista alipuun kanssa",
+  "archive_task_label": "Arkistoi tehtävä",
+  "unarchive_task_label": "Palauta arkistosta",
+  "reorder_children_by_label": "Järjestä alitehtävät",
+  "zoom_in_label": "Lähennä",
+  "projects_label": "Projektit",
+  "set_as_a_project_label": "Aseta projektiksi",
+  "unset_as_a_project_label": "Poista projekti-asetus",
+  "close_project_label": "Sulje projekti",
+  "repoen_project_label": "Avaa projekti uudelleen",
+  "add_to_project_label": "Lisää projektiin",
+  "apply_value_to_subtree": "Sovella __value__ alipuuhun",
+  "bulk_set_options_label": "Aseta"
+}

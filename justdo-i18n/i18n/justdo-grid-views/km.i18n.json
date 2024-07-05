@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "ទិដ្ឋភាពតារាង",
+  "grid_views_search_placeholder": "ស្វែងរកទិដ្ឋភាព",
+  "grid_views_no_view_label": "គ្មានទិដ្ឋភាព",
+  "grid_views_add_current_view_label": "បន្ថែមទិដ្ឋភាពបច្ចុប្បន្ន",
+  "grid_views_rename_label": "ប្តូរឈ្មោះ",
+  "grid_views_update_label": "ធ្វើបច្ចុប្បន្នភាព",
+  "grid_views_remove_label": "លុប",
+  "grid_views_share_label": "ចែករំលែក",
+  "grid_views_unshare_label": "ឈប់ចែករំលែក",
+  "grid_views_shared_label": "បានចែករំលែក"
+}

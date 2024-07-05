@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "接続済み",
+  "meteor_status_connecting": "接続中...",
+  "meteor_status_failed": "サーバー接続に失敗しました",
+  "meteor_status_waiting": "サーバー接続を待っています",
+  "meteor_status_offline": "オフラインモード",
+  "meteor_status_reconnect_in": "1秒後に再試行します...",
+  "meteor_status_reconnect_in_plural": "__count__ 秒後に再試行します...",
+  "meteor_status_try_now_waiting": "今すぐ試す",
+  "meteor_status_try_now_offline": "再接続する"
+}

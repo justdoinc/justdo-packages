@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Табличные представления",
+  "grid_views_search_placeholder": "Поиск представлений",
+  "grid_views_no_view_label": "Нет представлений",
+  "grid_views_add_current_view_label": "Добавить текущее представление",
+  "grid_views_rename_label": "Переименовать",
+  "grid_views_update_label": "Обновить",
+  "grid_views_remove_label": "Удалить",
+  "grid_views_share_label": "Поделиться",
+  "grid_views_unshare_label": "Отменить доступ",
+  "grid_views_shared_label": "общий доступ"
+}

@@ -1,0 +1,11 @@
+{
+  "email_greeting_with_name": "Hej __name__, ",
+  "unread_task_chat_notification_subject": "Nya chattmeddelanden väntar på dig",
+  "unread_task_chat_notification_title": "Nya chattmeddelanden väntar på dig i följande uppgift:",
+  "unread_group_chat_notification_subject": "Nya meddelanden från __channel_title__ väntar på dig",
+  "unread_group_chat_notification_title_html": "Nya meddelanden från <span style=\"font-weight: bold;\">__channel_title__</span> väntar på dig!",
+  "open_in_justdo": "Öppna i JustDo",
+  "unsubscribe_from_justdo": "Avsluta prenumeration på alla uppdateringsmeddelanden från JustDo",
+  "unsubscribe_from_project": "Avsluta prenumeration på uppdateringar för __project_title__",
+  "reply_email_for_support": "Har du några problem? Svara på det här e-postmeddelandet för support."
+}

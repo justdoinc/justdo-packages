@@ -1,0 +1,9 @@
+{
+  "item_details_title": "詳細",
+  "item_details_members_label": "メンバー",
+  "item_details_description_label": "説明",
+  "item_details_add_task_description": "タスクの説明を追加",
+  "item_details_more_info_label": "詳細情報",
+  "item_details_context_title": "コンテキスト",
+  "item_details_context_drag_to_add_parent_label": "ドラッグして親タスクを追加"
+}

@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "เชื่อมต่อแล้ว",
+  "meteor_status_connecting": "กำลังเชื่อมต่อ...",
+  "meteor_status_failed": "การเชื่อมต่อกับเซิร์ฟเวอร์ล้มเหลว",
+  "meteor_status_waiting": "กำลังรอการเชื่อมต่อกับเซิร์ฟเวอร์",
+  "meteor_status_offline": "โหมดออฟไลน์",
+  "meteor_status_reconnect_in": "กำลังลองอีกครั้งในอีกหนึ่งวินาที...",
+  "meteor_status_reconnect_in_plural": "กำลังลองอีกครั้งในอีก __count__ วินาที...",
+  "meteor_status_try_now_waiting": "ลองเดี๋ยวนี้",
+  "meteor_status_try_now_offline": "เชื่อมต่ออีกครั้ง"
+}

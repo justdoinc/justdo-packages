@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "In JustDo",
+  "print_dropdown_entire_justdo": "Toàn bộ JustDo",
+  "print_dropdown_visible_tasks": "Các công việc hiển thị",
+  "print_dropdown_print_current_task": "In công việc hiện tại",
+  "print_dropdown_all_child_tasks": "Tất cả công việc con",
+  "print_dropdown_visible_child_tasks": "Các công việc con hiển thị",
+  "print_dropdown_download": "Tải xuống",
+  "print_dropdown_download_as_png": "Tải xuống dưới dạng PNG",
+  "print_grid_columns_settings_label": "Cài đặt cột",
+  "print_grid_columns_options_label": "Tùy chọn cột",
+  "print_grid_print": "In",
+  "print_grid_export_csv": "Xuất CSV",
+  "print_grid_select_all": "Chọn tất cả",
+  "print_grid_apply": "Áp dụng"
+}

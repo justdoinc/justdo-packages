@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "طباعة JustDo",
+  "print_dropdown_entire_justdo": "JustDo بالكامل",
+  "print_dropdown_visible_tasks": "المهام المرئية",
+  "print_dropdown_print_current_task": "طباعة المهمة الحالية",
+  "print_dropdown_all_child_tasks": "جميع المهام الفرعية",
+  "print_dropdown_visible_child_tasks": "المهام الفرعية المرئية",
+  "print_dropdown_download": "تنزيل",
+  "print_dropdown_download_as_png": "تنزيل كصورة PNG",
+  "print_grid_columns_settings_label": "إعدادات الأعمدة",
+  "print_grid_columns_options_label": "خيارات الأعمدة",
+  "print_grid_print": "طباعة",
+  "print_grid_export_csv": "تصدير كملف CSV",
+  "print_grid_select_all": "تحديد الكل",
+  "print_grid_apply": "تطبيق"
+}

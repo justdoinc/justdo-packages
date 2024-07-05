@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "สถานะที่ใช้งานอยู่",
+  "project_configurations_no_active_states_label": "ไม่มีสถานะที่ใช้งานอยู่",
+  "project_configurations_hidden_states_label": "สถานะที่ซ่อนอยู่",
+  "project_configurations_no_hidden_states_label": "ไม่มีสถานะที่ซ่อนอยู่",
+  "project_configurations_type_state_name_placeholder": "พิมพ์ชื่อสถานะ",
+  "project_configurations_default_title_for_this_state_label": "ชื่อเริ่มต้นสำหรับสถานะนี้",
+  "project_configurations_restore_state_label": "คืนค่าสถานะ",
+  "project_configurations_create_extended_state_label": "สร้างสถานะเพิ่มเติม",
+  "project_configurations_hide_state": "ซ่อนสถานะ",
+  "project_configurations_remove_extended_state": "ลบสถานะเพิ่มเติม",
+  "new_custom_state_default_title": "__state__ - เพิ่มเติม"
+}

@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Prikazi tablice",
+  "grid_views_search_placeholder": "Pretraži prikaze",
+  "grid_views_no_view_label": "Nema prikaza",
+  "grid_views_add_current_view_label": "Dodaj trenutni prikaz",
+  "grid_views_rename_label": "Preimenuj",
+  "grid_views_update_label": "Ažuriraj",
+  "grid_views_remove_label": "Ukloni",
+  "grid_views_share_label": "Podijeli",
+  "grid_views_unshare_label": "Prekini dijeljenje",
+  "grid_views_shared_label": "podijeljeno"
+}

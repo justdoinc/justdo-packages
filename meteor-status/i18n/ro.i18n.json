@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Conectat",
+  "meteor_status_connecting": "Se conectează...",
+  "meteor_status_failed": "Conexiunea la server a eșuat",
+  "meteor_status_waiting": "Se așteaptă conexiunea la server,",
+  "meteor_status_offline": "Mod offline.",
+  "meteor_status_reconnect_in": "se încearcă din nou într-o secundă...",
+  "meteor_status_reconnect_in_plural": "se încearcă din nou în __count__ secunde...",
+  "meteor_status_try_now_waiting": "Încearcă acum",
+  "meteor_status_try_now_offline": "Conectează-te din nou"
+}

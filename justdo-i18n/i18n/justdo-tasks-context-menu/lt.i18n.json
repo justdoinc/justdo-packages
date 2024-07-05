@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Pašalinti užduotis",
+  "remove_from_parent_label": "Pašalinti iš tėvinės užduoties",
+  "remove_with_subtree_label": "Pašalinti su pomedžiu",
+  "archive_task_label": "Archyvuoti užduotį",
+  "unarchive_task_label": "Išimti užduotį iš archyvo",
+  "reorder_children_by_label": "Pertvarkyti vaikines užduotis pagal",
+  "zoom_in_label": "Priartinti",
+  "projects_label": "Projektai",
+  "set_as_a_project_label": "Nustatyti kaip projektą",
+  "unset_as_a_project_label": "Panaikinti projekto žymėjimą",
+  "close_project_label": "Uždaryti projektą",
+  "repoen_project_label": "Iš naujo atidaryti projektą",
+  "add_to_project_label": "Pridėti prie projekto",
+  "apply_value_to_subtree": "Taikyti __value__ pomedžiui",
+  "bulk_set_options_label": "Nustatyti"
+}

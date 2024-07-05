@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "__user_name__s organisation",
+  "create_org_label": "Skapa organisation",
+  "without_orgs_label": "Utan organisation",
+  "justdos_under_named_org_html": "JustDos under <span class=\"org-name\">__org_name__</span>",
+  "justdos_without_orgs": "JustDos utan en organisation",
+  "orgs_project_config_title": "Organisationer",
+  "assign_justdo_to_organization_label": "Tilldela JustDo till organisation",
+  "another_organization": "en annan organisation",
+  "pre_transfer_justdo_to_org_notice_html": "Du är på väg att överföra denna JustDo till <b>__dest_org_name__</b>. <br> Alla medlemmar i denna JustDo kommer att bli medlemmar i <b>__dest_org_name__</b>.",
+  "select_organization": "Välj organisation",
+  "org_expiring_soon_notice_title": "Din organisationslicens löper snart ut!",
+  "org_expiring_soon_notice_html": "Licensen för din organisation <b>__org_name__</b> löper ut den __org_expiration_date__. <br> Vi hoppas att JustDo har gjort ditt arbetsliv enklare!",
+  "org_locked_notice_title": "Din organisationslicens har löpt ut!",
+  "org_locked_notice_html": "Licensen för din organisation <b>__org_name__</b> har löpt ut den __org_expiration_date__. <br> Vi hoppas att JustDo har gjort ditt arbetsliv enklare, och vi skulle älska att fortsätta göra det!",
+  "org_access_restricted_title": "__org_name__: Tillfällig åtkomstbegränsning",
+  "org_access_restricted_html": "Åtkomsten till din organisation <b>__org_name__</b> är för närvarande begränsad. Vänligen kontakta dina organisationsadministratörer för mer information om detta ärende. <br> Vi uppskattar ditt tålamod och förståelse.",
+  "renew_org_license_instruction_html": "Du kan förnya licensen genom att klicka på knappen \"Förnya licens\" nedan.<br>Vårt supportteam hjälper dig gärna.<br><br>Tack för att du är en del av JustDo-gemenskapen. Vi utvecklar aktivt nya funktioner för nästa release för att förbättra ditt arbetsflöde!",
+  "renew_org_licnese_modal_btn_label": "Förnya licens",
+  "org_pre_expire_renewal_contact_page_message": "Min organisation __org_name__ __optional_domain_msg__ är på väg att löpa ut och jag vill förnya licensen.",
+  "org_post_expire_renewal_contact_page_message": "Min organisation __org_name__ __optional_domain_msg__ har löpt ut och jag vill förnya licensen."
+}

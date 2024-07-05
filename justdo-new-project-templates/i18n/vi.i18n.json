@@ -1,13 +1,11 @@
 {
   "private_follow_up": "Theo dõi riêng tư",
-
   "new_project_template_popup_title": "Chào mừng!",
   "new_project_template_popup_subtitle": "Bắt đầu bằng việc chọn mẫu giao diện phù hợp nhất với bạn",
-
+  "project_templates_getting_started_label": "Bắt đầu",
   "project_templates_home_builders_inc_label": "Danh sách nhà thầu",
   "project_templates_it_firm_label": "Công ty CNTT",
   "project_templates_movies_production_label": "Sản xuất phim",
-
   "project_templates_task_title_finance": "Tài chính",
   "project_templates_task_title_bank_with_custom_name": "Ngân hàng __bank_name__",
   "project_templates_task_title_secure_financing_for_custom_name": "Đảm bảo nguồn tiền cho __site_name__",
@@ -19,13 +17,11 @@
   "project_templates_task_title_prepare_fy_report": "Chuẩn bị báo cáo tài chính",
   "project_templates_task_title_contact_auditor": "Liên hệ Kiểm toán viên",
   "project_templates_task_title_prepare_employer_return": "Chuẩn bị hồ sơ khai thuế cho người sử dụng lao động",
-
   "project_templates_task_title_candidate_with_custom_name": "Ứng viên __candidate_name__",
   "project_templates_task_title_human_resources": "Nhân sự",
   "project_templates_task_title_recruit_on_site_engineer": "Tuyển dụng kỹ sư công trình",
   "project_templates_task_title_coordinate_zoom_meeting": "Điều phối cuộc họp online trên Zoom",
   "project_templates_task_title_cv_is_missing_contact_by_email": "Thiếu CV, liên hệ qua email",
-
   "project_templates_task_title_sites": "Địa điểm",
   "project_templates_task_title_demo_site_name_1": "Meadowview Estates",
   "project_templates_task_title_demo_site_name_2": "Làng Willow Creek",
@@ -56,7 +52,6 @@
   "project_templates_task_title_final_documentation": "Tài liệu đã hoàn tất",
   "project_templates_task_title_warranty_and_maintenance": "Bảo hành & Bảo trì",
   "project_templates_task_title_client_handover": "Bàn giao khách hàng",
-
   "project_templates_task_title_research_and_development": "Nghiên cứu & phát triển",
   "project_templates_task_title_mobile_app_development": "Phát triển ứng dụng di động",
   "project_templates_task_title_sprints": "Sprints",
@@ -82,7 +77,6 @@
   "project_templates_task_title_deployment_version_on_client_server": "Triển khai __version__ trên máy chủ Khách hàng __client__",
   "project_templates_task_title_contact_to_reproduce_reported_issue": "Liên hệ tái hiện vấn đề báo cáo trước đó",
   "project_templates_task_title_recruit_position_for_frontend": "Tuyển dụng vị trí phát triển giao diện người dùng",
-
   "movies": "Phim ảnh",
   "demo_movie_name_1": "Người đẹp ngủ trong rừng",
   "demo_movie_name_2": "Nàng Bạch Tuyết và Bảy Chú Lùn",

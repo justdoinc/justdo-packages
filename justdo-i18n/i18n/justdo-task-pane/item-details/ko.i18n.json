@@ -1,0 +1,9 @@
+{
+  "item_details_title": "세부사항",
+  "item_details_members_label": "멤버",
+  "item_details_description_label": "설명",
+  "item_details_add_task_description": "작업 설명 추가",
+  "item_details_more_info_label": "추가 정보",
+  "item_details_context_title": "컨텍스트",
+  "item_details_context_drag_to_add_parent_label": "상위 작업을 추가하려면 드래그하세요"
+}

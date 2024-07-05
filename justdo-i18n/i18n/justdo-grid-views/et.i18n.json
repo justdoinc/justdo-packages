@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Võrgustikuvaated",
+  "grid_views_search_placeholder": "Otsi vaateid",
+  "grid_views_no_view_label": "Vaateid pole",
+  "grid_views_add_current_view_label": "Lisa praegune vaade",
+  "grid_views_rename_label": "Nimeta ümber",
+  "grid_views_update_label": "Uuenda",
+  "grid_views_remove_label": "Eemalda",
+  "grid_views_share_label": "Jaga",
+  "grid_views_unshare_label": "Lõpeta jagamine",
+  "grid_views_shared_label": "jagatud"
+}

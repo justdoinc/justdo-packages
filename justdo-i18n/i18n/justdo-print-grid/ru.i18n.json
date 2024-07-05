@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "Печать JustDo",
+  "print_dropdown_entire_justdo": "Весь JustDo",
+  "print_dropdown_visible_tasks": "Видимые задачи",
+  "print_dropdown_print_current_task": "Печать текущей задачи",
+  "print_dropdown_all_child_tasks": "Все подзадачи",
+  "print_dropdown_visible_child_tasks": "Видимые подзадачи",
+  "print_dropdown_download": "Скачать",
+  "print_dropdown_download_as_png": "Скачать как PNG",
+  "print_grid_columns_settings_label": "Настройки столбцов",
+  "print_grid_columns_options_label": "Параметры столбцов",
+  "print_grid_print": "Печать",
+  "print_grid_export_csv": "Экспорт CSV",
+  "print_grid_select_all": "Выбрать все",
+  "print_grid_apply": "Применить"
+}

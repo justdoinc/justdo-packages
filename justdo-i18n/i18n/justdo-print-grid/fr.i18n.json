@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "Imprimer le tableau JustDo",
+  "print_dropdown_entire_justdo": "Tableau JustDo complet",
+  "print_dropdown_visible_tasks": "Tâches visibles",
+  "print_dropdown_print_current_task": "Imprimer la tâche actuelle",
+  "print_dropdown_all_child_tasks": "Toutes les tâches enfants",
+  "print_dropdown_visible_child_tasks": "Tâches enfants visibles",
+  "print_dropdown_download": "Télécharger",
+  "print_dropdown_download_as_png": "Télécharger en PNG",
+  "print_grid_columns_settings_label": "Paramètres des colonnes",
+  "print_grid_columns_options_label": "Options des colonnes",
+  "print_grid_print": "Imprimer",
+  "print_grid_export_csv": "Exporter en CSV",
+  "print_grid_select_all": "Tout sélectionner",
+  "print_grid_apply": "Appliquer"
+}

@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "__user_name__ का संगठन",
+  "create_org_label": "संगठन बनाएँ",
+  "without_orgs_label": "संगठन के बिना",
+  "justdos_under_named_org_html": "<span class=\"org-name\">__org_name__</span> के अंतर्गत JustDo बोर्ड",
+  "justdos_without_orgs": "संगठन के बिना JustDo बोर्ड",
+  "orgs_project_config_title": "संगठन",
+  "assign_justdo_to_organization_label": "JustDo बोर्ड को संगठन को सौंपें",
+  "another_organization": "दूसरा संगठन",
+  "pre_transfer_justdo_to_org_notice_html": "आप इस JustDo बोर्ड को <b>__dest_org_name__</b> में स्थानांतरित करने वाले हैं। <br> इस JustDo बोर्ड के सभी सदस्य <b>__dest_org_name__</b> के सदस्य बन जाएंगे।",
+  "select_organization": "संगठन चुनें",
+  "org_expiring_soon_notice_title": "आपके संगठन का लाइसेंस जल्द ही समाप्त होने वाला है!",
+  "org_expiring_soon_notice_html": "आपके संगठन <b>__org_name__</b> का लाइसेंस __org_expiration_date__ को समाप्त हो जाएगा। <br> हमें आशा है कि JustDo ने आपके कार्य जीवन को आसान बना दिया है!",
+  "org_locked_notice_title": "आपके संगठन का लाइसेंस समाप्त हो गया है!",
+  "org_locked_notice_html": "आपके संगठन <b>__org_name__</b> का लाइसेंस __org_expiration_date__ को समाप्त हो गया है। <br> हमें आशा है कि JustDo ने आपके कार्य जीवन को आसान बना दिया है, और हम ऐसा करना जारी रखना चाहेंगे!",
+  "org_access_restricted_title": "__org_name__: अस्थायी पहुंच प्रतिबंध",
+  "org_access_restricted_html": "आपके संगठन <b>__org_name__</b> तक पहुंच वर्तमान में प्रतिबंधित है। कृपया इस मामले के बारे में अधिक जानकारी के लिए अपने संगठन के प्रशासकों से संपर्क करें। <br> हम आपके धैर्य और समझ की सराहना करते हैं।",
+  "renew_org_license_instruction_html": "आप नीचे दिए गए \"लाइसेंस नवीनीकरण करें\" बटन पर क्लिक करके लाइसेंस का नवीनीकरण कर सकते हैं।<br>हमारी सहायता टीम हमेशा आपकी मदद करने के लिए तैयार है।<br><br>JustDo समुदाय का हिस्सा बनने के लिए धन्यवाद। हम आपके कार्यप्रवाह को बेहतर बनाने के लिए अगले संस्करण के लिए नई सुविधाओं को सक्रिय रूप से विकसित कर रहे हैं!",
+  "renew_org_licnese_modal_btn_label": "लाइसेंस नवीनीकरण करें",
+  "org_pre_expire_renewal_contact_page_message": "मेरा संगठन __org_name__ __optional_domain_msg__ समाप्त होने वाला है और मैं लाइसेंस का नवीनीकरण करना चाहता हूं।",
+  "org_post_expire_renewal_contact_page_message": "मेरा संगठन __org_name__ __optional_domain_msg__ समाप्त हो गया है और मैं लाइसेंस का नवीनीकरण करना चाहता हूं।"
+}

@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "Code di Ticket",
+  "project_config_ticket_queues_new_ticket_queue_label": "Nuova coda di ticket",
+  "project_config_ticket_queues_enter_task_number_label": "Inserisci il numero dell'attività",
+  "project_config_ticket_queues_no_ticket_queues_label": "Nessuna coda di ticket",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "Non puoi rimuovere questa Coda di Ticket, poiché non sei membro della sua Attività"
+}

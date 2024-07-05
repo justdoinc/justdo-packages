@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "__user_name__의 조직",
+  "create_org_label": "조직 만들기",
+  "without_orgs_label": "조직 없음",
+  "justdos_under_named_org_html": "<span class=\"org-name\">__org_name__</span> 소속 JustDo 보드",
+  "justdos_without_orgs": "조직에 속하지 않은 JustDo 보드",
+  "orgs_project_config_title": "조직",
+  "assign_justdo_to_organization_label": "JustDo 보드를 조직에 할당",
+  "another_organization": "다른 조직",
+  "pre_transfer_justdo_to_org_notice_html": "이 JustDo 보드를 <b>__dest_org_name__</b>로 이전하려고 합니다. <br> 이 JustDo 보드의 모든 멤버가 <b>__dest_org_name__</b>의 멤버가 됩니다.",
+  "select_organization": "조직 선택",
+  "org_expiring_soon_notice_title": "조직 라이선스가 곧 만료됩니다!",
+  "org_expiring_soon_notice_html": "<b>__org_name__</b> 조직의 라이선스가 __org_expiration_date__에 만료됩니다. <br> JustDo가 귀하의 업무 생활을 더 편리하게 만들어 드렸기를 바랍니다!",
+  "org_locked_notice_title": "조직 라이선스가 만료되었습니다!",
+  "org_locked_notice_html": "<b>__org_name__</b> 조직의 라이선스가 __org_expiration_date__에 만료되었습니다. <br> JustDo가 귀하의 업무 생활을 더 편리하게 만들어 드렸기를 바라며, 앞으로도 그렇게 하고 싶습니다!",
+  "org_access_restricted_title": "__org_name__: 일시적 접근 제한",
+  "org_access_restricted_html": "<b>__org_name__</b> 조직에 대한 접근이 현재 제한되어 있습니다. 이 문제에 대한 자세한 내용은 조직 관리자에게 문의하세요. <br> 귀하의 인내와 이해에 감사드립니다.",
+  "renew_org_license_instruction_html": "아래의 \"라이선스 갱신\" 버튼을 클릭하여 라이선스를 갱신할 수 있습니다.<br>지원팀이 언제나 도와드릴 준비가 되어 있습니다.<br><br>JustDo 커뮤니티의 일원이 되어 주셔서 감사합니다. 귀하의 워크플로우를 향상시키기 위해 다음 릴리스에 새로운 기능을 열심히 개발하고 있습니다!",
+  "renew_org_licnese_modal_btn_label": "라이선스 갱신",
+  "org_pre_expire_renewal_contact_page_message": "__org_name__ __optional_domain_msg__ 조직의 라이선스가 곧 만료되어 갱신하고 싶습니다.",
+  "org_post_expire_renewal_contact_page_message": "__org_name__ __optional_domain_msg__ 조직의 라이선스가 만료되어 갱신하고 싶습니다."
+}

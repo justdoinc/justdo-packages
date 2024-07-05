@@ -17,16 +17,16 @@
   "updatedAt_schema_label": "Đã cập nhật",
   "archived_schema_label": "Nhiệm vụ đã lưu trữ",
   "description_schema_label": "Mô tả",
-
-
-
+  "status_by_schema_label": "Ghi chú bởi",
+  "status_updated_at_schema_label": "Ghi chú cập nhật lúc",
+  "state_updated_at_schema_label": "Trạng thái thay đổi lúc",
   "project_id_schema_label": "Mã ID trang JustDo",
   "parents_schema_label": "Công việc chính",
   "users_schema_label": "Người dùng",
   "seqId_schema_label": "Mã ID chuỗi tác vụ",
-
-
-
+  "created_by_user_id_schema_label": "Được tạo bởi ID người dùng",
+  "updated_by_schema_label": "Được cập nhật bởi ID người dùng",
+  "users_updated_at_schema_label": "Người dùng cập nhật lúc",
   "owner_id_schema_label": "Chủ sở hữu",
   "pending_owner_id_schema_label": "Quyền sở hữu đang treo"
 }

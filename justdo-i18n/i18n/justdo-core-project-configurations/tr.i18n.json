@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Aktif durumlar",
+  "project_configurations_no_active_states_label": "Aktif durum yok",
+  "project_configurations_hidden_states_label": "Gizli durumlar",
+  "project_configurations_no_hidden_states_label": "Gizli durum yok",
+  "project_configurations_type_state_name_placeholder": "Durum adını yazın",
+  "project_configurations_default_title_for_this_state_label": "Bu durum için varsayılan başlık",
+  "project_configurations_restore_state_label": "Durumu geri yükle",
+  "project_configurations_create_extended_state_label": "Genişletilmiş durum oluştur",
+  "project_configurations_hide_state": "Durumu gizle",
+  "project_configurations_remove_extended_state": "Genişletilmiş durumu kaldır",
+  "new_custom_state_default_title": "__state__ - genişletilmiş"
+}

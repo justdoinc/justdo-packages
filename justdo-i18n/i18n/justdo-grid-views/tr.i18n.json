@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Tablo Görünümleri",
+  "grid_views_search_placeholder": "Görünümleri ara",
+  "grid_views_no_view_label": "Görünüm yok",
+  "grid_views_add_current_view_label": "Mevcut görünümü ekle",
+  "grid_views_rename_label": "Yeniden adlandır",
+  "grid_views_update_label": "Güncelle",
+  "grid_views_remove_label": "Kaldır",
+  "grid_views_share_label": "Paylaş",
+  "grid_views_unshare_label": "Paylaşımı kaldır",
+  "grid_views_shared_label": "paylaşıldı"
+}

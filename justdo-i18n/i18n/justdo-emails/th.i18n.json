@@ -1,0 +1,11 @@
+{
+  "email_greeting_with_name": "สวัสดี __name__,",
+  "unread_task_chat_notification_subject": "มีข้อความใหม่รอคุณอยู่",
+  "unread_task_chat_notification_title": "มีข้อความใหม่รอคุณอยู่ในงานต่อไปนี้:",
+  "unread_group_chat_notification_subject": "มีข้อความใหม่จาก __channel_title__ รอคุณอยู่",
+  "unread_group_chat_notification_title_html": "มีข้อความใหม่จาก <span style=\"font-weight: bold;\">__channel_title__</span> รอคุณอยู่!",
+  "open_in_justdo": "เปิดใน JustDo",
+  "unsubscribe_from_justdo": "ยกเลิกการรับการแจ้งเตือนทั้งหมดจาก JustDo",
+  "unsubscribe_from_project": "ยกเลิกการรับการอัปเดตสำหรับ __project_title__",
+  "reply_email_for_support": "มีปัญหาใดๆ หรือไม่? ตอบกลับอีเมลนี้เพื่อขอรับการสนับสนุน"
+}

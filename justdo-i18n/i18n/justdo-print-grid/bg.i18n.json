@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "Отпечатай JustDo",
+  "print_dropdown_entire_justdo": "Целият JustDo",
+  "print_dropdown_visible_tasks": "Видими задачи",
+  "print_dropdown_print_current_task": "Отпечатай текущата задача",
+  "print_dropdown_all_child_tasks": "Всички подзадачи",
+  "print_dropdown_visible_child_tasks": "Видими подзадачи",
+  "print_dropdown_download": "Изтегли",
+  "print_dropdown_download_as_png": "Изтегли като PNG",
+  "print_grid_columns_settings_label": "Настройки на колоните",
+  "print_grid_columns_options_label": "Опции за колоните",
+  "print_grid_print": "Отпечатай",
+  "print_grid_export_csv": "Експортирай като CSV",
+  "print_grid_select_all": "Избери всички",
+  "print_grid_apply": "Приложи"
+}

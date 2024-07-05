@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Ondoa Kazi",
+  "remove_from_parent_label": "Ondoa Kutoka kwa Mzazi",
+  "remove_with_subtree_label": "Ondoa na Mti Mdogo",
+  "archive_task_label": "Hifadhi Kazi",
+  "unarchive_task_label": "Rejesha Kazi kutoka Kumbukumbu",
+  "reorder_children_by_label": "Panga upya watoto kwa",
+  "zoom_in_label": "Kuza",
+  "projects_label": "Miradi",
+  "set_as_a_project_label": "Weka kama Mradi",
+  "unset_as_a_project_label": "Ondoa kama Mradi",
+  "close_project_label": "Funga Mradi",
+  "repoen_project_label": "Fungua Mradi Tena",
+  "add_to_project_label": "Ongeza kwenye mradi",
+  "apply_value_to_subtree": "Tumia __value__ kwa mti mdogo",
+  "bulk_set_options_label": "Weka"
+}

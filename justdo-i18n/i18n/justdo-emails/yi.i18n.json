@@ -1,0 +1,11 @@
+{
+  "email_greeting_with_name": "העלא __name__, ",
+  "unread_task_chat_notification_subject": "נײַע שמועס אָנזאָגן װאַרטן אױף אײַך",
+  "unread_task_chat_notification_title": "נײַע שמועס אָנזאָגן װאַרטן אױף אײַך אין דער פֿאָלגנדיקער אױפֿגאַבע:",
+  "unread_group_chat_notification_subject": "נײַע אָנזאָגן פֿון __channel_title__ װאַרטן אױף אײַך",
+  "unread_group_chat_notification_title_html": "נײַע אָנזאָגן פֿון <span style=\"font-weight: bold;\">__channel_title__</span> װאַרטן אױף אײַך!",
+  "open_in_justdo": "עפֿענען אין JustDo",
+  "unsubscribe_from_justdo": "זיך אָפּמעלדן פֿון אַלע דערהײַנטיקונג אָנזאָגן פֿון JustDo",
+  "unsubscribe_from_project": "זיך אָפּמעלדן פֿון דערהײַנטיקונגען פֿאַר __project_title__",
+  "reply_email_for_support": "האָט איר עפּעס פּראָבלעמען? ענטפֿערט אױף דעם בליצפּאָסט פֿאַר הילף."
+}

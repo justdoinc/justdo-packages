@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Συνδεδεμένο",
+  "meteor_status_connecting": "Σύνδεση...",
+  "meteor_status_failed": "Η σύνδεση με τον διακομιστή απέτυχε",
+  "meteor_status_waiting": "Αναμονή για σύνδεση με τον διακομιστή,",
+  "meteor_status_offline": "Λειτουργία εκτός σύνδεσης.",
+  "meteor_status_reconnect_in": "προσπάθεια ξανά σε ένα δευτερόλεπτο...",
+  "meteor_status_reconnect_in_plural": "προσπάθεια ξανά σε __count__ δευτερόλεπτα...",
+  "meteor_status_try_now_waiting": "Δοκιμάστε τώρα",
+  "meteor_status_try_now_offline": "Επανασύνδεση"
+}

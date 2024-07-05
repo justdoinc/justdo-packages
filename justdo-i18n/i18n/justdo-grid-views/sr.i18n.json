@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Pregledi tabele",
+  "grid_views_search_placeholder": "Pretraži preglede",
+  "grid_views_no_view_label": "Nema pregleda",
+  "grid_views_add_current_view_label": "Dodaj trenutni pregled",
+  "grid_views_rename_label": "Preimenuj",
+  "grid_views_update_label": "Ažuriraj",
+  "grid_views_remove_label": "Ukloni",
+  "grid_views_share_label": "Podeli",
+  "grid_views_unshare_label": "Poništi deljenje",
+  "grid_views_shared_label": "podeljeno"
+}

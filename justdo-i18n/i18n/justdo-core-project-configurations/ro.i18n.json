@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Stări active",
+  "project_configurations_no_active_states_label": "Nu există stări active",
+  "project_configurations_hidden_states_label": "Stări ascunse",
+  "project_configurations_no_hidden_states_label": "Nu există stări ascunse",
+  "project_configurations_type_state_name_placeholder": "Introduceți numele stării",
+  "project_configurations_default_title_for_this_state_label": "Titlu implicit pentru această stare",
+  "project_configurations_restore_state_label": "Restabilire stare",
+  "project_configurations_create_extended_state_label": "Creare stare extinsă",
+  "project_configurations_hide_state": "Ascunde starea",
+  "project_configurations_remove_extended_state": "Elimină starea extinsă",
+  "new_custom_state_default_title": "__state__ - extinsă"
+}

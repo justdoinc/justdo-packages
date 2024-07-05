@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "እይታን ለመቀየር",
+  "tab_switcher_dropdown_search_placeholder": "እይታዎች",
+  "tab_switcher_main_view_label": "ዋና እይታ",
+  "tab_switcher_my_favorites_label": "የእኔ ምርጫዎች",
+  "tab_switcher_my_due_list_label": "የእኔ የመጨረሻ ጊዜ ዝርዝር",
+  "tab_switcher_recently_label": "በቅርብ ጊዜ",
+  "tab_switcher_recently_completed_label": "የተጠናቀቁ",
+  "tab_switcher_recently_updated_label": "የተዘመኑ",
+  "tab_switcher_recently_created_label": "የተፈጠሩ",
+  "tab_switcher_miscellaneous_label": "ልዩ ልዩ",
+  "tab_switcher_task_ownershipt_transfers_label": "የተግባር ባለቤትነት ዝውውሮች",
+  "tab_switcher_ticket_queues_label": "የትኬት ወረፋዎች",
+  "tab_switcher_members_due_lists_label": "የአባላት የመጨረሻ ጊዜ ዝርዝሮች",
+  "tab_switcher_all_members_due_list_label": "የሁሉም አባላት የመጨረሻ ጊዜ ዝርዝር",
+  "tab_switcher_projects_section_label": "ፕሮジክቶች",
+  "tab_switcher_projects_label": "ፕሮጀክቶች"
+}

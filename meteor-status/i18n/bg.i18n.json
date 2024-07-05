@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Свързано",
+  "meteor_status_connecting": "Свързване...",
+  "meteor_status_failed": "Връзката със сървъра се провали",
+  "meteor_status_waiting": "Изчакване на връзка със сървъра,",
+  "meteor_status_offline": "Офлайн режим.",
+  "meteor_status_reconnect_in": "нов опит след една секунда...",
+  "meteor_status_reconnect_in_plural": "нов опит след __count__ секунди...",
+  "meteor_status_try_now_waiting": "Опитайте сега",
+  "meteor_status_try_now_offline": "Свържете се отново"
+}

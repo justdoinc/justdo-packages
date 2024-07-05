@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Görevleri Kaldır",
+  "remove_from_parent_label": "Üst Görevden Kaldır",
+  "remove_with_subtree_label": "Alt Ağaçla Birlikte Kaldır",
+  "archive_task_label": "Görevi Arşivle",
+  "unarchive_task_label": "Görevi Arşivden Çıkar",
+  "reorder_children_by_label": "Alt görevleri sırala",
+  "zoom_in_label": "Yakınlaştır",
+  "projects_label": "Projeler",
+  "set_as_a_project_label": "Proje Olarak Ayarla",
+  "unset_as_a_project_label": "Proje Ayarını Kaldır",
+  "close_project_label": "Projeyi Kapat",
+  "repoen_project_label": "Projeyi Yeniden Aç",
+  "add_to_project_label": "Projeye Ekle",
+  "apply_value_to_subtree": "__value__ değerini alt ağaca uygula",
+  "bulk_set_options_label": "Toplu Ayarla"
+}

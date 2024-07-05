@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "Aseta otsikko JustDollesi",
+  "set_justdo_name_subtitle": "Napsauta otsikkoa siirtyäksesi muokkaustilaan",
+  "create_first_task_title": "Luo ensimmäiset tehtäväsi",
+  "create_first_task_subtitle": "Voit luoda tehtäviä joko työkalupalkin painikkeilla tai pikanäppäimillä ALT+ENTER / ALT+SHIFT+ENTER",
+  "invite_members_title": "Kutsu tiimin jäseniä",
+  "invite_members_subtitle": "Kutsu tiimisi jäsenet liittymään ja tekemään yhteistyötä uudessa JustDossasi",
+  "import_tasks_title": "Tuo tehtäviä",
+  "import_tasks_subtitle": "Voit siirtää olemassa olevia tehtäviä ja tietoja JustDohon ja jatkaa saumattomasti taulukkolaskennan tuontitoiminnolla",
+  "customize_columns_title": "Muokkaa näkymääsi",
+  "customize_columns_subtitle": "Hallitse, mitä näet taulukossa (Grid) lisäämällä/poistamalla sarakkeita, suodattamalla tehtäviä niiden tilan mukaan ja muuta!",
+  "get_free_support_title": "Hanki ilmaista tukea",
+  "get_free_support_subtitle": "Henkilökohtainen tukisessio JustDo-tiimin kanssa",
+  "request": "Pyydä",
+  "free_support_request_received": "Vastaanotettu, otamme sinuun pian yhteyttä sähköpostitse",
+  "tutorials_recent_product_updates": "Viimeisimmät tuotepäivitykset",
+  "tutorials_justdo_quick_start": "JustDon pikaopas",
+  "tutorials_justdo_advanced_features": "JustDon edistyneet ominaisuudet",
+  "tutorials_justdo_support_center": "JustDo-tukikeskus"
+}

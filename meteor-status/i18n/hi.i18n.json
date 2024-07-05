@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "कनेक्टेड",
+  "meteor_status_connecting": "कनेक्ट हो रहा है...",
+  "meteor_status_failed": "सर्वर कनेक्शन विफल हो गया",
+  "meteor_status_waiting": "सर्वर कनेक्शन का इंतज़ार कर रहा है,",
+  "meteor_status_offline": "ऑफलाइन मोड।",
+  "meteor_status_reconnect_in": "एक सेकंड में फिर से कोशिश कर रहा है...",
+  "meteor_status_reconnect_in_plural": "__count__ सेकंड में फिर से कोशिश कर रहा है...",
+  "meteor_status_try_now_waiting": "अभी कोशिश करें",
+  "meteor_status_try_now_offline": "फिर से कनेक्ट करें"
+}

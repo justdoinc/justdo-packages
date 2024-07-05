@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "ប្តូរទិដ្ឋភាព",
+  "tab_switcher_dropdown_search_placeholder": "ទិដ្ឋភាព",
+  "tab_switcher_main_view_label": "ទិដ្ឋភាពសំខាន់",
+  "tab_switcher_my_favorites_label": "សំណព្វចិត្តរបស់ខ្ញុំ",
+  "tab_switcher_my_due_list_label": "បញ្ជីកាលកំណត់របស់ខ្ញុំ",
+  "tab_switcher_recently_label": "ថ្មីៗនេះ",
+  "tab_switcher_recently_completed_label": "បានបញ្ចប់",
+  "tab_switcher_recently_updated_label": "បានធ្វើបច្ចុប្បន្នភាព",
+  "tab_switcher_recently_created_label": "បានបង្កើត",
+  "tab_switcher_miscellaneous_label": "ផ្សេងៗ",
+  "tab_switcher_task_ownershipt_transfers_label": "ការផ្ទេរកម្មសិទ្ធិភារកិច្ច",
+  "tab_switcher_ticket_queues_label": "ជួរសំបុត្រ",
+  "tab_switcher_members_due_lists_label": "បញ្ជីកាលកំណត់របស់សមាជិក",
+  "tab_switcher_all_members_due_list_label": "បញ្ជីកាលកំណត់របស់សមាជិកទាំងអស់",
+  "tab_switcher_projects_section_label": "គម្រោង",
+  "tab_switcher_projects_label": "គម្រោង"
+}

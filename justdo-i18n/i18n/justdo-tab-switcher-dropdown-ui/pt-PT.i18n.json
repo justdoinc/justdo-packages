@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Alternar Visualização",
+  "tab_switcher_dropdown_search_placeholder": "Visualizações",
+  "tab_switcher_main_view_label": "Vista Principal",
+  "tab_switcher_my_favorites_label": "Meus Favoritos",
+  "tab_switcher_my_due_list_label": "Minha Lista de Prazos",
+  "tab_switcher_recently_label": "Recentemente",
+  "tab_switcher_recently_completed_label": "Concluídos",
+  "tab_switcher_recently_updated_label": "Atualizados",
+  "tab_switcher_recently_created_label": "Criados",
+  "tab_switcher_miscellaneous_label": "Diversos",
+  "tab_switcher_task_ownershipt_transfers_label": "Transferências de Propriedade de Tarefas",
+  "tab_switcher_ticket_queues_label": "Filas de Tickets",
+  "tab_switcher_members_due_lists_label": "Listas de Prazos dos Membros",
+  "tab_switcher_all_members_due_list_label": "Lista de Prazos de Todos os Membros",
+  "tab_switcher_projects_section_label": "Projetos",
+  "tab_switcher_projects_label": "Projetos"
+}

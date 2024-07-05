@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Hapus Tugas",
+  "remove_from_parent_label": "Hapus dari Induk",
+  "remove_with_subtree_label": "Hapus dengan Sub-Pohon",
+  "archive_task_label": "Arsipkan Tugas",
+  "unarchive_task_label": "Batalkan Arsip Tugas",
+  "reorder_children_by_label": "Urutkan ulang anak berdasarkan",
+  "zoom_in_label": "Perbesar",
+  "projects_label": "Proyek",
+  "set_as_a_project_label": "Tetapkan sebagai Proyek",
+  "unset_as_a_project_label": "Batalkan sebagai Proyek",
+  "close_project_label": "Tutup Proyek",
+  "repoen_project_label": "Buka Kembali Proyek",
+  "add_to_project_label": "Tambahkan ke proyek",
+  "apply_value_to_subtree": "Terapkan __value__ ke sub-pohon",
+  "bulk_set_options_label": "Tetapkan"
+}

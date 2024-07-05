@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Perjungti rodinį",
+  "tab_switcher_dropdown_search_placeholder": "Rodiniai",
+  "tab_switcher_main_view_label": "Pagrindinis rodinys",
+  "tab_switcher_my_favorites_label": "Mano mėgstamiausi",
+  "tab_switcher_my_due_list_label": "Mano terminų sąrašas",
+  "tab_switcher_recently_label": "Neseniai",
+  "tab_switcher_recently_completed_label": "Užbaigta",
+  "tab_switcher_recently_updated_label": "Atnaujinta",
+  "tab_switcher_recently_created_label": "Sukurta",
+  "tab_switcher_miscellaneous_label": "Įvairūs",
+  "tab_switcher_task_ownershipt_transfers_label": "Užduočių nuosavybės perdavimai",
+  "tab_switcher_ticket_queues_label": "Užklausų eilės",
+  "tab_switcher_members_due_lists_label": "Narių terminų sąrašai",
+  "tab_switcher_all_members_due_list_label": "Visų narių terminų sąrašas",
+  "tab_switcher_projects_section_label": "Projektai",
+  "tab_switcher_projects_label": "Projektai"
+}

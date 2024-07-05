@@ -1,0 +1,8 @@
+{
+  "task_type_delayed_label": "En retard",
+  "task_type_behind_label": "En retard",
+  "task_type_late_label": "En retard",
+  "task_type_overdue_label": "En retard",
+  "task_type_key_task_label": "Tâche clé",
+  "task_type_no_owner_label": "Sans responsable"
+}

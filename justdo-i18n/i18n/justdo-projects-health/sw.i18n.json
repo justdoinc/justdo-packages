@@ -1,0 +1,8 @@
+{
+  "task_type_delayed_label": "Imechelewa",
+  "task_type_behind_label": "Nyuma",
+  "task_type_late_label": "Kuchelewa",
+  "task_type_overdue_label": "Imepitiliza muda",
+  "task_type_key_task_label": "Kazi Muhimu",
+  "task_type_no_owner_label": "Hakuna Mmiliki"
+}

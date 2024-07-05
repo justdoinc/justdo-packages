@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "JustDo에 제목 설정하기",
+  "set_justdo_name_subtitle": "제목을 클릭하면 편집 모드로 들어갑니다",
+  "create_first_task_title": "첫 번째 작업 만들기",
+  "create_first_task_subtitle": "작업을 생성하려면 도구 모음의 버튼을 사용하거나 ALT+ENTER / ALT+SHIFT+ENTER 키보드 단축키를 사용하세요",
+  "invite_members_title": "팀원 초대하기",
+  "invite_members_subtitle": "새로운 JustDo 보드에서 협업할 팀원들을 초대하세요",
+  "import_tasks_title": "작업 가져오기",
+  "import_tasks_subtitle": "스프레드시트 가져오기 기능을 통해 기존 작업과 데이터를 JustDo로 전송하여 원활하게 계속할 수 있습니다",
+  "customize_columns_title": "보기 사용자 지정",
+  "customize_columns_subtitle": "열 추가/제거, 작업 상태별 필터링 등을 통해 그리드(데이터 테이블)에서 보고 싶은 내용을 제어하세요!",
+  "get_free_support_title": "무료 지원 받기",
+  "get_free_support_subtitle": "JustDo 팀과의 1대1 지원 세션",
+  "request": "요청",
+  "free_support_request_received": "접수되었습니다. 곧 이메일로 연락 드리겠습니다",
+  "tutorials_recent_product_updates": "최근 제품 업데이트",
+  "tutorials_justdo_quick_start": "JustDo 빠른 시작 가이드",
+  "tutorials_justdo_advanced_features": "JustDo 고급 기능",
+  "tutorials_justdo_support_center": "JustDo 고객 지원 센터"
+}

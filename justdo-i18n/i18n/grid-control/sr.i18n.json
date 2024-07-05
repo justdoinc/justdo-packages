@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Dodaj kolonu",
+  "hide_column_label": "Sakrij kolonu",
+  "freeze_column_label": "Zamrzni kolonu",
+  "unfreeze_column_label": "Odmrzni kolonu",
+  "tree_control_tooltip_gantt_milestone": "Gantov miljokaz",
+  "tree_control_tooltip_buffer_task": "Bafer zadatak",
+  "tree_control_tooltip_Meetings": "Sastanci",
+  "tree_control_tooltip_start_time_tracking": "Počni da radiš na ovom zadatku",
+  "tree_control_tooltip_stop_time_tracking": "Trenutno radiš na ovom zadatku, pritisni da zaustaviš i zabeležiš odrađeno vreme",
+  "tree_control_tooltip_resources": "Resursi",
+  "tree_control_tooltip_description": "Opis zadatka",
+  "tree_control_tooltip_chat_messages": "Četovi",
+  "tree_control_tooltip_files_count": "__files_count__ fajlova",
+  "tree_control_tooltip_emails_count": "__emails_count__ mejlova",
+  "tree_control_tooltip_task_is_a_project": "Zadatak je projekat",
+  "tree_control_tooltip_task_is_archived": "Zadatak je arhiviran"
+}

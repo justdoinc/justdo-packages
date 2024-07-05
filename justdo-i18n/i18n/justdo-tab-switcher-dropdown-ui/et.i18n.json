@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Vaheta vaadet",
+  "tab_switcher_dropdown_search_placeholder": "Vaated",
+  "tab_switcher_main_view_label": "Põhivaade",
+  "tab_switcher_my_favorites_label": "Minu lemmikud",
+  "tab_switcher_my_due_list_label": "Minu tähtajalised ülesanded",
+  "tab_switcher_recently_label": "Hiljuti",
+  "tab_switcher_recently_completed_label": "Lõpetatud",
+  "tab_switcher_recently_updated_label": "Uuendatud",
+  "tab_switcher_recently_created_label": "Loodud",
+  "tab_switcher_miscellaneous_label": "Muu",
+  "tab_switcher_task_ownershipt_transfers_label": "Ülesannete omandiõiguse ülekanded",
+  "tab_switcher_ticket_queues_label": "Piletijärjekorrad",
+  "tab_switcher_members_due_lists_label": "Liikmete tähtajalised nimekirjad",
+  "tab_switcher_all_members_due_list_label": "Kõigi liikmete tähtajaline nimekiri",
+  "tab_switcher_projects_section_label": "Projektid",
+  "tab_switcher_projects_label": "Projektid"
+}

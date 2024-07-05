@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "JustDo 인쇄",
+  "print_dropdown_entire_justdo": "전체 JustDo 보드",
+  "print_dropdown_visible_tasks": "보이는 작업",
+  "print_dropdown_print_current_task": "현재 작업 인쇄",
+  "print_dropdown_all_child_tasks": "모든 하위 작업",
+  "print_dropdown_visible_child_tasks": "보이는 하위 작업",
+  "print_dropdown_download": "다운로드",
+  "print_dropdown_download_as_png": "PNG로 다운로드",
+  "print_grid_columns_settings_label": "열 설정",
+  "print_grid_columns_options_label": "열 옵션",
+  "print_grid_print": "인쇄",
+  "print_grid_export_csv": "CSV로 내보내기",
+  "print_grid_select_all": "모두 선택",
+  "print_grid_apply": "적용"
+}

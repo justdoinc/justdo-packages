@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "Vælg en titel til din JustDo",
+  "set_justdo_name_subtitle": "Klik simpelthen på titlen for at gå i redigeringstilstand",
+  "create_first_task_title": "Opret dine første opgaver",
+  "create_first_task_subtitle": "For at oprette opgaver kan du enten bruge knapperne på værktøjslinjen eller bruge tastaturgenvejene ALT+ENTER / ALT+SHIFT+ENTER",
+  "invite_members_title": "Inviter teammedlemmer",
+  "invite_members_subtitle": "Inviter dine teammedlemmer til at deltage og samarbejde i din nye JustDo",
+  "import_tasks_title": "Importer opgaver",
+  "import_tasks_subtitle": "Du kan overføre eksisterende opgaver og data til JustDo og fortsætte problemfrit med vores regneark-importfunktion",
+  "customize_columns_title": "Tilpas din visning",
+  "customize_columns_subtitle": "Kontroller, hvad du ser i datanettet (Grid) ved at tilføje/fjerne kolonner, filtrere opgaver efter deres status og mere!",
+  "get_free_support_title": "Få gratis support",
+  "get_free_support_subtitle": "1-til-1 supportsession med JustDo-teamet",
+  "request": "Anmod",
+  "free_support_request_received": "Modtaget, vi vender tilbage til dig snarest via e-mail",
+  "tutorials_recent_product_updates": "Seneste produktopdateringer",
+  "tutorials_justdo_quick_start": "JustDo Hurtig Start",
+  "tutorials_justdo_advanced_features": "JustDo Avancerede Funktioner",
+  "tutorials_justdo_support_center": "JustDo Supportcenter"
+}

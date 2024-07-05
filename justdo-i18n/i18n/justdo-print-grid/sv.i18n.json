@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "Skriv ut JustDo",
+  "print_dropdown_entire_justdo": "Hela JustDo",
+  "print_dropdown_visible_tasks": "Synliga uppgifter",
+  "print_dropdown_print_current_task": "Skriv ut aktuell uppgift",
+  "print_dropdown_all_child_tasks": "Alla underuppgifter",
+  "print_dropdown_visible_child_tasks": "Synliga underuppgifter",
+  "print_dropdown_download": "Ladda ner",
+  "print_dropdown_download_as_png": "Ladda ner som PNG",
+  "print_grid_columns_settings_label": "Kolumninställningar",
+  "print_grid_columns_options_label": "Kolumnalternativ",
+  "print_grid_print": "Skriv ut",
+  "print_grid_export_csv": "Exportera CSV",
+  "print_grid_select_all": "Markera alla",
+  "print_grid_apply": "Tillämpa"
+}

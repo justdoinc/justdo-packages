@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Spalte hinzufügen",
+  "hide_column_label": "Spalte ausblenden",
+  "freeze_column_label": "Spalte fixieren",
+  "unfreeze_column_label": "Spalte lösen",
+  "tree_control_tooltip_gantt_milestone": "Gantt-Meilenstein",
+  "tree_control_tooltip_buffer_task": "Pufferaufgabe",
+  "tree_control_tooltip_Meetings": "Besprechungen",
+  "tree_control_tooltip_start_time_tracking": "Beginnen Sie mit der Arbeit an dieser Aufgabe",
+  "tree_control_tooltip_stop_time_tracking": "Sie arbeiten gerade an dieser Aufgabe, drücken Sie hier, um zu stoppen und die Arbeitszeit zu protokollieren",
+  "tree_control_tooltip_resources": "Ressourcen",
+  "tree_control_tooltip_description": "Aufgabenbeschreibung",
+  "tree_control_tooltip_chat_messages": "Chat-Nachrichten",
+  "tree_control_tooltip_files_count": "__files_count__ Dateien",
+  "tree_control_tooltip_emails_count": "__emails_count__ E-Mails",
+  "tree_control_tooltip_task_is_a_project": "Aufgabe ist ein Projekt",
+  "tree_control_tooltip_task_is_archived": "Aufgabe ist archiviert"
+}

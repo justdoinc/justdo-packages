@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Zobrazenia tabuľky",
+  "grid_views_search_placeholder": "Vyhľadať zobrazenia",
+  "grid_views_no_view_label": "Žiadne zobrazenia",
+  "grid_views_add_current_view_label": "Pridať aktuálne zobrazenie",
+  "grid_views_rename_label": "Premenovať",
+  "grid_views_update_label": "Aktualizovať",
+  "grid_views_remove_label": "Odstrániť",
+  "grid_views_share_label": "Zdieľať",
+  "grid_views_unshare_label": "Zrušiť zdieľanie",
+  "grid_views_shared_label": "zdieľané"
+}

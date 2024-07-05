@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "アクティブな状態",
+  "project_configurations_no_active_states_label": "アクティブな状態がありません",
+  "project_configurations_hidden_states_label": "非表示の状態",
+  "project_configurations_no_hidden_states_label": "非表示の状態がありません",
+  "project_configurations_type_state_name_placeholder": "状態名を入力",
+  "project_configurations_default_title_for_this_state_label": "この状態のデフォルトタイトル",
+  "project_configurations_restore_state_label": "状態を復元",
+  "project_configurations_create_extended_state_label": "拡張状態を作成",
+  "project_configurations_hide_state": "状態を非表示",
+  "project_configurations_remove_extended_state": "拡張状態を削除",
+  "new_custom_state_default_title": "__state__ - 拡張"
+}

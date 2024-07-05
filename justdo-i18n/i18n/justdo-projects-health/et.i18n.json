@@ -1,0 +1,8 @@
+{
+  "task_type_delayed_label": "Viivitatud",
+  "task_type_behind_label": "Mahajäänud",
+  "task_type_late_label": "Hilinev",
+  "task_type_overdue_label": "Tähtaja ületanud",
+  "task_type_key_task_label": "Võtmeülesanne",
+  "task_type_no_owner_label": "Omanikuta"
+}

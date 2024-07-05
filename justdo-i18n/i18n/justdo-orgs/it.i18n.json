@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "Organizzazione di __user_name__",
+  "create_org_label": "Crea Organizzazione",
+  "without_orgs_label": "Senza Organizzazione",
+  "justdos_under_named_org_html": "JustDo sotto <span class=\"org-name\">__org_name__</span>",
+  "justdos_without_orgs": "JustDo senza un'organizzazione",
+  "orgs_project_config_title": "Organizzazioni",
+  "assign_justdo_to_organization_label": "Assegna JustDo all'organizzazione",
+  "another_organization": "un'altra organizzazione",
+  "pre_transfer_justdo_to_org_notice_html": "Stai per trasferire questo JustDo a <b>__dest_org_name__</b>. <br> Tutti i membri di questo JustDo diventeranno membri di <b>__dest_org_name__</b>.",
+  "select_organization": "Seleziona Organizzazione",
+  "org_expiring_soon_notice_title": "La licenza della tua organizzazione sta per scadere!",
+  "org_expiring_soon_notice_html": "La licenza per la tua organizzazione <b>__org_name__</b> scadrà il __org_expiration_date__. <br> Speriamo che JustDo abbia reso la tua vita lavorativa più facile!",
+  "org_locked_notice_title": "La licenza della tua organizzazione è scaduta!",
+  "org_locked_notice_html": "La licenza per la tua organizzazione <b>__org_name__</b> è scaduta il __org_expiration_date__. <br> Speriamo che JustDo abbia reso la tua vita lavorativa più facile e ci piacerebbe continuare a farlo!",
+  "org_access_restricted_title": "__org_name__: Restrizione Temporanea dell'Accesso",
+  "org_access_restricted_html": "L'accesso alla tua organizzazione <b>__org_name__</b> è attualmente limitato. Si prega di contattare gli amministratori dell'organizzazione per maggiori dettagli riguardo questa questione. <br> Apprezziamo la tua pazienza e comprensione.",
+  "renew_org_license_instruction_html": "Puoi rinnovare la licenza cliccando sul pulsante \"Rinnova Licenza\" qui sotto.<br>Il nostro team di supporto è sempre felice di assisterti.<br><br>Grazie per far parte della comunità JustDo. Stiamo attivamente sviluppando nuove funzionalità per la prossima versione per migliorare il tuo flusso di lavoro!",
+  "renew_org_licnese_modal_btn_label": "Rinnova Licenza",
+  "org_pre_expire_renewal_contact_page_message": "La mia organizzazione __org_name__ __optional_domain_msg__ sta per scadere e vorrei rinnovare la licenza.",
+  "org_post_expire_renewal_contact_page_message": "La mia organizzazione __org_name__ __optional_domain_msg__ è scaduta e vorrei rinnovare la licenza."
+}

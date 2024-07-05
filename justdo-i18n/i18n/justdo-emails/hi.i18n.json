@@ -1,0 +1,11 @@
+{
+  "email_greeting_with_name": "नमस्ते __name__, ",
+  "unread_task_chat_notification_subject": "आपके लिए नए चैट संदेश प्रतीक्षा कर रहे हैं",
+  "unread_task_chat_notification_title": "निम्नलिखित कार्य में आपके लिए नए चैट संदेश प्रतीक्षा कर रहे हैं:",
+  "unread_group_chat_notification_subject": "__channel_title__ से नए संदेश आपकी प्रतीक्षा कर रहे हैं",
+  "unread_group_chat_notification_title_html": "<span style=\"font-weight: bold;\">__channel_title__</span> से नए संदेश आपकी प्रतीक्षा कर रहे हैं!",
+  "open_in_justdo": "JustDo में खोलें",
+  "unsubscribe_from_justdo": "JustDo से सभी अपडेट सूचनाओं से सदस्यता समाप्त करें",
+  "unsubscribe_from_project": "__project_title__ के अपडेट से सदस्यता समाप्त करें",
+  "reply_email_for_support": "कोई समस्या है? सहायता के लिए इस ईमेल का जवाब दें।"
+}

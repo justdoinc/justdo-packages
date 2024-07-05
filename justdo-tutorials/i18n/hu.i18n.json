@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "Adj címet a JustDo táblának",
+  "set_justdo_name_subtitle": "Egyszerűen kattints a címre a szerkesztési módba lépéshez",
+  "create_first_task_title": "Hozd létre az első feladataidat",
+  "create_first_task_subtitle": "Feladatok létrehozásához használhatod az eszköztár gombjait, vagy az ALT+ENTER / ALT+SHIFT+ENTER billentyűparancsokat",
+  "invite_members_title": "Hívj meg csapattagokat",
+  "invite_members_subtitle": "Hívd meg csapattagjaidat, hogy csatlakozzanak és együttműködjenek az új JustDo táblában",
+  "import_tasks_title": "Feladatok importálása",
+  "import_tasks_subtitle": "Átviheted meglévő feladataidat és adataidat a JustDo-ba, és zökkenőmentesen folytathatod a munkát a táblázat importálási funkciónkkal",
+  "customize_columns_title": "Testreszabhatod a nézetedet",
+  "customize_columns_subtitle": "Szabályozd, mit látsz a rácson (Grid) oszlopok hozzáadásával/eltávolításával, feladatok szűrésével állapot szerint, és még sok más módon!",
+  "get_free_support_title": "Kérj ingyenes támogatást",
+  "get_free_support_subtitle": "1 az 1-ben támogatási alkalom a JustDo csapattal",
+  "request": "Kérelem",
+  "free_support_request_received": "Megkaptuk, hamarosan e-mailben válaszolunk",
+  "tutorials_recent_product_updates": "Legújabb termékfrissítések",
+  "tutorials_justdo_quick_start": "JustDo gyors kezdés",
+  "tutorials_justdo_advanced_features": "JustDo haladó funkciók",
+  "tutorials_justdo_support_center": "JustDo Támogatási Központ"
+}

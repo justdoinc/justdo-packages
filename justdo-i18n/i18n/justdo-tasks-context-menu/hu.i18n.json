@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Feladatok eltávolítása",
+  "remove_from_parent_label": "Eltávolítás a szülőelemből",
+  "remove_with_subtree_label": "Eltávolítás az alfeladatokkal együtt",
+  "archive_task_label": "Feladat archiválása",
+  "unarchive_task_label": "Feladat visszaállítása archívumból",
+  "reorder_children_by_label": "Alfeladatok rendezése",
+  "zoom_in_label": "Nagyítás",
+  "projects_label": "Projektek",
+  "set_as_a_project_label": "Beállítás projektként",
+  "unset_as_a_project_label": "Projekt beállítás megszüntetése",
+  "close_project_label": "Projekt lezárása",
+  "repoen_project_label": "Projekt újranyitása",
+  "add_to_project_label": "Hozzáadás projekthez",
+  "apply_value_to_subtree": "__value__ alkalmazása az alfeladatokra",
+  "bulk_set_options_label": "Beállítások"
+}

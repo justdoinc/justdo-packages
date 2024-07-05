@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "Drukāt JustDo",
+  "print_dropdown_entire_justdo": "Viss JustDo",
+  "print_dropdown_visible_tasks": "Redzamie uzdevumi",
+  "print_dropdown_print_current_task": "Drukāt pašreizējo uzdevumu",
+  "print_dropdown_all_child_tasks": "Visi apakšuzdevumi",
+  "print_dropdown_visible_child_tasks": "Redzamie apakšuzdevumi",
+  "print_dropdown_download": "Lejupielādēt",
+  "print_dropdown_download_as_png": "Lejupielādēt kā PNG",
+  "print_grid_columns_settings_label": "Kolonnu iestatījumi",
+  "print_grid_columns_options_label": "Kolonnu opcijas",
+  "print_grid_print": "Drukāt",
+  "print_grid_export_csv": "Eksportēt CSV",
+  "print_grid_select_all": "Atlasīt visu",
+  "print_grid_apply": "Pielietot"
+}

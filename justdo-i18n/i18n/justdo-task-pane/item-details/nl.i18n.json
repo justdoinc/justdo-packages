@@ -1,0 +1,9 @@
+{
+  "item_details_title": "Details",
+  "item_details_members_label": "Leden",
+  "item_details_description_label": "Beschrijving",
+  "item_details_add_task_description": "Taakbeschrijving toevoegen",
+  "item_details_more_info_label": "Meer informatie",
+  "item_details_context_title": "Context",
+  "item_details_context_drag_to_add_parent_label": "Sleep om een bovenliggende taak toe te voegen"
+}

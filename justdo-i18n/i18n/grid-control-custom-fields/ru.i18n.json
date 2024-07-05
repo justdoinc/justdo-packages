@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Пользовательские поля",
+  "grid_control_custom_fields_sort_by_name_label": "Сортировать по имени",
+  "grid_control_custom_fields_new_custom_field_label": "Новое пользовательское поле",
+  "grid_control_custom_fields_no_custom_fields_label": "Нет пользовательских полей",
+  "grid_control_custom_fields_label_placeholder": "метка",
+  "grid_control_custom_fields_text_label": "Текст",
+  "grid_control_custom_fields_number_label": "Число",
+  "grid_control_custom_fields_date_label": "Дата",
+  "grid_control_custom_fields_select_label": "Варианты",
+  "grid_control_custom_fields_multi_select_label": "Множественный выбор",
+  "grid_control_custom_fields_smart_numbers_label": "Умные числа",
+  "grid_control_custom_fields_unknown_type_label": "Неизвестный тип",
+  "grid_control_custom_fields_disabled_field_label": "Отключенное поле"
+}

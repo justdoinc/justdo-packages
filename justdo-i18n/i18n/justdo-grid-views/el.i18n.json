@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Προβολές Πίνακα",
+  "grid_views_search_placeholder": "Αναζήτηση προβολών",
+  "grid_views_no_view_label": "Δεν υπάρχουν προβολές",
+  "grid_views_add_current_view_label": "Προσθήκη τρέχουσας προβολής",
+  "grid_views_rename_label": "Μετονομασία",
+  "grid_views_update_label": "Ενημέρωση",
+  "grid_views_remove_label": "Αφαίρεση",
+  "grid_views_share_label": "Κοινοποίηση",
+  "grid_views_unshare_label": "Ακύρωση κοινοποίησης",
+  "grid_views_shared_label": "κοινοποιημένο"
+}

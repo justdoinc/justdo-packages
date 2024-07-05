@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Campos Personalizados",
+  "grid_control_custom_fields_sort_by_name_label": "Ordenar por Nome",
+  "grid_control_custom_fields_new_custom_field_label": "Novo campo personalizado",
+  "grid_control_custom_fields_no_custom_fields_label": "Sem campos personalizados",
+  "grid_control_custom_fields_label_placeholder": "rótulo",
+  "grid_control_custom_fields_text_label": "Texto",
+  "grid_control_custom_fields_number_label": "Número",
+  "grid_control_custom_fields_date_label": "Data",
+  "grid_control_custom_fields_select_label": "Opções",
+  "grid_control_custom_fields_multi_select_label": "Múltiplas Opções",
+  "grid_control_custom_fields_smart_numbers_label": "Números Inteligentes (Smart Numbers)",
+  "grid_control_custom_fields_unknown_type_label": "Tipo desconhecido",
+  "grid_control_custom_fields_disabled_field_label": "Campo desativado"
+}

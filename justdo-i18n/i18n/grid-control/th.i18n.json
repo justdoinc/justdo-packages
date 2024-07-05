@@ -1,0 +1,18 @@
+{
+  "add_column_label": "เพิ่มคอลัมน์",
+  "hide_column_label": "ซ่อนคอลัมน์",
+  "freeze_column_label": "ตรึงคอลัมน์",
+  "unfreeze_column_label": "ยกเลิกการตรึงคอลัมน์",
+  "tree_control_tooltip_gantt_milestone": "เหตุการณ์สำคัญในแผนภูมิแกนต์ (Gantt Milestone)",
+  "tree_control_tooltip_buffer_task": "งานสำรอง (Buffer Task)",
+  "tree_control_tooltip_Meetings": "การประชุม",
+  "tree_control_tooltip_start_time_tracking": "เริ่มทำงานในงานนี้",
+  "tree_control_tooltip_stop_time_tracking": "คุณกำลังทำงานในงานนี้อยู่ กดเพื่อหยุดและบันทึกเวลาที่ทำงาน",
+  "tree_control_tooltip_resources": "ทรัพยากร",
+  "tree_control_tooltip_description": "คำอธิบายงาน",
+  "tree_control_tooltip_chat_messages": "ข้อความแชท",
+  "tree_control_tooltip_files_count": "ไฟล์ __files_count__ ไฟล์",
+  "tree_control_tooltip_emails_count": "อีเมล __emails_count__ ฉบับ",
+  "tree_control_tooltip_task_is_a_project": "งานนี้เป็นโครงการ",
+  "tree_control_tooltip_task_is_archived": "งานนี้ถูกเก็บถาวรแล้ว"
+}

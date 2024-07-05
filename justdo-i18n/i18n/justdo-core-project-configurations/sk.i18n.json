@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Aktívne stavy",
+  "project_configurations_no_active_states_label": "Žiadne aktívne stavy",
+  "project_configurations_hidden_states_label": "Skryté stavy",
+  "project_configurations_no_hidden_states_label": "Žiadne skryté stavy",
+  "project_configurations_type_state_name_placeholder": "Zadajte názov stavu",
+  "project_configurations_default_title_for_this_state_label": "Predvolený názov pre tento stav",
+  "project_configurations_restore_state_label": "Obnoviť stav",
+  "project_configurations_create_extended_state_label": "Vytvoriť rozšírený stav",
+  "project_configurations_hide_state": "Skryť stav",
+  "project_configurations_remove_extended_state": "Odstrániť rozšírený stav",
+  "new_custom_state_default_title": "__state__ - rozšírený"
+}

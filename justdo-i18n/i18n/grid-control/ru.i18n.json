@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Добавить столбец",
+  "hide_column_label": "Скрыть столбец",
+  "freeze_column_label": "Закрепить столбец",
+  "unfreeze_column_label": "Открепить столбец",
+  "tree_control_tooltip_gantt_milestone": "Веха Ганта",
+  "tree_control_tooltip_buffer_task": "Буферная задача",
+  "tree_control_tooltip_Meetings": "Встречи",
+  "tree_control_tooltip_start_time_tracking": "Начать работу над этой задачей",
+  "tree_control_tooltip_stop_time_tracking": "Вы сейчас работаете над этой задачей, нажмите, чтобы остановить и зафиксировать отработанное время",
+  "tree_control_tooltip_resources": "Ресурсы",
+  "tree_control_tooltip_description": "Описание задачи",
+  "tree_control_tooltip_chat_messages": "Сообщения чата",
+  "tree_control_tooltip_files_count": "__files_count__ файлов",
+  "tree_control_tooltip_emails_count": "__emails_count__ писем",
+  "tree_control_tooltip_task_is_a_project": "Задача является проектом",
+  "tree_control_tooltip_task_is_archived": "Задача архивирована"
+}

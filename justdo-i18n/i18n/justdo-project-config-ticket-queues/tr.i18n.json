@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "Bilet Kuyrukları",
+  "project_config_ticket_queues_new_ticket_queue_label": "Yeni bilet kuyruğu",
+  "project_config_ticket_queues_enter_task_number_label": "Görev numarasını girin",
+  "project_config_ticket_queues_no_ticket_queues_label": "Bilet kuyruğu yok",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "Bu Bilet Kuyruğunu kaldıramazsınız, çünkü ilgili Görevin üyesi değilsiniz"
+}

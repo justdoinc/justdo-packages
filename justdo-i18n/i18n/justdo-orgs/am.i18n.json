@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "የ__user_name__ ድርጅት",
+  "create_org_label": "ድርጅት ፍጠር",
+  "without_orgs_label": "ያለ ድርጅት",
+  "justdos_under_named_org_html": "በ<span class=\"org-name\">__org_name__</span> ስር ያሉ ጃስትዱዎች (JustDos)",
+  "justdos_without_orgs": "ያለ ድርጅት ያሉ ጃስትዱዎች (JustDos)",
+  "orgs_project_config_title": "ድርጅቶች",
+  "assign_justdo_to_organization_label": "ጃስትዱን (JustDo) ለድርጅት መድብ",
+  "another_organization": "ሌላ ድርጅት",
+  "pre_transfer_justdo_to_org_notice_html": "ይህንን ጃስትዱ (JustDo) ወደ <b>__dest_org_name__</b> ለማዛወር ነው። <br> በዚህ ጃስትዱ (JustDo) ውስጥ ያሉ ሁሉም አባላት የ<b>__dest_org_name__</b> አባላት ይሆናሉ።",
+  "select_organization": "ድርጅት ይምረጡ",
+  "org_expiring_soon_notice_title": "የድርጅትዎ ፈቃድ በቅርብ ጊዜ ይexpired!",
+  "org_expiring_soon_notice_html": "የ<b>__org_name__</b> ድርጅትዎ ፈቃድ በ__org_expiration_date__ ያልቃል። <br> ጃስትዱ (JustDo) የስራ ሕይወትዎን ቀላል ያደረገ ይሆናል ተስፋ እናደርጋለን!",
+  "org_locked_notice_title": "የድርጅትዎ ፈቃድ አልቋል!",
+  "org_locked_notice_html": "የ<b>__org_name__</b> ድርጅትዎ ፈቃድ በ__org_expiration_date__ አልቋል። <br> ጃስትዱ (JustDo) የስራ ሕይወትዎን ቀላል ያደረገ ይሆናል ተስፋ እናደርጋለን፣ እና ይህንን ማድረጋችንን መቀጠል እንወዳለን!",
+  "org_access_restricted_title": "__org_name__: ጊዜያዊ የመዳረሻ ገደብ",
+  "org_access_restricted_html": "ወደ <b>__org_name__</b> ድርጅትዎ መዳረሻ በአሁኑ ወቅት ተገድቧል። እባክዎን ስለዚህ ጉዳይ ተጨማሪ ዝርዝሮችን ለማግኘት የድርጅትዎን አስተዳዳሪዎች ያነጋግሩ። <br> ለትዕግስትዎና ለመረዳትዎ እናመሰግናለን።",
+  "renew_org_license_instruction_html": "ከዚህ በታች ያለውን \"ፈቃድ አድስ\" አዝራር በመጫን ፈቃዱን ማደስ ይችላሉ።<br>የድጋፍ ቡድናችን ሁልጊዜ እርስዎን ለመርዳት ደስተኛ ነው።<br><br>በጃስትዱ (JustDo) ማህበረሰብ ውስጥ ስለሆኑ እናመሰግናለን። የስራ ሂደትዎን ለማሻሻል ለሚቀጥለው ስሪት አዳዲስ ባህሪያትን በንቃት እያዳበርን ነው!",
+  "renew_org_licnese_modal_btn_label": "ፈቃድ አድስ",
+  "org_pre_expire_renewal_contact_page_message": "የእኔ ድርጅት __org_name__ __optional_domain_msg__ ሊያልቅ ነው እና ፈቃዱን ማደስ እፈልጋለሁ።",
+  "org_post_expire_renewal_contact_page_message": "የእኔ ድርጅት __org_name__ __optional_domain_msg__ አልቋል እና ፈቃዱን ማደስ እፈልጋለሁ።"
+}

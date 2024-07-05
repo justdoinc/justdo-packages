@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Tabelvisninger",
+  "grid_views_search_placeholder": "Søg visninger",
+  "grid_views_no_view_label": "Ingen visninger",
+  "grid_views_add_current_view_label": "Tilføj nuværende visning",
+  "grid_views_rename_label": "Omdøb",
+  "grid_views_update_label": "Opdater",
+  "grid_views_remove_label": "Fjern",
+  "grid_views_share_label": "Del",
+  "grid_views_unshare_label": "Stop deling",
+  "grid_views_shared_label": "delt"
+}

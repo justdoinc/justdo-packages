@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "Организация на __user_name__",
+  "create_org_label": "Създаване на организация",
+  "without_orgs_label": "Без организация",
+  "justdos_under_named_org_html": "JustDo табла под <span class=\"org-name\">__org_name__</span>",
+  "justdos_without_orgs": "JustDo табла без организация",
+  "orgs_project_config_title": "Организации",
+  "assign_justdo_to_organization_label": "Присвояване на JustDo табло към организация",
+  "another_organization": "друга организация",
+  "pre_transfer_justdo_to_org_notice_html": "На път сте да прехвърлите това JustDo табло към <b>__dest_org_name__</b>. <br> Всички членове в това JustDo табло ще станат членове на <b>__dest_org_name__</b>.",
+  "select_organization": "Избор на организация",
+  "org_expiring_soon_notice_title": "Лицензът на вашата организация скоро изтича!",
+  "org_expiring_soon_notice_html": "Лицензът за вашата организация <b>__org_name__</b> ще изтече на __org_expiration_date__. <br> Надяваме се, че JustDo е улеснил вашия работен живот!",
+  "org_locked_notice_title": "Лицензът на вашата организация е изтекъл!",
+  "org_locked_notice_html": "Лицензът за вашата организация <b>__org_name__</b> е изтекъл на __org_expiration_date__. <br> Надяваме се, че JustDo е улеснил вашия работен живот и бихме искали да продължим да го правим!",
+  "org_access_restricted_title": "__org_name__: Временно ограничение на достъпа",
+  "org_access_restricted_html": "Достъпът до вашата организация <b>__org_name__</b> в момента е ограничен. Моля, свържете се с администраторите на вашата организация за повече подробности относно този въпрос. <br> Оценяваме вашето търпение и разбиране.",
+  "renew_org_license_instruction_html": "Можете да подновите лиценза, като кликнете върху бутона \"Подновяване на лиценз\" по-долу.<br>Нашият екип за поддръжка винаги е готов да ви помогне.<br><br>Благодарим ви, че сте част от общността на JustDo. Активно разработваме нови функции за следващата версия, за да подобрим вашия работен процес!",
+  "renew_org_licnese_modal_btn_label": "Подновяване на лиценз",
+  "org_pre_expire_renewal_contact_page_message": "Моята организация __org_name__ __optional_domain_msg__ скоро ще изтече и бих искал да подновя лиценза.",
+  "org_post_expire_renewal_contact_page_message": "Моята организация __org_name__ __optional_domain_msg__ е изтекла и бих искал да подновя лиценза."
+}

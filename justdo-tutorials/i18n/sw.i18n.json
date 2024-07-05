@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "Weka kichwa cha habari kwa JustDo yako",
+  "set_justdo_name_subtitle": "Bonyeza tu kichwa cha habari ili kuingia katika hali ya uhariri",
+  "create_first_task_title": "Tengeneza kazi zako za kwanza",
+  "create_first_task_subtitle": "Kutengeneza kazi, unaweza kutumia vifungo kwenye mwambaa zana, au kutumia njia za mkato za kibodi ALT+ENTER / ALT+SHIFT+ENTER",
+  "invite_members_title": "Alika wanatimu",
+  "invite_members_subtitle": "Alika wanatimu wako kujiunga na kushirikiana katika JustDo yako mpya",
+  "import_tasks_title": "Leta kazi",
+  "import_tasks_subtitle": "Unaweza kuhamisha kazi na data zilizopo kwenye JustDo na kuendelea bila kikwazo kwa kutumia kazi yetu ya kuingiza laha hesabu (spreadsheet)",
+  "customize_columns_title": "Rekebisha mwonekano wako",
+  "customize_columns_subtitle": "Dhibiti unachokiona kwenye gridi kwa kuongeza/kuondoa safu wima, kuchuja kazi kulingana na hali yao, na zaidi!",
+  "get_free_support_title": "Pata msaada wa bure",
+  "get_free_support_subtitle": "Kipindi cha msaada cha mtu kwa mtu na timu ya JustDo",
+  "request": "Omba",
+  "free_support_request_received": "Tumeipokea, tutawasiliana nawe hivi karibuni kupitia barua pepe",
+  "tutorials_recent_product_updates": "Masasisho ya Hivi Karibuni ya Bidhaa",
+  "tutorials_justdo_quick_start": "Kuanza Haraka kwa JustDo",
+  "tutorials_justdo_advanced_features": "Vipengele vya Hali ya Juu vya JustDo",
+  "tutorials_justdo_support_center": "Kituo cha Msaada cha JustDo"
+}

@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Sehemu za Kubinafsisha",
+  "grid_control_custom_fields_sort_by_name_label": "Panga kwa Jina",
+  "grid_control_custom_fields_new_custom_field_label": "Sehemu mpya ya kubinafsisha",
+  "grid_control_custom_fields_no_custom_fields_label": "Hakuna sehemu za kubinafsisha",
+  "grid_control_custom_fields_label_placeholder": "lebo",
+  "grid_control_custom_fields_text_label": "Maandishi",
+  "grid_control_custom_fields_number_label": "Nambari",
+  "grid_control_custom_fields_date_label": "Tarehe",
+  "grid_control_custom_fields_select_label": "Chaguo",
+  "grid_control_custom_fields_multi_select_label": "Chaguo Anuwai",
+  "grid_control_custom_fields_smart_numbers_label": "Nambari Mahiri (Smart Numbers)",
+  "grid_control_custom_fields_unknown_type_label": "Aina isiyojulikana",
+  "grid_control_custom_fields_disabled_field_label": "Sehemu iliyozimwa"
+}

@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Видалити завдання",
+  "remove_from_parent_label": "Видалити з батьківського",
+  "remove_with_subtree_label": "Видалити з піддеревом",
+  "archive_task_label": "Архівувати завдання",
+  "unarchive_task_label": "Розархівувати завдання",
+  "reorder_children_by_label": "Перевпорядкувати дочірні за",
+  "zoom_in_label": "Збільшити",
+  "projects_label": "Проекти",
+  "set_as_a_project_label": "Встановити як проект",
+  "unset_as_a_project_label": "Зняти статус проекту",
+  "close_project_label": "Закрити проект",
+  "repoen_project_label": "Повторно відкрити проект",
+  "add_to_project_label": "Додати до проекту",
+  "apply_value_to_subtree": "Застосувати __value__ до піддерева",
+  "bulk_set_options_label": "Встановити"
+}

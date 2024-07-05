@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "__user_name__ organizacija",
+  "create_org_label": "Sukurti organizaciją",
+  "without_orgs_label": "Be organizacijos",
+  "justdos_under_named_org_html": "JustDo lentos priklausančios <span class=\"org-name\">__org_name__</span>",
+  "justdos_without_orgs": "JustDo lentos be organizacijos",
+  "orgs_project_config_title": "Organizacijos",
+  "assign_justdo_to_organization_label": "Priskirti JustDo lentą organizacijai",
+  "another_organization": "kita organizacija",
+  "pre_transfer_justdo_to_org_notice_html": "Jūs ruošiatės perkelti šią JustDo lentą į <b>__dest_org_name__</b>. <br> Visi šios JustDo lentos nariai taps <b>__dest_org_name__</b> nariais.",
+  "select_organization": "Pasirinkti organizaciją",
+  "org_expiring_soon_notice_title": "Jūsų organizacijos licencija greitai baigsis!",
+  "org_expiring_soon_notice_html": "Jūsų organizacijos <b>__org_name__</b> licencija baigsis __org_expiration_date__. <br> Tikimės, kad JustDo palengvino jūsų darbo gyvenimą!",
+  "org_locked_notice_title": "Jūsų organizacijos licencija baigėsi!",
+  "org_locked_notice_html": "Jūsų organizacijos <b>__org_name__</b> licencija baigėsi __org_expiration_date__. <br> Tikimės, kad JustDo palengvino jūsų darbo gyvenimą, ir mes norėtume toliau tai daryti!",
+  "org_access_restricted_title": "__org_name__: Laikinas prieigos apribojimas",
+  "org_access_restricted_html": "Prieiga prie jūsų organizacijos <b>__org_name__</b> šiuo metu yra apribota. Prašome susisiekti su jūsų organizacijos administratoriais dėl išsamesnės informacijos šiuo klausimu. <br> Dėkojame už jūsų kantrybę ir supratimą.",
+  "renew_org_license_instruction_html": "Galite atnaujinti licenciją paspaudę mygtuką \"Atnaujinti licenciją\" žemiau.<br>Mūsų pagalbos komanda visada pasirengusi jums padėti.<br><br>Ačiū, kad esate JustDo bendruomenės dalis. Mes aktyviai kuriame naujas funkcijas kitam leidimui, kad pagerintume jūsų darbo eigą!",
+  "renew_org_licnese_modal_btn_label": "Atnaujinti licenciją",
+  "org_pre_expire_renewal_contact_page_message": "Mano organizacijos __org_name__ __optional_domain_msg__ licencija greitai baigsis ir norėčiau ją atnaujinti.",
+  "org_post_expire_renewal_contact_page_message": "Mano organizacijos __org_name__ __optional_domain_msg__ licencija baigėsi ir norėčiau ją atnaujinti."
+}

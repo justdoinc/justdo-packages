@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "Nastavte název pro váš JustDo",
+  "set_justdo_name_subtitle": "Jednoduše klikněte na název pro vstup do režimu úprav",
+  "create_first_task_title": "Vytvořte své první úkoly",
+  "create_first_task_subtitle": "Pro vytvoření úkolů můžete buď použít tlačítka na panelu nástrojů, nebo použít klávesové zkratky ALT+ENTER / ALT+SHIFT+ENTER",
+  "invite_members_title": "Pozvěte členy týmu",
+  "invite_members_subtitle": "Pozvěte členy svého týmu, aby se připojili a spolupracovali ve vašem novém JustDo",
+  "import_tasks_title": "Importujte úkoly",
+  "import_tasks_subtitle": "Můžete přenést existující úkoly a data do JustDo a plynule pokračovat pomocí naší funkce importu tabulek",
+  "customize_columns_title": "Přizpůsobte si zobrazení",
+  "customize_columns_subtitle": "Ovládejte, co vidíte v tabulce (grid) přidáním/odebráním sloupců, filtrováním úkolů podle jejich stavu a dalšími možnostmi!",
+  "get_free_support_title": "Získejte bezplatnou podporu",
+  "get_free_support_subtitle": "Individuální konzultace s týmem JustDo",
+  "request": "Požádat",
+  "free_support_request_received": "Přijato, brzy se vám ozveme e-mailem",
+  "tutorials_recent_product_updates": "Nedávné aktualizace produktu",
+  "tutorials_justdo_quick_start": "Rychlý start s JustDo",
+  "tutorials_justdo_advanced_features": "Pokročilé funkce JustDo",
+  "tutorials_justdo_support_center": "Centrum podpory JustDo"
+}

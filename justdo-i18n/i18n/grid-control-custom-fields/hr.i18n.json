@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Prilagođena polja",
+  "grid_control_custom_fields_sort_by_name_label": "Sortiraj po imenu",
+  "grid_control_custom_fields_new_custom_field_label": "Novo prilagođeno polje",
+  "grid_control_custom_fields_no_custom_fields_label": "Nema prilagođenih polja",
+  "grid_control_custom_fields_label_placeholder": "oznaka",
+  "grid_control_custom_fields_text_label": "Tekst",
+  "grid_control_custom_fields_number_label": "Broj",
+  "grid_control_custom_fields_date_label": "Datum",
+  "grid_control_custom_fields_select_label": "Opcije",
+  "grid_control_custom_fields_multi_select_label": "Višestruke opcije",
+  "grid_control_custom_fields_smart_numbers_label": "Pametni brojevi",
+  "grid_control_custom_fields_unknown_type_label": "Nepoznati tip",
+  "grid_control_custom_fields_disabled_field_label": "Onemogućeno polje"
+}

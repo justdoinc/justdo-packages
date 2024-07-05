@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Kohandatud väljad",
+  "grid_control_custom_fields_sort_by_name_label": "Sorteeri nime järgi",
+  "grid_control_custom_fields_new_custom_field_label": "Uus kohandatud väli",
+  "grid_control_custom_fields_no_custom_fields_label": "Kohandatud välju pole",
+  "grid_control_custom_fields_label_placeholder": "silt",
+  "grid_control_custom_fields_text_label": "Tekst",
+  "grid_control_custom_fields_number_label": "Number",
+  "grid_control_custom_fields_date_label": "Kuupäev",
+  "grid_control_custom_fields_select_label": "Valikud",
+  "grid_control_custom_fields_multi_select_label": "Mitu valikut",
+  "grid_control_custom_fields_smart_numbers_label": "Nutikad numbrid",
+  "grid_control_custom_fields_unknown_type_label": "Tundmatu tüüp",
+  "grid_control_custom_fields_disabled_field_label": "Keelatud väli"
+}

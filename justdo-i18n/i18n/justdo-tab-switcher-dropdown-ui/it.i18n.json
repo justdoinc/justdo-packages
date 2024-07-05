@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Cambia Vista",
+  "tab_switcher_dropdown_search_placeholder": "Viste",
+  "tab_switcher_main_view_label": "Vista Principale",
+  "tab_switcher_my_favorites_label": "I Miei Preferiti",
+  "tab_switcher_my_due_list_label": "La Mia Lista Scadenze",
+  "tab_switcher_recently_label": "Recenti",
+  "tab_switcher_recently_completed_label": "Completati",
+  "tab_switcher_recently_updated_label": "Aggiornati",
+  "tab_switcher_recently_created_label": "Creati",
+  "tab_switcher_miscellaneous_label": "Varie",
+  "tab_switcher_task_ownershipt_transfers_label": "Trasferimenti di Proprietà dei Compiti",
+  "tab_switcher_ticket_queues_label": "Code dei Ticket",
+  "tab_switcher_members_due_lists_label": "Liste Scadenze dei Membri",
+  "tab_switcher_all_members_due_list_label": "Lista Scadenze di Tutti i Membri",
+  "tab_switcher_projects_section_label": "Progetti",
+  "tab_switcher_projects_label": "Progetti"
+}

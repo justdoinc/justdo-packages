@@ -1,0 +1,8 @@
+{
+  "task_type_delayed_label": "متأخرة",
+  "task_type_behind_label": "متخلفة",
+  "task_type_late_label": "متأخرة",
+  "task_type_overdue_label": "متجاوزة للموعد",
+  "task_type_key_task_label": "مهمة رئيسية",
+  "task_type_no_owner_label": "بدون مالك"
+}

@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "グリッド表示",
+  "grid_views_search_placeholder": "ビューを検索",
+  "grid_views_no_view_label": "ビューなし",
+  "grid_views_add_current_view_label": "現在のビューを追加",
+  "grid_views_rename_label": "名前変更",
+  "grid_views_update_label": "更新",
+  "grid_views_remove_label": "削除",
+  "grid_views_share_label": "共有",
+  "grid_views_unshare_label": "共有解除",
+  "grid_views_shared_label": "共有済み"
+}

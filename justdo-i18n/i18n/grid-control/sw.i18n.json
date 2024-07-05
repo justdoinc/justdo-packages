@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Ongeza Safu",
+  "hide_column_label": "Ficha Safu",
+  "freeze_column_label": "Ganda Safu",
+  "unfreeze_column_label": "Ondoa Ugandishaji wa Safu",
+  "tree_control_tooltip_gantt_milestone": "Hatua Muhimu ya Gantt",
+  "tree_control_tooltip_buffer_task": "Kazi ya Kinga",
+  "tree_control_tooltip_Meetings": "Mikutano",
+  "tree_control_tooltip_start_time_tracking": "Anza kufanya kazi kwenye jukumu hili",
+  "tree_control_tooltip_stop_time_tracking": "Unafanya kazi kwenye jukumu hili sasa, bonyeza kuacha na kurekodi muda uliotumika",
+  "tree_control_tooltip_resources": "Rasilimali",
+  "tree_control_tooltip_description": "Maelezo ya jukumu",
+  "tree_control_tooltip_chat_messages": "Ujumbe wa gumzo",
+  "tree_control_tooltip_files_count": "Faili __files_count__",
+  "tree_control_tooltip_emails_count": "Barua pepe __emails_count__",
+  "tree_control_tooltip_task_is_a_project": "Jukumu ni mradi",
+  "tree_control_tooltip_task_is_archived": "Jukumu limehifadhiwa"
+}

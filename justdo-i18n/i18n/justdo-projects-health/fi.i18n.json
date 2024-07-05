@@ -1,0 +1,8 @@
+{
+  "task_type_delayed_label": "Viivästynyt",
+  "task_type_behind_label": "Jäljessä",
+  "task_type_late_label": "Myöhässä",
+  "task_type_overdue_label": "Erääntynyt",
+  "task_type_key_task_label": "Avaintehtävä",
+  "task_type_no_owner_label": "Ei omistajaa"
+}

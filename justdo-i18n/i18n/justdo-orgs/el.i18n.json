@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "Οργανισμός του/της __user_name__",
+  "create_org_label": "Δημιουργία Οργανισμού",
+  "without_orgs_label": "Χωρίς Οργανισμό",
+  "justdos_under_named_org_html": "Πίνακες JustDo υπό τον <span class=\"org-name\">__org_name__</span>",
+  "justdos_without_orgs": "Πίνακες JustDo χωρίς οργανισμό",
+  "orgs_project_config_title": "Οργανισμοί",
+  "assign_justdo_to_organization_label": "Ανάθεση πίνακα JustDo σε οργανισμό",
+  "another_organization": "άλλο οργανισμό",
+  "pre_transfer_justdo_to_org_notice_html": "Πρόκειται να μεταφέρετε αυτόν τον πίνακα JustDo στον <b>__dest_org_name__</b>. <br> Όλα τα μέλη αυτού του πίνακα JustDo θα γίνουν μέλη του <b>__dest_org_name__</b>.",
+  "select_organization": "Επιλογή Οργανισμού",
+  "org_expiring_soon_notice_title": "Η άδεια του οργανισμού σας λήγει σύντομα!",
+  "org_expiring_soon_notice_html": "Η άδεια για τον οργανισμό σας <b>__org_name__</b> θα λήξει στις __org_expiration_date__. <br> Ελπίζουμε ότι το JustDo έχει κάνει την εργασιακή σας ζωή ευκολότερη!",
+  "org_locked_notice_title": "Η άδεια του οργανισμού σας έχει λήξει!",
+  "org_locked_notice_html": "Η άδεια για τον οργανισμό σας <b>__org_name__</b> έχει λήξει στις __org_expiration_date__. <br> Ελπίζουμε ότι το JustDo έχει κάνει την εργασιακή σας ζωή ευκολότερη και θα θέλαμε πολύ να συνεχίσουμε να το κάνουμε!",
+  "org_access_restricted_title": "__org_name__: Προσωρινός Περιορισμός Πρόσβασης",
+  "org_access_restricted_html": "Η πρόσβαση στον οργανισμό σας <b>__org_name__</b> είναι προσωρινά περιορισμένη. Παρακαλούμε επικοινωνήστε με τους διαχειριστές του οργανισμού σας για περισσότερες λεπτομέρειες σχετικά με αυτό το θέμα. <br> Εκτιμούμε την υπομονή και την κατανόησή σας.",
+  "renew_org_license_instruction_html": "Μπορείτε να ανανεώσετε την άδεια κάνοντας κλικ στο κουμπί \"Ανανέωση Άδειας\" παρακάτω.<br>Η ομάδα υποστήριξής μας είναι πάντα πρόθυμη να σας βοηθήσει.<br><br>Σας ευχαριστούμε που είστε μέρος της κοινότητας του JustDo. Αναπτύσσουμε ενεργά νέες λειτουργίες για την επόμενη έκδοση για να βελτιώσουμε τη ροή εργασίας σας!",
+  "renew_org_licnese_modal_btn_label": "Ανανέωση Άδειας",
+  "org_pre_expire_renewal_contact_page_message": "Ο οργανισμός μου __org_name__ __optional_domain_msg__ πρόκειται να λήξει και θα ήθελα να ανανεώσω την άδεια.",
+  "org_post_expire_renewal_contact_page_message": "Ο οργανισμός μου __org_name__ __optional_domain_msg__ έχει λήξει και θα ήθελα να ανανεώσω την άδεια."
+}

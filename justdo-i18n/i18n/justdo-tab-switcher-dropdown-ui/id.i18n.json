@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Beralih Tampilan",
+  "tab_switcher_dropdown_search_placeholder": "Tampilan",
+  "tab_switcher_main_view_label": "Tampilan Utama",
+  "tab_switcher_my_favorites_label": "Favorit Saya",
+  "tab_switcher_my_due_list_label": "Daftar Jatuh Tempo Saya",
+  "tab_switcher_recently_label": "Baru-baru Ini",
+  "tab_switcher_recently_completed_label": "Selesai",
+  "tab_switcher_recently_updated_label": "Diperbarui",
+  "tab_switcher_recently_created_label": "Dibuat",
+  "tab_switcher_miscellaneous_label": "Lain-lain",
+  "tab_switcher_task_ownershipt_transfers_label": "Transfer Kepemilikan Tugas",
+  "tab_switcher_ticket_queues_label": "Antrean Tiket",
+  "tab_switcher_members_due_lists_label": "Daftar Jatuh Tempo Anggota",
+  "tab_switcher_all_members_due_list_label": "Daftar Jatuh Tempo Semua Anggota",
+  "tab_switcher_projects_section_label": "Proyek",
+  "tab_switcher_projects_label": "Proyek"
+}

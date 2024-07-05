@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "__user_name__ס ארגאַניזאַציע",
+  "create_org_label": "שאַפֿן ארגאַניזאַציע",
+  "without_orgs_label": "אָן ארגאַניזאַציע",
+  "justdos_under_named_org_html": "JustDo ברעטער אונטער <span class=\"org-name\">__org_name__</span>",
+  "justdos_without_orgs": "JustDo ברעטער אָן אַן ארגאַניזאַציע",
+  "orgs_project_config_title": "ארגאַניזאַציעס",
+  "assign_justdo_to_organization_label": "צוטיילן JustDo ברעט צו ארגאַניזאַציע",
+  "another_organization": "אַן אַנדער ארגאַניזאַציע",
+  "pre_transfer_justdo_to_org_notice_html": "איר גייט איבערפירן דעם JustDo ברעט צו <b>__dest_org_name__</b>. <br> אַלע מיטגלידער אין דעם JustDo ברעט וועלן ווערן מיטגלידער פון <b>__dest_org_name__</b>.",
+  "select_organization": "אויסקלייבן ארגאַניזאַציע",
+  "org_expiring_soon_notice_title": "אייער ארגאַניזאַציע ליצענץ גייט באַלד אויס!",
+  "org_expiring_soon_notice_html": "די ליצענץ פֿאַר אייער ארגאַניזאַציע <b>__org_name__</b> וועט אויסגיין אויף __org_expiration_date__. <br> מיר האָפֿן אַז JustDo האָט געמאַכט אייער אַרבעט לעבן גרינגער!",
+  "org_locked_notice_title": "אייער ארגאַניזאַציע ליצענץ איז אויסגעגאַנגען!",
+  "org_locked_notice_html": "די ליצענץ פֿאַר אייער ארגאַניזאַציע <b>__org_name__</b> איז אויסגעגאַנגען אויף __org_expiration_date__. <br> מיר האָפֿן אַז JustDo האָט געמאַכט אייער אַרבעט לעבן גרינגער, און מיר וואָלטן געוואָלט פֿאָרזעצן צו טאָן אַזוי!",
+  "org_access_restricted_title": "__org_name__: צייַטווייַליקע צוטריט באַגרענעצונג",
+  "org_access_restricted_html": "צוטריט צו אייער ארגאַניזאַציע <b>__org_name__</b> איז דערווייַל באַגרענעצט. ביטע פאַרבינדט זיך מיט אייער ארגאַניזאַציע אַדמיניסטראַטאָרס פֿאַר מער פּרטים וועגן דעם ענין. <br> מיר שעצן אייער געדולד און פאַרשטענדעניש.",
+  "renew_org_license_instruction_html": "איר קענט באַנייַען די ליצענץ דורך קליקן אויף דעם \"באַנייַען ליצענץ\" קנעפּל אונטן.<br>אונדזער שטיצע מאַנשאַפֿט איז שטענדיק גליקלעך צו העלפֿן אייך.<br><br>א דאַנק פֿאַר זיין א טייל פון דער JustDo קהילה. מיר אַנטוויקלען אַקטיוו נייַע פֿעיקייטן פֿאַר דעם קומענדיקן אַרויסגעבן צו פֿאַרבעסערן אייער אַרבעט פֿלוס!",
+  "renew_org_licnese_modal_btn_label": "באַנייַען ליצענץ",
+  "org_pre_expire_renewal_contact_page_message": "מיין ארגאַניזאַציע __org_name__ __optional_domain_msg__ גייט באַלד אויסגיין און איך וויל באַנייַען די ליצענץ.",
+  "org_post_expire_renewal_contact_page_message": "מיין ארגאַניזאַציע __org_name__ __optional_domain_msg__ איז אויסגעגאַנגען און איך וויל באַנייַען די ליצענץ."
+}

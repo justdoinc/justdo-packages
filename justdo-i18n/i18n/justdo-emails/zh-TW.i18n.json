@@ -1,11 +1,11 @@
 {
-    "email_greeting_with_name": "__name__您好，",
-    "unread_task_chat_notification_subject": "您有待查看的信息",
-    "unread_task_chat_notification_title": "下列任務有新的信息待您查看：",
-    "unread_group_chat_notification_subject": "您有來自__channel_title__的新信息",
-    "unread_group_chat_notification_title_html": "<span style=\"font-weight: bold;\">__channel_title__</span>群組有新的信息待你查看！",
-    "open_in_justdo": "於JustDo開啟",
-    "unsubscribe_from_justdo": "取消訂閱",
-    "unsubscribe_from_project": "取消訂閱來自__project_title__的信息",
-    "reply_email_for_support": "有任何疑問嗎？請回覆此電郵，我們很樂意為您解答。"
+  "email_greeting_with_name": "__name__您好，",
+  "unread_task_chat_notification_subject": "您有待查看的信息",
+  "unread_task_chat_notification_title": "下列任務有新的信息待您查看：",
+  "unread_group_chat_notification_subject": "您有來自__channel_title__的新信息",
+  "unread_group_chat_notification_title_html": "<span style=\"font-weight: bold;\">__channel_title__</span>群組有新的信息待你查看！",
+  "open_in_justdo": "於JustDo開啟",
+  "unsubscribe_from_justdo": "取消訂閱所有來自 JustDo 的更新通知",
+  "unsubscribe_from_project": "取消訂閱__project_title__的更新",
+  "reply_email_for_support": "有任何疑問嗎？請回覆此電郵，我們很樂意為您解答。"
 }

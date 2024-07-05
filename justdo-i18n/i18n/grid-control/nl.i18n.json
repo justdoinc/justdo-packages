@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Kolom toevoegen",
+  "hide_column_label": "Kolom verbergen",
+  "freeze_column_label": "Kolom bevriezen",
+  "unfreeze_column_label": "Kolom ontdooien",
+  "tree_control_tooltip_gantt_milestone": "Gantt-mijlpaal",
+  "tree_control_tooltip_buffer_task": "Buffertaak",
+  "tree_control_tooltip_Meetings": "Vergaderingen",
+  "tree_control_tooltip_start_time_tracking": "Begin met werken aan deze taak",
+  "tree_control_tooltip_stop_time_tracking": "U werkt nu aan deze taak, druk om te stoppen en de gewerkte tijd te registreren",
+  "tree_control_tooltip_resources": "Middelen",
+  "tree_control_tooltip_description": "Taakbeschrijving",
+  "tree_control_tooltip_chat_messages": "Chatberichten",
+  "tree_control_tooltip_files_count": "__files_count__ bestanden",
+  "tree_control_tooltip_emails_count": "__emails_count__ e-mails",
+  "tree_control_tooltip_task_is_a_project": "Taak is een project",
+  "tree_control_tooltip_task_is_archived": "Taak is gearchiveerd"
+}

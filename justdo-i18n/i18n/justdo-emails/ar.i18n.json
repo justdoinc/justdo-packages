@@ -1,0 +1,11 @@
+{
+  "email_greeting_with_name": "مرحباً __name__، ",
+  "unread_task_chat_notification_subject": "رسائل دردشة جديدة في انتظارك",
+  "unread_task_chat_notification_title": "هناك رسائل دردشة جديدة في انتظارك في المهمة التالية:",
+  "unread_group_chat_notification_subject": "رسائل جديدة من __channel_title__ في انتظارك",
+  "unread_group_chat_notification_title_html": "رسائل جديدة من <span style=\"font-weight: bold;\">__channel_title__</span> في انتظارك!",
+  "open_in_justdo": "فتح في JustDo",
+  "unsubscribe_from_justdo": "إلغاء الاشتراك من جميع إشعارات التحديث من JustDo",
+  "unsubscribe_from_project": "إلغاء الاشتراك من تحديثات __project_title__",
+  "reply_email_for_support": "هل تواجه أي مشاكل؟ قم بالرد على هذا البريد الإلكتروني للحصول على الدعم."
+}

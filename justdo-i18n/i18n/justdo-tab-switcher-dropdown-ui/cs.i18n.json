@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Přepnout zobrazení",
+  "tab_switcher_dropdown_search_placeholder": "Zobrazení",
+  "tab_switcher_main_view_label": "Hlavní zobrazení",
+  "tab_switcher_my_favorites_label": "Mé oblíbené",
+  "tab_switcher_my_due_list_label": "Můj seznam úkolů",
+  "tab_switcher_recently_label": "Nedávné",
+  "tab_switcher_recently_completed_label": "Dokončené",
+  "tab_switcher_recently_updated_label": "Aktualizované",
+  "tab_switcher_recently_created_label": "Vytvořené",
+  "tab_switcher_miscellaneous_label": "Různé",
+  "tab_switcher_task_ownershipt_transfers_label": "Převody vlastnictví úkolů",
+  "tab_switcher_ticket_queues_label": "Fronty tiketů",
+  "tab_switcher_members_due_lists_label": "Seznamy úkolů členů",
+  "tab_switcher_all_members_due_list_label": "Seznam úkolů všech členů",
+  "tab_switcher_projects_section_label": "Projekty",
+  "tab_switcher_projects_label": "Projekty"
+}

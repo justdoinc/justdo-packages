@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Añadir columna",
+  "hide_column_label": "Ocultar columna",
+  "freeze_column_label": "Congelar columna",
+  "unfreeze_column_label": "Descongelar columna",
+  "tree_control_tooltip_gantt_milestone": "Hito de Gantt",
+  "tree_control_tooltip_buffer_task": "Tarea de amortiguación",
+  "tree_control_tooltip_Meetings": "Reuniones",
+  "tree_control_tooltip_start_time_tracking": "Comenzar a trabajar en esta tarea",
+  "tree_control_tooltip_stop_time_tracking": "Estás trabajando en esta tarea ahora, presiona para detener y registrar el tiempo trabajado",
+  "tree_control_tooltip_resources": "Recursos",
+  "tree_control_tooltip_description": "Descripción de la tarea",
+  "tree_control_tooltip_chat_messages": "Mensajes de chat",
+  "tree_control_tooltip_files_count": "__files_count__ archivos",
+  "tree_control_tooltip_emails_count": "__emails_count__ correos electrónicos",
+  "tree_control_tooltip_task_is_a_project": "La tarea es un proyecto",
+  "tree_control_tooltip_task_is_archived": "La tarea está archivada"
+}

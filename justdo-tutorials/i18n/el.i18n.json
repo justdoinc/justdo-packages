@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "Ορίστε έναν τίτλο για το JustDo σας",
+  "set_justdo_name_subtitle": "Απλά κάντε κλικ στον τίτλο για να μπείτε σε λειτουργία επεξεργασίας",
+  "create_first_task_title": "Δημιουργήστε τις πρώτες σας εργασίες",
+  "create_first_task_subtitle": "Για να δημιουργήσετε εργασίες, μπορείτε είτε να χρησιμοποιήσετε τα κουμπιά στη γραμμή εργαλείων, είτε να χρησιμοποιήσετε τις συντομεύσεις πληκτρολογίου ALT+ENTER / ALT+SHIFT+ENTER",
+  "invite_members_title": "Προσκαλέστε μέλη της ομάδας",
+  "invite_members_subtitle": "Προσκαλέστε τα μέλη της ομάδας σας να συμμετάσχουν και να συνεργαστούν στο νέο σας JustDo",
+  "import_tasks_title": "Εισαγωγή εργασιών",
+  "import_tasks_subtitle": "Μπορείτε να μεταφέρετε υπάρχουσες εργασίες και δεδομένα στο JustDo και να συνεχίσετε απρόσκοπτα με τη λειτουργία εισαγωγής υπολογιστικών φύλλων",
+  "customize_columns_title": "Προσαρμόστε την προβολή σας",
+  "customize_columns_subtitle": "Ελέγξτε τι βλέπετε στον πίνακα δεδομένων προσθέτοντας/αφαιρώντας στήλες, φιλτράροντας εργασίες με βάση την κατάστασή τους και άλλα!",
+  "get_free_support_title": "Λάβετε δωρεάν υποστήριξη",
+  "get_free_support_subtitle": "Συνεδρία υποστήριξης 1 προς 1 με την ομάδα του JustDo",
+  "request": "Αίτημα",
+  "free_support_request_received": "Ελήφθη, θα επικοινωνήσουμε σύντομα μαζί σας μέσω email",
+  "tutorials_recent_product_updates": "Πρόσφατες Ενημερώσεις Προϊόντος",
+  "tutorials_justdo_quick_start": "Γρήγορη Εκκίνηση JustDo",
+  "tutorials_justdo_advanced_features": "Προχωρημένες Λειτουργίες JustDo",
+  "tutorials_justdo_support_center": "Κέντρο Υποστήριξης JustDo"
+}

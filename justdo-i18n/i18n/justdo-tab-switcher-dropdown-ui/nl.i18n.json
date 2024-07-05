@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Wissel van Weergave",
+  "tab_switcher_dropdown_search_placeholder": "Weergaven",
+  "tab_switcher_main_view_label": "Hoofdweergave",
+  "tab_switcher_my_favorites_label": "Mijn Favorieten",
+  "tab_switcher_my_due_list_label": "Mijn Vervaldagenlijst",
+  "tab_switcher_recently_label": "Recent",
+  "tab_switcher_recently_completed_label": "Voltooid",
+  "tab_switcher_recently_updated_label": "Bijgewerkt",
+  "tab_switcher_recently_created_label": "Aangemaakt",
+  "tab_switcher_miscellaneous_label": "Diversen",
+  "tab_switcher_task_ownershipt_transfers_label": "Taakeigendom Overdrachten",
+  "tab_switcher_ticket_queues_label": "Ticketwachtrijen",
+  "tab_switcher_members_due_lists_label": "Vervaldagenlijsten van Leden",
+  "tab_switcher_all_members_due_list_label": "Vervaldagenlijst van Alle Leden",
+  "tab_switcher_projects_section_label": "Projecten",
+  "tab_switcher_projects_label": "Projecten"
+}

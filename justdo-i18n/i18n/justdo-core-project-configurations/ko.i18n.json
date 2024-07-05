@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "활성 상태",
+  "project_configurations_no_active_states_label": "활성 상태 없음",
+  "project_configurations_hidden_states_label": "숨겨진 상태",
+  "project_configurations_no_hidden_states_label": "숨겨진 상태 없음",
+  "project_configurations_type_state_name_placeholder": "상태 이름 입력",
+  "project_configurations_default_title_for_this_state_label": "이 상태의 기본 제목",
+  "project_configurations_restore_state_label": "상태 복원",
+  "project_configurations_create_extended_state_label": "확장 상태 만들기",
+  "project_configurations_hide_state": "상태 숨기기",
+  "project_configurations_remove_extended_state": "확장 상태 제거",
+  "new_custom_state_default_title": "__state__ - 확장됨"
+}

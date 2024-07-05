@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "ลบงาน",
+  "remove_from_parent_label": "ลบออกจากงานหลัก",
+  "remove_with_subtree_label": "ลบพร้อมงานย่อย",
+  "archive_task_label": "เก็บถาวรงาน",
+  "unarchive_task_label": "ยกเลิกการเก็บถาวรงาน",
+  "reorder_children_by_label": "จัดเรียงงานย่อยตาม",
+  "zoom_in_label": "ขยาย",
+  "projects_label": "โครงการ",
+  "set_as_a_project_label": "ตั้งเป็นโครงการ",
+  "unset_as_a_project_label": "ยกเลิกการตั้งเป็นโครงการ",
+  "close_project_label": "ปิดโครงการ",
+  "repoen_project_label": "เปิดโครงการอีกครั้ง",
+  "add_to_project_label": "เพิ่มไปยังโครงการ",
+  "apply_value_to_subtree": "ใช้ __value__ กับงานย่อยทั้งหมด",
+  "bulk_set_options_label": "ตั้งค่า"
+}

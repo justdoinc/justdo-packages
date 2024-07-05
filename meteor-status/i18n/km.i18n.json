@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "បានភ្ជាប់",
+  "meteor_status_connecting": "កំពុងភ្ជាប់...",
+  "meteor_status_failed": "ការភ្ជាប់ទៅម៉ាស៊ីនមេបានបរាជ័យ",
+  "meteor_status_waiting": "កំពុងរង់ចាំការភ្ជាប់ទៅម៉ាស៊ីនមេ,",
+  "meteor_status_offline": "របៀបក្រៅបណ្តាញ។",
+  "meteor_status_reconnect_in": "កំពុងព្យាយាមម្តងទៀតក្នុងមួយវិនាទី...",
+  "meteor_status_reconnect_in_plural": "កំពុងព្យាយាមម្តងទៀតក្នុង __count__ វិនាទី...",
+  "meteor_status_try_now_waiting": "ព្យាយាមឥឡូវនេះ",
+  "meteor_status_try_now_offline": "ភ្ជាប់ម្តងទៀត"
+}

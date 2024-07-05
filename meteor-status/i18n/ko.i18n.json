@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "연결됨",
+  "meteor_status_connecting": "연결 중...",
+  "meteor_status_failed": "서버 연결에 실패했습니다",
+  "meteor_status_waiting": "서버 연결 대기 중,",
+  "meteor_status_offline": "오프라인 모드",
+  "meteor_status_reconnect_in": "1초 후 다시 시도합니다...",
+  "meteor_status_reconnect_in_plural": "__count__초 후 다시 시도합니다...",
+  "meteor_status_try_now_waiting": "지금 시도",
+  "meteor_status_try_now_offline": "다시 연결"
+}

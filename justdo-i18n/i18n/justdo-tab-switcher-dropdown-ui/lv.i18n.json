@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Pārslēgt skatu",
+  "tab_switcher_dropdown_search_placeholder": "Skati",
+  "tab_switcher_main_view_label": "Galvenais skats",
+  "tab_switcher_my_favorites_label": "Mani izlases",
+  "tab_switcher_my_due_list_label": "Mans termiņu saraksts",
+  "tab_switcher_recently_label": "Nesen",
+  "tab_switcher_recently_completed_label": "Pabeigts",
+  "tab_switcher_recently_updated_label": "Atjaunināts",
+  "tab_switcher_recently_created_label": "Izveidots",
+  "tab_switcher_miscellaneous_label": "Dažādi",
+  "tab_switcher_task_ownershipt_transfers_label": "Uzdevumu īpašumtiesību nodošana",
+  "tab_switcher_ticket_queues_label": "Biļešu rindas",
+  "tab_switcher_members_due_lists_label": "Dalībnieku termiņu saraksti",
+  "tab_switcher_all_members_due_list_label": "Visu dalībnieku termiņu saraksts",
+  "tab_switcher_projects_section_label": "Projekti",
+  "tab_switcher_projects_label": "Projekti"
+}

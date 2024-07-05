@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Prisijungta",
+  "meteor_status_connecting": "Jungiamasi...",
+  "meteor_status_failed": "Nepavyko prisijungti prie serverio",
+  "meteor_status_waiting": "Laukiama prisijungimo prie serverio,",
+  "meteor_status_offline": "Neprisijungus režimas.",
+  "meteor_status_reconnect_in": "bandoma dar kartą po sekundės...",
+  "meteor_status_reconnect_in_plural": "bandoma dar kartą po __count__ sekundžių...",
+  "meteor_status_try_now_waiting": "Bandyti dabar",
+  "meteor_status_try_now_offline": "Prisijungti iš naujo"
+}

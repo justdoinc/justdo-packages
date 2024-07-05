@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "그리드 보기",
+  "grid_views_search_placeholder": "보기 검색",
+  "grid_views_no_view_label": "보기 없음",
+  "grid_views_add_current_view_label": "현재 보기 추가",
+  "grid_views_rename_label": "이름 변경",
+  "grid_views_update_label": "업데이트",
+  "grid_views_remove_label": "삭제",
+  "grid_views_share_label": "공유",
+  "grid_views_unshare_label": "공유 해제",
+  "grid_views_shared_label": "공유됨"
+}

@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "タスクを削除",
+  "remove_from_parent_label": "親から削除",
+  "remove_with_subtree_label": "サブツリーごと削除",
+  "archive_task_label": "タスクをアーカイブ",
+  "unarchive_task_label": "タスクのアーカイブを解除",
+  "reorder_children_by_label": "子タスクを並び替え",
+  "zoom_in_label": "拡大",
+  "projects_label": "プロジェクト",
+  "set_as_a_project_label": "プロジェクトとして設定",
+  "unset_as_a_project_label": "プロジェクト設定を解除",
+  "close_project_label": "プロジェクトを閉じる",
+  "repoen_project_label": "プロジェクトを再開",
+  "add_to_project_label": "プロジェクトに追加",
+  "apply_value_to_subtree": "__value__をサブツリーに適用",
+  "bulk_set_options_label": "一括設定"
+}

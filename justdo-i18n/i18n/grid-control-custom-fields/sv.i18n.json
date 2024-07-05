@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Anpassade fält",
+  "grid_control_custom_fields_sort_by_name_label": "Sortera efter namn",
+  "grid_control_custom_fields_new_custom_field_label": "Nytt anpassat fält",
+  "grid_control_custom_fields_no_custom_fields_label": "Inga anpassade fält",
+  "grid_control_custom_fields_label_placeholder": "etikett",
+  "grid_control_custom_fields_text_label": "Text",
+  "grid_control_custom_fields_number_label": "Nummer",
+  "grid_control_custom_fields_date_label": "Datum",
+  "grid_control_custom_fields_select_label": "Alternativ",
+  "grid_control_custom_fields_multi_select_label": "Flerval",
+  "grid_control_custom_fields_smart_numbers_label": "Smarta nummer",
+  "grid_control_custom_fields_unknown_type_label": "Okänd typ",
+  "grid_control_custom_fields_disabled_field_label": "Inaktiverat fält"
+}

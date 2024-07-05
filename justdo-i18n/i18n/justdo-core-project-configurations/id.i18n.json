@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Status aktif",
+  "project_configurations_no_active_states_label": "Tidak ada status aktif",
+  "project_configurations_hidden_states_label": "Status tersembunyi",
+  "project_configurations_no_hidden_states_label": "Tidak ada status tersembunyi",
+  "project_configurations_type_state_name_placeholder": "Ketik nama status",
+  "project_configurations_default_title_for_this_state_label": "Judul default untuk status ini",
+  "project_configurations_restore_state_label": "Pulihkan status",
+  "project_configurations_create_extended_state_label": "Buat status diperluas",
+  "project_configurations_hide_state": "Sembunyikan status",
+  "project_configurations_remove_extended_state": "Hapus status diperluas",
+  "new_custom_state_default_title": "__state__ - diperluas"
+}

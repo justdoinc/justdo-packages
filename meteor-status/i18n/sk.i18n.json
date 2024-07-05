@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Pripojené",
+  "meteor_status_connecting": "Pripájanie...",
+  "meteor_status_failed": "Pripojenie k serveru zlyhalo",
+  "meteor_status_waiting": "Čakanie na pripojenie k serveru,",
+  "meteor_status_offline": "Offline režim.",
+  "meteor_status_reconnect_in": "ďalší pokus o jednu sekundu...",
+  "meteor_status_reconnect_in_plural": "ďalší pokus o __count__ sekúnd...",
+  "meteor_status_try_now_waiting": "Skúsiť teraz",
+  "meteor_status_try_now_offline": "Pripojiť znova"
+}

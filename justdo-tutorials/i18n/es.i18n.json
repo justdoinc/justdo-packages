@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "Establece un título para tu JustDo",
+  "set_justdo_name_subtitle": "Simplemente haz clic en el título para entrar en modo de edición",
+  "create_first_task_title": "Crea tus primeras tareas",
+  "create_first_task_subtitle": "Para crear tareas, puedes usar los botones en la barra de herramientas o utilizar los atajos de teclado ALT+ENTER / ALT+SHIFT+ENTER",
+  "invite_members_title": "Invita a miembros del equipo",
+  "invite_members_subtitle": "Invita a los miembros de tu equipo a unirse y colaborar en tu nuevo JustDo",
+  "import_tasks_title": "Importar tareas",
+  "import_tasks_subtitle": "Puedes transferir tareas y datos existentes a JustDo y continuar sin problemas con nuestra función de importación de hojas de cálculo",
+  "customize_columns_title": "Personaliza tu vista",
+  "customize_columns_subtitle": "Controla lo que ves en la cuadrícula (Grid) añadiendo/eliminando columnas, filtrando tareas por su estado, ¡y más!",
+  "get_free_support_title": "Obtén soporte gratuito",
+  "get_free_support_subtitle": "Sesión de soporte individual con el equipo de JustDo",
+  "request": "Solicitar",
+  "free_support_request_received": "Recibido, nos pondremos en contacto contigo por correo electrónico en breve",
+  "tutorials_recent_product_updates": "Actualizaciones recientes del producto",
+  "tutorials_justdo_quick_start": "Inicio rápido de JustDo",
+  "tutorials_justdo_advanced_features": "Funciones avanzadas de JustDo",
+  "tutorials_justdo_support_center": "Centro de soporte de JustDo"
+}

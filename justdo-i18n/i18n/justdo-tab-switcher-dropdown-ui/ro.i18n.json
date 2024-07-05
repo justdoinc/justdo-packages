@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Schimbă Vizualizarea",
+  "tab_switcher_dropdown_search_placeholder": "Vizualizări",
+  "tab_switcher_main_view_label": "Vizualizare Principală",
+  "tab_switcher_my_favorites_label": "Favoritele Mele",
+  "tab_switcher_my_due_list_label": "Lista Mea de Sarcini Scadente",
+  "tab_switcher_recently_label": "Recent",
+  "tab_switcher_recently_completed_label": "Finalizate",
+  "tab_switcher_recently_updated_label": "Actualizate",
+  "tab_switcher_recently_created_label": "Create",
+  "tab_switcher_miscellaneous_label": "Diverse",
+  "tab_switcher_task_ownershipt_transfers_label": "Transferuri de Proprietate a Sarcinilor",
+  "tab_switcher_ticket_queues_label": "Cozi de Tichete",
+  "tab_switcher_members_due_lists_label": "Liste de Sarcini Scadente ale Membrilor",
+  "tab_switcher_all_members_due_list_label": "Lista de Sarcini Scadente a Tuturor Membrilor",
+  "tab_switcher_projects_section_label": "Proiecte",
+  "tab_switcher_projects_label": "Proiecte"
+}

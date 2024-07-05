@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Переключить вид",
+  "tab_switcher_dropdown_search_placeholder": "Виды",
+  "tab_switcher_main_view_label": "Главный вид",
+  "tab_switcher_my_favorites_label": "Мои избранные",
+  "tab_switcher_my_due_list_label": "Мой список задач",
+  "tab_switcher_recently_label": "Недавние",
+  "tab_switcher_recently_completed_label": "Завершенные",
+  "tab_switcher_recently_updated_label": "Обновленные",
+  "tab_switcher_recently_created_label": "Созданные",
+  "tab_switcher_miscellaneous_label": "Разное",
+  "tab_switcher_task_ownershipt_transfers_label": "Передача прав на задачи",
+  "tab_switcher_ticket_queues_label": "Очереди заявок",
+  "tab_switcher_members_due_lists_label": "Списки задач участников",
+  "tab_switcher_all_members_due_list_label": "Список задач всех участников",
+  "tab_switcher_projects_section_label": "Проекты",
+  "tab_switcher_projects_label": "Проекты"
+}

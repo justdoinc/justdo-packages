@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "कार्य हटाएं",
+  "remove_from_parent_label": "मूल से हटाएं",
+  "remove_with_subtree_label": "उप-वृक्ष के साथ हटाएं",
+  "archive_task_label": "कार्य संग्रहित करें",
+  "unarchive_task_label": "कार्य असंग्रहित करें",
+  "reorder_children_by_label": "उप-कार्यों को पुनः क्रमबद्ध करें",
+  "zoom_in_label": "ज़ूम इन करें",
+  "projects_label": "परियोजनाएं",
+  "set_as_a_project_label": "परियोजना के रूप में सेट करें",
+  "unset_as_a_project_label": "परियोजना के रूप में अनसेट करें",
+  "close_project_label": "परियोजना बंद करें",
+  "repoen_project_label": "परियोजना पुनः खोलें",
+  "add_to_project_label": "परियोजना में जोड़ें",
+  "apply_value_to_subtree": "उप-वृक्ष पर __value__ लागू करें",
+  "bulk_set_options_label": "समूह में सेट करें"
+}

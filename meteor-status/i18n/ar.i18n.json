@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "متصل",
+  "meteor_status_connecting": "جاري الاتصال...",
+  "meteor_status_failed": "فشل الاتصال بالخادم",
+  "meteor_status_waiting": "في انتظار الاتصال بالخادم،",
+  "meteor_status_offline": "وضع عدم الاتصال.",
+  "meteor_status_reconnect_in": "محاولة الاتصال مرة أخرى خلال ثانية واحدة...",
+  "meteor_status_reconnect_in_plural": "محاولة الاتصال مرة أخرى خلال __count__ ثوانٍ...",
+  "meteor_status_try_now_waiting": "حاول الآن",
+  "meteor_status_try_now_offline": "الاتصال مجددًا"
+}

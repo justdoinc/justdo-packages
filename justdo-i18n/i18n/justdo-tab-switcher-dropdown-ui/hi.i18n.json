@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "दृश्य बदलें",
+  "tab_switcher_dropdown_search_placeholder": "दृश्य",
+  "tab_switcher_main_view_label": "मुख्य दृश्य",
+  "tab_switcher_my_favorites_label": "मेरे पसंदीदा",
+  "tab_switcher_my_due_list_label": "मेरी देय सूची",
+  "tab_switcher_recently_label": "हाल ही में",
+  "tab_switcher_recently_completed_label": "पूरा किया गया",
+  "tab_switcher_recently_updated_label": "अपडेट किया गया",
+  "tab_switcher_recently_created_label": "बनाया गया",
+  "tab_switcher_miscellaneous_label": "विविध",
+  "tab_switcher_task_ownershipt_transfers_label": "कार्य स्वामित्व हस्तांतरण",
+  "tab_switcher_ticket_queues_label": "टिकट कतारें",
+  "tab_switcher_members_due_lists_label": "सदस्यों की देय सूचियाँ",
+  "tab_switcher_all_members_due_list_label": "सभी सदस्यों की देय सूची",
+  "tab_switcher_projects_section_label": "परियोजनाएँ",
+  "tab_switcher_projects_label": "परियोजनाएँ"
+}

@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Câmpuri personalizate",
+  "grid_control_custom_fields_sort_by_name_label": "Sortează după nume",
+  "grid_control_custom_fields_new_custom_field_label": "Câmp personalizat nou",
+  "grid_control_custom_fields_no_custom_fields_label": "Niciun câmp personalizat",
+  "grid_control_custom_fields_label_placeholder": "etichetă",
+  "grid_control_custom_fields_text_label": "Text",
+  "grid_control_custom_fields_number_label": "Număr",
+  "grid_control_custom_fields_date_label": "Dată",
+  "grid_control_custom_fields_select_label": "Opțiuni",
+  "grid_control_custom_fields_multi_select_label": "Opțiuni multiple",
+  "grid_control_custom_fields_smart_numbers_label": "Numere inteligente",
+  "grid_control_custom_fields_unknown_type_label": "Tip necunoscut",
+  "grid_control_custom_fields_disabled_field_label": "Câmp dezactivat"
+}

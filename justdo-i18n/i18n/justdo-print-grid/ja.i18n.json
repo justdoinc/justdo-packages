@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "JustDoを印刷",
+  "print_dropdown_entire_justdo": "JustDo全体",
+  "print_dropdown_visible_tasks": "表示中のタスク",
+  "print_dropdown_print_current_task": "現在のタスクを印刷",
+  "print_dropdown_all_child_tasks": "すべての子タスク",
+  "print_dropdown_visible_child_tasks": "表示中の子タスク",
+  "print_dropdown_download": "ダウンロード",
+  "print_dropdown_download_as_png": "PNGでダウンロード",
+  "print_grid_columns_settings_label": "列の設定",
+  "print_grid_columns_options_label": "列のオプション",
+  "print_grid_print": "印刷",
+  "print_grid_export_csv": "CSVでエクスポート",
+  "print_grid_select_all": "すべて選択",
+  "print_grid_apply": "適用"
+}

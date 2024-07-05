@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Підключено",
+  "meteor_status_connecting": "Підключення...",
+  "meteor_status_failed": "Підключення до сервера не вдалося",
+  "meteor_status_waiting": "Очікування підключення до сервера,",
+  "meteor_status_offline": "Автономний режим.",
+  "meteor_status_reconnect_in": "повторна спроба через одну секунду...",
+  "meteor_status_reconnect_in_plural": "повторна спроба через __count__ секунд...",
+  "meteor_status_try_now_waiting": "Спробувати зараз",
+  "meteor_status_try_now_offline": "Підключитися знову"
+}

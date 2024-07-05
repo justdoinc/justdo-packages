@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Hali zinazotumika",
+  "project_configurations_no_active_states_label": "Hakuna hali zinazotumika",
+  "project_configurations_hidden_states_label": "Hali zilizofichwa",
+  "project_configurations_no_hidden_states_label": "Hakuna hali zilizofichwa",
+  "project_configurations_type_state_name_placeholder": "Andika jina la hali",
+  "project_configurations_default_title_for_this_state_label": "Kichwa cha msingi cha hali hii",
+  "project_configurations_restore_state_label": "Rejesha hali",
+  "project_configurations_create_extended_state_label": "Unda hali iliyopanuliwa",
+  "project_configurations_hide_state": "Ficha hali",
+  "project_configurations_remove_extended_state": "Ondoa hali iliyopanuliwa",
+  "new_custom_state_default_title": "__state__ - iliyopanuliwa"
+}

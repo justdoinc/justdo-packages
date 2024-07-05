@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Aktív állapotok",
+  "project_configurations_no_active_states_label": "Nincsenek aktív állapotok",
+  "project_configurations_hidden_states_label": "Rejtett állapotok",
+  "project_configurations_no_hidden_states_label": "Nincsenek rejtett állapotok",
+  "project_configurations_type_state_name_placeholder": "Írja be az állapot nevét",
+  "project_configurations_default_title_for_this_state_label": "Az állapot alapértelmezett címe",
+  "project_configurations_restore_state_label": "Állapot visszaállítása",
+  "project_configurations_create_extended_state_label": "Kiterjesztett állapot létrehozása",
+  "project_configurations_hide_state": "Állapot elrejtése",
+  "project_configurations_remove_extended_state": "Kiterjesztett állapot eltávolítása",
+  "new_custom_state_default_title": "__state__ - kiterjesztett"
+}

@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Додати стовпець",
+  "hide_column_label": "Приховати стовпець",
+  "freeze_column_label": "Закріпити стовпець",
+  "unfreeze_column_label": "Відкріпити стовпець",
+  "tree_control_tooltip_gantt_milestone": "Віха діаграми Ганта",
+  "tree_control_tooltip_buffer_task": "Буферне завдання",
+  "tree_control_tooltip_Meetings": "Зустрічі",
+  "tree_control_tooltip_start_time_tracking": "Почати роботу над цим завданням",
+  "tree_control_tooltip_stop_time_tracking": "Ви зараз працюєте над цим завданням, натисніть, щоб зупинити та записати відпрацьований час",
+  "tree_control_tooltip_resources": "Ресурси",
+  "tree_control_tooltip_description": "Опис завдання",
+  "tree_control_tooltip_chat_messages": "Повідомлення чату",
+  "tree_control_tooltip_files_count": "__files_count__ файлів",
+  "tree_control_tooltip_emails_count": "__emails_count__ електронних листів",
+  "tree_control_tooltip_task_is_a_project": "Завдання є проектом",
+  "tree_control_tooltip_task_is_archived": "Завдання архівовано"
+}

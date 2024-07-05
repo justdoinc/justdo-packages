@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Dodaj stupac",
+  "hide_column_label": "Sakrij stupac",
+  "freeze_column_label": "Zamrzni stupac",
+  "unfreeze_column_label": "Odmrzni stupac",
+  "tree_control_tooltip_gantt_milestone": "Ganttova prekretnica",
+  "tree_control_tooltip_buffer_task": "Rezervni zadatak",
+  "tree_control_tooltip_Meetings": "Sastanci",
+  "tree_control_tooltip_start_time_tracking": "Počni raditi na ovom zadatku",
+  "tree_control_tooltip_stop_time_tracking": "Trenutno radiš na ovom zadatku, pritisni za zaustavljanje i bilježenje odrađenog vremena",
+  "tree_control_tooltip_resources": "Resursi",
+  "tree_control_tooltip_description": "Opis zadatka",
+  "tree_control_tooltip_chat_messages": "Chat poruke",
+  "tree_control_tooltip_files_count": "__files_count__ datoteka",
+  "tree_control_tooltip_emails_count": "__emails_count__ e-mailova",
+  "tree_control_tooltip_task_is_a_project": "Zadatak je projekt",
+  "tree_control_tooltip_task_is_archived": "Zadatak je arhiviran"
+}

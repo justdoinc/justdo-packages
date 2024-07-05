@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Dodaj kolumnę",
+  "hide_column_label": "Ukryj kolumnę",
+  "freeze_column_label": "Zablokuj kolumnę",
+  "unfreeze_column_label": "Odblokuj kolumnę",
+  "tree_control_tooltip_gantt_milestone": "Kamień milowy Gantta",
+  "tree_control_tooltip_buffer_task": "Zadanie buforowe",
+  "tree_control_tooltip_Meetings": "Spotkania",
+  "tree_control_tooltip_start_time_tracking": "Rozpocznij pracę nad tym zadaniem",
+  "tree_control_tooltip_stop_time_tracking": "Pracujesz teraz nad tym zadaniem, naciśnij aby zatrzymać i zarejestrować przepracowany czas",
+  "tree_control_tooltip_resources": "Zasoby",
+  "tree_control_tooltip_description": "Opis zadania",
+  "tree_control_tooltip_chat_messages": "Wiadomości czatu",
+  "tree_control_tooltip_files_count": "__files_count__ plików",
+  "tree_control_tooltip_emails_count": "__emails_count__ e-maili",
+  "tree_control_tooltip_task_is_a_project": "Zadanie jest projektem",
+  "tree_control_tooltip_task_is_archived": "Zadanie jest zarchiwizowane"
+}

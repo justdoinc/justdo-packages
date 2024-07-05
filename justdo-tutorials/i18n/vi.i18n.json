@@ -4,7 +4,7 @@
   "create_first_task_title": "Tạo tác vụ đầu tiên",
   "create_first_task_subtitle": "Để tạo tác vụ, sử dụng các nút lệnh trên thanh công cụ hoặc tổ hợp phím tắt ALT+ENTER / ALT+SHIFT+ENTER",
   "invite_members_title": "Mời thành viên",
-  "invite_members_subtitle": "Mời các thành viên trong nhóm tham gia và làm việc cùng nhau trong phiên bản JustDo mới",  
+  "invite_members_subtitle": "Mời các thành viên trong nhóm tham gia và làm việc cùng nhau trong phiên bản JustDo mới",
   "import_tasks_title": "Nhập tác vụ",
   "import_tasks_subtitle": "Bạn có thể chuyển các tác vụ và dữ liệu hiện có sang JustDo và tiếp tục thao tác với chúng nhờ chức năng nhập bảng tính",
   "customize_columns_title": "Tùy chỉnh chế độ xem của bạn",
@@ -12,9 +12,9 @@
   "get_free_support_title": "Nhận hỗ trợ miễn phí",
   "get_free_support_subtitle": "Hỗ trợ trực tiếp 1-1 bởi đội ngũ JustDo",
   "request": "Yêu cầu",
-  "free_support_request_received": "Đã nhận được yêu cầu của bạn, chúng tôi sẽ liên hệ lại ngay qua email"
-
-
-
-
+  "free_support_request_received": "Đã nhận được yêu cầu của bạn, chúng tôi sẽ liên hệ lại ngay qua email",
+  "tutorials_recent_product_updates": "Cập nhật sản phẩm gần đây",
+  "tutorials_justdo_quick_start": "Hướng dẫn nhanh JustDo",
+  "tutorials_justdo_advanced_features": "Tính năng nâng cao của JustDo",
+  "tutorials_justdo_support_center": "Trung tâm hỗ trợ JustDo"
 }

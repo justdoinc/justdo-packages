@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "JustDo nyomtatása",
+  "print_dropdown_entire_justdo": "Teljes JustDo",
+  "print_dropdown_visible_tasks": "Látható feladatok",
+  "print_dropdown_print_current_task": "Aktuális feladat nyomtatása",
+  "print_dropdown_all_child_tasks": "Összes alfeladat",
+  "print_dropdown_visible_child_tasks": "Látható alfeladatok",
+  "print_dropdown_download": "Letöltés",
+  "print_dropdown_download_as_png": "Letöltés PNG formátumban",
+  "print_grid_columns_settings_label": "Oszlopbeállítások",
+  "print_grid_columns_options_label": "Oszlopok opciói",
+  "print_grid_print": "Nyomtatás",
+  "print_grid_export_csv": "CSV exportálása",
+  "print_grid_select_all": "Összes kijelölése",
+  "print_grid_apply": "Alkalmazás"
+}

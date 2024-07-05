@@ -1,0 +1,9 @@
+{
+  "item_details_title": "Szczegóły",
+  "item_details_members_label": "Członkowie",
+  "item_details_description_label": "Opis",
+  "item_details_add_task_description": "Dodaj opis zadania",
+  "item_details_more_info_label": "Więcej informacji",
+  "item_details_context_title": "Kontekst",
+  "item_details_context_drag_to_add_parent_label": "Przeciągnij, aby dodać zadanie nadrzędne"
+}

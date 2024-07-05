@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "JustDo प्रिंट करें",
+  "print_dropdown_entire_justdo": "पूरा JustDo",
+  "print_dropdown_visible_tasks": "दृश्यमान कार्य",
+  "print_dropdown_print_current_task": "वर्तमान कार्य प्रिंट करें",
+  "print_dropdown_all_child_tasks": "सभी उप-कार्य",
+  "print_dropdown_visible_child_tasks": "दृश्यमान उप-कार्य",
+  "print_dropdown_download": "डाउनलोड करें",
+  "print_dropdown_download_as_png": "PNG के रूप में डाउनलोड करें",
+  "print_grid_columns_settings_label": "कॉलम सेटिंग्स",
+  "print_grid_columns_options_label": "कॉलम विकल्प",
+  "print_grid_print": "प्रिंट करें",
+  "print_grid_export_csv": "CSV निर्यात करें",
+  "print_grid_select_all": "सभी चुनें",
+  "print_grid_apply": "लागू करें"
+}

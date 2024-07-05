@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "Chapisha JustDo",
+  "print_dropdown_entire_justdo": "JustDo Nzima",
+  "print_dropdown_visible_tasks": "Kazi Zinazoonekana",
+  "print_dropdown_print_current_task": "Chapisha Kazi ya Sasa",
+  "print_dropdown_all_child_tasks": "Kazi Zote za Mtoto",
+  "print_dropdown_visible_child_tasks": "Kazi za Mtoto Zinazoonekana",
+  "print_dropdown_download": "Pakua",
+  "print_dropdown_download_as_png": "Pakua kama PNG",
+  "print_grid_columns_settings_label": "Mipangilio ya Safu Wima",
+  "print_grid_columns_options_label": "Chaguo za Safu Wima",
+  "print_grid_print": "Chapisha",
+  "print_grid_export_csv": "Hamisha CSV",
+  "print_grid_select_all": "Chagua Zote",
+  "print_grid_apply": "Tekeleza"
+}

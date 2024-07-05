@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Активни състояния",
+  "project_configurations_no_active_states_label": "Няма активни състояния",
+  "project_configurations_hidden_states_label": "Скрити състояния",
+  "project_configurations_no_hidden_states_label": "Няма скрити състояния",
+  "project_configurations_type_state_name_placeholder": "Въведете име на състояние",
+  "project_configurations_default_title_for_this_state_label": "Стандартно заглавие за това състояние",
+  "project_configurations_restore_state_label": "Възстанови състояние",
+  "project_configurations_create_extended_state_label": "Създай разширено състояние",
+  "project_configurations_hide_state": "Скрий състояние",
+  "project_configurations_remove_extended_state": "Премахни разширено състояние",
+  "new_custom_state_default_title": "__state__ - разширено"
+}

@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "Štampaj JustDo",
+  "print_dropdown_entire_justdo": "Ceo JustDo",
+  "print_dropdown_visible_tasks": "Vidljivi zadaci",
+  "print_dropdown_print_current_task": "Štampaj trenutni zadatak",
+  "print_dropdown_all_child_tasks": "Svi podzadaci",
+  "print_dropdown_visible_child_tasks": "Vidljivi podzadaci",
+  "print_dropdown_download": "Preuzmi",
+  "print_dropdown_download_as_png": "Preuzmi kao PNG",
+  "print_grid_columns_settings_label": "Podešavanja kolona",
+  "print_grid_columns_options_label": "Opcije kolona",
+  "print_grid_print": "Štampaj",
+  "print_grid_export_csv": "Izvezi CSV",
+  "print_grid_select_all": "Izaberi sve",
+  "print_grid_apply": "Primeni"
+}

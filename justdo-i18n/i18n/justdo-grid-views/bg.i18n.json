@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Изгледи на таблицата",
+  "grid_views_search_placeholder": "Търсене на изгледи",
+  "grid_views_no_view_label": "Няма изгледи",
+  "grid_views_add_current_view_label": "Добави текущия изглед",
+  "grid_views_rename_label": "Преименувай",
+  "grid_views_update_label": "Обнови",
+  "grid_views_remove_label": "Премахни",
+  "grid_views_share_label": "Сподели",
+  "grid_views_unshare_label": "Прекрати споделянето",
+  "grid_views_shared_label": "споделено"
+}

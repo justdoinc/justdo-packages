@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Pasirinktiniai laukai",
+  "grid_control_custom_fields_sort_by_name_label": "Rūšiuoti pagal pavadinimą",
+  "grid_control_custom_fields_new_custom_field_label": "Naujas pasirinktinis laukas",
+  "grid_control_custom_fields_no_custom_fields_label": "Nėra pasirinktinių laukų",
+  "grid_control_custom_fields_label_placeholder": "etiketė",
+  "grid_control_custom_fields_text_label": "Tekstas",
+  "grid_control_custom_fields_number_label": "Skaičius",
+  "grid_control_custom_fields_date_label": "Data",
+  "grid_control_custom_fields_select_label": "Pasirinkimai",
+  "grid_control_custom_fields_multi_select_label": "Keli pasirinkimai",
+  "grid_control_custom_fields_smart_numbers_label": "Išmanūs skaičiai",
+  "grid_control_custom_fields_unknown_type_label": "Nežinomas tipas",
+  "grid_control_custom_fields_disabled_field_label": "Išjungtas laukas"
+}

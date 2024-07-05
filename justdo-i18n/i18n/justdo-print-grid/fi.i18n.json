@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "Tulosta JustDo",
+  "print_dropdown_entire_justdo": "Koko JustDo",
+  "print_dropdown_visible_tasks": "Näkyvät tehtävät",
+  "print_dropdown_print_current_task": "Tulosta nykyinen tehtävä",
+  "print_dropdown_all_child_tasks": "Kaikki alitehtävät",
+  "print_dropdown_visible_child_tasks": "Näkyvät alitehtävät",
+  "print_dropdown_download": "Lataa",
+  "print_dropdown_download_as_png": "Lataa PNG-muodossa",
+  "print_grid_columns_settings_label": "Sarakkeiden asetukset",
+  "print_grid_columns_options_label": "Sarakevalinnat",
+  "print_grid_print": "Tulosta",
+  "print_grid_export_csv": "Vie CSV-muodossa",
+  "print_grid_select_all": "Valitse kaikki",
+  "print_grid_apply": "Käytä"
+}

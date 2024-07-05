@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "Organizacja __user_name__",
+  "create_org_label": "Utwórz organizację",
+  "without_orgs_label": "Bez organizacji",
+  "justdos_under_named_org_html": "Tablice JustDo w organizacji <span class=\"org-name\">__org_name__</span>",
+  "justdos_without_orgs": "Tablice JustDo bez organizacji",
+  "orgs_project_config_title": "Organizacje",
+  "assign_justdo_to_organization_label": "Przypisz tablicę JustDo do organizacji",
+  "another_organization": "inna organizacja",
+  "pre_transfer_justdo_to_org_notice_html": "Zamierzasz przenieść tę tablicę JustDo do organizacji <b>__dest_org_name__</b>. <br> Wszyscy członkowie tej tablicy JustDo staną się członkami organizacji <b>__dest_org_name__</b>.",
+  "select_organization": "Wybierz organizację",
+  "org_expiring_soon_notice_title": "Licencja Twojej organizacji wkrótce wygaśnie!",
+  "org_expiring_soon_notice_html": "Licencja dla Twojej organizacji <b>__org_name__</b> wygaśnie __org_expiration_date__. <br> Mamy nadzieję, że JustDo ułatwiło Twoje życie zawodowe!",
+  "org_locked_notice_title": "Licencja Twojej organizacji wygasła!",
+  "org_locked_notice_html": "Licencja dla Twojej organizacji <b>__org_name__</b> wygasła __org_expiration_date__. <br> Mamy nadzieję, że JustDo ułatwiło Twoje życie zawodowe i chcielibyśmy nadal to robić!",
+  "org_access_restricted_title": "__org_name__: Tymczasowe ograniczenie dostępu",
+  "org_access_restricted_html": "Dostęp do Twojej organizacji <b>__org_name__</b> jest obecnie ograniczony. Skontaktuj się z administratorami swojej organizacji, aby uzyskać więcej informacji na ten temat. <br> Doceniamy Twoją cierpliwość i zrozumienie.",
+  "renew_org_license_instruction_html": "Możesz odnowić licencję, klikając przycisk \"Odnów licencję\" poniżej.<br>Nasz zespół wsparcia zawsze chętnie służy pomocą.<br><br>Dziękujemy, że jesteś częścią społeczności JustDo. Aktywnie pracujemy nad nowymi funkcjami do następnego wydania, aby usprawnić Twój przepływ pracy!",
+  "renew_org_licnese_modal_btn_label": "Odnów licencję",
+  "org_pre_expire_renewal_contact_page_message": "Moja organizacja __org_name__ __optional_domain_msg__ wkrótce wygaśnie i chciałbym odnowić licencję.",
+  "org_post_expire_renewal_contact_page_message": "Licencja mojej organizacji __org_name__ __optional_domain_msg__ wygasła i chciałbym ją odnowić."
+}

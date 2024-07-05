@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "Organizace uživatele __user_name__",
+  "create_org_label": "Vytvořit organizaci",
+  "without_orgs_label": "Bez organizace",
+  "justdos_under_named_org_html": "JustDo nástěnky pod <span class=\"org-name\">__org_name__</span>",
+  "justdos_without_orgs": "JustDo nástěnky bez organizace",
+  "orgs_project_config_title": "Organizace",
+  "assign_justdo_to_organization_label": "Přiřadit JustDo nástěnku k organizaci",
+  "another_organization": "jiná organizace",
+  "pre_transfer_justdo_to_org_notice_html": "Chystáte se přesunout tuto JustDo nástěnku do <b>__dest_org_name__</b>. <br> Všichni členové této JustDo nástěnky se stanou členy <b>__dest_org_name__</b>.",
+  "select_organization": "Vybrat organizaci",
+  "org_expiring_soon_notice_title": "Licence vaší organizace brzy vyprší!",
+  "org_expiring_soon_notice_html": "Licence pro vaši organizaci <b>__org_name__</b> vyprší dne __org_expiration_date__. <br> Doufáme, že vám JustDo usnadnil pracovní život!",
+  "org_locked_notice_title": "Licence vaší organizace vypršela!",
+  "org_locked_notice_html": "Licence pro vaši organizaci <b>__org_name__</b> vypršela dne __org_expiration_date__. <br> Doufáme, že vám JustDo usnadnil pracovní život a rádi bychom v tom pokračovali!",
+  "org_access_restricted_title": "__org_name__: Dočasné omezení přístupu",
+  "org_access_restricted_html": "Přístup k vaší organizaci <b>__org_name__</b> je momentálně omezen. Pro více informací o této záležitosti prosím kontaktujte administrátory vaší organizace. <br> Děkujeme za vaši trpělivost a pochopení.",
+  "renew_org_license_instruction_html": "Licenci můžete obnovit kliknutím na tlačítko \"Obnovit licenci\" níže.<br>Náš tým podpory vám vždy rád pomůže.<br><br>Děkujeme, že jste součástí komunity JustDo. Aktivně vyvíjíme nové funkce pro příští vydání, abychom vylepšili váš pracovní postup!",
+  "renew_org_licnese_modal_btn_label": "Obnovit licenci",
+  "org_pre_expire_renewal_contact_page_message": "Moje organizace __org_name__ __optional_domain_msg__ brzy vyprší a rád bych obnovil licenci.",
+  "org_post_expire_renewal_contact_page_message": "Moje organizace __org_name__ __optional_domain_msg__ vypršela a rád bych obnovil licenci."
+}

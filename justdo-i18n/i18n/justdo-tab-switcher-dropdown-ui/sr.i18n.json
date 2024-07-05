@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Промени приказ",
+  "tab_switcher_dropdown_search_placeholder": "Прикази",
+  "tab_switcher_main_view_label": "Главни приказ",
+  "tab_switcher_my_favorites_label": "Моји омиљени",
+  "tab_switcher_my_due_list_label": "Моја листа рокова",
+  "tab_switcher_recently_label": "Недавно",
+  "tab_switcher_recently_completed_label": "Завршено",
+  "tab_switcher_recently_updated_label": "Ажурирано",
+  "tab_switcher_recently_created_label": "Креирано",
+  "tab_switcher_miscellaneous_label": "Разно",
+  "tab_switcher_task_ownershipt_transfers_label": "Пренос власништва задатака",
+  "tab_switcher_ticket_queues_label": "Редови тикета",
+  "tab_switcher_members_due_lists_label": "Листе рокова чланова",
+  "tab_switcher_all_members_due_list_label": "Листа рокова свих чланова",
+  "tab_switcher_projects_section_label": "Пројекти",
+  "tab_switcher_projects_label": "Пројекти"
+}

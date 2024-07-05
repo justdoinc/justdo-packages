@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "លុបភារកិច្ច",
+  "remove_from_parent_label": "លុបចេញពីមេ",
+  "remove_with_subtree_label": "លុបជាមួយនឹងមែកធាងរង",
+  "archive_task_label": "ទុកភារកិច្ចក្នុងប័ណ្ណសារ",
+  "unarchive_task_label": "យកភារកិច្ចចេញពីប័ណ្ណសារ",
+  "reorder_children_by_label": "តម្រៀបមែកធាងរងតាម",
+  "zoom_in_label": "ពង្រីក",
+  "projects_label": "គម្រោង",
+  "set_as_a_project_label": "កំណត់ជាគម្រោង",
+  "unset_as_a_project_label": "លុបចេញពីការកំណត់ជាគម្រោង",
+  "close_project_label": "បិទគម្រោង",
+  "repoen_project_label": "បើកគម្រោងឡើងវិញ",
+  "add_to_project_label": "បន្ថែមទៅគម្រោង",
+  "apply_value_to_subtree": "អនុវត្ត __value__ ទៅលើមែកធាងរង",
+  "bulk_set_options_label": "កំណត់ជាក្រុម"
+}

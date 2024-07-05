@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Changer de vue",
+  "tab_switcher_dropdown_search_placeholder": "Vues",
+  "tab_switcher_main_view_label": "Vue principale",
+  "tab_switcher_my_favorites_label": "Mes favoris",
+  "tab_switcher_my_due_list_label": "Ma liste d'échéances",
+  "tab_switcher_recently_label": "Récemment",
+  "tab_switcher_recently_completed_label": "Terminé",
+  "tab_switcher_recently_updated_label": "Mis à jour",
+  "tab_switcher_recently_created_label": "Créé",
+  "tab_switcher_miscellaneous_label": "Divers",
+  "tab_switcher_task_ownershipt_transfers_label": "Transferts de propriété des tâches",
+  "tab_switcher_ticket_queues_label": "Files d'attente des tickets",
+  "tab_switcher_members_due_lists_label": "Listes d'échéances des membres",
+  "tab_switcher_all_members_due_list_label": "Liste d'échéances de tous les membres",
+  "tab_switcher_projects_section_label": "Projets",
+  "tab_switcher_projects_label": "Projets"
+}

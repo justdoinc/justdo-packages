@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "Vytlačiť JustDo",
+  "print_dropdown_entire_justdo": "Celé JustDo",
+  "print_dropdown_visible_tasks": "Viditeľné úlohy",
+  "print_dropdown_print_current_task": "Vytlačiť aktuálnu úlohu",
+  "print_dropdown_all_child_tasks": "Všetky podriadené úlohy",
+  "print_dropdown_visible_child_tasks": "Viditeľné podriadené úlohy",
+  "print_dropdown_download": "Stiahnuť",
+  "print_dropdown_download_as_png": "Stiahnuť ako PNG",
+  "print_grid_columns_settings_label": "Nastavenia stĺpcov",
+  "print_grid_columns_options_label": "Možnosti stĺpcov",
+  "print_grid_print": "Tlačiť",
+  "print_grid_export_csv": "Exportovať CSV",
+  "print_grid_select_all": "Vybrať všetko",
+  "print_grid_apply": "Použiť"
+}

@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "Määra oma JustDo pealkiri",
+  "set_justdo_name_subtitle": "Lihtsalt klõpsa pealkirjal, et siseneda redigeerimisrežiimi",
+  "create_first_task_title": "Loo oma esimesed ülesanded",
+  "create_first_task_subtitle": "Ülesannete loomiseks saad kasutada kas tööriistariba nuppe või klaviatuuri kiirklahve ALT+ENTER / ALT+SHIFT+ENTER",
+  "invite_members_title": "Kutsu meeskonnaliikmeid",
+  "invite_members_subtitle": "Kutsu oma meeskonnaliikmeid liituma ja koostööd tegema oma uues JustDo tabelis",
+  "import_tasks_title": "Impordi ülesanded",
+  "import_tasks_subtitle": "Saad üle kanda olemasolevad ülesanded ja andmed JustDo-sse ning sujuvalt jätkata meie arvutustabeli impordi funktsiooniga",
+  "customize_columns_title": "Kohanda oma vaadet",
+  "customize_columns_subtitle": "Kontrolli, mida näed tabelis, lisades/eemaldades veerge, filtreerides ülesandeid nende oleku järgi ja muud!",
+  "get_free_support_title": "Saa tasuta tuge",
+  "get_free_support_subtitle": "1-1 tugiseanss JustDo meeskonnaga",
+  "request": "Taotle",
+  "free_support_request_received": "Taotlus vastu võetud, võtame sinuga peagi e-posti teel ühendust",
+  "tutorials_recent_product_updates": "Hiljutised toote uuendused",
+  "tutorials_justdo_quick_start": "JustDo kiirstart",
+  "tutorials_justdo_advanced_features": "JustDo edasijõudnud funktsioonid",
+  "tutorials_justdo_support_center": "JustDo tugikeskus"
+}

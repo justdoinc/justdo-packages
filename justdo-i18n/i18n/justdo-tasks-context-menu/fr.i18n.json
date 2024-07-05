@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Supprimer les tâches",
+  "remove_from_parent_label": "Retirer du parent",
+  "remove_with_subtree_label": "Supprimer avec le sous-arbre",
+  "archive_task_label": "Archiver la tâche",
+  "unarchive_task_label": "Désarchiver la tâche",
+  "reorder_children_by_label": "Réorganiser les enfants par",
+  "zoom_in_label": "Zoom avant",
+  "projects_label": "Projets",
+  "set_as_a_project_label": "Définir comme projet",
+  "unset_as_a_project_label": "Annuler comme projet",
+  "close_project_label": "Fermer le projet",
+  "repoen_project_label": "Rouvrir le projet",
+  "add_to_project_label": "Ajouter au projet",
+  "apply_value_to_subtree": "Appliquer __value__ au sous-arbre",
+  "bulk_set_options_label": "Définir en masse"
+}

@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Lisa veerg",
+  "hide_column_label": "Peida veerg",
+  "freeze_column_label": "Kinnita veerg",
+  "unfreeze_column_label": "Vabasta veerg",
+  "tree_control_tooltip_gantt_milestone": "Gantti tähis",
+  "tree_control_tooltip_buffer_task": "Puhverülesanne",
+  "tree_control_tooltip_Meetings": "Koosolekud",
+  "tree_control_tooltip_start_time_tracking": "Alusta selle ülesande kallal töötamist",
+  "tree_control_tooltip_stop_time_tracking": "Sa töötad praegu selle ülesande kallal, vajuta lõpetamiseks ja töötatud aja logimiseks",
+  "tree_control_tooltip_resources": "Ressursid",
+  "tree_control_tooltip_description": "Ülesande kirjeldus",
+  "tree_control_tooltip_chat_messages": "Vestlussõnumid",
+  "tree_control_tooltip_files_count": "__files_count__ faili",
+  "tree_control_tooltip_emails_count": "__emails_count__ e-kirja",
+  "tree_control_tooltip_task_is_a_project": "Ülesanne on projekt",
+  "tree_control_tooltip_task_is_archived": "Ülesanne on arhiveeritud"
+}

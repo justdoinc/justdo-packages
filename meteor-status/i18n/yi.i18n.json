@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "פֿאַרבונדן",
+  "meteor_status_connecting": "פֿאַרבינדן...",
+  "meteor_status_failed": "די סערווער פֿאַרבינדונג האָט דורכגעפֿאַלן",
+  "meteor_status_waiting": "וואַרטן פֿאַר סערווער פֿאַרבינדונג,",
+  "meteor_status_offline": "אָפֿליין מאָדע.",
+  "meteor_status_reconnect_in": "פּרובירן נאָך אַמאָל אין איין סעקונדע...",
+  "meteor_status_reconnect_in_plural": "פּרובירן נאָך אַמאָל אין __count__ סעקונדעס...",
+  "meteor_status_try_now_waiting": "פּרובירט איצט",
+  "meteor_status_try_now_offline": "פֿאַרבינדן נאָך אַמאָל"
+}

@@ -1,0 +1,18 @@
+{
+  "add_column_label": "បន្ថែមជួរឈរ",
+  "hide_column_label": "លាក់ជួរឈរ",
+  "freeze_column_label": "បង្កកជួរឈរ",
+  "unfreeze_column_label": "ដោះបង្កកជួរឈរ",
+  "tree_control_tooltip_gantt_milestone": "ចំណុចសំខាន់នៃ Gantt",
+  "tree_control_tooltip_buffer_task": "កិច្ចការបម្រុង",
+  "tree_control_tooltip_Meetings": "កិច្ចប្រជុំ",
+  "tree_control_tooltip_start_time_tracking": "ចាប់ផ្តើមធ្វើការលើកិច្ចការនេះ",
+  "tree_control_tooltip_stop_time_tracking": "អ្នកកំពុងធ្វើការលើកិច្ចការនេះឥឡូវនេះ, ចុចដើម្បីបញ្ឈប់និងកត់ត្រាពេលវេលាដែលបានធ្វើការ",
+  "tree_control_tooltip_resources": "ធនធាន",
+  "tree_control_tooltip_description": "ការពិពណ៌នាអំពីកិច្ចការ",
+  "tree_control_tooltip_chat_messages": "សារជជែក",
+  "tree_control_tooltip_files_count": "ឯកសារចំនួន __files_count__",
+  "tree_control_tooltip_emails_count": "អ៊ីមែលចំនួន __emails_count__",
+  "tree_control_tooltip_task_is_a_project": "កិច្ចការនេះគឺជាគម្រោង",
+  "tree_control_tooltip_task_is_archived": "កិច្ចការត្រូវបានរក្សាទុក"
+}

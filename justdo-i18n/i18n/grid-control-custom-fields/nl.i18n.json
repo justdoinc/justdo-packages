@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Aangepaste velden",
+  "grid_control_custom_fields_sort_by_name_label": "Sorteren op naam",
+  "grid_control_custom_fields_new_custom_field_label": "Nieuw aangepast veld",
+  "grid_control_custom_fields_no_custom_fields_label": "Geen aangepaste velden",
+  "grid_control_custom_fields_label_placeholder": "label",
+  "grid_control_custom_fields_text_label": "Tekst",
+  "grid_control_custom_fields_number_label": "Nummer",
+  "grid_control_custom_fields_date_label": "Datum",
+  "grid_control_custom_fields_select_label": "Opties",
+  "grid_control_custom_fields_multi_select_label": "Meerdere opties",
+  "grid_control_custom_fields_smart_numbers_label": "Slimme nummers",
+  "grid_control_custom_fields_unknown_type_label": "Onbekend type",
+  "grid_control_custom_fields_disabled_field_label": "Uitgeschakeld veld"
+}

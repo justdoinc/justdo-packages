@@ -1,0 +1,18 @@
+{
+  "add_column_label": "열 추가",
+  "hide_column_label": "열 숨기기",
+  "freeze_column_label": "열 고정",
+  "unfreeze_column_label": "열 고정 해제",
+  "tree_control_tooltip_gantt_milestone": "간트 차트 마일스톤",
+  "tree_control_tooltip_buffer_task": "버퍼 태스크",
+  "tree_control_tooltip_Meetings": "회의",
+  "tree_control_tooltip_start_time_tracking": "이 태스크 작업 시작",
+  "tree_control_tooltip_stop_time_tracking": "현재 이 태스크 작업 중, 누르면 작업을 중지하고 작업 시간을 기록합니다",
+  "tree_control_tooltip_resources": "리소스",
+  "tree_control_tooltip_description": "태스크 설명",
+  "tree_control_tooltip_chat_messages": "채팅 메시지",
+  "tree_control_tooltip_files_count": "파일 __files_count__개",
+  "tree_control_tooltip_emails_count": "이메일 __emails_count__개",
+  "tree_control_tooltip_task_is_a_project": "태스크가 프로젝트입니다",
+  "tree_control_tooltip_task_is_archived": "태스크가 보관되었습니다"
+}

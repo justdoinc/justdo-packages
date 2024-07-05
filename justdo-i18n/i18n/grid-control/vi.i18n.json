@@ -2,5 +2,17 @@
   "add_column_label": "Thêm cột",
   "hide_column_label": "Ẩn cột",
   "freeze_column_label": "Cố định cột",
-  "unfreeze_column_label": "Bỏ cố định cột"
+  "unfreeze_column_label": "Bỏ cố định cột",
+  "tree_control_tooltip_gantt_milestone": "Cột Mốc Gantt",
+  "tree_control_tooltip_buffer_task": "Công Việc Đệm",
+  "tree_control_tooltip_Meetings": "Cuộc Họp",
+  "tree_control_tooltip_start_time_tracking": "Bắt đầu làm việc trên công việc này",
+  "tree_control_tooltip_stop_time_tracking": "Bạn đang làm việc trên công việc này, nhấn để dừng và ghi lại thời gian đã làm",
+  "tree_control_tooltip_resources": "Tài Nguyên",
+  "tree_control_tooltip_description": "Mô tả công việc",
+  "tree_control_tooltip_chat_messages": "Tin nhắn trò chuyện",
+  "tree_control_tooltip_files_count": "__files_count__ tệp",
+  "tree_control_tooltip_emails_count": "__emails_count__ email",
+  "tree_control_tooltip_task_is_a_project": "Công việc là một dự án",
+  "tree_control_tooltip_task_is_archived": "Công việc đã được lưu trữ"
 }

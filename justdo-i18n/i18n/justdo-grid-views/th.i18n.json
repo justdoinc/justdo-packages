@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "มุมมองตาราง",
+  "grid_views_search_placeholder": "ค้นหามุมมอง",
+  "grid_views_no_view_label": "ไม่มีมุมมอง",
+  "grid_views_add_current_view_label": "เพิ่มมุมมองปัจจุบัน",
+  "grid_views_rename_label": "เปลี่ยนชื่อ",
+  "grid_views_update_label": "อัปเดต",
+  "grid_views_remove_label": "ลบ",
+  "grid_views_share_label": "แชร์",
+  "grid_views_unshare_label": "ยกเลิกการแชร์",
+  "grid_views_shared_label": "แชร์แล้ว"
+}

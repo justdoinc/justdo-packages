@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Tabellvyer",
+  "grid_views_search_placeholder": "Sök vyer",
+  "grid_views_no_view_label": "Inga vyer",
+  "grid_views_add_current_view_label": "Lägg till aktuell vy",
+  "grid_views_rename_label": "Byt namn",
+  "grid_views_update_label": "Uppdatera",
+  "grid_views_remove_label": "Ta bort",
+  "grid_views_share_label": "Dela",
+  "grid_views_unshare_label": "Sluta dela",
+  "grid_views_shared_label": "delad"
+}

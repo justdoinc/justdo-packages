@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "พิมพ์ JustDo",
+  "print_dropdown_entire_justdo": "JustDo ทั้งหมด",
+  "print_dropdown_visible_tasks": "งานที่มองเห็นได้",
+  "print_dropdown_print_current_task": "พิมพ์งานปัจจุบัน",
+  "print_dropdown_all_child_tasks": "งานย่อยทั้งหมด",
+  "print_dropdown_visible_child_tasks": "งานย่อยที่มองเห็นได้",
+  "print_dropdown_download": "ดาวน์โหลด",
+  "print_dropdown_download_as_png": "ดาวน์โหลดเป็นไฟล์ PNG",
+  "print_grid_columns_settings_label": "การตั้งค่าคอลัมน์",
+  "print_grid_columns_options_label": "ตัวเลือกคอลัมน์",
+  "print_grid_print": "พิมพ์",
+  "print_grid_export_csv": "ส่งออกเป็น CSV",
+  "print_grid_select_all": "เลือกทั้งหมด",
+  "print_grid_apply": "นำไปใช้"
+}

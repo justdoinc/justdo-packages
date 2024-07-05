@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "__user_name__n organisaatio",
+  "create_org_label": "Luo organisaatio",
+  "without_orgs_label": "Ilman organisaatiota",
+  "justdos_under_named_org_html": "JustDot organisaation <span class=\"org-name\">__org_name__</span> alla",
+  "justdos_without_orgs": "JustDot ilman organisaatiota",
+  "orgs_project_config_title": "Organisaatiot",
+  "assign_justdo_to_organization_label": "Liitä JustDo-taulu organisaatioon",
+  "another_organization": "toinen organisaatio",
+  "pre_transfer_justdo_to_org_notice_html": "Olet siirtämässä tämän JustDo-taulun organisaatioon <b>__dest_org_name__</b>. <br> Kaikista tämän JustDo-taulun jäsenistä tulee organisaation <b>__dest_org_name__</b> jäseniä.",
+  "select_organization": "Valitse organisaatio",
+  "org_expiring_soon_notice_title": "Organisaatiosi lisenssi on vanhenemassa pian!",
+  "org_expiring_soon_notice_html": "Organisaatiosi <b>__org_name__</b> lisenssi vanhenee __org_expiration_date__. <br> Toivomme, että JustDo on helpottanut työelämääsi!",
+  "org_locked_notice_title": "Organisaatiosi lisenssi on vanhentunut!",
+  "org_locked_notice_html": "Organisaatiosi <b>__org_name__</b> lisenssi on vanhentunut __org_expiration_date__. <br> Toivomme, että JustDo on helpottanut työelämääsi, ja haluaisimme jatkaa sitä!",
+  "org_access_restricted_title": "__org_name__: Väliaikainen pääsyrajoitus",
+  "org_access_restricted_html": "Pääsy organisaatioosi <b>__org_name__</b> on tällä hetkellä rajoitettu. Ota yhteyttä organisaatiosi ylläpitäjiin saadaksesi lisätietoja tästä asiasta. <br> Arvostamme kärsivällisyyttäsi ja ymmärrystäsi.",
+  "renew_org_license_instruction_html": "Voit uusia lisenssin napsauttamalla alla olevaa \"Uusi lisenssi\" -painiketta.<br>Tukitiimimme auttaa mielellään sinua.<br><br>Kiitos, että olet osa JustDo-yhteisöä. Kehitämme aktiivisesti uusia ominaisuuksia seuraavaan versioon parantaaksemme työnkulkuasi!",
+  "renew_org_licnese_modal_btn_label": "Uusi lisenssi",
+  "org_pre_expire_renewal_contact_page_message": "Organisaationi __org_name__ __optional_domain_msg__ on vanhenemassa ja haluaisin uusia lisenssin.",
+  "org_post_expire_renewal_contact_page_message": "Organisaationi __org_name__ __optional_domain_msg__ on vanhentunut ja haluaisin uusia lisenssin."
+}

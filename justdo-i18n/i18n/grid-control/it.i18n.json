@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Aggiungi Colonna",
+  "hide_column_label": "Nascondi Colonna",
+  "freeze_column_label": "Blocca Colonna",
+  "unfreeze_column_label": "Sblocca Colonna",
+  "tree_control_tooltip_gantt_milestone": "Milestone Gantt",
+  "tree_control_tooltip_buffer_task": "Attività Cuscinetto",
+  "tree_control_tooltip_Meetings": "Riunioni",
+  "tree_control_tooltip_start_time_tracking": "Inizia a lavorare su questa attività",
+  "tree_control_tooltip_stop_time_tracking": "Stai lavorando su questa attività ora, premi per fermare e registrare il tempo lavorato",
+  "tree_control_tooltip_resources": "Risorse",
+  "tree_control_tooltip_description": "Descrizione dell'attività",
+  "tree_control_tooltip_chat_messages": "Messaggi chat",
+  "tree_control_tooltip_files_count": "__files_count__ file",
+  "tree_control_tooltip_emails_count": "__emails_count__ email",
+  "tree_control_tooltip_task_is_a_project": "L'attività è un progetto",
+  "tree_control_tooltip_task_is_archived": "L'attività è archiviata"
+}

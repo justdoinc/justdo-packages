@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "Organizacija korisnika __user_name__",
+  "create_org_label": "Kreiraj organizaciju",
+  "without_orgs_label": "Bez organizacije",
+  "justdos_under_named_org_html": "JustDo table u okviru <span class=\"org-name\">__org_name__</span>",
+  "justdos_without_orgs": "JustDo table bez organizacije",
+  "orgs_project_config_title": "Organizacije",
+  "assign_justdo_to_organization_label": "Dodeli JustDo tablu organizaciji",
+  "another_organization": "druga organizacija",
+  "pre_transfer_justdo_to_org_notice_html": "Spremate se da prebacite ovu JustDo tablu u <b>__dest_org_name__</b>. <br> Svi članovi ove JustDo table postaće članovi <b>__dest_org_name__</b>.",
+  "select_organization": "Izaberite organizaciju",
+  "org_expiring_soon_notice_title": "Licenca vaše organizacije uskoro ističe!",
+  "org_expiring_soon_notice_html": "Licenca za vašu organizaciju <b>__org_name__</b> ističe __org_expiration_date__. <br> Nadamo se da je JustDo olakšao vaš poslovni život!",
+  "org_locked_notice_title": "Licenca vaše organizacije je istekla!",
+  "org_locked_notice_html": "Licenca za vašu organizaciju <b>__org_name__</b> je istekla __org_expiration_date__. <br> Nadamo se da je JustDo olakšao vaš poslovni život i voleli bismo da nastavimo to da činimo!",
+  "org_access_restricted_title": "__org_name__: Privremeno ograničenje pristupa",
+  "org_access_restricted_html": "Pristup vašoj organizaciji <b>__org_name__</b> je trenutno ograničen. Molimo kontaktirajte administratore vaše organizacije za više detalja o ovom pitanju. <br> Cenimo vaše strpljenje i razumevanje.",
+  "renew_org_license_instruction_html": "Možete obnoviti licencu klikom na dugme \"Obnovi licencu\" ispod.<br>Naš tim za podršku je uvek spreman da vam pomogne.<br><br>Hvala vam što ste deo JustDo zajednice. Aktivno razvijamo nove funkcije za sledeće izdanje kako bismo poboljšali vaš radni proces!",
+  "renew_org_licnese_modal_btn_label": "Obnovi licencu",
+  "org_pre_expire_renewal_contact_page_message": "Moja organizacija __org_name__ __optional_domain_msg__ uskoro ističe i želeo/la bih da obnovim licencu.",
+  "org_post_expire_renewal_contact_page_message": "Moja organizacija __org_name__ __optional_domain_msg__ je istekla i želeo/la bih da obnovim licencu."
+}

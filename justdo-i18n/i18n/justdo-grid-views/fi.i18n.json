@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Taulukkonäkymät",
+  "grid_views_search_placeholder": "Etsi näkymiä",
+  "grid_views_no_view_label": "Ei näkymiä",
+  "grid_views_add_current_view_label": "Lisää nykyinen näkymä",
+  "grid_views_rename_label": "Nimeä uudelleen",
+  "grid_views_update_label": "Päivitä",
+  "grid_views_remove_label": "Poista",
+  "grid_views_share_label": "Jaa",
+  "grid_views_unshare_label": "Lopeta jakaminen",
+  "grid_views_shared_label": "jaettu"
+}

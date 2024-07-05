@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Ajouter une colonne",
+  "hide_column_label": "Masquer la colonne",
+  "freeze_column_label": "Figer la colonne",
+  "unfreeze_column_label": "Défiger la colonne",
+  "tree_control_tooltip_gantt_milestone": "Jalon Gantt",
+  "tree_control_tooltip_buffer_task": "Tâche tampon",
+  "tree_control_tooltip_Meetings": "Réunions",
+  "tree_control_tooltip_start_time_tracking": "Commencer à travailler sur cette tâche",
+  "tree_control_tooltip_stop_time_tracking": "Vous travaillez sur cette tâche maintenant, appuyez pour arrêter et enregistrer le temps travaillé",
+  "tree_control_tooltip_resources": "Ressources",
+  "tree_control_tooltip_description": "Description de la tâche",
+  "tree_control_tooltip_chat_messages": "Messages de chat",
+  "tree_control_tooltip_files_count": "__files_count__ fichiers",
+  "tree_control_tooltip_emails_count": "__emails_count__ e-mails",
+  "tree_control_tooltip_task_is_a_project": "La tâche est un projet",
+  "tree_control_tooltip_task_is_archived": "La tâche est archivée"
+}

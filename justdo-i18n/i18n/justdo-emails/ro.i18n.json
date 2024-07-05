@@ -1,0 +1,11 @@
+{
+  "email_greeting_with_name": "Salut __name__, ",
+  "unread_task_chat_notification_subject": "Aveți mesaje noi în așteptare",
+  "unread_task_chat_notification_title": "Aveți mesaje noi în așteptare în următoarea sarcină:",
+  "unread_group_chat_notification_subject": "Aveți mesaje noi de la __channel_title__ în așteptare",
+  "unread_group_chat_notification_title_html": "Aveți mesaje noi de la <span style=\"font-weight: bold;\">__channel_title__</span> în așteptare!",
+  "open_in_justdo": "Deschide în JustDo",
+  "unsubscribe_from_justdo": "Dezabonați-vă de la toate notificările de actualizare din JustDo",
+  "unsubscribe_from_project": "Dezabonați-vă de la actualizările pentru __project_title__",
+  "reply_email_for_support": "Întâmpinați probleme? Răspundeți la acest email pentru asistență."
+}

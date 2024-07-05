@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Tabellenansichten",
+  "grid_views_search_placeholder": "Ansichten durchsuchen",
+  "grid_views_no_view_label": "Keine Ansichten",
+  "grid_views_add_current_view_label": "Aktuelle Ansicht hinzufügen",
+  "grid_views_rename_label": "Umbenennen",
+  "grid_views_update_label": "Aktualisieren",
+  "grid_views_remove_label": "Entfernen",
+  "grid_views_share_label": "Teilen",
+  "grid_views_unshare_label": "Nicht mehr teilen",
+  "grid_views_shared_label": "geteilt"
+}

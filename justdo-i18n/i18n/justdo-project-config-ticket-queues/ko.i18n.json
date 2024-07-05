@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "티켓 대기열",
+  "project_config_ticket_queues_new_ticket_queue_label": "새 티켓 대기열",
+  "project_config_ticket_queues_enter_task_number_label": "작업 번호 입력",
+  "project_config_ticket_queues_no_ticket_queues_label": "티켓 대기열 없음",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "해당 작업의 구성원이 아니기 때문에 이 티켓 대기열을 제거할 수 없습니다"
+}

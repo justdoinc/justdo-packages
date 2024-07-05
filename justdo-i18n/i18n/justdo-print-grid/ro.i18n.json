@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "Printează JustDo",
+  "print_dropdown_entire_justdo": "Întregul JustDo",
+  "print_dropdown_visible_tasks": "Sarcini vizibile",
+  "print_dropdown_print_current_task": "Printează sarcina curentă",
+  "print_dropdown_all_child_tasks": "Toate sarcinile subordonate",
+  "print_dropdown_visible_child_tasks": "Sarcini subordonate vizibile",
+  "print_dropdown_download": "Descarcă",
+  "print_dropdown_download_as_png": "Descarcă ca PNG",
+  "print_grid_columns_settings_label": "Setări coloane",
+  "print_grid_columns_options_label": "Opțiuni coloane",
+  "print_grid_print": "Printează",
+  "print_grid_export_csv": "Exportă CSV",
+  "print_grid_select_all": "Selectează tot",
+  "print_grid_apply": "Aplică"
+}

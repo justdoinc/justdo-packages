@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Přidat sloupec",
+  "hide_column_label": "Skrýt sloupec",
+  "freeze_column_label": "Zmrazit sloupec",
+  "unfreeze_column_label": "Odmrazit sloupec",
+  "tree_control_tooltip_gantt_milestone": "Milník Ganttova diagramu",
+  "tree_control_tooltip_buffer_task": "Vyrovnávací úkol",
+  "tree_control_tooltip_Meetings": "Schůzky",
+  "tree_control_tooltip_start_time_tracking": "Začít pracovat na tomto úkolu",
+  "tree_control_tooltip_stop_time_tracking": "Právě pracujete na tomto úkolu, stiskněte pro ukončení a zaznamenání odpracovaného času",
+  "tree_control_tooltip_resources": "Zdroje",
+  "tree_control_tooltip_description": "Popis úkolu",
+  "tree_control_tooltip_chat_messages": "Chatové zprávy",
+  "tree_control_tooltip_files_count": "__files_count__ souborů",
+  "tree_control_tooltip_emails_count": "__emails_count__ e-mailů",
+  "tree_control_tooltip_task_is_a_project": "Úkol je projekt",
+  "tree_control_tooltip_task_is_archived": "Úkol je archivován"
+}

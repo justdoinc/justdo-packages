@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Champs personnalisés",
+  "grid_control_custom_fields_sort_by_name_label": "Trier par nom",
+  "grid_control_custom_fields_new_custom_field_label": "Nouveau champ personnalisé",
+  "grid_control_custom_fields_no_custom_fields_label": "Aucun champ personnalisé",
+  "grid_control_custom_fields_label_placeholder": "étiquette",
+  "grid_control_custom_fields_text_label": "Texte",
+  "grid_control_custom_fields_number_label": "Nombre",
+  "grid_control_custom_fields_date_label": "Date",
+  "grid_control_custom_fields_select_label": "Options",
+  "grid_control_custom_fields_multi_select_label": "Options multiples",
+  "grid_control_custom_fields_smart_numbers_label": "Nombres intelligents",
+  "grid_control_custom_fields_unknown_type_label": "Type inconnu",
+  "grid_control_custom_fields_disabled_field_label": "Champ désactivé"
+}

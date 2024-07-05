@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Viste Tabella",
+  "grid_views_search_placeholder": "Cerca viste",
+  "grid_views_no_view_label": "Nessuna vista",
+  "grid_views_add_current_view_label": "Aggiungi vista corrente",
+  "grid_views_rename_label": "Rinomina",
+  "grid_views_update_label": "Aggiorna",
+  "grid_views_remove_label": "Rimuovi",
+  "grid_views_share_label": "Condividi",
+  "grid_views_unshare_label": "Annulla condivisione",
+  "grid_views_shared_label": "condiviso"
+}

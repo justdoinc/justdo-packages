@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "सक्रिय स्थितियाँ",
+  "project_configurations_no_active_states_label": "कोई सक्रिय स्थिति नहीं",
+  "project_configurations_hidden_states_label": "छिपी हुई स्थितियाँ",
+  "project_configurations_no_hidden_states_label": "कोई छिपी हुई स्थिति नहीं",
+  "project_configurations_type_state_name_placeholder": "स्थिति का नाम टाइप करें",
+  "project_configurations_default_title_for_this_state_label": "इस स्थिति के लिए डिफ़ॉल्ट शीर्षक",
+  "project_configurations_restore_state_label": "स्थिति पुनर्स्थापित करें",
+  "project_configurations_create_extended_state_label": "विस्तारित स्थिति बनाएँ",
+  "project_configurations_hide_state": "स्थिति छिपाएँ",
+  "project_configurations_remove_extended_state": "विस्तारित स्थिति हटाएँ",
+  "new_custom_state_default_title": "__state__ - विस्तारित"
+}

@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Byt vy",
+  "tab_switcher_dropdown_search_placeholder": "Vyer",
+  "tab_switcher_main_view_label": "Huvudvy",
+  "tab_switcher_my_favorites_label": "Mina favoriter",
+  "tab_switcher_my_due_list_label": "Min förfallodag-lista",
+  "tab_switcher_recently_label": "Nyligen",
+  "tab_switcher_recently_completed_label": "Slutförda",
+  "tab_switcher_recently_updated_label": "Uppdaterade",
+  "tab_switcher_recently_created_label": "Skapade",
+  "tab_switcher_miscellaneous_label": "Övrigt",
+  "tab_switcher_task_ownershipt_transfers_label": "Ägarbyten för uppgifter",
+  "tab_switcher_ticket_queues_label": "Ärendeköer",
+  "tab_switcher_members_due_lists_label": "Medlemmars förfallodag-listor",
+  "tab_switcher_all_members_due_list_label": "Alla medlemmars förfallodag-lista",
+  "tab_switcher_projects_section_label": "Projekt",
+  "tab_switcher_projects_label": "Projekt"
+}

@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "אַקטיווע צושטאַנדן",
+  "project_configurations_no_active_states_label": "קיין אַקטיווע צושטאַנדן",
+  "project_configurations_hidden_states_label": "באַהאַלטענע צושטאַנדן",
+  "project_configurations_no_hidden_states_label": "קיין באַהאַלטענע צושטאַנדן",
+  "project_configurations_type_state_name_placeholder": "טיפּ צושטאַנד נאָמען",
+  "project_configurations_default_title_for_this_state_label": "פאָרויסגעשטעלטער טיטל פֿאַר דעם צושטאַנד",
+  "project_configurations_restore_state_label": "צוריקשטעלן צושטאַנד",
+  "project_configurations_create_extended_state_label": "שאַפֿן פֿאַרברייטערטן צושטאַנד",
+  "project_configurations_hide_state": "באַהאַלטן צושטאַנד",
+  "project_configurations_remove_extended_state": "אַוועקנעמען פֿאַרברייטערטן צושטאַנד",
+  "new_custom_state_default_title": "__state__ - פֿאַרברייטערט"
+}

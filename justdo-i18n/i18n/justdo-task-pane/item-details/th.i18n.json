@@ -1,0 +1,9 @@
+{
+  "item_details_title": "รายละเอียด",
+  "item_details_members_label": "สมาชิก",
+  "item_details_description_label": "คำอธิบาย",
+  "item_details_add_task_description": "เพิ่มคำอธิบายงาน",
+  "item_details_more_info_label": "ข้อมูลเพิ่มเติม",
+  "item_details_context_title": "บริบท",
+  "item_details_context_drag_to_add_parent_label": "ลากเพื่อเพิ่มงานหลัก"
+}

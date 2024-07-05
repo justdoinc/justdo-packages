@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "ビュー切り替え",
+  "tab_switcher_dropdown_search_placeholder": "ビュー",
+  "tab_switcher_main_view_label": "メインビュー",
+  "tab_switcher_my_favorites_label": "お気に入り",
+  "tab_switcher_my_due_list_label": "自分の期限リスト",
+  "tab_switcher_recently_label": "最近",
+  "tab_switcher_recently_completed_label": "完了済み",
+  "tab_switcher_recently_updated_label": "更新済み",
+  "tab_switcher_recently_created_label": "作成済み",
+  "tab_switcher_miscellaneous_label": "その他",
+  "tab_switcher_task_ownershipt_transfers_label": "タスク所有権の移転",
+  "tab_switcher_ticket_queues_label": "チケットキュー",
+  "tab_switcher_members_due_lists_label": "メンバーの期限リスト",
+  "tab_switcher_all_members_due_list_label": "全メンバーの期限リスト",
+  "tab_switcher_projects_section_label": "プロジェクト",
+  "tab_switcher_projects_label": "プロジェクト"
+}

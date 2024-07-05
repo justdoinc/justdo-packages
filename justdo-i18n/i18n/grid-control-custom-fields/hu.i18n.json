@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Egyéni mezők",
+  "grid_control_custom_fields_sort_by_name_label": "Rendezés név szerint",
+  "grid_control_custom_fields_new_custom_field_label": "Új egyéni mező",
+  "grid_control_custom_fields_no_custom_fields_label": "Nincsenek egyéni mezők",
+  "grid_control_custom_fields_label_placeholder": "címke",
+  "grid_control_custom_fields_text_label": "Szöveg",
+  "grid_control_custom_fields_number_label": "Szám",
+  "grid_control_custom_fields_date_label": "Dátum",
+  "grid_control_custom_fields_select_label": "Opciók",
+  "grid_control_custom_fields_multi_select_label": "Több opció",
+  "grid_control_custom_fields_smart_numbers_label": "Okos számok",
+  "grid_control_custom_fields_unknown_type_label": "Ismeretlen típus",
+  "grid_control_custom_fields_disabled_field_label": "Letiltott mező"
+}

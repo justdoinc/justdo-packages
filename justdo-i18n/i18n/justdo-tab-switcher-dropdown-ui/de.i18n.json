@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Ansicht wechseln",
+  "tab_switcher_dropdown_search_placeholder": "Ansichten",
+  "tab_switcher_main_view_label": "Hauptansicht",
+  "tab_switcher_my_favorites_label": "Meine Favoriten",
+  "tab_switcher_my_due_list_label": "Meine Fälligkeitsliste",
+  "tab_switcher_recently_label": "Kürzlich",
+  "tab_switcher_recently_completed_label": "Abgeschlossen",
+  "tab_switcher_recently_updated_label": "Aktualisiert",
+  "tab_switcher_recently_created_label": "Erstellt",
+  "tab_switcher_miscellaneous_label": "Sonstiges",
+  "tab_switcher_task_ownershipt_transfers_label": "Aufgabenbesitz-Übertragungen",
+  "tab_switcher_ticket_queues_label": "Ticket-Warteschlangen",
+  "tab_switcher_members_due_lists_label": "Fälligkeitslisten der Mitglieder",
+  "tab_switcher_all_members_due_list_label": "Fälligkeitsliste aller Mitglieder",
+  "tab_switcher_projects_section_label": "Projekte",
+  "tab_switcher_projects_label": "Projekte"
+}

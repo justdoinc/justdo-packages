@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Pola niestandardowe",
+  "grid_control_custom_fields_sort_by_name_label": "Sortuj według nazwy",
+  "grid_control_custom_fields_new_custom_field_label": "Nowe pole niestandardowe",
+  "grid_control_custom_fields_no_custom_fields_label": "Brak pól niestandardowych",
+  "grid_control_custom_fields_label_placeholder": "etykieta",
+  "grid_control_custom_fields_text_label": "Tekst",
+  "grid_control_custom_fields_number_label": "Liczba",
+  "grid_control_custom_fields_date_label": "Data",
+  "grid_control_custom_fields_select_label": "Opcje",
+  "grid_control_custom_fields_multi_select_label": "Wiele opcji",
+  "grid_control_custom_fields_smart_numbers_label": "Inteligentne liczby",
+  "grid_control_custom_fields_unknown_type_label": "Nieznany typ",
+  "grid_control_custom_fields_disabled_field_label": "Pole wyłączone"
+}

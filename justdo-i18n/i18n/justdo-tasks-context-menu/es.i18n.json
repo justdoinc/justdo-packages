@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Eliminar tareas",
+  "remove_from_parent_label": "Quitar de la tarea padre",
+  "remove_with_subtree_label": "Eliminar con sub-árbol",
+  "archive_task_label": "Archivar tarea",
+  "unarchive_task_label": "Desarchivar tarea",
+  "reorder_children_by_label": "Reordenar subtareas por",
+  "zoom_in_label": "Acercar",
+  "projects_label": "Proyectos",
+  "set_as_a_project_label": "Establecer como proyecto",
+  "unset_as_a_project_label": "Desmarcar como proyecto",
+  "close_project_label": "Cerrar proyecto",
+  "repoen_project_label": "Reabrir proyecto",
+  "add_to_project_label": "Agregar al proyecto",
+  "apply_value_to_subtree": "Aplicar __value__ al sub-árbol",
+  "bulk_set_options_label": "Establecer opciones en masa"
+}

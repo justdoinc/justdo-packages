@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Lentelės rodiniai",
+  "grid_views_search_placeholder": "Ieškoti rodinių",
+  "grid_views_no_view_label": "Nėra rodinių",
+  "grid_views_add_current_view_label": "Pridėti dabartinį rodinį",
+  "grid_views_rename_label": "Pervadinti",
+  "grid_views_update_label": "Atnaujinti",
+  "grid_views_remove_label": "Pašalinti",
+  "grid_views_share_label": "Dalintis",
+  "grid_views_unshare_label": "Nebedalintis",
+  "grid_views_shared_label": "pasidalinta"
+}

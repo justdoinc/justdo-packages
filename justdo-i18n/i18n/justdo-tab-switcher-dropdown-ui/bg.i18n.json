@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Смяна на изглед",
+  "tab_switcher_dropdown_search_placeholder": "Изгледи",
+  "tab_switcher_main_view_label": "Основен изглед",
+  "tab_switcher_my_favorites_label": "Моите любими",
+  "tab_switcher_my_due_list_label": "Моят списък със срокове",
+  "tab_switcher_recently_label": "Скорошни",
+  "tab_switcher_recently_completed_label": "Завършени",
+  "tab_switcher_recently_updated_label": "Обновени",
+  "tab_switcher_recently_created_label": "Създадени",
+  "tab_switcher_miscellaneous_label": "Разни",
+  "tab_switcher_task_ownershipt_transfers_label": "Прехвърляния на собственост на задачи",
+  "tab_switcher_ticket_queues_label": "Опашки за билети",
+  "tab_switcher_members_due_lists_label": "Списъци със срокове на членовете",
+  "tab_switcher_all_members_due_list_label": "Списък със срокове на всички членове",
+  "tab_switcher_projects_section_label": "Проекти",
+  "tab_switcher_projects_label": "Проекти"
+}

@@ -1,0 +1,8 @@
+{
+  "task_type_delayed_label": "In ritardo",
+  "task_type_behind_label": "Indietro",
+  "task_type_late_label": "In ritardo",
+  "task_type_overdue_label": "Scaduto",
+  "task_type_key_task_label": "Attività chiave",
+  "task_type_no_owner_label": "Senza responsabile"
+}

@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Vizualizări tabel",
+  "grid_views_search_placeholder": "Caută vizualizări",
+  "grid_views_no_view_label": "Fără vizualizări",
+  "grid_views_add_current_view_label": "Adaugă vizualizarea curentă",
+  "grid_views_rename_label": "Redenumește",
+  "grid_views_update_label": "Actualizează",
+  "grid_views_remove_label": "Elimină",
+  "grid_views_share_label": "Partajează",
+  "grid_views_unshare_label": "Anulează partajarea",
+  "grid_views_shared_label": "partajat"
+}

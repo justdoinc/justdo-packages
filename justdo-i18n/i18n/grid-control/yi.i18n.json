@@ -1,0 +1,18 @@
+{
+  "add_column_label": "קאָלום צולייגן",
+  "hide_column_label": "באַהאַלטן קאָלום",
+  "freeze_column_label": "פֿרירן קאָלום",
+  "unfreeze_column_label": "אויפטויען קאָלום",
+  "tree_control_tooltip_gantt_milestone": "גאַנט מיילשטיין",
+  "tree_control_tooltip_buffer_task": "באַפער אויפגאַבע",
+  "tree_control_tooltip_Meetings": "זיצונגען",
+  "tree_control_tooltip_start_time_tracking": "הייבט אָן צו אַרבעטן אויף דער אויפגאַבע",
+  "tree_control_tooltip_stop_time_tracking": "איר אַרבעט איצט אויף דער אויפגאַבע, דרוקט צו אויפהערן און פאַרשרייַבן די צייַט געאַרבעט",
+  "tree_control_tooltip_resources": "רעסורסן",
+  "tree_control_tooltip_description": "אויפגאַבע באַשרייַבונג",
+  "tree_control_tooltip_chat_messages": "שמועס אָנזאָגן",
+  "tree_control_tooltip_files_count": "__files_count__ טעקעס",
+  "tree_control_tooltip_emails_count": "__emails_count__ בליצפּאָסט",
+  "tree_control_tooltip_task_is_a_project": "אויפגאַבע איז אַ פּרויעקט",
+  "tree_control_tooltip_task_is_archived": "אויפגאַבע איז אַרכיווירט"
+}

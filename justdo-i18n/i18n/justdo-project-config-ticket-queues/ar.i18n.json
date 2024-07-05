@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "قوائم انتظار التذاكر",
+  "project_config_ticket_queues_new_ticket_queue_label": "قائمة انتظار تذاكر جديدة",
+  "project_config_ticket_queues_enter_task_number_label": "أدخل رقم المهمة",
+  "project_config_ticket_queues_no_ticket_queues_label": "لا توجد قوائم انتظار للتذاكر",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "لا يمكنك إزالة قائمة انتظار التذاكر هذه، لأنك لست عضوًا في المهمة الخاصة بها"
+}

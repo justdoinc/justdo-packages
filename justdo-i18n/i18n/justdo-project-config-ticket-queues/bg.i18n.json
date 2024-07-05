@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "Опашки за заявки",
+  "project_config_ticket_queues_new_ticket_queue_label": "Нова опашка за заявки",
+  "project_config_ticket_queues_enter_task_number_label": "Въведете номер на задачата",
+  "project_config_ticket_queues_no_ticket_queues_label": "Няма опашки за заявки",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "Не можете да премахнете тази опашка за заявки, тъй като не сте член на нейната задача"
+}

@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Estados activos",
+  "project_configurations_no_active_states_label": "No hay estados activos",
+  "project_configurations_hidden_states_label": "Estados ocultos",
+  "project_configurations_no_hidden_states_label": "No hay estados ocultos",
+  "project_configurations_type_state_name_placeholder": "Escribe el nombre del estado",
+  "project_configurations_default_title_for_this_state_label": "Título predeterminado para este estado",
+  "project_configurations_restore_state_label": "Restaurar estado",
+  "project_configurations_create_extended_state_label": "Crear estado extendido",
+  "project_configurations_hide_state": "Ocultar estado",
+  "project_configurations_remove_extended_state": "Eliminar estado extendido",
+  "new_custom_state_default_title": "__state__ - extendido"
+}

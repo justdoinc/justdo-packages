@@ -1,0 +1,8 @@
+{
+  "task_type_delayed_label": "የዘገየ",
+  "task_type_behind_label": "ከኋላ የቀረ",
+  "task_type_late_label": "ዘግይቷል",
+  "task_type_overdue_label": "ጊዜው ያለፈበት",
+  "task_type_key_task_label": "ቁልፍ ተግባር",
+  "task_type_no_owner_label": "ባለቤት የሌለው"
+}

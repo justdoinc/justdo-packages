@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "إزالة المهام",
+  "remove_from_parent_label": "إزالة من المهمة الأصل",
+  "remove_with_subtree_label": "إزالة مع الفروع الفرعية",
+  "archive_task_label": "أرشفة المهمة",
+  "unarchive_task_label": "إلغاء أرشفة المهمة",
+  "reorder_children_by_label": "إعادة ترتيب المهام الفرعية حسب",
+  "zoom_in_label": "تكبير",
+  "projects_label": "المشاريع",
+  "set_as_a_project_label": "تعيين كمشروع",
+  "unset_as_a_project_label": "إلغاء تعيين كمشروع",
+  "close_project_label": "إغلاق المشروع",
+  "repoen_project_label": "إعادة فتح المشروع",
+  "add_to_project_label": "إضافة إلى المشروع",
+  "apply_value_to_subtree": "تطبيق __value__ على الفروع الفرعية",
+  "bulk_set_options_label": "تعيين خيارات متعددة"
+}

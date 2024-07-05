@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "Ange en titel för din JustDo",
+  "set_justdo_name_subtitle": "Klicka bara på titeln för att gå in i redigeringsläge",
+  "create_first_task_title": "Skapa dina första uppgifter",
+  "create_first_task_subtitle": "För att skapa uppgifter kan du antingen använda knapparna i verktygsfältet eller använda tangentbordsgenvägarna ALT+ENTER / ALT+SHIFT+ENTER",
+  "invite_members_title": "Bjud in teammedlemmar",
+  "invite_members_subtitle": "Bjud in dina teammedlemmar att gå med och samarbeta i din nya JustDo",
+  "import_tasks_title": "Importera uppgifter",
+  "import_tasks_subtitle": "Du kan överföra befintliga uppgifter och data till JustDo och fortsätta sömlöst med vår kalkylbladsimportfunktion",
+  "customize_columns_title": "Anpassa din vy",
+  "customize_columns_subtitle": "Kontrollera vad du ser i rutnätet (Grid) genom att lägga till/ta bort kolumner, filtrera uppgifter efter status och mer!",
+  "get_free_support_title": "Få gratis support",
+  "get_free_support_subtitle": "1-mot-1 supportsession med JustDo-teamet",
+  "request": "Begär",
+  "free_support_request_received": "Mottaget, vi återkommer till dig via e-post inom kort",
+  "tutorials_recent_product_updates": "Senaste produktuppdateringar",
+  "tutorials_justdo_quick_start": "Snabbstart för JustDo",
+  "tutorials_justdo_advanced_features": "Avancerade funktioner i JustDo",
+  "tutorials_justdo_support_center": "JustDo Supportcenter"
+}

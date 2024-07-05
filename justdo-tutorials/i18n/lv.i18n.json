@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "Iestatiet nosaukumu savam JustDo",
+  "set_justdo_name_subtitle": "Vienkārši noklikšķiniet uz nosaukuma, lai sāktu rediģēšanas režīmu",
+  "create_first_task_title": "Izveidojiet savus pirmos uzdevumus",
+  "create_first_task_subtitle": "Lai izveidotu uzdevumus, varat izmantot pogas rīkjoslā vai izmantot tastatūras īsceļus ALT+ENTER / ALT+SHIFT+ENTER",
+  "invite_members_title": "Uzaiciniet komandas biedrus",
+  "invite_members_subtitle": "Uzaiciniet savus komandas biedrus pievienoties un sadarboties jūsu jaunajā JustDo",
+  "import_tasks_title": "Importēt uzdevumus",
+  "import_tasks_subtitle": "Jūs varat pārnest esošos uzdevumus un datus uz JustDo un turpināt darbu netraucēti, izmantojot mūsu izklājlapu importēšanas funkciju",
+  "customize_columns_title": "Pielāgojiet savu skatu",
+  "customize_columns_subtitle": "Kontrolējiet, ko redzat tabulā (grid), pievienojot/noņemot kolonnas, filtrējot uzdevumus pēc to statusa un citiem parametriem!",
+  "get_free_support_title": "Saņemiet bezmaksas atbalstu",
+  "get_free_support_subtitle": "1 pret 1 atbalsta sesija ar JustDo komandu",
+  "request": "Pieprasīt",
+  "free_support_request_received": "Saņemts, mēs ar jums sazināsimies pa e-pastu tuvākajā laikā",
+  "tutorials_recent_product_updates": "Jaunākie produkta atjauninājumi",
+  "tutorials_justdo_quick_start": "JustDo ātrā sākuma rokasgrāmata",
+  "tutorials_justdo_advanced_features": "JustDo papildu funkcijas",
+  "tutorials_justdo_support_center": "JustDo atbalsta centrs"
+}

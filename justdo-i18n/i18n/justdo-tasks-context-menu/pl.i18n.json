@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Usuń zadania",
+  "remove_from_parent_label": "Usuń z zadania nadrzędnego",
+  "remove_with_subtree_label": "Usuń wraz z poddrzewem",
+  "archive_task_label": "Zarchiwizuj zadanie",
+  "unarchive_task_label": "Przywróć zadanie z archiwum",
+  "reorder_children_by_label": "Zmień kolejność zadań podrzędnych według",
+  "zoom_in_label": "Powiększ",
+  "projects_label": "Projekty",
+  "set_as_a_project_label": "Ustaw jako projekt",
+  "unset_as_a_project_label": "Usuń ustawienie jako projekt",
+  "close_project_label": "Zamknij projekt",
+  "repoen_project_label": "Ponownie otwórz projekt",
+  "add_to_project_label": "Dodaj do projektu",
+  "apply_value_to_subtree": "Zastosuj __value__ do poddrzewa",
+  "bulk_set_options_label": "Ustaw opcje zbiorczo"
+}

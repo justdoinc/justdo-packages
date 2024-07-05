@@ -1,0 +1,18 @@
+{
+  "add_column_label": "ዓምድ ጨምር",
+  "hide_column_label": "ዓምድ ደብቅ",
+  "freeze_column_label": "ዓምድ አቁም",
+  "unfreeze_column_label": "ዓምድ አንቀሳቅስ",
+  "tree_control_tooltip_gantt_milestone": "የጋንት ግብ (Gantt Milestone)",
+  "tree_control_tooltip_buffer_task": "የመጠባበቂያ ተግባር",
+  "tree_control_tooltip_Meetings": "ስብሰባዎች",
+  "tree_control_tooltip_start_time_tracking": "በዚህ ተግባር ላይ መስራት ጀምር",
+  "tree_control_tooltip_stop_time_tracking": "አሁን በዚህ ተግባር ላይ እየሰራህ ነው፣ ለማቆም እና የተሰራውን ጊዜ ለመመዝገብ ይጫኑ",
+  "tree_control_tooltip_resources": "ሀብቶች",
+  "tree_control_tooltip_description": "የተግባር መግለጫ",
+  "tree_control_tooltip_chat_messages": "የቻት መልዕክቶች",
+  "tree_control_tooltip_files_count": "__files_count__ ፋይሎች",
+  "tree_control_tooltip_emails_count": "__emails_count__ ኢሜይሎች",
+  "tree_control_tooltip_task_is_a_project": "ተግባሩ ፕሮጀክት ነው",
+  "tree_control_tooltip_task_is_archived": "ተግባሩ ተጠብቋል"
+}

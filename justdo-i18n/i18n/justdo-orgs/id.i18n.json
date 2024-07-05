@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "Organisasi __user_name__",
+  "create_org_label": "Buat Organisasi",
+  "without_orgs_label": "Tanpa Organisasi",
+  "justdos_under_named_org_html": "JustDo di bawah <span class=\"org-name\">__org_name__</span>",
+  "justdos_without_orgs": "JustDo tanpa organisasi",
+  "orgs_project_config_title": "Organisasi",
+  "assign_justdo_to_organization_label": "Tetapkan JustDo ke organisasi",
+  "another_organization": "organisasi lain",
+  "pre_transfer_justdo_to_org_notice_html": "Anda akan memindahkan JustDo ini ke <b>__dest_org_name__</b>. <br> Semua anggota di JustDo ini akan menjadi anggota <b>__dest_org_name__</b>.",
+  "select_organization": "Pilih Organisasi",
+  "org_expiring_soon_notice_title": "Lisensi organisasi Anda akan segera berakhir!",
+  "org_expiring_soon_notice_html": "Lisensi untuk organisasi Anda <b>__org_name__</b> akan berakhir pada __org_expiration_date__. <br> Kami berharap JustDo telah membuat kehidupan kerja Anda lebih mudah!",
+  "org_locked_notice_title": "Lisensi organisasi Anda telah berakhir!",
+  "org_locked_notice_html": "Lisensi untuk organisasi Anda <b>__org_name__</b> telah berakhir pada __org_expiration_date__. <br> Kami berharap JustDo telah membuat kehidupan kerja Anda lebih mudah, dan kami ingin terus melakukannya!",
+  "org_access_restricted_title": "__org_name__: Pembatasan Akses Sementara",
+  "org_access_restricted_html": "Akses ke organisasi Anda <b>__org_name__</b> saat ini dibatasi. Silakan hubungi administrator organisasi Anda untuk informasi lebih lanjut mengenai hal ini. <br> Kami menghargai kesabaran dan pengertian Anda.",
+  "renew_org_license_instruction_html": "Anda dapat memperpanjang lisensi dengan mengklik tombol \"Perpanjang Lisensi\" di bawah ini.<br>Tim dukungan kami selalu siap membantu Anda.<br><br>Terima kasih telah menjadi bagian dari komunitas JustDo. Kami sedang aktif mengembangkan fitur-fitur baru untuk rilis berikutnya untuk meningkatkan alur kerja Anda!",
+  "renew_org_licnese_modal_btn_label": "Perpanjang Lisensi",
+  "org_pre_expire_renewal_contact_page_message": "Organisasi saya __org_name__ __optional_domain_msg__ akan segera berakhir dan saya ingin memperpanjang lisensinya.",
+  "org_post_expire_renewal_contact_page_message": "Organisasi saya __org_name__ __optional_domain_msg__ telah berakhir dan saya ingin memperpanjang lisensinya."
+}

@@ -7,6 +7,16 @@
   "orgs_project_config_title": "Các tổ chức",
   "assign_justdo_to_organization_label": "Gán JustDo cho tổ chức",
   "another_organization": "Tổ chức khác",
-  "pre_transfer_justdo_to_org_notice_html": "Bạn chuyển JustDo sang <b>__dest_org_name__</b>. <br> Tất cả thành viên trong JustDo sẽ trở thành thành viên của <b>__dest_org_name__</b>."
-  
+  "pre_transfer_justdo_to_org_notice_html": "Bạn chuyển JustDo sang <b>__dest_org_name__</b>. <br> Tất cả thành viên trong JustDo sẽ trở thành thành viên của <b>__dest_org_name__</b>.",
+  "select_organization": "Chọn Tổ chức",
+  "org_expiring_soon_notice_title": "Giấy phép tổ chức của bạn sắp hết hạn!",
+  "org_expiring_soon_notice_html": "Giấy phép cho tổ chức <b>__org_name__</b> của bạn sẽ hết hạn vào __org_expiration_date__. <br> Chúng tôi hy vọng rằng JustDo đã giúp công việc của bạn trở nên dễ dàng hơn!",
+  "org_locked_notice_title": "Giấy phép tổ chức của bạn đã hết hạn!",
+  "org_locked_notice_html": "Giấy phép cho tổ chức <b>__org_name__</b> của bạn đã hết hạn vào __org_expiration_date__. <br> Chúng tôi hy vọng rằng JustDo đã giúp công việc của bạn trở nên dễ dàng hơn, và chúng tôi rất muốn tiếp tục làm như vậy!",
+  "org_access_restricted_title": "__org_name__: Hạn chế Truy cập Tạm thời",
+  "org_access_restricted_html": "Quyền truy cập vào tổ chức <b>__org_name__</b> của bạn hiện đang bị hạn chế. Vui lòng liên hệ với quản trị viên tổ chức của bạn để biết thêm chi tiết về vấn đề này. <br> Chúng tôi đánh giá cao sự kiên nhẫn và thông cảm của bạn.",
+  "renew_org_license_instruction_html": "Bạn có thể gia hạn giấy phép bằng cách nhấp vào nút \"Gia hạn Giấy phép\" bên dưới.<br>Đội ngũ hỗ trợ của chúng tôi luôn sẵn sàng giúp đỡ bạn.<br><br>Cảm ơn bạn đã là một phần của cộng đồng JustDo. Chúng tôi đang tích cực phát triển các tính năng mới cho bản phát hành tiếp theo để nâng cao quy trình làm việc của bạn!",
+  "renew_org_licnese_modal_btn_label": "Gia hạn Giấy phép",
+  "org_pre_expire_renewal_contact_page_message": "Tổ chức __org_name__ __optional_domain_msg__ của tôi sắp hết hạn và tôi muốn gia hạn giấy phép.",
+  "org_post_expire_renewal_contact_page_message": "Tổ chức __org_name__ __optional_domain_msg__ của tôi đã hết hạn và tôi muốn gia hạn giấy phép."
 }

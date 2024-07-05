@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "Nustatykite savo JustDo pavadinimą",
+  "set_justdo_name_subtitle": "Tiesiog spustelėkite ant pavadinimo, kad įeitumėte į redagavimo režimą",
+  "create_first_task_title": "Sukurkite savo pirmąsias užduotis",
+  "create_first_task_subtitle": "Norėdami sukurti užduotis, galite naudoti mygtukus įrankių juostoje arba naudoti klaviatūros trumpinius ALT+ENTER / ALT+SHIFT+ENTER",
+  "invite_members_title": "Pakvieskite komandos narius",
+  "invite_members_subtitle": "Pakvieskite savo komandos narius prisijungti ir bendradarbiauti jūsų naujame JustDo",
+  "import_tasks_title": "Importuokite užduotis",
+  "import_tasks_subtitle": "Galite perkelti esamas užduotis ir duomenis į JustDo ir sklandžiai tęsti darbą naudodami mūsų skaičiuoklės importavimo funkciją",
+  "customize_columns_title": "Pritaikykite savo rodinį",
+  "customize_columns_subtitle": "Valdykite, ką matote tinklelyje (Grid), pridėdami/pašalindami stulpelius, filtruodami užduotis pagal jų būseną ir daugiau!",
+  "get_free_support_title": "Gaukite nemokamą pagalbą",
+  "get_free_support_subtitle": "1-1 pagalbos sesija su JustDo komanda",
+  "request": "Prašyti",
+  "free_support_request_received": "Gavome, netrukus su jumis susisieksime el. paštu",
+  "tutorials_recent_product_updates": "Naujausi produkto atnaujinimai",
+  "tutorials_justdo_quick_start": "JustDo greita pradžia",
+  "tutorials_justdo_advanced_features": "JustDo pažangios funkcijos",
+  "tutorials_justdo_support_center": "JustDo pagalbos centras"
+}

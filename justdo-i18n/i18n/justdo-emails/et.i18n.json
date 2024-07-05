@@ -1,0 +1,11 @@
+{
+  "email_greeting_with_name": "Tere __name__, ",
+  "unread_task_chat_notification_subject": "Uued vestlussõnumid ootavad sind",
+  "unread_task_chat_notification_title": "Uued vestlussõnumid ootavad sind järgmises ülesandes:",
+  "unread_group_chat_notification_subject": "__channel_title__ ootavad sind uued sõnumid",
+  "unread_group_chat_notification_title_html": "<span style=\"font-weight: bold;\">__channel_title__</span> ootavad sind uued sõnumid!",
+  "open_in_justdo": "Ava JustDos",
+  "unsubscribe_from_justdo": "Loobu kõigist JustDo uuendusteatistest",
+  "unsubscribe_from_project": "Loobu __project_title__ uuendustest",
+  "reply_email_for_support": "Probleeme? Vasta sellele e-kirjale, et saada abi."
+}

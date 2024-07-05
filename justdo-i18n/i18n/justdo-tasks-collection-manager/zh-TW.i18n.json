@@ -17,16 +17,16 @@
   "updatedAt_schema_label": "更新於",
   "archived_schema_label": "已歸檔",
   "description_schema_label": "描述",
-
-
-
+  "status_by_schema_label": "備註者",
+  "status_updated_at_schema_label": "備註更新時間",
+  "state_updated_at_schema_label": "狀態變更時間",
   "project_id_schema_label": "專案ID",
   "parents_schema_label": "母任務",
   "users_schema_label": "用戶",
   "seqId_schema_label": "任務流水號",
-
-
-
+  "created_by_user_id_schema_label": "創建者 ID",
+  "updated_by_schema_label": "更新者 ID",
+  "users_updated_at_schema_label": "使用者更新時間",
   "owner_id_schema_label": "負責人",
   "pending_owner_id_schema_label": "負責人轉移對象"
 }

@@ -1,0 +1,11 @@
+{
+  "email_greeting_with_name": "Ciao __name__, ",
+  "unread_task_chat_notification_subject": "Nuovi messaggi chat ti stanno aspettando",
+  "unread_task_chat_notification_title": "Nuovi messaggi chat ti stanno aspettando nel seguente task:",
+  "unread_group_chat_notification_subject": "Nuovi messaggi da __channel_title__ ti stanno aspettando",
+  "unread_group_chat_notification_title_html": "Nuovi messaggi da <span style=\"font-weight: bold;\">__channel_title__</span> ti stanno aspettando!",
+  "open_in_justdo": "Apri in JustDo",
+  "unsubscribe_from_justdo": "Annulla l'iscrizione a tutte le notifiche di aggiornamento da JustDo",
+  "unsubscribe_from_project": "Annulla l'iscrizione agli aggiornamenti per __project_title__",
+  "reply_email_for_support": "Hai problemi? Rispondi a questa email per ricevere assistenza."
+}

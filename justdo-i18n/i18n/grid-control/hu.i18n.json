@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Oszlop hozzáadása",
+  "hide_column_label": "Oszlop elrejtése",
+  "freeze_column_label": "Oszlop rögzítése",
+  "unfreeze_column_label": "Oszlop feloldása",
+  "tree_control_tooltip_gantt_milestone": "Gantt mérföldkő",
+  "tree_control_tooltip_buffer_task": "Puffer feladat",
+  "tree_control_tooltip_Meetings": "Megbeszélések",
+  "tree_control_tooltip_start_time_tracking": "Munka megkezdése ezen a feladaton",
+  "tree_control_tooltip_stop_time_tracking": "Jelenleg ezen a feladaton dolgozik, nyomja meg a leállításhoz és a munkaidő rögzítéséhez",
+  "tree_control_tooltip_resources": "Erőforrások",
+  "tree_control_tooltip_description": "Feladat leírása",
+  "tree_control_tooltip_chat_messages": "Chat üzenetek",
+  "tree_control_tooltip_files_count": "__files_count__ fájl",
+  "tree_control_tooltip_emails_count": "__emails_count__ e-mail",
+  "tree_control_tooltip_task_is_a_project": "A feladat egy projekt",
+  "tree_control_tooltip_task_is_archived": "A feladat archiválva van"
+}

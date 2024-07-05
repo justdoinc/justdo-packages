@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "Filas de Tickets",
+  "project_config_ticket_queues_new_ticket_queue_label": "Nova fila de tickets",
+  "project_config_ticket_queues_enter_task_number_label": "Introduza o número da tarefa",
+  "project_config_ticket_queues_no_ticket_queues_label": "Sem filas de tickets",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "Não pode remover esta Fila de Tickets, pois não é membro da sua Tarefa"
+}

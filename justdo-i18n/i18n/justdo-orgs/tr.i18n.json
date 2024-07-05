@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "__user_name__'in organizasyonu",
+  "create_org_label": "Organizasyon Oluştur",
+  "without_orgs_label": "Organizasyonsuz",
+  "justdos_under_named_org_html": "<span class=\"org-name\">__org_name__</span> altındaki JustDo Panoları",
+  "justdos_without_orgs": "Organizasyonsuz JustDo Panoları",
+  "orgs_project_config_title": "Organizasyonlar",
+  "assign_justdo_to_organization_label": "JustDo Panosunu organizasyona ata",
+  "another_organization": "başka bir organizasyon",
+  "pre_transfer_justdo_to_org_notice_html": "Bu JustDo Panosunu <b>__dest_org_name__</b> organizasyonuna aktarmak üzeresiniz. <br> Bu JustDo Panosundaki tüm üyeler <b>__dest_org_name__</b> üyesi olacaktır.",
+  "select_organization": "Organizasyon Seç",
+  "org_expiring_soon_notice_title": "Organizasyon lisansınız yakında sona eriyor!",
+  "org_expiring_soon_notice_html": "<b>__org_name__</b> organizasyonunuzun lisansı __org_expiration_date__ tarihinde sona erecek. <br> Umarız JustDo iş hayatınızı kolaylaştırmıştır!",
+  "org_locked_notice_title": "Organizasyon lisansınız sona erdi!",
+  "org_locked_notice_html": "<b>__org_name__</b> organizasyonunuzun lisansı __org_expiration_date__ tarihinde sona erdi. <br> Umarız JustDo iş hayatınızı kolaylaştırmıştır ve bunu yapmaya devam etmek isteriz!",
+  "org_access_restricted_title": "__org_name__: Geçici Erişim Kısıtlaması",
+  "org_access_restricted_html": "<b>__org_name__</b> organizasyonunuza erişim şu anda kısıtlanmıştır. Lütfen bu konuyla ilgili daha fazla bilgi için organizasyon yöneticilerinizle iletişime geçin. <br> Anlayışınız ve sabrınız için teşekkür ederiz.",
+  "renew_org_license_instruction_html": "Aşağıdaki \"Lisansı Yenile\" düğmesine tıklayarak lisansı yenileyebilirsiniz.<br>Destek ekibimiz size yardımcı olmaktan her zaman mutluluk duyacaktır.<br><br>JustDo topluluğunun bir parçası olduğunuz için teşekkür ederiz. İş akışınızı geliştirmek için bir sonraki sürümde yeni özellikler geliştirmeye devam ediyoruz!",
+  "renew_org_licnese_modal_btn_label": "Lisansı Yenile",
+  "org_pre_expire_renewal_contact_page_message": "__org_name__ __optional_domain_msg__ organizasyonumun süresi dolmak üzere ve lisansı yenilemek istiyorum.",
+  "org_post_expire_renewal_contact_page_message": "__org_name__ __optional_domain_msg__ organizasyonumun süresi doldu ve lisansı yenilemek istiyorum."
+}

@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Pridėti stulpelį",
+  "hide_column_label": "Slėpti stulpelį",
+  "freeze_column_label": "Užfiksuoti stulpelį",
+  "unfreeze_column_label": "Atfiksuoti stulpelį",
+  "tree_control_tooltip_gantt_milestone": "Ganto diagramos gairė",
+  "tree_control_tooltip_buffer_task": "Buferinė užduotis",
+  "tree_control_tooltip_Meetings": "Susitikimai",
+  "tree_control_tooltip_start_time_tracking": "Pradėti darbą su šia užduotimi",
+  "tree_control_tooltip_stop_time_tracking": "Jūs dabar dirbate su šia užduotimi, paspauskite norėdami sustabdyti ir užregistruoti išdirbtą laiką",
+  "tree_control_tooltip_resources": "Ištekliai",
+  "tree_control_tooltip_description": "Užduoties aprašymas",
+  "tree_control_tooltip_chat_messages": "Pokalbių žinutės",
+  "tree_control_tooltip_files_count": "__files_count__ failai",
+  "tree_control_tooltip_emails_count": "__emails_count__ el. laiškai",
+  "tree_control_tooltip_task_is_a_project": "Užduotis yra projektas",
+  "tree_control_tooltip_task_is_archived": "Užduotis yra archyvuota"
+}

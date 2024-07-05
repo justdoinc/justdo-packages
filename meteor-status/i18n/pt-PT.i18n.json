@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Conectado",
+  "meteor_status_connecting": "A conectar...",
+  "meteor_status_failed": "A conexão ao servidor falhou",
+  "meteor_status_waiting": "A aguardar conexão ao servidor,",
+  "meteor_status_offline": "Modo offline.",
+  "meteor_status_reconnect_in": "a tentar novamente em um segundo...",
+  "meteor_status_reconnect_in_plural": "a tentar novamente em __count__ segundos...",
+  "meteor_status_try_now_waiting": "Tentar agora",
+  "meteor_status_try_now_offline": "Conectar novamente"
+}

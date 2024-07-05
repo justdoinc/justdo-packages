@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "สลับมุมมอง",
+  "tab_switcher_dropdown_search_placeholder": "มุมมอง",
+  "tab_switcher_main_view_label": "มุมมองหลัก",
+  "tab_switcher_my_favorites_label": "รายการโปรดของฉัน",
+  "tab_switcher_my_due_list_label": "รายการครบกำหนดของฉัน",
+  "tab_switcher_recently_label": "เร็วๆ นี้",
+  "tab_switcher_recently_completed_label": "เสร็จสิ้นแล้ว",
+  "tab_switcher_recently_updated_label": "อัปเดตแล้ว",
+  "tab_switcher_recently_created_label": "สร้างแล้ว",
+  "tab_switcher_miscellaneous_label": "เบ็ดเตล็ด",
+  "tab_switcher_task_ownershipt_transfers_label": "การโอนความเป็นเจ้าของงาน",
+  "tab_switcher_ticket_queues_label": "คิวตั๋ว (Ticket Queues)",
+  "tab_switcher_members_due_lists_label": "รายการครบกำหนดของสมาชิก",
+  "tab_switcher_all_members_due_list_label": "รายการครบกำหนดของสมาชิกทั้งหมด",
+  "tab_switcher_projects_section_label": "โครงการ",
+  "tab_switcher_projects_label": "โครงการ"
+}

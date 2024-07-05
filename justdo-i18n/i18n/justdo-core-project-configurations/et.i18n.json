@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Aktiivsed olekud",
+  "project_configurations_no_active_states_label": "Aktiivsed olekud puuduvad",
+  "project_configurations_hidden_states_label": "Peidetud olekud",
+  "project_configurations_no_hidden_states_label": "Peidetud olekud puuduvad",
+  "project_configurations_type_state_name_placeholder": "Sisesta oleku nimi",
+  "project_configurations_default_title_for_this_state_label": "Selle oleku vaikimisi pealkiri",
+  "project_configurations_restore_state_label": "Taasta olek",
+  "project_configurations_create_extended_state_label": "Loo laiendatud olek",
+  "project_configurations_hide_state": "Peida olek",
+  "project_configurations_remove_extended_state": "Eemalda laiendatud olek",
+  "new_custom_state_default_title": "__state__ - laiendatud"
+}

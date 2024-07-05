@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "ተግባራትን አስወግድ",
+  "remove_from_parent_label": "ከወላጅ አስወግድ",
+  "remove_with_subtree_label": "ከንዑስ-ዛፍ ጋር አስወግድ",
+  "archive_task_label": "ተግባርን አርክብ",
+  "unarchive_task_label": "ተግባርን ከማህደር አውጣ",
+  "reorder_children_by_label": "ልጆችን እንደገና ደርድር በ",
+  "zoom_in_label": "አቅርብ",
+  "projects_label": "ፕሮጀክቶች",
+  "set_as_a_project_label": "እንደ ፕሮጀክት አዘጋጅ",
+  "unset_as_a_project_label": "እንደ ፕሮጀክት አታዘጋጅ",
+  "close_project_label": "ፕሮጀክት ዝጋ",
+  "repoen_project_label": "ፕሮጀክት እንደገና ክፈት",
+  "add_to_project_label": "ወደ ፕሮጀክት ጨምር",
+  "apply_value_to_subtree": "__value__ ን ለንዑስ-ዛፍ ተግብር",
+  "bulk_set_options_label": "አዘጋጅ"
+}

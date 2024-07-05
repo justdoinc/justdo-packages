@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "عروض الجدول",
+  "grid_views_search_placeholder": "البحث في العروض",
+  "grid_views_no_view_label": "لا توجد عروض",
+  "grid_views_add_current_view_label": "إضافة العرض الحالي",
+  "grid_views_rename_label": "إعادة التسمية",
+  "grid_views_update_label": "تحديث",
+  "grid_views_remove_label": "إزالة",
+  "grid_views_share_label": "مشاركة",
+  "grid_views_unshare_label": "إلغاء المشاركة",
+  "grid_views_shared_label": "تمت المشاركة"
+}

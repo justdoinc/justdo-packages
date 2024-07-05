@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Mukautetut kentät",
+  "grid_control_custom_fields_sort_by_name_label": "Lajittele nimen mukaan",
+  "grid_control_custom_fields_new_custom_field_label": "Uusi mukautettu kenttä",
+  "grid_control_custom_fields_no_custom_fields_label": "Ei mukautettuja kenttiä",
+  "grid_control_custom_fields_label_placeholder": "nimike",
+  "grid_control_custom_fields_text_label": "Teksti",
+  "grid_control_custom_fields_number_label": "Numero",
+  "grid_control_custom_fields_date_label": "Päivämäärä",
+  "grid_control_custom_fields_select_label": "Vaihtoehdot",
+  "grid_control_custom_fields_multi_select_label": "Monivalinta",
+  "grid_control_custom_fields_smart_numbers_label": "Älykkäät numerot (Smart Numbers)",
+  "grid_control_custom_fields_unknown_type_label": "Tuntematon tyyppi",
+  "grid_control_custom_fields_disabled_field_label": "Poistettu käytöstä oleva kenttä"
+}

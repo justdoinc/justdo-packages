@@ -1,0 +1,11 @@
+{
+  "email_greeting_with_name": "Merhaba __name__, ",
+  "unread_task_chat_notification_subject": "Sizi bekleyen yeni sohbet mesajları var",
+  "unread_task_chat_notification_title": "Aşağıdaki görevde sizi bekleyen yeni sohbet mesajları var:",
+  "unread_group_chat_notification_subject": "__channel_title__ kanalından sizi bekleyen yeni mesajlar var",
+  "unread_group_chat_notification_title_html": "<span style=\"font-weight: bold;\">__channel_title__</span> kanalından sizi bekleyen yeni mesajlar var!",
+  "open_in_justdo": "JustDo'da aç",
+  "unsubscribe_from_justdo": "JustDo'dan gelen tüm güncelleme bildirimlerinden çık",
+  "unsubscribe_from_project": "__project_title__ için güncellemelerden çık",
+  "reply_email_for_support": "Herhangi bir sorun mu yaşıyorsunuz? Destek için bu e-postayı yanıtlayın."
+}

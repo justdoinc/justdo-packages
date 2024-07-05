@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Προσθήκη Στήλης",
+  "hide_column_label": "Απόκρυψη Στήλης",
+  "freeze_column_label": "Πάγωμα Στήλης",
+  "unfreeze_column_label": "Ξεπάγωμα Στήλης",
+  "tree_control_tooltip_gantt_milestone": "Ορόσημο Gantt",
+  "tree_control_tooltip_buffer_task": "Εργασία Buffer",
+  "tree_control_tooltip_Meetings": "Συναντήσεις",
+  "tree_control_tooltip_start_time_tracking": "Έναρξη εργασίας σε αυτή την εργασία",
+  "tree_control_tooltip_stop_time_tracking": "Εργάζεστε σε αυτή την εργασία τώρα, πατήστε για διακοπή και καταγραφή του χρόνου εργασίας",
+  "tree_control_tooltip_resources": "Πόροι",
+  "tree_control_tooltip_description": "Περιγραφή εργασίας",
+  "tree_control_tooltip_chat_messages": "Μηνύματα συνομιλίας",
+  "tree_control_tooltip_files_count": "__files_count__ αρχεία",
+  "tree_control_tooltip_emails_count": "__emails_count__ emails",
+  "tree_control_tooltip_task_is_a_project": "Η εργασία είναι ένα έργο",
+  "tree_control_tooltip_task_is_archived": "Η εργασία έχει αρχειοθετηθεί"
+}

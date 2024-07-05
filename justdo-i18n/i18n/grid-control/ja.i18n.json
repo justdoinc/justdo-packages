@@ -1,0 +1,18 @@
+{
+  "add_column_label": "列を追加",
+  "hide_column_label": "列を非表示",
+  "freeze_column_label": "列を固定",
+  "unfreeze_column_label": "列の固定を解除",
+  "tree_control_tooltip_gantt_milestone": "ガントチャートのマイルストーン",
+  "tree_control_tooltip_buffer_task": "バッファタスク",
+  "tree_control_tooltip_Meetings": "ミーティング",
+  "tree_control_tooltip_start_time_tracking": "このタスクの作業を開始",
+  "tree_control_tooltip_stop_time_tracking": "現在このタスクに取り組んでいます。押すと停止して作業時間を記録します",
+  "tree_control_tooltip_resources": "リソース",
+  "tree_control_tooltip_description": "タスクの説明",
+  "tree_control_tooltip_chat_messages": "チャットメッセージ",
+  "tree_control_tooltip_files_count": "ファイル __files_count__ 件",
+  "tree_control_tooltip_emails_count": "メール __emails_count__ 件",
+  "tree_control_tooltip_task_is_a_project": "タスクはプロジェクトです",
+  "tree_control_tooltip_task_is_archived": "タスクはアーカイブされています"
+}

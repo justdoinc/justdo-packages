@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Benutzerdefinierte Felder",
+  "grid_control_custom_fields_sort_by_name_label": "Nach Name sortieren",
+  "grid_control_custom_fields_new_custom_field_label": "Neues benutzerdefiniertes Feld",
+  "grid_control_custom_fields_no_custom_fields_label": "Keine benutzerdefinierten Felder",
+  "grid_control_custom_fields_label_placeholder": "Bezeichnung",
+  "grid_control_custom_fields_text_label": "Text",
+  "grid_control_custom_fields_number_label": "Zahl",
+  "grid_control_custom_fields_date_label": "Datum",
+  "grid_control_custom_fields_select_label": "Optionen",
+  "grid_control_custom_fields_multi_select_label": "Mehrfachauswahl",
+  "grid_control_custom_fields_smart_numbers_label": "Intelligente Zahlen (Smart Numbers)",
+  "grid_control_custom_fields_unknown_type_label": "Unbekannter Typ",
+  "grid_control_custom_fields_disabled_field_label": "Deaktiviertes Feld"
+}

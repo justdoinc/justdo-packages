@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "ស្ថានភាពសកម្ម",
+  "project_configurations_no_active_states_label": "គ្មានស្ថានភាពសកម្ម",
+  "project_configurations_hidden_states_label": "ស្ថានភាពលាក់",
+  "project_configurations_no_hidden_states_label": "គ្មានស្ថានភាពលាក់",
+  "project_configurations_type_state_name_placeholder": "វាយបញ្ចូលឈ្មោះស្ថានភាព",
+  "project_configurations_default_title_for_this_state_label": "ចំណងជើងលំនាំដើមសម្រាប់ស្ថានភាពនេះ",
+  "project_configurations_restore_state_label": "ស្តារស្ថានភាព",
+  "project_configurations_create_extended_state_label": "បង្កើតស្ថានភាពពង្រីក",
+  "project_configurations_hide_state": "លាក់ស្ថានភាព",
+  "project_configurations_remove_extended_state": "លុបស្ថានភាពពង្រីក",
+  "new_custom_state_default_title": "ស្ថានភាពពង្រីក - __state__"
+}

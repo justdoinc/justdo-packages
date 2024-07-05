@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "مؤسسة __user_name__",
+  "create_org_label": "إنشاء مؤسسة",
+  "without_orgs_label": "بدون مؤسسة",
+  "justdos_under_named_org_html": "لوحات JustDo تحت <span class=\"org-name\">__org_name__</span>",
+  "justdos_without_orgs": "لوحات JustDo بدون مؤسسة",
+  "orgs_project_config_title": "المؤسسات",
+  "assign_justdo_to_organization_label": "تعيين لوحة JustDo إلى مؤسسة",
+  "another_organization": "مؤسسة أخرى",
+  "pre_transfer_justdo_to_org_notice_html": "أنت على وشك نقل لوحة JustDo هذه إلى <b>__dest_org_name__</b>. <br> سيصبح جميع الأعضاء في هذه اللوحة أعضاء في <b>__dest_org_name__</b>.",
+  "select_organization": "اختر المؤسسة",
+  "org_expiring_soon_notice_title": "ترخيص مؤسستك على وشك الانتهاء!",
+  "org_expiring_soon_notice_html": "سينتهي ترخيص مؤسستك <b>__org_name__</b> في __org_expiration_date__. <br> نأمل أن يكون JustDo قد جعل حياتك العملية أسهل!",
+  "org_locked_notice_title": "لقد انتهت صلاحية ترخيص مؤسستك!",
+  "org_locked_notice_html": "انتهت صلاحية ترخيص مؤسستك <b>__org_name__</b> في __org_expiration_date__. <br> نأمل أن يكون JustDo قد جعل حياتك العملية أسهل، ونود أن نستمر في القيام بذلك!",
+  "org_access_restricted_title": "__org_name__: تقييد مؤقت للوصول",
+  "org_access_restricted_html": "الوصول إلى مؤسستك <b>__org_name__</b> مقيد حاليًا. يرجى الاتصال بمسؤولي مؤسستك للحصول على مزيد من التفاصيل حول هذا الأمر. <br> نقدر صبرك وتفهمك.",
+  "renew_org_license_instruction_html": "يمكنك تجديد الترخيص بالنقر على زر \"تجديد الترخيص\" أدناه.<br>فريق الدعم لدينا سعيد دائمًا بمساعدتك.<br><br>شكرًا لك على كونك جزءًا من مجتمع JustDo. نحن نعمل بنشاط على تطوير ميزات جديدة للإصدار القادم لتحسين سير عملك!",
+  "renew_org_licnese_modal_btn_label": "تجديد الترخيص",
+  "org_pre_expire_renewal_contact_page_message": "مؤسستي __org_name__ __optional_domain_msg__ على وشك انتهاء الصلاحية وأود تجديد الترخيص.",
+  "org_post_expire_renewal_contact_page_message": "انتهت صلاحية مؤسستي __org_name__ __optional_domain_msg__ وأود تجديد الترخيص."
+}

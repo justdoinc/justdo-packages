@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "Postavite naziv za vaš JustDo",
+  "set_justdo_name_subtitle": "Jednostavno kliknite na naslov za ulazak u način uređivanja",
+  "create_first_task_title": "Stvorite svoje prve zadatke",
+  "create_first_task_subtitle": "Za stvaranje zadataka možete koristiti gumbe na alatnoj traci ili koristiti prečace na tipkovnici ALT+ENTER / ALT+SHIFT+ENTER",
+  "invite_members_title": "Pozovite članove tima",
+  "invite_members_subtitle": "Pozovite članove svog tima da se pridruže i surađuju u vašem novom JustDo-u",
+  "import_tasks_title": "Uvezite zadatke",
+  "import_tasks_subtitle": "Možete prenijeti postojeće zadatke i podatke u JustDo i nastaviti bez prekida s našom funkcijom uvoza proračunskih tablica",
+  "customize_columns_title": "Prilagodite svoj prikaz",
+  "customize_columns_subtitle": "Kontrolirajte što vidite na mreži dodavanjem/uklanjanjem stupaca, filtriranjem zadataka prema njihovom statusu i još mnogo toga!",
+  "get_free_support_title": "Dobijte besplatnu podršku",
+  "get_free_support_subtitle": "1-na-1 sesija podrške s JustDo timom",
+  "request": "Zatraži",
+  "free_support_request_received": "Primljeno, uskoro ćemo vam se javiti putem e-pošte",
+  "tutorials_recent_product_updates": "Nedavna ažuriranja proizvoda",
+  "tutorials_justdo_quick_start": "JustDo brzi početak",
+  "tutorials_justdo_advanced_features": "Napredne značajke JustDo-a",
+  "tutorials_justdo_support_center": "JustDo centar za podršku"
+}

@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "الحقول المخصصة",
+  "grid_control_custom_fields_sort_by_name_label": "ترتيب حسب الاسم",
+  "grid_control_custom_fields_new_custom_field_label": "حقل مخصص جديد",
+  "grid_control_custom_fields_no_custom_fields_label": "لا توجد حقول مخصصة",
+  "grid_control_custom_fields_label_placeholder": "تسمية",
+  "grid_control_custom_fields_text_label": "نص",
+  "grid_control_custom_fields_number_label": "رقم",
+  "grid_control_custom_fields_date_label": "تاريخ",
+  "grid_control_custom_fields_select_label": "خيارات",
+  "grid_control_custom_fields_multi_select_label": "خيارات متعددة",
+  "grid_control_custom_fields_smart_numbers_label": "أرقام ذكية",
+  "grid_control_custom_fields_unknown_type_label": "نوع غير معروف",
+  "grid_control_custom_fields_disabled_field_label": "حقل معطل"
+}

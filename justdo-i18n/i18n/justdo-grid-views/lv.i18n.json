@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Tabulas skati",
+  "grid_views_search_placeholder": "Meklēt skatus",
+  "grid_views_no_view_label": "Nav skatu",
+  "grid_views_add_current_view_label": "Pievienot pašreizējo skatu",
+  "grid_views_rename_label": "Pārdēvēt",
+  "grid_views_update_label": "Atjaunināt",
+  "grid_views_remove_label": "Noņemt",
+  "grid_views_share_label": "Kopīgot",
+  "grid_views_unshare_label": "Pārtraukt kopīgošanu",
+  "grid_views_shared_label": "kopīgots"
+}

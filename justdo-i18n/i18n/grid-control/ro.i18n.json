@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Adăugare coloană",
+  "hide_column_label": "Ascundere coloană",
+  "freeze_column_label": "Blocare coloană",
+  "unfreeze_column_label": "Deblocare coloană",
+  "tree_control_tooltip_gantt_milestone": "Jalon Gantt",
+  "tree_control_tooltip_buffer_task": "Sarcină tampon",
+  "tree_control_tooltip_Meetings": "Întâlniri",
+  "tree_control_tooltip_start_time_tracking": "Începe lucrul la această sarcină",
+  "tree_control_tooltip_stop_time_tracking": "Lucrezi la această sarcină acum, apasă pentru a opri și a înregistra timpul lucrat",
+  "tree_control_tooltip_resources": "Resurse",
+  "tree_control_tooltip_description": "Descrierea sarcinii",
+  "tree_control_tooltip_chat_messages": "Mesaje de chat",
+  "tree_control_tooltip_files_count": "__files_count__ fișiere",
+  "tree_control_tooltip_emails_count": "__emails_count__ e-mailuri",
+  "tree_control_tooltip_task_is_a_project": "Sarcina este un proiect",
+  "tree_control_tooltip_task_is_archived": "Sarcina este arhivată"
+}

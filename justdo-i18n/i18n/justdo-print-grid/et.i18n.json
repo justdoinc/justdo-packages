@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "Prindi JustDo",
+  "print_dropdown_entire_justdo": "Kogu JustDo",
+  "print_dropdown_visible_tasks": "Nähtavad ülesanded",
+  "print_dropdown_print_current_task": "Prindi praegune ülesanne",
+  "print_dropdown_all_child_tasks": "Kõik alamülesanded",
+  "print_dropdown_visible_child_tasks": "Nähtavad alamülesanded",
+  "print_dropdown_download": "Laadi alla",
+  "print_dropdown_download_as_png": "Laadi alla PNG-na",
+  "print_grid_columns_settings_label": "Veergude seaded",
+  "print_grid_columns_options_label": "Veergude valikud",
+  "print_grid_print": "Prindi",
+  "print_grid_export_csv": "Ekspordi CSV",
+  "print_grid_select_all": "Vali kõik",
+  "print_grid_apply": "Rakenda"
+}

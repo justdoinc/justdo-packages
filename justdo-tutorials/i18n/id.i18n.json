@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "Tetapkan judul untuk JustDo Anda",
+  "set_justdo_name_subtitle": "Cukup klik pada judul untuk masuk ke mode edit",
+  "create_first_task_title": "Buat tugas pertama Anda",
+  "create_first_task_subtitle": "Untuk membuat tugas, Anda dapat menggunakan tombol pada toolbar, atau gunakan pintasan keyboard ALT+ENTER / ALT+SHIFT+ENTER",
+  "invite_members_title": "Undang anggota tim",
+  "invite_members_subtitle": "Undang anggota tim Anda untuk bergabung dan berkolaborasi di JustDo baru Anda",
+  "import_tasks_title": "Impor tugas",
+  "import_tasks_subtitle": "Anda dapat mentransfer tugas dan data yang ada ke JustDo dan melanjutkan dengan mulus menggunakan fungsi impor spreadsheet kami",
+  "customize_columns_title": "Sesuaikan tampilan Anda",
+  "customize_columns_subtitle": "Kontrol apa yang Anda lihat di grid (tabel) dengan menambah/menghapus kolom, memfilter tugas berdasarkan statusnya, dan lainnya!",
+  "get_free_support_title": "Dapatkan dukungan gratis",
+  "get_free_support_subtitle": "Sesi dukungan 1-on-1 dengan tim JustDo",
+  "request": "Minta",
+  "free_support_request_received": "Diterima, kami akan segera menghubungi Anda melalui email",
+  "tutorials_recent_product_updates": "Pembaruan Produk Terbaru",
+  "tutorials_justdo_quick_start": "Panduan Cepat JustDo",
+  "tutorials_justdo_advanced_features": "Fitur Lanjutan JustDo",
+  "tutorials_justdo_support_center": "Pusat Dukungan JustDo"
+}

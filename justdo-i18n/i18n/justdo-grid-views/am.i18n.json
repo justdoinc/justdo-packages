@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "የሰንጠረዥ እይታዎች",
+  "grid_views_search_placeholder": "እይታዎችን ፈልግ",
+  "grid_views_no_view_label": "እይታዎች የሉም",
+  "grid_views_add_current_view_label": "አሁን ያለውን እይታ ጨምር",
+  "grid_views_rename_label": "ዳግም ሰይም",
+  "grid_views_update_label": "አዘምን",
+  "grid_views_remove_label": "አስወግድ",
+  "grid_views_share_label": "አካፍል",
+  "grid_views_unshare_label": "ማካፈል አቁም",
+  "grid_views_shared_label": "ተካፍሏል"
+}

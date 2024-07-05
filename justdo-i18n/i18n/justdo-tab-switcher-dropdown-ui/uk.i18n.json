@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Змінити вигляд",
+  "tab_switcher_dropdown_search_placeholder": "Вигляди",
+  "tab_switcher_main_view_label": "Головний вигляд",
+  "tab_switcher_my_favorites_label": "Мої улюблені",
+  "tab_switcher_my_due_list_label": "Мій список термінових завдань",
+  "tab_switcher_recently_label": "Нещодавні",
+  "tab_switcher_recently_completed_label": "Завершені",
+  "tab_switcher_recently_updated_label": "Оновлені",
+  "tab_switcher_recently_created_label": "Створені",
+  "tab_switcher_miscellaneous_label": "Різне",
+  "tab_switcher_task_ownershipt_transfers_label": "Передачі власності завдань",
+  "tab_switcher_ticket_queues_label": "Черги заявок",
+  "tab_switcher_members_due_lists_label": "Списки термінових завдань учасників",
+  "tab_switcher_all_members_due_list_label": "Список термінових завдань усіх учасників",
+  "tab_switcher_projects_section_label": "Проекти",
+  "tab_switcher_projects_label": "Проекти"
+}

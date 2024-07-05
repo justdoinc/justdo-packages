@@ -1,0 +1,11 @@
+{
+  "email_greeting_with_name": "こんにちは、__name__さん、",
+  "unread_task_chat_notification_subject": "新しいチャットメッセージがあります",
+  "unread_task_chat_notification_title": "以下のタスクで新しいチャットメッセージが待っています：",
+  "unread_group_chat_notification_subject": "__channel_title__から新しいメッセージがあります",
+  "unread_group_chat_notification_title_html": "<span style=\"font-weight: bold;\">__channel_title__</span>から新しいメッセージが待っています！",
+  "open_in_justdo": "JustDoで開く",
+  "unsubscribe_from_justdo": "JustDoからのすべての更新通知を解除する",
+  "unsubscribe_from_project": "__project_title__の更新通知を解除する",
+  "reply_email_for_support": "問題がありますか？このメールに返信してサポートを受けてください。"
+}

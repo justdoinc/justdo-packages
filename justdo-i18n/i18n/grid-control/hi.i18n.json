@@ -1,0 +1,18 @@
+{
+  "add_column_label": "कॉलम जोड़ें",
+  "hide_column_label": "कॉलम छिपाएं",
+  "freeze_column_label": "कॉलम फ्रीज करें",
+  "unfreeze_column_label": "कॉलम अनफ्रीज करें",
+  "tree_control_tooltip_gantt_milestone": "गैंट माइलस्टोन",
+  "tree_control_tooltip_buffer_task": "बफर कार्य",
+  "tree_control_tooltip_Meetings": "बैठकें",
+  "tree_control_tooltip_start_time_tracking": "इस कार्य पर काम करना शुरू करें",
+  "tree_control_tooltip_stop_time_tracking": "आप अभी इस कार्य पर काम कर रहे हैं, रोकने और काम किए गए समय को लॉग करने के लिए दबाएं",
+  "tree_control_tooltip_resources": "संसाधन",
+  "tree_control_tooltip_description": "कार्य विवरण",
+  "tree_control_tooltip_chat_messages": "चैट संदेश",
+  "tree_control_tooltip_files_count": "__files_count__ फ़ाइलें",
+  "tree_control_tooltip_emails_count": "__emails_count__ ईमेल",
+  "tree_control_tooltip_task_is_a_project": "कार्य एक प्रोजेक्ट है",
+  "tree_control_tooltip_task_is_archived": "कार्य संग्रहित किया गया है"
+}

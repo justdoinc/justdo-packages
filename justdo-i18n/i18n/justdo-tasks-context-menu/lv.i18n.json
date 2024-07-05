@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Noņemt uzdevumus",
+  "remove_from_parent_label": "Noņemt no vecāka",
+  "remove_with_subtree_label": "Noņemt ar apakšstruktūru",
+  "archive_task_label": "Arhivēt uzdevumu",
+  "unarchive_task_label": "Atarhivēt uzdevumu",
+  "reorder_children_by_label": "Pārkārtot apakšelementus pēc",
+  "zoom_in_label": "Pietuvināt",
+  "projects_label": "Projekti",
+  "set_as_a_project_label": "Iestatīt kā projektu",
+  "unset_as_a_project_label": "Noņemt projekta statusu",
+  "close_project_label": "Aizvērt projektu",
+  "repoen_project_label": "Atkārtoti atvērt projektu",
+  "add_to_project_label": "Pievienot projektam",
+  "apply_value_to_subtree": "Piemērot __value__ apakšstruktūrai",
+  "bulk_set_options_label": "Iestatīt vairākus"
+}

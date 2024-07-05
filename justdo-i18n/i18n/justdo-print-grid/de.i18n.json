@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "JustDo drucken",
+  "print_dropdown_entire_justdo": "Gesamtes JustDo",
+  "print_dropdown_visible_tasks": "Sichtbare Aufgaben",
+  "print_dropdown_print_current_task": "Aktuelle Aufgabe drucken",
+  "print_dropdown_all_child_tasks": "Alle Unteraufgaben",
+  "print_dropdown_visible_child_tasks": "Sichtbare Unteraufgaben",
+  "print_dropdown_download": "Herunterladen",
+  "print_dropdown_download_as_png": "Als PNG herunterladen",
+  "print_grid_columns_settings_label": "Spalteneinstellungen",
+  "print_grid_columns_options_label": "Spaltenoptionen",
+  "print_grid_print": "Drucken",
+  "print_grid_export_csv": "CSV exportieren",
+  "print_grid_select_all": "Alles auswählen",
+  "print_grid_apply": "Anwenden"
+}

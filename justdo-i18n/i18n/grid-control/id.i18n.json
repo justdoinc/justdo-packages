@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Tambah Kolom",
+  "hide_column_label": "Sembunyikan Kolom",
+  "freeze_column_label": "Bekukan Kolom",
+  "unfreeze_column_label": "Cairkan Kolom",
+  "tree_control_tooltip_gantt_milestone": "Tonggak Gantt",
+  "tree_control_tooltip_buffer_task": "Tugas Penyangga",
+  "tree_control_tooltip_Meetings": "Rapat",
+  "tree_control_tooltip_start_time_tracking": "Mulai mengerjakan tugas ini",
+  "tree_control_tooltip_stop_time_tracking": "Anda sedang mengerjakan tugas ini sekarang, tekan untuk berhenti dan catat waktu yang telah digunakan",
+  "tree_control_tooltip_resources": "Sumber Daya",
+  "tree_control_tooltip_description": "Deskripsi tugas",
+  "tree_control_tooltip_chat_messages": "Pesan obrolan",
+  "tree_control_tooltip_files_count": "__files_count__ berkas",
+  "tree_control_tooltip_emails_count": "__emails_count__ email",
+  "tree_control_tooltip_task_is_a_project": "Tugas adalah sebuah proyek",
+  "tree_control_tooltip_task_is_archived": "Tugas telah diarsipkan"
+}

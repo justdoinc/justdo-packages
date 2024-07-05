@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "Ticketwachtrijen",
+  "project_config_ticket_queues_new_ticket_queue_label": "Nieuwe ticketwachtrij",
+  "project_config_ticket_queues_enter_task_number_label": "Voer taaknummer in",
+  "project_config_ticket_queues_no_ticket_queues_label": "Geen ticketwachtrijen",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "Je kunt deze Ticketwachtrij niet verwijderen, omdat je geen lid bent van de bijbehorende Taak"
+}

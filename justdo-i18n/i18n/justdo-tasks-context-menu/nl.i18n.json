@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Taken verwijderen",
+  "remove_from_parent_label": "Verwijderen uit bovenliggende taak",
+  "remove_with_subtree_label": "Verwijderen met subboom",
+  "archive_task_label": "Taak archiveren",
+  "unarchive_task_label": "Taak dearchiveren",
+  "reorder_children_by_label": "Subtaken ordenen op",
+  "zoom_in_label": "Inzoomen",
+  "projects_label": "Projecten",
+  "set_as_a_project_label": "Als project instellen",
+  "unset_as_a_project_label": "Projectstatus opheffen",
+  "close_project_label": "Project sluiten",
+  "repoen_project_label": "Project heropenen",
+  "add_to_project_label": "Toevoegen aan project",
+  "apply_value_to_subtree": "__value__ toepassen op subboom",
+  "bulk_set_options_label": "Instellen"
+}

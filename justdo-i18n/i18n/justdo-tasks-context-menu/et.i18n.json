@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Eemalda ülesanded",
+  "remove_from_parent_label": "Eemalda ülemülesandest",
+  "remove_with_subtree_label": "Eemalda koos alamstruktuuri",
+  "archive_task_label": "Arhiveeri ülesanne",
+  "unarchive_task_label": "Taasta ülesanne arhiivist",
+  "reorder_children_by_label": "Järjesta alamülesanded",
+  "zoom_in_label": "Suurenda",
+  "projects_label": "Projektid",
+  "set_as_a_project_label": "Määra projektiks",
+  "unset_as_a_project_label": "Tühista projekti staatus",
+  "close_project_label": "Sulge projekt",
+  "repoen_project_label": "Ava projekt uuesti",
+  "add_to_project_label": "Lisa projekti",
+  "apply_value_to_subtree": "Rakenda __value__ alamstruktuurile",
+  "bulk_set_options_label": "Määra"
+}

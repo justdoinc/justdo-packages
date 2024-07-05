@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Aktīvie stāvokļi",
+  "project_configurations_no_active_states_label": "Nav aktīvo stāvokļu",
+  "project_configurations_hidden_states_label": "Slēptie stāvokļi",
+  "project_configurations_no_hidden_states_label": "Nav slēpto stāvokļu",
+  "project_configurations_type_state_name_placeholder": "Ierakstiet stāvokļa nosaukumu",
+  "project_configurations_default_title_for_this_state_label": "Noklusējuma nosaukums šim stāvoklim",
+  "project_configurations_restore_state_label": "Atjaunot stāvokli",
+  "project_configurations_create_extended_state_label": "Izveidot paplašinātu stāvokli",
+  "project_configurations_hide_state": "Slēpt stāvokli",
+  "project_configurations_remove_extended_state": "Noņemt paplašināto stāvokli",
+  "new_custom_state_default_title": "__state__ - paplašināts"
+}

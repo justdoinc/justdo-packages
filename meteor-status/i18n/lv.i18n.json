@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Savienojums izveidots",
+  "meteor_status_connecting": "Veido savienojumu...",
+  "meteor_status_failed": "Savienojums ar serveri neizdevās",
+  "meteor_status_waiting": "Gaida savienojumu ar serveri,",
+  "meteor_status_offline": "Bezsaistes režīms.",
+  "meteor_status_reconnect_in": "mēģina vēlreiz pēc vienas sekundes...",
+  "meteor_status_reconnect_in_plural": "mēģina vēlreiz pēc __count__ sekundēm...",
+  "meteor_status_try_now_waiting": "Mēģināt tagad",
+  "meteor_status_try_now_offline": "Izveidot savienojumu vēlreiz"
+}

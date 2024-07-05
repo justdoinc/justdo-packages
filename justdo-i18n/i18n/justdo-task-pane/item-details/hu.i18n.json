@@ -1,0 +1,9 @@
+{
+  "item_details_title": "Részletek",
+  "item_details_members_label": "Tagok",
+  "item_details_description_label": "Leírás",
+  "item_details_add_task_description": "Feladat leírás hozzáadása",
+  "item_details_more_info_label": "További információ",
+  "item_details_context_title": "Kontextus",
+  "item_details_context_drag_to_add_parent_label": "Húzza ide a szülő feladat hozzáadásához"
+}

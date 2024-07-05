@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Lisää sarake",
+  "hide_column_label": "Piilota sarake",
+  "freeze_column_label": "Lukitse sarake",
+  "unfreeze_column_label": "Vapauta sarake",
+  "tree_control_tooltip_gantt_milestone": "Gantt-virstanpylväs",
+  "tree_control_tooltip_buffer_task": "Puskuritehtävä",
+  "tree_control_tooltip_Meetings": "Kokoukset",
+  "tree_control_tooltip_start_time_tracking": "Aloita työskentely tässä tehtävässä",
+  "tree_control_tooltip_stop_time_tracking": "Työskentelet nyt tässä tehtävässä, paina lopettaaksesi ja kirjataksesi työajan",
+  "tree_control_tooltip_resources": "Resurssit",
+  "tree_control_tooltip_description": "Tehtävän kuvaus",
+  "tree_control_tooltip_chat_messages": "Keskusteluviestit",
+  "tree_control_tooltip_files_count": "__files_count__ tiedostoa",
+  "tree_control_tooltip_emails_count": "__emails_count__ sähköpostia",
+  "tree_control_tooltip_task_is_a_project": "Tehtävä on projekti",
+  "tree_control_tooltip_task_is_archived": "Tehtävä on arkistoitu"
+}

@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Pridať stĺpec",
+  "hide_column_label": "Skryť stĺpec",
+  "freeze_column_label": "Zmraziť stĺpec",
+  "unfreeze_column_label": "Rozmraziť stĺpec",
+  "tree_control_tooltip_gantt_milestone": "Míľnik Ganttovho diagramu",
+  "tree_control_tooltip_buffer_task": "Úloha s časovou rezervou",
+  "tree_control_tooltip_Meetings": "Stretnutia",
+  "tree_control_tooltip_start_time_tracking": "Začať pracovať na tejto úlohe",
+  "tree_control_tooltip_stop_time_tracking": "Momentálne pracujete na tejto úlohe, stlačte pre zastavenie a zaznamenanie odpracovaného času",
+  "tree_control_tooltip_resources": "Zdroje",
+  "tree_control_tooltip_description": "Popis úlohy",
+  "tree_control_tooltip_chat_messages": "Chatové správy",
+  "tree_control_tooltip_files_count": "__files_count__ súborov",
+  "tree_control_tooltip_emails_count": "__emails_count__ e-mailov",
+  "tree_control_tooltip_task_is_a_project": "Úloha je projekt",
+  "tree_control_tooltip_task_is_archived": "Úloha je archivovaná"
+}

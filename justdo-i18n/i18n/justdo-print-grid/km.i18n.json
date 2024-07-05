@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "បោះពុម្ពផ្ទាំងគ្រប់គ្រង JustDo",
+  "print_dropdown_entire_justdo": "ផ្ទាំងគ្រប់គ្រង JustDo ទាំងមូល",
+  "print_dropdown_visible_tasks": "កិច្ចការដែលអាចមើលឃើញ",
+  "print_dropdown_print_current_task": "បោះពុម្ពកិច្ចការបច្ចុប្បន្ន",
+  "print_dropdown_all_child_tasks": "កិច្ចការរងទាំងអស់",
+  "print_dropdown_visible_child_tasks": "កិច្ចការរងដែលអាចមើលឃើញ",
+  "print_dropdown_download": "ទាញយក",
+  "print_dropdown_download_as_png": "ទាញយកជា PNG",
+  "print_grid_columns_settings_label": "ការកំណត់ជួរឈរ",
+  "print_grid_columns_options_label": "ជម្រើសជួរឈរ",
+  "print_grid_print": "បោះពុម្ព",
+  "print_grid_export_csv": "នាំចេញជា CSV",
+  "print_grid_select_all": "ជ្រើសរើសទាំងអស់",
+  "print_grid_apply": "អនុវត្ត"
+}

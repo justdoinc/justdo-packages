@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Aktyvios būsenos",
+  "project_configurations_no_active_states_label": "Nėra aktyvių būsenų",
+  "project_configurations_hidden_states_label": "Paslėptos būsenos",
+  "project_configurations_no_hidden_states_label": "Nėra paslėptų būsenų",
+  "project_configurations_type_state_name_placeholder": "Įveskite būsenos pavadinimą",
+  "project_configurations_default_title_for_this_state_label": "Numatytasis šios būsenos pavadinimas",
+  "project_configurations_restore_state_label": "Atkurti būseną",
+  "project_configurations_create_extended_state_label": "Sukurti išplėstinę būseną",
+  "project_configurations_hide_state": "Slėpti būseną",
+  "project_configurations_remove_extended_state": "Pašalinti išplėstinę būseną",
+  "new_custom_state_default_title": "Išplėstinė __state__"
+}

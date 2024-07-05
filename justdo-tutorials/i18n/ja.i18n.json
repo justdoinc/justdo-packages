@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "JustDoのタイトルを設定する",
+  "set_justdo_name_subtitle": "タイトルをクリックするだけで編集モードに入れます",
+  "create_first_task_title": "最初のタスクを作成する",
+  "create_first_task_subtitle": "タスクを作成するには、ツールバーのボタンを使用するか、キーボードショートカットALT+ENTER / ALT+SHIFT+ENTERを使用できます",
+  "invite_members_title": "チームメンバーを招待する",
+  "invite_members_subtitle": "チームメンバーを新しいJustDoに参加し、協力するよう招待します",
+  "import_tasks_title": "タスクをインポートする",
+  "import_tasks_subtitle": "スプレッドシートインポート機能を使用して、既存のタスクとデータをJustDoに転送し、シームレスに続行できます",
+  "customize_columns_title": "ビューをカスタマイズする",
+  "customize_columns_subtitle": "列の追加/削除、タスクのステータスによるフィルタリングなどにより、グリッド（データテーブル）で表示する内容を制御できます",
+  "get_free_support_title": "無料サポートを受ける",
+  "get_free_support_subtitle": "JustDoチームとの1対1のサポートセッション",
+  "request": "リクエスト",
+  "free_support_request_received": "受け付けました。間もなくメールでご連絡いたします",
+  "tutorials_recent_product_updates": "最近の製品アップデート",
+  "tutorials_justdo_quick_start": "JustDoクイックスタート",
+  "tutorials_justdo_advanced_features": "JustDoの高度な機能",
+  "tutorials_justdo_support_center": "JustDoサポートセンター"
+}

@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Nézet váltása",
+  "tab_switcher_dropdown_search_placeholder": "Nézetek",
+  "tab_switcher_main_view_label": "Fő nézet",
+  "tab_switcher_my_favorites_label": "Kedvenceim",
+  "tab_switcher_my_due_list_label": "Esedékes feladataim",
+  "tab_switcher_recently_label": "Nemrég",
+  "tab_switcher_recently_completed_label": "Befejezett",
+  "tab_switcher_recently_updated_label": "Frissített",
+  "tab_switcher_recently_created_label": "Létrehozott",
+  "tab_switcher_miscellaneous_label": "Egyéb",
+  "tab_switcher_task_ownershipt_transfers_label": "Feladat tulajdonjog átadások",
+  "tab_switcher_ticket_queues_label": "Jegy sorok",
+  "tab_switcher_members_due_lists_label": "Tagok esedékes listái",
+  "tab_switcher_all_members_due_list_label": "Minden tag esedékes listája",
+  "tab_switcher_projects_section_label": "Projektek",
+  "tab_switcher_projects_label": "Projektek"
+}

@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "Εκτύπωση JustDo",
+  "print_dropdown_entire_justdo": "Ολόκληρο το JustDo",
+  "print_dropdown_visible_tasks": "Ορατές Εργασίες",
+  "print_dropdown_print_current_task": "Εκτύπωση Τρέχουσας Εργασίας",
+  "print_dropdown_all_child_tasks": "Όλες οι Υποεργασίες",
+  "print_dropdown_visible_child_tasks": "Ορατές Υποεργασίες",
+  "print_dropdown_download": "Λήψη",
+  "print_dropdown_download_as_png": "Λήψη ως PNG",
+  "print_grid_columns_settings_label": "Ρυθμίσεις στηλών",
+  "print_grid_columns_options_label": "Επιλογές στηλών",
+  "print_grid_print": "Εκτύπωση",
+  "print_grid_export_csv": "Εξαγωγή CSV",
+  "print_grid_select_all": "Επιλογή όλων",
+  "print_grid_apply": "Εφαρμογή"
+}

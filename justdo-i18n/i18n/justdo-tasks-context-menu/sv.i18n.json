@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Ta bort uppgifter",
+  "remove_from_parent_label": "Ta bort från överordnad",
+  "remove_with_subtree_label": "Ta bort med underträd",
+  "archive_task_label": "Arkivera uppgift",
+  "unarchive_task_label": "Avarkivera uppgift",
+  "reorder_children_by_label": "Sortera underordnade efter",
+  "zoom_in_label": "Zooma in",
+  "projects_label": "Projekt",
+  "set_as_a_project_label": "Ange som projekt",
+  "unset_as_a_project_label": "Ta bort som projekt",
+  "close_project_label": "Stäng projekt",
+  "repoen_project_label": "Återöppna projekt",
+  "add_to_project_label": "Lägg till i projekt",
+  "apply_value_to_subtree": "Tillämpa __value__ på underträd",
+  "bulk_set_options_label": "Ange i bulk"
+}

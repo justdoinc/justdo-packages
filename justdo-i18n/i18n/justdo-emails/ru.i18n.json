@@ -1,0 +1,11 @@
+{
+  "email_greeting_with_name": "Привет, __name__, ",
+  "unread_task_chat_notification_subject": "У вас есть новые сообщения в чате",
+  "unread_task_chat_notification_title": "У вас есть новые сообщения в чате по следующей задаче:",
+  "unread_group_chat_notification_subject": "У вас есть новые сообщения от __channel_title__",
+  "unread_group_chat_notification_title_html": "У вас есть новые сообщения от <span style=\"font-weight: bold;\">__channel_title__</span>!",
+  "open_in_justdo": "Открыть в JustDo",
+  "unsubscribe_from_justdo": "Отписаться от всех уведомлений об обновлениях JustDo",
+  "unsubscribe_from_project": "Отписаться от обновлений для __project_title__",
+  "reply_email_for_support": "Возникли проблемы? Ответьте на это письмо, чтобы получить поддержку."
+}

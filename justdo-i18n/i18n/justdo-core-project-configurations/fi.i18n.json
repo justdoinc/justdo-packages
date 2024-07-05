@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Aktiiviset tilat",
+  "project_configurations_no_active_states_label": "Ei aktiivisia tiloja",
+  "project_configurations_hidden_states_label": "Piilotetut tilat",
+  "project_configurations_no_hidden_states_label": "Ei piilotettuja tiloja",
+  "project_configurations_type_state_name_placeholder": "Kirjoita tilan nimi",
+  "project_configurations_default_title_for_this_state_label": "Tämän tilan oletsotsikko",
+  "project_configurations_restore_state_label": "Palauta tila",
+  "project_configurations_create_extended_state_label": "Luo laajennettu tila",
+  "project_configurations_hide_state": "Piilota tila",
+  "project_configurations_remove_extended_state": "Poista laajennettu tila",
+  "new_custom_state_default_title": "__state__ - laajennettu"
+}

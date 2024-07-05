@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Táblázatos nézetek",
+  "grid_views_search_placeholder": "Nézetek keresése",
+  "grid_views_no_view_label": "Nincsenek nézetek",
+  "grid_views_add_current_view_label": "Jelenlegi nézet hozzáadása",
+  "grid_views_rename_label": "Átnevezés",
+  "grid_views_update_label": "Frissítés",
+  "grid_views_remove_label": "Eltávolítás",
+  "grid_views_share_label": "Megosztás",
+  "grid_views_unshare_label": "Megosztás visszavonása",
+  "grid_views_shared_label": "megosztva"
+}

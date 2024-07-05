@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "Antrean Tiket",
+  "project_config_ticket_queues_new_ticket_queue_label": "Antrean tiket baru",
+  "project_config_ticket_queues_enter_task_number_label": "Masukkan nomor tugas",
+  "project_config_ticket_queues_no_ticket_queues_label": "Tidak ada antrean tiket",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "Anda tidak dapat menghapus Antrean Tiket ini, karena Anda bukan anggota Tugas terkait"
+}

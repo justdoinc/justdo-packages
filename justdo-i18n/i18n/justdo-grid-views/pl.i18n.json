@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Widoki tabeli",
+  "grid_views_search_placeholder": "Szukaj widoków",
+  "grid_views_no_view_label": "Brak widoków",
+  "grid_views_add_current_view_label": "Dodaj bieżący widok",
+  "grid_views_rename_label": "Zmień nazwę",
+  "grid_views_update_label": "Aktualizuj",
+  "grid_views_remove_label": "Usuń",
+  "grid_views_share_label": "Udostępnij",
+  "grid_views_unshare_label": "Cofnij udostępnianie",
+  "grid_views_shared_label": "udostępnione"
+}

@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Polja po meri",
+  "grid_control_custom_fields_sort_by_name_label": "Razvrsti po imenu",
+  "grid_control_custom_fields_new_custom_field_label": "Novo polje po meri",
+  "grid_control_custom_fields_no_custom_fields_label": "Ni polj po meri",
+  "grid_control_custom_fields_label_placeholder": "oznaka",
+  "grid_control_custom_fields_text_label": "Besedilo",
+  "grid_control_custom_fields_number_label": "Število",
+  "grid_control_custom_fields_date_label": "Datum",
+  "grid_control_custom_fields_select_label": "Možnosti",
+  "grid_control_custom_fields_multi_select_label": "Več možnosti",
+  "grid_control_custom_fields_smart_numbers_label": "Pametna števila",
+  "grid_control_custom_fields_unknown_type_label": "Neznana vrsta",
+  "grid_control_custom_fields_disabled_field_label": "Onemogočeno polje"
+}

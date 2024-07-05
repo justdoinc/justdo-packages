@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "វាលផ្ទាល់ខ្លួន",
+  "grid_control_custom_fields_sort_by_name_label": "តម្រៀបតាមឈ្មោះ",
+  "grid_control_custom_fields_new_custom_field_label": "វាលផ្ទាល់ខ្លួនថ្មី",
+  "grid_control_custom_fields_no_custom_fields_label": "គ្មានវាលផ្ទាល់ខ្លួន",
+  "grid_control_custom_fields_label_placeholder": "ស្លាក",
+  "grid_control_custom_fields_text_label": "អត្ថបទ",
+  "grid_control_custom_fields_number_label": "លេខ",
+  "grid_control_custom_fields_date_label": "កាលបរិច្ឆេទ",
+  "grid_control_custom_fields_select_label": "ជម្រើស",
+  "grid_control_custom_fields_multi_select_label": "ជម្រើសច្រើន",
+  "grid_control_custom_fields_smart_numbers_label": "លេខឆ្លាត (Smart Numbers)",
+  "grid_control_custom_fields_unknown_type_label": "ប្រភេទមិនស្គាល់",
+  "grid_control_custom_fields_disabled_field_label": "វាលដែលបានបិទ"
+}

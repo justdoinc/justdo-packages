@@ -1,0 +1,8 @@
+{
+  "task_type_delayed_label": "Bị trì hoãn",
+  "task_type_behind_label": "Bị chậm trễ",
+  "task_type_late_label": "Muộn",
+  "task_type_overdue_label": "Quá hạn",
+  "task_type_key_task_label": "Công việc quan trọng",
+  "task_type_no_owner_label": "Chưa có người phụ trách"
+}

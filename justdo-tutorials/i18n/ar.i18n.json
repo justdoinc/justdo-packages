@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "قم بتعيين عنوان لـ JustDo الخاص بك",
+  "set_justdo_name_subtitle": "ما عليك سوى النقر على العنوان للدخول في وضع التحرير",
+  "create_first_task_title": "أنشئ مهامك الأولى",
+  "create_first_task_subtitle": "لإنشاء المهام، يمكنك إما استخدام الأزرار في شريط الأدوات، أو استخدام اختصارات لوحة المفاتيح ALT+ENTER / ALT+SHIFT+ENTER",
+  "invite_members_title": "دعوة أعضاء الفريق",
+  "invite_members_subtitle": "ادعُ أعضاء فريقك للانضمام والتعاون في JustDo الجديد الخاص بك",
+  "import_tasks_title": "استيراد المهام",
+  "import_tasks_subtitle": "يمكنك نقل المهام والبيانات الموجودة إلى JustDo والاستمرار بسلاسة باستخدام وظيفة استيراد جداول البيانات لدينا",
+  "customize_columns_title": "تخصيص العرض الخاص بك",
+  "customize_columns_subtitle": "تحكم فيما تراه على الشبكة (جدول البيانات) عن طريق إضافة/إزالة الأعمدة، وتصفية المهام حسب حالتها، والمزيد!",
+  "get_free_support_title": "احصل على دعم مجاني",
+  "get_free_support_subtitle": "جلسة دعم فردية مع فريق JustDo",
+  "request": "طلب",
+  "free_support_request_received": "تم الاستلام، سنعود إليك قريبًا عبر البريد الإلكتروني",
+  "tutorials_recent_product_updates": "التحديثات الأخيرة للمنتج",
+  "tutorials_justdo_quick_start": "البدء السريع لـ JustDo",
+  "tutorials_justdo_advanced_features": "الميزات المتقدمة لـ JustDo",
+  "tutorials_justdo_support_center": "مركز دعم JustDo"
+}

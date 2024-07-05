@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Odstrani naloge",
+  "remove_from_parent_label": "Odstrani iz nadrejene naloge",
+  "remove_with_subtree_label": "Odstrani s podrejeno strukturo",
+  "archive_task_label": "Arhiviraj nalogo",
+  "unarchive_task_label": "Dearhiviraj nalogo",
+  "reorder_children_by_label": "Prerazporedi podrejene elemente po",
+  "zoom_in_label": "Povečaj",
+  "projects_label": "Projekti",
+  "set_as_a_project_label": "Nastavi kot projekt",
+  "unset_as_a_project_label": "Odstrani nastavitev kot projekt",
+  "close_project_label": "Zapri projekt",
+  "repoen_project_label": "Ponovno odpri projekt",
+  "add_to_project_label": "Dodaj v projekt",
+  "apply_value_to_subtree": "Uporabi __value__ za podstrukturo",
+  "bulk_set_options_label": "Nastavi"
+}

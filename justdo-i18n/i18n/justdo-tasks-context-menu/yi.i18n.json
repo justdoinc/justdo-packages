@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "אַוועקנעמען אויפֿגאַבעס",
+  "remove_from_parent_label": "אַוועקנעמען פֿון עלטער",
+  "remove_with_subtree_label": "אַוועקנעמען מיט אונטער-בוים",
+  "archive_task_label": "אַרכיווירן אויפֿגאַבע",
+  "unarchive_task_label": "אומאַרכיווירן אויפֿגאַבע",
+  "reorder_children_by_label": "איבערסדרן קינדער לויט",
+  "zoom_in_label": "פֿאַרגרעסערן",
+  "projects_label": "פּראָיעקטן",
+  "set_as_a_project_label": "באַשטימען ווי אַ פּראָיעקט",
+  "unset_as_a_project_label": "אָפּשטעלן ווי אַ פּראָיעקט",
+  "close_project_label": "פֿאַרמאַכן פּראָיעקט",
+  "repoen_project_label": "ווידער עפֿענען פּראָיעקט",
+  "add_to_project_label": "צולייגן צו פּראָיעקט",
+  "apply_value_to_subtree": "אָנווענדן __value__ צו אונטער-בוים",
+  "bulk_set_options_label": "באַשטימען"
+}

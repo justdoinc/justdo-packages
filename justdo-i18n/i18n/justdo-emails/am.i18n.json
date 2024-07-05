@@ -1,0 +1,11 @@
+{
+  "email_greeting_with_name": "ሰላም __name__፣ ",
+  "unread_task_chat_notification_subject": "አዲስ የጽሑፍ መልዕክቶች እርስዎን እየጠበቁ ነው",
+  "unread_task_chat_notification_title": "በሚከተለው ተግባር ውስጥ አዲስ የጽሑፍ መልዕክቶች እርስዎን እየጠበቁ ነው፡",
+  "unread_group_chat_notification_subject": "ከ__channel_title__ አዲስ መልዕክቶች እርስዎን እየጠበቁ ነው",
+  "unread_group_chat_notification_title_html": "ከ<span style=\"font-weight: bold;\">__channel_title__</span> አዲስ መልዕክቶች እርስዎን እየጠበቁ ነው!",
+  "open_in_justdo": "በJustDo ውስጥ ክፈት",
+  "unsubscribe_from_justdo": "ከJustDo ሁሉም የዝመና ማሳወቂያዎች ደንበኝነትዎን ይሰርዙ",
+  "unsubscribe_from_project": "ከ__project_title__ ዝማኔዎች ደንበኝነትዎን ይሰርዙ",
+  "reply_email_for_support": "ማንኛውም ችግር አለዎት? ለድጋፍ ወደዚህ ኢሜይል መልስ ይስጡ።"
+}

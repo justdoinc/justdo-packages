@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Lägg till kolumn",
+  "hide_column_label": "Dölj kolumn",
+  "freeze_column_label": "Frys kolumn",
+  "unfreeze_column_label": "Avfrys kolumn",
+  "tree_control_tooltip_gantt_milestone": "Gantt-milstolpe",
+  "tree_control_tooltip_buffer_task": "Bufferttask",
+  "tree_control_tooltip_Meetings": "Möten",
+  "tree_control_tooltip_start_time_tracking": "Börja arbeta på denna uppgift",
+  "tree_control_tooltip_stop_time_tracking": "Du arbetar på denna uppgift nu, tryck för att stoppa och logga arbetad tid",
+  "tree_control_tooltip_resources": "Resurser",
+  "tree_control_tooltip_description": "Uppgiftsbeskrivning",
+  "tree_control_tooltip_chat_messages": "Chattmeddelanden",
+  "tree_control_tooltip_files_count": "__files_count__ filer",
+  "tree_control_tooltip_emails_count": "__emails_count__ e-postmeddelanden",
+  "tree_control_tooltip_task_is_a_project": "Uppgiften är ett projekt",
+  "tree_control_tooltip_task_is_archived": "Uppgiften är arkiverad"
+}

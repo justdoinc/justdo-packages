@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Povezano",
+  "meteor_status_connecting": "Povezivanje...",
+  "meteor_status_failed": "Veza sa poslužiteljem nije uspjela",
+  "meteor_status_waiting": "Čekanje na vezu s poslužiteljem,",
+  "meteor_status_offline": "Izvanmrežni način rada.",
+  "meteor_status_reconnect_in": "pokušaj ponovnog povezivanja za jednu sekundu...",
+  "meteor_status_reconnect_in_plural": "pokušaj ponovnog povezivanja za __count__ sekundi...",
+  "meteor_status_try_now_waiting": "Pokušaj sada",
+  "meteor_status_try_now_offline": "Ponovno se poveži"
+}

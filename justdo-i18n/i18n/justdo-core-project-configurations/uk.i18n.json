@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Активні стани",
+  "project_configurations_no_active_states_label": "Немає активних станів",
+  "project_configurations_hidden_states_label": "Приховані стани",
+  "project_configurations_no_hidden_states_label": "Немає прихованих станів",
+  "project_configurations_type_state_name_placeholder": "Введіть назву стану",
+  "project_configurations_default_title_for_this_state_label": "Типовий заголовок для цього стану",
+  "project_configurations_restore_state_label": "Відновити стан",
+  "project_configurations_create_extended_state_label": "Створити розширений стан",
+  "project_configurations_hide_state": "Приховати стан",
+  "project_configurations_remove_extended_state": "Видалити розширений стан",
+  "new_custom_state_default_title": "__state__ - розширений"
+}

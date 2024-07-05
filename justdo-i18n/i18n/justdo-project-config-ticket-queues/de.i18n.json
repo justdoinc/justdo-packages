@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "Ticket-Warteschlangen",
+  "project_config_ticket_queues_new_ticket_queue_label": "Neue Ticket-Warteschlange",
+  "project_config_ticket_queues_enter_task_number_label": "Aufgabennummer eingeben",
+  "project_config_ticket_queues_no_ticket_queues_label": "Keine Ticket-Warteschlangen",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "Sie können diese Ticket-Warteschlange nicht entfernen, da Sie kein Mitglied der zugehörigen Aufgabe sind"
+}

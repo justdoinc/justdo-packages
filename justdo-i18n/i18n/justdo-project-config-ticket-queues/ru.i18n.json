@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "Очереди заявок",
+  "project_config_ticket_queues_new_ticket_queue_label": "Новая очередь заявок",
+  "project_config_ticket_queues_enter_task_number_label": "Введите номер задачи",
+  "project_config_ticket_queues_no_ticket_queues_label": "Нет очередей заявок",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "Вы не можете удалить эту очередь заявок, так как не являетесь участником соответствующей задачи"
+}

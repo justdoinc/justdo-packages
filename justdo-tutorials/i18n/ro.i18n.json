@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "Setați un titlu pentru JustDo-ul dumneavoastră",
+  "set_justdo_name_subtitle": "Faceți clic pe titlu pentru a intra în modul de editare",
+  "create_first_task_title": "Creați primele sarcini",
+  "create_first_task_subtitle": "Pentru a crea sarcini, puteți utiliza butoanele din bara de instrumente sau combinațiile de taste ALT+ENTER / ALT+SHIFT+ENTER",
+  "invite_members_title": "Invitați membrii echipei",
+  "invite_members_subtitle": "Invitați membrii echipei să se alăture și să colaboreze în noul dumneavoastră JustDo",
+  "import_tasks_title": "Importați sarcini",
+  "import_tasks_subtitle": "Puteți transfera sarcini și date existente în JustDo și să continuați fără probleme cu funcția noastră de import din foaie de calcul",
+  "customize_columns_title": "Personalizați vizualizarea",
+  "customize_columns_subtitle": "Controlați ce vedeți în grilă adăugând/eliminând coloane, filtrând sarcinile după status și multe altele!",
+  "get_free_support_title": "Obțineți asistență gratuită",
+  "get_free_support_subtitle": "Sesiune de asistență 1 la 1 cu echipa JustDo",
+  "request": "Solicitare",
+  "free_support_request_received": "Solicitare primită, vă vom contacta în curând prin e-mail",
+  "tutorials_recent_product_updates": "Actualizări recente ale produsului",
+  "tutorials_justdo_quick_start": "Ghid rapid JustDo",
+  "tutorials_justdo_advanced_features": "Funcții avansate JustDo",
+  "tutorials_justdo_support_center": "Centrul de asistență JustDo"
+}

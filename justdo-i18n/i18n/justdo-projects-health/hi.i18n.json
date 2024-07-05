@@ -1,0 +1,8 @@
+{
+  "task_type_delayed_label": "विलंबित",
+  "task_type_behind_label": "पीछे",
+  "task_type_late_label": "देर से",
+  "task_type_overdue_label": "समय सीमा पार",
+  "task_type_key_task_label": "महत्वपूर्ण कार्य",
+  "task_type_no_owner_label": "कोई मालिक नहीं"
+}

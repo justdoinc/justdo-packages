@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "Shirika la __user_name__",
+  "create_org_label": "Unda Shirika",
+  "without_orgs_label": "Bila Shirika",
+  "justdos_under_named_org_html": "JustDos chini ya <span class=\"org-name\">__org_name__</span>",
+  "justdos_without_orgs": "JustDos bila shirika",
+  "orgs_project_config_title": "Mashirika",
+  "assign_justdo_to_organization_label": "Weka JustDo kwenye shirika",
+  "another_organization": "shirika lingine",
+  "pre_transfer_justdo_to_org_notice_html": "Unakaribia kuhamisha JustDo hii kwenda <b>__dest_org_name__</b>. <br> Wanachama wote katika JustDo hii watakuwa wanachama wa <b>__dest_org_name__</b>.",
+  "select_organization": "Chagua Shirika",
+  "org_expiring_soon_notice_title": "Leseni ya shirika lako inakaribia kumalizika!",
+  "org_expiring_soon_notice_html": "Leseni ya shirika lako <b>__org_name__</b> itaisha tarehe __org_expiration_date__. <br> Tunatumaini kuwa JustDo imefanya maisha yako ya kazi kuwa rahisi zaidi!",
+  "org_locked_notice_title": "Leseni ya shirika lako imekwisha!",
+  "org_locked_notice_html": "Leseni ya shirika lako <b>__org_name__</b> iliisha tarehe __org_expiration_date__. <br> Tunatumaini kuwa JustDo imefanya maisha yako ya kazi kuwa rahisi zaidi, na tungependa kuendelea kufanya hivyo!",
+  "org_access_restricted_title": "__org_name__: Kizuizi cha Muda cha Upatikanaji",
+  "org_access_restricted_html": "Upatikanaji wa shirika lako <b>__org_name__</b> umezuiliwa kwa sasa. Tafadhali wasiliana na wasimamizi wa shirika lako kwa maelezo zaidi kuhusu suala hili. <br> Tunashukuru uvumilivu na uelewa wako.",
+  "renew_org_license_instruction_html": "Unaweza kufanya upya leseni kwa kubofya kitufe cha \"Fanya Upya Leseni\" hapa chini.<br>Timu yetu ya msaada iko tayari kukusaidia wakati wowote.<br><br>Asante kwa kuwa sehemu ya jumuiya ya JustDo. Tunatengeneza vipengele vipya kwa toleo lijalo ili kuboresha mtiririko wako wa kazi!",
+  "renew_org_licnese_modal_btn_label": "Fanya Upya Leseni",
+  "org_pre_expire_renewal_contact_page_message": "Shirika langu __org_name__ __optional_domain_msg__ linakaribia kumalizika na ningependa kufanya upya leseni.",
+  "org_post_expire_renewal_contact_page_message": "Shirika langu __org_name__ __optional_domain_msg__ limekwisha na ningependa kufanya upya leseni."
+}

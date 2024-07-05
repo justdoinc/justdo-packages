@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "ልዩ መስኮች",
+  "grid_control_custom_fields_sort_by_name_label": "በስም ደርድር",
+  "grid_control_custom_fields_new_custom_field_label": "አዲስ ልዩ መስክ",
+  "grid_control_custom_fields_no_custom_fields_label": "ልዩ መስኮች የሉም",
+  "grid_control_custom_fields_label_placeholder": "መለያ",
+  "grid_control_custom_fields_text_label": "ጽሑፍ",
+  "grid_control_custom_fields_number_label": "ቁጥር",
+  "grid_control_custom_fields_date_label": "ቀን",
+  "grid_control_custom_fields_select_label": "አማራጮች",
+  "grid_control_custom_fields_multi_select_label": "ብዙ አማራጮች",
+  "grid_control_custom_fields_smart_numbers_label": "ሰማርት ቁጥሮች (Smart Numbers)",
+  "grid_control_custom_fields_unknown_type_label": "ያልታወቀ ዓይነት",
+  "grid_control_custom_fields_disabled_field_label": "የተሰናከለ መስክ"
+}

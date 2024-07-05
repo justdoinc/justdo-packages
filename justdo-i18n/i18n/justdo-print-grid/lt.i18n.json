@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "Spausdinti JustDo",
+  "print_dropdown_entire_justdo": "Visas JustDo",
+  "print_dropdown_visible_tasks": "Matomos užduotys",
+  "print_dropdown_print_current_task": "Spausdinti dabartinę užduotį",
+  "print_dropdown_all_child_tasks": "Visos antrinės užduotys",
+  "print_dropdown_visible_child_tasks": "Matomos antrinės užduotys",
+  "print_dropdown_download": "Atsisiųsti",
+  "print_dropdown_download_as_png": "Atsisiųsti kaip PNG",
+  "print_grid_columns_settings_label": "Stulpelių nustatymai",
+  "print_grid_columns_options_label": "Stulpelių parinktys",
+  "print_grid_print": "Spausdinti",
+  "print_grid_export_csv": "Eksportuoti CSV",
+  "print_grid_select_all": "Pasirinkti viską",
+  "print_grid_apply": "Taikyti"
+}

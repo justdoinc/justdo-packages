@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Skift visning",
+  "tab_switcher_dropdown_search_placeholder": "Visninger",
+  "tab_switcher_main_view_label": "Hovedvisning",
+  "tab_switcher_my_favorites_label": "Mine favoritter",
+  "tab_switcher_my_due_list_label": "Min forfaldsliste",
+  "tab_switcher_recently_label": "Seneste",
+  "tab_switcher_recently_completed_label": "Fuldført",
+  "tab_switcher_recently_updated_label": "Opdateret",
+  "tab_switcher_recently_created_label": "Oprettet",
+  "tab_switcher_miscellaneous_label": "Diverse",
+  "tab_switcher_task_ownershipt_transfers_label": "Overførsler af opgaveejerskab",
+  "tab_switcher_ticket_queues_label": "Ticket-køer",
+  "tab_switcher_members_due_lists_label": "Medlemmers forfaldslister",
+  "tab_switcher_all_members_due_list_label": "Alle medlemmers forfaldsliste",
+  "tab_switcher_projects_section_label": "Projekter",
+  "tab_switcher_projects_label": "Projekter"
+}

@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "Užklausų eilės",
+  "project_config_ticket_queues_new_ticket_queue_label": "Nauja užklausų eilė",
+  "project_config_ticket_queues_enter_task_number_label": "Įveskite užduoties numerį",
+  "project_config_ticket_queues_no_ticket_queues_label": "Nėra užklausų eilių",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "Negalite pašalinti šios Užklausų eilės, nes nesate jos Užduoties narys"
+}

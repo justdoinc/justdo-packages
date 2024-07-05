@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "ជួរសំបុត្រ",
+  "project_config_ticket_queues_new_ticket_queue_label": "ជួរសំបុត្រថ្មី",
+  "project_config_ticket_queues_enter_task_number_label": "បញ្ចូលលេខកិច្ចការ",
+  "project_config_ticket_queues_no_ticket_queues_label": "គ្មានជួរសំបុត្រ",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "អ្នកមិនអាចលុបជួរសំបុត្រនេះបានទេ ដោយសារអ្នកមិនមែនជាសមាជិកនៃកិច្ចការរបស់វា"
+}

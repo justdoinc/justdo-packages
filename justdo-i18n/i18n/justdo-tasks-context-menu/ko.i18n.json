@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "작업 제거",
+  "remove_from_parent_label": "상위 항목에서 제거",
+  "remove_with_subtree_label": "하위 트리와 함께 제거",
+  "archive_task_label": "작업 보관",
+  "unarchive_task_label": "작업 보관 해제",
+  "reorder_children_by_label": "하위 항목 재정렬 기준",
+  "zoom_in_label": "확대",
+  "projects_label": "프로젝트",
+  "set_as_a_project_label": "프로젝트로 설정",
+  "unset_as_a_project_label": "프로젝트 설정 해제",
+  "close_project_label": "프로젝트 닫기",
+  "repoen_project_label": "프로젝트 다시 열기",
+  "add_to_project_label": "프로젝트에 추가",
+  "apply_value_to_subtree": "하위 트리에 __value__ 적용",
+  "bulk_set_options_label": "일괄 설정"
+}

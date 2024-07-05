@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Dodaj stolpec",
+  "hide_column_label": "Skrij stolpec",
+  "freeze_column_label": "Zamrzni stolpec",
+  "unfreeze_column_label": "Odmrzni stolpec",
+  "tree_control_tooltip_gantt_milestone": "Mejnik Ganttovega diagrama",
+  "tree_control_tooltip_buffer_task": "Vmesna naloga",
+  "tree_control_tooltip_Meetings": "Sestanki",
+  "tree_control_tooltip_start_time_tracking": "Začni delati na tej nalogi",
+  "tree_control_tooltip_stop_time_tracking": "Trenutno delaš na tej nalogi, pritisni za zaustavitev in beleženje opravljenega časa",
+  "tree_control_tooltip_resources": "Viri",
+  "tree_control_tooltip_description": "Opis naloge",
+  "tree_control_tooltip_chat_messages": "Sporočila klepeta",
+  "tree_control_tooltip_files_count": "__files_count__ datotek",
+  "tree_control_tooltip_emails_count": "__emails_count__ e-poštnih sporočil",
+  "tree_control_tooltip_task_is_a_project": "Naloga je projekt",
+  "tree_control_tooltip_task_is_archived": "Naloga je arhivirana"
+}

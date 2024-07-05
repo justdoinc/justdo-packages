@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Vues en grille",
+  "grid_views_search_placeholder": "Rechercher des vues",
+  "grid_views_no_view_label": "Aucune vue",
+  "grid_views_add_current_view_label": "Ajouter la vue actuelle",
+  "grid_views_rename_label": "Renommer",
+  "grid_views_update_label": "Mettre à jour",
+  "grid_views_remove_label": "Supprimer",
+  "grid_views_share_label": "Partager",
+  "grid_views_unshare_label": "Annuler le partage",
+  "grid_views_shared_label": "partagé"
+}

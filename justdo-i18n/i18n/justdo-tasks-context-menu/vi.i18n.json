@@ -12,5 +12,6 @@
   "close_project_label": "Đóng dự án",
   "repoen_project_label": "Mở lại dự án",
   "add_to_project_label": "Thêm dự án",
-  "apply_value_to_subtree": "Thêm __value__ vào tác vụ nhánh"
+  "apply_value_to_subtree": "Thêm __value__ vào tác vụ nhánh",
+  "bulk_set_options_label": "Thiết lập"
 }

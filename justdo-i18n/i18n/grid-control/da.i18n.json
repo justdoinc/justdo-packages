@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Tilføj kolonne",
+  "hide_column_label": "Skjul kolonne",
+  "freeze_column_label": "Fastfrys kolonne",
+  "unfreeze_column_label": "Ophæv frysning af kolonne",
+  "tree_control_tooltip_gantt_milestone": "Gantt-milepæl",
+  "tree_control_tooltip_buffer_task": "Buffertask",
+  "tree_control_tooltip_Meetings": "Møder",
+  "tree_control_tooltip_start_time_tracking": "Begynd at arbejde på denne opgave",
+  "tree_control_tooltip_stop_time_tracking": "Du arbejder på denne opgave nu, tryk for at stoppe og registrere den arbejdede tid",
+  "tree_control_tooltip_resources": "Ressourcer",
+  "tree_control_tooltip_description": "Opgavebeskrivelse",
+  "tree_control_tooltip_chat_messages": "Chatbeskeder",
+  "tree_control_tooltip_files_count": "__files_count__ filer",
+  "tree_control_tooltip_emails_count": "__emails_count__ e-mails",
+  "tree_control_tooltip_task_is_a_project": "Opgaven er et projekt",
+  "tree_control_tooltip_task_is_archived": "Opgaven er arkiveret"
+}

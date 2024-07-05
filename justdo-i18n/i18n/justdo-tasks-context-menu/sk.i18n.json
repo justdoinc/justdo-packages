@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Odstrániť úlohy",
+  "remove_from_parent_label": "Odstrániť z nadriadenej úlohy",
+  "remove_with_subtree_label": "Odstrániť s podstromom",
+  "archive_task_label": "Archivovať úlohu",
+  "unarchive_task_label": "Obnoviť úlohu z archívu",
+  "reorder_children_by_label": "Preusporiadať podúlohy podľa",
+  "zoom_in_label": "Priblížiť",
+  "projects_label": "Projekty",
+  "set_as_a_project_label": "Nastaviť ako projekt",
+  "unset_as_a_project_label": "Zrušiť nastavenie ako projekt",
+  "close_project_label": "Uzavrieť projekt",
+  "repoen_project_label": "Znovu otvoriť projekt",
+  "add_to_project_label": "Pridať do projektu",
+  "apply_value_to_subtree": "Aplikovať __value__ na podstrom",
+  "bulk_set_options_label": "Nastaviť"
+}

@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "Files d'attente des tickets",
+  "project_config_ticket_queues_new_ticket_queue_label": "Nouvelle file d'attente de tickets",
+  "project_config_ticket_queues_enter_task_number_label": "Entrez le numéro de la tâche",
+  "project_config_ticket_queues_no_ticket_queues_label": "Aucune file d'attente de tickets",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "Vous ne pouvez pas supprimer cette file d'attente de tickets, car vous n'êtes pas membre de sa tâche"
+}

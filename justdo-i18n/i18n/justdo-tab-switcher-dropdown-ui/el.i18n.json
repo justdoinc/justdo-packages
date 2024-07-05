@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Εναλλαγή Προβολής",
+  "tab_switcher_dropdown_search_placeholder": "Προβολές",
+  "tab_switcher_main_view_label": "Κύρια Προβολή",
+  "tab_switcher_my_favorites_label": "Τα Αγαπημένα μου",
+  "tab_switcher_my_due_list_label": "Η Λίστα Προθεσμιών μου",
+  "tab_switcher_recently_label": "Πρόσφατα",
+  "tab_switcher_recently_completed_label": "Ολοκληρωμένα",
+  "tab_switcher_recently_updated_label": "Ενημερωμένα",
+  "tab_switcher_recently_created_label": "Δημιουργημένα",
+  "tab_switcher_miscellaneous_label": "Διάφορα",
+  "tab_switcher_task_ownershipt_transfers_label": "Μεταβιβάσεις Ιδιοκτησίας Εργασιών",
+  "tab_switcher_ticket_queues_label": "Ουρές Αιτημάτων",
+  "tab_switcher_members_due_lists_label": "Λίστες Προθεσμιών Μελών",
+  "tab_switcher_all_members_due_list_label": "Λίστα Προθεσμιών Όλων των Μελών",
+  "tab_switcher_projects_section_label": "Έργα",
+  "tab_switcher_projects_label": "Έργα"
+}

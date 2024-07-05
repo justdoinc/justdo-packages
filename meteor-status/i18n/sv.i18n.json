@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Ansluten",
+  "meteor_status_connecting": "Ansluter...",
+  "meteor_status_failed": "Serveranslutningen misslyckades",
+  "meteor_status_waiting": "Väntar på serveranslutning,",
+  "meteor_status_offline": "Offlineläge.",
+  "meteor_status_reconnect_in": "försöker igen om en sekund...",
+  "meteor_status_reconnect_in_plural": "försöker igen om __count__ sekunder...",
+  "meteor_status_try_now_waiting": "Försök nu",
+  "meteor_status_try_now_offline": "Anslut igen"
+}

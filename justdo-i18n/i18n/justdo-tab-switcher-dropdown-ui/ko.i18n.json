@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "보기 전환",
+  "tab_switcher_dropdown_search_placeholder": "보기",
+  "tab_switcher_main_view_label": "메인 보기",
+  "tab_switcher_my_favorites_label": "즐겨찾기",
+  "tab_switcher_my_due_list_label": "나의 마감 목록",
+  "tab_switcher_recently_label": "최근",
+  "tab_switcher_recently_completed_label": "완료됨",
+  "tab_switcher_recently_updated_label": "업데이트됨",
+  "tab_switcher_recently_created_label": "생성됨",
+  "tab_switcher_miscellaneous_label": "기타",
+  "tab_switcher_task_ownershipt_transfers_label": "작업 소유권 이전",
+  "tab_switcher_ticket_queues_label": "티켓 대기열",
+  "tab_switcher_members_due_lists_label": "멤버 마감 목록",
+  "tab_switcher_all_members_due_list_label": "전체 멤버 마감 목록",
+  "tab_switcher_projects_section_label": "프로젝트",
+  "tab_switcher_projects_label": "프로젝트"
+}

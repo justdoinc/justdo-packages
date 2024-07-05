@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Zobrazení tabulky",
+  "grid_views_search_placeholder": "Vyhledat zobrazení",
+  "grid_views_no_view_label": "Žádná zobrazení",
+  "grid_views_add_current_view_label": "Přidat aktuální zobrazení",
+  "grid_views_rename_label": "Přejmenovat",
+  "grid_views_update_label": "Aktualizovat",
+  "grid_views_remove_label": "Odstranit",
+  "grid_views_share_label": "Sdílet",
+  "grid_views_unshare_label": "Zrušit sdílení",
+  "grid_views_shared_label": "sdíleno"
+}

@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Przełącz widok",
+  "tab_switcher_dropdown_search_placeholder": "Widoki",
+  "tab_switcher_main_view_label": "Widok główny",
+  "tab_switcher_my_favorites_label": "Moje ulubione",
+  "tab_switcher_my_due_list_label": "Moja lista terminów",
+  "tab_switcher_recently_label": "Ostatnio",
+  "tab_switcher_recently_completed_label": "Ukończone",
+  "tab_switcher_recently_updated_label": "Zaktualizowane",
+  "tab_switcher_recently_created_label": "Utworzone",
+  "tab_switcher_miscellaneous_label": "Różne",
+  "tab_switcher_task_ownershipt_transfers_label": "Transfery własności zadań",
+  "tab_switcher_ticket_queues_label": "Kolejki zgłoszeń",
+  "tab_switcher_members_due_lists_label": "Listy terminów członków",
+  "tab_switcher_all_members_due_list_label": "Lista terminów wszystkich członków",
+  "tab_switcher_projects_section_label": "Projekty",
+  "tab_switcher_projects_label": "Projekty"
+}

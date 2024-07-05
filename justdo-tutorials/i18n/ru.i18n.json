@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "Задайте название для вашего JustDo",
+  "set_justdo_name_subtitle": "Просто нажмите на заголовок, чтобы перейти в режим редактирования",
+  "create_first_task_title": "Создайте ваши первые задачи",
+  "create_first_task_subtitle": "Для создания задач вы можете использовать кнопки на панели инструментов или сочетания клавиш ALT+ENTER / ALT+SHIFT+ENTER",
+  "invite_members_title": "Пригласите членов команды",
+  "invite_members_subtitle": "Пригласите членов вашей команды присоединиться и сотрудничать в вашем новом JustDo",
+  "import_tasks_title": "Импорт задач",
+  "import_tasks_subtitle": "Вы можете перенести существующие задачи и данные в JustDo и продолжить работу без перерыва с помощью нашей функции импорта электронных таблиц",
+  "customize_columns_title": "Настройте ваше представление",
+  "customize_columns_subtitle": "Управляйте тем, что вы видите в таблице, добавляя/удаляя столбцы, фильтруя задачи по их статусу и многое другое!",
+  "get_free_support_title": "Получите бесплатную поддержку",
+  "get_free_support_subtitle": "Индивидуальная сессия поддержки с командой JustDo",
+  "request": "Запросить",
+  "free_support_request_received": "Получено, мы скоро свяжемся с вами по электронной почте",
+  "tutorials_recent_product_updates": "Последние обновления продукта",
+  "tutorials_justdo_quick_start": "Быстрый старт JustDo",
+  "tutorials_justdo_advanced_features": "Расширенные функции JustDo",
+  "tutorials_justdo_support_center": "Центр поддержки JustDo"
+}

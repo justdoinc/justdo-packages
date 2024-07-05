@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Pievienot kolonnu",
+  "hide_column_label": "Paslēpt kolonnu",
+  "freeze_column_label": "Fiksēt kolonnu",
+  "unfreeze_column_label": "Atfiksēt kolonnu",
+  "tree_control_tooltip_gantt_milestone": "Ganta diagrammas atskaites punkts",
+  "tree_control_tooltip_buffer_task": "Bufera uzdevums",
+  "tree_control_tooltip_Meetings": "Sanāksmes",
+  "tree_control_tooltip_start_time_tracking": "Sākt darbu pie šī uzdevuma",
+  "tree_control_tooltip_stop_time_tracking": "Jūs pašlaik strādājat pie šī uzdevuma, nospiediet, lai apturētu un reģistrētu nostrādāto laiku",
+  "tree_control_tooltip_resources": "Resursi",
+  "tree_control_tooltip_description": "Uzdevuma apraksts",
+  "tree_control_tooltip_chat_messages": "Tērzēšanas ziņojumi",
+  "tree_control_tooltip_files_count": "__files_count__ faili",
+  "tree_control_tooltip_emails_count": "__emails_count__ e-pasta ziņojumi",
+  "tree_control_tooltip_task_is_a_project": "Uzdevums ir projekts",
+  "tree_control_tooltip_task_is_archived": "Uzdevums ir arhivēts"
+}

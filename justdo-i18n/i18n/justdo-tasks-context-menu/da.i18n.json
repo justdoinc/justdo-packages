@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Fjern opgaver",
+  "remove_from_parent_label": "Fjern fra overordnet",
+  "remove_with_subtree_label": "Fjern med understruktur",
+  "archive_task_label": "Arkivér opgave",
+  "unarchive_task_label": "Gendan opgave fra arkiv",
+  "reorder_children_by_label": "Omarrangér underopgaver efter",
+  "zoom_in_label": "Zoom ind",
+  "projects_label": "Projekter",
+  "set_as_a_project_label": "Indstil som projekt",
+  "unset_as_a_project_label": "Fjern som projekt",
+  "close_project_label": "Luk projekt",
+  "repoen_project_label": "Genåbn projekt",
+  "add_to_project_label": "Tilføj til projekt",
+  "apply_value_to_subtree": "Anvend __value__ på understruktur",
+  "bulk_set_options_label": "Indstil"
+}

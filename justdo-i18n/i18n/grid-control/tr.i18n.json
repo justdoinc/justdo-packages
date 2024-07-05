@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Sütun Ekle",
+  "hide_column_label": "Sütunu Gizle",
+  "freeze_column_label": "Sütunu Sabitle",
+  "unfreeze_column_label": "Sütun Sabitlemesini Kaldır",
+  "tree_control_tooltip_gantt_milestone": "Gantt Kilometre Taşı",
+  "tree_control_tooltip_buffer_task": "Tampon Görev",
+  "tree_control_tooltip_Meetings": "Toplantılar",
+  "tree_control_tooltip_start_time_tracking": "Bu görev üzerinde çalışmaya başla",
+  "tree_control_tooltip_stop_time_tracking": "Şu anda bu görev üzerinde çalışıyorsunuz, durdurmak ve çalışma süresini kaydetmek için basın",
+  "tree_control_tooltip_resources": "Kaynaklar",
+  "tree_control_tooltip_description": "Görev açıklaması",
+  "tree_control_tooltip_chat_messages": "Sohbet mesajları",
+  "tree_control_tooltip_files_count": "__files_count__ dosya",
+  "tree_control_tooltip_emails_count": "__emails_count__ e-posta",
+  "tree_control_tooltip_task_is_a_project": "Görev bir projedir",
+  "tree_control_tooltip_task_is_archived": "Görev arşivlendi"
+}

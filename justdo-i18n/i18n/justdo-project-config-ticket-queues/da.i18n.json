@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "Opgavekøer",
+  "project_config_ticket_queues_new_ticket_queue_label": "Ny opgavekø",
+  "project_config_ticket_queues_enter_task_number_label": "Indtast opgavenummer",
+  "project_config_ticket_queues_no_ticket_queues_label": "Ingen opgavekøer",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "Du kan ikke fjerne denne opgavekø, da du ikke er medlem af dens opgave"
+}

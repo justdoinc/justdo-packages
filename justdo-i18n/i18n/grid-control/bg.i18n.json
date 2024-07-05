@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Добави колона",
+  "hide_column_label": "Скрий колона",
+  "freeze_column_label": "Фиксирай колона",
+  "unfreeze_column_label": "Освободи колона",
+  "tree_control_tooltip_gantt_milestone": "Етап в диаграмата на Гант",
+  "tree_control_tooltip_buffer_task": "Буферна задача",
+  "tree_control_tooltip_Meetings": "Срещи",
+  "tree_control_tooltip_start_time_tracking": "Започни работа по тази задача",
+  "tree_control_tooltip_stop_time_tracking": "В момента работите по тази задача, натиснете, за да спрете и да запишете отработеното време",
+  "tree_control_tooltip_resources": "Ресурси",
+  "tree_control_tooltip_description": "Описание на задачата",
+  "tree_control_tooltip_chat_messages": "Чат съобщения",
+  "tree_control_tooltip_files_count": "__files_count__ файла",
+  "tree_control_tooltip_emails_count": "__emails_count__ имейла",
+  "tree_control_tooltip_task_is_a_project": "Задачата е проект",
+  "tree_control_tooltip_task_is_archived": "Задачата е архивирана"
+}

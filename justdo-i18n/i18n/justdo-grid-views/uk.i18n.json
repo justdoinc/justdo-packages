@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Табличні подання",
+  "grid_views_search_placeholder": "Пошук подань",
+  "grid_views_no_view_label": "Немає подань",
+  "grid_views_add_current_view_label": "Додати поточне подання",
+  "grid_views_rename_label": "Перейменувати",
+  "grid_views_update_label": "Оновити",
+  "grid_views_remove_label": "Видалити",
+  "grid_views_share_label": "Поділитися",
+  "grid_views_unshare_label": "Скасувати спільний доступ",
+  "grid_views_shared_label": "спільне"
+}

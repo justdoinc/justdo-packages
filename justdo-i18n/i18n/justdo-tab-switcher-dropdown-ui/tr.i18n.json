@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Görünümü Değiştir",
+  "tab_switcher_dropdown_search_placeholder": "Görünümler",
+  "tab_switcher_main_view_label": "Ana Görünüm",
+  "tab_switcher_my_favorites_label": "Favorilerim",
+  "tab_switcher_my_due_list_label": "Vade Listem",
+  "tab_switcher_recently_label": "Son",
+  "tab_switcher_recently_completed_label": "Tamamlanan",
+  "tab_switcher_recently_updated_label": "Güncellenen",
+  "tab_switcher_recently_created_label": "Oluşturulan",
+  "tab_switcher_miscellaneous_label": "Çeşitli",
+  "tab_switcher_task_ownershipt_transfers_label": "Görev Sahipliği Transferleri",
+  "tab_switcher_ticket_queues_label": "Bilet Kuyrukları",
+  "tab_switcher_members_due_lists_label": "Üye Vade Listeleri",
+  "tab_switcher_all_members_due_list_label": "Tüm Üyelerin Vade Listesi",
+  "tab_switcher_projects_section_label": "Projeler",
+  "tab_switcher_projects_label": "Projeler"
+}

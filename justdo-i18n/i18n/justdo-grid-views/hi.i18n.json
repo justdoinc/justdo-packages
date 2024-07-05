@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "ग्रिड व्यू",
+  "grid_views_search_placeholder": "व्यू खोजें",
+  "grid_views_no_view_label": "कोई व्यू नहीं",
+  "grid_views_add_current_view_label": "वर्तमान व्यू जोड़ें",
+  "grid_views_rename_label": "नाम बदलें",
+  "grid_views_update_label": "अपडेट करें",
+  "grid_views_remove_label": "हटाएं",
+  "grid_views_share_label": "साझा करें",
+  "grid_views_unshare_label": "साझा करना बंद करें",
+  "grid_views_shared_label": "साझा किया गया"
+}

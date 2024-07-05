@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "Организация __user_name__",
+  "create_org_label": "Создать организацию",
+  "without_orgs_label": "Без организации",
+  "justdos_under_named_org_html": "JustDo-доски в <span class=\"org-name\">__org_name__</span>",
+  "justdos_without_orgs": "JustDo-доски без организации",
+  "orgs_project_config_title": "Организации",
+  "assign_justdo_to_organization_label": "Назначить JustDo-доску организации",
+  "another_organization": "другая организация",
+  "pre_transfer_justdo_to_org_notice_html": "Вы собираетесь перенести эту JustDo-доску в <b>__dest_org_name__</b>. <br> Все участники этой JustDo-доски станут членами <b>__dest_org_name__</b>.",
+  "select_organization": "Выбрать организацию",
+  "org_expiring_soon_notice_title": "Срок действия лицензии вашей организации скоро истекает!",
+  "org_expiring_soon_notice_html": "Срок действия лицензии для вашей организации <b>__org_name__</b> истекает __org_expiration_date__. <br> Надеемся, что JustDo сделал вашу работу проще!",
+  "org_locked_notice_title": "Срок действия лицензии вашей организации истек!",
+  "org_locked_notice_html": "Срок действия лицензии для вашей организации <b>__org_name__</b> истек __org_expiration_date__. <br> Надеемся, что JustDo сделал вашу работу проще, и мы хотели бы продолжать это делать!",
+  "org_access_restricted_title": "__org_name__: Временное ограничение доступа",
+  "org_access_restricted_html": "Доступ к вашей организации <b>__org_name__</b> в настоящее время ограничен. Пожалуйста, свяжитесь с администраторами вашей организации для получения дополнительной информации по этому вопросу. <br> Мы ценим ваше терпение и понимание.",
+  "renew_org_license_instruction_html": "Вы можете продлить лицензию, нажав на кнопку \"Продлить лицензию\" ниже.<br>Наша команда поддержки всегда готова помочь вам.<br><br>Спасибо, что вы являетесь частью сообщества JustDo. Мы активно разрабатываем новые функции для следующего релиза, чтобы улучшить ваш рабочий процесс!",
+  "renew_org_licnese_modal_btn_label": "Продлить лицензию",
+  "org_pre_expire_renewal_contact_page_message": "Срок действия лицензии моей организации __org_name__ __optional_domain_msg__ скоро истекает, и я хотел бы продлить лицензию.",
+  "org_post_expire_renewal_contact_page_message": "Срок действия лицензии моей организации __org_name__ __optional_domain_msg__ истек, и я хотел бы продлить лицензию."
+}

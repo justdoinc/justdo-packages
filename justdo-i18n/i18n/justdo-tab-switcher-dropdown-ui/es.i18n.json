@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Cambiar Vista",
+  "tab_switcher_dropdown_search_placeholder": "Vistas",
+  "tab_switcher_main_view_label": "Vista Principal",
+  "tab_switcher_my_favorites_label": "Mis Favoritos",
+  "tab_switcher_my_due_list_label": "Mi Lista de Pendientes",
+  "tab_switcher_recently_label": "Recientes",
+  "tab_switcher_recently_completed_label": "Completados",
+  "tab_switcher_recently_updated_label": "Actualizados",
+  "tab_switcher_recently_created_label": "Creados",
+  "tab_switcher_miscellaneous_label": "Misceláneos",
+  "tab_switcher_task_ownershipt_transfers_label": "Transferencias de Propiedad de Tareas",
+  "tab_switcher_ticket_queues_label": "Colas de Tickets",
+  "tab_switcher_members_due_lists_label": "Listas de Pendientes de Miembros",
+  "tab_switcher_all_members_due_list_label": "Lista de Pendientes de Todos los Miembros",
+  "tab_switcher_projects_section_label": "Proyectos",
+  "tab_switcher_projects_label": "Proyectos"
+}

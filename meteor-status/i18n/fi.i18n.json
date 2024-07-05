@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Yhdistetty",
+  "meteor_status_connecting": "Yhdistetään...",
+  "meteor_status_failed": "Palvelinyhteys epäonnistui",
+  "meteor_status_waiting": "Odotetaan palvelinyhteyttä,",
+  "meteor_status_offline": "Offline-tila.",
+  "meteor_status_reconnect_in": "yritetään uudelleen sekunnin kuluttua...",
+  "meteor_status_reconnect_in_plural": "yritetään uudelleen __count__ sekunnin kuluttua...",
+  "meteor_status_try_now_waiting": "Yritä nyt",
+  "meteor_status_try_now_offline": "Yhdistä uudelleen"
+}
