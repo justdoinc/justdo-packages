@@ -85,6 +85,15 @@ _.extend JustdoNews.prototype,
         fallback_description = APP.justdo_seo.getDefaultPageDescription lang
 
         return APP.justdo_i18n.getI18nTextOrFallback {i18n_key: news_template_doc.page_description, fallback_text: fallback_description, lang: lang}
+      preview_image: (req) ->
+        if Meteor.isClient
+          news_id = Router.current()?.getParams()?.news_id
+        if Meteor.isServer
+          {news_id} = self.getNewsParamFromReq req
+
+        news_template_doc = self.getNewsTemplateIfExists category, news_id, JustdoNews.default_news_template
+
+        return news_template_doc?.template_data?.news_array?[0]?.media_url or APP.justdo_seo.getDefaultPagePreviewImageUrl()
 
     routes =
       "/#{category}":
