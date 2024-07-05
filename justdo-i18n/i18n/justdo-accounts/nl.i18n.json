@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Het wachtwoord moet:",
+  "password_requirements_too_short": "Bestaan uit minimaal %d tekens",
+  "password_requirements_missing_number": "Minimaal één cijfer bevatten",
+  "password_requirements_special_sign": "Minimaal één speciaal teken bevatten",
+  "password_requirements_atleast_one_lowercase": "Minimaal één kleine Engelse letter bevatten",
+  "password_requirements_atleast_one_uppercase": "Minimaal één hoofdletter (Engelse letter) bevatten",
+  "password_requirements_too_similar": "Niet uw naam of delen van uw e-mailadres bevatten"
+}

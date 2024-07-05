@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Паролата трябва да:",
+  "password_requirements_too_short": "Съдържа поне %d символа",
+  "password_requirements_missing_number": "Има поне една цифра",
+  "password_requirements_special_sign": "Има поне един специален символ",
+  "password_requirements_atleast_one_lowercase": "Има поне една малка буква на латиница",
+  "password_requirements_atleast_one_uppercase": "Има поне една главна буква на латиница",
+  "password_requirements_too_similar": "Не включва вашето име или части от вашия имейл"
+}

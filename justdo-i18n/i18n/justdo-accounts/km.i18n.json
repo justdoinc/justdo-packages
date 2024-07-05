@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "ពាក្យសម្ងាត់ត្រូវតែ៖",
+  "password_requirements_too_short": "មានយ៉ាងហោចណាស់ %d តួអក្សរ",
+  "password_requirements_missing_number": "មានយ៉ាងហោចណាស់លេខមួយ",
+  "password_requirements_special_sign": "មានយ៉ាងហោចណាស់តួអក្សរពិសេសមួយ",
+  "password_requirements_atleast_one_lowercase": "មានយ៉ាងហោចណាស់អក្សរឡាតាំងតូចមួយតួ",
+  "password_requirements_atleast_one_uppercase": "មានយ៉ាងហោចណាស់អក្សរឡាតាំងធំមួយតួ",
+  "password_requirements_too_similar": "មិនត្រូវមានឈ្មោះរបស់អ្នក ឬផ្នែកណាមួយនៃអ៊ីមែលរបស់អ្នកនោះទេ"
+}

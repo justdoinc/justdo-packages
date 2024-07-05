@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Пароль повинен:",
+  "password_requirements_too_short": "Складатися принаймні з %d символів",
+  "password_requirements_missing_number": "Містити принаймні одну цифру",
+  "password_requirements_special_sign": "Містити принаймні один спеціальний символ",
+  "password_requirements_atleast_one_lowercase": "Містити принаймні одну малу англійську літеру",
+  "password_requirements_atleast_one_uppercase": "Містити принаймні одну велику англійську літеру",
+  "password_requirements_too_similar": "Не включати ваше ім'я або частини вашої електронної пошти"
+}

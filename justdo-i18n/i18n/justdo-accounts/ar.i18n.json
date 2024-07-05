@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "يجب أن تكون كلمة المرور:",
+  "password_requirements_too_short": "تتكون من %d حرف على الأقل",
+  "password_requirements_missing_number": "تحتوي على رقم واحد على الأقل",
+  "password_requirements_special_sign": "تحتوي على حرف خاص واحد على الأقل",
+  "password_requirements_atleast_one_lowercase": "تحتوي على حرف إنجليزي صغير واحد على الأقل",
+  "password_requirements_atleast_one_uppercase": "تحتوي على حرف إنجليزي كبير واحد على الأقل",
+  "password_requirements_too_similar": "لا تتضمن اسمك أو أجزاء من بريدك الإلكتروني"
+}

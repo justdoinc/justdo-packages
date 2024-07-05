@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Heslo musí:",
+  "password_requirements_too_short": "Obsahovat alespoň %d znaků",
+  "password_requirements_missing_number": "Obsahovat alespoň jedno číslo",
+  "password_requirements_special_sign": "Obsahovat alespoň jeden speciální znak",
+  "password_requirements_atleast_one_lowercase": "Obsahovat alespoň jedno malé písmeno anglické abecedy",
+  "password_requirements_atleast_one_uppercase": "Obsahovat alespoň jedno velké písmeno anglické abecedy",
+  "password_requirements_too_similar": "Neobsahovat vaše jméno ani části vaší e-mailové adresy"
+}

@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Salasanan tulee:",
+  "password_requirements_too_short": "Sisältää vähintään %d merkkiä",
+  "password_requirements_missing_number": "Sisältää vähintään yksi numero",
+  "password_requirements_special_sign": "Sisältää vähintään yksi erikoismerkki",
+  "password_requirements_atleast_one_lowercase": "Sisältää vähintään yksi pieni englanninkielinen kirjain",
+  "password_requirements_atleast_one_uppercase": "Sisältää vähintään yksi iso englanninkielinen kirjain",
+  "password_requirements_too_similar": "Ei sisältää nimeäsi tai osia sähköpostiosoitteestasi"
+}

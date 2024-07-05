@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Parola trebuie să:",
+  "password_requirements_too_short": "Conțină cel puțin %d caractere",
+  "password_requirements_missing_number": "Conțină cel puțin o cifră",
+  "password_requirements_special_sign": "Conțină cel puțin un caracter special",
+  "password_requirements_atleast_one_lowercase": "Conțină cel puțin o literă mică din alfabetul englez",
+  "password_requirements_atleast_one_uppercase": "Conțină cel puțin o literă mare din alfabetul englez",
+  "password_requirements_too_similar": "Nu includă numele tău sau părți din adresa ta de email"
+}

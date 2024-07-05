@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Nenosiri lazima:",
+  "password_requirements_too_short": "Liwe na angalau herufi %d",
+  "password_requirements_missing_number": "Liwe na angalau namba moja",
+  "password_requirements_special_sign": "Liwe na angalau herufi moja maalum",
+  "password_requirements_atleast_one_lowercase": "Liwe na angalau herufi ndogo moja ya Kiingereza",
+  "password_requirements_atleast_one_uppercase": "Liwe na angalau herufi kubwa moja ya Kiingereza",
+  "password_requirements_too_similar": "Lisiwe na jina lako, au sehemu ya barua pepe yako"
+}

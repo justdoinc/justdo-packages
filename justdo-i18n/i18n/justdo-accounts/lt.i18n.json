@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Slaptažodis turi:",
+  "password_requirements_too_short": "Sudaryti bent %d simbolius",
+  "password_requirements_missing_number": "Turėti bent vieną skaičių",
+  "password_requirements_special_sign": "Turėti bent vieną specialųjį simbolį",
+  "password_requirements_atleast_one_lowercase": "Turėti bent vieną mažąją anglišką raidę",
+  "password_requirements_atleast_one_uppercase": "Turėti bent vieną didžiąją anglišką raidę",
+  "password_requirements_too_similar": "Neįtraukti jūsų vardo ar el. pašto adreso dalių"
+}

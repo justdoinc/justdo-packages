@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Kata sandi harus:",
+  "password_requirements_too_short": "Terdiri dari minimal %d karakter",
+  "password_requirements_missing_number": "Memiliki setidaknya satu angka",
+  "password_requirements_special_sign": "Memiliki setidaknya satu karakter khusus",
+  "password_requirements_atleast_one_lowercase": "Memiliki setidaknya satu huruf kecil bahasa Inggris",
+  "password_requirements_atleast_one_uppercase": "Memiliki setidaknya satu huruf kapital bahasa Inggris",
+  "password_requirements_too_similar": "Tidak mengandung nama Anda, atau bagian dari email Anda"
+}

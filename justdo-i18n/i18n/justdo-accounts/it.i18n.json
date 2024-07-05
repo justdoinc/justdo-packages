@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "La password deve:",
+  "password_requirements_too_short": "Contenere almeno %d caratteri",
+  "password_requirements_missing_number": "Contenere almeno un numero",
+  "password_requirements_special_sign": "Contenere almeno un carattere speciale",
+  "password_requirements_atleast_one_lowercase": "Contenere almeno una lettera minuscola dell'alfabeto inglese",
+  "password_requirements_atleast_one_uppercase": "Contenere almeno una lettera maiuscola dell'alfabeto inglese",
+  "password_requirements_too_similar": "Non includere il tuo nome o parti della tua email"
+}

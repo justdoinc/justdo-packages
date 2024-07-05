@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Das Passwort muss:",
+  "password_requirements_too_short": "Aus mindestens %d Zeichen bestehen",
+  "password_requirements_missing_number": "Mindestens eine Zahl enthalten",
+  "password_requirements_special_sign": "Mindestens ein Sonderzeichen enthalten",
+  "password_requirements_atleast_one_lowercase": "Mindestens einen englischen Kleinbuchstaben enthalten",
+  "password_requirements_atleast_one_uppercase": "Mindestens einen englischen Großbuchstaben enthalten",
+  "password_requirements_too_similar": "Nicht Ihren Namen oder Teile Ihrer E-Mail-Adresse enthalten"
+}

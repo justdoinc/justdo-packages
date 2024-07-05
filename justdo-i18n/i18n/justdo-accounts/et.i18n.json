@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Parool peab:",
+  "password_requirements_too_short": "Koosnema vähemalt %d tähemärgist",
+  "password_requirements_missing_number": "Sisaldama vähemalt üht numbrit",
+  "password_requirements_special_sign": "Sisaldama vähemalt üht erimärki",
+  "password_requirements_atleast_one_lowercase": "Sisaldama vähemalt üht väikest inglise tähte",
+  "password_requirements_atleast_one_uppercase": "Sisaldama vähemalt üht suurt inglise tähte",
+  "password_requirements_too_similar": "Mitte sisaldama teie nime ega e-posti aadressi osi"
+}

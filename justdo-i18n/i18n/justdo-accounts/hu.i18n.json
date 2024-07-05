@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "A jelszónak:",
+  "password_requirements_too_short": "Legalább %d karakterből kell állnia",
+  "password_requirements_missing_number": "Tartalmaznia kell legalább egy számot",
+  "password_requirements_special_sign": "Tartalmaznia kell legalább egy speciális karaktert",
+  "password_requirements_atleast_one_lowercase": "Tartalmaznia kell legalább egy kisbetűs angol betűt",
+  "password_requirements_atleast_one_uppercase": "Tartalmaznia kell legalább egy nagybetűs angol betűt",
+  "password_requirements_too_similar": "Nem tartalmazhatja a nevedet vagy az e-mail címed részeit"
+}

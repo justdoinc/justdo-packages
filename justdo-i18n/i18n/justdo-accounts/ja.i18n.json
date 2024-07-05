@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "パスワードは以下の条件を満たす必要があります：",
+  "password_requirements_too_short": "%d文字以上で構成されていること",
+  "password_requirements_missing_number": "少なくとも1つの数字を含むこと",
+  "password_requirements_special_sign": "少なくとも1つの特殊文字を含むこと",
+  "password_requirements_atleast_one_lowercase": "少なくとも1つの小文字の英字を含むこと",
+  "password_requirements_atleast_one_uppercase": "少なくとも1つの大文字の英字を含むこと",
+  "password_requirements_too_similar": "あなたの名前やメールアドレスの一部を含まないこと"
+}

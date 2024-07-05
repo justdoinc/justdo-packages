@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Parolei jābūt:",
+  "password_requirements_too_short": "Vismaz %d rakstzīmju garumā",
+  "password_requirements_missing_number": "Vismaz viens cipars",
+  "password_requirements_special_sign": "Vismaz viena īpašā rakstzīme",
+  "password_requirements_atleast_one_lowercase": "Vismaz viens mazais latīņu alfabēta burts",
+  "password_requirements_atleast_one_uppercase": "Vismaz viens lielais latīņu alfabēta burts",
+  "password_requirements_too_similar": "Nedrīkst ietvert jūsu vārdu vai daļas no jūsu e-pasta adreses"
+}

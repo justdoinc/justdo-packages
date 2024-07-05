@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "דער פאַרװאָרט מוז:",
+  "password_requirements_too_short": "באַשטיין פון כאָטש %d סימבאָלן",
+  "password_requirements_missing_number": "האָבן כאָטש איין ציפֿער",
+  "password_requirements_special_sign": "האָבן כאָטש איין ספּעציעלן סימבאָל",
+  "password_requirements_atleast_one_lowercase": "האָבן כאָטש איין קליין ענגליש אות",
+  "password_requirements_atleast_one_uppercase": "האָבן כאָטש איין גרויס ענגליש אות",
+  "password_requirements_too_similar": "נישט אַרייַננעמען דיין נאָמען, אָדער טיילן פון דיין אימעיל"
+}

@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "비밀번호는 다음 조건을 충족해야 합니다:",
+  "password_requirements_too_short": "최소 %d자 이상이어야 합니다",
+  "password_requirements_missing_number": "최소 1개의 숫자를 포함해야 합니다",
+  "password_requirements_special_sign": "최소 1개의 특수 문자를 포함해야 합니다",
+  "password_requirements_atleast_one_lowercase": "최소 1개의 영문 소문자를 포함해야 합니다",
+  "password_requirements_atleast_one_uppercase": "최소 1개의 영문 대문자를 포함해야 합니다",
+  "password_requirements_too_similar": "이름이나 이메일 주소의 일부를 포함하지 않아야 합니다"
+}

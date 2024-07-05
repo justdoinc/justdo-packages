@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Lösenordet måste:",
+  "password_requirements_too_short": "Bestå av minst %d tecken",
+  "password_requirements_missing_number": "Innehålla minst en siffra",
+  "password_requirements_special_sign": "Innehålla minst ett specialtecken",
+  "password_requirements_atleast_one_lowercase": "Innehålla minst en liten bokstav på engelska",
+  "password_requirements_atleast_one_uppercase": "Innehålla minst en stor bokstav på engelska",
+  "password_requirements_too_similar": "Inte innehålla ditt namn eller delar av din e-postadress"
+}

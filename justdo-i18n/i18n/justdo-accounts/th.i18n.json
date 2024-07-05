@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "รหัสผ่านต้อง:",
+  "password_requirements_too_short": "มีอักขระอย่างน้อย %d ตัว",
+  "password_requirements_missing_number": "มีตัวเลขอย่างน้อยหนึ่งตัว",
+  "password_requirements_special_sign": "มีอักขระพิเศษอย่างน้อยหนึ่งตัว",
+  "password_requirements_atleast_one_lowercase": "มีตัวอักษรภาษาอังกฤษตัวพิมพ์เล็กอย่างน้อยหนึ่งตัว",
+  "password_requirements_atleast_one_uppercase": "มีตัวอักษรภาษาอังกฤษตัวพิมพ์ใหญ่อย่างน้อยหนึ่งตัว",
+  "password_requirements_too_similar": "ไม่รวมชื่อของคุณ หรือส่วนหนึ่งของอีเมลของคุณ"
+}

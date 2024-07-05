@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Le mot de passe doit :",
+  "password_requirements_too_short": "Contenir au moins %d caractères",
+  "password_requirements_missing_number": "Contenir au moins un chiffre",
+  "password_requirements_special_sign": "Contenir au moins un caractère spécial",
+  "password_requirements_atleast_one_lowercase": "Contenir au moins une lettre minuscule",
+  "password_requirements_atleast_one_uppercase": "Contenir au moins une lettre majuscule",
+  "password_requirements_too_similar": "Ne pas inclure votre nom ou des parties de votre adresse e-mail"
+}

@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Ο κωδικός πρόσβασης πρέπει:",
+  "password_requirements_too_short": "Να αποτελείται από τουλάχιστον %d χαρακτήρες",
+  "password_requirements_missing_number": "Να περιέχει τουλάχιστον έναν αριθμό",
+  "password_requirements_special_sign": "Να περιέχει τουλάχιστον έναν ειδικό χαρακτήρα",
+  "password_requirements_atleast_one_lowercase": "Να περιέχει τουλάχιστον ένα πεζό λατινικό γράμμα",
+  "password_requirements_atleast_one_uppercase": "Να περιέχει τουλάχιστον ένα κεφαλαίο λατινικό γράμμα",
+  "password_requirements_too_similar": "Να μην περιλαμβάνει το όνομά σας ή μέρη του email σας"
+}

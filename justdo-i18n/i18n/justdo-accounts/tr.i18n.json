@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Şifre şunları içermelidir:",
+  "password_requirements_too_short": "En az %d karakter içermelidir",
+  "password_requirements_missing_number": "En az bir rakam içermelidir",
+  "password_requirements_special_sign": "En az bir özel karakter içermelidir",
+  "password_requirements_atleast_one_lowercase": "En az bir küçük İngilizce harf içermelidir",
+  "password_requirements_atleast_one_uppercase": "En az bir büyük İngilizce harf içermelidir",
+  "password_requirements_too_similar": "Adınızı veya e-posta adresinizin parçalarını içermemelidir"
+}

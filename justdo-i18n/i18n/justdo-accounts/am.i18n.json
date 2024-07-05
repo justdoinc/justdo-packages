@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "የይለፍ ቃሉ መሟላት ያለበት:",
+  "password_requirements_too_short": "ቢያንስ %d ቁምፊዎችን መያዝ አለበት",
+  "password_requirements_missing_number": "ቢያንስ አንድ ቁጥር መያዝ አለበት",
+  "password_requirements_special_sign": "ቢያንስ አንድ ልዩ ምልክት መያዝ አለበት",
+  "password_requirements_atleast_one_lowercase": "ቢያንስ አንድ የእንግሊዝኛ ትንሽ ፊደል መያዝ አለበት",
+  "password_requirements_atleast_one_uppercase": "ቢያንስ አንድ የእንግሊዝኛ capital ፊደል መያዝ አለበት",
+  "password_requirements_too_similar": "ስምዎን ወይም የኢሜይል አድራሻዎን አካል መያዝ የለበትም"
+}
