@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "名前を入力してください",
+  "err_first_name_too_long": "名前は30文字以内で入力してください",
+  "err_last_name_too_long": "姓は30文字以内で入力してください",
+  "err_last_name_empty": "姓を入力してください",
+  "err_email_invalid": "有効なメールアドレスを入力してください",
+  "err_email_empty": "メールアドレスを入力してください",
+  "err_password_empty": "パスワードを入力してください",
+  "err_incorrect_password": "パスワードが正しくありません。パスワードをリセットするには、「パスワードをお忘れですか？」ボタンをクリックしてください。",
+  "err_no_password_set": "パスワードを設定するには、「パスワードをお忘れですか？」ボタンをクリックしてください。",
+  "err_password_too_similar": "パスワードが名前、姓、またはメールアドレスと類似しすぎています",
+  "err_retype_password_empty": "パスワードを再入力してください",
+  "err_retype_password_not_match": "パスワードが一致しません",
+  "err_agree_ts_and_pp_missing": "続行するには、利用規約とプライバシーポリシーを読み、同意する必要があります",
+  "err_cant_login": "ログインできません"
+}

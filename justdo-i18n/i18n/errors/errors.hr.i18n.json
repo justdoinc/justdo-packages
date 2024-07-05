@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Molimo unesite svoje ime",
+  "err_first_name_too_long": "Ime ne smije biti duže od 30 znakova",
+  "err_last_name_too_long": "Prezime ne smije biti duže od 30 znakova",
+  "err_last_name_empty": "Molimo unesite svoje prezime",
+  "err_email_invalid": "Molimo unesite valjanu e-mail adresu",
+  "err_email_empty": "Molimo unesite svoju e-mail adresu",
+  "err_password_empty": "Molimo unesite svoju lozinku",
+  "err_incorrect_password": "Netočna lozinka. Za resetiranje lozinke, kliknite na gumb \"Zaboravili ste lozinku?\"",
+  "err_no_password_set": "Za postavljanje lozinke, molimo kliknite na gumb \"Zaboravili ste lozinku?\"",
+  "err_password_too_similar": "Lozinka je previše slična vašem imenu, prezimenu ili e-mail adresi",
+  "err_retype_password_empty": "Molimo ponovno unesite svoju lozinku",
+  "err_retype_password_not_match": "Lozinke se ne podudaraju",
+  "err_agree_ts_and_pp_missing": "Morate pročitati i prihvatiti naše uvjete korištenja i politiku privatnosti kako biste nastavili",
+  "err_cant_login": "Nije moguće prijaviti se"
+}

@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Palun sisestage oma nimi",
+  "err_first_name_too_long": "Eesnimi ei tohi ületada 30 tähemärki",
+  "err_last_name_too_long": "Perekonnanimi ei tohi ületada 30 tähemärki",
+  "err_last_name_empty": "Palun sisestage oma perekonnanimi",
+  "err_email_invalid": "Palun sisestage kehtiv e-posti aadress",
+  "err_email_empty": "Palun sisestage oma e-posti aadress",
+  "err_password_empty": "Palun sisestage oma parool",
+  "err_incorrect_password": "Vale parool. Parooli lähtestamiseks võite klõpsata nupul \"Unustasin parooli?\"",
+  "err_no_password_set": "Parooli seadistamiseks klõpsake palun nupul \"Unustasin parooli?\"",
+  "err_password_too_similar": "Parool on liiga sarnane teie eesnime, perekonnanime või e-posti aadressiga",
+  "err_retype_password_empty": "Palun sisestage parool uuesti",
+  "err_retype_password_not_match": "Paroolid ei ühti",
+  "err_agree_ts_and_pp_missing": "Jätkamiseks peate lugema ja nõustuma meie kasutustingimuste ja privaatsuspoliitikaga",
+  "err_cant_login": "Sisselogimine ei õnnestu"
+}

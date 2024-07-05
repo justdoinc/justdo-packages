@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Proszę wpisać swoje imię",
+  "err_first_name_too_long": "Imię nie powinno przekraczać 30 znaków",
+  "err_last_name_too_long": "Nazwisko nie powinno przekraczać 30 znaków",
+  "err_last_name_empty": "Proszę wpisać swoje nazwisko",
+  "err_email_invalid": "Proszę podać prawidłowy adres e-mail",
+  "err_email_empty": "Proszę wpisać swój adres e-mail",
+  "err_password_empty": "Proszę wpisać swoje hasło",
+  "err_incorrect_password": "Nieprawidłowe hasło. Aby zresetować hasło, możesz kliknąć przycisk \"Zapomniałeś hasła?\".",
+  "err_no_password_set": "Aby ustawić hasło, kliknij przycisk \"Zapomniałeś hasła?\".",
+  "err_password_too_similar": "Hasło jest zbyt podobne do Twojego imienia, nazwiska lub adresu e-mail",
+  "err_retype_password_empty": "Proszę ponownie wpisać hasło",
+  "err_retype_password_not_match": "Hasła nie są zgodne",
+  "err_agree_ts_and_pp_missing": "Aby kontynuować, musisz przeczytać i zaakceptować nasze warunki korzystania i politykę prywatności",
+  "err_cant_login": "Nie można się zalogować"
+}

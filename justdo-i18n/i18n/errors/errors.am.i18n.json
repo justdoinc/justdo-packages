@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "እባክዎን ስምዎን ያስገቡ",
+  "err_first_name_too_long": "የመጀመሪያ ስም ከ30 ፊደላት መብለጥ የለበትም",
+  "err_last_name_too_long": "የአባት ስም ከ30 ፊደላት መብለጥ የለበትም",
+  "err_last_name_empty": "እባክዎን የአባትዎን ስም ያስገቡ",
+  "err_email_invalid": "እባክዎን ትክክለኛ የኢሜይል አድራሻ ያስገቡ",
+  "err_email_empty": "እባክዎን ኢሜይልዎን ያስገቡ",
+  "err_password_empty": "እባክዎን የይለፍ ቃልዎን ያስገቡ",
+  "err_incorrect_password": "የተሳሳተ የይለፍ ቃል። የይለፍ ቃልዎን ለመቀየር፣ \"የይለፍ ቃል ረሳሁ?\" የሚለውን ቁልፍ መጫን ይችላሉ።",
+  "err_no_password_set": "የይለፍ ቃልዎን ለማዘጋጀት፣ እባክዎን \"የይለፍ ቃል ረሳሁ?\" የሚለውን ቁልፍ ይጫኑ።",
+  "err_password_too_similar": "የይለፍ ቃልዎ ከስምዎ፣ ከአባትዎ ስም ወይም ከኢሜይልዎ ጋር በጣም ተመሳሳይ ነው",
+  "err_retype_password_empty": "እባክዎን የይለፍ ቃልዎን እንደገና ይጻፉ",
+  "err_retype_password_not_match": "የይለፍ ቃላት አይዛመዱም",
+  "err_agree_ts_and_pp_missing": "ለመቀጠል የእኛን የአገልግሎት ውሎችን እና የግላዊነት ፖሊሲን ማንበብ እና መስማማት አለብዎት",
+  "err_cant_login": "መግባት አልተቻለም"
+}

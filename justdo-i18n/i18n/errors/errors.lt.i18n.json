@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Prašome įvesti savo vardą",
+  "err_first_name_too_long": "Vardas neturėtų viršyti 30 simbolių",
+  "err_last_name_too_long": "Pavardė neturėtų viršyti 30 simbolių",
+  "err_last_name_empty": "Prašome įvesti savo pavardę",
+  "err_email_invalid": "Prašome įvesti galiojantį el. pašto adresą",
+  "err_email_empty": "Prašome įvesti savo el. paštą",
+  "err_password_empty": "Prašome įvesti slaptažodį",
+  "err_incorrect_password": "Neteisingas slaptažodis. Norėdami atstatyti slaptažodį, galite spustelėti mygtuką \"Pamiršote slaptažodį?\"",
+  "err_no_password_set": "Norėdami nustatyti savo slaptažodį, prašome spustelėti mygtuką \"Pamiršote slaptažodį?\"",
+  "err_password_too_similar": "Slaptažodis per daug panašus į jūsų vardą, pavardę ar el. paštą",
+  "err_retype_password_empty": "Prašome pakartotinai įvesti slaptažodį",
+  "err_retype_password_not_match": "Slaptažodžiai nesutampa",
+  "err_agree_ts_and_pp_missing": "Norėdami tęsti, turite perskaityti ir sutikti su mūsų naudojimo sąlygomis ir privatumo politika",
+  "err_cant_login": "Nepavyksta prisijungti"
+}

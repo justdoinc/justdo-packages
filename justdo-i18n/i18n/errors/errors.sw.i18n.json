@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Tafadhali ingiza jina lako",
+  "err_first_name_too_long": "Jina la kwanza halipaswi kuzidi herufi 30",
+  "err_last_name_too_long": "Jina la mwisho halipaswi kuzidi herufi 30",
+  "err_last_name_empty": "Tafadhali ingiza jina lako la mwisho",
+  "err_email_invalid": "Tafadhali ingiza anwani halali ya barua pepe",
+  "err_email_empty": "Tafadhali ingiza barua pepe yako",
+  "err_password_empty": "Tafadhali ingiza nywila yako",
+  "err_incorrect_password": "Nywila si sahihi. Ili kuweka upya nywila yako, unaweza kubofya kitufe cha \"Umesahau nywila?\"",
+  "err_no_password_set": "Ili kuweka nywila yako, tafadhali bofya kitufe cha \"Umesahau nywila?\"",
+  "err_password_too_similar": "Nywila inafanana sana na jina lako la kwanza, jina la mwisho au barua pepe",
+  "err_retype_password_empty": "Tafadhali ingiza tena nywila yako",
+  "err_retype_password_not_match": "Nywila hazifanani",
+  "err_agree_ts_and_pp_missing": "Unahitaji kusoma na kukubaliana na masharti yetu na sera ya faragha ili kuendelea",
+  "err_cant_login": "Huwezi kuingia"
+}

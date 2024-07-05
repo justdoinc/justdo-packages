@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Prosím, zadejte své jméno",
+  "err_first_name_too_long": "Jméno by nemělo přesáhnout 30 znaků",
+  "err_last_name_too_long": "Příjmení by nemělo přesáhnout 30 znaků",
+  "err_last_name_empty": "Prosím, zadejte své příjmení",
+  "err_email_invalid": "Prosím, zadejte platnou e-mailovou adresu",
+  "err_email_empty": "Prosím, zadejte svůj e-mail",
+  "err_password_empty": "Prosím, zadejte své heslo",
+  "err_incorrect_password": "Nesprávné heslo. Pro obnovení hesla můžete kliknout na tlačítko \"Zapomněli jste heslo?\"",
+  "err_no_password_set": "Pro nastavení hesla klikněte prosím na tlačítko \"Zapomněli jste heslo?\"",
+  "err_password_too_similar": "Heslo je příliš podobné vašemu jménu, příjmení nebo e-mailu",
+  "err_retype_password_empty": "Prosím, zadejte heslo znovu",
+  "err_retype_password_not_match": "Hesla se neshodují",
+  "err_agree_ts_and_pp_missing": "Pro pokračování musíte přečíst a souhlasit s našimi podmínkami použití a zásadami ochrany osobních údajů",
+  "err_cant_login": "Nelze se přihlásit"
+}

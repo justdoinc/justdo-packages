@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Kérjük, adja meg a nevét",
+  "err_first_name_too_long": "A keresztnév nem lehet hosszabb 30 karakternél",
+  "err_last_name_too_long": "A vezetéknév nem lehet hosszabb 30 karakternél",
+  "err_last_name_empty": "Kérjük, adja meg a vezetéknevét",
+  "err_email_invalid": "Kérjük, adjon meg egy érvényes e-mail címet",
+  "err_email_empty": "Kérjük, adja meg az e-mail címét",
+  "err_password_empty": "Kérjük, adja meg a jelszavát",
+  "err_incorrect_password": "Helytelen jelszó. A jelszó visszaállításához kattintson az \"Elfelejtette jelszavát?\" gombra.",
+  "err_no_password_set": "A jelszó beállításához kérjük, kattintson az \"Elfelejtette jelszavát?\" gombra.",
+  "err_password_too_similar": "A jelszó túlságosan hasonlít a keresztnevéhez, vezetéknevéhez vagy e-mail címéhez",
+  "err_retype_password_empty": "Kérjük, írja be újra a jelszavát",
+  "err_retype_password_not_match": "A jelszavak nem egyeznek",
+  "err_agree_ts_and_pp_missing": "A folytatáshoz el kell olvasnia és el kell fogadnia a felhasználási feltételeinket és az adatvédelmi irányelveinket",
+  "err_cant_login": "Nem tud bejelentkezni"
+}

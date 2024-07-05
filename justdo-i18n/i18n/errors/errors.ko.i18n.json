@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "이름을 입력해주세요",
+  "err_first_name_too_long": "이름은 30자를 초과할 수 없습니다",
+  "err_last_name_too_long": "성은 30자를 초과할 수 없습니다",
+  "err_last_name_empty": "성을 입력해주세요",
+  "err_email_invalid": "유효한 이메일 주소를 입력해주세요",
+  "err_email_empty": "이메일을 입력해주세요",
+  "err_password_empty": "비밀번호를 입력해주세요",
+  "err_incorrect_password": "비밀번호가 올바르지 않습니다. 비밀번호를 재설정하려면 \"비밀번호 찾기\" 버튼을 클릭하세요.",
+  "err_no_password_set": "비밀번호를 설정하려면 \"비밀번호 찾기\" 버튼을 클릭해주세요.",
+  "err_password_too_similar": "비밀번호가 이름, 성 또는 이메일과 너무 유사합니다",
+  "err_retype_password_empty": "비밀번호를 다시 입력해주세요",
+  "err_retype_password_not_match": "비밀번호가 일치하지 않습니다",
+  "err_agree_ts_and_pp_missing": "계속하려면 이용약관과 개인정보 처리방침을 읽고 동의해야 합니다",
+  "err_cant_login": "로그인할 수 없습니다"
+}

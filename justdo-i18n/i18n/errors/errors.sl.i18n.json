@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Prosimo, vnesite svoje ime",
+  "err_first_name_too_long": "Ime ne sme presegati 30 znakov",
+  "err_last_name_too_long": "Priimek ne sme presegati 30 znakov",
+  "err_last_name_empty": "Prosimo, vnesite svoj priimek",
+  "err_email_invalid": "Prosimo, vnesite veljaven e-poštni naslov",
+  "err_email_empty": "Prosimo, vnesite svoj e-poštni naslov",
+  "err_password_empty": "Prosimo, vnesite svoje geslo",
+  "err_incorrect_password": "Napačno geslo. Za ponastavitev gesla lahko kliknete na gumb \"Ste pozabili geslo?\"",
+  "err_no_password_set": "Za nastavitev gesla kliknite na gumb \"Ste pozabili geslo?\"",
+  "err_password_too_similar": "Geslo je preveč podobno vašemu imenu, priimku ali e-poštnemu naslovu",
+  "err_retype_password_empty": "Prosimo, ponovno vnesite svoje geslo",
+  "err_retype_password_not_match": "Gesli se ne ujemata",
+  "err_agree_ts_and_pp_missing": "Za nadaljevanje morate prebrati in se strinjati z našimi pogoji uporabe in politiko zasebnosti",
+  "err_cant_login": "Prijava ni mogoča"
+}

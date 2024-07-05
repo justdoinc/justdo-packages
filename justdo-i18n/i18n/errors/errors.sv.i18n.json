@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Vänligen ange ditt namn",
+  "err_first_name_too_long": "Förnamnet får inte överstiga 30 tecken",
+  "err_last_name_too_long": "Efternamnet får inte överstiga 30 tecken",
+  "err_last_name_empty": "Vänligen ange ditt efternamn",
+  "err_email_invalid": "Vänligen ange en giltig e-postadress",
+  "err_email_empty": "Vänligen ange din e-postadress",
+  "err_password_empty": "Vänligen ange ditt lösenord",
+  "err_incorrect_password": "Felaktigt lösenord. För att återställa ditt lösenord kan du klicka på knappen \"Glömt lösenord?\"",
+  "err_no_password_set": "För att ställa in ditt lösenord, vänligen klicka på knappen \"Glömt lösenord?\"",
+  "err_password_too_similar": "Lösenordet är för likt ditt förnamn, efternamn eller e-postadress",
+  "err_retype_password_empty": "Vänligen ange lösenordet igen",
+  "err_retype_password_not_match": "Lösenorden matchar inte",
+  "err_agree_ts_and_pp_missing": "Du måste läsa och godkänna våra användarvillkor och integritetspolicy för att fortsätta",
+  "err_cant_login": "Kan inte logga in"
+}

@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Mohon masukkan nama Anda",
+  "err_first_name_too_long": "Nama depan tidak boleh melebihi 30 karakter",
+  "err_last_name_too_long": "Nama belakang tidak boleh melebihi 30 karakter",
+  "err_last_name_empty": "Mohon masukkan nama belakang Anda",
+  "err_email_invalid": "Mohon masukkan alamat email yang valid",
+  "err_email_empty": "Mohon masukkan email Anda",
+  "err_password_empty": "Mohon masukkan kata sandi Anda",
+  "err_incorrect_password": "Kata sandi salah. Untuk mengatur ulang kata sandi Anda, Anda dapat mengklik tombol \"Lupa kata sandi?\"",
+  "err_no_password_set": "Untuk mengatur kata sandi Anda, silakan klik tombol \"Lupa kata sandi?\"",
+  "err_password_too_similar": "Kata sandi terlalu mirip dengan nama depan, nama belakang, atau email Anda",
+  "err_retype_password_empty": "Mohon ketik ulang kata sandi Anda",
+  "err_retype_password_not_match": "Kata sandi tidak cocok",
+  "err_agree_ts_and_pp_missing": "Anda perlu membaca dan menyetujui syarat dan ketentuan serta kebijakan privasi kami untuk melanjutkan",
+  "err_cant_login": "Tidak dapat masuk"
+}

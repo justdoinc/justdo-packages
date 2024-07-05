@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Indtast venligst dit navn",
+  "err_first_name_too_long": "Fornavn må ikke overstige 30 tegn",
+  "err_last_name_too_long": "Efternavn må ikke overstige 30 tegn",
+  "err_last_name_empty": "Indtast venligst dit efternavn",
+  "err_email_invalid": "Indtast venligst en gyldig e-mailadresse",
+  "err_email_empty": "Indtast venligst din e-mail",
+  "err_password_empty": "Indtast venligst din adgangskode",
+  "err_incorrect_password": "Forkert adgangskode. For at nulstille din adgangskode kan du klikke på knappen \"Glemt adgangskode?\"",
+  "err_no_password_set": "For at oprette din adgangskode, klik venligst på knappen \"Glemt adgangskode?\"",
+  "err_password_too_similar": "Adgangskoden ligner dit fornavn, efternavn eller e-mail for meget",
+  "err_retype_password_empty": "Gentag venligst din adgangskode",
+  "err_retype_password_not_match": "Adgangskoderne matcher ikke",
+  "err_agree_ts_and_pp_missing": "Du skal læse og acceptere vores betingelser og vilkår samt privatlivspolitik for at fortsætte",
+  "err_cant_login": "Kan ikke logge ind"
+}

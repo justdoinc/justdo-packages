@@ -6,7 +6,7 @@
   "err_email_invalid": "請輸入有效的電郵地址",
   "err_email_empty": "請輸入電郵地址",
   "err_password_empty": "請輸入密碼",
-  "err_incorrect_password": "密碼錯誤",
+  "err_incorrect_password": "密碼不正確。如需重設密碼，請點擊「忘記密碼？」按鈕。",
   "err_no_password_set": "請點擊\"忘記密碼？\"按鈕以設置您的密碼。",
   "err_password_too_similar": "密碼與您的姓名或電郵太相似",
   "err_retype_password_empty": "請重新輸入密碼",

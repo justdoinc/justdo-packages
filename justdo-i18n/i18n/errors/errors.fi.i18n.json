@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Syötä nimesi",
+  "err_first_name_too_long": "Etunimen pituus ei saa ylittää 30 merkkiä",
+  "err_last_name_too_long": "Sukunimen pituus ei saa ylittää 30 merkkiä",
+  "err_last_name_empty": "Syötä sukunimesi",
+  "err_email_invalid": "Syötä kelvollinen sähköpostiosoite",
+  "err_email_empty": "Syötä sähköpostiosoitteesi",
+  "err_password_empty": "Syötä salasanasi",
+  "err_incorrect_password": "Virheellinen salasana. Voit nollata salasanasi napsauttamalla \"Unohditko salasanasi?\" -painiketta.",
+  "err_no_password_set": "Asettaaksesi salasanan, napsauta \"Unohditko salasanasi?\" -painiketta.",
+  "err_password_too_similar": "Salasana on liian samankaltainen etunimesi, sukunimesi tai sähköpostiosoitteesi kanssa",
+  "err_retype_password_empty": "Syötä salasanasi uudelleen",
+  "err_retype_password_not_match": "Salasanat eivät täsmää",
+  "err_agree_ts_and_pp_missing": "Sinun tulee lukea ja hyväksyä käyttöehtomme ja tietosuojakäytäntömme jatkaaksesi",
+  "err_cant_login": "Kirjautuminen ei onnistu"
+}

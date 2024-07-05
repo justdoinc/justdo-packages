@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Veuillez entrer votre prénom",
+  "err_first_name_too_long": "Le prénom ne doit pas dépasser 30 caractères",
+  "err_last_name_too_long": "Le nom de famille ne doit pas dépasser 30 caractères",
+  "err_last_name_empty": "Veuillez entrer votre nom de famille",
+  "err_email_invalid": "Veuillez entrer une adresse e-mail valide",
+  "err_email_empty": "Veuillez saisir votre adresse e-mail",
+  "err_password_empty": "Veuillez entrer votre mot de passe",
+  "err_incorrect_password": "Mot de passe incorrect. Pour réinitialiser votre mot de passe, vous pouvez cliquer sur le bouton \"Mot de passe oublié ?\"",
+  "err_no_password_set": "Pour configurer votre mot de passe, veuillez cliquer sur le bouton \"Mot de passe oublié ?\"",
+  "err_password_too_similar": "Le mot de passe est trop similaire à votre prénom, nom de famille ou adresse e-mail",
+  "err_retype_password_empty": "Veuillez retaper votre mot de passe",
+  "err_retype_password_not_match": "Les mots de passe ne correspondent pas",
+  "err_agree_ts_and_pp_missing": "Vous devez lire et accepter nos conditions d'utilisation et notre politique de confidentialité pour continuer",
+  "err_cant_login": "Impossible de se connecter"
+}

@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Vă rugăm să introduceți numele dumneavoastră",
+  "err_first_name_too_long": "Prenumele nu trebuie să depășească 30 de caractere",
+  "err_last_name_too_long": "Numele de familie nu trebuie să depășească 30 de caractere",
+  "err_last_name_empty": "Vă rugăm să introduceți numele dumneavoastră de familie",
+  "err_email_invalid": "Vă rugăm să introduceți o adresă de email validă",
+  "err_email_empty": "Vă rugăm să introduceți adresa dumneavoastră de email",
+  "err_password_empty": "Vă rugăm să introduceți parola",
+  "err_incorrect_password": "Parolă incorectă. Pentru a vă reseta parola, puteți apăsa pe butonul \"Ați uitat parola?\"",
+  "err_no_password_set": "Pentru a vă configura parola, vă rugăm să apăsați pe butonul \"Ați uitat parola?\"",
+  "err_password_too_similar": "Parola este prea asemănătoare cu prenumele, numele de familie sau adresa de email",
+  "err_retype_password_empty": "Vă rugăm să reintroduceți parola",
+  "err_retype_password_not_match": "Parolele nu se potrivesc",
+  "err_agree_ts_and_pp_missing": "Trebuie să citiți și să fiți de acord cu termenii și condițiile noastre și cu politica de confidențialitate pentru a continua",
+  "err_cant_login": "Nu vă puteți autentifica"
+}

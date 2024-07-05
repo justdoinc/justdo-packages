@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Lūdzu, ievadiet savu vārdu",
+  "err_first_name_too_long": "Vārds nedrīkst pārsniegt 30 rakstzīmes",
+  "err_last_name_too_long": "Uzvārds nedrīkst pārsniegt 30 rakstzīmes",
+  "err_last_name_empty": "Lūdzu, ievadiet savu uzvārdu",
+  "err_email_invalid": "Lūdzu, ievadiet derīgu e-pasta adresi",
+  "err_email_empty": "Lūdzu, ievadiet savu e-pastu",
+  "err_password_empty": "Lūdzu, ievadiet savu paroli",
+  "err_incorrect_password": "Nepareiza parole. Lai atiestatītu paroli, varat noklikšķināt uz pogas \"Aizmirsu paroli?\".",
+  "err_no_password_set": "Lai iestatītu paroli, lūdzu, noklikšķiniet uz pogas \"Aizmirsu paroli?\".",
+  "err_password_too_similar": "Parole ir pārāk līdzīga jūsu vārdam, uzvārdam vai e-pastam",
+  "err_retype_password_empty": "Lūdzu, atkārtoti ievadiet savu paroli",
+  "err_retype_password_not_match": "Paroles nesakrīt",
+  "err_agree_ts_and_pp_missing": "Lai turpinātu, jums ir jāizlasa un jāpiekrīt mūsu lietošanas noteikumiem un privātuma politikai",
+  "err_cant_login": "Nevar pierakstīties"
+}

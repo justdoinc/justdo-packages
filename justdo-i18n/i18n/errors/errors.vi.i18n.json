@@ -6,8 +6,8 @@
   "err_email_invalid": "Vui lòng nhập email hợp lệ",
   "err_email_empty": "Vui lòng nhập email của bạn",
   "err_password_empty": "Vui lòng nhập mật khẩu của bạn",
-  "err_incorrect_password": "Sai mật khẩu",
-  
+  "err_incorrect_password": "Mật khẩu không chính xác. Để đặt lại mật khẩu, bạn có thể nhấp vào nút \"Quên mật khẩu?\".",
+  "err_no_password_set": "Để thiết lập mật khẩu, vui lòng nhấp vào nút \"Quên mật khẩu?\".",
   "err_password_too_similar": "Mật khẩu giống với tên, họ hoặc email của bạn",
   "err_retype_password_empty": "Vui lòng nhập lại mật khẩu của bạn",
   "err_retype_password_not_match": "Mất khẩu không hợp lệ",

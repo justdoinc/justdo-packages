@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Bitte geben Sie Ihren Namen ein",
+  "err_first_name_too_long": "Der Vorname sollte nicht länger als 30 Zeichen sein",
+  "err_last_name_too_long": "Der Nachname sollte nicht länger als 30 Zeichen sein",
+  "err_last_name_empty": "Bitte geben Sie Ihren Nachnamen ein",
+  "err_email_invalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+  "err_email_empty": "Bitte geben Sie Ihre E-Mail-Adresse ein",
+  "err_password_empty": "Bitte geben Sie Ihr Passwort ein",
+  "err_incorrect_password": "Falsches Passwort. Um Ihr Passwort zurückzusetzen, können Sie auf die Schaltfläche \"Passwort vergessen?\" klicken.",
+  "err_no_password_set": "Um Ihr Passwort einzurichten, klicken Sie bitte auf die Schaltfläche \"Passwort vergessen?\".",
+  "err_password_too_similar": "Das Passwort ist Ihrem Vornamen, Nachnamen oder Ihrer E-Mail-Adresse zu ähnlich",
+  "err_retype_password_empty": "Bitte geben Sie Ihr Passwort erneut ein",
+  "err_retype_password_not_match": "Die Passwörter stimmen nicht überein",
+  "err_agree_ts_and_pp_missing": "Sie müssen unsere Nutzungsbedingungen und Datenschutzrichtlinie lesen und ihnen zustimmen, um fortzufahren",
+  "err_cant_login": "Anmeldung nicht möglich"
+}

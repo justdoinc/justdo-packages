@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Inserisci il tuo nome",
+  "err_first_name_too_long": "Il nome non deve superare i 30 caratteri",
+  "err_last_name_too_long": "Il cognome non deve superare i 30 caratteri",
+  "err_last_name_empty": "Inserisci il tuo cognome",
+  "err_email_invalid": "Inserisci un indirizzo email valido",
+  "err_email_empty": "Inserisci la tua email",
+  "err_password_empty": "Inserisci la tua password",
+  "err_incorrect_password": "Password errata. Per reimpostare la password, puoi cliccare sul pulsante \"Password dimenticata?\"",
+  "err_no_password_set": "Per impostare la tua password, clicca sul pulsante \"Password dimenticata?\"",
+  "err_password_too_similar": "La password è troppo simile al tuo nome, cognome o email",
+  "err_retype_password_empty": "Reinserisci la tua password",
+  "err_retype_password_not_match": "Le password non corrispondono",
+  "err_agree_ts_and_pp_missing": "Devi leggere e accettare i nostri termini e condizioni e l'informativa sulla privacy per continuare",
+  "err_cant_login": "Impossibile accedere"
+}

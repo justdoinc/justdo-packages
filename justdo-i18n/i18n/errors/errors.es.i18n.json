@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Por favor, ingrese su nombre",
+  "err_first_name_too_long": "El nombre no debe exceder los 30 caracteres",
+  "err_last_name_too_long": "El apellido no debe exceder los 30 caracteres",
+  "err_last_name_empty": "Por favor, ingrese su apellido",
+  "err_email_invalid": "Por favor, ingrese una dirección de correo electrónico válida",
+  "err_email_empty": "Por favor, ingrese su correo electrónico",
+  "err_password_empty": "Por favor, ingrese su contraseña",
+  "err_incorrect_password": "Contraseña incorrecta. Para restablecer su contraseña, puede hacer clic en el botón \"¿Olvidó su contraseña?\"",
+  "err_no_password_set": "Para configurar su contraseña, por favor haga clic en el botón \"¿Olvidó su contraseña?\"",
+  "err_password_too_similar": "La contraseña es demasiado similar a su nombre, apellido o correo electrónico",
+  "err_retype_password_empty": "Por favor, vuelva a escribir su contraseña",
+  "err_retype_password_not_match": "Las contraseñas no coinciden",
+  "err_agree_ts_and_pp_missing": "Debe leer y aceptar nuestros términos y condiciones y la política de privacidad para continuar",
+  "err_cant_login": "No se puede iniciar sesión"
+}

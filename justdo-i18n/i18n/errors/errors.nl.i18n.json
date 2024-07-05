@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Voer alstublieft uw naam in",
+  "err_first_name_too_long": "Voornaam mag niet langer zijn dan 30 tekens",
+  "err_last_name_too_long": "Achternaam mag niet langer zijn dan 30 tekens",
+  "err_last_name_empty": "Voer alstublieft uw achternaam in",
+  "err_email_invalid": "Voer alstublieft een geldig e-mailadres in",
+  "err_email_empty": "Voer alstublieft uw e-mailadres in",
+  "err_password_empty": "Voer alstublieft uw wachtwoord in",
+  "err_incorrect_password": "Onjuist wachtwoord. Om uw wachtwoord opnieuw in te stellen, kunt u op de knop \"Wachtwoord vergeten?\" klikken.",
+  "err_no_password_set": "Om uw wachtwoord in te stellen, klik alstublieft op de knop \"Wachtwoord vergeten?\".",
+  "err_password_too_similar": "Wachtwoord lijkt te veel op uw voornaam, achternaam of e-mailadres",
+  "err_retype_password_empty": "Voer alstublieft uw wachtwoord opnieuw in",
+  "err_retype_password_not_match": "Wachtwoorden komen niet overeen",
+  "err_agree_ts_and_pp_missing": "U moet onze algemene voorwaarden en privacybeleid lezen en accepteren om door te gaan",
+  "err_cant_login": "Kan niet inloggen"
+}

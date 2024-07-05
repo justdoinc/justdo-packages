@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Lütfen adınızı girin",
+  "err_first_name_too_long": "Ad 30 karakteri geçmemelidir",
+  "err_last_name_too_long": "Soyad 30 karakteri geçmemelidir",
+  "err_last_name_empty": "Lütfen soyadınızı girin",
+  "err_email_invalid": "Lütfen geçerli bir e-posta adresi girin",
+  "err_email_empty": "Lütfen e-posta adresinizi girin",
+  "err_password_empty": "Lütfen şifrenizi girin",
+  "err_incorrect_password": "Yanlış şifre. Şifrenizi sıfırlamak için \"Şifremi unuttum?\" düğmesine tıklayabilirsiniz.",
+  "err_no_password_set": "Şifrenizi ayarlamak için lütfen \"Şifremi unuttum?\" düğmesine tıklayın.",
+  "err_password_too_similar": "Şifre, adınıza, soyadınıza veya e-posta adresinize çok benzer",
+  "err_retype_password_empty": "Lütfen şifrenizi tekrar girin",
+  "err_retype_password_not_match": "Şifreler eşleşmiyor",
+  "err_agree_ts_and_pp_missing": "Devam etmek için kullanım şartlarımızı ve gizlilik politikamızı okumanız ve kabul etmeniz gerekmektedir",
+  "err_cant_login": "Giriş yapılamıyor"
+}
