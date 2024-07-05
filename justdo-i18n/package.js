@@ -5,6 +5,10 @@ Package.describe({
   git: "https://github.com/justdoinc/justdo-shared-packages/tree/master/justdo-i18n"
 });
 
+Npm.depends({
+  "excel4node": "1.8.2"
+})
+
 client = "client"
 server = "server"
 both = [client, server]
@@ -63,6 +67,7 @@ Package.onUse(function (api) {
   api.use("tracker", client);
   api.use("astrocoders:handlebars-server@1.0.3", server);
   api.use("webapp", server);
+  api.use("check", server)
 
   api.addFiles("lib/both/analytics.coffee", both);
 

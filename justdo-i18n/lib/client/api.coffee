@@ -237,88 +237,36 @@ _.extend JustdoI18n.prototype,
   # @example
   #   Download a proofreading document excluding translations with specific keys.
   #   APP.justdo_i18n.getProofreaderDoc exclude_keys: ["key1", "key2"]
-  getProofreaderDoc: (options) ->
-    cur_route_name = APP.justdo_i18n_routes?.getCurrentRouteName() or Router.current().route.getName()
-
-    default_lang = JustdoI18n.default_lang
-    default_lang_name = TAPi18n.getLanguages()[default_lang].name
+  getProofreaderDoc: (options={}) ->
+    default_options = 
+      exclude_templates: []
+      include_keys: []
+      exclude_keys: []
+    options = _.extend default_options, options
 
     lang = @getLang()
-
-    file_name = "#{cur_route_name}.#{lang}.csv"
-
-    header_row = ["Translation", default_lang_name, "Key"]
-    csv_rows = [header_row]
-
-    pushKeyToCsvRows = (key, templates_set) ->
-      # Check whether the key is excluded
-      if options?.exclude_keys?
-        should_key_be_excluded = false
-        for exclude_key in options.exclude_keys
-          if (exclude_key is key) or (exclude_key.test?(key))
-            return
+    options.lang = lang
+    options.cur_page_i18n_keys = []
+    @_getCurPageI18nKeys().forEach (templates_set, key) -> options.cur_page_i18n_keys.push {key: key, templates: Array.from(templates_set)}
     
-      # Check whether the key is used only by excluded templates
-      if (options?.excluded_templates?) and (templates_set instanceof Set)
-        templates = _.map Array.from(templates_set), (template_name) -> template_name.replace "Template.", ""
+    Meteor.call "getProofreaderDoc", options, (err, csv_string) ->
+      if err
+        console.error err
+        return
+      
+      cur_route_name = APP.justdo_i18n_routes?.getCurrentRouteName() or Router.current().route.getName()
+      file_name = "#{cur_route_name}.#{lang}.xlsx"
 
-        if not _.isEmpty templates
-          is_key_used_only_by_excluded_template = _.isEmpty _.difference templates, options.excluded_templates
-          if is_key_used_only_by_excluded_template
-            return
-
-      default_lang_string = TAPi18n.__ key, {}, default_lang
-      translated_string = TAPi18n.__ key, {}, lang
-
-      # Values inside i18n files can be an array. 
-      # If it is, default_lang_string and translated_string will be a string of the array joined by "\n".
-      # Therefore to check whether the original value is an array, 
-      # we'll have to access the original value from the i18n files directly via TAPi18next.options.resStore. 
-      if _.isArray (default_lang_array = TAPi18next.options.resStore[default_lang].project[key])
-        translated_array = TAPi18next.options.resStore[lang].project[key]
-        for default_lang_array_element, i in default_lang_array
-          translated_array_element = translated_array[i]
-          csv_rows.push [translated_array_element, default_lang_array_element, key + "[" + i + "]"]
-      else
-        csv_rows.push [translated_string, default_lang_string, key]
-
-      return
-
-    # Include i18n keys that are used in the current page without those used by templates in the list of excluded_templates
-    @_getCurPageI18nKeys().forEach (templates_set, key) -> pushKeyToCsvRows key, templates_set
-    
-    isKeyAlreadyAdded = (key) => @_getCurPageI18nKeys().has key
-    if _.isArray options?.include_keys
-      for include_key in options.include_keys
-        if (not isKeyAlreadyAdded include_key) and (_.isString include_key)
-          pushKeyToCsvRows include_key
-        else if _.isRegExp include_key
-          for key of TAPi18next.options.resStore[default_lang].project
-            if (not isKeyAlreadyAdded key) and (include_key.test key)
-              pushKeyToCsvRows key
-    
-    # Below are heavily influenced by exportCSV under justdo-print-grid package.
-    # universalBOM needs to force Excel use UTF-8 for CSV
-    universalBOM = "\uFEFF"
-    csv_string = universalBOM
-    new_line = "\u000d\n"
-    for row in csv_rows
-      csv_string += _.map(row, (val) -> "\"" + String(val or "").replace(/"/g, "\"\"") + "\"").join(",") + new_line
-  
-    if window.Blob && window.navigator.msSaveOrOpenBlob
-      csv_blob_obj = new Blob([csv_string])
-
-      window.navigator.msSaveOrOpenBlob(csv_blob_obj, file_name)
-    else
-      # Create invisible link to set file name
-      encoded_uri = "data:text/csv;charset=utf-8," + encodeURIComponent(csv_string)
+      blob_obj = new Blob [csv_string], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}
       download_link = document.createElement("a")
+      download_link.href = window.URL.createObjectURL(blob_obj);
       download_link.target = '_blank'
-      download_link.href = encoded_uri
       download_link.download = file_name
 
       document.body.appendChild(download_link)
       download_link.click()
       document.body.removeChild(download_link)
 
+      return
+    
     return
