@@ -7,3 +7,4 @@ _.extend JustdoI18n,
   # Translates our format of lang tag to Vimeo's
   vimeo_lang_tags:
     "zh-TW": "zh-Hant"
+  lang_dropdown_max_lang_per_col: 16
