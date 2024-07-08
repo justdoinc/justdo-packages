@@ -255,7 +255,7 @@ _.extend JustdoI18n.prototype,
         return
       
       cur_route_name = APP.justdo_i18n_routes?.getCurrentRouteName() or Router.current().route.getName()
-      file_name = "#{cur_route_name}.#{lang}.xlsx"
+      file_name = "#{lang}.#{cur_route_name}.xlsx"
 
       blob_obj = new Blob [csv_string], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"}
       download_link = document.createElement("a")
