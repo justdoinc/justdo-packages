@@ -55,4 +55,5 @@ _.extend JustdoCoreHelpers,
 
     return cdn_url
 
+  isCDNUrl: (url) -> url.startsWith(cdn)
 
