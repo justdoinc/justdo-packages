@@ -273,6 +273,22 @@ _.extend JustdoI18n.prototype,
           for key of TAPi18next.options.resStore[default_lang].project
             if (not isKeyAlreadyAdded key) and (include_key.test key)
               writeRow key
+    
+    # Prevent user from editing the header row (i.e "Translation", "English", "Key")
+    worksheet.addDataValidation
+      type: "textLength"
+      error: "This cell is locked"
+      operator: "equal"
+      sqref: "A4:C4"
+      formulas: [""]
+
+    # Prevent user from editing the "Translation" and "Key" column
+    worksheet.addDataValidation
+      type: "textLength"
+      error: "This cell is locked"
+      operator: "equal"
+      sqref: "B:C"
+      formulas: [""]
 
     buffer = await workbook.writeToBuffer()
     return buffer
