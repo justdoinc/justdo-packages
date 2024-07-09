@@ -258,3 +258,13 @@ _.extend JustdoNews.prototype,
     return _.find news.templates, (template_obj) -> template_obj._id is template_name
 
   getAllRegisteredCategories: -> _.keys @news
+
+  getNewsParamFromPath: (path) ->
+    # Attempt to remove the lang prefix from the path if justdo_i18n_routes exists
+    path = APP.justdo_i18n_routes?.getPathWithoutLangPrefix(path) or path
+    
+    # Remove the search part of the path
+    path = JustdoHelpers.getNormalisedUrlPathnameWithoutSearchPart path
+
+    [news_category, news_id, news_template] = _.filter path.split("/"), (path_segment) -> not _.isEmpty path_segment
+    return {news_category, news_id, news_template}

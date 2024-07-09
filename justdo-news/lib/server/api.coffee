@@ -34,7 +34,7 @@ _.extend JustdoNews.prototype,
       url_obj = new URL req.url, JustdoHelpers.getRootUrl()
       lang = APP.justdo_i18n_routes?.getUrlLangFromReq(req)
 
-      {news_category, news_id, news_template} = @getNewsParamFromReq req
+      {news_category, news_id, news_template} = @getNewsParamFromPath req.url
 
       # If news_category isn't registered, skip.
       # Note that this is a middleware. news_category could be any path (not just /news)
@@ -84,13 +84,3 @@ _.extend JustdoNews.prototype,
       return
 
     return
-
-  getNewsParamFromReq: (req) ->
-    # Attempt to remove the lang prefix from the url if justdo_i18n_routes exists
-    url = APP.justdo_i18n_routes?.getPathWithoutLangPrefix(req.url) or req.url
-    
-    # Remove the search part of the url
-    url = JustdoHelpers.getNormalisedUrlPathnameWithoutSearchPart url
-
-    [news_category, news_id, news_template] = _.filter url.split("/"), (url_segment) -> not _.isEmpty url_segment
-    return {news_category, news_id, news_template}
