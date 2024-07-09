@@ -93,7 +93,7 @@ _.extend JustdoNews.prototype,
 
         news_template_doc = self.getNewsTemplateIfExists category, news_id, JustdoNews.default_news_template
 
-        return news_template_doc?.template_data?.news_array?[0]?.media_url or APP.justdo_seo.getDefaultPagePreviewImageUrl()
+        return news_template_doc?.template_data?.news_array?[0]?.media_url
 
     routes =
       "/#{category}":
