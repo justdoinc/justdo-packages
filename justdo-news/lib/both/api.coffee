@@ -58,11 +58,7 @@ _.extend JustdoNews.prototype,
 
     metadata =
       title_i18n: (lang, path) ->
-        if Meteor.isClient
-          news_id = Router.current()?.getParams()?.news_id
-          news_template = Router.current()?.getParams()?.news_template
-        if Meteor.isServer
-          {news_id, new_template} = self.getNewsParamFromPath path
+        {news_id, new_template} = self.getNewsParamFromPath path
 
         if not news_template?
           news_template = JustdoNews.default_news_template
@@ -72,11 +68,7 @@ _.extend JustdoNews.prototype,
 
         return APP.justdo_i18n.getI18nTextOrFallback {i18n_key: news_template_doc.page_title, fallback_text: fallback_title, lang: lang}
       description_i18n: (lang, path) ->
-        if Meteor.isClient
-          news_id = Router.current()?.getParams()?.news_id
-          news_template = Router.current()?.getParams()?.news_template
-        if Meteor.isServer
-          {news_id, new_template} = self.getNewsParamFromPath path
+        {news_id, new_template} = self.getNewsParamFromPath path
 
         if not news_template?
           news_template = JustdoNews.default_news_template
@@ -86,10 +78,7 @@ _.extend JustdoNews.prototype,
 
         return APP.justdo_i18n.getI18nTextOrFallback {i18n_key: news_template_doc.page_description, fallback_text: fallback_description, lang: lang}
       preview_image: (path) ->
-        if Meteor.isClient
-          news_id = Router.current()?.getParams()?.news_id
-        if Meteor.isServer
-          {news_id} = self.getNewsParamFromPath path
+        {news_id} = self.getNewsParamFromPath path
 
         news_template_doc = self.getNewsTemplateIfExists category, news_id, JustdoNews.default_news_template
 
@@ -259,10 +248,7 @@ _.extend JustdoNews.prototype,
 
   getAllRegisteredCategories: -> _.keys @news
 
-  getNewsParamFromPath: (path) ->
-    # Attempt to remove the lang prefix from the path if justdo_i18n_routes exists
-    path = APP.justdo_i18n_routes?.getPathWithoutLangPrefix(path) or path
-    
+  getNewsParamFromPath: (path) ->    
     # Remove the search part of the path
     path = JustdoHelpers.getNormalisedUrlPathnameWithoutSearchPart path
 
