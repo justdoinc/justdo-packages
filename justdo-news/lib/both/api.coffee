@@ -87,8 +87,6 @@ _.extend JustdoNews.prototype,
     routes =
       "/#{category}":
         routingFunction: ->
-          APP.justdo_i18n?.forceLtrForRoute "#{underscored_category}_page"
-
           self.redirectToMostRecentNewsPageByCategoryOrFallback category
           return
         route_options:
@@ -102,8 +100,6 @@ _.extend JustdoNews.prototype,
             return
       "/#{category}/:news_id":
         routingFunction: ->
-          APP.justdo_i18n?.forceLtrForRoute "#{underscored_category}_page_with_news_id"
-
           news_id = @params.news_id.toLowerCase()
 
           if not self.getNewsIdIfExists(category, news_id)?
@@ -125,8 +121,6 @@ _.extend JustdoNews.prototype,
 
       "/#{category}/:news_id/:news_template":
         routingFunction: ->
-          APP.justdo_i18n?.forceLtrForRoute "#{underscored_category}_page_with_news_id_and_template"
-
           news_id = @params.news_id.toLowerCase()
           news_template = @params.news_template
 
