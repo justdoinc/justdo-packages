@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "__user_name__་ཡི་ཚོགས་པ་",
+  "create_org_label": "ཚོགས་པ་གསར་བཟོ་",
+  "without_orgs_label": "ཚོགས་པ་མེད་པ་",
+  "justdos_under_named_org_html": "<span class=\"org-name\">__org_name__</span>་འོག་གི་JustDo་ལས་གཞི་ཁག་",
+  "justdos_without_orgs": "ཚོགས་པ་མེད་པའི་JustDo་ལས་གཞི་ཁག་",
+  "orgs_project_config_title": "ཚོགས་པ་ཁག་",
+  "assign_justdo_to_organization_label": "JustDo་ལས་གཞི་ཚོགས་པར་སྤྲོད་པ་",
+  "another_organization": "ཚོགས་པ་གཞན་ཞིག་",
+  "pre_transfer_justdo_to_org_notice_html": "ཁྱེད་ཀྱིས་JustDo་ལས་གཞི་འདི་<b>__dest_org_name__</b>་ལ་གནང་རྩིས་ཡོད། <br> JustDo་ལས་གཞི་འདིའི་ཁོངས་མི་ཚང་མ་<b>__dest_org_name__</b>་ཡི་ཁོངས་མི་ཆགས་ངེས།",
+  "select_organization": "ཚོགས་པ་འདེམས་",
+  "org_expiring_soon_notice_title": "ཁྱེད་ཀྱི་ཚོགས་པའི་ཆོག་མཆན་མྱུར་དུ་དུས་ཡོལ་གྱི་རེད!",
+  "org_expiring_soon_notice_html": "ཁྱེད་ཀྱི་ཚོགས་པ་<b>__org_name__</b>་ཡི་ཆོག་མཆན་དུས་ཡོལ་ཉིན་མོ་ནི་__org_expiration_date__་ཡིན། <br> ང་ཚོས་JustDoས་ཁྱེད་ཀྱི་ལས་ཀའི་མི་ཚེ་སྟབས་བདེ་རུ་བཏང་ཡོད་པར་རེ་བ་བྱེད་ཀྱི་ཡོད!",
+  "org_locked_notice_title": "ཁྱེད་ཀྱི་ཚོགས་པའི་ཆོག་མཆན་དུས་ཡོལ་ཟིན!",
+  "org_locked_notice_html": "ཁྱེད་ཀྱི་ཚོགས་པ་<b>__org_name__</b>་ཡི་ཆོག་མཆན་__org_expiration_date__་ཉིན་དུས་ཡོལ་ཟིན། <br> ང་ཚོས་JustDoས་ཁྱེད་ཀྱི་ལས་ཀའི་མི་ཚེ་སྟབས་བདེ་རུ་བཏང་ཡོད་པར་རེ་བ་བྱེད་ཀྱི་ཡོད་ལ། མུ་མཐུད་དེ་ལྟར་བྱེད་ཐུབ་པར་དགའ་པོ་ཡོད!",
+  "org_access_restricted_title": "__org_name__: གནས་སྐབས་སྤྱོད་དམིགས་ཚད་བཀག་",
+  "org_access_restricted_html": "ད་ལྟ་ཁྱེད་ཀྱི་ཚོགས་པ་<b>__org_name__</b>་ལ་སྤྱོད་དམིགས་ཚད་བཀག་བྱས་ཡོད། གནད་དོན་འདིའི་སྐོར་ལ་ཞིབ་ཕྲ་གསལ་བཤད་ཆེད་ཁྱེད་ཀྱི་ཚོགས་པའི་དོ་དམ་པར་འབྲེལ་བ་གནང་རོགས། <br> ཁྱེད་ཀྱི་བཟོད་བསྲན་དང་གོ་རྟོགས་ལ་ང་ཚོས་བཀའ་དྲིན་ཆེ་ཞུ་རྒྱུ་ཡིན།",
+  "renew_org_license_instruction_html": "འོག་གི་\"ཆོག་མཆན་གསར་སྒྱུར་(Renew License)\"་ཟེར་བའི་གནོན་མཐེབ་ཐོག་གནོན་ནས་ཁྱེད་ཀྱིས་ཆོག་མཆན་གསར་སྒྱུར་བྱེད་ཐུབ།<br>ང་ཚོའི་རྒྱབ་སྐྱོར་ཚན་པས་རྟག་ཏུ་རོགས་རམ་བྱེད་པར་དགའ་པོ་ཡོད།<br><br>JustDo་ཚོགས་སྡེའི་ཆ་ཤས་སུ་གྱུར་པར་ཐུགས་རྗེ་ཆེ། ང་ཚོས་ཁྱེད་ཀྱི་ལས་ཀའི་རྒྱུན་ཡར་རྒྱས་གཏོང་ཆེད་ཐོན་རྫས་གསར་པའི་ནང་ཁྱད་ཆོས་གསར་པ་མང་པོ་གསར་སྤེལ་བྱེད་བཞིན་ཡོད!",
+  "renew_org_licnese_modal_btn_label": "ཆོག་མཆན་གསར་སྒྱུར་",
+  "org_pre_expire_renewal_contact_page_message": "ངའི་ཚོགས་པ་__org_name__ __optional_domain_msg__་ཡི་ཆོག་མཆན་མྱུར་དུ་དུས་ཡོལ་རྩིས་ཡོད་པས་ངས་ཆོག་མཆན་གསར་སྒྱུར་བྱེད་འདོད་ཡོད།",
+  "org_post_expire_renewal_contact_page_message": "ངའི་ཚོགས་པ་__org_name__ __optional_domain_msg__་ཡི་ཆོག་མཆན་དུས་ཡོལ་ཟིན་པས་ངས་ཆོག་མཆན་གསར་སྒྱུར་བྱེད་འདོད་ཡོད།"
+}

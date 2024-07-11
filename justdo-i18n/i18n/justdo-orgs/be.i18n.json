@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "Арганізацыя __user_name__",
+  "create_org_label": "Стварыць арганізацыю",
+  "without_orgs_label": "Без арганізацыі",
+  "justdos_under_named_org_html": "Дошкі (JustDos) у <span class=\"org-name\">__org_name__</span>",
+  "justdos_without_orgs": "Дошкі (JustDos) без арганізацыі",
+  "orgs_project_config_title": "Арганізацыі",
+  "assign_justdo_to_organization_label": "Прызначыць дошку (JustDo) арганізацыі",
+  "another_organization": "іншая арганізацыя",
+  "pre_transfer_justdo_to_org_notice_html": "Вы збіраецеся перадаць гэтую дошку (JustDo) у <b>__dest_org_name__</b>. <br> Усе ўдзельнікі гэтай дошкі (JustDo) стануць удзельнікамі <b>__dest_org_name__</b>.",
+  "select_organization": "Выбраць арганізацыю",
+  "org_expiring_soon_notice_title": "Тэрмін дзеяння ліцэнзіі вашай арганізацыі хутка скончыцца!",
+  "org_expiring_soon_notice_html": "Тэрмін дзеяння ліцэнзіі для вашай арганізацыі <b>__org_name__</b> скончыцца __org_expiration_date__. <br> Мы спадзяемся, што JustDo палепшыў ваша працоўнае жыццё!",
+  "org_locked_notice_title": "Тэрмін дзеяння ліцэнзіі вашай арганізацыі скончыўся!",
+  "org_locked_notice_html": "Тэрмін дзеяння ліцэнзіі для вашай арганізацыі <b>__org_name__</b> скончыўся __org_expiration_date__. <br> Мы спадзяемся, што JustDo палепшыў ваша працоўнае жыццё, і мы хацелі б працягваць гэта рабіць!",
+  "org_access_restricted_title": "__org_name__: Часовае абмежаванне доступу",
+  "org_access_restricted_html": "Доступ да вашай арганізацыі <b>__org_name__</b> у цяперашні час абмежаваны. Калі ласка, звярніцеся да адміністратараў вашай арганізацыі для атрымання дадатковай інфармацыі па гэтым пытанні. <br> Мы цэнім ваша цярпенне і разуменне.",
+  "renew_org_license_instruction_html": "Вы можаце аднавіць ліцэнзію, націснуўшы кнопку \"Аднавіць ліцэнзію\" ніжэй.<br>Наша каманда падтрымкі заўсёды гатова дапамагчы вам.<br><br>Дзякуй за тое, што вы з'яўляецеся часткай супольнасці JustDo. Мы актыўна распрацоўваем новыя функцыі для наступнага рэлізу, каб палепшыць ваш працоўны працэс!",
+  "renew_org_licnese_modal_btn_label": "Аднавіць ліцэнзію",
+  "org_pre_expire_renewal_contact_page_message": "Тэрмін дзеяння ліцэнзіі маёй арганізацыі __org_name__ __optional_domain_msg__ хутка скончыцца, і я хацеў бы яе аднавіць.",
+  "org_post_expire_renewal_contact_page_message": "Тэрмін дзеяння ліцэнзіі маёй арганізацыі __org_name__ __optional_domain_msg__ скончыўся, і я хацеў бы яе аднавіць."
+}

@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Отстрани задачи",
+  "remove_from_parent_label": "Отстрани од родител",
+  "remove_with_subtree_label": "Отстрани со под-дрво",
+  "archive_task_label": "Архивирај задача",
+  "unarchive_task_label": "Деархивирај задача",
+  "reorder_children_by_label": "Преподреди деца според",
+  "zoom_in_label": "Зголеми",
+  "projects_label": "Проекти",
+  "set_as_a_project_label": "Постави како проект",
+  "unset_as_a_project_label": "Отстрани како проект",
+  "close_project_label": "Затвори проект",
+  "repoen_project_label": "Повторно отвори проект",
+  "add_to_project_label": "Додади во проект",
+  "apply_value_to_subtree": "Примени __value__ на под-дрвото",
+  "bulk_set_options_label": "Постави"
+}

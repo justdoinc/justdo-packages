@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Fjern oppgaver",
+  "remove_from_parent_label": "Fjern fra overordnet",
+  "remove_with_subtree_label": "Fjern med undertre",
+  "archive_task_label": "Arkiver oppgave",
+  "unarchive_task_label": "Dearkiver oppgave",
+  "reorder_children_by_label": "Sorter underelementer etter",
+  "zoom_in_label": "Zoom inn",
+  "projects_label": "Prosjekter",
+  "set_as_a_project_label": "Sett som et prosjekt",
+  "unset_as_a_project_label": "Fjern som prosjekt",
+  "close_project_label": "Lukk prosjekt",
+  "repoen_project_label": "Gjenåpne prosjekt",
+  "add_to_project_label": "Legg til i prosjekt",
+  "apply_value_to_subtree": "Bruk __value__ på undertre",
+  "bulk_set_options_label": "Angi"
+}

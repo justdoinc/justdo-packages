@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Көрініс ауыстыру",
+  "tab_switcher_dropdown_search_placeholder": "Көріністер",
+  "tab_switcher_main_view_label": "Негізгі көрініс",
+  "tab_switcher_my_favorites_label": "Менің таңдаулыларым",
+  "tab_switcher_my_due_list_label": "Менің мерзімді тізімім",
+  "tab_switcher_recently_label": "Жақында",
+  "tab_switcher_recently_completed_label": "Аяқталған",
+  "tab_switcher_recently_updated_label": "Жаңартылған",
+  "tab_switcher_recently_created_label": "Жасалған",
+  "tab_switcher_miscellaneous_label": "Әр түрлі",
+  "tab_switcher_task_ownershipt_transfers_label": "Тапсырма иелігін беру",
+  "tab_switcher_ticket_queues_label": "Билет кезектері",
+  "tab_switcher_members_due_lists_label": "Мүшелердің мерзімді тізімдері",
+  "tab_switcher_all_members_due_list_label": "Барлық мүшелердің мерзімді тізімі",
+  "tab_switcher_projects_section_label": "Жобалар",
+  "tab_switcher_projects_label": "Жобалар"
+}

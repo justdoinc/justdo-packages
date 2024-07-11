@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Прикази на табела",
+  "grid_views_search_placeholder": "Пребарај прикази",
+  "grid_views_no_view_label": "Нема прикази",
+  "grid_views_add_current_view_label": "Додај тековен приказ",
+  "grid_views_rename_label": "Преименувај",
+  "grid_views_update_label": "Ажурирај",
+  "grid_views_remove_label": "Отстрани",
+  "grid_views_share_label": "Сподели",
+  "grid_views_unshare_label": "Прекини споделување",
+  "grid_views_shared_label": "споделено"
+}

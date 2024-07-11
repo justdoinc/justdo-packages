@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Faol holatlar",
+  "project_configurations_no_active_states_label": "Faol holatlar yo'q",
+  "project_configurations_hidden_states_label": "Yashirin holatlar",
+  "project_configurations_no_hidden_states_label": "Yashirin holatlar yo'q",
+  "project_configurations_type_state_name_placeholder": "Holat nomini kiriting",
+  "project_configurations_default_title_for_this_state_label": "Ushbu holat uchun standart sarlavha",
+  "project_configurations_restore_state_label": "Holatni tiklash",
+  "project_configurations_create_extended_state_label": "Kengaytirilgan holat yaratish",
+  "project_configurations_hide_state": "Holatni yashirish",
+  "project_configurations_remove_extended_state": "Kengaytirilgan holatni oʻchirish",
+  "new_custom_state_default_title": "__state__ - kengaytirilgan"
+}

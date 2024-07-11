@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Вазифаҳоро нест кардан",
+  "remove_from_parent_label": "Аз волидайн хориҷ кардан",
+  "remove_with_subtree_label": "Бо зердарахт нест кардан",
+  "archive_task_label": "Вазифаро бойгонӣ кардан",
+  "unarchive_task_label": "Вазифаро аз бойгонӣ баровардан",
+  "reorder_children_by_label": "Тартиби фарзандонро аз нав кардан аз рӯи",
+  "zoom_in_label": "Калон кардан",
+  "projects_label": "Лоиҳаҳо",
+  "set_as_a_project_label": "Ҳамчун лоиҳа танзим кардан",
+  "unset_as_a_project_label": "Аз лоиҳа будан бекор кардан",
+  "close_project_label": "Лоиҳаро пӯшидан",
+  "repoen_project_label": "Лоиҳаро аз нав кушодан",
+  "add_to_project_label": "Ба лоиҳа илова кардан",
+  "apply_value_to_subtree": "__value__-ро ба зердарахт татбиқ кардан",
+  "bulk_set_options_label": "Танзим кардан"
+}

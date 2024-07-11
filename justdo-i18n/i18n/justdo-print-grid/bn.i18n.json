@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "জাস্টডু প্রিন্ট করুন",
+  "print_dropdown_entire_justdo": "সম্পূর্ণ জাস্টডু",
+  "print_dropdown_visible_tasks": "দৃশ্যমান কাজগুলি",
+  "print_dropdown_print_current_task": "বর্তমান কাজটি প্রিন্ট করুন",
+  "print_dropdown_all_child_tasks": "সমস্ত উপ-কাজ",
+  "print_dropdown_visible_child_tasks": "দৃশ্যমান উপ-কাজগুলি",
+  "print_dropdown_download": "ডাউনলোড করুন",
+  "print_dropdown_download_as_png": "PNG হিসাবে ডাউনলোড করুন",
+  "print_grid_columns_settings_label": "কলাম সেটিংস",
+  "print_grid_columns_options_label": "কলাম অপশনগুলি",
+  "print_grid_print": "প্রিন্ট করুন",
+  "print_grid_export_csv": "CSV এক্সপোর্ট করুন",
+  "print_grid_select_all": "সবগুলি নির্বাচন করুন",
+  "print_grid_apply": "প্রয়োগ করুন"
+}

@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Atazak Kendu",
+  "remove_from_parent_label": "Gurasotik Kendu",
+  "remove_with_subtree_label": "Azpi-zuhaitzarekin Kendu",
+  "archive_task_label": "Ataza Artxibatu",
+  "unarchive_task_label": "Ataza Desartxibatu",
+  "reorder_children_by_label": "Umeak ordenatu honen arabera",
+  "zoom_in_label": "Handitu",
+  "projects_label": "Proiektuak",
+  "set_as_a_project_label": "Proiektu gisa ezarri",
+  "unset_as_a_project_label": "Proiektu gisa kendu",
+  "close_project_label": "Proiektua Itxi",
+  "repoen_project_label": "Proiektua Berrireki",
+  "add_to_project_label": "Proiektura gehitu",
+  "apply_value_to_subtree": "__value__ azpi-zuhaitzari aplikatu",
+  "bulk_set_options_label": "Ezarri"
+}

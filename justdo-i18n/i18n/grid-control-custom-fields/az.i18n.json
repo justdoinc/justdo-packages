@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Xüsusi Sahələr",
+  "grid_control_custom_fields_sort_by_name_label": "Ada görə çeşidləmək",
+  "grid_control_custom_fields_new_custom_field_label": "Yeni xüsusi sahə",
+  "grid_control_custom_fields_no_custom_fields_label": "Xüsusi sahələr yoxdur",
+  "grid_control_custom_fields_label_placeholder": "etiket",
+  "grid_control_custom_fields_text_label": "Mətn",
+  "grid_control_custom_fields_number_label": "Rəqəm",
+  "grid_control_custom_fields_date_label": "Tarix",
+  "grid_control_custom_fields_select_label": "Seçimlər",
+  "grid_control_custom_fields_multi_select_label": "Çoxlu Seçimlər",
+  "grid_control_custom_fields_smart_numbers_label": "Ağıllı Rəqəmlər",
+  "grid_control_custom_fields_unknown_type_label": "Naməlum növ",
+  "grid_control_custom_fields_disabled_field_label": "Deaktiv edilmiş sahə"
+}

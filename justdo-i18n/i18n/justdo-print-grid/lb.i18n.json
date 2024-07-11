@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "JustDo drécken",
+  "print_dropdown_entire_justdo": "Ganz JustDo",
+  "print_dropdown_visible_tasks": "Siichtbar Aufgaben",
+  "print_dropdown_print_current_task": "Aktuell Aufgab drécken",
+  "print_dropdown_all_child_tasks": "All Ënneraufgaben",
+  "print_dropdown_visible_child_tasks": "Siichtbar Ënneraufgaben",
+  "print_dropdown_download": "Eroflueden",
+  "print_dropdown_download_as_png": "Als PNG eroflueden",
+  "print_grid_columns_settings_label": "Kolonnen Astellungen",
+  "print_grid_columns_options_label": "Kolonnen Optioune",
+  "print_grid_print": "Drécken",
+  "print_grid_export_csv": "CSV exportéieren",
+  "print_grid_select_all": "Alles auswielen",
+  "print_grid_apply": "Uwenden"
+}

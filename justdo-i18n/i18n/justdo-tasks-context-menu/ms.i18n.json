@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Buang Tugas",
+  "remove_from_parent_label": "Buang Dari Induk",
+  "remove_with_subtree_label": "Buang dengan Sub-Pohon",
+  "archive_task_label": "Arkib Tugas",
+  "unarchive_task_label": "Nyaharkib Tugas",
+  "reorder_children_by_label": "Susun semula anak mengikut",
+  "zoom_in_label": "Zum masuk",
+  "projects_label": "Projek",
+  "set_as_a_project_label": "Tetapkan sebagai Projek",
+  "unset_as_a_project_label": "Nyahtetapkan sebagai Projek",
+  "close_project_label": "Tutup Projek",
+  "repoen_project_label": "Buka Semula Projek",
+  "add_to_project_label": "Tambah ke projek",
+  "apply_value_to_subtree": "Terapkan __value__ ke sub-pohon",
+  "bulk_set_options_label": "Tetapkan"
+}

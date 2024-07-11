@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Usiicht wiesselen",
+  "tab_switcher_dropdown_search_placeholder": "Usichten",
+  "tab_switcher_main_view_label": "Haaptusiicht",
+  "tab_switcher_my_favorites_label": "Meng Favoriten",
+  "tab_switcher_my_due_list_label": "Meng Fällegkeetslëscht",
+  "tab_switcher_recently_label": "Rezent",
+  "tab_switcher_recently_completed_label": "Ofgeschloss",
+  "tab_switcher_recently_updated_label": "Aktualiséiert",
+  "tab_switcher_recently_created_label": "Erstallt",
+  "tab_switcher_miscellaneous_label": "Verschiddenes",
+  "tab_switcher_task_ownershipt_transfers_label": "Iwwerdrounge vun Aufgabebesëtz",
+  "tab_switcher_ticket_queues_label": "Ticket-Waardeschlaangen",
+  "tab_switcher_members_due_lists_label": "Fällegkeetslëschte vun de Memberen",
+  "tab_switcher_all_members_due_list_label": "Fällegkeetslëscht vun alle Memberen",
+  "tab_switcher_projects_section_label": "Projeten",
+  "tab_switcher_projects_label": "Projeten"
+}

@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "பணிகளை அகற்று",
+  "remove_from_parent_label": "தாய் பணியிலிருந்து அகற்று",
+  "remove_with_subtree_label": "துணை-மரத்துடன் அகற்று",
+  "archive_task_label": "பணியை காப்பகப்படுத்து",
+  "unarchive_task_label": "பணியை காப்பகத்திலிருந்து மீட்டெடு",
+  "reorder_children_by_label": "துணைப் பணிகளை மறுவரிசைப்படுத்து",
+  "zoom_in_label": "பெரிதாக்கு",
+  "projects_label": "திட்டங்கள்",
+  "set_as_a_project_label": "திட்டமாக அமை",
+  "unset_as_a_project_label": "திட்டமாக அமைப்பதை நீக்கு",
+  "close_project_label": "திட்டத்தை மூடு",
+  "repoen_project_label": "திட்டத்தை மீண்டும் திற",
+  "add_to_project_label": "திட்டத்தில் சேர்",
+  "apply_value_to_subtree": "துணை-மரத்திற்கு __value__ ஐப் பயன்படுத்து",
+  "bulk_set_options_label": "தொகுப்பாக அமை"
+}

@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Zəhmət olmasa adınızı daxil edin",
+  "err_first_name_too_long": "Ad 30 simvoldan çox olmamalıdır",
+  "err_last_name_too_long": "Soyad 30 simvoldan çox olmamalıdır",
+  "err_last_name_empty": "Zəhmət olmasa soyadınızı daxil edin",
+  "err_email_invalid": "Zəhmət olmasa düzgün e-poçt ünvanı daxil edin",
+  "err_email_empty": "Zəhmət olmasa e-poçt ünvanınızı daxil edin",
+  "err_password_empty": "Zəhmət olmasa şifrənizi daxil edin",
+  "err_incorrect_password": "Yanlış şifrə. Şifrənizi sıfırlamaq üçün \"Şifrəni unutmusunuz?\" düyməsini klikləyə bilərsiniz.",
+  "err_no_password_set": "Şifrənizi təyin etmək üçün \"Şifrəni unutmusunuz?\" düyməsini klikləyin.",
+  "err_password_too_similar": "Şifrə adınıza, soyadınıza və ya e-poçt ünvanınıza çox oxşardır",
+  "err_retype_password_empty": "Zəhmət olmasa şifrənizi yenidən daxil edin",
+  "err_retype_password_not_match": "Şifrələr uyğun gəlmir",
+  "err_agree_ts_and_pp_missing": "Davam etmək üçün istifadə şərtlərimizi və məxfilik siyasətimizi oxuyub razılaşmalısınız",
+  "err_cant_login": "Daxil olmaq mümkün deyil"
+}

@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "La contrasenya ha de:",
+  "password_requirements_too_short": "Tenir almenys %d caràcters",
+  "password_requirements_missing_number": "Incloure almenys un número",
+  "password_requirements_special_sign": "Incloure almenys un caràcter especial",
+  "password_requirements_atleast_one_lowercase": "Incloure almenys una lletra minúscula en anglès",
+  "password_requirements_atleast_one_uppercase": "Incloure almenys una lletra majúscula en anglès",
+  "password_requirements_too_similar": "No incloure el teu nom ni parts del teu correu electrònic"
+}

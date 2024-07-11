@@ -1,0 +1,8 @@
+{
+  "task_type_delayed_label": "Forsinket",
+  "task_type_behind_label": "På etterskudd",
+  "task_type_late_label": "Sen",
+  "task_type_overdue_label": "Forfalt",
+  "task_type_key_task_label": "Nøkkeloppgave",
+  "task_type_no_owner_label": "Ingen eier"
+}

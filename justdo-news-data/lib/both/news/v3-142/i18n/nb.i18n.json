@@ -1,0 +1,15 @@
+{
+  "v3_142_news_title": "v3.142",
+  "v3_142_news_main_name": "Hva er nytt",
+  "v3_142_news_main_array_item_1_title": "Introduserer kinesisk oversettelse",
+  "v3_142_news_main_array_item_1_subtitle": "Tilgjengelig kun på JustDo.com",
+  "v3_142_news_main_array_item_2_title": "Sett status for flere elementer samtidig",
+  "v3_142_news_main_array_item_2_subtitle": "Denne oppdateringen muliggjør en mer effektiv arbeidsflyt. Du kan nå endre status for flere elementer i én enkelt handling. I tillegg til å sette status, kan denne funksjonen brukes til å oppdatere ulike andre opsjonsfelter i bulk. Dette inkluderer egendefinerte felter og plugin-felter i din JustDo.",
+  "v3_142_news_features_name": "Andre oppdateringer",
+  "v3_142_news_features_title": "Forbedringer",
+  "v3_142_news_features_update_items": [
+    "1. Introduserer 'Velg alle' og 'Fjern alle valg'-knapper til vår oppgavekopieringsfunksjon - som gjør feltvalg raskere og enklere."
+  ],
+  "v3_142_news_page_title": "JustDo v3.142: Kinesisk oversettelse, masseoppdatering av status og mer",
+  "v3_142_news_page_description": "JustDo v3.142 introduserer støtte for kinesisk språk, muligheten til å sette status for flere elementer samtidig, og forbedringer i oppgavekopiering."
+}

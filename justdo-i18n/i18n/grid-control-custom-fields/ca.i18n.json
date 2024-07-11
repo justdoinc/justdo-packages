@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Camps personalitzats",
+  "grid_control_custom_fields_sort_by_name_label": "Ordenar per nom",
+  "grid_control_custom_fields_new_custom_field_label": "Nou camp personalitzat",
+  "grid_control_custom_fields_no_custom_fields_label": "No hi ha camps personalitzats",
+  "grid_control_custom_fields_label_placeholder": "etiqueta",
+  "grid_control_custom_fields_text_label": "Text",
+  "grid_control_custom_fields_number_label": "Número",
+  "grid_control_custom_fields_date_label": "Data",
+  "grid_control_custom_fields_select_label": "Opcions",
+  "grid_control_custom_fields_multi_select_label": "Múltiples opcions",
+  "grid_control_custom_fields_smart_numbers_label": "Números intel·ligents (Smart Numbers)",
+  "grid_control_custom_fields_unknown_type_label": "Tipus desconegut",
+  "grid_control_custom_fields_disabled_field_label": "Camp desactivat"
+}

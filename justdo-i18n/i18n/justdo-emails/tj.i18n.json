@@ -1,0 +1,11 @@
+{
+  "email_greeting_with_name": "Салом __name__, ",
+  "unread_task_chat_notification_subject": "Паёмҳои нави чат интизори шумоянд",
+  "unread_task_chat_notification_title": "Паёмҳои нави чат дар вазифаи зерин интизори шумоянд:",
+  "unread_group_chat_notification_subject": "Паёмҳои нав аз __channel_title__ интизори шумоянд",
+  "unread_group_chat_notification_title_html": "Паёмҳои нав аз <span style=\"font-weight: bold;\">__channel_title__</span> интизори шумоянд!",
+  "open_in_justdo": "Дар JustDo кушоед",
+  "unsubscribe_from_justdo": "Аз ҳамаи огоҳиномаҳои навсозӣ аз JustDo обуна нашавед",
+  "unsubscribe_from_project": "Аз навсозиҳо барои __project_title__ обуна нашавед",
+  "reply_email_for_support": "Оё ягон мушкилӣ доред? Барои дастгирӣ ба ин почта ҷавоб диҳед."
+}

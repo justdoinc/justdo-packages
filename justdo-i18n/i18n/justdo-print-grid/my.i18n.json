@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "JustDo ကို ပုံနှိပ်ရန်",
+  "print_dropdown_entire_justdo": "JustDo အားလုံး",
+  "print_dropdown_visible_tasks": "မြင်နိုင်သော လုပ်ငန်းတာဝန်များ",
+  "print_dropdown_print_current_task": "လက်ရှိ လုပ်ငန်းတာဝန်ကို ပုံနှိပ်ရန်",
+  "print_dropdown_all_child_tasks": "လုပ်ငန်းခွဲ အားလုံး",
+  "print_dropdown_visible_child_tasks": "မြင်နိုင်သော လုပ်ငန်းခွဲများ",
+  "print_dropdown_download": "ဒေါင်းလုဒ်လုပ်ရန်",
+  "print_dropdown_download_as_png": "PNG အဖြစ် ဒေါင်းလုဒ်လုပ်ရန်",
+  "print_grid_columns_settings_label": "ကော်လံ အပြင်အဆင်များ",
+  "print_grid_columns_options_label": "ကော်လံ ရွေးချယ်စရာများ",
+  "print_grid_print": "ပုံနှိပ်ရန်",
+  "print_grid_export_csv": "CSV အဖြစ် ထုတ်ယူရန်",
+  "print_grid_select_all": "အားလုံးရွေးရန်",
+  "print_grid_apply": "အသုံးပြုရန်"
+}

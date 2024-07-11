@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "Txartel-ilarak",
+  "project_config_ticket_queues_new_ticket_queue_label": "Txartel-ilara berria",
+  "project_config_ticket_queues_enter_task_number_label": "Sartu ataza zenbakia",
+  "project_config_ticket_queues_no_ticket_queues_label": "Ez dago txartel-ilarik",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "Ezin duzu Txartel-ilara hau kendu, ez baitzara bere Atazako kide"
+}

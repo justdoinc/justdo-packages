@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Šta je novo",
+  "v3_140_news_main_array_item_1_title": "Ažuriran dizajn prebacivača kartica",
+  "v3_140_news_main_array_item_1_subtitle": "Dizajn sada bolje označava kada je kartica aktivna.",
+  "v3_140_news_main_array_item_2_title": "Predstavljena Solid Purple tema",
+  "v3_140_news_main_array_item_3_title": "Pojednostavljeno pozivanje korisnika",
+  "v3_140_news_main_array_item_4_title": "Poboljšano upravljanje članovima JustDo-a",
+  "v3_140_news_main_array_item_4_subtitle": "Odaberite za uklanjanje više korisnika odjednom.",
+  "v3_140_news_main_array_item_5_title": "Podrška za pregled videa u JustDo datotekama",
+  "v3_140_news_main_array_item_6_title": "Prikaz korisničkog avatara u kolonama Vlasnik/Čeka na vlasništvo",
+  "v3_140_news_features_name": "Ostala ažuriranja",
+  "v3_140_news_features_title": "Poboljšanja",
+  "v3_140_news_features_update_items": [
+    "1. Boja sekundarnih dugmadi promijenjena sa tamno sive na svijetlo sivu",
+    "2. Uklonjene klasične teme",
+    "3. Podrška za sortiranje podzadataka prema polju Praćenje",
+    "4. Novi moderni font je sada u upotrebi za bolju podršku jezicima koji nisu engleski",
+    "5. Dodana mogućnost skrivanja bočne trake u Admin panelu sajta",
+    "6. Poboljšanja dizajna dijaloga za odbijanje vlasništva (uključujući mogućnost potvrde slanja sa ctrl+enter)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Ažuriranja dizajna, pojednostavljeno pozivanje korisnika i više",
+  "v3_140_news_page_description": "JustDo v3.140 donosi poboljšanja dizajna, unaprijeđene procese pozivanja korisnika, poboljšanu podršku za video i višestruka poboljšanja upotrebljivosti."
+}

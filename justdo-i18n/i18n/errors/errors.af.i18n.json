@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Voer asseblief jou naam in",
+  "err_first_name_too_long": "Voornaam mag nie 30 karakters oorskry nie",
+  "err_last_name_too_long": "Van mag nie 30 karakters oorskry nie",
+  "err_last_name_empty": "Voer asseblief jou van in",
+  "err_email_invalid": "Voer asseblief 'n geldige e-posadres in",
+  "err_email_empty": "Voer asseblief jou e-pos in",
+  "err_password_empty": "Voer asseblief jou wagwoord in",
+  "err_incorrect_password": "Verkeerde wagwoord. Om jou wagwoord te herstel, kan jy op die \"Wagwoord vergeet?\" knoppie klik.",
+  "err_no_password_set": "Om jou wagwoord op te stel, klik asseblief op die \"Wagwoord vergeet?\" knoppie.",
+  "err_password_too_similar": "Wagwoord is te soortgelyk aan jou voornaam, van of e-pos",
+  "err_retype_password_empty": "Tik asseblief jou wagwoord weer in",
+  "err_retype_password_not_match": "Wagwoorde stem nie ooreen nie",
+  "err_agree_ts_and_pp_missing": "Jy moet ons bepalings en voorwaardes en privaatheidsbeleid lees en daarmee instem om voort te gaan",
+  "err_cant_login": "Kan nie aanmeld nie"
+}

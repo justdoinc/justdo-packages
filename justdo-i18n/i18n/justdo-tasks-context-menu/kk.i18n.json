@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Тапсырмаларды жою",
+  "remove_from_parent_label": "Ата-енеден жою",
+  "remove_with_subtree_label": "Ішкі ағашымен бірге жою",
+  "archive_task_label": "Тапсырманы мұрағаттау",
+  "unarchive_task_label": "Тапсырманы мұрағаттан шығару",
+  "reorder_children_by_label": "Балалар элементтерін қайта реттеу",
+  "zoom_in_label": "Үлкейту",
+  "projects_label": "Жобалар",
+  "set_as_a_project_label": "Жоба ретінде орнату",
+  "unset_as_a_project_label": "Жоба ретінде орнатуды болдырмау",
+  "close_project_label": "Жобаны жабу",
+  "repoen_project_label": "Жобаны қайта ашу",
+  "add_to_project_label": "Жобаға қосу",
+  "apply_value_to_subtree": "__value__ мәнін ішкі ағашқа қолдану",
+  "bulk_set_options_label": "Опцияларды орнату"
+}

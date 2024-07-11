@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Vistes de Graella",
+  "grid_views_search_placeholder": "Cerca vistes",
+  "grid_views_no_view_label": "Sense vistes",
+  "grid_views_add_current_view_label": "Afegir vista actual",
+  "grid_views_rename_label": "Canviar nom",
+  "grid_views_update_label": "Actualitzar",
+  "grid_views_remove_label": "Eliminar",
+  "grid_views_share_label": "Compartir",
+  "grid_views_unshare_label": "Deixar de compartir",
+  "grid_views_shared_label": "compartit"
+}

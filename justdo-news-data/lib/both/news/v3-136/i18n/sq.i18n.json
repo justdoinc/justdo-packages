@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Çfarë ka të re",
+  "v3_136_news_main_array_item_1_title": "Faqe e re kryesore",
+  "v3_136_news_main_array_item_1_subtitle": "Prezantojmë Faqen tonë të Rifreskuar Kryesore 🎉",
+  "v3_136_news_main_array_item_2_title": "Gjendje të personalizuara",
+  "v3_136_news_main_array_item_2_subtitle": "Rritni efikasitetin e punës suaj me shtesën tonë të fundit - Gjendjet e Personalizuara. Përshtatni gjendjet e detyrave sipas nevojave unike të projektit tuaj dhe ndiqni progresin me saktësi më të madhe.",
+  "v3_136_news_main_array_item_3_title": "Qëndroni të Informuar me Treguesin e Emaileve të Palexuara në Tabelë",
+  "v3_136_news_main_array_item_3_subtitle": "Mos humbisni më përditësime të rëndësishme! Treguesi ynë i ri i Emaileve të Palexuara në Tabelë ju mban të informuar për emailet e palexuara brenda detyrave, duke siguruar komunikim efikas dhe veprim të menjëhershëm.",
+  "v3_136_news_main_array_item_4_title": "Filtra të Përmirësuar për Dialogun e Shtimit të Shpejtë",
+  "v3_136_news_main_array_item_4_subtitle": "Rritni produktivitetin tuaj me filtrat tanë të saposhtuara për Zgjedhësin e Destinacionit dhe Pronarit në Dialogun e Shtimit të Shpejtë. Thjeshtësoni krijimin e detyrave duke gjetur destinacionin dhe pronarin e duhur me lehtësi.",
+  "v3_136_news_features_name": "Përditësime të Tjera",
+  "v3_136_news_features_title": "Përmirësime",
+  "v3_136_news_features_update_items": [
+    "1. Përmirësim i performancës për operacione që përfshijnë përditësime për më shumë se 1 mijë detyra, veçanërisht ndryshimin e anëtarëve të detyrave të një nën-peme më të madhe se 1 mijë përdorues.",
+    "2. Skeda e aktivitetit: Rregullim i regjistrimit të aktivitetit që nuk shfaqej saktë nëse ishte një shtim prindëror dhe prindi ishte hequr <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>video</a>.",
+    "3. Ngarkimi i avatarëve për mjedise që përdorin skedarët e JustDo.",
+    "4. Prezantimi i konceptit të Organizatave: një njësi logjike opsionale mbi JustDo-t.",
+    "5. MailDo: Kur merret një email, pronari i detyrës tani çheshtëzohet automatikisht në bisedë."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Faqe e Re Kryesore, Gjendje të Personalizuara, Filtra të Përmirësuar dhe Më Shumë",
+  "v3_136_news_page_description": "JustDo v3.136 prezanton një faqe të rifreskuar kryesore, gjendje të fuqishme të personalizuara për detyrat, filtra të përmirësuar për shtim më të shpejtë të detyrave, dhe përmirësime të rëndësishme të performancës."
+}

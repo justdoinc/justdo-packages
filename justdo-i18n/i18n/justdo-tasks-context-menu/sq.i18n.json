@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Hiq Detyrat",
+  "remove_from_parent_label": "Hiq nga Prindi",
+  "remove_with_subtree_label": "Hiq me Nën-Pemë",
+  "archive_task_label": "Arkivo Detyrën",
+  "unarchive_task_label": "Çarkivo Detyrën",
+  "reorder_children_by_label": "Rirendit fëmijët sipas",
+  "zoom_in_label": "Zmadho",
+  "projects_label": "Projekte",
+  "set_as_a_project_label": "Vendos si Projekt",
+  "unset_as_a_project_label": "Hiq si Projekt",
+  "close_project_label": "Mbyll Projektin",
+  "repoen_project_label": "Rihap Projektin",
+  "add_to_project_label": "Shto në projekt",
+  "apply_value_to_subtree": "Apliko __value__ në nën-pemë",
+  "bulk_set_options_label": "Vendos"
+}

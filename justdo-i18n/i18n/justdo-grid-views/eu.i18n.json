@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Sareta Ikuspegiak",
+  "grid_views_search_placeholder": "Bilatu ikuspegiak",
+  "grid_views_no_view_label": "Ikuspegirik ez",
+  "grid_views_add_current_view_label": "Gehitu uneko ikuspegia",
+  "grid_views_rename_label": "Izena aldatu",
+  "grid_views_update_label": "Eguneratu",
+  "grid_views_remove_label": "Kendu",
+  "grid_views_share_label": "Partekatu",
+  "grid_views_unshare_label": "Partekatzea utzi",
+  "grid_views_shared_label": "partekatuta"
+}

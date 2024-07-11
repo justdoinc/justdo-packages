@@ -1,0 +1,11 @@
+{
+  "email_greeting_with_name": "Përshëndetje __name__, ",
+  "unread_task_chat_notification_subject": "Mesazhe të reja në chat ju presin",
+  "unread_task_chat_notification_title": "Mesazhe të reja në chat ju presin në detyrën e mëposhtme:",
+  "unread_group_chat_notification_subject": "Mesazhe të reja nga __channel_title__ ju presin",
+  "unread_group_chat_notification_title_html": "Mesazhe të reja nga <span style=\"font-weight: bold;\">__channel_title__</span> ju presin!",
+  "open_in_justdo": "Hape në JustDo",
+  "unsubscribe_from_justdo": "Çregjistrohu nga të gjitha njoftimet e përditësimeve nga JustDo",
+  "unsubscribe_from_project": "Çregjistrohu nga përditësimet për __project_title__",
+  "reply_email_for_support": "Keni ndonjë problem? Përgjigjuni këtij emaili për ndihmë."
+}

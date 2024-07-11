@@ -1,0 +1,11 @@
+{
+  "email_greeting_with_name": "မင်္ဂလာပါ __name__၊ ",
+  "unread_task_chat_notification_subject": "သင့်အတွက် ဖတ်ရှုရန် ခဲ့ဆက်သွယ်ရေးမက်ဆေ့ခ်ျအသစ်များ ရှိနေပါသည်",
+  "unread_task_chat_notification_title": "အောက်ပါတာဝန်တွင် သင့်အတွက် ဖတ်ရှုရန် ခဲ့ဆက်သွယ်ရေးမက်ဆေ့ခ်ျအသစ်များ ရှိနေပါသည်:",
+  "unread_group_chat_notification_subject": "__channel_title__ မှ မက်ဆေ့ခ်ျအသစ်များသည် သင့်အတွက် စောင့်ဆိုင်းနေပါသည်",
+  "unread_group_chat_notification_title_html": "<span style=\"font-weight: bold;\">__channel_title__</span> မှ မက်ဆေ့ခ်ျအသစ်များသည် သင့်အတွက် စောင့်ဆိုင်းနေပါသည်!",
+  "open_in_justdo": "JustDo တွင် ဖွင့်ပါ",
+  "unsubscribe_from_justdo": "JustDo မှ အပ်ဒိတ်အကြောင်းကြားချက်အားလုံးကို ရပ်ဆိုင်းရန်",
+  "unsubscribe_from_project": "__project_title__ အတွက် အပ်ဒိတ်များမှ ရပ်ဆိုင်းရန်",
+  "reply_email_for_support": "ပြဿနာတစ်စုံတစ်ရာ ရှိပါသလား? အကူအညီအတွက် ဤအီးမေးလ်ကို ပြန်ဖြေပါ။"
+}

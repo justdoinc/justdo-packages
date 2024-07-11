@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "সক্রিয় অবস্থা",
+  "project_configurations_no_active_states_label": "কোনো সক্রিয় অবস্থা নেই",
+  "project_configurations_hidden_states_label": "লুকানো অবস্থা",
+  "project_configurations_no_hidden_states_label": "কোনো লুকানো অবস্থা নেই",
+  "project_configurations_type_state_name_placeholder": "অবস্থার নাম টাইপ করুন",
+  "project_configurations_default_title_for_this_state_label": "এই অবস্থার জন্য ডিফল্ট শিরোনাম",
+  "project_configurations_restore_state_label": "অবস্থা পুনরুদ্ধার করুন",
+  "project_configurations_create_extended_state_label": "বর্ধিত অবস্থা তৈরি করুন",
+  "project_configurations_hide_state": "অবস্থা লুকান",
+  "project_configurations_remove_extended_state": "বর্ধিত অবস্থা সরান",
+  "new_custom_state_default_title": "__state__ - বর্ধিত"
+}

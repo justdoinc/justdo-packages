@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Pasahitzak honako hau izan behar du:",
+  "password_requirements_too_short": "Gutxienez %d karaktere izan",
+  "password_requirements_missing_number": "Gutxienez zenbaki bat izan",
+  "password_requirements_special_sign": "Gutxienez karaktere berezi bat izan",
+  "password_requirements_atleast_one_lowercase": "Gutxienez ingelesezko letra xehe bat izan",
+  "password_requirements_atleast_one_uppercase": "Gutxienez ingelesezko maiuskula bat izan",
+  "password_requirements_too_similar": "Ez du zure izena edo zure posta elektronikoaren zatiak izan behar"
+}

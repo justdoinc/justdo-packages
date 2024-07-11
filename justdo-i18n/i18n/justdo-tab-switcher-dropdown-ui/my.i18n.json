@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "မြင်ကွင်းပြောင်းရန်",
+  "tab_switcher_dropdown_search_placeholder": "မြင်ကွင်းများ",
+  "tab_switcher_main_view_label": "အဓိကမြင်ကွင်း",
+  "tab_switcher_my_favorites_label": "ကျွန်ုပ်၏အကြိုက်ဆုံးများ",
+  "tab_switcher_my_due_list_label": "ကျွန်ုပ်၏သတ်မှတ်ရက်စာရင်း",
+  "tab_switcher_recently_label": "မကြာသေးမီက",
+  "tab_switcher_recently_completed_label": "ပြီးစီးခဲ့သော",
+  "tab_switcher_recently_updated_label": "မွမ်းမံထားသော",
+  "tab_switcher_recently_created_label": "ဖန်တီးထားသော",
+  "tab_switcher_miscellaneous_label": "အထွေထွေ",
+  "tab_switcher_task_ownershipt_transfers_label": "တာဝန်ပိုင်ဆိုင်မှု လွှဲပြောင်းခြင်းများ",
+  "tab_switcher_ticket_queues_label": "တောင်းဆိုချက်တန်းစီစာရင်းများ (Ticket Queues)",
+  "tab_switcher_members_due_lists_label": "အဖွဲ့ဝင်များ၏ သတ်မှတ်ရက်စာရင်းများ",
+  "tab_switcher_all_members_due_list_label": "အဖွဲ့ဝင်အားလုံး၏ သတ်မှတ်ရက်စာရင်း",
+  "tab_switcher_projects_section_label": "စီမံကိန်းများ",
+  "tab_switcher_projects_label": "စီမံကိန်းများ"
+}

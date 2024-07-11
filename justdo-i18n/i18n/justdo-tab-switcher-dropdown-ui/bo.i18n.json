@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "ལྟ་ཚུལ་བརྗེ་བ།",
+  "tab_switcher_dropdown_search_placeholder": "ལྟ་ཚུལ་ཁག",
+  "tab_switcher_main_view_label": "གཙོ་བོའི་ལྟ་ཚུལ།",
+  "tab_switcher_my_favorites_label": "ངའི་དགའ་ཤོས།",
+  "tab_switcher_my_due_list_label": "ངའི་དུས་བཀག་ཐོ།",
+  "tab_switcher_recently_label": "ཉེ་ཆར།",
+  "tab_switcher_recently_completed_label": "ལེགས་གྲུབ་བྱུང་བ།",
+  "tab_switcher_recently_updated_label": "གསར་བསྒྱུར་བྱས་པ།",
+  "tab_switcher_recently_created_label": "གསར་བཟོ་བྱས་པ།",
+  "tab_switcher_miscellaneous_label": "སྣ་ཚོགས།",
+  "tab_switcher_task_ownershipt_transfers_label": "ལས་འགན་བདག་དབང་རྩིས་སྤྲོད།",
+  "tab_switcher_ticket_queues_label": "འཛིན་ཤོག་གི་གྲལ་རིམ། (Ticket Queues)",
+  "tab_switcher_members_due_lists_label": "ཚོགས་མིའི་དུས་བཀག་ཐོ་ཁག",
+  "tab_switcher_all_members_due_list_label": "ཚོགས་མི་ཚང་མའི་དུས་བཀག་ཐོ།",
+  "tab_switcher_projects_section_label": "ལས་འཆར་ཁག",
+  "tab_switcher_projects_label": "ལས་འཆར་ཁག"
+}

@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Лозинката мора:",
+  "password_requirements_too_short": "Да се состои од најмалку %d знаци",
+  "password_requirements_missing_number": "Да содржи најмалку еден број",
+  "password_requirements_special_sign": "Да содржи најмалку еден специјален знак",
+  "password_requirements_atleast_one_lowercase": "Да содржи најмалку една мала буква од англиската азбука",
+  "password_requirements_atleast_one_uppercase": "Да содржи најмалку една голема буква од англиската азбука",
+  "password_requirements_too_similar": "Да не го вклучува вашето име или делови од вашата е-пошта"
+}

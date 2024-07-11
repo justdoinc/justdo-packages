@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Verwyder Take",
+  "remove_from_parent_label": "Verwyder van Ouer",
+  "remove_with_subtree_label": "Verwyder met Subboom",
+  "archive_task_label": "Argiveer Taak",
+  "unarchive_task_label": "Ontargiveer Taak",
+  "reorder_children_by_label": "Herrangskik kinders volgens",
+  "zoom_in_label": "Zoem in",
+  "projects_label": "Projekte",
+  "set_as_a_project_label": "Stel as 'n Projek",
+  "unset_as_a_project_label": "Ontstel as 'n Projek",
+  "close_project_label": "Sluit Projek",
+  "repoen_project_label": "Heropen Projek",
+  "add_to_project_label": "Voeg by projek",
+  "apply_value_to_subtree": "Pas __value__ toe op subboom",
+  "bulk_set_options_label": "Stel"
+}

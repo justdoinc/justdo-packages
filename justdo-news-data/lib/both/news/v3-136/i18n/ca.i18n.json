@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Novetats",
+  "v3_136_news_main_array_item_1_title": "Nova pàgina d'inici",
+  "v3_136_news_main_array_item_1_subtitle": "Presentem la nostra pàgina d'inici renovada 🎉",
+  "v3_136_news_main_array_item_2_title": "Estats personalitzats",
+  "v3_136_news_main_array_item_2_subtitle": "Augmenteu l'eficiència del vostre flux de treball amb la nostra última addició: Estats personalitzats. Adapteu els estats de les tasques a les necessitats úniques del vostre projecte i feu un seguiment del progrés amb més precisió.",
+  "v3_136_news_main_array_item_3_title": "Manteniu-vos informat amb l'indicador de correus electrònics no llegits a la graella",
+  "v3_136_news_main_array_item_3_subtitle": "No us perdeu mai més actualitzacions importants! El nostre nou indicador de correus electrònics no llegits a la graella us manté informat sobre els correus electrònics no llegits dins de les tasques, garantint una comunicació eficient i una acció ràpida.",
+  "v3_136_news_main_array_item_4_title": "Filtres millorats per al diàleg d'afegir ràpid",
+  "v3_136_news_main_array_item_4_subtitle": "Augmenteu la vostra productivitat amb els nostres nous filtres per a la destinació i el selector de propietari del Bootbox d'afegir ràpid. Simplifica la creació de tasques trobant la destinació i el propietari adequats amb facilitat.",
+  "v3_136_news_features_name": "Altres actualitzacions",
+  "v3_136_news_features_title": "Millores",
+  "v3_136_news_features_update_items": [
+    "1. Millora del rendiment per a operacions que impliquen actualitzacions de més de 1000 tasques, en particular, canviar els membres de tasques d'un subarbre de més de 1000 usuaris.",
+    "2. Pestanya d'activitat: Correcció del registre d'activitat que no es mostrava correctament si era una addició de pare i el pare s'eliminava <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>vídeo</a>.",
+    "3. Càrrega d'avatars per a entorns que utilitzen fitxers JustDo.",
+    "4. Introducció del concepte d'Organitzacions: una unitat lògica opcional per sobre dels JustDos.",
+    "5. MailDo: Quan es rep un correu electrònic, ara es desactiva automàticament el silenci del propietari de la tasca al xat."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Nova pàgina d'inici, estats personalitzats, filtres millorats i més",
+  "v3_136_news_page_description": "JustDo v3.136 introdueix una pàgina d'inici renovada, potents estats personalitzats per a tasques, filtres millorats per afegir tasques més ràpidament i importants millores de rendiment."
+}

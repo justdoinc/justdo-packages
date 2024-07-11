@@ -1,0 +1,18 @@
+{
+  "v3_138_news_title": "v3.138",
+  "v3_138_news_main_name": "Novetats",
+  "v3_138_news_main_array_item_1_title": "Finestra d'invitació de membres de JustDo renovada",
+  "v3_138_news_main_array_item_1_subtitle": "Ampliant la nostra funcionalitat d'invitació existent, hem afegit una nova característica que us permet seleccionar totes les tasques amb un sol clic quan afegiu nous usuaris. Per a un procés de configuració més eficient per a projectes grans.",
+  "v3_138_news_main_array_item_2_title": "Navegació millorada en la visualització prèvia de fitxers",
+  "v3_138_news_main_array_item_2_subtitle": "Creiem en la importància d'una navegació fluida. Per això, hem implementat la navegació per teclat en les visualitzacions prèvies de fitxers. Ara podeu moure-us fàcilment pels vostres fitxers utilitzant només el teclat, fent que el procés de revisió i edició sigui encara més fluid.",
+  "v3_138_news_main_array_item_3_title": "Actualització elegant del disseny",
+  "v3_138_news_main_array_item_3_subtitle": "Per millorar l'experiència visual, hem canviat a un disseny modern i corbat per als nostres botons i entrades",
+  "v3_138_news_features_name": "Altres actualitzacions",
+  "v3_138_news_features_title": "Millores",
+  "v3_138_news_features_update_items": [
+    "1. Indicadors de càrrega per a l'activitat recent del xat",
+    "2. Els administradors del lloc amb correu electrònic no verificat perdran l'accés a la pàgina d'administració del lloc"
+  ],
+  "v3_138_news_page_title": "JustDo v3.138: Invitacions renovades, navegació de fitxers, disseny i més",
+  "v3_138_news_page_description": "Experimenteu invitacions d'usuaris millorades, una navegació més fluida en la visualització prèvia de fitxers, una actualització elegant del disseny i més a JustDo v3.138."
+}

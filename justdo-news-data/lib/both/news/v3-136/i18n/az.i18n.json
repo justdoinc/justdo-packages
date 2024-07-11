@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Yeniliklər",
+  "v3_136_news_main_array_item_1_title": "Yeni giriş səhifəsi",
+  "v3_136_news_main_array_item_1_subtitle": "Yenilənmiş Giriş Səhifəmizi Təqdim Edirik 🎉",
+  "v3_136_news_main_array_item_2_title": "Fərdi vəziyyətlər",
+  "v3_136_news_main_array_item_2_subtitle": "Ən son əlavəmiz olan Fərdi Vəziyyətlərlə iş axınınızın effektivliyini artırın. Tapşırıq vəziyyətlərini unikal layihə ehtiyaclarınıza uyğunlaşdırın və irəliləyişi daha dəqiq izləyin.",
+  "v3_136_news_main_array_item_3_title": "Şəbəkə Üzərində Oxunmamış E-poçt Göstəricisi ilə Məlumatlı Olun",
+  "v3_136_news_main_array_item_3_subtitle": "Bir daha vacib yenilikləri qaçırmayın! Yeni Şəbəkə Üzərində Oxunmamış E-poçt Göstəricimiz tapşırıqlardakı oxunmamış e-poçtlar haqqında sizi məlumatlandırır və effektiv ünsiyyəti və təcili hərəkəti təmin edir.",
+  "v3_136_news_main_array_item_4_title": "Sürətli Əlavə Dialoqu üçün Təkmilləşdirilmiş Filtrlər",
+  "v3_136_news_main_array_item_4_subtitle": "Sürətli Əlavə Bootbox Təyinat Yeri və Sahibi Seçicisi üçün yeni əlavə edilmiş filtrlərimizlə məhsuldarlığınızı artırın. Düzgün təyinat yerini və sahibi asanlıqla taparaq tapşırıq yaratma prosesini sadələşdirin.",
+  "v3_136_news_features_name": "Digər Yeniləmələr",
+  "v3_136_news_features_title": "Təkmilləşdirmələr",
+  "v3_136_news_features_update_items": [
+    "1. 1000-dən çox tapşırığın yenilənməsini əhatə edən əməliyyatlar üçün performans təkmilləşdirməsi, xüsusilə 1000-dən çox istifadəçidən ibarət alt ağacın tapşırıq üzvlərini dəyişdirərkən.",
+    "2. Fəaliyyət bölməsi: Əgər valideyn əlavəsi varsa və valideyn silinibsə, fəaliyyət jurnalının düzgün göstərilməməsi problemi həll edildi <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>video</a>.",
+    "3. JustDo fayllarından istifadə edən mühitlər üçün avatar yükləmələri.",
+    "4. Təşkilatlar konsepsiyası təqdim edildi: JustDo-lardan yuxarıda olan ixtiyari məntiqi vahid.",
+    "5. MailDo: E-poçt alındıqda, tapşırıq sahibinin söhbətdəki səssizliyi artıq avtomatik olaraq ləğv olunur."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Yeni Giriş Səhifəsi, Fərdi Vəziyyətlər, Təkmilləşdirilmiş Filtrlər və Daha Çox",
+  "v3_136_news_page_description": "JustDo v3.136 yenilənmiş giriş səhifəsi, tapşırıqlar üçün güclü fərdi vəziyyətlər, daha sürətli tapşırıq əlavə etmək üçün təkmilləşdirilmiş filtrlər və vacib performans yeniləmələri təqdim edir."
+}

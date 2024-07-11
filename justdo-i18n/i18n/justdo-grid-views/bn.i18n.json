@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "গ্রিড ভিউ (Grid Views)",
+  "grid_views_search_placeholder": "ভিউ খুঁজুন",
+  "grid_views_no_view_label": "কোনো ভিউ নেই",
+  "grid_views_add_current_view_label": "বর্তমান ভিউ যোগ করুন",
+  "grid_views_rename_label": "নাম পরিবর্তন করুন",
+  "grid_views_update_label": "আপডেট করুন",
+  "grid_views_remove_label": "অপসারণ করুন",
+  "grid_views_share_label": "শেয়ার করুন",
+  "grid_views_unshare_label": "শেয়ার বাতিল করুন",
+  "grid_views_shared_label": "শেয়ার করা হয়েছে"
+}

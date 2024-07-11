@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "अनुकूल फिल्डहरू (Custom Fields)",
+  "grid_control_custom_fields_sort_by_name_label": "नाम अनुसार क्रमबद्ध गर्नुहोस्",
+  "grid_control_custom_fields_new_custom_field_label": "नयाँ अनुकूल फिल्ड",
+  "grid_control_custom_fields_no_custom_fields_label": "कुनै अनुकूल फिल्डहरू छैनन्",
+  "grid_control_custom_fields_label_placeholder": "लेबल",
+  "grid_control_custom_fields_text_label": "पाठ",
+  "grid_control_custom_fields_number_label": "संख्या",
+  "grid_control_custom_fields_date_label": "मिति",
+  "grid_control_custom_fields_select_label": "विकल्पहरू",
+  "grid_control_custom_fields_multi_select_label": "बहु विकल्पहरू",
+  "grid_control_custom_fields_smart_numbers_label": "स्मार्ट संख्याहरू (Smart Numbers)",
+  "grid_control_custom_fields_unknown_type_label": "अज्ञात प्रकार",
+  "grid_control_custom_fields_disabled_field_label": "अक्षम गरिएको फिल्ड"
+}

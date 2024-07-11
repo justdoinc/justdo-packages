@@ -1,0 +1,11 @@
+{
+  "email_greeting_with_name": "Salom __name__, ",
+  "unread_task_chat_notification_subject": "Yangi chat xabarlari sizni kutmoqda",
+  "unread_task_chat_notification_title": "Quyidagi vazifada yangi chat xabarlari sizni kutmoqda:",
+  "unread_group_chat_notification_subject": "__channel_title__ dan yangi xabarlar sizni kutmoqda",
+  "unread_group_chat_notification_title_html": "<span style=\"font-weight: bold;\">__channel_title__</span> dan yangi xabarlar sizni kutmoqda!",
+  "open_in_justdo": "JustDo da ochish",
+  "unsubscribe_from_justdo": "JustDo dan barcha yangilanish bildirishnomalarini bekor qilish",
+  "unsubscribe_from_project": "__project_title__ yangilanishlaridan obunani bekor qilish",
+  "reply_email_for_support": "Biror muammo bo'lsa? Yordam olish uchun ushbu xatga javob bering."
+}

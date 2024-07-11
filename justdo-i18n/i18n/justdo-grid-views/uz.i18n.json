@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Jadval ko'rinishlari",
+  "grid_views_search_placeholder": "Ko'rinishlarni qidirish",
+  "grid_views_no_view_label": "Ko'rinishlar yo'q",
+  "grid_views_add_current_view_label": "Joriy ko'rinishni qo'shish",
+  "grid_views_rename_label": "Qayta nomlash",
+  "grid_views_update_label": "Yangilash",
+  "grid_views_remove_label": "Olib tashlash",
+  "grid_views_share_label": "Ulashish",
+  "grid_views_unshare_label": "Ulashishni bekor qilish",
+  "grid_views_shared_label": "ulashilgan"
+}

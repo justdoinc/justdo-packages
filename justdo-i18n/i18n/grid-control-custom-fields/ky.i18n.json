@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Атайын талаалар",
+  "grid_control_custom_fields_sort_by_name_label": "Аты боюнча иреттөө",
+  "grid_control_custom_fields_new_custom_field_label": "Жаңы атайын талаа",
+  "grid_control_custom_fields_no_custom_fields_label": "Атайын талаалар жок",
+  "grid_control_custom_fields_label_placeholder": "белги",
+  "grid_control_custom_fields_text_label": "Текст",
+  "grid_control_custom_fields_number_label": "Сан",
+  "grid_control_custom_fields_date_label": "Күн",
+  "grid_control_custom_fields_select_label": "Варианттар",
+  "grid_control_custom_fields_multi_select_label": "Көп варианттар",
+  "grid_control_custom_fields_smart_numbers_label": "Акылдуу сандар (Smart Numbers)",
+  "grid_control_custom_fields_unknown_type_label": "Белгисиз түр",
+  "grid_control_custom_fields_disabled_field_label": "Өчүрүлгөн талаа"
+}

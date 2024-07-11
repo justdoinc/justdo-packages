@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Тилкени кошуу",
+  "hide_column_label": "Тилкени жашыруу",
+  "freeze_column_label": "Тилкени тоңдуруу",
+  "unfreeze_column_label": "Тилкени эритүү",
+  "tree_control_tooltip_gantt_milestone": "Гант этабы (Gantt Milestone)",
+  "tree_control_tooltip_buffer_task": "Буфер тапшырмасы",
+  "tree_control_tooltip_Meetings": "Жолугушуулар",
+  "tree_control_tooltip_start_time_tracking": "Бул тапшырма үстүндө иштөөнү баштоо",
+  "tree_control_tooltip_stop_time_tracking": "Сиз азыр бул тапшырма үстүндө иштеп жатасыз, токтотуу жана иштелген убакытты каттоо үчүн басыңыз",
+  "tree_control_tooltip_resources": "Ресурстар",
+  "tree_control_tooltip_description": "Тапшырманын сүрөттөмөсү",
+  "tree_control_tooltip_chat_messages": "Чат билдирүүлөрү",
+  "tree_control_tooltip_files_count": "__files_count__ файл",
+  "tree_control_tooltip_emails_count": "__emails_count__ электрондук кат",
+  "tree_control_tooltip_task_is_a_project": "Тапшырма долбоор болуп саналат",
+  "tree_control_tooltip_task_is_archived": "Тапшырма архивделген"
+}

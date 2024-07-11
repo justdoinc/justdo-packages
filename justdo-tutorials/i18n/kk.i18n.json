@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "JustDo-ңызға атау қойыңыз",
+  "set_justdo_name_subtitle": "Өңдеу режиміне кіру үшін тақырыпты басыңыз",
+  "create_first_task_title": "Алғашқы тапсырмаларыңызды жасаңыз",
+  "create_first_task_subtitle": "Тапсырмаларды жасау үшін құралдар тақтасындағы батырмаларды немесе ALT+ENTER / ALT+SHIFT+ENTER пернелер тіркесімін қолдануға болады",
+  "invite_members_title": "Топ мүшелерін шақырыңыз",
+  "invite_members_subtitle": "Топ мүшелерін жаңа JustDo-ңызға қосылып, бірлесіп жұмыс істеуге шақырыңыз",
+  "import_tasks_title": "Тапсырмаларды импорттау",
+  "import_tasks_subtitle": "Электрондық кестені импорттау функциясы арқылы қолданыстағы тапсырмалар мен деректерді JustDo-ға тасымалдап, жұмысыңызды үздіксіз жалғастыра аласыз",
+  "customize_columns_title": "Көрінісіңізді баптаңыз",
+  "customize_columns_subtitle": "Бағандарды қосу/жою, тапсырмаларды олардың күйі бойынша сүзгілеу және т.б. арқылы торда (grid) көретін нәрселерді басқарыңыз!",
+  "get_free_support_title": "Тегін қолдау алыңыз",
+  "get_free_support_subtitle": "JustDo командасымен 1-ге-1 қолдау сессиясы",
+  "request": "Сұрау",
+  "free_support_request_received": "Қабылданды, жақын арада сізге электрондық пошта арқылы хабарласамыз",
+  "tutorials_recent_product_updates": "Соңғы өнім жаңартулары",
+  "tutorials_justdo_quick_start": "JustDo жылдам бастау нұсқаулығы",
+  "tutorials_justdo_advanced_features": "JustDo кеңейтілген мүмкіндіктері",
+  "tutorials_justdo_support_center": "JustDo қолдау орталығы"
+}

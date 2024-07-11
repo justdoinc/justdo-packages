@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "Cetak JustDo",
+  "print_dropdown_entire_justdo": "JustDo Keseluruhan",
+  "print_dropdown_visible_tasks": "Tugas yang Kelihatan",
+  "print_dropdown_print_current_task": "Cetak Tugas Semasa",
+  "print_dropdown_all_child_tasks": "Semua Tugas Anak",
+  "print_dropdown_visible_child_tasks": "Tugas Anak yang Kelihatan",
+  "print_dropdown_download": "Muat Turun",
+  "print_dropdown_download_as_png": "Muat Turun sebagai PNG",
+  "print_grid_columns_settings_label": "Tetapan lajur",
+  "print_grid_columns_options_label": "Pilihan lajur",
+  "print_grid_print": "Cetak",
+  "print_grid_export_csv": "Eksport CSV",
+  "print_grid_select_all": "Pilih semua",
+  "print_grid_apply": "Terapkan"
+}

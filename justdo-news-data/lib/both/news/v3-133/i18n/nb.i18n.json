@@ -1,0 +1,13 @@
+{
+  "v3_133_news_title": "v3.133",
+  "v3_133_news_main_name": "Hva er nytt",
+  "v3_133_news_main_array_item_1_title": "Legg til filter i hurtigvalg for destinasjon og eier",
+  "v3_133_news_main_array_item_1_subtitle": "Forbedringer for 'Last inn mer'-knappen ved lange e-poster",
+  "v3_133_news_features_name": "Andre oppdateringer",
+  "v3_133_news_features_title": "Forbedringer",
+  "v3_133_news_features_update_items": [
+    "1. MailDo: Når en e-post mottas, blir oppgaveeieren nå automatisk umuted (ikke lenger dempet) i chatten."
+  ],
+  "v3_133_news_page_title": "JustDo v3.133: Strømlinjeformet oppgaveopprettelse og e-postforbedringer",
+  "v3_133_news_page_description": "JustDo v3.133 introduserer filtre for raskere oppgaveopprettelse og forbedringer i håndtering av lange e-poster for smidigere arbeidsflyt."
+}

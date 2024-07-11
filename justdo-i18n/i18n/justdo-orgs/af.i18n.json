@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "__user_name__ se organisasie",
+  "create_org_label": "Skep Organisasie",
+  "without_orgs_label": "Sonder Organisasie",
+  "justdos_under_named_org_html": "JustDos onder <span class=\"org-name\">__org_name__</span>",
+  "justdos_without_orgs": "JustDos sonder 'n organisasie",
+  "orgs_project_config_title": "Organisasies",
+  "assign_justdo_to_organization_label": "Ken JustDo toe aan organisasie",
+  "another_organization": "nog 'n organisasie",
+  "pre_transfer_justdo_to_org_notice_html": "Jy is op die punt om hierdie JustDo na <b>__dest_org_name__</b> oor te dra. <br> Alle lede in hierdie JustDo sal lede van <b>__dest_org_name__</b> word.",
+  "select_organization": "Kies Organisasie",
+  "org_expiring_soon_notice_title": "Jou organisasie se lisensie verval binnekort!",
+  "org_expiring_soon_notice_html": "Die lisensie vir jou organisasie <b>__org_name__</b> sal op __org_expiration_date__ verval. <br> Ons hoop dat JustDo jou werkslewe makliker gemaak het!",
+  "org_locked_notice_title": "Jou organisasie se lisensie het verval!",
+  "org_locked_notice_html": "Die lisensie vir jou organisasie <b>__org_name__</b> het op __org_expiration_date__ verval. <br> Ons hoop dat JustDo jou werkslewe makliker gemaak het, en ons sal graag wil voortgaan om dit te doen!",
+  "org_access_restricted_title": "__org_name__: Tydelike Toegangsbeperking",
+  "org_access_restricted_html": "Toegang tot jou organisasie <b>__org_name__</b> is tans beperk. Kontak asseblief jou organisasie-administrateurs vir meer besonderhede oor hierdie saak. <br> Ons waardeer jou geduld en begrip.",
+  "renew_org_license_instruction_html": "Jy kan die lisensie hernu deur op die \"Hernu Lisensie\"-knoppie hieronder te klik.<br>Ons ondersteuningspan is altyd gereed om jou te help.<br><br>Dankie dat jy deel is van die JustDo-gemeenskap. Ons ontwikkel aktief nuwe funksies vir die volgende vrystelling om jou werksvloei te verbeter!",
+  "renew_org_licnese_modal_btn_label": "Hernu Lisensie",
+  "org_pre_expire_renewal_contact_page_message": "My organisasie __org_name__ __optional_domain_msg__ is op die punt om te verval en ek wil graag die lisensie hernu.",
+  "org_post_expire_renewal_contact_page_message": "My organisasie __org_name__ __optional_domain_msg__ het verval en ek wil graag die lisensie hernu."
+}

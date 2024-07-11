@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Gjendjet aktive",
+  "project_configurations_no_active_states_label": "Nuk ka gjendje aktive",
+  "project_configurations_hidden_states_label": "Gjendjet e fshehura",
+  "project_configurations_no_hidden_states_label": "Nuk ka gjendje të fshehura",
+  "project_configurations_type_state_name_placeholder": "Shkruani emrin e gjendjes",
+  "project_configurations_default_title_for_this_state_label": "Titulli i parazgjedhur për këtë gjendje",
+  "project_configurations_restore_state_label": "Rivendos gjendjen",
+  "project_configurations_create_extended_state_label": "Krijo gjendje të zgjeruar",
+  "project_configurations_hide_state": "Fshih gjendjen",
+  "project_configurations_remove_extended_state": "Hiq gjendjen e zgjeruar",
+  "new_custom_state_default_title": "__state__ - e zgjeruar"
+}

@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Novetats",
+  "v3_140_news_main_array_item_1_title": "Disseny del canviador de pestanyes actualitzat",
+  "v3_140_news_main_array_item_1_subtitle": "El disseny ara indica millor quan una pestanya està activa.",
+  "v3_140_news_main_array_item_2_title": "Introducció del tema Lila Sòlid",
+  "v3_140_news_main_array_item_3_title": "Simplificació de la invitació d'usuaris",
+  "v3_140_news_main_array_item_4_title": "Millora de la gestió de membres de JustDo",
+  "v3_140_news_main_array_item_4_subtitle": "Seleccioneu per eliminar múltiples usuaris alhora.",
+  "v3_140_news_main_array_item_5_title": "Suport per a la previsualització de vídeos als fitxers de JustDo",
+  "v3_140_news_main_array_item_6_title": "Mostra l'avatar de l'usuari a les columnes de Propietari/Propietari Pendent",
+  "v3_140_news_features_name": "Altres actualitzacions",
+  "v3_140_news_features_title": "Millores",
+  "v3_140_news_features_update_items": [
+    "1. El color dels botons secundaris ha canviat de gris fosc a gris clar",
+    "2. S'han eliminat els temes clàssics",
+    "3. Suport per ordenar les tasques secundàries pel camp de Seguiment",
+    "4. S'utilitza una nova font moderna per donar millor suport a idiomes no anglesos",
+    "5. S'ha afegit la capacitat d'amagar la barra lateral a l'Administració del Lloc",
+    "6. Millores en el disseny del diàleg de rebuig de propietat (incloent la capacitat de confirmar l'enviament amb ctrl+enter)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Actualitzacions de disseny, Invitacions d'usuaris simplificades i més",
+  "v3_140_news_page_description": "JustDo v3.140 ofereix refinaments de disseny, fluxos de treball d'invitació d'usuaris millorats, suport de vídeo millorat i múltiples millores d'usabilitat."
+}

@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Konektatuta",
+  "meteor_status_connecting": "Konektatzen...",
+  "meteor_status_failed": "Zerbitzariarekin konexioa huts egin du",
+  "meteor_status_waiting": "Zerbitzariarekin konexioaren zain,",
+  "meteor_status_offline": "Lineaz kanpoko modua.",
+  "meteor_status_reconnect_in": "segundo batean berriz saiatzen...",
+  "meteor_status_reconnect_in_plural": "__count__ segundotan berriz saiatzen...",
+  "meteor_status_try_now_waiting": "Saiatu orain",
+  "meteor_status_try_now_offline": "Konektatu berriro"
+}

@@ -1,0 +1,8 @@
+{
+  "task_type_delayed_label": "འགོར་འགྱངས་བྱུང་བ།",
+  "task_type_behind_label": "རྗེས་ལུས་ཐེབས་པ།",
+  "task_type_late_label": "ཕྱི་པོ།",
+  "task_type_overdue_label": "དུས་བརྒལ་བ།",
+  "task_type_key_task_label": "གལ་ཆེའི་ལས་འགན།",
+  "task_type_no_owner_label": "བདག་པོ་མེད་པ།"
+}

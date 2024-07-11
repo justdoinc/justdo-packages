@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "အလုပ်တာဝန်များကို ဖယ်ရှားရန်",
+  "remove_from_parent_label": "မိဘထံမှ ဖယ်ရှားရန်",
+  "remove_with_subtree_label": "လက်အောက်ခံအပိုင်းများနှင့်အတူ ဖယ်ရှားရန်",
+  "archive_task_label": "အလုပ်တာဝန်ကို မှတ်တမ်းတင်ရန်",
+  "unarchive_task_label": "အလုပ်တာဝန်ကို မှတ်တမ်းမှ ပြန်ထုတ်ရန်",
+  "reorder_children_by_label": "လက်အောက်ခံများကို ပြန်လည်စီစဉ်ရန်",
+  "zoom_in_label": "ချဲ့ကြည့်ရန်",
+  "projects_label": "စီမံကိန်းများ",
+  "set_as_a_project_label": "စီမံကိန်းအဖြစ် သတ်မှတ်ရန်",
+  "unset_as_a_project_label": "စီမံကိန်းအဖြစ်မှ ပယ်ဖျက်ရန်",
+  "close_project_label": "စီမံကိန်းပိတ်ရန်",
+  "repoen_project_label": "စီမံကိန်းပြန်ဖွင့်ရန်",
+  "add_to_project_label": "စီမံကိန်းသို့ ထည့်သွင်းရန်",
+  "apply_value_to_subtree": "__value__ ကို လက်အောက်ခံအပိုင်းများအားလုံးသို့ အသုံးပြုရန်",
+  "bulk_set_options_label": "အစုလိုက် သတ်မှတ်ရန်"
+}

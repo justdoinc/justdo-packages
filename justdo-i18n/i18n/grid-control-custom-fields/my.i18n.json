@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "စိတ်ကြိုက်ကွက်လပ်များ (Custom Fields)",
+  "grid_control_custom_fields_sort_by_name_label": "အမည်အလိုက် စီရန်",
+  "grid_control_custom_fields_new_custom_field_label": "စိတ်ကြိုက်ကွက်လပ်အသစ်",
+  "grid_control_custom_fields_no_custom_fields_label": "စိတ်ကြိုက်ကွက်လပ်များ မရှိပါ",
+  "grid_control_custom_fields_label_placeholder": "တံဆိပ်",
+  "grid_control_custom_fields_text_label": "စာသား",
+  "grid_control_custom_fields_number_label": "နံပါတ်",
+  "grid_control_custom_fields_date_label": "ရက်စွဲ",
+  "grid_control_custom_fields_select_label": "ရွေးချယ်စရာများ",
+  "grid_control_custom_fields_multi_select_label": "ရွေးချယ်စရာများစွာ",
+  "grid_control_custom_fields_smart_numbers_label": "အလိုအလျောက်နံပါတ်များ (Smart Numbers)",
+  "grid_control_custom_fields_unknown_type_label": "မသိသောအမျိုးအစား",
+  "grid_control_custom_fields_disabled_field_label": "ပိတ်ထားသောကွက်လပ်"
+}

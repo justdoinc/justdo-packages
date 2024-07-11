@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Tukar Paparan",
+  "tab_switcher_dropdown_search_placeholder": "Paparan",
+  "tab_switcher_main_view_label": "Paparan Utama",
+  "tab_switcher_my_favorites_label": "Kegemaran Saya",
+  "tab_switcher_my_due_list_label": "Senarai Tamat Tempoh Saya",
+  "tab_switcher_recently_label": "Terkini",
+  "tab_switcher_recently_completed_label": "Selesai",
+  "tab_switcher_recently_updated_label": "Dikemaskini",
+  "tab_switcher_recently_created_label": "Dicipta",
+  "tab_switcher_miscellaneous_label": "Pelbagai",
+  "tab_switcher_task_ownershipt_transfers_label": "Pemindahan Pemilikan Tugas",
+  "tab_switcher_ticket_queues_label": "Barisan Tiket",
+  "tab_switcher_members_due_lists_label": "Senarai Tamat Tempoh Ahli",
+  "tab_switcher_all_members_due_list_label": "Senarai Tamat Tempoh Semua Ahli",
+  "tab_switcher_projects_section_label": "Projek",
+  "tab_switcher_projects_label": "Projek"
+}

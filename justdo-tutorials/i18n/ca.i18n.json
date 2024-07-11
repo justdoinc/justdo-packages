@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "Estableix un títol per al teu JustDo",
+  "set_justdo_name_subtitle": "Simplement fes clic al títol per entrar al mode d'edició",
+  "create_first_task_title": "Crea les teves primeres tasques",
+  "create_first_task_subtitle": "Per crear tasques, pots utilitzar els botons de la barra d'eines o les dreceres de teclat ALT+ENTER / ALT+SHIFT+ENTER",
+  "invite_members_title": "Convida membres de l'equip",
+  "invite_members_subtitle": "Convida els membres del teu equip a unir-se i col·laborar en el teu nou JustDo",
+  "import_tasks_title": "Importa tasques",
+  "import_tasks_subtitle": "Pots transferir tasques i dades existents a JustDo i continuar sense problemes amb la nostra funció d'importació de fulls de càlcul",
+  "customize_columns_title": "Personalitza la teva vista",
+  "customize_columns_subtitle": "Controla el que veus a la graella afegint/eliminant columnes, filtrant tasques pel seu estat i més!",
+  "get_free_support_title": "Obté suport gratuït",
+  "get_free_support_subtitle": "Sessió de suport individual amb l'equip de JustDo",
+  "request": "Sol·licita",
+  "free_support_request_received": "Rebuda, ens posarem en contacte amb tu per correu electrònic aviat",
+  "tutorials_recent_product_updates": "Actualitzacions recents del producte",
+  "tutorials_justdo_quick_start": "Inici ràpid de JustDo",
+  "tutorials_justdo_advanced_features": "Funcions avançades de JustDo",
+  "tutorials_justdo_support_center": "Centre de suport de JustDo"
+}

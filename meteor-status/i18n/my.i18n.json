@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "ချိတ်ဆက်ပြီးပါပြီ",
+  "meteor_status_connecting": "ချိတ်ဆက်နေသည်...",
+  "meteor_status_failed": "ဆာဗာနှင့် ချိတ်ဆက်မှု မအောင်မြင်ပါ",
+  "meteor_status_waiting": "ဆာဗာနှင့် ချိတ်ဆက်ရန် စောင့်ဆိုင်းနေသည်၊",
+  "meteor_status_offline": "အင်တာနက်မရှိသော အခြေအနေ။",
+  "meteor_status_reconnect_in": "တစ်စက္ကန့်အတွင်း ပြန်လည်ကြိုးစားနေသည်...",
+  "meteor_status_reconnect_in_plural": "__count__ စက္ကန့်အတွင်း ပြန်လည်ကြိုးစားနေသည်...",
+  "meteor_status_try_now_waiting": "ယခုကြိုးစားကြည့်ပါ",
+  "meteor_status_try_now_offline": "ပြန်လည်ချိတ်ဆက်ရန်"
+}

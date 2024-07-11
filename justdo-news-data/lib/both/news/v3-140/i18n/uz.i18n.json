@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Yangiliklar",
+  "v3_140_news_main_array_item_1_title": "Tab almashtiruvchi dizayni yangilandi",
+  "v3_140_news_main_array_item_1_subtitle": "Dizayn endi qaysi tab faol ekanligini yaxshiroq ko'rsatadi.",
+  "v3_140_news_main_array_item_2_title": "To'q safsar mavzusi taqdim etildi",
+  "v3_140_news_main_array_item_3_title": "Foydalanuvchilarni taklif qilish soddalashtirildi",
+  "v3_140_news_main_array_item_4_title": "JustDo a'zolarini boshqarish yaxshilandi",
+  "v3_140_news_main_array_item_4_subtitle": "Bir vaqtning o'zida bir nechta foydalanuvchilarni o'chirish uchun tanlang.",
+  "v3_140_news_main_array_item_5_title": "JustDo fayllarida video oldindan ko'rish qo'llab-quvvatlanadi",
+  "v3_140_news_main_array_item_6_title": "Egasi/Kutilayotgan Egasi ustunlarida foydalanuvchi avatari ko'rsatiladi",
+  "v3_140_news_features_name": "Boshqa yangilanishlar",
+  "v3_140_news_features_title": "Yaxshilanishlar",
+  "v3_140_news_features_update_items": [
+    "1. Ikkilamchi tugmalarning rangi to'q kulrangdan och kulrangga o'zgartirildi",
+    "2. Klassik mavzular olib tashlandi",
+    "3. Bolalar vazifalarini Follow Up (Kuzatish) maydoniga ko'ra saralash qo'llab-quvvatlanadi",
+    "4. Ingliz tilidan boshqa tillarga yaxshiroq moslashish uchun yangi zamonaviy shrift ishlatilmoqda",
+    "5. Sayt Administratoriga yon panelni yashirish imkoniyati qo'shildi",
+    "6. Egalikni rad etish oynasi (dialog) dizayni yaxshilandi (shu jumladan, ctrl+enter bilan yuborishni tasdiqlash imkoniyati)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Dizayn yangilanishlari, soddalashtirilgan foydalanuvchi takliflari va boshqalar",
+  "v3_140_news_page_description": "JustDo v3.140 versiyasi dizayn yangilanishlarini, yaxshilangan foydalanuvchi taklif qilish jarayonlarini, kengaytirilgan video qo'llab-quvvatlashni va ko'plab foydalanish qulayligini oshiradigan yangilanishlarni taqdim etadi."
+}

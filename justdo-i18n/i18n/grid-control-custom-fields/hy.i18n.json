@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Հատուկ դաշտեր",
+  "grid_control_custom_fields_sort_by_name_label": "Դասավորել ըստ անվան",
+  "grid_control_custom_fields_new_custom_field_label": "Նոր հատուկ դաշտ",
+  "grid_control_custom_fields_no_custom_fields_label": "Հատուկ դաշտեր չկան",
+  "grid_control_custom_fields_label_placeholder": "պիտակ",
+  "grid_control_custom_fields_text_label": "Տեքստ",
+  "grid_control_custom_fields_number_label": "Թիվ",
+  "grid_control_custom_fields_date_label": "Ամսաթիվ",
+  "grid_control_custom_fields_select_label": "Տարբերակներ",
+  "grid_control_custom_fields_multi_select_label": "Բազմակի տարբերակներ",
+  "grid_control_custom_fields_smart_numbers_label": "Խելացի թվեր (Smart Numbers)",
+  "grid_control_custom_fields_unknown_type_label": "Անհայտ տեսակ",
+  "grid_control_custom_fields_disabled_field_label": "Անջատված դաշտ"
+}

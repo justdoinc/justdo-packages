@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "கடவுச்சொல் கண்டிப்பாக:",
+  "password_requirements_too_short": "குறைந்தது %d எழுத்துக்களைக் கொண்டிருக்க வேண்டும்",
+  "password_requirements_missing_number": "குறைந்தது ஒரு எண்ணைக் கொண்டிருக்க வேண்டும்",
+  "password_requirements_special_sign": "குறைந்தது ஒரு சிறப்பு எழுத்துருவைக் கொண்டிருக்க வேண்டும்",
+  "password_requirements_atleast_one_lowercase": "குறைந்தது ஒரு சிறிய ஆங்கில எழுத்தைக் கொண்டிருக்க வேண்டும்",
+  "password_requirements_atleast_one_uppercase": "குறைந்தது ஒரு பெரிய ஆங்கில எழுத்தைக் கொண்டிருக்க வேண்டும்",
+  "password_requirements_too_similar": "உங்கள் பெயரையோ அல்லது உங்கள் மின்னஞ்சலின் பகுதிகளையோ உள்ளடக்கக் கூடாது"
+}

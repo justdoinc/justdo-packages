@@ -1,0 +1,18 @@
+{
+  "add_column_label": "स्तम्भ थप्नुहोस्",
+  "hide_column_label": "स्तम्भ लुकाउनुहोस्",
+  "freeze_column_label": "स्तम्भ जमाउनुहोस्",
+  "unfreeze_column_label": "स्तम्भ पगाल्नुहोस्",
+  "tree_control_tooltip_gantt_milestone": "गान्ट माइलस्टोन",
+  "tree_control_tooltip_buffer_task": "बफर कार्य",
+  "tree_control_tooltip_Meetings": "बैठकहरू",
+  "tree_control_tooltip_start_time_tracking": "यो कार्यमा काम गर्न सुरु गर्नुहोस्",
+  "tree_control_tooltip_stop_time_tracking": "तपाईं अहिले यो कार्यमा काम गर्दै हुनुहुन्छ, रोक्न र काम गरेको समय लग गर्न थिच्नुहोस्",
+  "tree_control_tooltip_resources": "स्रोतहरू",
+  "tree_control_tooltip_description": "कार्य विवरण",
+  "tree_control_tooltip_chat_messages": "च्याट सन्देशहरू",
+  "tree_control_tooltip_files_count": "__files_count__ फाइलहरू",
+  "tree_control_tooltip_emails_count": "__emails_count__ इमेलहरू",
+  "tree_control_tooltip_task_is_a_project": "कार्य एउटा परियोजना हो",
+  "tree_control_tooltip_task_is_archived": "कार्य अभिलेखीकरण गरिएको छ"
+}

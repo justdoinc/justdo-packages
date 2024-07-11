@@ -1,0 +1,18 @@
+{
+  "add_column_label": "ကော်လံထည့်ပါ",
+  "hide_column_label": "ကော်လံဖျောက်ပါ",
+  "freeze_column_label": "ကော်လံရပ်တန့်ပါ",
+  "unfreeze_column_label": "ကော်လံရပ်တန့်ခြင်းဖြေပါ",
+  "tree_control_tooltip_gantt_milestone": "Gantt မှတ်တိုင် (Gantt Milestone)",
+  "tree_control_tooltip_buffer_task": "ကြားခံလုပ်ငန်း (Buffer Task)",
+  "tree_control_tooltip_Meetings": "အစည်းအဝေးများ",
+  "tree_control_tooltip_start_time_tracking": "ဤလုပ်ငန်းကို စတင်လုပ်ဆောင်ပါ",
+  "tree_control_tooltip_stop_time_tracking": "သင်သည် ဤလုပ်ငန်းကို လုပ်ဆောင်နေပါသည်၊ ရပ်တန့်ရန်နှင့် အချိန်မှတ်တမ်းတင်ရန် နှိပ်ပါ",
+  "tree_control_tooltip_resources": "အရင်းအမြစ်များ",
+  "tree_control_tooltip_description": "လုပ်ငန်းဖော်ပြချက်",
+  "tree_control_tooltip_chat_messages": "ချက်တင်မက်ဆေ့ချ်များ",
+  "tree_control_tooltip_files_count": "ဖိုင် __files_count__ ခု",
+  "tree_control_tooltip_emails_count": "အီးမေးလ် __emails_count__ စောင်",
+  "tree_control_tooltip_task_is_a_project": "လုပ်ငန်းသည် စီမံကိန်းတစ်ခုဖြစ်သည်",
+  "tree_control_tooltip_task_is_archived": "လုပ်ငန်းကို မှတ်တမ်းသိမ်းဆည်းထားသည်"
+}

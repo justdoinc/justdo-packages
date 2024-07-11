@@ -1,0 +1,8 @@
+{
+  "task_type_delayed_label": "Retardat",
+  "task_type_behind_label": "Endarrerit",
+  "task_type_late_label": "Tard",
+  "task_type_overdue_label": "Vençut",
+  "task_type_key_task_label": "Tasca clau",
+  "task_type_no_owner_label": "Sense propietari"
+}

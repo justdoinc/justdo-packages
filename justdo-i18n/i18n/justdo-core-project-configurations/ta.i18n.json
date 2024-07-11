@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "செயலில் உள்ள நிலைகள்",
+  "project_configurations_no_active_states_label": "செயலில் உள்ள நிலைகள் இல்லை",
+  "project_configurations_hidden_states_label": "மறைக்கப்பட்ட நிலைகள்",
+  "project_configurations_no_hidden_states_label": "மறைக்கப்பட்ட நிலைகள் இல்லை",
+  "project_configurations_type_state_name_placeholder": "நிலையின் பெயரை தட்டச்சு செய்யவும்",
+  "project_configurations_default_title_for_this_state_label": "இந்த நிலைக்கான இயல்புநிலை தலைப்பு",
+  "project_configurations_restore_state_label": "நிலையை மீட்டெடு",
+  "project_configurations_create_extended_state_label": "விரிவாக்கப்பட்ட நிலையை உருவாக்கு",
+  "project_configurations_hide_state": "நிலையை மறை",
+  "project_configurations_remove_extended_state": "விரிவாக்கப்பட்ட நிலையை அகற்று",
+  "new_custom_state_default_title": "__state__ - விரிவாக்கப்பட்டது"
+}

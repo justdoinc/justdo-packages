@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Құпия сөз міндетті түрде:",
+  "password_requirements_too_short": "Кем дегенде %d таңбадан тұруы керек",
+  "password_requirements_missing_number": "Кем дегенде бір сан болуы керек",
+  "password_requirements_special_sign": "Кем дегенде бір арнайы таңба болуы керек",
+  "password_requirements_atleast_one_lowercase": "Кем дегенде бір кіші әріппен жазылған ағылшын әрпі болуы керек",
+  "password_requirements_atleast_one_uppercase": "Кем дегенде бір бас әріппен жазылған ағылшын әрпі болуы керек",
+  "password_requirements_too_similar": "Сіздің атыңызды немесе электрондық поштаңыздың бөліктерін қамтымауы керек"
+}

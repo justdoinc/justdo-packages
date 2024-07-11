@@ -1,0 +1,8 @@
+{
+  "task_type_delayed_label": "Ուշացած",
+  "task_type_behind_label": "Հետ մնացած",
+  "task_type_late_label": "Ուշ",
+  "task_type_overdue_label": "Ժամկետանց",
+  "task_type_key_task_label": "Հիմնական առաջադրանք",
+  "task_type_no_owner_label": "Առանց պատասխանատուի"
+}

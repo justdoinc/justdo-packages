@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "কাজগুলি সরান",
+  "remove_from_parent_label": "মূল কাজ থেকে সরান",
+  "remove_with_subtree_label": "উপ-শাখাসহ সরান",
+  "archive_task_label": "কাজ আর্কাইভ করুন",
+  "unarchive_task_label": "কাজ আনআর্কাইভ করুন",
+  "reorder_children_by_label": "উপ-কাজগুলি পুনঃবিন্যাস করুন",
+  "zoom_in_label": "জুম ইন",
+  "projects_label": "প্রকল্পসমূহ",
+  "set_as_a_project_label": "প্রকল্প হিসাবে সেট করুন",
+  "unset_as_a_project_label": "প্রকল্প হিসাবে অনির্ধারিত করুন",
+  "close_project_label": "প্রকল্প বন্ধ করুন",
+  "repoen_project_label": "প্রকল্প পুনরায় খুলুন",
+  "add_to_project_label": "প্রকল্পে যোগ করুন",
+  "apply_value_to_subtree": "উপ-শাখায় __value__ প্রয়োগ করুন",
+  "bulk_set_options_label": "একসাথে সেট করুন"
+}

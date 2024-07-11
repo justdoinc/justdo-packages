@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "जस्टडु प्रिन्ट गर्नुहोस्",
+  "print_dropdown_entire_justdo": "सम्पूर्ण जस्टडु",
+  "print_dropdown_visible_tasks": "देखिने कार्यहरू",
+  "print_dropdown_print_current_task": "हालको कार्य प्रिन्ट गर्नुहोस्",
+  "print_dropdown_all_child_tasks": "सबै सहायक कार्यहरू",
+  "print_dropdown_visible_child_tasks": "देखिने सहायक कार्यहरू",
+  "print_dropdown_download": "डाउनलोड गर्नुहोस्",
+  "print_dropdown_download_as_png": "PNG को रूपमा डाउनलोड गर्नुहोस्",
+  "print_grid_columns_settings_label": "स्तम्भ सेटिङहरू",
+  "print_grid_columns_options_label": "स्तम्भ विकल्पहरू",
+  "print_grid_print": "प्रिन्ट गर्नुहोस्",
+  "print_grid_export_csv": "CSV निर्यात गर्नुहोस्",
+  "print_grid_select_all": "सबै चयन गर्नुहोस्",
+  "print_grid_apply": "लागू गर्नुहोस्"
+}

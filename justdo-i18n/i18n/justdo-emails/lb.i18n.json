@@ -1,0 +1,11 @@
+{
+  "email_greeting_with_name": "Moien __name__, ",
+  "unread_task_chat_notification_subject": "Nei Chat-Noriichten waarden op Iech",
+  "unread_task_chat_notification_title": "Nei Chat-Noriichten waarden op Iech an dëser Aufgab:",
+  "unread_group_chat_notification_subject": "Nei Noriichte vun __channel_title__ waarden op Iech",
+  "unread_group_chat_notification_title_html": "Nei Noriichte vun <span style=\"font-weight: bold;\">__channel_title__</span> waarden op Iech!",
+  "open_in_justdo": "An JustDo opmaachen",
+  "unsubscribe_from_justdo": "Vun alle Benorichtigungen vun JustDo ofmellen",
+  "unsubscribe_from_project": "Vun de Benorichtigunge fir __project_title__ ofmellen",
+  "reply_email_for_support": "Hutt Dir Problemer? Äntwert op dës E-Mail fir Ënnerstëtzung."
+}

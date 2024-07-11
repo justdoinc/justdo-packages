@@ -1,0 +1,18 @@
+{
+  "v3_138_news_title": "v3.138",
+  "v3_138_news_main_name": "Hva er nytt",
+  "v3_138_news_main_array_item_1_title": "Oppgradert invitasjonsvindu for JustDo-medlemmer",
+  "v3_138_news_main_array_item_1_subtitle": "Som en utvidelse av vår eksisterende invitasjonsfunksjonalitet, har vi lagt til en ny funksjon som lar deg velge alle oppgaver med bare ett klikk når du legger til nye brukere. Dette gir en mer effektiv oppsettsprosess for store prosjekter.",
+  "v3_138_news_main_array_item_2_title": "Forbedret filforhåndsvisningsnavigasjon",
+  "v3_138_news_main_array_item_2_subtitle": "Vi tror på viktigheten av sømløs navigasjon. Derfor har vi implementert tastaturnavigasjon i filforhåndsvisninger. Nå kan du enkelt navigere gjennom filene dine ved å bare bruke tastaturet, noe som gjør gjennomgang og redigering til en enda smidigere prosess.",
+  "v3_138_news_main_array_item_3_title": "Elegant designoppgradering",
+  "v3_138_news_main_array_item_3_subtitle": "For å forbedre den visuelle opplevelsen har vi byttet til et moderne buet design for våre knapper og inndatafelt.",
+  "v3_138_news_features_name": "Andre oppdateringer",
+  "v3_138_news_features_title": "Forbedringer",
+  "v3_138_news_features_update_items": [
+    "1. Lasteindikatorer for nylig chatteaktivitet",
+    "2. Nettstedsadministratorer med ubekreftet e-post vil miste tilgang til nettstedsadministrasjonssiden"
+  ],
+  "v3_138_news_page_title": "JustDo v3.138: Oppgraderte invitasjoner, filnavigasjon, design og mer",
+  "v3_138_news_page_description": "Opplev forbedrede brukerinvitasjoner, smidigere filforhåndsvisningsnavigasjon, en elegant designoppgradering og mer i JustDo v3.138."
+}

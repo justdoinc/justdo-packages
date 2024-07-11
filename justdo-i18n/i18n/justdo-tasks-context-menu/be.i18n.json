@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Выдаліць задачы",
+  "remove_from_parent_label": "Выдаліць з бацькоўскай задачы",
+  "remove_with_subtree_label": "Выдаліць з падзадачамі",
+  "archive_task_label": "Архіваваць задачу",
+  "unarchive_task_label": "Разархіваваць задачу",
+  "reorder_children_by_label": "Пераўпарадкаваць падзадачы па",
+  "zoom_in_label": "Павялічыць",
+  "projects_label": "Праекты",
+  "set_as_a_project_label": "Вызначыць як праект",
+  "unset_as_a_project_label": "Адмяніць вызначэнне як праект",
+  "close_project_label": "Закрыць праект",
+  "repoen_project_label": "Зноў адкрыць праект",
+  "add_to_project_label": "Дадаць да праекта",
+  "apply_value_to_subtree": "Прымяніць __value__ да падзадач",
+  "bulk_set_options_label": "Усталяваць"
+}

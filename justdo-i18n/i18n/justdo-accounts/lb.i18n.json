@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "D'Passwuert muss:",
+  "password_requirements_too_short": "Op d'mannst %d Zeechen hunn",
+  "password_requirements_missing_number": "Op d'mannst eng Zuel hunn",
+  "password_requirements_special_sign": "Op d'mannst ee Speziallzeechen hunn",
+  "password_requirements_atleast_one_lowercase": "Op d'mannst ee klenge Buschtaf hunn",
+  "password_requirements_atleast_one_uppercase": "Op d'mannst ee grousse Buschtaf hunn",
+  "password_requirements_too_similar": "Net Ären Numm oder Deeler vun Ärer E-Mail-Adress enthalen"
+}

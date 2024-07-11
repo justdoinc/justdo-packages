@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Ակտիվ վիճակներ",
+  "project_configurations_no_active_states_label": "Ակտիվ վիճակներ չկան",
+  "project_configurations_hidden_states_label": "Թաքնված վիճակներ",
+  "project_configurations_no_hidden_states_label": "Թաքնված վիճակներ չկան",
+  "project_configurations_type_state_name_placeholder": "Մուտքագրեք վիճակի անունը",
+  "project_configurations_default_title_for_this_state_label": "Այս վիճակի համար լռելյայն վերնագիր",
+  "project_configurations_restore_state_label": "Վերականգնել վիճակը",
+  "project_configurations_create_extended_state_label": "Ստեղծել ընդլայնված վիճակ",
+  "project_configurations_hide_state": "Թաքցնել վիճակը",
+  "project_configurations_remove_extended_state": "Հեռացնել ընդլայնված վիճակը",
+  "new_custom_state_default_title": "__state__ - ընդլայնված"
+}

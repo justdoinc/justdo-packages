@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "जडान भयो",
+  "meteor_status_connecting": "जडान हुँदैछ...",
+  "meteor_status_failed": "सर्भर जडान असफल भयो",
+  "meteor_status_waiting": "सर्भर जडानको लागि प्रतीक्षा गर्दै,",
+  "meteor_status_offline": "अफलाइन मोड।",
+  "meteor_status_reconnect_in": "एक सेकेन्डमा फेरि प्रयास गर्दै...",
+  "meteor_status_reconnect_in_plural": "__count__ सेकेन्डमा फेरि प्रयास गर्दै...",
+  "meteor_status_try_now_waiting": "अहिले प्रयास गर्नुहोस्",
+  "meteor_status_try_now_offline": "फेरि जडान गर्नुहोस्"
+}

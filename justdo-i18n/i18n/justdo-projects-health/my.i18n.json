@@ -1,0 +1,8 @@
+{
+  "task_type_delayed_label": "နှောင့်နှေးနေသော",
+  "task_type_behind_label": "နောက်ကျနေသော",
+  "task_type_late_label": "နောက်ကျသော",
+  "task_type_overdue_label": "သတ်မှတ်ရက်ကျော်လွန်သော",
+  "task_type_key_task_label": "အဓိကတာဝန် (Key Task)",
+  "task_type_no_owner_label": "တာဝန်ခံမရှိသော"
+}

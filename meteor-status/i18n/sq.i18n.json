@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "I lidhur",
+  "meteor_status_connecting": "Duke u lidhur...",
+  "meteor_status_failed": "Lidhja me serverin dështoi",
+  "meteor_status_waiting": "Duke pritur lidhjen me serverin,",
+  "meteor_status_offline": "Në gjendje offline.",
+  "meteor_status_reconnect_in": "duke u përpjekur përsëri në një sekondë...",
+  "meteor_status_reconnect_in_plural": "duke u përpjekur përsëri në __count__ sekonda...",
+  "meteor_status_try_now_waiting": "Provo tani",
+  "meteor_status_try_now_offline": "Lidhu përsëri"
+}

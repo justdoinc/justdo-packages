@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Canviar la Vista",
+  "tab_switcher_dropdown_search_placeholder": "Vistes",
+  "tab_switcher_main_view_label": "Vista Principal",
+  "tab_switcher_my_favorites_label": "Els Meus Preferits",
+  "tab_switcher_my_due_list_label": "La Meva Llista de Venciments",
+  "tab_switcher_recently_label": "Recentment",
+  "tab_switcher_recently_completed_label": "Completat",
+  "tab_switcher_recently_updated_label": "Actualitzat",
+  "tab_switcher_recently_created_label": "Creat",
+  "tab_switcher_miscellaneous_label": "Miscel·lània",
+  "tab_switcher_task_ownershipt_transfers_label": "Transferències de Propietat de Tasques",
+  "tab_switcher_ticket_queues_label": "Cues de Tiquets",
+  "tab_switcher_members_due_lists_label": "Llistes de Venciments dels Membres",
+  "tab_switcher_all_members_due_list_label": "Llista de Venciments de Tots els Membres",
+  "tab_switcher_projects_section_label": "Projectes",
+  "tab_switcher_projects_label": "Projectes"
+}

@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Hva er nytt",
+  "v3_136_news_main_array_item_1_title": "Ny landingsside",
+  "v3_136_news_main_array_item_1_subtitle": "Introduserer vår oppdaterte landingsside 🎉",
+  "v3_136_news_main_array_item_2_title": "Egendefinerte statuser",
+  "v3_136_news_main_array_item_2_subtitle": "Øk effektiviteten i arbeidsflyten din med vår nyeste tillegg - Egendefinerte statuser. Tilpass oppgavestatuser for å passe dine unike prosjektbehov og spor fremgang med større presisjon.",
+  "v3_136_news_main_array_item_3_title": "Hold deg informert med indikator for uleste e-poster i oversikten",
+  "v3_136_news_main_array_item_3_subtitle": "Gå aldri glipp av viktige oppdateringer igjen! Vår nye indikator for uleste e-poster i oversikten holder deg informert om uleste e-poster innenfor oppgaver, og sikrer effektiv kommunikasjon og rask handling.",
+  "v3_136_news_main_array_item_4_title": "Forbedrede filtre for hurtigleggedialogen",
+  "v3_136_news_main_array_item_4_subtitle": "Øk produktiviteten din med våre nylig lagt til filtre for hurtigleggedialogen for destinasjon og eiervelger. Effektiviser oppgaveopprettelsen ved å enkelt finne riktig destinasjon og eier.",
+  "v3_136_news_features_name": "Andre oppdateringer",
+  "v3_136_news_features_title": "Forbedringer",
+  "v3_136_news_features_update_items": [
+    "1. Ytelsesforbedring for operasjoner som involverer oppdateringer av mer enn 1000 oppgaver, spesielt ved endring av oppgavemedlemmer i et undertre større enn 1000 brukere.",
+    "2. Aktivitetsfanen: Fikset at aktivitetsloggen ikke vises korrekt hvis det er en overordnet-tillegg og den overordnede er fjernet <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>video</a>.",
+    "3. Last opp avatarer for miljøer som bruker JustDo-filer.",
+    "4. Introdusert konseptet Organisasjoner: en valgfri logisk enhet over JustDos.",
+    "5. MailDo: Når en e-post mottas, blir oppgaveeieren nå automatisk umulet i chatten."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Ny landingsside, egendefinerte statuser, forbedrede filtre og mer",
+  "v3_136_news_page_description": "JustDo v3.136 introduserer en oppdatert landingsside, kraftige egendefinerte statuser for oppgaver, forbedrede filtre for raskere oppgavelegging, og viktige ytelsesoppgraderinger."
+}

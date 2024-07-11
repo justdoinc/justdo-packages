@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "JustDo uchun sarlavha o'rnating",
+  "set_justdo_name_subtitle": "Tahrirlash rejimiga kirish uchun sarlavhani bosing",
+  "create_first_task_title": "Birinchi vazifalaringizni yarating",
+  "create_first_task_subtitle": "Vazifalarni yaratish uchun siz asboblar panelidagi tugmalardan foydalanishingiz yoki ALT+ENTER / ALT+SHIFT+ENTER klaviatura yorliqlaridan foydalanishingiz mumkin",
+  "invite_members_title": "Jamoa a'zolarini taklif qiling",
+  "invite_members_subtitle": "Jamoa a'zolaringizni yangi JustDo-ga qo'shilish va hamkorlik qilish uchun taklif qiling",
+  "import_tasks_title": "Vazifalarni import qiling",
+  "import_tasks_subtitle": "Mavjud vazifalar va ma'lumotlarni JustDo-ga o'tkazishingiz va bizning jadval import qilish funksiyamiz bilan uzluksiz davom ettirishingiz mumkin",
+  "customize_columns_title": "Ko'rinishingizni sozlang",
+  "customize_columns_subtitle": "Jadvalda (Grid) nimani ko'rishni boshqaring: ustunlarni qo'shish/olib tashlash, vazifalarni holati bo'yicha filtrlash va boshqalar!",
+  "get_free_support_title": "Bepul yordam oling",
+  "get_free_support_subtitle": "JustDo jamoasi bilan 1-ga-1 yordam sessiyasi",
+  "request": "So'rov",
+  "free_support_request_received": "Qabul qilindi, tez orada sizga elektron pochta orqali javob beramiz",
+  "tutorials_recent_product_updates": "So'nggi mahsulot yangilanishlari",
+  "tutorials_justdo_quick_start": "JustDo tezkor boshlash",
+  "tutorials_justdo_advanced_features": "JustDo ilg'or xususiyatlari",
+  "tutorials_justdo_support_center": "JustDo yordam markazi"
+}

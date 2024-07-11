@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Yangiliklar",
+  "v3_136_news_main_array_item_1_title": "Yangi bosh sahifa",
+  "v3_136_news_main_array_item_1_subtitle": "Yangilangan bosh sahifamizni taqdim etamiz 🎉",
+  "v3_136_news_main_array_item_2_title": "Maxsus holatlar",
+  "v3_136_news_main_array_item_2_subtitle": "Eng so'nggi qo'shimchamiz - Maxsus holatlar bilan ish jarayoningiz samaradorligini oshiring. Vazifalar holatlarini o'zingizning noyob loyiha ehtiyojlaringizga moslashtiring va jarayonni yanada aniqroq kuzatib boring.",
+  "v3_136_news_main_array_item_3_title": "Jadval ustidagi o'qilmagan elektron xatlar ko'rsatkichi bilan xabardor bo'ling",
+  "v3_136_news_main_array_item_3_subtitle": "Endi muhim yangilanishlarni hech qachon o'tkazib yubormaysiz! Yangi Jadval ustidagi o'qilmagan elektron xatlar ko'rsatkichimiz vazifalar ichidagi o'qilmagan elektron xatlar haqida sizni xabardor qiladi, samarali aloqa va tezkor harakatlarni ta'minlaydi.",
+  "v3_136_news_main_array_item_4_title": "Tezkor qo'shish muloqot oynasi uchun kengaytirilgan filtrlar",
+  "v3_136_news_main_array_item_4_subtitle": "Tezkor qo'shish Bootbox manzili va Egasi tanlash uchun yangi qo'shilgan filtrlarimiz bilan unumdorligingizni oshiring. To'g'ri manzil va egasini oson topish orqali vazifa yaratishni osonlashtiring.",
+  "v3_136_news_features_name": "Boshqa yangilanishlar",
+  "v3_136_news_features_title": "Yaxshilanishlar",
+  "v3_136_news_features_update_items": [
+    "1. 1000 dan ortiq vazifalarni yangilash bilan bog'liq operatsiyalar uchun ishlash samaradorligi oshirildi, ayniqsa 1000 dan ortiq foydalanuvchilardan iborat kichik daraxt a'zolarini o'zgartirishda.",
+    "2. Faoliyat jadvali: Agar u ota-ona qo'shish bo'lsa va ota-ona olib tashlangan bo'lsa, faoliyat jurnali to'g'ri ko'rsatilmasligi tuzatildi <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>video</a>.",
+    "3. JustDo fayllaridan foydalanadigan muhitlar uchun avatar yuklash.",
+    "4. Tashkilotlar tushunchasi joriy etildi: JustDo ustida ixtiyoriy mantiqiy birlik.",
+    "5. MailDo: Elektron xat qabul qilinganda, vazifa egasi endi chatda avtomatik ravishda ovozsizlantirilmaydi."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Yangi bosh sahifa, Maxsus holatlar, Kengaytirilgan filtrlar va boshqalar",
+  "v3_136_news_page_description": "JustDo v3.136 yangilangan bosh sahifa, vazifalar uchun kuchli maxsus holatlar, tezroq vazifa qo'shish uchun kengaytirilgan filtrlar va muhim ishlash yaxshilanishlarini taqdim etadi."
+}

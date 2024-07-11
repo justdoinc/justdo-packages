@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "Чэргі білетаў",
+  "project_config_ticket_queues_new_ticket_queue_label": "Новая чарга білетаў",
+  "project_config_ticket_queues_enter_task_number_label": "Увядзіце нумар задачы",
+  "project_config_ticket_queues_no_ticket_queues_label": "Няма чэргаў білетаў",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "Вы не можаце выдаліць гэтую Чаргу білетаў, паколькі вы не з'яўляецеся ўдзельнікам яе Задачы"
+}

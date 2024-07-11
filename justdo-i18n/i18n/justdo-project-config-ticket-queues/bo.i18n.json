@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "འཛིན་ཤོག་གྲལ་རིམ།",
+  "project_config_ticket_queues_new_ticket_queue_label": "འཛིན་ཤོག་གྲལ་རིམ་གསར་པ།",
+  "project_config_ticket_queues_enter_task_number_label": "ལས་འགན་ཨང་གྲངས་འཇུག་རོགས།",
+  "project_config_ticket_queues_no_ticket_queues_label": "འཛིན་ཤོག་གྲལ་རིམ་མེད།",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "ཁྱེད་རང་དེའི་ལས་འགན་གྱི་ཚོགས་མི་མིན་པས། འཛིན་ཤོག་གྲལ་རིམ་འདི་འདོར་ཐབས་མེད།"
+}

@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "Билет кезектері",
+  "project_config_ticket_queues_new_ticket_queue_label": "Жаңа билет кезегі",
+  "project_config_ticket_queues_enter_task_number_label": "Тапсырма нөмірін енгізіңіз",
+  "project_config_ticket_queues_no_ticket_queues_label": "Билет кезектері жоқ",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "Сіз бұл Билет кезегін жоя алмайсыз, өйткені сіз оның Тапсырмасының мүшесі емессіз"
+}

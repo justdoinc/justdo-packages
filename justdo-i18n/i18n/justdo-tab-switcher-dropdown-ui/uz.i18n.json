@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Ko'rinishni almashtirish",
+  "tab_switcher_dropdown_search_placeholder": "Ko'rinishlar",
+  "tab_switcher_main_view_label": "Asosiy ko'rinish",
+  "tab_switcher_my_favorites_label": "Mening sevimlilarim",
+  "tab_switcher_my_due_list_label": "Mening muddatli ro'yxatim",
+  "tab_switcher_recently_label": "Yaqinda",
+  "tab_switcher_recently_completed_label": "Tugatilgan",
+  "tab_switcher_recently_updated_label": "Yangilangan",
+  "tab_switcher_recently_created_label": "Yaratilgan",
+  "tab_switcher_miscellaneous_label": "Turli xil",
+  "tab_switcher_task_ownershipt_transfers_label": "Vazifalar egalik huquqini o'tkazish",
+  "tab_switcher_ticket_queues_label": "Tiket navbatlari",
+  "tab_switcher_members_due_lists_label": "A'zolarning muddatli ro'yxatlari",
+  "tab_switcher_all_members_due_list_label": "Barcha a'zolarning muddatli ro'yxati",
+  "tab_switcher_projects_section_label": "Loyihalar",
+  "tab_switcher_projects_label": "Loyihalar"
+}

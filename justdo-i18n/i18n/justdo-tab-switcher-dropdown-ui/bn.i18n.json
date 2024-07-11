@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "ভিউ পরিবর্তন করুন",
+  "tab_switcher_dropdown_search_placeholder": "ভিউসমূহ",
+  "tab_switcher_main_view_label": "প্রধান ভিউ",
+  "tab_switcher_my_favorites_label": "আমার পছন্দসমূহ",
+  "tab_switcher_my_due_list_label": "আমার বাকি কাজের তালিকা",
+  "tab_switcher_recently_label": "সাম্প্রতিক",
+  "tab_switcher_recently_completed_label": "সম্পন্ন",
+  "tab_switcher_recently_updated_label": "হালনাগাদকৃত",
+  "tab_switcher_recently_created_label": "সৃষ্ট",
+  "tab_switcher_miscellaneous_label": "বিবিধ",
+  "tab_switcher_task_ownershipt_transfers_label": "কাজের মালিকানা হস্তান্তর",
+  "tab_switcher_ticket_queues_label": "টিকেট সারি (Ticket Queues)",
+  "tab_switcher_members_due_lists_label": "সদস্যদের বাকি কাজের তালিকা",
+  "tab_switcher_all_members_due_list_label": "সকল সদস্যের বাকি কাজের তালিকা",
+  "tab_switcher_projects_section_label": "প্রকল্পসমূহ",
+  "tab_switcher_projects_label": "প্রকল্পসমূহ"
+}

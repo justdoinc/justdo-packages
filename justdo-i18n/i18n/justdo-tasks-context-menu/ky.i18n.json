@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Тапшырмаларды өчүрүү",
+  "remove_from_parent_label": "Негизги тапшырмадан өчүрүү",
+  "remove_with_subtree_label": "Кошумча тапшырмалары менен өчүрүү",
+  "archive_task_label": "Тапшырманы архивдөө",
+  "unarchive_task_label": "Тапшырманы архивден чыгаруу",
+  "reorder_children_by_label": "Кошумча тапшырмаларды тартиптөө",
+  "zoom_in_label": "Чоңойтуу",
+  "projects_label": "Долбоорлор",
+  "set_as_a_project_label": "Долбоор катары белгилөө",
+  "unset_as_a_project_label": "Долбоор белгисин алып салуу",
+  "close_project_label": "Долбоорду жабуу",
+  "repoen_project_label": "Долбоорду кайра ачуу",
+  "add_to_project_label": "Долбоорго кошуу",
+  "apply_value_to_subtree": "__value__ кошумча тапшырмаларга колдонуу",
+  "bulk_set_options_label": "Топтук орнотуу"
+}

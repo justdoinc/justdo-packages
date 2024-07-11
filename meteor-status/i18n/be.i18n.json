@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Падключана",
+  "meteor_status_connecting": "Падключэнне...",
+  "meteor_status_failed": "Не ўдалося падключыцца да сервера",
+  "meteor_status_waiting": "Чаканне падключэння да сервера,",
+  "meteor_status_offline": "Рэжым афлайн.",
+  "meteor_status_reconnect_in": "спроба зноў праз адну секунду...",
+  "meteor_status_reconnect_in_plural": "спроба зноў праз __count__ секунд...",
+  "meteor_status_try_now_waiting": "Паспрабаваць зараз",
+  "meteor_status_try_now_offline": "Падключыцца зноў"
+}

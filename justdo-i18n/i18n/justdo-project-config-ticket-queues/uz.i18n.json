@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "Tiket navbatlari",
+  "project_config_ticket_queues_new_ticket_queue_label": "Yangi tiket navbati",
+  "project_config_ticket_queues_enter_task_number_label": "Vazifa raqamini kiriting",
+  "project_config_ticket_queues_no_ticket_queues_label": "Tiket navbatlari yo'q",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "Siz ushbu Tiket navbatini o'chira olmaysiz, chunki siz uning Vazifasiga a'zo emassiz"
+}

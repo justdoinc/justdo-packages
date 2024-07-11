@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Gitt w.e.g. Ären Numm an",
+  "err_first_name_too_long": "De Virnumm sollt net méi wéi 30 Zeechen hunn",
+  "err_last_name_too_long": "De Familljennumm sollt net méi wéi 30 Zeechen hunn",
+  "err_last_name_empty": "Gitt w.e.g. Äre Familljennumm an",
+  "err_email_invalid": "Gitt w.e.g. eng gëlteg E-Mail-Adress an",
+  "err_email_empty": "Gitt w.e.g. Är E-Mail-Adress an",
+  "err_password_empty": "Gitt w.e.g. Äert Passwuert an",
+  "err_incorrect_password": "Falsch Passwuert. Fir Äert Passwuert zréckzesetzen, klickt w.e.g. op de Knäppchen \"Passwuert vergiess?\".",
+  "err_no_password_set": "Fir Äert Passwuert anzerichtten, klickt w.e.g. op de Knäppchen \"Passwuert vergiess?\".",
+  "err_password_too_similar": "D'Passwuert ass ze änlech wéi Äre Virnumm, Familljennumm oder E-Mail",
+  "err_retype_password_empty": "Gitt w.e.g. Äert Passwuert nach eng Kéier an",
+  "err_retype_password_not_match": "D'Passwierder stëmmen net iwwerteneen",
+  "err_agree_ts_and_pp_missing": "Dir musst eis Notzungsbedéngungen an Dateschutzrichtlinn liesen an akzeptéieren fir weiderzefueren",
+  "err_cant_login": "Aloggen net méiglech"
+}

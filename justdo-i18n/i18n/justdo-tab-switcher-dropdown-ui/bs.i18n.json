@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Promijeni prikaz",
+  "tab_switcher_dropdown_search_placeholder": "Prikazi",
+  "tab_switcher_main_view_label": "Glavni prikaz",
+  "tab_switcher_my_favorites_label": "Moji favoriti",
+  "tab_switcher_my_due_list_label": "Moja lista zadataka",
+  "tab_switcher_recently_label": "Nedavno",
+  "tab_switcher_recently_completed_label": "Završeno",
+  "tab_switcher_recently_updated_label": "Ažurirano",
+  "tab_switcher_recently_created_label": "Kreirano",
+  "tab_switcher_miscellaneous_label": "Razno",
+  "tab_switcher_task_ownershipt_transfers_label": "Prenosi vlasništva zadataka",
+  "tab_switcher_ticket_queues_label": "Redovi zahtjeva",
+  "tab_switcher_members_due_lists_label": "Liste zadataka članova",
+  "tab_switcher_all_members_due_list_label": "Lista zadataka svih članova",
+  "tab_switcher_projects_section_label": "Projekti",
+  "tab_switcher_projects_label": "Projekti"
+}

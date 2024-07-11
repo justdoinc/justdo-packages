@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Aktiv vəziyyətlər",
+  "project_configurations_no_active_states_label": "Aktiv vəziyyət yoxdur",
+  "project_configurations_hidden_states_label": "Gizli vəziyyətlər",
+  "project_configurations_no_hidden_states_label": "Gizli vəziyyət yoxdur",
+  "project_configurations_type_state_name_placeholder": "Vəziyyət adını daxil edin",
+  "project_configurations_default_title_for_this_state_label": "Bu vəziyyət üçün standart başlıq",
+  "project_configurations_restore_state_label": "Vəziyyəti bərpa et",
+  "project_configurations_create_extended_state_label": "Genişləndirilmiş vəziyyət yarat",
+  "project_configurations_hide_state": "Vəziyyəti gizlət",
+  "project_configurations_remove_extended_state": "Genişləndirilmiş vəziyyəti sil",
+  "new_custom_state_default_title": "__state__ - genişləndirilmiş"
+}

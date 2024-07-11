@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Voeg Kolom By",
+  "hide_column_label": "Versteek Kolom",
+  "freeze_column_label": "Vries Kolom",
+  "unfreeze_column_label": "Ontvries Kolom",
+  "tree_control_tooltip_gantt_milestone": "Gantt-mylpaal",
+  "tree_control_tooltip_buffer_task": "Buffertaak",
+  "tree_control_tooltip_Meetings": "Vergaderings",
+  "tree_control_tooltip_start_time_tracking": "Begin werk aan hierdie taak",
+  "tree_control_tooltip_stop_time_tracking": "Jy werk nou aan hierdie taak, druk om te stop en die gewerkte tyd aan te teken",
+  "tree_control_tooltip_resources": "Hulpbronne",
+  "tree_control_tooltip_description": "Taakbeskrywing",
+  "tree_control_tooltip_chat_messages": "Kletsboodskappe",
+  "tree_control_tooltip_files_count": "__files_count__ lêers",
+  "tree_control_tooltip_emails_count": "__emails_count__ e-posse",
+  "tree_control_tooltip_task_is_a_project": "Taak is 'n projek",
+  "tree_control_tooltip_task_is_archived": "Taak is gearchiveer"
+}

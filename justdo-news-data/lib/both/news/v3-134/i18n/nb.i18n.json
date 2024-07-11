@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Hva er nytt",
+  "v3_134_news_main_array_item_1_title": "Arkivering",
+  "v3_134_news_main_array_item_1_subtitle": "Når det kommer nye prosjekter og nye aktiviteter du må jobbe med, trenger du å sette de gamle til side og fokusere på de nye. Nå kan du arkivere disse prosjektene og oppgavene, fjerne dem fra daglig visning, samtidig som du fortsatt har muligheten til å få tilgang til dem ved behov og til og med avarkivere dem.",
+  "v3_134_news_main_array_item_2_title": "Flervalgsmuligheter-felt",
+  "v3_134_news_main_array_item_2_subtitle": "I tillegg til det egendefinerte feltet \"Alternativer\" har du nå typen \"Flere alternativer\". Dette alternativet lar deg opprette en liste med forhåndsdefinerte alternativer som brukere kan velge flere verdier fra for hver enkelt oppgave.",
+  "v3_134_news_main_array_item_3_title": "Oppgaveeier og Ventende eier-felt + filter",
+  "v3_134_news_main_array_item_3_subtitle": "Du har nå muligheten til å inkludere flere felt som viser både Oppgaveeier og Ventende eier for oppgaver. Denne oppdateringen gir deg mulighet til å effektivt filtrere oppgavetreet basert på disse kriteriene, noe som gir en mer strømlinjeformet og personlig oppgavestyringsopplevelse.",
+  "v3_134_news_features_name": "Andre oppdateringer",
+  "v3_134_news_features_title": "Forbedringer",
+  "v3_134_news_features_update_items": [
+    "1. E-poster - Filer mindre enn 150x150 piksler legges ikke til i filer.",
+    "2. E-poster - Vis bare de siste 20 e-postene, pluss \"last inn flere\".",
+    "3. Fjerning av utvidelser og \"lagre\"-knapp."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Prosjektarkivering, flervalgsmuligheter og mer",
+  "v3_134_news_page_description": "Oppdag kraften i prosjektarkivering, fleksibiliteten i flervalgsmuligheter-felt, og forbedret oppgaveeierskapshåndtering i JustDo v3.134."
+}

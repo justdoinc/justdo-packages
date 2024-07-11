@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Sila masukkan nama anda",
+  "err_first_name_too_long": "Nama pertama tidak boleh melebihi 30 aksara",
+  "err_last_name_too_long": "Nama keluarga tidak boleh melebihi 30 aksara",
+  "err_last_name_empty": "Sila masukkan nama keluarga anda",
+  "err_email_invalid": "Sila masukkan alamat e-mel yang sah",
+  "err_email_empty": "Sila masukkan e-mel anda",
+  "err_password_empty": "Sila masukkan kata laluan anda",
+  "err_incorrect_password": "Kata laluan tidak betul. Untuk menetapkan semula kata laluan anda, anda boleh klik pada butang \"Lupa kata laluan?\"",
+  "err_no_password_set": "Untuk menetapkan kata laluan anda, sila klik pada butang \"Lupa kata laluan?\"",
+  "err_password_too_similar": "Kata laluan terlalu serupa dengan nama pertama, nama keluarga atau e-mel anda",
+  "err_retype_password_empty": "Sila taip semula kata laluan anda",
+  "err_retype_password_not_match": "Kata laluan tidak sepadan",
+  "err_agree_ts_and_pp_missing": "Anda perlu membaca dan bersetuju dengan terma dan syarat serta dasar privasi kami untuk meneruskan",
+  "err_cant_login": "Tidak dapat log masuk"
+}

@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Cədvəl Görünüşləri",
+  "grid_views_search_placeholder": "Görünüşləri axtar",
+  "grid_views_no_view_label": "Görünüş yoxdur",
+  "grid_views_add_current_view_label": "Cari görünüşü əlavə et",
+  "grid_views_rename_label": "Adını dəyişdir",
+  "grid_views_update_label": "Yenilə",
+  "grid_views_remove_label": "Sil",
+  "grid_views_share_label": "Paylaş",
+  "grid_views_unshare_label": "Paylaşımı ləğv et",
+  "grid_views_shared_label": "paylaşılıb"
+}

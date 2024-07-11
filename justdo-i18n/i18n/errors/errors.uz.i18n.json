@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Iltimos, ismingizni kiriting",
+  "err_first_name_too_long": "Ism 30 ta belgidan oshmasligi kerak",
+  "err_last_name_too_long": "Familiya 30 ta belgidan oshmasligi kerak",
+  "err_last_name_empty": "Iltimos, familiyangizni kiriting",
+  "err_email_invalid": "Iltimos, to'g'ri elektron pochta manzilini kiriting",
+  "err_email_empty": "Iltimos, elektron pochtangizni kiriting",
+  "err_password_empty": "Iltimos, parolingizni kiriting",
+  "err_incorrect_password": "Noto'g'ri parol. Parolni tiklash uchun \"Parolni unutdingizmi?\" tugmasini bosing.",
+  "err_no_password_set": "Parolingizni o'rnatish uchun \"Parolni unutdingizmi?\" tugmasini bosing.",
+  "err_password_too_similar": "Parol ismingiz, familiyangiz yoki elektron pochtangizga juda o'xshash",
+  "err_retype_password_empty": "Iltimos, parolni qayta kiriting",
+  "err_retype_password_not_match": "Parollar mos kelmayapti",
+  "err_agree_ts_and_pp_missing": "Davom etish uchun foydalanish shartlari va maxfiylik siyosatini o'qib, ularga rozilik bildirishingiz kerak",
+  "err_cant_login": "Tizimga kirib bo'lmayapti"
+}

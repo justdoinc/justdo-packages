@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Afegir columna",
+  "hide_column_label": "Amagar columna",
+  "freeze_column_label": "Fixar columna",
+  "unfreeze_column_label": "Desfixar columna",
+  "tree_control_tooltip_gantt_milestone": "Fita del Gantt",
+  "tree_control_tooltip_buffer_task": "Tasca de marge (Buffer Task)",
+  "tree_control_tooltip_Meetings": "Reunions",
+  "tree_control_tooltip_start_time_tracking": "Començar a treballar en aquesta tasca",
+  "tree_control_tooltip_stop_time_tracking": "Estàs treballant en aquesta tasca ara, prem per aturar i registrar el temps treballat",
+  "tree_control_tooltip_resources": "Recursos",
+  "tree_control_tooltip_description": "Descripció de la tasca",
+  "tree_control_tooltip_chat_messages": "Missatges de xat",
+  "tree_control_tooltip_files_count": "__files_count__ arxius",
+  "tree_control_tooltip_emails_count": "__emails_count__ correus electrònics",
+  "tree_control_tooltip_task_is_a_project": "La tasca és un projecte",
+  "tree_control_tooltip_task_is_archived": "La tasca està arxivada"
+}

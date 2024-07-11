@@ -1,0 +1,11 @@
+{
+  "email_greeting_with_name": "Kaixo __name__, ",
+  "unread_task_chat_notification_subject": "Txat-mezu berriak zure zain daude",
+  "unread_task_chat_notification_title": "Txat-mezu berriak zure zain daude hurrengo zereginean:",
+  "unread_group_chat_notification_subject": "__channel_title__ kanaletik mezu berriak zure zain daude",
+  "unread_group_chat_notification_title_html": "<span style=\"font-weight: bold;\">__channel_title__</span> kanaletik mezu berriak zure zain daude!",
+  "open_in_justdo": "Ireki JustDo-n",
+  "unsubscribe_from_justdo": "Kendu harpidetza JustDo-ren eguneraketa jakinarazpen guztietatik",
+  "unsubscribe_from_project": "Kendu harpidetza __project_title__ proiektuaren eguneraketetatik",
+  "reply_email_for_support": "Arazorik al duzu? Erantzun mezu honi laguntza jasotzeko."
+}

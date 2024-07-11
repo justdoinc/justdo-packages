@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Белсенді күйлер",
+  "project_configurations_no_active_states_label": "Белсенді күйлер жоқ",
+  "project_configurations_hidden_states_label": "Жасырын күйлер",
+  "project_configurations_no_hidden_states_label": "Жасырын күйлер жоқ",
+  "project_configurations_type_state_name_placeholder": "Күй атауын енгізіңіз",
+  "project_configurations_default_title_for_this_state_label": "Бұл күй үшін әдепкі атау",
+  "project_configurations_restore_state_label": "Күйді қалпына келтіру",
+  "project_configurations_create_extended_state_label": "Кеңейтілген күй жасау",
+  "project_configurations_hide_state": "Күйді жасыру",
+  "project_configurations_remove_extended_state": "Кеңейтілген күйді жою",
+  "new_custom_state_default_title": "__state__ - кеңейтілген"
+}

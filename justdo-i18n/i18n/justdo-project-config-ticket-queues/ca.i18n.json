@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "Cues de Tiquets",
+  "project_config_ticket_queues_new_ticket_queue_label": "Nova cua de tiquets",
+  "project_config_ticket_queues_enter_task_number_label": "Introduïu el número de tasca",
+  "project_config_ticket_queues_no_ticket_queues_label": "No hi ha cues de tiquets",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "No podeu eliminar aquesta Cua de Tiquets, ja que no sou membre de la seva Tasca"
+}

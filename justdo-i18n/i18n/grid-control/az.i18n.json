@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Sütun əlavə et",
+  "hide_column_label": "Sütunu gizlət",
+  "freeze_column_label": "Sütunu dondur",
+  "unfreeze_column_label": "Sütunu dondan çıxar",
+  "tree_control_tooltip_gantt_milestone": "Qantt (Gantt) mərhələsi",
+  "tree_control_tooltip_buffer_task": "Bufer tapşırıq",
+  "tree_control_tooltip_Meetings": "Görüşlər",
+  "tree_control_tooltip_start_time_tracking": "Bu tapşırıq üzərində işləməyə başla",
+  "tree_control_tooltip_stop_time_tracking": "Hal-hazırda bu tapşırıq üzərində işləyirsiniz, dayandırmaq və işlənmiş vaxtı qeyd etmək üçün basın",
+  "tree_control_tooltip_resources": "Resurslar",
+  "tree_control_tooltip_description": "Tapşırıq təsviri",
+  "tree_control_tooltip_chat_messages": "Çat mesajları",
+  "tree_control_tooltip_files_count": "__files_count__ fayl",
+  "tree_control_tooltip_emails_count": "__emails_count__ e-poçt",
+  "tree_control_tooltip_task_is_a_project": "Tapşırıq bir layihədir",
+  "tree_control_tooltip_task_is_archived": "Tapşırıq arxivləşdirilib"
+}

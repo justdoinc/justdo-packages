@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Поврзано",
+  "meteor_status_connecting": "Се поврзува...",
+  "meteor_status_failed": "Поврзувањето со серверот не успеа",
+  "meteor_status_waiting": "Се чека поврзување со серверот,",
+  "meteor_status_offline": "Офлајн режим.",
+  "meteor_status_reconnect_in": "повторен обид за една секунда...",
+  "meteor_status_reconnect_in_plural": "повторен обид за __count__ секунди...",
+  "meteor_status_try_now_waiting": "Обиди се сега",
+  "meteor_status_try_now_offline": "Поврзи се повторно"
+}

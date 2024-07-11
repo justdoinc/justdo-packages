@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "JustDo-nu çap et",
+  "print_dropdown_entire_justdo": "Bütün JustDo",
+  "print_dropdown_visible_tasks": "Görünən Tapşırıqlar",
+  "print_dropdown_print_current_task": "Cari Tapşırığı Çap Et",
+  "print_dropdown_all_child_tasks": "Bütün Alt Tapşırıqlar",
+  "print_dropdown_visible_child_tasks": "Görünən Alt Tapşırıqlar",
+  "print_dropdown_download": "Yüklə",
+  "print_dropdown_download_as_png": "PNG kimi yüklə",
+  "print_grid_columns_settings_label": "Sütun parametrləri",
+  "print_grid_columns_options_label": "Sütun seçimləri",
+  "print_grid_print": "Çap et",
+  "print_grid_export_csv": "CSV ixrac et",
+  "print_grid_select_all": "Hamısını seç",
+  "print_grid_apply": "Tətbiq et"
+}

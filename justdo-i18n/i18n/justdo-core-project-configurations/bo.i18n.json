@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "འགུལ་བསྐྱོད་གནས་སྟངས།",
+  "project_configurations_no_active_states_label": "འགུལ་བསྐྱོད་གནས་སྟངས་མེད།",
+  "project_configurations_hidden_states_label": "སྦས་པའི་གནས་སྟངས།",
+  "project_configurations_no_hidden_states_label": "སྦས་པའི་གནས་སྟངས་མེད།",
+  "project_configurations_type_state_name_placeholder": "གནས་སྟངས་མིང་འབྲི་རོགས།",
+  "project_configurations_default_title_for_this_state_label": "གནས་སྟངས་འདིའི་གཞི་བཞག་ཁ་བྱང་།",
+  "project_configurations_restore_state_label": "གནས་སྟངས་སླར་གསོ།",
+  "project_configurations_create_extended_state_label": "རྒྱ་སྐྱེད་གནས་སྟངས་བཟོ་བ།",
+  "project_configurations_hide_state": "གནས་སྟངས་སྦས།",
+  "project_configurations_remove_extended_state": "རྒྱ་སྐྱེད་གནས་སྟངས་མེད་པར་བཟོ་བ།",
+  "new_custom_state_default_title": "__state__ - རྒྱ་སྐྱེད།"
+}

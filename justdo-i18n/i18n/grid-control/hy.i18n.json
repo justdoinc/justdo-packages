@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Ավելացնել սյունակ",
+  "hide_column_label": "Թաքցնել սյունակը",
+  "freeze_column_label": "Սառեցնել սյունակը",
+  "unfreeze_column_label": "Ապասառեցնել սյունակը",
+  "tree_control_tooltip_gantt_milestone": "Գանտի ցուցանիշ (Gantt Milestone)",
+  "tree_control_tooltip_buffer_task": "Բուֆերային առաջադրանք",
+  "tree_control_tooltip_Meetings": "Հանդիպումներ",
+  "tree_control_tooltip_start_time_tracking": "Սկսել աշխատել այս առաջադրանքի վրա",
+  "tree_control_tooltip_stop_time_tracking": "Դուք հիմա աշխատում եք այս առաջադրանքի վրա, սեղմեք՝ դադարեցնելու և գրանցելու աշխատած ժամանակը",
+  "tree_control_tooltip_resources": "Ռեսուրսներ",
+  "tree_control_tooltip_description": "Առաջադրանքի նկարագրություն",
+  "tree_control_tooltip_chat_messages": "Զրույցի հաղորդագրություններ",
+  "tree_control_tooltip_files_count": "__files_count__ ֆայլ",
+  "tree_control_tooltip_emails_count": "__emails_count__ էլ. նամակ",
+  "tree_control_tooltip_task_is_a_project": "Առաջադրանքը նախագիծ է",
+  "tree_control_tooltip_task_is_archived": "Առաջադրանքը արխիվացված է"
+}

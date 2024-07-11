@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Գաղտնաբառը պետք է՝",
+  "password_requirements_too_short": "Բաղկացած լինի առնվազն %d նիշից",
+  "password_requirements_missing_number": "Պարունակի առնվազն մեկ թիվ",
+  "password_requirements_special_sign": "Պարունակի առնվազն մեկ հատուկ նշան",
+  "password_requirements_atleast_one_lowercase": "Պարունակի առնվազն մեկ փոքրատառ անգլերեն տառ",
+  "password_requirements_atleast_one_uppercase": "Պարունակի առնվազն մեկ մեծատառ անգլերեն տառ",
+  "password_requirements_too_similar": "Չպարունակի ձեր անունը կամ էլ. փոստի հասցեի մասեր"
+}

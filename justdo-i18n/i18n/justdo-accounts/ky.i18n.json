@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Сырсөз төмөнкүдөй болушу керек:",
+  "password_requirements_too_short": "Кеминде %d символдон турушу керек",
+  "password_requirements_missing_number": "Кеминде бир сан камтышы керек",
+  "password_requirements_special_sign": "Кеминде бир атайын символду камтышы керек",
+  "password_requirements_atleast_one_lowercase": "Кеминде бир кичине англис тамгасын камтышы керек",
+  "password_requirements_atleast_one_uppercase": "Кеминде бир чоң англис тамгасын камтышы керек",
+  "password_requirements_too_similar": "Сиздин атыңызды же электрондук почтаңыздын бөлүктөрүн камтыбашы керек"
+}

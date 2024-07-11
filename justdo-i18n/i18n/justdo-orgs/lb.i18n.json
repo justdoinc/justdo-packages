@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "__user_name__ seng Organisatioun",
+  "create_org_label": "Organisatioun erstellen",
+  "without_orgs_label": "Ouni Organisatioun",
+  "justdos_under_named_org_html": "JustDos ënner <span class=\"org-name\">__org_name__</span>",
+  "justdos_without_orgs": "JustDos ouni eng Organisatioun",
+  "orgs_project_config_title": "Organisatiounen",
+  "assign_justdo_to_organization_label": "JustDo enger Organisatioun zouweisen",
+  "another_organization": "eng aner Organisatioun",
+  "pre_transfer_justdo_to_org_notice_html": "Dir sidd am Gaang dëse JustDo (JustDo Board) op <b>__dest_org_name__</b> ze transferéieren. <br> All Memberen an dësem JustDo ginn zu Membere vun <b>__dest_org_name__</b>.",
+  "select_organization": "Organisatioun auswielen",
+  "org_expiring_soon_notice_title": "D'Lizenz vun Ärer Organisatioun leeft geschwënn of!",
+  "org_expiring_soon_notice_html": "D'Lizenz fir Är Organisatioun <b>__org_name__</b> leeft den __org_expiration_date__ of. <br> Mir hoffen, dass JustDo Äert Aarbechtsliewe méi einfach gemaach huet!",
+  "org_locked_notice_title": "D'Lizenz vun Ärer Organisatioun ass ofgelaf!",
+  "org_locked_notice_html": "D'Lizenz fir Är Organisatioun <b>__org_name__</b> ass den __org_expiration_date__ ofgelaf. <br> Mir hoffen, dass JustDo Äert Aarbechtsliewe méi einfach gemaach huet, a mir géife gäre weiderhin dozou bäidroen!",
+  "org_access_restricted_title": "__org_name__: Temporär Zouganksaschränkung",
+  "org_access_restricted_html": "Den Zougang zu Ärer Organisatioun <b>__org_name__</b> ass momentan ageschränkt. Kontaktéiert w.e.g. Är Organisatiounsadministrateuren fir méi Detailer iwwer dës Situatioun. <br> Mir schätzen Är Gedold a Verständnis.",
+  "renew_org_license_instruction_html": "Dir kënnt d'Lizenz erneieren andeems Dir op de Knäppche \"Lizenz erneieren\" hei drënner klickt.<br>Eist Support-Team ass ëmmer frou Iech ze hëllefen.<br><br>Merci, dass Dir en Deel vun der JustDo-Communautéit sidd. Mir schaffen aktiv un neie Funktioune fir déi nächst Versioun fir Äre Workflow ze verbesseren!",
+  "renew_org_licnese_modal_btn_label": "Lizenz erneieren",
+  "org_pre_expire_renewal_contact_page_message": "Meng Organisatioun __org_name__ __optional_domain_msg__ leeft geschwënn of an ech géif gär d'Lizenz erneieren.",
+  "org_post_expire_renewal_contact_page_message": "Meng Organisatioun __org_name__ __optional_domain_msg__ ass ofgelaf an ech géif gär d'Lizenz erneieren."
+}

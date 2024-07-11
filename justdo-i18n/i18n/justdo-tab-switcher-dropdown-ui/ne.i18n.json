@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "दृश्य बदल्नुहोस्",
+  "tab_switcher_dropdown_search_placeholder": "दृश्यहरू",
+  "tab_switcher_main_view_label": "मुख्य दृश्य",
+  "tab_switcher_my_favorites_label": "मेरा मनपर्नेहरू",
+  "tab_switcher_my_due_list_label": "मेरो म्याद सूची",
+  "tab_switcher_recently_label": "हालै",
+  "tab_switcher_recently_completed_label": "पूरा गरिएको",
+  "tab_switcher_recently_updated_label": "अद्यावधिक गरिएको",
+  "tab_switcher_recently_created_label": "सिर्जना गरिएको",
+  "tab_switcher_miscellaneous_label": "विविध",
+  "tab_switcher_task_ownershipt_transfers_label": "कार्य स्वामित्व हस्तान्तरण",
+  "tab_switcher_ticket_queues_label": "टिकट लाइनहरू",
+  "tab_switcher_members_due_lists_label": "सदस्यहरूको म्याद सूचीहरू",
+  "tab_switcher_all_members_due_list_label": "सबै सदस्यहरूको म्याद सूची",
+  "tab_switcher_projects_section_label": "परियोजनाहरू",
+  "tab_switcher_projects_label": "परियोजनाहरू"
+}

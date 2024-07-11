@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Aktiv Zoustänn",
+  "project_configurations_no_active_states_label": "Keng aktiv Zoustänn",
+  "project_configurations_hidden_states_label": "Verstoppt Zoustänn",
+  "project_configurations_no_hidden_states_label": "Keng verstoppt Zoustänn",
+  "project_configurations_type_state_name_placeholder": "Zoustandsnumm aginn",
+  "project_configurations_default_title_for_this_state_label": "Standard Titel fir dësen Zoustand",
+  "project_configurations_restore_state_label": "Zoustand erëmhierstellen",
+  "project_configurations_create_extended_state_label": "Erweiderte Zoustand erstellen",
+  "project_configurations_hide_state": "Zoustand verstoppen",
+  "project_configurations_remove_extended_state": "Erweiderte Zoustand läschen",
+  "new_custom_state_default_title": "__state__ - erweidert"
+}

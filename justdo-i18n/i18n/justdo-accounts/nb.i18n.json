@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Passordet må:",
+  "password_requirements_too_short": "Bestå av minst %d tegn",
+  "password_requirements_missing_number": "Ha minst ett tall",
+  "password_requirements_special_sign": "Ha minst ett spesialtegn",
+  "password_requirements_atleast_one_lowercase": "Ha minst én liten bokstav",
+  "password_requirements_atleast_one_uppercase": "Ha minst én stor bokstav",
+  "password_requirements_too_similar": "Ikke inneholde navnet ditt eller deler av e-postadressen din"
+}

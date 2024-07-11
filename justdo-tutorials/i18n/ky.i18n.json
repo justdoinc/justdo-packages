@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "JustDo үчүн аталыш коюңуз",
+  "set_justdo_name_subtitle": "Оңдоо режимине өтүү үчүн аталышты жөн гана басыңыз",
+  "create_first_task_title": "Биринчи тапшырмаларыңызды түзүңүз",
+  "create_first_task_subtitle": "Тапшырмаларды түзүү үчүн аспаптар тилкесиндеги баскычтарды колдонсоңуз болот, же ALT+ENTER / ALT+SHIFT+ENTER клавиатура ыкчам баскычтарын колдонсоңуз болот",
+  "invite_members_title": "Команда мүчөлөрүн чакыруу",
+  "invite_members_subtitle": "Команда мүчөлөрүңүздү жаңы JustDoңузга кошулуп, биргелешип иштөөгө чакырыңыз",
+  "import_tasks_title": "Тапшырмаларды импорттоо",
+  "import_tasks_subtitle": "Учурдагы тапшырмаларыңызды жана маалыматтарыңызды JustDoго которуп, электрондук таблицаларды импорттоо функциябыз менен үзгүлтүксүз улантсаңыз болот",
+  "customize_columns_title": "Көрүнүшүңүздү ыңгайлаштырыңыз",
+  "customize_columns_subtitle": "Мамычаларды кошуу/алып салуу, тапшырмаларды статусуна жараша чыпкалоо жана башка аркылуу тордо (таблицада) эмнени көрөрүңүздү көзөмөлдөңүз!",
+  "get_free_support_title": "Акысыз колдоо алыңыз",
+  "get_free_support_subtitle": "JustDo командасы менен жекеме-жеке колдоо сессиясы",
+  "request": "Суроо-талап",
+  "free_support_request_received": "Кабыл алынды, жакында сизге электрондук почта аркылуу жооп беребиз",
+  "tutorials_recent_product_updates": "Акыркы өнүмдүн жаңыртуулары",
+  "tutorials_justdo_quick_start": "JustDo тез баштоо",
+  "tutorials_justdo_advanced_features": "JustDo өркүндөтүлгөн мүмкүнчүлүктөрү",
+  "tutorials_justdo_support_center": "JustDo колдоо борбору"
+}

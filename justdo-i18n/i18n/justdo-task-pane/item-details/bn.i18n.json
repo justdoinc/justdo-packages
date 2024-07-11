@@ -1,0 +1,9 @@
+{
+  "item_details_title": "বিস্তারিত",
+  "item_details_members_label": "সদস্যরা",
+  "item_details_description_label": "বিবরণ",
+  "item_details_add_task_description": "টাস্কের বিবরণ যোগ করুন",
+  "item_details_more_info_label": "আরও তথ্য",
+  "item_details_context_title": "প্রসঙ্গ",
+  "item_details_context_drag_to_add_parent_label": "একটি অভিভাবক টাস্ক (parent Task) যোগ করতে টেনে আনুন"
+}

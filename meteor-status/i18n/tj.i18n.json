@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Пайваст шуд",
+  "meteor_status_connecting": "Пайвастшавӣ...",
+  "meteor_status_failed": "Пайвастшавӣ ба сервер ноком шуд",
+  "meteor_status_waiting": "Дар интизори пайвастшавӣ ба сервер,",
+  "meteor_status_offline": "Ҳолати офлайн.",
+  "meteor_status_reconnect_in": "кӯшиши навбатӣ пас аз як сония...",
+  "meteor_status_reconnect_in_plural": "кӯшиши навбатӣ пас аз __count__ сония...",
+  "meteor_status_try_now_waiting": "Ҳозир кӯшиш кунед",
+  "meteor_status_try_now_offline": "Дубора пайваст шавед"
+}

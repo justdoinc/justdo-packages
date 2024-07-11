@@ -1,0 +1,8 @@
+{
+  "task_type_delayed_label": "Одложено",
+  "task_type_behind_label": "Заостанува",
+  "task_type_late_label": "Доцни",
+  "task_type_overdue_label": "Задоцнето",
+  "task_type_key_task_label": "Клучна задача",
+  "task_type_no_owner_label": "Без сопственик"
+}

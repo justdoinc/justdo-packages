@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Ҳолатҳои фаъол",
+  "project_configurations_no_active_states_label": "Ҳолатҳои фаъол нестанд",
+  "project_configurations_hidden_states_label": "Ҳолатҳои пинҳонӣ",
+  "project_configurations_no_hidden_states_label": "Ҳолатҳои пинҳонӣ нестанд",
+  "project_configurations_type_state_name_placeholder": "Номи ҳолатро ворид кунед",
+  "project_configurations_default_title_for_this_state_label": "Унвони пешфарз барои ин ҳолат",
+  "project_configurations_restore_state_label": "Барқарор кардани ҳолат",
+  "project_configurations_create_extended_state_label": "Эҷоди ҳолати васеъшуда",
+  "project_configurations_hide_state": "Пинҳон кардани ҳолат",
+  "project_configurations_remove_extended_state": "Хориҷ кардани ҳолати васеъшуда",
+  "new_custom_state_default_title": "__state__ - васеъшуда"
+}

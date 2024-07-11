@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Көрүнүштү алмаштыруу",
+  "tab_switcher_dropdown_search_placeholder": "Көрүнүштөр",
+  "tab_switcher_main_view_label": "Негизги көрүнүш",
+  "tab_switcher_my_favorites_label": "Менин сүйүктүүлөрүм",
+  "tab_switcher_my_due_list_label": "Менин мөөнөтү келген тизмем",
+  "tab_switcher_recently_label": "Жакында",
+  "tab_switcher_recently_completed_label": "Аяктаган",
+  "tab_switcher_recently_updated_label": "Жаңыртылган",
+  "tab_switcher_recently_created_label": "Түзүлгөн",
+  "tab_switcher_miscellaneous_label": "Ар түрдүү",
+  "tab_switcher_task_ownershipt_transfers_label": "Тапшырмалардын ээлигин өткөрүп берүү",
+  "tab_switcher_ticket_queues_label": "Билет кезектери",
+  "tab_switcher_members_due_lists_label": "Мүчөлөрдүн мөөнөтү келген тизмелери",
+  "tab_switcher_all_members_due_list_label": "Бардык мүчөлөрдүн мөөнөтү келген тизмеси",
+  "tab_switcher_projects_section_label": "Долбоорлор",
+  "tab_switcher_projects_label": "Долбоорлор"
+}

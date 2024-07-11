@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "མཚན་ཉིད་རང་བཟོ།",
+  "grid_control_custom_fields_sort_by_name_label": "མིང་ལྟར་གོ་རིམ་སྒྲིག་པ།",
+  "grid_control_custom_fields_new_custom_field_label": "མཚན་ཉིད་རང་བཟོ་གསར་པ།",
+  "grid_control_custom_fields_no_custom_fields_label": "མཚན་ཉིད་རང་བཟོ་མེད།",
+  "grid_control_custom_fields_label_placeholder": "ཁ་ཡིག",
+  "grid_control_custom_fields_text_label": "ཡི་གེ",
+  "grid_control_custom_fields_number_label": "ཨང་ཀི།",
+  "grid_control_custom_fields_date_label": "ཚེས་གྲངས།",
+  "grid_control_custom_fields_select_label": "འདེམས་ཚན།",
+  "grid_control_custom_fields_multi_select_label": "འདེམས་ཚན་མང་པོ།",
+  "grid_control_custom_fields_smart_numbers_label": "རིག་ནུས་ཅན་གྱི་ཨང་ཀི། (Smart Numbers)",
+  "grid_control_custom_fields_unknown_type_label": "རིགས་མ་ཤེས་པ།",
+  "grid_control_custom_fields_disabled_field_label": "སྤྱོད་མི་ཆོག་པའི་ས་ཁོངས།"
+}

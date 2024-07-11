@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Bytt visning",
+  "tab_switcher_dropdown_search_placeholder": "Visninger",
+  "tab_switcher_main_view_label": "Hovedvisning",
+  "tab_switcher_my_favorites_label": "Mine favoritter",
+  "tab_switcher_my_due_list_label": "Min forfallsliste",
+  "tab_switcher_recently_label": "Nylig",
+  "tab_switcher_recently_completed_label": "Fullført",
+  "tab_switcher_recently_updated_label": "Oppdatert",
+  "tab_switcher_recently_created_label": "Opprettet",
+  "tab_switcher_miscellaneous_label": "Diverse",
+  "tab_switcher_task_ownershipt_transfers_label": "Overføringer av oppgaveeierskap",
+  "tab_switcher_ticket_queues_label": "Henvendelseskøer",
+  "tab_switcher_members_due_lists_label": "Medlemmers forfallslister",
+  "tab_switcher_all_members_due_list_label": "Alle medlemmers forfallsliste",
+  "tab_switcher_projects_section_label": "Prosjekter",
+  "tab_switcher_projects_label": "Prosjekter"
+}

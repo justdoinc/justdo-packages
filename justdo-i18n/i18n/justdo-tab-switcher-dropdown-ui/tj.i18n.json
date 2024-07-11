@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Тағйир додани намуд",
+  "tab_switcher_dropdown_search_placeholder": "Намудҳо",
+  "tab_switcher_main_view_label": "Намуди асосӣ",
+  "tab_switcher_my_favorites_label": "Дӯстдоштаҳои ман",
+  "tab_switcher_my_due_list_label": "Рӯйхати муҳлатноки ман",
+  "tab_switcher_recently_label": "Ба наздикӣ",
+  "tab_switcher_recently_completed_label": "Анҷомёфта",
+  "tab_switcher_recently_updated_label": "Навшуда",
+  "tab_switcher_recently_created_label": "Эҷодшуда",
+  "tab_switcher_miscellaneous_label": "Гуногун",
+  "tab_switcher_task_ownershipt_transfers_label": "Интиқоли моликияти вазифаҳо",
+  "tab_switcher_ticket_queues_label": "Навбатҳои чипта (Ticket Queues)",
+  "tab_switcher_members_due_lists_label": "Рӯйхатҳои муҳлатноки аъзоён",
+  "tab_switcher_all_members_due_list_label": "Рӯйхати муҳлатноки ҳамаи аъзоён",
+  "tab_switcher_projects_section_label": "Лоиҳаҳо",
+  "tab_switcher_projects_label": "Лоиҳаҳо"
+}

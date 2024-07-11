@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Ulangan",
+  "meteor_status_connecting": "Ulanmoqda...",
+  "meteor_status_failed": "Server bilan aloqa o'rnatilmadi",
+  "meteor_status_waiting": "Server bilan aloqa o'rnatishni kutmoqda,",
+  "meteor_status_offline": "Oflayn rejim.",
+  "meteor_status_reconnect_in": "bir soniyadan keyin qayta uriniladi...",
+  "meteor_status_reconnect_in_plural": "__count__ soniyadan keyin qayta uriniladi...",
+  "meteor_status_try_now_waiting": "Hozir urinib ko'ring",
+  "meteor_status_try_now_offline": "Qayta ulaning"
+}

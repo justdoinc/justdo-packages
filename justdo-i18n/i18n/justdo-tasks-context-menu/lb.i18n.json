@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Aufgaben ewechhuelen",
+  "remove_from_parent_label": "Vum Elterendeel ewechhuelen",
+  "remove_with_subtree_label": "Mat Ënnerstruktur ewechhuelen",
+  "archive_task_label": "Aufgab archivéieren",
+  "unarchive_task_label": "Aufgab desarchivéieren",
+  "reorder_children_by_label": "Ënnerelementer nei ordnen no",
+  "zoom_in_label": "Erazoomen",
+  "projects_label": "Projeten",
+  "set_as_a_project_label": "Als Projekt festleeën",
+  "unset_as_a_project_label": "Als Projekt ofhiewen",
+  "close_project_label": "Projekt zoumaachen",
+  "repoen_project_label": "Projekt erëm opmaachen",
+  "add_to_project_label": "Zum Projekt bäifügen",
+  "apply_value_to_subtree": "__value__ op Ënnerstruktur uwenden",
+  "bulk_set_options_label": "Festleeën"
+}

@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "Imprimir JustDo",
+  "print_dropdown_entire_justdo": "JustDo sencer",
+  "print_dropdown_visible_tasks": "Tasques visibles",
+  "print_dropdown_print_current_task": "Imprimir tasca actual",
+  "print_dropdown_all_child_tasks": "Totes les tasques filles",
+  "print_dropdown_visible_child_tasks": "Tasques filles visibles",
+  "print_dropdown_download": "Descarregar",
+  "print_dropdown_download_as_png": "Descarregar com a PNG",
+  "print_grid_columns_settings_label": "Configuració de columnes",
+  "print_grid_columns_options_label": "Opcions de columnes",
+  "print_grid_print": "Imprimir",
+  "print_grid_export_csv": "Exportar CSV",
+  "print_grid_select_all": "Seleccionar tot",
+  "print_grid_apply": "Aplicar"
+}

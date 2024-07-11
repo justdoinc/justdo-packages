@@ -1,0 +1,15 @@
+{
+  "v3_142_news_title": "v3.142",
+  "v3_142_news_main_name": "Novetats",
+  "v3_142_news_main_array_item_1_title": "Introducció de la traducció al xinès",
+  "v3_142_news_main_array_item_1_subtitle": "Disponible només a JustDo.com",
+  "v3_142_news_main_array_item_2_title": "Estableix estats per a múltiples elements alhora",
+  "v3_142_news_main_array_item_2_subtitle": "Aquesta actualització permet un flux de treball més eficient. Ara pots aplicar canvis d'estat a diversos elements en una sola acció. A més d'establir estats, aquesta funció es pot utilitzar per actualitzar diversos altres camps d'opcions en bloc. Inclou els camps personalitzats del teu JustDo (tauler) i els camps dels connectors.",
+  "v3_142_news_features_name": "Altres actualitzacions",
+  "v3_142_news_features_title": "Millores",
+  "v3_142_news_features_update_items": [
+    "1. Introducció dels botons 'Selecciona tot' i 'Desselecciona tot' a la nostra funció de Còpia de Tasques - fent la selecció de camps més ràpida i senzilla."
+  ],
+  "v3_142_news_page_title": "JustDo v3.142: Traducció al xinès, Actualitzacions d'estat en bloc i més",
+  "v3_142_news_page_description": "JustDo v3.142 introdueix el suport per a l'idioma xinès, la capacitat d'establir estats per a múltiples elements alhora i millores en la còpia de tasques."
+}

@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Илова кардани сутун",
+  "hide_column_label": "Пинҳон кардани сутун",
+  "freeze_column_label": "Яхкунонидани сутун",
+  "unfreeze_column_label": "Обшавии сутун",
+  "tree_control_tooltip_gantt_milestone": "Марҳилаи Гант",
+  "tree_control_tooltip_buffer_task": "Вазифаи буфер",
+  "tree_control_tooltip_Meetings": "Вохӯриҳо",
+  "tree_control_tooltip_start_time_tracking": "Оғози кор дар ин вазифа",
+  "tree_control_tooltip_stop_time_tracking": "Шумо ҳоло дар ин вазифа кор мекунед, барои қатъ кардан ва сабти вақти корӣ пахш кунед",
+  "tree_control_tooltip_resources": "Захираҳо",
+  "tree_control_tooltip_description": "Тавсифи вазифа",
+  "tree_control_tooltip_chat_messages": "Паёмҳои чат",
+  "tree_control_tooltip_files_count": "__files_count__ файлҳо",
+  "tree_control_tooltip_emails_count": "__emails_count__ почтаи электронӣ",
+  "tree_control_tooltip_task_is_a_project": "Вазифа лоиҳа аст",
+  "tree_control_tooltip_task_is_archived": "Вазифа бойгонӣ шудааст"
+}

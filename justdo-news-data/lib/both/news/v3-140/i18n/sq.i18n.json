@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Çfarë ka të re",
+  "v3_140_news_main_array_item_1_title": "Dizajni i ndërruesit të skedave u përditësua",
+  "v3_140_news_main_array_item_1_subtitle": "Dizajni tani tregon më mirë kur një skedë është aktive.",
+  "v3_140_news_main_array_item_2_title": "Prezantimi i temës Vjollcë e Fortë",
+  "v3_140_news_main_array_item_3_title": "Thjeshtësimi i ftesës së përdoruesve",
+  "v3_140_news_main_array_item_4_title": "Përmirësimi i menaxhimit të anëtarëve të JustDo",
+  "v3_140_news_main_array_item_4_subtitle": "Zgjidhni për të hequr disa përdorues njëkohësisht.",
+  "v3_140_news_main_array_item_5_title": "Mbështetje për paraparjen e videove në skedarët e JustDo",
+  "v3_140_news_main_array_item_6_title": "Shfaqja e avatarëve të përdoruesve në kolonat e Pronarit/Pronarit në Pritje",
+  "v3_140_news_features_name": "Përditësime të Tjera",
+  "v3_140_news_features_title": "Përmirësime",
+  "v3_140_news_features_update_items": [
+    "1. Ngjyra e butonave dytësorë u ndryshua nga gri e errët në gri të lehtë",
+    "2. Temat klasike u hoqën",
+    "3. Mbështetje për renditjen e detyrave të fëmijëve sipas fushës së Ndjekjes",
+    "4. Një font i ri modern tani është në përdorim për të mbështetur më mirë gjuhët jo-angleze",
+    "5. U shtua mundësia për të fshehur shiritin anësor në Admin e Faqes",
+    "6. Përmirësime në dizajnin e dialogut të refuzimit të pronësisë (përfshirë mundësinë për të konfirmuar dorëzimin me ctrl+enter)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Përditësime të Dizajnit, Ftesa të Thjeshtuara të Përdoruesve dhe Më Shumë",
+  "v3_140_news_page_description": "JustDo v3.140 sjell përmirësime të dizajnit, përmirësime të punës me ftesat e përdoruesve, mbështetje të përmirësuar për video dhe shumë përmirësime të përdorshmërisë."
+}

@@ -1,0 +1,24 @@
+{
+  "v3_140_news_title": "v3.140",
+  "v3_140_news_main_name": "Yeniliklər",
+  "v3_140_news_main_array_item_1_title": "Tab dəyişdirici dizaynı yeniləndi",
+  "v3_140_news_main_array_item_1_subtitle": "Dizayn indi bir tabın aktiv olduğunu daha yaxşı göstərir.",
+  "v3_140_news_main_array_item_2_title": "Tünd Bənövşəyi mövzu təqdim edildi",
+  "v3_140_news_main_array_item_3_title": "İstifadəçi dəvətinin sadələşdirilməsi",
+  "v3_140_news_main_array_item_4_title": "JustDo üzv idarəetməsinin təkmilləşdirilməsi",
+  "v3_140_news_main_array_item_4_subtitle": "Eyni anda birdən çox istifadəçini silmək üçün seçin.",
+  "v3_140_news_main_array_item_5_title": "JustDo fayllarında video önbaxışının dəstəklənməsi",
+  "v3_140_news_main_array_item_6_title": "Sahibkar/Gözləyən Sahibkar sütunlarında istifadəçi avatarının göstərilməsi",
+  "v3_140_news_features_name": "Digər Yenilənmələr",
+  "v3_140_news_features_title": "Təkmilləşdirmələr",
+  "v3_140_news_features_update_items": [
+    "1. İkinci dərəcəli düymələrin rəngi tünd bozdan açıq boza dəyişdirildi",
+    "2. Klassik mövzular silindi",
+    "3. Alt tapşırıqların İzləmə sahəsinə görə sıralanmasının dəstəklənməsi",
+    "4. İngiliscə olmayan dilləri daha yaxşı dəstəkləmək üçün yeni müasir şrift istifadə olunur",
+    "5. Sayt Admin panelində yan paneli gizlətmək imkanı əlavə edildi",
+    "6. Sahibliyi rədd etmə dialoqunda dizayn təkmilləşdirmələri (ctrl+enter ilə təsdiqi təqdim etmək imkanı daxil olmaqla)"
+  ],
+  "v3_140_news_page_title": "JustDo v3.140: Dizayn Yeniləmələri, Sadələşdirilmiş İstifadəçi Dəvətləri və Daha Çox",
+  "v3_140_news_page_description": "JustDo v3.140 dizayn təkmilləşdirmələri, təkmilləşdirilmiş istifadəçi dəvət prosesləri, gücləndirilmiş video dəstəyi və çoxsaylı istifadə rahatlığı yeniləmələri təqdim edir."
+}

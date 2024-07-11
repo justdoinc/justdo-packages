@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "কাস্টম ফিল্ড",
+  "grid_control_custom_fields_sort_by_name_label": "নাম অনুসারে সাজান",
+  "grid_control_custom_fields_new_custom_field_label": "নতুন কাস্টম ফিল্ড",
+  "grid_control_custom_fields_no_custom_fields_label": "কোনো কাস্টম ফিল্ড নেই",
+  "grid_control_custom_fields_label_placeholder": "লেবেল",
+  "grid_control_custom_fields_text_label": "টেক্সট",
+  "grid_control_custom_fields_number_label": "সংখ্যা",
+  "grid_control_custom_fields_date_label": "তারিখ",
+  "grid_control_custom_fields_select_label": "অপশন",
+  "grid_control_custom_fields_multi_select_label": "একাধিক অপশন",
+  "grid_control_custom_fields_smart_numbers_label": "স্মার্ট সংখ্যা (Smart Numbers)",
+  "grid_control_custom_fields_unknown_type_label": "অজানা ধরন",
+  "grid_control_custom_fields_disabled_field_label": "নিষ্ক্রিয় ফিল্ড"
+}

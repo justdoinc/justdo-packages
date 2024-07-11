@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "टिकट कतारहरू",
+  "project_config_ticket_queues_new_ticket_queue_label": "नयाँ टिकट कतार",
+  "project_config_ticket_queues_enter_task_number_label": "कार्य संख्या प्रविष्ट गर्नुहोस्",
+  "project_config_ticket_queues_no_ticket_queues_label": "कुनै टिकट कतारहरू छैनन्",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "तपाईं यो टिकट कतार हटाउन सक्नुहुन्न, किनकि तपाईं यसको कार्यको सदस्य हुनुहुन्न"
+}

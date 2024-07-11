@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "__user_name__ ұйымы",
+  "create_org_label": "Ұйым Құру",
+  "without_orgs_label": "Ұйымсыз",
+  "justdos_under_named_org_html": "<span class=\"org-name\">__org_name__</span> ұйымының JustDo тақталары",
+  "justdos_without_orgs": "Ұйымсыз JustDo тақталары",
+  "orgs_project_config_title": "Ұйымдар",
+  "assign_justdo_to_organization_label": "JustDo тақтасын ұйымға тағайындау",
+  "another_organization": "басқа ұйым",
+  "pre_transfer_justdo_to_org_notice_html": "Сіз бұл JustDo тақтасын <b>__dest_org_name__</b> ұйымына аударғалы жатырсыз. <br> Осы JustDo тақтасындағы барлық мүшелер <b>__dest_org_name__</b> ұйымының мүшелері болады.",
+  "select_organization": "Ұйымды таңдаңыз",
+  "org_expiring_soon_notice_title": "Сіздің ұйымыңыздың лицензиясының мерзімі жақында аяқталады!",
+  "org_expiring_soon_notice_html": "Сіздің <b>__org_name__</b> ұйымыңыздың лицензиясы __org_expiration_date__ күні аяқталады. <br> Біз JustDo сіздің жұмыс өміріңізді жеңілдетті деп үміттенеміз!",
+  "org_locked_notice_title": "Сіздің ұйымыңыздың лицензиясының мерзімі аяқталды!",
+  "org_locked_notice_html": "Сіздің <b>__org_name__</b> ұйымыңыздың лицензиясы __org_expiration_date__ күні аяқталды. <br> Біз JustDo сіздің жұмыс өміріңізді жеңілдетті деп үміттенеміз және осылай жалғастырғымыз келеді!",
+  "org_access_restricted_title": "__org_name__: Уақытша қол жеткізу шектеуі",
+  "org_access_restricted_html": "Қазіргі уақытта <b>__org_name__</b> ұйымыңызға қол жеткізу шектелген. Бұл мәселе туралы қосымша ақпарат алу үшін ұйымыңыздың әкімшілеріне хабарласыңыз. <br> Түсіністігіңіз бен шыдамдылығыңыз үшін рахмет.",
+  "renew_org_license_instruction_html": "Төмендегі \"Лицензияны жаңарту\" түймесін басу арқылы лицензияны жаңарта аласыз.<br>Біздің қолдау көрсету тобымыз әрқашан көмектесуге дайын.<br><br>JustDo қауымдастығының бір бөлігі болғаныңыз үшін рахмет. Біз сіздің жұмыс процесіңізді жақсарту үшін келесі шығарылымға арналған жаңа мүмкіндіктерді белсенді түрде әзірлеудеміз!",
+  "renew_org_licnese_modal_btn_label": "Лицензияны жаңарту",
+  "org_pre_expire_renewal_contact_page_message": "Менің __org_name__ __optional_domain_msg__ ұйымымның мерзімі аяқталғалы жатыр және мен лицензияны жаңартқым келеді.",
+  "org_post_expire_renewal_contact_page_message": "Менің __org_name__ __optional_domain_msg__ ұйымымның мерзімі аяқталды және мен лицензияны жаңартқым келеді."
+}

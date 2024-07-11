@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "Druk JustDo",
+  "print_dropdown_entire_justdo": "Hele JustDo",
+  "print_dropdown_visible_tasks": "Sigbare Take",
+  "print_dropdown_print_current_task": "Druk Huidige Taak",
+  "print_dropdown_all_child_tasks": "Alle Subtake",
+  "print_dropdown_visible_child_tasks": "Sigbare Subtake",
+  "print_dropdown_download": "Aflaai",
+  "print_dropdown_download_as_png": "Laai af as PNG",
+  "print_grid_columns_settings_label": "Kolomme-instellings",
+  "print_grid_columns_options_label": "Kolomme-opsies",
+  "print_grid_print": "Druk",
+  "print_grid_export_csv": "Uitvoer na CSV",
+  "print_grid_select_all": "Kies alles",
+  "print_grid_apply": "Pas toe"
+}

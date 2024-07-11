@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Пераключыць выгляд",
+  "tab_switcher_dropdown_search_placeholder": "Выгляды",
+  "tab_switcher_main_view_label": "Галоўны выгляд",
+  "tab_switcher_my_favorites_label": "Мае ўлюбёныя",
+  "tab_switcher_my_due_list_label": "Мой спіс тэрміновых",
+  "tab_switcher_recently_label": "Нядаўна",
+  "tab_switcher_recently_completed_label": "Завершаныя",
+  "tab_switcher_recently_updated_label": "Абноўленыя",
+  "tab_switcher_recently_created_label": "Створаныя",
+  "tab_switcher_miscellaneous_label": "Рознае",
+  "tab_switcher_task_ownershipt_transfers_label": "Перадача ўласнасці задач",
+  "tab_switcher_ticket_queues_label": "Чэргі заявак",
+  "tab_switcher_members_due_lists_label": "Спісы тэрміновых удзельнікаў",
+  "tab_switcher_all_members_due_list_label": "Спіс тэрміновых усіх удзельнікаў",
+  "tab_switcher_projects_section_label": "Праекты",
+  "tab_switcher_projects_label": "Праекты"
+}

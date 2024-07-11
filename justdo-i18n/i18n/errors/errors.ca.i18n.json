@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Si us plau, introduïu el vostre nom",
+  "err_first_name_too_long": "El nom no hauria de superar els 30 caràcters",
+  "err_last_name_too_long": "El cognom no hauria de superar els 30 caràcters",
+  "err_last_name_empty": "Si us plau, introduïu el vostre cognom",
+  "err_email_invalid": "Si us plau, introduïu una adreça de correu electrònic vàlida",
+  "err_email_empty": "Si us plau, introduïu el vostre correu electrònic",
+  "err_password_empty": "Si us plau, introduïu la vostra contrasenya",
+  "err_incorrect_password": "Contrasenya incorrecta. Per restablir la vostra contrasenya, podeu fer clic al botó \"Has oblidat la contrasenya?\"",
+  "err_no_password_set": "Per configurar la vostra contrasenya, si us plau, feu clic al botó \"Has oblidat la contrasenya?\"",
+  "err_password_too_similar": "La contrasenya és massa similar al vostre nom, cognom o correu electrònic",
+  "err_retype_password_empty": "Si us plau, torneu a escriure la vostra contrasenya",
+  "err_retype_password_not_match": "Les contrasenyes no coincideixen",
+  "err_agree_ts_and_pp_missing": "Cal que llegiu i accepteu els nostres termes i condicions i la política de privacitat per continuar",
+  "err_cant_login": "No es pot iniciar sessió"
+}

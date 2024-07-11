@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "Organizata e __user_name__",
+  "create_org_label": "Krijo Organizatë",
+  "without_orgs_label": "Pa Organizatë",
+  "justdos_under_named_org_html": "JustDo-t nën <span class=\"org-name\">__org_name__</span>",
+  "justdos_without_orgs": "JustDo-t pa një organizatë",
+  "orgs_project_config_title": "Organizatat",
+  "assign_justdo_to_organization_label": "Cakto JustDo-n në organizatë",
+  "another_organization": "një organizatë tjetër",
+  "pre_transfer_justdo_to_org_notice_html": "Ju jeni gati të transferoni këtë JustDo në <b>__dest_org_name__</b>. <br> Të gjithë anëtarët në këtë JustDo do të bëhen anëtarë të <b>__dest_org_name__</b>.",
+  "select_organization": "Zgjidhni Organizatën",
+  "org_expiring_soon_notice_title": "Licenca e organizatës suaj po skadon së shpejti!",
+  "org_expiring_soon_notice_html": "Licenca për organizatën tuaj <b>__org_name__</b> do të skadojë më __org_expiration_date__. <br> Shpresojmë që JustDo ta ketë bërë jetën tuaj të punës më të lehtë!",
+  "org_locked_notice_title": "Licenca e organizatës suaj ka skaduar!",
+  "org_locked_notice_html": "Licenca për organizatën tuaj <b>__org_name__</b> ka skaduar më __org_expiration_date__. <br> Shpresojmë që JustDo ta ketë bërë jetën tuaj të punës më të lehtë dhe do të donim të vazhdonim ta bënim këtë!",
+  "org_access_restricted_title": "__org_name__: Kufizim i Përkohshëm i Aksesit",
+  "org_access_restricted_html": "Aksesi në organizatën tuaj <b>__org_name__</b> është aktualisht i kufizuar. Ju lutemi kontaktoni administratorët e organizatës suaj për më shumë detaje në lidhje me këtë çështje. <br> Ne vlerësojmë durimin dhe mirëkuptimin tuaj.",
+  "renew_org_license_instruction_html": "Ju mund ta rinovoni licencën duke klikuar butonin \"Rinovo Licencën\" më poshtë.<br>Ekipi ynë i mbështetjes është gjithmonë i lumtur t'ju ndihmojë.<br><br>Faleminderit që jeni pjesë e komunitetit JustDo. Ne jemi duke zhvilluar aktivisht veçori të reja për versionin e ardhshëm për të përmirësuar rrjedhën tuaj të punës!",
+  "renew_org_licnese_modal_btn_label": "Rinovo Licencën",
+  "org_pre_expire_renewal_contact_page_message": "Organizata ime __org_name__ __optional_domain_msg__ është gati të skadojë dhe unë dëshiroj të rinovoj licencën.",
+  "org_post_expire_renewal_contact_page_message": "Organizata ime __org_name__ __optional_domain_msg__ ka skaduar dhe unë dëshiroj të rinovoj licencën."
+}

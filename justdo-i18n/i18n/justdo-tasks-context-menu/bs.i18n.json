@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Ukloni zadatke",
+  "remove_from_parent_label": "Ukloni iz nadređenog",
+  "remove_with_subtree_label": "Ukloni sa podstablom",
+  "archive_task_label": "Arhiviraj zadatak",
+  "unarchive_task_label": "Dearhiviraj zadatak",
+  "reorder_children_by_label": "Preuredi podređene prema",
+  "zoom_in_label": "Povećaj",
+  "projects_label": "Projekti",
+  "set_as_a_project_label": "Postavi kao projekt",
+  "unset_as_a_project_label": "Ukloni kao projekt",
+  "close_project_label": "Zatvori projekt",
+  "repoen_project_label": "Ponovo otvori projekt",
+  "add_to_project_label": "Dodaj u projekt",
+  "apply_value_to_subtree": "Primijeni __value__ na podstablo",
+  "bulk_set_options_label": "Postavi"
+}

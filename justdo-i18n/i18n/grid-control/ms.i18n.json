@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Tambah Lajur",
+  "hide_column_label": "Sembunyikan Lajur",
+  "freeze_column_label": "Bekukan Lajur",
+  "unfreeze_column_label": "Nyahbeku Lajur",
+  "tree_control_tooltip_gantt_milestone": "Tonggak Pencapaian Gantt",
+  "tree_control_tooltip_buffer_task": "Tugas Penampan",
+  "tree_control_tooltip_Meetings": "Mesyuarat",
+  "tree_control_tooltip_start_time_tracking": "Mula bekerja pada tugas ini",
+  "tree_control_tooltip_stop_time_tracking": "Anda sedang bekerja pada tugas ini sekarang, tekan untuk berhenti dan log masa bekerja",
+  "tree_control_tooltip_resources": "Sumber",
+  "tree_control_tooltip_description": "Penerangan tugas",
+  "tree_control_tooltip_chat_messages": "Mesej perbualan",
+  "tree_control_tooltip_files_count": "__files_count__ fail",
+  "tree_control_tooltip_emails_count": "__emails_count__ e-mel",
+  "tree_control_tooltip_task_is_a_project": "Tugas adalah projek",
+  "tree_control_tooltip_task_is_archived": "Tugas telah diarkibkan"
+}

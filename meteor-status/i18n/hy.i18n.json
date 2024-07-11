@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Միացված է",
+  "meteor_status_connecting": "Միանում է...",
+  "meteor_status_failed": "Սերվերի հետ կապը չհաջողվեց",
+  "meteor_status_waiting": "Սպասում է սերվերի հետ կապին,",
+  "meteor_status_offline": "Անցանց ռեժիմ",
+  "meteor_status_reconnect_in": "կրկին փորձում է միանալ մեկ վայրկյանից...",
+  "meteor_status_reconnect_in_plural": "կրկին փորձում է միանալ __count__ վայրկյանից...",
+  "meteor_status_try_now_waiting": "Փորձել հիմա",
+  "meteor_status_try_now_offline": "Կրկին միանալ"
+}

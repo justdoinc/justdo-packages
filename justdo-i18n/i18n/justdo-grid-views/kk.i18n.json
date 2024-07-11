@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Кесте көріністері",
+  "grid_views_search_placeholder": "Көріністерді іздеу",
+  "grid_views_no_view_label": "Көріністер жоқ",
+  "grid_views_add_current_view_label": "Ағымдағы көріністі қосу",
+  "grid_views_rename_label": "Атын өзгерту",
+  "grid_views_update_label": "Жаңарту",
+  "grid_views_remove_label": "Жою",
+  "grid_views_share_label": "Бөлісу",
+  "grid_views_unshare_label": "Бөлісуді тоқтату",
+  "grid_views_shared_label": "бөлісілген"
+}

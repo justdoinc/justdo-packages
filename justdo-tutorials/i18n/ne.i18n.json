@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "आफ्नो JustDo को लागि शीर्षक सेट गर्नुहोस्",
+  "set_justdo_name_subtitle": "सम्पादन मोडमा प्रवेश गर्न केवल शीर्षकमा क्लिक गर्नुहोस्",
+  "create_first_task_title": "आफ्नो पहिलो कार्यहरू सिर्जना गर्नुहोस्",
+  "create_first_task_subtitle": "कार्यहरू सिर्जना गर्न, तपाईं या त टूलबारमा भएका बटनहरू प्रयोग गर्न सक्नुहुन्छ, वा किबोर्ड सर्टकटहरू ALT+ENTER / ALT+SHIFT+ENTER प्रयोग गर्न सक्नुहुन्छ",
+  "invite_members_title": "टीम सदस्यहरूलाई आमन्त्रण गर्नुहोस्",
+  "invite_members_subtitle": "आफ्नो नयाँ JustDo मा सामेल हुन र सहकार्य गर्न आफ्नो टीम सदस्यहरूलाई आमन्त्रण गर्नुहोस्",
+  "import_tasks_title": "कार्यहरू आयात गर्नुहोस्",
+  "import_tasks_subtitle": "तपाईं हाम्रो स्प्रेडशीट आयात कार्यक्षमता प्रयोग गरेर विद्यमान कार्यहरू र डाटा JustDo मा स्थानान्तरण गर्न र निरन्तर रूपमा जारी राख्न सक्नुहुन्छ",
+  "customize_columns_title": "आफ्नो दृश्य अनुकूलन गर्नुहोस्",
+  "customize_columns_subtitle": "स्तम्भहरू थप्ने/हटाउने, कार्यहरूलाई तिनीहरूको स्थिति अनुसार फिल्टर गर्ने, र अझै बढी गरेर ग्रिड (तालिका) मा तपाईंले के देख्नुहुन्छ नियन्त्रण गर्नुहोस्!",
+  "get_free_support_title": "निःशुल्क सहयोग प्राप्त गर्नुहोस्",
+  "get_free_support_subtitle": "JustDo टीमसँग 1-देखि-1 सहयोग सत्र",
+  "request": "अनुरोध गर्नुहोस्",
+  "free_support_request_received": "प्राप्त भयो, हामी छिट्टै इमेल मार्फत तपाईंलाई सम्पर्क गर्नेछौं",
+  "tutorials_recent_product_updates": "हालैका उत्पाद अपडेटहरू",
+  "tutorials_justdo_quick_start": "JustDo द्रुत सुरुवात",
+  "tutorials_justdo_advanced_features": "JustDo उन्नत सुविधाहरू",
+  "tutorials_justdo_support_center": "JustDo सहायता केन्द्र"
+}

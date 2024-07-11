@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Connectat",
+  "meteor_status_connecting": "Connectant...",
+  "meteor_status_failed": "La connexió amb el servidor ha fallat",
+  "meteor_status_waiting": "Esperant la connexió amb el servidor,",
+  "meteor_status_offline": "Mode fora de línia.",
+  "meteor_status_reconnect_in": "tornant a intentar en un segon...",
+  "meteor_status_reconnect_in_plural": "tornant a intentar en __count__ segons...",
+  "meteor_status_try_now_waiting": "Prova ara",
+  "meteor_status_try_now_offline": "Torna a connectar"
+}

@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "ग्रिड दृश्यहरू",
+  "grid_views_search_placeholder": "दृश्यहरू खोज्नुहोस्",
+  "grid_views_no_view_label": "कुनै दृश्य छैन",
+  "grid_views_add_current_view_label": "हालको दृश्य थप्नुहोस्",
+  "grid_views_rename_label": "पुन: नामाकरण गर्नुहोस्",
+  "grid_views_update_label": "अपडेट गर्नुहोस्",
+  "grid_views_remove_label": "हटाउनुहोस्",
+  "grid_views_share_label": "साझा गर्नुहोस्",
+  "grid_views_unshare_label": "साझा नगर्नुहोस्",
+  "grid_views_shared_label": "साझा गरिएको"
+}

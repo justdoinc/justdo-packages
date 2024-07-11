@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Eliminar tasques",
+  "remove_from_parent_label": "Eliminar de la tasca pare",
+  "remove_with_subtree_label": "Eliminar amb el subarbre",
+  "archive_task_label": "Arxivar tasca",
+  "unarchive_task_label": "Desarxivar tasca",
+  "reorder_children_by_label": "Reordenar subtasques per",
+  "zoom_in_label": "Apropar",
+  "projects_label": "Projectes",
+  "set_as_a_project_label": "Establir com a projecte",
+  "unset_as_a_project_label": "Desestablir com a projecte",
+  "close_project_label": "Tancar projecte",
+  "repoen_project_label": "Reobrir projecte",
+  "add_to_project_label": "Afegir al projecte",
+  "apply_value_to_subtree": "Aplicar __value__ al subarbre",
+  "bulk_set_options_label": "Establir opcions en massa"
+}

@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Gehitu Zutabea",
+  "hide_column_label": "Ezkutatu Zutabea",
+  "freeze_column_label": "Izoztu Zutabea",
+  "unfreeze_column_label": "Desizoztu Zutabea",
+  "tree_control_tooltip_gantt_milestone": "Gantt Mugarria",
+  "tree_control_tooltip_buffer_task": "Buffer Ataza",
+  "tree_control_tooltip_Meetings": "Bilerak",
+  "tree_control_tooltip_start_time_tracking": "Hasi ataza honetan lan egiten",
+  "tree_control_tooltip_stop_time_tracking": "Orain ataza honetan ari zara lanean, sakatu gelditzeko eta lan egindako denbora erregistratzeko",
+  "tree_control_tooltip_resources": "Baliabideak",
+  "tree_control_tooltip_description": "Atazaren deskribapena",
+  "tree_control_tooltip_chat_messages": "Txat mezuak",
+  "tree_control_tooltip_files_count": "__files_count__ fitxategi",
+  "tree_control_tooltip_emails_count": "__emails_count__ mezu elektroniko",
+  "tree_control_tooltip_task_is_a_project": "Ataza proiektu bat da",
+  "tree_control_tooltip_task_is_archived": "Ataza artxibatuta dago"
+}

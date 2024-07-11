@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Aktive tilstander",
+  "project_configurations_no_active_states_label": "Ingen aktive tilstander",
+  "project_configurations_hidden_states_label": "Skjulte tilstander",
+  "project_configurations_no_hidden_states_label": "Ingen skjulte tilstander",
+  "project_configurations_type_state_name_placeholder": "Skriv inn tilstandsnavn",
+  "project_configurations_default_title_for_this_state_label": "Standardtittel for denne tilstanden",
+  "project_configurations_restore_state_label": "Gjenopprett tilstand",
+  "project_configurations_create_extended_state_label": "Opprett utvidet tilstand",
+  "project_configurations_hide_state": "Skjul tilstand",
+  "project_configurations_remove_extended_state": "Fjern utvidet tilstand",
+  "new_custom_state_default_title": "__state__ - utvidet"
+}

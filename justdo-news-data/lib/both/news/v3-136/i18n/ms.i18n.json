@@ -1,0 +1,23 @@
+{
+  "v3_136_news_title": "v3.136",
+  "v3_136_news_main_name": "Apa yang baharu",
+  "v3_136_news_main_array_item_1_title": "Halaman utama baharu",
+  "v3_136_news_main_array_item_1_subtitle": "Memperkenalkan Halaman Utama Kami Yang Disegarkan 🎉",
+  "v3_136_news_main_array_item_2_title": "Status tersuai",
+  "v3_136_news_main_array_item_2_subtitle": "Tingkatkan kecekapan aliran kerja anda dengan tambahan terbaru kami - Status Tersuai. Sesuaikan status tugas mengikut keperluan projek unik anda dan pantau kemajuan dengan lebih tepat.",
+  "v3_136_news_main_array_item_3_title": "Kekal Dimaklumkan dengan Penunjuk E-mel Belum Dibaca Atas Grid",
+  "v3_136_news_main_array_item_3_subtitle": "Jangan pernah terlepas kemas kini penting lagi! Penunjuk E-mel Belum Dibaca Atas Grid baharu kami memastikan anda dimaklumkan tentang e-mel yang belum dibaca dalam tugas, memastikan komunikasi yang cekap dan tindakan segera.",
+  "v3_136_news_main_array_item_4_title": "Penapis Dipertingkatkan untuk Dialog Tambah Cepat",
+  "v3_136_news_main_array_item_4_subtitle": "Tingkatkan produktiviti anda dengan penapis baharu kami untuk Pemilih Destinasi dan Pemilik Bootbox Tambah Cepat. Permudahkan penciptaan tugas dengan mencari destinasi dan pemilik yang tepat dengan mudah.",
+  "v3_136_news_features_name": "Kemas Kini Lain",
+  "v3_136_news_features_title": "Penambahbaikan",
+  "v3_136_news_features_update_items": [
+    "1. Peningkatan prestasi untuk operasi yang melibatkan kemas kini lebih daripada 1k tugas, terutamanya, menukar ahli tugas sub-pohon yang lebih besar daripada 1k pengguna.",
+    "2. Tab aktiviti: Pembetulan log aktiviti yang tidak dipaparkan dengan betul jika ia adalah tambahan ibu bapa dan ibu bapa dikeluarkan <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>video</a>.",
+    "3. Muat naik avatar untuk persekitaran yang menggunakan fail JustDo.",
+    "4. Memperkenalkan konsep Organisasi: unit logik pilihan di atas JustDos.",
+    "5. MailDo: Apabila e-mel diterima, pemilik tugas kini secara automatik dinyahsenyapkan dalam sembang."
+  ],
+  "v3_136_news_page_title": "JustDo v3.136: Halaman Utama Baharu, Status Tersuai, Penapis Dipertingkatkan & Banyak Lagi",
+  "v3_136_news_page_description": "JustDo v3.136 memperkenalkan halaman utama yang disegarkan, status tersuai yang berkuasa untuk tugas, penapis dipertingkatkan untuk penambahan tugas yang lebih cepat, dan peningkatan prestasi penting."
+}

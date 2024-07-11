@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Vennligst skriv inn navnet ditt",
+  "err_first_name_too_long": "Fornavnet bør ikke overstige 30 tegn",
+  "err_last_name_too_long": "Etternavnet bør ikke overstige 30 tegn",
+  "err_last_name_empty": "Vennligst skriv inn etternavnet ditt",
+  "err_email_invalid": "Vennligst skriv inn en gyldig e-postadresse",
+  "err_email_empty": "Vennligst skriv inn e-postadressen din",
+  "err_password_empty": "Vennligst skriv inn passordet ditt",
+  "err_incorrect_password": "Feil passord. For å tilbakestille passordet ditt, kan du klikke på \"Glemt passord?\"-knappen.",
+  "err_no_password_set": "For å opprette passordet ditt, vennligst klikk på \"Glemt passord?\"-knappen.",
+  "err_password_too_similar": "Passordet er for likt fornavnet ditt, etternavnet ditt eller e-postadressen din",
+  "err_retype_password_empty": "Vennligst skriv inn passordet ditt på nytt",
+  "err_retype_password_not_match": "Passordene stemmer ikke overens",
+  "err_agree_ts_and_pp_missing": "Du må lese og godta våre vilkår og betingelser og personvernregler for å fortsette",
+  "err_cant_login": "Kan ikke logge inn"
+}

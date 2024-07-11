@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Tilkoblet",
+  "meteor_status_connecting": "Kobler til...",
+  "meteor_status_failed": "Serverforbindelsen mislyktes",
+  "meteor_status_waiting": "Venter på serverforbindelse,",
+  "meteor_status_offline": "Frakoblet modus.",
+  "meteor_status_reconnect_in": "prøver igjen om ett sekund...",
+  "meteor_status_reconnect_in_plural": "prøver igjen om __count__ sekunder...",
+  "meteor_status_try_now_waiting": "Prøv nå",
+  "meteor_status_try_now_offline": "Koble til igjen"
+}

@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "সংযুক্ত",
+  "meteor_status_connecting": "সংযোগ স্থাপন করা হচ্ছে...",
+  "meteor_status_failed": "সার্ভার সংযোগ ব্যর্থ হয়েছে",
+  "meteor_status_waiting": "সার্ভার সংযোগের জন্য অপেক্ষা করছে,",
+  "meteor_status_offline": "অফলাইন মোড।",
+  "meteor_status_reconnect_in": "এক সেকেন্ডের মধ্যে আবার চেষ্টা করা হচ্ছে...",
+  "meteor_status_reconnect_in_plural": "__count__ সেকেন্ডের মধ্যে আবার চেষ্টা করা হচ্ছে...",
+  "meteor_status_try_now_waiting": "এখনই চেষ্টা করুন",
+  "meteor_status_try_now_offline": "আবার সংযোগ করুন"
+}

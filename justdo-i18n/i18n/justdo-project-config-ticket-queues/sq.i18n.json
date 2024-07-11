@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "Radhët e Biletave",
+  "project_config_ticket_queues_new_ticket_queue_label": "Radhë e re biletash",
+  "project_config_ticket_queues_enter_task_number_label": "Fut numrin e detyrës",
+  "project_config_ticket_queues_no_ticket_queues_label": "Nuk ka radhë biletash",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "Nuk mund ta hiqni këtë Radhë Biletash, pasi nuk jeni anëtar i Detyrës së saj"
+}

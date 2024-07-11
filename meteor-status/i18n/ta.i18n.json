@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "இணைக்கப்பட்டுள்ளது",
+  "meteor_status_connecting": "இணைக்கிறது...",
+  "meteor_status_failed": "சேவையக இணைப்பு தோல்வியுற்றது",
+  "meteor_status_waiting": "சேவையக இணைப்புக்காக காத்திருக்கிறது,",
+  "meteor_status_offline": "ஆஃப்லைன் பயன்முறை.",
+  "meteor_status_reconnect_in": "ஒரு வினாடியில் மீண்டும் முயற்சிக்கிறது...",
+  "meteor_status_reconnect_in_plural": "__count__ வினாடிகளில் மீண்டும் முயற்சிக்கிறது...",
+  "meteor_status_try_now_waiting": "இப்போது முயற்சிக்கவும்",
+  "meteor_status_try_now_offline": "மீண்டும் இணைக்கவும்"
+}

@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Աղյուսակային տեսքեր",
+  "grid_views_search_placeholder": "Որոնել տեսքերը",
+  "grid_views_no_view_label": "Տեսքեր չկան",
+  "grid_views_add_current_view_label": "Ավելացնել ընթացիկ տեսքը",
+  "grid_views_rename_label": "Վերանվանել",
+  "grid_views_update_label": "Թարմացնել",
+  "grid_views_remove_label": "Հեռացնել",
+  "grid_views_share_label": "Կիսվել",
+  "grid_views_unshare_label": "Դադարեցնել կիսվելը",
+  "grid_views_shared_label": "կիսված"
+}

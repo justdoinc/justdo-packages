@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Рамз бояд:",
+  "password_requirements_too_short": "Аз %d аломат иборат бошад",
+  "password_requirements_missing_number": "Ҳадди ақал як рақам дошта бошад",
+  "password_requirements_special_sign": "Ҳадди ақал як аломати махсус дошта бошад",
+  "password_requirements_atleast_one_lowercase": "Ҳадди ақал як ҳарфи хурди англисӣ дошта бошад",
+  "password_requirements_atleast_one_uppercase": "Ҳадди ақал як ҳарфи калони англисӣ дошта бошад",
+  "password_requirements_too_similar": "Номи шумо ё қисмҳои почтаи электронии шуморо дар бар нагирад"
+}

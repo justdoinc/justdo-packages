@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "টিকেট সারি",
+  "project_config_ticket_queues_new_ticket_queue_label": "নতুন টিকেট সারি",
+  "project_config_ticket_queues_enter_task_number_label": "কাজের সংখ্যা লিখুন",
+  "project_config_ticket_queues_no_ticket_queues_label": "কোনো টিকেট সারি নেই",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "আপনি এই টিকেট সারি সরাতে পারবেন না, কারণ আপনি এর কাজের সদস্য নন"
+}

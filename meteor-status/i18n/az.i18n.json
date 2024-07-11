@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Qoşuldu",
+  "meteor_status_connecting": "Qoşulur...",
+  "meteor_status_failed": "Server bağlantısı uğursuz oldu",
+  "meteor_status_waiting": "Server bağlantısı gözlənilir,",
+  "meteor_status_offline": "Oflayn rejim.",
+  "meteor_status_reconnect_in": "bir saniyə sonra yenidən cəhd edilir...",
+  "meteor_status_reconnect_in_plural": "__count__ saniyə sonra yenidən cəhd edilir...",
+  "meteor_status_try_now_waiting": "İndi cəhd edin",
+  "meteor_status_try_now_offline": "Yenidən qoşulun"
+}

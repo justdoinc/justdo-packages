@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Keadaan aktif",
+  "project_configurations_no_active_states_label": "Tiada keadaan aktif",
+  "project_configurations_hidden_states_label": "Keadaan tersembunyi",
+  "project_configurations_no_hidden_states_label": "Tiada keadaan tersembunyi",
+  "project_configurations_type_state_name_placeholder": "Taip nama keadaan",
+  "project_configurations_default_title_for_this_state_label": "Tajuk lalai untuk keadaan ini",
+  "project_configurations_restore_state_label": "Pulihkan keadaan",
+  "project_configurations_create_extended_state_label": "Cipta keadaan lanjutan",
+  "project_configurations_hide_state": "Sembunyikan keadaan",
+  "project_configurations_remove_extended_state": "Buang keadaan lanjutan",
+  "new_custom_state_default_title": "__state__ - lanjutan"
+}

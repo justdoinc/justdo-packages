@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Fjalëkalimi duhet:",
+  "password_requirements_too_short": "Të përbëhet nga të paktën %d karaktere",
+  "password_requirements_missing_number": "Të ketë të paktën një numër",
+  "password_requirements_special_sign": "Të ketë të paktën një karakter të veçantë",
+  "password_requirements_atleast_one_lowercase": "Të ketë të paktën një shkronjë të vogël në anglisht",
+  "password_requirements_atleast_one_uppercase": "Të ketë të paktën një shkronjë të madhe në anglisht",
+  "password_requirements_too_similar": "Të mos përfshijë emrin tuaj, ose pjesë të emailit tuaj"
+}

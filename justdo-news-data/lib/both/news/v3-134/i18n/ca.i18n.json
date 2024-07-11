@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Novetats",
+  "v3_134_news_main_array_item_1_title": "Arxivament",
+  "v3_134_news_main_array_item_1_subtitle": "Quan hi ha nous projectes i noves activitats en les quals has de treballar, necessites deixar de banda les antigues i centrar-te en les noves. Ara pots arxivar aquests projectes i tasques, eliminant-los de la teva vista diària, però mantenint la capacitat d'accedir-hi quan sigui necessari i fins i tot desarxivar-los.",
+  "v3_134_news_main_array_item_2_title": "Camp d'opcions múltiples",
+  "v3_134_news_main_array_item_2_subtitle": "A més del camp personalitzat \"Opcions\", ara tens el tipus \"Opcions múltiples\". Aquesta opció et permet crear una llista d'opcions predefinides de les quals els usuaris poden seleccionar múltiples valors per a cada tasca individual.",
+  "v3_134_news_main_array_item_3_title": "Camps de Propietari i Propietari Pendent de la tasca + filtre",
+  "v3_134_news_main_array_item_3_subtitle": "Ara tens la capacitat d'incorporar camps addicionals que mostren tant el Propietari de la Tasca com el Propietari Pendent de les tasques. Aquesta actualització et permet filtrar eficientment el teu arbre de tasques basant-te en aquests criteris, proporcionant una experiència de gestió de tasques més simplificada i personalitzada.",
+  "v3_134_news_features_name": "Altres actualitzacions",
+  "v3_134_news_features_title": "Millores",
+  "v3_134_news_features_update_items": [
+    "1. Correus electrònics - Els fitxers més petits de 150x150 píxels no s'afegeixen als fitxers.",
+    "2. Correus electrònics - Mostra només els últims 20 correus, més un botó de \"carregar més\".",
+    "3. Eliminació d'extensions i del botó \"botiga\"."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Arxivament de projectes, Opcions múltiples i més",
+  "v3_134_news_page_description": "Descobreix el poder de l'arxivament de projectes, la flexibilitat dels camps d'opcions múltiples i la millora en la gestió de propietaris de tasques a JustDo v3.134."
+}

@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Туташты",
+  "meteor_status_connecting": "Туташууда...",
+  "meteor_status_failed": "Серверге туташуу ийгиликсиз болду",
+  "meteor_status_waiting": "Серверге туташууну күтүүдө,",
+  "meteor_status_offline": "Оффлайн режими.",
+  "meteor_status_reconnect_in": "бир секунддан кийин кайра аракет кылуу...",
+  "meteor_status_reconnect_in_plural": "__count__ секунддан кийин кайра аракет кылуу...",
+  "meteor_status_try_now_waiting": "Азыр аракет кылуу",
+  "meteor_status_try_now_offline": "Кайра туташуу"
+}

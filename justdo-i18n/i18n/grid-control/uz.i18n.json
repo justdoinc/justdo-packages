@@ -1,0 +1,18 @@
+{
+  "add_column_label": "Ustun qo'shish",
+  "hide_column_label": "Ustunni yashirish",
+  "freeze_column_label": "Ustunni muzlatish",
+  "unfreeze_column_label": "Ustunni muzdan tushirish",
+  "tree_control_tooltip_gantt_milestone": "Gantt muddati (Gantt Milestone)",
+  "tree_control_tooltip_buffer_task": "Zaxira vazifa (Buffer Task)",
+  "tree_control_tooltip_Meetings": "Uchrashuvlar",
+  "tree_control_tooltip_start_time_tracking": "Ushbu vazifa ustida ishlashni boshlash",
+  "tree_control_tooltip_stop_time_tracking": "Siz hozir ushbu vazifa ustida ishlayapsiz, to'xtatish va ishlangan vaqtni qayd etish uchun bosing",
+  "tree_control_tooltip_resources": "Resurslar",
+  "tree_control_tooltip_description": "Vazifa tavsifi",
+  "tree_control_tooltip_chat_messages": "Chat xabarlari",
+  "tree_control_tooltip_files_count": "__files_count__ ta fayl",
+  "tree_control_tooltip_emails_count": "__emails_count__ ta xat",
+  "tree_control_tooltip_task_is_a_project": "Vazifa loyihadir",
+  "tree_control_tooltip_task_is_archived": "Vazifa arxivlangan"
+}

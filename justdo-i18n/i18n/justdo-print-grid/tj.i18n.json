@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "Чоп кардани JustDo",
+  "print_dropdown_entire_justdo": "Тамоми JustDo",
+  "print_dropdown_visible_tasks": "Вазифаҳои намоён",
+  "print_dropdown_print_current_task": "Чоп кардани вазифаи ҷорӣ",
+  "print_dropdown_all_child_tasks": "Ҳамаи вазифаҳои фарзандӣ",
+  "print_dropdown_visible_child_tasks": "Вазифаҳои фарзандии намоён",
+  "print_dropdown_download": "Боргирӣ",
+  "print_dropdown_download_as_png": "Боргирӣ ҳамчун PNG",
+  "print_grid_columns_settings_label": "Танзимоти сутунҳо",
+  "print_grid_columns_options_label": "Имконоти сутунҳо",
+  "print_grid_print": "Чоп",
+  "print_grid_export_csv": "Содироти CSV",
+  "print_grid_select_all": "Ҳамаро интихоб кунед",
+  "print_grid_apply": "Татбиқ кардан"
+}

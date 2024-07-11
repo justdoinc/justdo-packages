@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Kata laluan mesti:",
+  "password_requirements_too_short": "Mengandungi sekurang-kurangnya %d aksara",
+  "password_requirements_missing_number": "Mempunyai sekurang-kurangnya satu nombor",
+  "password_requirements_special_sign": "Mempunyai sekurang-kurangnya satu aksara khas",
+  "password_requirements_atleast_one_lowercase": "Mempunyai sekurang-kurangnya satu huruf kecil bahasa Inggeris",
+  "password_requirements_atleast_one_uppercase": "Mempunyai sekurang-kurangnya satu huruf besar bahasa Inggeris",
+  "password_requirements_too_similar": "Tidak mengandungi nama anda, atau sebahagian daripada e-mel anda"
+}

@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Торчо көрүнүштөрү (Grid Views)",
+  "grid_views_search_placeholder": "Көрүнүштөрдү издөө",
+  "grid_views_no_view_label": "Көрүнүштөр жок",
+  "grid_views_add_current_view_label": "Учурдагы көрүнүштү кошуу",
+  "grid_views_rename_label": "Атын өзгөртүү",
+  "grid_views_update_label": "Жаңылоо",
+  "grid_views_remove_label": "Алып салуу",
+  "grid_views_share_label": "Бөлүшүү",
+  "grid_views_unshare_label": "Бөлүшүүнү токтотуу",
+  "grid_views_shared_label": "бөлүшүлгөн"
+}

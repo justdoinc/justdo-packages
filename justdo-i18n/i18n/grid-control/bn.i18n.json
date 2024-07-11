@@ -1,0 +1,18 @@
+{
+  "add_column_label": "কলাম যোগ করুন",
+  "hide_column_label": "কলাম লুকান",
+  "freeze_column_label": "কলাম স্থির করুন",
+  "unfreeze_column_label": "কলাম অস্থির করুন",
+  "tree_control_tooltip_gantt_milestone": "গ্যান্ট মাইলস্টোন",
+  "tree_control_tooltip_buffer_task": "বাফার কাজ",
+  "tree_control_tooltip_Meetings": "সভা",
+  "tree_control_tooltip_start_time_tracking": "এই কাজে কাজ শুরু করুন",
+  "tree_control_tooltip_stop_time_tracking": "আপনি এখন এই কাজে কাজ করছেন, থামাতে এবং কাজের সময় লগ করতে চাপুন",
+  "tree_control_tooltip_resources": "সম্পদ",
+  "tree_control_tooltip_description": "কাজের বিবরণ",
+  "tree_control_tooltip_chat_messages": "চ্যাট বার্তা",
+  "tree_control_tooltip_files_count": "__files_count__ টি ফাইল",
+  "tree_control_tooltip_emails_count": "__emails_count__ টি ইমেইল",
+  "tree_control_tooltip_task_is_a_project": "কাজটি একটি প্রকল্প",
+  "tree_control_tooltip_task_is_archived": "কাজটি সংরক্ষিত করা হয়েছে"
+}

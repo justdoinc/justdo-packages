@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Ikuspegi Aldaketa",
+  "tab_switcher_dropdown_search_placeholder": "Ikuspegiak",
+  "tab_switcher_main_view_label": "Ikuspegi Nagusia",
+  "tab_switcher_my_favorites_label": "Nire Gogokoak",
+  "tab_switcher_my_due_list_label": "Nire Epemugen Zerrenda",
+  "tab_switcher_recently_label": "Duela Gutxi",
+  "tab_switcher_recently_completed_label": "Bukatuta",
+  "tab_switcher_recently_updated_label": "Eguneratuta",
+  "tab_switcher_recently_created_label": "Sortuta",
+  "tab_switcher_miscellaneous_label": "Hainbat",
+  "tab_switcher_task_ownershipt_transfers_label": "Zereginen Jabetza Transferentziak",
+  "tab_switcher_ticket_queues_label": "Txartelen Ilarak",
+  "tab_switcher_members_due_lists_label": "Kideen Epemugen Zerrendak",
+  "tab_switcher_all_members_due_list_label": "Kide Guztien Epemugen Zerrenda",
+  "tab_switcher_projects_section_label": "Proiektuak",
+  "tab_switcher_projects_label": "Proiektuak"
+}

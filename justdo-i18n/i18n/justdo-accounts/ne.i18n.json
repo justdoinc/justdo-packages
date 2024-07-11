@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "पासवर्ड अनिवार्य रूपमा:",
+  "password_requirements_too_short": "कम्तिमा %d वर्णहरू हुनुपर्छ",
+  "password_requirements_missing_number": "कम्तिमा एउटा संख्या हुनुपर्छ",
+  "password_requirements_special_sign": "कम्तिमा एउटा विशेष चिन्ह हुनुपर्छ",
+  "password_requirements_atleast_one_lowercase": "कम्तिमा एउटा सानो अंग्रेजी अक्षर हुनुपर्छ",
+  "password_requirements_atleast_one_uppercase": "कम्तिमा एउटा ठूलो अंग्रेजी अक्षर हुनुपर्छ",
+  "password_requirements_too_similar": "तपाईंको नाम वा इमेलको कुनै भाग समावेश नगर्नुहोस्"
+}

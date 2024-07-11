@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "পাসওয়ার্ড অবশ্যই:",
+  "password_requirements_too_short": "কমপক্ষে %d টি অক্ষর থাকতে হবে",
+  "password_requirements_missing_number": "কমপক্ষে একটি সংখ্যা থাকতে হবে",
+  "password_requirements_special_sign": "কমপক্ষে একটি বিশেষ চিহ্ন থাকতে হবে",
+  "password_requirements_atleast_one_lowercase": "কমপক্ষে একটি ছোট হাতের ইংরেজি অক্ষর থাকতে হবে",
+  "password_requirements_atleast_one_uppercase": "কমপক্ষে একটি বড় হাতের ইংরেজি অক্ষর থাকতে হবে",
+  "password_requirements_too_similar": "আপনার নাম বা আপনার ইমেইলের অংশ অন্তর্ভুক্ত করা যাবে না"
+}

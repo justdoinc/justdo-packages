@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "உங்கள் JustDo-விற்கு ஒரு தலைப்பை அமைக்கவும்",
+  "set_justdo_name_subtitle": "தலைப்பை கிளிக் செய்வதன் மூலம் திருத்தும் முறைக்கு செல்லவும்",
+  "create_first_task_title": "உங்கள் முதல் பணிகளை உருவாக்கவும்",
+  "create_first_task_subtitle": "பணிகளை உருவாக்க, நீங்கள் கருவிப்பட்டையில் உள்ள பொத்தான்களைப் பயன்படுத்தலாம் அல்லது ALT+ENTER / ALT+SHIFT+ENTER என்ற விசைப்பலகை குறுக்குவழிகளைப் பயன்படுத்தலாம்",
+  "invite_members_title": "குழு உறுப்பினர்களை அழைக்கவும்",
+  "invite_members_subtitle": "உங்கள் புதிய JustDo-வில் சேர்ந்து ஒத்துழைக்க உங்கள் குழு உறுப்பினர்களை அழைக்கவும்",
+  "import_tasks_title": "பணிகளை இறக்குமதி செய்யவும்",
+  "import_tasks_subtitle": "ஏற்கனவே உள்ள பணிகள் மற்றும் தரவுகளை JustDo-விற்கு மாற்றி, எங்கள் விரிதாள் இறக்குமதி செயல்பாட்டுடன் தொடர்ந்து பணியாற்றலாம்",
+  "customize_columns_title": "உங்கள் பார்வையை தனிப்பயனாக்கவும்",
+  "customize_columns_subtitle": "வரிசைகளைச் சேர்த்தல்/அகற்றுதல், பணிகளை அவற்றின் நிலை மூலம் வடிகட்டுதல் மற்றும் பலவற்றின் மூலம் கட்டத்தில் (Grid) நீங்கள் காண்பதைக் கட்டுப்படுத்தவும்!",
+  "get_free_support_title": "இலவச ஆதரவைப் பெறுங்கள்",
+  "get_free_support_subtitle": "JustDo குழுவுடன் 1-க்கு-1 ஆதரவு அமர்வு",
+  "request": "கோரிக்கை",
+  "free_support_request_received": "பெறப்பட்டது, நாங்கள் விரைவில் மின்னஞ்சல் மூலம் உங்களைத் தொடர்பு கொள்வோம்",
+  "tutorials_recent_product_updates": "சமீபத்திய தயாரிப்பு புதுப்பிப்புகள்",
+  "tutorials_justdo_quick_start": "JustDo விரைவு தொடக்கம்",
+  "tutorials_justdo_advanced_features": "JustDo மேம்பட்ட அம்சங்கள்",
+  "tutorials_justdo_support_center": "JustDo ஆதரவு மையம்"
+}

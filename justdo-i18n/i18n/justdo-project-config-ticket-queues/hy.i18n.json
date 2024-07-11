@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "Տոմսերի հերթեր",
+  "project_config_ticket_queues_new_ticket_queue_label": "Նոր տոմսերի հերթ",
+  "project_config_ticket_queues_enter_task_number_label": "Մուտքագրեք առաջադրանքի համարը",
+  "project_config_ticket_queues_no_ticket_queues_label": "Տոմսերի հերթեր չկան",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "Դուք չեք կարող հեռացնել այս Տոմսերի հերթը, քանի որ դուք դրա Առաջադրանքի անդամ չեք"
+}

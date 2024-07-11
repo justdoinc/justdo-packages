@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "Skriv ut JustDo",
+  "print_dropdown_entire_justdo": "Hele JustDo-tavlen",
+  "print_dropdown_visible_tasks": "Synlige oppgaver",
+  "print_dropdown_print_current_task": "Skriv ut gjeldende oppgave",
+  "print_dropdown_all_child_tasks": "Alle underoppgaver",
+  "print_dropdown_visible_child_tasks": "Synlige underoppgaver",
+  "print_dropdown_download": "Last ned",
+  "print_dropdown_download_as_png": "Last ned som PNG",
+  "print_grid_columns_settings_label": "Kolonneinnstillinger",
+  "print_grid_columns_options_label": "Kolonnealternativer",
+  "print_grid_print": "Skriv ut",
+  "print_grid_export_csv": "Eksporter CSV",
+  "print_grid_select_all": "Velg alle",
+  "print_grid_apply": "Bruk"
+}

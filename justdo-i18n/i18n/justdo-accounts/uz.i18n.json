@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Parol quyidagilarga mos kelishi kerak:",
+  "password_requirements_too_short": "Kamida %d ta belgidan iborat bo'lishi",
+  "password_requirements_missing_number": "Kamida bitta raqam bo'lishi",
+  "password_requirements_special_sign": "Kamida bitta maxsus belgi bo'lishi",
+  "password_requirements_atleast_one_lowercase": "Kamida bitta kichik ingliz harfi bo'lishi",
+  "password_requirements_atleast_one_uppercase": "Kamida bitta katta ingliz harfi bo'lishi",
+  "password_requirements_too_similar": "Ismingiz yoki elektron pochtangiz qismlarini o'z ichiga olmasligi"
+}

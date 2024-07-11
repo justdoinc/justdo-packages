@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "__user_name__-ի կազմակերպություն",
+  "create_org_label": "Ստեղծել կազմակերպություն",
+  "without_orgs_label": "Առանց կազմակերպության",
+  "justdos_under_named_org_html": "<span class=\"org-name\">__org_name__</span> կազմակերպության JustDo տախտակները",
+  "justdos_without_orgs": "JustDo տախտակներ առանց կազմակերպության",
+  "orgs_project_config_title": "Կազմակերպություններ",
+  "assign_justdo_to_organization_label": "Նշանակել JustDo տախտակը կազմակերպությանը",
+  "another_organization": "մեկ այլ կազմակերպություն",
+  "pre_transfer_justdo_to_org_notice_html": "Դուք պատրաստվում եք փոխանցել այս JustDo տախտակը <b>__dest_org_name__</b> կազմակերպությանը։ <br> Այս JustDo տախտակի բոլոր անդամները կդառնան <b>__dest_org_name__</b>-ի անդամներ։",
+  "select_organization": "Ընտրել կազմակերպություն",
+  "org_expiring_soon_notice_title": "Ձեր կազմակերպության արտոնագիրը շուտով կավարտվի:",
+  "org_expiring_soon_notice_html": "Ձեր <b>__org_name__</b> կազմակերպության արտոնագիրը կավարտվի __org_expiration_date__-ին։ <br> Հուսով ենք, որ JustDo-ն հեշտացրել է ձեր աշխատանքային կյանքը:",
+  "org_locked_notice_title": "Ձեր կազմակերպության արտոնագիրն ավարտվել է:",
+  "org_locked_notice_html": "Ձեր <b>__org_name__</b> կազմակերպության արտոնագիրն ավարտվել է __org_expiration_date__-ին։ <br> Հուսով ենք, որ JustDo-ն հեշտացրել է ձեր աշխատանքային կյանքը, և մենք շատ կկամենայինք շարունակել անել այդպես:",
+  "org_access_restricted_title": "__org_name__: Ժամանակավոր մուտքի սահմանափակում",
+  "org_access_restricted_html": "Ձեր <b>__org_name__</b> կազմակերպության մուտքը ներկայումս սահմանափակված է։ Խնդրում ենք կապվել ձեր կազմակերպության ադմինիստրատորների հետ՝ այս հարցի վերաբերյալ լրացուցիչ տեղեկությունների համար։ <br> Գնահատում ենք ձեր համբերությունն ու ըմբռնումը։",
+  "renew_org_license_instruction_html": "Դուք կարող եք թարմացնել արտոնագիրը՝ սեղմելով ստորև \"Թարմացնել արտոնագիրը\" կոճակը։<br>Մեր աջակցման թիմը միշտ պատրաստ է օգնել ձեզ։<br><br>Շնորհակալություն JustDo համայնքի մասը լինելու համար։ Մենք ակտիվորեն մշակում ենք նոր հատկություններ հաջորդ թողարկման համար՝ ձեր աշխատանքային հոսքը բարելավելու նպատակով:",
+  "renew_org_licnese_modal_btn_label": "Թարմացնել արտոնագիրը",
+  "org_pre_expire_renewal_contact_page_message": "Իմ __org_name__ __optional_domain_msg__ կազմակերպության արտոնագիրը շուտով կավարտվի, և ես ցանկանում եմ թարմացնել այն։",
+  "org_post_expire_renewal_contact_page_message": "Իմ __org_name__ __optional_domain_msg__ կազմակերպության արտոնագիրն ավարտվել է, և ես ցանկանում եմ թարմացնել այն։"
+}

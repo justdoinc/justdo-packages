@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "JustDo-ны басып шығару",
+  "print_dropdown_entire_justdo": "Толық JustDo",
+  "print_dropdown_visible_tasks": "Көрінетін тапсырмалар",
+  "print_dropdown_print_current_task": "Ағымдағы тапсырманы басып шығару",
+  "print_dropdown_all_child_tasks": "Барлық бағынышты тапсырмалар",
+  "print_dropdown_visible_child_tasks": "Көрінетін бағынышты тапсырмалар",
+  "print_dropdown_download": "Жүктеп алу",
+  "print_dropdown_download_as_png": "PNG ретінде жүктеп алу",
+  "print_grid_columns_settings_label": "Бағандар параметрлері",
+  "print_grid_columns_options_label": "Бағандар опциялары",
+  "print_grid_print": "Басып шығару",
+  "print_grid_export_csv": "CSV форматында экспорттау",
+  "print_grid_select_all": "Барлығын таңдау",
+  "print_grid_apply": "Қолдану"
+}

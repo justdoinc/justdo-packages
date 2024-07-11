@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "அட்டவணைக் காட்சிகள்",
+  "grid_views_search_placeholder": "காட்சிகளைத் தேடு",
+  "grid_views_no_view_label": "காட்சிகள் இல்லை",
+  "grid_views_add_current_view_label": "தற்போதைய காட்சியைச் சேர்",
+  "grid_views_rename_label": "மறுபெயரிடு",
+  "grid_views_update_label": "புதுப்பி",
+  "grid_views_remove_label": "அகற்று",
+  "grid_views_share_label": "பகிர்",
+  "grid_views_unshare_label": "பகிர்வு நீக்கு",
+  "grid_views_shared_label": "பகிரப்பட்டது"
+}

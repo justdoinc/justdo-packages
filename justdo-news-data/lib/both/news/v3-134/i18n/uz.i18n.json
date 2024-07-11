@@ -1,0 +1,19 @@
+{
+  "v3_134_news_title": "v3.134",
+  "v3_134_news_main_name": "Yangiliklar",
+  "v3_134_news_main_array_item_1_title": "Arxivlash",
+  "v3_134_news_main_array_item_1_subtitle": "Yangi loyihalar va bajarilishi kerak bo'lgan yangi faoliyatlar paydo bo'lganda, eski ishlarni chetga surib, yangilariga e'tibor qaratish kerak bo'ladi. Endi siz ushbu loyihalar va vazifalarni arxivlay olasiz, ularni kundalik ko'rinishingizdan olib tashlab, lekin kerak bo'lganda ularga kirish va hatto arxivdan chiqarish imkoniyatini saqlab qolasiz.",
+  "v3_134_news_main_array_item_2_title": "Ko'p tanlovli variantlar maydoni",
+  "v3_134_news_main_array_item_2_subtitle": "\"Variantlar\" maxsus maydoniga qo'shimcha ravishda endi sizda \"Ko'p variantlar\" turi mavjud. Bu variant foydalanuvchilarga har bir alohida vazifa uchun oldindan belgilangan variantlar ro'yxatidan bir nechta qiymatlarni tanlash imkonini beradi.",
+  "v3_134_news_main_array_item_3_title": "Vazifa egasi va Kutilayotgan ega maydonlari + filtr",
+  "v3_134_news_main_array_item_3_subtitle": "Endi siz vazifalarning ham Vazifa egasi, ham Kutilayotgan egasini ko'rsatadigan qo'shimcha maydonlarni qo'shish imkoniyatiga egasiz. Ushbu yangilanish sizga vazifalar ro'yxatini (task tree) ushbu mezonlar asosida samarali filtrlash imkonini beradi, bu esa vazifalarni boshqarishda yanada oqilona va shaxsiylashtirilgan tajribani ta'minlaydi.",
+  "v3_134_news_features_name": "Boshqa yangilanishlar",
+  "v3_134_news_features_title": "Yaxshilanishlar",
+  "v3_134_news_features_update_items": [
+    "1. E-pochta - 150x150 pikseldan kichik fayllar fayllarga qo'shilmaydi.",
+    "2. E-pochta - Faqat oxirgi 20 ta xabarni ko'rsatish, qo'shimcha \"ko'proq yuklash\" tugmasi bilan.",
+    "3. Kengaytmalar va \"saqlash\" tugmasini olib tashlash."
+  ],
+  "v3_134_news_page_title": "JustDo v3.134: Loyihalarni arxivlash, Ko'p tanlovli variantlar va boshqalar",
+  "v3_134_news_page_description": "JustDo v3.134 da loyihalarni arxivlash qudrati, ko'p tanlovli variantlar maydonlarining moslashuvchanligi va vazifalar egaligini boshqarishning takomillashtirilgan imkoniyatlarini kashf eting."
+}

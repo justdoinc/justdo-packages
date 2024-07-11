@@ -1,0 +1,9 @@
+{
+  "password_requirements_password_must": "Lozinka mora:",
+  "password_requirements_too_short": "Sadržavati najmanje %d znakova",
+  "password_requirements_missing_number": "Imati najmanje jedan broj",
+  "password_requirements_special_sign": "Imati najmanje jedan poseban znak",
+  "password_requirements_atleast_one_lowercase": "Imati najmanje jedno malo slovo engleske abecede",
+  "password_requirements_atleast_one_uppercase": "Imati najmanje jedno veliko slovo engleske abecede",
+  "password_requirements_too_similar": "Ne uključivati vaše ime ili dijelove vaše email adrese"
+}

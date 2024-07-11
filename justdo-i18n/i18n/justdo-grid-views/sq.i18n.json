@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Pamjet e Tabelës",
+  "grid_views_search_placeholder": "Kërko pamjet",
+  "grid_views_no_view_label": "Nuk ka pamje",
+  "grid_views_add_current_view_label": "Shto pamjen aktuale",
+  "grid_views_rename_label": "Riemërto",
+  "grid_views_update_label": "Përditëso",
+  "grid_views_remove_label": "Hiq",
+  "grid_views_share_label": "Ndaj",
+  "grid_views_unshare_label": "Ndalo ndarjen",
+  "grid_views_shared_label": "ndarë"
+}

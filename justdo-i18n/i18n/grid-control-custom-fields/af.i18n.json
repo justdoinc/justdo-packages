@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Pasgemaakte Velde",
+  "grid_control_custom_fields_sort_by_name_label": "Sorteer volgens Naam",
+  "grid_control_custom_fields_new_custom_field_label": "Nuwe pasgemaakte veld",
+  "grid_control_custom_fields_no_custom_fields_label": "Geen pasgemaakte velde",
+  "grid_control_custom_fields_label_placeholder": "etiket",
+  "grid_control_custom_fields_text_label": "Teks",
+  "grid_control_custom_fields_number_label": "Nommer",
+  "grid_control_custom_fields_date_label": "Datum",
+  "grid_control_custom_fields_select_label": "Opsies",
+  "grid_control_custom_fields_multi_select_label": "Veelvuldige Opsies",
+  "grid_control_custom_fields_smart_numbers_label": "Slim Nommers",
+  "grid_control_custom_fields_unknown_type_label": "Onbekende tipe",
+  "grid_control_custom_fields_disabled_field_label": "Gedeaktiveerde veld"
+}

@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Mesedez, sartu zure izena",
+  "err_first_name_too_long": "Izenak ezin ditu 30 karaktere baino gehiago izan",
+  "err_last_name_too_long": "Abizenak ezin ditu 30 karaktere baino gehiago izan",
+  "err_last_name_empty": "Mesedez, sartu zure abizena",
+  "err_email_invalid": "Mesedez, sartu baliozko helbide elektronikoa",
+  "err_email_empty": "Mesedez, sartu zure helbide elektronikoa",
+  "err_password_empty": "Mesedez, sartu zure pasahitza",
+  "err_incorrect_password": "Pasahitz okerra. Pasahitza berrezartzeko, egin klik \"Pasahitza ahaztu duzu?\" botoian.",
+  "err_no_password_set": "Zure pasahitza konfiguratzeko, mesedez egin klik \"Pasahitza ahaztu duzu?\" botoian.",
+  "err_password_too_similar": "Pasahitza zure izen, abizen edo helbide elektronikoaren oso antzekoa da",
+  "err_retype_password_empty": "Mesedez, idatzi berriro zure pasahitza",
+  "err_retype_password_not_match": "Pasahitzak ez datoz bat",
+  "err_agree_ts_and_pp_missing": "Gure erabilera-baldintzak eta pribatutasun-politika irakurri eta onartu behar dituzu jarraitzeko",
+  "err_cant_login": "Ezin da saioa hasi"
+}

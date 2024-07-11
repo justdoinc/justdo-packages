@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "Друкаваць JustDo",
+  "print_dropdown_entire_justdo": "Увесь JustDo",
+  "print_dropdown_visible_tasks": "Бачныя задачы",
+  "print_dropdown_print_current_task": "Друкаваць бягучую задачу",
+  "print_dropdown_all_child_tasks": "Усе падпарадкаваныя задачы",
+  "print_dropdown_visible_child_tasks": "Бачныя падпарадкаваныя задачы",
+  "print_dropdown_download": "Спампаваць",
+  "print_dropdown_download_as_png": "Спампаваць як PNG",
+  "print_grid_columns_settings_label": "Налады слупкоў",
+  "print_grid_columns_options_label": "Опцыі слупкоў",
+  "print_grid_print": "Друк",
+  "print_grid_export_csv": "Экспарт CSV",
+  "print_grid_select_all": "Выбраць усё",
+  "print_grid_apply": "Прымяніць"
+}

@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Verbonnen",
+  "meteor_status_connecting": "Verbënnt...",
+  "meteor_status_failed": "D'Verbindung zum Server ass feelgeschloen",
+  "meteor_status_waiting": "Waart op d'Serververbindung,",
+  "meteor_status_offline": "Offline Modus.",
+  "meteor_status_reconnect_in": "probéiert erëm an enger Sekonn...",
+  "meteor_status_reconnect_in_plural": "probéiert erëm an __count__ Sekonnen...",
+  "meteor_status_try_now_waiting": "Elo probéieren",
+  "meteor_status_try_now_offline": "Erëm verbannen"
+}

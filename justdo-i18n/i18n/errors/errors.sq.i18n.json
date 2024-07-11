@@ -1,0 +1,16 @@
+{
+  "err_first_name_empty": "Ju lutem shkruani emrin tuaj",
+  "err_first_name_too_long": "Emri nuk duhet të tejkalojë 30 karaktere",
+  "err_last_name_too_long": "Mbiemri nuk duhet të tejkalojë 30 karaktere",
+  "err_last_name_empty": "Ju lutem shkruani mbiemrin tuaj",
+  "err_email_invalid": "Ju lutem shkruani një adresë të vlefshme emaili",
+  "err_email_empty": "Ju lutem shkruani emailin tuaj",
+  "err_password_empty": "Ju lutem shkruani fjalëkalimin tuaj",
+  "err_incorrect_password": "Fjalëkalim i pasaktë. Për të rivendosur fjalëkalimin tuaj, mund të klikoni në butonin \"Keni harruar fjalëkalimin?\"",
+  "err_no_password_set": "Për të vendosur fjalëkalimin tuaj, ju lutem klikoni në butonin \"Keni harruar fjalëkalimin?\"",
+  "err_password_too_similar": "Fjalëkalimi është shumë i ngjashëm me emrin tuaj, mbiemrin ose emailin",
+  "err_retype_password_empty": "Ju lutem rishkruani fjalëkalimin tuaj",
+  "err_retype_password_not_match": "Fjalëkalimet nuk përputhen",
+  "err_agree_ts_and_pp_missing": "Ju duhet të lexoni dhe të pranoni kushtet tona të përdorimit dhe politikën e privatësisë për të vazhduar",
+  "err_cant_login": "Nuk mund të hyni"
+}

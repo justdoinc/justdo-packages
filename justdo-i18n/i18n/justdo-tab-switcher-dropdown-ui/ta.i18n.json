@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "காட்சியை மாற்று",
+  "tab_switcher_dropdown_search_placeholder": "காட்சிகள்",
+  "tab_switcher_main_view_label": "முக்கிய காட்சி",
+  "tab_switcher_my_favorites_label": "எனது பிடித்தவைகள்",
+  "tab_switcher_my_due_list_label": "எனது நிலுவைப் பட்டியல்",
+  "tab_switcher_recently_label": "சமீபத்தில்",
+  "tab_switcher_recently_completed_label": "முடிக்கப்பட்டவை",
+  "tab_switcher_recently_updated_label": "புதுப்பிக்கப்பட்டவை",
+  "tab_switcher_recently_created_label": "உருவாக்கப்பட்டவை",
+  "tab_switcher_miscellaneous_label": "பல்வகை",
+  "tab_switcher_task_ownershipt_transfers_label": "பணி உரிமை மாற்றங்கள்",
+  "tab_switcher_ticket_queues_label": "டிக்கெட் வரிசைகள்",
+  "tab_switcher_members_due_lists_label": "உறுப்பினர்களின் நிலுவைப் பட்டியல்கள்",
+  "tab_switcher_all_members_due_list_label": "அனைத்து உறுப்பினர்களின் நிலுவைப் பட்டியல்",
+  "tab_switcher_projects_section_label": "திட்டப்பணிகள்",
+  "tab_switcher_projects_label": "திட்டப்பணிகள்"
+}

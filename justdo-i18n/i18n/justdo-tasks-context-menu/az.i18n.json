@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Tapşırıqları Sil",
+  "remove_from_parent_label": "Ana Tapşırıqdan Sil",
+  "remove_with_subtree_label": "Alt-Ağacla Birlikdə Sil",
+  "archive_task_label": "Tapşırığı Arxivləşdir",
+  "unarchive_task_label": "Tapşırığı Arxivdən Çıxar",
+  "reorder_children_by_label": "Alt tapşırıqları sırala",
+  "zoom_in_label": "Yaxınlaşdır",
+  "projects_label": "Layihələr",
+  "set_as_a_project_label": "Layihə kimi təyin et",
+  "unset_as_a_project_label": "Layihə təyinatını ləğv et",
+  "close_project_label": "Layihəni Bağla",
+  "repoen_project_label": "Layihəni Yenidən Aç",
+  "add_to_project_label": "Layihəyə əlavə et",
+  "apply_value_to_subtree": "__value__ alt-ağaca tətbiq et",
+  "bulk_set_options_label": "Təyin et"
+}

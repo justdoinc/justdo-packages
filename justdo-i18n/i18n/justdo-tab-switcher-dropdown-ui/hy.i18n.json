@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Փոխել տեսքը",
+  "tab_switcher_dropdown_search_placeholder": "Տեսքեր",
+  "tab_switcher_main_view_label": "Հիմնական տեսք",
+  "tab_switcher_my_favorites_label": "Իմ նախընտրածները",
+  "tab_switcher_my_due_list_label": "Իմ ժամկետային ցուցակը",
+  "tab_switcher_recently_label": "Վերջերս",
+  "tab_switcher_recently_completed_label": "Ավարտված",
+  "tab_switcher_recently_updated_label": "Թարմացված",
+  "tab_switcher_recently_created_label": "Ստեղծված",
+  "tab_switcher_miscellaneous_label": "Այլ",
+  "tab_switcher_task_ownershipt_transfers_label": "Առաջադրանքների սեփականատիրության փոխանցումներ",
+  "tab_switcher_ticket_queues_label": "Տոմսերի հերթեր",
+  "tab_switcher_members_due_lists_label": "Անդամների ժամկետային ցուցակներ",
+  "tab_switcher_all_members_due_list_label": "Բոլոր անդամների ժամկետային ցուցակ",
+  "tab_switcher_projects_section_label": "Նախագծեր",
+  "tab_switcher_projects_label": "Նախագծեր"
+}

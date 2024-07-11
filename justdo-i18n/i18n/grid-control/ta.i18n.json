@@ -1,0 +1,18 @@
+{
+  "add_column_label": "நெடுவரிசை சேர்",
+  "hide_column_label": "நெடுவரிசையை மறை",
+  "freeze_column_label": "நெடுவரிசையை உறைய வை",
+  "unfreeze_column_label": "நெடுவரிசையை உறைநீக்கு",
+  "tree_control_tooltip_gantt_milestone": "கான்ட் மைல்கல் (Gantt Milestone)",
+  "tree_control_tooltip_buffer_task": "இடைநிலை பணி (Buffer Task)",
+  "tree_control_tooltip_Meetings": "கூட்டங்கள்",
+  "tree_control_tooltip_start_time_tracking": "இந்த பணியில் வேலை செய்யத் தொடங்கு",
+  "tree_control_tooltip_stop_time_tracking": "நீங்கள் இப்போது இந்த பணியில் வேலை செய்கிறீர்கள், நிறுத்தி வேலை செய்த நேரத்தைப் பதிவு செய்ய அழுத்தவும்",
+  "tree_control_tooltip_resources": "வளங்கள்",
+  "tree_control_tooltip_description": "பணி விவரம்",
+  "tree_control_tooltip_chat_messages": "அரட்டை செய்திகள்",
+  "tree_control_tooltip_files_count": "__files_count__ கோப்புகள்",
+  "tree_control_tooltip_emails_count": "__emails_count__ மின்னஞ்சல்கள்",
+  "tree_control_tooltip_task_is_a_project": "பணி ஒரு திட்டமாகும்",
+  "tree_control_tooltip_task_is_archived": "பணி காப்பகப்படுத்தப்பட்டுள்ளது"
+}

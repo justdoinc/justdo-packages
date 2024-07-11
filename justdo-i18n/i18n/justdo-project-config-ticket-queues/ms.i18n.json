@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "Barisan Tiket",
+  "project_config_ticket_queues_new_ticket_queue_label": "Barisan tiket baru",
+  "project_config_ticket_queues_enter_task_number_label": "Masukkan nombor tugas",
+  "project_config_ticket_queues_no_ticket_queues_label": "Tiada barisan tiket",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "Anda tidak boleh membuang Barisan Tiket ini, kerana anda bukan ahli Tugasnya"
+}

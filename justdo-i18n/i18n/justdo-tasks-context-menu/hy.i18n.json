@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Հեռացնել առաջադրանքները",
+  "remove_from_parent_label": "Հեռացնել ծնողից",
+  "remove_with_subtree_label": "Հեռացնել ենթածառով",
+  "archive_task_label": "Արխիվացնել առաջադրանքը",
+  "unarchive_task_label": "Հանել արխիվից",
+  "reorder_children_by_label": "Վերադասավորել ենթաառաջադրանքները ըստ",
+  "zoom_in_label": "Մեծացնել",
+  "projects_label": "Նախագծեր",
+  "set_as_a_project_label": "Սահմանել որպես նախագիծ",
+  "unset_as_a_project_label": "Հանել նախագծի կարգավիճակը",
+  "close_project_label": "Փակել նախագիծը",
+  "repoen_project_label": "Վերաբացել նախագիծը",
+  "add_to_project_label": "Ավելացնել նախագծին",
+  "apply_value_to_subtree": "Կիրառել __value__-ը ենթածառի վրա",
+  "bulk_set_options_label": "Սահմանել"
+}

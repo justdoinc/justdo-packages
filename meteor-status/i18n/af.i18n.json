@@ -1,0 +1,11 @@
+{
+  "meteor_status_connected": "Gekoppel",
+  "meteor_status_connecting": "Besig om te koppel...",
+  "meteor_status_failed": "Die bedienerverbinding het misluk",
+  "meteor_status_waiting": "Wag vir bedienerverbinding,",
+  "meteor_status_offline": "Aflynmodus.",
+  "meteor_status_reconnect_in": "probeer weer oor een sekonde...",
+  "meteor_status_reconnect_in_plural": "probeer weer oor __count__ sekondes...",
+  "meteor_status_try_now_waiting": "Probeer nou",
+  "meteor_status_try_now_offline": "Koppel weer"
+}

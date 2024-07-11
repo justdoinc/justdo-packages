@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Прилагодени полиња",
+  "grid_control_custom_fields_sort_by_name_label": "Подреди по име",
+  "grid_control_custom_fields_new_custom_field_label": "Ново прилагодено поле",
+  "grid_control_custom_fields_no_custom_fields_label": "Нема прилагодени полиња",
+  "grid_control_custom_fields_label_placeholder": "етикета",
+  "grid_control_custom_fields_text_label": "Текст",
+  "grid_control_custom_fields_number_label": "Број",
+  "grid_control_custom_fields_date_label": "Датум",
+  "grid_control_custom_fields_select_label": "Опции",
+  "grid_control_custom_fields_multi_select_label": "Повеќе опции",
+  "grid_control_custom_fields_smart_numbers_label": "Паметни броеви (Smart Numbers)",
+  "grid_control_custom_fields_unknown_type_label": "Непознат тип",
+  "grid_control_custom_fields_disabled_field_label": "Оневозможено поле"
+}

@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Уласныя палі",
+  "grid_control_custom_fields_sort_by_name_label": "Сартаваць па назве",
+  "grid_control_custom_fields_new_custom_field_label": "Новае ўласнае поле",
+  "grid_control_custom_fields_no_custom_fields_label": "Няма ўласных палёў",
+  "grid_control_custom_fields_label_placeholder": "пазнака",
+  "grid_control_custom_fields_text_label": "Тэкст",
+  "grid_control_custom_fields_number_label": "Лічба",
+  "grid_control_custom_fields_date_label": "Дата",
+  "grid_control_custom_fields_select_label": "Параметры",
+  "grid_control_custom_fields_multi_select_label": "Множныя параметры",
+  "grid_control_custom_fields_smart_numbers_label": "Разумныя лічбы (Smart Numbers)",
+  "grid_control_custom_fields_unknown_type_label": "Невядомы тып",
+  "grid_control_custom_fields_disabled_field_label": "Адключанае поле"
+}

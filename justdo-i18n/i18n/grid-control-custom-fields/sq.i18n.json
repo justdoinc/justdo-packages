@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Fushat e personalizuara",
+  "grid_control_custom_fields_sort_by_name_label": "Rendit sipas emrit",
+  "grid_control_custom_fields_new_custom_field_label": "Fushë e re e personalizuar",
+  "grid_control_custom_fields_no_custom_fields_label": "Nuk ka fusha të personalizuara",
+  "grid_control_custom_fields_label_placeholder": "etiketë",
+  "grid_control_custom_fields_text_label": "Tekst",
+  "grid_control_custom_fields_number_label": "Numër",
+  "grid_control_custom_fields_date_label": "Datë",
+  "grid_control_custom_fields_select_label": "Opsione",
+  "grid_control_custom_fields_multi_select_label": "Opsione të shumta",
+  "grid_control_custom_fields_smart_numbers_label": "Numra të mençur (Smart Numbers)",
+  "grid_control_custom_fields_unknown_type_label": "Lloj i panjohur",
+  "grid_control_custom_fields_disabled_field_label": "Fushë e çaktivizuar"
+}

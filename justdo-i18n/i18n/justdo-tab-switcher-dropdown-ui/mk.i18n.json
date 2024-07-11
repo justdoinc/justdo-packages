@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Промени приказ",
+  "tab_switcher_dropdown_search_placeholder": "Прикази",
+  "tab_switcher_main_view_label": "Главен приказ",
+  "tab_switcher_my_favorites_label": "Мои омилени",
+  "tab_switcher_my_due_list_label": "Мој список на задачи со рок",
+  "tab_switcher_recently_label": "Неодамна",
+  "tab_switcher_recently_completed_label": "Завршени",
+  "tab_switcher_recently_updated_label": "Ажурирани",
+  "tab_switcher_recently_created_label": "Креирани",
+  "tab_switcher_miscellaneous_label": "Разно",
+  "tab_switcher_task_ownershipt_transfers_label": "Трансфери на сопственост на задачи",
+  "tab_switcher_ticket_queues_label": "Редици на тикети",
+  "tab_switcher_members_due_lists_label": "Списоци на задачи со рок на членови",
+  "tab_switcher_all_members_due_list_label": "Список на задачи со рок за сите членови",
+  "tab_switcher_projects_section_label": "Проекти",
+  "tab_switcher_projects_label": "Проекти"
+}

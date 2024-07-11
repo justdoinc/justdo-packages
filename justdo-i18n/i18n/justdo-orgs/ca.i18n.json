@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "Organització de __user_name__",
+  "create_org_label": "Crear Organització",
+  "without_orgs_label": "Sense Organització",
+  "justdos_under_named_org_html": "Taulers JustDo sota <span class=\"org-name\">__org_name__</span>",
+  "justdos_without_orgs": "Taulers JustDo sense una organització",
+  "orgs_project_config_title": "Organitzacions",
+  "assign_justdo_to_organization_label": "Assignar tauler JustDo a l'organització",
+  "another_organization": "una altra organització",
+  "pre_transfer_justdo_to_org_notice_html": "Estàs a punt de transferir aquest tauler JustDo a <b>__dest_org_name__</b>. <br> Tots els membres d'aquest tauler JustDo es convertiran en membres de <b>__dest_org_name__</b>.",
+  "select_organization": "Seleccionar Organització",
+  "org_expiring_soon_notice_title": "La llicència de la vostra organització està a punt de caducar!",
+  "org_expiring_soon_notice_html": "La llicència de la vostra organització <b>__org_name__</b> caducarà el __org_expiration_date__. <br> Esperem que JustDo hagi facilitat la vostra vida laboral!",
+  "org_locked_notice_title": "La llicència de la vostra organització ha caducat!",
+  "org_locked_notice_html": "La llicència de la vostra organització <b>__org_name__</b> ha caducat el __org_expiration_date__. <br> Esperem que JustDo hagi facilitat la vostra vida laboral, i ens encantaria continuar fent-ho!",
+  "org_access_restricted_title": "__org_name__: Restricció temporal d'accés",
+  "org_access_restricted_html": "L'accés a la vostra organització <b>__org_name__</b> està actualment restringit. Si us plau, contacteu amb els administradors de la vostra organització per obtenir més detalls sobre aquest assumpte. <br> Agraïm la vostra paciència i comprensió.",
+  "renew_org_license_instruction_html": "Podeu renovar la llicència fent clic al botó \"Renovar Llicència\" a continuació.<br>El nostre equip de suport sempre està disposat a ajudar-vos.<br><br>Gràcies per formar part de la comunitat JustDo. Estem desenvolupant activament noves funcionalitats per a la propera versió per millorar el vostre flux de treball!",
+  "renew_org_licnese_modal_btn_label": "Renovar Llicència",
+  "org_pre_expire_renewal_contact_page_message": "La meva organització __org_name__ __optional_domain_msg__ està a punt de caducar i m'agradaria renovar la llicència.",
+  "org_post_expire_renewal_contact_page_message": "La meva organització __org_name__ __optional_domain_msg__ ha caducat i m'agradaria renovar la llicència."
+}

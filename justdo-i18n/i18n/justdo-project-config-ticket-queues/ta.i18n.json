@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "டிக்கெட் வரிசைகள்",
+  "project_config_ticket_queues_new_ticket_queue_label": "புதிய டிக்கெட் வரிசை",
+  "project_config_ticket_queues_enter_task_number_label": "பணி எண்ணை உள்ளிடவும்",
+  "project_config_ticket_queues_no_ticket_queues_label": "டிக்கெட் வரிசைகள் இல்லை",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "இந்த டிக்கெட் வரிசையை நீக்க முடியாது, ஏனெனில் நீங்கள் அதன் பணியின் உறுப்பினர் அல்ல"
+}

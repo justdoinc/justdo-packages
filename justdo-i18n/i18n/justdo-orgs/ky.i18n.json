@@ -1,0 +1,22 @@
+{
+  "default_org_name_with_user_name": "__user_name__ уюму",
+  "create_org_label": "Уюм түзүү",
+  "without_orgs_label": "Уюмсуз",
+  "justdos_under_named_org_html": "<span class=\"org-name\">__org_name__</span> уюмундагы JustDo тактайлары",
+  "justdos_without_orgs": "Уюмсуз JustDo тактайлары",
+  "orgs_project_config_title": "Уюмдар",
+  "assign_justdo_to_organization_label": "JustDo тактайын уюмга дайындоо",
+  "another_organization": "башка уюм",
+  "pre_transfer_justdo_to_org_notice_html": "Сиз бул JustDo тактайын <b>__dest_org_name__</b> уюмуна өткөрүп берүү алдындасыз. <br> Бул JustDo тактайындагы бардык мүчөлөр <b>__dest_org_name__</b> уюмунун мүчөлөрү болуп калышат.",
+  "select_organization": "Уюмду тандаңыз",
+  "org_expiring_soon_notice_title": "Уюмуңуздун лицензиясынын мөөнөтү жакында бүтөт!",
+  "org_expiring_soon_notice_html": "<b>__org_name__</b> уюмуңуздун лицензиясынын мөөнөтү __org_expiration_date__ күнү бүтөт. <br> Биз JustDo сиздин жумуш жашооңузду жеңилдеткен деп үмүттөнөбүз!",
+  "org_locked_notice_title": "Уюмуңуздун лицензиясынын мөөнөтү бүттү!",
+  "org_locked_notice_html": "<b>__org_name__</b> уюмуңуздун лицензиясынын мөөнөтү __org_expiration_date__ күнү бүттү. <br> Биз JustDo сиздин жумуш жашооңузду жеңилдеткен деп үмүттөнөбүз, жана муну улантууну каалайбыз!",
+  "org_access_restricted_title": "__org_name__: Убактылуу кирүү чектөөсү",
+  "org_access_restricted_html": "<b>__org_name__</b> уюмуңузга кирүү учурда чектелген. Бул маселе боюнча кошумча маалымат алуу үчүн уюмуңуздун администраторлоруна кайрылыңыз. <br> Сиздин сабырдуулугуңуз жана түшүнүүңүз үчүн ыраазычылык билдиребиз.",
+  "renew_org_license_instruction_html": "\"Лицензияны жаңылоо\" баскычын басуу менен лицензияны жаңылай аласыз.<br>Биздин колдоо тобубуз сизге жардам берүүгө дайыма даяр.<br><br>JustDo коомчулугунун бир бөлүгү болгонуңуз үчүн рахмат. Биз сиздин иш процессиңизди жакшыртуу үчүн кийинки чыгарылышка жаңы функцияларды активдүү түрдө иштеп чыгууда!",
+  "renew_org_licnese_modal_btn_label": "Лицензияны жаңылоо",
+  "org_pre_expire_renewal_contact_page_message": "Менин __org_name__ уюмумдун __optional_domain_msg__ лицензиясынын мөөнөтү жакында бүтөт жана мен аны жаңылоону каалайм.",
+  "org_post_expire_renewal_contact_page_message": "Менин __org_name__ уюмумдун __optional_domain_msg__ лицензиясынын мөөнөтү бүттү жана мен аны жаңылоону каалайм."
+}

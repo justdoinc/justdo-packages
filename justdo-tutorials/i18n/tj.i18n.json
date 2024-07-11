@@ -1,0 +1,20 @@
+{
+  "set_justdo_name_title": "Ба JustDo-и худ сарлавҳа гузоред",
+  "set_justdo_name_subtitle": "Барои ворид шудан ба ҳолати таҳрир, танҳо ба сарлавҳа пахш кунед",
+  "create_first_task_title": "Вазифаҳои аввалини худро эҷод кунед",
+  "create_first_task_subtitle": "Барои эҷоди вазифаҳо, шумо метавонед тугмаҳои панели асбобҳоро истифода баред ё миёнбурҳои клавиатураи ALT+ENTER / ALT+SHIFT+ENTER-ро истифода баред",
+  "invite_members_title": "Аъзоёни гурӯҳро даъват кунед",
+  "invite_members_subtitle": "Аъзоёни гурӯҳи худро барои ҳамроҳшавӣ ва ҳамкорӣ дар JustDo-и нави шумо даъват кунед",
+  "import_tasks_title": "Вазифаҳоро ворид кунед",
+  "import_tasks_subtitle": "Шумо метавонед вазифаҳо ва маълумоти мавҷударо ба JustDo интиқол диҳед ва бо функсияи воридоти ҷадвали мо бемамониат идома диҳед",
+  "customize_columns_title": "Намуди худро танзим кунед",
+  "customize_columns_subtitle": "Назорат кунед, ки шумо дар ҷадвал (grid) чиро мебинед бо илова/ҳазф кардани сутунҳо, филтр кардани вазифаҳо аз рӯи ҳолаташон ва ғайра!",
+  "get_free_support_title": "Дастгирии ройгон гиред",
+  "get_free_support_subtitle": "Ҷаласаи дастгирии 1-ба-1 бо гурӯҳи JustDo",
+  "request": "Дархост",
+  "free_support_request_received": "Қабул шуд, мо ба зудӣ тавассути почтаи электронӣ ба шумо ҷавоб медиҳем",
+  "tutorials_recent_product_updates": "Навсозиҳои охирини маҳсулот",
+  "tutorials_justdo_quick_start": "Оғози зуди JustDo",
+  "tutorials_justdo_advanced_features": "Хусусиятҳои пешрафтаи JustDo",
+  "tutorials_justdo_support_center": "Маркази дастгирии JustDo"
+}

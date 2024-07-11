@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Активни состојби",
+  "project_configurations_no_active_states_label": "Нема активни состојби",
+  "project_configurations_hidden_states_label": "Скриени состојби",
+  "project_configurations_no_hidden_states_label": "Нема скриени состојби",
+  "project_configurations_type_state_name_placeholder": "Внесете име на состојба",
+  "project_configurations_default_title_for_this_state_label": "Стандардно име за оваа состојба",
+  "project_configurations_restore_state_label": "Врати состојба",
+  "project_configurations_create_extended_state_label": "Создади проширена состојба",
+  "project_configurations_hide_state": "Скриј состојба",
+  "project_configurations_remove_extended_state": "Отстрани проширена состојба",
+  "new_custom_state_default_title": "__state__ - проширена"
+}

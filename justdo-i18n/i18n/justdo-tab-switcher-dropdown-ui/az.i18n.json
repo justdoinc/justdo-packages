@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Görünüşü Dəyişdirin",
+  "tab_switcher_dropdown_search_placeholder": "Görünüşlər",
+  "tab_switcher_main_view_label": "Əsas Görünüş",
+  "tab_switcher_my_favorites_label": "Mənim Seçdiklərim",
+  "tab_switcher_my_due_list_label": "Mənim Vaxtı Çatan Siyahım",
+  "tab_switcher_recently_label": "Son Zamanlar",
+  "tab_switcher_recently_completed_label": "Tamamlanmış",
+  "tab_switcher_recently_updated_label": "Yenilənmiş",
+  "tab_switcher_recently_created_label": "Yaradılmış",
+  "tab_switcher_miscellaneous_label": "Müxtəlif",
+  "tab_switcher_task_ownershipt_transfers_label": "Tapşırıq Sahibliyi Transferləri",
+  "tab_switcher_ticket_queues_label": "Bilet Növbələri",
+  "tab_switcher_members_due_lists_label": "Üzvlərin Vaxtı Çatan Siyahıları",
+  "tab_switcher_all_members_due_list_label": "Bütün Üzvlərin Vaxtı Çatan Siyahısı",
+  "tab_switcher_projects_section_label": "Layihələr",
+  "tab_switcher_projects_label": "Layihələr"
+}

@@ -1,0 +1,16 @@
+{
+  "print_dropdown_print_justdo": "JustDo басып чыгаруу",
+  "print_dropdown_entire_justdo": "Бүтүн JustDo",
+  "print_dropdown_visible_tasks": "Көрүнүп турган тапшырмалар",
+  "print_dropdown_print_current_task": "Учурдагы тапшырманы басып чыгаруу",
+  "print_dropdown_all_child_tasks": "Бардык көз каранды тапшырмалар",
+  "print_dropdown_visible_child_tasks": "Көрүнүп турган көз каранды тапшырмалар",
+  "print_dropdown_download": "Жүктөп алуу",
+  "print_dropdown_download_as_png": "PNG форматында жүктөп алуу",
+  "print_grid_columns_settings_label": "Мамычалардын жөндөөлөрү",
+  "print_grid_columns_options_label": "Мамычалардын параметрлери",
+  "print_grid_print": "Басып чыгаруу",
+  "print_grid_export_csv": "CSV форматында экспорттоо",
+  "print_grid_select_all": "Баарын тандоо",
+  "print_grid_apply": "Колдонуу"
+}

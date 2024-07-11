@@ -1,0 +1,17 @@
+{
+  "remove_tasks_label": "Vazifalarni o'chirish",
+  "remove_from_parent_label": "Asosiy vazifadan o'chirish",
+  "remove_with_subtree_label": "Ichki vazifalar bilan birga o'chirish",
+  "archive_task_label": "Vazifani arxivlash",
+  "unarchive_task_label": "Vazifani arxivdan chiqarish",
+  "reorder_children_by_label": "Ichki vazifalarni tartiblesh",
+  "zoom_in_label": "Kattalashtirish",
+  "projects_label": "Loyihalar",
+  "set_as_a_project_label": "Loyiha sifatida belgilash",
+  "unset_as_a_project_label": "Loyiha belgilashini bekor qilish",
+  "close_project_label": "Loyihani yopish",
+  "repoen_project_label": "Loyihani qayta ochish",
+  "add_to_project_label": "Loyihaga qo'shish",
+  "apply_value_to_subtree": "__value__ ni ichki vazifalarga qo'llash",
+  "bulk_set_options_label": "Belgilash"
+}
