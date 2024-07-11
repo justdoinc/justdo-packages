@@ -1,9 +1,0 @@
-{
-  "password_requirements_password_must": "གསང་ཚིག་ངེས་པར་དུ།",
-  "password_requirements_too_short": "ཡིག་འབྲུ་ %d ཡན་ཆད་ཡོད་དགོས།",
-  "password_requirements_missing_number": "ཨང་གྲངས་གཅིག་ཡན་ཆད་ཡོད་དགོས།",
-  "password_requirements_special_sign": "དམིགས་བསལ་ཡིག་འབྲུ་གཅིག་ཡན་ཆད་ཡོད་དགོས།",
-  "password_requirements_atleast_one_lowercase": "དབྱིན་ཡིག་གསལ་བྱེད་ཆུང་བ་གཅིག་ཡན་ཆད་ཡོད་དགོས།",
-  "password_requirements_atleast_one_uppercase": "དབྱིན་ཡིག་གསལ་བྱེད་ཆེན་པོ་གཅིག་ཡན་ཆད་ཡོད་དགོས།",
-  "password_requirements_too_similar": "ཁྱེད་ཀྱི་མིང་ངམ་གློག་འཕྲིན་ཆ་ཤས་ཚུད་མི་ཆོག"
-}

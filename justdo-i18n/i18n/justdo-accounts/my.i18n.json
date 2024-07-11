@@ -1,9 +1,0 @@
-{
-  "password_requirements_password_must": "စကားဝှက်သည်:",
-  "password_requirements_too_short": "အနည်းဆုံး စာလုံး %d လုံး ပါဝင်ရမည်",
-  "password_requirements_missing_number": "အနည်းဆုံး နံပါတ် တစ်လုံး ပါဝင်ရမည်",
-  "password_requirements_special_sign": "အနည်းဆုံး အထူးစာလုံး တစ်လုံး ပါဝင်ရမည်",
-  "password_requirements_atleast_one_lowercase": "အနည်းဆုံး အင်္ဂလိပ်စာလုံးအသေး တစ်လုံး ပါဝင်ရမည်",
-  "password_requirements_atleast_one_uppercase": "အနည်းဆုံး အင်္ဂလိပ်စာလုံးအကြီး တစ်လုံး ပါဝင်ရမည်",
-  "password_requirements_too_similar": "သင့်အမည် သို့မဟုတ် သင့်အီးမေးလ်၏ အစိတ်အပိုင်းများ မပါဝင်ရပါ"
-}
