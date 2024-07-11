@@ -221,6 +221,7 @@ _.extend JustdoI18n.prototype,
   # @param {Array<string>} [options.exclude_templates] - An array of template names to exclude from the output.
   # @param {Array<string|RegExp>} [options.include_keys] - An array of strings or regular expressions to filter the keys included in the output.
   # @param {Array<string|RegExp>} [options.exclude_keys] - An array of translation keys to exclude from the output.
+  # @param {boolean} [options.all_keys=false] - If true, includes all translation keys in the output, regardless of other filtering options.
 
   # @example
   #   Download a proofreading document for all translations used in current page.
@@ -237,19 +238,69 @@ _.extend JustdoI18n.prototype,
   # @example
   #   Download a proofreading document excluding translations with specific keys.
   #   APP.justdo_i18n.getProofreaderDoc exclude_keys: ["key1", "key2"]
+
+  # @example
+  #   Download a proofreading document including all translation keys under the current lang, regardless of other filtering options.
+  #   APP.justdo_i18n.getProofreaderDoc all_keys: true
   getProofreaderDoc: (options={}) ->
     default_options = 
       exclude_templates: []
       include_keys: []
       exclude_keys: []
+      all_keys: false
     options = _.extend default_options, options
 
     lang = @getLang()
-    options.lang = lang
-    options.cur_page_i18n_keys = []
-    @_getCurPageI18nKeys().forEach (templates_set, key) -> options.cur_page_i18n_keys.push {key: key, templates: Array.from(templates_set)}
+    method_call_options = 
+      lang: lang
     
-    Meteor.call "getProofreaderDoc", options, (err, csv_string) ->
+    if options.all_keys
+      method_call_options.all_keys = true
+    else
+      for key, value of options
+        # Ensure that the array values are not empty
+        if _.isArray(value)
+          options[key] = _.filter value, (item) -> not _.isEmpty item
+
+      cur_page_i18n_keys = @_getCurPageI18nKeys()
+      i18n_keys_and_depending_templates = []
+      cur_page_i18n_keys.forEach (templates_set, key) -> i18n_keys_and_depending_templates.push {key: key, templates: Array.from(templates_set)}
+
+      # Add include_keys to i18n_keys_and_depending_templates
+      for include_key in options.include_keys
+        # If key already exists in cur_page_i18n_keys, skip it
+        if cur_page_i18n_keys.has include_key
+          continue
+        
+        if _.isString include_key
+          i18n_keys_and_depending_templates.push {key: include_key, templates: []}
+        # If include_key is a RegExp, add all keys that match the RegExp
+        else if _.isRegExp include_key
+          for key of TAPi18next.options.resStore[JustdoI18n.default_lang].project
+            if include_key.test key
+              i18n_keys_and_depending_templates.push {key: key, templates: []}
+        
+      # Filter i18n_keys_and_depending_templates based on exclude_templates and exclude_keys
+      i18n_keys_and_depending_templates = _.filter i18n_keys_and_depending_templates, (data) ->
+        {key, templates} = data
+        
+        if options?.excluded_templates? and not _.isEmpty(templates)
+          templates = _.map templates, (template_name) -> template_name.replace "Template.", ""
+
+          is_key_used_only_by_excluded_template = _.isEmpty _.difference templates, options.excluded_templates
+          if is_key_used_only_by_excluded_template
+            return false
+        
+        if options?.exclude_keys?
+          for exclude_key in options.exclude_keys
+            if (exclude_key is key) or (exclude_key.test?(key))
+              return false
+        
+        return true
+
+      method_call_options.i18n_keys = _.map i18n_keys_and_depending_templates, (data) -> data.key
+
+    Meteor.call "getProofreaderDoc", method_call_options, (err, csv_string) ->
       if err
         console.error err
         return

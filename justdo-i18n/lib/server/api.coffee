@@ -117,20 +117,11 @@ _.extend JustdoI18n.prototype,
   _getProofreaderDocOptionsSchema: new SimpleSchema
     lang:
       type: String
-    cur_page_i18n_keys:
-      type: [Object]
-    "cur_page_i18n_keys.$.key":
-      type: String
-    "cur_page_i18n_keys.$.templates":
+    i18n_keys:
       type: [String]
-    exclude_keys:
-      type: [Match.OneOf(String, RegExp)]
       optional: true
-    include_keys:
-      type: [Match.OneOf(String, RegExp)]
-      optional: true
-    excluded_templates:
-      type: [String]
+    all_keys:
+      type: Boolean
       optional: true
   getProofreaderDoc: (options) ->
     {cleaned_val} =
@@ -193,8 +184,6 @@ _.extend JustdoI18n.prototype,
     worksheet.cell row_i, 3
       .string "Key"
       .style header_style
-    # Always show the header
-    worksheet.row(row_i).freeze()
 
     # Create cell style & write row
     ltr_cell_style =
@@ -221,27 +210,7 @@ _.extend JustdoI18n.prototype,
         .style ltr_cell_style
       return
 
-    added_keys = new Set()
-    writeRow = (key, templates) ->
-      # Note that we're adding the key to added_keys before checking whether it should be excluded, 
-      # so that we don't add it again if it's excluded
-      added_keys.add key
-
-      # Check whether the key is excluded
-      if options?.exclude_keys?
-        should_key_be_excluded = false
-        for exclude_key in options.exclude_keys
-          if (exclude_key is key) or (exclude_key.test?(key))
-            return
-    
-      # Check whether the key is used only by excluded templates
-      if options?.excluded_templates? and not _.isEmpty(templates)
-        templates = _.map templates, (template_name) -> template_name.replace "Template.", ""
-
-        is_key_used_only_by_excluded_template = _.isEmpty _.difference templates, options.excluded_templates
-        if is_key_used_only_by_excluded_template
-          return
-
+    writeRow = (key) ->
       default_lang_string = TAPi18n.__ key, {}, default_lang
       translated_string = TAPi18n.__ key, {}, lang
 
@@ -258,22 +227,16 @@ _.extend JustdoI18n.prototype,
         _writeRow translated_string, default_lang_string, key
       return
 
-    for key_and_template in options.cur_page_i18n_keys
-      key = key_and_template.key
-      templates = key_and_template.templates
+    if options.all_keys
+      i18n_keys_to_write = _.keys TAPi18next.options.resStore[JustdoI18n.default_lang].project
+    else
+      if _.isEmpty options.i18n_keys
+        throw @_error "missing-argument", "You must provide either i18n_keys or all_keys: true"
+      i18n_keys_to_write = options.i18n_keys
+      
+    for key in i18n_keys_to_write
+      writeRow key
 
-      writeRow key, templates
-    
-    isKeyAlreadyAdded = (key) => added_keys.has key
-    if _.isArray options?.include_keys
-      for include_key in options.include_keys
-        if (not isKeyAlreadyAdded include_key) and (_.isString include_key)
-          writeRow include_key
-        else if _.isRegExp include_key
-          for key of TAPi18next.options.resStore[default_lang].project
-            if (not isKeyAlreadyAdded key) and (include_key.test key)
-              writeRow key
-    
     # Prevent user from editing the header row (i.e "Translation", "English", "Key")
     worksheet.addDataValidation
       type: "textLength"
