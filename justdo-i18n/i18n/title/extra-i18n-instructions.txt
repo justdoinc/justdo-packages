@@ -1,2 +1,0 @@
-The following data are the title and description for our pages. 
-Therefore do not translate our brandname "JustDo" even if previous instruction specifies it.
