@@ -116,6 +116,9 @@ _.extend JustdoI18nRoutes.prototype,
     # and not the case received in the url. If the received lang from the url isn't matching the case correctly
     # we will also add, original_lang_tag to the returned object. (Not receiveing this means the lang tag was
     # correctly cased).
+    #
+    # Note 3: We only use the originalUrl of the req object. As such, you can
+    # mimic the behavior of this function by passing an object with an originalUrl.
 
     URL = JustdoHelpers.getURL()
     original_url = req.originalUrl
