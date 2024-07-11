@@ -1,5 +1,5 @@
 {
-  "password_requirements_password_must": "يجب أن تكون كلمة المرور:",
+  "password_requirements_password_must": "يجب على كلمة المرور أن:",
   "password_requirements_too_short": "تتكون من %d حرف على الأقل",
   "password_requirements_missing_number": "تحتوي على رقم واحد على الأقل",
   "password_requirements_special_sign": "تحتوي على حرف خاص واحد على الأقل",
