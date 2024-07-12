@@ -66,7 +66,7 @@ _.extend JustdoNews.prototype,
         news_template_doc = self.getNewsTemplateIfExists category, news_id, news_template
         fallback_title = APP.justdo_seo.getDefaultPageTitle lang
 
-        return APP.justdo_i18n.getI18nTextOrFallback {i18n_key: news_template_doc.page_title, fallback_text: fallback_title, lang: lang}
+        return APP.justdo_i18n.getI18nTextOrFallback {i18n_key: news_template_doc?.page_title, fallback_text: fallback_title, lang: lang}
       description_i18n: (path_without_lang, lang) ->
         {news_id, new_template} = self.getNewsParamFromPath path_without_lang
 
@@ -76,7 +76,7 @@ _.extend JustdoNews.prototype,
         news_template_doc = self.getNewsTemplateIfExists category, news_id, news_template
         fallback_description = APP.justdo_seo.getDefaultPageDescription lang
 
-        return APP.justdo_i18n.getI18nTextOrFallback {i18n_key: news_template_doc.page_description, fallback_text: fallback_description, lang: lang}
+        return APP.justdo_i18n.getI18nTextOrFallback {i18n_key: news_template_doc?.page_description, fallback_text: fallback_description, lang: lang}
       preview_image: (path_without_lang) ->
         {news_id} = self.getNewsParamFromPath path_without_lang
 
