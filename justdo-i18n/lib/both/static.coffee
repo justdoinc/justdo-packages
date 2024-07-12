@@ -8,3 +8,6 @@ _.extend JustdoI18n,
   vimeo_lang_tags:
     "zh-TW": "zh-Hant"
   lang_dropdown_max_lang_per_col: 16
+  proofreading_scope:
+    landing_page_layout_templates: ["top_banner", "header", "main_menu", "footer"]
+    default_tab_title_and_descriptions: [/^default_tab_.*$/]
