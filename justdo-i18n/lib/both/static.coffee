@@ -8,6 +8,7 @@ _.extend JustdoI18n,
   vimeo_lang_tags:
     "zh-TW": "zh-Hant"
   lang_dropdown_max_lang_per_col: 16
-  proofreading_scope:
-    landing_page_layout_templates: ["top_banner", "header", "main_menu", "footer"]
-    common_excluded_keys: [/^default_tab_.*$/, "improve_translation_tooltip"]
+  default_non_i18n_route_proofreading_scope: {all_keys: true} # The scope we use when the route isn't i18n (available only in english);
+                                                              # {all_keys: true} means that we download all keys in the environment
+  default_i18n_route_proofreading_scope: {} # The scope we use when the route is i18nable;
+                                            # {} means that we download keys that we've encountered

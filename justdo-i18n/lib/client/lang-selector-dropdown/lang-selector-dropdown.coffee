@@ -24,18 +24,18 @@ Template.lang_selector_dropdown.events
     APP.justdo_google_analytics?.sendEvent "footer-languag-improve-btn", {lang: APP.justdo_i18n.getLang()}
 
     route_name = APP.justdo_i18n_routes?.getCurrentRouteName() or Router.current()?.route.getName()
-    proofreading_scope = APP.justdo_i18n.getRouteProofreadingScope route_name
+    if not (proofreading_scope = APP.justdo_i18n.getRouteProofreadingScope route_name)?
+      proofreading_scope = JustdoI18n.default_proofreading_scope
+
     # Note that we're explicitly NOT using API from justdo_i18n_routes to determine if the current route is i18nable
     # because justdo_i18n_routes may not be available in all environments.
     is_cur_route_i18nable = Router.routes[route_name]?.options?.translatable
 
     if not proofreading_scope?
       if is_cur_route_i18nable
-        proofreading_scope = 
-          exclude_templates: JustdoI18n.proofreading_scope.landing_page_layout_templates
-          exclude_keys: JustdoI18n.proofreading_scope.common_excluded_keys
+        proofreading_scope = JustdoI18n.default_i18n_route_proofreading_scope
       else
-        proofreading_scope = {all_keys: true}
+        proofreading_scope = JustdoI18n.default_non_i18n_route_proofreading_scope 
   
     APP.justdo_i18n.getProofreaderDoc proofreading_scope
 
