@@ -36,11 +36,15 @@
       <div id="plugin-carousel" class="carousel slide py-3" data-ride="carousel">
         {{#if hasMoreThanOneSliderItems}}
           <ol class="carousel-indicators">
-            {{{carouselIndicators}}}
+            {{#each slider}}
+              <li data-target="#plugin-carousel" data-slide-to="{{@index}}" class="{{#if $eq @index 0}}active{{/if}}"></li>
+            {{/each}}
           </ol>
         {{/if}}
         <div class="carousel-inner d-flex" role="listbox">
-          {{{carousel}}}
+          {{#each slider}}
+            <div class="carousel-item{{#if $eq @index 0}} active{{/if}}">{{{xssGuard this}}}</div>
+          {{/each}}
         </div>
       </div>
       <!-- Plugin info -->
@@ -48,8 +52,9 @@
         <div class="plugin-category text-center border-right col-md-6 px-3 d-flex align-items-center justify-content-center">
           {{{categories}}}
         </div>
-        <div class="plugin-price text-center col-md-6 px-3 d-flex align-items-center justify-content-center">
-          Price: <strong class="text-primary ml-1">Free</strong>
+        <div class="plugin-price text-center col-md-6 px-3 d-flex flex-column align-items-center justify-content-center">
+          <div>Price: <strong class="text-primary ml-1">Free</strong></div>
+          <a href="{{i18nRoute route="pricing"}}" class="pricing-page-link">Learn more</a>
         </div>
       </div>
       <!-- Plugin description -->

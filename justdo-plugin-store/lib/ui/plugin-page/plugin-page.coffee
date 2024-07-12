@@ -46,34 +46,6 @@ Template.justdo_plugins_store_plugin_page.helpers
 
     return cat_names.join(" &bull; ")
 
-  carouselIndicators: ->
-    tpl = Template.instance()
-
-    plugin_def = tpl.store_manager.getActivePluginPageObject()
-
-    if not (slider = plugin_def.slider)?
-      return ""
-
-    res = ""
-    for i in [0...slider.length]
-      res += """<li data-target="#plugin-carousel" data-slide-to="#{i}" #{if i == 0 then ' class="active"'}></li>"""
-
-    return res
-    
-  carousel: ->
-    tpl = Template.instance()
-
-    plugin_def = tpl.store_manager.getActivePluginPageObject()
-
-    if not (slider = plugin_def.slider)?
-      return ""
-
-    res = ""
-    for i in [0...slider.length]
-      res += """<div class="carousel-item#{if i == 0 then ' active' else ""}">#{slider[i]}</div>"""
-
-    return res
-
   hasMoreThanOneSliderItems: ->
     tpl = Template.instance()
 

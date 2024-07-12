@@ -20,6 +20,8 @@ _.extend JustdoPluginStore.prototype,
     active_plugin_page_rv = new ReactiveVar null
 
     store_manager =
+      getAll: -> share.store_db.plugins
+      
       useBootstrapLayout: ->
         return options.use_bootstrap_layout
 
