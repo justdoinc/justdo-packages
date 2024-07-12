@@ -43,7 +43,12 @@
         {{/if}}
         <div class="carousel-inner d-flex" role="listbox">
           {{#each slider}}
-            <div class="carousel-item{{#if $eq @index 0}} active{{/if}}">{{{xssGuard this}}}</div>
+            <div class="carousel-item{{#if $eq @index 0}} active{{/if}}">
+              {{#if $eq asset_type "image"}}
+                <img src="{{asset_url}}" style="margin: 0 auto;" class="d-block w-100" />
+              {{/if}}
+              {{{xssGuard this}}}
+            </div>
           {{/each}}
         </div>
       </div>

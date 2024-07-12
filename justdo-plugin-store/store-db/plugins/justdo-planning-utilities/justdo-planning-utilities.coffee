@@ -39,10 +39,9 @@ share.store_db.plugins.push
   isPluginEnabledForEnvironment: -> true
 
   slider: [
-    """<img src="/layout/images/pricing/gantt.jpg" style="margin: 0 auto;" class="d-block w-100" />""",
-    """<img src="/layout/images/pricing/milestones.jpg" style="margin: 0 auto;" class="d-block w-100" />""",
-    """<img src="/layout/images/pricing/key_tasks.jpg" style="margin: 0 auto;" class="d-block w-100" />""",
-    """<img src="/layout/images/pricing/baselines.jpg" style="margin: 0 auto;" class="d-block w-100" />""",
-    """<img src="/layout/images/pricing/slack_time.jpg" style="margin: 0 auto;" class="d-block w-100" />""",
-
+    { asset_type: "image", asset_url: "/layout/images/pricing/gantt.jpg"},
+    { asset_type: "image", asset_url: "/layout/images/pricing/milestones.jpg"},
+    { asset_type: "image", asset_url: "/layout/images/pricing/key_tasks.jpg"},
+    { asset_type: "image", asset_url: "/layout/images/pricing/baselines.jpg"},
+    { asset_type: "image", asset_url: "/layout/images/pricing/slack_time.jpg"}
   ]
