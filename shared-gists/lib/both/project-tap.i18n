@@ -1,3 +1,3 @@
 {
-  "supported_languages": ["ar", "es", "fr", "he", "ja", "km", "ko", "pt-PT", "pt-BR", "vi", "ru", "yi", "it", "de", "hi", "tr", "el", "da", "fi", "nl", "sv", "th", "id", "pl", "cs", "hu", "ro", "sk", "uk", "bg", "hr", "sr", "sl", "et", "lv", "lt", "am", "zh-CN", "zh-TW", "sw"]
+  "supported_languages": ["ar", "es", "fr", "he", "ja", "km", "ko", "pt-PT", "pt-BR", "vi", "ru", "yi", "it", "de", "hi", "tr", "el", "da", "fi", "nl", "sv", "th", "id", "pl", "cs", "hu", "ro", "sk", "uk", "bg", "hr", "sr", "sl", "et", "lv", "lt", "am", "zh-CN", "zh-TW", "sw", "af", "az", "be", "bn", "bs", "ca", "eu", "lb", "mk", "ne", "nb", "sq", "ta", "uz", "hy", "kk", "ky", "ms", "tj"]
 }
