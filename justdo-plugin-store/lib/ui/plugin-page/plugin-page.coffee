@@ -70,7 +70,7 @@ Template.justdo_plugins_store_plugin_page.helpers
 
     res = ""
     for i in [0...slider.length]
-      res += """<div class="item #{if i == 0 then 'active'}">#{slider[i]}</div>"""
+      res += """<div class="carousel-item#{if i == 0 then ' active' else ""}">#{slider[i]}</div>"""
 
     return res
 
