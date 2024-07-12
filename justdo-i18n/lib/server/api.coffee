@@ -230,8 +230,11 @@ _.extend JustdoI18n.prototype,
     if options.all_keys
       i18n_keys_to_write = _.keys TAPi18next.options.resStore[JustdoI18n.default_lang].project
     else
+      options.i18n_keys = _.uniq _.filter options.i18n_keys, (key) -> _.isRegExp(key) or (not _.isEmpty key)
+
       if _.isEmpty options.i18n_keys
         throw @_error "missing-argument", "You must provide either i18n_keys or all_keys: true"
+      
       i18n_keys_to_write = options.i18n_keys
       
     for key in i18n_keys_to_write

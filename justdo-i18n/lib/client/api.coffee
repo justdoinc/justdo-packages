@@ -242,7 +242,7 @@ _.extend JustdoI18n.prototype,
   # @example
   #   Download a proofreading document including all translation keys under the current lang, regardless of other filtering options.
   #   APP.justdo_i18n.getProofreaderDoc all_keys: true
-  getProofreaderDoc: (options={}) ->
+  getProofreaderDoc: (options) ->
     default_options = 
       exclude_templates: []
       include_keys: []
@@ -260,7 +260,8 @@ _.extend JustdoI18n.prototype,
       for key, value of options
         # Ensure that the array values are not empty
         if _.isArray(value)
-          options[key] = _.filter value, (item) -> not _.isEmpty item
+          # _.isEmpty will return true on all regexps. So we need add _.isRegExp check
+          options[key] = _.filter value, (item) -> _.isRegExp(item) or (not _.isEmpty item)
 
       cur_page_i18n_keys = @_getCurPageI18nKeys()
       i18n_keys_and_depending_templates = []
