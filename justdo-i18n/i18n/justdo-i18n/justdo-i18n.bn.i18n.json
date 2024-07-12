@@ -1,3 +1,4 @@
 {
-  "show_this_page_in": "এই পৃষ্ঠাটি <span class=\"set-default-lang\" data-lang-tag=\"__default_lang_tag__\">__default_lang_name__</span> ভাষায় দেখাবেন?"
+  "show_this_page_in": "এই পৃষ্ঠাটি <span class=\"set-default-lang\" data-lang-tag=\"__default_lang_tag__\">__default_lang_name__</span> ভাষায় দেখাবেন?",
+  "improve_translation_tooltip": "অনুবাদ ডাউনলোড করুন এবং উন্নত করুন"
 }

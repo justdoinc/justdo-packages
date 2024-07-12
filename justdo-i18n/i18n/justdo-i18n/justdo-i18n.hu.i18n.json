@@ -1,3 +1,4 @@
 {
-  "show_this_page_in": "Mutassuk ezt az oldalt <span class=\"set-default-lang\" data-lang-tag=\"__default_lang_tag__\">__default_lang_name__</span> nyelven?"
+  "show_this_page_in": "Mutassuk ezt az oldalt <span class=\"set-default-lang\" data-lang-tag=\"__default_lang_tag__\">__default_lang_name__</span> nyelven?",
+  "improve_translation_tooltip": "Töltse le és javítsa a fordítást"
 }

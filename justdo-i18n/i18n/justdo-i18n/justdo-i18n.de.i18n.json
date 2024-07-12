@@ -1,3 +1,4 @@
 {
-  "show_this_page_in": "Diese Seite auf <span class=\"set-default-lang\" data-lang-tag=\"__default_lang_tag__\">__default_lang_name__</span> anzeigen?"
+  "show_this_page_in": "Diese Seite auf <span class=\"set-default-lang\" data-lang-tag=\"__default_lang_tag__\">__default_lang_name__</span> anzeigen?",
+  "improve_translation_tooltip": "Übersetzung herunterladen und verbessern"
 }

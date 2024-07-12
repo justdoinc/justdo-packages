@@ -1,3 +1,4 @@
 {
-  "show_this_page_in": "Ushbu sahifani <span class=\"set-default-lang\" data-lang-tag=\"__default_lang_tag__\">__default_lang_name__</span> tilida ko'rsatilsinmi?"
+  "show_this_page_in": "Ushbu sahifani <span class=\"set-default-lang\" data-lang-tag=\"__default_lang_tag__\">__default_lang_name__</span> tilida ko'rsatilsinmi?",
+  "improve_translation_tooltip": "Tarjimani yuklab oling va yaxshilang"
 }

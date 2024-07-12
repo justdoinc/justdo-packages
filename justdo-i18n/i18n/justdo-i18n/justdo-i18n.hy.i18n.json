@@ -1,3 +1,4 @@
 {
-  "show_this_page_in": "Ցուցադրել այս էջը <span class=\"set-default-lang\" data-lang-tag=\"__default_lang_tag__\">__default_lang_name__</span> լեզվո՞վ:"
+  "show_this_page_in": "Ցուցադրել այս էջը <span class=\"set-default-lang\" data-lang-tag=\"__default_lang_tag__\">__default_lang_name__</span> լեզվո՞վ:",
+  "improve_translation_tooltip": "Ներբեռնել և բարելավել թարգմանությունը"
 }

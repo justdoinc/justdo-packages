@@ -1,3 +1,4 @@
 {
-  "show_this_page_in": "இந்தப் பக்கத்தை <span class=\"set-default-lang\" data-lang-tag=\"__default_lang_tag__\">__default_lang_name__</span> மொழியில் காட்டவா?"
+  "show_this_page_in": "இந்தப் பக்கத்தை <span class=\"set-default-lang\" data-lang-tag=\"__default_lang_tag__\">__default_lang_name__</span> மொழியில் காட்டவா?",
+  "improve_translation_tooltip": "மொழிபெயர்ப்பை பதிவிறக்கி மேம்படுத்தவும்"
 }
