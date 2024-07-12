@@ -10,6 +10,9 @@ Template.lang_selector_dropdown.helpers
 
     return chunked_langs
 
+  isDefaultLang: ->
+    return APP.justdo_i18n.getLang() is JustdoI18n.default_lang
+
 Template.lang_selector_dropdown.events
   "click .dropdown-item": (e, tpl) ->
     lang_tag =  $(e.target).closest(".dropdown-item").data("lang-tag")
