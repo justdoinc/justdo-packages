@@ -15,11 +15,9 @@
         {{/each}}
       </div>
     </div>
-    {{#unless isDefaultLang}}
-      <button type="button" class="btn footer-languag-improve-btn" jd-tt="user-info?id=fzLiEk8kGxzbmoe3g">
-        <svg class="jd-icon text-secondary m-0"><use xlink:href="/layout/icons-feather-sprite.svg#download"></use></svg>
-        <div class="jd-tooltip">{{_ "improve_translation_tooltip"}}</div>
-      </button>
-    {{/unless}}
+    <button type="button" class="btn footer-languag-improve-btn">
+      <svg class="jd-icon text-secondary m-0"><use xlink:href="/layout/icons-feather-sprite.svg#download"></use></svg>
+      <div class="jd-tooltip">{{{xssGuard(_ "improve_translation_tooltip")}}}</div>
+    </button>
   </div>
 </template>
