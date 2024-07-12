@@ -212,7 +212,10 @@ _.extend JustdoI18n.prototype,
 
     return @isLangRtl @getLang()
 
-  # Generates a CSV document for proofreading translations.
+  getRouteProofreadingScope: (route_name) ->
+    return Router.routes[route_name]?.options?.proofreading_scope
+
+  # Generates a XLSX document for proofreading translations.
 
   # The document includes translations based on the current language, suggested fixes,
   # original English text, and unique identifiers for each translation key.
@@ -285,10 +288,10 @@ _.extend JustdoI18n.prototype,
       i18n_keys_and_depending_templates = _.filter i18n_keys_and_depending_templates, (data) ->
         {key, templates} = data
         
-        if options?.excluded_templates? and not _.isEmpty(templates)
+        if options?.exclude_templates? and not _.isEmpty(templates)
           templates = _.map templates, (template_name) -> template_name.replace "Template.", ""
 
-          is_key_used_only_by_excluded_template = _.isEmpty _.difference templates, options.excluded_templates
+          is_key_used_only_by_excluded_template = _.isEmpty _.difference templates, options.exclude_templates
           if is_key_used_only_by_excluded_template
             return false
         
