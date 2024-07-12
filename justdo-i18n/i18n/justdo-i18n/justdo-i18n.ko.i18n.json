@@ -1,4 +1,4 @@
 {
   "show_this_page_in": "이 페이지를 <span class=\"set-default-lang\" data-lang-tag=\"__default_lang_tag__\">__default_lang_name__</span>(으)로 표시하시겠습니까?",
-  "improve_translation_tooltip": "번역을 다운로드하고 개선하기"
+  "improve_translation_tooltip": "문법 오류나 오탈자를 발견하셨나요? <b>수정에 도움을 주시면 감사하겠습니다 🙏</b><br>언어 파일을 다운로드하고 수정된 내용을 보내주세요."
 }
