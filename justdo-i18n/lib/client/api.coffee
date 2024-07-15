@@ -213,7 +213,17 @@ _.extend JustdoI18n.prototype,
     return @isLangRtl @getLang()
 
   getRouteProofreadingScope: (route_name) ->
-    return Router.routes[route_name]?.options?.proofreading_scope
+    if (route_proofreading_scope = Router.routes[route_name]?.options?.proofreading_scope)?
+      return route_proofreading_scope
+
+    # Note that we're explicitly NOT using API from justdo_i18n_routes to determine if the current route is i18nable
+    # because justdo_i18n_routes may not be available in all environments.
+    is_route_i18nable = Router.routes[route_name]?.options?.translatable
+
+    if is_route_i18nable
+      return JustdoI18n.default_i18n_route_proofreading_scope
+
+    return JustdoI18n.default_non_i18n_route_proofreading_scope
 
   # Generates a XLSX document for proofreading translations.
 
