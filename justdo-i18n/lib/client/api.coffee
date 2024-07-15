@@ -263,8 +263,7 @@ _.extend JustdoI18n.prototype,
       for key, value of options
         # Ensure that the array values are not empty
         if _.isArray(value)
-          # _.isEmpty will return true on all regexps. So we need add _.isRegExp check
-          options[key] = _.filter value, (item) -> _.isRegExp(item) or (not _.isEmpty item)
+          options[key] = _.compact value
 
       cur_page_i18n_keys = @_getCurPageI18nKeys()
       i18n_keys_and_depending_templates = []
