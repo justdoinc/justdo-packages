@@ -7,14 +7,6 @@ _.extend JustdoI18n.prototype,
 
     # Use of new Map() instead of {} because it maintains the order of insertion
     @cur_page_i18n_keys = new Map()
-    # This tracker is to clear cur_page_i18n_keys from the previous page when the page changes.
-    @cur_page_i18n_keys_tracker = Tracker.autorun =>
-      Router.current() # For reactivity. We want to clear cur_page_i18n_keys when the page changes.
-      @_clearCurPageI18nKeys()
-      return
-    @onDestroy =>
-      @cur_page_i18n_keys_tracker?.stop?()
-      return
 
     # XXX The APP.executeAfterAppClientCode wrap is necessary because on the first page load,
     # XXX TAPi18n's list of supported languages may not be fully initialized as specified in project-tap.i18n.
@@ -153,8 +145,6 @@ _.extend JustdoI18n.prototype,
     return
     
   _getCurPageI18nKeys: -> @cur_page_i18n_keys
-
-  _clearCurPageI18nKeys: -> @cur_page_i18n_keys.clear()
 
   setLang: (lang, options) ->
     # options:
