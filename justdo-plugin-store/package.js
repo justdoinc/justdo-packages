@@ -63,9 +63,9 @@ Package.onUse(function (api) {
   api.addAssets("store-db/plugins/justdo-calendar-view/media/store-list-icon.png", client);
 
   // justdo-planning-utilities
-  api.addFiles("store-db/plugins/justdo-planning-utilities/justdo-planning-utilities.coffee", both);
-  api.addAssets("store-db/plugins/justdo-planning-utilities/media/delivery-planner-icon.png", client);
-  api.addAssets("store-db/plugins/justdo-planning-utilities/media/delivery-planner-screenshot.png", client);
+  api.addFiles("store-db/plugins/gantt-chart/gantt-chart.coffee", both);
+  api.addAssets("store-db/plugins/gantt-chart/media/delivery-planner-icon.png", client);
+  api.addAssets("store-db/plugins/gantt-chart/media/delivery-planner-screenshot.png", client);
 
   // time-tracker 
   api.addFiles("store-db/plugins/justdo-time-tracker/justdo-time-tracker.coffee", both);

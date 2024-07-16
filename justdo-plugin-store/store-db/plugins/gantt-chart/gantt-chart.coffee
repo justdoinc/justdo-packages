@@ -1,5 +1,5 @@
 share.store_db.plugins.push
-  id: "justdo-planning-utilities"
+  id: "gantt-chart"
   title: "Gantt Chart Project Planner"
   short_description: "Visualize and manage project timelines with interactive Gantt charts."
   full_description: """
@@ -28,7 +28,7 @@ share.store_db.plugins.push
     </ul> 
   """
   categories: ["featured", "misc", "management"]
-  image_url: "/packages/justdoinc_justdo-plugin-store/store-db/plugins/justdo-planning-utilities/media/delivery-planner-icon.png"
+  image_url: "/packages/justdoinc_justdo-plugin-store/store-db/plugins/gantt-chart/media/delivery-planner-icon.png"
   price: "Free"
   version: "1.0"
   developer: "JustDo, Inc."
