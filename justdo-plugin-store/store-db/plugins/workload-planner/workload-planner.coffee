@@ -20,7 +20,5 @@ share.store_db.plugins.push
   isPluginEnabledForEnvironment: -> true
 
   slider: [
-    """
-      <iframe width="100%" height="400" src="https://drive.google.com/file/d/1MAxA4QaoaTNHSuGw_NTb1NkE6F8Qi96w/preview" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    """
+    {asset_type: "iframe", asset_url: "https://drive.google.com/file/d/1MAxA4QaoaTNHSuGw_NTb1NkE6F8Qi96w/preview"}
   ]

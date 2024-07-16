@@ -46,8 +46,9 @@
             <div class="carousel-item{{#if $eq @index 0}} active{{/if}}">
               {{#if $eq asset_type "image"}}
                 <img src="{{asset_url}}" style="margin: 0 auto;" class="d-block w-100" />
+              {{else if $eq asset_type "iframe"}}
+                <iframe src="{{asset_url}}" width="100%" height="400" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
               {{/if}}
-              {{{xssGuard this}}}
             </div>
           {{/each}}
         </div>
