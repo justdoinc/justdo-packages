@@ -4,7 +4,7 @@
       <div class="row mb-3">
         <div class="col-md-8 d-flex align-items-center">
           <div class="return-to-menu mr-2 jd-c-pointer"><svg class="jd-icon jd-icon-32 text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-left-circle"/></svg></div>
-          <h1 class="m-0 title">{{title}}</h1>
+          <h1 class="m-0 title">{{_ title}}</h1>
         </div>
         <div class="col-md-4">
           {{#if isProjectPage}}
@@ -65,7 +65,7 @@
       </div>
       <!-- Plugin description -->
       <div class="plugin-description py-3 border-bottom">
-        <p>{{{full_description}}}</p>
+        <p>{{{xssGuard(_ full_description)}}}</p>
       </div>
       <div class="plugin-additional-info py-3 border-bottom">
         <h5>ADDITIONAL INFO</h5>
