@@ -93,6 +93,10 @@ Package.onUse(function (api) {
   api.addFiles("store-db/plugins/task-copy/task-copy.coffee", both);
   api.addAssets("store-db/plugins/task-copy/media/store-list-icon.png", client);
 
+  // risk-management
+  api.addFiles("store-db/plugins/risk-management/risk-management.coffee", both);
+  api.addAssets("store-db/plugins/risk-management/media/store-list-icon.png", client);
+
   // rows-styling
   api.addFiles("store-db/plugins/rows-styling/rows-styling.coffee", both);
   api.addAssets("store-db/plugins/rows-styling/media/store-list-icon.png", client);
