@@ -8,7 +8,7 @@ if (templating = Package.templating)?
     # <div title="{{{}}}"></div>
 
     options = options?.hash or {}
-    _.extend options, 
+    options = _.extend {}, options, 
       allow_html_parsing: true
       enclosing_char: ""
         
