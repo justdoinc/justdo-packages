@@ -11,11 +11,13 @@ both = [client, server]
 
 Package.onUse(function (api) {
   api.versionsFrom("1.4.1.1");
-
+  
+  // api.use("ecmascript", both);
+  // api.use("tmeasday:check-npm-versions@0.3.1", both);
   api.use("coffeescript", both);
   api.use("underscore", both);
   api.use("mongo", both);
-
+  
   // Uncomment if you want to use NPM peer dependencies using
   // checkNpmVersions.
   //
@@ -38,6 +40,7 @@ Package.onUse(function (api) {
   // api.use("tmeasday:check-npm-versions@0.3.1", both);
 
   // api.use("stevezhu:lodash@4.17.2", both);
+
   api.use("templating", client);
   api.use('fourseven:scss@3.2.0', client);
 
@@ -55,6 +58,7 @@ Package.onUse(function (api) {
   api.use("reactive-var", both);
   api.use("tap:i18n", both);
   api.use("justdoinc:justdo-i18n@1.0.0", both);
+
   api.use("tracker", client);
 
   api.addFiles("store-db/init.coffee", both);

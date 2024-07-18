@@ -30,6 +30,9 @@ Template.justdo_plugins_store_plugins_list.helpers
     tpl = Template.instance()
 
     return tpl.store_manager.isPluginInstalled(plugin.id)
+  
+  getDeveloperUrlWithoutProtocol: ->
+    return @developer_url.replace /https?:\/\//, ""
 
 Template.justdo_plugins_store_plugins_list.events
   "click .plugin-tile": ->
