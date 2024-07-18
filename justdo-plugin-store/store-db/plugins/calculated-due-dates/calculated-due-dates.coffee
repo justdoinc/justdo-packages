@@ -2,7 +2,7 @@ share.store_db.plugins.push
   id: "calculated-due-dates"
   title: "plugin_store_calculated_due_dates_title"
   short_description: "plugin_store_calculated_due_dates_short_description"
-  full_description: "plugin_store_calculated_due_dates_full_description"
+  full_description: ["plugin_store_calculated_due_dates_full_description"]
   categories: ["featured", "justdo-labs"]
   image_url: "/packages/justdoinc_justdo-plugin-store/store-db/plugins/calculated-due-dates/media/store-list-icon.png"
   price: "Free"

@@ -2,7 +2,7 @@ share.store_db.plugins.push
   id: "gantt-chart"
   title: "plugin_store_gantt_chart_title"
   short_description: "plugin_store_gantt_chart_short_description"
-  full_description: "plugin_store_gantt_chart_full_description"
+  full_description: ["plugin_store_gantt_chart_full_description"]
   categories: ["featured", "misc", "management"]
   image_url: "/packages/justdoinc_justdo-plugin-store/store-db/plugins/gantt-chart/media/delivery-planner-icon.png"
   price: "Free"

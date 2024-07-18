@@ -2,7 +2,7 @@ share.store_db.plugins.push
   id: "justdo-activity"
   title: "plugin_store_activity_log_title"
   short_description: "plugin_store_activity_log_short_description"
-  full_description: "plugin_store_activity_log_full_description"
+  full_description: ["plugin_store_activity_log_full_description"]
   categories: ["featured", "misc", "management"]
   image_url: "/packages/justdoinc_justdo-plugin-store/store-db/plugins/justdo-activity/media/store-list-icon.png"
   price: "Free"

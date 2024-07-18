@@ -2,7 +2,7 @@ share.store_db.plugins.push
   id: "rows-styling"
   title: "plugin_store_rows_styling_title"
   short_description: "plugin_store_rows_styling_short_description"
-  full_description: "plugin_store_rows_styling_full_description"
+  full_description: ["plugin_store_rows_styling_full_description"]
   categories: ["featured", "misc"]
   image_url: "/packages/justdoinc_justdo-plugin-store/store-db/plugins/rows-styling/media/store-list-icon.png"
   price: "Free"

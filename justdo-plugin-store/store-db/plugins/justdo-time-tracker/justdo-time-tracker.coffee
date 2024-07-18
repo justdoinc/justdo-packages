@@ -2,7 +2,7 @@ share.store_db.plugins.push
   id: "justdo-time-tracker"
   title: "plugin_store_time_tracker_title"
   short_description: "plugin_store_time_tracker_short_description"
-  full_description: "plugin_store_time_tracker_full_description"
+  full_description: ["plugin_store_time_tracker_full_description"]
   categories: ["featured", "misc", "management", "power-tools"]
   image_url: "/packages/justdoinc_justdo-plugin-store/store-db/plugins/justdo-time-tracker/media/store-list-icon.png"
   price: "Free"

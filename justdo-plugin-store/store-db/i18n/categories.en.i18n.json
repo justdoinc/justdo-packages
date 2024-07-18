@@ -1,9 +1,19 @@
 {
   "plugin_store_category_featured_label": "Featured",
+  "plugin_store_category_featured_meta_title": "Featured JustDo Plugins: Enhance Your Project Management",
+  "plugin_store_category_featured_meta_description": "Explore our curated selection of JustDo plugins to boost productivity, streamline workflows, and enhance team collaboration. Find the perfect tools to customize your JustDo experience.",
   "plugin_store_category_management_label": "Management",
+  "plugin_store_category_management_meta_title": "JustDo Plugins for Management: Lead & Deliver Projects",
+  "plugin_store_category_management_meta_description": "Empower your team with JustDo plugins for efficient project and resource management. Optimize workflows, track progress, and achieve project success.",
   "plugin_store_category_misc_label": "Miscellaneous",
+  "plugin_store_category_misc_meta_title": "Miscellaneous JustDo Plugins: Enhancements & Utilities",
+  "plugin_store_category_misc_meta_description": "Discover a variety of JustDo plugins to enhance specific aspects of your workflow, from task visualization to time tracking and more.",
   "plugin_store_category_power_tools_label": "Power tools",
+  "plugin_store_category_power_tools_meta_title": "JustDo Power Tools: Advanced Features for Power Users",
+  "plugin_store_category_power_tools_meta_description": "Unlock advanced functionality with JustDo Power Tools. Automate tasks, integrate with other apps, and take your project management to the next level.",
   "plugin_store_category_justdo_labs_label": "JustDo Labs",
+  "plugin_store_category_justdo_labs_meta_title": "JustDo Labs: Explore Cutting-Edge Project Management",
+  "plugin_store_category_justdo_labs_meta_description": "Be the first to experience the latest innovations in project management. JustDo Labs features experimental and cutting-edge tools to transform your workflow.",
   "plugin_store_category_unknown_label": "Unknown",
   "plugin_store_category_installed_label": "Installed"
 }

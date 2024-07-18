@@ -65,7 +65,11 @@
       </div>
       <!-- Plugin description -->
       <div class="plugin-description py-3 border-bottom">
-        <p>{{{xssGuard(_ full_description)}}}</p>
+        <p>
+          {{#each full_description}}
+            {{{xssGuard(_ this)}}}
+          {{/each}}
+        </p>
       </div>
       <div class="plugin-additional-info py-3 border-bottom">
         <h5>{{_ "plugin_store_additional_info"}}</h5>
