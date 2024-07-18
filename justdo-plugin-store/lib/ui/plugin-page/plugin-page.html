@@ -68,13 +68,13 @@
         <p>{{{xssGuard(_ full_description)}}}</p>
       </div>
       <div class="plugin-additional-info py-3 border-bottom">
-        <h5>ADDITIONAL INFO</h5>
-        <p class="mb-0">Version:<strong class="text-primary"> {{version}}</strong></p>
+        <h5>{{_ "plugin_store_additional_info"}}</h5>
+        <p class="mb-0">{{{xssGuard(_ "plugin_store_version" version=version)}}}</p>
       </div>
       <div class="plugin-developer py-3">
-        <h5>DEVELOPER</h5>
-        <p class="mb-0">Company:<strong class="text-primary"> {{developer}}</strong></p>
-        <p class="mb-0">Website:<strong class="text-primary"> {{developer_url}}</strong></p>
+        <h5>{{_ "plugin_store_developer"}}</h5>
+        <p class="mb-0">{{{xssGuard(_ "plugin_store_developer_company" company_name=developerI18n)}}}</p>
+        <p class="mb-0">{{{xssGuard(_ "plugin_store_developer_website" company_website=developer_url)}}}</p>
       </div>
     {{/with}}
   </div>

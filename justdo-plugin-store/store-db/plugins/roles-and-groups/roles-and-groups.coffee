@@ -11,8 +11,8 @@
 #   image_url: "/packages/justdoinc_justdo-plugin-store/store-db/plugins/roles-and-groups/media/store-list-icon.jpg"
 #   price: "Free"
 #   version: "1.0"
-#   developer: "JustDo, Inc."
-#   developer_url: "justdo.com"
+#   developer: "plugin_store_default_plugin_developer_name"
+#   developer_url: "https://justdo.com"
 
 #   package_name: "justdoinc:justdo-roles"
 #   package_project_custom_feature_id: "justdo_roles"

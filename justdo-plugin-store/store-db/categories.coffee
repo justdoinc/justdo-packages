@@ -2,32 +2,26 @@ share.store_db.categories =
   [
     {
       id: "featured"
-      label:
-        en: "Featured"
+      label: "plugin_store_category_featured_label"
     }
     {
       id: "misc"
-      label:
-        en: "Miscellaneous"
+      label: "plugin_store_category_misc_label"
     }
     {
       id: "management"
-      label:
-        en: "Management"
+      label: "plugin_store_category_management_label"
     }
     {
       id: "power-tools"
-      label:
-        en: "Power tools"
+      label: "plugin_store_category_power_tools_label"
     }
     {
       id: "justdo-labs"
-      label:
-        en: "JustDo Labs"
+      label: "plugin_store_category_justdo_labs_label"
     }
   ]
 
 share.store_db.installed_category_def =
   id: "installed"
-  label:
-    en: "Installed"
+  label: "plugin_store_category_installed_label"

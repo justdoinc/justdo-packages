@@ -7,8 +7,8 @@ share.store_db.plugins.push
   image_url: "/packages/justdoinc_justdo-plugin-store/store-db/plugins/private-follow-up/media/store-list-icon.jpeg"
   price: "Free"
   version: "1.0"
-  developer: "JustDo, Inc."
-  developer_url: "justdo.com"
+  developer: "plugin_store_default_plugin_developer_name"
+  developer_url: "https://justdo.com"
 
   package_name: "justdoinc:justdo-private-follow-up"
   package_project_custom_feature_id: "justdo_private_follow_up"
