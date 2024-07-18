@@ -1,4 +1,5 @@
 {
+  "plugin_store_title": "Plugins",
   "plugin_store_additional_info": "ADDITIONAL INFO",
   "plugin_store_developer": "DEVELOPER",
   "plugin_store_version": "Version: <strong class=\"text-primary\">__version__</strong>",
