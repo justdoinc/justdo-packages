@@ -12,6 +12,12 @@ _.extend JustdoHelpers,
       enclosing_char: undefined
       enclosing_char_esc: undefined # If set to undefined, we will use the html entity value for the char.
       allowEmptyTags: true
+      # When set to false, noFormatting appends white space between text and other elements.
+      # e.g. <span>This is a <a href="">link</a>.</span> > <span>This is a <a href="">link</a> .</span>
+      noFormatting: false 
+      # noTextManhandle, when set to true, forces noFormatting to be true.
+      # It also disable the trimming of consecutive white spaces and new lines. 
+      noTextManhandle: false
 
     options = _.extend {}, default_options, options
 
@@ -146,6 +152,12 @@ _.extend JustdoHelpers,
 
       if options.allowEmptyTags? # If set to undefined we will not pass this option at all, to use the defaults
         uni_html_options.allowEmptyTags = options.allowEmptyTags
+      
+      if options.noFormatting?
+        uni_html_options.noFormatting = options.noFormatting
+      
+      if options.noTextManhandle?
+        uni_html_options.noTextManhandle = options.noTextManhandle
 
       purified_html = UniHTML.purify text, uni_html_options
 
