@@ -1,8 +1,0 @@
-{
-  "task_type_delayed_label": "Vėluojanti",
-  "task_type_behind_label": "Atsiliekanti",
-  "task_type_late_label": "Pavėluota",
-  "task_type_overdue_label": "Pradelsta",
-  "task_type_key_task_label": "Pagrindinė užduotis",
-  "task_type_no_owner_label": "Be atsakingo asmens"
-}

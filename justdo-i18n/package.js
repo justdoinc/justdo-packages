@@ -164,6 +164,135 @@ Package.onUse(function (api) {
     "i18n/common/tg.i18n.json"
   ], both);
 
+  // loader
+  api.addFiles([
+    "i18n/loader/loader.en.i18n.json",
+    "i18n/loader/loader.ar.i18n.json",
+    "i18n/loader/loader.es.i18n.json",
+    "i18n/loader/loader.fr.i18n.json",
+    "i18n/loader/loader.he.i18n.json",
+    "i18n/loader/loader.ja.i18n.json",
+    "i18n/loader/loader.km.i18n.json",
+    "i18n/loader/loader.ko.i18n.json",
+    "i18n/loader/loader.pt-PT.i18n.json",
+    "i18n/loader/loader.pt-BR.i18n.json",
+    "i18n/loader/loader.vi.i18n.json",
+    "i18n/loader/loader.ru.i18n.json",
+    "i18n/loader/loader.yi.i18n.json",
+    "i18n/loader/loader.it.i18n.json",
+    "i18n/loader/loader.de.i18n.json",
+    "i18n/loader/loader.hi.i18n.json",
+    "i18n/loader/loader.tr.i18n.json",
+    "i18n/loader/loader.el.i18n.json",
+    "i18n/loader/loader.da.i18n.json",
+    "i18n/loader/loader.fi.i18n.json",
+    "i18n/loader/loader.nl.i18n.json",
+    "i18n/loader/loader.sv.i18n.json",
+    "i18n/loader/loader.th.i18n.json",
+    "i18n/loader/loader.id.i18n.json",
+    "i18n/loader/loader.pl.i18n.json",
+    "i18n/loader/loader.cs.i18n.json",
+    "i18n/loader/loader.hu.i18n.json",
+    "i18n/loader/loader.ro.i18n.json",
+    "i18n/loader/loader.sk.i18n.json",
+    "i18n/loader/loader.uk.i18n.json",
+    "i18n/loader/loader.bg.i18n.json",
+    "i18n/loader/loader.hr.i18n.json",
+    "i18n/loader/loader.sr.i18n.json",
+    "i18n/loader/loader.sl.i18n.json",
+    "i18n/loader/loader.et.i18n.json",
+    "i18n/loader/loader.lv.i18n.json",
+    "i18n/loader/loader.lt.i18n.json",
+    "i18n/loader/loader.am.i18n.json",
+    "i18n/loader/loader.zh-CN.i18n.json",
+    "i18n/loader/loader.zh-TW.i18n.json",
+    "i18n/loader/loader.sw.i18n.json",
+    "i18n/loader/loader.af.i18n.json",
+    "i18n/loader/loader.az.i18n.json",
+    "i18n/loader/loader.be.i18n.json",
+    "i18n/loader/loader.bn.i18n.json",
+    "i18n/loader/loader.bs.i18n.json",
+    "i18n/loader/loader.ca.i18n.json",
+    "i18n/loader/loader.eu.i18n.json",
+    "i18n/loader/loader.lb.i18n.json",
+    "i18n/loader/loader.mk.i18n.json",
+    "i18n/loader/loader.ne.i18n.json",
+    "i18n/loader/loader.nb.i18n.json",
+    "i18n/loader/loader.sq.i18n.json",
+    "i18n/loader/loader.ta.i18n.json",
+    "i18n/loader/loader.uz.i18n.json",
+    "i18n/loader/loader.hy.i18n.json",
+    "i18n/loader/loader.kk.i18n.json",
+    "i18n/loader/loader.ky.i18n.json",
+    "i18n/loader/loader.ms.i18n.json",
+    "i18n/loader/loader.tg.i18n.json"
+  ], both);
+
+  // title
+  api.addFiles([
+    "i18n/title/title.en.i18n.json",
+    "i18n/title/title.ar.i18n.json",
+    "i18n/title/title.es.i18n.json",
+    "i18n/title/title.fr.i18n.json",
+    "i18n/title/title.he.i18n.json",
+    "i18n/title/title.ja.i18n.json",
+    "i18n/title/title.km.i18n.json",
+    "i18n/title/title.ko.i18n.json",
+    "i18n/title/title.pt-PT.i18n.json",
+    "i18n/title/title.pt-BR.i18n.json",
+    "i18n/title/title.vi.i18n.json",
+    "i18n/title/title.ru.i18n.json",
+    "i18n/title/title.yi.i18n.json",
+    "i18n/title/title.it.i18n.json",
+    "i18n/title/title.de.i18n.json",
+    "i18n/title/title.hi.i18n.json",
+    "i18n/title/title.tr.i18n.json",
+    "i18n/title/title.el.i18n.json",
+    "i18n/title/title.da.i18n.json",
+    "i18n/title/title.fi.i18n.json",
+    "i18n/title/title.nl.i18n.json",
+    "i18n/title/title.sv.i18n.json",
+    "i18n/title/title.th.i18n.json",
+    "i18n/title/title.id.i18n.json",
+    "i18n/title/title.pl.i18n.json",
+    "i18n/title/title.cs.i18n.json",
+    "i18n/title/title.hu.i18n.json",
+    "i18n/title/title.ro.i18n.json",
+    "i18n/title/title.sk.i18n.json",
+    "i18n/title/title.uk.i18n.json",
+    "i18n/title/title.bg.i18n.json",
+    "i18n/title/title.hr.i18n.json",
+    "i18n/title/title.sr.i18n.json",
+    "i18n/title/title.sl.i18n.json",
+    "i18n/title/title.et.i18n.json",
+    "i18n/title/title.lv.i18n.json",
+    "i18n/title/title.lt.i18n.json",
+    "i18n/title/title.am.i18n.json",
+    "i18n/title/title.zh-CN.i18n.json",
+    "i18n/title/title.zh-TW.i18n.json",
+    "i18n/title/title.sw.i18n.json",
+    "i18n/title/title.af.i18n.json",
+    "i18n/title/title.az.i18n.json",
+    "i18n/title/title.be.i18n.json",
+    "i18n/title/title.bn.i18n.json",
+    "i18n/title/title.bs.i18n.json",
+    "i18n/title/title.ca.i18n.json",
+    "i18n/title/title.eu.i18n.json",
+    "i18n/title/title.lb.i18n.json",
+    "i18n/title/title.mk.i18n.json",
+    "i18n/title/title.ne.i18n.json",
+    "i18n/title/title.nb.i18n.json",
+    "i18n/title/title.sq.i18n.json",
+    "i18n/title/title.ta.i18n.json",
+    "i18n/title/title.uz.i18n.json",
+    "i18n/title/title.hy.i18n.json",
+    "i18n/title/title.kk.i18n.json",
+    "i18n/title/title.ky.i18n.json",
+    "i18n/title/title.ms.i18n.json",
+    "i18n/title/title.tg.i18n.json"
+  ], both);
+
+
   // justdo-i18n
   api.addFiles([
     "i18n/justdo-i18n/justdo-i18n.en.i18n.json",
@@ -227,84 +356,6 @@ Package.onUse(function (api) {
     "i18n/justdo-i18n/justdo-i18n.ms.i18n.json",
     "i18n/justdo-i18n/justdo-i18n.tg.i18n.json"
   ], both);
-  
-  api.addFiles("i18n/loader/loader.en.i18n.json", both);
-  api.addFiles("i18n/loader/loader.vi.i18n.json", both);
-  api.addFiles("i18n/loader/loader.zh-TW.i18n.json", both);
-  api.addFiles("i18n/title/title.en.i18n.json", both);
-  api.addFiles("i18n/title/title.vi.i18n.json", both);
-  api.addFiles("i18n/title/title.zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-task-pane/item-details/en.i18n.json", both);
-  api.addFiles("i18n/justdo-task-pane/item-details/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-task-pane/item-details/vi.i18n.json", both);
-  api.addFiles("i18n/justdo-task-pane/activity/en.i18n.json", both);
-  api.addFiles("i18n/justdo-task-pane/activity/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-task-pane/activity/vi.i18n.json", both);
-  api.addFiles("i18n/justdo-tasks-collection-manager/en.i18n.json", both);
-  api.addFiles("i18n/justdo-tasks-collection-manager/vi.i18n.json", both);
-  api.addFiles("i18n/justdo-tasks-collection-manager/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-chat/en.i18n.json", both);
-  api.addFiles("i18n/justdo-chat/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-chat/vi.i18n.json", both);
-  api.addFiles("i18n/justdo-tasks-changelog-manager/en.i18n.json", both);
-  api.addFiles("i18n/justdo-tasks-changelog-manager/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-task-types/en.i18n.json", both);
-  api.addFiles("i18n/justdo-task-types/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-task-types/vi.i18n.json", both);
-  api.addFiles("i18n/justdo-private-follow-up/en.i18n.json", both);
-  api.addFiles("i18n/justdo-private-follow-up/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-private-follow-up/vi.i18n.json", both);
-  api.addFiles("i18n/justdo-webapp-layout/en.i18n.json", both);
-  api.addFiles("i18n/justdo-webapp-layout/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-webapp-layout/vi.i18n.json", both);
-  api.addFiles("i18n/justdo-files/en.i18n.json", both);
-  api.addFiles("i18n/justdo-files/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-files/vi.i18n.json", both);
-  api.addFiles("i18n/justdo-tab-switcher-dropdown-ui/en.i18n.json", both);
-  api.addFiles("i18n/justdo-tab-switcher-dropdown-ui/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-tab-switcher-dropdown-ui/vi.i18n.json", both);
-  api.addFiles("i18n/justdo-item-duplicate-control/en.i18n.json", both);
-  api.addFiles("i18n/justdo-item-duplicate-control/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-item-duplicate-control/vi.i18n.json", both);
-  api.addFiles("i18n/justdo-projects/en.i18n.json", both);
-  api.addFiles("i18n/justdo-projects/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-projects/vi.i18n.json", both);
-  api.addFiles("i18n/grid-control/zh-TW.i18n.json", both);
-  api.addFiles("i18n/grid-control/en.i18n.json", both);
-  api.addFiles("i18n/grid-control/vi.i18n.json", both);
-  api.addFiles("i18n/justdo-orgs/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-orgs/en.i18n.json", both);
-  api.addFiles("i18n/justdo-orgs/vi.i18n.json", both);
-  api.addFiles("i18n/justdo-grid-views/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-grid-views/en.i18n.json", both);
-  api.addFiles("i18n/justdo-grid-views/vi.i18n.json", both);
-  api.addFiles("i18n/justdo-clipboard-import/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-clipboard-import/en.i18n.json", both);
-  api.addFiles("i18n/justdo-clipboard-import/vi.i18n.json", both);
-  api.addFiles("i18n/justdo-project-config-ui/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-project-config-ui/en.i18n.json", both);
-  api.addFiles("i18n/justdo-project-config-ui/vi.i18n.json", both);
-  api.addFiles("i18n/grid-control-custom-fields/zh-TW.i18n.json", both);
-  api.addFiles("i18n/grid-control-custom-fields/en.i18n.json", both);
-  api.addFiles("i18n/grid-control-custom-fields/vi.i18n.json", both);
-  api.addFiles("i18n/justdo-project-config-ticket-queues/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-project-config-ticket-queues/en.i18n.json", both);
-  api.addFiles("i18n/justdo-core-project-configurations/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-core-project-configurations/en.i18n.json", both);
-  api.addFiles("i18n/justdo-core-project-configurations/vi.i18n.json", both);
-  api.addFiles("i18n/justdo-tasks-context-menu/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-tasks-context-menu/en.i18n.json", both);
-  api.addFiles("i18n/justdo-tasks-context-menu/vi.i18n.json", both);
-  api.addFiles("i18n/justdo-planning-utilities/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-planning-utilities/en.i18n.json", both);
-  api.addFiles("i18n/justdo-projects-health/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-projects-health/en.i18n.json", both);
-  api.addFiles("i18n/justdo-resources-availability/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-resources-availability/en.i18n.json", both);
-  api.addFiles("i18n/justdo-print-grid/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-print-grid/en.i18n.json", both);
-  api.addFiles("i18n/justdo-emails/zh-TW.i18n.json", both);
-  api.addFiles("i18n/justdo-emails/en.i18n.json", both);
 
   api.addFiles("lib/both/app-integration.coffee", both);
   // Note: app-integration need to load last, so immediateInit procedures in

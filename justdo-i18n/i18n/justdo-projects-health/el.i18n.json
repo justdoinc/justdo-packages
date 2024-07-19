@@ -1,8 +1,0 @@
-{
-  "task_type_delayed_label": "Καθυστερημένη",
-  "task_type_behind_label": "Πίσω",
-  "task_type_late_label": "Αργοπορημένη",
-  "task_type_overdue_label": "Εκπρόθεσμη",
-  "task_type_key_task_label": "Βασική Εργασία",
-  "task_type_no_owner_label": "Χωρίς Υπεύθυνο"
-}

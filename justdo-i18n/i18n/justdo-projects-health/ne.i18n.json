@@ -1,8 +1,0 @@
-{
-  "task_type_delayed_label": "ढिलो भएको",
-  "task_type_behind_label": "पछाडि परेको",
-  "task_type_late_label": "ढिला",
-  "task_type_overdue_label": "म्याद नाघेको",
-  "task_type_key_task_label": "मुख्य कार्य",
-  "task_type_no_owner_label": "कुनै जिम्मेवार व्यक्ति छैन"
-}

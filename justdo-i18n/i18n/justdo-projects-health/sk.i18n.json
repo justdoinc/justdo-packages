@@ -1,8 +1,0 @@
-{
-  "task_type_delayed_label": "Oneskorené",
-  "task_type_behind_label": "Zaostávajúce",
-  "task_type_late_label": "Meškajúce",
-  "task_type_overdue_label": "Po termíne",
-  "task_type_key_task_label": "Kľúčová úloha",
-  "task_type_no_owner_label": "Bez vlastníka"
-}

@@ -1,8 +1,0 @@
-{
-  "task_type_delayed_label": "Verzögert",
-  "task_type_behind_label": "Im Rückstand",
-  "task_type_late_label": "Verspätet",
-  "task_type_overdue_label": "Überfällig",
-  "task_type_key_task_label": "Schlüsselaufgabe",
-  "task_type_no_owner_label": "Kein Verantwortlicher"
-}

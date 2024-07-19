@@ -1,8 +1,0 @@
-{
-  "task_type_delayed_label": "מעוכב",
-  "task_type_behind_label": "מפגר בלוח הזמנים",
-  "task_type_late_label": "מאחר",
-  "task_type_overdue_label": "עבר את המועד",
-  "task_type_key_task_label": "משימת מפתח (Key Task)",
-  "task_type_no_owner_label": "ללא אחראי"
-}

@@ -1,8 +1,0 @@
-{
-  "task_type_delayed_label": "Vertraagd",
-  "task_type_behind_label": "Achterop",
-  "task_type_late_label": "Te laat",
-  "task_type_overdue_label": "Over tijd",
-  "task_type_key_task_label": "Kerntaak",
-  "task_type_no_owner_label": "Geen eigenaar"
-}

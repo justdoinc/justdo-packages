@@ -1,8 +1,0 @@
-{
-  "task_type_delayed_label": "遅延",
-  "task_type_behind_label": "遅れ気味",
-  "task_type_late_label": "遅刻",
-  "task_type_overdue_label": "期限切れ",
-  "task_type_key_task_label": "重要タスク",
-  "task_type_no_owner_label": "担当者なし"
-}

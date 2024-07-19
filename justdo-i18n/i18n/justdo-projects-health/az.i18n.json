@@ -1,8 +1,0 @@
-{
-  "task_type_delayed_label": "Gecikdirilmiş",
-  "task_type_behind_label": "Geridə qalan",
-  "task_type_late_label": "Gec",
-  "task_type_overdue_label": "Vaxtı keçmiş",
-  "task_type_key_task_label": "Əsas tapşırıq",
-  "task_type_no_owner_label": "Sahibsiz"
-}

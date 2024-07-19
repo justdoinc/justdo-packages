@@ -1,8 +1,0 @@
-{
-  "task_type_delayed_label": "Delayed",
-  "task_type_behind_label": "Behind",
-  "task_type_late_label": "Late",
-  "task_type_overdue_label": "Overdue",
-  "task_type_key_task_label": "Key Task",
-  "task_type_no_owner_label": "No Owner"
-}

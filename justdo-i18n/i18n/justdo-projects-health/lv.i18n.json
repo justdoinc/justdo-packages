@@ -1,8 +1,0 @@
-{
-  "task_type_delayed_label": "Aizkavēts",
-  "task_type_behind_label": "Atpaliek",
-  "task_type_late_label": "Nokavēts",
-  "task_type_overdue_label": "Nokavējies",
-  "task_type_key_task_label": "Galvenais uzdevums",
-  "task_type_no_owner_label": "Nav īpašnieka"
-}

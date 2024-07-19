@@ -1,8 +1,0 @@
-{
-  "task_type_delayed_label": "Gecikmiş",
-  "task_type_behind_label": "Geride",
-  "task_type_late_label": "Geç",
-  "task_type_overdue_label": "Süresi Geçmiş",
-  "task_type_key_task_label": "Anahtar Görev",
-  "task_type_no_owner_label": "Sahibi Yok"
-}

@@ -1,8 +1,0 @@
-{
-  "task_type_delayed_label": "Retrasado",
-  "task_type_behind_label": "Atrasado",
-  "task_type_late_label": "Tardío",
-  "task_type_overdue_label": "Vencido",
-  "task_type_key_task_label": "Tarea Clave",
-  "task_type_no_owner_label": "Sin Responsable"
-}

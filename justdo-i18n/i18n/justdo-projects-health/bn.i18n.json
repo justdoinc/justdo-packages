@@ -1,8 +1,0 @@
-{
-  "task_type_delayed_label": "বিলম্বিত",
-  "task_type_behind_label": "পিছিয়ে পড়া",
-  "task_type_late_label": "দেরি",
-  "task_type_overdue_label": "সময়োত্তীর্ণ",
-  "task_type_key_task_label": "মূল কাজ",
-  "task_type_no_owner_label": "কোনো মালিক নেই"
-}

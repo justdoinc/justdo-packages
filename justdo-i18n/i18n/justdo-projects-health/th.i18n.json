@@ -1,8 +1,0 @@
-{
-  "task_type_delayed_label": "ล่าช้า",
-  "task_type_behind_label": "ตามไม่ทัน",
-  "task_type_late_label": "สาย",
-  "task_type_overdue_label": "เลยกำหนด",
-  "task_type_key_task_label": "งานสำคัญ",
-  "task_type_no_owner_label": "ไม่มีผู้รับผิดชอบ"
-}

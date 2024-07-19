@@ -1,8 +1,0 @@
-{
-  "task_type_delayed_label": "지연됨",
-  "task_type_behind_label": "뒤처짐",
-  "task_type_late_label": "늦음",
-  "task_type_overdue_label": "기한 초과",
-  "task_type_key_task_label": "주요 작업",
-  "task_type_no_owner_label": "담당자 없음"
-}

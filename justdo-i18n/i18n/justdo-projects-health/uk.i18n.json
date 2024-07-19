@@ -1,8 +1,0 @@
-{
-  "task_type_delayed_label": "Відкладено",
-  "task_type_behind_label": "Відстає",
-  "task_type_late_label": "Запізнюється",
-  "task_type_overdue_label": "Прострочено",
-  "task_type_key_task_label": "Ключове завдання",
-  "task_type_no_owner_label": "Без власника"
-}

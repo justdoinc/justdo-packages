@@ -1,8 +1,0 @@
-{
-  "task_type_delayed_label": "Забавена",
-  "task_type_behind_label": "Изостанала",
-  "task_type_late_label": "Закъсняла",
-  "task_type_overdue_label": "Просрочена",
-  "task_type_key_task_label": "Ключова задача",
-  "task_type_no_owner_label": "Без отговорник"
-}

@@ -1,8 +1,0 @@
-{
-  "task_type_delayed_label": "Késleltetett",
-  "task_type_behind_label": "Lemaradt",
-  "task_type_late_label": "Késésben",
-  "task_type_overdue_label": "Lejárt",
-  "task_type_key_task_label": "Kulcsfeladat",
-  "task_type_no_owner_label": "Nincs felelős"
-}

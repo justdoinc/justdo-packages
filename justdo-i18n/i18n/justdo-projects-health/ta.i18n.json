@@ -1,8 +1,0 @@
-{
-  "task_type_delayed_label": "தாமதமானது",
-  "task_type_behind_label": "பின்தங்கியது",
-  "task_type_late_label": "காலதாமதம்",
-  "task_type_overdue_label": "காலங்கடந்தது",
-  "task_type_key_task_label": "முக்கிய பணி",
-  "task_type_no_owner_label": "உரிமையாளர் இல்லை"
-}

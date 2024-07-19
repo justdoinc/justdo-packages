@@ -1,8 +1,0 @@
-{
-  "task_type_delayed_label": "Zakasnjeno",
-  "task_type_behind_label": "Zaostaja",
-  "task_type_late_label": "Zamuja",
-  "task_type_overdue_label": "Pretečeno",
-  "task_type_key_task_label": "Ključna naloga",
-  "task_type_no_owner_label": "Brez lastnika"
-}

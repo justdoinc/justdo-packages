@@ -1,8 +1,0 @@
-{
-  "task_type_delayed_label": "延迟",
-  "task_type_behind_label": "落后",
-  "task_type_late_label": "延误",
-  "task_type_overdue_label": "逾期",
-  "task_type_key_task_label": "关键任务",
-  "task_type_no_owner_label": "无负责人"
-}
