@@ -1,6 +1,7 @@
 {
   "plugin_store_title": "Eklentiler",
   "plugin_store_additional_info": "EK BİLGİLER",
+  "plugin_store_learn_more": "Daha Fazla Bilgi",
   "plugin_store_developer": "GELİŞTİRİCİ",
   "plugin_store_version": "Sürüm: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Şirket: <strong class=\"text-primary\">__company_name__</strong>",

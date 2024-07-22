@@ -1,6 +1,7 @@
 {
   "plugin_store_title": "Плагиндер",
   "plugin_store_additional_info": "ҚОСЫМША АҚПАРАТ",
+  "plugin_store_learn_more": "Көбірек білу",
   "plugin_store_developer": "ӘЗІРЛЕУШІ",
   "plugin_store_version": "Нұсқасы: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Компания: <strong class=\"text-primary\">__company_name__</strong>",

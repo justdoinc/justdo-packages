@@ -1,6 +1,7 @@
 {
   "plugin_store_title": "ปลั๊กอิน",
   "plugin_store_additional_info": "ข้อมูลเพิ่มเติม",
+  "plugin_store_learn_more": "เรียนรู้เพิ่มเติม",
   "plugin_store_developer": "ผู้พัฒนา",
   "plugin_store_version": "เวอร์ชัน: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "บริษัท: <strong class=\"text-primary\">__company_name__</strong>",

@@ -1,6 +1,7 @@
 {
   "plugin_store_title": "Spraudņi",
   "plugin_store_additional_info": "PAPILDU INFORMĀCIJA",
+  "plugin_store_learn_more": "Uzzināt vairāk",
   "plugin_store_developer": "IZSTRĀDĀTĀJS",
   "plugin_store_version": "Versija: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Uzņēmums: <strong class=\"text-primary\">__company_name__</strong>",

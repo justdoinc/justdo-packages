@@ -1,6 +1,7 @@
 {
   "plugin_store_title": "Dodaci",
   "plugin_store_additional_info": "DODATNE INFORMACIJE",
+  "plugin_store_learn_more": "Saznajte više",
   "plugin_store_developer": "PROGRAMER",
   "plugin_store_version": "Verzija: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Kompanija: <strong class=\"text-primary\">__company_name__</strong>",

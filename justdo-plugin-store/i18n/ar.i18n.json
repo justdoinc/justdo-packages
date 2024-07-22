@@ -1,6 +1,7 @@
 {
   "plugin_store_title": "الإضافات",
   "plugin_store_additional_info": "معلومات إضافية",
+  "plugin_store_learn_more": "اعرف المزيد",
   "plugin_store_developer": "المطور",
   "plugin_store_version": "الإصدار: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "الشركة: <strong class=\"text-primary\">__company_name__</strong>",

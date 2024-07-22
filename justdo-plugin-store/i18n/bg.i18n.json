@@ -1,6 +1,7 @@
 {
   "plugin_store_title": "Плъгини",
   "plugin_store_additional_info": "ДОПЪЛНИТЕЛНА ИНФОРМАЦИЯ",
+  "plugin_store_learn_more": "Научете повече",
   "plugin_store_developer": "РАЗРАБОТЧИК",
   "plugin_store_version": "Версия: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Компания: <strong class=\"text-primary\">__company_name__</strong>",

@@ -1,6 +1,7 @@
 {
   "plugin_store_title": "Pemalam",
   "plugin_store_additional_info": "MAKLUMAT TAMBAHAN",
+  "plugin_store_learn_more": "Ketahui Lebih Lanjut",
   "plugin_store_developer": "PEMAJU",
   "plugin_store_version": "Versi: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Syarikat: <strong class=\"text-primary\">__company_name__</strong>",

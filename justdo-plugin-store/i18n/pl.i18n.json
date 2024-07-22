@@ -1,6 +1,7 @@
 {
   "plugin_store_title": "Wtyczki",
   "plugin_store_additional_info": "DODATKOWE INFORMACJE",
+  "plugin_store_learn_more": "Dowiedz się więcej",
   "plugin_store_developer": "DEWELOPER",
   "plugin_store_version": "Wersja: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Firma: <strong class=\"text-primary\">__company_name__</strong>",

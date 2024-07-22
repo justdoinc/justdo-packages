@@ -1,6 +1,7 @@
 {
   "plugin_store_title": "செருகுநிரல்கள்",
   "plugin_store_additional_info": "கூடுதல் தகவல்",
+  "plugin_store_learn_more": "மேலும் அறிக",
   "plugin_store_developer": "உருவாக்குநர்",
   "plugin_store_version": "பதிப்பு: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "நிறுவனம்: <strong class=\"text-primary\">__company_name__</strong>",

@@ -1,6 +1,7 @@
 {
   "plugin_store_title": "Плагіни",
   "plugin_store_additional_info": "ДОДАТКОВА ІНФОРМАЦІЯ",
+  "plugin_store_learn_more": "Дізнатися більше",
   "plugin_store_developer": "РОЗРОБНИК",
   "plugin_store_version": "Версія: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Компанія: <strong class=\"text-primary\">__company_name__</strong>",

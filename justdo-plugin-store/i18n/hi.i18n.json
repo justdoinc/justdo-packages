@@ -1,6 +1,7 @@
 {
   "plugin_store_title": "प्लगइन्स",
   "plugin_store_additional_info": "अतिरिक्त जानकारी",
+  "plugin_store_learn_more": "और जानें",
   "plugin_store_developer": "डेवलपर",
   "plugin_store_version": "संस्करण: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "कंपनी: <strong class=\"text-primary\">__company_name__</strong>",

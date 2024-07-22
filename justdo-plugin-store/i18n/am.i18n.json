@@ -1,6 +1,7 @@
 {
   "plugin_store_title": "ፕላግኢኖች",
   "plugin_store_additional_info": "ተጨማሪ መረጃ",
+  "plugin_store_learn_more": "ተጨማሪ ይወቁ",
   "plugin_store_developer": "አበልጽጎ",
   "plugin_store_version": "ስሪት፦ <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "ኩባንያ፦ <strong class=\"text-primary\">__company_name__</strong>",

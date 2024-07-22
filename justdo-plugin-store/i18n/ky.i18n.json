@@ -1,6 +1,7 @@
 {
   "plugin_store_title": "Плагиндер",
   "plugin_store_additional_info": "КОШУМЧА МААЛЫМАТ",
+  "plugin_store_learn_more": "Көбүрөөк билүү",
   "plugin_store_developer": "ИШТЕП ЧЫГУУЧУ",
   "plugin_store_version": "Версия: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Компания: <strong class=\"text-primary\">__company_name__</strong>",

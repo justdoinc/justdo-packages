@@ -1,6 +1,7 @@
 {
   "plugin_store_title": "תוספים",
   "plugin_store_additional_info": "מידע נוסף",
+  "plugin_store_learn_more": "למידע נוסף",
   "plugin_store_developer": "מפתח",
   "plugin_store_version": "גרסה: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "חברה: <strong class=\"text-primary\">__company_name__</strong>",

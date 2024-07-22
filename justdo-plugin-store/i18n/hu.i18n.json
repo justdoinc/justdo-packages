@@ -1,6 +1,7 @@
 {
   "plugin_store_title": "Bővítmények",
   "plugin_store_additional_info": "TOVÁBBI INFORMÁCIÓK",
+  "plugin_store_learn_more": "Tudjon meg többet",
   "plugin_store_developer": "FEJLESZTŐ",
   "plugin_store_version": "Verzió: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Cég: <strong class=\"text-primary\">__company_name__</strong>",

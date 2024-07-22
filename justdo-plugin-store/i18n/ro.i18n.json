@@ -1,6 +1,7 @@
 {
   "plugin_store_title": "Plugin-uri",
   "plugin_store_additional_info": "INFORMAȚII SUPLIMENTARE",
+  "plugin_store_learn_more": "Află mai multe",
   "plugin_store_developer": "DEZVOLTATOR",
   "plugin_store_version": "Versiune: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Companie: <strong class=\"text-primary\">__company_name__</strong>",
