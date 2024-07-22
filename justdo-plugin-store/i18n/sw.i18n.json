@@ -1,0 +1,9 @@
+{
+  "plugin_store_title": "Viambatanisho",
+  "plugin_store_additional_info": "TAARIFA ZA ZIADA",
+  "plugin_store_developer": "MTENGENEZAJI",
+  "plugin_store_version": "Toleo: <strong class=\"text-primary\">__version__</strong>",
+  "plugin_store_developer_company": "Kampuni: <strong class=\"text-primary\">__company_name__</strong>",
+  "plugin_store_developer_website": "Tovuti: <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",
+  "plugin_store_default_plugin_developer_name": "JustDo, Inc."
+}

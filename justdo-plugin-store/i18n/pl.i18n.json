@@ -1,0 +1,9 @@
+{
+  "plugin_store_title": "Wtyczki",
+  "plugin_store_additional_info": "DODATKOWE INFORMACJE",
+  "plugin_store_developer": "DEWELOPER",
+  "plugin_store_version": "Wersja: <strong class=\"text-primary\">__version__</strong>",
+  "plugin_store_developer_company": "Firma: <strong class=\"text-primary\">__company_name__</strong>",
+  "plugin_store_developer_website": "Strona internetowa: <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",
+  "plugin_store_default_plugin_developer_name": "JustDo, Inc."
+}

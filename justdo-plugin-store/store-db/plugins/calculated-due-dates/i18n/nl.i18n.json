@@ -1,0 +1,5 @@
+{
+  "plugin_store_calculated_due_dates_title": "Berekende Einddatums",
+  "plugin_store_calculated_due_dates_short_description": "Creëer automatisch bijgewerkte afhankelijkheden voor einddatums",
+  "plugin_store_calculated_due_dates_full_description": "De Berekende Einddatums-plugin stelt je in staat om afhankelijkheden tussen einddatums van verschillende taken te creëren en in te stellen. Met deze plugin kun je automatisch een einddatum voor een bepaalde taak instellen:<br><br><ul><li>Als de laatste einddatum van de directe subtaken.</li><li>Als de laatste einddatum van alle subtaken.</li><li>Als de laatste einddatum van een specifieke lijst met andere taken.</li><li>Als een verschuiving ten opzichte van een andere taak (bijv. de einddatum van Taak #7 is 3 dagen na de einddatum van Taak #6).</li></ul><br>Zo kun je bij een taak met meerdere subtaken en werkfasen de berekende einddatum instellen op basis van de laatste einddatum van alle subtaken van de hoofdtaak. Dit betekent dat als één taak vertraging oploopt, de einddatum van de hoofdtaak automatisch wordt bijgewerkt om deze nieuwe realiteit weer te geven."
+}

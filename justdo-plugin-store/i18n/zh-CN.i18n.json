@@ -1,0 +1,9 @@
+{
+  "plugin_store_title": "插件商店",
+  "plugin_store_additional_info": "附加信息",
+  "plugin_store_developer": "开发者",
+  "plugin_store_version": "版本：<strong class=\"text-primary\">__version__</strong>",
+  "plugin_store_developer_company": "公司：<strong class=\"text-primary\">__company_name__</strong>",
+  "plugin_store_developer_website": "网站：<strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",
+  "plugin_store_default_plugin_developer_name": "JustDo"
+}

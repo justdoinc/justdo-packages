@@ -1,0 +1,9 @@
+{
+  "plugin_store_title": "플러그인",
+  "plugin_store_additional_info": "추가 정보",
+  "plugin_store_developer": "개발자",
+  "plugin_store_version": "버전: <strong class=\"text-primary\">__version__</strong>",
+  "plugin_store_developer_company": "회사: <strong class=\"text-primary\">__company_name__</strong>",
+  "plugin_store_developer_website": "웹사이트: <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",
+  "plugin_store_default_plugin_developer_name": "JustDo, Inc."
+}

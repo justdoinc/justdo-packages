@@ -1,0 +1,5 @@
+{
+  "plugin_store_calculated_due_dates_title": "Apskaičiuotos termino datos",
+  "plugin_store_calculated_due_dates_short_description": "Sukurkite automatiškai atsinaujinančias termino datų priklausomybes",
+  "plugin_store_calculated_due_dates_full_description": "Apskaičiuotų termino datų įskiepis leidžia susieti ir nustatyti skirtingų užduočių termino datų priklausomybes. Su šiuo įskiepiu galėsite automatiškai nustatyti tam tikros užduoties termino datą:<br><br><ul><li>Kaip vėliausią tiesioginių antrinių užduočių termino datą.</li><li>Kaip vėliausią visų jos antrinių užduočių termino datą.</li><li>Kaip vėliausią iš konkrečių kitų užduočių sąrašo.</li><li>Kaip laiko tarpą nuo kitos užduoties (pvz., 7-os užduoties termino data yra 3 dienos po 6-os užduoties termino datos).</li></ul><br>Taigi, turint užduotį su keliomis antrinėmis užduotimis ir darbo etapais, galite nustatyti apskaičiuotą termino datą remiantis vėliausia visų pagrindinės užduoties antrinių užduočių termino data. Tai savo ruožtu reikštų, kad jei viena užduotis vėluoja, pagrindinės užduoties termino data būtų automatiškai atnaujinta, atspindint šią naują realybę."
+}

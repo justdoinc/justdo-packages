@@ -1,0 +1,5 @@
+{
+  "plugin_store_calculated_due_dates_title": "Lasketut määräpäivät",
+  "plugin_store_calculated_due_dates_short_description": "Luo automaattisesti päivittyviä riippuvuuksia määräpäiville",
+  "plugin_store_calculated_due_dates_full_description": "Lasketut määräpäivät -lisäosa mahdollistaa eri tehtävien määräpäivien yhdistämisen ja riippuvuuksien asettamisen. Tällä lisäosalla voit automaattisesti asettaa tietyn tehtävän määräpäivän:<br><br><ul><li>Suorien alitehtävien korkeimman määräpäivän mukaan.</li><li>Kaikkien alitehtävien korkeimman määräpäivän mukaan.</li><li>Tiettyjen muiden tehtävien korkeimman määräpäivän mukaan.</li><li>Siirtymänä jonkin toisen tehtävän määräpäivästä (esim. Tehtävä #7:n määräpäivä on 3 päivää Tehtävä #6:n määräpäivän jälkeen).</li></ul><br>Näin ollen tehtävässä, jolla on useita alitehtäviä ja työvaiheita, voit asettaa lasketun määräpäivän perustuen kaikkien ylätason tehtävien alitehtävien korkeimpaan määräpäivään. Tämä puolestaan tarkoittaisi, että jos yksi tehtävä on myöhässä, ylätason tehtävän määräpäivä päivittyisi automaattisesti heijastamaan tätä uutta todellisuutta."
+}

@@ -1,0 +1,5 @@
+{
+  "plugin_store_calculated_due_dates_title": "計算截止日期",
+  "plugin_store_calculated_due_dates_short_description": "為截止日期創建自動更新的依賴關係",
+  "plugin_store_calculated_due_dates_full_description": "計算截止日期插件允許您關聯和設置不同任務截止日期的依賴關係。使用此插件，您可以自動設置某個任務的截止日期：<br><br><ul><li>作為其直接子任務中最晚的截止日期。</li><li>作為其所有子任務中最晚的截止日期。</li><li>作為特定任務列表中最晚的截止日期。</li><li>作為與其他任務的時間偏移（例如：任務#7的截止日期是任務#6截止日期之後3天）。</li></ul><br>因此，對於具有多個子任務和工作階段的任務，您可以根據父任務的所有子任務中最晚的截止日期來設置計算的截止日期。這意味著如果一個任務進度落後，父任務的截止日期將自動更新以反映這個新的現實情況。"
+}

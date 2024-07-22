@@ -1,0 +1,5 @@
+{
+  "plugin_store_calculated_due_dates_title": "Beregnede forfallsdatoer",
+  "plugin_store_calculated_due_dates_short_description": "Opprett automatisk oppdaterende avhengigheter for forfallsdatoer",
+  "plugin_store_calculated_due_dates_full_description": "Utvidelsen for beregnede forfallsdatoer lar deg knytte sammen og sette avhengigheter mellom ulike oppgavers forfallsdatoer. Med denne utvidelsen kan du automatisk sette en forfallsdato for en bestemt oppgave:<br><br><ul><li>Som den seneste forfallsdatoen for dens direkte underoppgaver.</li><li>Som den seneste forfallsdatoen for alle dens underoppgaver.</li><li>Som den seneste forfallsdatoen fra en spesifikk liste over andre oppgaver.</li><li>Som en forskyvning fra en annen oppgave (f.eks. forfallsdato for Oppgave #7 er 3 dager etter forfallsdato for Oppgave #6).</li></ul><br>Dermed kan du for en oppgave med flere underoppgaver og arbeidsfaser sette den beregnede forfallsdatoen basert på den seneste forfallsdatoen for alle hovedoppgavens underoppgaver. Dette betyr at hvis én oppgave er forsinket, vil hovedoppgavens forfallsdato automatisk oppdateres for å gjenspeile denne nye virkeligheten."
+}

@@ -1,0 +1,4 @@
+{
+  "plugin_store_calculated_due_dates_meta_title": "自動計算到期日：任務依賴關係與截止日期自動化",
+  "plugin_store_calculated_due_dates_meta_description": "根據依賴關係動態更新任務到期日。設定偏移量或從子任務截止日期計算到期日。通過自動化工作流程提高專案排程準確性。"
+}

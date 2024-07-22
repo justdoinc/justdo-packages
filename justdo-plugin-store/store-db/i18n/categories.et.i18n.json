@@ -1,0 +1,19 @@
+{
+  "plugin_store_category_featured_label": "Esiletõstetud",
+  "plugin_store_category_featured_meta_title": "JustDo esiletõstetud pistikprogrammid: täiusta projektijuhtimist",
+  "plugin_store_category_featured_meta_description": "Avasta meie valitud JustDo pistikprogramme tootlikkuse tõstmiseks, töövoogude optimeerimiseks ja meeskonnatöö parandamiseks. Leia parimad tööriistad JustDo kogemuse kohandamiseks.",
+  "plugin_store_category_management_label": "Juhtimine",
+  "plugin_store_category_management_meta_title": "JustDo pistikprogrammid juhtimiseks: juhi ja teosta projekte",
+  "plugin_store_category_management_meta_description": "Võimesta oma meeskonda JustDo pistikprogrammidega tõhusaks projekti- ja ressursijuhtimiseks. Optimeeri töövoogusid, jälgi edenemist ja saavuta edu.",
+  "plugin_store_category_misc_label": "Mitmesugust",
+  "plugin_store_category_misc_meta_title": "JustDo mitmesugused pistikprogrammid: täiendused ja utiliidid",
+  "plugin_store_category_misc_meta_description": "Avasta erinevaid JustDo pistikprogramme töövoo aspektide täiustamiseks, alates ülesannete visualiseerimisest kuni ajaplaneerimiseni.",
+  "plugin_store_category_power_tools_label": "Võimsad tööriistad",
+  "plugin_store_category_power_tools_meta_title": "JustDo võimsad tööriistad: edasijõudnud funktsioonid",
+  "plugin_store_category_power_tools_meta_description": "Ava edasijõudnud funktsioonid JustDo võimsate tööriistadega. Automatiseeri, integreeri ja vii projektijuhtimine uuele tasemele.",
+  "plugin_store_category_justdo_labs_label": "JustDo Labs",
+  "plugin_store_category_justdo_labs_meta_title": "JustDo Labs: Avasta uuenduslikku projektijuhtimist",
+  "plugin_store_category_justdo_labs_meta_description": "Koge esimesena uusimaid innovatsioone projektijuhtimises. JustDo Labs pakub eksperimentaalseid ja uuenduslikke tööriistu.",
+  "plugin_store_category_unknown_label": "Tundmatu",
+  "plugin_store_category_installed_label": "Installitud"
+}

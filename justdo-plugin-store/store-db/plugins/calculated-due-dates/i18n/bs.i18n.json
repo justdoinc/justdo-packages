@@ -1,0 +1,5 @@
+{
+  "plugin_store_calculated_due_dates_title": "Izračunati rokovi",
+  "plugin_store_calculated_due_dates_short_description": "Kreirajte automatski ažurirajuće zavisnosti za rokove",
+  "plugin_store_calculated_due_dates_full_description": "Dodatak za izračunate rokove vam omogućava da povežete i postavite zavisnosti između rokova različitih zadataka. S ovim dodatkom moći ćete automatski postaviti rok određenog zadatka:<br><br><ul><li>Kao najkasniji rok njegovih direktnih podzadataka.</li><li>Kao najkasniji rok svih njegovih podzadataka.</li><li>Kao najkasniji rok specifične liste drugih zadataka.</li><li>Kao pomak od nekog drugog zadatka (npr. rok Zadatka #7 je 3 dana nakon roka Zadatka #6).</li></ul><br>Stoga, za zadatak s više podzadataka i faza rada, mogli biste postaviti izračunati rok na osnovu najkasnijeg roka svih podzadataka roditeljskog zadatka. To bi zauzvrat značilo da ako jedan zadatak kasni, rok roditeljskog zadatka bi se automatski ažurirao kako bi odražavao ovu novu stvarnost."
+}

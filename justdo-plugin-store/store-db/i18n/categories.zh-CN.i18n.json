@@ -1,0 +1,19 @@
+{
+  "plugin_store_category_featured_label": "精选",
+  "plugin_store_category_featured_meta_title": "精选JustDo插件：提升您的项目管理效率",
+  "plugin_store_category_featured_meta_description": "探索我们精心挑选的JustDo插件，提高生产力、优化工作流程并增强团队协作。找到完美工具，定制您的JustDo体验。",
+  "plugin_store_category_management_label": "管理",
+  "plugin_store_category_management_meta_title": "JustDo管理插件：领导并交付项目",
+  "plugin_store_category_management_meta_description": "利用JustDo插件赋能团队，实现高效的项目和资源管理。优化工作流程，跟踪进度，确保项目成功。",
+  "plugin_store_category_misc_label": "其他",
+  "plugin_store_category_misc_meta_title": "JustDo杂项插件：增强功能和实用工具",
+  "plugin_store_category_misc_meta_description": "发现各种JustDo插件，增强工作流程的特定方面，从任务可视化到时间跟踪等多种功能。",
+  "plugin_store_category_power_tools_label": "高级工具",
+  "plugin_store_category_power_tools_meta_title": "JustDo高级工具：为高级用户提供的进阶功能",
+  "plugin_store_category_power_tools_meta_description": "使用JustDo高级工具解锁进阶功能。自动化任务，集成其他应用，将项目管理提升到新高度。",
+  "plugin_store_category_justdo_labs_label": "JustDo实验室",
+  "plugin_store_category_justdo_labs_meta_title": "JustDo实验室：探索前沿项目管理技术",
+  "plugin_store_category_justdo_labs_meta_description": "率先体验项目管理领域的最新创新。JustDo实验室提供实验性和前沿工具，彻底改变您的工作流程。",
+  "plugin_store_category_unknown_label": "未知",
+  "plugin_store_category_installed_label": "已安装"
+}

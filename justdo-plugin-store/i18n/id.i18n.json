@@ -1,0 +1,9 @@
+{
+  "plugin_store_title": "Plugin",
+  "plugin_store_additional_info": "INFO TAMBAHAN",
+  "plugin_store_developer": "PENGEMBANG",
+  "plugin_store_version": "Versi: <strong class=\"text-primary\">__version__</strong>",
+  "plugin_store_developer_company": "Perusahaan: <strong class=\"text-primary\">__company_name__</strong>",
+  "plugin_store_developer_website": "Situs Web: <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",
+  "plugin_store_default_plugin_developer_name": "JustDo, Inc."
+}

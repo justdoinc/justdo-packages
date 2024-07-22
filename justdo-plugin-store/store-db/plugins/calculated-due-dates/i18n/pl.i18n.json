@@ -1,0 +1,5 @@
+{
+  "plugin_store_calculated_due_dates_title": "Obliczane Terminy",
+  "plugin_store_calculated_due_dates_short_description": "Twórz automatycznie aktualizujące się zależności dla terminów",
+  "plugin_store_calculated_due_dates_full_description": "Wtyczka Obliczane Terminy pozwala na powiązanie i ustawienie zależności między terminami różnych zadań. Dzięki tej wtyczce będziesz mógł automatycznie ustawić termin wykonania określonego zadania:<br><br><ul><li>Jako najdalszy termin jego bezpośrednich podzadań.</li><li>Jako najdalszy termin wszystkich jego podzadań.</li><li>Jako najdalszy termin z konkretnej listy innych zadań.</li><li>Jako przesunięcie względem innego zadania (np. termin Zadania #7 jest 3 dni po terminie Zadania #6).</li></ul><br>Dzięki temu, w przypadku zadania z wieloma podzadaniami i etapami pracy, możesz ustawić obliczony termin na podstawie najdalszego terminu wszystkich podzadań zadania nadrzędnego. To z kolei oznacza, że jeśli jedno zadanie się opóźnia, termin zadania nadrzędnego zostanie automatycznie zaktualizowany, aby odzwierciedlić tę nową rzeczywistość."
+}

@@ -1,0 +1,9 @@
+{
+  "plugin_store_title": "Плагиндер",
+  "plugin_store_additional_info": "ҚОСЫМША АҚПАРАТ",
+  "plugin_store_developer": "ӘЗІРЛЕУШІ",
+  "plugin_store_version": "Нұсқасы: <strong class=\"text-primary\">__version__</strong>",
+  "plugin_store_developer_company": "Компания: <strong class=\"text-primary\">__company_name__</strong>",
+  "plugin_store_developer_website": "Веб-сайт: <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",
+  "plugin_store_default_plugin_developer_name": "JustDo, Inc."
+}

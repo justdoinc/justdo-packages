@@ -1,0 +1,19 @@
+{
+  "plugin_store_category_featured_label": "주목할 만한 플러그인",
+  "plugin_store_category_featured_meta_title": "주목할 만한 JustDo 플러그인: 프로젝트 관리 향상",
+  "plugin_store_category_featured_meta_description": "생산성 향상, 워크플로우 간소화, 팀 협업 개선을 위한 엄선된 JustDo 플러그인을 탐색해보세요. JustDo 경험을 맞춤화할 완벽한 도구를 찾아보세요.",
+  "plugin_store_category_management_label": "관리",
+  "plugin_store_category_management_meta_title": "프로젝트 리드와 수행을 위한 JustDo 관리 플러그인",
+  "plugin_store_category_management_meta_description": "효율적인 프로젝트 및 리소스 관리를 위한 JustDo 플러그인으로 팀을 강화하세요. 워크플로우 최적화, 진행 상황 추적, 프로젝트 성공 달성.",
+  "plugin_store_category_misc_label": "기타",
+  "plugin_store_category_misc_meta_title": "기타 JustDo 플러그인: 기능 개선 및 유틸리티",
+  "plugin_store_category_misc_meta_description": "작업 시각화부터 시간 추적까지 워크플로우의 특정 측면을 개선하는 다양한 JustDo 플러그인을 발견하세요.",
+  "plugin_store_category_power_tools_label": "파워 도구",
+  "plugin_store_category_power_tools_meta_title": "JustDo 파워 도구: 파워 유저를 위한 고급 기능",
+  "plugin_store_category_power_tools_meta_description": "JustDo 파워 도구로 고급 기능을 활용하세요. 작업 자동화, 앱 통합, 프로젝트 관리 수준 향상.",
+  "plugin_store_category_justdo_labs_label": "JustDo 랩스",
+  "plugin_store_category_justdo_labs_meta_title": "JustDo 랩스: 최첨단 프로젝트 관리 탐험",
+  "plugin_store_category_justdo_labs_meta_description": "프로젝트 관리의 최신 혁신을 가장 먼저 경험하세요. JustDo 랩스는 워크플로우를 혁신할 실험적이고 최첨단 도구를 제공합니다.",
+  "plugin_store_category_unknown_label": "알 수 없음",
+  "plugin_store_category_installed_label": "설치됨"
+}

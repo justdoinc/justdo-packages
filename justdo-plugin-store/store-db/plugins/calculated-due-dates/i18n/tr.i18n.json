@@ -1,0 +1,5 @@
+{
+  "plugin_store_calculated_due_dates_title": "Hesaplanan Bitiş Tarihleri",
+  "plugin_store_calculated_due_dates_short_description": "Bitiş tarihleri için otomatik güncellenen bağımlılıklar oluşturun",
+  "plugin_store_calculated_due_dates_full_description": "Hesaplanan Bitiş Tarihleri eklentisi, farklı görevlerin bitiş tarihlerini ilişkilendirmenize ve bağımlılıklar kurmanıza olanak tanır. Bu eklentiyle belirli bir görevin bitiş tarihini otomatik olarak şu şekillerde ayarlayabilirsiniz:<br><br><ul><li>Doğrudan alt görevlerinin en geç bitiş tarihi olarak.</li><li>Tüm alt görevlerinin en geç bitiş tarihi olarak.</li><li>Belirli bir görev listesinin en geç bitiş tarihi olarak.</li><li>Başka bir görevden belirli bir süre sonrası olarak (örn. Görev #7'nin bitiş tarihi, Görev #6'nın bitiş tarihinden 3 gün sonra).</li></ul><br>Böylece, birden fazla alt görevi ve iş aşaması olan bir görev için, hesaplanan bitiş tarihini üst görevin tüm alt görevlerinin en geç bitiş tarihine göre ayarlayabilirsiniz. Bu da, eğer bir görev gecikmeli ilerliyorsa, üst görevin bitiş tarihinin bu yeni durumu yansıtacak şekilde otomatik olarak güncelleneceği anlamına gelir."
+}

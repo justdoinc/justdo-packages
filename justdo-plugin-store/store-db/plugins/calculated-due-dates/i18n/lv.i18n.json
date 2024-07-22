@@ -1,0 +1,5 @@
+{
+  "plugin_store_calculated_due_dates_title": "Aprēķinātie termiņi",
+  "plugin_store_calculated_due_dates_short_description": "Izveidojiet automātiski atjaunināmas termiņu atkarības",
+  "plugin_store_calculated_due_dates_full_description": "Aprēķināto termiņu spraudnis ļauj jums saistīt un iestatīt dažādu uzdevumu termiņu atkarības. Ar šo spraudni jūs varēsiet automātiski iestatīt konkrēta uzdevuma termiņu:<br><br><ul><li>Kā vēlāko termiņu no tā tiešajiem apakšuzdevumiem.</li><li>Kā vēlāko termiņu no visiem tā apakšuzdevumiem.</li><li>Kā vēlāko termiņu no konkrēta citu uzdevumu saraksta.</li><li>Kā nobīdi no cita uzdevuma (piemēram, Uzdevuma #7 termiņš ir 3 dienas pēc Uzdevuma #6 termiņa).</li></ul><br>Tādējādi uzdevumam ar vairākiem apakšuzdevumiem un darba posmiem jūs varētu iestatīt aprēķināto termiņu, balstoties uz vēlāko termiņu no visiem vecākuzdevuma apakšuzdevumiem. Tas savukārt nozīmētu, ka ja viens uzdevums kavējas, vecākuzdevuma termiņš tiktu automātiski atjaunināts, lai atspoguļotu šo jauno realitāti."
+}

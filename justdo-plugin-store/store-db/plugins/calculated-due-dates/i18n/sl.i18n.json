@@ -1,0 +1,5 @@
+{
+  "plugin_store_calculated_due_dates_title": "Izračunani roki",
+  "plugin_store_calculated_due_dates_short_description": "Ustvarite samodejno posodabljajoče se odvisnosti za roke",
+  "plugin_store_calculated_due_dates_full_description": "Vtičnik Izračunani roki vam omogoča povezovanje in nastavljanje odvisnosti rokov različnih nalog. S tem vtičnikom lahko samodejno nastavite rok določene naloge:<br><br><ul><li>Kot najpoznejši rok neposrednih podrejenih nalog.</li><li>Kot najpoznejši rok vseh podrejenih nalog.</li><li>Kot najpoznejši rok določenega seznama drugih nalog.</li><li>Kot zamik od neke druge naloge (npr. rok Naloge #7 je 3 dni po roku Naloge #6).</li></ul><br>Tako bi lahko pri nalogi z več podrejenimi nalogami in fazami dela nastavili izračunani rok na podlagi najpoznejšega roka vseh podrejenih nalog nadrejene naloge. To bi pomenilo, da če ena naloga zamuja, se rok nadrejene naloge samodejno posodobi, da odraža to novo realnost."
+}

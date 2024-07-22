@@ -1,0 +1,5 @@
+{
+  "plugin_store_calculated_due_dates_title": "Arvutatud tähtajad",
+  "plugin_store_calculated_due_dates_short_description": "Loo automaatselt uuenevad tähtaegade sõltuvused",
+  "plugin_store_calculated_due_dates_full_description": "Arvutatud tähtaegade plugin võimaldab seostada ja määrata erinevate ülesannete tähtaegade vahelisi sõltuvusi. Selle pluginaga saate automaatselt määrata teatud ülesande tähtaja:<br><br><ul><li>Kui selle otseste alaülesannete hiliseim tähtaeg.</li><li>Kui kõigi selle alaülesannete hiliseim tähtaeg.</li><li>Kui teatud konkreetsete ülesannete nimekirja hiliseim tähtaeg.</li><li>Kui nihe mõne teise ülesande suhtes (nt Ülesande #7 tähtaeg on 3 päeva pärast Ülesande #6 tähtaega).</li></ul><br>Seega, mitme alaülesande ja tööetapiga ülesande puhul saaksite määrata arvutatud tähtaja, mis põhineb kõigi ülemülesande alaülesannete hiliseimal tähtajal. See omakorda tähendaks, et kui üks ülesanne hilineb, uuendataks ülemülesande tähtaega automaatselt, et see peegeldaks uut olukorda."
+}

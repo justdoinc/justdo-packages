@@ -1,0 +1,5 @@
+{
+  "plugin_store_calculated_due_dates_title": "Vypočítaná data dokončení",
+  "plugin_store_calculated_due_dates_short_description": "Vytvářejte automaticky aktualizované závislosti pro termíny dokončení",
+  "plugin_store_calculated_due_dates_full_description": "Plugin Vypočítaná data dokončení umožňuje propojit a nastavit závislosti mezi termíny dokončení různých úkolů. S tímto pluginem můžete automaticky nastavit datum dokončení určitého úkolu:<br><br><ul><li>Jako nejpozdější datum dokončení jeho přímých podúkolů.</li><li>Jako nejpozdější datum dokončení všech jeho podúkolů.</li><li>Jako nejpozdější datum z konkrétního seznamu jiných úkolů.</li><li>Jako posun od jiného úkolu (např. termín dokončení úkolu č. 7 je 3 dny po termínu dokončení úkolu č. 6).</li></ul><br>Díky tomu u úkolu s více podúkoly a fázemi práce můžete nastavit vypočítané datum dokončení na základě nejpozdějšího data dokončení všech podúkolů nadřazeného úkolu. To by znamenalo, že pokud jeden úkol má zpoždění, termín dokončení nadřazeného úkolu by se automaticky aktualizoval, aby odrážel tuto novou skutečnost."
+}

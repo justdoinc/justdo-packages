@@ -1,0 +1,9 @@
+{
+  "plugin_store_title": "ปลั๊กอิน",
+  "plugin_store_additional_info": "ข้อมูลเพิ่มเติม",
+  "plugin_store_developer": "ผู้พัฒนา",
+  "plugin_store_version": "เวอร์ชัน: <strong class=\"text-primary\">__version__</strong>",
+  "plugin_store_developer_company": "บริษัท: <strong class=\"text-primary\">__company_name__</strong>",
+  "plugin_store_developer_website": "เว็บไซต์: <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",
+  "plugin_store_default_plugin_developer_name": "JustDo, Inc."
+}

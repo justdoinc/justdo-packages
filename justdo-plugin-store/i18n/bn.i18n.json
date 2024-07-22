@@ -1,0 +1,9 @@
+{
+  "plugin_store_title": "প্লাগইনসমূহ",
+  "plugin_store_additional_info": "অতিরিক্ত তথ্য",
+  "plugin_store_developer": "ডেভেলপার",
+  "plugin_store_version": "সংস্করণ: <strong class=\"text-primary\">__version__</strong>",
+  "plugin_store_developer_company": "কোম্পানি: <strong class=\"text-primary\">__company_name__</strong>",
+  "plugin_store_developer_website": "ওয়েবসাইট: <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",
+  "plugin_store_default_plugin_developer_name": "JustDo, Inc."
+}

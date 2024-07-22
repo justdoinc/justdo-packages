@@ -1,0 +1,5 @@
+{
+  "plugin_store_calculated_due_dates_title": "Ngày đến hạn tự động",
+  "plugin_store_calculated_due_dates_short_description": "Tạo các phụ thuộc tự động cập nhật cho ngày đến hạn",
+  "plugin_store_calculated_due_dates_full_description": "Plugin Ngày đến hạn tự động cho phép bạn liên kết và thiết lập các phụ thuộc giữa ngày đến hạn của các công việc khác nhau. Với plugin này, bạn có thể tự động đặt ngày đến hạn của một công việc cụ thể:<br><br><ul><li>Là ngày đến hạn muộn nhất của các công việc con trực tiếp.</li><li>Là ngày đến hạn muộn nhất của tất cả các công việc con.</li><li>Là ngày muộn nhất trong một danh sách cụ thể các công việc khác.</li><li>Là một khoảng thời gian sau ngày đến hạn của một công việc khác (ví dụ: Ngày đến hạn của Công việc #7 là 3 ngày sau ngày đến hạn của Công việc #6).</li></ul><br>Do đó, với một công việc có nhiều công việc con và các giai đoạn làm việc, bạn có thể đặt ngày đến hạn tự động dựa trên ngày đến hạn muộn nhất của tất cả các công việc con của công việc cha. Điều này có nghĩa là nếu một công việc bị chậm trễ, ngày đến hạn của công việc cha sẽ tự động được cập nhật để phản ánh thực tế mới này."
+}

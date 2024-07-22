@@ -1,0 +1,5 @@
+{
+  "plugin_store_calculated_due_dates_title": "Kalkulatutako Epemugak",
+  "plugin_store_calculated_due_dates_short_description": "Sortu automatikoki eguneratzen diren epemuga-mendekotasunak",
+  "plugin_store_calculated_due_dates_full_description": "Kalkulatutako Epemugak (Calculated Due Dates) pluginak zeregin desberdinen epemugak lotzeko eta mendekotasunak ezartzeko aukera ematen dizu. Plugin honekin, zeregin baten epemuga automatikoki ezarri ahal izango duzu:<br><br><ul><li>Bere zuzeneko azpi-zereginen epemuga altuena bezala.</li><li>Bere azpi-zeregin guztien epemuga altuena bezala.</li><li>Beste zeregin zehatzen zerrenda baten epemuga altuena bezala.</li><li>Beste zeregin baten desplazamendu gisa (adibidez, 7. Zereginaren epemuga 6. Zereginaren epemuga baino 3 egun beranduago).</li></ul><br>Beraz, azpi-zeregin anitz eta lan-fase desberdinak dituen zeregin batekin, kalkulatutako epemuga gurasoen zereginaren azpi-zeregin guztien epemuga altuenean oinarrituta ezarri ahal izango zenuke. Honek esan nahi du zeregin bat atzeratzen bada, gurasoen zereginaren epemuga automatikoki eguneratuko litzatekeela errealitate berri hau islatzeko."
+}

@@ -1,0 +1,9 @@
+{
+  "plugin_store_title": "Lisäosat",
+  "plugin_store_additional_info": "LISÄTIETOJA",
+  "plugin_store_developer": "KEHITTÄJÄ",
+  "plugin_store_version": "Versio: <strong class=\"text-primary\">__version__</strong>",
+  "plugin_store_developer_company": "Yritys: <strong class=\"text-primary\">__company_name__</strong>",
+  "plugin_store_developer_website": "Verkkosivusto: <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",
+  "plugin_store_default_plugin_developer_name": "JustDo, Inc."
+}

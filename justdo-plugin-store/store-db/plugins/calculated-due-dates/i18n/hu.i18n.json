@@ -1,0 +1,5 @@
+{
+  "plugin_store_calculated_due_dates_title": "Számított határidők",
+  "plugin_store_calculated_due_dates_short_description": "Automatikusan frissülő határidő-függőségek létrehozása",
+  "plugin_store_calculated_due_dates_full_description": "A Számított határidők (Calculated Due Dates) bővítmény lehetővé teszi különböző feladatok határidejének összekapcsolását és függőségek beállítását. Ezzel a bővítménnyel automatikusan beállíthatja egy adott feladat határidejét:<br><br><ul><li>A közvetlen alfeladatai közül a legkésőbbi határidőre.</li><li>Az összes alfeladata közül a legkésőbbi határidőre.</li><li>Más feladatok meghatározott listájának legkésőbbi határidejére.</li><li>Egy másik feladathoz képest eltolással (pl. a 7. feladat határideje 3 nappal a 6. feladat határideje után van).</li></ul><br>Így egy több alfeladattal és munkafázissal rendelkező feladat esetén beállíthatja a számított határidőt az összes szülőfeladat alfeladatának legkésőbbi határideje alapján. Ez azt jelenti, hogy ha egy feladat csúszik, a szülőfeladat határideje automatikusan frissül, tükrözve ezt az új helyzetet."
+}

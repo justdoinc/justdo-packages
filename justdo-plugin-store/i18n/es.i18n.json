@@ -1,0 +1,9 @@
+{
+  "plugin_store_title": "Complementos",
+  "plugin_store_additional_info": "INFORMACIÓN ADICIONAL",
+  "plugin_store_developer": "DESARROLLADOR",
+  "plugin_store_version": "Versión: <strong class=\"text-primary\">__version__</strong>",
+  "plugin_store_developer_company": "Empresa: <strong class=\"text-primary\">__company_name__</strong>",
+  "plugin_store_developer_website": "Sitio web: <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",
+  "plugin_store_default_plugin_developer_name": "JustDo, Inc."
+}

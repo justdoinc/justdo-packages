@@ -1,0 +1,5 @@
+{
+  "plugin_store_calculated_due_dates_title": "Berekende Sperdatums",
+  "plugin_store_calculated_due_dates_short_description": "Skep outo-opdaterende afhanklikhede vir sperdatums",
+  "plugin_store_calculated_due_dates_full_description": "Die Berekende Sperdatums-invoegsel laat jou toe om afhanklikhede tussen verskillende take se sperdatums te skep en te stel. Met hierdie invoegsel kan jy outomaties 'n sperdatum vir 'n sekere taak stel:<br><br><ul><li>As die laatste sperdatum van sy direkte subtake.</li><li>As die laatste sperdatum van al sy subtake.</li><li>As die laatste van 'n spesifieke lys ander take.</li><li>As 'n verskuiwing vanaf 'n ander taak (bv. Taak #7 se sperdatum is 3 dae na Taak #6 se sperdatum).</li></ul><br>Dus, met 'n taak wat verskeie subtake en werkfases het, kan jy die berekende sperdatum stel gebaseer op die laatste sperdatum van al die ouerstaak se subtake. Dit beteken dat as een taak agter raak, die ouerstaak se sperdatum outomaties opgedateer sal word om hierdie nuwe realiteit te weerspieël."
+}
