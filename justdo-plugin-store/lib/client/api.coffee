@@ -14,8 +14,7 @@ _.extend JustdoPluginStore.prototype,
   getPluginsStoreManager: (options) ->
     options = _.extend {}, @getPluginsStoreManager_default_options, options
 
-    default_category = "featured"
-    active_category_rv = new ReactiveVar default_category
+    active_category_rv = new ReactiveVar JustdoPluginStore.default_category
 
     active_plugin_page_rv = new ReactiveVar null
 
@@ -37,12 +36,12 @@ _.extend JustdoPluginStore.prototype,
 
         return categories
 
-      getDefaultCategory: -> default_category
+      getDefaultCategory: -> JustdoPluginStore.default_category
 
       getActiveCategory: -> active_category_rv.get()
 
       clearActiveCategory: ->
-        active_category_rv.set default_category
+        active_category_rv.set JustdoPluginStore.default_category
 
         return
 

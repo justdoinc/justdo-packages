@@ -53,6 +53,6 @@ Template.justdo_plugins_store_plugins_list.events
 
     tpl = Template.instance()
 
-    tpl.store_manager.setActiveCategory "featured"
+    tpl.store_manager.setActiveCategory JustdoPluginStore.default_category
 
     return

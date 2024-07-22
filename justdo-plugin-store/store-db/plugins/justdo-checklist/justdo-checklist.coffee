@@ -3,7 +3,7 @@ share.store_db.plugins.push
   title: "plugin_store_checklists_title"
   short_description: "plugin_store_checklists_short_description"
   full_description: ["plugin_store_checklists_full_description"]
-  categories: ["featured", "misc"]
+  categories: [JustdoPluginStore.default_category, "misc"]
   image_url: "/packages/justdoinc_justdo-plugin-store/store-db/plugins/justdo-checklist/media/checklist-icon.jpg"
   price: "Free"
   version: "1.0"

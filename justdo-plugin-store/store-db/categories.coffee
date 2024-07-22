@@ -1,7 +1,7 @@
 share.store_db.categories =
   [
     {
-      id: "featured"
+      id: JustdoPluginStore.default_category
       label: "plugin_store_category_featured_label"
     }
     {

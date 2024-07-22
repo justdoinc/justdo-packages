@@ -3,7 +3,7 @@ share.store_db.plugins.push
   title: "plugin_store_calendar_view_title"
   short_description: "plugin_store_calendar_view_short_description"
   full_description: ["plugin_store_calendar_view_full_description"]
-  categories: ["featured", "management", "power-tools"]
+  categories: [JustdoPluginStore.default_category, "management", "power-tools"]
   image_url: "/packages/justdoinc_justdo-plugin-store/store-db/plugins/justdo-calendar-view/media/store-list-icon.png"
   price: "Free"
   version: "1.0"
