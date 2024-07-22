@@ -34,25 +34,24 @@
       </div>
       <!-- Images slider -->
       <div id="plugin-carousel" class="carousel slide py-3" data-ride="carousel">
-        {{#if hasMoreThanOneSliderItems}}
-          <ol class="carousel-indicators">
+        <div class="swiper">
+          <div class="swiper-wrapper">
             {{#each slider}}
-              <li data-target="#plugin-carousel" data-slide-to="{{@index}}" class="{{#if $eq @index 0}}active{{/if}}"></li>
+              <div class="swiper-slide" dir="{{#if isRtl}}rtl{{/if}}">
+                {{#if $eq asset_type "image"}}
+                  <img src="{{asset_url}}" class="d-block w-100" />
+                {{else if $eq asset_type "iframe"}}
+                  <iframe src="{{asset_url}}" width="100%" height="400" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                {{/if}}
+              </div>
             {{/each}}
-          </ol>
-        {{/if}}
-        <div class="carousel-inner d-flex" role="listbox">
-          {{#each slider}}
-            <div class="carousel-item{{#if $eq @index 0}} active{{/if}}">
-              {{#if $eq asset_type "image"}}
-                <img src="{{asset_url}}" style="margin: 0 auto;" class="d-block w-100" />
-              {{else if $eq asset_type "iframe"}}
-                <iframe src="{{asset_url}}" width="100%" height="400" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-              {{/if}}
-            </div>
-          {{/each}}
+          </div>
+          <div class="swiper-pagination"></div>
         </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
       </div>
+      
       <!-- Plugin info -->
       <div class="plugin-info border-bottom border-top py-3 row {{#if hasMoreThanOneSliderItems}}has-more-than-one-slider-items{{/if}}">
         <div class="plugin-category text-center border-right col-md-6 px-3 d-flex align-items-center justify-content-center">

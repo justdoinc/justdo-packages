@@ -11,13 +11,15 @@ both = [client, server]
 
 Package.onUse(function (api) {
   api.versionsFrom("1.4.1.1");
-  
-  // api.use("ecmascript", both);
-  // api.use("tmeasday:check-npm-versions@0.3.1", both);
-  api.use("coffeescript", both);
-  api.use("underscore", both);
+
+  api.use("ecmascript", both);
+  api.use("tmeasday:check-npm-versions@0.3.1", both);
+
   api.use("mongo", both);
-  
+
+  api.use("underscore", both);
+  api.use("coffeescript", both);
+
   // Uncomment if you want to use NPM peer dependencies using
   // checkNpmVersions.
   //
@@ -159,6 +161,13 @@ Package.onUse(function (api) {
   api.addFiles("lib/ui/plugin-page/plugin-page.html", client);
   api.addFiles("lib/ui/plugin-page/plugin-page.coffee", client);
   api.addFiles("lib/ui/plugin-page/plugin-page.sass", client);
+
+  // Always after templates
+  api.addFiles("i18n/en.i18n.json", both);
+  api.addFiles("store-db/i18n/categories.en.i18n.json", both);
+
+  api.addFiles("store-db/plugins/risk-management/i18n/en.i18n.json", both);
+  api.addFiles("store-db/plugins/risk-management/i18n/zh-CN.i18n.json", both);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
