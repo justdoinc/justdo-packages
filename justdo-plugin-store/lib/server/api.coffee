@@ -37,12 +37,13 @@ _.extend JustdoPluginStore.prototype,
         lang = data.lang_tag
       
      # The construction of url_obj is necessary to keep the search params and other parts of the url intact when redirecting
-      url_obj = new URL req.url, JustdoHelpers.getRootUrl()
+      url_obj = new URL url, JustdoHelpers.getRootUrl()
       
       base_path = "/plugins"
       category_base_path = "#{base_path}/c"
       plugins_base_path = "#{base_path}/p"
       
+      # Handles categories
       if url_obj.pathname.startsWith category_base_path
         if url_obj.pathname is "#{category_base_path}/#{JustdoPluginStore.default_category}"
           # Assign the path to url obj to maintain the search params and other parts of the url
@@ -52,15 +53,16 @@ _.extend JustdoPluginStore.prototype,
           res.end()
           return
         
-        url_category = url_obj.pathname.replace(category_base_path, "").replace(/\//g, "")
+        url_category = @getCategoryOrPluginIdFromPath url_obj.pathname
         if not @isCategoryExists url_category
           res.writeHead 404
           # XXX We should probably return a nicely-styled static 404 page here, like the one on Youtube
           res.end "404 Not Found"
           return
       
+      # Handles plugins
       if url_obj.pathname.startsWith plugins_base_path
-        url_plugin = url_obj.pathname.replace(plugins_base_path, "").replace(/\//g, "")
+        url_plugin = @getCategoryOrPluginIdFromPath url_obj.pathname
         if not @isPluginExists url_plugin
           res.writeHead 404
           # XXX We should probably return a nicely-styled static 404 page here, like the one on Youtube
@@ -74,3 +76,7 @@ _.extend JustdoPluginStore.prototype,
 
   getAllPlugins: -> share.store_db.plugins
 
+  getCategoryOrPluginIdFromPath: (path_without_lang) ->
+    path_without_lang = JustdoHelpers.getNormalisedUrlPathnameWithoutSearchPart path_without_lang
+    category_or_plugin_url_prefix = /\/plugins\/[pc]\//
+    return path_without_lang.replace(category_or_plugin_url_prefix, "").replace(/\//g, "")
