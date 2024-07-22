@@ -36,17 +36,17 @@
       <div id="plugin-carousel" class="carousel slide py-3" data-ride="carousel">
         <div class="swiper">
           <div class="swiper-wrapper">
-            {{#each slider}}
+            {{#each slide in slider}}
               <div class="swiper-slide" dir="{{#if isRtl}}rtl{{/if}}">
-                {{#if $eq asset_type "image"}}
-                  <img src="{{asset_url}}" class="d-block w-100" />
-                {{else if $eq asset_type "iframe"}}
-                  <iframe src="{{asset_url}}" width="100%" height="400" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                {{#if $eq slide.asset_type "image"}}
+                  <img src="{{slide.asset_url}}" alt="{{_ title}}" class="d-block w-100" />
+                {{else if $eq slide.asset_type "iframe"}}
+                  <iframe src="{{slide.asset_url}}" width="100%" height="400" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 {{/if}}
-                {{#if $or title subtitle}}
+                {{#if $or slide.title slide.subtitle}}
                   <div class="jd-hero-slider-content">
-                    <div class="jd-hero-slider-title">{{_ asset_title}}</div>
-                    <div class="jd-hero-slider-subtitle">{{_ asset_subtitle}}</div>
+                    <div class="jd-hero-slider-title">{{_ slide.asset_title}}</div>
+                    <div class="jd-hero-slider-subtitle">{{_ slide.asset_subtitle}}</div>
                   </div>
                 {{/if}}
               </div>

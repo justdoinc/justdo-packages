@@ -14,4 +14,6 @@ share.store_db.plugins.push
   package_project_custom_feature_id: "justdo_time_tracker"
   isPluginEnabledForEnvironment: -> true
 
-  slider: []
+  slider: [
+    {asset_type: "image", asset_url: "/layout/images/pricing/time_tracker.jpg"}
+  ]

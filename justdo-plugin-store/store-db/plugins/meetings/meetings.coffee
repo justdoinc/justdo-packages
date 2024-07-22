@@ -14,4 +14,6 @@ share.store_db.plugins.push
   package_project_custom_feature_id: "meetings_module"
   isPluginEnabledForEnvironment: -> true
 
-  slider: []
+  slider: [
+    {asset_type: "image", asset_url: "/layout/images/pricing/meetigns.jpg"}
+  ]

@@ -14,4 +14,6 @@ share.store_db.plugins.push
   package_project_custom_feature_id: "resource_planner_module"
   isPluginEnabledForEnvironment: -> true
 
-  slider: []
+  slider: [
+    {asset_type: "image", asset_url: "/layout/images/pricing/resource_planner.jpg"}
+  ]

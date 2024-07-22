@@ -14,4 +14,6 @@ share.store_db.plugins.push
   package_project_custom_feature_id: "justdo_inbound_emails"
   isPluginEnabledForEnvironment: -> env.INBOUND_EMAILS_ENABLED is "true"
 
-  slider: []
+  slider: [
+    {asset_type: "image", asset_url: "/layout/images/pricing/mail_do.jpg"}
+  ]
