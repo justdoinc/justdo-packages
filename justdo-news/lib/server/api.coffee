@@ -30,11 +30,16 @@ _.extend JustdoNews.prototype,
       res.end()
       return
     WebApp.connectHandlers.use (req, res, next) =>
-      # The construction of url_obj is necessary to keep the search params and other parts of the url intact when redirecting
-      url_obj = new URL req.url, JustdoHelpers.getRootUrl()
-      lang = APP.justdo_i18n_routes?.getUrlLangFromReq(req)
+      url = req.url
+      if APP.justdo_i18n_routes?
+        data = APP.justdo_i18n_routes.getStrippedPathAndLangFromReq req
+        url = data.processed_path
+        lang = data.lang_tag
 
-      {news_category, news_id, news_template} = @getNewsParamFromPath req.url
+      # The construction of url_obj is necessary to keep the search params and other parts of the url intact when redirecting
+      url_obj = new URL url, JustdoHelpers.getRootUrl()
+
+      {news_category, news_id, news_template} = @getNewsParamFromPath url_obj.pathname
 
       # If news_category isn't registered, skip.
       # Note that this is a middleware. news_category could be any path (not just /news)
