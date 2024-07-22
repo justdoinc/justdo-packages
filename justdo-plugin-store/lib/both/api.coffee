@@ -17,3 +17,6 @@ _.extend JustdoPluginStore.prototype,
       return
 
     return
+  
+  isCategoryExists: (category_id) -> _.find share.store_db.categories, (category_obj) -> category_obj.id is category_id
+  isPluginExists: (plugin_id) -> _.find share.store_db.plugins, (plugin_obj) -> plugin_obj.id is plugin_id

@@ -1,5 +1,6 @@
 _.extend JustdoPluginStore.prototype,
   _immediateInit: ->
+    @_setupConnectHandlers()
     return
 
   _deferredInit: ->
@@ -22,6 +23,52 @@ _.extend JustdoPluginStore.prototype,
     @_ensureIndexesExists()
 
     return
+
+  _setupConnectHandlers: ->
+    # This middleware does the following jobs:
+    # 1. redirects /plugins/c/{JustdoPluginStore.default_category} to /plugins
+    # 2. returns 404 if the category or plugin doesn't exist
+    # Note that we don't handle /plugins/p and /plugins/c here because they aren't registered and will return 404 by default.
+    WebApp.connectHandlers.use (req, res, next) =>
+      url = req.url
+      if APP.justdo_i18n_routes?
+        data = APP.justdo_i18n_routes.getStrippedPathAndLangFromReq req
+        url = data.processed_path
+        lang = data.lang_tag
+      
+     # The construction of url_obj is necessary to keep the search params and other parts of the url intact when redirecting
+      url_obj = new URL req.url, JustdoHelpers.getRootUrl()
+      
+      base_path = "/plugins"
+      category_base_path = "#{base_path}/c"
+      plugins_base_path = "#{base_path}/p"
+      
+      if url_obj.pathname.startsWith category_base_path
+        if url_obj.pathname is "#{category_base_path}/#{JustdoPluginStore.default_category}"
+          # Assign the path to url obj to maintain the search params and other parts of the url
+          url_obj.pathname = if lang? then APP.justdo_i18n_routes.i18nPath(base_path, lang) else base_path
+          res.writeHead 301,
+            Location: url_obj
+          res.end()
+          return
+        
+        url_category = url_obj.pathname.replace(category_base_path, "").replace(/\//g, "")
+        if not @isCategoryExists url_category
+          res.writeHead 404
+          # XXX We should probably return a nicely-styled static 404 page here, like the one on Youtube
+          res.end "404 Not Found"
+          return
+      
+      if url_obj.pathname.startsWith plugins_base_path
+        url_plugin = url_obj.pathname.replace(plugins_base_path, "").replace(/\//g, "")
+        if not @isPluginExists url_plugin
+          res.writeHead 404
+          # XXX We should probably return a nicely-styled static 404 page here, like the one on Youtube
+          res.end "404 Not Found"
+          return
+
+      next()
+      return
   
   getAllCategories: -> share.store_db.categories
 
