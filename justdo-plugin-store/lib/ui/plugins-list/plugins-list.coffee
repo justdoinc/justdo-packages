@@ -46,7 +46,10 @@ Template.justdo_plugins_store_plugins_list.events
     $(document).scrollTop(0)
 
     return
-
+  
+  "click .plugin-tile-anchor-wrapper": (e, tpl) ->
+    e.preventDefault()
+    return
 
   "click .browse-our-featured-plugins": (e) ->
     e.preventDefault()

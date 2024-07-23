@@ -13,11 +13,13 @@ Template.justdo_plugins_store_categories_list.helpers
     tpl = Template.instance()
 
     return @id == tpl.store_manager.getActiveCategory()
+  
+  isDefaultCategory: ->
+    return @id == JustdoPluginStore.default_category
 
 Template.justdo_plugins_store_categories_list.events
-  "click .plugins-category": ->
-    tpl = Template.instance()
-
+  "click .plugins-category": (e, tpl) ->
+    e.preventDefault()
 
     tpl.store_manager.clearActivePluginPage()
     tpl.store_manager.setActiveCategory @id

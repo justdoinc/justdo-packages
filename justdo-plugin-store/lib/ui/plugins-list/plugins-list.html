@@ -13,7 +13,8 @@
     {{else}}
       {{#each listActiveCategoryPlugins}}
       <div class="col-xs-12 col-sm-6 col-md-4">
-        <!-- <div class="{{#if useBootstrapLayout}}col-xs-12 col-sm-6 col-md-4{{/if}}"> -->
+        <a href="{{i18nRoute route="plugin_page" plugin=id}}" class="plugin-tile-anchor-wrapper">
+          <!-- <div class="{{#if useBootstrapLayout}}col-xs-12 col-sm-6 col-md-4{{/if}}"> -->
           <div class="plugin-tile rounded mb-5 plugin-tile plugin-{{id}}">
             <div class="p-2">
               <div class="plugin-img shadow" style="background-image: url('{{image_url}}')">
@@ -34,7 +35,8 @@
               </div>
             </div>
           </div>
-        </div>
+        </a>
+      </div>
       {{/each}}
     {{/if}}
   </div>
