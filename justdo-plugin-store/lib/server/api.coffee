@@ -75,8 +75,3 @@ _.extend JustdoPluginStore.prototype,
   getAllCategories: -> share.store_db.categories
 
   getAllPlugins: -> share.store_db.plugins
-
-  getCategoryOrPluginIdFromPath: (path_without_lang) ->
-    path_without_lang = JustdoHelpers.getNormalisedUrlPathnameWithoutSearchPart path_without_lang
-    category_or_plugin_url_prefix = /\/plugins\/[pc]\//
-    return path_without_lang.replace(category_or_plugin_url_prefix, "").replace(/\//g, "")

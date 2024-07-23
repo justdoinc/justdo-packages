@@ -19,4 +19,8 @@ _.extend JustdoPluginStore.prototype,
     return
   
   isCategoryExists: (category_id) -> _.find share.store_db.categories, (category_obj) -> category_obj.id is category_id
-  isPluginExists: (plugin_id) -> _.find share.store_db.plugins, (plugin_obj) -> plugin_obj.id is plugin_id
+  isPluginExists: (plugin_id) -> _.find share.store_db.plugins, (plugin_obj) -> plugin_obj.id is plugin_id  
+  getCategoryOrPluginIdFromPath: (path_without_lang) ->
+    path_without_lang = JustdoHelpers.getNormalisedUrlPathnameWithoutSearchPart path_without_lang
+    category_or_plugin_url_prefix = /\/plugins\/[pc]\//
+    return path_without_lang.replace(category_or_plugin_url_prefix, "").replace(/\//g, "")
