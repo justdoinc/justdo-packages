@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Interaktivni Ganttov diagram",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Vizualizirajte in upravljajte časovnice projektov, odvisnosti in napredek z interaktivnimi Ganttovimi diagrami v JustDo.<br>Učinkovito načrtujte, spremljajte in izvajajte projekte ter zagotovite pravočasno dostavo.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Mejniki",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Označite pomembne dogodke in roke v časovnici projekta z mejniki.<br>Zagotovite jasne vizualne kontrolne točke, da bo vaša ekipa osredotočena, motivirana in usklajena.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Ključne naloge",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Identificirajte in poudarite ključne naloge ali mejnike, ki pomembno vplivajo na napredek in uspeh projekta.<br>Zagotovite, da so te kritične aktivnosti prednostno obravnavane in učinkovito spremljane.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Izhodiščne črte",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Spremljajte napredek projekta in identificirajte odstopanja od prvotnega načrta z izhodiščnimi črtami.<br>Primerjajte različne verzije urnika projekta za zagotovitev pravočasne izvedbe in uspeha projekta.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Časovna rezerva",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Vizualizirajte fleksibilnost nalog in potencialne časovne blažilnike neposredno na Ganttovem diagramu.<br>Proaktivno upravljajte tveganja in zagotovite pravočasno izvedbo projekta z JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Blažilne naloge",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Dodajte blažilne naloge v urnik projekta za prilagajanje negotovostim, upravljanje tveganj in preprečevanje zamud, ki bi vplivale na celoten časovni okvir projekta."
+}

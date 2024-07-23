@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Bagan Gantt Interaktif",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Visualisasikan dan kelola jadwal proyek, ketergantungan, dan kemajuan dengan bagan Gantt interaktif di JustDo.<br>Rencanakan, lacak, dan selesaikan proyek secara efisien sambil memastikan pengiriman tepat waktu.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Tonggak Pencapaian",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Tandai kejadian penting dan tenggat waktu dalam jadwal proyek Anda menggunakan Tonggak Pencapaian (Milestones).<br>Berikan titik pemeriksaan visual yang jelas untuk menjaga fokus, motivasi, dan keselarasan tim Anda.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Tugas Kunci",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Identifikasi dan sorot tugas atau tonggak pencapaian penting yang berdampak signifikan terhadap kemajuan dan keberhasilan proyek.<br>Pastikan aktivitas penting ini diprioritaskan dan dilacak secara efektif.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Garis Dasar",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Lacak kemajuan proyek dan identifikasi penyimpangan dari rencana awal menggunakan Garis Dasar (Baselines).<br>Bandingkan berbagai versi jadwal proyek Anda untuk memastikan pengiriman tepat waktu dan keberhasilan proyek.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Waktu Longgar",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Visualisasikan fleksibilitas tugas dan potensi penyangga jadwal langsung pada bagan Gantt Anda.<br>Kelola risiko secara proaktif dan pastikan pengiriman proyek tepat waktu dengan JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Tugas Penyangga",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Tambahkan tugas penyangga ke jadwal proyek Anda untuk mengakomodasi ketidakpastian, mengelola risiko, dan mencegah penundaan yang mempengaruhi keseluruhan jadwal proyek."
+}

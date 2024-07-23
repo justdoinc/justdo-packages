@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "インタラクティブガントチャート",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "JustDoのインタラクティブガントチャートでプロジェクトのタイムライン、依存関係、進捗を視覚化・管理。<br>効率的に計画、追跡、納品し、期限内の完了を確保します。",
+  "plugin_store_gantt_chart_asset_milestones_title": "マイルストーン",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "マイルストーンを使用してプロジェクトタイムライン上の重要なイベントや期限をマーク。<br>チームの焦点を合わせ、モチベーションを維持し、調和を保つための明確な視覚的チェックポイントを提供します。",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "重要タスク",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "プロジェクトの進捗と成功に大きな影響を与える重要なタスクやマイルストーンを特定・強調。<br>これらの重要な活動が優先され、効果的に追跡されることを確保します。",
+  "plugin_store_gantt_chart_asset_baselines_title": "ベースライン",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "ベースラインを使用してプロジェクトの進捗を追跡し、当初の計画からの逸脱を特定。<br>プロジェクトスケジュールの異なるバージョンを比較し、期限内の納品とプロジェクトの成功を確保します。",
+  "plugin_store_gantt_chart_asset_slack_time_title": "スラックタイム",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "ガントチャート上でタスクの柔軟性と潜在的なスケジュールバッファを直接視覚化。<br>JustDoでリスクを事前に管理し、プロジェクトの期限内納品を確保します。",
+  "plugin_store_gantt_chart_asset_buffers_title": "バッファタスク",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "不確実性に対応し、リスクを管理し、遅延が全体のプロジェクトタイムラインに影響を与えるのを防ぐため、プロジェクトスケジュールにバッファタスクを追加します。"
+}

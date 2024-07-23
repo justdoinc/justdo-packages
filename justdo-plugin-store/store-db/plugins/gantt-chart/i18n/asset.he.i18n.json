@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "תרשים גאנט אינטראקטיבי",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "הדמיה וניהול של לוחות זמנים, תלויות והתקדמות בפרויקטים עם תרשימי גאנט אינטראקטיביים ב-JustDo.<br>תכנון, מעקב ומסירת פרויקטים ביעילות תוך הבטחת עמידה בלוחות זמנים.",
+  "plugin_store_gantt_chart_asset_milestones_title": "אבני דרך",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "סימון אירועים משמעותיים ומועדי יעד בציר הזמן של הפרויקט באמצעות אבני דרך.<br>מתן נקודות ביקורת ויזואליות ברורות לשמירה על מיקוד, מוטיבציה והתאמה של הצוות.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "משימות מפתח",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "זיהוי והדגשת משימות או אבני דרך קריטיות המשפיעות משמעותית על התקדמות והצלחת הפרויקט.<br>הבטחה כי פעילויות חיוניות אלה מתועדפות ומנוטרות ביעילות.",
+  "plugin_store_gantt_chart_asset_baselines_title": "קווי בסיס",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "מעקב אחר התקדמות הפרויקט וזיהוי סטיות מהתוכנית המקורית באמצעות קווי בסיס.<br>השוואת גרסאות שונות של לוח הזמנים של הפרויקט להבטחת עמידה בלוחות זמנים והצלחת הפרויקט.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Slack Time",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "הדמיה של גמישות המשימות וחוצצי זמן פוטנציאליים ישירות על תרשים הגאנט שלך.<br>ניהול פרואקטיבי של סיכונים והבטחת עמידה בלוחות זמנים של הפרויקט עם JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "חוצצים",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "הוספת משימות חוצץ ללוח הזמנים של הפרויקט כדי להתמודד עם אי-ודאויות, לנהל סיכונים ולמנוע עיכובים מלהשפיע על לוח הזמנים הכולל של הפרויקט."
+}

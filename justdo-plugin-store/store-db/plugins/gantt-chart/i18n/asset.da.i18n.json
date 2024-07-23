@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Interaktivt Gantt-diagram",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Visualisér og administrér projekttidslinjer, afhængigheder og fremskridt med interaktive Gantt-diagrammer i JustDo.<br>Planlæg, spor og levér projekter effektivt, mens du sikrer rettidig levering.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Milepæle",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Markér vigtige begivenheder og deadlines inden for din projekttidslinje ved hjælp af milepæle.<br>Giv klare visuelle checkpoints for at holde dit team fokuseret, motiveret og samstemt.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Nøgleopgaver",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Identificér og fremhæv afgørende opgaver eller milepæle, der har stor indflydelse på projektets fremskridt og succes.<br>Sikr at disse kritiske aktiviteter prioriteres og spores effektivt.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Baselines",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Spor projektets fremskridt og identificér afvigelser fra den oprindelige plan ved hjælp af baselines.<br>Sammenlign forskellige versioner af din projektplan for at sikre rettidig levering og projektsucces.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Slack-tid",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Visualisér opgavefleksibilitet og potentielle tidsbuffere direkte på dit Gantt-diagram.<br>Proaktiv risikostyring og sikring af rettidig projektlevering med JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Bufferopgaver",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Tilføj bufferopgaver til din projektplan for at imødekomme usikkerheder, håndtere risici og forhindre forsinkelser i at påvirke den overordnede projekttidsplan."
+}

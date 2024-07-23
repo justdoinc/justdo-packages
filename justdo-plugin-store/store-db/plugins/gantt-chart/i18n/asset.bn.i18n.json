@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "ইন্টারেক্টিভ গ্যান্ট চার্ট",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "JustDo-তে ইন্টারেক্টিভ গ্যান্ট চার্টের মাধ্যমে প্রকল্পের সময়রেখা, নির্ভরতা এবং অগ্রগতি দেখুন ও পরিচালনা করুন।<br>দক্ষতার সাথে প্রকল্প পরিকল্পনা, ট্র্যাক এবং সময়মত সম্পন্ন করুন।",
+  "plugin_store_gantt_chart_asset_milestones_title": "মাইলস্টোন",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "আপনার প্রকল্পের সময়রেখায় গুরুত্বপূর্ণ ইভেন্ট এবং সময়সীমা চিহ্নিত করতে মাইলস্টোন ব্যবহার করুন।<br>আপনার দলকে মনোযোগী, উদ্দীপিত এবং একসূত্রে বাঁধা রাখতে স্পষ্ট দৃশ্যমান চেকপয়েন্ট প্রদান করুন।",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "মূল কাজ",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "প্রকল্পের অগ্রগতি ও সাফল্যকে উল্লেখযোগ্যভাবে প্রভাবিত করে এমন গুরুত্বপূর্ণ কাজ বা মাইলস্টোন চিহ্নিত ও হাইলাইট করুন।<br>এই জরুরি কার্যক্রমগুলি অগ্রাধিকার পাচ্ছে এবং কার্যকরভাবে ট্র্যাক করা হচ্ছে তা নিশ্চিত করুন।",
+  "plugin_store_gantt_chart_asset_baselines_title": "বেসলাইন",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "বেসলাইন ব্যবহার করে প্রকল্পের অগ্রগতি ট্র্যাক করুন এবং মূল পরিকল্পনা থেকে বিচ্যুতি চিহ্নিত করুন।<br>সময়মত ডেলিভারি এবং প্রকল্পের সাফল্য নিশ্চিত করতে আপনার প্রকল্প সময়সূচীর বিভিন্ন সংস্করণ তুলনা করুন।",
+  "plugin_store_gantt_chart_asset_slack_time_title": "স্ল্যাক টাইম",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "আপনার গ্যান্ট চার্টে সরাসরি কাজের নমনীয়তা এবং সম্ভাব্য সময়সূচী বাফার দেখুন।<br>JustDo-এর সাথে সক্রিয়ভাবে ঝুঁকি পরিচালনা করুন এবং প্রকল্পের সময়মত সমাপ্তি নিশ্চিত করুন।",
+  "plugin_store_gantt_chart_asset_buffers_title": "বাফার টাস্ক",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "অনিশ্চয়তা মোকাবেলা, ঝুঁকি পরিচালনা এবং সামগ্রিক প্রকল্প সময়রেখায় বিলম্ব প্রভাব ফেলা রোধ করতে আপনার প্রকল্প সময়সূচীতে বাফার টাস্ক যোগ করুন।"
+}

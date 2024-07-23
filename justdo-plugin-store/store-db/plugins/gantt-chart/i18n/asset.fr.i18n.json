@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Diagramme de Gantt interactif",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Visualisez et gérez les délais, les dépendances et l'avancement des projets avec des diagrammes de Gantt interactifs dans JustDo.<br>Planifiez, suivez et livrez les projets efficacement tout en assurant une livraison dans les délais.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Jalons",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Marquez les événements importants et les échéances dans le calendrier de votre projet à l'aide de jalons.<br>Fournissez des points de contrôle visuels clairs pour garder votre équipe concentrée, motivée et alignée.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Tâches clés",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Identifiez et mettez en évidence les tâches ou jalons cruciaux qui ont un impact significatif sur l'avancement et le succès du projet.<br>Assurez-vous que ces activités critiques sont priorisées et suivies efficacement.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Lignes de base",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Suivez l'avancement du projet et identifiez les écarts par rapport au plan initial à l'aide des lignes de base.<br>Comparez différentes versions du calendrier de votre projet pour assurer une livraison dans les délais et le succès du projet.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Temps de battement",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Visualisez la flexibilité des tâches et les marges potentielles directement sur votre diagramme de Gantt.<br>Gérez proactivement les risques et assurez une livraison du projet dans les délais avec JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Tâches tampons",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Ajoutez des tâches tampons à votre calendrier de projet pour tenir compte des incertitudes, gérer les risques et empêcher les retards d'impacter le calendrier global du projet."
+}

@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "İnteraktiv Qant Qrafiki",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "JustDo-da interaktiv Qant qrafikləri ilə layihə müddətlərini, asılılıqları və irəliləyişi vizuallaşdırın və idarə edin.<br>Layihələri səmərəli şəkildə planlaşdırın, izləyin və vaxtında çatdırılmasını təmin edin.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Mərhələlər",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Mərhələlərdən istifadə edərək layihə müddətində əhəmiyyətli hadisələri və son tarixləri qeyd edin.<br>Komandanızı diqqətli, motivasiyalı və uyğun saxlamaq üçün aydın vizual nəzarət nöqtələri təmin edin.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Əsas Tapşırıqlar",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Layihənin irəliləyişinə və uğuruna əhəmiyyətli təsir göstərən mühüm tapşırıqları və ya mərhələləri müəyyən edin və vurğulayın.<br>Bu kritik fəaliyyətlərin prioritetləşdirilməsini və effektiv şəkildə izlənilməsini təmin edin.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Əsas Xətlər",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Əsas Xətlərdən istifadə edərək layihənin irəliləyişini izləyin və ilkin plandan kənarlaşmaları müəyyən edin.<br>Vaxtında çatdırılmanı və layihənin uğurunu təmin etmək üçün layihə qrafikinizin müxtəlif versiyalarını müqayisə edin.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Boş Vaxt (Slack Time)",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Tapşırıq çevikliyini və potensial qrafik buferlərini birbaşa Qant qrafikinizə vizuallaşdırın.<br>JustDo ilə riskləri proaktiv şəkildə idarə edin və layihənin vaxtında çatdırılmasını təmin edin.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Bufer Tapşırıqları",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Qeyri-müəyyənlikləri nəzərə almaq, riskləri idarə etmək və gecikmələrin ümumi layihə müddətinə təsir etməsinin qarşısını almaq üçün layihə qrafikinizə bufer tapşırıqları əlavə edin."
+}

@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Interaktīvā Ganta diagramma",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Vizualizējiet un pārvaldiet projektu grafikus, atkarības un progresu ar interaktīvām Ganta diagrammām JustDo.<br>Efektīvi plānojiet, sekojiet līdzi un piegādājiet projektus, nodrošinot savlaicīgu izpildi.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Atskaites punkti",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Atzīmējiet nozīmīgus notikumus un termiņus projekta grafikā, izmantojot Atskaites punktus.<br>Nodrošiniet skaidrus vizuālos kontrolpunktus, lai saglabātu komandas fokusu, motivāciju un saskaņotību.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Galvenie uzdevumi",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Identificējiet un izceliet izšķirošos uzdevumus vai atskaites punktus, kas būtiski ietekmē projekta progresu un panākumus.<br>Nodrošiniet, ka šīs kritiskās aktivitātes tiek prioritizētas un efektīvi uzraudzītas.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Bāzes līnijas",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Sekojiet projekta progresam un identificējiet novirzes no sākotnējā plāna, izmantojot Bāzes līnijas.<br>Salīdziniet dažādas projekta grafika versijas, lai nodrošinātu savlaicīgu piegādi un projekta veiksmi.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Brīvais laiks",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Vizualizējiet uzdevumu elastību un potenciālos grafika buferus tieši Ganta diagrammā.<br>Proaktīvi pārvaldiet riskus un nodrošiniet savlaicīgu projekta piegādi ar JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Bufera uzdevumi",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Pievienojiet bufera uzdevumus savam projekta grafikam, lai pielāgotos neparedzētiem apstākļiem, pārvaldītu riskus un novērstu kavējumu ietekmi uz kopējo projekta grafiku."
+}

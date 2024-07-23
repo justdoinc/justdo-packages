@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Interaktivni Gantt dijagram",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Vizualizirajte i upravljajte vremenskim okvirima projekta, zavisnostima i napretkom pomoću interaktivnih Gantt dijagrama u JustDo.<br>Efikasno planirajte, pratite i isporučujte projekte osiguravajući pravovremenu isporuku.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Prekretnice",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Označite značajne događaje i rokove unutar vremenskog okvira vašeg projekta koristeći Prekretnice.<br>Pružite jasne vizualne kontrolne tačke kako biste održali tim fokusiranim, motivisanim i usklađenim.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Ključni zadaci",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Identificirajte i istaknite ključne zadatke ili prekretnice koje značajno utiču na napredak i uspjeh projekta.<br>Osigurajte da se ove kritične aktivnosti prioritiziraju i efektivno prate.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Osnovne linije",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Pratite napredak projekta i identificirajte odstupanja od originalnog plana koristeći Osnovne linije.<br>Uporedite različite verzije rasporeda vašeg projekta kako biste osigurali pravovremenu isporuku i uspjeh projekta.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Vrijeme odstupanja",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Vizualizirajte fleksibilnost zadataka i potencijalne vremenske rezerve direktno na vašem Gantt dijagramu.<br>Proaktivno upravljajte rizicima i osigurajte pravovremenu isporuku projekta sa JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Zadaci amortizacije",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Dodajte zadatke amortizacije u raspored vašeg projekta kako biste prilagodili neizvjesnosti, upravljali rizicima i spriječili kašnjenja koja bi mogla uticati na ukupni vremenski okvir projekta."
+}

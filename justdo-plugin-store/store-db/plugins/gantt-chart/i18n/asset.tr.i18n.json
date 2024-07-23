@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Etkileşimli Gantt Şeması",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "JustDo'da etkileşimli Gantt şemaları ile proje zaman çizelgelerini, bağımlılıkları ve ilerlemeyi görselleştirin ve yönetin.<br>Zamanında teslimi sağlarken projeleri verimli bir şekilde planlayın, takip edin ve tamamlayın.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Kilometre Taşları",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Proje zaman çizelgenizde önemli olayları ve son tarihleri Kilometre Taşları kullanarak işaretleyin.<br>Ekibinizi odaklı, motive ve uyumlu tutmak için net görsel kontrol noktaları sağlayın.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Kilit Görevler",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Proje ilerlemesini ve başarısını önemli ölçüde etkileyen kritik görevleri veya kilometre taşlarını belirleyin ve vurgulayın.<br>Bu kritik faaliyetlerin önceliklendirilmesini ve etkili bir şekilde takip edilmesini sağlayın.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Temel Çizgiler",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Temel Çizgileri kullanarak proje ilerlemesini takip edin ve orijinal plandan sapmaları belirleyin.<br>Zamanında teslim ve proje başarısını sağlamak için proje programınızın farklı versiyonlarını karşılaştırın.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Boş Zaman",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Gantt şemanızda görev esnekliğini ve potansiyel program tamponlarını doğrudan görselleştirin.<br>JustDo ile riskleri proaktif bir şekilde yönetin ve projenin zamanında teslimini sağlayın.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Tampon Görevler",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Belirsizlikleri karşılamak, riskleri yönetmek ve gecikmelerin genel proje zaman çizelgesini etkilemesini önlemek için proje programınıza tampon görevler ekleyin."
+}

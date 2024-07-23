@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Interaktyvus Ganto diagrama",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Vizualizuokite ir valdykite projektų terminus, priklausomybes ir pažangą naudodami interaktyvias Ganto diagramas JustDo.<br>Efektyviai planuokite, sekite ir pristatykite projektus, užtikrindami savalaikį pristatymą.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Etapai",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Pažymėkite svarbius įvykius ir terminus savo projekto laiko juostoje naudodami Etapus.<br>Suteikite aiškius vizualinius kontrolinius taškus, kad jūsų komanda išliktų sutelkta, motyvuota ir suderinta.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Pagrindinės užduotys",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Identifikuokite ir paryškinkite lemiamas užduotis ar etapus, kurie reikšmingai veikia projekto pažangą ir sėkmę.<br>Užtikrinkite, kad šios kritinės veiklos būtų prioritetizuotos ir efektyviai sekamos.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Bazinės linijos",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Sekite projekto pažangą ir identifikuokite nukrypimus nuo pradinio plano naudodami Bazines linijas.<br>Palyginkite skirtingas jūsų projekto tvarkaraščio versijas, kad užtikrintumėte savalaikį pristatymą ir projekto sėkmę.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Laisvas laikas",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Vizualizuokite užduočių lankstumą ir potencialius tvarkaraščio rezervus tiesiogiai savo Ganto diagramoje.<br>Proaktyviai valdykite rizikas ir užtikrinkite savalaikį projekto pristatymą su JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Rezervinės užduotys",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Pridėkite rezervines užduotis prie savo projekto tvarkaraščio, kad prisitaikytumėte prie netikėtumų, valdytumėte rizikas ir neleistumėte vėlavimams paveikti bendro projekto laiko grafiko."
+}

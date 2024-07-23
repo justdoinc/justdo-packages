@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Diagramă Gantt interactivă",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Vizualizați și gestionați cronologiile proiectelor, dependențele și progresul cu diagrame Gantt interactive în JustDo.<br>Planificați, urmăriți și livrați proiecte eficient, asigurând livrarea la timp.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Repere (Milestones)",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Marcați evenimente semnificative și termene limită în cronologia proiectului folosind Repere.<br>Oferiți puncte de control vizuale clare pentru a menține echipa concentrată, motivată și aliniată.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Sarcini cheie",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Identificați și evidențiați sarcinile sau reperele cruciale care au un impact semnificativ asupra progresului și succesului proiectului.<br>Asigurați-vă că aceste activități critice sunt prioritizate și urmărite eficient.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Linii de bază (Baselines)",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Urmăriți progresul proiectului și identificați abaterile de la planul inițial folosind Linii de bază.<br>Comparați diferite versiuni ale programului proiectului pentru a asigura livrarea la timp și succesul proiectului.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Timp de relaxare (Slack Time)",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Vizualizați flexibilitatea sarcinilor și potențialele tampoane de program direct pe diagrama Gantt.<br>Gestionați proactiv riscurile și asigurați livrarea la timp a proiectului cu JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Sarcini tampon",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Adăugați sarcini tampon la programul proiectului pentru a acomoda incertitudinile, gestiona riscurile și preveni impactul întârzierilor asupra cronologiei generale a proiectului."
+}

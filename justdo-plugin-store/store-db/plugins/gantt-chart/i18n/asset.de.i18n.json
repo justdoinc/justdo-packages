@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Interaktives Gantt-Diagramm",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Visualisieren und verwalten Sie Projekt-Zeitpläne, Abhängigkeiten und Fortschritte mit interaktiven Gantt-Diagrammen in JustDo.<br>Planen, verfolgen und liefern Sie Projekte effizient und stellen Sie eine pünktliche Fertigstellung sicher.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Meilensteine",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Markieren Sie wichtige Ereignisse und Fristen innerhalb Ihres Projekt-Zeitplans mit Meilensteinen.<br>Bieten Sie klare visuelle Kontrollpunkte, um Ihr Team fokussiert, motiviert und ausgerichtet zu halten.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Schlüsselaufgaben",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Identifizieren und heben Sie entscheidende Aufgaben oder Meilensteine hervor, die den Projektfortschritt und -erfolg maßgeblich beeinflussen.<br>Stellen Sie sicher, dass diese kritischen Aktivitäten priorisiert und effektiv verfolgt werden.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Basislinien",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Verfolgen Sie den Projektfortschritt und identifizieren Sie Abweichungen vom ursprünglichen Plan mit Basislinien.<br>Vergleichen Sie verschiedene Versionen Ihres Projektzeitplans, um pünktliche Lieferung und Projekterfolg sicherzustellen.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Pufferzeit",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Visualisieren Sie die Flexibilität von Aufgaben und potenzielle Zeitpuffer direkt in Ihrem Gantt-Diagramm.<br>Managen Sie proaktiv Risiken und gewährleisten Sie eine pünktliche Projektlieferung mit JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Pufferaufgaben",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Fügen Sie Pufferaufgaben zu Ihrem Projektzeitplan hinzu, um Unsicherheiten zu berücksichtigen, Risiken zu managen und zu verhindern, dass Verzögerungen den gesamten Projektzeitplan beeinflussen."
+}

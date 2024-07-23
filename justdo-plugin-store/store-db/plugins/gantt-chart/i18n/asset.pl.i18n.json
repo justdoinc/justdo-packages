@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Interaktywny Wykres Gantta",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Wizualizuj i zarządzaj harmonogramami projektów, zależnościami i postępem za pomocą interaktywnych wykresów Gantta w JustDo.<br>Planuj, śledź i dostarczaj projekty efektywnie, zapewniając terminową realizację.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Kamienie Milowe",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Oznaczaj istotne wydarzenia i terminy w harmonogramie projektu za pomocą Kamieni Milowych.<br>Zapewnij jasne wizualne punkty kontrolne, aby utrzymać skupienie, motywację i spójność zespołu.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Kluczowe Zadania",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Identyfikuj i podkreślaj kluczowe zadania lub kamienie milowe, które znacząco wpływają na postęp i sukces projektu.<br>Zapewnij efektywne priorytetyzowanie i śledzenie tych krytycznych działań.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Linie Bazowe",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Śledź postęp projektu i identyfikuj odchylenia od pierwotnego planu za pomocą Linii Bazowych.<br>Porównuj różne wersje harmonogramu projektu, aby zapewnić terminową realizację i sukces projektu.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Czas Luzu",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Wizualizuj elastyczność zadań i potencjalne bufory czasowe bezpośrednio na wykresie Gantta.<br>Proaktywnie zarządzaj ryzykiem i zapewniaj terminową realizację projektu z JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Zadania Buforowe",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Dodawaj zadania buforowe do harmonogramu projektu, aby uwzględnić niepewności, zarządzać ryzykiem i zapobiegać opóźnieniom wpływającym na ogólny harmonogram projektu."
+}

@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "交互式甘特图",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "在JustDo中使用交互式甘特图可视化和管理项目时间线、依赖关系和进度。<br>高效规划、跟踪和交付项目，确保按时完成。",
+  "plugin_store_gantt_chart_asset_milestones_title": "里程碑",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "使用里程碑标记项目时间线中的重要事件和截止日期。<br>提供清晰的可视化检查点，使团队保持专注、积极和协调一致。",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "关键任务",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "识别并突出显示对项目进度和成功有重大影响的关键任务或里程碑。<br>确保这些关键活动得到优先处理和有效跟踪。",
+  "plugin_store_gantt_chart_asset_baselines_title": "基准线",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "使用基准线跟踪项目进度并识别与原计划的偏差。<br>比较项目进度的不同版本，确保按时交付和项目成功。",
+  "plugin_store_gantt_chart_asset_slack_time_title": "浮动时间",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "直接在甘特图上可视化任务的灵活性和潜在的进度缓冲。<br>使用JustDo主动管理风险并确保项目按时交付。",
+  "plugin_store_gantt_chart_asset_buffers_title": "缓冲任务",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "在项目进度中添加缓冲任务，以应对不确定性、管理风险，并防止延误影响整体项目时间线。"
+}

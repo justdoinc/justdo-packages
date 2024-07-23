@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Diagrama de Gantt Interactivo",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Visualiza y gestiona cronogramas, dependencias y progreso de proyectos con diagramas de Gantt interactivos en JustDo.<br>Planifica, supervisa y entrega proyectos eficientemente asegurando entregas a tiempo.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Hitos",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Marca eventos significativos y fechas límite en tu cronograma de proyecto usando Hitos.<br>Proporciona puntos de control visuales claros para mantener a tu equipo enfocado, motivado y alineado.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Tareas Clave",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Identifica y resalta tareas cruciales o hitos que impactan significativamente el progreso y éxito del proyecto.<br>Asegura que estas actividades críticas sean priorizadas y supervisadas efectivamente.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Líneas Base",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Supervisa el progreso del proyecto e identifica desviaciones del plan original usando Líneas Base.<br>Compara diferentes versiones de tu cronograma para asegurar entregas a tiempo y éxito del proyecto.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Tiempo de Holgura",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Visualiza la flexibilidad de tareas y posibles márgenes de tiempo directamente en tu diagrama de Gantt.<br>Gestiona riesgos proactivamente y asegura la entrega a tiempo del proyecto con JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Tareas de Amortiguación",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Añade tareas de amortiguación a tu cronograma para acomodar incertidumbres, gestionar riesgos y evitar que los retrasos impacten el cronograma general del proyecto."
+}

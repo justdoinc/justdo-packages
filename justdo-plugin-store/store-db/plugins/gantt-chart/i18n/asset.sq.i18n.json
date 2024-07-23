@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Grafiku Interaktiv Gantt",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Vizualizoni dhe menaxhoni afatet kohore të projektit, varësitë dhe progresin me grafikë interaktivë Gantt në JustDo.<br>Planifikoni, gjurmoni dhe dorëzoni projekte në mënyrë efikase duke siguruar dorëzimin në kohë.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Gurët Kilometrikë",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Shënoni ngjarje dhe afate të rëndësishme brenda afatit kohor të projektit tuaj duke përdorur Gurët Kilometrikë.<br>Ofroni pika kontrolli të qarta vizuale për të mbajtur ekipin tuaj të fokusuar, të motivuar dhe të harmonizuar.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Detyrat Kyçe",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Identifikoni dhe theksoni detyra ose gurë kilometrikë thelbësorë që ndikojnë ndjeshëm në progresin dhe suksesin e projektit.<br>Sigurohuni që këto aktivitete kritike të prioritizohen dhe gjurmohen efektivisht.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Vijat Bazë",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Gjurmoni progresin e projektit dhe identifikoni devijimet nga plani origjinal duke përdorur Vijat Bazë.<br>Krahasoni versione të ndryshme të orarit të projektit tuaj për të siguruar dorëzimin në kohë dhe suksesin e projektit.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Koha e Lirë (Slack Time)",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Vizualizoni fleksibilitetin e detyrave dhe buferët e mundshëm të orarit direkt në grafikun tuaj Gantt.<br>Menaxhoni në mënyrë proaktive rreziqet dhe siguroni dorëzimin në kohë të projektit me JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Detyrat Bufer",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Shtoni detyra bufer në orarin e projektit tuaj për të akomoduar pasiguritë, menaxhuar rreziqet dhe parandaluar vonesat që ndikojnë në afatin e përgjithshëm kohor të projektit."
+}

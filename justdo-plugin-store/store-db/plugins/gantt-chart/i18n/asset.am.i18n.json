@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "ተግባራዊ የጋንት ቻርት",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "በጀስትዱ ውስጥ ተግባራዊ የጋንት ቻርት በመጠቀም የፕሮጀክት የጊዜ ሰሌዳዎችን፣ ግንኙነቶችን እና እድገትን ይመልከቱ እና ያስተዳድሩ።<br>ፕሮጀክቶችን በውጤታማነት ያቅዱ፣ ይከታተሉ እና ያስረክቡ በወቅቱ መረከብን ያረጋግጡ።",
+  "plugin_store_gantt_chart_asset_milestones_title": "ዋና ዋና ደረጃዎች",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "በፕሮጀክትዎ የጊዜ ሰሌዳ ውስጥ ጠቃሚ ክስተቶችን እና የመጨረሻ ቀኖችን በዋና ዋና ደረጃዎች ይግለጹ።<br>ለቡድንዎ ግልጽ የሆኑ የእይታ ማረጋገጫ ነጥቦችን በመስጠት ትኩረት፣ ተነሳሽነት እና ስምምነት እንዲኖራቸው ያድርጉ።",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "ቁልፍ ተግባራት",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "በፕሮጀክቱ እድገት እና ስኬት ላይ ከፍተኛ ተጽእኖ የሚያሳድሩ አስፈላጊ ተግባራትን ወይም ዋና ዋና ደረጃዎችን ይለዩ እና ያጉልቱ።<br>እነዚህ ወሳኝ እንቅስቃሴዎች ቅድሚያ እንዲሰጣቸው እና በውጤታማነት እንዲከታተሉ ያረጋግጡ።",
+  "plugin_store_gantt_chart_asset_baselines_title": "መነሻ መስመሮች",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "መነሻ መስመሮችን (Baselines) በመጠቀም የፕሮጀክት እድገትን ይከታተሉ እና ከመጀመሪያው እቅድ ያለውን ልዩነት ይለዩ።<br>በወቅቱ ማስረከብን እና የፕሮጀክት ስኬትን ለማረጋገጥ የፕሮጀክትዎን የጊዜ ሰሌዳ የተለያዩ ስሪቶችን ያወዳድሩ።",
+  "plugin_store_gantt_chart_asset_slack_time_title": "የገና ጊዜ (Slack Time)",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "በጋንት ቻርትዎ ላይ በቀጥታ የተግባር ተለዋዋጭነትን እና ሊሆኑ የሚችሉ የጊዜ ሰሌዳ ማቆያዎችን ይመልከቱ።<br>በጀስትዱ አማካኝነት ስጋቶችን በንቃት ያስተዳድሩ እና ፕሮጀክቱ በወቅቱ መረከቡን ያረጋግጡ።",
+  "plugin_store_gantt_chart_asset_buffers_title": "የእረፍት ተግባራት",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "አጠቃላይ የፕሮጀክት የጊዜ ሰሌዳ ላይ መዘግየቶች ተጽእኖ እንዳያሳድሩ ለማስወገድ፣ እርግጠኛ ያልሆኑ ነገሮችን ለማስተናገድ እና ስጋቶችን ለማስተዳደር የእረፍት ተግባራትን ወደ ፕሮጀክት መርሃ ግብርዎ ያክሉ።"
+}

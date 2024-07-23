@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Diagramma di Gantt Interattivo",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Visualizza e gestisci le tempistiche dei progetti, le dipendenze e i progressi con diagrammi di Gantt interattivi in JustDo.<br>Pianifica, monitora e consegna i progetti in modo efficiente garantendo la consegna puntuale.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Traguardi",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Segna eventi significativi e scadenze nella timeline del tuo progetto usando i Traguardi.<br>Fornisci chiari punti di controllo visivi per mantenere il tuo team concentrato, motivato e allineato.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Attività Chiave",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Identifica e evidenzia attività cruciali o traguardi che influenzano significativamente il progresso e il successo del progetto.<br>Assicurati che queste attività critiche siano prioritizzate e monitorate efficacemente.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Baseline",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Monitora il progresso del progetto e identifica le deviazioni dal piano originale usando le Baseline.<br>Confronta diverse versioni del programma del tuo progetto per garantire la consegna puntuale e il successo del progetto.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Tempo di Slack",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Visualizza la flessibilità delle attività e i potenziali buffer di programma direttamente sul tuo diagramma di Gantt.<br>Gestisci proattivamente i rischi e assicura la consegna puntuale del progetto con JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Attività Buffer",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Aggiungi attività buffer al programma del tuo progetto per adattarti alle incertezze, gestire i rischi e prevenire che i ritardi influenzino la timeline complessiva del progetto."
+}

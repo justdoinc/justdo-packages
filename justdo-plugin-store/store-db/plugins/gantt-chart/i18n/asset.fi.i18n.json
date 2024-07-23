@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Interaktiivinen Gantt-kaavio",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Visualisoi ja hallitse projektien aikajanoja, riippuvuuksia ja edistymistä interaktiivisilla Gantt-kaavioilla JustDossa.<br>Suunnittele, seuraa ja toimita projektit tehokkaasti varmistaen oikea-aikaisen toimituksen.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Virstanpylväät",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Merkitse merkittävät tapahtumat ja määräajat projektin aikajanalle käyttämällä virstanpylväitä.<br>Tarjoa selkeät visuaaliset tarkistuspisteet pitääksesi tiimisi keskittyneenä, motivoituneena ja yhdensuuntaisena.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Avaintehtävät",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Tunnista ja korosta ratkaisevia tehtäviä tai virstanpylväitä, jotka vaikuttavat merkittävästi projektin etenemiseen ja onnistumiseen.<br>Varmista, että nämä kriittiset toiminnot priorisoidaan ja seurataan tehokkaasti.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Perusviivat",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Seuraa projektin edistymistä ja tunnista poikkeamat alkuperäisestä suunnitelmasta perusviivojen avulla.<br>Vertaa projektiaikataulun eri versioita varmistaaksesi oikea-aikaisen toimituksen ja projektin onnistumisen.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Pelivara",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Visualisoi tehtävien joustavuus ja mahdolliset aikataulupuskurit suoraan Gantt-kaaviossasi.<br>Hallitse riskejä ennakoivasti ja varmista projektin oikea-aikainen toimitus JustDon avulla.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Puskuritehtävät",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Lisää puskuritehtäviä projektiaikatauluusi huomioidaksesi epävarmuustekijät, hallitaksesi riskejä ja estääksesi viivästysten vaikutukset kokonaisprojektin aikatauluun."
+}

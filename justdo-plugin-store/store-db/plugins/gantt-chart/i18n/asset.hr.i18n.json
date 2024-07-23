@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Interaktivni Ganttov dijagram",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Vizualizirajte i upravljajte vremenskim okvirima projekta, ovisnostima i napretkom pomoću interaktivnih Ganttovih dijagrama u JustDo-u.<br>Učinkovito planirajte, pratite i isporučujte projekte osiguravajući pravovremenu isporuku.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Prekretnice",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Označite važne događaje i rokove unutar vremenskog okvira projekta koristeći Prekretnice.<br>Pružite jasne vizualne kontrolne točke kako biste svoj tim održali fokusiranim, motiviranim i usklađenim.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Ključni zadaci",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Identificirajte i istaknite ključne zadatke ili prekretnice koje značajno utječu na napredak i uspjeh projekta.<br>Osigurajte da se ove kritične aktivnosti prioritiziraju i učinkovito prate.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Osnovne linije",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Pratite napredak projekta i identificirajte odstupanja od izvornog plana koristeći Osnovne linije.<br>Usporedite različite verzije rasporeda projekta kako biste osigurali pravovremenu isporuku i uspjeh projekta.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Vrijeme odstupanja",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Vizualizirajte fleksibilnost zadataka i potencijalne vremenske rezerve izravno na vašem Ganttovom dijagramu.<br>Proaktivno upravljajte rizicima i osigurajte pravovremenu isporuku projekta s JustDo-om.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Zadaci s rezervom",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Dodajte zadatke s rezervom u raspored projekta kako biste prilagodili nesigurnosti, upravljali rizicima i spriječili da kašnjenja utječu na ukupni vremenski okvir projekta."
+}

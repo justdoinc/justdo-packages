@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Diagrama de Gantt Interactiu",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Visualitza i gestiona cronologies de projectes, dependències i progrés amb diagrames de Gantt interactius a JustDo.<br>Planifica, segueix i entrega projectes eficientment assegurant el lliurament a temps.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Fites",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Marca esdeveniments significatius i dates límit dins la cronologia del projecte utilitzant Fites.<br>Proporciona punts de control visuals clars per mantenir l'equip centrat, motivat i alineat.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Tasques Clau",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Identifica i destaca tasques crucials o fites que impacten significativament en el progrés i l'èxit del projecte.<br>Assegura que aquestes activitats crítiques es prioritzin i es segueixin eficaçment.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Línies Base",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Segueix el progrés del projecte i identifica desviacions del pla original utilitzant Línies Base.<br>Compara diferents versions del calendari del projecte per assegurar el lliurament a temps i l'èxit del projecte.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Temps de Marge",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Visualitza la flexibilitat de les tasques i els possibles marges de calendari directament al diagrama de Gantt.<br>Gestiona els riscos de manera proactiva i assegura el lliurament a temps del projecte amb JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Tasques de Coixí",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Afegeix tasques de coixí al calendari del projecte per acomodar incerteses, gestionar riscos i evitar que els retards impactin en la cronologia general del projecte."
+}

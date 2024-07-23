@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Gantt Grafiko Interaktiboa",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Bisualizatu eta kudeatu proiektuen denbora-lerroak, mendekotasunak eta aurrerapenak Gantt grafiko interaktiboekin JustDo-n.<br>Planifikatu, jarraitu eta burutu proiektuak eraginkortasunez, garaiz entregatzea bermatuz.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Mugarriak",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Markatu gertaera garrantzitsuak eta epemugak zure proiektuaren denbora-lerroan Mugarriak erabiliz.<br>Eskaini kontrol-puntu bisual argiak zure taldea arreta mantentzeko, motibatzeko eta lerrokatuta izateko.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Funtsezko Zereginak",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Identifikatu eta nabarmendu proiektuaren aurrerapenean eta arrakstan eragin nabarmena duten zeregin edo mugarri erabakigarriak.<br>Ziurtatu jarduera kritiko hauek lehenesten eta eraginkortasunez jarraitzen direla.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Oinarrizko Lerroak",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Jarraitu proiektuaren aurrerapena eta identifikatu jatorrizko planetik desbideratzeak Oinarrizko Lerroak erabiliz.<br>Alderatu zure proiektu-egutegiko bertsio desberdinak garaiz entregatzea eta proiektuaren arrakasta bermatzeko.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Denbora Malgua",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Bisualizatu zereginen malgutasuna eta egutegi-buffer potentzialak zuzenean zure Gantt grafikoan.<br>Kudeatu arriskuak proaktiboki eta bermatu proiektuaren garaiz entregatzea JustDo-rekin.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Buffer Zereginak",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Gehitu buffer zereginak zure proiektu-egutegian ziurgabetasunak onartzeko, arriskuak kudeatzeko eta atzerapenek proiektuaren denbora-lerro orokorrean eragina izatea saihesteko."
+}

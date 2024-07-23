@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "مخطط جانت التفاعلي",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "قم بتصور وإدارة الجداول الزمنية للمشروع والتبعيات والتقدم باستخدام مخططات جانت التفاعلية في JustDo.<br>خطط وتتبع ونفذ المشاريع بكفاءة مع ضمان التسليم في الوقت المحدد.",
+  "plugin_store_gantt_chart_asset_milestones_title": "المعالم الرئيسية",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "حدد الأحداث والمواعيد النهائية الهامة ضمن الجدول الزمني لمشروعك باستخدام المعالم الرئيسية.<br>قدم نقاط تحقق مرئية واضحة لإبقاء فريقك مركزًا ومتحفزًا ومتناغمًا.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "المهام الرئيسية",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "حدد وأبرز المهام الحاسمة أو المعالم التي تؤثر بشكل كبير على تقدم المشروع ونجاحه.<br>تأكد من تحديد أولويات هذه الأنشطة الحيوية وتتبعها بفعالية.",
+  "plugin_store_gantt_chart_asset_baselines_title": "الخطوط الأساسية",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "تتبع تقدم المشروع وحدد الانحرافات عن الخطة الأصلية باستخدام الخطوط الأساسية.<br>قارن بين الإصدارات المختلفة لجدول مشروعك لضمان التسليم في الوقت المحدد ونجاح المشروع.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "الوقت المرن",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "قم بتصور مرونة المهام والمخازن المؤقتة المحتملة للجدول الزمني مباشرة على مخطط جانت الخاص بك.<br>أدر المخاطر بشكل استباقي وضمن تسليم المشروع في الوقت المحدد مع JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "مهام المخزن المؤقت",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "أضف مهام المخزن المؤقت إلى جدول مشروعك لاستيعاب حالات عدم اليقين، وإدارة المخاطر، ومنع التأخيرات من التأثير على الجدول الزمني الشامل للمشروع."
+}

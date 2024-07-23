@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Interaktívny Ganttov diagram",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Vizualizujte a spravujte časové harmonogramy projektov, závislosti a pokrok pomocou interaktívnych Ganttových diagramov v JustDo.<br>Efektívne plánujte, sledujte a dodávajte projekty a zabezpečte ich včasné dodanie.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Míľniky",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Označte významné udalosti a termíny v časovom harmonograme vášho projektu pomocou míľnikov.<br>Poskytnite jasné vizuálne kontrolné body, aby bol váš tím sústredený, motivovaný a zosúladený.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Kľúčové úlohy",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Identifikujte a zvýraznite zásadné úlohy alebo míľniky, ktoré výrazne ovplyvňujú pokrok a úspech projektu.<br>Zabezpečte efektívnu prioritizáciu a sledovanie týchto kritických aktivít.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Základné línie",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Sledujte pokrok projektu a identifikujte odchýlky od pôvodného plánu pomocou základných línií.<br>Porovnávajte rôzne verzie harmonogramu projektu, aby ste zabezpečili včasné dodanie a úspech projektu.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Časová rezerva",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Vizualizujte flexibilitu úloh a potenciálne časové rezervy priamo vo vašom Ganttovom diagrame.<br>Proaktívne riaďte riziká a zabezpečte včasné dodanie projektu s JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Nárazníkové úlohy",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Pridajte nárazníkové úlohy do harmonogramu projektu, aby ste zohľadnili neistoty, riadili riziká a zabránili oneskoreniam ovplyvňujúcim celkový časový harmonogram projektu."
+}

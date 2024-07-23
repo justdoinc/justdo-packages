@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "인터랙티브 간트 차트",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "JustDo의 인터랙티브 간트 차트로 프로젝트 일정, 의존성 및 진행 상황을 시각화하고 관리하세요.<br>프로젝트를 효율적으로 계획, 추적하고 납기를 준수하며 완료하세요.",
+  "plugin_store_gantt_chart_asset_milestones_title": "마일스톤",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "마일스톤을 사용하여 프로젝트 일정 내 중요한 이벤트와 기한을 표시하세요.<br>팀이 집중력을 유지하고 동기부여를 받으며 목표에 맞춰 나아갈 수 있도록 명확한 시각적 체크포인트를 제공합니다.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "핵심 태스크",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "프로젝트 진행과 성공에 중요한 영향을 미치는 핵심 태스크나 마일스톤을 식별하고 강조하세요.<br>이러한 중요 활동들이 우선순위를 받고 효과적으로 추적되도록 보장합니다.",
+  "plugin_store_gantt_chart_asset_baselines_title": "기준선",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "기준선(Baselines)을 사용하여 프로젝트 진행 상황을 추적하고 원래 계획에서의 편차를 식별하세요.<br>프로젝트 일정의 다양한 버전을 비교하여 납기 준수와 프로젝트 성공을 보장합니다.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "여유 시간",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "간트 차트에 직접 태스크의 유연성과 잠재적인 일정 버퍼를 시각화하세요.<br>JustDo로 위험을 사전에 관리하고 프로젝트의 정시 완료를 보장하세요.",
+  "plugin_store_gantt_chart_asset_buffers_title": "버퍼 태스크",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "불확실성에 대비하고 위험을 관리하며 지연이 전체 프로젝트 일정에 영향을 미치는 것을 방지하기 위해 프로젝트 일정에 버퍼 태스크를 추가하세요."
+}

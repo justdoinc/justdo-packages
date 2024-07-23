@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "แผนภูมิแกนต์แบบโต้ตอบ",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "มองเห็นและจัดการระยะเวลาโครงการ ความสัมพันธ์ของงาน และความคืบหน้าด้วยแผนภูมิแกนต์แบบโต้ตอบใน JustDo<br>วางแผน ติดตาม และส่งมอบโครงการอย่างมีประสิทธิภาพพร้อมรับรองการส่งมอบตรงเวลา",
+  "plugin_store_gantt_chart_asset_milestones_title": "เหตุการณ์สำคัญ",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "ทำเครื่องหมายเหตุการณ์สำคัญและกำหนดเวลาในไทม์ไลน์โครงการด้วยเหตุการณ์สำคัญ<br>ให้จุดตรวจสอบที่ชัดเจนเพื่อให้ทีมของคุณมีจุดโฟกัส แรงจูงใจ และทำงานสอดคล้องกัน",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "งานสำคัญ",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "ระบุและเน้นงานสำคัญหรือเหตุการณ์สำคัญที่ส่งผลต่อความคืบหน้าและความสำเร็จของโครงการ<br>รับรองว่ากิจกรรมสำคัญเหล่านี้ได้รับการจัดลำดับความสำคัญและติดตามอย่างมีประสิทธิภาพ",
+  "plugin_store_gantt_chart_asset_baselines_title": "เส้นฐาน",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "ติดตามความคืบหน้าของโครงการและระบุการเบี่ยงเบนจากแผนเดิมโดยใช้เส้นฐาน<br>เปรียบเทียบกำหนดการโครงการเวอร์ชันต่างๆ เพื่อรับรองการส่งมอบตรงเวลาและความสำเร็จของโครงการ",
+  "plugin_store_gantt_chart_asset_slack_time_title": "เวลาหย่อน",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "มองเห็นความยืดหยุ่นของงานและช่วงเวลาสำรองที่เป็นไปได้โดยตรงบนแผนภูมิแกนต์ของคุณ<br>จัดการความเสี่ยงเชิงรุกและรับรองการส่งมอบโครงการตรงเวลาด้วย JustDo",
+  "plugin_store_gantt_chart_asset_buffers_title": "งานสำรอง",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "เพิ่มงานสำรองในกำหนดการโครงการของคุณเพื่อรองรับความไม่แน่นอน จัดการความเสี่ยง และป้องกันความล่าช้าที่อาจส่งผลกระทบต่อระยะเวลาโครงการโดยรวม"
+}

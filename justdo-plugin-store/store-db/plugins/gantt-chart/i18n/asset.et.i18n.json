@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Interaktiivne Gantti diagramm",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Visualiseeri ja halda projekti ajakavasid, sõltuvusi ja edenemist interaktiivsete Gantti diagrammidega JustDos.<br>Planeeri, jälgi ja teosta projekte tõhusalt, tagades õigeaegse valmimise.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Verstapostid",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Märgi olulisi sündmusi ja tähtaegu oma projekti ajajoonel verstapostidega.<br>Paku selgeid visuaalseid kontrollpunkte, et hoida oma meeskond keskendunud, motiveeritud ja kooskõlas.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Võtmeülesanded",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Tuvasta ja tõsta esile kriitilised ülesanded või verstapostid, mis oluliselt mõjutavad projekti edenemist ja edu.<br>Taga nende oluliste tegevuste prioriseerimine ja efektiivne jälgimine.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Lähtejoon",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Jälgi projekti edenemist ja tuvasta kõrvalekaldeid algsest plaanist kasutades lähtejooni (Baselines).<br>Võrdle erinevaid projekti ajakava versioone, et tagada õigeaegne valmimine ja projekti edu.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Ajaline puhver",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Visualiseeri ülesannete paindlikkust ja võimalikke ajakava puhvreid otse oma Gantti diagrammil.<br>Halda ennetavalt riske ja taga projekti õigeaegne valmimine JustDoga.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Puhverülesanded",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Lisa puhverülesandeid oma projekti ajakavasse, et arvestada ebakindlusega, hallata riske ja vältida viivituste mõju üldisele projekti ajakavale."
+}

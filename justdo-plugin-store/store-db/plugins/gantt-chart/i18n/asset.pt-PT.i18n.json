@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Gráfico de Gantt Interativo",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Visualize e gira cronogramas, dependências e progresso de projetos com gráficos de Gantt interativos no JustDo.<br>Planeie, acompanhe e entregue projetos eficientemente, garantindo entregas pontuais.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Marcos",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Marque eventos significativos e prazos dentro do cronograma do seu projeto usando Marcos.<br>Forneça pontos de verificação visuais claros para manter sua equipe focada, motivada e alinhada.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Tarefas-Chave",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Identifique e destaque tarefas cruciais ou marcos que impactam significativamente o progresso e o sucesso do projeto.<br>Garanta que estas atividades críticas sejam priorizadas e acompanhadas eficazmente.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Linhas de Base",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Acompanhe o progresso do projeto e identifique desvios do plano original usando Linhas de Base.<br>Compare diferentes versões do cronograma do seu projeto para garantir entregas pontuais e o sucesso do projeto.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Tempo de Folga",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Visualize a flexibilidade das tarefas e possíveis margens de tempo diretamente no seu gráfico de Gantt.<br>Gira proativamente os riscos e garanta a entrega pontual do projeto com o JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Tarefas de Buffer",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Adicione tarefas de buffer ao cronograma do seu projeto para acomodar incertezas, gerir riscos e evitar que atrasos impactem o cronograma geral do projeto."
+}

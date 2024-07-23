@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Interaktive Gantt-Diagramm",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Visualiséiert a geréiert Projet-Zäitlinnen, Ofhängegkeeten a Fortschrëtter mat interaktive Gantt-Diagrammen a JustDo.<br>Plangt, verfolgt a liwwert Projeten effizient a séchert pünktlech Liwwerung.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Meilesteen",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Markéiert wichteg Evenementer an Deadlinen innerhalb vun Ärer Projet-Zäitlinn mat Meilesteen.<br>Bitt kloer visuell Kontrollpunkten fir Äert Team fokusséiert, motivéiert an alignéiert ze halen.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Schlësselaufgaben",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Identifizéiert a markéiert crucial Aufgaben oder Meilesteen déi de Projet-Fortschrëtt a -Erfolleg bedeitend beaflossen.<br>Stellt sécher datt dës kritesch Aktivitéite prioritiséiert an effektiv verfollegt ginn.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Basislinnen",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Verfolgt de Projet-Fortschrëtt an identifizéiert Ofwäichunge vum urspréngleche Plang mat Basislinnen.<br>Vergläicht verschidde Versioune vun Ärem Projet-Zäitplang fir pünktlech Liwwerung a Projet-Erfolleg ze garantéieren.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Slack-Zäit",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Visualiséiert d'Flexibilitéit vun Aufgaben a méiglech Zäitpuffer direkt op Ärem Gantt-Diagramm.<br>Geréiert Risiken proaktiv a séchert pünktlech Projet-Liwwerung mat JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Puffer-Aufgaben",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Füügt Puffer-Aufgaben zu Ärem Projet-Zäitplang dobäi fir Onsécherheeten ze berücksichtegen, Risiken ze geréieren an ze verhënneren datt Verspéidungen den allgemenge Projet-Zäitplang beaflossen."
+}

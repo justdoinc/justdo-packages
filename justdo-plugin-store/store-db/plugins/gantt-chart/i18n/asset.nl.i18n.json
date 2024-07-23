@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Interactief Gantt-diagram",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Visualiseer en beheer projecttijdlijnen, afhankelijkheden en voortgang met interactieve Gantt-diagrammen in JustDo.<br>Plan, volg en lever projecten efficiënt op tijd af.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Mijlpalen",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Markeer belangrijke gebeurtenissen en deadlines binnen uw projecttijdlijn met Mijlpalen.<br>Bied duidelijke visuele controlepunten om uw team gefocust, gemotiveerd en op één lijn te houden.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Sleuteltaken",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Identificeer en markeer cruciale taken of mijlpalen die een significante impact hebben op de projectvoortgang en het succes.<br>Zorg ervoor dat deze kritieke activiteiten effectief worden geprioriteerd en gevolgd.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Baselines (Referentielijnen)",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Volg de projectvoortgang en identificeer afwijkingen van het oorspronkelijke plan met Baselines.<br>Vergelijk verschillende versies van uw projectplanning om tijdige oplevering en projectsucces te garanderen.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Speling",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Visualiseer taakflexibiliteit en potentiële tijdsbuffers direct in uw Gantt-diagram.<br>Beheer proactief risico's en zorg voor tijdige projectoplevering met JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Buffertaken",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Voeg buffertaken toe aan uw projectplanning om onzekerheden op te vangen, risico's te beheren en te voorkomen dat vertragingen de algehele projecttijdlijn beïnvloeden."
+}

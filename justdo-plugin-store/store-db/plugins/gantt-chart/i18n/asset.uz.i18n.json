@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Interaktiv Gant jadvali",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "JustDo'da interaktiv Gant jadvallari yordamida loyiha muddatlarini, bog'liqliklarni va jarayonni vizualizatsiya qiling va boshqaring.<br>Loyihalarni samarali rejalashtiring, kuzating va o'z vaqtida etkazib berilishini ta'minlang.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Muhim bosqichlar",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Muhim bosqichlar yordamida loyiha vaqt shkalasidagi muhim voqealar va muddatlarni belgilang.<br>Jamoangizni diqqatli, ruhlangan va bir-biriga moslashgan holda saqlash uchun aniq vizual nazorat nuqtalarini taqdim eting.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Asosiy vazifalar",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Loyiha jarayoni va muvaffaqiyatiga sezilarli ta'sir ko'rsatadigan muhim vazifalar yoki bosqichlarni aniqlang va ta'kidlang.<br>Ushbu muhim faoliyatlar ustuvor bo'lishini va samarali kuzatilishini ta'minlang.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Asosiy chiziqlar",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Asosiy chiziqlar yordamida loyiha jarayonini kuzating va dastlabki rejadan chetga chiqishlarni aniqlang.<br>O'z vaqtida etkazib berish va loyiha muvaffaqiyatini ta'minlash uchun loyiha jadvalining turli versiyalarini solishtiring.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Bo'sh vaqt",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Gant jadvalida vazifalarning moslashuvchanligini va potentsial jadval bufferlarini vizualizatsiya qiling.<br>JustDo yordamida xavflarni proaktiv boshqaring va loyihaning o'z vaqtida bajarilishini ta'minlang.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Bufer vazifalar",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Noaniqliklarni hisobga olish, xavflarni boshqarish va kechikishlarning umumiy loyiha jadvaliga ta'sirini oldini olish uchun loyiha jadvalingizga bufer vazifalarni qo'shing."
+}

@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Interaktív Gantt-diagram",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Vizualizáld és kezeld a projektek időbeosztását, függőségeit és haladását interaktív Gantt-diagramokkal a JustDo-ban.<br>Tervezz, kövess nyomon és valósíts meg projekteket hatékonyan, biztosítva a határidőre történő teljesítést.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Mérföldkövek",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Jelöld a fontos eseményeket és határidőket a projekt idővonalon Mérföldkövek segítségével.<br>Biztosíts egyértelmű vizuális ellenőrzőpontokat, hogy csapatod fókuszált, motivált és összehangolt maradjon.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Kulcsfontosságú feladatok",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Azonosítsd és emeld ki a kritikus feladatokat vagy mérföldköveket, amelyek jelentősen befolyásolják a projekt előrehaladását és sikerét.<br>Biztosítsd, hogy ezek a kulcsfontosságú tevékenységek prioritást élvezzenek és hatékonyan legyenek nyomon követve.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Alapvonalak",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Kövesd nyomon a projekt előrehaladását és azonosítsd az eredeti tervtől való eltéréseket Alapvonalak segítségével.<br>Hasonlítsd össze a projektütemterv különböző verzióit a határidőre történő teljesítés és a projekt sikerének biztosítása érdekében.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Tartalékidő",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Jelenítsd meg a feladatok rugalmasságát és a lehetséges ütemezési puffereket közvetlenül a Gantt-diagramon.<br>Proaktívan kezeld a kockázatokat és biztosítsd a projektek időben történő teljesítését a JustDo-val.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Puffer feladatok",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Adj puffer feladatokat a projektütemtervhez a bizonytalanságok kezelésére, a kockázatok menedzselésére és a késések megelőzésére, hogy azok ne befolyásolják a teljes projekt időbeosztását."
+}

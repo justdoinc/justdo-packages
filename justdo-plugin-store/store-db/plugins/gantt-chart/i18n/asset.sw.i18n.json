@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Chati ya Gantt Shirikishi",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Onesha na usimamie muda wa miradi, uhusiano, na maendeleo kwa chati za Gantt shirikishi katika JustDo.<br>Panga, fuatilia, na fikisha miradi kwa ufanisi huku ukihakikisha uwasilishaji kwa wakati.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Hatua Muhimu",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Weka alama kwa matukio muhimu na tarehe za mwisho ndani ya muda wa mradi wako kwa kutumia Hatua Muhimu.<br>Toa vituo vya kuangalia wazi ili kuweka timu yako imelenga, imehamasishwa, na imelingana.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Kazi Muhimu",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Tambua na uangaze kazi muhimu au hatua muhimu zinazohusiana sana na maendeleo na mafanikio ya mradi.<br>Hakikisha shughuli hizi muhimu zinapewa kipaumbele na kufuatiliwa kwa ufanisi.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Msingi",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Fuatilia maendeleo ya mradi na utambue tofauti kutoka mpango wa awali kwa kutumia Misingi (Baselines).<br>Linganisha matoleo tofauti ya ratiba ya mradi wako ili kuhakikisha uwasilishaji kwa wakati na mafanikio ya mradi.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Muda wa Ziada",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Onesha uwezo wa kubadilika wa kazi na vipindi vya kinga vya ratiba moja kwa moja kwenye chati yako ya Gantt.<br>Simamia hatari kwa ufanisi na uhakikishe uwasilishaji wa mradi kwa wakati na JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Kazi za Kinga",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Ongeza kazi za kinga kwenye ratiba ya mradi wako ili kukabiliana na mambo yasiyotarajiwa, kudhibiti hatari, na kuzuia ucheleweshaji usiathiri muda wa mradi kwa ujumla."
+}

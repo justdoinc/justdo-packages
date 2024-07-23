@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Biểu đồ Gantt tương tác",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Trực quan hóa và quản lý tiến độ dự án, các phụ thuộc và tiến trình bằng biểu đồ Gantt tương tác trong JustDo.<br>Lập kế hoạch, theo dõi và hoàn thành dự án hiệu quả đồng thời đảm bảo giao hàng đúng hạn.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Các mốc quan trọng",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Đánh dấu các sự kiện và thời hạn quan trọng trong tiến độ dự án bằng Mốc quan trọng.<br>Cung cấp các điểm kiểm tra trực quan rõ ràng để giúp nhóm của bạn tập trung, động lực và đồng bộ.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Nhiệm vụ chính",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Xác định và làm nổi bật các nhiệm vụ hoặc mốc quan trọng có ảnh hưởng đáng kể đến tiến độ và thành công của dự án.<br>Đảm bảo các hoạt động quan trọng này được ưu tiên và theo dõi hiệu quả.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Đường cơ sở",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Theo dõi tiến độ dự án và xác định sai lệch so với kế hoạch ban đầu bằng Đường cơ sở.<br>So sánh các phiên bản khác nhau của lịch trình dự án để đảm bảo giao hàng đúng hạn và thành công của dự án.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Thời gian dư (Slack Time)",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Trực quan hóa tính linh hoạt của nhiệm vụ và các vùng đệm lịch trình tiềm năng trực tiếp trên biểu đồ Gantt.<br>Chủ động quản lý rủi ro và đảm bảo giao hàng đúng hạn với JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Nhiệm vụ đệm",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Thêm nhiệm vụ đệm vào lịch trình dự án để điều chỉnh các yếu tố không chắc chắn, quản lý rủi ro và ngăn chặn sự chậm trễ ảnh hưởng đến tổng thể tiến độ dự án."
+}
