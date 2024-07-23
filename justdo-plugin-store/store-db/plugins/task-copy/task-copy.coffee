@@ -18,5 +18,5 @@ share.store_db.plugins.push
   isPluginEnabledForEnvironment: -> true
 
   slider: [
-    {asset_type: "iframe", asset_url: "https://www.youtube.com/embed/gIty__rKWOc?ecver=1"}
+    {asset_type: "iframe", asset_url: "https://www.youtube.com/embed/gIty__rKWOc?ecver=1", asset_title: "plugin_store_task_copy_asset_task_copy_title", asset_subtitle: "plugin_store_task_copy_asset_task_copy_subtitle"}
   ]

@@ -18,5 +18,5 @@ share.store_db.plugins.push
   isPluginEnabledForEnvironment: -> env.INBOUND_EMAILS_ENABLED is "true"
 
   slider: [
-    {asset_type: "image", asset_url: "/layout/images/pricing/mail_do.jpg"}
+    {asset_type: "image", asset_url: "/layout/images/pricing/mail_do.jpg", asset_title: "plugin_store_maildo_asset_maildo_title", asset_subtitle: "plugin_store_maildo_asset_maildo_subtitle"}
   ]

@@ -18,5 +18,5 @@ share.store_db.plugins.push
   isPluginEnabledForEnvironment: -> true
 
   slider: [
-    {asset_type: "iframe", asset_url: "https://drive.google.com/file/d/1MAxA4QaoaTNHSuGw_NTb1NkE6F8Qi96w/preview"}
+    {asset_type: "iframe", asset_url: "https://drive.google.com/file/d/1MAxA4QaoaTNHSuGw_NTb1NkE6F8Qi96w/preview", asset_title: "plugin_store_workload_planner_asset_workload_planner_title", asset_subtitle: "plugin_store_workload_planner_asset_workload_planner_subtitle"}
   ]

@@ -18,9 +18,10 @@ share.store_db.plugins.push
   isPluginEnabledForEnvironment: -> true
 
   slider: [
-    { asset_type: "image", asset_url: "/layout/images/pricing/gantt.jpg"},
-    { asset_type: "image", asset_url: "/layout/images/pricing/milestones.jpg"},
-    { asset_type: "image", asset_url: "/layout/images/pricing/key_tasks.jpg"},
-    { asset_type: "image", asset_url: "/layout/images/pricing/baselines.jpg"},
-    { asset_type: "image", asset_url: "/layout/images/pricing/slack_time.jpg"}
+    { asset_type: "image", asset_url: "/layout/images/pricing/gantt.jpg", asset_title: "plugin_store_gantt_chart_asset_gantt_chart_title", asset_subtitle: "plugin_store_gantt_chart_asset_gantt_chart_subtitle"},
+    { asset_type: "image", asset_url: "/layout/images/pricing/milestones.jpg", asset_title: "plugin_store_gantt_chart_asset_milestones_title", asset_subtitle: "plugin_store_gantt_chart_asset_milestones_subtitle"},
+    { asset_type: "image", asset_url: "/layout/images/pricing/key_tasks.jpg", asset_title: "plugin_store_gantt_chart_asset_key_tasks_title", asset_subtitle: "plugin_store_gantt_chart_asset_key_tasks_subtitle"},
+    { asset_type: "image", asset_url: "/layout/images/pricing/baselines.jpg", asset_title: "plugin_store_gantt_chart_asset_baselines_title", asset_subtitle: "plugin_store_gantt_chart_asset_baselines_subtitle"},
+    { asset_type: "image", asset_url: "/layout/images/pricing/slack_time.jpg", asset_title: "plugin_store_gantt_chart_asset_slack_time_title", asset_subtitle: "plugin_store_gantt_chart_asset_slack_time_subtitle"},
+    { asset_type: "image", asset_url: "/layout/images/pricing/buffers.jpg", asset_title: "plugin_store_gantt_chart_asset_buffers_title", asset_subtitle: "plugin_store_gantt_chart_asset_buffers_subtitle"}
   ]

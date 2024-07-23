@@ -1,0 +1,14 @@
+{
+  "plugin_store_gantt_chart_asset_gantt_chart_title": "Interactive Gantt Chart",
+  "plugin_store_gantt_chart_asset_gantt_chart_subtitle": "Visualize and manage project timelines, dependencies, and progress with interactive Gantt charts in JustDo.<br>Plan, track, and deliver projects efficiently while ensuring on-time delivery.",
+  "plugin_store_gantt_chart_asset_milestones_title": "Milestones",
+  "plugin_store_gantt_chart_asset_milestones_subtitle": "Mark significant events and deadlines within your project timeline using Milestones.<br>Provide clear visual checkpoints to keep your team focused, motivated, and aligned.",
+  "plugin_store_gantt_chart_asset_key_tasks_title": "Key Tasks",
+  "plugin_store_gantt_chart_asset_key_tasks_subtitle": "Identify and highlight crucial tasks or milestones that significantly impact project progress and success.<br>Ensure these critical activities are prioritized and tracked effectively.",
+  "plugin_store_gantt_chart_asset_baselines_title": "Baselines",
+  "plugin_store_gantt_chart_asset_baselines_subtitle": "Track project progress and identify deviations from the original plan using Baselines.<br>Compare different versions of your project schedule to ensure on-time delivery and project success.",
+  "plugin_store_gantt_chart_asset_slack_time_title": "Slack Time",
+  "plugin_store_gantt_chart_asset_slack_time_subtitle": "Visualize task flexibility and potential schedule buffers directly on your Gantt chart.<br>Proactively manage risks and ensure on-time project delivery with JustDo.",
+  "plugin_store_gantt_chart_asset_buffers_title": "Buffer Tasks",
+  "plugin_store_gantt_chart_asset_buffers_subtitle": "Add buffer tasks to your project schedule to accommodate uncertainties, manage risks, and prevent delays from impacting the overall project timeline."
+}

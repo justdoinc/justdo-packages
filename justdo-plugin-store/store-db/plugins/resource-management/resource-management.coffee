@@ -18,5 +18,5 @@ share.store_db.plugins.push
   isPluginEnabledForEnvironment: -> true
 
   slider: [
-    {asset_type: "image", asset_url: "/layout/images/pricing/resource_planner.jpg"}
+    {asset_type: "image", asset_url: "/layout/images/pricing/resource_planner.jpg", asset_title: "plugin_store_resource_management_asset_resource_management_title", asset_subtitle: "plugin_store_resource_management_asset_resource_management_subtitle"}
   ]

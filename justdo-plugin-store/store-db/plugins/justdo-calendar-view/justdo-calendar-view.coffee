@@ -18,5 +18,5 @@ share.store_db.plugins.push
   isPluginEnabledForEnvironment: -> true
 
   slider: [
-    {asset_type: "image", asset_url: "/layout/images/pricing/calendar.jpg"}
+    {asset_type: "image", asset_url: "/layout/images/pricing/calendar.jpg", asset_title: "plugin_store_calendar_view_asset_calendar_view_title", asset_subtitle: "plugin_store_calendar_view_asset_calendar_view_subtitle"}
   ]

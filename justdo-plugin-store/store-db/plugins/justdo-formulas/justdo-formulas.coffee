@@ -18,5 +18,5 @@ share.store_db.plugins.push
   isPluginEnabledForEnvironment: -> true
 
   slider: [
-    {asset_type: "image", asset_url: "/layout/images/pricing/formula.jpg"}
+    {asset_type: "image", asset_url: "/layout/images/pricing/formula.jpg", asset_title: "plugin_store_formulas_asset_formulas_title", asset_subtitle: "plugin_store_formulas_asset_formulas_subtitle"}
   ]

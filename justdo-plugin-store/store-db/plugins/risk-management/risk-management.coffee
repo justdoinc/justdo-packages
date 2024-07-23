@@ -18,5 +18,5 @@ share.store_db.plugins.push
   isPluginEnabledForEnvironment: -> true
 
   slider: [
-    {asset_type: "image", asset_url: "/layout/images/pricing/risk_management.jpg"}
+    {asset_type: "image", asset_url: "/layout/images/pricing/risk_management.jpg", asset_title: "plugin_store_risk_management_asset_risk_management_title", asset_subtitle: "plugin_store_risk_management_asset_risk_management_subtitle"}
   ]

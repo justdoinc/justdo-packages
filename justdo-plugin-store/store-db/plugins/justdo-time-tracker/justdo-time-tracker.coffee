@@ -18,5 +18,5 @@ share.store_db.plugins.push
   isPluginEnabledForEnvironment: -> true
 
   slider: [
-    {asset_type: "image", asset_url: "/layout/images/pricing/time_tracker.jpg"}
+    {asset_type: "image", asset_url: "/layout/images/pricing/time_tracker.jpg", asset_title: "plugin_store_time_tracker_asset_time_tracker_title", asset_subtitle: "plugin_store_time_tracker_asset_time_tracker_subtitle"}
   ]

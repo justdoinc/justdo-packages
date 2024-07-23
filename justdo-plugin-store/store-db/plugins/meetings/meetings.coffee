@@ -18,5 +18,5 @@ share.store_db.plugins.push
   isPluginEnabledForEnvironment: -> true
 
   slider: [
-    {asset_type: "image", asset_url: "/layout/images/pricing/meetigns.jpg"}
+    {asset_type: "image", asset_url: "/layout/images/pricing/meetigns.jpg", asset_title: "plugin_store_meetings_asset_meetings_title", asset_subtitle: "plugin_store_meetings_asset_meetings_subtitle"}
   ]
