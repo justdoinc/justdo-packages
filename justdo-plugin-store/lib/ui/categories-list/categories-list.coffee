@@ -16,15 +16,3 @@ Template.justdo_plugins_store_categories_list.helpers
   
   isDefaultCategory: ->
     return @id == JustdoPluginStore.default_category
-
-Template.justdo_plugins_store_categories_list.events
-  "click .plugins-category": (e, tpl) ->
-    e.preventDefault()
-
-    tpl.store_manager.clearActivePluginPage()
-    tpl.store_manager.setActiveCategory @id
-
-    $(".store-front").scrollTop(0)
-    $(document).scrollTop(0)
-
-    return

@@ -35,22 +35,6 @@ Template.justdo_plugins_store_plugins_list.helpers
     return @developer_url.replace /https?:\/\//, ""
 
 Template.justdo_plugins_store_plugins_list.events
-  "click .plugin-tile": ->
-    tpl = Template.instance()
-
-    tpl.store_manager.setActivePluginPage @id
-
-    Tracker.flush()
-
-    $(".store-front").scrollTop(0)
-    $(document).scrollTop(0)
-
-    return
-  
-  "click .plugin-tile-anchor-wrapper": (e, tpl) ->
-    e.preventDefault()
-    return
-
   "click .browse-our-featured-plugins": (e) ->
     e.preventDefault()
 
