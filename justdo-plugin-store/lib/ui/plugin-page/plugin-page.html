@@ -45,10 +45,10 @@
                 {{/if}}
                   <div class="jd-hero-slider-content">
                     {{#if slide.asset_title}}
-                      <div class="jd-hero-slider-title">{{_ slide.asset_title}}</div>
+                      <div class="jd-hero-slider-title">{{{xssGuard(_ slide.asset_title)}}}</div>
                     {{/if}}
                     {{#if slide.asset_subtitle}}
-                      <div class="jd-hero-slider-subtitle">{{_ slide.asset_subtitle}}</div>
+                      <div class="jd-hero-slider-subtitle">{{{xssGuard(_ slide.asset_subtitle)}}}</div>
                     {{/if}}
                   </div>
               </div>
