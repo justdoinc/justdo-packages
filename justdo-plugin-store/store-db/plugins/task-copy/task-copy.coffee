@@ -1,6 +1,9 @@
 share.store_db.plugins.push
   id: "task-copy"
   title: "plugin_store_task_copy_title"
+  metadata:
+    title: "plugin_store_task_copy_meta_title"
+    description: "plugin_store_task_copy_meta_description"
   short_description: "plugin_store_task_copy_short_description",
   full_description: ["plugin_store_task_copy_full_description"]
   categories: [JustdoPluginStore.default_category, "misc"]

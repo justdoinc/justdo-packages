@@ -1,6 +1,9 @@
 share.store_db.plugins.push
   id: "rows-styling"
   title: "plugin_store_rows_styling_title"
+  metadata:
+    title: "plugin_store_rows_styling_meta_title"
+    description: "plugin_store_rows_styling_meta_description"
   short_description: "plugin_store_rows_styling_short_description"
   full_description: ["plugin_store_rows_styling_full_description"]
   categories: [JustdoPluginStore.default_category, "misc"]

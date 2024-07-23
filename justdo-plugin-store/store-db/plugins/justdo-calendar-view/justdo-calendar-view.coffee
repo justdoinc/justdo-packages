@@ -1,6 +1,9 @@
 share.store_db.plugins.push
   id: "justdo-calendar-view"
   title: "plugin_store_calendar_view_title"
+  metadata:
+    title: "plugin_store_calendar_view_meta_title"
+    description: "plugin_store_calendar_view_meta_description"
   short_description: "plugin_store_calendar_view_short_description"
   full_description: ["plugin_store_calendar_view_full_description"]
   categories: [JustdoPluginStore.default_category, "management", "power-tools"]

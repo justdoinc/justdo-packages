@@ -1,6 +1,9 @@
 share.store_db.plugins.push
   id: "resource-management"
   title: "plugin_store_resource_management_title"
+  metadata:
+    title: "plugin_store_resource_management_meta_title"
+    description: "plugin_store_resource_management_meta_description"
   short_description: "plugin_store_resource_management_short_description"
   full_description: ["plugin_store_resource_management_full_description"]
   categories: [JustdoPluginStore.default_category, "management", "power-tools"]

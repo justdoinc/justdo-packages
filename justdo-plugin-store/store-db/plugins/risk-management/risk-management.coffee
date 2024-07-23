@@ -1,6 +1,9 @@
 share.store_db.plugins.push
   id: "risk-management"
   title: "plugin_store_risk_management_title"
+  metadata:
+    title: "plugin_store_risk_management_meta_title"
+    description: "plugin_store_risk_management_meta_description"
   short_description: "plugin_store_risk_management_short_description"
   full_description: ["plugin_store_risk_management_full_description"]
   categories: [JustdoPluginStore.default_category, "management"]

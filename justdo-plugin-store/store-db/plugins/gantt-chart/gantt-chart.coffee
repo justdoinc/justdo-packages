@@ -1,6 +1,9 @@
 share.store_db.plugins.push
   id: "gantt-chart"
   title: "plugin_store_gantt_chart_title"
+  metadata:
+    title: "plugin_store_gantt_chart_meta_title"
+    description: "plugin_store_gantt_chart_meta_description"
   short_description: "plugin_store_gantt_chart_short_description"
   full_description: ["plugin_store_gantt_chart_full_description"]
   categories: [JustdoPluginStore.default_category, "misc", "management"]
