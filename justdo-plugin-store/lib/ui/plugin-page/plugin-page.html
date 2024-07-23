@@ -43,12 +43,14 @@
                 {{else if $eq slide.asset_type "iframe"}}
                   <iframe src="{{slide.asset_url}}" width="100%" height="400" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 {{/if}}
-                {{#if $or slide.title slide.subtitle}}
                   <div class="jd-hero-slider-content">
-                    <div class="jd-hero-slider-title">{{_ slide.asset_title}}</div>
-                    <div class="jd-hero-slider-subtitle">{{_ slide.asset_subtitle}}</div>
+                    {{#if slide.asset_title}}
+                      <div class="jd-hero-slider-title">{{_ slide.asset_title}}</div>
+                    {{/if}}
+                    {{#if slide.asset_subtitle}}
+                      <div class="jd-hero-slider-subtitle">{{_ slide.asset_subtitle}}</div>
+                    {{/if}}
                   </div>
-                {{/if}}
               </div>
             {{/each}}
           </div>
