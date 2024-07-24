@@ -76,7 +76,7 @@ Package.onUse(function (api) {
 
   // justdo-planning-utilities
   api.addFiles("store-db/plugins/gantt-chart/gantt-chart.coffee", both);
-  api.addAssets("store-db/plugins/gantt-chart/media/delivery-planner-icon.png", client);
+  api.addAssets("store-db/plugins/gantt-chart/media/store-list-icon.png", client);
   api.addAssets("store-db/plugins/gantt-chart/media/delivery-planner-screenshot.png", client);
 
   // time-tracker 
