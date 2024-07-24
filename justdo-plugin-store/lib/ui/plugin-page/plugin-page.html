@@ -3,7 +3,13 @@
     {{#with getActivePluginPageObject}}
       <div class="row mb-3">
         <div class="col-md-8 d-flex align-items-center">
-          <div class="return-to-menu mr-2 jd-c-pointer"><svg class="jd-icon jd-icon-32 text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-left-circle"/></svg></div>
+          <a href="{{#if $eq getActiveCategory getDefaultCategory}}{{i18nRoute route="plugins_store"}}{{else}}{{i18nRoute route="plugins_store_category" category=getActiveCategory}}{{/if}}">
+            <div class="return-to-menu mr-2 jd-c-pointer">
+              <svg class="jd-icon jd-icon-32 text-primary">
+                <use xlink:href="/layout/icons-feather-sprite.svg#arrow-left-circle"/>
+              </svg>
+            </div>
+          </a>
           <h1 class="m-0 title">{{_ title}}</h1>
         </div>
         <div class="col-md-4">

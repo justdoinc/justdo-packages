@@ -7,7 +7,6 @@ import Navigation from "swiper/modules/navigation.mjs"
 import Pagination from "swiper/modules/pagination.mjs"
 import Keyboard from "swiper/modules/keyboard.mjs"
 
-
 Template.justdo_plugins_store_plugin_page.onCreated ->
   @store_manager = @data.store_manager
 
@@ -75,6 +74,16 @@ Template.justdo_plugins_store_plugin_page.helpers
       return TAPi18n.__ cat_label_i18n
 
     return cat_names.join(" &bull; ")
+  
+  getActiveCategory: ->
+    tpl = Template.instance()
+
+    return tpl.store_manager.getActiveCategory()
+  
+  getDefaultCategory: ->
+    tpl = Template.instance()
+
+    return tpl.store_manager.getDefaultCategory()
 
   hasMoreThanOneSliderItems: ->
     tpl = Template.instance()
