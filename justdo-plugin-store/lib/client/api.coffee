@@ -39,7 +39,7 @@ _.extend JustdoPluginStore.prototype,
       getActiveCategory: -> active_category_rv.get()
 
       clearActiveCategory: ->
-        active_category_rv.set JustdoPluginStore.default_category
+        active_category_rv.set @getDefaultCategory()
 
         return
 
