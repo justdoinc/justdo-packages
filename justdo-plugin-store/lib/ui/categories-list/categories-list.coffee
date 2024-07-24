@@ -19,8 +19,6 @@ Template.justdo_plugins_store_categories_list.helpers
 
 Template.justdo_plugins_store_categories_list.events
   "click .plugins-category": (e, tpl) ->
-    e.preventDefault()
-
     tpl.store_manager.clearActivePluginPage()
     tpl.store_manager.setActiveCategory @id
 
