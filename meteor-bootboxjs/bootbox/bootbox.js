@@ -620,13 +620,11 @@
     body.find(".bootbox-body").html(options.message);
 
     // The following resulted from the following coffeescript code:
-    // if (options.allow_rtl) and APP.justdo_i18n?.isRtl()
+    // if options.allow_rtl and options.rtl_ready and APP.justdo_i18n.isRtl()
     //   dialog.addClass("right-to-left")
     //   dialog.attr("dir", "rtl")
     // START
-    var ref;
-
-    if (options.allow_rtl && ((ref = APP.justdo_i18n) != null ? ref.isRtl() : void 0)) {
+    if (options.allow_rtl && options.rtl_ready && APP.justdo_i18n.isRtl()) {
       dialog.addClass("right-to-left");
       dialog.attr("dir", "rtl");
     }
@@ -1016,17 +1014,21 @@
     return exports.setDefaults("locale", name);
   };
 
-  // This method is used to set the default value of allow_rtl=false if is_rtl_transition_mode=true, and vice-versa.
-  // The motivation behind this is to allow gradual RTL support on the web-app level,
-  // so that we can enable rtl bootbox for templates that supports RTL, while keeping others in LTR mode.
-  // Once the web-app transition is completed, remove justdo-web-app/application/lib/030-i18n/client/001-bootbox-rtl-transition-mode.coffee
-  // and this function.
-  exports.rtlTransitionMode = function(is_rtl_transition_mode) {
+  // In this fork of bootbox, we have mechanism to enable RTL mode in bootbox, we add classes and
+  // attributes to the dialog to make it RTL compatible. When we recognize that the current lang is RTL.
+  //
+  // For established applications that are beginning to add support for RTL languages, that might be an issue since
+  // enabling RTL in bootbox will affect all dialogs, and some might not be ready for RTL.
+  //
+  // To allow gradual RTL support, we've added a new method: rtlTransitionMode. If callsed with true, only
+  // dialogs that have rtl_ready option set to true will be affected by RTL mode. The rest will remain in LTR mode,
+  // even if the language is RTL.  exports.rtlTransitionMode = function(is_rtl_transition_mode) {
+  exports.rtlTransitionMode = function(is_rtl_transition_mode) { 
     if (is_rtl_transition_mode) {
-      this.setDefaults("allow_rtl", false);
+      this.setDefaults("rtl_ready", false);
     }
     else {
-      this.setDefaults("allow_rtl", true);
+      this.setDefaults("rtl_ready", true);
     }
     return
   }
