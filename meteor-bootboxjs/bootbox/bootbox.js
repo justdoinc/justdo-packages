@@ -84,7 +84,9 @@
     // dialog container
     container: "body",
     // focused element
-    focused_element: ".btn-primary:first"
+    focused_element: ".btn-primary:first",
+    // allow rtl
+    allow_rtl: true
   };
 
   // our public object; augmented after our private API
@@ -609,13 +611,13 @@
     body.find(".bootbox-body").html(options.message);
 
     // The following resulted from the following coffeescript code:
-    // if APP.justdo_i18n?.isRtl()
+    // if (options.allow_rtl) and APP.justdo_i18n?.isRtl()
     //   dialog.addClass("right-to-left")
     //   dialog.attr("dir", "rtl")
     // START
     var ref;
 
-    if ((ref = APP.justdo_i18n) != null ? ref.isRtl() : void 0) {
+    if (options.allow_rtl && ((ref = APP.justdo_i18n) != null ? ref.isRtl() : void 0)) {
       dialog.addClass("right-to-left");
       dialog.attr("dir", "rtl");
     }
@@ -1004,6 +1006,16 @@
   exports.setLocale = function(name) {
     return exports.setDefaults("locale", name);
   };
+
+  exports.rtlTransitionMode = function(is_rtl_transition_mode) {
+    if (is_rtl_transition_mode) {
+      this.setDefaults("allow_rtl", false);
+    }
+    else {
+      this.setDefaults("allow_rtl", true);
+    }
+    return
+  }
 
   exports.init = function(_$) {
     return init(_$ || $);
