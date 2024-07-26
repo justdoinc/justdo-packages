@@ -85,7 +85,16 @@
     container: "body",
     // focused element
     focused_element: ".btn-primary:first",
-    // allow rtl mode in bootbox if APP.justdo_i18n.isRtl() returns true
+    // rtl_ready is relevant only in environments where rtlTransitionMode(true) is set.
+    // It is used to determine if this particular dialog been prepared for RTL, and if so,
+    // we'll apply to it the necessary RTL classes/attributes as if rtlTransitionMode(true)
+    // was never set.
+    //
+    // This is to allow gradual RTL support for apps that are transitioning to RTL, so that
+    // we can enable rtl bootbox for templates that supports RTL, while keeping others in LTR mode.
+    rtl_ready: true,
+    // allow rtl mode in bootbox if APP.justdo_i18n.isRtl() returns true. If set to false, rtl mode will be disabled,
+    // even in RTL languages.
     allow_rtl: true
   };
 
