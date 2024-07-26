@@ -85,7 +85,7 @@
     container: "body",
     // focused element
     focused_element: ".btn-primary:first",
-    // allow rtl
+    // allow rtl mode in bootbox if APP.justdo_i18n.isRtl() returns true
     allow_rtl: true
   };
 
@@ -1007,6 +1007,11 @@
     return exports.setDefaults("locale", name);
   };
 
+  // This method is used to set the default value of allow_rtl=false if is_rtl_transition_mode=true, and vice-versa.
+  // The motivation behind this is to allow gradual RTL support on the web-app level,
+  // so that we can enable rtl bootbox for templates that supports RTL, while keeping others in LTR mode.
+  // Once the web-app transition is completed, remove justdo-web-app/application/lib/030-i18n/client/001-bootbox-rtl-transition-mode.coffee
+  // and this function.
   exports.rtlTransitionMode = function(is_rtl_transition_mode) {
     if (is_rtl_transition_mode) {
       this.setDefaults("allow_rtl", false);
