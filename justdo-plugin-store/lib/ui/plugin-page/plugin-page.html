@@ -1,97 +1,85 @@
 <template name="justdo_plugins_store_plugin_page">
+  <a class="return-to-menu" href="{{#if $eq getActiveCategory getDefaultCategory}}{{i18nRoute route="plugins_store"}}{{else}}{{i18nRoute route="plugins_store_category" category=getActiveCategory}}{{/if}}">
+    <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-left"/></svg>
+  </a>
   <div class="justdo-plugins-plugin-page">
     {{#with getActivePluginPageObject}}
-      <div class="row mb-3">
-        <div class="col-md-8 d-flex align-items-center">
-          <a href="{{#if $eq getActiveCategory getDefaultCategory}}{{i18nRoute route="plugins_store"}}{{else}}{{i18nRoute route="plugins_store_category" category=getActiveCategory}}{{/if}}">
-            <div class="return-to-menu mr-2 jd-c-pointer">
-              <svg class="jd-icon jd-icon-32 text-primary">
-                <use xlink:href="/layout/icons-feather-sprite.svg#arrow-left-circle"/>
-              </svg>
-            </div>
-          </a>
-          <h1 class="m-0 title">{{_ title}}</h1>
-        </div>
-        <div class="col-md-4">
+      <div class="plugin-page-header">
+        <div class="plugin-page-img shadow" style="background-image: url('{{image_url}}')"></div>
+        <div class="plugin-page-header-info">
+          <div class="plugin-page-title">{{_ title}}</div>
+          <div class="plugin-page-categories">
+            {{{categories}}}
+          </div>
+          <a href="{{i18nRoute route="pricing"}}" title="{{_ "plugin_store_learn_more"}}" class="pricing-page-link">{{_ "plugin_store_learn_more"}}</a>
           {{#if isProjectPage}}
-            {{#if isProjectPageAdmin}}
-              {{#if activePluginPagePluginInstallable}}
-                {{#if activePluginPagePluginEnabledForEnvironment}}
-                  <button class="btn btn-primary pull-right install-toggle-btn">
+            <div class="plugin-page-btn-wrapper">
+              {{#if isProjectPageAdmin}}
+                {{#if activePluginPagePluginInstallable}}
+                  {{#if activePluginPagePluginEnabledForEnvironment}}
                     {{#if activePluginPagePluginInstalled}}
-                      <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;&nbsp;Uninstall
+                      <button class="btn btn-outline-primary install-toggle-btn">Uninstall</button>
                     {{else}}
-                      <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Install
+                      <button class="btn btn-primary install-toggle-btn">Install</button>
                     {{/if}}
-                  </button>
+                  {{else}}
+                    <div class="unable-to-install-notice">Plugin is not supported, <br> please contact support to install</div>
+                  {{/if}}
+                {{/if}}
+              {{else}}
+                {{#if activePluginPagePluginInstalled}}
+                  <div class="install-notice text-primary">Installed</div>
                 {{else}}
-                  <div class="unable-to-install-notice">Plugin is not supported, <br> please contact support to install</div>
+                  <div class="install-notice text-primary">Contact this JustDo admins to install this plugin</div>
                 {{/if}}
               {{/if}}
-            {{else}}
-              {{#if activePluginPagePluginInstalled}}
-                <div class="unable-to-install-notice" style="padding-top: 12px; text-align: center;">Installed</div>
-              {{else}}
-                <div class="unable-to-install-notice">Contact this JustDo admins to <br> install this plugin</div>
-              {{/if}}
-            {{/if}}
+            </div>
           {{/if}}
         </div>
       </div>
       <!-- Images slider -->
-      <div id="plugin-carousel" class="carousel slide py-3" data-ride="carousel">
-        <div class="swiper">
-          <div class="swiper-wrapper">
-            {{#each slide in slider}}
-              <div class="swiper-slide" dir="{{#if isRtl}}rtl{{/if}}">
-                {{#if $eq slide.asset_type "image"}}
-                  <img src="{{slide.asset_url}}" alt="{{_ title}}" class="d-block w-100" />
-                {{else if $eq slide.asset_type "iframe"}}
-                  <iframe src="{{slide.asset_url}}" width="100%" height="400" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                {{/if}}
-                  <div class="jd-hero-slider-content">
-                    {{#if slide.asset_title}}
-                      <div class="jd-hero-slider-title">{{{xssGuard(_ slide.asset_title)}}}</div>
-                    {{/if}}
-                    {{#if slide.asset_subtitle}}
-                      <div class="jd-hero-slider-subtitle">{{{xssGuard(_ slide.asset_subtitle)}}}</div>
-                    {{/if}}
-                  </div>
-              </div>
-            {{/each}}
+      {{#if slider}}
+        <div id="plugin-carousel" class="carousel slide" data-ride="carousel">
+          <div class="swiper">
+            <div class="swiper-wrapper">
+              {{#each slide in slider}}
+                <div class="swiper-slide" dir="{{#if isRtl}}rtl{{/if}}">
+                  {{#if $eq slide.asset_type "image"}}
+                    <img src="{{slide.asset_url}}" alt="{{_ title}}" class="d-block w-100" />
+                  {{else if $eq slide.asset_type "iframe"}}
+                    <iframe src="{{slide.asset_url}}" width="100%" height="400" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                  {{/if}}
+                    <div class="jd-hero-slider-content">
+                      {{#if slide.asset_title}}
+                        <div class="jd-hero-slider-title">{{{xssGuard(_ slide.asset_title)}}}</div>
+                      {{/if}}
+                      {{#if slide.asset_subtitle}}
+                        <div class="jd-hero-slider-subtitle">{{{xssGuard(_ slide.asset_subtitle)}}}</div>
+                      {{/if}}
+                    </div>
+                </div>
+              {{/each}}
+            </div>
+            <div class="swiper-pagination"></div>
           </div>
-          <div class="swiper-pagination"></div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
         </div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-      </div>
-      
-      <!-- Plugin info -->
-      <div class="plugin-info border-bottom border-top py-3 row {{#if hasMoreThanOneSliderItems}}has-more-than-one-slider-items{{/if}}">
-        <div class="plugin-category text-center border-right col-md-6 px-3 d-flex align-items-center justify-content-center">
-          {{{categories}}}
-        </div>
-        <div class="plugin-price text-center col-md-6 px-3 d-flex flex-column align-items-center justify-content-center">
-          {{!-- <div>Price: <strong class="text-primary ml-1">Free</strong></div> --}}
-          <a href="{{i18nRoute route="pricing"}}" title="{{_ "plugin_store_learn_more"}}" class="pricing-page-link">{{_ "plugin_store_learn_more"}}</a>
-        </div>
-      </div>
+      {{/if}}
       <!-- Plugin description -->
-      <div class="plugin-description py-3 border-bottom">
+      <div class="plugin-description">
         <p>
           {{#each full_description}}
             {{{xssGuard(_ this)}}}
           {{/each}}
         </p>
       </div>
-      <div class="plugin-additional-info py-3 border-bottom">
-        <h5>{{_ "plugin_store_additional_info"}}</h5>
-        <p class="mb-0">{{{xssGuard(_ "plugin_store_version" version=version)}}}</p>
-      </div>
-      <div class="plugin-developer py-3">
-        <h5>{{_ "plugin_store_developer"}}</h5>
-        <p class="mb-0">{{{xssGuard(_ "plugin_store_developer_company" company_name=developerI18n)}}}</p>
-        <p class="mb-0">{{{xssGuard(_ "plugin_store_developer_website" company_website=developer_url)}}}</p>
+      <div class="plugin-additional-info">
+        <div class="plugin-additional-info-title">{{_ "plugin_store_developer"}}</div>
+        <div class="plugin-additional-info-text">{{{xssGuard(_ "plugin_store_developer_company" company_name=developerI18n)}}}</div>
+        <div class="plugin-additional-info-text">{{{xssGuard(_ "plugin_store_developer_website" company_website=developer_url)}}}</div>
+        <div class="plugin-additional-info-title">{{_ "plugin_store_additional_info"}}</div>
+        <div class="plugin-additional-info-text">{{{xssGuard(_ "plugin_store_version" version=version)}}}</div>
       </div>
     {{/with}}
   </div>

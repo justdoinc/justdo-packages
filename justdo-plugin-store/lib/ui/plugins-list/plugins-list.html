@@ -15,23 +15,21 @@
       <div class="col-xs-12 col-sm-6 col-md-4">
         <a href="{{i18nRoute route="plugin_page" plugin=id}}" class="plugin-tile-anchor-wrapper">
           <div class="plugin-tile mb-5 plugin-tile plugin-{{id}}">
-            <div class="p-2">
-              <div class="plugin-img shadow" style="background-image: url('{{image_url}}')">
-                {{#if isPluginInstalled}}
-                  <div class="plugin-installed border bg-light rounded-sm font-weight-bold py-1 px-2 d-flex align-items-center"><svg class="jd-icon jd-icon-16 mr-1"><use xlink:href="/layout/icons-feather-sprite.svg#check-circle"/></svg>Installed</div>
-                {{/if}}
-                <div class="developer-info">
-                  <small class="text-white d-block developer-name">{{_ developer}}</small>
-                  <small class="text-white d-block developer-site">{{getDeveloperUrlWithoutProtocol}}</small>
-                </div>
+            <div class="plugin-img shadow" style="background-image: url('{{image_url}}')">
+              {{#if isPluginInstalled}}
+                <div class="plugin-installed border bg-light rounded-sm font-weight-bold py-1 px-2 d-flex align-items-center"><svg class="jd-icon jd-icon-16 mr-1"><use xlink:href="/layout/icons-feather-sprite.svg#check-circle"/></svg>Installed</div>
+              {{/if}}
+              <div class="developer-info">
+                <small class="text-white d-block developer-name">{{_ developer}}</small>
+                <small class="text-white d-block developer-site">{{getDeveloperUrlWithoutProtocol}}</small>
               </div>
-              <div class="plugin-short-info">
-                <div class="plugin-short-info-title">{{_ title}}</div>
-                <div class="plugin-short-info-subtitle">{{_ short_description}}</div>
-                {{!-- <div class="more-info">
-                  <small class="text-primary">{{price}}</small>
-                </div> --}}
-              </div>
+            </div>
+            <div class="plugin-short-info">
+              <div class="plugin-short-info-title">{{_ title}}</div>
+              <div class="plugin-short-info-subtitle">{{_ short_description}}</div>
+              {{!-- <div class="more-info">
+                <small class="text-primary">{{price}}</small>
+              </div> --}}
             </div>
           </div>
         </a>

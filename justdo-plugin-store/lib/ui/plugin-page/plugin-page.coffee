@@ -73,13 +73,13 @@ Template.justdo_plugins_store_plugin_page.helpers
       cat_label_i18n = cat_def?.label or "plugin_store_category_unknown_label"
       return TAPi18n.__ cat_label_i18n
 
-    return cat_names.join(" &bull; ")
-  
+    return cat_names.join(", ")
+
   getActiveCategory: ->
     tpl = Template.instance()
 
     return tpl.store_manager.getActiveCategory()
-  
+
   getDefaultCategory: ->
     tpl = Template.instance()
 
@@ -94,7 +94,7 @@ Template.justdo_plugins_store_plugin_page.helpers
       return false
 
     return slider.length > 1
-  
+
   developerI18n: -> TAPi18n.__ @developer
 
 Template.justdo_plugins_store_plugin_page.events

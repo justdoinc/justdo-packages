@@ -3,26 +3,111 @@
 @import "{}/node_modules/swiper/modules/navigation.scss"
 @import "{}/node_modules/swiper/modules/keyboard.scss"
 
-.justdo-plugins-plugin-page
-  .jd-icon
-    stroke: currentColor
-    stroke-width: 2
-    stroke-linecap: round
-    stroke-linejoin: round
-    fill: none
-  .title
-    font-size: 2rem
-
-  .jd-icon-32
+.plugin-page
+  display: flex
+  .return-to-menu
     width: 32px
     height: 32px
-    
+    cursor: pointer
+    flex-shrink: 0
+    margin-top: 12px
+    .jd-icon
+      stroke: currentColor
+      stroke-width: 2
+      stroke-linecap: round
+      stroke-linejoin: round
+      fill: none
+      width: 100%
+      height: 100%
+      color: black
+      cursor: pointer
+      transition: transform 0.25s
+      transform: scale(1)
+      &:hover
+        transform: scale(1.15)
+.justdo-plugins-plugin-page
+  padding-left: 12px
+  .plugin-page-header
+    display: flex
+    margin-bottom: 32px
+  .plugin-page-header-info
+    display: flex
+    flex-direction: column
+  .plugin-page-img
+    width: 120px
+    height: 120px
+    border-radius: 20px
+    background-position: center
+    background-repeat: no-repeat
+    background-size: cover
+    margin-right: 24px
+  .plugin-page-title
+    font-size: 24px
+    font-weight: 600
+  .plugin-page-categories
+    color: rgba(53, 68, 97, 0.95)
+    margin-top: 4px
+  #plugin-carousel
+    border-radius: 20px
+    overflow: hidden
+    border: 3px solid #e7edf5
+    margin-bottom: 32px
+    .jd-hero-slider-content
+      left: 0px
+      right: 0px
+      bottom: 0px
+      text-shadow: none
+      border-radius: 0px 0px 16px 16px
+    .swiper-button-next,
+    .swiper-button-prev
+      &::after
+        font-size: 24px
+        color: black
+    .swiper-pagination
+      position: relative
+      padding-bottom: 12px
+      .swiper-pagination-bullet
+        background: #6FA1CF
+        opacity: 0.35
+        &.swiper-pagination-bullet-active
+          opacity: 1
   .jd-hero-slider-content
     opacity: 1
     pointer-events: none
-  
+  .plugin-page-btn-wrapper
+    display: flex
+    .install-toggle-btn
+      margin-top: 12px
+    .install-notice
+      background: #e8effe
+      padding: 6px 12px
+      border-radius: 4px
+      margin-top: 12px
+      font-size: 14px
+      font-weight: 500
   .plugin-description
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125)
+    padding-bottom: 12px
+    margin-bottom: 24px
     p
       h2
-        font-size: 1.25rem
-        font-weight: 500
+        font-size: 16px
+        font-weight: 600
+      ul
+        padding-left: 20px
+        margin-bottom: 0
+  .plugin-additional-info
+    font-size: 14px
+  .plugin-additional-info-title
+    font-weight: 600
+    margin-top: 12px
+    margin-bottom: 2px
+
+.right-to-left
+  .plugin-page
+    .return-to-menu
+      transform: rotate(180deg)
+      margin-left: 12px
+  .plugin-page-img
+    margin-right: unset
+    margin-left: 24px
