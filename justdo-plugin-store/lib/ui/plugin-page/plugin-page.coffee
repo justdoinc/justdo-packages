@@ -64,17 +64,9 @@ Template.justdo_plugins_store_plugin_page.helpers
         return true
 
     return false
-
-  categories: ->
-    tpl = Template.instance()
-
-    cat_names = _.map @categories, (cat_id) ->
-      cat_def = _.find tpl.store_manager.listCategories(), (c) -> c.id is cat_id
-      cat_label_i18n = cat_def?.label or "plugin_store_category_unknown_label"
-      return TAPi18n.__ cat_label_i18n
-
-    return cat_names.join(", ")
-
+  
+  categories: -> _.map @categories, (category) -> APP.justdo_plugin_store.getCategoryById category
+  
   getActiveCategory: ->
     tpl = Template.instance()
 

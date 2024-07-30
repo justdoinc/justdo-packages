@@ -9,7 +9,12 @@
         <div class="plugin-page-header-info">
           <div class="plugin-page-title">{{_ title}}</div>
           <div class="plugin-page-categories">
-            {{categories}}
+            {{#each categories}}
+              {{#if $gt @index 0}}
+                <span class="text-secondary"> | </span>
+              {{/if}}
+              <a href="{{i18nRoute route="plugins_store_category" category=id}}" class="plugin-page-category text-secondary">{{_ label}}</a>
+            {{/each}}
           </div>
           <a href="{{i18nRoute route="pricing"}}" title="{{_ "plugin_store_learn_more"}}" class="pricing-page-link">{{_ "plugin_store_learn_more"}}</a>
           {{#if isProjectPage}}
