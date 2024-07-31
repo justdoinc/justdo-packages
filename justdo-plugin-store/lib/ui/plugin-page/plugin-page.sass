@@ -7,10 +7,19 @@
   display: flex
   .return-to-menu
     width: 32px
-    height: 32px
+    height: 40px
     cursor: pointer
-    flex-shrink: 0
-    margin-top: 12px
+    position: absolute
+    background-color: white
+    border-radius: 4px
+    box-shadow: -1px 0px 12px rgba(0, 0, 0, 0.12)
+    top: -6px
+    left: 10px
+    padding-right: 2px
+    transition: transform 0.25s
+    transform: scale(1)
+    &:hover
+      transform: scale(1.1)
     .jd-icon
       stroke: currentColor
       stroke-width: 2
@@ -21,10 +30,6 @@
       height: 100%
       color: black
       cursor: pointer
-      transition: transform 0.25s
-      transform: scale(1)
-      &:hover
-        transform: scale(1.15)
 .justdo-plugins-plugin-page
   padding-left: 12px
   .plugin-page-header
@@ -46,7 +51,15 @@
     font-weight: 600
   .plugin-page-categories
     color: rgba(53, 68, 97, 0.95)
-    margin-top: 4px
+    margin: 4px 0px
+    display: flex
+    align-items: center
+    flex-wrap: wrap
+    .plugin-page-categories-delimiter
+      width: 1px
+      height: 15px
+      margin: 0 8px
+      background-color: rgba(53, 68, 97, 0.2)
   #plugin-carousel
     border-radius: 20px
     overflow: hidden
@@ -111,3 +124,21 @@
   .plugin-page-img
     margin-right: unset
     margin-left: 24px
+
+@media (max-width: 768px)
+  .plugin-page
+    .return-to-menu
+      left: 0
+
+@media (max-width: 450px)
+  .justdo-plugins-plugin-page
+    .plugin-page-img
+      width: 80px
+      height: 80px
+      flex-shrink: 0
+      border-radius: 12px
+    .plugin-page-title
+      font-size: 18px
+    .plugin-page-categories,
+    .pricing-page-link
+      font-size: 14px

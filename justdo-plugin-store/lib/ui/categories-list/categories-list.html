@@ -1,9 +1,26 @@
 <template name="justdo_plugins_store_categories_list">
-  <ul class="plugins-categories-list list-group list-group-flush">
+  <ul class="plugins-categories-list list-group list-group-flush ">
     {{#each categories}}
       <a href="{{#if isDefaultCategory}}{{i18nRoute route="plugins_store"}}{{else}}{{i18nRoute route="plugins_store_category" category=id}}{{/if}}" class="plugins-category plugins-category-{{id}}">
         <li class="list-group-item list-group-item-action {{#if isActiveCategory}}active{{/if}}" category-id="{{id}}">{{_ label}}</li>
       </a>
     {{/each}}
   </ul>
+
+
+  <div class="plugins-categories-dropdown dropdown">
+    <div class="plugins-categories-dropdown-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+      {{_ activeCategoryLabel}}
+      <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"></use></svg>
+    </div>
+
+    <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
+      {{#each categories}}
+        <a href="{{#if isDefaultCategory}}{{i18nRoute route="plugins_store"}}{{else}}{{i18nRoute route="plugins_store_category" category=id}}{{/if}}" class="dropdown-item {{#if isActiveCategory}}active{{/if}} plugins-category plugins-category-{{id}}">
+          <li category-id="{{id}}">{{_ label}}</li>
+        </a>
+      {{/each}}
+    </ul>
+  </div>
+
 </template>

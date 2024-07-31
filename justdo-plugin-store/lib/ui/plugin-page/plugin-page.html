@@ -11,7 +11,7 @@
           <div class="plugin-page-categories">
             {{#each categories}}
               {{#if $gt @index 0}}
-                <span class="text-secondary"> | </span>
+                <div class="plugin-page-categories-delimiter"></div>
               {{/if}}
               <a href="{{i18nRoute route="plugins_store_category" category=id}}" class="plugin-page-category text-secondary">{{_ label}}</a>
             {{/each}}
