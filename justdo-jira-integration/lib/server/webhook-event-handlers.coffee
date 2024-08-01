@@ -549,18 +549,21 @@ _.extend JustdoJiraIntegration.prototype,
       jira_doc_id = @getJiraDocIdFromJustdoId justdo_id
 
       removeAllParents = (task_doc) =>
-        all_parent_task_ids = _.map task_doc.parents2, (parent_obj) -> parent_obj.parent
-        while (parent_task_id = all_parent_task_ids.pop())?
         task_owner = task_doc.owner_id
+        all_parent_task_ids = _.map task_doc.parents2, (parent_obj) -> {parent_task_id: parent_obj.parent, retry: 0}
+        while (parent_task = all_parent_task_ids.pop())?
           # removeParent middleware will consume jira_issue_id and ignore this operation
           @deleted_issue_ids.add parseInt(task_doc.jira_issue_id)
           try
             APP.projects._grid_data_com.removeParent "/#{parent_task.parent_task_id}/#{task_doc._id}/", task_owner
           catch e
             if e.error isnt "unknown-parent"
-              all_parent_task_ids.unshift parent_task_id
-              console.trace()
-              console.error e
+              if parent_task.retry < 3
+                parent_task.retry += 1
+                all_parent_task_ids.unshift parent_task 
+              else
+                console.trace()
+                console.error e
 
       if not @isJiraIntegrationInstalledOnJustdo justdo_id
         return
