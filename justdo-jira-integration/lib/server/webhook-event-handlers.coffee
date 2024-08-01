@@ -551,10 +551,11 @@ _.extend JustdoJiraIntegration.prototype,
       removeAllParents = (task_doc) =>
         all_parent_task_ids = _.map task_doc.parents2, (parent_obj) -> parent_obj.parent
         while (parent_task_id = all_parent_task_ids.pop())?
+        task_owner = task_doc.owner_id
           # removeParent middleware will consume jira_issue_id and ignore this operation
           @deleted_issue_ids.add parseInt(task_doc.jira_issue_id)
           try
-            APP.projects._grid_data_com.removeParent "/#{parent_task_id}/#{task_doc._id}/", @_getJustdoAdmin justdo_id
+            APP.projects._grid_data_com.removeParent "/#{parent_task.parent_task_id}/#{task_doc._id}/", task_owner
           catch e
             if e.error isnt "unknown-parent"
               all_parent_task_ids.unshift parent_task_id
@@ -595,10 +596,10 @@ _.extend JustdoJiraIntegration.prototype,
             $ne: null
           jira_issue_type:
             $in: _.map @getRankedIssueTypesInJiraProject(jira_doc_id, jira_project_id)[-1], (issue_type_def) -> issue_type_def.name
-        @tasks_collection.find(query, {fields: {jira_issue_id: 1, "parents2.parent": 1}}).forEach (child_task) => removeAllParents child_task
+        @tasks_collection.find(query, {fields: {jira_issue_id: 1, "parents2.parent": 1, owner_id: 1}}).forEach (child_task) => removeAllParents child_task
 
       # At last, remove the issue that was removed in Jira.
-      task = @tasks_collection.findOne({jira_issue_id: jira_issue_id}, {fields: {jira_issue_id: 1, "parents2.parent": 1}})
+      task = @tasks_collection.findOne({jira_issue_id: jira_issue_id}, {fields: {jira_issue_id: 1, "parents2.parent": 1, owner_id: 1}})
       removeAllParents task
 
       # Just in case removeParent() fails.
