@@ -107,6 +107,14 @@ _.extend JustdoJiraIntegration.prototype,
   _getJustdoAdmin: (justdo_id) ->
     return @projects_collection.findOne({_id: justdo_id, "members.is_admin": true}, {fields: {"members.$": 1}}).members[0].user_id
 
+  _getJiraMountpointOwner: (jira_project_id) ->
+    jira_project_id = parseInt jira_project_id, 10
+    return @tasks_collection.findOne({jira_project_id, jira_mountpoint_type: "root"}, {fields: {owner_id: 1}})?.owner_id
+  
+  _getJiraIssueOwner: (jira_issue_id) ->
+    jira_issue_id = parseInt jira_issue_id, 10
+    return @tasks_collection.findOne({jira_issue_id}, {fields: {owner_id: 1}})?.owner_id
+
   _setupInvertedFieldMap: ->
     JustdoJiraIntegration.jira_field_to_justdo_field_map = {}
     for task_field, issue_field_def of JustdoJiraIntegration.justdo_field_to_jira_field_map
@@ -269,7 +277,9 @@ _.extend JustdoJiraIntegration.prototype,
 
     _.extend task_fields, @_mapJiraFieldsToJustdoFields justdo_id, {issue: jira_issue_body}
 
-    parent_task = @tasks_collection.findOne GridDataCom.helpers.getPathItemId parent_path, {fields: {jira_sprint: 1, jira_fix_version: 1, owner_id: 1}}
+    if not (parent_task = @tasks_collection.findOne GridDataCom.helpers.getPathItemId parent_path, {fields: {jira_sprint: 1, jira_fix_version: 1, owner_id: 1}})?
+      console.warn "[justdo-jira-integration] Attempted to create #{jira_issue_key} under non-existant parent path #{parent_path}"
+      return
 
     gc = APP.projects._grid_data_com
     created_task_id = ""
@@ -1535,13 +1545,14 @@ _.extend JustdoJiraIntegration.prototype,
 
       checkIssuesIntegrity = (res, current_checkpoint) =>
         for issue in res.issues
+          jira_issue_id = parseInt issue.id
           if not @_ensureCheckpointProcessInControl current_checkpoint
             return
 
           justdo_id = @getJustdoIdForIssue(issue) or issue.fields[JustdoJiraIntegration.project_id_custom_field_id]
           mapped_task_fields = @_mapJiraFieldsToJustdoFields justdo_id, {issue}, {include_null_values: true}
           if mapped_task_fields.owner_id is null
-            mapped_task_fields.owner_id = @_getJustdoAdmin justdo_id
+            mapped_task_fields.owner_id = @_getJiraIssueOwner jira_issue_id
           if not (@tasks_collection.findOne(_.extend({jira_issue_id: parseInt issue.id}, mapped_task_fields), {fields: {_id: 1}}))?
             @issues_with_discrepancies.push issue.id
         return
