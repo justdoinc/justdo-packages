@@ -165,9 +165,8 @@ APP.on "jira-core-fields-ready", ->
                 new_sprint_id = parseInt new_sprint_id
               new_sprint_mountpoint = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_sprint_mountpoint_id: new_sprint_id}, {fields: {_id: 1}})?._id
 
-            if (task_doc = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_issue_id: jira_issue_id}, {fields: {_id: 1, jira_sprint: 1, parents2: 1}}))?
+            if (task_doc = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_issue_id: jira_issue_id}, {fields: {_id: 1, jira_sprint: 1, parents2: 1, owner_id: 1}}))?
               grid_data = APP.projects._grid_data_com
-              justdo_admin_id = @_getJustdoAdmin justdo_id
 
               # In case a discrepency happens, fetch the old sprint id from our db.
               if task_doc.jira_sprint? and (task_doc.jira_sprint isnt new_sprint_name)
@@ -192,7 +191,7 @@ APP.on "jira-core-fields-ready", ->
                 if old_sprint_mountpoint? and new_sprint_mountpoint?
                   # Relocate issue
                   try
-                    grid_data.movePath "/#{old_sprint_mountpoint}/#{task_doc._id}/", {parent: new_sprint_mountpoint, order: 0}, justdo_admin_id
+                    grid_data.movePath "/#{old_sprint_mountpoint}/#{task_doc._id}/", {parent: new_sprint_mountpoint, order: 0}, task_doc.owner_id
                   catch e
                     if e.error not in ["parent-already-exists", "unknown-parent"]
                       console.trace()
@@ -200,7 +199,7 @@ APP.on "jira-core-fields-ready", ->
                 # Remove sprint parent
                 else if old_sprint_mountpoint?
                   try
-                    grid_data.removeParent "/#{old_sprint_mountpoint}/#{task_doc._id}/", justdo_admin_id
+                    grid_data.removeParent "/#{old_sprint_mountpoint}/#{task_doc._id}/", task_doc.owner_id
                   catch e
                     if e.error isnt "unknown-parent"
                       console.trace()
@@ -208,7 +207,7 @@ APP.on "jira-core-fields-ready", ->
                 # Add sprint parent
                 else if new_sprint_mountpoint?
                   try
-                    grid_data.addParent task_doc._id, {parent: new_sprint_mountpoint, order: 0}, justdo_admin_id
+                    grid_data.addParent task_doc._id, {parent: new_sprint_mountpoint, order: 0}, task_doc.owner_id
                   catch e
                     if e.error isnt "parent-already-exists"
                       console.trace()
@@ -258,14 +257,13 @@ APP.on "jira-core-fields-ready", ->
               jira_issue_id = parseInt req_body.issue.id
               jira_project_id = parseInt req_body.issue.fields.project.id
               grid_data = APP.projects._grid_data_com
-              justdo_admin_id = @_getJustdoAdmin justdo_id
+              task_doc = @tasks_collection.findOne({jira_issue_id: jira_issue_id}, {fields: {parents2: 1, owner_id: 1}})
               ops = {}
 
               if _.isString field.from
                 old_fix_version_mountpoint = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_fix_version_mountpoint_id: parseInt field.from}, {fields: {_id: 1}})
                 ops.$pull =
                   jira_fix_version: field.fromString
-              task_doc = @tasks_collection.findOne({jira_issue_id: jira_issue_id}, {fields: {parents2: 1}})
               if _.isString field.to
                 new_fix_version_mountpoint = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_fix_version_mountpoint_id: parseInt field.to}, {fields: {_id: 1}})
                 ops.$addToSet =
@@ -284,14 +282,14 @@ APP.on "jira-core-fields-ready", ->
 
               if old_fix_version_mountpoint?
                 try
-                  grid_data.removeParent "/#{old_fix_version_mountpoint._id}/#{task_doc._id}/", justdo_admin_id
+                  grid_data.removeParent "/#{old_fix_version_mountpoint._id}/#{task_doc._id}/", task_doc.owner_id
                 catch e
                   if e.error isnt "unknown-parent"
                     console.trace()
                     console.error e
               if new_fix_version_mountpoint?
                 try
-                  grid_data.addParent task_doc._id, {parent: new_fix_version_mountpoint._id, order: 0}, justdo_admin_id
+                  grid_data.addParent task_doc._id, {parent: new_fix_version_mountpoint._id, order: 0}, task_doc.owner_id
                 catch e
                   if e.error isnt "parent-already-exists"
                     console.trace()

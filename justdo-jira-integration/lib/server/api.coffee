@@ -259,7 +259,6 @@ _.extend JustdoJiraIntegration.prototype,
     jira_issue_key = jira_issue_body.key
     jira_issue_id = jira_issue_body.id
     jira_project_id = jira_issue_body.fields.project.id
-    justdo_admin_id = @_getJustdoAdmin justdo_id
 
     task_fields =
       project_id: justdo_id
@@ -270,12 +269,12 @@ _.extend JustdoJiraIntegration.prototype,
 
     _.extend task_fields, @_mapJiraFieldsToJustdoFields justdo_id, {issue: jira_issue_body}
 
-    perform_as = justdo_admin_id
+    parent_task = @tasks_collection.findOne GridDataCom.helpers.getPathItemId parent_path, {fields: {jira_sprint: 1, jira_fix_version: 1, owner_id: 1}}
 
     gc = APP.projects._grid_data_com
     created_task_id = ""
     try
-      created_task_id = gc.addChild parent_path, task_fields, perform_as
+      created_task_id = gc.addChild parent_path, task_fields, parent_task.owner_id
     catch e
       @logger.error jira_issue_key, parent_path, "failed", e
 
@@ -293,7 +292,6 @@ _.extend JustdoJiraIntegration.prototype,
       # The following handles adding parent of created task to their sprint/fix version.
       # Note that add parent is called only when the created task has a different sprint/fix version that the parent task.
       if @getIssueTypeRank(task_fields.jira_issue_type, jira_project_id) > -1
-        parent_task = @tasks_collection.findOne GridDataCom.helpers.getPathItemId parent_path, {fields: {jira_sprint: 1, jira_fix_version: 1}}
         if (issue_sprint = task_fields.jira_sprint)? and (issue_sprint isnt parent_task.jira_sprint)
           # XXX Uncomment for debug info
           # console.log "-----Adding to sprint-----"
@@ -307,7 +305,7 @@ _.extend JustdoJiraIntegration.prototype,
               sprint_parent_task_id = @tasks_collection.findOne({jira_sprint_mountpoint_id: parseInt sprint_id}, {fields: {_id: 1}})?._id
           # XXX This if condition catches cases where a sprint is closed and we do not create a task out of it.
           if sprint_parent_task_id?
-            gc.addParent created_task_id, {parent: sprint_parent_task_id}, perform_as
+            gc.addParent created_task_id, {parent: sprint_parent_task_id}, parent_task.owner_id
 
         if not _.isEmpty(fix_versions = jira_issue_body.fields.fixVersions)
           for fix_version in fix_versions
@@ -322,7 +320,7 @@ _.extend JustdoJiraIntegration.prototype,
                 fix_version_parent_task_id = @tasks_collection.findOne({jira_fix_version_mountpoint_id: parseInt fix_version.id}, {fields: {_id: 1}})?._id
               # XXX This if condition catches cases where a fix version is closed and we do not create a task out of it.
               if fix_version_parent_task_id?
-                gc.addParent created_task_id, {parent: fix_version_parent_task_id}, perform_as
+                gc.addParent created_task_id, {parent: fix_version_parent_task_id}, parent_task.owner_id
 
       @setJustdoIdandTaskIdToJiraIssue justdo_id, created_task_id, jira_issue_id
 
@@ -757,7 +755,7 @@ _.extend JustdoJiraIntegration.prototype,
     if @getJustdosIdsAndTasksIdsfromMountedJiraProjectId(jira_project_id)?.justdo_id isnt justdo_id
       @removeJustdoCustomFieldMapping justdo_id, jira_project_id
 
-    justdo_admin_id = @_getJustdoAdmin justdo_id
+    justdo_admin_id = user_id
     # XXX If the Justdo admin is guarenteed to also be a member of the moutned Jira project,
     # XXX change the following to an array and remove default value.
     # Get an array of user_ids of Jira project members to be inserted in tasks created from Jira issue
@@ -1617,9 +1615,8 @@ _.extend JustdoJiraIntegration.prototype,
     jira_project_id = parseInt jira_issue_body.fields.project.id
     justdo_id = @getJustdoIdForIssue jira_issue_body or jira_issue_body.fields[JustdoJiraIntegration.project_id_custom_field_id]
 
-    justdo_admin_id = @_getJustdoAdmin justdo_id
     grid_data = APP.projects._grid_data_com
-    task_doc = @tasks_collection.findOne({jira_issue_id: jira_issue_id}, {fields: {jira_fix_version: 1, "parents2.parent": 1}})
+    task_doc = @tasks_collection.findOne({jira_issue_id: jira_issue_id}, {fields: {jira_fix_version: 1, "parents2.parent": 1, owner_id: 1}})
 
     existing_fix_versions = new Map()
 
@@ -1658,7 +1655,7 @@ _.extend JustdoJiraIntegration.prototype,
                 _id: 1
             fix_version_mountpoint = @tasks_collection.findOne(query, query_options)
             try
-              grid_data.addParent task_doc._id, {parent: fix_version_mountpoint?._id, order: 0}, justdo_admin_id
+              grid_data.addParent task_doc._id, {parent: fix_version_mountpoint?._id, order: 0}, task_doc.owner_id
             catch e
               if e.error isnt "parent-already-exists"
                 console.trace()
@@ -1667,7 +1664,7 @@ _.extend JustdoJiraIntegration.prototype,
     # Finally we remove the old fix version parents
     existing_fix_versions.forEach (fix_version_mountpoint_task_id) ->
       try
-        grid_data.removeParent "/#{fix_version_mountpoint_task_id}/#{task_doc._id}/", justdo_admin_id
+        grid_data.removeParent "/#{fix_version_mountpoint_task_id}/#{task_doc._id}/", task_doc.owner_id
       catch e
         if e.error isnt "unknown-parent"
           console.trace()
