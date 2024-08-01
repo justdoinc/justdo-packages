@@ -1228,6 +1228,8 @@ _.extend JustdoJiraIntegration.prototype,
 
     deleted_jira_users_emails = Array.from deleted_jira_users_emails
 
+    jira_tree_task_owner_id = @tasks_collection.findOne({jira_project_id}, {fields: {owner_id: 1}})?.owner_id
+
     # For case option.justdo_id wasn't provided, fetch it from the db
     if _.isEmpty deleted_jira_users_emails
       fallback_justdo_id = @tasks_collection.findOne({jira_project_id}, {fields: {project_id: 1}})?.project_id
@@ -1256,7 +1258,7 @@ _.extend JustdoJiraIntegration.prototype,
       APP.projects.bulkUpdateTasksUsers options.justdo_id,
         tasks: _.map tasks_to_remove_member, (doc) -> doc._id
         members_to_remove: deleted_user_ids
-      , @_getJustdoAdmin options.justdo_id
+      , jira_tree_task_owner_id
 
     return
 
