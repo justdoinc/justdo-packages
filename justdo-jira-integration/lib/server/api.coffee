@@ -970,6 +970,7 @@ _.extend JustdoJiraIntegration.prototype,
     client = @getJiraClientForJustdo(justdo_id).v2
 
     projects = await client.projects.getAllProjects()
+    projects = _.filter projects, (project) -> project.style is "classic"
     projects = _.map projects, (project) -> _.pick(project, "name", "key", "id")
 
     return projects

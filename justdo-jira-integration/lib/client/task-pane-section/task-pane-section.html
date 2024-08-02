@@ -26,9 +26,10 @@
               <li class="jira-project" data-project-id="{{id}}" data-project-key="{{key}}"><a href="#">{{name}}({{key}})</a></li>
 
             {{else}}
-            <div class="">Loading...</div>
+              <div class="">Loading...</div>
             {{/each}}
           </ul>
+          <small>Note: At the moment only company managed projects are supported.</small>
         </div>
       {{/if}}
     {{/with}}
