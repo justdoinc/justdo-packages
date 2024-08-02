@@ -752,7 +752,7 @@ _.extend JustdoJiraIntegration.prototype,
     client = @getJiraClientForJustdo justdo_id
 
     # Ensure all project members is either normal or proxy users, and add them as member to the target Justdo.
-    @fetchAndStoreAllUsersUnderJiraProject jira_project_id, {justdo_id: justdo_id, client: client.v2}
+    @fetchAndStoreAllUsersUnderJiraProject jira_project_id, {justdo_id: justdo_id, client: client.v2, user_id: user_id}
     # Fetch all sprints and fixed versions under the current Jira project
     @fetchAndStoreAllSprintsUnderJiraProject jira_project_id, {justdo_id: justdo_id, client: client.agile}
     @fetchAndStoreAllFixVersionsUnderJiraProject jira_project_id, {justdo_id: justdo_id, client: client.v2}
@@ -1239,7 +1239,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     deleted_jira_users_emails = Array.from deleted_jira_users_emails
 
-    jira_tree_task_owner_id = @tasks_collection.findOne({jira_project_id}, {fields: {owner_id: 1}})?.owner_id
+    jira_tree_task_owner_id = options?.user_id or @tasks_collection.findOne({jira_project_id}, {fields: {owner_id: 1}})?.owner_id
 
     # For case option.justdo_id wasn't provided, fetch it from the db
     if _.isEmpty deleted_jira_users_emails
