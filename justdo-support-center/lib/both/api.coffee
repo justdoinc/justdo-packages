@@ -19,9 +19,3 @@ _.extend JustdoSupportCenter.prototype,
       return
 
     return
-
-  isPluginInstalledOnProjectDoc: (project_doc) ->
-    return APP.projects.isPluginInstalledOnProjectDoc(JustdoSupportCenter.project_custom_feature_id, project_doc)
-
-  getProjectDocIfPluginInstalled: (project_id) ->
-    return @projects_collection.findOne({_id: project_id, "conf.custom_features": JustdoSupportCenter.project_custom_feature_id})
