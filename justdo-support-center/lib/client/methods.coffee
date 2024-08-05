@@ -1,0 +1,1 @@
+_.extend JustdoSupportCenter.prototype, {}
