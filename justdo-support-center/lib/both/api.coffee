@@ -5,6 +5,7 @@ _.extend JustdoSupportCenter.prototype,
     # Add here code that should run, in the Server and Client, during the JS
     # tick in which we create the object instance.
 
+    @registerNewsCategory()
     @setupRouter()
 
     return
@@ -19,3 +20,5 @@ _.extend JustdoSupportCenter.prototype,
       return
 
     return
+
+  registerNewsCategory: -> APP.justdo_news.registerNewsCategory "support"
