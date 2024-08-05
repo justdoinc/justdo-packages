@@ -1544,6 +1544,15 @@ _.extend JustdoJiraIntegration.prototype,
       @_stopOngoingCheckpoint()
       @ongoing_checkpoint = server_info.serverTime
 
+      # Resync sprints and fix versions for each project under the Jira instanxce
+      if not _.isEmpty(mounted_jira_project_ids) and not options?.sync_issues_only
+        agile_client = @clients[jira_server_id].agile
+        for jira_project_id in mounted_jira_project_ids
+          @fetchAndStoreAllSprintsUnderJiraProject jira_project_id, {client: agile_client}
+          @fetchAndStoreAllFixVersionsUnderJiraProject jira_project_id, {client: client}
+          @fetchAndStoreAllUsersUnderJiraProject jira_project_id, {client: client}
+          @fetchAndStoreIssueTypesUnderJiraProject jira_project_id, {client: client}
+
       checkIssuesIntegrity = (res, current_checkpoint) =>
         for issue in res.issues
           jira_issue_id = parseInt issue.id
@@ -1565,14 +1574,6 @@ _.extend JustdoJiraIntegration.prototype,
 
       @_searchIssueUsingJqlUntilMaxResults jira_server_id, issue_search_body, server_info.serverTime, search_issue_using_jql_until_max_results_options, checkIssuesIntegrity
 
-      # Resync sprints and fix versions for each project under the Jira instanxce
-      if not _.isEmpty(mounted_jira_project_ids) and not options?.sync_issues_only
-        agile_client = @clients[jira_server_id].agile
-        for jira_project_id in mounted_jira_project_ids
-          @fetchAndStoreAllSprintsUnderJiraProject jira_project_id, {client: agile_client}
-          @fetchAndStoreAllFixVersionsUnderJiraProject jira_project_id, {client: client}
-          @fetchAndStoreAllUsersUnderJiraProject jira_project_id, {client: client}
-          @fetchAndStoreIssueTypesUnderJiraProject jira_project_id, {client: client}
     else
       console.info "[justdo-jira-integration] Another checkpoint process is in progress (checkpoint: #{@ongoing_checkpoint})"
 
