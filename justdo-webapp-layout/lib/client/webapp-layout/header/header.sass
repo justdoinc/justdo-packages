@@ -176,7 +176,7 @@ nav.navbar
 .drawer-open
   .drawer
     transform: translateX(0px)
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15)
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08)
     opacity: 1
   .drawer-backdrop
     display: block
@@ -245,7 +245,7 @@ nav.navbar
 
 
 // CSS Fixes for RTL Layout
-body.right-to-left
+.navbar.right-to-left
   direction: rtl
   .user-dropdown-toggle
     margin-left: unset !important
@@ -258,6 +258,8 @@ body.right-to-left
     right: auto
     left: 0 !important
   #login-dropdown-list
+    .dropdown-info
+      text-align: right
     .dropdown-avatar
       margin-right: unset
       margin-left: 1.5rem
@@ -324,7 +326,20 @@ body.right-to-left
       padding-left: unset
       border-right: 2px solid #dbe0e6
       padding-right: 8px
+  .drawer-icon .jd-icon
+    padding: 0.6rem 0 0.6rem 0.6rem
 
+.drawer.right-to-left
+  direction: rtl
+.drawer-open .drawer.right-to-left
+  transform: translateX(0px)
+.drawer.right-to-left
+  transform: translateX(312px)
+  right: 0
+  .projects-wrapper
+    text-align: right
+    .list-group
+      padding-right: 0
   .dropdown-orgs
     .org-list
       text-align: right
@@ -334,16 +349,9 @@ body.right-to-left
       border-radius: 4px 0px 0px 4px
       border-left: 1px solid #dee2e6
       border-right: 0
-  .drawer-icon .jd-icon
-    padding: 0.6rem 0 0.6rem 0.6rem
-  .drawer-open .drawer
-    transform: translateX(0px)
-  .drawer
-    transform: translateX(312px)
-    .projects-wrapper
-      text-align: right
-      .list-group
-        padding-right: 0
+
+.page-orgs-conf.right-to-left
+  direction: rtl
   .settings-page-menu-item
     text-align: right
   .orgs-info
