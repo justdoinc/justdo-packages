@@ -17,3 +17,9 @@ _.extend JustdoLegalDocsVersions,
     readable_name: "Promoters Terms and Conditions"
     landing_page_address: "/promoters-terms-and-conditions"
     signature_required: false
+  source_available_terms:
+    version: "1.0.0"
+    date: "2024-08-12"
+    readable_name: "Source Available Terms and Conditions"
+    landing_page_address: "/source-available-terms"
+    signature_required: false
