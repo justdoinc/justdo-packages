@@ -1,0 +1,7 @@
+<template name="justdo_site_admins_page">
+  {{#if isSiteAdmin}}
+    {{> justdo_site_admins_page_site_admin view_name=view_name}}
+  {{else}}
+    {{> justdo_site_admins_page_non_site_admin}}
+  {{/if}}
+</template>

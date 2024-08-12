@@ -1,0 +1,73 @@
+<template name="justdo_site_admin_members">
+  <div class="site-admins-header">
+    <div class="users-filter-wrapper">
+      <div class="input-wrapper">
+        <input type="text" class="form-control form-control-sm users-filter" placeholder="Search" />
+        {{#if filterIsActive}}
+          <div class="users-filter-control">
+            <div class="users-filter-count bg-primary">
+              {{{xssGuard filteredUsersCount}}}
+            </div>
+            <svg class="jd-icon jd-c-pointer text-dark users-filter-clear p-1" style=""><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+          </div>
+        {{/if}}
+      </div>
+      <button class="btn btn-primary btn-sm refresh-site-users">Refresh</button>
+    </div>
+    <div class="site-admins-stat-wrapper">
+      <div class="site-admins-stat-container">
+        Active users:
+        <div class="site-admins-info-value">
+          {{{xssGuard activeUsersCount}}}
+        </div>
+        {{#if licensingEnabled}}
+          <div class="site-admins-info-divider"></div>
+          {{#if unlimitedLicense}}
+            Licensed users:
+            <div class="site-admins-info-value">
+              Unlimited
+            </div>
+          {{else}}
+            Licenses available:
+            <div class="site-admins-info-value">
+              {{{xssGuard licensePermittedUsers}}}
+            </div>
+            <div class="site-admins-info-divider"></div>
+            Licenses in use:
+            <div class="site-admins-info-value">
+              {{{xssGuard licensedUsersCount}}}
+            </div>
+          {{/if}}
+
+          <div class="site-admins-info-divider"></div>
+          Valid until:
+          <div class="site-admins-info-value">
+            {{{xssGuard licenseValidUntil}}}
+          </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+
+  <div class="site-admins-content">
+    <table class="table site-admins-table">
+      <tr>
+        <th class="sort-by {{#if $eq activeFilter 'name'}}active{{/if}}" sort-by="name"><div class="sort-by-wrapper">Name<svg class="jd-icon chevron"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if orderByFieldDesc}}chevron-down{{else}}chevron-up{{/if}}"></use></svg></div></th>
+        <th class="sort-by {{#if $eq activeFilter 'email'}}active{{/if}}" sort-by="email"><div class="sort-by-wrapper">Email<svg class="jd-icon chevron"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if orderByFieldDesc}}chevron-down{{else}}chevron-up{{/if}}"></use></svg></div></th>
+        <th class="sort-by {{#if $eq activeFilter 'remarks'}}active{{/if}}" sort-by="remarks"><div class="sort-by-wrapper">Role <svg class="jd-icon chevron"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if orderByFieldDesc}}chevron-down{{else}}chevron-up{{/if}}"></use></svg></div></th>
+        <th class=""></th>
+      </tr>
+
+      {{#each siteUsers}}
+        <tr>
+          <td>{{> justdo_avatar}} <span>{{getPseudoFieldVal "name"}}</span></td>
+          <td title="{{getPseudoFieldVal 'email'}}"><span>{{getPseudoFieldVal "email"}}</span></td>
+          <td>{{{xssGuard getPseudoRemarksVal}}}</td>
+          <td class="site-admins-list-item-action"><svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg></td>
+        </tr>
+      {{/each}}
+      
+    </table>
+
+  </div>
+</template>

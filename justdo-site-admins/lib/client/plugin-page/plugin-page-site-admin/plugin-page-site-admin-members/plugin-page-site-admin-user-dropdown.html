@@ -1,0 +1,29 @@
+<template name="site_admin_user_dropdown">
+  {{#each dropdownItems}}
+    {{#if template}}
+      {{> Template.dynamic template=template data=templateData}}
+    {{else if html}}
+      {{{html}}}
+    {{/if}}
+  {{/each}}
+</template>
+
+<template name="site_admin_user_dropdown_toggle_deactivted_user">
+  <div class="dropdown-item toggle-deactivate-user">
+    {{#if isDeactivatedUser}}
+      Reactivate user
+    {{else}}
+      Deactivate user
+    {{/if}}
+  </div>
+</template>
+
+<template name="site_admin_user_dropdown_toggle_site_admin">
+  <div class="dropdown-item toggle-site-admin">
+      {{#if isAdmin}}
+        Unset as site admin
+      {{else}}
+        Set as site admin
+      {{/if}}
+  </div>
+</template>

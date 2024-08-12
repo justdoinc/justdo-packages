@@ -1,0 +1,1 @@
+_.extend JustdoSiteAdmins.modules["admins-list-public"], {}

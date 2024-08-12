@@ -1,0 +1,39 @@
+.site-admins-header
+  display: flex
+  flex-direction: column
+  
+  .btn-primary
+    font-weight: 600
+    text-transform: uppercase
+
+  .users-filter-wrapper
+    display: flex
+    .input-wrapper
+      position: relative
+      width: 100%
+    .users-filter
+      padding-left: 12px
+    .users-filter-control
+      position: absolute
+      right: 3px
+      top: 0
+      display: flex
+      bottom: 0
+      align-items: center
+    .users-filter-count
+      color: white
+      border-radius: 4px
+      font-weight: 600
+      margin-right: 4px
+      font-size: 14px
+      padding: 5px
+      line-height: 100%
+    .users-filter-clear
+      stroke-width: 2
+      &:hover
+        stroke: black
+        background-color: rgba(0, 0, 0, 0.08)
+        transform: scale(1.05)
+
+  .refresh-site-users
+    margin-left: 12px
