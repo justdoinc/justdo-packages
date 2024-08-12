@@ -1,1 +1,0 @@
-Template.task_pane_justdo_site_admins_core_task_pane_section_section.helpers {}
