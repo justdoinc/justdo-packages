@@ -14,7 +14,7 @@ share.RecentActivityDropdown = JustdoHelpers.generateNewTemplateDropdown "recent
           element = details.element
           element.element.addClass "animate slideIn shadow-lg"
           element.element.css
-            top: new_position.top - 7
+            top: new_position.top - 6
             left: new_position.left + 20
 
       $(".dropdown-menu.show").removeClass("show") # Hide active dropdown
