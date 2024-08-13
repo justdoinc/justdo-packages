@@ -244,7 +244,7 @@ nav.navbar
   vertical-align: text-top
 
 
-// CSS Fixes for RTL Layout
+// CSS support for RTL Layout for all elements across the application
 .navbar.right-to-left
   direction: rtl
   .user-dropdown-toggle
@@ -384,3 +384,23 @@ nav.navbar
   .project-members
     margin-right: unset
     margin-left: -6px
+
+.project-template-welcome-ai.right-to-left
+  direction: rtl
+  text-align: right
+  .welcome-ai-typed
+    padding: 20px 16px 20px 100px
+  .welcome-ai-btn-wrapper
+    left: 16px
+    right: unset
+    .loader
+      margin-right: unset
+      margin-left: 6px
+  .welcome-ai-input-wrapper .welcome-ai-input
+    padding: 20px 16px 20px 100px
+  .welcome-ai-result-item
+    padding-left: unset
+    padding-right: 16px
+    .welcome-ai-result-item-checkbox
+      margin-right: unset
+      margin-left: 8px
