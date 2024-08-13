@@ -96,6 +96,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/plugin-page/plugin-page-site-admin/plugin-page-site-admin-members/plugin-page-site-admin-user-dropdown.html", client);
   api.addFiles("lib/client/plugin-page/plugin-page-site-admin/plugin-page-site-admin-members/plugin-page-site-admin-user-dropdown.coffee", client);
 
+  api.addFiles("lib/modules/admins-list-public/admins-list-public-both.coffee", both);
+  api.addFiles("lib/modules/admins-list-public/admins-list-public-client.coffee", client);
+  api.addFiles("lib/modules/admins-list-public/admins-list-public-server.coffee", server);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
