@@ -19,7 +19,7 @@ _.extend JustdoSiteAdmins.prototype,
       login_state_sym = login_state[0]
 
       if (login_state_sym == "logged-in") and Meteor.user()?
-        if @isUserSuperSiteAdmin Meteor.user()
+        if @isUserSuperSiteAdmin? Meteor.user()
           @registerSiteAdminsPage "members-ext", {template: "justdo_super_site_admin_members", title: "Members Ext.", position: 1}
         computation.stop()
       return
