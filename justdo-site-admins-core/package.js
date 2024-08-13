@@ -100,6 +100,8 @@ Package.onUse(function (api) {
   api.addFiles("lib/modules/admins-list-public/admins-list-public-client.coffee", client);
   api.addFiles("lib/modules/admins-list-public/admins-list-public-server.coffee", server);
 
+  api.addFiles("lib/both/app-integration.coffee", both);
+
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", both);
