@@ -1,0 +1,22 @@
+<template name="justdo_site_admins_page_non_site_admin">
+  <div class="non-admin">
+    <div class="non-admin-content">
+      <div class="site-admins-title">
+        Site Admins
+        <button class="btn btn-primary btn-sm refresh-site-admins">Refresh</button>
+      </div>
+      <table class="table site-admins-table">
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+        </tr>
+        {{#each siteAdmins}}
+          <tr>
+            <td><div>{{> justdo_avatar}}{{displayName}}</div></td>
+            <td title="{{getUserMainEmail}}"><div>{{getUserMainEmail}}</div></td>
+          </tr>
+        {{/each}}
+      </table>
+    </div>
+  </div>
+</template>

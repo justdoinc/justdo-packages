@@ -51,7 +51,9 @@ Package.onUse(function (api) {
 
   api.use("matb33:collection-hooks@0.8.4", both);
 
+  api.use("check", both);
   api.use("reactive-var", both);
+  api.use("reactive-dict", both);
   api.use("tracker", client);
 
   api.addFiles("lib/both/analytics.coffee", both);
@@ -66,13 +68,39 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/api.coffee", server);
   api.addFiles("lib/server/methods.coffee", server);
 
+  api.addFiles("lib/client/global-template-helpers.coffee", client);
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
+
+  api.addFiles("lib/client/plugin-page/plugin-page.sass", client);
+  api.addFiles("lib/client/plugin-page/plugin-page.html", client);
+  api.addFiles("lib/client/plugin-page/plugin-page.coffee", client);
+
+  api.addFiles("lib/client/plugin-page/plugin-page-site-admin/menu-item/menu-item.sass", client);
+  api.addFiles("lib/client/plugin-page/plugin-page-site-admin/menu-item/menu-item.html", client);
+  api.addFiles("lib/client/plugin-page/plugin-page-site-admin/menu-item/menu-item.coffee", client);
+
+  api.addFiles("lib/client/plugin-page/plugin-page-non-site-admin/plugin-page-non-site-admin.sass", client);
+  api.addFiles("lib/client/plugin-page/plugin-page-non-site-admin/plugin-page-non-site-admin.html", client);
+  api.addFiles("lib/client/plugin-page/plugin-page-non-site-admin/plugin-page-non-site-admin.coffee", client);
+
+  api.addFiles("lib/client/plugin-page/plugin-page-site-admin/plugin-page-site-admin.sass", client);
+  api.addFiles("lib/client/plugin-page/plugin-page-site-admin/plugin-page-site-admin.html", client);
+  api.addFiles("lib/client/plugin-page/plugin-page-site-admin/plugin-page-site-admin.coffee", client);
+
+  api.addFiles("lib/client/plugin-page/plugin-page-site-admin/plugin-page-site-admin-members/plugin-page-site-admin-members.sass", client);
+  api.addFiles("lib/client/plugin-page/plugin-page-site-admin/plugin-page-site-admin-members/plugin-page-site-admin-members.html", client);
+  api.addFiles("lib/client/plugin-page/plugin-page-site-admin/plugin-page-site-admin-members/plugin-page-site-admin-members.coffee", client);
+
+  api.addFiles("lib/client/plugin-page/plugin-page-site-admin/plugin-page-site-admin-members/plugin-page-site-admin-user-dropdown.sass", client);
+  api.addFiles("lib/client/plugin-page/plugin-page-site-admin/plugin-page-site-admin-members/plugin-page-site-admin-user-dropdown.html", client);
+  api.addFiles("lib/client/plugin-page/plugin-page-site-admin/plugin-page-site-admin-members/plugin-page-site-admin-user-dropdown.coffee", client);
+
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", both);
   api.use("justdoinc:justdo-webapp-boot@1.0.0", both);
 
-  api.export("JustdoSiteAdminsCore", both);
+  api.export("JustdoSiteAdmins", both);
 });

@@ -1,0 +1,24 @@
+.site-admins-menu-item
+  margin: 0px 27px
+  padding: 12px 0
+  line-height: 100%
+  border-top: 1px solid #eceff1
+  color: #3D495B
+  opacity: 0.8
+  cursor: pointer
+  position: relative
+  &:hover
+    opacity: 1
+  &.active
+    opacity: 1
+    .site-admins-menu-item-active
+      display: block
+
+.site-admins-menu-item-active
+  position: absolute
+  width: 4px
+  top: 0
+  height: 100%
+  left: -27px
+  display: none
+  border-radius: 0px 1px 1px 0px

@@ -1,0 +1,162 @@
+$site-admin-menu-width: 260px
+
+.site-admins-wrapper
+  display: flex
+  position: relative
+
+.site-admins-resize-handle
+  position: absolute
+  width: 20px
+  height: 32px
+  background-color: white
+  border: 1px solid #ced5dc
+  border-radius: 4px
+  left: $site-admin-menu-width - 4
+  top: 17px
+  transition: width .35s cubic-bezier(0.24,1,0.32,1)
+  cursor: pointer
+  display: flex
+  align-items: center
+  justify-content: center
+  svg
+    padding: 0px
+    stroke-width: 2px
+
+.site-admins-wrapper.menu-hidden
+  .site-admins-resize-handle
+    left: 2px
+    svg
+      transform: rotate(180deg)
+  .site-admins-menu
+    flex-basis: 0px
+
+.site-admins-container
+  display: flex
+  flex-grow: 1
+  flex-direction: column
+  overflow: hidden
+  padding: 20px 28px
+
+  .tab-content,
+  .tab-pane,
+  .tab-pane-container,
+  .site-admins-section-container,
+  .site-admins-content
+    height: 100%
+
+  .site-admins-content
+    overflow: scroll
+
+    .site-admins-table
+      white-space: nowrap
+      font-size: 15px
+      td
+        padding: 8px 12px !important
+        .badge
+          font-weight: 600
+        &[title]
+          text-decoration: underline dotted
+          &:hover
+            text-decoration: underline solid
+      tr
+        &:hover
+          background-color: #F7F8F9
+      th
+        font-size: 11px
+        text-transform: uppercase
+        font-weight: 600
+        &[title]
+          div
+            text-decoration: underline dotted
+
+      .sort-by
+        cursor: pointer
+        &:hover
+          text-decoration: underline
+        &.active
+          .jd-icon.chevron
+            opacity: 1
+      .sort-by-wrapper
+        display: flex
+        align-items: center
+        .jd-icon
+          width: 18px
+          height: 18px
+          stroke-width: 2px
+          &.always-show
+            margin-left: 4px
+          &.chevron
+            opacity: 0
+            margin-left: 2px
+
+
+  .tab-pane-container
+    display: flex
+    flex-direction: column
+
+  .site-admins-section-container
+    display: flex
+    flex-direction: column
+    overflow: hidden
+
+.page-justdo_site_admins_page,
+.page-justdo_site_admins_page_members,
+.page-justdo_site_admins_page_members_ext,
+.page-justdo_site_admins_page_registrable_users
+  display: flex
+  height: 100%
+  padding: 0
+
+.site-admins-menu
+  display: flex
+  width: $site-admin-menu-width
+  flex-shrink: 0
+  flex-basis: $site-admin-menu-width
+  padding: 20px 0
+  flex-direction: column
+  overflow: hidden
+
+.site-admins-menu-title
+  font-weight: 600
+  font-size: 18px
+  color: #3D495B
+  padding: 0 27px
+  margin-bottom: 12px
+
+.site-admins-section-title
+  font-weight: 600
+  font-size: 18px
+  color: #3D495B
+  margin-bottom: 12px
+  display: flex
+
+.site-admins-stat-wrapper
+  display: flex
+  margin: 12px 0
+
+.site-admins-stat-container
+  display: flex
+  align-items: center
+  background-color: rgba(0, 123, 255, 0.08)
+  padding: 8px 16px
+  border-radius: 4px
+  border: 1px dashed rgba(0, 123, 255, 0.36)
+  font-size: 15px
+
+.site-admins-info-divider
+  background-color: rgba(0, 123, 255, 0.36)
+  width: 1px
+  height: 20px
+  margin: 0 12px
+
+.site-admins-info-value
+  font-weight: 600
+  margin-left: 4px
+
+.site-admins-list-item-action
+  cursor: pointer
+  .jd-icon
+    width: 20px
+    height: 20px
+    opacity: 0.5
+    transition: opacity 0.2s linear

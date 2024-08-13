@@ -1,0 +1,36 @@
+<template name="justdo_site_admins_page_site_admin">
+  <div class="site-admins-wrapper {{#if menuIsHidden}}menu-hidden{{/if}}" style="min-width: {{getMinWidth}}px">
+    <div class="site-admins-menu bg-light">
+      <div class="site-admins-menu-title">Site Admin dashboard</div>
+      <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+        {{#each leftDrawerItems}}
+          {{#if template}}
+            {{> Template.dynamic template=template data=template_data}}
+          {{else if html}}
+            {{{html}}}
+          {{/if}}
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="site-admins-resize-handle shadow-sm">
+      <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-left"/></svg>
+    </div>
+
+    <div class="site-admins-container shadow-sm">
+      <div class="tab-content">
+        <div class="tab-pane site-admins-{{currentView}} fade show active" role="tabpanel">
+          <div class="tab-pane-container">
+            <div class="site-admins-section-title">
+              {{viewTitle}}
+            </div>
+            <div class="site-admins-section-container">
+              {{> Template.dynamic template=viewTemplateName}}
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</template>

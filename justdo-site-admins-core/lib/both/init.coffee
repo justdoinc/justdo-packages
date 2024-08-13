@@ -2,13 +2,19 @@ default_options = {}
 
 options_schema =
   both:
-    projects_collection:
-      type: "skip-type-check"
+    site_admins_conf:
+      type: [String]
       optional: false
       bind_to_instance: true
 
-    tasks_collection:
-      type: "skip-type-check"
+    client_type:
+      type: String
+      optional: false
+      bind_to_instance: true
+
+  server:
+    site_admins_emails:
+      type: [String]
       optional: false
       bind_to_instance: true
 
@@ -72,7 +78,7 @@ options_schema =
 #         optional: true
 #         defaultValue: 30
 
-JustdoSiteAdminsCore = (options) ->
+JustdoSiteAdmins = (options) ->
   # skeleton-version: v3.0.1
 
   # Developer, avoid changing this constuctor, to do stuff on init
@@ -82,8 +88,8 @@ JustdoSiteAdminsCore = (options) ->
 
   @destroyed = false
 
-  @logger = Logger.get("justdo-site-admins-core")
-  @JA = JustdoAnalytics.setupConstructorJA(@, "justdo-site-admins-core")
+  @logger = Logger.get("justdo-site-admins")
+  @JA = JustdoAnalytics.setupConstructorJA(@, "justdo-site-admins")
 
   @logger.debug "Init begin"
 
@@ -131,16 +137,14 @@ JustdoSiteAdminsCore = (options) ->
     # the encapsulating computation (if any)
     Tracker.nonreactive =>
       @_bothImmediateInit()
-
       @_immediateInit()
-
+        
       return
 
   else
     @_bothImmediateInit()
-
     @_immediateInit()
-
+        
   Meteor.defer =>
     @_bothDeferredInit()
     @_deferredInit()
@@ -151,9 +155,9 @@ JustdoSiteAdminsCore = (options) ->
 
   return @
 
-Util.inherits JustdoSiteAdminsCore, EventEmitter
+Util.inherits JustdoSiteAdmins, EventEmitter
 
-_.extend JustdoSiteAdminsCore.prototype,
+_.extend JustdoSiteAdmins.prototype,
   _error: JustdoHelpers.constructor_error
 
   onDestroy: (proc) ->
@@ -175,4 +179,3 @@ _.extend JustdoSiteAdminsCore.prototype,
     @logger.debug "Destroyed"
 
     return
-
