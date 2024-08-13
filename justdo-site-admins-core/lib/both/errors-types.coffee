@@ -12,4 +12,6 @@ _.extend JustdoSiteAdmins.prototype,
   # as the base for all the packages based on
   # justdo-package-skeleton >= 0.0.4
   _errors_types:
-    _.extend {}, JustdoHelpers.common_errors_types, {}
+    _.extend {}, JustdoHelpers.common_errors_types,
+      "site-admin-required": "Site admin required"
+      "unknown-_module-id": "Unknown _module id" # _ added before of the word _module cause babel transpiler breaks the build if that word appears anywhere, even in a comment
