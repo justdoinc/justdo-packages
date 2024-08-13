@@ -1,10 +1,16 @@
-  _immediateInit: ->
 _.extend JustdoSiteAdmins.prototype,
+  _coreImmediateInit: ->
+    @registerCoreGlobalTemplateHelpers()
+    @_setupMembersPage()
+    @site_admin_page_position = 100
+
     return
 
-  _deferredInit: ->
+  _coreDeferredInit: ->
     if @destroyed
       return
+
+    return
 
   _setupMembersPage: ->
     @registerSiteAdminsPage "members", {template: "justdo_site_admin_members", position: 0}

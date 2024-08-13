@@ -1,5 +1,5 @@
-  _setupMethods: ->
 _.extend JustdoSiteAdmins.prototype,
+  _setupCoreMethods: ->
     self = @
 
     Meteor.methods 

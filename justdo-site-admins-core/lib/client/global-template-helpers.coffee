@@ -1,5 +1,5 @@
 _.extend JustdoSiteAdmins.prototype,
-  registerGlobalTemplateHelpers: ->
+  registerCoreGlobalTemplateHelpers: ->
     self = @
 
     template_helpers =

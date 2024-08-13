@@ -1,15 +1,16 @@
-_.extend JustdoSiteAdminsCore.prototype,
-  _bothImmediateInit: ->
+_.extend JustdoSiteAdmins.prototype,
+  _coreBothImmediateInit: ->
     # @_bothImmediateInit runs before the specific env's @_immediateInit()
 
     # Add here code that should run, in the Server and Client, during the JS
     # tick in which we create the object instance.
 
-    @setupRouter()
+    @setupCoreRouter()
+    @initModules("Immediate")
 
     return
-
-  _bothDeferredInit: ->
+    
+  _coreBothDeferredInit: ->
     # @_bothDeferredInit runs before the specific env's @_deferredInit()
 
     # Add here code that should run, in the Server and Client, after the JS
@@ -17,6 +18,10 @@ _.extend JustdoSiteAdminsCore.prototype,
 
     if @destroyed
       return
+
+    @initModules("Deferred")
+
+    return
 
   _registerModule_conf_schema: new SimpleSchema
     bothImmediateInit:

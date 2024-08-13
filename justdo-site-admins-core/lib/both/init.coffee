@@ -121,6 +121,7 @@ JustdoSiteAdmins = (options) ->
 
   @_on_destroy_procedures = []
 
+  @_attachCoreCollectionsSchemas()
   @_attachCollectionsSchemas()
 
   if Meteor.isClient
@@ -136,17 +137,23 @@ JustdoSiteAdmins = (options) ->
     # computation to avoid our init procedures from affecting
     # the encapsulating computation (if any)
     Tracker.nonreactive =>
+      @_coreBothImmediateInit()
       @_bothImmediateInit()
+      @_coreImmediateInit()
       @_immediateInit()
         
       return
 
   else
+    @_coreBothImmediateInit()
     @_bothImmediateInit()
+    @_coreImmediateInit()
     @_immediateInit()
         
   Meteor.defer =>
+    @_coreBothDeferredInit()
     @_bothDeferredInit()
+    @_coreDeferredInit()
     @_deferredInit()
 
     return

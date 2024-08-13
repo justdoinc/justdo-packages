@@ -1,5 +1,5 @@
 _.extend JustdoSiteAdmins.prototype,
-  _attachCollectionsSchemas: ->
+  _attachCoreCollectionsSchemas: ->
     Meteor.users.attachSchema
       "site_admin.is_site_admin":
         optional: true

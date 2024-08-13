@@ -1,5 +1,5 @@
 _.extend JustdoSiteAdmins.prototype,
-  setupRouter: ->
+  setupCoreRouter: ->
     self = @
 
     if @client_type is "web-app"

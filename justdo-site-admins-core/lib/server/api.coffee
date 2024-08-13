@@ -1,16 +1,15 @@
-  _immediateInit: ->
 _.extend JustdoSiteAdmins.prototype,
+  _coreImmediateInit: ->
     return
 
-  _deferredInit: ->
+  _coreDeferredInit: ->
     if @destroyed
       return
 
-    # Defined in methods.coffee
-    @_setupMethods()
+    @_setupCoreMethods()
 
-    # Defined in publications.coffee
-    @_setupPublications()
+    return
+
   setUsersAsSiteAdmins: (users_ids, performing_user_id) ->
     # If performing_user_id is null we assume secured source
 
