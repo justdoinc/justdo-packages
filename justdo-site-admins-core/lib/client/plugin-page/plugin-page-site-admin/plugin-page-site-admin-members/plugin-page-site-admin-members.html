@@ -60,7 +60,7 @@
 
       {{#each siteUsers}}
         <tr>
-          <td>{{> justdo_avatar}} <span>{{getPseudoFieldVal "name"}}</span></td>
+          <td>{{> justdo_avatar}} <span>{{> display_name_with_graphic_unverified_warning}}</span></td>
           <td title="{{getPseudoFieldVal 'email'}}"><span>{{getPseudoFieldVal "email"}}</span></td>
           <td>{{{xssGuard getPseudoRemarksVal}}}</td>
           <td class="site-admins-list-item-action"><svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg></td>
