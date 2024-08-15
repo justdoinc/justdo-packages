@@ -8,7 +8,7 @@
     </div>
   {{else}}
     {{#with recentActivityItems}}
-      <div class="recent-activity-items-container">
+      <div class="recent-activity-items-container {{#if isRtl}}right-to-left{{/if}}">
         <div class="recent-activity-items-viewport">
           <div class="recent-activity-items">
             {{#each this}}

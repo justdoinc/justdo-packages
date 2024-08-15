@@ -404,3 +404,22 @@ nav.navbar
     .welcome-ai-result-item-checkbox
       margin-right: unset
       margin-left: 8px
+
+.quick-notes-wrapper.right-to-left
+  direction: rtl
+  text-align: right
+  .quick-note-add
+    padding: 16px 0px 8px 40px
+  .quick-note-add-btn
+    right: unset
+    left: 20px
+
+.recent-activity-items-container.right-to-left
+  direction: rtl
+  .tooltip-content
+    right: unset
+    left: 16px
+  .tooltip-content.tooltip-left::after
+    left: unset
+    right: 100%
+    transform: rotate(180deg)
