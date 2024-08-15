@@ -1,0 +1,11 @@
+<template name="site_admin_user_dropdown_toggle_proxy_user">
+  {{#if eligibleToShow}}
+    <div class="dropdown-item toggle-proxy-user">
+      {{#if isProxyUser}}
+        Unset as proxy user
+      {{else}}
+        Set as proxy user
+      {{/if}}
+    </div>
+  {{/if}}
+</template>
