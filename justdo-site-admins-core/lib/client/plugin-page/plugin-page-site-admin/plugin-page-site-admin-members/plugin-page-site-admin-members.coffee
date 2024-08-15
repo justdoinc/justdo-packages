@@ -1,5 +1,4 @@
-# license = window.LICENSE
-license = {'permitted_domain':'localhost','grace_period_ends':'2025-05-18','valid_until':'2025-07-01','paid_users':1}
+license = window.LICENSE
 
 spinning_icon = """<span class="fa fa-spinner fa-spin"></span>"""
 
@@ -71,8 +70,9 @@ Template.justdo_site_admin_members.onCreated ->
       remarks = []
 
       # Excluded remarks can co-exist with site-admin or deactivated, but not expiring/expired.
-      if APP.accounts.isUserExcluded(user)
-        remarks.push """<span class="badge badge-success rounded-0 mr-1">Excluded</span>"""
+      if license?
+        if APP.accounts.isUserExcluded(user)
+          remarks.push """<span class="badge badge-success rounded-0 mr-1">Excluded</span>"""
 
       if APP.justdo_site_admins.isUserSiteAdmin(user)
         remarks.push """<span class="badge badge-primary rounded-0 mr-1">Site Admin</span>"""
