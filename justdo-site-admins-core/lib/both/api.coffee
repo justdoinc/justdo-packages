@@ -107,3 +107,5 @@ _.extend JustdoSiteAdmins.prototype,
       throw @_error("site-admin-required")
 
     return
+
+  isUserSuperSiteAdmin: -> false
