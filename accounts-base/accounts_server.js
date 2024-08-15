@@ -402,11 +402,14 @@ export class AccountsServer extends AccountsCommon {
   _loginUser(methodInvocation, userId, stampedLoginToken) {
     var user_flags = Meteor.users.findOne(userId, {fields: {deactivated: 1, is_proxy: 1}});
 
+    // !!! IMPORTANT !!!
+    // If you change the following lines, you must also change them in 800-hooks.coffee
     // If the user is deactivated, prevent the user from logging in.
     if (user_flags.deactivated) {
       this.logoutAllClients([userId]);
       throw new Meteor.Error("account-deactivated", "Account is deactivated");
     }
+    // !!! END IMPORTANT !!!
 
     try {
       APP.emit("pre-login", userId);
@@ -418,10 +421,13 @@ export class AccountsServer extends AccountsCommon {
       throw e;
     }
 
+    // !!! IMPORTANT !!!
+    // If you change the following lines, you must also change them in 800-hooks.coffee
     // If a proxy user logs in, unset is_proxy flag and consider the user as normal user.
     if (user_flags.is_proxy) {
       Meteor.users.update(userId, {$unset: {is_proxy: 1}, $set: {createdAt: new Date()}});
     }
+    // !!! END IMPORTANT !!!
 
     if (! stampedLoginToken) {
       stampedLoginToken = this._generateStampedLoginToken();
