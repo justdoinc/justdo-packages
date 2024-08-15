@@ -10,3 +10,9 @@ _.extend JustdoSiteAdmins.prototype,
 
   getAllSiteAdminsIds: (cb) ->
     return Meteor.call("saGetAllSiteAdminsIds", cb)
+
+  deactivateUsers: (users_ids, cb) ->
+    return Meteor.call("saDeactivateUsers", users_ids, cb)
+
+  reactivateUsers: (users_ids, cb) ->
+    return Meteor.call("saReactivateUsers", users_ids, cb)

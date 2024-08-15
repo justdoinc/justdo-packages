@@ -17,4 +17,12 @@ _.extend JustdoSiteAdmins.prototype,
       saGetAllSiteAdminsIds: ->
         return self.getAllSiteAdminsIds(@userId)
 
+      saDeactivateUsers: (users_ids) ->
+        # users_ids checks are performed inside self.deactivateUsers
+        return self.deactivateUsers(users_ids, @userId)
+
+      saReactivateUsers: (users_ids) ->
+        # users_ids checks are performed inside self.reactivateUsers
+        return self.reactivateUsers(users_ids, @userId)
+
     return
