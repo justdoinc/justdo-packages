@@ -908,6 +908,20 @@ _.extend JustdoAccounts.prototype,
 
     return
 
+  # !!! IMPORTANT !!!
+  # If you change the following lines regarding excluded user concept, 
+  # you must also change them in 600-SDK-ONLY-extra-features.coffee
+  getRegexForExcludedEmailDomains: ->
+    regex = []
+
+    for domain in JustdoSiteAdmins.excluded_domains
+      regex.push "(.+@#{JustdoHelpers.escapeRegExp domain})"
+
+    regex = new RegExp regex.join "|"
+
+    return regex
+  # !!! END IMPORTANT !!!
+
   destroy: ->
     if @destroyed
       @logger.debug "Destroyed already"
