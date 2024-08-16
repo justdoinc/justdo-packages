@@ -1,12 +1,10 @@
-license = window.LICENSE
-
 spinning_icon = """<span class="fa fa-spinner fa-spin"></span>"""
 
 Template.justdo_site_admin_members.onCreated ->
   self = @
 
   @all_site_users_rv = new ReactiveVar([])
-  if license? 
+  if (license = LICENSE_RV.get())? 
     @licensed_users_crv = JustdoHelpers.newComputedReactiveVar null, ->
       all_site_users = self.all_site_users_rv.get()
 
@@ -67,6 +65,7 @@ Template.justdo_site_admin_members.onCreated ->
     name: (user) -> JustdoHelpers.displayName(user)
     email: (user) -> JustdoHelpers.getUserMainEmail(user)
     remarks: (user) ->
+      license = LICENSE_RV.get()
       remarks = []
 
       # Excluded remarks can co-exist with site-admin or deactivated, but not expiring/expired.
@@ -189,15 +188,15 @@ Template.justdo_site_admin_members.helpers
     return Template.instance().users_filter_term_rv.get()?
 
   licensingEnabled: ->
-    return license?
+    return LICENSE_RV.get()?
 
-  unlimitedLicense: -> license.unlimited_users
+  unlimitedLicense: -> LICENSE_RV.get().unlimited_users
 
   licensedUsersCount: -> Template.instance().licensed_users_crv.get().size
 
-  licensePermittedUsers: -> license.licensed_users
+  licensePermittedUsers: -> LICENSE_RV.get().licensed_users
 
-  licenseValidUntil: -> moment(license.expire_on, "YYYY-MM-DD").format JustdoHelpers.getUserPreferredDateFormat()
+  licenseValidUntil: -> moment(LICENSE_RV.get().expire_on, "YYYY-MM-DD").format JustdoHelpers.getUserPreferredDateFormat()
 
   siteUsers: ->
     tpl = Template.instance()
