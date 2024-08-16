@@ -4,42 +4,44 @@ Template.justdo_site_admin_members.onCreated ->
   self = @
 
   @all_site_users_rv = new ReactiveVar([])
-  if (license = LICENSE_RV.get())? 
-    @licensed_users_crv = JustdoHelpers.newComputedReactiveVar null, ->
-      all_site_users = self.all_site_users_rv.get()
+  @licensed_users_crv = JustdoHelpers.newComputedReactiveVar null, ->
+    if not (license = LICENSE_RV.get())?
+      return
 
-      if license.unlimited_users
-        return new Set(_.map(all_site_users, (user_obj) -> user_obj._id))
+    all_site_users = self.all_site_users_rv.get()
 
-      licensed_users_set = new Set()
-      licensed_users_count = license.licensed_users
+    if license.unlimited_users
+      return new Set(_.map(all_site_users, (user_obj) -> user_obj._id))
 
-      sortByCreatedAtPredicate = (u1, u2) ->
-        if u1.createdAt > u2.createdAt
-          return 1
-        if u1.createdAt < u2.createdAt
-          return -1
-        return 0
+    licensed_users_set = new Set()
+    licensed_users_count = license.licensed_users
 
-      all_site_users
-        .filter (user) -> return (not APP.accounts.isUserDeactivated user) and (not APP.accounts.isUserExcluded user)
-        .sort (u1, u2) ->
-          # If both users are site admins, simply sort by their createdAt
-          if u1.site_admin?.is_site_admin and u2.site_admin?.is_site_admin
-            return sortByCreatedAtPredicate u1, u2
+    sortByCreatedAtPredicate = (u1, u2) ->
+      if u1.createdAt > u2.createdAt
+        return 1
+      if u1.createdAt < u2.createdAt
+        return -1
+      return 0
 
-          # Site admins always take precedence when compared with normal user
-          if u2.site_admin?.is_site_admin
-            return 1
-          if u1.site_admin?.is_site_admin
-            return -1
-
-          # If both users aren't site admins, simply sort by their createdAt
+    all_site_users
+      .filter (user) -> return (not APP.accounts.isUserDeactivated user) and (not APP.accounts.isUserExcluded user)
+      .sort (u1, u2) ->
+        # If both users are site admins, simply sort by their createdAt
+        if u1.site_admin?.is_site_admin and u2.site_admin?.is_site_admin
           return sortByCreatedAtPredicate u1, u2
-        .slice(0, licensed_users_count)
-        .forEach (user) -> licensed_users_set.add user._id
 
-      return licensed_users_set
+        # Site admins always take precedence when compared with normal user
+        if u2.site_admin?.is_site_admin
+          return 1
+        if u1.site_admin?.is_site_admin
+          return -1
+
+        # If both users aren't site admins, simply sort by their createdAt
+        return sortByCreatedAtPredicate u1, u2
+      .slice(0, licensed_users_count)
+      .forEach (user) -> licensed_users_set.add user._id
+
+    return licensed_users_set
 
   @users_filter_term_rv = new ReactiveVar(null)
 
