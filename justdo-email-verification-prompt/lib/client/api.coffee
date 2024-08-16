@@ -1,7 +1,7 @@
 if (custom_new_user_delay_ms = amplify.store("email_verification_prompt::custom_new_user_delay_ms"))?
   # To allow easy testing of this feature, a custom delay period can be set in the
   # browser local storage. While on the JustDo webapp, call:
-  
+
   # amplify.store("email_verification_prompt::custom_new_user_delay_ms", time_ms)
 
   # time_ms is a Number, representing the desired delay in miliseconds for testing
@@ -48,7 +48,7 @@ _.extend JustdoEmailVerificationPrompt.prototype,
     @new_user_verification_required_delay_dep.depend()
 
     @new_user_verification_required_delay_timeout = setTimeout =>
-      # Note, since 
+      # Note, since
       @new_user_verification_required_delay_dep.changed()
 
       return
@@ -139,6 +139,7 @@ _.extend JustdoEmailVerificationPrompt.prototype,
       title: "Please verify your email address"
       message: message_template.node
       className: "email-verification-required-dialog bootbox-new-design"
+      rtl_ready: true
 
       onEscape: ->
         return true
@@ -154,6 +155,7 @@ _.extend JustdoEmailVerificationPrompt.prototype,
                   message: err.reason
                   className: "bootbox-new-design email-verification-prompt-alerts"
                   closeButton: false
+                  rtl_ready: true
 
                 return
 
@@ -161,6 +163,7 @@ _.extend JustdoEmailVerificationPrompt.prototype,
                 message: "<h4><b>Email verification sent</b></h4><p>If you can't find the verification email, please check your spam folder.</p>"
                 className: "bootbox-new-design email-verification-prompt-alerts"
                 closeButton: false
+                rtl_ready: true
 
             return false
 
@@ -185,6 +188,7 @@ _.extend JustdoEmailVerificationPrompt.prototype,
       message: "<b>Email verification completed successfully!</b>"
       className: "bootbox-new-design email-verification-prompt-alerts"
       closeButton: false
+      rtl_ready: true
       callback: =>
         @_verification_completed_successfully_dialog = undefined
 
@@ -197,4 +201,3 @@ _.extend JustdoEmailVerificationPrompt.prototype,
     @_verification_completed_successfully_dialog = undefined
 
     return
-

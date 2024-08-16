@@ -1,5 +1,5 @@
 <template name="project_operations_toolbar">
-  <div id="project-grid-operations" class="mr-2 flex-grow-1">
+  <div id="project-grid-operations">
     <div class="btn-toolbar d-flex align-items-center" role="toolbar">
       <div class="tab-switcher-wrapper {{#if showTabExit}}show-tab-exit btn btn-primary btn-sm{{/if}}">
         {{> project_operations_tab_switcher}}{{!-- XXX when removing this one, don't forget to remove the tab-switcher folder--}}
@@ -31,9 +31,9 @@
         {{> item_duplicate_control}} {{!-- Defined in the justdo-item-duplicate-control package --}}
       {{/if}}
       {{> rows_styling_control}} {{!-- Defined in the justdo-rows-styling package --}}
-      <div class="project-header-toolbar-divider ml-1 mr-3"></div>
+      <div class="project-header-toolbar-divider"></div>
       {{> search_comp}}
-      <div class="project-header-toolbar-divider mx-3" style="{{#unless displayPrioritySlider}}display: none{{/unless}}"></div>
+      <div class="project-header-toolbar-divider" style="{{#unless displayPrioritySlider}}display: none{{/unless}}"></div>
       <div style="{{#unless displayPrioritySlider}}display: none{{/unless}}">
         {{> justdo_priority_slider id="operations_toolbar_priority_slider"}}
       </div>

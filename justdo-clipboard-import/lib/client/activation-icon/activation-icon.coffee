@@ -730,6 +730,7 @@ Template.justdo_clipboard_import_activation_icon.events
       message: message_template.node
       animate: true
       scrollable: true
+      rtl_ready: true
       className: "bootbox-new-design justdo-clipboard-import-dialog"
 
       onEscape: =>
@@ -799,6 +800,7 @@ Template.justdo_clipboard_import_activation_icon.events
                 inputType: "select"
                 inputOptions: options
                 value: getDefaultDateFormat()
+                rtl_ready: true
                 callback: (date_format) =>
                   if date_format?
                     modal_data.date_fields_date_format.set(date_format)

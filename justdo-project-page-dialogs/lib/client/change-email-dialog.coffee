@@ -43,6 +43,7 @@ _editEmail = ->
     title: "Change Email"
     message: message_template.node
     className: "edit-email-dialog bootbox-new-design"
+    rtl_ready: true
 
     onEscape: ->
       return true
