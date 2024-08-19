@@ -152,3 +152,48 @@ Meteor.methods
         subject: subject
 
     return true
+
+# This middleware is used to handle mailing list form submission
+WebApp.connectHandlers.use (req, res, next) ->
+  if req.url is "/join-mailing-list"
+    if req.method isnt "POST"
+      res.writeHead 405
+      res.end "Method Not Allowed"
+      return
+
+    try
+      request_details = req.body
+      request_details.source_template = "source-available-build"
+      request_details.message = "join-mailing-list"
+      if not request_details.name?
+        request_details.name = request_details.email
+      
+      {cleaned_val} =
+        JustdoHelpers.simpleSchemaCleanAndValidate(
+          DemoDetailsSchema,
+          request_details,
+          {throw_on_error: true}
+        )
+      request_details = cleaned_val
+
+      # Insert request only if it's not a duplicate
+      query = 
+        email: request_details.email
+        source_template: request_details.source_template
+        message: request_details.message
+      if not APP.collections.DemoRequests.findOne(query)?
+        APP.collections.DemoRequests.insert request_details
+
+      res.writeHead 200
+      res.end "OK"
+      return
+    catch error
+      console.error error
+      res.writeHead 400
+      res.end()
+      return
+    
+  else
+    next()
+
+  return
