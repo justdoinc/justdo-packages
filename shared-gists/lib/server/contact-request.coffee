@@ -188,9 +188,9 @@ WebApp.connectHandlers.use (req, res, next) ->
       res.end "OK"
       return
     catch error
-      console.error error
       res.writeHead 400
-      res.end()
+      # Return a JSON object with the error message
+      res.end(error.message)
       return
     
   else
