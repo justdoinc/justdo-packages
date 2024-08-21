@@ -1,5 +1,5 @@
 <template name="members_dropdown_menu">
-  <div class="members-dropdown-wrapper {{#if inviteMode}}invite-mode{{/if}}">
+  <div class="members-dropdown-wrapper {{#if inviteMode}}invite-mode{{/if}} {{#if isRtl}}right-to-left{{/if}}">
     <div class="members-dropdown-list {{#if selectMode}}selected-mode{{/if}}">
       <div class="members-search-wrapper d-flex align-items-center">
         <input type="text" class="members-search-input form-control form-control-sm" placeholder="{{_ "members_dropdown_search_members_placeholder"}}">

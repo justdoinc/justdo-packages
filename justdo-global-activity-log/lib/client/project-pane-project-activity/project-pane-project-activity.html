@@ -7,10 +7,10 @@
 </template>
 
 <template name="global_activity_log_project_pane_project_activity">
-  <div class="tab-project-activity">
+  <div class="tab-project-activity {{#if isRtl}}right-to-left{{/if}}">
 
     <div class="filter-toggle show-my-changes px-3 d-flex align-items-center justify-content-end">
-      <div class="mr-1">
+      <div class="filter-toggle-icon">
         {{#if isActiveMyChangesFilter}}
           <svg class="jd-icon text-secondary mr-0"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
         {{else}}
@@ -20,7 +20,7 @@
     </div>
 
     <div class="filter-toggle show-notes-only px-3 d-flex align-items-center justify-content-end">
-      <div class="mr-1">
+      <div class="filter-toggle-icon">
         {{#if isActiveNotesFilter}}
           <svg class="jd-icon text-secondary mr-0"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
         {{else}}
@@ -35,7 +35,7 @@
           <span class="task-details text-primary">{{getTaskDetails}}</span>
           <span class="activity-message {{#if undone}}undone{{/if}}">{{getActivityMessage}}</span>
         </div>
-        <span class="date text-muted ml-auto mr-0 text-nowrap">{{moFromNow negativeDateOrNow}}</span>
+        <span class="date text-muted">{{moFromNow negativeDateOrNow}}</span>
       </div>
     {{/each}}
 

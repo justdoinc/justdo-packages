@@ -1,15 +1,15 @@
 <template name="project_pane_kanban">
-  <div class="kanban-toolbar">
+  <div class="kanban-toolbar {{#if isRtl}}right-to-left{{/if}}">
     <div class="kanban-toolbar-operations-left">
       <!-- Kanban Task Selector -->
-      {{> tasks_list_widget 
+      {{> tasks_list_widget
         sections=tasksList
         onItemClick=onContextTaskSelect
       }}
 
       <div class="{{#unless activeTask}}disable-element{{/unless}} d-flex align-items-center">
         <!-- Kanban State Selector -->
-        <div class="kanban-state-selector dropdown ml-2">
+        <div class="kanban-state-selector dropdown">
           <button class="btn btn-light btn-sm border" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{buttonFieldLabel}}
           </button>
@@ -20,8 +20,8 @@
           </div>
         </div>
         <!-- Kanban User Selector -->
-        <div class="divider ml-3 mr-2"></div>
-        <div class="kanban-member-selector {{#if memberFilter}}active-member{{/if}} dropdown mr-1">
+        <div class="divider"></div>
+        <div class="kanban-member-selector {{#if memberFilter}}active-member{{/if}} dropdown">
           {{#if memberFilter}}
             <img class="kanban-filter-member-avatar kanban-member-selector-btn" src="{{memberAvatar memberFilter}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <svg class="jd-icon kanban-clear-member-filter"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
@@ -67,7 +67,7 @@
             </a>
           </div>
         </div>
-        <div class="divider ml-2 mr-3"></div>
+        <div class="divider"></div>
       </div>
     </div>
     {{#if activeTask}}
@@ -80,7 +80,7 @@
     <div class="kanban-toolbar-operations-right"></div>
   </div>
 
-  <div class="kanban-wrapper clearfix">
+  <div class="kanban-wrapper clearfix {{#if isRtl}}right-to-left{{/if}}">
     {{#if activeTask}}
     <div class="kanban-wrapper-container">
       <div class="kanban-boards">
@@ -100,7 +100,7 @@
   </div>
 
   <!-- Add Board -->
-  <div class="modal fade" id="kanban-add-board" data-backdrop="false" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal fade {{#if isRtl}}right-to-left{{/if}}" id="kanban-add-board" data-backdrop="false" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -111,7 +111,7 @@
         </div>
         <div class="modal-body">
           {{#each allActiveBoardFieldValues}}
-            <button type="button" class="kanban-board-add-item btn btn-primary {{#if boardIsVisible}}visible{{/if}} btn-sm text-left font-weight-bold">{{{xssGuard label}}}</button>
+            <button type="button" class="kanban-board-add-item btn btn-primary {{#if boardIsVisible}}visible{{/if}} btn-sm">{{{xssGuard label}}}</button>
           {{/each}}
         </div>
       </div>

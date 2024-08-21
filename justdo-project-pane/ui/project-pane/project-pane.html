@@ -13,7 +13,7 @@
 </template>
 
 <template name="justdo_project_pane_expanded_header">
-  <div class="justdo-project-pane-header bg-light">
+  <div class="justdo-project-pane-header bg-light {{#if isRtl}}right-to-left{{/if}}">
     <div class="justdo-project-pane-tabs">
       {{#each getTabs}}
         <div class="project-pane-tab-wrapper">
@@ -25,7 +25,7 @@
       {{/each}}
     </div>
     <div class="d-flex">
-      <div class="project-pane-divider border-right my-1 ml-2"></div>
+      <div class="project-pane-divider border-right"></div>
       <div class="justdo-project-pane-close">
         <svg class="jd-icon jd-c-pointer text-dark mx-1"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
       </div>
