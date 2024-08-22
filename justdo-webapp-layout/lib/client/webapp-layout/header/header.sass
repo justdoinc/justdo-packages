@@ -613,6 +613,12 @@ nav.navbar
       margin-left: 6px
   .kanban-task-title
     margin: 4px 0px 4px 8px
+  .kanban-member-selector
+    margin-right: unset
+    margin-left: 8px
+  .kanban-sort-item .jd-icon
+    margin-left: unset
+    margin-right: 6px
 
 #kanban-add-board.right-to-left
   direction: rtl
@@ -625,3 +631,52 @@ nav.navbar
       text-align: right
     .close
       margin: -1rem auto -1rem -1rem
+
+.projects-health-header.right-to-left,
+.projects-health-list.right-to-left,
+.justdo-risks-header.right-to-left,
+.justdo-risks-list.right-to-left
+  direction: rtl
+  text-align: right
+  .dropdown-menu
+    text-align: right !important
+  .members-multi-selector .dropdown-menu
+    right: 0
+    left: auto !important
+    transform: translate3d(12px, 24px, 0px) !important
+    .members-selector-member-avatar
+      margin-right: unset
+      margin-left: 6px
+  .expand-collapse-icon
+    margin-right: unset
+    margin-left: 8px
+
+.time-tracker-pane-toolbar.right-to-left,
+.project-pane-time-tracker-history.right-to-left
+  direction: rtl
+  text-align: right
+  .toolbar-right
+    padding-left: unset
+    padding-right: 8px
+  .dropdown-menu
+    text-align: right !important
+  .time-tracker-users
+    margin-right: unset
+    margin-left: 4px
+    .dropdown-menu
+      right: 0
+      left: auto !important
+      transform: translate3d(12px, 24px, 0px) !important
+      .time-tracker-user-avatar
+        margin-right: unset
+        margin-left: 6px
+  .time-tracker-new-record-td
+    padding: 8px 0px 8px 8px !important
+  .record-duration
+    margin-left: unset
+    margin-right: 16px
+  .duration-editor .end-time
+    margin-left: unset
+    margin-right: 4px
+  .tracker-notes input
+    text-align: right
