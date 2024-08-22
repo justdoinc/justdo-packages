@@ -69,10 +69,10 @@ _.extend JustdoSiteAdmins.prototype,
     if _.isEmpty(users_ids)
       return
 
-    hard_coded_users_ids = @getHardCodedAdminsUsersIds()
-    for user_id in users_ids
-      if user_id in hard_coded_users_ids
-        throw @_error "cant-remove-hardcoded-site-admin"
+    if (hard_coded_users_ids = @getHardCodedAdminsUsersIds?())?
+      for user_id in users_ids
+        if user_id in hard_coded_users_ids
+          throw @_error "cant-remove-hardcoded-site-admin"
 
     query =
       _id: $in: users_ids
