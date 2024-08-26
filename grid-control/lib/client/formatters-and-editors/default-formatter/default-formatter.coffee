@@ -50,7 +50,7 @@ GridControl.installFormatter "defaultFormatter",
             if bg_color != "transparent"
               custom_style += """background-color: #{bg_color}; color: #{JustdoHelpers.getFgColor(bg_color)};"""
 
-      if schema.type is Number
+      if (schema.type is Number) and not APP.justdo_i18n.isRtl()
         custom_style += " text-align: right;"
         if schema.decimal is true
           value = formatDecimals(value)
