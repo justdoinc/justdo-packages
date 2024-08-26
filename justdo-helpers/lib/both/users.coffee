@@ -118,6 +118,25 @@ _.extend JustdoHelpers,
       user_preferred_date_format = JustdoHelpers.getUserPreferredDateFormat()
 
     return moment(unicode_date_string, raw_data_moment_format).format(user_preferred_date_format)
+  
+  # This function is a locale aware version of normalizeUnicodeDateStringAndFormatToUserPreference.
+  # e.g. when unicode_date_string is "٢٠٢٤-٠٨-٠١" (Arabic representation of "2024-08-01"),
+  # normalizeUnicodeDateStringAndFormatToUserPreference returns "٢٠٢٤-٠٨-٠١"
+  # but normalizeLocalizedUnicodeDateStringAndFormatToUserPreference returns "2024-08-01"
+  # As a general rule of thumb, normalizeUnicodeDateStringAndFormatToUserPreference should be used for display purpose,
+  # while normalizeLocalizedUnicodeDateStringAndFormatToUserPreference should be used for input processing purpose (e.g. search, set date in grid date editor, etc).
+  normalizeLocalizedUnicodeDateStringAndFormatToUserPreference: (unicode_date_string, user_preferred_date_format) ->
+    if not unicode_date_string? or unicode_date_string == ""
+      return ""
+
+    # We allow passing the user_preferred_date_format so for the slick grid formatter,
+    # that we need to be highly optimized, we will be able to cache it
+    # in the column level
+    if not user_preferred_date_format?
+      user_preferred_date_format = JustdoHelpers.getUserPreferredDateFormat()
+
+    return moment(unicode_date_string, raw_data_moment_format).locale(JustdoI18n.default_lang).format(user_preferred_date_format)
+
 
   getTimeStringInUserPreferenceFormat: (show_seconds=true) ->
     # Reactive resource!

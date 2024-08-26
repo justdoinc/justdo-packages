@@ -10,7 +10,7 @@ normalizeUserPreferenceDateFormatAndFormatToUnicodeDateString = (user_format_dat
   if not user_format_date_string? or user_format_date_string == ""
     return ""
 
-  return moment(user_format_date_string, JustdoHelpers.getUserPreferredDateFormat()).format(raw_data_moment_format)
+  return moment(user_format_date_string, JustdoHelpers.getUserPreferredDateFormat()).locale(JustdoI18n.default_lang).format(raw_data_moment_format)
 
 #
 # Actions buttons definitions:
@@ -298,7 +298,7 @@ GridControl.installEditor "UnicodeDateEditor",
     if not val?
       val = null # val must be null to be interpreted as clear (undefined ignored)
 
-    @$input.datepicker("setDate", JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(val))
+    @$input.datepicker("setDate", JustdoHelpers.normalizeLocalizedUnicodeDateStringAndFormatToUserPreference(val))
     @$input.change()
 
     return

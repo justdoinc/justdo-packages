@@ -32,9 +32,13 @@ _.extend GridData.prototype,
       if fields_schema[field].grid_column_formatter == "unicodeDateFormatter" and _.isString(val) and not _.isEmpty(val)
         # Unicode date strings
 
-        val = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(val)
+        # If val is "٢٠٢٤-٠٨-٠١" (Arabic representation of "2024-08-01"),
+        # localized_val will be "٢٠٢٤-٠٨-٠١" and non_localized_val will be "2024-08-01"
+        # We want to support both formats in search.
+        localized_val = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(val)
+        non_localized_val = JustdoHelpers.normalizeLocalizedUnicodeDateStringAndFormatToUserPreference(val)
 
-      return term.test(val)
+      return term.test(localized_val) or term.test(non_localized_val)
 
     each_options =
       expand_only: false
