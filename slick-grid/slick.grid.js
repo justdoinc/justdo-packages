@@ -27,7 +27,6 @@ if (typeof Slick === "undefined") {
   throw "slick.core.js not loaded";
 }
 
-
 (function ($) {
   // Slick.Grid
   $.extend(true, window, {
@@ -837,6 +836,11 @@ if (typeof Slick === "undefined") {
             .bind("drag", function (e, dd) {
               e = bindEventPageOffsets(e, e.originalEvent);
               var actualMinWidth, d = Math.min(maxPageX, Math.max(minPageX, e.pageX)) - pageX, x;
+              
+              // Flip the drag direction if the grid is right-to-left
+              if (APP.justdo_i18n.isRtl())
+                d = -d;
+
               if (d < 0) { // shrink column
                 x = d;
                 for (j = i; j >= 0; j--) {
