@@ -23,3 +23,9 @@ _.extend JustdoLegalDocsVersions,
     readable_name: "Trademark Policy"
     landing_page_address: "/trademark-policy"
     signature_required: false
+  source_available_license_agreement:
+    version: "1.0.0"
+    date: "2024-08-16"
+    readable_name: "Source Available License Agreement"
+    landing_page_address: "/source-available-license-agreement"
+    signature_required: false
