@@ -18,6 +18,10 @@ getKeyBgColor = (grid_values, value) ->
 
 GridControl.installEditor "SelectorEditor",
   init: ->
+    style_right = "right"
+    if APP.justdo_i18n.isRtl()
+      style_right = "left"
+
     if not (selector_options = @context.column.values)?
       selector_options = {}
     else
@@ -124,7 +128,7 @@ GridControl.installEditor "SelectorEditor",
                 #   <div class="state-done-animation salute">
                 #     <lottie-player
                 #       background="transparent"
-                #       style="width: initial; height: 123px; position: absolute; top: -50px; right: 0"
+                #       style="width: initial; height: 123px; position: absolute; top: -50px; #{style_right}: 0"
                 #       src="/layout/lottie/task-done-salute.json"
                 #       speed="0.5"
                 #       autoplay="true">
@@ -138,7 +142,7 @@ GridControl.installEditor "SelectorEditor",
                   <div class="state-done-animation check">
                     <lottie-player
                       background="transparent"
-                      style="width: 45px; height: 45px; position: absolute; top: -20px; right: -20px;"
+                      style="width: 45px; height: 45px; position: absolute; top: -20px; #{style_right}: -20px;"
                       src="/layout/lottie/task-done-check.json"
                       speed="3"
                       autoplay="true">

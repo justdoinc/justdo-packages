@@ -197,6 +197,10 @@ GridControl.installFormatter "textWithTreeControls",
   slick_grid: ->
     {row, cell, value, doc, self, path} = @getFriendlyArgs()
 
+    style_left = "left"
+    if APP.justdo_i18n.isRtl()
+      style_left = "right"
+
     level = @_grid_data.getItemLevel row
     expand_state = @_grid_data.getItemExpandState row
 
@@ -236,7 +240,7 @@ GridControl.installFormatter "textWithTreeControls",
       # .slick-dynamic-row-height .slick-cell for correct height)
       tree_control += """
         <div class="grid-tree-control-priority slick-prevent-edit"
-             style="background-color: #{JustdoColorGradient.getColorRgbString(doc.priority or 0)}; left: #{priority_indentation}px;"></div>
+             style="background-color: #{JustdoColorGradient.getColorRgbString(doc.priority or 0)}; #{style_left}: #{priority_indentation}px;"></div>
       """
 
       current_left_pos += priority_width
@@ -255,7 +259,7 @@ GridControl.installFormatter "textWithTreeControls",
 
     tree_control += """
       <div class="grid-tree-control-toggle slick-prevent-edit #{state}"
-           style="left: #{toggle_indentation}px;">
+           style="#{style_left}: #{toggle_indentation}px;">
            <svg><use xlink:href="/layout/icons-feather-sprite.svg##{svg_icon_name}"></use></svg>
       </div>
     """
@@ -447,7 +451,7 @@ GridControl.installFormatter "textWithTreeControls",
 
       tree_control += """
         <span class="label label-primary grid-tree-control-task-id slick-prevent-edit cell-handle"
-               style="left: #{index_left}px;
+               style="#{style_left}: #{index_left}px;
                       width: #{index_width}px;" jd-tt="task-info?id=#{doc._id}">
           #{index}
       """
@@ -507,13 +511,13 @@ GridControl.installFormatter "textWithTreeControls",
       tree_control += """
         <div class="grid-tree-control-user slick-prevent-edit"
              title="#{title}"
-             style="left: #{owner_id_left}px;
+             style="#{style_left}: #{owner_id_left}px;
                     width: #{owner_id_width}px;
                     height: #{owner_id_width}px;">
           <img src="#{JustdoAvatar.showUserAvatarOrFallback(owner_doc)}"
                class="grid-tree-control-user-img slick-prevent-edit"
                alt="#{owner_display_name}"
-               style="left: #{owner_id_left}px;
+               style="#{style_left}: #{owner_id_left}px;
                       width: #{owner_id_width}px;
                       height: #{owner_id_width}px;">
       """
@@ -544,7 +548,7 @@ GridControl.installFormatter "textWithTreeControls",
 
     tree_control += """
         <div class="grid-tree-control-text" dir="auto"
-              style="margin-left: #{text_left_margin}px;">#{value}</div>
+              style="margin-#{style_left}: #{text_left_margin}px;">#{value}</div>
     """
 
     tree_control += """
@@ -560,13 +564,13 @@ GridControl.installFormatter "textWithTreeControls",
 
     if state is "expand"
       tree_control += """
-        <div class="hl hl-f" style="left: #{level_indent * (level + 1) + 4}px"></div>
+        <div class="hl hl-f" style="#{style_left}: #{level_indent * (level + 1) + 4}px"></div>
       """
 
     if level > 0
       for i in [1..level]
         tree_control += """
-          <div class="hl" style="left: #{level_indent * i + 4}px"></div>
+          <div class="hl" style="#{style_left}: #{level_indent * i + 4}px"></div>
         """
 
     return tree_control
