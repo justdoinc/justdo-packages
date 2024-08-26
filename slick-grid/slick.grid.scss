@@ -204,3 +204,41 @@ classes should alter those!
 .column-name-tooltip.show {
   opacity: 1;
 }
+
+// RTL modifications
+.right-to-left{
+  .slick-header.ui-state-default, .slick-headerrow.ui-state-default {
+    border-left: unset;
+    border-right: 0px;
+  }
+
+  .slick-header-column.ui-state-default .slick-column-name {
+    text-align: right;
+  }
+
+  .slick-header-column.ui-state-default {
+    border-right: 0px;
+    border-left: 1px solid silver;
+
+    float: right;
+  }
+
+  .slick-sort-indicator {
+    margin-left: unset;
+    margin-right: 4px;
+
+    float: right;
+  }
+
+  .slick-resizable-handle {
+    left: 0px;
+    right: unset;
+  }
+
+  .slick-cell, .slick-headerrow-column {
+    border-right: unset !important; 
+    border-left: 1px dotted silver !important;
+
+    padding: 1px 1px 2px 2px !important;
+  }
+}

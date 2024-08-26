@@ -463,3 +463,87 @@ select.selectpicker {
 .bootstrap-select .dropdown-item:focus {
   outline: none;
 }
+
+/* RTL modification */
+.right-to-left .bootstrap-select > .dropdown-toggle {
+  text-align: left;
+}
+.right-to-left .bootstrap-select > select.mobile-device {
+  left: unset;
+  right: 0;
+}
+.right-to-left .bootstrap-select:not(.input-group-btn),
+.right-to-left .bootstrap-select[class*="col-"] {
+  margin-left: unset;
+  margin-right: 0;
+}
+.right-to-left .bootstrap-select.dropdown-menu-right,
+.right-to-left .bootstrap-select[class*="col-"].dropdown-menu-right,
+.right-to-left .row .bootstrap-select[class*="col-"].dropdown-menu-right {
+  float: left;
+}
+.right-to-left .bootstrap-select.bs-container {
+  left: unset;
+  right: 0;
+}
+.right-to-left .bootstrap-select .dropdown-toggle .filter-option {
+  left: unset;
+  right: 0;
+
+  float: right;
+}
+.right-to-left .bs3.bootstrap-select .dropdown-toggle .filter-option {
+  padding-right: unset;
+  padding-left: inherit;
+}
+.right-to-left .input-group .bs3-has-addon.bootstrap-select .dropdown-toggle .filter-option {
+  padding-left: unset;
+  padding-right: inherit;
+}
+.right-to-left .input-group .bs3-has-addon.bootstrap-select .dropdown-toggle .filter-option .filter-option-inner {
+  padding-right: unset;
+  padding-left: inherit;
+}
+
+.right-to-left .bootstrap-select .dropdown-toggle .caret {
+  right: unset;
+  left: 12px;
+}
+.right-to-left .bootstrap-select .dropdown-menu li a.opt {
+  padding-left: unset;
+  padding-right: 2.25em;
+}
+.right-to-left .bootstrap-select .dropdown-menu li small {
+  padding-left: unset;
+  padding-right: 0.5em;
+}
+.right-to-left .bootstrap-select.show-tick .dropdown-menu .selected span.check-mark {
+  right: unset;
+  left: 15px;
+}
+.right-to-left .bootstrap-select.show-tick .dropdown-menu li a span.text {
+  margin-right: unset;
+  margin-left: 34px;
+}
+.right-to-left .bootstrap-select .bs-ok-default:after {
+  border-width: 0 0 0.26em 0.26em;
+}
+.right-to-left .bootstrap-select.show-menu-arrow .dropdown-toggle .filter-option:before {
+  left: unset;
+  right: 9px;
+}
+.right-to-left .bootstrap-select.show-menu-arrow .dropdown-toggle .filter-option:after {
+  left: unset;
+  right: 10px;
+}
+.right-to-left .bootstrap-select.show-menu-arrow.pull-right .dropdown-toggle .filter-option:before {
+  right: auto;
+  left: 12px;
+}
+.bootstrap-select.show-menu-arrow.pull-right .dropdown-toggle .filter-option:after {
+  right: auto;
+  left: 13px;
+}
+.right-to-left .bs-donebutton {
+  float: right;
+}

@@ -135,6 +135,31 @@ input.editor-unicode-date
 .ui-datepicker-trigger
   display: none
 
+// RTL modification
+.right-to-left
+  .uni-date-formatter
+    text-align: right
+    &:hover
+      .udf-action-btn
+        float: left
+  
+  .unicode-date-editor
+    .udf-action-btn
+      float: left
+
+    .udf-id-date-setter
+      margin-right: unset
+      margin-left: 2px
+    
+    .ui-datepicker-header
+      .ui-datepicker-prev-hover
+        left: unset
+        right: 2px
+
+      .ui-datepicker-next-hover
+        right: unset
+        left: 2px
+
 //
 // Placeholder style
 //
@@ -158,3 +183,4 @@ input.editor-unicode-date
 
 .editor-unicode-date::-ms-input-placeholder // MS edge
   @include unicode-date-editor-placeholder-style()
+

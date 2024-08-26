@@ -297,3 +297,31 @@
     overflow: visible
     width: auto
     background: linear-gradient(to right, #1EB2F2, #C660EA)
+
+// RTL modification
+.right-to-left
+  .grid-tree-control-text
+    text-align: right
+
+  .grid-tree-control-activation-area
+    left: unset
+    right: 0
+
+  .grid-tree-control-toggle
+    padding-left: unset
+    padding-right: 4px
+  
+  .grid-tree-control-task-id
+    box-shadow: 0px rgba(0, 0, 0, 0.08) 4px  0px
+
+  .grid-tree-control-task-favorite
+    right: unset
+    left: -8px
+
+  .grid-tree-control-user
+    .transfer-owner
+      right: unset
+      left: -2px
+
+  .grid-tree-control-item-icons
+    float: left

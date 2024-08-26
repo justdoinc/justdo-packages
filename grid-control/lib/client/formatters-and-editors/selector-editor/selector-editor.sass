@@ -69,3 +69,33 @@
       overflow: hidden
     &.check
       overflow: visible
+
+// RTL modification
+.right-to-left
+  .selector-editor
+    .dropdown-menu
+      .dropdown-item
+        text-align: right
+
+    button
+      margin-right: unset
+      margin-left: 0
+
+    // Modify selectpicker's style
+    .btn:first-child
+      padding-left: unset
+      padding-right: 5px
+
+    .dropdown-toggle
+      .null-state
+        right: unset
+        left: 20px
+
+  .slick-cell
+    .selector-editor
+      .dropdown-toggle
+        .null-state
+          right: unset
+          left: 0px
+
+          margin: 14px 10px 14px 30px
