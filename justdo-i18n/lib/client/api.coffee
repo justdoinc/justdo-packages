@@ -208,7 +208,7 @@ _.extend JustdoI18n.prototype,
 
     # Note that we're explicitly NOT using API from justdo_i18n_routes to determine if the current route is i18nable
     # because justdo_i18n_routes may not be available in all environments.
-    is_route_i18nable = Router.routes[route_name]?.options?.translatable
+    is_route_i18nable = @isRouteTranslatable route_name
 
     if is_route_i18nable
       return JustdoI18n.default_i18n_route_proofreading_scope

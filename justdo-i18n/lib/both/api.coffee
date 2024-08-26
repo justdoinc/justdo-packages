@@ -151,3 +151,7 @@ _.extend JustdoI18n.prototype,
     @disable_rtl_support_rv.set true
     
     return
+  
+  isRouteTranslatable: (route_name) ->
+    route = Router.routes[route_name]
+    return route?.options?.translatable
