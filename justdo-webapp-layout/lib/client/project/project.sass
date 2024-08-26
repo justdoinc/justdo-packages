@@ -77,3 +77,26 @@
   #project-main
     position: absolute
     right: 0
+
+// RTL modification
+// Note that the following "left" and "right" are flipped on dislay due to RTL
+.right-to-left
+  .right-toolbar
+    #task-pane
+      left: 0 !important
+      right: auto !important // jQuery resizable quirks
+
+    #project-main
+      position: absolute
+      right: 0
+      left: unset
+
+  .left-toolbar
+    #task-pane
+      right: 0 !important
+      left: auto !important // jQuery resizable quirks
+
+    #project-main
+      position: absolute
+      left: 0
+      right: unset
