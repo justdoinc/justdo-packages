@@ -1,5 +1,5 @@
 <template name="app_layout">
-  <div class="global-wrapper">
+  <div class="global-wrapper {{#if isRtl}}right-to-left{{/if}}" dir="{{#if isRtl}}rtl{{else}}ltr{{/if}}">
     <div class="app-wrapper {{#if projectContainerBelowMinimalWidth}}lt-minimal-project-container-width{{/if}}" style="width: {{getWindowWidth}}px; height: {{getWindowHeight}}px; margin-left: {{windowDimGravityOffset.left}}px; margin-top: {{windowDimGravityOffset.top}}px;">
       {{> header}}
 
