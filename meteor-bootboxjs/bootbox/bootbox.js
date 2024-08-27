@@ -623,10 +623,14 @@
     // if options.allow_rtl and options.rtl_ready and APP.justdo_i18n.isRtl()
     //   dialog.addClass("right-to-left")
     //   dialog.attr("dir", "rtl")
+    // else
+    //   dialog.attr("dir", "ltr");
     // START
     if (options.allow_rtl && options.rtl_ready && APP.justdo_i18n.isRtl()) {
       dialog.addClass("right-to-left");
       dialog.attr("dir", "rtl");
+    } else {
+      dialog.attr("dir", "ltr");
     }
     // END
 
