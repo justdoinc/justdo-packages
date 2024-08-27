@@ -336,6 +336,9 @@ _.extend JustdoI18n.prototype,
     
     is_rtl = @isRtl()
     if is_rtl
-      return direction is "left" ? "right" : "left"
+      if direction is "left"
+        return "right"
+      if direction is "right"
+        return "left"
     
     return direction
