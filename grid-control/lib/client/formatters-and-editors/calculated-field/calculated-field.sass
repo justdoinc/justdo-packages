@@ -37,3 +37,22 @@
   &.cfld-empty
     .cfld-hidden-if-empty
       display: none
+
+// RTL modification
+.right-to-left
+  .cfld-formatter
+    &:hover
+      .cfld-action-btn
+        float: left
+
+  .additional-field-items-list
+    .cfld-editor
+      textarea
+        text-align: right !important
+
+    .cfld-action-btn
+      float: left
+
+    .cfld-id-field-settings
+      margin-right: unset
+      margin-left: 1px

@@ -148,3 +148,35 @@
   100%
     background: rgba(255, 228, 20, 0)
     color: black
+
+// RTL modification
+.right-to-left
+  .additional-field-items-list
+    .df-formatter
+      > div
+        text-align: right !important
+
+    // UnicodeDateEditor, UnicodeDateFollowUpDateEditor
+    .unicode-date-editor
+      .udf-id-date-setter
+        right: unset
+        left: 0
+
+  .additional-field-item
+    .add-to-grid
+      margin-top: 5px
+      margin-left: unset
+      margin-right: 5px
+
+    .field-value
+      .field-editor
+        margin-right: unset
+        margin-left: 22px
+
+    .field-actions
+      right: unset
+      left: 4px
+
+    .tooltip-content
+      right: unset
+      left: 23px

@@ -107,3 +107,28 @@
       font-weight: 500
       margin: 0
       margin-bottom: 4px
+
+// RTL modification
+.right-to-left
+  #task-pane
+    // Important: rules related to toolbar position in wireframe (left/bottom...)
+    // should be specified in project.sass
+    $border-color: #c0c0c0
+
+    .right-toolbar #task-pane
+      border-left: unset
+      border-right: 1px solid $border-color
+
+    .left-toolbar #task-pane
+      border-right: unset
+      border-left: 1px solid $border-color
+
+    // Sub sections
+    section
+      text-align: right
+
+      h2
+        font-size: 14px
+        font-weight: 500
+        margin: 0
+        margin-bottom: 4px

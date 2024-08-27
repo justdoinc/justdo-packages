@@ -113,3 +113,32 @@
 .idc-section-header
   font-style: italic
   text-decoration: underline
+
+// RTL modification
+.right-to-left
+  @mixin seqid-with-move-indicator-rtl
+    .fa-map-marker
+      left: unset
+      right: 50%
+      margin-left: unset
+      margin-right: -3px
+
+  .gu-mirror.idc-task-seq-id, .gu-transit.idc-task-seq-id
+    @include seqid-with-move-indicator-rtl
+
+  .idc-task-context
+    &:hover
+      .idc-context-item-moveable
+        @include seqid-with-move-indicator-rtl
+
+  .idc-task-context-delete
+    float: left
+
+  .idc-task-context-add-parent-container
+    float: left
+
+  .idc-context-item
+    .idc-task-seq-id
+      // Override .label/.grid-tree-control-task-id designs
+      margin-right: unset
+      margin-left: 3px

@@ -547,3 +547,6 @@ select.selectpicker {
 .right-to-left .bs-donebutton {
   float: right;
 }
+.right-to-left .bootstrap-select .dropdown-toggle .filter-option-inner-inner {
+  text-align: right;
+}
