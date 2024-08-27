@@ -1,5 +1,5 @@
 <template name="project">
-  <div class="page-container-header">
+  <div class="page-container-header {{#if isRtl}}right-to-left{{/if}}">
     {{> project_header}}
   </div>
   <div class="project-container {{toolbar_position}}-toolbar  {{#if isToolbarOpen}}open-toolbar{{else}}closed-toolbar{{/if}} {{#if is_project_admin}}project-admin{{/if}}">
