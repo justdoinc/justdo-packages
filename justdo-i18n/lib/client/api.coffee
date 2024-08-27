@@ -332,6 +332,7 @@ _.extend JustdoI18n.prototype,
   # Note that input value is case insensitive,
   # and the return value is always lowercase.
   getRtlAwareDirection: (direction) ->
+    direction = direction.toLowerCase()
     direction_map = 
       left: "right"
       right: "left"
