@@ -18,9 +18,7 @@ getKeyBgColor = (grid_values, value) ->
 
 GridControl.installEditor "SelectorEditor",
   init: ->
-    style_right = "right"
-    if APP.justdo_i18n.isRtl()
-      style_right = "left"
+    style_right = APP.justdo_i18n.getRtlAwareDirection "right"
 
     if not (selector_options = @context.column.values)?
       selector_options = {}

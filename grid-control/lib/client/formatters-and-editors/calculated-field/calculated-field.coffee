@@ -405,13 +405,15 @@ GridControl.installFormatter formatter_name,
     # If error found, return it as the value, prefixed with "Error: "
     if (err = value.err)?
       return "Error: #{err}"
+      
+    style_right = APP.justdo_i18n.getRtlAwareDirection "right"
 
     # If field is calculated field, show its returned value
     if (cval = value.cval)?
       cval = JustdoHelpers.roundNumber cval, 2
-      return """<div style="font-weight: bold; text-decoration: underline; text-align: right;">#{cval}</div>"""
+      return """<div style="font-weight: bold; text-decoration: underline; text-align: #{style_right};">#{cval}</div>"""
 
-    return """<div style="text-align: right;">#{value}</div>"""
+    return """<div style="text-align: #{style_right};">#{value}</div>"""
 
   #
   # Actions buttons
@@ -538,9 +540,11 @@ GridControl.installEditorExtension
         .html(@$input)
         .appendTo(@context.container);
 
+      style_right = APP.justdo_i18n.getRtlAwareDirection "right"
+
       if not _.isNaN(parseFloat(@getEditorFieldValueFromDoc()))
         # Align numeral values to the right
-        @$input.css({"text-align": "right"})
+        @$input.css({"text-align": "#{style_right}"})
 
       @$input.addClass("cfld-editor-textarea")
 

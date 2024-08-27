@@ -197,9 +197,7 @@ GridControl.installFormatter "textWithTreeControls",
   slick_grid: ->
     {row, cell, value, doc, self, path} = @getFriendlyArgs()
 
-    style_left = "left"
-    if APP.justdo_i18n.isRtl()
-      style_left = "right"
+    style_left = APP.justdo_i18n.getRtlAwareDirection "left"
 
     level = @_grid_data.getItemLevel row
     expand_state = @_grid_data.getItemExpandState row

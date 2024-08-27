@@ -324,3 +324,18 @@ _.extend JustdoI18n.prototype,
       return
     
     return
+
+  # Returns direction as-is if current dir is LTR,
+  # otherwise returns the opposite direction.
+  # Note that input value is case insensitive,
+  # and the return value is always lowercase.
+  getRtlAwareDirection: (direction) ->
+    supported_directions = ["left", "right"]
+    if direction not in supported_directions
+      throw @_error "invalid-argument", "Direction must be either 'left' or 'right'"
+    
+    is_rtl = @isRtl()
+    if is_rtl
+      return direction is "left" ? "right" : "left"
+    
+    return direction
