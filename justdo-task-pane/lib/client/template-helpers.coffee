@@ -22,7 +22,7 @@ APP.executeAfterAppLibCode ->
               toolbar_position not in ["right", "left"] # allowed values
         # the default position, if you change this, update also the default we
         # set in 015-project-page-wireframe-manager.coffee
-        return "right"
+        return APP.justdo_i18n.getRtlAwareDirection "right" # Only the default position should be RTL aware
       else
         return toolbar_position
 
