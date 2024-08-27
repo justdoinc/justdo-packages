@@ -2,9 +2,9 @@
   <div class="task-pane-task-changelog">
     <div class="filter-toggle {{#if filterForStatusChanges}}active-filter{{/if}} d-flex align-items-center bg-light p-1 rounded mb-1">
       {{#if filterForStatusChanges}}
-        <svg class="jd-icon text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
+        <svg class="jd-icon text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "right"}}"/></svg>
       {{else}}
-        <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
+        <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "left"}}"/></svg>
       {{/if}}
 
       <span class="text-body text-uppercase font-weight-bold jd-c-pointer ml-1">{{_ "filter_for_notes_changes_only"}}</span>
@@ -25,7 +25,7 @@
 <template name="task_pane_task_changelog_record">
   {{#unless filtered}}
     <div class="record d-flex py-2">
-      <div class="image mr-2 mt-1">{{#with changingUser}}{{> justdo_avatar}}{{/with}}</div>
+      <div class="image m{{getRtlAwareDirection "r"}}-2 mt-1">{{#with changingUser}}{{> justdo_avatar}}{{/with}}</div>
       <div class="content">
         <div class="data text-body {{#if undone}}undone{{/if}}">
           {{{xssGuard formatedValue}}}

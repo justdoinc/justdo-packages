@@ -97,6 +97,8 @@ _.extend JustdoI18n.prototype,
     
     Template.registerHelper "isRtl", (route_name) => @isRtl route_name
 
+    Template.registerHelper "getRtlAwareDirection", (direction) => @getRtlAwareDirection direction
+
   _overrideTapI18nHelper: ->
     # This is to override TAPi18n.__ and the {{_}} helpers to gather all the i18n keys used in the page, and which template uses the key, to @cur_page_i18n_keys.
     # @cur_page_i18n_keys is used in getProofreaderDoc.

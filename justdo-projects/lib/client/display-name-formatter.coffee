@@ -16,6 +16,7 @@ GridControl.installFormatter "display_name_formatter",
 
     icon_width = 28
     margin = 4 + icon_width
+    style_left = APP.justdo_i18n.getRtlAwareDirection "left"
 
     formatter_html = """<div class="grid-formatter display-name-formatter">"""
 
@@ -32,7 +33,7 @@ GridControl.installFormatter "display_name_formatter",
                       width: #{icon_width}px;
                       height: #{icon_width}px;">
         </span>
-        <span style="margin-left:#{margin}px;">#{display_name}</span>
+        <span style="margin-#{style_left}:#{margin}px;">#{display_name}</span>
       """
 
     formatter_html += "</div>"

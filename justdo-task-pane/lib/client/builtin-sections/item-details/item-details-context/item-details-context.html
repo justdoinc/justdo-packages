@@ -33,7 +33,7 @@
 
   {{#each $mapped allParents}}
     <div class="idc-context-item {{#if section_header}}idc-section-header{{/if}} {{#if canMoveCurrentPathItem}}idc-context-item-moveable{{/if}}"
-         style="padding-left: {{margin_left}}px"
+         style="padding-{{getRtlAwareDirection "left"}}: {{margin_left}}px"
          path="{{path}}"
          title="{{title}}{{#if status}}
 Status: {{status}}{{/if}}">
