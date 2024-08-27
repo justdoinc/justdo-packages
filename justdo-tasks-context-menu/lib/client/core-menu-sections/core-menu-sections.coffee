@@ -38,7 +38,7 @@ _.extend JustdoTasksContextMenu.prototype,
 
           return
         icon_type: "feather"
-        icon_val: "corner-down-right"
+        icon_val: "corner-down-#{APP.justdo_i18n.getRtlAwareDirection "right"}"
 
       listingCondition: ->
         unfulfilled_op_req = APP.modules.project_page.getUnfulfilledOpReq("addSubTask")
