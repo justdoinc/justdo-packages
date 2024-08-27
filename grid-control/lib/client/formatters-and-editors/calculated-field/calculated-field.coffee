@@ -540,6 +540,9 @@ GridControl.installEditorExtension
         .html(@$input)
         .appendTo(@context.container);
 
+      if APP.justdo_i18n.isRtl()
+        @$input.attr "dir", "rtl"
+
       style_right = APP.justdo_i18n.getRtlAwareDirection "right"
 
       if not _.isNaN(parseFloat(@getEditorFieldValueFromDoc()))

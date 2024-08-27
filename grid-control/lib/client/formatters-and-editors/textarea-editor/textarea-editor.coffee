@@ -104,6 +104,8 @@ GridControl.installEditor "TextareaEditor",
     # by inheriting editors (see TextareaWithTreeControlsEditor for example)
     $wrapper = $("""<div class="grid-editor textarea-editor" />""")
     $wrapper.html(@$input)
+    if APP.justdo_i18n.isRtl()
+      @$input.attr "dir", "rtl"
 
     return $wrapper
 

@@ -15,5 +15,7 @@ GridControl.installEditorExtension
         .html(@$input)
 
       @$input.addClass "tree-control-textarea"
+      if APP.justdo_i18n.isRtl()
+        @$input.attr "dir", "rtl"
 
       return $tree_control
