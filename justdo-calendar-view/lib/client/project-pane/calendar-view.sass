@@ -569,3 +569,21 @@
   .calendar_task_id,
   .calendar_task_title
     opacity: 0
+
+// RTL modifications
+.right-to-left
+  .calendar_view_header
+    text-align: right
+    .dropdown-menu
+      text-align: right !important
+    .members-multi-selector .dropdown-menu
+      right: 0
+      left: auto !important
+      transform: translate3d(12px, 24px, 0px) !important
+      .members-selector-member-avatar
+        margin-right: unset
+        margin-left: 6px
+        
+  .calendar_view_main_table_wrapper
+    .calendar-user-name
+      text-align: right

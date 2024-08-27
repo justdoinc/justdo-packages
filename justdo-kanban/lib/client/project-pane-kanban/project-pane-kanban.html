@@ -1,5 +1,5 @@
 <template name="project_pane_kanban">
-  <div class="kanban-toolbar {{#if isRtl}}right-to-left{{/if}}">
+  <div class="kanban-toolbar">
     <div class="kanban-toolbar-operations-left">
       <!-- Kanban Task Selector -->
       {{> tasks_list_widget
@@ -80,7 +80,7 @@
     <div class="kanban-toolbar-operations-right"></div>
   </div>
 
-  <div class="kanban-wrapper clearfix {{#if isRtl}}right-to-left{{/if}}">
+  <div class="kanban-wrapper clearfix">
     {{#if activeTask}}
     <div class="kanban-wrapper-container">
       <div class="kanban-boards">
@@ -100,7 +100,7 @@
   </div>
 
   <!-- Add Board -->
-  <div class="modal fade {{#if isRtl}}right-to-left{{/if}}" id="kanban-add-board" data-backdrop="false" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal fade" id="kanban-add-board" data-backdrop="false" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">
         <div class="modal-header">

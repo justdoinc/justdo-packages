@@ -1,5 +1,5 @@
 <template name="justdo_calendar_project_pane">
-    <div class="calendar_view_header {{#if isRtl}}right-to-left{{/if}}">
+    <div class="calendar_view_header">
       <div class="calendar_view_toolbar">
         <div class="calendar_view_project_selector dropdown">
           <button class="btn btn-light btn-sm border" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -45,7 +45,7 @@
       </div>
     </div>
 
-    <div class="calendar_view_main_table_wrapper calendar-view-{{calendarViewResolution}} {{#if isRtl}}right-to-left{{/if}}">
+    <div class="calendar_view_main_table_wrapper calendar-view-{{calendarViewResolution}}">
       <table class="main_table_fixed_header" width="100%">
         <thead>
           <tr>

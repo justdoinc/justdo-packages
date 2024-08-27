@@ -245,3 +245,36 @@
     transform: translate3d(-4px, 0, 0)
   40%, 60%
     transform: translate3d(4px, 0, 0)
+
+// RTL modification
+.right-to-left
+  .kanban-toolbar,
+  .kanban-wrapper
+    text-align: right
+    .kanban-state-selector
+      margin-left: unset
+      margin-right: 8px
+    .dropdown-menu
+      text-align: right
+    .kanban-member-avatar
+      margin-right: unset
+      margin-left: 6px
+    .kanban-board-count
+      margin-right: unset
+      margin-left: 4px
+    .dropdown-item
+      .jd-icon
+        margin-right: unset
+        margin-left: 6px
+    .kanban-task-title
+      margin: 4px 0px 4px 8px
+    .kanban-member-selector
+      margin-right: unset
+      margin-left: 8px
+    .kanban-sort-item .jd-icon
+      margin-left: unset
+      margin-right: 6px
+
+  #kanban-add-board
+    .kanban-board-add-item
+      text-align: right
