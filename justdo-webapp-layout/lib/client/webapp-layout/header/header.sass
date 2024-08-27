@@ -246,8 +246,7 @@ nav.navbar
 
 // CSS support for RTL Layout for all elements across the application
 .right-to-left
-  .navbar.right-to-left
-    direction: rtl
+  .navbar
     .user-dropdown-toggle
       margin-left: unset !important
       margin-right: 8px
@@ -330,11 +329,10 @@ nav.navbar
     .drawer-icon .jd-icon
       padding: 0.6rem 0 0.6rem 0.6rem
 
-  .drawer.right-to-left
-    direction: rtl
-  .drawer-open .drawer.right-to-left
+  .drawer
+  .drawer-open .drawer
     transform: translateX(0px)
-  .drawer.right-to-left
+  .drawer
     transform: translateX(312px)
     right: 0
     .projects-wrapper
@@ -357,12 +355,10 @@ nav.navbar
       margin-left: unset
       margin-right: 12px
 
-  .page-orgs-conf.right-to-left
-    direction: rtl
+  .page-orgs-conf
     .settings-page-menu-item
       text-align: right
     .orgs-info
-      direction: rtl
     .orgs-section-title,
     .delete-orgs,
     .site-admins-table
@@ -371,8 +367,7 @@ nav.navbar
       right: unset !important
       left: 3px
 
-  .dashboard-orgs.right-to-left
-    direction: rtl
+  .dashboard-orgs
     .dropdown.dropdown-orgs
       .dropdown-btn
         border-radius: 0px 4px 4px 0px !important
@@ -386,8 +381,7 @@ nav.navbar
       margin-right: unset
       margin-left: -6px
 
-  .project-template-welcome-ai.right-to-left
-    direction: rtl
+  .project-template-welcome-ai
     text-align: right
     .welcome-ai-typed
       padding: 20px 16px 20px 100px
@@ -406,8 +400,7 @@ nav.navbar
         margin-right: unset
         margin-left: 8px
 
-  .quick-notes-wrapper.right-to-left
-    direction: rtl
+  .quick-notes-wrapper
     text-align: right
     .quick-note-add
       padding: 16px 0px 8px 40px
@@ -415,8 +408,7 @@ nav.navbar
       right: unset
       left: 20px
 
-  .recent-activity-items-container.right-to-left
-    direction: rtl
+  .recent-activity-items-container
     .tooltip-content
       right: unset
       left: 16px
@@ -428,8 +420,7 @@ nav.navbar
       padding-right: unset
       padding-left: 16px
 
-  .page-container-header.right-to-left
-    direction: rtl
+  .page-container-header
     .dropdown-menu
       right: auto !important
       left: 0 !important
@@ -465,8 +456,7 @@ nav.navbar
     #operations_toolbar_priority_slider
       direction: ltr
 
-  .grid-views-dropdown-menu-wrapper.right-to-left
-    direction: rtl
+  .grid-views-dropdown-menu-wrapper
     .jd-icon-dropdown
       margin-right: unset
       margin-left: 12px
@@ -482,8 +472,7 @@ nav.navbar
         margin-left: unset !important
         margin-right: 4px
 
-  .tab-switcher-dropdown-wrapper.right-to-left
-    direction: rtl
+  .tab-switcher-dropdown-wrapper
     text-align: right
     .views-search-input
       padding-left: unset
@@ -498,14 +487,14 @@ nav.navbar
       margin-right: unset
       margin-left: 8px
 
-  .bootbox.modal.right-to-left
+  .bootbox.modal
     .modal-header .close
       margin: -1rem auto -1rem -1rem
     .modal-content .modal-footer .btn + .btn
       margin-left: unset !important
       margin-right: 8px !important
 
-  .justdo-clipboard-import-dialog.right-to-left
+  .justdo-clipboard-import-dialog
     .modal-content
       left: unset
       right: 2vw
@@ -515,8 +504,7 @@ nav.navbar
       margin-right: unset
       margin-left: 2px
 
-  .members-dropdown-wrapper.right-to-left
-    direction: rtl
+  .members-dropdown-wrapper
     text-align: right
     .members-dropdown-header .label
       padding-right: unset
@@ -561,11 +549,9 @@ nav.navbar
         margin-right: unset
         margin-left: 8px
 
-  .justdo-project-pane-header.right-to-left
-    direction: rtl
+  .justdo-project-pane-header
 
-  .tab-project-activity.right-to-left
-    direction: rtl
+  .tab-project-activity
     .filter-toggle
       float: left
     .filter-toggle-icon
@@ -576,8 +562,7 @@ nav.navbar
         margin-left: 0
         margin-right: auto
 
-  .justdo-projects-dashboard-wrapper.right-to-left
-    direction: rtl
+  .justdo-projects-dashboard-wrapper
     text-align: right
     .btn
       text-align: right
@@ -593,9 +578,8 @@ nav.navbar
         margin-right: unset
         margin-left: 4px
 
-  .kanban-toolbar.right-to-left,
-  .kanban-wrapper.right-to-left
-    direction: rtl
+  .kanban-toolbar,
+  .kanban-wrapper
     text-align: right
     .kanban-state-selector
       margin-left: unset
@@ -621,23 +605,21 @@ nav.navbar
       margin-left: unset
       margin-right: 6px
 
-  #kanban-add-board.right-to-left
-    direction: rtl
+  #kanban-add-board
     .kanban-board-add-item
       text-align: right
 
-  .modal.right-to-left
+  .modal
     .modal-header
       .modal-title
         text-align: right
       .close
         margin: -1rem auto -1rem -1rem
 
-  .projects-health-header.right-to-left,
-  .projects-health-list.right-to-left,
-  .justdo-risks-header.right-to-left,
-  .justdo-risks-list.right-to-left
-    direction: rtl
+  .projects-health-header,
+  .projects-health-list,
+  .justdo-risks-header,
+  .justdo-risks-list
     text-align: right
     .dropdown-menu
       text-align: right !important
@@ -652,9 +634,8 @@ nav.navbar
       margin-right: unset
       margin-left: 8px
 
-  .time-tracker-pane-toolbar.right-to-left,
-  .project-pane-time-tracker-history.right-to-left
-    direction: rtl
+  .time-tracker-pane-toolbar,
+  .project-pane-time-tracker-history
     text-align: right
     .toolbar-right
       padding-left: unset
@@ -682,21 +663,18 @@ nav.navbar
     .tracker-notes input
       text-align: right
 
-  .time-trakcer-report-dialog.right-to-left
+  .time-trakcer-report-dialog
     .add-task-button
       margin-left: unset
       margin-right: 8px
 
-  .jpu_project_pane_baselines.right-to-left
-    direction: rtl
+  .jpu_project_pane_baselines
     text-align: right
 
-  .tab-justdo-dependencies-wrapper.right-to-left
-    direction: rtl
+  .tab-justdo-dependencies-wrapper
     text-align: right
 
-  .calendar_view_header.right-to-left
-    direction: rtl
+  .calendar_view_header
     text-align: right
     .dropdown-menu
       text-align: right !important
@@ -710,6 +688,6 @@ nav.navbar
     .calendar_view_date_selector
       direction: ltr
 
-  .calendar_view_main_table_wrapper.right-to-left
+  .calendar_view_main_table_wrapper
     .calendar-user-name
       text-align: right
