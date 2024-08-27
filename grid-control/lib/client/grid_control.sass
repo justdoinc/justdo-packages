@@ -186,3 +186,32 @@ $standard-cell-padding-bottom: 3px
 
         &.editable
           background-color: $active-editable-background-color
+
+// RTL modifications
+.right-to-left
+  .slick-header.ui-state-default, .slick-header-column
+    border-right: unset 
+    border-left: none
+
+  .slick-header-column
+    border-right: unset
+    border-left: 1px dotted gainsboro
+
+  .slick-loading-indicator
+    margin-right: unset
+    margin-left: 3px
+
+  .grid-control
+    .slick-cell
+      border-right: unset
+      border-left: $row-right-border-style
+
+  .frozen-columns-mode
+    .frozen
+      left: unset !important
+      right: 0 !important
+
+    #grid-control-mux & .type-section-item
+      .frozen
+        border-right: unset
+        border-left: 0 none
