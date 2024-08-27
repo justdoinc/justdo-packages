@@ -330,15 +330,16 @@ _.extend JustdoI18n.prototype,
   # Note that input value is case insensitive,
   # and the return value is always lowercase.
   getRtlAwareDirection: (direction) ->
-    supported_directions = ["left", "right"]
-    if direction not in supported_directions
-      throw @_error "invalid-argument", "Direction must be either 'left' or 'right'"
+    direction_map = 
+      left: "right"
+      right: "left"
+      l: "r"
+      r: "l"
+    if direction not of direction_map
+      throw @_error "invalid-argument", "Direction must be either \"left\", \"right\" or \"l\", \"r\"."
     
     is_rtl = @isRtl()
     if is_rtl
-      if direction is "left"
-        return "right"
-      if direction is "right"
-        return "left"
+      return direction_map[direction].toLowerCase()
     
-    return direction
+    return direction.toLowerCase()
