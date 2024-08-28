@@ -45,7 +45,7 @@ _.extend JustdoFormulaFields.prototype,
     return
 
   installCustomField: ->
-    GridControlCustomFields.registerCustomFieldsTypes JustdoFormulaFields.custom_field_type_id, 
+    GridControlCustomFields.registerCustomFieldsTypes JustdoFormulaFields.custom_field_type_id,
       type_id: "number"
       label: "Formula"
 
@@ -170,6 +170,7 @@ _.extend JustdoFormulaFields.prototype,
       title: "Writing a Formula"
       message: message_template.node
       className: "formula-editing-rules-dialog bootbox-new-design"
+      rtl_ready: true
 
       onEscape: ->
         return true

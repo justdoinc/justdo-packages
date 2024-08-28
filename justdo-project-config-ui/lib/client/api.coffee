@@ -46,6 +46,7 @@ _.extend JustdoProjectConfigUI.prototype,
       message: message_template.node
       animate: false
       className: "project-configuration-dialog bootbox-new-design"
+      rtl_ready: true
 
       onEscape: ->
         return true
@@ -126,7 +127,7 @@ _.extend JustdoProjectConfigUI.prototype,
     if not @sections[section_id].templates[template_id]
       console.warn "Unknown section/template #{section_id}/#{template_id}"
       return
-    
+
     delete @sections[section_id].templates[template_id]
     @sections_dep.changed()
 

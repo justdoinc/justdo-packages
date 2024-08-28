@@ -16,6 +16,8 @@
   .add-custom-field-option
     border-bottom: 1px dashed #e0e0e0
     padding: 0 16px
+    input
+      margin-right: 8px
   .custom-field-options
     max-height: 320px
     overflow: auto
@@ -31,9 +33,11 @@
       cursor: pointer
       &:hover
         text-decoration: underline
+    .btn + .btn
+      margin-left: 4px
 
   .jd-icon-custom-field
-    cursor: grab
+    cursor: pointer
     stroke: currentColor
     stroke-width: 2
     stroke-linecap: round
