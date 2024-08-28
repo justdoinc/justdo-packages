@@ -1,7 +1,21 @@
-.bootbox
+.bootbox.modal
   &.right-to-left
     text-align: right
-  
+    
+    .modal-header
+      .modal-title
+        text-align: right
+      .close
+        margin: -1rem auto -1rem -1rem
+
+
+
+    .modal-header .close
+      margin: -1rem auto -1rem -1rem
+    .modal-content .modal-footer .btn + .btn
+      margin-left: unset !important
+      margin-right: 8px !important
+
 .bootbox-new-design
   .modal-content
     box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.18)
