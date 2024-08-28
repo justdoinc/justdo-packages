@@ -138,7 +138,7 @@ APP.executeAfterAppLibCode ->
   project_page_module.setNullaryOperation "moveLeft",
     human_description: "Outdent"
     human_description_i18n: "move_left_label"
-    keyboard_shortcut: "alt+left"
+    keyboard_shortcut: "alt+#{APP.justdo_i18n.getRtlAwareDirection "left"}"
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-#{APP.justdo_i18n.getRtlAwareDirection "left"}"/></svg>"""
     op: -> gridControl().moveActivePathLeft()
@@ -147,7 +147,7 @@ APP.executeAfterAppLibCode ->
   project_page_module.setNullaryOperation "moveRight",
     human_description: "Indent"
     human_description_i18n: "move_right_label"
-    keyboard_shortcut: "alt+right"
+    keyboard_shortcut: "alt+#{APP.justdo_i18n.getRtlAwareDirection "right"}"
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-#{APP.justdo_i18n.getRtlAwareDirection "right"}"/></svg>"""
     op: -> gridControl().moveActivePathRight()
