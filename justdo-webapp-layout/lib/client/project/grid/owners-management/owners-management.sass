@@ -111,3 +111,28 @@ $max_content_height: 158px
 .reject-ownership-buttons
   text-align: right
   padding: 8px 0
+
+// RTL modifications
+.right-to-left    
+  .owner-setter-dropdown.open
+    .owners-dropdown-menu
+      text-align: right
+
+      left: unset
+        
+    .ownership-transfer-dialog
+      .members-search-wrapper
+        .jd-icon
+          left: unset
+          right: 4px
+
+      .members-search-input
+        padding-left: unset
+        padding-right: 1.8rem
+
+    .decisions-dialogs
+      .message-area
+        padding: 0 0.5rem 0 2rem 
+
+    .reject-ownership-buttons
+      text-align: left

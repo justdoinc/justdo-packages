@@ -117,8 +117,8 @@ APP.executeAfterAppLibCode ->
       @$dropdown
         .position
           of: $connected_element
-          my: "left top"
-          at: "left bottom"
+          my: "#{APP.justdo_i18n.getRtlAwareDirection "left"} top"
+          at: "#{APP.justdo_i18n.getRtlAwareDirection "left"} bottom"
           collision: "none #{collision_type}"
           using: (new_position, details) =>
             target = details.target
