@@ -56,6 +56,9 @@
             &:hover
               transform: scale(1.05)
 
+    .cont + .cont
+      margin-left: 4px
+
   .hidden-users-count
     background: #E6EEF9
     padding: 3px 8px
@@ -72,3 +75,16 @@
     line-height: 17px
     top: 4px
     position: relative
+
+// RTL modifications
+.right-to-left
+  .item-members
+    .justdo-avatars-box
+      .cont
+        .justdo-avatar-badge
+          right: unset
+          left: -2px
+
+      .cont + .cont
+        margin-left: unset
+        margin-right: 4px
