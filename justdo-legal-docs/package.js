@@ -26,6 +26,7 @@ Package.onUse(function (api) {
   api.addFiles("docs/privacy-policy.html", client);
   api.addFiles("docs/terms-conditions.html", client);
   api.addFiles("docs/trademark-policy.html", client);
+  api.addFiles("docs/source-available-license-agreement.sass", client);
   api.addFiles("docs/source-available-license-agreement.html", client);
   api.addFiles("docs/privacy-shield.html", client);
   api.addFiles("docs/on-premise.html", client);
