@@ -33,12 +33,12 @@ _.extend GridData.prototype,
         # Unicode date strings
 
         # If val is "٢٠٢٤-٠٨-٠١" (Arabic representation of "2024-08-01"),
-        # localized_val will be "٢٠٢٤-٠٨-٠١" and non_localized_val will be "2024-08-01"
+        # val will be "٢٠٢٤-٠٨-٠١" and non_localized_val will be "2024-08-01"
         # We want to support both formats in search.
-        localized_val = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(val)
+        val = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(val)
         non_localized_val = JustdoHelpers.normalizeLocalizedUnicodeDateStringAndFormatToUserPreference(val)
 
-      return term.test(localized_val) or term.test(non_localized_val)
+      return term.test(val) or term.test(non_localized_val)
 
     each_options =
       expand_only: false
