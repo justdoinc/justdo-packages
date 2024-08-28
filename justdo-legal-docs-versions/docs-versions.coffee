@@ -27,5 +27,5 @@ _.extend JustdoLegalDocsVersions,
     version: "1.0.0"
     date: "2024-08-16"
     readable_name: "Source Available License Agreement"
-    landing_page_address: "/source-available-license-agreement"
+    landing_page_address: "/source-available-license"
     signature_required: false
