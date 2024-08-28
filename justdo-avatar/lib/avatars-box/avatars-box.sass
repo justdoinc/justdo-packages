@@ -29,7 +29,6 @@
 .justdo-avatars-box
   $avatar-width: 30px
   $avatar-height: 30px
-  $avatar-margin-right: 4px
   $avatar-margin-left: 4px
   $avatar-margin-bottom: 0
 
@@ -52,3 +51,11 @@
     background-color: #dedede
     display: inline-block
     vertical-align: middle
+
+// RTL modifications
+.right-to-left
+  $avatar-margin-right: 4px
+  .justdo-avatars-box
+    .cont + .cont
+      margin-left: unset
+      margin-right: $avatar-margin-right
