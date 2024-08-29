@@ -12,3 +12,34 @@
   width: 24px
   height: 24px
   padding: 2px
+
+// RTL modifications
+.right-to-left
+  .snackbar-container
+    .action
+      margin: 0 24px 0 0
+
+  .snackbar-pos
+    &.bottom-center
+      top: auto !important
+      bottom: 0
+      left: 50%
+      transform: translate(-50%, -50%)
+    &.bottom-left
+      left: unset
+      right: 0
+    &.bottom-right
+      right: unset
+      left: 0
+    &.top-left
+      left: unset
+      right: 0
+    &.top-center
+      bottom: auto !important
+      top: 0
+      left: 50%
+      transform: translate(-50%, -50%)
+    &.top-right
+      right: unset
+      left: 0
+
