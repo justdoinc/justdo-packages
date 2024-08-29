@@ -206,6 +206,8 @@ APP.executeAfterAppLibCode ->
 
     isTaskPaneOpen: -> project_page_module.preferences.get()?.toolbar_open
 
+    getTaskPanePosition: -> project_page_module.preferences.get()?.toolbar_position
+
   Template.panes_controls.events
     "click .task-pane-control": ->
       toolbar_open = project_page_module.preferences.get()?.toolbar_open

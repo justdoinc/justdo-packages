@@ -135,7 +135,7 @@
         <use xlink:href="/layout/icons-feather-sprite.svg#sidebar"></use>
       </svg>
     {{/if}}
-    <svg class="jd-icon jd-c-pointer text-dark task-pane-control {{#if isTaskPaneOpen}}control-opened{{/if}}">
+    <svg class="jd-icon jd-c-pointer text-dark task-pane-control task-pane-{{getTaskPanePosition}} {{#if isTaskPaneOpen}}control-opened{{/if}}">
       <title>{{#if isTaskPaneOpen}}{{_ "hide_task_pane_label"}}{{else}}{{_ "show_task_pane_label"}}{{/if}}</title>
       <use xlink:href="/layout/icons-feather-sprite.svg#sidebar"></use>
     </svg>
