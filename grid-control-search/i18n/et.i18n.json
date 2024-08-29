@@ -1,0 +1,5 @@
+{
+  "grid_control_search_task_with_seq_id_prefix": "Ülesanne #__seqId__:",
+  "grid_control_search_state_prefix": "Olek: ",
+  "grid_control_search_note_prefix": "Märkus: "
+}

@@ -1,0 +1,5 @@
+{
+  "grid_control_search_task_with_seq_id_prefix": "Тапсырма #__seqId__:",
+  "grid_control_search_state_prefix": "Күй: ",
+  "grid_control_search_note_prefix": "Ескертпе: "
+}

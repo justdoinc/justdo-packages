@@ -1,0 +1,5 @@
+{
+  "grid_control_search_task_with_seq_id_prefix": "작업 #__seqId__:",
+  "grid_control_search_state_prefix": "상태: ",
+  "grid_control_search_note_prefix": "메모: "
+}

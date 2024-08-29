@@ -1,0 +1,5 @@
+{
+  "grid_control_search_task_with_seq_id_prefix": "Uzdevums #__seqId__:",
+  "grid_control_search_state_prefix": "Stāvoklis: ",
+  "grid_control_search_note_prefix": "Piezīme: "
+}
