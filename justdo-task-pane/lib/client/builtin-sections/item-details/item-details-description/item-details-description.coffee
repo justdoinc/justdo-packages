@@ -303,6 +303,7 @@ APP.executeAfterAppLibCode ->
           fileAllowedTypes: ["*"]
           imageMaxSize: env.FILESTACK_MAX_FILE_SIZE_BYTES
           imageAllowedTypes: ["jpeg", "jpg", "png"]
+          direction: if APP.justdo_i18n.isRtl() then "rtl" else "ltr"
         })
         .on "froalaEditor.file.beforeUpload", (e, editor, files) ->
           _uploadFilesAndInsertToEditor task_id, files, editor, "file"

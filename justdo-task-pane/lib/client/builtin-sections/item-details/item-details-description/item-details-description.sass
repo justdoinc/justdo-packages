@@ -124,3 +124,21 @@ $max-desc-width: 750px
 
   .minimize-description-icon
     display: block
+
+// RTL modifications
+.right-to-left
+  #task-description-container
+    .task-description-header
+      .maximize-description
+        svg
+          margin-right: unset
+          margin-left: -1px
+
+    #done-edit-description
+      margin-right: unset
+      margin-left: 8px
+
+  .task-pane-section-item-details-wrapper.description-only-view
+    .description-task-pane-section
+      left: 12px
+      right: 10px
