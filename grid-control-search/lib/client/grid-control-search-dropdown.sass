@@ -103,3 +103,26 @@
     font-weight: bold
     color: black
     border-radius: 2px
+
+// RTL modifications
+.right-to-left
+  .search-dropdown
+    text-align: right
+    
+    .search-dropdown-nav-link + .search-dropdown-nav-link
+      margin-left: unset
+      margin-right: 12px
+
+    .search-dropdown-filters
+      .filter-item
+        padding: 4px 8px 4px 4px
+      .filter-item + .filter-item
+        margin-left: unset
+        margin-right: 4px
+      .filter-item-remove
+        margin-left: unset
+        margin-right: 4px
+
+    .task-info-state + .task-info-note
+      padding-left: unset
+      padding-right: 4px
