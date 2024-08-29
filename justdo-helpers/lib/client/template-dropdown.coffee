@@ -19,9 +19,8 @@ TemplateDropdownProto = (connected_element) ->
       .click (e) =>
         e.stopPropagation()
 
-        if @allowOpen()
-          if @initiated
-            @openDropdown()
+        if @initiated and @allowOpen() and (not @isOpenDropdown())
+          @openDropdown()
 
   @current_dropdown_node = null
 
