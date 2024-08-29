@@ -7,8 +7,8 @@ share.SearchDropdown = JustdoHelpers.generateNewTemplateDropdown "grid-control-s
     @$dropdown
       .position
         of: $connected_element
-        my: "left top"
-        at: "left bottom"
+        my: "#{APP.justdo_i18n.getRtlAwareDirection "left"} top"
+        at: "#{APP.justdo_i18n.getRtlAwareDirection "left"} bottom"
         collision: "fit fit"
         using: (new_position, details) =>
           target = details.target
@@ -16,7 +16,7 @@ share.SearchDropdown = JustdoHelpers.generateNewTemplateDropdown "grid-control-s
           element.element.addClass "animate slideIn shadow-lg bg-white"
           element.element.css
             top: 20
-            left: 0
+            [APP.justdo_i18n.getRtlAwareDirection "left"]: 0
 
     return
 
