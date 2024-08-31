@@ -100,13 +100,13 @@ _.extend MeetingsManagerPlugin.prototype,
 
             return
 
-          return 
+          return
         icon_type: "feather"
         icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           return "plus"
       listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
         return true
-  
+
   openSettingsDialog: ->
     message_template =
       APP.helpers.renderTemplateInNewNode(Template.meetings_settings, {})
@@ -115,6 +115,7 @@ _.extend MeetingsManagerPlugin.prototype,
       title: "Meeting Settings"
       message: message_template.node
       animate: false
+      rtl_ready: true
       className: "meetings-settings-dialog bootbox-new-design"
 
       onEscape: ->
@@ -125,5 +126,5 @@ _.extend MeetingsManagerPlugin.prototype,
           label: "Close"
           callback: =>
             return true
-    
+
     return
