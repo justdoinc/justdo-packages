@@ -738,6 +738,11 @@ _.extend JustdoJiraIntegration.prototype,
 
     return
 
+  _getStartAtIfMoreResultsAvailable: (current_start_at, total, max_results) ->
+    if total > (new_start_at = current_start_at + max_results)
+      return new_start_at
+    return
+
   mountTaskWithJiraProject: (task_id, jira_project_id, user_id) ->
     justdo_id = APP.collections.Tasks.findOne(task_id, {fields: {project_id: 1}})?.project_id
     jira_doc_id = @getJiraDocIdFromJustdoId justdo_id
@@ -857,7 +862,7 @@ _.extend JustdoJiraIntegration.prototype,
       parent_key = issues[0]?.fields.parent?.key or issues[0]?.fields[JustdoJiraIntegration.epic_link_custom_field_id]
 
       # In case there is more than jql_issue_search_results_limit results, fetch the remaining issues.
-      if res.total > (new_start_at = res.startAt + res.maxResults)
+      if (new_start_at = @_getStartAtIfMoreResultsAvailable res.startAt, res.total, res.maxResults)?
         same_level_issue_search_body = _.extend {}, issue_search_body, {startAt: new_start_at}
         if parent_key?
           same_level_issue_search_body.jql = """project=#{jira_project_id} and "Parent Link"=#{parent_key} and status!=done order by id desc"""
@@ -1064,12 +1069,28 @@ _.extend JustdoJiraIntegration.prototype,
     {client, justdo_id} = options
     if not client?
       client = @getJiraClientForJustdo(justdo_id).agile
+    
+    boards = []
+    
+    api_options = 
+      projectKeyOrId: jira_project_key_or_id
+      startAt: 0
+    loop
+      if new_start_at?
+        api_options.startAt = new_start_at
 
-    {err, res} = @pseudoBlockingJiraApiCallInsideFiber "board.getAllBoards", {projectKeyOrId: jira_project_key_or_id}, client
-    if err?
-      console.error err
+      {err, res} = @pseudoBlockingJiraApiCallInsideFiber "board.getAllBoards", api_options, client
 
-    return res
+      if err?
+        console.error "getAllBoardsAssociatedToJiraProject:", err
+        break
+
+      boards = boards.concat res.values
+      
+      if not (new_start_at = @_getStartAtIfMoreResultsAvailable res.startAt, res.total, res.maxResults)?
+        break
+
+    return boards
 
   # Since sprints are associated with boards instead of Jira project,
   # we will have to fetch all associated Jira projects via API call.
@@ -1112,23 +1133,35 @@ _.extend JustdoJiraIntegration.prototype,
     jira_server_id = @getJiraServerIdFromApiClient client
 
     boards = @getAllBoardsAssociatedToJiraProject jira_project_id, {client}
+    sprints = []
 
-    for board in boards.values
+    for board in boards
       board_id = board.id
-      {err, res} = @pseudoBlockingJiraApiCallInsideFiber "board.getAllSprints", {boardId: board_id}, client
-      if err?
-        console.error err
-        # We can get err simply because the board doesn't have sprints enabled. Just ignore it.
-        continue
+      api_options = 
+        boardId: board_id
+        startAt: 0
 
-      sprints = res
+      loop
+        if new_start_at?
+          api_options.startAt = new_start_at
 
-      query =
-        "server_info.id": jira_server_id
-      ops =
-        $set:
-          "jira_projects.#{jira_project_id}.sprints": sprints.values
-      @jira_collection.update query, ops, {jd_analytics_skip_logging: true}
+        {err, res} = @pseudoBlockingJiraApiCallInsideFiber "board.getAllSprints", api_options, client
+        if err?
+          console.error "fetchAndStoreAllSprintsUnderJiraProject:", err
+          # We can get err simply because the board doesn't have sprints enabled. Just ignore it.
+          break
+
+        sprints = sprints.concat res.values
+
+        if not (new_start_at = @_getStartAtIfMoreResultsAvailable res.startAt, res.total, res.maxResults)?
+          break
+
+    query =
+      "server_info.id": jira_server_id
+    ops =
+      $set:
+        "jira_projects.#{jira_project_id}.sprints": sprints
+    @jira_collection.update query, ops, {jd_analytics_skip_logging: true}
 
     return
 
@@ -1466,7 +1499,7 @@ _.extend JustdoJiraIntegration.prototype,
     await responseProcessor.call @, res, jira_server_time
 
     if @_ensureCheckpointProcessInControl jira_server_time
-      if res.total > (new_start_at = res.startAt + res.maxResults)
+      if (new_start_at = @_getStartAtIfMoreResultsAvailable res.startAt, res.total, res.maxResults)?
         issue_search_body.startAt = new_start_at
         await @_searchIssueUsingJqlUntilMaxResults jira_server_id, issue_search_body, jira_server_time, options, responseProcessor
       else if _.isEmpty @issues_with_discrepancies
