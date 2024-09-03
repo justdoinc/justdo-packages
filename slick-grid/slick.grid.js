@@ -582,6 +582,7 @@ if (typeof Slick === "undefined") {
             .attr("id", "" + uid + m.id)
             .attr("title", m.toolTip || "")
             .data("column", m)
+            .data("field_id", m.id)
             .addClass(m.headerCssClass || "")
             .appendTo($headers);
 
