@@ -181,6 +181,7 @@ UnicodeDatesFilterControllerConstructor = (context) ->
     return
 
   @controller.find(".custom-datepicker").datepicker
+    dateFormat: JustdoHelpers.getUserPreferredDataFormatInJqueryUiFormat()
     firstDay: Meteor?.user()?.profile?.first_day_of_week or 0
     onSelect: (date, obj) ->
       if obj.input.hasClass "custom-datepicker-start"
@@ -229,7 +230,7 @@ UnicodeDatesFilterControllerConstructor = (context) ->
     if $label.hasClass "custom-range-label-start"
       if moment(date, date_format, true).isValid() or date == ""
         if date
-          constructor.custom_range_start = moment($label.text(), date_format).format("MM/DD/YYYY")
+          constructor.custom_range_start = $label.text()
         else
           constructor.custom_range_start = ""
 
@@ -240,7 +241,7 @@ UnicodeDatesFilterControllerConstructor = (context) ->
     if $label.hasClass "custom-range-label-end"
       if moment(date, date_format, true).isValid() or date == ""
         if date
-          constructor.custom_range_end = moment($label.text(), date_format).format("MM/DD/YYYY")
+          constructor.custom_range_end = $label.text()
         else
           constructor.custom_range_end = ""
 
@@ -406,8 +407,9 @@ columnFilterStateToQuery = (column_filter_state, context) ->
 
   if (custom_range = column_filter_state.custom_range)?
     {start, end} = custom_range
-    start = moment(start)
-    end = moment(end)
+    date_format = JustdoHelpers.getUserPreferredDateFormat()
+    start = moment(start, date_format).locale(JustdoI18n.default_lang)
+    end = moment(end, date_format).locale(JustdoI18n.default_lang)
     range_query = {}
     if start.isValid()
       range_query.$gte = start.format("YYYY-MM-DD")
