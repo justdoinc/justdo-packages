@@ -66,6 +66,20 @@ APP.executeAfterAppLibCode ->
     project_page_module.initWireframeManager()
     project_page_module.loadKeyboardShortcuts()
 
+    # The following autorun is to ensure that RTL-aware keyboard shortcuts (e.g. indent/outdent) are loaded correctly.
+    is_rtl = APP.justdo_i18n.isRtl()
+    @autorun ->
+      # If language changed but the direction is the same, return.
+      if is_rtl is APP.justdo_i18n.isRtl()
+        return
+      
+      is_rtl = APP.justdo_i18n.isRtl()
+      project_page_module.unloadKeyboardShortcuts()
+      project_page_module.loadKeyboardShortcuts()
+      return
+    
+    return
+
   Template.project.destroyed = ->
     main_module.unsetCustomHeaderTemplate("middle")
     main_module.unsetCustomHeaderTemplate("right")
