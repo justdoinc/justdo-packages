@@ -167,19 +167,34 @@ _.extend GridControl.prototype,
     @$filter_dropdown
       .position
         of: $connected_element
-        my: "left top"
-        at: "left bottom"
+        my: "#{APP.justdo_i18n.getRtlAwareDirection "left"} top"
+        at: "#{APP.justdo_i18n.getRtlAwareDirection "left"} bottom"
         collision: "fit fit"
 
         using: (new_position, details) =>
           target = details.target
           element = details.element
 
-          container_left_pos = @container.position().left
-          container_right_pos = container_left_pos + @container.innerWidth()
-          target_right = target.left + $connected_element.innerWidth()
+          # Get the container position relative to screen
+          container_position = 
+            left: @container.offset().left
+            right: @container.offset().left + @container.innerWidth()
+          
+          # Factor in also title column width because it's freezed, if the current dropdown isn't from title column
+          field_id = target.element.parent().data "field_id"
+          if field_id isnt "title"
+            title_column_width = _.find(@getView(), (column) => column.field is "title")?.width or 0
+            if APP.justdo_i18n.isRtl()
+              container_position.right -= title_column_width
+            else
+              container_position.left += title_column_width
 
-          if target_right > container_right_pos or target.left < @container.position().left
+          target_position =
+            left: target.left
+            right: target.left + $connected_element.innerWidth()
+
+          # If target position (filter icon) overflows the container, close the dropdown
+          if (target_position.right > container_position.right) or (target_position.left < container_position.left)
             @_closeFiltersDropdown()
 
             return
