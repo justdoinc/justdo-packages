@@ -181,6 +181,7 @@ UnicodeDatesFilterControllerConstructor = (context) ->
     return
 
   @controller.find(".custom-datepicker").datepicker
+    firstDay: Meteor?.user()?.profile?.first_day_of_week or 0
     onSelect: (date, obj) ->
       if obj.input.hasClass "custom-datepicker-start"
         constructor.custom_range_start = date
