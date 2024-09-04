@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Ամսաթիվ և ժամ",
+  "core_user_conf_email_notifications_title": "Էլ․ փոստի ծանուցումներ",
+  "core_user_conf_appereance_title": "Տեսք",
+  "core_user_conf_extensions_title": "Հավելումներ",
+  "core_user_conf_am_pm_default": "Լռելյայն",
+  "core_user_conf_am_pm_24h": "24 ժամյա",
+  "core_user_conf_am_pm_12h": "12 ժամյա",
+  "core_user_conf_monday": "Երկուշաբթի",
+  "core_user_conf_tuesday": "Երեքշաբթի",
+  "core_user_conf_wednesday": "Չորեքշաբթի",
+  "core_user_conf_thursday": "Հինգշաբթի",
+  "core_user_conf_friday": "Ուրբաթ",
+  "core_user_conf_saturday": "Շաբաթ",
+  "core_user_conf_sunday": "Կիրակի"
+}

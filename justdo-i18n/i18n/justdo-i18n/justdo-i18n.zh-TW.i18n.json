@@ -1,4 +1,5 @@
 {
   "show_this_page_in": "以<span class=\"set-default-lang\" data-lang-tag=\"__default_lang_tag__\">__default_lang_name__</span>檢視此頁？",
-  "improve_translation_tooltip": "發現文法錯誤或拼寫錯誤？<b>請幫助我們修正🙏</b><br>下載我們的語言檔案並發送更正給我們。"
+  "improve_translation_tooltip": "發現文法錯誤或拼寫錯誤？<b>請幫助我們修正🙏</b><br>下載我們的語言檔案並發送更正給我們。",
+  "languages_title": "語言"
 }

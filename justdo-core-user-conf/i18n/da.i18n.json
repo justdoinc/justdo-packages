@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Dato & Tid",
+  "core_user_conf_email_notifications_title": "E-mail-notifikationer",
+  "core_user_conf_appereance_title": "Udseende",
+  "core_user_conf_extensions_title": "Udvidelser",
+  "core_user_conf_am_pm_default": "Standard",
+  "core_user_conf_am_pm_24h": "24 timer",
+  "core_user_conf_am_pm_12h": "12 timer",
+  "core_user_conf_monday": "Mandag",
+  "core_user_conf_tuesday": "Tirsdag",
+  "core_user_conf_wednesday": "Onsdag",
+  "core_user_conf_thursday": "Torsdag",
+  "core_user_conf_friday": "Fredag",
+  "core_user_conf_saturday": "Lørdag",
+  "core_user_conf_sunday": "Søndag"
+}

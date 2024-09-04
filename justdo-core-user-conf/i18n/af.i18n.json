@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Datum & Tyd",
+  "core_user_conf_email_notifications_title": "E-pos Kennisgewings",
+  "core_user_conf_appereance_title": "Voorkoms",
+  "core_user_conf_extensions_title": "Uitbreidings",
+  "core_user_conf_am_pm_default": "Verstek",
+  "core_user_conf_am_pm_24h": "24 uur",
+  "core_user_conf_am_pm_12h": "12 uur",
+  "core_user_conf_monday": "Maandag",
+  "core_user_conf_tuesday": "Dinsdag",
+  "core_user_conf_wednesday": "Woensdag",
+  "core_user_conf_thursday": "Donderdag",
+  "core_user_conf_friday": "Vrydag",
+  "core_user_conf_saturday": "Saterdag",
+  "core_user_conf_sunday": "Sondag"
+}

@@ -18,7 +18,7 @@ _.extend JustdoAppHighContrast.prototype,
       main_module = APP.modules.main
 
       main_module.user_config_ui.registerConfigSection "high-contrast-mode",
-        title: "High Contrast Mode"
+        title: "high_contrast_config_title"
         priority: 800
 
       main_module.user_config_ui.registerConfigTemplate "high-contrast-mode-setter",

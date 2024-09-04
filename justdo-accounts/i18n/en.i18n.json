@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Have at least one special character",
   "password_requirements_atleast_one_lowercase": "Have at least one lower case English letter",
   "password_requirements_atleast_one_uppercase": "Have at least one capital English letter",
-  "password_requirements_too_similar": "Not include your name, or parts of your email"
+  "password_requirements_too_similar": "Not include your name, or parts of your email",
+  "first_name_schema_label": "First Name",
+  "last_name_schema_label": "Last Name",
+  "profile_pic_schema_label": "Profile Picture",
+  "date_format_schema_label": "Date Format",
+  "time_format_schema_label": "Time Format",
+  "first_day_of_week_schema_label": "First Day of the Week",
+  "timezone_schema_label": "Timezone",
+  "avatar_fg_schema_label": "Avatar Foreground",
+  "avatar_bg_schema_label": "Avatar Background",
+  "lang_schema_label": "Preferred Language",
+  "email_schema_label": "Email",
+  "ignore_invites_schema_label": "Ignore users with no password (consider them non-existing)"
 }

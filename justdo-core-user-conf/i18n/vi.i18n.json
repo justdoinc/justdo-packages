@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Ngày & Giờ",
+  "core_user_conf_email_notifications_title": "Thông báo qua Email",
+  "core_user_conf_appereance_title": "Giao diện",
+  "core_user_conf_extensions_title": "Tiện ích mở rộng",
+  "core_user_conf_am_pm_default": "Mặc định",
+  "core_user_conf_am_pm_24h": "24 giờ",
+  "core_user_conf_am_pm_12h": "12 giờ",
+  "core_user_conf_monday": "Thứ Hai",
+  "core_user_conf_tuesday": "Thứ Ba",
+  "core_user_conf_wednesday": "Thứ Tư",
+  "core_user_conf_thursday": "Thứ Năm",
+  "core_user_conf_friday": "Thứ Sáu",
+  "core_user_conf_saturday": "Thứ Bảy",
+  "core_user_conf_sunday": "Chủ Nhật"
+}

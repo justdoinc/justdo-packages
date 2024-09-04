@@ -1,4 +1,6 @@
 {
   "chat_label": "চ্যাট",
-  "message_editor_input_placeholder": "একটি বার্তা টাইপ করুন..."
+  "message_editor_input_placeholder": "একটি বার্তা টাইপ করুন...",
+  "chat_config_title": "চ্যাট",
+  "chat_receive_chat_email_notifications": "চ্যাট ইমেল বিজ্ঞপ্তি গ্রহণ করুন"
 }

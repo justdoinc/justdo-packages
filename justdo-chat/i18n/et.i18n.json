@@ -1,4 +1,6 @@
 {
   "chat_label": "Vestlus",
-  "message_editor_input_placeholder": "Kirjuta sõnum..."
+  "message_editor_input_placeholder": "Kirjuta sõnum...",
+  "chat_config_title": "Vestlus",
+  "chat_receive_chat_email_notifications": "Saa vestluse e-posti teavitusi"
 }

@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Күн жана убакыт",
+  "core_user_conf_email_notifications_title": "Электрондук почта эскертүүлөрү",
+  "core_user_conf_appereance_title": "Көрүнүш",
+  "core_user_conf_extensions_title": "Кеңейтүүлөр",
+  "core_user_conf_am_pm_default": "Демейки",
+  "core_user_conf_am_pm_24h": "24 сааттык",
+  "core_user_conf_am_pm_12h": "12 сааттык",
+  "core_user_conf_monday": "Дүйшөмбү",
+  "core_user_conf_tuesday": "Шейшемби",
+  "core_user_conf_wednesday": "Шаршемби",
+  "core_user_conf_thursday": "Бейшемби",
+  "core_user_conf_friday": "Жума",
+  "core_user_conf_saturday": "Ишемби",
+  "core_user_conf_sunday": "Жекшемби"
+}

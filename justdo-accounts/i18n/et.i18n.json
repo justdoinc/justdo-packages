@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Sisaldama vähemalt üht erimärki",
   "password_requirements_atleast_one_lowercase": "Sisaldama vähemalt üht väikest inglise tähte",
   "password_requirements_atleast_one_uppercase": "Sisaldama vähemalt üht suurt inglise tähte",
-  "password_requirements_too_similar": "Mitte sisaldama teie nime ega e-posti aadressi osi"
+  "password_requirements_too_similar": "Mitte sisaldama teie nime ega e-posti aadressi osi",
+  "first_name_schema_label": "Eesnimi",
+  "last_name_schema_label": "Perekonnanimi",
+  "profile_pic_schema_label": "Profiilipilt",
+  "date_format_schema_label": "Kuupäeva formaat",
+  "time_format_schema_label": "Kellaaja formaat",
+  "first_day_of_week_schema_label": "Nädala esimene päev",
+  "timezone_schema_label": "Ajavöönd",
+  "avatar_fg_schema_label": "Avatari esiplaan",
+  "avatar_bg_schema_label": "Avatari taust",
+  "lang_schema_label": "Eelistatud keel",
+  "email_schema_label": "E-post",
+  "ignore_invites_schema_label": "Ignoreeri paroolita kasutajaid (käsitle neid mitteolemasolevatena)"
 }

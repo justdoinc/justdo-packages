@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "לכלול לפחות תו מיוחד אחד",
   "password_requirements_atleast_one_lowercase": "לכלול לפחות אות קטנה אחת באנגלית",
   "password_requirements_atleast_one_uppercase": "לכלול לפחות אות גדולה אחת באנגלית",
-  "password_requirements_too_similar": "לא לכלול את שמך או חלקים מהאימייל שלך"
+  "password_requirements_too_similar": "לא לכלול את שמך או חלקים מהאימייל שלך",
+  "first_name_schema_label": "שם פרטי",
+  "last_name_schema_label": "שם משפחה",
+  "profile_pic_schema_label": "תמונת פרופיל",
+  "date_format_schema_label": "פורמט תאריך",
+  "time_format_schema_label": "פורמט שעה",
+  "first_day_of_week_schema_label": "היום הראשון בשבוע",
+  "timezone_schema_label": "אזור זמן",
+  "avatar_fg_schema_label": "צבע קדמי של האווטאר",
+  "avatar_bg_schema_label": "צבע רקע של האווטאר",
+  "lang_schema_label": "שפה מועדפת",
+  "email_schema_label": "אימייל",
+  "ignore_invites_schema_label": "התעלם ממשתמשים ללא סיסמה (התייחס אליהם כלא קיימים)"
 }

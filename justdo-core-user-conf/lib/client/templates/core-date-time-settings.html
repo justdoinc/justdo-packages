@@ -1,6 +1,6 @@
 <template name="core_user_conf_core_time_settings">
   <div class="form-group mb-2">
-    <label for="date-format-date-time-setting">{{date_format_label}}</label>
+    <label for="date-format-date-time-setting">{{_ date_format_label}}</label>
     <select type="text" id="date-format-date-time-setting" class="form-control form-control-sm date-format-date-time-setting">
       {{#each allowed_date_formats}}
         <option value="{{this.value}}" {{isSelected this.value user_date_format}}>{{this.text}}</option>
@@ -11,20 +11,20 @@
   <div class="row time-settings-row mb-2">
     <div class="col-sm-6">
       <div class="form-group-sm">
-        <label for="use-am-pm-date-time-setting">{{use_am_pm_format_label}}</label>
+        <label for="use-am-pm-date-time-setting">{{_ use_am_pm_format_label}}</label>
         <select type="text" id="use-am-pm-date-time-setting" class="form-control form-control-sm use-am-pm-date-time-setting">
-          <option value="default" {{isSelected null use_am_pm}}>Default</option>
-          <option value="12" {{isSelected true use_am_pm}}>12 hour</option>
-          <option value="24" {{isSelected false use_am_pm}}>24 hour</option>
+          <option value="default" {{isSelected null use_am_pm}}>{{_ "core_user_conf_am_pm_default"}}</option>
+          <option value="12" {{isSelected true use_am_pm}}>{{_ "core_user_conf_am_pm_24h"}}</option>
+          <option value="24" {{isSelected false use_am_pm}}>{{_ "core_user_conf_am_pm_12h"}}</option>
         </select>
       </div>
     </div>
     <div class="col-sm-6">
       <div class="form-group-sm">
-        <label for="first-week-day-date-time-setting">{{first_day_of_week_label}}</label>
+        <label for="first-week-day-date-time-setting">{{_ first_day_of_week_label}}</label>
         <select type="text" id="first-week-day-date-time-setting" class="form-control form-control-sm first-week-day-date-time-setting">{{first_day_of_week}}
           {{#each allowed_first_day_of_week_inputs}}
-            <option value="{{id}}" {{isSelected id first_day_of_week}}>{{name}}</option>
+            <option value="{{id}}" {{isSelected id first_day_of_week}}>{{_ name}}</option>
           {{/each}}
         </select>
       </div>

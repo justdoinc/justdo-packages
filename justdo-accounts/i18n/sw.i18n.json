@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Liwe na angalau herufi moja maalum",
   "password_requirements_atleast_one_lowercase": "Liwe na angalau herufi ndogo moja ya Kiingereza",
   "password_requirements_atleast_one_uppercase": "Liwe na angalau herufi kubwa moja ya Kiingereza",
-  "password_requirements_too_similar": "Lisiwe na jina lako, au sehemu ya barua pepe yako"
+  "password_requirements_too_similar": "Lisiwe na jina lako, au sehemu ya barua pepe yako",
+  "first_name_schema_label": "Jina la Kwanza",
+  "last_name_schema_label": "Jina la Mwisho",
+  "profile_pic_schema_label": "Picha ya Wasifu",
+  "date_format_schema_label": "Muundo wa Tarehe",
+  "time_format_schema_label": "Muundo wa Saa",
+  "first_day_of_week_schema_label": "Siku ya Kwanza ya Wiki",
+  "timezone_schema_label": "Saa ya Eneo (Timezone)",
+  "avatar_fg_schema_label": "Rangi ya Mbele ya Avatar",
+  "avatar_bg_schema_label": "Rangi ya Nyuma ya Avatar",
+  "lang_schema_label": "Lugha Unayopendelea",
+  "email_schema_label": "Barua pepe",
+  "ignore_invites_schema_label": "Puuza watumiaji wasio na nenosiri (wachukuliwe kama hawapo)"
 }

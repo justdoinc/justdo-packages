@@ -1,4 +1,6 @@
 {
   "chat_label": "Obrolan",
-  "message_editor_input_placeholder": "Ketik pesan..."
+  "message_editor_input_placeholder": "Ketik pesan...",
+  "chat_config_title": "Obrolan",
+  "chat_receive_chat_email_notifications": "Terima notifikasi email obrolan"
 }

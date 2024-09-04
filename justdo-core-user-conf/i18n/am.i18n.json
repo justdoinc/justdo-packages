@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "ቀንና ሰዓት",
+  "core_user_conf_email_notifications_title": "የኢሜይል ማሳወቂያዎች",
+  "core_user_conf_appereance_title": "መልክ",
+  "core_user_conf_extensions_title": "ቅጥያዎች (Extensions)",
+  "core_user_conf_am_pm_default": "ነባሪ",
+  "core_user_conf_am_pm_24h": "24 ሰዓት",
+  "core_user_conf_am_pm_12h": "12 ሰዓት",
+  "core_user_conf_monday": "ሰኞ",
+  "core_user_conf_tuesday": "ማክሰኞ",
+  "core_user_conf_wednesday": "ረቡዕ",
+  "core_user_conf_thursday": "ሐሙስ",
+  "core_user_conf_friday": "አርብ",
+  "core_user_conf_saturday": "ቅዳሜ",
+  "core_user_conf_sunday": "እሁድ"
+}

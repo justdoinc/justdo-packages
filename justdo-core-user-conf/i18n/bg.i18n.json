@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Дата и час",
+  "core_user_conf_email_notifications_title": "Имейл известия",
+  "core_user_conf_appereance_title": "Външен вид",
+  "core_user_conf_extensions_title": "Разширения",
+  "core_user_conf_am_pm_default": "По подразбиране",
+  "core_user_conf_am_pm_24h": "24-часов формат",
+  "core_user_conf_am_pm_12h": "12-часов формат",
+  "core_user_conf_monday": "Понеделник",
+  "core_user_conf_tuesday": "Вторник",
+  "core_user_conf_wednesday": "Сряда",
+  "core_user_conf_thursday": "Четвъртък",
+  "core_user_conf_friday": "Петък",
+  "core_user_conf_saturday": "Събота",
+  "core_user_conf_sunday": "Неделя"
+}

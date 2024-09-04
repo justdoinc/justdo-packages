@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Sisältää vähintään yksi erikoismerkki",
   "password_requirements_atleast_one_lowercase": "Sisältää vähintään yksi pieni englanninkielinen kirjain",
   "password_requirements_atleast_one_uppercase": "Sisältää vähintään yksi iso englanninkielinen kirjain",
-  "password_requirements_too_similar": "Ei sisältää nimeäsi tai osia sähköpostiosoitteestasi"
+  "password_requirements_too_similar": "Ei sisältää nimeäsi tai osia sähköpostiosoitteestasi",
+  "first_name_schema_label": "Etunimi",
+  "last_name_schema_label": "Sukunimi",
+  "profile_pic_schema_label": "Profiilikuva",
+  "date_format_schema_label": "Päivämäärän muoto",
+  "time_format_schema_label": "Ajan muoto",
+  "first_day_of_week_schema_label": "Viikon ensimmäinen päivä",
+  "timezone_schema_label": "Aikavyöhyke",
+  "avatar_fg_schema_label": "Avatarin etuala",
+  "avatar_bg_schema_label": "Avatarin tausta",
+  "lang_schema_label": "Ensisijainen kieli",
+  "email_schema_label": "Sähköposti",
+  "ignore_invites_schema_label": "Jätä huomiotta käyttäjät ilman salasanaa (pidä heitä olemattomina)"
 }

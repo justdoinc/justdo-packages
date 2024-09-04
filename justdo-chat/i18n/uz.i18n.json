@@ -1,4 +1,6 @@
 {
   "chat_label": "Chat",
-  "message_editor_input_placeholder": "Xabar yozing..."
+  "message_editor_input_placeholder": "Xabar yozing...",
+  "chat_config_title": "Chat",
+  "chat_receive_chat_email_notifications": "Chat elektron pochta xabarnomalarini qabul qiling"
 }

@@ -1,4 +1,6 @@
 {
   "chat_label": "Разговор",
-  "message_editor_input_placeholder": "Напишете порака..."
+  "message_editor_input_placeholder": "Напишете порака...",
+  "chat_config_title": "Разговор",
+  "chat_receive_chat_email_notifications": "Примајте известувања за разговор преку е-пошта"
 }

@@ -1,4 +1,6 @@
 {
   "chat_label": "Chatt",
-  "message_editor_input_placeholder": "Skriv ett meddelande..."
+  "message_editor_input_placeholder": "Skriv ett meddelande...",
+  "chat_config_title": "Chatt",
+  "chat_receive_chat_email_notifications": "Ta emot e-postmeddelanden för chatt"
 }

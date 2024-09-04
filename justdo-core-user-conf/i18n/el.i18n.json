@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Ημερομηνία & Ώρα",
+  "core_user_conf_email_notifications_title": "Ειδοποιήσεις Email",
+  "core_user_conf_appereance_title": "Εμφάνιση",
+  "core_user_conf_extensions_title": "Επεκτάσεις",
+  "core_user_conf_am_pm_default": "Προεπιλογή",
+  "core_user_conf_am_pm_24h": "24ωρο",
+  "core_user_conf_am_pm_12h": "12ωρο",
+  "core_user_conf_monday": "Δευτέρα",
+  "core_user_conf_tuesday": "Τρίτη",
+  "core_user_conf_wednesday": "Τετάρτη",
+  "core_user_conf_thursday": "Πέμπτη",
+  "core_user_conf_friday": "Παρασκευή",
+  "core_user_conf_saturday": "Σάββατο",
+  "core_user_conf_sunday": "Κυριακή"
+}

@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Fecha y Hora",
+  "core_user_conf_email_notifications_title": "Notificaciones por Correo Electrónico",
+  "core_user_conf_appereance_title": "Apariencia",
+  "core_user_conf_extensions_title": "Extensiones",
+  "core_user_conf_am_pm_default": "Predeterminado",
+  "core_user_conf_am_pm_24h": "24 horas",
+  "core_user_conf_am_pm_12h": "12 horas",
+  "core_user_conf_monday": "Lunes",
+  "core_user_conf_tuesday": "Martes",
+  "core_user_conf_wednesday": "Miércoles",
+  "core_user_conf_thursday": "Jueves",
+  "core_user_conf_friday": "Viernes",
+  "core_user_conf_saturday": "Sábado",
+  "core_user_conf_sunday": "Domingo"
+}

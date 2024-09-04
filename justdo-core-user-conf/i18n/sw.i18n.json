@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Tarehe na Saa",
+  "core_user_conf_email_notifications_title": "Arifa za Barua Pepe",
+  "core_user_conf_appereance_title": "Muonekano",
+  "core_user_conf_extensions_title": "Vipanua",
+  "core_user_conf_am_pm_default": "Chaguo-msingi",
+  "core_user_conf_am_pm_24h": "Saa 24",
+  "core_user_conf_am_pm_12h": "Saa 12",
+  "core_user_conf_monday": "Jumatatu",
+  "core_user_conf_tuesday": "Jumanne",
+  "core_user_conf_wednesday": "Jumatano",
+  "core_user_conf_thursday": "Alhamisi",
+  "core_user_conf_friday": "Ijumaa",
+  "core_user_conf_saturday": "Jumamosi",
+  "core_user_conf_sunday": "Jumapili"
+}

@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Պարունակի առնվազն մեկ հատուկ նշան",
   "password_requirements_atleast_one_lowercase": "Պարունակի առնվազն մեկ փոքրատառ անգլերեն տառ",
   "password_requirements_atleast_one_uppercase": "Պարունակի առնվազն մեկ մեծատառ անգլերեն տառ",
-  "password_requirements_too_similar": "Չպարունակի ձեր անունը կամ էլ. փոստի հասցեի մասեր"
+  "password_requirements_too_similar": "Չպարունակի ձեր անունը կամ էլ. փոստի հասցեի մասեր",
+  "first_name_schema_label": "Անուն",
+  "last_name_schema_label": "Ազգանուն",
+  "profile_pic_schema_label": "Պրոֆիլի նկար",
+  "date_format_schema_label": "Ամսաթվի ձևաչափ",
+  "time_format_schema_label": "Ժամանակի ձևաչափ",
+  "first_day_of_week_schema_label": "Շաբաթվա առաջին օր",
+  "timezone_schema_label": "Ժամային գոտի",
+  "avatar_fg_schema_label": "Ավատարի առաջնային պլան",
+  "avatar_bg_schema_label": "Ավատարի ֆոն",
+  "lang_schema_label": "Նախընտրելի լեզու",
+  "email_schema_label": "Էլ. փոստ",
+  "ignore_invites_schema_label": "Անտեսել առանց գաղտնաբառի օգտատերերին (համարել նրանց գոյություն չունեցող)"
 }

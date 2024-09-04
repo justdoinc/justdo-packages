@@ -1,4 +1,6 @@
 {
   "chat_label": "Gumzo",
-  "message_editor_input_placeholder": "Andika ujumbe..."
+  "message_editor_input_placeholder": "Andika ujumbe...",
+  "chat_config_title": "Gumzo",
+  "chat_receive_chat_email_notifications": "Pokea arifa za barua pepe za gumzo"
 }

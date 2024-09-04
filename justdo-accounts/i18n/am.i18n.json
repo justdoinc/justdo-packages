@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "ቢያንስ አንድ ልዩ ምልክት መያዝ አለበት",
   "password_requirements_atleast_one_lowercase": "ቢያንስ አንድ የእንግሊዝኛ ትንሽ ፊደል መያዝ አለበት",
   "password_requirements_atleast_one_uppercase": "ቢያንስ አንድ የእንግሊዝኛ capital ፊደል መያዝ አለበት",
-  "password_requirements_too_similar": "ስምዎን ወይም የኢሜይል አድራሻዎን አካል መያዝ የለበትም"
+  "password_requirements_too_similar": "ስምዎን ወይም የኢሜይል አድራሻዎን አካል መያዝ የለበትም",
+  "first_name_schema_label": "የመጀመሪያ ስም",
+  "last_name_schema_label": "የአባት ስም",
+  "profile_pic_schema_label": "የመገለጫ ሥዕል",
+  "date_format_schema_label": "የቀን አቀራረብ",
+  "time_format_schema_label": "የሰዓት አቀራረብ",
+  "first_day_of_week_schema_label": "የሳምንቱ የመጀመሪያ ቀን",
+  "timezone_schema_label": "የሰዓት ሰቅ",
+  "avatar_fg_schema_label": "የአቫታር ቅድመ-ገጽታ",
+  "avatar_bg_schema_label": "የአቫታር ዳራ",
+  "lang_schema_label": "የተመረጠ ቋንቋ",
+  "email_schema_label": "ኢሜይል",
+  "ignore_invites_schema_label": "የይለፍ ቃል የሌላቸውን ተጠቃሚዎች ችላ በል (እንደሌሉ ቆጠራቸው)"
 }

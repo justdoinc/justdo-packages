@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "التاريخ والوقت",
+  "core_user_conf_email_notifications_title": "إشعارات البريد الإلكتروني",
+  "core_user_conf_appereance_title": "المظهر",
+  "core_user_conf_extensions_title": "الإضافات",
+  "core_user_conf_am_pm_default": "الافتراضي",
+  "core_user_conf_am_pm_24h": "24 ساعة",
+  "core_user_conf_am_pm_12h": "12 ساعة",
+  "core_user_conf_monday": "الاثنين",
+  "core_user_conf_tuesday": "الثلاثاء",
+  "core_user_conf_wednesday": "الأربعاء",
+  "core_user_conf_thursday": "الخميس",
+  "core_user_conf_friday": "الجمعة",
+  "core_user_conf_saturday": "السبت",
+  "core_user_conf_sunday": "الأحد"
+}

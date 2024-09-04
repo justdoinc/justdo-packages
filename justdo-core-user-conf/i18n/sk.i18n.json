@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Dátum a čas",
+  "core_user_conf_email_notifications_title": "E-mailové upozornenia",
+  "core_user_conf_appereance_title": "Vzhľad",
+  "core_user_conf_extensions_title": "Rozšírenia",
+  "core_user_conf_am_pm_default": "Predvolené",
+  "core_user_conf_am_pm_24h": "24-hodinový formát",
+  "core_user_conf_am_pm_12h": "12-hodinový formát",
+  "core_user_conf_monday": "Pondelok",
+  "core_user_conf_tuesday": "Utorok",
+  "core_user_conf_wednesday": "Streda",
+  "core_user_conf_thursday": "Štvrtok",
+  "core_user_conf_friday": "Piatok",
+  "core_user_conf_saturday": "Sobota",
+  "core_user_conf_sunday": "Nedeľa"
+}

@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Conțină cel puțin un caracter special",
   "password_requirements_atleast_one_lowercase": "Conțină cel puțin o literă mică din alfabetul englez",
   "password_requirements_atleast_one_uppercase": "Conțină cel puțin o literă mare din alfabetul englez",
-  "password_requirements_too_similar": "Nu includă numele tău sau părți din adresa ta de email"
+  "password_requirements_too_similar": "Nu includă numele tău sau părți din adresa ta de email",
+  "first_name_schema_label": "Prenume",
+  "last_name_schema_label": "Nume de familie",
+  "profile_pic_schema_label": "Fotografie de profil",
+  "date_format_schema_label": "Format dată",
+  "time_format_schema_label": "Format oră",
+  "first_day_of_week_schema_label": "Prima zi a săptămânii",
+  "timezone_schema_label": "Fus orar",
+  "avatar_fg_schema_label": "Prim-plan avatar",
+  "avatar_bg_schema_label": "Fundal avatar",
+  "lang_schema_label": "Limba preferată",
+  "email_schema_label": "Email",
+  "ignore_invites_schema_label": "Ignoră utilizatorii fără parolă (consideră-i inexistenți)"
 }

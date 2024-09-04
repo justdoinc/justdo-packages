@@ -1,4 +1,6 @@
 {
   "chat_label": "Chat",
-  "message_editor_input_placeholder": "Schreift eng Noriicht..."
+  "message_editor_input_placeholder": "Schreift eng Noriicht...",
+  "chat_config_title": "Chat",
+  "chat_receive_chat_email_notifications": "E-Mail-Notifikatiounen fir Chat-Noriichten kréien"
 }

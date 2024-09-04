@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Tarih ve Saat",
+  "core_user_conf_email_notifications_title": "E-posta Bildirimleri",
+  "core_user_conf_appereance_title": "Görünüm",
+  "core_user_conf_extensions_title": "Eklentiler",
+  "core_user_conf_am_pm_default": "Varsayılan",
+  "core_user_conf_am_pm_24h": "24 saat",
+  "core_user_conf_am_pm_12h": "12 saat",
+  "core_user_conf_monday": "Pazartesi",
+  "core_user_conf_tuesday": "Salı",
+  "core_user_conf_wednesday": "Çarşamba",
+  "core_user_conf_thursday": "Perşembe",
+  "core_user_conf_friday": "Cuma",
+  "core_user_conf_saturday": "Cumartesi",
+  "core_user_conf_sunday": "Pazar"
+}

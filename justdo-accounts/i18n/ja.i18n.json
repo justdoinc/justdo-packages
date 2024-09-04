@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "少なくとも1つの特殊文字を含むこと",
   "password_requirements_atleast_one_lowercase": "少なくとも1つの小文字の英字を含むこと",
   "password_requirements_atleast_one_uppercase": "少なくとも1つの大文字の英字を含むこと",
-  "password_requirements_too_similar": "あなたの名前やメールアドレスの一部を含まないこと"
+  "password_requirements_too_similar": "あなたの名前やメールアドレスの一部を含まないこと",
+  "first_name_schema_label": "名",
+  "last_name_schema_label": "姓",
+  "profile_pic_schema_label": "プロフィール画像",
+  "date_format_schema_label": "日付形式",
+  "time_format_schema_label": "時刻形式",
+  "first_day_of_week_schema_label": "週の最初の曜日",
+  "timezone_schema_label": "タイムゾーン",
+  "avatar_fg_schema_label": "アバター前景色",
+  "avatar_bg_schema_label": "アバター背景色",
+  "lang_schema_label": "希望言語",
+  "email_schema_label": "メールアドレス",
+  "ignore_invites_schema_label": "パスワードのないユーザーを無視する（存在しないものとみなす）"
 }

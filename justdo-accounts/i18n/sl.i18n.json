@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Vsebovati vsaj en poseben znak",
   "password_requirements_atleast_one_lowercase": "Vsebovati vsaj eno malo angleško črko",
   "password_requirements_atleast_one_uppercase": "Vsebovati vsaj eno veliko angleško črko",
-  "password_requirements_too_similar": "Ne sme vključevati vašega imena ali delov vašega e-poštnega naslova"
+  "password_requirements_too_similar": "Ne sme vključevati vašega imena ali delov vašega e-poštnega naslova",
+  "first_name_schema_label": "Ime",
+  "last_name_schema_label": "Priimek",
+  "profile_pic_schema_label": "Profilna slika",
+  "date_format_schema_label": "Format datuma",
+  "time_format_schema_label": "Format časa",
+  "first_day_of_week_schema_label": "Prvi dan tedna",
+  "timezone_schema_label": "Časovni pas",
+  "avatar_fg_schema_label": "Ospredje avatarja",
+  "avatar_bg_schema_label": "Ozadje avatarja",
+  "lang_schema_label": "Želeni jezik",
+  "email_schema_label": "E-pošta",
+  "ignore_invites_schema_label": "Prezri uporabnike brez gesla (obravnavaj jih kot neobstoječe)"
 }

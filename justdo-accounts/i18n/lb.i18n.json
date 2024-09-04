@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Op d'mannst ee Speziallzeechen hunn",
   "password_requirements_atleast_one_lowercase": "Op d'mannst ee klenge Buschtaf hunn",
   "password_requirements_atleast_one_uppercase": "Op d'mannst ee grousse Buschtaf hunn",
-  "password_requirements_too_similar": "Net Ären Numm oder Deeler vun Ärer E-Mail-Adress enthalen"
+  "password_requirements_too_similar": "Net Ären Numm oder Deeler vun Ärer E-Mail-Adress enthalen",
+  "first_name_schema_label": "Virnumm",
+  "last_name_schema_label": "Familljennumm",
+  "profile_pic_schema_label": "Profilbild",
+  "date_format_schema_label": "Datumsformat",
+  "time_format_schema_label": "Zäitformat",
+  "first_day_of_week_schema_label": "Éischten Dag vun der Woch",
+  "timezone_schema_label": "Zäitzon",
+  "avatar_fg_schema_label": "Avatar Vierdergrond",
+  "avatar_bg_schema_label": "Avatar Hannergrond",
+  "lang_schema_label": "Virgestallte Sprooch",
+  "email_schema_label": "E-Mail",
+  "ignore_invites_schema_label": "Benotzer ouni Passwuert ignoréieren (als net existent betruechten)"
 }

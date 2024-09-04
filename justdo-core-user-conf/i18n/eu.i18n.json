@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Data eta ordua",
+  "core_user_conf_email_notifications_title": "Posta elektronikoko jakinarazpenak",
+  "core_user_conf_appereance_title": "Itxura",
+  "core_user_conf_extensions_title": "Luzapenak",
+  "core_user_conf_am_pm_default": "Lehenetsia",
+  "core_user_conf_am_pm_24h": "24 orduko formatua",
+  "core_user_conf_am_pm_12h": "12 orduko formatua",
+  "core_user_conf_monday": "Astelehena",
+  "core_user_conf_tuesday": "Asteartea",
+  "core_user_conf_wednesday": "Asteazkena",
+  "core_user_conf_thursday": "Osteguna",
+  "core_user_conf_friday": "Ostirala",
+  "core_user_conf_saturday": "Larunbata",
+  "core_user_conf_sunday": "Igandea"
+}

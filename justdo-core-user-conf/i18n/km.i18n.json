@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "កាលបរិច្ឆេទ & ម៉ោង",
+  "core_user_conf_email_notifications_title": "ការជូនដំណឹងតាមអ៊ីមែល",
+  "core_user_conf_appereance_title": "រូបរាង",
+  "core_user_conf_extensions_title": "កម្មវិធីបន្ថែម",
+  "core_user_conf_am_pm_default": "លំនាំដើម",
+  "core_user_conf_am_pm_24h": "24 ម៉ោង",
+  "core_user_conf_am_pm_12h": "12 ម៉ោង",
+  "core_user_conf_monday": "ថ្ងៃច័ន្ទ",
+  "core_user_conf_tuesday": "ថ្ងៃអង្គារ",
+  "core_user_conf_wednesday": "ថ្ងៃពុធ",
+  "core_user_conf_thursday": "ថ្ងៃព្រហស្បតិ៍",
+  "core_user_conf_friday": "ថ្ងៃសុក្រ",
+  "core_user_conf_saturday": "ថ្ងៃសៅរ៍",
+  "core_user_conf_sunday": "ថ្ងៃអាទិត្យ"
+}

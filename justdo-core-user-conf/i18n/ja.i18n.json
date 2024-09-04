@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "日付と時刻",
+  "core_user_conf_email_notifications_title": "メール通知",
+  "core_user_conf_appereance_title": "外観",
+  "core_user_conf_extensions_title": "拡張機能",
+  "core_user_conf_am_pm_default": "デフォルト",
+  "core_user_conf_am_pm_24h": "24時間表示",
+  "core_user_conf_am_pm_12h": "12時間表示",
+  "core_user_conf_monday": "月曜日",
+  "core_user_conf_tuesday": "火曜日",
+  "core_user_conf_wednesday": "水曜日",
+  "core_user_conf_thursday": "木曜日",
+  "core_user_conf_friday": "金曜日",
+  "core_user_conf_saturday": "土曜日",
+  "core_user_conf_sunday": "日曜日"
+}

@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Кеминде бир атайын символду камтышы керек",
   "password_requirements_atleast_one_lowercase": "Кеминде бир кичине англис тамгасын камтышы керек",
   "password_requirements_atleast_one_uppercase": "Кеминде бир чоң англис тамгасын камтышы керек",
-  "password_requirements_too_similar": "Сиздин атыңызды же электрондук почтаңыздын бөлүктөрүн камтыбашы керек"
+  "password_requirements_too_similar": "Сиздин атыңызды же электрондук почтаңыздын бөлүктөрүн камтыбашы керек",
+  "first_name_schema_label": "Аты",
+  "last_name_schema_label": "Фамилиясы",
+  "profile_pic_schema_label": "Профиль сүрөтү",
+  "date_format_schema_label": "Күн форматы",
+  "time_format_schema_label": "Убакыт форматы",
+  "first_day_of_week_schema_label": "Жуманын биринчи күнү",
+  "timezone_schema_label": "Убакыт алкагы",
+  "avatar_fg_schema_label": "Аватар алдыңкы планы",
+  "avatar_bg_schema_label": "Аватар фону",
+  "lang_schema_label": "Артыкчылык берилген тил",
+  "email_schema_label": "Электрондук почта",
+  "ignore_invites_schema_label": "Купуя сөзү жок колдонуучуларды этибарга албоо (жок деп эсептөө)"
 }

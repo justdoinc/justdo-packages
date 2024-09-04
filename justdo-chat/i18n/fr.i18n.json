@@ -1,4 +1,6 @@
 {
   "chat_label": "Discussion",
-  "message_editor_input_placeholder": "Tapez un message..."
+  "message_editor_input_placeholder": "Tapez un message...",
+  "chat_config_title": "Discussion",
+  "chat_receive_chat_email_notifications": "Recevoir des notifications par e-mail pour les discussions"
 }

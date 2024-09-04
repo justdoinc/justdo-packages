@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Turėti bent vieną specialųjį simbolį",
   "password_requirements_atleast_one_lowercase": "Turėti bent vieną mažąją anglišką raidę",
   "password_requirements_atleast_one_uppercase": "Turėti bent vieną didžiąją anglišką raidę",
-  "password_requirements_too_similar": "Neįtraukti jūsų vardo ar el. pašto adreso dalių"
+  "password_requirements_too_similar": "Neįtraukti jūsų vardo ar el. pašto adreso dalių",
+  "first_name_schema_label": "Vardas",
+  "last_name_schema_label": "Pavardė",
+  "profile_pic_schema_label": "Profilio nuotrauka",
+  "date_format_schema_label": "Datos formatas",
+  "time_format_schema_label": "Laiko formatas",
+  "first_day_of_week_schema_label": "Pirmoji savaitės diena",
+  "timezone_schema_label": "Laiko juosta",
+  "avatar_fg_schema_label": "Avataro priekinis planas",
+  "avatar_bg_schema_label": "Avataro fonas",
+  "lang_schema_label": "Pageidaujama kalba",
+  "email_schema_label": "El. paštas",
+  "ignore_invites_schema_label": "Ignoruoti vartotojus be slaptažodžio (laikyti juos neegzistuojančiais)"
 }

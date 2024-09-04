@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Содержать хотя бы один специальный символ",
   "password_requirements_atleast_one_lowercase": "Содержать хотя бы одну строчную букву английского алфавита",
   "password_requirements_atleast_one_uppercase": "Содержать хотя бы одну заглавную букву английского алфавита",
-  "password_requirements_too_similar": "Не включать ваше имя или части вашего email-адреса"
+  "password_requirements_too_similar": "Не включать ваше имя или части вашего email-адреса",
+  "first_name_schema_label": "Имя",
+  "last_name_schema_label": "Фамилия",
+  "profile_pic_schema_label": "Фотография профиля",
+  "date_format_schema_label": "Формат даты",
+  "time_format_schema_label": "Формат времени",
+  "first_day_of_week_schema_label": "Первый день недели",
+  "timezone_schema_label": "Часовой пояс",
+  "avatar_fg_schema_label": "Передний план аватара",
+  "avatar_bg_schema_label": "Фон аватара",
+  "lang_schema_label": "Предпочитаемый язык",
+  "email_schema_label": "Электронная почта",
+  "ignore_invites_schema_label": "Игнорировать пользователей без пароля (считать их несуществующими)"
 }

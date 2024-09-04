@@ -1,4 +1,5 @@
 {
   "show_this_page_in": "Mostrar esta página em <span class=\"set-default-lang\" data-lang-tag=\"__default_lang_tag__\">__default_lang_name__</span>?",
-  "improve_translation_tooltip": "Encontrou um erro gramatical ou um erro ortográfico? <b>Por favor, ajude-nos a corrigi-lo 🙏</b><br>Descarregue o nosso ficheiro de idioma e envie-nos a correção."
+  "improve_translation_tooltip": "Encontrou um erro gramatical ou um erro ortográfico? <b>Por favor, ajude-nos a corrigi-lo 🙏</b><br>Descarregue o nosso ficheiro de idioma e envie-nos a correção.",
+  "languages_title": "Idiomas"
 }

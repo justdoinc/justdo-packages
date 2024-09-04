@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Memiliki setidaknya satu karakter khusus",
   "password_requirements_atleast_one_lowercase": "Memiliki setidaknya satu huruf kecil bahasa Inggris",
   "password_requirements_atleast_one_uppercase": "Memiliki setidaknya satu huruf kapital bahasa Inggris",
-  "password_requirements_too_similar": "Tidak mengandung nama Anda, atau bagian dari email Anda"
+  "password_requirements_too_similar": "Tidak mengandung nama Anda, atau bagian dari email Anda",
+  "first_name_schema_label": "Nama Depan",
+  "last_name_schema_label": "Nama Belakang",
+  "profile_pic_schema_label": "Foto Profil",
+  "date_format_schema_label": "Format Tanggal",
+  "time_format_schema_label": "Format Waktu",
+  "first_day_of_week_schema_label": "Hari Pertama dalam Minggu",
+  "timezone_schema_label": "Zona Waktu",
+  "avatar_fg_schema_label": "Warna Depan Avatar",
+  "avatar_bg_schema_label": "Warna Latar Avatar",
+  "lang_schema_label": "Bahasa Pilihan",
+  "email_schema_label": "Email",
+  "ignore_invites_schema_label": "Abaikan pengguna tanpa kata sandi (anggap mereka tidak ada)"
 }

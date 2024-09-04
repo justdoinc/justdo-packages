@@ -1,4 +1,6 @@
 {
   "chat_label": "Tērzēšana",
-  "message_editor_input_placeholder": "Ierakstiet ziņojumu..."
+  "message_editor_input_placeholder": "Ierakstiet ziņojumu...",
+  "chat_config_title": "Tērzēšana",
+  "chat_receive_chat_email_notifications": "Saņemt tērzēšanas e-pasta paziņojumus"
 }

@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Tanggal & Waktu",
+  "core_user_conf_email_notifications_title": "Notifikasi Email",
+  "core_user_conf_appereance_title": "Tampilan",
+  "core_user_conf_extensions_title": "Ekstensi",
+  "core_user_conf_am_pm_default": "Default",
+  "core_user_conf_am_pm_24h": "24 jam",
+  "core_user_conf_am_pm_12h": "12 jam",
+  "core_user_conf_monday": "Senin",
+  "core_user_conf_tuesday": "Selasa",
+  "core_user_conf_wednesday": "Rabu",
+  "core_user_conf_thursday": "Kamis",
+  "core_user_conf_friday": "Jumat",
+  "core_user_conf_saturday": "Sabtu",
+  "core_user_conf_sunday": "Minggu"
+}

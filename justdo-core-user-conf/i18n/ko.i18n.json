@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "날짜 및 시간",
+  "core_user_conf_email_notifications_title": "이메일 알림",
+  "core_user_conf_appereance_title": "외관",
+  "core_user_conf_extensions_title": "확장 기능",
+  "core_user_conf_am_pm_default": "기본값",
+  "core_user_conf_am_pm_24h": "24시간제",
+  "core_user_conf_am_pm_12h": "12시간제",
+  "core_user_conf_monday": "월요일",
+  "core_user_conf_tuesday": "화요일",
+  "core_user_conf_wednesday": "수요일",
+  "core_user_conf_thursday": "목요일",
+  "core_user_conf_friday": "금요일",
+  "core_user_conf_saturday": "토요일",
+  "core_user_conf_sunday": "일요일"
+}

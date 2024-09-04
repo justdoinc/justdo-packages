@@ -1,4 +1,5 @@
 {
   "show_this_page_in": "Orrialde hau <span class=\"set-default-lang\" data-lang-tag=\"__default_lang_tag__\">__default_lang_name__</span> hizkuntzan erakutsi?",
-  "improve_translation_tooltip": "Gramatika akats bat edo errata bat aurkitu duzu? <b>Mesedez, lagundu konpontzen 🙏</b><br>Deskargatu gure hizkuntza fitxategia eta bidali zuzenketa."
+  "improve_translation_tooltip": "Gramatika akats bat edo errata bat aurkitu duzu? <b>Mesedez, lagundu konpontzen 🙏</b><br>Deskargatu gure hizkuntza fitxategia eta bidali zuzenketa.",
+  "languages_title": "Hizkuntzak"
 }

@@ -1,4 +1,6 @@
 {
   "chat_label": "कुराकानी",
-  "message_editor_input_placeholder": "सन्देश टाइप गर्नुहोस्..."
+  "message_editor_input_placeholder": "सन्देश टाइप गर्नुहोस्...",
+  "chat_config_title": "कुराकानी",
+  "chat_receive_chat_email_notifications": "कुराकानी इमेल सूचनाहरू प्राप्त गर्नुहोस्"
 }

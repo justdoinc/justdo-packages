@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Ən azı bir xüsusi simvol ehtiva etməlidir",
   "password_requirements_atleast_one_lowercase": "Ən azı bir kiçik ingilis hərfi ehtiva etməlidir",
   "password_requirements_atleast_one_uppercase": "Ən azı bir böyük ingilis hərfi ehtiva etməlidir",
-  "password_requirements_too_similar": "Adınızı və ya e-poçt ünvanınızın hissələrini ehtiva etməməlidir"
+  "password_requirements_too_similar": "Adınızı və ya e-poçt ünvanınızın hissələrini ehtiva etməməlidir",
+  "first_name_schema_label": "Ad",
+  "last_name_schema_label": "Soyad",
+  "profile_pic_schema_label": "Profil Şəkli",
+  "date_format_schema_label": "Tarix Formatı",
+  "time_format_schema_label": "Vaxt Formatı",
+  "first_day_of_week_schema_label": "Həftənin İlk Günü",
+  "timezone_schema_label": "Saat Qurşağı",
+  "avatar_fg_schema_label": "Avatar Ön Planı",
+  "avatar_bg_schema_label": "Avatar Arxa Planı",
+  "lang_schema_label": "Üstünlük Verilən Dil",
+  "email_schema_label": "E-poçt",
+  "ignore_invites_schema_label": "Şifrəsi olmayan istifadəçiləri nəzərə almayın (onları mövcud olmayan hesab edin)"
 }

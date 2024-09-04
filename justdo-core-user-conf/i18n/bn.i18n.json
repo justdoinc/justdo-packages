@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "তারিখ ও সময়",
+  "core_user_conf_email_notifications_title": "ইমেল বিজ্ঞপ্তি",
+  "core_user_conf_appereance_title": "অ্যাপিয়ারেন্স (Appearance)",
+  "core_user_conf_extensions_title": "এক্সটেনশন",
+  "core_user_conf_am_pm_default": "ডিফল্ট",
+  "core_user_conf_am_pm_24h": "২৪ ঘণ্টা",
+  "core_user_conf_am_pm_12h": "১২ ঘণ্টা",
+  "core_user_conf_monday": "সোমবার",
+  "core_user_conf_tuesday": "মঙ্গলবার",
+  "core_user_conf_wednesday": "বুধবার",
+  "core_user_conf_thursday": "বৃহস্পতিবার",
+  "core_user_conf_friday": "শুক্রবার",
+  "core_user_conf_saturday": "শনিবার",
+  "core_user_conf_sunday": "রবিবার"
+}

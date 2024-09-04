@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "दिनांक और समय",
+  "core_user_conf_email_notifications_title": "ईमेल सूचनाएँ",
+  "core_user_conf_appereance_title": "दिखावट",
+  "core_user_conf_extensions_title": "एक्स्टेंशन",
+  "core_user_conf_am_pm_default": "डिफ़ॉल्ट",
+  "core_user_conf_am_pm_24h": "24 घंटे",
+  "core_user_conf_am_pm_12h": "12 घंटे",
+  "core_user_conf_monday": "सोमवार",
+  "core_user_conf_tuesday": "मंगलवार",
+  "core_user_conf_wednesday": "बुधवार",
+  "core_user_conf_thursday": "गुरुवार",
+  "core_user_conf_friday": "शुक्रवार",
+  "core_user_conf_saturday": "शनिवार",
+  "core_user_conf_sunday": "रविवार"
+}

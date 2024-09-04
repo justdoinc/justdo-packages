@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "日期與時間",
+  "core_user_conf_email_notifications_title": "電子郵件通知",
+  "core_user_conf_appereance_title": "外觀",
+  "core_user_conf_extensions_title": "擴充功能",
+  "core_user_conf_am_pm_default": "預設",
+  "core_user_conf_am_pm_24h": "24小時制",
+  "core_user_conf_am_pm_12h": "12小時制",
+  "core_user_conf_monday": "星期一",
+  "core_user_conf_tuesday": "星期二",
+  "core_user_conf_wednesday": "星期三",
+  "core_user_conf_thursday": "星期四",
+  "core_user_conf_friday": "星期五",
+  "core_user_conf_saturday": "星期六",
+  "core_user_conf_sunday": "星期日"
+}

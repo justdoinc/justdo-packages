@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Tartalmaznia kell legalább egy speciális karaktert",
   "password_requirements_atleast_one_lowercase": "Tartalmaznia kell legalább egy kisbetűs angol betűt",
   "password_requirements_atleast_one_uppercase": "Tartalmaznia kell legalább egy nagybetűs angol betűt",
-  "password_requirements_too_similar": "Nem tartalmazhatja a nevedet vagy az e-mail címed részeit"
+  "password_requirements_too_similar": "Nem tartalmazhatja a nevedet vagy az e-mail címed részeit",
+  "first_name_schema_label": "Keresztnév",
+  "last_name_schema_label": "Vezetéknév",
+  "profile_pic_schema_label": "Profilkép",
+  "date_format_schema_label": "Dátumformátum",
+  "time_format_schema_label": "Időformátum",
+  "first_day_of_week_schema_label": "A hét első napja",
+  "timezone_schema_label": "Időzóna",
+  "avatar_fg_schema_label": "Avatar előtér",
+  "avatar_bg_schema_label": "Avatar háttér",
+  "lang_schema_label": "Preferált nyelv",
+  "email_schema_label": "E-mail",
+  "ignore_invites_schema_label": "Jelszó nélküli felhasználók figyelmen kívül hagyása (nem létezőnek tekintése)"
 }

@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Datum i vrijeme",
+  "core_user_conf_email_notifications_title": "Email obavještenja",
+  "core_user_conf_appereance_title": "Izgled",
+  "core_user_conf_extensions_title": "Proširenja",
+  "core_user_conf_am_pm_default": "Podrazumijevano",
+  "core_user_conf_am_pm_24h": "24 sata",
+  "core_user_conf_am_pm_12h": "12 sati",
+  "core_user_conf_monday": "Ponedjeljak",
+  "core_user_conf_tuesday": "Utorak",
+  "core_user_conf_wednesday": "Srijeda",
+  "core_user_conf_thursday": "Četvrtak",
+  "core_user_conf_friday": "Petak",
+  "core_user_conf_saturday": "Subota",
+  "core_user_conf_sunday": "Nedjelja"
+}

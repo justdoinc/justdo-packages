@@ -1,4 +1,6 @@
 {
   "chat_label": "Txata",
-  "message_editor_input_placeholder": "Idatzi mezu bat..."
+  "message_editor_input_placeholder": "Idatzi mezu bat...",
+  "chat_config_title": "Txata",
+  "chat_receive_chat_email_notifications": "Jaso txateko mezu-jakinarazpenak posta elektronikoz"
 }

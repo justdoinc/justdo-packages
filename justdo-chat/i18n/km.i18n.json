@@ -1,4 +1,6 @@
 {
   "chat_label": "ជជែក",
-  "message_editor_input_placeholder": "វាយសារ..."
+  "message_editor_input_placeholder": "វាយសារ...",
+  "chat_config_title": "ជជែកកម្សាន្ត",
+  "chat_receive_chat_email_notifications": "ទទួលការជូនដំណឹងតាមអ៊ីមែលសម្រាប់ការជជែកកម្សាន្ត"
 }

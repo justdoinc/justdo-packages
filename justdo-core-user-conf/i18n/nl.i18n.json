@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Datum & Tijd",
+  "core_user_conf_email_notifications_title": "E-mailmeldingen",
+  "core_user_conf_appereance_title": "Uiterlijk",
+  "core_user_conf_extensions_title": "Extensies",
+  "core_user_conf_am_pm_default": "Standaard",
+  "core_user_conf_am_pm_24h": "24 uur",
+  "core_user_conf_am_pm_12h": "12 uur",
+  "core_user_conf_monday": "Maandag",
+  "core_user_conf_tuesday": "Dinsdag",
+  "core_user_conf_wednesday": "Woensdag",
+  "core_user_conf_thursday": "Donderdag",
+  "core_user_conf_friday": "Vrijdag",
+  "core_user_conf_saturday": "Zaterdag",
+  "core_user_conf_sunday": "Zondag"
+}

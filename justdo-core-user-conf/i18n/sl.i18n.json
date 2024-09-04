@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Datum in čas",
+  "core_user_conf_email_notifications_title": "E-poštna obvestila",
+  "core_user_conf_appereance_title": "Videz",
+  "core_user_conf_extensions_title": "Razširitve",
+  "core_user_conf_am_pm_default": "Privzeto",
+  "core_user_conf_am_pm_24h": "24-urni format",
+  "core_user_conf_am_pm_12h": "12-urni format",
+  "core_user_conf_monday": "Ponedeljek",
+  "core_user_conf_tuesday": "Torek",
+  "core_user_conf_wednesday": "Sreda",
+  "core_user_conf_thursday": "Četrtek",
+  "core_user_conf_friday": "Petek",
+  "core_user_conf_saturday": "Sobota",
+  "core_user_conf_sunday": "Nedelja"
+}

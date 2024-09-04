@@ -1,4 +1,5 @@
 {
   "show_this_page_in": "Bu səhifəni <span class=\"set-default-lang\" data-lang-tag=\"__default_lang_tag__\">__default_lang_name__</span> dilində göstərmək istəyirsiniz?",
-  "improve_translation_tooltip": "Qrammatik səhv və ya yazı xətası tapdınız? <b>Zəhmət olmasa, onu düzəltməyimizə kömək edin 🙏</b><br>Dil faylımızı yükləyin və düzəlişi bizə göndərin."
+  "improve_translation_tooltip": "Qrammatik səhv və ya yazı xətası tapdınız? <b>Zəhmət olmasa, onu düzəltməyimizə kömək edin 🙏</b><br>Dil faylımızı yükləyin və düzəlişi bizə göndərin.",
+  "languages_title": "Dillər"
 }

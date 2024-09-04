@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Datum a čas",
+  "core_user_conf_email_notifications_title": "E-mailová upozornění",
+  "core_user_conf_appereance_title": "Vzhled",
+  "core_user_conf_extensions_title": "Rozšíření",
+  "core_user_conf_am_pm_default": "Výchozí",
+  "core_user_conf_am_pm_24h": "24 hodinový",
+  "core_user_conf_am_pm_12h": "12 hodinový",
+  "core_user_conf_monday": "Pondělí",
+  "core_user_conf_tuesday": "Úterý",
+  "core_user_conf_wednesday": "Středa",
+  "core_user_conf_thursday": "Čtvrtek",
+  "core_user_conf_friday": "Pátek",
+  "core_user_conf_saturday": "Sobota",
+  "core_user_conf_sunday": "Neděle"
+}

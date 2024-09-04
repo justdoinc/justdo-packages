@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Tarix və Vaxt",
+  "core_user_conf_email_notifications_title": "E-poçt Bildirişləri",
+  "core_user_conf_appereance_title": "Görünüş",
+  "core_user_conf_extensions_title": "Əlavələr",
+  "core_user_conf_am_pm_default": "Standart",
+  "core_user_conf_am_pm_24h": "24 saat",
+  "core_user_conf_am_pm_12h": "12 saat",
+  "core_user_conf_monday": "Bazar ertəsi",
+  "core_user_conf_tuesday": "Çərşənbə axşamı",
+  "core_user_conf_wednesday": "Çərşənbə",
+  "core_user_conf_thursday": "Cümə axşamı",
+  "core_user_conf_friday": "Cümə",
+  "core_user_conf_saturday": "Şənbə",
+  "core_user_conf_sunday": "Bazar"
+}

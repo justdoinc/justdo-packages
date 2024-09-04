@@ -1,4 +1,6 @@
 {
   "chat_label": "Pokalbis",
-  "message_editor_input_placeholder": "Įveskite žinutę..."
+  "message_editor_input_placeholder": "Įveskite žinutę...",
+  "chat_config_title": "Pokalbis",
+  "chat_receive_chat_email_notifications": "Gauti pokalbių pranešimus el. paštu"
 }

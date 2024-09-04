@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Dátum és idő",
+  "core_user_conf_email_notifications_title": "E-mail értesítések",
+  "core_user_conf_appereance_title": "Megjelenés",
+  "core_user_conf_extensions_title": "Bővítmények",
+  "core_user_conf_am_pm_default": "Alapértelmezett",
+  "core_user_conf_am_pm_24h": "24 órás",
+  "core_user_conf_am_pm_12h": "12 órás",
+  "core_user_conf_monday": "Hétfő",
+  "core_user_conf_tuesday": "Kedd",
+  "core_user_conf_wednesday": "Szerda",
+  "core_user_conf_thursday": "Csütörtök",
+  "core_user_conf_friday": "Péntek",
+  "core_user_conf_saturday": "Szombat",
+  "core_user_conf_sunday": "Vasárnap"
+}

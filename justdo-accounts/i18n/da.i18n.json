@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Indeholde mindst ét specialtegn",
   "password_requirements_atleast_one_lowercase": "Indeholde mindst ét engelsk bogstav med lille skrift",
   "password_requirements_atleast_one_uppercase": "Indeholde mindst ét engelsk bogstav med stort skrift",
-  "password_requirements_too_similar": "Ikke indeholde dit navn eller dele af din e-mailadresse"
+  "password_requirements_too_similar": "Ikke indeholde dit navn eller dele af din e-mailadresse",
+  "first_name_schema_label": "Fornavn",
+  "last_name_schema_label": "Efternavn",
+  "profile_pic_schema_label": "Profilbillede",
+  "date_format_schema_label": "Datoformat",
+  "time_format_schema_label": "Tidsformat",
+  "first_day_of_week_schema_label": "Ugens første dag",
+  "timezone_schema_label": "Tidszone",
+  "avatar_fg_schema_label": "Avatar forgrund",
+  "avatar_bg_schema_label": "Avatar baggrund",
+  "lang_schema_label": "Foretrukket sprog",
+  "email_schema_label": "E-mail",
+  "ignore_invites_schema_label": "Ignorer brugere uden adgangskode (betragt dem som ikke-eksisterende)"
 }

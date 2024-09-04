@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Kamida bitta maxsus belgi bo'lishi",
   "password_requirements_atleast_one_lowercase": "Kamida bitta kichik ingliz harfi bo'lishi",
   "password_requirements_atleast_one_uppercase": "Kamida bitta katta ingliz harfi bo'lishi",
-  "password_requirements_too_similar": "Ismingiz yoki elektron pochtangiz qismlarini o'z ichiga olmasligi"
+  "password_requirements_too_similar": "Ismingiz yoki elektron pochtangiz qismlarini o'z ichiga olmasligi",
+  "first_name_schema_label": "Ism",
+  "last_name_schema_label": "Familiya",
+  "profile_pic_schema_label": "Profil rasmi",
+  "date_format_schema_label": "Sana formati",
+  "time_format_schema_label": "Vaqt formati",
+  "first_day_of_week_schema_label": "Haftaning birinchi kuni",
+  "timezone_schema_label": "Vaqt mintaqasi",
+  "avatar_fg_schema_label": "Avatar old qismi",
+  "avatar_bg_schema_label": "Avatar foni",
+  "lang_schema_label": "Afzal ko'rilgan til",
+  "email_schema_label": "Elektron pochta",
+  "ignore_invites_schema_label": "Paroli bo'lmagan foydalanuvchilarni e'tiborsiz qoldirish (ularni mavjud emas deb hisoblash)"
 }

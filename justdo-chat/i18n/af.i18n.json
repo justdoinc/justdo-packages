@@ -1,4 +1,6 @@
 {
   "chat_label": "Gesels",
-  "message_editor_input_placeholder": "Tik 'n boodskap..."
+  "message_editor_input_placeholder": "Tik 'n boodskap...",
+  "chat_config_title": "Gesels",
+  "chat_receive_chat_email_notifications": "Ontvang gesels e-pos kennisgewings"
 }

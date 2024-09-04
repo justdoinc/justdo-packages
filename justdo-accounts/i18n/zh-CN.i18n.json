@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "包含至少一个特殊字符",
   "password_requirements_atleast_one_lowercase": "包含至少一个小写英文字母",
   "password_requirements_atleast_one_uppercase": "包含至少一个大写英文字母",
-  "password_requirements_too_similar": "不包含您的姓名或电子邮件的部分内容"
+  "password_requirements_too_similar": "不包含您的姓名或电子邮件的部分内容",
+  "first_name_schema_label": "名",
+  "last_name_schema_label": "姓",
+  "profile_pic_schema_label": "头像",
+  "date_format_schema_label": "日期格式",
+  "time_format_schema_label": "时间格式",
+  "first_day_of_week_schema_label": "每周第一天",
+  "timezone_schema_label": "时区",
+  "avatar_fg_schema_label": "头像前景色",
+  "avatar_bg_schema_label": "头像背景色",
+  "lang_schema_label": "首选语言",
+  "email_schema_label": "电子邮箱",
+  "ignore_invites_schema_label": "忽略没有密码的用户（视为不存在）"
 }

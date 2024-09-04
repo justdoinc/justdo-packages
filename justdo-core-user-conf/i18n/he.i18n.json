@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "תאריך ושעה",
+  "core_user_conf_email_notifications_title": "התראות בדוא\"ל",
+  "core_user_conf_appereance_title": "מראה",
+  "core_user_conf_extensions_title": "הרחבות",
+  "core_user_conf_am_pm_default": "ברירת מחדל",
+  "core_user_conf_am_pm_24h": "24 שעות",
+  "core_user_conf_am_pm_12h": "12 שעות",
+  "core_user_conf_monday": "יום שני",
+  "core_user_conf_tuesday": "יום שלישי",
+  "core_user_conf_wednesday": "יום רביעי",
+  "core_user_conf_thursday": "יום חמישי",
+  "core_user_conf_friday": "יום שישי",
+  "core_user_conf_saturday": "יום שבת",
+  "core_user_conf_sunday": "יום ראשון"
+}

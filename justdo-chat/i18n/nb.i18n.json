@@ -1,4 +1,6 @@
 {
   "chat_label": "Chat",
-  "message_editor_input_placeholder": "Skriv en melding..."
+  "message_editor_input_placeholder": "Skriv en melding...",
+  "chat_config_title": "Chat",
+  "chat_receive_chat_email_notifications": "Motta e-postvarsler for chat"
 }

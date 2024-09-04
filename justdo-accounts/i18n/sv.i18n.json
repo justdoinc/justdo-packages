@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Innehålla minst ett specialtecken",
   "password_requirements_atleast_one_lowercase": "Innehålla minst en liten bokstav på engelska",
   "password_requirements_atleast_one_uppercase": "Innehålla minst en stor bokstav på engelska",
-  "password_requirements_too_similar": "Inte innehålla ditt namn eller delar av din e-postadress"
+  "password_requirements_too_similar": "Inte innehålla ditt namn eller delar av din e-postadress",
+  "first_name_schema_label": "Förnamn",
+  "last_name_schema_label": "Efternamn",
+  "profile_pic_schema_label": "Profilbild",
+  "date_format_schema_label": "Datumformat",
+  "time_format_schema_label": "Tidsformat",
+  "first_day_of_week_schema_label": "Veckans första dag",
+  "timezone_schema_label": "Tidszon",
+  "avatar_fg_schema_label": "Avatar förgrund",
+  "avatar_bg_schema_label": "Avatar bakgrund",
+  "lang_schema_label": "Föredraget språk",
+  "email_schema_label": "E-post",
+  "ignore_invites_schema_label": "Ignorera användare utan lösenord (betrakta dem som icke-existerande)"
 }

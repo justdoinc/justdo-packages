@@ -1,4 +1,6 @@
 {
   "chat_label": "Trò chuyện",
-  "message_editor_input_placeholder": "Viết tin nhắn…"
+  "message_editor_input_placeholder": "Viết tin nhắn…",
+  "chat_config_title": "Trò chuyện",
+  "chat_receive_chat_email_notifications": "Nhận thông báo email về trò chuyện"
 }

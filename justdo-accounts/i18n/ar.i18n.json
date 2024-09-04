@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "تحتوي على حرف خاص واحد على الأقل",
   "password_requirements_atleast_one_lowercase": "تحتوي على حرف إنجليزي صغير واحد على الأقل",
   "password_requirements_atleast_one_uppercase": "تحتوي على حرف إنجليزي كبير واحد على الأقل",
-  "password_requirements_too_similar": "لا تتضمن اسمك أو أجزاء من بريدك الإلكتروني"
+  "password_requirements_too_similar": "لا تتضمن اسمك أو أجزاء من بريدك الإلكتروني",
+  "first_name_schema_label": "الاسم الأول",
+  "last_name_schema_label": "اسم العائلة",
+  "profile_pic_schema_label": "الصورة الشخصية",
+  "date_format_schema_label": "تنسيق التاريخ",
+  "time_format_schema_label": "تنسيق الوقت",
+  "first_day_of_week_schema_label": "اليوم الأول من الأسبوع",
+  "timezone_schema_label": "المنطقة الزمنية",
+  "avatar_fg_schema_label": "لون الأمامي للصورة الرمزية",
+  "avatar_bg_schema_label": "لون الخلفية للصورة الرمزية",
+  "lang_schema_label": "اللغة المفضلة",
+  "email_schema_label": "البريد الإلكتروني",
+  "ignore_invites_schema_label": "تجاهل المستخدمين بدون كلمة مرور (اعتبارهم غير موجودين)"
 }

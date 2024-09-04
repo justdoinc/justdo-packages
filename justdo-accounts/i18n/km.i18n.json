@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "មានយ៉ាងហោចណាស់តួអក្សរពិសេសមួយ",
   "password_requirements_atleast_one_lowercase": "មានយ៉ាងហោចណាស់អក្សរឡាតាំងតូចមួយតួ",
   "password_requirements_atleast_one_uppercase": "មានយ៉ាងហោចណាស់អក្សរឡាតាំងធំមួយតួ",
-  "password_requirements_too_similar": "មិនត្រូវមានឈ្មោះរបស់អ្នក ឬផ្នែកណាមួយនៃអ៊ីមែលរបស់អ្នកនោះទេ"
+  "password_requirements_too_similar": "មិនត្រូវមានឈ្មោះរបស់អ្នក ឬផ្នែកណាមួយនៃអ៊ីមែលរបស់អ្នកនោះទេ",
+  "first_name_schema_label": "នាមខ្លួន",
+  "last_name_schema_label": "នាមត្រកូល",
+  "profile_pic_schema_label": "រូបភាពកម្រងព័ត៌មាន",
+  "date_format_schema_label": "ទម្រង់កាលបរិច្ឆេទ",
+  "time_format_schema_label": "ទម្រង់ម៉ោង",
+  "first_day_of_week_schema_label": "ថ្ងៃទីមួយនៃសប្តាហ៍",
+  "timezone_schema_label": "តំបន់ពេលវេលា",
+  "avatar_fg_schema_label": "ផ្ទៃខាងមុខនៃរូបតំណាង",
+  "avatar_bg_schema_label": "ផ្ទៃខាងក្រោយនៃរូបតំណាង",
+  "lang_schema_label": "ភាសាដែលចូលចិត្ត",
+  "email_schema_label": "អ៊ីមែល",
+  "ignore_invites_schema_label": "មិនអើពើនឹងអ្នកប្រើប្រាស់ដែលគ្មានពាក្យសម្ងាត់ (ចាត់ទុកថាពួកគេមិនមាន)"
 }

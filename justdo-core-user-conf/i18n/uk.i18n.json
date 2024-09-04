@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Дата і час",
+  "core_user_conf_email_notifications_title": "Сповіщення електронною поштою",
+  "core_user_conf_appereance_title": "Зовнішній вигляд",
+  "core_user_conf_extensions_title": "Розширення",
+  "core_user_conf_am_pm_default": "За замовчуванням",
+  "core_user_conf_am_pm_24h": "24-годинний формат",
+  "core_user_conf_am_pm_12h": "12-годинний формат",
+  "core_user_conf_monday": "Понеділок",
+  "core_user_conf_tuesday": "Вівторок",
+  "core_user_conf_wednesday": "Середа",
+  "core_user_conf_thursday": "Четвер",
+  "core_user_conf_friday": "П'ятниця",
+  "core_user_conf_saturday": "Субота",
+  "core_user_conf_sunday": "Неділя"
+}

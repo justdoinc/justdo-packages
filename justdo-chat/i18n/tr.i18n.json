@@ -1,4 +1,6 @@
 {
   "chat_label": "Sohbet",
-  "message_editor_input_placeholder": "Bir mesaj yazın..."
+  "message_editor_input_placeholder": "Bir mesaj yazın...",
+  "chat_config_title": "Sohbet",
+  "chat_receive_chat_email_notifications": "Sohbet e-posta bildirimleri al"
 }

@@ -2,9 +2,9 @@ getUserSchemaForField = (field) ->
   return JustdoHelpers.getCollectionSchemaForField(Meteor.users, field)
 
 Template.core_user_conf_core_profile_settings.helpers
-  first_name_label: -> getUserSchemaForField("profile.first_name").label
+  first_name_label: -> getUserSchemaForField("profile.first_name").label_i18n
 
-  last_name_label: -> getUserSchemaForField("profile.last_name").label
+  last_name_label: -> getUserSchemaForField("profile.last_name").label_i18n
 
   logged_user_first_name_last_name: -> Meteor.user({fields: {"profile.first_name": 1, "profile.last_name": 1}})
 

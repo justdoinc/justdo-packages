@@ -1,4 +1,5 @@
 {
   "show_this_page_in": "Prikaži to stran v jeziku <span class=\"set-default-lang\" data-lang-tag=\"__default_lang_tag__\">__default_lang_name__</span>?",
-  "improve_translation_tooltip": "Ste našli slovnično napako ali tipkarsko napako? <b>Prosimo, pomagajte nam jo popraviti 🙏</b><br>Prenesite našo jezikovno datoteko in nam pošljite popravek."
+  "improve_translation_tooltip": "Ste našli slovnično napako ali tipkarsko napako? <b>Prosimo, pomagajte nam jo popraviti 🙏</b><br>Prenesite našo jezikovno datoteko in nam pošljite popravek.",
+  "languages_title": "Jeziki"
 }

@@ -99,6 +99,7 @@ _.extend JustdoAccounts,
       # Thus, we must set it to optional.
 
       label: "First name"
+      label_i18n: "first_name_schema_label"
       type: String
       max: 50
       regEx: /\S/ # at least one non-space char
@@ -110,6 +111,7 @@ _.extend JustdoAccounts,
      # Thus, we must set it to optional.
 
       label: "Last name"
+      label_i18n: "last_name_schema_label"
       type: String
       max: 50
       regEx: /\S/ # at least one non-space char
@@ -117,11 +119,13 @@ _.extend JustdoAccounts,
       optional: true
 
       label: "Profile pic"
+      label_i18n: "profile_pic_schema_label"
       type: String
       max: 1000
       # regEx: SimpleSchema.RegEx.Url, since we save SVGs here as well, might not be url
     date_format:
       label: "Date Format"
+      label_i18n: "date_format_schema_label"
       type: String
       defaultValue: "YYYY-MM-DD"
       allowedValues: [
@@ -136,12 +140,14 @@ _.extend JustdoAccounts,
 
     use_am_pm:
       label: "Time format"
+      label_i18n: "time_format_schema_label"
       type: Boolean
       optional: true # If undefined/null, should use the machine's locale
       defaultValue: null
 
     first_day_of_week:
       label: "First day of week"
+      label_i18n: "first_day_of_week_schema_label"
       type: Number
       defaultValue: 1
       allowedValues: [0, 1, 2, 3, 4, 5, 6] # Follows JS Date.getDay() - 0 is Sunday
@@ -150,12 +156,14 @@ _.extend JustdoAccounts,
       optional: true
 
       label: "Timezone"
+      label_i18n: "timezone_schema_label"
       type: String
 
     avatar_fg:
       optional: true
 
       label: "Avatar Foreground"
+      label_i18n: "avatar_fg_schema_label"
       type: String
 
       regEx: /^#[0-9a-f]{6}$/i
@@ -164,6 +172,7 @@ _.extend JustdoAccounts,
       optional: true
 
       label: "Avatar Background"
+      label_i18n: "avatar_bg_schema_label"
       type: String
 
       regEx: /^#[0-9a-f]{6}$/i
@@ -172,16 +181,19 @@ _.extend JustdoAccounts,
       optional: true
 
       label: "Preferred Language"
+      label_i18n: "lang_schema_label"
       type: String
 
   get_user_public_info_options_schema: new SimpleSchema
     email:
       label: "Email"
+      label_i18n: "email_schema_label"
       type: String
       regEx: JustdoHelpers.common_regexps.email
 
     ignore_invited:
       label: "Ignore users with no password (consider them non-existing)"
+      label_i18n: "ignore_invites_schema_label"
       type: Boolean
       optional: true
       defaultValue: false

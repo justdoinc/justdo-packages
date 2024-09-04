@@ -39,6 +39,7 @@ Package.onUse(function (api) {
 
   api.use("matb33:collection-hooks@0.8.4", both);
 
+  api.addFiles("lib/both/simple-schema-extensions.coffee", both);
   api.addFiles("lib/both/init.coffee", both);
   api.addFiles('lib/both/errors-types.coffee', both);
   api.addFiles('lib/both/meteor-accounts-configuration.coffee', both);

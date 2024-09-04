@@ -1,4 +1,6 @@
 {
   "chat_label": "Chat",
-  "message_editor_input_placeholder": "Nachricht eingeben..."
+  "message_editor_input_placeholder": "Nachricht eingeben...",
+  "chat_config_title": "Chat",
+  "chat_receive_chat_email_notifications": "Chat-E-Mail-Benachrichtigungen erhalten"
 }

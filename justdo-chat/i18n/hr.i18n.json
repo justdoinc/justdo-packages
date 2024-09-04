@@ -1,4 +1,6 @@
 {
   "chat_label": "Razgovor",
-  "message_editor_input_placeholder": "Upišite poruku..."
+  "message_editor_input_placeholder": "Upišite poruku...",
+  "chat_config_title": "Chat",
+  "chat_receive_chat_email_notifications": "Primaj obavijesti o chatu e-poštom"
 }

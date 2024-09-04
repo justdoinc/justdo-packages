@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "कम से कम एक विशेष वर्ण होना चाहिए",
   "password_requirements_atleast_one_lowercase": "कम से कम एक छोटे अंग्रेजी अक्षर का होना चाहिए",
   "password_requirements_atleast_one_uppercase": "कम से कम एक बड़े अंग्रेजी अक्षर का होना चाहिए",
-  "password_requirements_too_similar": "आपका नाम या आपके ईमेल के हिस्से शामिल नहीं होने चाहिए"
+  "password_requirements_too_similar": "आपका नाम या आपके ईमेल के हिस्से शामिल नहीं होने चाहिए",
+  "first_name_schema_label": "पहला नाम",
+  "last_name_schema_label": "अंतिम नाम",
+  "profile_pic_schema_label": "प्रोफ़ाइल चित्र",
+  "date_format_schema_label": "दिनांक प्रारूप",
+  "time_format_schema_label": "समय प्रारूप",
+  "first_day_of_week_schema_label": "सप्ताह का पहला दिन",
+  "timezone_schema_label": "समय क्षेत्र",
+  "avatar_fg_schema_label": "अवतार अग्रभूमि",
+  "avatar_bg_schema_label": "अवतार पृष्ठभूमि",
+  "lang_schema_label": "पसंदीदा भाषा",
+  "email_schema_label": "ईमेल",
+  "ignore_invites_schema_label": "बिना पासवर्ड वाले उपयोगकर्ताओं को अनदेखा करें (उन्हें गैर-मौजूद मानें)"
 }

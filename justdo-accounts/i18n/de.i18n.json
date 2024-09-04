@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Mindestens ein Sonderzeichen enthalten",
   "password_requirements_atleast_one_lowercase": "Mindestens einen englischen Kleinbuchstaben enthalten",
   "password_requirements_atleast_one_uppercase": "Mindestens einen englischen Großbuchstaben enthalten",
-  "password_requirements_too_similar": "Nicht Ihren Namen oder Teile Ihrer E-Mail-Adresse enthalten"
+  "password_requirements_too_similar": "Nicht Ihren Namen oder Teile Ihrer E-Mail-Adresse enthalten",
+  "first_name_schema_label": "Vorname",
+  "last_name_schema_label": "Nachname",
+  "profile_pic_schema_label": "Profilbild",
+  "date_format_schema_label": "Datumsformat",
+  "time_format_schema_label": "Zeitformat",
+  "first_day_of_week_schema_label": "Erster Tag der Woche",
+  "timezone_schema_label": "Zeitzone",
+  "avatar_fg_schema_label": "Avatar-Vordergrund",
+  "avatar_bg_schema_label": "Avatar-Hintergrund",
+  "lang_schema_label": "Bevorzugte Sprache",
+  "email_schema_label": "E-Mail",
+  "ignore_invites_schema_label": "Benutzer ohne Passwort ignorieren (als nicht vorhanden betrachten)"
 }

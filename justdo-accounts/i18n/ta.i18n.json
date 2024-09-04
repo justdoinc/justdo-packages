@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "குறைந்தது ஒரு சிறப்பு எழுத்துருவைக் கொண்டிருக்க வேண்டும்",
   "password_requirements_atleast_one_lowercase": "குறைந்தது ஒரு சிறிய ஆங்கில எழுத்தைக் கொண்டிருக்க வேண்டும்",
   "password_requirements_atleast_one_uppercase": "குறைந்தது ஒரு பெரிய ஆங்கில எழுத்தைக் கொண்டிருக்க வேண்டும்",
-  "password_requirements_too_similar": "உங்கள் பெயரையோ அல்லது உங்கள் மின்னஞ்சலின் பகுதிகளையோ உள்ளடக்கக் கூடாது"
+  "password_requirements_too_similar": "உங்கள் பெயரையோ அல்லது உங்கள் மின்னஞ்சலின் பகுதிகளையோ உள்ளடக்கக் கூடாது",
+  "first_name_schema_label": "முதற்பெயர்",
+  "last_name_schema_label": "கடைசிப்பெயர்",
+  "profile_pic_schema_label": "சுயவிவரப் படம்",
+  "date_format_schema_label": "தேதி வடிவம்",
+  "time_format_schema_label": "நேர வடிவம்",
+  "first_day_of_week_schema_label": "வாரத்தின் முதல் நாள்",
+  "timezone_schema_label": "நேர மண்டலம்",
+  "avatar_fg_schema_label": "அவதார முன்புற நிறம்",
+  "avatar_bg_schema_label": "அவதார பின்புற நிறம்",
+  "lang_schema_label": "விருப்பமான மொழி",
+  "email_schema_label": "மின்னஞ்சல்",
+  "ignore_invites_schema_label": "கடவுச்சொல் இல்லாத பயனர்களைப் புறக்கணிக்கவும் (அவர்கள் இல்லாதவர்களாகக் கருதவும்)"
 }

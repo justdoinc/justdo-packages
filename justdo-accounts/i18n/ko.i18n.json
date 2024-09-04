@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "최소 1개의 특수 문자를 포함해야 합니다",
   "password_requirements_atleast_one_lowercase": "최소 1개의 영문 소문자를 포함해야 합니다",
   "password_requirements_atleast_one_uppercase": "최소 1개의 영문 대문자를 포함해야 합니다",
-  "password_requirements_too_similar": "이름이나 이메일 주소의 일부를 포함하지 않아야 합니다"
+  "password_requirements_too_similar": "이름이나 이메일 주소의 일부를 포함하지 않아야 합니다",
+  "first_name_schema_label": "이름",
+  "last_name_schema_label": "성",
+  "profile_pic_schema_label": "프로필 사진",
+  "date_format_schema_label": "날짜 형식",
+  "time_format_schema_label": "시간 형식",
+  "first_day_of_week_schema_label": "한 주의 시작일",
+  "timezone_schema_label": "시간대",
+  "avatar_fg_schema_label": "아바타 전경색",
+  "avatar_bg_schema_label": "아바타 배경색",
+  "lang_schema_label": "선호 언어",
+  "email_schema_label": "이메일",
+  "ignore_invites_schema_label": "비밀번호가 없는 사용자 무시 (존재하지 않는 것으로 간주)"
 }

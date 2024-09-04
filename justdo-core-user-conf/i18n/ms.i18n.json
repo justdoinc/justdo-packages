@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Tarikh & Masa",
+  "core_user_conf_email_notifications_title": "Pemberitahuan E-mel",
+  "core_user_conf_appereance_title": "Penampilan",
+  "core_user_conf_extensions_title": "Sambungan",
+  "core_user_conf_am_pm_default": "Lalai",
+  "core_user_conf_am_pm_24h": "24 jam",
+  "core_user_conf_am_pm_12h": "12 jam",
+  "core_user_conf_monday": "Isnin",
+  "core_user_conf_tuesday": "Selasa",
+  "core_user_conf_wednesday": "Rabu",
+  "core_user_conf_thursday": "Khamis",
+  "core_user_conf_friday": "Jumaat",
+  "core_user_conf_saturday": "Sabtu",
+  "core_user_conf_sunday": "Ahad"
+}

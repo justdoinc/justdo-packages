@@ -1,4 +1,5 @@
 {
   "show_this_page_in": "Zobrazit tuto stránku v <span class=\"set-default-lang\" data-lang-tag=\"__default_lang_tag__\">__default_lang_name__</span>?",
-  "improve_translation_tooltip": "Našli jste gramatickou chybu nebo překlep? <b>Prosím, pomozte nám to opravit 🙏</b><br>Stáhněte si náš jazykový soubor a pošlete nám opravu."
+  "improve_translation_tooltip": "Našli jste gramatickou chybu nebo překlep? <b>Prosím, pomozte nám to opravit 🙏</b><br>Stáhněte si náš jazykový soubor a pošlete nám opravu.",
+  "languages_title": "Jazyky"
 }

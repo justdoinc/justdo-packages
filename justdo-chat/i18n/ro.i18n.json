@@ -1,4 +1,6 @@
 {
   "chat_label": "Chat",
-  "message_editor_input_placeholder": "Scrieți un mesaj..."
+  "message_editor_input_placeholder": "Scrieți un mesaj...",
+  "chat_config_title": "Chat",
+  "chat_receive_chat_email_notifications": "Primiți notificări prin e-mail pentru chat"
 }

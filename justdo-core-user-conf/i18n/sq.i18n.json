@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Data dhe Ora",
+  "core_user_conf_email_notifications_title": "Njoftimet me Email",
+  "core_user_conf_appereance_title": "Pamja",
+  "core_user_conf_extensions_title": "Zgjerime",
+  "core_user_conf_am_pm_default": "Parazgjedhur",
+  "core_user_conf_am_pm_24h": "24 orë",
+  "core_user_conf_am_pm_12h": "12 orë",
+  "core_user_conf_monday": "E hënë",
+  "core_user_conf_tuesday": "E martë",
+  "core_user_conf_wednesday": "E mërkurë",
+  "core_user_conf_thursday": "E enjte",
+  "core_user_conf_friday": "E premte",
+  "core_user_conf_saturday": "E shtunë",
+  "core_user_conf_sunday": "E diel"
+}

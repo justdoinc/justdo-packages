@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Gutxienez karaktere berezi bat izan",
   "password_requirements_atleast_one_lowercase": "Gutxienez ingelesezko letra xehe bat izan",
   "password_requirements_atleast_one_uppercase": "Gutxienez ingelesezko maiuskula bat izan",
-  "password_requirements_too_similar": "Ez du zure izena edo zure posta elektronikoaren zatiak izan behar"
+  "password_requirements_too_similar": "Ez du zure izena edo zure posta elektronikoaren zatiak izan behar",
+  "first_name_schema_label": "Izena",
+  "last_name_schema_label": "Abizena",
+  "profile_pic_schema_label": "Profileko Argazkia",
+  "date_format_schema_label": "Data Formatua",
+  "time_format_schema_label": "Ordu Formatua",
+  "first_day_of_week_schema_label": "Asteko Lehen Eguna",
+  "timezone_schema_label": "Ordu-zona",
+  "avatar_fg_schema_label": "Avatarren Aurreko Planoa",
+  "avatar_bg_schema_label": "Avatarren Atzeko Planoa",
+  "lang_schema_label": "Hobetsitako Hizkuntza",
+  "email_schema_label": "Helbide Elektronikoa",
+  "ignore_invites_schema_label": "Pasahitzik gabeko erabiltzaileak baztertu (ez-existentetzat hartu)"
 }

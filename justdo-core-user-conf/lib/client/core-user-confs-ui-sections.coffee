@@ -13,17 +13,17 @@ APP.executeAfterAppLibCode ->
     priority: 10
 
   main_module.user_config_ui.registerConfigSection "date_time_settings",
-    title: "Date & Time"
+    title: "core_user_conf_date_time_title"
     priority: 100
 
   main_module.user_config_ui.registerConfigSection "email_notifications_settings",
-    title: "Email Notifications"
+    title: "core_user_conf_email_notifications_title"
     priority: 100
 
   main_module.user_config_ui.registerConfigSection "appearance",
-    title: "Appearance"
+    title: "core_user_conf_appereance_title"
     priority: 100
 
   main_module.user_config_ui.registerConfigSection "extensions",
-    title: "Extensions"
+    title: "core_user_conf_extensions_title"
     priority: 200

@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "தேதி & நேரம்",
+  "core_user_conf_email_notifications_title": "மின்னஞ்சல் அறிவிப்புகள்",
+  "core_user_conf_appereance_title": "தோற்றம்",
+  "core_user_conf_extensions_title": "நீட்டிப்புகள்",
+  "core_user_conf_am_pm_default": "இயல்புநிலை",
+  "core_user_conf_am_pm_24h": "24 மணி நேரம்",
+  "core_user_conf_am_pm_12h": "12 மணி நேரம்",
+  "core_user_conf_monday": "திங்கள்",
+  "core_user_conf_tuesday": "செவ்வாய்",
+  "core_user_conf_wednesday": "புதன்",
+  "core_user_conf_thursday": "வியாழன்",
+  "core_user_conf_friday": "வெள்ளி",
+  "core_user_conf_saturday": "சனி",
+  "core_user_conf_sunday": "ஞாயிறு"
+}

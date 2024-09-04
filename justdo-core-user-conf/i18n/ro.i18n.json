@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Dată și Oră",
+  "core_user_conf_email_notifications_title": "Notificări prin Email",
+  "core_user_conf_appereance_title": "Aspect",
+  "core_user_conf_extensions_title": "Extensii",
+  "core_user_conf_am_pm_default": "Implicit",
+  "core_user_conf_am_pm_24h": "Format 24 ore",
+  "core_user_conf_am_pm_12h": "Format 12 ore",
+  "core_user_conf_monday": "Luni",
+  "core_user_conf_tuesday": "Marți",
+  "core_user_conf_wednesday": "Miercuri",
+  "core_user_conf_thursday": "Joi",
+  "core_user_conf_friday": "Vineri",
+  "core_user_conf_saturday": "Sâmbătă",
+  "core_user_conf_sunday": "Duminică"
+}

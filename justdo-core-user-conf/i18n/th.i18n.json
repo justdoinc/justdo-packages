@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "วันที่และเวลา",
+  "core_user_conf_email_notifications_title": "การแจ้งเตือนทางอีเมล",
+  "core_user_conf_appereance_title": "รูปลักษณ์",
+  "core_user_conf_extensions_title": "ส่วนขยาย",
+  "core_user_conf_am_pm_default": "ค่าเริ่มต้น",
+  "core_user_conf_am_pm_24h": "24 ชั่วโมง",
+  "core_user_conf_am_pm_12h": "12 ชั่วโมง",
+  "core_user_conf_monday": "วันจันทร์",
+  "core_user_conf_tuesday": "วันอังคาร",
+  "core_user_conf_wednesday": "วันพุธ",
+  "core_user_conf_thursday": "วันพฤหัสบดี",
+  "core_user_conf_friday": "วันศุกร์",
+  "core_user_conf_saturday": "วันเสาร์",
+  "core_user_conf_sunday": "วันอาทิตย์"
+}

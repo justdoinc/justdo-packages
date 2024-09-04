@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Kuupäev ja kellaaeg",
+  "core_user_conf_email_notifications_title": "E-posti teavitused",
+  "core_user_conf_appereance_title": "Välimus",
+  "core_user_conf_extensions_title": "Laiendused",
+  "core_user_conf_am_pm_default": "Vaikimisi",
+  "core_user_conf_am_pm_24h": "24-tunnine",
+  "core_user_conf_am_pm_12h": "12-tunnine",
+  "core_user_conf_monday": "Esmaspäev",
+  "core_user_conf_tuesday": "Teisipäev",
+  "core_user_conf_wednesday": "Kolmapäev",
+  "core_user_conf_thursday": "Neljapäev",
+  "core_user_conf_friday": "Reede",
+  "core_user_conf_saturday": "Laupäev",
+  "core_user_conf_sunday": "Pühapäev"
+}

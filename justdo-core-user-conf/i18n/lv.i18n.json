@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Datums un laiks",
+  "core_user_conf_email_notifications_title": "E-pasta paziņojumi",
+  "core_user_conf_appereance_title": "Izskats",
+  "core_user_conf_extensions_title": "Paplašinājumi",
+  "core_user_conf_am_pm_default": "Noklusējums",
+  "core_user_conf_am_pm_24h": "24 stundu",
+  "core_user_conf_am_pm_12h": "12 stundu",
+  "core_user_conf_monday": "Pirmdiena",
+  "core_user_conf_tuesday": "Otrdiena",
+  "core_user_conf_wednesday": "Trešdiena",
+  "core_user_conf_thursday": "Ceturtdiena",
+  "core_user_conf_friday": "Piektdiena",
+  "core_user_conf_saturday": "Sestdiena",
+  "core_user_conf_sunday": "Svētdiena"
+}

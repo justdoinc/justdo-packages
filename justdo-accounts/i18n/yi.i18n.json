@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "האָבן כאָטש איין ספּעציעלן סימבאָל",
   "password_requirements_atleast_one_lowercase": "האָבן כאָטש איין קליין ענגליש אות",
   "password_requirements_atleast_one_uppercase": "האָבן כאָטש איין גרויס ענגליש אות",
-  "password_requirements_too_similar": "נישט אַרייַננעמען דיין נאָמען, אָדער טיילן פון דיין אימעיל"
+  "password_requirements_too_similar": "נישט אַרייַננעמען דיין נאָמען, אָדער טיילן פון דיין אימעיל",
+  "first_name_schema_label": "ערשטער נאָמען",
+  "last_name_schema_label": "לעצטער נאָמען",
+  "profile_pic_schema_label": "פּראָפיל בילד",
+  "date_format_schema_label": "דאַטע פאָרמאַט",
+  "time_format_schema_label": "צייט פאָרמאַט",
+  "first_day_of_week_schema_label": "ערשטער טאָג פון וואָך",
+  "timezone_schema_label": "צייט זאָנע",
+  "avatar_fg_schema_label": "אַוואַטאַר פאָדערגרונט",
+  "avatar_bg_schema_label": "אַוואַטאַר הינטערגרונט",
+  "lang_schema_label": "פּרעפערירטע שפּראַך",
+  "email_schema_label": "אימעיל",
+  "ignore_invites_schema_label": "איגנאָרירן ניצערס אָן אַ פּאַסוואָרט (באַטראַכטן זיי ווי נישט עקזיסטירנדיק)"
 }

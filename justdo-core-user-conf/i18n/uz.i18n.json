@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Sana va vaqt",
+  "core_user_conf_email_notifications_title": "Elektron pochta xabarnomalarini",
+  "core_user_conf_appereance_title": "Ko'rinish",
+  "core_user_conf_extensions_title": "Kengaytmalar",
+  "core_user_conf_am_pm_default": "Standart",
+  "core_user_conf_am_pm_24h": "24 soatlik",
+  "core_user_conf_am_pm_12h": "12 soatlik",
+  "core_user_conf_monday": "Dushanba",
+  "core_user_conf_tuesday": "Seshanba",
+  "core_user_conf_wednesday": "Chorshanba",
+  "core_user_conf_thursday": "Payshanba",
+  "core_user_conf_friday": "Juma",
+  "core_user_conf_saturday": "Shanba",
+  "core_user_conf_sunday": "Yakshanba"
+}

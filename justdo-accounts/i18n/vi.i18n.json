@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Phải có ít nhất 1 ký tự đặc biệt",
   "password_requirements_atleast_one_lowercase": "Phải có ít nhất 1 chữ cái tiếng Anh viết thường",
   "password_requirements_atleast_one_uppercase": "Phải có ít nhất 1 chữ cái tiếng Anh viết hoa",
-  "password_requirements_too_similar": "Không bao gồm tên, hoặc trùng với địa chỉ email của bạn"
+  "password_requirements_too_similar": "Không bao gồm tên, hoặc trùng với địa chỉ email của bạn",
+  "first_name_schema_label": "Tên",
+  "last_name_schema_label": "Họ",
+  "profile_pic_schema_label": "Ảnh đại diện",
+  "date_format_schema_label": "Định dạng ngày",
+  "time_format_schema_label": "Định dạng thời gian",
+  "first_day_of_week_schema_label": "Ngày đầu tiên của tuần",
+  "timezone_schema_label": "Múi giờ",
+  "avatar_fg_schema_label": "Màu chữ avatar",
+  "avatar_bg_schema_label": "Màu nền avatar",
+  "lang_schema_label": "Ngôn ngữ ưa thích",
+  "email_schema_label": "Email",
+  "ignore_invites_schema_label": "Bỏ qua người dùng không có mật khẩu (coi họ như không tồn tại)"
 }

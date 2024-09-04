@@ -1,4 +1,6 @@
 {
   "chat_label": "Ћаскање",
-  "message_editor_input_placeholder": "Откуцајте поруку..."
+  "message_editor_input_placeholder": "Откуцајте поруку...",
+  "chat_config_title": "Ćaskanje",
+  "chat_receive_chat_email_notifications": "Primajte obaveštenja o ćaskanju putem e-pošte"
 }

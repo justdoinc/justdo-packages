@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Να περιέχει τουλάχιστον έναν ειδικό χαρακτήρα",
   "password_requirements_atleast_one_lowercase": "Να περιέχει τουλάχιστον ένα πεζό λατινικό γράμμα",
   "password_requirements_atleast_one_uppercase": "Να περιέχει τουλάχιστον ένα κεφαλαίο λατινικό γράμμα",
-  "password_requirements_too_similar": "Να μην περιλαμβάνει το όνομά σας ή μέρη του email σας"
+  "password_requirements_too_similar": "Να μην περιλαμβάνει το όνομά σας ή μέρη του email σας",
+  "first_name_schema_label": "Όνομα",
+  "last_name_schema_label": "Επώνυμο",
+  "profile_pic_schema_label": "Εικόνα Προφίλ",
+  "date_format_schema_label": "Μορφή Ημερομηνίας",
+  "time_format_schema_label": "Μορφή Ώρας",
+  "first_day_of_week_schema_label": "Πρώτη Ημέρα της Εβδομάδας",
+  "timezone_schema_label": "Ζώνη Ώρας",
+  "avatar_fg_schema_label": "Χρώμα Προσκηνίου Avatar",
+  "avatar_bg_schema_label": "Χρώμα Φόντου Avatar",
+  "lang_schema_label": "Προτιμώμενη Γλώσσα",
+  "email_schema_label": "Email",
+  "ignore_invites_schema_label": "Αγνόηση χρηστών χωρίς κωδικό (θεωρούνται ανύπαρκτοι)"
 }

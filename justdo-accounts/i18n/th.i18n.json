@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "มีอักขระพิเศษอย่างน้อยหนึ่งตัว",
   "password_requirements_atleast_one_lowercase": "มีตัวอักษรภาษาอังกฤษตัวพิมพ์เล็กอย่างน้อยหนึ่งตัว",
   "password_requirements_atleast_one_uppercase": "มีตัวอักษรภาษาอังกฤษตัวพิมพ์ใหญ่อย่างน้อยหนึ่งตัว",
-  "password_requirements_too_similar": "ไม่รวมชื่อของคุณ หรือส่วนหนึ่งของอีเมลของคุณ"
+  "password_requirements_too_similar": "ไม่รวมชื่อของคุณ หรือส่วนหนึ่งของอีเมลของคุณ",
+  "first_name_schema_label": "ชื่อ",
+  "last_name_schema_label": "นามสกุล",
+  "profile_pic_schema_label": "รูปโปรไฟล์",
+  "date_format_schema_label": "รูปแบบวันที่",
+  "time_format_schema_label": "รูปแบบเวลา",
+  "first_day_of_week_schema_label": "วันแรกของสัปดาห์",
+  "timezone_schema_label": "เขตเวลา",
+  "avatar_fg_schema_label": "สีพื้นหน้าของอวตาร",
+  "avatar_bg_schema_label": "สีพื้นหลังของอวตาร",
+  "lang_schema_label": "ภาษาที่ต้องการ",
+  "email_schema_label": "อีเมล",
+  "ignore_invites_schema_label": "ละเว้นผู้ใช้ที่ไม่มีรหัสผ่าน (ถือว่าไม่มีตัวตน)"
 }

@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Сана ва вақт",
+  "core_user_conf_email_notifications_title": "Огоҳиномаҳои почтаи электронӣ",
+  "core_user_conf_appereance_title": "Намуди зоҳирӣ",
+  "core_user_conf_extensions_title": "Иловаҳо",
+  "core_user_conf_am_pm_default": "Пешфарз",
+  "core_user_conf_am_pm_24h": "24 соата",
+  "core_user_conf_am_pm_12h": "12 соата",
+  "core_user_conf_monday": "Душанбе",
+  "core_user_conf_tuesday": "Сешанбе",
+  "core_user_conf_wednesday": "Чоршанбе",
+  "core_user_conf_thursday": "Панҷшанбе",
+  "core_user_conf_friday": "Ҷумъа",
+  "core_user_conf_saturday": "Шанбе",
+  "core_user_conf_sunday": "Якшанбе"
+}

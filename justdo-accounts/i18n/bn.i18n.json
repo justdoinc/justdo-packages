@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "কমপক্ষে একটি বিশেষ চিহ্ন থাকতে হবে",
   "password_requirements_atleast_one_lowercase": "কমপক্ষে একটি ছোট হাতের ইংরেজি অক্ষর থাকতে হবে",
   "password_requirements_atleast_one_uppercase": "কমপক্ষে একটি বড় হাতের ইংরেজি অক্ষর থাকতে হবে",
-  "password_requirements_too_similar": "আপনার নাম বা আপনার ইমেইলের অংশ অন্তর্ভুক্ত করা যাবে না"
+  "password_requirements_too_similar": "আপনার নাম বা আপনার ইমেইলের অংশ অন্তর্ভুক্ত করা যাবে না",
+  "first_name_schema_label": "নামের প্রথম অংশ",
+  "last_name_schema_label": "নামের শেষ অংশ",
+  "profile_pic_schema_label": "প্রোফাইল ছবি",
+  "date_format_schema_label": "তারিখের ফরম্যাট",
+  "time_format_schema_label": "সময়ের ফরম্যাট",
+  "first_day_of_week_schema_label": "সপ্তাহের প্রথম দিন",
+  "timezone_schema_label": "সময় অঞ্চল",
+  "avatar_fg_schema_label": "অবতার সম্মুখভাগ",
+  "avatar_bg_schema_label": "অবতার পটভূমি",
+  "lang_schema_label": "পছন্দসই ভাষা",
+  "email_schema_label": "ইমেইল",
+  "ignore_invites_schema_label": "পাসওয়ার্ডহীন ব্যবহারকারীদের উপেক্ষা করুন (তাদের অবিদ্যমান বলে গণ্য করুন)"
 }

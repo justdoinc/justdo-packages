@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Mempunyai sekurang-kurangnya satu aksara khas",
   "password_requirements_atleast_one_lowercase": "Mempunyai sekurang-kurangnya satu huruf kecil bahasa Inggeris",
   "password_requirements_atleast_one_uppercase": "Mempunyai sekurang-kurangnya satu huruf besar bahasa Inggeris",
-  "password_requirements_too_similar": "Tidak mengandungi nama anda, atau sebahagian daripada e-mel anda"
+  "password_requirements_too_similar": "Tidak mengandungi nama anda, atau sebahagian daripada e-mel anda",
+  "first_name_schema_label": "Nama Pertama",
+  "last_name_schema_label": "Nama Akhir",
+  "profile_pic_schema_label": "Gambar Profil",
+  "date_format_schema_label": "Format Tarikh",
+  "time_format_schema_label": "Format Masa",
+  "first_day_of_week_schema_label": "Hari Pertama Minggu",
+  "timezone_schema_label": "Zon Masa",
+  "avatar_fg_schema_label": "Latar Depan Avatar",
+  "avatar_bg_schema_label": "Latar Belakang Avatar",
+  "lang_schema_label": "Bahasa Pilihan",
+  "email_schema_label": "E-mel",
+  "ignore_invites_schema_label": "Abaikan pengguna tanpa kata laluan (anggap mereka tidak wujud)"
 }

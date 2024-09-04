@@ -1,4 +1,6 @@
 {
   "chat_label": "Sembang",
-  "message_editor_input_placeholder": "Taip mesej..."
+  "message_editor_input_placeholder": "Taip mesej...",
+  "chat_config_title": "Sembang",
+  "chat_receive_chat_email_notifications": "Terima pemberitahuan e-mel sembang"
 }

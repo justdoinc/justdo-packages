@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Змяшчаць прынамсі адзін спецыяльны сімвал",
   "password_requirements_atleast_one_lowercase": "Змяшчаць прынамсі адну малую літару англійскага алфавіта",
   "password_requirements_atleast_one_uppercase": "Змяшчаць прынамсі адну вялікую літару англійскага алфавіта",
-  "password_requirements_too_similar": "Не ўключаць вашае імя або часткі вашага электроннага адраса"
+  "password_requirements_too_similar": "Не ўключаць вашае імя або часткі вашага электроннага адраса",
+  "first_name_schema_label": "Імя",
+  "last_name_schema_label": "Прозвішча",
+  "profile_pic_schema_label": "Фота профілю",
+  "date_format_schema_label": "Фармат даты",
+  "time_format_schema_label": "Фармат часу",
+  "first_day_of_week_schema_label": "Першы дзень тыдня",
+  "timezone_schema_label": "Часавы пояс",
+  "avatar_fg_schema_label": "Пярэдні план аватара",
+  "avatar_bg_schema_label": "Фон аватара",
+  "lang_schema_label": "Пажаданая мова",
+  "email_schema_label": "Электронная пошта",
+  "ignore_invites_schema_label": "Ігнараваць карыстальнікаў без пароля (лічыць іх неіснуючымі)"
 }

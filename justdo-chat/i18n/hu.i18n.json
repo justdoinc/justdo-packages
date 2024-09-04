@@ -1,4 +1,6 @@
 {
   "chat_label": "Csevegés",
-  "message_editor_input_placeholder": "Írj egy üzenetet..."
+  "message_editor_input_placeholder": "Írj egy üzenetet...",
+  "chat_config_title": "Csevegés",
+  "chat_receive_chat_email_notifications": "Csevegési e-mail értesítések fogadása"
 }

@@ -1,0 +1,16 @@
+{
+  "core_user_conf_date_time_title": "Datum & Zäit",
+  "core_user_conf_email_notifications_title": "E-Mail Notifikatiounen",
+  "core_user_conf_appereance_title": "Ausgesinn",
+  "core_user_conf_extensions_title": "Erweiderungen",
+  "core_user_conf_am_pm_default": "Standard",
+  "core_user_conf_am_pm_24h": "24 Stonnen",
+  "core_user_conf_am_pm_12h": "12 Stonnen",
+  "core_user_conf_monday": "Méindeg",
+  "core_user_conf_tuesday": "Dënschdeg",
+  "core_user_conf_wednesday": "Mëttwoch",
+  "core_user_conf_thursday": "Donneschdeg",
+  "core_user_conf_friday": "Freideg",
+  "core_user_conf_saturday": "Samschdeg",
+  "core_user_conf_sunday": "Sonndeg"
+}

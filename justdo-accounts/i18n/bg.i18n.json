@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Има поне един специален символ",
   "password_requirements_atleast_one_lowercase": "Има поне една малка буква на латиница",
   "password_requirements_atleast_one_uppercase": "Има поне една главна буква на латиница",
-  "password_requirements_too_similar": "Не включва вашето име или части от вашия имейл"
+  "password_requirements_too_similar": "Не включва вашето име или части от вашия имейл",
+  "first_name_schema_label": "Име",
+  "last_name_schema_label": "Фамилия",
+  "profile_pic_schema_label": "Профилна снимка",
+  "date_format_schema_label": "Формат на датата",
+  "time_format_schema_label": "Формат на часа",
+  "first_day_of_week_schema_label": "Първи ден от седмицата",
+  "timezone_schema_label": "Часова зона",
+  "avatar_fg_schema_label": "Преден план на аватара",
+  "avatar_bg_schema_label": "Фон на аватара",
+  "lang_schema_label": "Предпочитан език",
+  "email_schema_label": "Имейл",
+  "ignore_invites_schema_label": "Игнорирай потребители без парола (считай ги за несъществуващи)"
 }

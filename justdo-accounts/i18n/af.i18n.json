@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Ten minste een spesiale karakter hê",
   "password_requirements_atleast_one_lowercase": "Ten minste een kleinletter Engelse letter hê",
   "password_requirements_atleast_one_uppercase": "Ten minste een hoofletter Engelse letter hê",
-  "password_requirements_too_similar": "Nie jou naam of dele van jou e-posadres insluit nie"
+  "password_requirements_too_similar": "Nie jou naam of dele van jou e-posadres insluit nie",
+  "first_name_schema_label": "Voornaam",
+  "last_name_schema_label": "Van",
+  "profile_pic_schema_label": "Profielfoto",
+  "date_format_schema_label": "Datumformaat",
+  "time_format_schema_label": "Tydformaat",
+  "first_day_of_week_schema_label": "Eerste Dag van die Week",
+  "timezone_schema_label": "Tydsone",
+  "avatar_fg_schema_label": "Avatar Voorgrond",
+  "avatar_bg_schema_label": "Avatar Agtergrond",
+  "lang_schema_label": "Voorkeur Taal",
+  "email_schema_label": "E-pos",
+  "ignore_invites_schema_label": "Ignoreer gebruikers sonder wagwoord (beskou hulle as nie-bestaande)"
 }

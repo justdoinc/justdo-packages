@@ -1,4 +1,6 @@
 {
   "chat_label": "Զրուցարան",
-  "message_editor_input_placeholder": "Մուտքագրեք հաղորդագրություն..."
+  "message_editor_input_placeholder": "Մուտքագրեք հաղորդագրություն...",
+  "chat_config_title": "Զրույց",
+  "chat_receive_chat_email_notifications": "Ստանալ զրույցի էլ. փոստի ծանուցումներ"
 }

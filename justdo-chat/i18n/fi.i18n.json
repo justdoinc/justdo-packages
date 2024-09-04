@@ -1,4 +1,6 @@
 {
   "chat_label": "Keskustelu",
-  "message_editor_input_placeholder": "Kirjoita viesti..."
+  "message_editor_input_placeholder": "Kirjoita viesti...",
+  "chat_config_title": "Keskustelu",
+  "chat_receive_chat_email_notifications": "Vastaanota keskusteluilmoituksia sähköpostitse"
 }

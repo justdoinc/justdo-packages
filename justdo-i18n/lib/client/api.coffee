@@ -78,7 +78,7 @@ _.extend JustdoI18n.prototype,
         return
 
       APP.modules.main.user_config_ui.registerConfigSection "langs-selector",
-        title: "Languages"
+        title: "languages_title"
         priority: 50
 
       APP.modules.main.user_config_ui.registerConfigTemplate "langs-selector-dropdown",

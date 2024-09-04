@@ -1,4 +1,6 @@
 {
   "chat_label": "שמועס",
-  "message_editor_input_placeholder": "שרײַבט אַ מעלדונג..."
+  "message_editor_input_placeholder": "שרײַבט אַ מעלדונג...",
+  "chat_config_title": "שמועס",
+  "chat_receive_chat_email_notifications": "באַקומען שמועס אימעיל מעלדונגען"
 }

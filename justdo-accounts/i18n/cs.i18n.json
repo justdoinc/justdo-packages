@@ -5,5 +5,17 @@
   "password_requirements_special_sign": "Obsahovat alespoň jeden speciální znak",
   "password_requirements_atleast_one_lowercase": "Obsahovat alespoň jedno malé písmeno anglické abecedy",
   "password_requirements_atleast_one_uppercase": "Obsahovat alespoň jedno velké písmeno anglické abecedy",
-  "password_requirements_too_similar": "Neobsahovat vaše jméno ani části vaší e-mailové adresy"
+  "password_requirements_too_similar": "Neobsahovat vaše jméno ani části vaší e-mailové adresy",
+  "first_name_schema_label": "Křestní jméno",
+  "last_name_schema_label": "Příjmení",
+  "profile_pic_schema_label": "Profilový obrázek",
+  "date_format_schema_label": "Formát data",
+  "time_format_schema_label": "Formát času",
+  "first_day_of_week_schema_label": "První den týdne",
+  "timezone_schema_label": "Časové pásmo",
+  "avatar_fg_schema_label": "Popředí avataru",
+  "avatar_bg_schema_label": "Pozadí avataru",
+  "lang_schema_label": "Preferovaný jazyk",
+  "email_schema_label": "E-mail",
+  "ignore_invites_schema_label": "Ignorovat uživatele bez hesla (považovat je za neexistující)"
 }
