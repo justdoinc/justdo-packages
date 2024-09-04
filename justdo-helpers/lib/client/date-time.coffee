@@ -38,7 +38,7 @@ _.extend JustdoHelpers,
   getRelativeUnicodeDate: (days_offset=0) ->
     # Relative to today + days_offset
 
-    return moment().add(days_offset, "days").format(unicode_date_format)
+    return moment().locale(JustdoI18n.default_lang).add(days_offset, "days").format(unicode_date_format)
 
   getCurrentUnicodeDateReactive: ->
     if not currentUnicodeDateReactiveCrv?
