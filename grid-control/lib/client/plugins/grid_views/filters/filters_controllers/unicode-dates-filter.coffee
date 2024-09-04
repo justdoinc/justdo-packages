@@ -1,3 +1,5 @@
+datepicker_default_format = "DD/MM/YYYY"
+
 default_filter_options =
   filter_options: [
     # # Format:
@@ -181,7 +183,6 @@ UnicodeDatesFilterControllerConstructor = (context) ->
     return
 
   @controller.find(".custom-datepicker").datepicker
-    dateFormat: JustdoHelpers.getUserPreferredDataFormatInJqueryUiFormat()
     firstDay: Meteor?.user()?.profile?.first_day_of_week or 0
     onSelect: (date, obj) ->
       if obj.input.hasClass "custom-datepicker-start"
@@ -224,13 +225,13 @@ UnicodeDatesFilterControllerConstructor = (context) ->
 
   @controller.find(".custom-range-label").on "blur", (e) ->
     $label = $(e.target).closest(".custom-range-label")
-    date_format = JustdoHelpers.getUserPreferredDateFormat()
+    date_format = datepicker_default_format
     date = $label.text()
 
     if $label.hasClass "custom-range-label-start"
       if moment(date, date_format, true).isValid() or date == ""
         if date
-          constructor.custom_range_start = $label.text()
+          constructor.custom_range_start = moment(date, date_format).format("YYYY-MM-DD")
         else
           constructor.custom_range_start = ""
 
@@ -241,7 +242,7 @@ UnicodeDatesFilterControllerConstructor = (context) ->
     if $label.hasClass "custom-range-label-end"
       if moment(date, date_format, true).isValid() or date == ""
         if date
-          constructor.custom_range_end = $label.text()
+          constructor.custom_range_end = moment(date, date_format).format("YYYY-MM-DD")
         else
           constructor.custom_range_end = ""
 
@@ -293,29 +294,34 @@ _.extend UnicodeDatesFilterControllerConstructor.prototype,
       label_start = ""
       label_end = ""
 
-      date_format = JustdoHelpers.getUserPreferredDateFormat()
+      date_format = datepicker_default_format
+      user_date_format = JustdoHelpers.getUserPreferredDateFormat()
 
-      if filter_state.custom_range.start != ""
-        label_start = moment(filter_state.custom_range.start).format(date_format)
+      if (start = filter_state.custom_range.start) != ""
+        label_start = moment(start, date_format).format(user_date_format)
 
-      if filter_state.custom_range.end != ""
-        label_end = moment(filter_state.custom_range.end).format(date_format)
+      if (end = filter_state.custom_range.end) != ""
+        label_end = moment(end, date_format).format(user_date_format)
 
-      @custom_range_start = filter_state.custom_range.start
-      @custom_range_end = filter_state.custom_range.end
+      @custom_range_start = start
+      @custom_range_end = end
 
-      @controller.find(".custom-range-label-start").text label_start
-      @controller.find(".custom-range-label-end").text label_end
+      @controller.find(".custom-range-label-start")
+        .text label_start
+        .data "raw_date", start
+      @controller.find(".custom-range-label-end")
+        .text label_end
+        .data "raw_date", end
 
       $start_input_wrapper = @controller.find(".custom-range-label-start").parents(".custom-range-input-wrapper")
       $end_input_wrapper = @controller.find(".custom-range-label-end").parents(".custom-range-input-wrapper")
 
-      if moment(label_start, date_format, true).isValid()
+      if moment(label_start, user_date_format, true).isValid()
         $start_input_wrapper.removeClass "empty"
       else
         $start_input_wrapper.addClass "empty"
 
-      if moment(label_end, date_format, true).isValid()
+      if moment(label_end, user_date_format, true).isValid()
         $end_input_wrapper.removeClass "empty"
       else
         $end_input_wrapper.addClass "empty"
@@ -407,7 +413,7 @@ columnFilterStateToQuery = (column_filter_state, context) ->
 
   if (custom_range = column_filter_state.custom_range)?
     {start, end} = custom_range
-    date_format = JustdoHelpers.getUserPreferredDateFormat()
+    date_format = datepicker_default_format
     start = moment(start, date_format).locale(JustdoI18n.default_lang)
     end = moment(end, date_format).locale(JustdoI18n.default_lang)
     range_query = {}
