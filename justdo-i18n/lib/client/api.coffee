@@ -17,7 +17,6 @@ _.extend JustdoI18n.prototype,
         lang = @getLang()
         
         TAPi18n.setLanguage lang
-        i18n?.setLanguage lang
 
         # On the initial load, bootbox might not be loaded yet, try to set it again after app accounts are ready
         # (which is quite late in the init process)

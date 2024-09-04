@@ -57,8 +57,6 @@ Package.onUse(function (api) {
   api.use("tap:i18n", both);
   api.use("momentjs:moment", both);
   api.use("rzymek:moment-locales", both);
-  // Although we prefer tap:i18n, anti:i18n is used by other packages like meteor-accounts-ui-bootstrap-3
-  api.use("anti:i18n@0.4.3", client, {weak: true}); 
 
   api.use("matb33:collection-hooks@0.8.4", both);
   api.use("meteorspark:app@0.3.0", both);
