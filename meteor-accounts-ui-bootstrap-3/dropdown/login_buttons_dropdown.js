@@ -170,21 +170,21 @@
     fields: function() {
       return [{
         fieldName: 'old-password',
-        fieldLabel: i18n('changePasswordFields.currentPassword'),
+        fieldLabel: TAPi18n.__("change_password_fields_current_password"),
         inputType: 'password',
         visible: function() {
           return true;
         }
       }, {
         fieldName: 'password',
-        fieldLabel: i18n('changePasswordFields.newPassword'),
+        fieldLabel: TAPi18n.__("change_password_fields_new_password"),
         inputType: 'password',
         visible: function() {
           return true;
         }
       }, {
         fieldName: 'password-again',
-        fieldLabel: i18n('changePasswordFields.newPasswordAgain'),
+        fieldLabel: TAPi18n.__("change_password_fields_new_password_again"),
         inputType: 'password',
         visible: function() {
           // No need to make users double-enter their password if
@@ -255,7 +255,7 @@
     var password = elementValueById('login-password');
 
     if (password == oldPassword) {
-      loginButtonsSession.errorMessage(i18n('errorMessages.newPasswordSameAsOld'));
+      loginButtonsSession.errorMessage(TAPi18n.__("error_messages_new_password_same_as_old"));
       return;
     }
 
@@ -270,12 +270,12 @@
     Accounts.changePassword(oldPassword, password, function(error) {
       if (error) {
         if (error.reason == 'Incorrect password'){
-          loginButtonsSession.errorMessage(i18n('errorMessages.incorrectPassword'))
+          loginButtonsSession.errorMessage(TAPi18n.__("error_messages_incorrect_password"))
         } else {
           loginButtonsSession.errorMessage(error.reason || "Unknown error");
         }
       } else {
-        loginButtonsSession.infoMessage(i18n('infoMessages.passwordChanged'));
+        loginButtonsSession.infoMessage(TAPi18n.__("info_messages_password_changed"));
 
         $("#login-old-password,#login-password,#login-password-again").val("")
 
@@ -294,7 +294,7 @@
       // notably not trimmed. a password could (?) start or end with a space
       var password = elementValueById('login-password');
       if (password !== passwordAgain) {
-        loginButtonsSession.errorMessage(i18n('errorMessages.passwordsDontMatch'));
+        loginButtonsSession.errorMessage(TAPi18n.__("error_messages_passwords_dont_match"));
         return false;
       }
     }

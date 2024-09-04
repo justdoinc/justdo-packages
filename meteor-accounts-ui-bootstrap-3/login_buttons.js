@@ -143,7 +143,7 @@
     if (username.length >= 3) {
       return true;
     } else {
-      loginButtonsSession.errorMessage(i18n('errorMessages.usernameTooShort'));
+      loginButtonsSession.errorMessage(TAPi18n.__("error_messages_username_too_short"));
       return false;
     }
   };
@@ -157,7 +157,7 @@
     if (re.test(email)) {
       return true;
     } else {
-      loginButtonsSession.errorMessage(i18n('errorMessages.invalidEmail'));
+      loginButtonsSession.errorMessage(TAPi18n.__("error_messages_invalid_email"));
       return false;
     }
   };

@@ -5,10 +5,6 @@
       "1.1.2"
     ],
     [
-      "anti:i18n",
-      "0.4.3"
-    ],
-    [
       "application-configuration",
       "1.0.3"
     ],

@@ -75,7 +75,7 @@
         } else {
           $('#login-buttons-reset-password-modal').modal("hide");
           $('#login-buttons-reset-password-modal-success').modal();
-          loginButtonsSession.infoMessage(i18n('infoMessages.passwordChanged'));
+          loginButtonsSession.infoMessage(TAPi18n.__("info_messages_password_changed"));
           loginButtonsSession.set('resetPasswordToken', null);
           Accounts._enableAutoLogin();
         }
