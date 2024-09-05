@@ -69,7 +69,7 @@ _.extend TemplateDropdownProto.prototype,
   allowOpen: -> true
 
   isOpenDropdown: ->
-    return @$dropdown.data("isOpen")
+    return @$dropdown.data("isOpen")()
   
   openDropdown: ->
     if not @$dropdown.data("open")?
