@@ -136,6 +136,9 @@ _.extend TemplateDropdownProto.prototype,
             left: new_position.left
 
   destroy: ->
+    @$connected_element.off "mousedown"
+    @$connected_element.off "click"
+
     @$dropdown.data("destroy")?()
 
     @destroyDropdownContentNode()
