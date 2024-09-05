@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Отклонить передачу владения от",
+  "owners_mgmt_accept_transfer_from": "Принять передачу владения от",
+  "owners_mgmt_cancel_transfer_to": "Отменить передачу владения",
+  "owners_mgmt_loading": "Загрузка...",
+  "owners_mgmt_transfer_ownership_to": "Передать владение...",
+  "owners_mgmt_task_only_visible_to_you": "Эта задача видна только вам",
+  "owners_mgmt_take_ownership_from_removed_owner": "Принять владение от удаленного владельца",
+  "owners_mgmt_take_ownership_from": "Принять владение от",
+  "owners_mgmt_edit_task_members": "Редактировать участников задачи",
+  "owners_mgmt_share_task": "Поделиться задачей",
+  "owners_mgmt_leave_a_reject_message": "Оставить сообщение об отказе",
+  "owners_mgmt_transfer_child_tasks_too": "Передать владение __count__ подзадачей также?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Передать владение __count__ подзадачами также?",
+  "owners_mgmt_transfer_child_tasks_done": "Передача владения __count__ подзадачей обработана.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Передача владения __count__ подзадачами обработана.",
+  "owners_mgmt_transfer": "Передать"
+}

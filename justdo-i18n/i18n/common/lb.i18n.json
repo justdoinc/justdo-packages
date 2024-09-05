@@ -29,7 +29,7 @@
   "main_page_description": "Stäerkt Äert Team mat JustDo, der sécherer an erweiderbarer Projektmanagement-Léisung. Eis Quellcode-zougänglech Plattform bitt Transparenz a Personaliséierung, mat mächtege Gantt-Diagrammer, Kanban-Tafelen a méi.",
   "edit": "Änneren",
   "search": "Sichen",
-  "add_btn_label": "DOBÄISETZEN",
+  "add": "Bäifügen",
   "updated_with_time": "Aktualiséiert __time__",
   "stop": "Stopp",
   "generate": "Generéieren",
@@ -37,5 +37,12 @@
   "undo": "Réckgängeg maachen",
   "you": "Dir",
   "all": "All",
-  "none": "Keng"
+  "none": "Keng",
+  "save": "Späicheren",
+  "confirm": "Bestätegen",
+  "send": "Schécken",
+  "reject": "Ofleenen",
+  "accept": "Unhuelen",
+  "take": "Huelen",
+  "keep": "Behalen"
 }

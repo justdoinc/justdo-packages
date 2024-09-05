@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Rebutjar la transferència de propietat de",
+  "owners_mgmt_accept_transfer_from": "Acceptar la transferència de propietat de",
+  "owners_mgmt_cancel_transfer_to": "Cancel·lar la transferència de propietat a",
+  "owners_mgmt_loading": "Carregant...",
+  "owners_mgmt_transfer_ownership_to": "Transferir la propietat a...",
+  "owners_mgmt_task_only_visible_to_you": "Aquesta tasca només és visible per a tu",
+  "owners_mgmt_take_ownership_from_removed_owner": "Prendre la propietat del propietari eliminat",
+  "owners_mgmt_take_ownership_from": "Prendre la propietat de",
+  "owners_mgmt_edit_task_members": "Editar els membres de la tasca",
+  "owners_mgmt_share_task": "Compartir tasca",
+  "owners_mgmt_leave_a_reject_message": "Deixar un missatge de rebuig",
+  "owners_mgmt_transfer_child_tasks_too": "Transferir també la propietat de __count__ subtasca?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Transferir també la propietat de __count__ subtasques?",
+  "owners_mgmt_transfer_child_tasks_done": "S'ha processat la transferència de propietat de __count__ subtasca.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "S'ha processat la transferència de propietat de __count__ subtasques.",
+  "owners_mgmt_transfer": "Transferir"
+}

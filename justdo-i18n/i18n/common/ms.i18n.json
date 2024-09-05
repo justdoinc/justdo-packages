@@ -29,7 +29,7 @@
   "main_page_description": "Perkasakan pasukan anda dengan JustDo, penyelesaian pengurusan projek yang selamat dan boleh dikembangkan. Platform sumber terbuka kami menyediakan ketelusan dan penyesuaian, dengan carta Gantt, papan Kanban, dan banyak lagi yang berkuasa.",
   "edit": "Sunting",
   "search": "Cari",
-  "add_btn_label": "TAMBAH",
+  "add": "Tambah",
   "updated_with_time": "Dikemaskini __time__",
   "stop": "Henti",
   "generate": "Jana",
@@ -37,5 +37,12 @@
   "undo": "Batal",
   "you": "anda",
   "all": "Semua",
-  "none": "Tiada"
+  "none": "Tiada",
+  "save": "Simpan",
+  "confirm": "Sahkan",
+  "send": "Hantar",
+  "reject": "Tolak",
+  "accept": "Terima",
+  "take": "Ambil",
+  "keep": "Simpan"
 }

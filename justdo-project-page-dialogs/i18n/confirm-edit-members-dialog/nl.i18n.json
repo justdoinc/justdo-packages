@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Deze bewerking duurt ongeveer <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "Deze bewerking duurt maximaal <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "De bewerking beïnvloedt meer dan <b>__count__</b> records en zal daarom enige tijd in beslag nemen. U kunt de voortgang volgen in het venster voor het bewerken van leden.",
+  "confirm_edit_member_dialog_bulk_remove_members": "U staat op het punt <b>__members_to_remove__</b> te verwijderen uit <b>__count__</b> taak<br>Als gevolg hiervan wordt u de eigenaar van alle taken die eigendom waren van deze gebruikers.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "U staat op het punt <b>__members_to_remove__</b> te verwijderen uit <b>__count__</b> taken<br>Als gevolg hiervan wordt u de eigenaar van alle taken die eigendom waren van deze gebruikers.",
+  "confirm_edit_member_dialog_bulk_add_members": "U staat op het punt toegang te verlenen tot <b>__count__</b> taak aan: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "U staat op het punt toegang te verlenen tot <b>__count__</b> taken aan: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ en nog een gebruiker",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ en nog __count__ andere gebruikers"
+}

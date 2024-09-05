@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Tolak transfer kepemilikan dari",
+  "owners_mgmt_accept_transfer_from": "Terima transfer kepemilikan dari",
+  "owners_mgmt_cancel_transfer_to": "Batalkan transfer kepemilikan ke",
+  "owners_mgmt_loading": "Memuat...",
+  "owners_mgmt_transfer_ownership_to": "Transfer kepemilikan ke...",
+  "owners_mgmt_task_only_visible_to_you": "Tugas ini hanya terlihat oleh Anda",
+  "owners_mgmt_take_ownership_from_removed_owner": "Ambil kepemilikan dari pemilik yang dihapus",
+  "owners_mgmt_take_ownership_from": "Ambil kepemilikan dari",
+  "owners_mgmt_edit_task_members": "Edit Anggota Tugas",
+  "owners_mgmt_share_task": "Bagikan Tugas",
+  "owners_mgmt_leave_a_reject_message": "Tinggalkan pesan penolakan",
+  "owners_mgmt_transfer_child_tasks_too": "Transfer kepemilikan __count__ sub-tugas juga?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Transfer kepemilikan __count__ sub-tugas juga?",
+  "owners_mgmt_transfer_child_tasks_done": "Transfer kepemilikan __count__ sub-tugas diproses.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Transfer kepemilikan __count__ sub-tugas diproses.",
+  "owners_mgmt_transfer": "Transfer"
+}

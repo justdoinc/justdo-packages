@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Avslå overføring av eierskap fra",
+  "owners_mgmt_accept_transfer_from": "Godta overføring av eierskap fra",
+  "owners_mgmt_cancel_transfer_to": "Avbryt overføring av eierskap til",
+  "owners_mgmt_loading": "Laster...",
+  "owners_mgmt_transfer_ownership_to": "Overfør eierskap til...",
+  "owners_mgmt_task_only_visible_to_you": "Denne oppgaven er kun synlig for deg",
+  "owners_mgmt_take_ownership_from_removed_owner": "Ta eierskap fra fjernet eier",
+  "owners_mgmt_take_ownership_from": "Ta eierskap fra",
+  "owners_mgmt_edit_task_members": "Rediger oppgavemedlemmer",
+  "owners_mgmt_share_task": "Del oppgave",
+  "owners_mgmt_leave_a_reject_message": "Legg igjen en avslagsmelding",
+  "owners_mgmt_transfer_child_tasks_too": "Overfør også eierskap av __count__ underoppgave?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Overfør også eierskap av __count__ underoppgaver?",
+  "owners_mgmt_transfer_child_tasks_done": "Overføring av eierskap for __count__ underoppgave er utført.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Overføring av eierskap for __count__ underoppgaver er utført.",
+  "owners_mgmt_transfer": "Overfør"
+}

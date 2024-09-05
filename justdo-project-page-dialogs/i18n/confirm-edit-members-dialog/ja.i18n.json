@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "この操作には約<u>__min_time_to_process__</u>かかります",
+  "confirm_edit_member_dialog_max_time_to_process": "この操作には最大<u>__max_time_to_process__</u>かかります",
+  "confirm_edit_member_dialog_batch_process_msg": "操作が<b>__count__</b>件以上のレコードに影響するため、時間がかかります。メンバー編集ウィンドウで進捗状況を確認できます。",
+  "confirm_edit_member_dialog_bulk_remove_members": "<b>__count__</b>件のタスクから<b>__members_to_remove__</b>を削除しようとしています。<br>その結果、これらのユーザーが所有していたすべてのタスクのオーナーになります。",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "<b>__count__</b>件のタスクから<b>__members_to_remove__</b>を削除しようとしています。<br>その結果、これらのユーザーが所有していたすべてのタスクのオーナーになります。",
+  "confirm_edit_member_dialog_bulk_add_members": "<b>__count__</b>件のタスクへのアクセス権を<b>__members_to_add__</b>に付与しようとしています。",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "<b>__count__</b>件のタスクへのアクセス権を<b>__members_to_add__</b>に付与しようとしています。",
+  "confirm_edit_member_dialog_and_other_users": "__users__ともう1人のユーザー",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__とその他__count__人のユーザー"
+}

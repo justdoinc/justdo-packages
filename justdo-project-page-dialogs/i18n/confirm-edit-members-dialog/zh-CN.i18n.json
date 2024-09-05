@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "此操作将耗时约<u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "此操作最多需要<u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "操作影响超过<b>__count__</b>条记录，因此需要一些时间。您可以在成员编辑窗口中跟踪其进度。",
+  "confirm_edit_member_dialog_bulk_remove_members": "您即将从<b>__count__</b>个任务中移除<b>__members_to_remove__</b>。<br>因此，这些用户拥有的所有任务将转由您来负责。",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "您即将从<b>__count__</b>个任务中移除<b>__members_to_remove__</b>。<br>因此，这些用户拥有的所有任务将转由您来负责。",
+  "confirm_edit_member_dialog_bulk_add_members": "您即将授予<b>__members_to_add__</b>访问<b>__count__</b>个任务的权限。",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "您即将授予<b>__members_to_add__</b>访问<b>__count__</b>个任务的权限。",
+  "confirm_edit_member_dialog_and_other_users": "__users__和另一位用户",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__和另外__count__位用户"
+}

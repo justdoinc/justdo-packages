@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "உரிமை மாற்றத்தை நிராகரி",
+  "owners_mgmt_accept_transfer_from": "உரிமை மாற்றத்தை ஏற்றுக்கொள்",
+  "owners_mgmt_cancel_transfer_to": "உரிமை மாற்றத்தை ரத்து செய்",
+  "owners_mgmt_loading": "ஏற்றுகிறது...",
+  "owners_mgmt_transfer_ownership_to": "உரிமையை மாற்றுக...",
+  "owners_mgmt_task_only_visible_to_you": "இந்த பணி உங்களுக்கு மட்டுமே தெரியும்",
+  "owners_mgmt_take_ownership_from_removed_owner": "நீக்கப்பட்ட உரிமையாளரிடமிருந்து உரிமையை எடு",
+  "owners_mgmt_take_ownership_from": "உரிமையை எடு",
+  "owners_mgmt_edit_task_members": "பணி உறுப்பினர்களைத் திருத்து",
+  "owners_mgmt_share_task": "பணியைப் பகிர்",
+  "owners_mgmt_leave_a_reject_message": "நிராகரிப்பு செய்தியை விடு",
+  "owners_mgmt_transfer_child_tasks_too": "__count__ துணைப்பணியின் உரிமையையும் மாற்றவா?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "__count__ துணைப்பணிகளின் உரிமையையும் மாற்றவா?",
+  "owners_mgmt_transfer_child_tasks_done": "__count__ துணைப்பணியின் உரிமை மாற்றம் செயலாக்கப்பட்டது.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "__count__ துணைப்பணிகளின் உரிமை மாற்றம் செயலாக்கப்பட்டது.",
+  "owners_mgmt_transfer": "மாற்று"
+}

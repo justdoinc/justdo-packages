@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Reject ownership transfer from",
+  "owners_mgmt_accept_transfer_from": "Accept ownership transfer from",
+  "owners_mgmt_cancel_transfer_to": "Cancel ownership transfer to",
+  "owners_mgmt_loading": "Loading...",
+  "owners_mgmt_transfer_ownership_to": "Transfer ownership to...",
+  "owners_mgmt_task_only_visible_to_you": "This task is only visible to you",
+  "owners_mgmt_take_ownership_from_removed_owner": "Take ownership from removed owner",
+  "owners_mgmt_take_ownership_from": "Take ownership from",
+  "owners_mgmt_edit_task_members": "Edit Task Members",
+  "owners_mgmt_share_task": "Share Task",
+  "owners_mgmt_leave_a_reject_message": "Leave a reject message",
+  "owners_mgmt_transfer_child_tasks_too": "Transfer ownership of __count__ child-task as well?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Transfer ownership of __count__ child-tasks as well?",
+  "owners_mgmt_transfer_child_tasks_done": "Transfer ownership of __count__ child-task processed.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Transfer ownership of __count__ child-tasks processed.",
+  "owners_mgmt_transfer": "Transfer"
+}

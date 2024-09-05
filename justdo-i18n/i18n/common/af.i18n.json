@@ -29,7 +29,7 @@
   "main_page_description": "Bemagtig jou span met JustDo, die veilige en uitbreibare projekbestuuroplossing. Ons bron-beskikbare platform bied deursigtigheid en aanpasbaarheid, met kragtige Gantt-kaarte, Kanban-borde (Kanban boards), en meer.",
   "edit": "Wysig",
   "search": "Soek",
-  "add_btn_label": "VOEG BY",
+  "add": "Voeg by",
   "updated_with_time": "Opgedateer __time__",
   "stop": "Stop",
   "generate": "Genereer",
@@ -37,5 +37,12 @@
   "undo": "Ontdoen",
   "you": "jy",
   "all": "Alles",
-  "none": "Geen"
+  "none": "Geen",
+  "save": "Stoor",
+  "confirm": "Bevestig",
+  "send": "Stuur",
+  "reject": "Verwerp",
+  "accept": "Aanvaar",
+  "take": "Neem",
+  "keep": "Behou"
 }

@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "இந்த செயல்பாடு சுமார் <u>__min_time_to_process__</u> ஆகும்",
+  "confirm_edit_member_dialog_max_time_to_process": "இந்த செயல்பாடு அதிகபட்சமாக <u>__max_time_to_process__</u> ஆகும்",
+  "confirm_edit_member_dialog_batch_process_msg": "செயல்பாடு <b>__count__</b>க்கும் அதிகமான பதிவுகளை பாதிக்கிறது, எனவே சிறிது நேரம் எடுக்கும். உறுப்பினர்கள் திருத்த சாளரத்தில் அதன் முன்னேற்றத்தை நீங்கள் கண்காணிக்கலாம்.",
+  "confirm_edit_member_dialog_bulk_remove_members": "நீங்கள் <b>__count__</b> பணியிலிருந்து <b>__members_to_remove__</b> ஐ நீக்க உள்ளீர்கள்<br>இதன் விளைவாக, இந்த பயனர்களுக்குச் சொந்தமான அனைத்து பணிகளுக்கும் நீங்கள் உரிமையாளராக மாறுவீர்கள்.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "நீங்கள் <b>__count__</b> பணிகளிலிருந்து <b>__members_to_remove__</b> ஐ நீக்க உள்ளீர்கள்<br>இதன் விளைவாக, இந்த பயனர்களுக்குச் சொந்தமான அனைத்து பணிகளுக்கும் நீங்கள் உரிமையாளராக மாறுவீர்கள்.",
+  "confirm_edit_member_dialog_bulk_add_members": "நீங்கள் <b>__count__</b> பணிக்கு அணுகல் வழங்க உள்ளீர்கள்: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "நீங்கள் <b>__count__</b> பணிகளுக்கு அணுகல் வழங்க உள்ளீர்கள்: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ மற்றும் மற்றொரு பயனர்",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ மற்றும் மற்ற __count__ பயனர்கள்"
+}

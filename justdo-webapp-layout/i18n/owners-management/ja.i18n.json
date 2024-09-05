@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "所有権移転を拒否する",
+  "owners_mgmt_accept_transfer_from": "所有権移転を受け入れる",
+  "owners_mgmt_cancel_transfer_to": "所有権移転をキャンセルする",
+  "owners_mgmt_loading": "読み込み中...",
+  "owners_mgmt_transfer_ownership_to": "所有権を移転する...",
+  "owners_mgmt_task_only_visible_to_you": "このタスクはあなたにのみ表示されます",
+  "owners_mgmt_take_ownership_from_removed_owner": "削除された所有者から所有権を取得する",
+  "owners_mgmt_take_ownership_from": "所有権を取得する",
+  "owners_mgmt_edit_task_members": "タスクメンバーを編集",
+  "owners_mgmt_share_task": "タスクを共有",
+  "owners_mgmt_leave_a_reject_message": "拒否メッセージを残す",
+  "owners_mgmt_transfer_child_tasks_too": "__count__個の子タスクの所有権も移転しますか？",
+  "owners_mgmt_transfer_child_tasks_too_plural": "__count__個の子タスクの所有権も移転しますか？",
+  "owners_mgmt_transfer_child_tasks_done": "__count__個の子タスクの所有権移転が処理されました。",
+  "owners_mgmt_transfer_child_tasks_done_plural": "__count__個の子タスクの所有権移転が処理されました。",
+  "owners_mgmt_transfer": "移転"
+}

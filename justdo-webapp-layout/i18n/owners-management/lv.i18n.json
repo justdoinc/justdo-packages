@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Noraidīt īpašumtiesību nodošanu no",
+  "owners_mgmt_accept_transfer_from": "Pieņemt īpašumtiesību nodošanu no",
+  "owners_mgmt_cancel_transfer_to": "Atcelt īpašumtiesību nodošanu",
+  "owners_mgmt_loading": "Ielāde...",
+  "owners_mgmt_transfer_ownership_to": "Nodot īpašumtiesības...",
+  "owners_mgmt_task_only_visible_to_you": "Šis uzdevums ir redzams tikai jums",
+  "owners_mgmt_take_ownership_from_removed_owner": "Pārņemt īpašumtiesības no noņemtā īpašnieka",
+  "owners_mgmt_take_ownership_from": "Pārņemt īpašumtiesības no",
+  "owners_mgmt_edit_task_members": "Rediģēt uzdevuma dalībniekus",
+  "owners_mgmt_share_task": "Koplietot uzdevumu",
+  "owners_mgmt_leave_a_reject_message": "Atstāt noraidījuma ziņojumu",
+  "owners_mgmt_transfer_child_tasks_too": "Nodot īpašumtiesības arī __count__ apakšuzdevumam?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Nodot īpašumtiesības arī __count__ apakšuzdevumiem?",
+  "owners_mgmt_transfer_child_tasks_done": "__count__ apakšuzdevuma īpašumtiesību nodošana pabeigta.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "__count__ apakšuzdevumu īpašumtiesību nodošana pabeigta.",
+  "owners_mgmt_transfer": "Nodot"
+}

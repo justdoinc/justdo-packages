@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Այս գործողությունը կտևի մոտավորապես <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "Այս գործողությունը կտևի առավելագույնը <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "Գործողությունն ազդում է ավելի քան <b>__count__</b> գրառումների վրա և հետևաբար կտևի որոշ ժամանակ: Դուք կարող եք հետևել դրա ընթացքին անդամների խմբագրման պատուհանում:",
+  "confirm_edit_member_dialog_bulk_remove_members": "Դուք պատրաստվում եք հեռացնել <b>__members_to_remove__</b> <b>__count__</b> առաջադրանքից<br>Արդյունքում, դուք կդառնաք այս օգտատերերի բոլոր առաջադրանքների սեփականատերը:",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Դուք պատրաստվում եք հեռացնել <b>__members_to_remove__</b> <b>__count__</b> առաջադրանքներից<br>Արդյունքում, դուք կդառնաք այս օգտատերերի բոլոր առաջադրանքների սեփականատերը:",
+  "confirm_edit_member_dialog_bulk_add_members": "Դուք պատրաստվում եք տրամադրել մուտք <b>__count__</b> առաջադրանքին հետևյալ անձանց՝ <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Դուք պատրաստվում եք տրամադրել մուտք <b>__count__</b> առաջադրանքներին հետևյալ անձանց՝ <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ և ևս մեկ օգտատեր",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ և ևս __count__ օգտատերեր"
+}

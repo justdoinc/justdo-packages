@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "此操作將需要約<u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "此操作最多將需要<u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "操作影響超過<b>__count__</b>筆記錄，因此需要一段時間。您可以在成員編輯窗口中追蹤其進度。",
+  "confirm_edit_member_dialog_bulk_remove_members": "您即將從<b>__count__</b>個任務中移除<b>__members_to_remove__</b>。<br>因此，您將成為這些用戶所擁有的所有任務的新擁有者。",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "您即將從<b>__count__</b>個任務中移除<b>__members_to_remove__</b>。<br>因此，您將成為這些用戶所擁有的所有任務的新擁有者。",
+  "confirm_edit_member_dialog_bulk_add_members": "您即將授予<b>__members_to_add__</b>對<b>__count__</b>個任務的存取權限。",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "您即將授予<b>__members_to_add__</b>對<b>__count__</b>個任務的存取權限。",
+  "confirm_edit_member_dialog_and_other_users": "__users__和另一位用戶",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__和另外__count__位用戶"
+}

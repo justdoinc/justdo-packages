@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "การดำเนินการนี้จะใช้เวลาประมาณ <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "การดำเนินการนี้จะใช้เวลาสูงสุด <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "การดำเนินการมีผลกับระเบียนมากกว่า <b>__count__</b> รายการ จึงจะใช้เวลาสักครู่ คุณสามารถติดตามความคืบหน้าได้ในหน้าต่างแก้ไขสมาชิก",
+  "confirm_edit_member_dialog_bulk_remove_members": "คุณกำลังจะลบ <b>__members_to_remove__</b> ออกจาก <b>__count__</b> งาน<br>ผลลัพธ์คือ คุณจะกลายเป็นเจ้าของงานทั้งหมดที่เคยเป็นของผู้ใช้เหล่านี้",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "คุณกำลังจะลบ <b>__members_to_remove__</b> ออกจาก <b>__count__</b> งาน<br>ผลลัพธ์คือ คุณจะกลายเป็นเจ้าของงานทั้งหมดที่เคยเป็นของผู้ใช้เหล่านี้",
+  "confirm_edit_member_dialog_bulk_add_members": "คุณกำลังจะให้สิทธิ์การเข้าถึง <b>__count__</b> งานแก่: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "คุณกำลังจะให้สิทธิ์การเข้าถึง <b>__count__</b> งานแก่: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ และผู้ใช้อีกหนึ่งคน",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ และผู้ใช้อีก __count__ คน"
+}

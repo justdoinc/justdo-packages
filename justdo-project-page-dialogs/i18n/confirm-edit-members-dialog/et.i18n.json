@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "See toiming võtab umbes <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "See toiming võtab kuni <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "Toiming mõjutab rohkem kui <b>__count__</b> kirjet ja võtab seetõttu aega. Saate jälgida selle edenemist liikmete redigeerimise aknas.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Olete eemaldamas <b>__members_to_remove__</b> <b>__count__</b> ülesandest<br>Selle tulemusena saab teist nende kasutajate omatud ülesannete omanik.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Olete eemaldamas <b>__members_to_remove__</b> <b>__count__</b> ülesandest<br>Selle tulemusena saab teist nende kasutajate omatud ülesannete omanik.",
+  "confirm_edit_member_dialog_bulk_add_members": "Olete andmas juurdepääsu <b>__count__</b> ülesandele kasutajatele: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Olete andmas juurdepääsu <b>__count__</b> ülesandele kasutajatele: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ ja veel üks kasutaja",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ ja veel __count__ kasutajat"
+}

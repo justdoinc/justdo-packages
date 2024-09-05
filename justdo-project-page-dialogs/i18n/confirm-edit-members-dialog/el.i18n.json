@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Αυτή η λειτουργία θα διαρκέσει περίπου <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "Αυτή η λειτουργία θα διαρκέσει έως και <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "Η λειτουργία επηρεάζει περισσότερες από <b>__count__</b> εγγραφές και επομένως θα διαρκέσει λίγο. Μπορείτε να παρακολουθήσετε την πρόοδό της στο παράθυρο επεξεργασίας μελών.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Πρόκειται να αφαιρέσετε <b>__members_to_remove__</b> από <b>__count__</b> εργασία<br>Ως αποτέλεσμα, θα γίνετε ο ιδιοκτήτης όλων των εργασιών που ανήκουν σε αυτούς τους χρήστες.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Πρόκειται να αφαιρέσετε <b>__members_to_remove__</b> από <b>__count__</b> εργασίες<br>Ως αποτέλεσμα, θα γίνετε ο ιδιοκτήτης όλων των εργασιών που ανήκουν σε αυτούς τους χρήστες.",
+  "confirm_edit_member_dialog_bulk_add_members": "Πρόκειται να δώσετε πρόσβαση σε <b>__count__</b> εργασία στους: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Πρόκειται να δώσετε πρόσβαση σε <b>__count__</b> εργασίες στους: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ και ένας άλλος χρήστης",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ και άλλοι __count__ χρήστες"
+}

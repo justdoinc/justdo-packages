@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "Verander E-pos",
+  "edit_email_dialog_confirm_btn_label": "Verander E-pos",
+  "edit_email_dialog_current_email": "Huidige E-pos",
+  "edit_email_dialog_new_email": "Nuwe E-pos",
+  "edit_email_dialog_password": "Wagwoord",
+  "edit_email_dialog_forgot_password": "Het jy jou wagwoord vergeet?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "Voer jou wagwoord in om jou e-pos te verander",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "Is jy seker jy wil jou rekening se e-pos verander na: <b>__email__</b>?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>'n E-pos is gestuur met instruksies om jou wagwoord te herstel</b></h4><p>As jy nie die e-pos kan vind nie, kyk asseblief in jou strooipos-lêer.</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "Jy moet 'n wagwoord stel om jou e-pos te kan verander"
+}

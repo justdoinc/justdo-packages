@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "E-Mail änneren",
+  "edit_email_dialog_confirm_btn_label": "E-Mail änneren",
+  "edit_email_dialog_current_email": "Aktuell E-Mail",
+  "edit_email_dialog_new_email": "Nei E-Mail",
+  "edit_email_dialog_password": "Passwuert",
+  "edit_email_dialog_forgot_password": "Passwuert vergiess?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "Gitt Äert Passwuert an fir Är E-Mail z'änneren",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "Sidd Dir sécher, dass Dir Är Konto-E-Mail op <b>__email__</b> ännere wëllt?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>Eng E-Mail mat Uweisunge fir d'Passwuert zeréckzesetzen gouf geschéckt</b></h4><p>Wann Dir d'E-Mail net fannt, kuckt w.e.g. an Ärem Spam-Dossier.</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "Dir musst e Passwuert setzen fir Är E-Mail z'änneren"
+}

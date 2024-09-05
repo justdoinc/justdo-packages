@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Aquesta operació trigarà al voltant de <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "Aquesta operació trigarà fins a <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "L'operació afecta més de <b>__count__</b> registres i, per tant, trigarà una estona. Podeu fer un seguiment del seu progrés a la finestra d'edició de membres.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Esteu a punt d'eliminar <b>__members_to_remove__</b> de <b>__count__</b> tasca<br>Com a resultat, us convertireu en el propietari de totes les tasques que pertanyen a aquests usuaris.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Esteu a punt d'eliminar <b>__members_to_remove__</b> de <b>__count__</b> tasques<br>Com a resultat, us convertireu en el propietari de totes les tasques que pertanyen a aquests usuaris.",
+  "confirm_edit_member_dialog_bulk_add_members": "Esteu a punt de concedir accés a <b>__count__</b> tasca a: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Esteu a punt de concedir accés a <b>__count__</b> tasques a: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ i un altre usuari",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ i __count__ usuaris més"
+}

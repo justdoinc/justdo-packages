@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Operasi ini akan mengambil masa sekitar <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "Operasi ini akan mengambil masa sehingga <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "Operasi ini melibatkan lebih daripada <b>__count__</b> rekod dan akan mengambil masa. Anda boleh menjejaki kemajuannya di tetingkap edit ahli.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Anda akan menyingkirkan <b>__members_to_remove__</b> daripada <b>__count__</b> tugas<br>Hasilnya, anda akan menjadi pemilik semua tugas yang dimiliki oleh pengguna-pengguna ini.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Anda akan menyingkirkan <b>__members_to_remove__</b> daripada <b>__count__</b> tugas<br>Hasilnya, anda akan menjadi pemilik semua tugas yang dimiliki oleh pengguna-pengguna ini.",
+  "confirm_edit_member_dialog_bulk_add_members": "Anda akan memberi akses kepada <b>__count__</b> tugas kepada: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Anda akan memberi akses kepada <b>__count__</b> tugas kepada: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ dan seorang pengguna lain",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ dan __count__ pengguna lain"
+}

@@ -1,0 +1,13 @@
+{
+  "themes_selector_config_title": "בוחר ערכות נושא",
+  "themes_selector_label": "ערכת נושא של JustDo",
+  "themes_selector_default": "כחול כהה מלא (ברירת מחדל)",
+  "themes_selector_solid_blue": "כחול מלא",
+  "themes_selector_solid_dark": "כהה מלא",
+  "themes_selector_solid_dark_green": "ירוק כהה מלא",
+  "themes_selector_solid_purple": "סגול מלא",
+  "themes_selector_solid": "ירוק מלא",
+  "themes_selector_solid_orange": "כתום מלא",
+  "themes_selector_classic": "קלאסי",
+  "themes_selector_unicorn": "חד-קרן"
+}

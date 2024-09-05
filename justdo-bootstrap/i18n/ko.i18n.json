@@ -1,0 +1,13 @@
+{
+  "themes_selector_config_title": "테마 선택기",
+  "themes_selector_label": "JustDo 테마",
+  "themes_selector_default": "솔리드 다크 블루 (기본값)",
+  "themes_selector_solid_blue": "솔리드 블루",
+  "themes_selector_solid_dark": "솔리드 다크",
+  "themes_selector_solid_dark_green": "솔리드 다크 그린",
+  "themes_selector_solid_purple": "솔리드 퍼플",
+  "themes_selector_solid": "솔리드 그린",
+  "themes_selector_solid_orange": "솔리드 오렌지",
+  "themes_selector_classic": "클래식",
+  "themes_selector_unicorn": "유니콘"
+}

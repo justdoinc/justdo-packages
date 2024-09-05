@@ -1,0 +1,13 @@
+{
+  "themes_selector_config_title": "Selector de temes",
+  "themes_selector_label": "Tema de JustDo",
+  "themes_selector_default": "Blau fosc sòlid (predeterminat)",
+  "themes_selector_solid_blue": "Blau sòlid",
+  "themes_selector_solid_dark": "Fosc sòlid",
+  "themes_selector_solid_dark_green": "Verd fosc sòlid",
+  "themes_selector_solid_purple": "Lila sòlid",
+  "themes_selector_solid": "Verd sòlid",
+  "themes_selector_solid_orange": "Taronja sòlid",
+  "themes_selector_classic": "Clàssic",
+  "themes_selector_unicorn": "Unicorn"
+}

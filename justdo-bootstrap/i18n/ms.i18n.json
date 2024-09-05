@@ -1,0 +1,13 @@
+{
+  "themes_selector_config_title": "Pemilih Tema",
+  "themes_selector_label": "Tema JustDo",
+  "themes_selector_default": "Biru Gelap Pekat (lalai)",
+  "themes_selector_solid_blue": "Biru Pekat",
+  "themes_selector_solid_dark": "Gelap Pekat",
+  "themes_selector_solid_dark_green": "Hijau Gelap Pekat",
+  "themes_selector_solid_purple": "Ungu Pekat",
+  "themes_selector_solid": "Hijau Pekat",
+  "themes_selector_solid_orange": "Oren Pekat",
+  "themes_selector_classic": "Klasik",
+  "themes_selector_unicorn": "Unicorn"
+}

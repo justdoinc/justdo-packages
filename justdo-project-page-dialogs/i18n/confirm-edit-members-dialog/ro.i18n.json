@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Această operațiune va dura aproximativ <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "Această operațiune va dura până la <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "Operațiunea afectează mai mult de <b>__count__</b> înregistrări și, prin urmare, va dura ceva timp. Puteți urmări progresul în fereastra de editare a membrilor.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Sunteți pe cale să eliminați <b>__members_to_remove__</b> din <b>__count__</b> sarcină<br>Ca urmare, veți deveni proprietarul tuturor sarcinilor deținute de acești utilizatori.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Sunteți pe cale să eliminați <b>__members_to_remove__</b> din <b>__count__</b> sarcini<br>Ca urmare, veți deveni proprietarul tuturor sarcinilor deținute de acești utilizatori.",
+  "confirm_edit_member_dialog_bulk_add_members": "Sunteți pe cale să acordați acces la <b>__count__</b> sarcină pentru: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Sunteți pe cale să acordați acces la <b>__count__</b> sarcini pentru: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ și încă un utilizator",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ și alți __count__ utilizatori"
+}

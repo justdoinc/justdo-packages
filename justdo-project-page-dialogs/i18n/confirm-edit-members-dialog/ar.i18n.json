@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "ستستغرق هذه العملية حوالي <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "ستستغرق هذه العملية ما يصل إلى <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "تؤثر العملية على أكثر من <b>__count__</b> سجل ولذلك ستستغرق بعض الوقت. يمكنك تتبع تقدمها في نافذة تحرير الأعضاء.",
+  "confirm_edit_member_dialog_bulk_remove_members": "أنت على وشك إزالة <b>__members_to_remove__</b> من <b>__count__</b> مهمة<br>ونتيجة لذلك، ستصبح مالكًا لجميع المهام المملوكة من قبل هؤلاء المستخدمين.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "أنت على وشك إزالة <b>__members_to_remove__</b> من <b>__count__</b> مهام<br>ونتيجة لذلك، ستصبح مالكًا لجميع المهام المملوكة من قبل هؤلاء المستخدمين.",
+  "confirm_edit_member_dialog_bulk_add_members": "أنت على وشك منح حق الوصول إلى <b>__count__</b> مهمة لـ: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "أنت على وشك منح حق الوصول إلى <b>__count__</b> مهام لـ: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ ومستخدم آخر",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ و __count__ مستخدمين آخرين"
+}

@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "የባለቤትነት ዝውውርን አትቀበል ከ",
+  "owners_mgmt_accept_transfer_from": "የባለቤትነት ዝውውርን ተቀበል ከ",
+  "owners_mgmt_cancel_transfer_to": "የባለቤትነት ዝውውርን ሰርዝ ወደ",
+  "owners_mgmt_loading": "በመጫን ላይ...",
+  "owners_mgmt_transfer_ownership_to": "ባለቤትነትን አስተላልፍ ወደ...",
+  "owners_mgmt_task_only_visible_to_you": "ይህ ተግባር ለእርስዎ ብቻ የሚታይ ነው",
+  "owners_mgmt_take_ownership_from_removed_owner": "ከተወገደው ባለቤት ባለቤትነትን ውሰድ",
+  "owners_mgmt_take_ownership_from": "ባለቤትነትን ውሰድ ከ",
+  "owners_mgmt_edit_task_members": "የተግባር አባላትን አርትዕ",
+  "owners_mgmt_share_task": "ተግባርን አጋራ",
+  "owners_mgmt_leave_a_reject_message": "የውድቅ መልዕክት ይተው",
+  "owners_mgmt_transfer_child_tasks_too": "የ__count__ ንዑስ-ተግባር ባለቤትነትንም ለማስተላለፍ?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "የ__count__ ንዑስ-ተግባራት ባለቤትነትንም ለማስተላለፍ?",
+  "owners_mgmt_transfer_child_tasks_done": "የ__count__ ንዑስ-ተግባር ባለቤትነት ዝውውር ተጠናቅቋል።",
+  "owners_mgmt_transfer_child_tasks_done_plural": "የ__count__ ንዑስ-ተግባራት ባለቤትነት ዝውውር ተጠናቅቋል።",
+  "owners_mgmt_transfer": "አስተላልፍ"
+}

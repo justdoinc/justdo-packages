@@ -29,7 +29,7 @@
   "main_page_description": "使用JustDo赋能你的团队，这是一个安全且可扩展的项目管理解决方案。我们的开放源代码平台提供透明度和定制化，具有强大的甘特图、看板等功能。",
   "edit": "编辑",
   "search": "搜索",
-  "add_btn_label": "添加",
+  "add": "添加",
   "updated_with_time": "__time__ 更新",
   "stop": "停止",
   "generate": "生成",
@@ -37,5 +37,12 @@
   "undo": "撤销",
   "you": "您",
   "all": "全部",
-  "none": "无"
+  "none": "无",
+  "save": "保存",
+  "confirm": "确认",
+  "send": "发送",
+  "reject": "拒绝",
+  "accept": "接受",
+  "take": "取用",
+  "keep": "保持"
 }

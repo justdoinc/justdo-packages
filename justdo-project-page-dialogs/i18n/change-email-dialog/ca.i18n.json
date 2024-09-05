@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "Canviar correu electrònic",
+  "edit_email_dialog_confirm_btn_label": "Canviar correu electrònic",
+  "edit_email_dialog_current_email": "Correu electrònic actual",
+  "edit_email_dialog_new_email": "Nou correu electrònic",
+  "edit_email_dialog_password": "Contrasenya",
+  "edit_email_dialog_forgot_password": "Has oblidat la contrasenya?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "Introdueix la teva contrasenya per canviar el correu electrònic",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "Estàs segur que vols canviar el correu electrònic del teu compte a: <b>__email__</b>?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>S'ha enviat un correu electrònic amb instruccions per restablir la contrasenya</b></h4><p>Si no pots trobar el correu, si us plau, comprova la carpeta de correu no desitjat.</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "Has d'establir una contrasenya per poder canviar el teu correu electrònic"
+}

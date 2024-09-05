@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "אָפּזאָגן אייגנטום איבערפירן פון",
+  "owners_mgmt_accept_transfer_from": "אָננעמען אייגנטום איבערפירן פון",
+  "owners_mgmt_cancel_transfer_to": "אַנולירן אייגנטום איבערפירן צו",
+  "owners_mgmt_loading": "לאָודינג...",
+  "owners_mgmt_transfer_ownership_to": "איבערפירן אייגנטום צו...",
+  "owners_mgmt_task_only_visible_to_you": "די אויפגאַבע איז נאר זעבאַר פֿאַר דיר",
+  "owners_mgmt_take_ownership_from_removed_owner": "נעמען אייגנטום פון אַוועקגענומענעם אייגנטימער",
+  "owners_mgmt_take_ownership_from": "נעמען אייגנטום פון",
+  "owners_mgmt_edit_task_members": "רעדאַקטירן אויפגאַבע מיטגלידער",
+  "owners_mgmt_share_task": "טיילן אויפגאַבע",
+  "owners_mgmt_leave_a_reject_message": "לאָזן אַ אָפּזאָג מעלדונג",
+  "owners_mgmt_transfer_child_tasks_too": "איבערפירן אייגנטום פון __count__ קינד-אויפגאַבע אויך?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "איבערפירן אייגנטום פון __count__ קינד-אויפגאַבעס אויך?",
+  "owners_mgmt_transfer_child_tasks_done": "איבערפירן אייגנטום פון __count__ קינד-אויפגאַבע פּראָצעסירט.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "איבערפירן אייגנטום פון __count__ קינד-אויפגאַבעס פּראָצעסירט.",
+  "owners_mgmt_transfer": "איבערפירן"
+}

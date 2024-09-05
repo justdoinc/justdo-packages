@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "E-mail wijzigen",
+  "edit_email_dialog_confirm_btn_label": "E-mail wijzigen",
+  "edit_email_dialog_current_email": "Huidig e-mailadres",
+  "edit_email_dialog_new_email": "Nieuw e-mailadres",
+  "edit_email_dialog_password": "Wachtwoord",
+  "edit_email_dialog_forgot_password": "Wachtwoord vergeten?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "Voer uw wachtwoord in om uw e-mailadres te wijzigen",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "Weet u zeker dat u het e-mailadres van uw account wilt wijzigen naar: <b>__email__</b>?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>Er is een e-mail verzonden met instructies voor het opnieuw instellen van uw wachtwoord</b></h4><p>Als u de e-mail niet kunt vinden, controleer dan uw spammap.</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "U moet een wachtwoord instellen om uw e-mailadres te kunnen wijzigen"
+}

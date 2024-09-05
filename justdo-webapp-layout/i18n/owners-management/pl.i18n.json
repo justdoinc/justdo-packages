@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Odrzuć przeniesienie własności od",
+  "owners_mgmt_accept_transfer_from": "Zaakceptuj przeniesienie własności od",
+  "owners_mgmt_cancel_transfer_to": "Anuluj przeniesienie własności do",
+  "owners_mgmt_loading": "Ładowanie...",
+  "owners_mgmt_transfer_ownership_to": "Przenieś własność do...",
+  "owners_mgmt_task_only_visible_to_you": "To zadanie jest widoczne tylko dla Ciebie",
+  "owners_mgmt_take_ownership_from_removed_owner": "Przejmij własność od usuniętego właściciela",
+  "owners_mgmt_take_ownership_from": "Przejmij własność od",
+  "owners_mgmt_edit_task_members": "Edytuj członków zadania",
+  "owners_mgmt_share_task": "Udostępnij zadanie",
+  "owners_mgmt_leave_a_reject_message": "Zostaw wiadomość o odrzuceniu",
+  "owners_mgmt_transfer_child_tasks_too": "Przenieść własność __count__ podzadania również?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Przenieść własność __count__ podzadań również?",
+  "owners_mgmt_transfer_child_tasks_done": "Przeniesiono własność __count__ podzadania.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Przeniesiono własność __count__ podzadań.",
+  "owners_mgmt_transfer": "Przenieś"
+}

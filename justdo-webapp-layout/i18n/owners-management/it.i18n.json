@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Rifiuta il trasferimento di proprietà da",
+  "owners_mgmt_accept_transfer_from": "Accetta il trasferimento di proprietà da",
+  "owners_mgmt_cancel_transfer_to": "Annulla il trasferimento di proprietà a",
+  "owners_mgmt_loading": "Caricamento...",
+  "owners_mgmt_transfer_ownership_to": "Trasferisci la proprietà a...",
+  "owners_mgmt_task_only_visible_to_you": "Questa attività è visibile solo a te",
+  "owners_mgmt_take_ownership_from_removed_owner": "Prendi la proprietà dal proprietario rimosso",
+  "owners_mgmt_take_ownership_from": "Prendi la proprietà da",
+  "owners_mgmt_edit_task_members": "Modifica i membri dell'attività",
+  "owners_mgmt_share_task": "Condividi attività",
+  "owners_mgmt_leave_a_reject_message": "Lascia un messaggio di rifiuto",
+  "owners_mgmt_transfer_child_tasks_too": "Trasferire anche la proprietà di __count__ sotto-attività?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Trasferire anche la proprietà di __count__ sotto-attività?",
+  "owners_mgmt_transfer_child_tasks_done": "Trasferimento della proprietà di __count__ sotto-attività elaborato.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Trasferimento della proprietà di __count__ sotto-attività elaborato.",
+  "owners_mgmt_transfer": "Trasferisci"
+}

@@ -29,7 +29,7 @@
   "main_page_description": "Ojačajte svoj tim sa JustDo, bezbednim i proširivim rešenjem za upravljanje projektima. Naša platforma sa dostupnim izvornim kodom pruža transparentnost i mogućnost prilagođavanja, sa moćnim Gantt dijagramima, Kanban tablama i još mnogo toga.",
   "edit": "Izmeni",
   "search": "Pretraži",
-  "add_btn_label": "DODAJ",
+  "add": "Додај",
   "updated_with_time": "Ažurirano __time__",
   "stop": "Zaustavi",
   "generate": "Generiši",
@@ -37,5 +37,12 @@
   "undo": "Poništi",
   "you": "vi",
   "all": "Sve",
-  "none": "Ništa"
+  "none": "Ništa",
+  "save": "Сачувај",
+  "confirm": "Потврди",
+  "send": "Пошаљи",
+  "reject": "Одбиј",
+  "accept": "Прихвати",
+  "take": "Преузми",
+  "keep": "Задржи"
 }

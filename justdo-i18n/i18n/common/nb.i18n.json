@@ -29,7 +29,7 @@
   "main_page_description": "Styrk teamet ditt med JustDo, den sikre og utvidbare prosjektstyringsløsningen. Vår kildekode-tilgjengelige plattform gir transparens og tilpasningsmuligheter, med kraftige Gantt-diagrammer, Kanban-tavler og mer.",
   "edit": "Rediger",
   "search": "Søk",
-  "add_btn_label": "LEGG TIL",
+  "add": "Legg til",
   "updated_with_time": "Oppdatert __time__",
   "stop": "Stopp",
   "generate": "Generer",
@@ -37,5 +37,12 @@
   "undo": "Angre",
   "you": "du",
   "all": "Alle",
-  "none": "Ingen"
+  "none": "Ingen",
+  "save": "Lagre",
+  "confirm": "Bekreft",
+  "send": "Send",
+  "reject": "Avvis",
+  "accept": "Godta",
+  "take": "Ta",
+  "keep": "Behold"
 }

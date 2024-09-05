@@ -29,7 +29,7 @@
   "main_page_description": "Tăng cường sức mạnh cho đội ngũ của bạn với JustDo, giải pháp quản lý dự án an toàn và mở rộng. Nền tảng mã nguồn công khai của chúng tôi cung cấp tính minh bạch và khả năng tùy chỉnh, với biểu đồ Gantt mạnh mẽ, bảng Kanban, và nhiều tính năng khác.",
   "edit": "Chỉnh sửa",
   "search": "Tìm kiếm",
-  "add_btn_label": "Thêm",
+  "add": "Thêm",
   "updated_with_time": "Đã cập nhật __time__",
   "stop": "Dừng",
   "generate": "Tạo",
@@ -37,5 +37,12 @@
   "undo": "Hoàn tác",
   "you": "bạn",
   "all": "Tất cả",
-  "none": "Không có"
+  "none": "Không có",
+  "save": "Lưu",
+  "confirm": "Xác nhận",
+  "send": "Gửi",
+  "reject": "Từ chối",
+  "accept": "Chấp nhận",
+  "take": "Lấy",
+  "keep": "Giữ"
 }

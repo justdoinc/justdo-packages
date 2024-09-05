@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Thao tác này sẽ mất khoảng <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "Thao tác này sẽ mất tối đa <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "Thao tác ảnh hưởng đến hơn <b>__count__</b> bản ghi và do đó sẽ mất một lúc. Bạn có thể theo dõi tiến trình trong cửa sổ chỉnh sửa thành viên.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Bạn sắp xóa <b>__members_to_remove__</b> khỏi <b>__count__</b> nhiệm vụ<br>Kết quả là bạn sẽ trở thành chủ sở hữu của tất cả các nhiệm vụ thuộc về những người dùng này.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Bạn sắp xóa <b>__members_to_remove__</b> khỏi <b>__count__</b> nhiệm vụ<br>Kết quả là bạn sẽ trở thành chủ sở hữu của tất cả các nhiệm vụ thuộc về những người dùng này.",
+  "confirm_edit_member_dialog_bulk_add_members": "Bạn sắp cấp quyền truy cập vào <b>__count__</b> nhiệm vụ cho: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Bạn sắp cấp quyền truy cập vào <b>__count__</b> nhiệm vụ cho: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ và một người dùng khác",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ và __count__ người dùng khác"
+}

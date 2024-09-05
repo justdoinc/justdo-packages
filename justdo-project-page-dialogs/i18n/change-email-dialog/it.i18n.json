@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "Modifica Email",
+  "edit_email_dialog_confirm_btn_label": "Modifica Email",
+  "edit_email_dialog_current_email": "Email Attuale",
+  "edit_email_dialog_new_email": "Nuova Email",
+  "edit_email_dialog_password": "Password",
+  "edit_email_dialog_forgot_password": "Hai dimenticato la password?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "Inserisci la tua password per modificare la tua email",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "Sei sicuro di voler cambiare l'email del tuo account in: <b>__email__</b>?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>È stata inviata un'email con le istruzioni per reimpostare la password</b></h4><p>Se non riesci a trovare l'email, controlla la cartella spam.</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "Devi impostare una password per poter modificare la tua email"
+}

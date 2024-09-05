@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "E-Mail-Adresse ändern",
+  "edit_email_dialog_confirm_btn_label": "E-Mail-Adresse ändern",
+  "edit_email_dialog_current_email": "Aktuelle E-Mail",
+  "edit_email_dialog_new_email": "Neue E-Mail",
+  "edit_email_dialog_password": "Passwort",
+  "edit_email_dialog_forgot_password": "Passwort vergessen?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "Geben Sie Ihr Passwort ein, um Ihre E-Mail-Adresse zu ändern",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "Sind Sie sicher, dass Sie die E-Mail-Adresse Ihres Kontos in <b>__email__</b> ändern möchten?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>Eine E-Mail mit Anweisungen zum Zurücksetzen des Passworts wurde gesendet</b></h4><p>Wenn Sie die E-Mail nicht finden können, überprüfen Sie bitte Ihren Spam-Ordner.</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "Sie müssen ein Passwort festlegen, um Ihre E-Mail-Adresse ändern zu können"
+}

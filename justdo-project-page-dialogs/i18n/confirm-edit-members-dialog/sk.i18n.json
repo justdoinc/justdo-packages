@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Táto operácia bude trvať približne <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "Táto operácia bude trvať maximálne <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "Operácia ovplyvňuje viac ako <b>__count__</b> záznamov, a preto bude trvať dlhšie. Jej priebeh môžete sledovať v okne úprav členov.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Chystáte sa odstrániť <b>__members_to_remove__</b> z <b>__count__</b> úlohy<br>V dôsledku toho sa stanete vlastníkom všetkých úloh, ktoré vlastnili títo používatelia.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Chystáte sa odstrániť <b>__members_to_remove__</b> z <b>__count__</b> úloh<br>V dôsledku toho sa stanete vlastníkom všetkých úloh, ktoré vlastnili títo používatelia.",
+  "confirm_edit_member_dialog_bulk_add_members": "Chystáte sa udeliť prístup k <b>__count__</b> úlohe pre: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Chystáte sa udeliť prístup k <b>__count__</b> úlohám pre: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ a ďalší používateľ",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ a ďalší __count__ používatelia"
+}

@@ -1,0 +1,13 @@
+{
+  "themes_selector_config_title": "Teemavalitsin",
+  "themes_selector_label": "JustDo-teema",
+  "themes_selector_default": "Yhtenäinen tummansininen (oletus)",
+  "themes_selector_solid_blue": "Yhtenäinen sininen",
+  "themes_selector_solid_dark": "Yhtenäinen tumma",
+  "themes_selector_solid_dark_green": "Yhtenäinen tummanvihreä",
+  "themes_selector_solid_purple": "Yhtenäinen violetti",
+  "themes_selector_solid": "Yhtenäinen vihreä",
+  "themes_selector_solid_orange": "Yhtenäinen oranssi",
+  "themes_selector_classic": "Klassinen",
+  "themes_selector_unicorn": "Yksisarvinen"
+}

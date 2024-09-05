@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Operesheni hii itachukua takribani <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "Operesheni hii itachukua hadi <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "Operesheni inaathiri zaidi ya rekodi <b>__count__</b> na kwa hivyo itachukua muda. Unaweza kufuatilia maendeleo yake katika dirisha la kuhariri wanachama.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Unakaribia kuondoa <b>__members_to_remove__</b> kutoka kwa kazi <b>__count__</b><br>Kama matokeo, utakuwa mmiliki wa kazi zote zinazomilikiwa na watumiaji hawa.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Unakaribia kuondoa <b>__members_to_remove__</b> kutoka kwa kazi <b>__count__</b><br>Kama matokeo, utakuwa mmiliki wa kazi zote zinazomilikiwa na watumiaji hawa.",
+  "confirm_edit_member_dialog_bulk_add_members": "Unakaribia kutoa ruhusa ya kufikia kazi <b>__count__</b> kwa: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Unakaribia kutoa ruhusa ya kufikia kazi <b>__count__</b> kwa: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ na mtumiaji mwingine mmoja",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ na watumiaji wengine __count__"
+}

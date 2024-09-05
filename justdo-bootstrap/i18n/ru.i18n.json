@@ -1,0 +1,13 @@
+{
+  "themes_selector_config_title": "Выбор тем",
+  "themes_selector_label": "Тема JustDo",
+  "themes_selector_default": "Сплошной тёмно-синий (по умолчанию)",
+  "themes_selector_solid_blue": "Сплошной синий",
+  "themes_selector_solid_dark": "Сплошной тёмный",
+  "themes_selector_solid_dark_green": "Сплошной тёмно-зелёный",
+  "themes_selector_solid_purple": "Сплошной фиолетовый",
+  "themes_selector_solid": "Сплошной зелёный",
+  "themes_selector_solid_orange": "Сплошной оранжевый",
+  "themes_selector_classic": "Классический",
+  "themes_selector_unicorn": "Единорог"
+}

@@ -29,7 +29,7 @@
   "main_page_description": "Vahvista tiimiäsi JustDo:lla, turvallisella ja laajennettavalla projektinhallintaratkaisulla. Lähdekoodi-saatavilla oleva alustamme tarjoaa läpinäkyvyyttä ja mukautettavuutta, tehokkaat Gantt-kaaviot, Kanban-taulut ja paljon muuta.",
   "edit": "Muokkaa",
   "search": "Hae",
-  "add_btn_label": "LISÄÄ",
+  "add": "Lisää",
   "updated_with_time": "Päivitetty __time__",
   "stop": "Lopeta",
   "generate": "Luo",
@@ -37,5 +37,12 @@
   "undo": "Kumoa",
   "you": "sinä",
   "all": "Kaikki",
-  "none": "Ei mitään"
+  "none": "Ei mitään",
+  "save": "Tallenna",
+  "confirm": "Vahvista",
+  "send": "Lähetä",
+  "reject": "Hylkää",
+  "accept": "Hyväksy",
+  "take": "Ota",
+  "keep": "Säilytä"
 }

@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Ez a művelet körülbelül <u>__min_time_to_process__</u> időt vesz igénybe",
+  "confirm_edit_member_dialog_max_time_to_process": "Ez a művelet legfeljebb <u>__max_time_to_process__</u> időt vesz igénybe",
+  "confirm_edit_member_dialog_batch_process_msg": "A művelet több mint <b>__count__</b> rekordot érint, ezért időbe telik. A folyamatot nyomon követheti a tagok szerkesztési ablakában.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Ön <b>__members_to_remove__</b> tagot készül eltávolítani <b>__count__</b> feladatból.<br>Ennek eredményeként Ön lesz az összes olyan feladat tulajdonosa, amelyek ezekhez a felhasználókhoz tartoztak.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Ön <b>__members_to_remove__</b> tagot készül eltávolítani <b>__count__</b> feladatból.<br>Ennek eredményeként Ön lesz az összes olyan feladat tulajdonosa, amelyek ezekhez a felhasználókhoz tartoztak.",
+  "confirm_edit_member_dialog_bulk_add_members": "Ön hozzáférést készül adni <b>__count__</b> feladathoz a következő felhasználó(k)nak: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Ön hozzáférést készül adni <b>__count__</b> feladathoz a következő felhasználó(k)nak: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ és még egy felhasználó",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ és további __count__ felhasználó"
+}

@@ -1,0 +1,13 @@
+{
+  "themes_selector_config_title": "Zgjedhësi i Temave",
+  "themes_selector_label": "Tema e JustDo",
+  "themes_selector_default": "Blu e Errët e Plotë (parazgjedhur)",
+  "themes_selector_solid_blue": "Blu e Plotë",
+  "themes_selector_solid_dark": "E Errët e Plotë",
+  "themes_selector_solid_dark_green": "E Gjelbër e Errët e Plotë",
+  "themes_selector_solid_purple": "Vjollcë e Plotë",
+  "themes_selector_solid": "E Gjelbër e Plotë",
+  "themes_selector_solid_orange": "Portokalli e Plotë",
+  "themes_selector_classic": "Klasike",
+  "themes_selector_unicorn": "Njëbrirësh (Unicorn)"
+}

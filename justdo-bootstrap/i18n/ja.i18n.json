@@ -1,0 +1,13 @@
+{
+  "themes_selector_config_title": "テーマセレクター",
+  "themes_selector_label": "JustDoのテーマ",
+  "themes_selector_default": "ソリッドダークブルー（デフォルト）",
+  "themes_selector_solid_blue": "ソリッドブルー",
+  "themes_selector_solid_dark": "ソリッドダーク",
+  "themes_selector_solid_dark_green": "ソリッドダークグリーン",
+  "themes_selector_solid_purple": "ソリッドパープル",
+  "themes_selector_solid": "ソリッドグリーン",
+  "themes_selector_solid_orange": "ソリッドオレンジ",
+  "themes_selector_classic": "クラシック",
+  "themes_selector_unicorn": "ユニコーン"
+}

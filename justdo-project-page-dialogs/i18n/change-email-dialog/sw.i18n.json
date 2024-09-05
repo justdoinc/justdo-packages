@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "Badilisha Barua pepe",
+  "edit_email_dialog_confirm_btn_label": "Badilisha Barua pepe",
+  "edit_email_dialog_current_email": "Barua pepe ya Sasa",
+  "edit_email_dialog_new_email": "Barua pepe Mpya",
+  "edit_email_dialog_password": "Nywila",
+  "edit_email_dialog_forgot_password": "Umesahau nywila yako?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "Ingiza nywila yako ili kubadilisha barua pepe yako",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "Je, una uhakika unataka kubadilisha barua pepe ya akaunti yako kuwa: <b>__email__</b>?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>Barua pepe imetumwa na maagizo ya kuweka upya nywila</b></h4><p>Ikiwa huwezi kupata barua pepe, tafadhali angalia folda yako ya spam.</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "Lazima uweke nywila ili kubadilisha barua pepe yako"
+}

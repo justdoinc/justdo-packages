@@ -29,7 +29,7 @@
   "main_page_description": "Erősítse meg csapatát a JustDo-val, a biztonságos és bővíthető projektmenedzsment megoldással. Forrás-elérhető platformunk átláthatóságot és testreszabhatóságot biztosít, hatékony Gantt-diagramokkal, Kanban táblákkal és még sok mással.",
   "edit": "Szerkesztés",
   "search": "Keresés",
-  "add_btn_label": "HOZZÁADÁS",
+  "add": "Hozzáadás",
   "updated_with_time": "Frissítve: __time__",
   "stop": "Leállítás",
   "generate": "Generálás",
@@ -37,5 +37,12 @@
   "undo": "Visszavonás",
   "you": "ön",
   "all": "Összes",
-  "none": "Egyik sem"
+  "none": "Egyik sem",
+  "save": "Mentés",
+  "confirm": "Megerősítés",
+  "send": "Küldés",
+  "reject": "Elutasítás",
+  "accept": "Elfogadás",
+  "take": "Elvétel",
+  "keep": "Megtartás"
 }

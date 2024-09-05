@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Ин амалиёт тақрибан <u>__min_time_to_process__</u> вақт мегирад",
+  "confirm_edit_member_dialog_max_time_to_process": "Ин амалиёт то <u>__max_time_to_process__</u> вақт мегирад",
+  "confirm_edit_member_dialog_batch_process_msg": "Амалиёт ба зиёда аз <b>__count__</b> сабт таъсир мерасонад ва бинобар ин муддате вақт мегирад. Шумо метавонед пешрафти онро дар равзанаи таҳрири аъзоён пайгирӣ кунед.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Шумо дар арафаи хориҷ кардани <b>__members_to_remove__</b> аз <b>__count__</b> вазифа ҳастед<br>Дар натиҷа, шумо соҳиби ҳамаи вазифаҳое мешавед, ки ин корбарон соҳибӣ мекарданд.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Шумо дар арафаи хориҷ кардани <b>__members_to_remove__</b> аз <b>__count__</b> вазифа ҳастед<br>Дар натиҷа, шумо соҳиби ҳамаи вазифаҳое мешавед, ки ин корбарон соҳибӣ мекарданд.",
+  "confirm_edit_member_dialog_bulk_add_members": "Шумо дар арафаи додани дастрасӣ ба <b>__count__</b> вазифа ба: <b>__members_to_add__</b> ҳастед",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Шумо дар арафаи додани дастрасӣ ба <b>__count__</b> вазифа ба: <b>__members_to_add__</b> ҳастед",
+  "confirm_edit_member_dialog_and_other_users": "__users__ ва боз як корбари дигар",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ ва боз __count__ корбари дигар"
+}

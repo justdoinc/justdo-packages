@@ -29,7 +29,7 @@
   "main_page_description": "JustDo ile ekibinizi güçlendirin, güvenli ve genişletilebilir proje yönetim çözümü. Kaynak-erişilebilir platformumuz, güçlü Gantt şemaları, Kanban panoları ve daha fazlasıyla şeffaflık ve özelleştirme sağlar.",
   "edit": "Düzenle",
   "search": "Ara",
-  "add_btn_label": "EKLE",
+  "add": "Ekle",
   "updated_with_time": "__time__ önce güncellendi",
   "stop": "Durdur",
   "generate": "Oluştur",
@@ -37,5 +37,12 @@
   "undo": "Geri Al",
   "you": "siz",
   "all": "Tümü",
-  "none": "Hiçbiri"
+  "none": "Hiçbiri",
+  "save": "Kaydet",
+  "confirm": "Onayla",
+  "send": "Gönder",
+  "reject": "Reddet",
+  "accept": "Kabul Et",
+  "take": "Al",
+  "keep": "Sakla"
 }

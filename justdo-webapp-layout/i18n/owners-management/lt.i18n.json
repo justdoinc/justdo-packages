@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Atmesti nuosavybės perdavimą iš",
+  "owners_mgmt_accept_transfer_from": "Priimti nuosavybės perdavimą iš",
+  "owners_mgmt_cancel_transfer_to": "Atšaukti nuosavybės perdavimą",
+  "owners_mgmt_loading": "Kraunama...",
+  "owners_mgmt_transfer_ownership_to": "Perduoti nuosavybę...",
+  "owners_mgmt_task_only_visible_to_you": "Ši užduotis matoma tik jums",
+  "owners_mgmt_take_ownership_from_removed_owner": "Perimti nuosavybę iš pašalinto savininko",
+  "owners_mgmt_take_ownership_from": "Perimti nuosavybę iš",
+  "owners_mgmt_edit_task_members": "Redaguoti užduoties narius",
+  "owners_mgmt_share_task": "Dalintis užduotimi",
+  "owners_mgmt_leave_a_reject_message": "Palikti atmetimo žinutę",
+  "owners_mgmt_transfer_child_tasks_too": "Perduoti nuosavybę __count__ antrinei užduočiai taip pat?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Perduoti nuosavybę __count__ antrinėms užduotims taip pat?",
+  "owners_mgmt_transfer_child_tasks_done": "Nuosavybės perdavimas __count__ antrinei užduočiai atliktas.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Nuosavybės perdavimas __count__ antrinėms užduotims atliktas.",
+  "owners_mgmt_transfer": "Perduoti"
+}

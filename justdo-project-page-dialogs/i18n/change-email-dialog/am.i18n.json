@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "ኢሜይል መለወጥ",
+  "edit_email_dialog_confirm_btn_label": "ኢሜይል መለወጥ",
+  "edit_email_dialog_current_email": "አሁን ያለው ኢሜይል",
+  "edit_email_dialog_new_email": "አዲስ ኢሜይል",
+  "edit_email_dialog_password": "የይለፍ ቃል",
+  "edit_email_dialog_forgot_password": "የይለፍ ቃልዎን ረሱ?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "ኢሜይልዎን ለመለወጥ የይለፍ ቃልዎን ያስገቡ",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "የአካውንትዎን ኢሜይል ወደ: <b>__email__</b> መለወጥ እንደሚፈልጉ እርግጠኛ ነዎት?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>የይለፍ ቃል ዳግም ማስጀመሪያ መመሪያዎችን የያዘ ኢሜይል ተልኳል</b></h4><p>ኢሜይሉን ማግኘት ካልቻሉ፣ እባክዎን የስፓም ፎልደርዎን ይፈትሹ።</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "ኢሜይልዎን ለመለወጥ የይለፍ ቃል ማዘጋጀት አለብዎት"
+}

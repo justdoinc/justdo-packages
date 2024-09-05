@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Keeldu omandiõiguse üleandmisest kasutajalt",
+  "owners_mgmt_accept_transfer_from": "Nõustu omandiõiguse üleandmisega kasutajalt",
+  "owners_mgmt_cancel_transfer_to": "Tühista omandiõiguse üleandmine kasutajale",
+  "owners_mgmt_loading": "Laadimine...",
+  "owners_mgmt_transfer_ownership_to": "Anna omandiõigus üle...",
+  "owners_mgmt_task_only_visible_to_you": "See ülesanne on nähtav ainult sulle",
+  "owners_mgmt_take_ownership_from_removed_owner": "Võta omandiõigus eemaldatud omanikult",
+  "owners_mgmt_take_ownership_from": "Võta omandiõigus kasutajalt",
+  "owners_mgmt_edit_task_members": "Muuda ülesande liikmeid",
+  "owners_mgmt_share_task": "Jaga ülesannet",
+  "owners_mgmt_leave_a_reject_message": "Jäta tagasilükkamise sõnum",
+  "owners_mgmt_transfer_child_tasks_too": "Kas anda üle ka __count__ alamülesande omandiõigus?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Kas anda üle ka __count__ alamülesande omandiõigus?",
+  "owners_mgmt_transfer_child_tasks_done": "__count__ alamülesande omandiõiguse üleandmine töödeldud.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "__count__ alamülesande omandiõiguse üleandmine töödeldud.",
+  "owners_mgmt_transfer": "Anna üle"
+}

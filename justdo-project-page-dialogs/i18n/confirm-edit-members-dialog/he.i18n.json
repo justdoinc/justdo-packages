@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "פעולה זו תימשך בערך <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "פעולה זו תימשך עד <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "הפעולה משפיעה על יותר מ-<b>__count__</b> רשומות ולכן תימשך זמן מה. תוכל לעקוב אחר התקדמותה בחלון עריכת החברים.",
+  "confirm_edit_member_dialog_bulk_remove_members": "אתה עומד להסיר <b>__members_to_remove__</b> מ-<b>__count__</b> משימה<br>כתוצאה מכך, תהפוך לבעלים של כל המשימות שהיו בבעלות משתמשים אלה.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "אתה עומד להסיר <b>__members_to_remove__</b> מ-<b>__count__</b> משימות<br>כתוצאה מכך, תהפוך לבעלים של כל המשימות שהיו בבעלות משתמשים אלה.",
+  "confirm_edit_member_dialog_bulk_add_members": "אתה עומד להעניק גישה ל-<b>__count__</b> משימה ל: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "אתה עומד להעניק גישה ל-<b>__count__</b> משימות ל: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ ומשתמש נוסף",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ ו-__count__ משתמשים נוספים"
+}

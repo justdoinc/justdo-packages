@@ -29,7 +29,7 @@
   "main_page_description": "Versterk je team met JustDo, de veilige en uitbreidbare projectmanagementoplossing. Ons source-available platform biedt transparantie en aanpassingsmogelijkheden, met krachtige Gantt-diagrammen, Kanban-borden en meer.",
   "edit": "Bewerken",
   "search": "Zoeken",
-  "add_btn_label": "TOEVOEGEN",
+  "add": "Toevoegen",
   "updated_with_time": "Bijgewerkt __time__",
   "stop": "Stoppen",
   "generate": "Genereren",
@@ -37,5 +37,12 @@
   "undo": "Ongedaan maken",
   "you": "jij",
   "all": "Alles",
-  "none": "Geen"
+  "none": "Geen",
+  "save": "Opslaan",
+  "confirm": "Bevestigen",
+  "send": "Verzenden",
+  "reject": "Afwijzen",
+  "accept": "Accepteren",
+  "take": "Nemen",
+  "keep": "Behouden"
 }

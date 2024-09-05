@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "拒绝来自以下人员的所有权转让",
+  "owners_mgmt_accept_transfer_from": "接受来自以下人员的所有权转让",
+  "owners_mgmt_cancel_transfer_to": "取消向以下人员的所有权转让",
+  "owners_mgmt_loading": "加载中...",
+  "owners_mgmt_transfer_ownership_to": "转让所有权给...",
+  "owners_mgmt_task_only_visible_to_you": "此任务仅对您可见",
+  "owners_mgmt_take_ownership_from_removed_owner": "从已移除的所有者那里接管所有权",
+  "owners_mgmt_take_ownership_from": "从以下人员接管所有权",
+  "owners_mgmt_edit_task_members": "编辑任务成员",
+  "owners_mgmt_share_task": "分享任务",
+  "owners_mgmt_leave_a_reject_message": "留下拒绝消息",
+  "owners_mgmt_transfer_child_tasks_too": "是否同时转让 __count__ 个子任务的所有权？",
+  "owners_mgmt_transfer_child_tasks_too_plural": "是否同时转让 __count__ 个子任务的所有权？",
+  "owners_mgmt_transfer_child_tasks_done": "__count__ 个子任务的所有权转让已处理。",
+  "owners_mgmt_transfer_child_tasks_done_plural": "__count__ 个子任务的所有权转让已处理。",
+  "owners_mgmt_transfer": "转让"
+}

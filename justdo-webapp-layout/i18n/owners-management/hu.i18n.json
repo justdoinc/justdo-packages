@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Tulajdonjog átruházás elutasítása a következőtől:",
+  "owners_mgmt_accept_transfer_from": "Tulajdonjog átruházás elfogadása a következőtől:",
+  "owners_mgmt_cancel_transfer_to": "Tulajdonjog átruházás visszavonása a következőnek:",
+  "owners_mgmt_loading": "Betöltés...",
+  "owners_mgmt_transfer_ownership_to": "Tulajdonjog átruházása a következőnek...",
+  "owners_mgmt_task_only_visible_to_you": "Ez a feladat csak az Ön számára látható",
+  "owners_mgmt_take_ownership_from_removed_owner": "Tulajdonjog átvétele az eltávolított tulajdonostól",
+  "owners_mgmt_take_ownership_from": "Tulajdonjog átvétele a következőtől:",
+  "owners_mgmt_edit_task_members": "Feladat résztvevőinek szerkesztése",
+  "owners_mgmt_share_task": "Feladat megosztása",
+  "owners_mgmt_leave_a_reject_message": "Hagyjon elutasító üzenetet",
+  "owners_mgmt_transfer_child_tasks_too": "Átruházza __count__ alfeladat tulajdonjogát is?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Átruházza __count__ alfeladat tulajdonjogát is?",
+  "owners_mgmt_transfer_child_tasks_done": "__count__ alfeladat tulajdonjogának átruházása feldolgozva.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "__count__ alfeladat tulajdonjogának átruházása feldolgozva.",
+  "owners_mgmt_transfer": "Átruházás"
+}

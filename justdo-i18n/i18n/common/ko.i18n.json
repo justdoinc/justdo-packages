@@ -29,7 +29,7 @@
   "main_page_description": "JustDo로 팀의 역량을 강화하세요. 안전하고 확장 가능한 프로젝트 관리 솔루션입니다. 우리의 소스 공개 플랫폼은 투명성과 맞춤화를 제공하며, 강력한 간트 차트, 칸반 보드 등을 포함합니다.",
   "edit": "편집",
   "search": "검색",
-  "add_btn_label": "추가",
+  "add": "추가",
   "updated_with_time": "__time__ 업데이트됨",
   "stop": "중지",
   "generate": "생성",
@@ -37,5 +37,12 @@
   "undo": "실행 취소",
   "you": "내가",
   "all": "모두",
-  "none": "없음"
+  "none": "없음",
+  "save": "저장",
+  "confirm": "확인",
+  "send": "보내기",
+  "reject": "거절",
+  "accept": "수락",
+  "take": "가져가기",
+  "keep": "유지"
 }

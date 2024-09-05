@@ -378,3 +378,63 @@
 
   & + .modal-backdrop
     display: none
+
+// RTL modifications
+.right-to-left
+  .members-editor-search
+    .recent-batched-ops
+      margin-right: unset
+      margin-left: 22px
+
+      .count
+        right: unset
+        left: -3px
+
+  .recent-batched-ops-dropdown
+    .dropdown-menu
+      right: auto !important
+      left: 12px !important
+
+    .members-list-add-users-container
+      border-right: unset
+      border-left: 1px solid #ecf1f8
+      padding: 20px 27px 0px 0px
+      .section-caption,
+      .members-list
+        padding-right: unset
+        padding-left: 14px
+
+    .members-list-keep-users-container
+      padding: 20px 14px 0px 0px
+      .section-caption,
+      .members-list
+        padding-right: unset
+        padding-left: 20px
+
+  .notes
+    li
+      padding: 8px 12px 8px 8px
+      .note-item
+        padding-right: unset
+        padding-left: 16px
+
+  .members-editor-dialog
+    .checkbox
+      left: unset
+      right: 27px
+
+    .user-btn
+      img
+        margin-right: unset
+        margin-left: 4px
+      .display-name
+        margin-left: unset
+        margin-right: 2px
+        .unverified-email-warn
+          margin-right: unset
+          margin-left: 4px
+
+    .invite-new-member
+      .jd-icon
+        margin-right: unset
+        margin-left: 2px

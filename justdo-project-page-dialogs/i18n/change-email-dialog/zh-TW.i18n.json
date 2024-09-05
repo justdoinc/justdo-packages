@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "更改電子郵件",
+  "edit_email_dialog_confirm_btn_label": "更改電子郵件",
+  "edit_email_dialog_current_email": "目前的電子郵件",
+  "edit_email_dialog_new_email": "新的電子郵件",
+  "edit_email_dialog_password": "密碼",
+  "edit_email_dialog_forgot_password": "忘記密碼？",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "請輸入您的密碼以更改電子郵件",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "您確定要將您的帳戶電子郵件更改為：<b>__email__</b>嗎？",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>已發送含有密碼重置說明的電子郵件</b></h4><p>如果您找不到該郵件，請檢查您的垃圾郵件資料夾。</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "您必須設置密碼才能更改電子郵件"
+}

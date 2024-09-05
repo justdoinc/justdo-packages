@@ -8,7 +8,7 @@
           {{#with owner}}{{> justdo_avatar}}{{/with}}
         </div>
         <div class="message-area">
-          <div class="action-message">Reject ownership transfer from</div>
+          <div class="action-message">{{_ "owners_mgmt_reject_transfer_from"}}</div>
           <div class="member-name">{{#with owner}}{{displayName}}{{/with}}</div>
         </div>
       </div>
@@ -16,8 +16,8 @@
       {{> item_owners_management_reject_transfer_request_input}}
 
       <div class="reject-ownership-buttons">
-        <button type="button" class="btn btn-sm btn-light cancel-reject-button mr-1">Cancel</button>
-        <button type="button" class="btn btn-sm btn-primary cancel-transfer">Send</button>
+        <button type="button" class="btn btn-sm btn-light cancel-reject-button mr-1">{{_ "cancel"}}</button>
+        <button type="button" class="btn btn-sm btn-primary cancel-transfer">{{_ "send"}}</button>
       </div>
     {{else}}
       <div class="decisions-dialogs ownership-accept-reject-dialog">
@@ -25,21 +25,21 @@
           {{#with owner}}{{> justdo_avatar}}{{/with}}
         </div>
         <div class="message-area">
-          <div class="action-message">Accept ownership transfer from</div>
+          <div class="action-message">{{_ "owners_mgmt_accept_transfer_from"}}</div>
           <div class="member-name">{{#with owner}}{{displayName}}{{/with}}</div>
         </div>
-        <button type="button" class="btn btn-sm btn-danger pre-reject-button mr-1">Reject</button>
-        <button type="button" class="btn btn-sm btn-primary approve-transfer">Accept</button>
+        <button type="button" class="btn btn-sm btn-danger pre-reject-button mr-1">{{_ "reject"}}</button>
+        <button type="button" class="btn btn-sm btn-primary approve-transfer">{{_ "accept"}}</button>
       </div>
     {{/if}}
   {{else if $eq $.Meteor.userId owner_id}}
     {{#if $not pending_owner_id}}
       {{#if $eq taskHasOtherMembers "loading"}}
-        <div class="loading-message">Loading...</div>
+        <div class="loading-message">{{_ "owners_mgmt_loading"}}</div>
       {{else if $eq taskHasOtherMembers "yes"}}
         <div class="ownership-transfer-dialog">
           <div class="members-search-wrapper">
-            <input class="members-search-input form-control form-control-sm border-white ownership-dialog-item" placeholder="Transfer ownership to...">
+            <input class="members-search-input form-control form-control-sm border-white ownership-dialog-item" placeholder="{{_ "owners_mgmt_transfer_ownership_to"}}">
             <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#search"></use></svg>
           </div>
           <div class="members">
@@ -48,14 +48,12 @@
                 {{> justdo_avatar}} {{> display_name_with_graphic_unverified_warning}}
               </div>
             {{else}}
-              <div class="no-members-found my-2 text-muted">
-                No results found
-              </div>
+              <div class="no-members-found my-2 text-muted">{{_ "members_mgmt_dialog_no_results"}}</div>
             {{/each}}
           </div>
         </div>
       {{else}}
-        <div class="only-member-message">This task is visible only to you</div>
+        <div class="only-member-message">{{_ "owners_mgmt_task_only_visible_to_you"}}</div>
       {{/if}}
     {{else}}
       <div class="decisions-dialogs cancel-ownership-transfer-dialog">
@@ -63,10 +61,10 @@
           {{#with pending_owner}}{{> justdo_avatar}}{{/with}}
         </div>
         <div class="message-area">
-          <div class="action-message">Cancel ownership transfer to</div>
+          <div class="action-message">{{_ "owners_mgmt_cancel_transfer_to"}}</div>
           <div class="member-name">{{#with pending_owner}}{{displayName}}{{/with}}</div>
         </div>
-        <button type="button" class="btn btn-sm btn-primary cancel-transfer">Cancel</button>
+        <button type="button" class="btn btn-sm btn-primary cancel-transfer">{{_ "cancel"}}</button>
       </div>
     {{/if}}
   {{else}}
@@ -76,10 +74,17 @@
         {{#with owner}}{{> justdo_avatar}}{{/with}}
       </div>
       <div class="message-area">
-        <div class="action-message">{{#if is_removed_owner}}Take ownership from removed owner{{else}}Take ownership from{{/if}}</div>
+        <div class="action-message">
+          {{#if is_removed_owner}}
+            {{_ "owners_mgmt_take_ownership_from_removed_owner"}}
+          {{else}}
+            {{_ "owners_mgmt_take_ownership_from"}}
+          {{/if}}
+        </div>
+
         <div class="member-name">{{#with owner}}{{displayName}}{{/with}}</div>
       </div>
-      <button type="button" class="btn btn-sm btn-primary take-ownership">Take</button>
+      <button type="button" class="btn btn-sm btn-primary take-ownership">{{_ "take"}}</button>
     </div>
   {{/if}}
 
@@ -89,13 +94,13 @@
         {{#if $neq taskHasOtherMembers "loading"}}
           {{!-- Only for the pre-reject state we don't show the membership management area--}}
           {{#if taskHasOtherMembers}}
-            Edit Task Members
+            {{_ "owners_mgmt_edit_task_members"}}
           {{else}}
-            Share Task
+            {{_ "owners_mgmt_share_task"}}
           {{/if}}
         {{else}}
           <div class="manage-members-loading">
-            Loading...
+            {{_ "owners_mgmt_loading"}}
           </div>
         {{/if}}
       </div>
@@ -104,5 +109,5 @@
 </template>
 
 <template name="item_owners_management_reject_transfer_request_input">
-  <textarea type="text" class="reject-message-input" placeholder="Leave a reject message"></textarea>
+  <textarea type="text" class="reject-message-input" placeholder="{{_ "owners_mgmt_leave_a_reject_message"}}"></textarea>
 </template>

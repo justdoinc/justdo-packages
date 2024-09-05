@@ -29,7 +29,7 @@
   "main_page_description": "Indartu zure taldea JustDo-rekin, proiektu kudeaketarako soluzio seguru eta hedagarria. Gure iturri-irekiko plataformak gardentasuna eta pertsonalizazioa eskaintzen ditu, Gantt diagrama indartsuak, Kanban taulak eta gehiagorekin.",
   "edit": "Editatu",
   "search": "Bilatu",
-  "add_btn_label": "GEHITU",
+  "add": "Gehitu",
   "updated_with_time": "__time__ eguneratua",
   "stop": "Gelditu",
   "generate": "Sortu",
@@ -37,5 +37,12 @@
   "undo": "Desegin",
   "you": "zu",
   "all": "Guztiak",
-  "none": "Bat ere ez"
+  "none": "Bat ere ez",
+  "save": "Gorde",
+  "confirm": "Baieztatu",
+  "send": "Bidali",
+  "reject": "Ukatu",
+  "accept": "Onartu",
+  "take": "Hartu",
+  "keep": "Mantendu"
 }

@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "This operation will take around <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "This operation will take up to <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "Operation affects more than <b>__count__</b> records and therefore will take a while. You can track its progress in the members edit window.",
+  "confirm_edit_member_dialog_bulk_remove_members": "You are about to remove <b>__members_to_remove__</b> from <b>__count__</b> task<br>As a result, you'll become the owner of all the tasks owned by these users.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "You are about to remove <b>__members_to_remove__</b> from <b>__count__</b> tasks<br>As a result, you'll become the owner of all the tasks owned by these users.",
+  "confirm_edit_member_dialog_bulk_add_members":"You are about to grant access to <b>__count__</b> task to: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural":"You are about to grant access to <b>__count__</b> tasks to: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ and another user",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ and another __count__ users"
+}

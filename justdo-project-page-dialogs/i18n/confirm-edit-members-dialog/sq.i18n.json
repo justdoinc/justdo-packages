@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Ky operacion do të zgjasë rreth <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "Ky operacion do të zgjasë deri në <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "Operacioni ndikon në më shumë se <b>__count__</b> regjistrime dhe për këtë arsye do të zgjasë pak. Ju mund të ndiqni progresin e tij në dritaren e redaktimit të anëtarëve.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Jeni gati të hiqni <b>__members_to_remove__</b> nga <b>__count__</b> detyrë<br>Si rezultat, ju do të bëheni pronari i të gjitha detyrave në pronësi të këtyre përdoruesve.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Jeni gati të hiqni <b>__members_to_remove__</b> nga <b>__count__</b> detyra<br>Si rezultat, ju do të bëheni pronari i të gjitha detyrave në pronësi të këtyre përdoruesve.",
+  "confirm_edit_member_dialog_bulk_add_members": "Jeni gati t'i jepni qasje në <b>__count__</b> detyrë: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Jeni gati t'i jepni qasje në <b>__count__</b> detyra: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ dhe një përdorues tjetër",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ dhe __count__ përdorues të tjerë"
+}

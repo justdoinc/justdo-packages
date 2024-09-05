@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Questa operazione richiederà circa <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "Questa operazione richiederà fino a <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "L'operazione influisce su più di <b>__count__</b> record e quindi richiederà del tempo. Puoi monitorarne il progresso nella finestra di modifica dei membri.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Stai per rimuovere <b>__members_to_remove__</b> da <b>__count__</b> attività<br>Di conseguenza, diventerai il proprietario di tutte le attività possedute da questi utenti.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Stai per rimuovere <b>__members_to_remove__</b> da <b>__count__</b> attività<br>Di conseguenza, diventerai il proprietario di tutte le attività possedute da questi utenti.",
+  "confirm_edit_member_dialog_bulk_add_members": "Stai per concedere l'accesso a <b>__count__</b> attività a: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Stai per concedere l'accesso a <b>__count__</b> attività a: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ e un altro utente",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ e altri __count__ utenti"
+}

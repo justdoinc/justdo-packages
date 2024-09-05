@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Иелік құқығын беруден бас тарту",
+  "owners_mgmt_accept_transfer_from": "Иелік құқығын беруді қабылдау",
+  "owners_mgmt_cancel_transfer_to": "Иелік құқығын беруді болдырмау",
+  "owners_mgmt_loading": "Жүктелуде...",
+  "owners_mgmt_transfer_ownership_to": "Иелік құқығын беру...",
+  "owners_mgmt_task_only_visible_to_you": "Бұл тапсырма тек сізге көрінеді",
+  "owners_mgmt_take_ownership_from_removed_owner": "Алынған иеден иелік құқығын алу",
+  "owners_mgmt_take_ownership_from": "Иелік құқығын алу",
+  "owners_mgmt_edit_task_members": "Тапсырма мүшелерін өңдеу",
+  "owners_mgmt_share_task": "Тапсырманы бөлісу",
+  "owners_mgmt_leave_a_reject_message": "Бас тарту хабарламасын қалдыру",
+  "owners_mgmt_transfer_child_tasks_too": "__count__ ішкі тапсырманың иелік құқығын да беру керек пе?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "__count__ ішкі тапсырмалардың иелік құқығын да беру керек пе?",
+  "owners_mgmt_transfer_child_tasks_done": "__count__ ішкі тапсырманың иелік құқығы берілді.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "__count__ ішкі тапсырмалардың иелік құқығы берілді.",
+  "owners_mgmt_transfer": "Беру"
+}

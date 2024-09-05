@@ -1,0 +1,13 @@
+{
+  "themes_selector_config_title": "Témaválasztó",
+  "themes_selector_label": "JustDo téma",
+  "themes_selector_default": "Egyszínű sötétkék (alapértelmezett)",
+  "themes_selector_solid_blue": "Egyszínű kék",
+  "themes_selector_solid_dark": "Egyszínű sötét",
+  "themes_selector_solid_dark_green": "Egyszínű sötétzöld",
+  "themes_selector_solid_purple": "Egyszínű lila",
+  "themes_selector_solid": "Egyszínű zöld",
+  "themes_selector_solid_orange": "Egyszínű narancssárga",
+  "themes_selector_classic": "Klasszikus",
+  "themes_selector_unicorn": "Unikornis"
+}

@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Ta operacja zajmie około <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "Ta operacja zajmie maksymalnie <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "Operacja dotyczy ponad <b>__count__</b> rekordów, dlatego potrwa dłużej. Możesz śledzić jej postęp w oknie edycji członków.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Zamierzasz usunąć <b>__members_to_remove__</b> z <b>__count__</b> zadania<br>W rezultacie staniesz się właścicielem wszystkich zadań należących do tych użytkowników.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Zamierzasz usunąć <b>__members_to_remove__</b> z <b>__count__</b> zadań<br>W rezultacie staniesz się właścicielem wszystkich zadań należących do tych użytkowników.",
+  "confirm_edit_member_dialog_bulk_add_members": "Zamierzasz przyznać dostęp do <b>__count__</b> zadania dla: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Zamierzasz przyznać dostęp do <b>__count__</b> zadań dla: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ i inny użytkownik",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ i __count__ innych użytkowników"
+}

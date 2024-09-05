@@ -29,7 +29,7 @@
   "main_page_description": "Imarisha timu yako na JustDo, suluhisho salama na lenye uwezo wa kupanuliwa kwa usimamizi wa miradi. Jukwaa letu lenye chanzo kinachopatikana linatoa uwazi na urahisi wa kubadilisha, pamoja na chati thabiti za Gantt, vibao vya Kanban, na zaidi.",
   "edit": "Hariri",
   "search": "Tafuta",
-  "add_btn_label": "ONGEZA",
+  "add": "Ongeza",
   "updated_with_time": "Imesasishwa __time__",
   "stop": "Simama",
   "generate": "Tengeneza",
@@ -37,5 +37,12 @@
   "undo": "Tendua",
   "you": "wewe",
   "all": "Vyote",
-  "none": "Hakuna"
+  "none": "Hakuna",
+  "save": "Hifadhi",
+  "confirm": "Thibitisha",
+  "send": "Tuma",
+  "reject": "Kataa",
+  "accept": "Kubali",
+  "take": "Chukua",
+  "keep": "Hifadhi"
 }

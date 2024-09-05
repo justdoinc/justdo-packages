@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Denne operasjonen vil ta rundt <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "Denne operasjonen vil ta opptil <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "Operasjonen påvirker mer enn <b>__count__</b> poster og vil derfor ta litt tid. Du kan følge fremdriften i medlemsredigeringsvinduet.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Du er i ferd med å fjerne <b>__members_to_remove__</b> fra <b>__count__</b> oppgave<br>Som et resultat vil du bli eier av alle oppgavene som eies av disse brukerne.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Du er i ferd med å fjerne <b>__members_to_remove__</b> fra <b>__count__</b> oppgaver<br>Som et resultat vil du bli eier av alle oppgavene som eies av disse brukerne.",
+  "confirm_edit_member_dialog_bulk_add_members": "Du er i ferd med å gi tilgang til <b>__count__</b> oppgave til: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Du er i ferd med å gi tilgang til <b>__count__</b> oppgaver til: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ og en annen bruker",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ og __count__ andre brukere"
+}

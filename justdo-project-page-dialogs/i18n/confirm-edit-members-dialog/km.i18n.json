@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "ប្រតិបត្តិការនេះនឹងចំណាយពេលប្រហែល <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "ប្រតិបត្តិការនេះនឹងចំណាយពេលរហូតដល់ <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "ប្រតិបត្តិការប៉ះពាល់ដល់កំណត់ត្រាច្រើនជាង <b>__count__</b> ហើយដូច្នេះវានឹងចំណាយពេលយូរ។ អ្នកអាចតាមដានវឌ្ឍនភាពរបស់វានៅក្នុងបង្អួចកែសម្រួលសមាជិក។",
+  "confirm_edit_member_dialog_bulk_remove_members": "អ្នកកំពុងត្រៀមលុប <b>__members_to_remove__</b> ចេញពីកិច្ចការ <b>__count__</b><br>ជាលទ្ធផល អ្នកនឹងក្លាយជាម្ចាស់នៃកិច្ចការទាំងអស់ដែលជាកម្មសិទ្ធិរបស់អ្នកប្រើប្រាស់ទាំងនេះ។",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "អ្នកកំពុងត្រៀមលុប <b>__members_to_remove__</b> ចេញពីកិច្ចការ <b>__count__</b><br>ជាលទ្ធផល អ្នកនឹងក្លាយជាម្ចាស់នៃកិច្ចការទាំងអស់ដែលជាកម្មសិទ្ធិរបស់អ្នកប្រើប្រាស់ទាំងនេះ។",
+  "confirm_edit_member_dialog_bulk_add_members": "អ្នកកំពុងត្រៀមផ្តល់សិទ្ធិចូលប្រើកិច្ចការ <b>__count__</b> ដល់៖ <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "អ្នកកំពុងត្រៀមផ្តល់សិទ្ធិចូលប្រើកិច្ចការ <b>__count__</b> ដល់៖ <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ និងអ្នកប្រើប្រាស់ម្នាក់ទៀត",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ និងអ្នកប្រើប្រាស់ផ្សេងទៀតចំនួន __count__ នាក់"
+}

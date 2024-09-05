@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Verwerp eienaarskap-oordrag van",
+  "owners_mgmt_accept_transfer_from": "Aanvaar eienaarskap-oordrag van",
+  "owners_mgmt_cancel_transfer_to": "Kanselleer eienaarskap-oordrag na",
+  "owners_mgmt_loading": "Besig om te laai...",
+  "owners_mgmt_transfer_ownership_to": "Dra eienaarskap oor na...",
+  "owners_mgmt_task_only_visible_to_you": "Hierdie taak is slegs vir jou sigbaar",
+  "owners_mgmt_take_ownership_from_removed_owner": "Neem eienaarskap oor van verwyderde eienaar",
+  "owners_mgmt_take_ownership_from": "Neem eienaarskap oor van",
+  "owners_mgmt_edit_task_members": "Wysig Taak-lede",
+  "owners_mgmt_share_task": "Deel Taak",
+  "owners_mgmt_leave_a_reject_message": "Laat 'n verwerpingsboodskap",
+  "owners_mgmt_transfer_child_tasks_too": "Dra eienaarskap van __count__ subtaak ook oor?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Dra eienaarskap van __count__ subtake ook oor?",
+  "owners_mgmt_transfer_child_tasks_done": "Eienaarskap-oordrag van __count__ subtaak verwerk.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Eienaarskap-oordrag van __count__ subtake verwerk.",
+  "owners_mgmt_transfer": "Oordra"
+}

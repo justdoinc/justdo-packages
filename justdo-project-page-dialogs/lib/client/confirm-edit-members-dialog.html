@@ -4,30 +4,25 @@
       <div class="section crossed-threshold bg-light">
         {{#with timeToProcess}}
           {{#if $eq min_time_to_process max_time_to_process}}
-            <div class="secton-message font-weight-bold">This operation will take around <u>{{min_time_to_process}}</u></div>
+            <div class="secton-message font-weight-bold">{{{xssGuard(_ "confirm_edit_member_dialog_min_time_to_process" min_time_to_process=min_time_to_process)}}}</div>
           {{else}}
-            <div class="secton-message font-weight-bold">This operation will take up to <u>{{max_time_to_process}}</u></div>
+            <div class="secton-message font-weight-bold">{{{xssGuard(_ "confirm_edit_member_dialog_max_time_to_process" max_time_to_process=max_time_to_process)}}}</div>
           {{/if}}
         {{/with}}
-        <div class="secton-message mt-1">Operation affects more than <b>{{batchedImmediateProcessThreshold}}</b> records and therefore will take a while. You can track its progress in the members edit window.</div>
+        <div class="secton-message mt-1">{{{xssGuard(_ "confirm_edit_member_dialog_batch_process_msg" count=batchedImmediateProcessThreshold)}}}</div>
       </div>
     {{/if }}
 
     {{#if has_sub_sub_tasks_and_more_then_confirm_task_count}}
       {{#if members_to_remove}}
         <div class="section remove">
-          <div class="section-message">
-            You are about to remove <b>{{usersText members_to_remove}}</b> from <b>{{tasks_count}}</b> tasks<br>
-            As a result, you'll become the owner of all the tasks owned by these users.
-          </div>
+          <div class="section-message">{{{xssGuard(_ "confirm_edit_member_dialog_bulk_remove_members" members_to_remove=(usersText members_to_remove) count=tasks_count)}}}</div>
         </div>
       {{/if}}
 
       {{#if members_to_add}}
         <div class="section add">
-          <div class="section-message">
-            You are about to grant access to <b>{{tasks_count}}</b> tasks to: <b>{{usersText members_to_add}}</b>
-          </div>
+          <div class="section-message">{{{xssGuard(_ "confirm_edit_member_dialog_bulk_add_members" members_to_add=(usersText members_to_add) count=tasks_count)}}}</div>
         </div>
       {{/if}}
     {{/if}}

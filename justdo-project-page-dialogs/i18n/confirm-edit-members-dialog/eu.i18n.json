@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Eragiketa honek <u>__min_time_to_process__</u> inguru iraungo du",
+  "confirm_edit_member_dialog_max_time_to_process": "Eragiketa honek gehienez <u>__max_time_to_process__</u> iraungo du",
+  "confirm_edit_member_dialog_batch_process_msg": "Eragiketak <b>__count__</b> erregistro baino gehiagotan eragiten du eta, beraz, denbora pixka bat beharko du. Bere aurrerapena kideen edizio leihoan jarraitu dezakezu.",
+  "confirm_edit_member_dialog_bulk_remove_members": "<b>__members_to_remove__</b> <b>__count__</b> atazetik kentzear zaude<br>Ondorioz, erabiltzaile horiek jabetzan zituzten ataza guztien jabe bihurtuko zara.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "<b>__members_to_remove__</b> <b>__count__</b> atazetatik kentzear zaude<br>Ondorioz, erabiltzaile horiek jabetzan zituzten ataza guztien jabe bihurtuko zara.",
+  "confirm_edit_member_dialog_bulk_add_members": "<b>__count__</b> atazara sarbidea ematea zoaz: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "<b>__count__</b> atazetara sarbidea ematea zoaz: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ eta beste erabiltzaile bat",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ eta beste __count__ erabiltzaile"
+}

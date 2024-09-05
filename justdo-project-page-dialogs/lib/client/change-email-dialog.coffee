@@ -20,7 +20,7 @@ ProjectPageDialogs.editEmail = (cb) ->
       _editEmail()
     else
       bootbox.alert
-        message: "You must set password in order to change your email"
+        message: TAPi18n.__ "edit_email_dialog_you_must_set_password_to_change_email"
         className: "bootbox-new-design bootbox-new-design-simple-dialogs-default"
         closeButton: false
 
@@ -40,7 +40,7 @@ _editEmail = ->
     JustdoHelpers.renderTemplateInNewNode(Template.change_email_dialog, data)
 
   dialog = bootbox.dialog
-    title: "Change Email"
+    title: TAPi18n.__ "edit_email_dialog_title"
     message: message_template.node
     className: "edit-email-dialog bootbox-new-design"
     rtl_ready: true
@@ -50,7 +50,7 @@ _editEmail = ->
 
     buttons:
       cancel:
-        label: "Cancel"
+        label: TAPi18n.__ "cancel"
 
         className: "btn-light"
 
@@ -58,7 +58,7 @@ _editEmail = ->
           return true
 
       submit:
-        label: "Change Email"
+        label: TAPi18n.__ "edit_email_dialog_confirm_btn_label"
 
         className: "btn-primary"
 
@@ -70,14 +70,14 @@ _editEmail = ->
           if email_is_valid_rv.get()
             if _.isEmpty(password = $("#new-email-password-confirmation").val())
               bootbox.alert
-                message: "Enter your password to change your email"
+                message: TAPi18n.__ "edit_email_dialog_enter_your_password_to_change_your_email"
                 className: "bootbox-new-design bootbox-new-design-simple-dialogs-default"
                 closeButton: false
 
               return false
 
             bootbox.confirm
-              message: "Are you sure you want to change your account email to: <b>#{email_rv.get()}</b>"
+              message: TAPi18n.__ "edit_email_dialog_are_you_sure_you_want_to_change_your_email",  {email: email_rv.get()}
               className: "bootbox-new-design bootbox-new-design-simple-dialogs-default"
               closeButton: false
 
@@ -128,7 +128,7 @@ Template.change_email_dialog.events
         return
 
       bootbox.alert
-        message: "<h4><b>An email sent with password reset instructions</b></h4><p>If you can't find the email, please check your spam folder.</p>"
+        message: TAPi18n.__ "edit_email_dialog_email_sent_with_password_reset_instructions"
         className: "bootbox-new-design bootbox-new-design-simple-dialogs-default"
         closeButton: false
 

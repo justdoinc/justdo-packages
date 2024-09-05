@@ -29,7 +29,7 @@
   "main_page_description": "Suteikite savo komandai galių su JustDo - saugia ir išplečiama projektų valdymo sistema. Mūsų prieinamo kodo platforma užtikrina skaidrumą ir pritaikomumą, su galingomis Gantt diagramomis, Kanban lentomis ir daugiau.",
   "edit": "Redaguoti",
   "search": "Ieškoti",
-  "add_btn_label": "PRIDĖTI",
+  "add": "Pridėti",
   "updated_with_time": "Atnaujinta __time__",
   "stop": "Sustabdyti",
   "generate": "Generuoti",
@@ -37,5 +37,12 @@
   "undo": "Atšaukti",
   "you": "jūs",
   "all": "Visi",
-  "none": "Nė vienas"
+  "none": "Nė vienas",
+  "save": "Išsaugoti",
+  "confirm": "Patvirtinti",
+  "send": "Siųsti",
+  "reject": "Atmesti",
+  "accept": "Priimti",
+  "take": "Paimti",
+  "keep": "Išlaikyti"
 }

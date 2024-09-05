@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "Promjena e-pošte",
+  "edit_email_dialog_confirm_btn_label": "Promijeni e-poštu",
+  "edit_email_dialog_current_email": "Trenutačna e-pošta",
+  "edit_email_dialog_new_email": "Nova e-pošta",
+  "edit_email_dialog_password": "Lozinka",
+  "edit_email_dialog_forgot_password": "Zaboravili ste lozinku?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "Unesite svoju lozinku za promjenu e-pošte",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "Jeste li sigurni da želite promijeniti e-poštu vašeg računa na: <b>__email__</b>?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>Poslan je e-mail s uputama za resetiranje lozinke</b></h4><p>Ako ne možete pronaći e-mail, provjerite mapu neželjene pošte.</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "Morate postaviti lozinku kako biste promijenili e-poštu"
+}

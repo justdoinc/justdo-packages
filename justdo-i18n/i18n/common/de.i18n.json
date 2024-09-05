@@ -29,7 +29,7 @@
   "main_page_description": "Stärken Sie Ihr Team mit JustDo, der sicheren und erweiterbaren Projektmanagement-Lösung. Unsere quelloffene Plattform bietet Transparenz und Anpassungsmöglichkeiten, mit leistungsstarken Gantt-Diagrammen, Kanban-Boards und mehr.",
   "edit": "Bearbeiten",
   "search": "Suchen",
-  "add_btn_label": "HINZUFÜGEN",
+  "add": "Hinzufügen",
   "updated_with_time": "Aktualisiert __time__",
   "stop": "Stopp",
   "generate": "Generieren",
@@ -37,5 +37,12 @@
   "undo": "Rückgängig",
   "you": "Sie",
   "all": "Alle",
-  "none": "Keine"
+  "none": "Keine",
+  "save": "Speichern",
+  "confirm": "Bestätigen",
+  "send": "Senden",
+  "reject": "Ablehnen",
+  "accept": "Akzeptieren",
+  "take": "Nehmen",
+  "keep": "Behalten"
 }

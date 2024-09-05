@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "D'Iwwerdroung vun der Besëtzschaft ofleenen vun",
+  "owners_mgmt_accept_transfer_from": "D'Iwwerdroung vun der Besëtzschaft akzeptéieren vun",
+  "owners_mgmt_cancel_transfer_to": "D'Iwwerdroung vun der Besëtzschaft ofbriechen zu",
+  "owners_mgmt_loading": "Gëtt gelueden...",
+  "owners_mgmt_transfer_ownership_to": "Besëtzschaft iwwerdroen un...",
+  "owners_mgmt_task_only_visible_to_you": "Dës Aufgab ass nëmme fir Iech siichtbar",
+  "owners_mgmt_take_ownership_from_removed_owner": "D'Besëtzschaft vum ewechgehollene Besëtzer iwwerhuelen",
+  "owners_mgmt_take_ownership_from": "D'Besëtzschaft iwwerhuelen vun",
+  "owners_mgmt_edit_task_members": "Aufgabememberen änneren",
+  "owners_mgmt_share_task": "Aufgab deelen",
+  "owners_mgmt_leave_a_reject_message": "Hannerloosst eng Ofleenung Noriicht",
+  "owners_mgmt_transfer_child_tasks_too": "D'Besëtzschaft vun __count__ Ënneraufgab och iwwerdroen?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "D'Besëtzschaft vun __count__ Ënneraufgaben och iwwerdroen?",
+  "owners_mgmt_transfer_child_tasks_done": "Iwwerdroung vun der Besëtzschaft vun __count__ Ënneraufgab ofgeschloss.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Iwwerdroung vun der Besëtzschaft vun __count__ Ënneraufgaben ofgeschloss.",
+  "owners_mgmt_transfer": "Iwwerdroen"
+}

@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Šī darbība aizņems aptuveni <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "Šī darbība aizņems līdz <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "Darbība ietekmē vairāk nekā <b>__count__</b> ierakstus, tāpēc tā aizņems laiku. Jūs varat sekot tās progresam dalībnieku rediģēšanas logā.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Jūs gatavojaties noņemt <b>__members_to_remove__</b> no <b>__count__</b> uzdevuma<br>Rezultātā jūs kļūsiet par visu šo lietotāju īpašumā esošo uzdevumu īpašnieku.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Jūs gatavojaties noņemt <b>__members_to_remove__</b> no <b>__count__</b> uzdevumiem<br>Rezultātā jūs kļūsiet par visu šo lietotāju īpašumā esošo uzdevumu īpašnieku.",
+  "confirm_edit_member_dialog_bulk_add_members": "Jūs gatavojaties piešķirt piekļuvi <b>__count__</b> uzdevumam šādiem lietotājiem: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Jūs gatavojaties piešķirt piekļuvi <b>__count__</b> uzdevumiem šādiem lietotājiem: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ un vēl viens lietotājs",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ un vēl __count__ lietotāji"
+}

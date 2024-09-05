@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "Электрондук почтаны өзгөртүү",
+  "edit_email_dialog_confirm_btn_label": "Электрондук почтаны өзгөртүү",
+  "edit_email_dialog_current_email": "Учурдагы электрондук почта",
+  "edit_email_dialog_new_email": "Жаңы электрондук почта",
+  "edit_email_dialog_password": "Сырсөз",
+  "edit_email_dialog_forgot_password": "Сырсөзүңүздү унуттуңузбу?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "Электрондук почтаңызды өзгөртүү үчүн сырсөзүңүздү киргизиңиз",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "Аккаунтуңуздун электрондук почтасын <b>__email__</b> дарегине өзгөртүүнү каалайсызбы?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>Сырсөздү калыбына келтирүү нускамалары менен электрондук кат жөнөтүлдү</b></h4><p>Эгер электрондук катты таба албасаңыз, спам папкаңызды текшериңиз.</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "Электрондук почтаңызды өзгөртүү үчүн сырсөз коюшуңуз керек"
+}

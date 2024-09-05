@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Denna åtgärd kommer att ta ungefär <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "Denna åtgärd kommer att ta upp till <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "Åtgärden påverkar mer än <b>__count__</b> poster och kommer därför att ta en stund. Du kan följa dess framsteg i fönstret för medlemsredigering.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Du är på väg att ta bort <b>__members_to_remove__</b> från <b>__count__</b> uppgift<br>Som ett resultat kommer du att bli ägare till alla uppgifter som ägs av dessa användare.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Du är på väg att ta bort <b>__members_to_remove__</b> från <b>__count__</b> uppgifter<br>Som ett resultat kommer du att bli ägare till alla uppgifter som ägs av dessa användare.",
+  "confirm_edit_member_dialog_bulk_add_members": "Du är på väg att ge åtkomst till <b>__count__</b> uppgift för: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Du är på väg att ge åtkomst till <b>__count__</b> uppgifter för: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ och en annan användare",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ och ytterligare __count__ användare"
+}

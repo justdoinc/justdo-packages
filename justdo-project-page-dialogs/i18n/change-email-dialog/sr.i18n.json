@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "Промена имејла",
+  "edit_email_dialog_confirm_btn_label": "Промени имејл",
+  "edit_email_dialog_current_email": "Тренутни имејл",
+  "edit_email_dialog_new_email": "Нови имејл",
+  "edit_email_dialog_password": "Лозинка",
+  "edit_email_dialog_forgot_password": "Заборавили сте лозинку?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "Унесите своју лозинку да бисте променили имејл",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "Да ли сте сигурни да желите да промените имејл адресу вашег налога на: <b>__email__</b>?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>Послат је имејл са упутствима за ресетовање лозинке</b></h4><p>Ако не можете да пронађете имејл, проверите фолдер за нежељену пошту.</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "Морате поставити лозинку да бисте променили имејл"
+}

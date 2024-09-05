@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Dës Operatioun wäert ongeféier <u>__min_time_to_process__</u> daueren",
+  "confirm_edit_member_dialog_max_time_to_process": "Dës Operatioun wäert bis zu <u>__max_time_to_process__</u> daueren",
+  "confirm_edit_member_dialog_batch_process_msg": "D'Operatioun beaflosst méi wéi <b>__count__</b> Entréeën an wäert dofir eng Zäitchen daueren. Dir kënnt de Fortschrëtt am Fënster fir d'Beaarbechtung vun de Memberen verfollegen.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Dir sidd am Gaang <b>__members_to_remove__</b> vun <b>__count__</b> Aufgab ze läschen.<br>Als Resultat gitt Dir den Eegentemer vun all den Aufgaben, déi dës Benotzer besëtzen.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Dir sidd am Gaang <b>__members_to_remove__</b> vun <b>__count__</b> Aufgaben ze läschen.<br>Als Resultat gitt Dir den Eegentemer vun all den Aufgaben, déi dës Benotzer besëtzen.",
+  "confirm_edit_member_dialog_bulk_add_members": "Dir sidd am Gaang <b>__members_to_add__</b> Zougang zu <b>__count__</b> Aufgab ze ginn.",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Dir sidd am Gaang <b>__members_to_add__</b> Zougang zu <b>__count__</b> Aufgaben ze ginn.",
+  "confirm_edit_member_dialog_and_other_users": "__users__ an een anere Benotzer",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ an aner __count__ Benotzer"
+}

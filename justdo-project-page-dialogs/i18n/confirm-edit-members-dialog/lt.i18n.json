@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Ši operacija užtruks apie <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "Ši operacija užtruks iki <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "Operacija paveikia daugiau nei <b>__count__</b> įrašų, todėl užtruks kurį laiką. Galite stebėti jos eigą narių redagavimo lange.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Jūs ketinate pašalinti <b>__members_to_remove__</b> iš <b>__count__</b> užduoties<br>Dėl to tapsite visų užduočių, kurios priklausė šiems vartotojams, savininku.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Jūs ketinate pašalinti <b>__members_to_remove__</b> iš <b>__count__</b> užduočių<br>Dėl to tapsite visų užduočių, kurios priklausė šiems vartotojams, savininku.",
+  "confirm_edit_member_dialog_bulk_add_members": "Jūs ketinate suteikti prieigą prie <b>__count__</b> užduoties šiems nariams: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Jūs ketinate suteikti prieigą prie <b>__count__</b> užduočių šiems nariams: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ ir dar vienas vartotojas",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ ir dar __count__ vartotojų"
+}

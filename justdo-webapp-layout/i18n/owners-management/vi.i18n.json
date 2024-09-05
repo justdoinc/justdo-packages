@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Từ chối chuyển quyền sở hữu từ",
+  "owners_mgmt_accept_transfer_from": "Chấp nhận chuyển quyền sở hữu từ",
+  "owners_mgmt_cancel_transfer_to": "Hủy chuyển quyền sở hữu cho",
+  "owners_mgmt_loading": "Đang tải...",
+  "owners_mgmt_transfer_ownership_to": "Chuyển quyền sở hữu cho...",
+  "owners_mgmt_task_only_visible_to_you": "Chỉ bạn mới nhìn thấy công việc này",
+  "owners_mgmt_take_ownership_from_removed_owner": "Nhận quyền sở hữu từ chủ sở hữu đã bị xóa",
+  "owners_mgmt_take_ownership_from": "Nhận quyền sở hữu từ",
+  "owners_mgmt_edit_task_members": "Chỉnh sửa thành viên công việc",
+  "owners_mgmt_share_task": "Chia sẻ công việc",
+  "owners_mgmt_leave_a_reject_message": "Để lại tin nhắn từ chối",
+  "owners_mgmt_transfer_child_tasks_too": "Chuyển quyền sở hữu của __count__ công việc con cùng lúc?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Chuyển quyền sở hữu của __count__ công việc con cùng lúc?",
+  "owners_mgmt_transfer_child_tasks_done": "Đã xử lý chuyển quyền sở hữu của __count__ công việc con.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Đã xử lý chuyển quyền sở hữu của __count__ công việc con.",
+  "owners_mgmt_transfer": "Chuyển giao"
+}

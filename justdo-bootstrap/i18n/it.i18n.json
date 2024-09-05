@@ -1,0 +1,13 @@
+{
+  "themes_selector_config_title": "Selettore dei Temi",
+  "themes_selector_label": "Tema di JustDo",
+  "themes_selector_default": "Blu Scuro Uniforme (predefinito)",
+  "themes_selector_solid_blue": "Blu Uniforme",
+  "themes_selector_solid_dark": "Scuro Uniforme",
+  "themes_selector_solid_dark_green": "Verde Scuro Uniforme",
+  "themes_selector_solid_purple": "Viola Uniforme",
+  "themes_selector_solid": "Verde Uniforme",
+  "themes_selector_solid_orange": "Arancione Uniforme",
+  "themes_selector_classic": "Classico",
+  "themes_selector_unicorn": "Unicorno"
+}

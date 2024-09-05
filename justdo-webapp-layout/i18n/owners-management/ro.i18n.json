@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Respinge transferul de proprietate de la",
+  "owners_mgmt_accept_transfer_from": "Acceptă transferul de proprietate de la",
+  "owners_mgmt_cancel_transfer_to": "Anulează transferul de proprietate către",
+  "owners_mgmt_loading": "Se încarcă...",
+  "owners_mgmt_transfer_ownership_to": "Transferă proprietatea către...",
+  "owners_mgmt_task_only_visible_to_you": "Această sarcină este vizibilă doar pentru tine",
+  "owners_mgmt_take_ownership_from_removed_owner": "Preia proprietatea de la proprietarul eliminat",
+  "owners_mgmt_take_ownership_from": "Preia proprietatea de la",
+  "owners_mgmt_edit_task_members": "Editează membrii sarcinii",
+  "owners_mgmt_share_task": "Partajează sarcina",
+  "owners_mgmt_leave_a_reject_message": "Lasă un mesaj de respingere",
+  "owners_mgmt_transfer_child_tasks_too": "Transferă și proprietatea pentru __count__ sarcină subordonată?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Transferă și proprietatea pentru __count__ sarcini subordonate?",
+  "owners_mgmt_transfer_child_tasks_done": "Transferul de proprietate pentru __count__ sarcină subordonată a fost procesat.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Transferul de proprietate pentru __count__ sarcini subordonate a fost procesat.",
+  "owners_mgmt_transfer": "Transferă"
+}

@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Bu operatsiya taxminan <u>__min_time_to_process__</u> vaqt oladi",
+  "confirm_edit_member_dialog_max_time_to_process": "Bu operatsiya ko'pi bilan <u>__max_time_to_process__</u> vaqt oladi",
+  "confirm_edit_member_dialog_batch_process_msg": "Operatsiya <b>__count__</b> dan ortiq yozuvlarga ta'sir qiladi, shuning uchun biroz vaqt oladi. Siz uning jarayonini a'zolarni tahrirlash oynasida kuzatib borishingiz mumkin.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Siz <b>__count__</b> vazifadan <b>__members_to_remove__</b> ni olib tashlamoqchisiz<br>Natijada, siz ushbu foydalanuvchilarga tegishli barcha vazifalarning egasiga aylanasiz.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Siz <b>__count__</b> vazifadan <b>__members_to_remove__</b> ni olib tashlamoqchisiz<br>Natijada, siz ushbu foydalanuvchilarga tegishli barcha vazifalarning egasiga aylanasiz.",
+  "confirm_edit_member_dialog_bulk_add_members": "Siz <b>__count__</b> vazifaga kirish huquqini quyidagilarga bermoqchisiz: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Siz <b>__count__</b> vazifaga kirish huquqini quyidagilarga bermoqchisiz: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ va yana bir foydalanuvchi",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ va yana __count__ foydalanuvchilar"
+}

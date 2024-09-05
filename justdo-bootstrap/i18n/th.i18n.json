@@ -1,0 +1,13 @@
+{
+  "themes_selector_config_title": "ตัวเลือกธีม",
+  "themes_selector_label": "ธีมของ JustDo",
+  "themes_selector_default": "สีน้ำเงินเข้มทึบ (ค่าเริ่มต้น)",
+  "themes_selector_solid_blue": "สีน้ำเงินทึบ",
+  "themes_selector_solid_dark": "สีเข้มทึบ",
+  "themes_selector_solid_dark_green": "สีเขียวเข้มทึบ",
+  "themes_selector_solid_purple": "สีม่วงทึบ",
+  "themes_selector_solid": "สีเขียวทึบ",
+  "themes_selector_solid_orange": "สีส้มทึบ",
+  "themes_selector_classic": "แบบคลาสสิก",
+  "themes_selector_unicorn": "ยูนิคอร์น"
+}

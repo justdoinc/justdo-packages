@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Отхвърляне на прехвърляне на собственост от",
+  "owners_mgmt_accept_transfer_from": "Приемане на прехвърляне на собственост от",
+  "owners_mgmt_cancel_transfer_to": "Отмяна на прехвърляне на собственост към",
+  "owners_mgmt_loading": "Зареждане...",
+  "owners_mgmt_transfer_ownership_to": "Прехвърляне на собственост към...",
+  "owners_mgmt_task_only_visible_to_you": "Тази задача е видима само за вас",
+  "owners_mgmt_take_ownership_from_removed_owner": "Поемане на собствеността от премахнат собственик",
+  "owners_mgmt_take_ownership_from": "Поемане на собствеността от",
+  "owners_mgmt_edit_task_members": "Редактиране на участниците в задачата",
+  "owners_mgmt_share_task": "Споделяне на задача",
+  "owners_mgmt_leave_a_reject_message": "Оставете съобщение за отхвърляне",
+  "owners_mgmt_transfer_child_tasks_too": "Да се прехвърли ли собствеността и на __count__ подзадача?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Да се прехвърли ли собствеността и на __count__ подзадачи?",
+  "owners_mgmt_transfer_child_tasks_done": "Прехвърлянето на собствеността на __count__ подзадача е обработено.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Прехвърлянето на собствеността на __count__ подзадачи е обработено.",
+  "owners_mgmt_transfer": "Прехвърляне"
+}

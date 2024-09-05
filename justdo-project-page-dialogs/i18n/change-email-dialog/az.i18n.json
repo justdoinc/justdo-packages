@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "E-poçtu dəyişdirin",
+  "edit_email_dialog_confirm_btn_label": "E-poçtu dəyişdirin",
+  "edit_email_dialog_current_email": "Cari e-poçt",
+  "edit_email_dialog_new_email": "Yeni e-poçt",
+  "edit_email_dialog_password": "Şifrə",
+  "edit_email_dialog_forgot_password": "Şifrənizi unutmusunuz?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "E-poçtunuzu dəyişdirmək üçün şifrənizi daxil edin",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "Hesabınızın e-poçtunu <b>__email__</b> ünvanına dəyişdirmək istədiyinizə əminsiniz?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>Şifrə sıfırlama təlimatları ilə e-poçt göndərildi</b></h4><p>E-poçtu tapa bilmirsinizsə, zəhmət olmasa spam qovluğunuzu yoxlayın.</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "E-poçtunuzu dəyişdirmək üçün şifrə təyin etməlisiniz"
+}

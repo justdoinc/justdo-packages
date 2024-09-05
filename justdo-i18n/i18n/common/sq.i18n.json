@@ -29,7 +29,7 @@
   "main_page_description": "Fuqizoni ekipin tuaj me JustDo, zgjidhja e sigurt dhe e zgjërueshme për menaxhimin e projekteve. Platforma jonë me burim të hapur ofron transparencë dhe përshtatje, me grafikë Gantt të fuqishëm, tabelat Kanban dhe më shumë.",
   "edit": "Ndrysho",
   "search": "Kërko",
-  "add_btn_label": "SHTO",
+  "add": "Shto",
   "updated_with_time": "Përditësuar __time__",
   "stop": "Ndalo",
   "generate": "Gjenero",
@@ -37,5 +37,12 @@
   "undo": "Zhbëj",
   "you": "ju",
   "all": "Të gjitha",
-  "none": "Asnjë"
+  "none": "Asnjë",
+  "save": "Ruaj",
+  "confirm": "Konfirmo",
+  "send": "Dërgo",
+  "reject": "Refuzo",
+  "accept": "Prano",
+  "take": "Merr",
+  "keep": "Mbaj"
 }

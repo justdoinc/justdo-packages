@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "更改邮箱",
+  "edit_email_dialog_confirm_btn_label": "更改邮箱",
+  "edit_email_dialog_current_email": "当前邮箱",
+  "edit_email_dialog_new_email": "新邮箱",
+  "edit_email_dialog_password": "密码",
+  "edit_email_dialog_forgot_password": "忘记密码？",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "输入您的密码以更改邮箱",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "您确定要将您的账户邮箱更改为：<b>__email__</b>吗？",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>已发送包含密码重置说明的邮件</b></h4><p>如果您找不到该邮件，请检查您的垃圾邮件文件夹。</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "您必须设置密码才能更改邮箱"
+}

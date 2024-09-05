@@ -1,0 +1,13 @@
+{
+  "themes_selector_config_title": "Sélecteur de thèmes",
+  "themes_selector_label": "Thème JustDo",
+  "themes_selector_default": "Bleu foncé uni (par défaut)",
+  "themes_selector_solid_blue": "Bleu uni",
+  "themes_selector_solid_dark": "Foncé uni",
+  "themes_selector_solid_dark_green": "Vert foncé uni",
+  "themes_selector_solid_purple": "Violet uni",
+  "themes_selector_solid": "Vert uni",
+  "themes_selector_solid_orange": "Orange uni",
+  "themes_selector_classic": "Classique",
+  "themes_selector_unicorn": "Licorne"
+}

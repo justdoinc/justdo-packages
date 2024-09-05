@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "Тағйир додани почтаи электронӣ",
+  "edit_email_dialog_confirm_btn_label": "Тағйир додани почтаи электронӣ",
+  "edit_email_dialog_current_email": "Почтаи электронии ҷорӣ",
+  "edit_email_dialog_new_email": "Почтаи электронии нав",
+  "edit_email_dialog_password": "Рамз",
+  "edit_email_dialog_forgot_password": "Рамзро фаромӯш кардед?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "Барои тағйир додани почтаи электронӣ рамзи худро ворид кунед",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "Оё шумо мутмаин ҳастед, ки мехоҳед почтаи электронии ҳисоби худро ба: <b>__email__</b> тағйир диҳед?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>Паёми электронӣ бо дастурҳои барқарорсозии рамз фиристода шуд</b></h4><p>Агар шумо паёмро пайдо карда натавонед, лутфан папкаи спамро санҷед.</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "Барои тағйир додани почтаи электронӣ, шумо бояд рамз таъин кунед"
+}

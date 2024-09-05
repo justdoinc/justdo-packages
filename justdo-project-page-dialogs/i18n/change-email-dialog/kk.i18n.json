@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "Электрондық поштаны өзгерту",
+  "edit_email_dialog_confirm_btn_label": "Электрондық поштаны өзгерту",
+  "edit_email_dialog_current_email": "Ағымдағы электрондық пошта",
+  "edit_email_dialog_new_email": "Жаңа электрондық пошта",
+  "edit_email_dialog_password": "Құпия сөз",
+  "edit_email_dialog_forgot_password": "Құпия сөзіңізді ұмыттыңыз ба?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "Электрондық поштаңызды өзгерту үшін құпия сөзіңізді енгізіңіз",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "Аккаунтыңыздың электрондық поштасын <b>__email__</b> мекенжайына өзгерткіңіз келетініне сенімдісіз бе?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>Құпия сөзді қалпына келтіру нұсқаулары бар электрондық хат жіберілді</b></h4><p>Егер хатты таба алмасаңыз, спам қалтасын тексеріңіз.</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "Электрондық поштаңызды өзгерту үшін құпия сөз орнатуыңыз керек"
+}

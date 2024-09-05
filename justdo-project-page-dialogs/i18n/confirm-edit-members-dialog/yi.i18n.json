@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "די אפעראציע וועט נעמען ארום <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "די אפעראציע וועט נעמען ביז <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "די אפעראציע באווירקט מער ווי <b>__count__</b> רעקארדן און וועט דעריבער נעמען א וויילע. איר קענט נאכפאלגן דעם פארשריט אין דעם מיטגלידער רעדאגירן פענצטער.",
+  "confirm_edit_member_dialog_bulk_remove_members": "איר גייט אוועקנעמען <b>__members_to_remove__</b> פון <b>__count__</b> אויפגאבע<br>אלס רעזולטאט וועט איר ווערן דער אייגנטימער פון אלע אויפגאבעס וואס געהערן צו די באניצערס.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "איר גייט אוועקנעמען <b>__members_to_remove__</b> פון <b>__count__</b> אויפגאבעס<br>אלס רעזולטאט וועט איר ווערן דער אייגנטימער פון אלע אויפגאבעס וואס געהערן צו די באניצערס.",
+  "confirm_edit_member_dialog_bulk_add_members": "איר גייט געבן צוטריט צו <b>__count__</b> אויפגאבע פאר: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "איר גייט געבן צוטריט צו <b>__count__</b> אויפגאבעס פאר: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ און נאך א באניצער",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ און נאך __count__ באניצערס"
+}

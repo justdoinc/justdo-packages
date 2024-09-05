@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Odbij prenos vlasništva od",
+  "owners_mgmt_accept_transfer_from": "Prihvati prenos vlasništva od",
+  "owners_mgmt_cancel_transfer_to": "Otkaži prenos vlasništva za",
+  "owners_mgmt_loading": "Učitavanje...",
+  "owners_mgmt_transfer_ownership_to": "Prenesi vlasništvo na...",
+  "owners_mgmt_task_only_visible_to_you": "Ovaj zadatak je vidljiv samo vama",
+  "owners_mgmt_take_ownership_from_removed_owner": "Preuzmi vlasništvo od uklonjenog vlasnika",
+  "owners_mgmt_take_ownership_from": "Preuzmi vlasništvo od",
+  "owners_mgmt_edit_task_members": "Uredi članove zadatka",
+  "owners_mgmt_share_task": "Podeli zadatak",
+  "owners_mgmt_leave_a_reject_message": "Ostavi poruku odbijanja",
+  "owners_mgmt_transfer_child_tasks_too": "Preneti vlasništvo i nad __count__ podzadatkom?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Preneti vlasništvo i nad __count__ podzadataka?",
+  "owners_mgmt_transfer_child_tasks_done": "Prenos vlasništva nad __count__ podzadatkom je obrađen.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Prenos vlasništva nad __count__ podzadataka je obrađen.",
+  "owners_mgmt_transfer": "Prenesi"
+}

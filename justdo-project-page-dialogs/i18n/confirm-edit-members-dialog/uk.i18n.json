@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Ця операція займе приблизно <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "Ця операція займе до <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "Операція впливає на більш ніж <b>__count__</b> записів, тому займе деякий час. Ви можете відстежувати її прогрес у вікні редагування учасників.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Ви збираєтеся видалити <b>__members_to_remove__</b> з <b>__count__</b> завдання<br>У результаті ви станете власником усіх завдань, якими володіли ці користувачі.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Ви збираєтеся видалити <b>__members_to_remove__</b> з <b>__count__</b> завдань<br>У результаті ви станете власником усіх завдань, якими володіли ці користувачі.",
+  "confirm_edit_member_dialog_bulk_add_members": "Ви збираєтеся надати доступ до <b>__count__</b> завдання для: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Ви збираєтеся надати доступ до <b>__count__</b> завдань для: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ та ще один користувач",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ та ще __count__ користувачів"
+}

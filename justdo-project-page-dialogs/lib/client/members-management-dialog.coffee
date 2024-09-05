@@ -62,22 +62,22 @@ APP.executeAfterAppLibCode ->
     if proceed_type == "remove_self"
       for user in keep_users
         if user._id != Meteor.userId()
-          addDisabledReason(user, "You can't remove yourself and other users at the same time.")
+          addDisabledReason(user, "members_mgmt_dialog_cant_remove_self_and_other_users")
       for user in add_users
         if user._id != Meteor.userId()
-          addDisabledReason(user, "You can't remove yourself and other users at the same time.")
+          addDisabledReason(user, "members_mgmt_dialog_cant_remove_self_and_other_users")
     else if proceed_type == "remove_others"
       for user in keep_users
         if user._id == Meteor.userId()
-          addDisabledReason(user, "You can't remove yourself and other users at the same time.")
+          addDisabledReason(user, "members_mgmt_dialog_cant_remove_self_and_other_users")
       for user in add_users
         if user._id == Meteor.userId()
-          addDisabledReason(user, "You can't remove yourself and other users at the same time.")
+          addDisabledReason(user, "members_mgmt_dialog_cant_remove_self_and_other_users")
     else
       for user in keep_users
-        deleteDisabledReason(user, "You can't remove yourself and other users at the same time.")
+        deleteDisabledReason(user, "members_mgmt_dialog_cant_remove_self_and_other_users")
       for user in add_users
-        deleteDisabledReason(user, "You can't remove yourself and other users at the same time.")
+        deleteDisabledReason(user, "members_mgmt_dialog_cant_remove_self_and_other_users")
 
     proceed_type_rv.set(proceed_type)
 
@@ -148,16 +148,16 @@ APP.executeAfterAppLibCode ->
 
   addDisabledReasonIfNeccessary = (users, task_id) ->
     if users.length is 1
-      addDisabledReason(users[0], "You are the last member of this task hence you cannot remove yourself from it")
+      addDisabledReason(users[0], "members_mgmt_dialog_cant_remove_self_only_member")
       return users
 
     for user in users
       if user._id == Meteor.userId()
         is_owner_result = _isOwnerOfAnySubTask(task_id)
         if is_owner_result == 1
-          addDisabledReason(user, "You are the owner of this task hence you cannot remove yourself from it")
+          addDisabledReason(user, "members_mgmt_dialog_cant_remove_self_task_owner")
         else if is_owner_result == 2
-          addDisabledReason(user, "You own some tasks in the sub-tree hence you cannot remove yourself")
+          addDisabledReason(user, "members_mgmt_dialog_cant_remove_self_subtree_owner")
 
     return users
 
@@ -170,12 +170,12 @@ APP.executeAfterAppLibCode ->
     users = _.uniq(augmented_task_doc.users or [])
 
     if not (item_users = users)?
-      throw project_page_module._error("unknown-data-context", "can't determine current task users")
+      throw project_page_module._error("unknown-data-context", TAPi18n.__("members_mgmt_dialog_cant_determine_task_users"))
 
     _users_to_keep = item_users
 
     if not (project_members = (project = project_page_module.curProj())?.getMembersIds({if_justdo_guest_include_ancestors_members_of_items: task_id}))?
-      throw project_page_module._error("unknown-data-context", "can't determine project members")
+      throw project_page_module._error("unknown-data-context", TAPi18n.__("members_mgmt_dialog_cant_determine_project_members"))
     _users_to_add = _.difference project_members, item_users
 
     users_lists_already_exist = Tracker.nonreactive -> users_to_keep.get()?
@@ -339,21 +339,21 @@ APP.executeAfterAppLibCode ->
           action_id: "add-users"
           caption: TAPi18n.__ "member_management_dialog_add_members"
           action_users_reactive_var: users_to_add
-          proceed_message: "Add"
-          dont_proceed_message: "Don't add"
+          proceed_message: TAPi18n.__ "add"
+          dont_proceed_message: TAPi18n.__ "members_mgmt_dialog_dont_add"
           proceed_status_fa_icon: "fa-check"
           dont_proceed_status_fa_icon: null
-          no_members_msg: "No members to add"
+          no_members_msg: TAPi18n.__ "members_mgmt_dialog_no_members_to_add"
         },
         {
           action_id: "keep-users"
           caption: TAPi18n.__ "members_management_dialog_keep_members"
           action_users_reactive_var: users_to_keep
-          proceed_message: "Keep"
-          dont_proceed_message: "Remove"
+          proceed_message: TAPi18n.__ "keep"
+          dont_proceed_message: TAPi18n.__ "remove"
           proceed_status_fa_icon: null
           dont_proceed_status_fa_icon: "fa-times"
-          no_members_msg: "This task is visible only to you, select members to share"
+          no_members_msg: TAPi18n.__ "members_mgmt_dialog_this_task_only_visible_to_you"
         }
       ]
     cascade: -> cascade.get()
@@ -373,30 +373,21 @@ APP.executeAfterAppLibCode ->
       displayName = JustdoHelpers.displayName # shortcut
 
       if (removing_current_task_owner = _notes?.removing_current_task_owner)?
-        notes_messages.push "<strong>#{displayName(@owner_id)}</strong> is <strong>task ##{@seqId}</strong> owner. Following the membership cancellation, you will become the task owner."
+        notes_messages.push TAPi18n.__ "members_mgmt_dialog_removing_current_task_owner", {current_owner: displayName(@owner_id), seqId: @seqId}
 
       if _notes?.removing_self
-        notes_messages.push "You're removing yourself from <strong>task ##{@seqId}</strong>. You won't be able to undo this action."
+        notes_messages.push TAPi18n.__ "members_mgmt_dialog_removing_self", {seqId: @seqId}
+
       if (subtasks_owners_ids_pending_removal = _notes?.subtasks_owners_ids_pending_removal)?
         subtasks_owners_ids_pending_removal = _.keys subtasks_owners_ids_pending_removal
 
-        if subtasks_owners_ids_pending_removal.length == 1
-          notes_messages.push "<strong>#{displayName(subtasks_owners_ids_pending_removal[0])}</strong> is an owner of some sub-tasks. Following the membership cancellation you will become the owner of these tasks."
+        if (amount_of_subtask_owners_pending_removal = subtasks_owners_ids_pending_removal.length) == 1
+          notes_messages.push TAPi18n.__ "members_mgmt_dialog_removing_subtree_owner", {subtree_owner: displayName(subtasks_owners_ids_pending_removal[0]), count: amount_of_subtask_owners_pending_removal}
         else
-          message = ""
-
-          for user_id, index in subtasks_owners_ids_pending_removal
-            if index == subtasks_owners_ids_pending_removal.length - 1
-              message += ", and #{displayName(user_id)}"
-            else
-              if index != 0
-                message += ", "
-
-              message += displayName(user_id)
-
-          message += " are owners of some sub-tasks. Following their membership cancellation you will become the owner of all these sub-tasks."
-
-          notes_messages.push message
+          subtask_owners = _.map subtasks_owners_ids_pending_removal, (user_id) -> displayName(user_id)
+          last_subtask_owner = subtask_owners.pop()
+          subtask_owners = subtask_owners.join " ,"
+          notes_messages.push TAPi18n.__ "members_mgmt_dialog_removing_subtree_owner_plural", {subtree_owners: subtask_owners, last_subtree_owner: last_subtask_owner, count: amount_of_subtask_owners_pending_removal}
 
       return notes_messages
 
@@ -520,20 +511,20 @@ APP.executeAfterAppLibCode ->
 
     showYouIfIsOwner: ->
       if Template.instance().user_doc._id == Meteor.userId()
-        return "(You)"
+        return TAPi18n.__ "members_mgmt_dialog_you"
 
       return ""
 
     disabledReason: ->
       @disabled_reasons_dep.depend()
-      return @disabled_reasons.values().next().value
+      return TAPi18n.__ @disabled_reasons.values().next().value
 
 
   Template.task_pane_item_details_members_editor_user_btn.events
     "click .user-btn": (e, tpl) ->
       if (disabled_reason = @disabled_reasons.values().next().value)
         JustdoSnackbar.show
-          text: disabled_reason
+          text: TAPi18n.__ disabled_reason
         return
 
       clicked_user_id = @_id
@@ -562,9 +553,10 @@ APP.executeAfterAppLibCode ->
       APP.helpers.renderTemplateInNewNode(Template.task_pane_item_details_members_editor, task_doc)
 
     bootbox.dialog
-      title: "Edit Task Members"
+      title: TAPi18n.__ "members_mgmt_dialog_title"
       message: message_template.node
       animate: false
+      rtl_ready: true
       className: "members-editor-dialog bootbox-new-design"
 
       onEscape: ->
@@ -572,7 +564,7 @@ APP.executeAfterAppLibCode ->
 
       buttons:
         cancel:
-          label: "Cancel"
+          label: TAPi18n.__ "cancel"
 
           className: "btn-light"
 
@@ -580,7 +572,7 @@ APP.executeAfterAppLibCode ->
             return true
 
         submit:
-          label: "Save"
+          label: TAPi18n.__ "save"
           callback: =>
             project = project_page_module.curProj()
 
@@ -639,11 +631,12 @@ APP.executeAfterAppLibCode ->
 
             if has_sub_sub_tasks_and_more_then_confirm_task_count or crossed_immediate_execution_threshold
               bootbox.confirm
+                rtl_ready: true
                 className: "bootbox-new-design bootbox-new-design-simple-dialogs-default confirm-edit-members"
-                title: "Confirm edit members"
+                title: TAPi18n.__ "members_mgmt_dialog_confirm_edit_members"
                 buttons:
                   confirm:
-                    label: "Confirm"
+                    label: TAPi18n.__ "confirm"
                 message: JustdoHelpers.renderTemplateInNewNode(Template.confirm_edit_members_dialog, {
                   members_to_remove: if members_to_remove.length > 0 then members_to_remove else null
                   members_to_add: if members_to_add.length > 0 then members_to_add else null
@@ -674,7 +667,10 @@ APP.executeAfterAppLibCode ->
     recentBatchedOpsCount: -> APP.collections.DBMigrationBatchedCollectionUpdates.find(getBatchedCollectionUpdatesQuery()).fetch().length
     isInProgress: -> @process_status is "in-progress"
     processedPercent: -> Math.floor((@process_status_details.processed / @process_status_details.total) * 100)
-    detailedProcessed: -> """Processed #{JustdoHelpers.localeAwareNumberRepresentation parseInt(@process_status_details.processed, 10)} tasks out of #{JustdoHelpers.localeAwareNumberRepresentation parseInt(@process_status_details.total, 10)}"""
+    detailedProcessed: -> 
+      num_processed = @process_status_details.processed
+      total_amount = @process_status_details.total
+      return TAPi18n.__ "members_mgmt_dialog_detailed_progress", {num_processed, total_amount}
 
     opsMessage: ->
       op_object = @
@@ -701,59 +697,39 @@ APP.executeAfterAppLibCode ->
 
       if Meteor.userId() in members_to_remove
         # When the user himself is removed, he'll always be the only one involved in the operation
-        message_arr.push "Removing You from #{JustdoHelpers.localeAwareNumberRepresentation parseInt(total_tasks_in_job, 10)} tasks"
+        message_arr.push TAPi18n.__("members_mgmt_dialog_removing_operating_user", {count: total_tasks_in_job})
 
         return getMessage()
 
       message_arr.push "<div class='recent-batched-msg-text'>"
 
       if members_to_add.length > 0 and members_to_remove.length > 0
-        message_arr.push "Adding #{members_to_add.length} and removing #{members_to_remove.length} members from"
+        message_arr.push TAPi18n.__("members_mgmt_dialog_adding_and_removing_user", {add_count: members_to_add.length, remove_count: members_to_remove.length, tasks_count: total_tasks_in_job})
       else
         if members_to_add.length > 0
-          message_arr.push "Adding #{members_to_add.length}"
+          message_arr.push TAPi18n.__("members_mgmt_dialog_adding_user", {count: members_to_add.length, tasks_count: total_tasks_in_job})
         if members_to_remove.length > 0
-          message_arr.push "Removing #{members_to_remove.length}"
-
-        if (members_to_add.length + members_to_remove.length) > 1
-          message_arr.push "members"
-        else
-          message_arr.push "member"
-
-        if members_to_add.length > 0
-          message_arr.push "to"
-        if members_to_remove.length > 0
-          message_arr.push "from"
-
-      message_arr.push "#{JustdoHelpers.localeAwareNumberRepresentation parseInt(total_tasks_in_job, 10)} tasks"
+          message_arr.push TAPi18n.__("members_mgmt_dialog_removing_user", {count: members_to_remove.length, tasks_count: total_tasks_in_job})
 
       if tasks_to_list_by_their_name.length > 0
-        if tasks_to_list_by_their_name.length == 1
-          message_arr.push "under task"
-        else
-          message_arr.push "under tasks"
-
-        message_arr.push _.map(tasks_to_list_by_their_name, (task_id) -> "<span class='task'>#{JustdoHelpers.taskCommonName(APP.collections.Tasks.findOne(task_id), 50)}</span>").join(", ")
+        message_arr.push TAPi18n.__("members_mgmt_dialog_under_task", {count: tasks_to_list_by_their_name.length, task_name: _.map(tasks_to_list_by_their_name, (task_id) -> "<span class='task'>#{JustdoHelpers.taskCommonName(APP.collections.Tasks.findOne(task_id), 50)}</span>").join(", ")})
 
         if tasks_werent_included_in_the_list_count > 0
-          if tasks_werent_included_in_the_list_count == 1
-            message_arr.push "and one other task"
-          else
-            message_arr.push "and #{tasks_werent_included_in_the_list_count} other tasks"
+          message_arr.push TAPi18n.__("members_mgmt_dialog_and_other_task", {count: tasks_werent_included_in_the_list_count})
 
       message_arr.push "</div>"
 
       if (process_status = op_object.process_status) == "pending"
-        message_arr.push """<div title="About to begin"><svg class="jd-icon about-to-begin"><use xlink:href="/layout/icons-feather-sprite.svg#clock"></use></svg></div>"""
+        message_arr.push """<div title="#{TAPi18n.__ "members_mgmt_dialog_about_to_begin"}"><svg class="jd-icon about-to-begin"><use xlink:href="/layout/icons-feather-sprite.svg#clock"></use></svg></div>"""
 
       if process_status == "done"
-        message_arr.push """<div title="Done"><svg class="jd-icon done"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg></div>"""
+        message_arr.push """<div title="#{TAPi18n.__ "done"}"><svg class="jd-icon done"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg></div>"""
 
       if process_status == "terminated"
-        message_arr.push """<div title="Terminated"><svg class="jd-icon terminated"><use xlink:href="/layout/icons-feather-sprite.svg#alert-circle"></use></svg></div>"""
+        message_arr.push """<div title="#{TAPi18n.__ "members_mgmt_dialog_terminated"}"><svg class="jd-icon terminated"><use xlink:href="/layout/icons-feather-sprite.svg#alert-circle"></use></svg></div>"""
 
       if process_status == "error"
-        message_arr.push """<div title="Failed to process. Error code: #{op_object.process_status_details?.error_data?.code}"><svg class="jd-icon error"><use xlink:href="/layout/icons-feather-sprite.svg#slash"></use></svg></div>"""
+        message_arr.push """<div title="#{TAPi18n.__ "members_mgmt_dialog_error", {error_code: op_object.process_status_details?.error_data?.code}}"><svg class="jd-icon error"><use xlink:href="/layout/icons-feather-sprite.svg#slash"></use></svg></div>"""
 
       return getMessage()
 
@@ -763,8 +739,8 @@ APP.executeAfterAppLibCode ->
 
       bootbox.confirm
         className: "bootbox-new-design bootbox-new-design-simple-dialogs-default"
-        title: "Are you sure you want to terminate this operation?"
-        message: "<p>We <b>do not</b> rever the updates already made by this operation.</p><p>You'll have to manually revert the tasks already affected by this update to undo the changes already made.</p><p>It is highly recommended to let the operation finish first, and then undo it by requesting another update.</p>"
+        title: TAPi18n.__ "members_mgmt_dialog_terminate_title"
+        message: TAPi18n.__ "members_mgmt_dialog_terminate_message"
         callback: (result) ->
           if result
             Meteor.call("terminateBatchedCollectionUpdatesJob", job_id)

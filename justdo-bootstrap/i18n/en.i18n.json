@@ -1,0 +1,13 @@
+{
+  "themes_selector_config_title": "Themes Selector" ,
+  "themes_selector_label": "JustDo Theme",
+  "themes_selector_default": "Solid Dark Blue (default)",
+  "themes_selector_solid_blue": "Solid Blue",
+  "themes_selector_solid_dark": "Solid Dark",
+  "themes_selector_solid_dark_green": "Solid Dark Green",
+  "themes_selector_solid_purple": "Solid Purple",
+  "themes_selector_solid": "Solid Green",
+  "themes_selector_solid_orange": "Solid Orange",
+  "themes_selector_classic": "Classic",
+  "themes_selector_unicorn": "Unicorn"
+}

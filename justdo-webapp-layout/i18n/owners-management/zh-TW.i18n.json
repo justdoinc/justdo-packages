@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "拒絕所有權轉移來自",
+  "owners_mgmt_accept_transfer_from": "接受所有權轉移來自",
+  "owners_mgmt_cancel_transfer_to": "取消所有權轉移至",
+  "owners_mgmt_loading": "載入中...",
+  "owners_mgmt_transfer_ownership_to": "轉移所有權至...",
+  "owners_mgmt_task_only_visible_to_you": "此任務只有您可見",
+  "owners_mgmt_take_ownership_from_removed_owner": "從已移除的擁有者取得所有權",
+  "owners_mgmt_take_ownership_from": "從以下對象取得所有權",
+  "owners_mgmt_edit_task_members": "編輯任務成員",
+  "owners_mgmt_share_task": "分享任務",
+  "owners_mgmt_leave_a_reject_message": "留下拒絕訊息",
+  "owners_mgmt_transfer_child_tasks_too": "是否同時轉移 __count__ 個子任務的所有權？",
+  "owners_mgmt_transfer_child_tasks_too_plural": "是否同時轉移 __count__ 個子任務的所有權？",
+  "owners_mgmt_transfer_child_tasks_done": "__count__ 個子任務的所有權轉移已處理完成。",
+  "owners_mgmt_transfer_child_tasks_done_plural": "__count__ 個子任務的所有權轉移已處理完成。",
+  "owners_mgmt_transfer": "轉移"
+}

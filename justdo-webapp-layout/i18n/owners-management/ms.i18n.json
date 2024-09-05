@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Tolak pemindahan pemilikan daripada",
+  "owners_mgmt_accept_transfer_from": "Terima pemindahan pemilikan daripada",
+  "owners_mgmt_cancel_transfer_to": "Batal pemindahan pemilikan kepada",
+  "owners_mgmt_loading": "Memuat...",
+  "owners_mgmt_transfer_ownership_to": "Pindah pemilikan kepada...",
+  "owners_mgmt_task_only_visible_to_you": "Tugasan ini hanya boleh dilihat oleh anda",
+  "owners_mgmt_take_ownership_from_removed_owner": "Ambil pemilikan daripada pemilik yang dikeluarkan",
+  "owners_mgmt_take_ownership_from": "Ambil pemilikan daripada",
+  "owners_mgmt_edit_task_members": "Sunting Ahli Tugasan",
+  "owners_mgmt_share_task": "Kongsi Tugasan",
+  "owners_mgmt_leave_a_reject_message": "Tinggalkan mesej penolakan",
+  "owners_mgmt_transfer_child_tasks_too": "Pindah pemilikan __count__ sub-tugasan juga?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Pindah pemilikan __count__ sub-tugasan juga?",
+  "owners_mgmt_transfer_child_tasks_done": "Pemindahan pemilikan __count__ sub-tugasan telah diproses.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Pemindahan pemilikan __count__ sub-tugasan telah diproses.",
+  "owners_mgmt_transfer": "Pindah"
+}

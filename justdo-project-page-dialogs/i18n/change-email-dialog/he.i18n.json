@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "שינוי כתובת דואר אלקטרוני",
+  "edit_email_dialog_confirm_btn_label": "שנה כתובת דואר אלקטרוני",
+  "edit_email_dialog_current_email": "כתובת דואר אלקטרוני נוכחית",
+  "edit_email_dialog_new_email": "כתובת דואר אלקטרוני חדשה",
+  "edit_email_dialog_password": "סיסמה",
+  "edit_email_dialog_forgot_password": "שכחת את הסיסמה שלך?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "הזן את הסיסמה שלך כדי לשנות את כתובת הדואר האלקטרוני",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "האם אתה בטוח שברצונך לשנות את כתובת הדואר האלקטרוני של החשבון שלך ל: <b>__email__</b>?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>נשלח דואר אלקטרוני עם הוראות לאיפוס הסיסמה</b></h4><p>אם אינך מוצא את הדואר האלקטרוני, אנא בדוק את תיקיית הספאם שלך.</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "עליך להגדיר סיסמה כדי לשנות את כתובת הדואר האלקטרוני שלך"
+}

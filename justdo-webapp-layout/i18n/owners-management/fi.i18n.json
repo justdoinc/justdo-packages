@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Hylkää omistajuuden siirto käyttäjältä",
+  "owners_mgmt_accept_transfer_from": "Hyväksy omistajuuden siirto käyttäjältä",
+  "owners_mgmt_cancel_transfer_to": "Peruuta omistajuuden siirto käyttäjälle",
+  "owners_mgmt_loading": "Ladataan...",
+  "owners_mgmt_transfer_ownership_to": "Siirrä omistajuus käyttäjälle...",
+  "owners_mgmt_task_only_visible_to_you": "Tämä tehtävä näkyy vain sinulle",
+  "owners_mgmt_take_ownership_from_removed_owner": "Ota omistajuus poistetulta omistajalta",
+  "owners_mgmt_take_ownership_from": "Ota omistajuus käyttäjältä",
+  "owners_mgmt_edit_task_members": "Muokkaa tehtävän jäseniä",
+  "owners_mgmt_share_task": "Jaa tehtävä",
+  "owners_mgmt_leave_a_reject_message": "Jätä hylkäysviesti",
+  "owners_mgmt_transfer_child_tasks_too": "Siirretäänkö myös __count__ alitehtävän omistajuus?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Siirretäänkö myös __count__ alitehtävän omistajuus?",
+  "owners_mgmt_transfer_child_tasks_done": "__count__ alitehtävän omistajuuden siirto käsitelty.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "__count__ alitehtävän omistajuuden siirto käsitelty.",
+  "owners_mgmt_transfer": "Siirrä"
+}

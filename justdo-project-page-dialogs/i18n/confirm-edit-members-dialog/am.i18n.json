@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "ይህ ሥራ በግምት <u>__min_time_to_process__</u> ይወስዳል",
+  "confirm_edit_member_dialog_max_time_to_process": "ይህ ሥራ እስከ <u>__max_time_to_process__</u> ሊወስድ ይችላል",
+  "confirm_edit_member_dialog_batch_process_msg": "ሥራው ከ<b>__count__</b> በላይ መዝገቦችን ስለሚነካ ጊዜ ይወስዳል። በአባላት ማስተካከያ መስኮት ውስጥ የሥራውን ሂደት መከታተል ይችላሉ።",
+  "confirm_edit_member_dialog_bulk_remove_members": "<b>__members_to_remove__</b>ን ከ<b>__count__</b> ዕቅድ ለማስወገድ ነው<br>በዚህም ምክንያት፣ በእነዚህ ተጠቃሚዎች የተያዙ ሁሉንም ዕቅዶች ባለቤት ይሆናሉ።",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "<b>__members_to_remove__</b>ን ከ<b>__count__</b> ዕቅዶች ለማስወገድ ነው<br>በዚህም ምክንያት፣ በእነዚህ ተጠቃሚዎች የተያዙ ሁሉንም ዕቅዶች ባለቤት ይሆናሉ።",
+  "confirm_edit_member_dialog_bulk_add_members": "ለ<b>__count__</b> ዕቅድ ለሚከተሉት መዳረሻ ለመስጠት ነው፦ <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "ለ<b>__count__</b> ዕቅዶች ለሚከተሉት መዳረሻ ለመስጠት ነው፦ <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ እና ሌላ ተጠቃሚ",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ እና ሌሎች __count__ ተጠቃሚዎች"
+}

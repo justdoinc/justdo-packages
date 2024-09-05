@@ -29,7 +29,7 @@
   "main_page_description": "Potenzia il tuo team con JustDo, la soluzione di Project Management sicura ed estendibile. La nostra piattaforma con disponibilità del codice sorgente offre trasparenza e personalizzazione, potenti diagrammi di Gantt, board Kanban e altro ancora.",
   "edit": "Modifica",
   "search": "Cerca",
-  "add_btn_label": "AGGIUNGI",
+  "add": "Aggiungi",
   "updated_with_time": "Aggiornato __time__",
   "stop": "Ferma",
   "generate": "Genera",
@@ -37,5 +37,12 @@
   "undo": "Annulla",
   "you": "tu",
   "all": "Tutti",
-  "none": "Nessuno"
+  "none": "Nessuno",
+  "save": "Salva",
+  "confirm": "Conferma",
+  "send": "Invia",
+  "reject": "Rifiuta",
+  "accept": "Accetta",
+  "take": "Prendi",
+  "keep": "Mantieni"
 }

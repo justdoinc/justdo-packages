@@ -29,7 +29,7 @@
   "main_page_description": "JustDo bilan jamoangizni kuchaytiring - xavfsiz va kengaytiriladigan loyihalarni boshqarish yechimidir. Bizning ochiq-kodli platformamiz shaffoflik va moslashuvchanlikni ta'minlaydi, kuchli Gantt diagrammalari, Kanban doskasi va boshqalar bilan.",
   "edit": "Tahrirlash",
   "search": "Qidirish",
-  "add_btn_label": "QO'SHISH",
+  "add": "Qo'shish",
   "updated_with_time": "__time__ yangilandi",
   "stop": "To'xtatish",
   "generate": "Yaratish",
@@ -37,5 +37,12 @@
   "undo": "Bekor qilish",
   "you": "siz",
   "all": "Hammasi",
-  "none": "Hech biri"
+  "none": "Hech biri",
+  "save": "Saqlash",
+  "confirm": "Tasdiqlash",
+  "send": "Yuborish",
+  "reject": "Rad etish",
+  "accept": "Qabul qilish",
+  "take": "Olish",
+  "keep": "Saqlash"
 }

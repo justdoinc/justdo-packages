@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Tämä toiminto kestää noin <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "Tämä toiminto kestää enintään <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "Toiminto vaikuttaa yli <b>__count__</b> tietueeseen, joten se vie jonkin aikaa. Voit seurata sen edistymistä jäsenten muokkausikkunassa.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Olet poistamassa <b>__members_to_remove__</b> <b>__count__</b> tehtävästä<br>Tämän seurauksena sinusta tulee kaikkien näiden käyttäjien omistamien tehtävien omistaja.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Olet poistamassa <b>__members_to_remove__</b> <b>__count__</b> tehtävästä<br>Tämän seurauksena sinusta tulee kaikkien näiden käyttäjien omistamien tehtävien omistaja.",
+  "confirm_edit_member_dialog_bulk_add_members": "Olet antamassa pääsyn <b>__count__</b> tehtävään seuraaville: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Olet antamassa pääsyn <b>__count__</b> tehtävään seuraaville: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ ja yksi muu käyttäjä",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ ja __count__ muuta käyttäjää"
+}

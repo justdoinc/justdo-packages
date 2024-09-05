@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Адхіліць перадачу права ўласнасці ад",
+  "owners_mgmt_accept_transfer_from": "Прыняць перадачу права ўласнасці ад",
+  "owners_mgmt_cancel_transfer_to": "Адмяніць перадачу права ўласнасці",
+  "owners_mgmt_loading": "Загрузка...",
+  "owners_mgmt_transfer_ownership_to": "Перадаць права ўласнасці...",
+  "owners_mgmt_task_only_visible_to_you": "Гэта задача бачная толькі вам",
+  "owners_mgmt_take_ownership_from_removed_owner": "Узяць права ўласнасці ад выдаленага ўладальніка",
+  "owners_mgmt_take_ownership_from": "Узяць права ўласнасці ад",
+  "owners_mgmt_edit_task_members": "Рэдагаваць удзельнікаў задачы",
+  "owners_mgmt_share_task": "Падзяліцца задачай",
+  "owners_mgmt_leave_a_reject_message": "Пакіньце паведамленне пра адмову",
+  "owners_mgmt_transfer_child_tasks_too": "Перадаць права ўласнасці на __count__ падзадачу таксама?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Перадаць права ўласнасці на __count__ падзадачы таксама?",
+  "owners_mgmt_transfer_child_tasks_done": "Перадача права ўласнасці на __count__ падзадачу апрацавана.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Перадача права ўласнасці на __count__ падзадачы апрацавана.",
+  "owners_mgmt_transfer": "Перадаць"
+}

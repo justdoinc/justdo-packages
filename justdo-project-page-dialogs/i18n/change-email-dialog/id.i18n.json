@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "Ubah Email",
+  "edit_email_dialog_confirm_btn_label": "Ubah Email",
+  "edit_email_dialog_current_email": "Email Saat Ini",
+  "edit_email_dialog_new_email": "Email Baru",
+  "edit_email_dialog_password": "Kata Sandi",
+  "edit_email_dialog_forgot_password": "Lupa kata sandi Anda?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "Masukkan kata sandi Anda untuk mengubah email",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "Apakah Anda yakin ingin mengubah email akun Anda menjadi: <b>__email__</b>?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>Email telah dikirim dengan instruksi pengaturan ulang kata sandi</b></h4><p>Jika Anda tidak dapat menemukan emailnya, silakan periksa folder spam Anda.</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "Anda harus mengatur kata sandi untuk dapat mengubah email Anda"
+}

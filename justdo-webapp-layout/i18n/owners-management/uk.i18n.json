@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Відхилити передачу права власності від",
+  "owners_mgmt_accept_transfer_from": "Прийняти передачу права власності від",
+  "owners_mgmt_cancel_transfer_to": "Скасувати передачу права власності",
+  "owners_mgmt_loading": "Завантаження...",
+  "owners_mgmt_transfer_ownership_to": "Передати право власності...",
+  "owners_mgmt_task_only_visible_to_you": "Це завдання видно лише вам",
+  "owners_mgmt_take_ownership_from_removed_owner": "Взяти право власності від видаленого власника",
+  "owners_mgmt_take_ownership_from": "Взяти право власності від",
+  "owners_mgmt_edit_task_members": "Редагувати учасників завдання",
+  "owners_mgmt_share_task": "Поділитися завданням",
+  "owners_mgmt_leave_a_reject_message": "Залишити повідомлення про відхилення",
+  "owners_mgmt_transfer_child_tasks_too": "Передати право власності на __count__ підзавдання також?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Передати право власності на __count__ підзавдань також?",
+  "owners_mgmt_transfer_child_tasks_done": "Передачу права власності на __count__ підзавдання оброблено.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Передачу права власності на __count__ підзавдань оброблено.",
+  "owners_mgmt_transfer": "Передати"
+}

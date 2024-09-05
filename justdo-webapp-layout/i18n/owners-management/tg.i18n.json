@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Рад кардани интиқоли соҳибӣ аз",
+  "owners_mgmt_accept_transfer_from": "Қабул кардани интиқоли соҳибӣ аз",
+  "owners_mgmt_cancel_transfer_to": "Бекор кардани интиқоли соҳибӣ ба",
+  "owners_mgmt_loading": "Бор шуда истодааст...",
+  "owners_mgmt_transfer_ownership_to": "Интиқоли соҳибӣ ба...",
+  "owners_mgmt_task_only_visible_to_you": "Ин вазифа танҳо барои шумо намоён аст",
+  "owners_mgmt_take_ownership_from_removed_owner": "Соҳибиятро аз соҳиби хориҷшуда гирифтан",
+  "owners_mgmt_take_ownership_from": "Соҳибиятро гирифтан аз",
+  "owners_mgmt_edit_task_members": "Таҳрири аъзоёни вазифа",
+  "owners_mgmt_share_task": "Мубодилаи вазифа",
+  "owners_mgmt_leave_a_reject_message": "Паёми радкуниро гузоред",
+  "owners_mgmt_transfer_child_tasks_too": "Оё __count__ вазифаи фаръиро низ интиқол диҳем?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Оё __count__ вазифаҳои фаръиро низ интиқол диҳем?",
+  "owners_mgmt_transfer_child_tasks_done": "Интиқоли __count__ вазифаи фаръӣ анҷом ёфт.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Интиқоли __count__ вазифаҳои фаръӣ анҷом ёфт.",
+  "owners_mgmt_transfer": "Интиқол"
+}

@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Rechazar transferencia de propiedad de",
+  "owners_mgmt_accept_transfer_from": "Aceptar transferencia de propiedad de",
+  "owners_mgmt_cancel_transfer_to": "Cancelar transferencia de propiedad a",
+  "owners_mgmt_loading": "Cargando...",
+  "owners_mgmt_transfer_ownership_to": "Transferir propiedad a...",
+  "owners_mgmt_task_only_visible_to_you": "Esta tarea solo es visible para ti",
+  "owners_mgmt_take_ownership_from_removed_owner": "Tomar propiedad del propietario eliminado",
+  "owners_mgmt_take_ownership_from": "Tomar propiedad de",
+  "owners_mgmt_edit_task_members": "Editar miembros de la tarea",
+  "owners_mgmt_share_task": "Compartir tarea",
+  "owners_mgmt_leave_a_reject_message": "Dejar un mensaje de rechazo",
+  "owners_mgmt_transfer_child_tasks_too": "¿Transferir también la propiedad de __count__ subtarea?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "¿Transferir también la propiedad de __count__ subtareas?",
+  "owners_mgmt_transfer_child_tasks_done": "Transferencia de propiedad de __count__ subtarea procesada.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Transferencia de propiedad de __count__ subtareas procesada.",
+  "owners_mgmt_transfer": "Transferir"
+}

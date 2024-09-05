@@ -29,7 +29,7 @@
   "main_page_description": "Berdayakan tim Anda dengan JustDo, solusi manajemen proyek yang aman dan dapat diperluas. Platform kami dengan sumber tersedia menyediakan transparansi dan kustomisasi, dengan bagan Gantt yang kuat, papan Kanban, dan banyak lagi.",
   "edit": "Edit",
   "search": "Cari",
-  "add_btn_label": "TAMBAH",
+  "add": "Tambah",
   "updated_with_time": "Diperbarui __time__",
   "stop": "Berhenti",
   "generate": "Hasilkan",
@@ -37,5 +37,12 @@
   "undo": "Batalkan",
   "you": "Anda",
   "all": "Semua",
-  "none": "Tidak Ada"
+  "none": "Tidak Ada",
+  "save": "Simpan",
+  "confirm": "Konfirmasi",
+  "send": "Kirim",
+  "reject": "Tolak",
+  "accept": "Terima",
+  "take": "Ambil",
+  "keep": "Simpan"
 }

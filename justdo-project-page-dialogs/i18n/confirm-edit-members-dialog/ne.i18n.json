@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "यो कार्य लगभग <u>__min_time_to_process__</u> समय लिनेछ",
+  "confirm_edit_member_dialog_max_time_to_process": "यो कार्य बढीमा <u>__max_time_to_process__</u> समय लिनेछ",
+  "confirm_edit_member_dialog_batch_process_msg": "यो कार्यले <b>__count__</b> भन्दा बढी रेकर्डहरूलाई प्रभावित गर्छ र त्यसैले केही समय लाग्नेछ। तपाईंले यसको प्रगतिलाई सदस्य सम्पादन विन्डोमा ट्र्याक गर्न सक्नुहुनेछ।",
+  "confirm_edit_member_dialog_bulk_remove_members": "तपाईं <b>__count__</b> कार्यबाट <b>__members_to_remove__</b> लाई हटाउन लाग्नुभएको छ<br>परिणाम स्वरूप, यी प्रयोगकर्ताहरूको स्वामित्वमा रहेका सबै कार्यहरूको मालिक तपाईं हुनुहुनेछ।",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "तपाईं <b>__count__</b> कार्यहरूबाट <b>__members_to_remove__</b> लाई हटाउन लाग्नुभएको छ<br>परिणाम स्वरूप, यी प्रयोगकर्ताहरूको स्वामित्वमा रहेका सबै कार्यहरूको मालिक तपाईं हुनुहुनेछ।",
+  "confirm_edit_member_dialog_bulk_add_members": "तपाईं <b>__count__</b> कार्यमा यी सदस्यहरूलाई पहुँच दिन लाग्नुभएको छ: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "तपाईं <b>__count__</b> कार्यहरूमा यी सदस्यहरूलाई पहुँच दिन लाग्नुभएको छ: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ र अर्को एक प्रयोगकर्ता",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ र अन्य __count__ प्रयोगकर्ताहरू"
+}

@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "ईमेल बदलें",
+  "edit_email_dialog_confirm_btn_label": "ईमेल बदलें",
+  "edit_email_dialog_current_email": "वर्तमान ईमेल",
+  "edit_email_dialog_new_email": "नया ईमेल",
+  "edit_email_dialog_password": "पासवर्ड",
+  "edit_email_dialog_forgot_password": "अपना पासवर्ड भूल गए?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "अपना ईमेल बदलने के लिए अपना पासवर्ड दर्ज करें",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "क्या आप वाकई अपने खाते का ईमेल बदलकर: <b>__email__</b> करना चाहते हैं?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>पासवर्ड रीसेट निर्देशों के साथ एक ईमेल भेजा गया है</b></h4><p>यदि आपको ईमेल नहीं मिल रहा है, तो कृपया अपने स्पैम फ़ोल्डर की जाँच करें।</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "अपना ईमेल बदलने के लिए आपको एक पासवर्ड सेट करना होगा"
+}

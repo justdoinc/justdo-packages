@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Бұл операция шамамен <u>__min_time_to_process__</u> уақыт алады",
+  "confirm_edit_member_dialog_max_time_to_process": "Бұл операция <u>__max_time_to_process__</u> дейін уақыт алуы мүмкін",
+  "confirm_edit_member_dialog_batch_process_msg": "Операция <b>__count__</b>-дан астам жазбаға әсер етеді, сондықтан біраз уақыт алады. Оның орындалу барысын мүшелерді өңдеу терезесінде бақылай аласыз.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Сіз <b>__count__</b> тапсырмадан <b>__members_to_remove__</b> алып тастағалы жатырсыз<br>Нәтижесінде, осы пайдаланушыларға тиесілі барлық тапсырмалардың иесі боласыз.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Сіз <b>__count__</b> тапсырмадан <b>__members_to_remove__</b> алып тастағалы жатырсыз<br>Нәтижесінде, осы пайдаланушыларға тиесілі барлық тапсырмалардың иесі боласыз.",
+  "confirm_edit_member_dialog_bulk_add_members": "Сіз <b>__count__</b> тапсырмаға келесі адамдарға қол жеткізу құқығын бергелі жатырсыз: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Сіз <b>__count__</b> тапсырмаға келесі адамдарға қол жеткізу құқығын бергелі жатырсыз: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ және тағы бір пайдаланушы",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ және тағы __count__ пайдаланушы"
+}

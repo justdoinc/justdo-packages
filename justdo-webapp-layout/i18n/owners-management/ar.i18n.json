@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "رفض نقل الملكية من",
+  "owners_mgmt_accept_transfer_from": "قبول نقل الملكية من",
+  "owners_mgmt_cancel_transfer_to": "إلغاء نقل الملكية إلى",
+  "owners_mgmt_loading": "جارٍ التحميل...",
+  "owners_mgmt_transfer_ownership_to": "نقل الملكية إلى...",
+  "owners_mgmt_task_only_visible_to_you": "هذه المهمة مرئية لك فقط",
+  "owners_mgmt_take_ownership_from_removed_owner": "استلام الملكية من المالك المحذوف",
+  "owners_mgmt_take_ownership_from": "استلام الملكية من",
+  "owners_mgmt_edit_task_members": "تعديل أعضاء المهمة",
+  "owners_mgmt_share_task": "مشاركة المهمة",
+  "owners_mgmt_leave_a_reject_message": "اترك رسالة رفض",
+  "owners_mgmt_transfer_child_tasks_too": "نقل ملكية __count__ مهمة فرعية أيضًا؟",
+  "owners_mgmt_transfer_child_tasks_too_plural": "نقل ملكية __count__ مهام فرعية أيضًا؟",
+  "owners_mgmt_transfer_child_tasks_done": "تمت معالجة نقل ملكية __count__ مهمة فرعية.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "تمت معالجة نقل ملكية __count__ مهام فرعية.",
+  "owners_mgmt_transfer": "نقل"
+}

@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "மின்னஞ்சலை மாற்று",
+  "edit_email_dialog_confirm_btn_label": "மின்னஞ்சலை மாற்று",
+  "edit_email_dialog_current_email": "தற்போதைய மின்னஞ்சல்",
+  "edit_email_dialog_new_email": "புதிய மின்னஞ்சல்",
+  "edit_email_dialog_password": "கடவுச்சொல்",
+  "edit_email_dialog_forgot_password": "கடவுச்சொல் மறந்துவிட்டதா?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "உங்கள் மின்னஞ்சலை மாற்ற உங்கள் கடவுச்சொல்லை உள்ளிடவும்",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "உங்கள் கணக்கு மின்னஞ்சலை <b>__email__</b> என்பதற்கு மாற்ற விரும்புகிறீர்களா?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>கடவுச்சொல் மீட்டமைப்பு வழிமுறைகளுடன் மின்னஞ்சல் அனுப்பப்பட்டுள்ளது</b></h4><p>மின்னஞ்சலைக் காணவில்லை என்றால், உங்கள் ஸ்பாம் (spam) கோப்புறையைச் சரிபார்க்கவும்.</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "உங்கள் மின்னஞ்சலை மாற்ற கடவுச்சொல்லை அமைக்க வேண்டும்"
+}

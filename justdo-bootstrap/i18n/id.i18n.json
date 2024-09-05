@@ -1,0 +1,13 @@
+{
+  "themes_selector_config_title": "Pemilih Tema",
+  "themes_selector_label": "Tema JustDo",
+  "themes_selector_default": "Biru Gelap Solid (default)",
+  "themes_selector_solid_blue": "Biru Solid",
+  "themes_selector_solid_dark": "Gelap Solid",
+  "themes_selector_solid_dark_green": "Hijau Gelap Solid",
+  "themes_selector_solid_purple": "Ungu Solid",
+  "themes_selector_solid": "Hijau Solid",
+  "themes_selector_solid_orange": "Oranye Solid",
+  "themes_selector_classic": "Klasik",
+  "themes_selector_unicorn": "Unicorn"
+}

@@ -29,7 +29,7 @@
   "main_page_description": "Împuternicește-ți echipa cu JustDo, soluția securizată și extensibilă de management de proiecte. Platforma noastră cu sursă disponibilă oferă transparență și personalizare, cu diagrame Gantt puternice, panouri Kanban și multe altele.",
   "edit": "Editează",
   "search": "Caută",
-  "add_btn_label": "ADAUGĂ",
+  "add": "Adaugă",
   "updated_with_time": "Actualizat __time__",
   "stop": "Stop",
   "generate": "Generează",
@@ -37,5 +37,12 @@
   "undo": "Anulează",
   "you": "tu",
   "all": "Toate",
-  "none": "Niciunul"
+  "none": "Niciunul",
+  "save": "Salvează",
+  "confirm": "Confirmă",
+  "send": "Trimite",
+  "reject": "Respinge",
+  "accept": "Acceptă",
+  "take": "Ia",
+  "keep": "Păstrează"
 }

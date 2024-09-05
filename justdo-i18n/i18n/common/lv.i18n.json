@@ -29,7 +29,7 @@
   "main_page_description": "Pilnvarojiet savu komandu ar JustDo, drošo un paplašināmo projektu vadības risinājumu. Mūsu atvērtā koda platforma nodrošina caurskatāmību un pielāgošanas iespējas, ar spēcīgām Ganta diagrammām, Kanban dēļiem un vēl vairāk.",
   "edit": "Rediģēt",
   "search": "Meklēt",
-  "add_btn_label": "PIEVIENOT",
+  "add": "Pievienot",
   "updated_with_time": "Atjaunināts __time__",
   "stop": "Apturēt",
   "generate": "Ģenerēt",
@@ -37,5 +37,12 @@
   "undo": "Atsaukt",
   "you": "jūs",
   "all": "Visi",
-  "none": "Neviens"
+  "none": "Neviens",
+  "save": "Saglabāt",
+  "confirm": "Apstiprināt",
+  "send": "Sūtīt",
+  "reject": "Noraidīt",
+  "accept": "Pieņemt",
+  "take": "Ņemt",
+  "keep": "Saglabāt"
 }

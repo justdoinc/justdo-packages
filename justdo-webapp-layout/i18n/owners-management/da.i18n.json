@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Afvis ejerskabsoverførsel fra",
+  "owners_mgmt_accept_transfer_from": "Accepter ejerskabsoverførsel fra",
+  "owners_mgmt_cancel_transfer_to": "Annuller ejerskabsoverførsel til",
+  "owners_mgmt_loading": "Indlæser...",
+  "owners_mgmt_transfer_ownership_to": "Overfør ejerskab til...",
+  "owners_mgmt_task_only_visible_to_you": "Denne opgave er kun synlig for dig",
+  "owners_mgmt_take_ownership_from_removed_owner": "Overtag ejerskab fra fjernet ejer",
+  "owners_mgmt_take_ownership_from": "Overtag ejerskab fra",
+  "owners_mgmt_edit_task_members": "Rediger opgavemedlemmer",
+  "owners_mgmt_share_task": "Del opgave",
+  "owners_mgmt_leave_a_reject_message": "Efterlad en afvisningsbesked",
+  "owners_mgmt_transfer_child_tasks_too": "Overfør også ejerskab af __count__ underopgave?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Overfør også ejerskab af __count__ underopgaver?",
+  "owners_mgmt_transfer_child_tasks_done": "Overførsel af ejerskab for __count__ underopgave behandlet.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Overførsel af ejerskab for __count__ underopgaver behandlet.",
+  "owners_mgmt_transfer": "Overfør"
+}

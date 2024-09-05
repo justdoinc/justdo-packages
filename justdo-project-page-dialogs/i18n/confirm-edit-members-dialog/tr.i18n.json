@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Bu işlem yaklaşık <u>__min_time_to_process__</u> sürecektir",
+  "confirm_edit_member_dialog_max_time_to_process": "Bu işlem en fazla <u>__max_time_to_process__</u> sürecektir",
+  "confirm_edit_member_dialog_batch_process_msg": "İşlem <b>__count__</b>'den fazla kaydı etkilediği için biraz zaman alacaktır. İlerlemeyi üye düzenleme penceresinde takip edebilirsiniz.",
+  "confirm_edit_member_dialog_bulk_remove_members": "<b>__count__</b> görevden <b>__members_to_remove__</b> üyeyi çıkarmak üzeresiniz.<br>Sonuç olarak, bu kullanıcılara ait tüm görevlerin sahibi siz olacaksınız.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "<b>__count__</b> görevden <b>__members_to_remove__</b> üyeyi çıkarmak üzeresiniz.<br>Sonuç olarak, bu kullanıcılara ait tüm görevlerin sahibi siz olacaksınız.",
+  "confirm_edit_member_dialog_bulk_add_members": "<b>__count__</b> göreve şu kişilere erişim vermek üzeresiniz: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "<b>__count__</b> göreve şu kişilere erişim vermek üzeresiniz: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ ve bir diğer kullanıcı",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ ve diğer __count__ kullanıcı"
+}

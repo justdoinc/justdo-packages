@@ -29,7 +29,7 @@
   "main_page_description": "Wzmocnij swój zespół dzięki JustDo, bezpiecznej i rozszerzalnej platformie do zarządzania projektami. Nasza platforma z dostępnym kodem źródłowym zapewnia przejrzystość i możliwość dostosowania, oferując potężne wykresy Gantta, tablice Kanban i wiele więcej.",
   "edit": "Edytuj",
   "search": "Szukaj",
-  "add_btn_label": "DODAJ",
+  "add": "Dodaj",
   "updated_with_time": "Zaktualizowano __time__",
   "stop": "Stop",
   "generate": "Generuj",
@@ -37,5 +37,12 @@
   "undo": "Cofnij",
   "you": "ty",
   "all": "Wszystkie",
-  "none": "Brak"
+  "none": "Brak",
+  "save": "Zapisz",
+  "confirm": "Potwierdź",
+  "send": "Wyślij",
+  "reject": "Odrzuć",
+  "accept": "Akceptuj",
+  "take": "Weź",
+  "keep": "Zachowaj"
 }

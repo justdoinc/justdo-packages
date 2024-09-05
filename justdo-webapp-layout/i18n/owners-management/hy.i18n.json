@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Մերժել սեփականության փոխանցումը",
+  "owners_mgmt_accept_transfer_from": "Ընդունել սեփականության փոխանցումը",
+  "owners_mgmt_cancel_transfer_to": "Չեղարկել սեփականության փոխանցումը",
+  "owners_mgmt_loading": "Բեռնվում է...",
+  "owners_mgmt_transfer_ownership_to": "Փոխանցել սեփականությունը...",
+  "owners_mgmt_task_only_visible_to_you": "Այս առաջադրանքը տեսանելի է միայն Ձեզ",
+  "owners_mgmt_take_ownership_from_removed_owner": "Վերցնել սեփականությունը հեռացված սեփականատիրոջից",
+  "owners_mgmt_take_ownership_from": "Վերցնել սեփականությունը",
+  "owners_mgmt_edit_task_members": "Խմբագրել առաջադրանքի անդամներին",
+  "owners_mgmt_share_task": "Կիսվել առաջադրանքով",
+  "owners_mgmt_leave_a_reject_message": "Թողնել մերժման հաղորդագրություն",
+  "owners_mgmt_transfer_child_tasks_too": "Փոխանցե՞լ նաև __count__ ենթաառաջադրանքի սեփականությունը:",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Փոխանցե՞լ նաև __count__ ենթաառաջադրանքների սեփականությունը:",
+  "owners_mgmt_transfer_child_tasks_done": "__count__ ենթաառաջադրանքի սեփականության փոխանցումը մշակված է:",
+  "owners_mgmt_transfer_child_tasks_done_plural": "__count__ ենթաառաջադրանքների սեփականության փոխանցումը մշակված է:",
+  "owners_mgmt_transfer": "Փոխանցել"
+}

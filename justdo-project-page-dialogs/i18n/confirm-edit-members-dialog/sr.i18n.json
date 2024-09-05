@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Ova operacija će trajati oko <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "Ova operacija će trajati najviše <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "Operacija utiče na više od <b>__count__</b> zapisa i zato će potrajati. Možete pratiti njen napredak u prozoru za uređivanje članova.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Spremate se da uklonite <b>__members_to_remove__</b> iz <b>__count__</b> zadatka<br>Kao rezultat, postaćete vlasnik svih zadataka koji su pripadali ovim korisnicima.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Spremate se da uklonite <b>__members_to_remove__</b> iz <b>__count__</b> zadataka<br>Kao rezultat, postaćete vlasnik svih zadataka koji su pripadali ovim korisnicima.",
+  "confirm_edit_member_dialog_bulk_add_members": "Spremate se da dodelite pristup za <b>__count__</b> zadatak sledećim korisnicima: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Spremate se da dodelite pristup za <b>__count__</b> zadataka sledećim korisnicima: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ i još jedan korisnik",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ i još __count__ korisnika"
+}

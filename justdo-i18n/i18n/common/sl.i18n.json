@@ -29,7 +29,7 @@
   "main_page_description": "Opolnomočite svojo ekipo z JustDo, varno in razširljivo rešitvijo za upravljanje projektov. Naša platforma z dostopno izvorno kodo zagotavlja preglednost in prilagodljivost, z zmogljivimi Ganttovimi diagrami, Kanban tablami in več.",
   "edit": "Uredi",
   "search": "Išči",
-  "add_btn_label": "DODAJ",
+  "add": "Dodaj",
   "updated_with_time": "Posodobljeno __time__",
   "stop": "Ustavi",
   "generate": "Ustvari",
@@ -37,5 +37,12 @@
   "undo": "Razveljavi",
   "you": "vi",
   "all": "Vse",
-  "none": "Nič"
+  "none": "Nič",
+  "save": "Shrani",
+  "confirm": "Potrdi",
+  "send": "Pošlji",
+  "reject": "Zavrni",
+  "accept": "Sprejmi",
+  "take": "Vzemi",
+  "keep": "Ohrani"
 }

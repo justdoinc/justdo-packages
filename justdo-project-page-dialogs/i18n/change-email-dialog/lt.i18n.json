@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "Keisti el. paštą",
+  "edit_email_dialog_confirm_btn_label": "Keisti el. paštą",
+  "edit_email_dialog_current_email": "Dabartinis el. paštas",
+  "edit_email_dialog_new_email": "Naujas el. paštas",
+  "edit_email_dialog_password": "Slaptažodis",
+  "edit_email_dialog_forgot_password": "Pamiršote slaptažodį?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "Įveskite savo slaptažodį, kad pakeistumėte el. paštą",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "Ar tikrai norite pakeisti savo paskyros el. paštą į: <b>__email__</b>?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>Išsiųstas el. laiškas su slaptažodžio atkūrimo instrukcijomis</b></h4><p>Jei nerandate el. laiško, patikrinkite savo šlamšto aplanką.</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "Norėdami pakeisti el. paštą, turite nustatyti slaptažodį"
+}

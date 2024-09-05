@@ -1,0 +1,13 @@
+{
+  "themes_selector_config_title": "Selector de Teme",
+  "themes_selector_label": "Temă JustDo",
+  "themes_selector_default": "Albastru Închis Solid (implicit)",
+  "themes_selector_solid_blue": "Albastru Solid",
+  "themes_selector_solid_dark": "Închis Solid",
+  "themes_selector_solid_dark_green": "Verde Închis Solid",
+  "themes_selector_solid_purple": "Violet Solid",
+  "themes_selector_solid": "Verde Solid",
+  "themes_selector_solid_orange": "Portocaliu Solid",
+  "themes_selector_classic": "Clasic",
+  "themes_selector_unicorn": "Unicorn"
+}

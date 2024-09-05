@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Eigendomsoverdracht afwijzen van",
+  "owners_mgmt_accept_transfer_from": "Eigendomsoverdracht accepteren van",
+  "owners_mgmt_cancel_transfer_to": "Eigendomsoverdracht annuleren naar",
+  "owners_mgmt_loading": "Laden...",
+  "owners_mgmt_transfer_ownership_to": "Eigendom overdragen aan...",
+  "owners_mgmt_task_only_visible_to_you": "Deze taak is alleen zichtbaar voor jou",
+  "owners_mgmt_take_ownership_from_removed_owner": "Eigendom overnemen van verwijderde eigenaar",
+  "owners_mgmt_take_ownership_from": "Eigendom overnemen van",
+  "owners_mgmt_edit_task_members": "Taakleden bewerken",
+  "owners_mgmt_share_task": "Taak delen",
+  "owners_mgmt_leave_a_reject_message": "Laat een afwijzingsbericht achter",
+  "owners_mgmt_transfer_child_tasks_too": "Ook eigendom van __count__ subtaak overdragen?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Ook eigendom van __count__ subtaken overdragen?",
+  "owners_mgmt_transfer_child_tasks_done": "Eigendomsoverdracht van __count__ subtaak verwerkt.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Eigendomsoverdracht van __count__ subtaken verwerkt.",
+  "owners_mgmt_transfer": "Overdragen"
+}

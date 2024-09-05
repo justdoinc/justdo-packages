@@ -29,7 +29,7 @@
   "main_page_description": "Võimestage oma meeskonda JustDo'ga, turvalise ja laiendatava projektijuhtimise lahendusega. Meie kättesaadava lähtekoodiga platvorm pakub läbipaistvust ja kohandamisvõimalusi, võimsate Gantti graafikute, Kanban tahvlite ja palju muuga.",
   "edit": "Muuda",
   "search": "Otsi",
-  "add_btn_label": "LISA",
+  "add": "Lisa",
   "updated_with_time": "Uuendatud __time__",
   "stop": "Peata",
   "generate": "Genereeri",
@@ -37,5 +37,12 @@
   "undo": "Võta tagasi",
   "you": "sina",
   "all": "Kõik",
-  "none": "Mitte ükski"
+  "none": "Mitte ükski",
+  "save": "Salvesta",
+  "confirm": "Kinnita",
+  "send": "Saada",
+  "reject": "Lükka tagasi",
+  "accept": "Nõustu",
+  "take": "Võta",
+  "keep": "Hoia"
 }

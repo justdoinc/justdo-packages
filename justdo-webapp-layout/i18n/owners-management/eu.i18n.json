@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Jabetza-transferentzia ukatu hemendik:",
+  "owners_mgmt_accept_transfer_from": "Jabetza-transferentzia onartu hemendik:",
+  "owners_mgmt_cancel_transfer_to": "Jabetza-transferentzia ezeztatu hona:",
+  "owners_mgmt_loading": "Kargatzen...",
+  "owners_mgmt_transfer_ownership_to": "Jabetza transferitu hona...",
+  "owners_mgmt_task_only_visible_to_you": "Zeregin hau zuretzat soilik da ikusgai",
+  "owners_mgmt_take_ownership_from_removed_owner": "Jabetza hartu kendutako jabeagandik",
+  "owners_mgmt_take_ownership_from": "Jabetza hartu hemendik:",
+  "owners_mgmt_edit_task_members": "Zereginaren Kideak Editatu",
+  "owners_mgmt_share_task": "Zeregina Partekatu",
+  "owners_mgmt_leave_a_reject_message": "Utzi ukatzeko mezu bat",
+  "owners_mgmt_transfer_child_tasks_too": "__count__ azpi-zereginaren jabetza ere transferitu?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "__count__ azpi-zereginen jabetza ere transferitu?",
+  "owners_mgmt_transfer_child_tasks_done": "__count__ azpi-zereginaren jabetza transferitu da.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "__count__ azpi-zereginen jabetza transferitu da.",
+  "owners_mgmt_transfer": "Transferitu"
+}

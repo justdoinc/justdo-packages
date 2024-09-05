@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "Emailni o'zgartirish",
+  "edit_email_dialog_confirm_btn_label": "Emailni o'zgartirish",
+  "edit_email_dialog_current_email": "Joriy email",
+  "edit_email_dialog_new_email": "Yangi email",
+  "edit_email_dialog_password": "Parol",
+  "edit_email_dialog_forgot_password": "Parolingizni unutdingizmi?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "Emailingizni o'zgartirish uchun parolingizni kiriting",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "Hisob emailingizni <b>__email__</b> ga o'zgartirishni xohlayotganingizga ishonchingiz komilmi?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>Parolni tiklash yo'riqnomasi bilan email yuborildi</b></h4><p>Agar emailni topa olmasangiz, iltimos spam jildini tekshiring.</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "Emailni o'zgartirish uchun parol o'rnatishingiz kerak"
+}

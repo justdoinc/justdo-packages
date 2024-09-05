@@ -29,7 +29,7 @@
   "main_page_description": "Posilnite svoj tím pomocou JustDo, bezpečného a rozšíriteľného riešenia pre správu projektov. Naša platforma s dostupným zdrojovým kódom poskytuje transparentnosť a prispôsobiteľnosť, s výkonnými Ganttovými diagramami, Kanban tabuľami a ďalšími funkciami.",
   "edit": "Upraviť",
   "search": "Hľadať",
-  "add_btn_label": "PRIDAŤ",
+  "add": "Pridať",
   "updated_with_time": "Aktualizované __time__",
   "stop": "Zastaviť",
   "generate": "Generovať",
@@ -37,5 +37,12 @@
   "undo": "Späť",
   "you": "vy",
   "all": "Všetko",
-  "none": "Žiadne"
+  "none": "Žiadne",
+  "save": "Uložiť",
+  "confirm": "Potvrdiť",
+  "send": "Odoslať",
+  "reject": "Odmietnuť",
+  "accept": "Prijať",
+  "take": "Vziať",
+  "keep": "Ponechať"
 }

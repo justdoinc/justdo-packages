@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "メールアドレスの変更",
+  "edit_email_dialog_confirm_btn_label": "メールアドレスを変更",
+  "edit_email_dialog_current_email": "現在のメールアドレス",
+  "edit_email_dialog_new_email": "新しいメールアドレス",
+  "edit_email_dialog_password": "パスワード",
+  "edit_email_dialog_forgot_password": "パスワードをお忘れですか？",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "メールアドレスを変更するにはパスワードを入力してください",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "アカウントのメールアドレスを <b>__email__</b> に変更してもよろしいですか？",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>パスワードリセット手順のメールを送信しました</b></h4><p>メールが見つからない場合は、迷惑メールフォルダをご確認ください。</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "メールアドレスを変更するには、パスワードを設定する必要があります"
+}

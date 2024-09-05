@@ -1,11 +1,11 @@
 <template name="task_pane_item_details_members_editor">
   <div class="members-editor-search">
-    <input type="text" class="members-search-input" value="" placeholder="Find member">
+    <input type="text" class="members-search-input" value="" placeholder="{{_ "members_mgmt_dialog_find_member"}}">
     {{#if displayRecentBatchedOps}}
       <div class="recent-batched-ops-dropdown dropdown ">
         <div class="recent-batched-ops" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <svg class="jd-icon jd-c-pointer">
-            <title>Updates</title>
+            <title>{{_ "members_mgmt_dialog_updates"}}</title>
             <use xlink:href="/layout/icons-feather-sprite.svg#bell"></use>
           </svg>
           <div class="count bg-primary">{{recentBatchedOpsCount}}</div>
@@ -23,7 +23,7 @@
   </div>
   <div class="checkbox">
     <label>
-      <input class="cascade-action-checkbox mr-2" type="checkbox" checked="{{isChecked cascade true}}"> Apply changes to all child-tasks.
+      <input class="cascade-action-checkbox mr-2" type="checkbox" checked="{{isChecked cascade true}}"> {{_ "members_mgmt_dialog_apply_changes_to_all_child_tasks"}}
     </label>
   </div>
   {{#if display_notes_section}}
@@ -67,7 +67,7 @@
       {{#if showInviteMembersSection}}
         <div class="invite-new-member text-primary">
           <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#plus"></use></svg>
-          New members
+          {{_ "members_mgmt_dialog_new_members"}}
         </div>
       {{/if}}
     </div>
@@ -77,7 +77,7 @@
           {{#each action_users_filtered}}
             {{> task_pane_item_details_members_editor_user_btn}}
           {{else}}
-            <div class="no-results">No results found</div>
+            <div class="no-results">{{_ "members_mgmt_dialog_no_results"}}</div>
           {{/each}}
         </div>
       </div>

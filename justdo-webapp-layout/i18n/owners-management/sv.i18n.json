@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Avvisa ägarskapsöverföring från",
+  "owners_mgmt_accept_transfer_from": "Acceptera ägarskapsöverföring från",
+  "owners_mgmt_cancel_transfer_to": "Avbryt ägarskapsöverföring till",
+  "owners_mgmt_loading": "Laddar...",
+  "owners_mgmt_transfer_ownership_to": "Överför ägarskap till...",
+  "owners_mgmt_task_only_visible_to_you": "Denna uppgift är endast synlig för dig",
+  "owners_mgmt_take_ownership_from_removed_owner": "Ta över ägarskap från borttagen ägare",
+  "owners_mgmt_take_ownership_from": "Ta över ägarskap från",
+  "owners_mgmt_edit_task_members": "Redigera uppgiftsmedlemmar",
+  "owners_mgmt_share_task": "Dela uppgift",
+  "owners_mgmt_leave_a_reject_message": "Lämna ett avvisningsmeddelande",
+  "owners_mgmt_transfer_child_tasks_too": "Överför även ägarskap för __count__ underuppgift?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Överför även ägarskap för __count__ underuppgifter?",
+  "owners_mgmt_transfer_child_tasks_done": "Ägarskapsöverföring av __count__ underuppgift genomförd.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Ägarskapsöverföring av __count__ underuppgifter genomförd.",
+  "owners_mgmt_transfer": "Överför"
+}

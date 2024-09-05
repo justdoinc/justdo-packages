@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Эта операция займет около <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "Эта операция займет до <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "Операция затрагивает более <b>__count__</b> записей и поэтому займет некоторое время. Вы можете отслеживать ее прогресс в окне редактирования участников.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Вы собираетесь удалить <b>__members_to_remove__</b> из <b>__count__</b> задачи<br>В результате вы станете владельцем всех задач, принадлежащих этим пользователям.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Вы собираетесь удалить <b>__members_to_remove__</b> из <b>__count__</b> задач<br>В результате вы станете владельцем всех задач, принадлежащих этим пользователям.",
+  "confirm_edit_member_dialog_bulk_add_members": "Вы собираетесь предоставить доступ к <b>__count__</b> задаче: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Вы собираетесь предоставить доступ к <b>__count__</b> задачам: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ и еще один пользователь",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ и еще __count__ пользователей"
+}

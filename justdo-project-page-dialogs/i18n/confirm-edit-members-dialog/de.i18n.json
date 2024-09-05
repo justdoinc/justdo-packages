@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Dieser Vorgang wird ungefähr <u>__min_time_to_process__</u> dauern",
+  "confirm_edit_member_dialog_max_time_to_process": "Dieser Vorgang wird bis zu <u>__max_time_to_process__</u> dauern",
+  "confirm_edit_member_dialog_batch_process_msg": "Der Vorgang betrifft mehr als <b>__count__</b> Datensätze und wird daher einige Zeit in Anspruch nehmen. Sie können den Fortschritt im Fenster zur Mitgliederbearbeitung verfolgen.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Sie sind dabei, <b>__members_to_remove__</b> von <b>__count__</b> Aufgabe zu entfernen.<br>Infolgedessen werden Sie der Besitzer aller Aufgaben, die diesen Benutzern gehören.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Sie sind dabei, <b>__members_to_remove__</b> von <b>__count__</b> Aufgaben zu entfernen.<br>Infolgedessen werden Sie der Besitzer aller Aufgaben, die diesen Benutzern gehören.",
+  "confirm_edit_member_dialog_bulk_add_members": "Sie sind dabei, <b>__members_to_add__</b> Zugriff auf <b>__count__</b> Aufgabe zu gewähren.",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Sie sind dabei, <b>__members_to_add__</b> Zugriff auf <b>__count__</b> Aufgaben zu gewähren.",
+  "confirm_edit_member_dialog_and_other_users": "__users__ und ein weiterer Benutzer",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ und weitere __count__ Benutzer"
+}

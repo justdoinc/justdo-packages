@@ -1,0 +1,13 @@
+{
+  "themes_selector_config_title": "Вибір тем",
+  "themes_selector_label": "Тема JustDo",
+  "themes_selector_default": "Суцільний темно-синій (за замовчуванням)",
+  "themes_selector_solid_blue": "Суцільний синій",
+  "themes_selector_solid_dark": "Суцільний темний",
+  "themes_selector_solid_dark_green": "Суцільний темно-зелений",
+  "themes_selector_solid_purple": "Суцільний фіолетовий",
+  "themes_selector_solid": "Суцільний зелений",
+  "themes_selector_solid_orange": "Суцільний помаранчевий",
+  "themes_selector_classic": "Класичний",
+  "themes_selector_unicorn": "Єдиноріг"
+}

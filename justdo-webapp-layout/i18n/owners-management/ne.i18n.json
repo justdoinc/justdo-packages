@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "स्वामित्व हस्तान्तरण अस्वीकार गर्नुहोस्",
+  "owners_mgmt_accept_transfer_from": "स्वामित्व हस्तान्तरण स्वीकार गर्नुहोस्",
+  "owners_mgmt_cancel_transfer_to": "स्वामित्व हस्तान्तरण रद्द गर्नुहोस्",
+  "owners_mgmt_loading": "लोड हुँदैछ...",
+  "owners_mgmt_transfer_ownership_to": "स्वामित्व हस्तान्तरण गर्नुहोस्...",
+  "owners_mgmt_task_only_visible_to_you": "यो कार्य केवल तपाईंलाई मात्र देखिन्छ",
+  "owners_mgmt_take_ownership_from_removed_owner": "हटाइएको मालिकबाट स्वामित्व लिनुहोस्",
+  "owners_mgmt_take_ownership_from": "स्वामित्व लिनुहोस्",
+  "owners_mgmt_edit_task_members": "कार्य सदस्यहरू सम्पादन गर्नुहोस्",
+  "owners_mgmt_share_task": "कार्य साझा गर्नुहोस्",
+  "owners_mgmt_leave_a_reject_message": "अस्वीकार सन्देश छोड्नुहोस्",
+  "owners_mgmt_transfer_child_tasks_too": "__count__ उप-कार्यको स्वामित्व पनि हस्तान्तरण गर्ने?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "__count__ उप-कार्यहरूको स्वामित्व पनि हस्तान्तरण गर्ने?",
+  "owners_mgmt_transfer_child_tasks_done": "__count__ उप-कार्यको स्वामित्व हस्तान्तरण प्रक्रिया पूरा भयो।",
+  "owners_mgmt_transfer_child_tasks_done_plural": "__count__ उप-कार्यहरूको स्वामित्व हस्तान्तरण प्रक्रिया पूरा भयो।",
+  "owners_mgmt_transfer": "हस्तान्तरण"
+}

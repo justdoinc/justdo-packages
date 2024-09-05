@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Гэтая аперацыя зойме каля <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "Гэтая аперацыя зойме да <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "Аперацыя закранае больш за <b>__count__</b> запісаў, таму яна зойме некаторы час. Вы можаце адсочваць яе прагрэс у акне рэдагавання ўдзельнікаў.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Вы збіраецеся выдаліць <b>__members_to_remove__</b> з <b>__count__</b> задачы<br>У выніку вы станеце ўладальнікам усіх задач, якімі валодалі гэтыя карыстальнікі.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Вы збіраецеся выдаліць <b>__members_to_remove__</b> з <b>__count__</b> задач<br>У выніку вы станеце ўладальнікам усіх задач, якімі валодалі гэтыя карыстальнікі.",
+  "confirm_edit_member_dialog_bulk_add_members": "Вы збіраецеся даць доступ да <b>__count__</b> задачы: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Вы збіраецеся даць доступ да <b>__count__</b> задач: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ і яшчэ адзін карыстальнік",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ і яшчэ __count__ карыстальнікаў"
+}

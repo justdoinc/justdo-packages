@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Ta operacija bo trajala približno <u>__min_time_to_process__</u>",
+  "confirm_edit_member_dialog_max_time_to_process": "Ta operacija bo trajala največ <u>__max_time_to_process__</u>",
+  "confirm_edit_member_dialog_batch_process_msg": "Operacija vpliva na več kot <b>__count__</b> zapisov, zato bo trajala nekaj časa. Napredek lahko spremljate v oknu za urejanje članov.",
+  "confirm_edit_member_dialog_bulk_remove_members": "Odstranili boste <b>__members_to_remove__</b> iz <b>__count__</b> naloge<br>Posledično boste postali lastnik vseh nalog, ki so v lasti teh uporabnikov.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "Odstranili boste <b>__members_to_remove__</b> iz <b>__count__</b> nalog<br>Posledično boste postali lastnik vseh nalog, ki so v lasti teh uporabnikov.",
+  "confirm_edit_member_dialog_bulk_add_members": "Dodelili boste dostop do <b>__count__</b> naloge za: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "Dodelili boste dostop do <b>__count__</b> nalog za: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ in še en uporabnik",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ in še __count__ drugih uporabnikov"
+}

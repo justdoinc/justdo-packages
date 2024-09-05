@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "Zmeniť email",
+  "edit_email_dialog_confirm_btn_label": "Zmeniť email",
+  "edit_email_dialog_current_email": "Aktuálny email",
+  "edit_email_dialog_new_email": "Nový email",
+  "edit_email_dialog_password": "Heslo",
+  "edit_email_dialog_forgot_password": "Zabudli ste heslo?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "Zadajte svoje heslo pre zmenu emailu",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "Ste si istí, že chcete zmeniť email vášho účtu na: <b>__email__</b>?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>Email s inštrukciami na obnovenie hesla bol odoslaný</b></h4><p>Ak nemôžete nájsť email, skontrolujte prosím priečinok so spamom.</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "Pre zmenu emailu si musíte nastaviť heslo"
+}

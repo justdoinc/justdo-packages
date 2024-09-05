@@ -29,7 +29,7 @@
   "main_page_description": "Potencia el teu equip amb JustDo, la solució de gestió de projectes segura i extensible. La nostra plataforma de codi obert ofereix transparència i personalització, amb potents diagrames de Gantt, taulers Kanban i més.",
   "edit": "Editar",
   "search": "Cercar",
-  "add_btn_label": "AFEGIR",
+  "add": "Afegir",
   "updated_with_time": "Actualitzat __time__",
   "stop": "Aturar",
   "generate": "Generar",
@@ -37,5 +37,12 @@
   "undo": "Desfer",
   "you": "tu",
   "all": "Tot",
-  "none": "Cap"
+  "none": "Cap",
+  "save": "Desar",
+  "confirm": "Confirmar",
+  "send": "Enviar",
+  "reject": "Rebutjar",
+  "accept": "Acceptar",
+  "take": "Agafar",
+  "keep": "Mantenir"
 }

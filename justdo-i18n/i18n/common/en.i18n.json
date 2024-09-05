@@ -29,7 +29,7 @@
   "main_page_description": "Empower your team with JustDo, the secure, and extendable project management solution. Our source-available platform provides transparency and customization, with powerful Gantt charts, Kanban boards, and more.",
   "edit": "Edit",
   "search": "Search",
-  "add_btn_label": "ADD",
+  "add": "Add",
   "updated_with_time": "Updated __time__",
   "stop": "Stop",
   "generate": "Generate",
@@ -37,5 +37,12 @@
   "undo": "Undo",
   "you": "you",
   "all": "All",
-  "none": "None"
+  "none": "None",
+  "save": "Save",
+  "confirm": "Confirm",
+  "send": "Send",
+  "reject": "Reject",
+  "accept": "Accept",
+  "take": "Take",
+  "keep": "Keep"
 }

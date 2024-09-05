@@ -1,0 +1,11 @@
+{
+  "confirm_edit_member_dialog_min_time_to_process": "Bu əməliyyat təxminən <u>__min_time_to_process__</u> vaxt aparacaq",
+  "confirm_edit_member_dialog_max_time_to_process": "Bu əməliyyat ən çoxu <u>__max_time_to_process__</u> vaxt aparacaq",
+  "confirm_edit_member_dialog_batch_process_msg": "Əməliyyat <b>__count__</b>-dən çox qeydə təsir edir və buna görə bir müddət vaxt aparacaq. Onun gedişatını üzvlərin redaktə pəncərəsində izləyə bilərsiniz.",
+  "confirm_edit_member_dialog_bulk_remove_members": "<b>__count__</b> tapşırıqdan <b>__members_to_remove__</b> iştirakçını silmək üzrəsiniz.<br>Nəticədə, bu istifadəçilərə məxsus bütün tapşırıqların sahibi siz olacaqsınız.",
+  "confirm_edit_member_dialog_bulk_remove_members_plural": "<b>__count__</b> tapşırıqdan <b>__members_to_remove__</b> iştirakçını silmək üzrəsiniz.<br>Nəticədə, bu istifadəçilərə məxsus bütün tapşırıqların sahibi siz olacaqsınız.",
+  "confirm_edit_member_dialog_bulk_add_members": "<b>__count__</b> tapşırığa bu iştirakçıları əlavə etmək üzrəsiniz: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_bulk_add_members_plural": "<b>__count__</b> tapşırığa bu iştirakçıları əlavə etmək üzrəsiniz: <b>__members_to_add__</b>",
+  "confirm_edit_member_dialog_and_other_users": "__users__ və daha bir istifadəçi",
+  "confirm_edit_member_dialog_and_other_users_plural": "__users__ və daha __count__ istifadəçi"
+}

@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "ផ្លាស់ប្តូរអ៊ីមែល",
+  "edit_email_dialog_confirm_btn_label": "ផ្លាស់ប្តូរអ៊ីមែល",
+  "edit_email_dialog_current_email": "អ៊ីមែលបច្ចុប្បន្ន",
+  "edit_email_dialog_new_email": "អ៊ីមែលថ្មី",
+  "edit_email_dialog_password": "ពាក្យសម្ងាត់",
+  "edit_email_dialog_forgot_password": "ភ្លេចពាក្យសម្ងាត់របស់អ្នក?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "បញ្ចូលពាក្យសម្ងាត់របស់អ្នកដើម្បីផ្លាស់ប្តូរអ៊ីមែលរបស់អ្នក",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "តើអ្នកប្រាកដថាចង់ផ្លាស់ប្តូរអ៊ីមែលគណនីរបស់អ្នកទៅជា៖ <b>__email__</b>?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>អ៊ីមែលត្រូវបានផ្ញើជាមួយនឹងការណែនាំអំពីការកំណត់ពាក្យសម្ងាត់ឡើងវិញ</b></h4><p>ប្រសិនបើអ្នកមិនអាចរកឃើញអ៊ីមែល សូមពិនិត្យមើលថតឯកសារស្ប៉ាមរបស់អ្នក។</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "អ្នកត្រូវតែកំណត់ពាក្យសម្ងាត់ដើម្បីផ្លាស់ប្តូរអ៊ីមែលរបស់អ្នក"
+}

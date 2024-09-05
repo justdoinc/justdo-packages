@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Одбиј пренос на сопственост од",
+  "owners_mgmt_accept_transfer_from": "Прифати пренос на сопственост од",
+  "owners_mgmt_cancel_transfer_to": "Откажи пренос на сопственост кон",
+  "owners_mgmt_loading": "Се вчитува...",
+  "owners_mgmt_transfer_ownership_to": "Пренеси сопственост на...",
+  "owners_mgmt_task_only_visible_to_you": "Оваа задача е видлива само за вас",
+  "owners_mgmt_take_ownership_from_removed_owner": "Преземи сопственост од отстранет сопственик",
+  "owners_mgmt_take_ownership_from": "Преземи сопственост од",
+  "owners_mgmt_edit_task_members": "Уреди членови на задачата",
+  "owners_mgmt_share_task": "Сподели задача",
+  "owners_mgmt_leave_a_reject_message": "Остави порака за одбивање",
+  "owners_mgmt_transfer_child_tasks_too": "Да се пренесе сопственоста и на __count__ под-задача?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Да се пренесе сопственоста и на __count__ под-задачи?",
+  "owners_mgmt_transfer_child_tasks_done": "Пренос на сопственост на __count__ под-задача е обработен.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Пренос на сопственост на __count__ под-задачи е обработен.",
+  "owners_mgmt_transfer": "Пренеси"
+}

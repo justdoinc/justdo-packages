@@ -29,7 +29,7 @@
   "main_page_description": "JustDo ilə komandanızı gücləndirin - təhlükəsiz və genişləndirilə bilən layihə idarəetmə həlli. Bizim açıq mənbəli platformamız şəffaflıq və xüsusiləşdirmə təmin edir, güclü Gantt qrafikləri, Kanban lövhələri və daha çox imkanlar təklif edir.",
   "edit": "Redaktə et",
   "search": "Axtar",
-  "add_btn_label": "ƏLAVƏ ET",
+  "add": "Əlavə et",
   "updated_with_time": "__time__ yeniləndi",
   "stop": "Dayandır",
   "generate": "Yarat",
@@ -37,5 +37,12 @@
   "undo": "Geri al",
   "you": "siz",
   "all": "Hamısı",
-  "none": "Heç biri"
+  "none": "Heç biri",
+  "save": "Yadda saxla",
+  "confirm": "Təsdiq et",
+  "send": "Göndər",
+  "reject": "Rədd et",
+  "accept": "Qəbul et",
+  "take": "Götür",
+  "keep": "Saxla"
 }

@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Odmítnout převod vlastnictví od",
+  "owners_mgmt_accept_transfer_from": "Přijmout převod vlastnictví od",
+  "owners_mgmt_cancel_transfer_to": "Zrušit převod vlastnictví na",
+  "owners_mgmt_loading": "Načítání...",
+  "owners_mgmt_transfer_ownership_to": "Převést vlastnictví na...",
+  "owners_mgmt_task_only_visible_to_you": "Tento úkol je viditelný pouze pro vás",
+  "owners_mgmt_take_ownership_from_removed_owner": "Převzít vlastnictví od odstraněného vlastníka",
+  "owners_mgmt_take_ownership_from": "Převzít vlastnictví od",
+  "owners_mgmt_edit_task_members": "Upravit členy úkolu",
+  "owners_mgmt_share_task": "Sdílet úkol",
+  "owners_mgmt_leave_a_reject_message": "Zanechat zprávu o odmítnutí",
+  "owners_mgmt_transfer_child_tasks_too": "Převést vlastnictví __count__ podřízeného úkolu také?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "Převést vlastnictví __count__ podřízených úkolů také?",
+  "owners_mgmt_transfer_child_tasks_done": "Převod vlastnictví __count__ podřízeného úkolu zpracován.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "Převod vlastnictví __count__ podřízených úkolů zpracován.",
+  "owners_mgmt_transfer": "Převést"
+}

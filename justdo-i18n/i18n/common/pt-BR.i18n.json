@@ -29,7 +29,7 @@
   "main_page_description": "Capacite sua equipe com o JustDo, a solução de gerenciamento de projetos segura e extensível. Nossa plataforma de código fonte disponível oferece transparência e personalização, com poderosos gráficos de Gantt, quadros Kanban e muito mais.",
   "edit": "Editar",
   "search": "Pesquisar",
-  "add_btn_label": "ADICIONAR",
+  "add": "Adicionar",
   "updated_with_time": "Atualizado __time__",
   "stop": "Parar",
   "generate": "Gerar",
@@ -37,5 +37,12 @@
   "undo": "Desfazer",
   "you": "você",
   "all": "Todos",
-  "none": "Nenhum"
+  "none": "Nenhum",
+  "save": "Salvar",
+  "confirm": "Confirmar",
+  "send": "Enviar",
+  "reject": "Rejeitar",
+  "accept": "Aceitar",
+  "take": "Pegar",
+  "keep": "Manter"
 }

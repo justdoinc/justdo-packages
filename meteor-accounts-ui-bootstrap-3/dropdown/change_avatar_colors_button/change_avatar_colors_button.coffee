@@ -5,7 +5,7 @@ Template._loginDropdownEditAvatarColorsBtn.events
 
 
     bootbox.dialog
-      title: "Avatar Colors Editor"
+      title: TAPi18n.__ "logged_in_dropdown_avatar_colors_editors"
       message: message_template.node
       animate: false
       className: "avatars-colors-editor bootbox-new-design"
@@ -15,7 +15,7 @@ Template._loginDropdownEditAvatarColorsBtn.events
 
       buttons:
         cancel:
-          label: "Cancel"
+          label: TAPi18n.__ "cancel"
 
           className: "btn-light"
 
@@ -23,7 +23,7 @@ Template._loginDropdownEditAvatarColorsBtn.events
             return true
 
         submit:
-          label: "Save"
+          label: TAPi18n.__ "save"
           callback: =>
             avatar_bg = $(".bg-color-picker input").val()
             avatar_fg = $(".fg-color-picker input").val()

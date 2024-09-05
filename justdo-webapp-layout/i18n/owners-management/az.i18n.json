@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "Mülkiyyətin ötürülməsini bundan rədd et",
+  "owners_mgmt_accept_transfer_from": "Mülkiyyətin ötürülməsini bundan qəbul et",
+  "owners_mgmt_cancel_transfer_to": "Mülkiyyətin ötürülməsini buna ləğv et",
+  "owners_mgmt_loading": "Yüklənir...",
+  "owners_mgmt_transfer_ownership_to": "Mülkiyyəti ötür...",
+  "owners_mgmt_task_only_visible_to_you": "Bu tapşırıq yalnız sizə görünür",
+  "owners_mgmt_take_ownership_from_removed_owner": "Silinmiş sahibdən mülkiyyəti götür",
+  "owners_mgmt_take_ownership_from": "Mülkiyyəti bundan götür",
+  "owners_mgmt_edit_task_members": "Tapşırıq Üzvlərini Redaktə Et",
+  "owners_mgmt_share_task": "Tapşırığı Paylaş",
+  "owners_mgmt_leave_a_reject_message": "Rədd mesajı burax",
+  "owners_mgmt_transfer_child_tasks_too": "__count__ alt-tapşırığın mülkiyyətini də ötürmək?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "__count__ alt-tapşırığın mülkiyyətini də ötürmək?",
+  "owners_mgmt_transfer_child_tasks_done": "__count__ alt-tapşırığın mülkiyyəti ötürüldü.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "__count__ alt-tapşırığın mülkiyyəti ötürüldü.",
+  "owners_mgmt_transfer": "Ötür"
+}

@@ -1,0 +1,12 @@
+{
+  "edit_email_dialog_title": "Muuda e-posti aadressi",
+  "edit_email_dialog_confirm_btn_label": "Muuda e-posti aadressi",
+  "edit_email_dialog_current_email": "Praegune e-posti aadress",
+  "edit_email_dialog_new_email": "Uus e-posti aadress",
+  "edit_email_dialog_password": "Parool",
+  "edit_email_dialog_forgot_password": "Unustasid oma parooli?",
+  "edit_email_dialog_enter_your_password_to_change_your_email": "Sisesta oma parool e-posti aadressi muutmiseks",
+  "edit_email_dialog_are_you_sure_you_want_to_change_your_email": "Kas oled kindel, et soovid muuta oma konto e-posti aadressi: <b>__email__</b>?",
+  "edit_email_dialog_email_sent_with_password_reset_instructions": "<h4><b>E-kiri parooli lähtestamise juhistega on saadetud</b></h4><p>Kui sa ei leia e-kirja, palun kontrolli oma rämpsposti kausta.</p>",
+  "edit_email_dialog_you_must_set_password_to_change_email": "E-posti aadressi muutmiseks pead sa määrama parooli"
+}

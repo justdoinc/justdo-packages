@@ -29,7 +29,7 @@
   "main_page_description": "使用JustDo為您的團隊賦能，這是一個安全且可擴展的專案管理解決方案。我們的原始碼可見平台提供透明度和自定義功能，配備強大的甘特圖、看板等功能。",
   "edit": "編輯",
   "search": "搜尋",
-  "add_btn_label": "增加",
+  "add": "新增",
   "updated_with_time": "最後更新於__time__",
   "stop": "停止",
   "generate": "生產",
@@ -37,5 +37,12 @@
   "undo": "復原",
   "you": "您",
   "all": "全部",
-  "none": "沒有"
+  "none": "沒有",
+  "save": "儲存",
+  "confirm": "確認",
+  "send": "發送",
+  "reject": "拒絕",
+  "accept": "接受",
+  "take": "取用",
+  "keep": "保留"
 }

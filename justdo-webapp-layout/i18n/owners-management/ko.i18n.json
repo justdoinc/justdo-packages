@@ -1,0 +1,18 @@
+{
+  "owners_mgmt_reject_transfer_from": "소유권 이전 거부",
+  "owners_mgmt_accept_transfer_from": "소유권 이전 수락",
+  "owners_mgmt_cancel_transfer_to": "소유권 이전 취소",
+  "owners_mgmt_loading": "로딩 중...",
+  "owners_mgmt_transfer_ownership_to": "소유권 이전하기...",
+  "owners_mgmt_task_only_visible_to_you": "이 작업은 당신에게만 보입니다",
+  "owners_mgmt_take_ownership_from_removed_owner": "제거된 소유자로부터 소유권 가져오기",
+  "owners_mgmt_take_ownership_from": "소유권 가져오기",
+  "owners_mgmt_edit_task_members": "작업 멤버 편집",
+  "owners_mgmt_share_task": "작업 공유",
+  "owners_mgmt_leave_a_reject_message": "거절 메시지 남기기",
+  "owners_mgmt_transfer_child_tasks_too": "__count__개의 하위 작업 소유권도 이전하시겠습니까?",
+  "owners_mgmt_transfer_child_tasks_too_plural": "__count__개의 하위 작업 소유권도 이전하시겠습니까?",
+  "owners_mgmt_transfer_child_tasks_done": "__count__개의 하위 작업 소유권 이전이 처리되었습니다.",
+  "owners_mgmt_transfer_child_tasks_done_plural": "__count__개의 하위 작업 소유권 이전이 처리되었습니다.",
+  "owners_mgmt_transfer": "이전"
+}

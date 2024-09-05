@@ -263,8 +263,8 @@ APP.executeAfterAppLibCode ->
         # if there are relevant child tasks:
         if child_tasks.length > 0
           JustdoSnackbar.show
-            text: "Transfer ownership of #{child_tasks.length} child-tasks as well?"
-            actionText: "Transfer"
+            text: TAPi18n.__ "owners_mgmt_transfer_child_tasks_too", {count: child_tasks.length}
+            actionText: TAPi18n.__ "owners_mgmt_transfer"
             duration: 10000
             showDismissButton: true
             onActionClick: =>
@@ -280,8 +280,8 @@ APP.executeAfterAppLibCode ->
                 APP.collections.Tasks.update task_id, modifier
 
               JustdoSnackbar.show
-                text: "Transfer ownership of #{child_tasks.length} child-tasks processed."
-                actionText: "UNDO"
+                text: TAPi18n.__ "owners_mgmt_transfer_child_tasks_done", {count: child_tasks.length}
+                actionText: TAPi18n.__ "undo"
                 duration: 10000
                 showDismissButton: true
                 onActionClick: =>

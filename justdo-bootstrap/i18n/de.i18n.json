@@ -1,0 +1,13 @@
+{
+  "themes_selector_config_title": "Themenauswahl",
+  "themes_selector_label": "JustDo-Theme",
+  "themes_selector_default": "Einfarbig Dunkelblau (Standard)",
+  "themes_selector_solid_blue": "Einfarbig Blau",
+  "themes_selector_solid_dark": "Einfarbig Dunkel",
+  "themes_selector_solid_dark_green": "Einfarbig Dunkelgrün",
+  "themes_selector_solid_purple": "Einfarbig Lila",
+  "themes_selector_solid": "Einfarbig Grün",
+  "themes_selector_solid_orange": "Einfarbig Orange",
+  "themes_selector_classic": "Klassisch",
+  "themes_selector_unicorn": "Einhorn"
+}
