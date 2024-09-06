@@ -74,6 +74,7 @@ APP.executeAfterAppLibCode ->
         title: bootbox_title
         message: message_template.node
         className: "ticket-entry-dialog bootbox-new-design"
+        rtl_ready: true
         onEscape: ->
           preBootboxDestroyProcedures()
         buttons:
