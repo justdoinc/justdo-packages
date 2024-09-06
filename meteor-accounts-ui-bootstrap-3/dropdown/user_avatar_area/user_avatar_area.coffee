@@ -60,6 +60,7 @@ Template._loginDropdownAvatarArea.events
       className: "bootbox-new-design"
       title: "Profile Picture Remove"
       message: "Are you sure you want to remove your profile picture?"
+      rtl_ready: true
       buttons:
         cancel: label: "Cancel"
         confirm: label: "Confirm"
