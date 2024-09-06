@@ -158,6 +158,7 @@ _.extend JustdoSystemUpdates.prototype,
       message: system_update_template.node
       className: "system-update-dialog bootbox-new-design"
       focused_element: ""
+      rtl_ready: true
 
       onEscape: ->
         markAsRead()
