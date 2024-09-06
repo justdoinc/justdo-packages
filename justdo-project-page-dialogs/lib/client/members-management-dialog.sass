@@ -113,7 +113,7 @@
 
   .members-list-add-users-container
     border-right: 1px solid #ecf1f8
-    padding: 20px 0px 0px 27px
+    padding: 20px 0px 0px 20px
     .section-caption,
     .members-list
       padding-right: 14px
@@ -312,6 +312,8 @@
       display: flex
       align-items: center
       color: #3D495B
+    .cascade-action-checkbox
+      margin-right: 8px
   .section-caption
     color: #3D495B
     display: flex
@@ -327,6 +329,8 @@
     align-items: center
     justify-content: space-between
     transition: padding 0.35s
+    .user-btn-content
+      margin-right: 16px
     .jd-icon
       color: #C5CBD3
       stroke-width: 3
@@ -422,11 +426,16 @@
     .checkbox
       left: unset
       right: 27px
-
+      .cascade-action-checkbox
+            margin-left: 8px
+            margin-right: unset
     .user-btn
       img
         margin-right: unset
         margin-left: 4px
+      .user-btn-content
+          margin-right: unset
+          margin-left: 16px
       .display-name
         margin-left: unset
         margin-right: 2px

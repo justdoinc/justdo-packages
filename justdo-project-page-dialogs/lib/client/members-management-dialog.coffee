@@ -558,6 +558,7 @@ APP.executeAfterAppLibCode ->
       animate: false
       rtl_ready: true
       className: "members-editor-dialog bootbox-new-design"
+      rtl_ready: true
 
       onEscape: ->
         return true
