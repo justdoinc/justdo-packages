@@ -44,5 +44,10 @@
   "reject": "Rədd et",
   "accept": "Qəbul et",
   "take": "Götür",
-  "keep": "Saxla"
+  "keep": "Saxla",
+  "reset": "Sıfırla",
+  "import": "İdxal et",
+  "select": "Seç",
+  "invalid_email": "Yanlış e-poçt",
+  "others": "Digərləri"
 }

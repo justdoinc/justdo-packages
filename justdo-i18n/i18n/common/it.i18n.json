@@ -44,5 +44,10 @@
   "reject": "Rifiuta",
   "accept": "Accetta",
   "take": "Prendi",
-  "keep": "Mantieni"
+  "keep": "Mantieni",
+  "reset": "Reimposta",
+  "import": "Importa",
+  "select": "Seleziona",
+  "invalid_email": "Email non valida",
+  "others": "Altri"
 }

@@ -44,5 +44,10 @@
   "reject": "Tolak",
   "accept": "Terima",
   "take": "Ambil",
-  "keep": "Simpan"
+  "keep": "Simpan",
+  "reset": "Set Semula",
+  "import": "Import",
+  "select": "Pilih",
+  "invalid_email": "E-mel tidak sah",
+  "others": "Lain-lain"
 }

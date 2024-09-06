@@ -44,5 +44,10 @@
   "reject": "Lükka tagasi",
   "accept": "Nõustu",
   "take": "Võta",
-  "keep": "Hoia"
+  "keep": "Hoia",
+  "reset": "Lähtesta",
+  "import": "Impordi",
+  "select": "Vali",
+  "invalid_email": "Vigane e-posti aadress",
+  "others": "Teised"
 }

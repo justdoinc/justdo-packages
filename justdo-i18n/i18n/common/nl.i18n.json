@@ -44,5 +44,10 @@
   "reject": "Afwijzen",
   "accept": "Accepteren",
   "take": "Nemen",
-  "keep": "Behouden"
+  "keep": "Behouden",
+  "reset": "Resetten",
+  "import": "Importeren",
+  "select": "Selecteren",
+  "invalid_email": "Ongeldig e-mailadres",
+  "others": "Anderen"
 }

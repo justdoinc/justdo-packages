@@ -44,5 +44,10 @@
   "reject": "거절",
   "accept": "수락",
   "take": "가져가기",
-  "keep": "유지"
+  "keep": "유지",
+  "reset": "초기화",
+  "import": "가져오기",
+  "select": "선택",
+  "invalid_email": "유효하지 않은 이메일",
+  "others": "기타"
 }

@@ -44,5 +44,10 @@
   "reject": "Từ chối",
   "accept": "Chấp nhận",
   "take": "Lấy",
-  "keep": "Giữ"
+  "keep": "Giữ",
+  "reset": "Đặt lại",
+  "import": "Nhập",
+  "select": "Chọn",
+  "invalid_email": "Email không hợp lệ",
+  "others": "Khác"
 }

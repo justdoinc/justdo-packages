@@ -44,5 +44,10 @@
   "reject": "Odbij",
   "accept": "Prihvati",
   "take": "Uzmi",
-  "keep": "Zadrži"
+  "keep": "Zadrži",
+  "reset": "Resetiraj",
+  "import": "Uvezi",
+  "select": "Odaberi",
+  "invalid_email": "Nevažeća e-pošta",
+  "others": "Ostali"
 }

@@ -44,5 +44,10 @@
   "reject": "拒否",
   "accept": "承諾",
   "take": "取る",
-  "keep": "保持"
+  "keep": "保持",
+  "reset": "リセット",
+  "import": "インポート",
+  "select": "選択",
+  "invalid_email": "無効なメールアドレス",
+  "others": "その他"
 }

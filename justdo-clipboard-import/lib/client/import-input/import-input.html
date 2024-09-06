@@ -2,10 +2,10 @@
   <div class="justdo-clipboard-import-container">
     {{#if waitingForPaste}}
       <textarea class="form-control justdo-clipboard-import-paste-target"
-                placeholder="{{pasteTargetPlaceholder}}"></textarea>
-      <small><i>Limited to {{importLimit}} tasks</i></small>
+                placeholder="{{_ pasteTargetPlaceholder}}"></textarea>
+      <small><i>{{_ "clipboard_import_rows_limit" limit=importLimit}}</i></small>
       <div class="justdo-clipboard-import-intro">
-        <a href="https://support.justdo.com/hc/en-us/articles/360015993900-How-to-Import-Tasks-from-a-Spreadsheet" target="_blank">How Does it Work?</a>
+        <a href="https://support.justdo.com/hc/en-us/articles/360015993900-How-to-Import-Tasks-from-a-Spreadsheet" target="_blank">{{_ "clipboard_import_how_does_it_work"}}</a>
       </div>
     {{/if}}
 
@@ -13,14 +13,14 @@
       <div class="justdo-clipboard-import-table-container">
         {{#if importing}}
           <div class="import-helper-message">
-            {{importHelperMessage}}
+            {{_ importHelperMessage}}
           </div>
         {{/if}}
 
         <table class="justdo-clipboard-import-table table table-sm">
           <tr>
             <td class="bg-light import-column-header">
-              Import
+              {{_ "import"}}
             </td>
             {{#each numberOfColumns}}
               <th class="bg-light" data-col-index="{{@index}}">

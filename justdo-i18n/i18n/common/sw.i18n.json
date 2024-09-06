@@ -44,5 +44,10 @@
   "reject": "Kataa",
   "accept": "Kubali",
   "take": "Chukua",
-  "keep": "Hifadhi"
+  "keep": "Hifadhi",
+  "reset": "Weka upya",
+  "import": "Leta",
+  "select": "Chagua",
+  "invalid_email": "Barua pepe batili",
+  "others": "Wengine"
 }

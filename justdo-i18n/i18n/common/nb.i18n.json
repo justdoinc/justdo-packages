@@ -44,5 +44,10 @@
   "reject": "Avvis",
   "accept": "Godta",
   "take": "Ta",
-  "keep": "Behold"
+  "keep": "Behold",
+  "reset": "Tilbakestill",
+  "import": "Importer",
+  "select": "Velg",
+  "invalid_email": "Ugyldig e-postadresse",
+  "others": "Andre"
 }

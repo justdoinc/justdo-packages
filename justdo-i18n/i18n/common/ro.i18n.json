@@ -44,5 +44,10 @@
   "reject": "Respinge",
   "accept": "Acceptă",
   "take": "Ia",
-  "keep": "Păstrează"
+  "keep": "Păstrează",
+  "reset": "Resetează",
+  "import": "Importă",
+  "select": "Selectează",
+  "invalid_email": "Email invalid",
+  "others": "Alții"
 }

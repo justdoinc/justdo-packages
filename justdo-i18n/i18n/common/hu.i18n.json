@@ -44,5 +44,10 @@
   "reject": "Elutasítás",
   "accept": "Elfogadás",
   "take": "Elvétel",
-  "keep": "Megtartás"
+  "keep": "Megtartás",
+  "reset": "Visszaállítás",
+  "import": "Importálás",
+  "select": "Kiválasztás",
+  "invalid_email": "Érvénytelen e-mail cím",
+  "others": "Egyebek"
 }

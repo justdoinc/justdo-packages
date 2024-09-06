@@ -44,5 +44,10 @@
   "reject": "Rebutjar",
   "accept": "Acceptar",
   "take": "Agafar",
-  "keep": "Mantenir"
+  "keep": "Mantenir",
+  "reset": "Restablir",
+  "import": "Importar",
+  "select": "Seleccionar",
+  "invalid_email": "Correu electrònic no vàlid",
+  "others": "Altres"
 }

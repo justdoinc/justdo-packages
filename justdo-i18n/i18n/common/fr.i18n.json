@@ -44,5 +44,10 @@
   "reject": "Rejeter",
   "accept": "Accepter",
   "take": "Prendre",
-  "keep": "Garder"
+  "keep": "Garder",
+  "reset": "Réinitialiser",
+  "import": "Importer",
+  "select": "Sélectionner",
+  "invalid_email": "Adresse e-mail invalide",
+  "others": "Autres"
 }

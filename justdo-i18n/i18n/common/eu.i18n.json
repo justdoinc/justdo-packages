@@ -44,5 +44,10 @@
   "reject": "Ukatu",
   "accept": "Onartu",
   "take": "Hartu",
-  "keep": "Mantendu"
+  "keep": "Mantendu",
+  "reset": "Berrezarri",
+  "import": "Inportatu",
+  "select": "Hautatu",
+  "invalid_email": "Baliogabeko helbide elektronikoa",
+  "others": "Besteak"
 }

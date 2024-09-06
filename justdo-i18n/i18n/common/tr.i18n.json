@@ -44,5 +44,10 @@
   "reject": "Reddet",
   "accept": "Kabul Et",
   "take": "Al",
-  "keep": "Sakla"
+  "keep": "Sakla",
+  "reset": "Sıfırla",
+  "import": "İçe Aktar",
+  "select": "Seç",
+  "invalid_email": "Geçersiz e-posta",
+  "others": "Diğerleri"
 }

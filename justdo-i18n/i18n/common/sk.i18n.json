@@ -44,5 +44,10 @@
   "reject": "Odmietnuť",
   "accept": "Prijať",
   "take": "Vziať",
-  "keep": "Ponechať"
+  "keep": "Ponechať",
+  "reset": "Resetovať",
+  "import": "Importovať",
+  "select": "Vybrať",
+  "invalid_email": "Neplatný e-mail",
+  "others": "Ostatní"
 }

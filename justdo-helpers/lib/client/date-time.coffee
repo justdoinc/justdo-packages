@@ -58,7 +58,7 @@ _.extend JustdoHelpers,
     current_year = new Date().getFullYear()
     allowed_date_formats = _.map allowed_date_formats, (format) ->
       if format is "Others"
-        return {text: format, value: format}
+        return {text: TAPi18n.__("others"), value: format}
 
       demo_date = moment(new Date(current_year, 2, 14)).format(format) # JS months count from 0 to 11, so it's 14th March, (current year)
       return {text: "#{demo_date} (#{format})", value: format}

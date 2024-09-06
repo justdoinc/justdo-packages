@@ -44,5 +44,10 @@
   "reject": "Avvisa",
   "accept": "Acceptera",
   "take": "Ta",
-  "keep": "Behåll"
+  "keep": "Behåll",
+  "reset": "Återställ",
+  "import": "Importera",
+  "select": "Välj",
+  "invalid_email": "Ogiltig e-postadress",
+  "others": "Andra"
 }

@@ -78,7 +78,7 @@ bindTargetToPaste = (tpl) ->
       #limit max number of rows to import
       if rows.length > JustdoClipboardImport.import_limit
         JustdoSnackbar.show
-          text: "Too many rows, you may copy up to #{JustdoClipboardImport.import_limit} rows."
+          text: TAPi18n.__ "clipboard_import_too_many_rows", {limit: JustdoClipboardImport.import_limit}
         return
 
       #trim all rows according to the longest row. This handles cases where the entire row is copied to
@@ -96,7 +96,7 @@ bindTargetToPaste = (tpl) ->
     else
       tpl.data.dialog_state.set "wait_for_paste"
       JustdoSnackbar.show
-        text: "Couldn't find tabular information in the clipboard."
+        text: TAPi18n.__ "clipboard_import_cant_find_tabular_data"
 
     return
 
@@ -118,18 +118,18 @@ Template.justdo_clipboard_import_input.onCreated ->
     state = Template.instance().data.dialog_state.get()
 
     if state == "wait_for_paste"
-      $(".justdo-clipboard-import-main-button").html "Cancel"
+      $(".justdo-clipboard-import-main-button").html TAPi18n.__("cancel")
       $("#progressbar").hide()
       Meteor.defer =>
         bindTargetToPaste self
         return
     else if state == "has_data"
-      $(".justdo-clipboard-import-main-button").html "Import"
+      $(".justdo-clipboard-import-main-button").html TAPi18n.__("import")
     else if state == "importing"
       $(".justdo-clipboard-import-main-button, .justdo-import-clipboard-data-reset-button, .col-def-selector, .import-row-checkbox, .justdo-clipboard-import-dialog .close").prop "disabled", true
       $(".justdo-clipboard-import-main-button").prop "disabled", true
     else
-      $(".justdo-clipboard-import-main-button").html "Cancel"
+      $(".justdo-clipboard-import-main-button").html TAPi18n.__("cancel")
       $("#progressbar").hide()
     return
 
@@ -138,7 +138,7 @@ Template.justdo_clipboard_import_input.onCreated ->
 Template.justdo_clipboard_import_input.helpers
   waitingForPaste: -> Template.instance().data.dialog_state.get() is "wait_for_paste"
 
-  pasteTargetPlaceholder: -> "Copy content from your spreadsheet and paste it here to create tasks.\nThe first column is regarded as the Subject."
+  pasteTargetPlaceholder: -> "clipboard_import_placeholder_msg"
 
   hasData: -> Template.instance().data.dialog_state.get() in ["has_data", "importing"]
 

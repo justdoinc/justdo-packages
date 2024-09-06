@@ -44,5 +44,10 @@
   "reject": "Refuzo",
   "accept": "Prano",
   "take": "Merr",
-  "keep": "Mbaj"
+  "keep": "Mbaj",
+  "reset": "Rivendos",
+  "import": "Importo",
+  "select": "Zgjidh",
+  "invalid_email": "Email i pavlefshëm",
+  "others": "Të tjerë"
 }

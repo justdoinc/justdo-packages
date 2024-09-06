@@ -44,5 +44,10 @@
   "reject": "Noraidīt",
   "accept": "Pieņemt",
   "take": "Ņemt",
-  "keep": "Saglabāt"
+  "keep": "Saglabāt",
+  "reset": "Atiestatīt",
+  "import": "Importēt",
+  "select": "Izvēlēties",
+  "invalid_email": "Nederīga e-pasta adrese",
+  "others": "Citi"
 }

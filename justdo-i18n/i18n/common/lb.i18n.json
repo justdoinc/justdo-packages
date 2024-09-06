@@ -44,5 +44,10 @@
   "reject": "Ofleenen",
   "accept": "Unhuelen",
   "take": "Huelen",
-  "keep": "Behalen"
+  "keep": "Behalen",
+  "reset": "Zerécksetzen",
+  "import": "Importéieren",
+  "select": "Auswielen",
+  "invalid_email": "Ongëlteg E-Mail",
+  "others": "Anerer"
 }

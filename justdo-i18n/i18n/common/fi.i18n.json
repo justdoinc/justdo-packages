@@ -44,5 +44,10 @@
   "reject": "Hylkää",
   "accept": "Hyväksy",
   "take": "Ota",
-  "keep": "Säilytä"
+  "keep": "Säilytä",
+  "reset": "Nollaa",
+  "import": "Tuo",
+  "select": "Valitse",
+  "invalid_email": "Virheellinen sähköpostiosoite",
+  "others": "Muut"
 }

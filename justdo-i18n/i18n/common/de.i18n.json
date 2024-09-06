@@ -44,5 +44,10 @@
   "reject": "Ablehnen",
   "accept": "Akzeptieren",
   "take": "Nehmen",
-  "keep": "Behalten"
+  "keep": "Behalten",
+  "reset": "Zurücksetzen",
+  "import": "Importieren",
+  "select": "Auswählen",
+  "invalid_email": "Ungültige E-Mail-Adresse",
+  "others": "Andere"
 }

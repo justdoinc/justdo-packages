@@ -44,5 +44,10 @@
   "reject": "Verwerp",
   "accept": "Aanvaar",
   "take": "Neem",
-  "keep": "Behou"
+  "keep": "Behou",
+  "reset": "Herstel",
+  "import": "Invoer",
+  "select": "Kies",
+  "invalid_email": "Ongeldige e-posadres",
+  "others": "Ander"
 }

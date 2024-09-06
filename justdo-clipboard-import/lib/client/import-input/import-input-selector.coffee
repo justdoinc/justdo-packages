@@ -11,14 +11,17 @@ Template.justdo_clipboard_import_input_selector.onCreated ->
    _.extend available_field_types[0],
     "clipboard-import-no-import":
       label: "-- skip column --"
+      label_i18n: "clipboard_import_skip_column"
       _id: "clipboard-import-no-import"
 
     "clipboard-import-index":
        label: "Original Index (will not be imported)"
+       label_i18n: "clipboard_import_index_column"
        _id: "clipboard-import-index"
 
      "task-indent-level":
        label: "Indent Level"
+       label_i18n: "clipboard_import_indent_level"
        _id: "task-indent-level"
 
    # available_field_types[1] is an array
@@ -122,11 +125,11 @@ Template.justdo_clipboard_import_input_selector.events
                 user_obj: user_doc
               return
             # If no user doc found, we put a warning icon next to the cell data indicating that the email does not belong to a member
-            user_not_found_icon = """<span title="User not found in the current JustDo, invite the user first." class="raw-tooltip owner-id-alert"><svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#alert-triangle"/></svg></span>"""
+            user_not_found_icon = """<span title="#{TAPi18n.__ "clipboard_import_user_not_found"}" class="raw-tooltip owner-id-alert"><svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#alert-triangle"/></svg></span>"""
             $data_cell.prepend(user_not_found_icon) # No user input is used here, hence no xssGuard
             return
 
-          not_email_icon = """<span title="Invalid email" class="raw-tooltip owner-id-alert"><svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#alert-circle"/></svg></span>"""
+          not_email_icon = """<span title="#{TAPi18n.__ "invalid_email"}" class="raw-tooltip owner-id-alert"><svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#alert-circle"/></svg></span>"""
           $data_cell.prepend(not_email_icon) # No user input is used here, hence no xssGuard
           return
 

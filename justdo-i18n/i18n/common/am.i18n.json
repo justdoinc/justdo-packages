@@ -44,5 +44,10 @@
   "reject": "ውደቅ",
   "accept": "ተቀበል",
   "take": "ውሰድ",
-  "keep": "ያዝ"
+  "keep": "ያዝ",
+  "reset": "ዳግም አስጀምር",
+  "import": "አስገባ",
+  "select": "ምረጥ",
+  "invalid_email": "ልክ ያልሆነ ኢሜይል",
+  "others": "ሌሎች"
 }

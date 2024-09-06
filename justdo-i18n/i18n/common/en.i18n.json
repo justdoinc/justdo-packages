@@ -44,5 +44,10 @@
   "reject": "Reject",
   "accept": "Accept",
   "take": "Take",
-  "keep": "Keep"
+  "keep": "Keep",
+  "reset": "Reset",
+  "import": "Import",
+  "select": "Select",
+  "invalid_email": "Invalid email",
+  "others": "Others"
 }

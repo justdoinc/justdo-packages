@@ -44,5 +44,10 @@
   "reject": "拒绝",
   "accept": "接受",
   "take": "取用",
-  "keep": "保持"
+  "keep": "保持",
+  "reset": "重置",
+  "import": "导入",
+  "select": "选择",
+  "invalid_email": "无效的电子邮箱",
+  "others": "其他"
 }

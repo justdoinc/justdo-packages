@@ -180,14 +180,14 @@ getSelectedColumnsDefinitions = ->
     col_def = available_field_types?[0]?[duplicated_field_id]
     ret_val =
       err:
-        message: "More than 1 column is selected as #{if col_def? then col_def.label else duplicated_field_id}"
+        message: TAPi18n.__ "clipboard_import_duplicate_field", {field: col_def?.label or duplicated_field_id}
     return ret_val
 
   return selected_columns_definitions
 
 testDataAndImport = (modal_data, selected_columns_definitions) ->
   modal_data.dialog_state.set "importing"
-  modal_data.import_helper_message.set "Preparing..."
+  modal_data.import_helper_message.set "clipboard_import_preparing"
   saveImportConfig selected_columns_definitions
   # Check that all columns have the same number of cells
   cp_data = modal_data.clipboard_data.get()
@@ -220,7 +220,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     if row.length != number_of_columns
       showErrorInSnackbarAndRevertState
         dialog_state: modal_data.dialog_state
-        snackbar_message: "Mismatch in number of columns on different rows. Import aborted."
+        snackbar_message: TAPi18n.__ "clipboard_import_column_number_mismatch"
       return false
 
     task.project_id = project_id
@@ -298,7 +298,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
               if val == null
                 showErrorInSnackbarAndRevertState
                   dialog_state: modal_data.dialog_state
-                  snackbar_message: "Invalid #{field_def.label} value #{cell_val} in line #{line_number} - not a valid option. Import aborted."
+                  snackbar_message: TAPi18n.__("clipboard_import_invalid_option_value", {field: field_def.label, val: cell_val, line: line_number})
                   snackbar_duration: 15000
                   problematic_row: line_number
 
@@ -321,7 +321,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
               if val == null
                 showErrorInSnackbarAndRevertState
                   dialog_state: modal_data.dialog_state
-                  snackbar_message: "Invalid #{field_def.label} value #{value} in line #{line_number} - not a valid option. Import aborted."
+                  snackbar_message: TAPi18n.__("clipboard_import_invalid_option_value", {field: field_def.label, val: cell_val, line: line_number})
                   snackbar_duration: 15000
                   problematic_row: line_number
 
@@ -338,7 +338,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
             if _.isNaN cell_val
                 showErrorInSnackbarAndRevertState
                   dialog_state: modal_data.dialog_state
-                  snackbar_message: "Invalid value \"#{original_cell_val}\" in line #{line_number} - should be a number. Import aborted."
+                  snackbar_message: TAPi18n.__("clipboard_import_value_should_be_number", {val: original_cell_val, line: line_number})
                   snackbar_duration: 15000
                   problematic_row: line_number
 
@@ -357,7 +357,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
             if out_of_range
               showErrorInSnackbarAndRevertState
                 dialog_state: modal_data.dialog_state
-                snackbar_message: "Invalid #{field_def.label} value #{cell_val} in line #{line_number} (must be between #{field_def.min} and #{field_def.max}). Import aborted."
+                snackbar_message: TAPi18n.__("clipboard_import_value_out_of_range", {val: cell_val, field: field_def.label, min: field_def.min, max: field_def.max, line: line_number})
                 problematic_row: line_number
               return false
 
@@ -376,7 +376,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
             if not moment_date.isValid()
               showErrorInSnackbarAndRevertState
                 dialog_state: modal_data.dialog_state
-                snackbar_message: "Invalid date format in line #{line_number}. Import aborted."
+                snackbar_message: TAPi18n.__("clipboard_import_invalid_date_format", {line: line_number})
                 problematic_row: line_number
 
               modal_data.date_fields_date_format.set null
@@ -392,7 +392,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       if indent_level > last_indent + 1 or indent_level <= 0 or (last_indent == -1 and indent_level != 1) or indent_level < base_indent
         showErrorInSnackbarAndRevertState
           dialog_state: modal_data.dialog_state
-          snackbar_message: "Invalid indentation at line #{line_number} - inconsistent indentation."
+          snackbar_message: TAPi18n.__("clipboard_import_invalid_indent", {line: line_number})
           snackbar_duration: 15000
           problematic_row: line_number
 
@@ -407,7 +407,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       if task.start_date? and task.end_date? and task.start_date != task.end_date
         showErrorInSnackbarAndRevertState
           dialog_state: modal_data.dialog_state
-          snackbar_message: "Task #{task.title} at line #{line_number} is a milestone, it can only have the same Start Date and End Date."
+          snackbar_message: TAPi18n.__("clipboard_import_milestone_can_only_have_identical_start_and_end_date", {line: line_number, task: task.title})
           snackbar_duration: 15000
           problematic_row: line_number
         return false
@@ -529,13 +529,13 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     if not APP.justdo_planning_utilities?
       return
 
-    modal_data.import_helper_message.set "Importing dependencies..."
+    modal_data.import_helper_message.set "clipboard_import_importing_dependencies"
     custom_bulk_update_payload = {}
     for temp_import_id, deps_str of dependencies_strs
       if not (deps = APP.justdo_planning_utilities.parseDependenciesStr deps_str, project_id, import_idx_to_task_id)?
         line_number = temp_import_id.split("_L")[1]
         scrollToAndHighlightProblematicRow line_number
-        throw new Meteor.Error "invalid dependency", "Invalid dependency (#{deps_str}) found in line #{line_number}"
+        throw new Meteor.Error "invalid dependency", TAPi18n.__("clipboard_import_invalid_dependency", {dep: deps_str, line: line_number})
 
       deps_payload = []
       for dep in deps
@@ -554,7 +554,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     return true
 
   importOwners = ->
-    modal_data.import_helper_message.set "Importing Owners..."
+    modal_data.import_helper_message.set "clipboard_import_importing_owners"
     if _.isEmpty owner_id_to_temp_import_id_map
       return
 
@@ -641,7 +641,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
         if trials == 0
           undoImport 1  # Try again just in case the client database are not updated fast enough
         else if show_err
-          error_text = "Undo failed."
+          error_text = TAPi18n.__ "clipboard_import_undo_failed"
           if err.reason?
             error_text = "#{err.reason}. #{error_text}"
           JustdoSnackbar.show
@@ -652,14 +652,14 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
     return
 
-  modal_data.import_helper_message.set "Importing..."
+  modal_data.import_helper_message.set "clipboard_import_importing"
   async.mapSeries [1..max_indent], (n, callback) ->
     importLevel(n, callback)
   , (err, results) ->
     if err?
       showErrorInSnackbarAndRevertState
         dialog_state: modal_data.dialog_state
-        snackbar_message: "#{err?.reason or "Incorrect dependenc(ies) found."}. Import aborted."
+        snackbar_message: TAPi18n.__("clipboard_import_failed_with_reason", {reason: err?.reason or TAPi18n.__("clipboard_import_incorrect_dependency_found")})
         snackbar_duration: 15000
 
       undoImport()
@@ -673,7 +673,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     catch err
       showErrorInSnackbarAndRevertState
         dialog_state: modal_data.dialog_state
-        snackbar_message: "#{err.reason}. Import aborted."
+        snackbar_message: TAPi18n.__("clipboard_import_failed_with_reason", {reason: err.reason})
         snackbar_duration: 15000
 
       undoImport()
@@ -686,9 +686,9 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
     bootbox.hideAll()
     JustdoSnackbar.show
-      text: "#{task_paths_added.length} task#{if task_paths_added.length > 1 then "s" else ""} imported."
+      text: TAPi18n.__("clipboard_import_task_imported", {count: task_paths_added.length})
       duration: 1000 * 60 * 2 # 2 mins
-      actionText: "Undo"
+      actionText: TAPi18n.__("undo")
       showDismissButton: true
       onActionClick: =>
         undoImport(0, true)
@@ -714,7 +714,7 @@ Template.justdo_clipboard_import_activation_icon.events
       getAvailableFieldTypes: getAvailableFieldTypes
       date_fields_date_format: new ReactiveVar(null)
       import_config_local_storage_key: getLocalStorageKey()
-      import_helper_message: new ReactiveVar "Preparing..."
+      import_helper_message: new ReactiveVar "clipboard_import_preparing"
 
     message_template =
       JustdoHelpers.renderTemplateInNewNode(Template.justdo_clipboard_import_input, modal_data)
@@ -726,7 +726,7 @@ Template.justdo_clipboard_import_activation_icon.events
       task_or_project_name = "#{JD.activeJustdo({title: 1})?.title}"
 
     dialog = bootbox.dialog
-      title: """Import spreadsheet data as child tasks to <i>#{task_or_project_name}</i><div id="progressbar"></div>"""
+      title: TAPi18n.__("clipboard_import_dialog_title", {task_or_project_name: task_or_project_name})
       message: message_template.node
       animate: true
       scrollable: true
@@ -736,7 +736,7 @@ Template.justdo_clipboard_import_activation_icon.events
       onEscape: =>
         if modal_data.dialog_state.get() == "importing"
           JustdoSnackbar.show
-            text: "Import in progress..."
+            text: TAPi18n.__ "clipboard_import_importing_is_in_progress"
             duration: 1000 * 20 # 20 secs
           return false
 
@@ -744,7 +744,7 @@ Template.justdo_clipboard_import_activation_icon.events
 
       buttons:
         Reset:
-          label: "Reset"
+          label: TAPi18n.__ "reset"
           className: "btn-default justdo-import-clipboard-data-reset-button"
           callback: =>
             modal_data.dialog_state.set "wait_for_paste"
@@ -757,7 +757,7 @@ Template.justdo_clipboard_import_activation_icon.events
             return false
 
         Import:
-          label: "Cancel"
+          label: TAPi18n.__ "cancel"
           className: "btn-primary justdo-clipboard-import-main-button"
           callback: =>
             cp_data = modal_data.clipboard_data.get()
@@ -780,7 +780,7 @@ Template.justdo_clipboard_import_activation_icon.events
             # Check that all columns are selected and return false if not the case
             if selected_columns_definitions.length < (number_of_columns)
               JustdoSnackbar.show
-                text: "Please select all columns fields."
+                text: TAPi18n.__ "clipboard_import_please_select_all_column_fields"
               return false
 
             # Manage dates - ask for input format
@@ -794,7 +794,7 @@ Template.justdo_clipboard_import_activation_icon.events
               options = JustdoHelpers.getAllowedDateFormatsWithExample({custom_date_formats: custom_allowed_dates_formats})
 
               bootbox.prompt
-                title: "Please select source date format"
+                title: TAPi18n.__ "clipboard_import_please_select_source_date_format"
                 animate: true
                 className: "bootbox-new-design"
                 inputType: "select"

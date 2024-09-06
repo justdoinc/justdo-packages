@@ -44,5 +44,10 @@
   "reject": "דחה",
   "accept": "קבל",
   "take": "קח",
-  "keep": "שמור"
+  "keep": "שמור",
+  "reset": "אפס",
+  "import": "ייבא",
+  "select": "בחר",
+  "invalid_email": "כתובת אימייל לא תקינה",
+  "others": "אחרים"
 }

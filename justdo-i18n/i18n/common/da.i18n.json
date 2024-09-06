@@ -44,5 +44,10 @@
   "reject": "Afvis",
   "accept": "Accepter",
   "take": "Tag",
-  "keep": "Behold"
+  "keep": "Behold",
+  "reset": "Nulstil",
+  "import": "Importer",
+  "select": "Vælg",
+  "invalid_email": "Ugyldig e-mail",
+  "others": "Andre"
 }

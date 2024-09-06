@@ -44,5 +44,10 @@
   "reject": "Atmesti",
   "accept": "Priimti",
   "take": "Paimti",
-  "keep": "Išlaikyti"
+  "keep": "Išlaikyti",
+  "reset": "Atstatyti",
+  "import": "Importuoti",
+  "select": "Pasirinkti",
+  "invalid_email": "Neteisingas el. pašto adresas",
+  "others": "Kiti"
 }

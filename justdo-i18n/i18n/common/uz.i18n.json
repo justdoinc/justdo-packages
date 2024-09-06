@@ -44,5 +44,10 @@
   "reject": "Rad etish",
   "accept": "Qabul qilish",
   "take": "Olish",
-  "keep": "Saqlash"
+  "keep": "Saqlash",
+  "reset": "Qayta o'rnatish",
+  "import": "Import",
+  "select": "Tanlash",
+  "invalid_email": "Noto'g'ri elektron pochta",
+  "others": "Boshqalar"
 }
