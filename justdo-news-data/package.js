@@ -56,7 +56,7 @@ Package.onUse(function (api) {
   api.use("justdoinc:justdo-news@1.0.0", both);
   api.use("tap:i18n", both);
   api.use("justdoinc:justdo-i18n@1.0.0", both);
-  
+
   api.addFiles("lib/both/news-category-registrar.coffee", both);
 
   api.addFiles("lib/client/news-common.sass", client);
@@ -559,6 +559,24 @@ Package.onUse(function (api) {
     "lib/both/news/v5-06/i18n/ms.i18n.json",
     "lib/both/news/v5-06/i18n/tg.i18n.json"
   ], both);
+
+
+
+
+  // v5.2
+  api.addAssets([
+    "lib/both/news/v5-2/assets/1.png",
+    "lib/both/news/v5-2/assets/2.png",
+    "lib/both/news/v5-2/assets/3.png",
+    "lib/both/news/v5-2/assets/4.png"
+  ], client);
+  api.addFiles("lib/both/news/v5-2/v5-2.coffee", both);
+  api.addFiles([
+    "lib/both/news/v5-2/i18n/en.i18n.json"
+  ], both);
+
+
+
 
   api.export("JustdoNewsData", both);
 });
