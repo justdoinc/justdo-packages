@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Convidar nous membres",
+  "add_project_member_email_input_placeholder": "Escriviu o enganxeu correus electrònics, p. ex.: nom@exemple.com, nom2@exemple.com",
+  "add_project_member_no_members": "No hi ha membres",
+  "add_project_member_select_tasks_or_projects_to_invite": "Seleccioneu tasques arrel o projectes que estaran disponibles per als nous usuaris",
+  "add_project_member_no_root_tasks": "No s'han trobat tasques arrel",
+  "add_project_member_no_projects": "No s'han trobat projectes",
+  "add_project_member_set_all_as": "Establir tots com a: ",
+  "add_project_member_search_root_tasks_or_projects": "Cercar tasques arrel / projectes",
+  "add_project_member_new_users": "Nous usuaris",
+  "add_project_member_registered_users": "Usuaris registrats",
+  "add_project_member_existing_members": "Membres existents d'aquest JustDo (tauler)"
+}

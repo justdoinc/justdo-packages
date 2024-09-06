@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Yeni Üzvləri Dəvət Et",
+  "add_project_member_email_input_placeholder": "E-poçt ünvan(lar)ını daxil edin və ya yapışdırın, məs: ad@nümunə.com, ad2@nümunə.com",
+  "add_project_member_no_members": "Üzv yoxdur",
+  "add_project_member_select_tasks_or_projects_to_invite": "Yeni istifadəçilər üçün əlçatan olacaq əsas tapşırıqları və ya layihələri seçin",
+  "add_project_member_no_root_tasks": "Əsas tapşırıq tapılmadı",
+  "add_project_member_no_projects": "Layihə tapılmadı",
+  "add_project_member_set_all_as": "Hamısını belə təyin et: ",
+  "add_project_member_search_root_tasks_or_projects": "Əsas tapşırıqları / layihələri axtar",
+  "add_project_member_new_users": "Yeni İstifadəçilər",
+  "add_project_member_registered_users": "Qeydiyyatdan Keçmiş İstifadəçilər",
+  "add_project_member_existing_members": "Bu JustDo-nun Mövcud Üzvləri"
+}

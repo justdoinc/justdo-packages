@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "புதிய உறுப்பினர்களை அழைக்கவும்",
+  "add_project_member_email_input_placeholder": "மின்னஞ்சல்(களை) தட்டச்சு செய்யவும் அல்லது ஒட்டவும், எ.கா: name@example.com, name2@example.com",
+  "add_project_member_no_members": "உறுப்பினர்கள் இல்லை",
+  "add_project_member_select_tasks_or_projects_to_invite": "புதிய பயனர்களுக்கு கிடைக்கக்கூடிய மூல பணிகள் அல்லது திட்டங்களைத் தேர்ந்தெடுக்கவும்",
+  "add_project_member_no_root_tasks": "மூல பணிகள் எதுவும் கிடைக்கவில்லை",
+  "add_project_member_no_projects": "திட்டங்கள் எதுவும் கிடைக்கவில்லை",
+  "add_project_member_set_all_as": "அனைத்தையும் இவ்வாறு அமைக்கவும்: ",
+  "add_project_member_search_root_tasks_or_projects": "மூல பணிகள் / திட்டங்களைத் தேடுங்கள்",
+  "add_project_member_new_users": "புதிய பயனர்கள்",
+  "add_project_member_registered_users": "பதிவு செய்யப்பட்ட பயனர்கள்",
+  "add_project_member_existing_members": "இந்த JustDo-வின் தற்போதைய உறுப்பினர்கள்"
+}

@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "কিছু সদস্য আমন্ত্রিত হননি",
+  "invite_member_failed_by_registrable_user": "সাইট অ্যাডমিনে বর্তমান নিবন্ধনযোগ্য ব্যবহারকারী কনফিগারেশন নিম্নলিখিত ব্যবহারকারীদের যোগ করতে বাধা দিয়েছে:",
+  "invite_member_failed_other_reason": "নিম্নলিখিত ব্যবহারকারীদের যোগ করা যায়নি:"
+}

@@ -48,6 +48,18 @@
   "reset": "Tilbakestill",
   "import": "Importer",
   "select": "Velg",
+  "select_all": "Velg alle",
+  "clear_all": "Fjern alle",
   "invalid_email": "Ugyldig e-postadresse",
-  "others": "Andre"
+  "others": "Andre",
+  "invite": "Inviter",
+  "root_tasks": "Hovedoppgaver",
+  "apply": "Bruk",
+  "projects_label": "Prosjekter",
+  "member": "Medlem",
+  "guest": "Gjest",
+  "proxy": "Stedfortreder",
+  "type": "type",
+  "full_name": "fullt navn",
+  "email": "e-post"
 }

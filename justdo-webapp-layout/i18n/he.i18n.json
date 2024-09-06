@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "הזמנה מתקדמת",
   "members_dropdown_invite_no_projects_found": "לא נמצאו פרויקטים",
   "members_dropdown_invite_no_projects_html": "אין פרויקטים בלוח JustDo זה.<br>לחץ קליק ימני על משימה כדי להגדיר אותה כפרויקט.",
-  "member_dropdown_invite_clear_all": "נקה הכל",
-  "member_dropdown_invite_select_all": "בחר הכל",
   "member_dropdown_invite_select_with_number": "בחר __count__",
   "member_dropdown_invite_share_all_with_number_html": "שתף את כל <span>__count__</span> המשימה",
   "member_dropdown_invite_share_all_with_number_html_plural": "שתף את כל <span>__count__</span> המשימות",

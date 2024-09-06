@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Yangi a'zolarni taklif qilish",
+  "add_project_member_email_input_placeholder": "Enter tugmasini bosing yoki elektron pochta manzilini kiriting/joylashtiring, masalan: name@example.com, name2@example.com",
+  "add_project_member_no_members": "A'zolar yo'q",
+  "add_project_member_select_tasks_or_projects_to_invite": "Yangi foydalanuvchilar uchun mavjud bo'ladigan asosiy vazifalar yoki loyihalarni tanlang",
+  "add_project_member_no_root_tasks": "Asosiy vazifalar topilmadi",
+  "add_project_member_no_projects": "Loyihalar topilmadi",
+  "add_project_member_set_all_as": "Hammasi uchun o'rnatish: ",
+  "add_project_member_search_root_tasks_or_projects": "Asosiy vazifalar / loyihalarni qidirish",
+  "add_project_member_new_users": "Yangi foydalanuvchilar",
+  "add_project_member_registered_users": "Ro'yxatdan o'tgan foydalanuvchilar",
+  "add_project_member_existing_members": "Ushbu JustDo taxtasining mavjud a'zolari"
+}

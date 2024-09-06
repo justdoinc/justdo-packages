@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Jemput Ahli Baru",
+  "add_project_member_email_input_placeholder": "Taip Enter atau tampal e-mel, cth: nama@contoh.com, nama2@contoh.com",
+  "add_project_member_no_members": "Tiada ahli",
+  "add_project_member_select_tasks_or_projects_to_invite": "Pilih tugas akar atau projek yang akan tersedia untuk pengguna baru",
+  "add_project_member_no_root_tasks": "Tiada tugas akar ditemui",
+  "add_project_member_no_projects": "Tiada projek ditemui",
+  "add_project_member_set_all_as": "Tetapkan semua sebagai: ",
+  "add_project_member_search_root_tasks_or_projects": "Cari tugas akar / projek",
+  "add_project_member_new_users": "Pengguna Baru",
+  "add_project_member_registered_users": "Pengguna Berdaftar",
+  "add_project_member_existing_members": "Ahli Sedia Ada JustDo ini"
+}

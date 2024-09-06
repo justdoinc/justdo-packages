@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Pozovite nove članove",
+  "add_project_member_email_input_placeholder": "Unesite ili zalijepite e-mail adrese, npr.: ime@primjer.com, ime2@primjer.com",
+  "add_project_member_no_members": "Nema članova",
+  "add_project_member_select_tasks_or_projects_to_invite": "Odaberite glavne zadatke ili projekte koji će biti dostupni novim korisnicima",
+  "add_project_member_no_root_tasks": "Nije pronađen nijedan glavni zadatak",
+  "add_project_member_no_projects": "Nema pronađenih projekata",
+  "add_project_member_set_all_as": "Postavi sve kao: ",
+  "add_project_member_search_root_tasks_or_projects": "Pretraži glavne zadatke / projekte",
+  "add_project_member_new_users": "Novi korisnici",
+  "add_project_member_registered_users": "Registrirani korisnici",
+  "add_project_member_existing_members": "Postojeći članovi ovog JustDo ploče"
+}

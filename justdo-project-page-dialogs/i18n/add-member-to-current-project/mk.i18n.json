@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Поканете нови членови",
+  "add_project_member_email_input_placeholder": "Внесете или залепете е-пошта/и пр.: ime@primer.com, ime2@primer.com",
+  "add_project_member_no_members": "Нема членови",
+  "add_project_member_select_tasks_or_projects_to_invite": "Изберете главни задачи или проекти достапни за новите корисници",
+  "add_project_member_no_root_tasks": "Не се пронајдени главни задачи",
+  "add_project_member_no_projects": "Не се пронајдени проекти",
+  "add_project_member_set_all_as": "Постави ги сите како: ",
+  "add_project_member_search_root_tasks_or_projects": "Пребарај главни задачи / проекти",
+  "add_project_member_new_users": "Нови корисници",
+  "add_project_member_registered_users": "Регистрирани корисници",
+  "add_project_member_existing_members": "Постоечки членови на оваа JustDo табла"
+}

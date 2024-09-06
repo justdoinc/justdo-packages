@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "เชิญสมาชิกใหม่",
+  "add_project_member_email_input_placeholder": "พิมพ์ Enter หรือวางอีเมล เช่น: name@example.com, name2@example.com",
+  "add_project_member_no_members": "ไม่มีสมาชิก",
+  "add_project_member_select_tasks_or_projects_to_invite": "เลือกงานหลักหรือโครงการที่จะเปิดให้ผู้ใช้ใหม่เข้าถึงได้",
+  "add_project_member_no_root_tasks": "ไม่พบงานหลัก",
+  "add_project_member_no_projects": "ไม่พบโครงการ",
+  "add_project_member_set_all_as": "ตั้งค่าทั้งหมดเป็น: ",
+  "add_project_member_search_root_tasks_or_projects": "ค้นหางานหลัก / โครงการ",
+  "add_project_member_new_users": "ผู้ใช้ใหม่",
+  "add_project_member_registered_users": "ผู้ใช้ที่ลงทะเบียนแล้ว",
+  "add_project_member_existing_members": "สมาชิกปัจจุบันของ JustDo บอร์ดนี้"
+}

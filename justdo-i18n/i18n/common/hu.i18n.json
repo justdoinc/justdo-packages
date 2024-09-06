@@ -48,6 +48,18 @@
   "reset": "Visszaállítás",
   "import": "Importálás",
   "select": "Kiválasztás",
+  "select_all": "Összes kiválasztása",
+  "clear_all": "Összes törlése",
   "invalid_email": "Érvénytelen e-mail cím",
-  "others": "Egyebek"
+  "others": "Egyebek",
+  "invite": "Meghívás",
+  "root_tasks": "Főfeladatok",
+  "apply": "Alkalmazás",
+  "projects_label": "Projektek",
+  "member": "Tag",
+  "guest": "Vendég",
+  "proxy": "Helyettes",
+  "type": "típus",
+  "full_name": "teljes név",
+  "email": "e-mail"
 }

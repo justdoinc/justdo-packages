@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Mời Thành Viên Mới",
+  "add_project_member_email_input_placeholder": "Nhập hoặc dán email, ví dụ: ten@example.com, ten2@example.com",
+  "add_project_member_no_members": "Không có thành viên",
+  "add_project_member_select_tasks_or_projects_to_invite": "Chọn các công việc gốc hoặc dự án sẽ có sẵn cho người dùng mới",
+  "add_project_member_no_root_tasks": "Không tìm thấy công việc gốc nào",
+  "add_project_member_no_projects": "Không tìm thấy dự án nào",
+  "add_project_member_set_all_as": "Đặt tất cả là: ",
+  "add_project_member_search_root_tasks_or_projects": "Tìm kiếm công việc gốc / dự án",
+  "add_project_member_new_users": "Người Dùng Mới",
+  "add_project_member_registered_users": "Người Dùng Đã Đăng Ký",
+  "add_project_member_existing_members": "Thành Viên Hiện Có của JustDo này"
+}

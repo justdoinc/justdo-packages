@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "Niektorí členovia neboli pozvaní",
+  "invite_member_failed_by_registrable_user": "Aktuálna konfigurácia Registrovateľných používateľov v Správe webu zabránila pridaniu nasledujúcich používateľov:",
+  "invite_member_failed_other_reason": "Nasledujúci používatelia nemohli byť pridaní:"
+}

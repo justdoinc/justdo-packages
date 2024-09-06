@@ -48,6 +48,18 @@
   "reset": "Resetuj",
   "import": "Uvezi",
   "select": "Odaberi",
+  "select_all": "Odaberi sve",
+  "clear_all": "Očisti sve",
   "invalid_email": "Nevažeća email adresa",
-  "others": "Ostali"
+  "others": "Ostali",
+  "invite": "Pozovi",
+  "root_tasks": "Glavni zadaci",
+  "apply": "Primijeni",
+  "projects_label": "Projekti",
+  "member": "Član",
+  "guest": "Gost",
+  "proxy": "Proxy",
+  "type": "tip",
+  "full_name": "puno ime",
+  "email": "e-pošta"
 }

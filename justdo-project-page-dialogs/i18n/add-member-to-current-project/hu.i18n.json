@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Új tagok meghívása",
+  "add_project_member_email_input_placeholder": "Írja be vagy illessze be az e-mail címeket, pl.: nev@pelda.com, nev2@pelda.com",
+  "add_project_member_no_members": "Nincsenek tagok",
+  "add_project_member_select_tasks_or_projects_to_invite": "Válassza ki azokat a főfeladatokat vagy projekteket, amelyek elérhetőek lesznek az új felhasználók számára",
+  "add_project_member_no_root_tasks": "Nem találhatók főfeladatok",
+  "add_project_member_no_projects": "Nincsenek projektek",
+  "add_project_member_set_all_as": "Mindent beállít mint: ",
+  "add_project_member_search_root_tasks_or_projects": "Főfeladatok / projektek keresése",
+  "add_project_member_new_users": "Új felhasználók",
+  "add_project_member_registered_users": "Regisztrált felhasználók",
+  "add_project_member_existing_members": "A JustDo tábla meglévő tagjai"
+}

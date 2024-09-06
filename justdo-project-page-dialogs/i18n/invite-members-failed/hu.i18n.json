@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "Néhány tagot nem sikerült meghívni",
+  "invite_member_failed_by_registrable_user": "A jelenlegi Regisztrálható Felhasználók beállítása a Webhely Adminisztrációban megakadályozta a következő felhasználók hozzáadását:",
+  "invite_member_failed_other_reason": "A következő felhasználókat nem sikerült hozzáadni:"
+}

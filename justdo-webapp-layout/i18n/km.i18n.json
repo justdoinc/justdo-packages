@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "ការអញ្ជើញកម្រិតខ្ពស់",
   "members_dropdown_invite_no_projects_found": "រកមិនឃើញគម្រោង",
   "members_dropdown_invite_no_projects_html": "មិនមានគម្រោងនៅក្នុង JustDo នេះទេ។<br>ចុចស្តាំលើកិច្ចការមួយដើម្បីកំណត់វាជាគម្រោង។",
-  "member_dropdown_invite_clear_all": "សម្អាតទាំងអស់",
-  "member_dropdown_invite_select_all": "ជ្រើសរើសទាំងអស់",
   "member_dropdown_invite_select_with_number": "ជ្រើសរើស __count__",
   "member_dropdown_invite_share_all_with_number_html": "ចែករំលែកកិច្ចការទាំងអស់ <span>__count__</span>",
   "member_dropdown_invite_share_all_with_number_html_plural": "ចែករំលែកកិច្ចការទាំងអស់ <span>__count__</span>",

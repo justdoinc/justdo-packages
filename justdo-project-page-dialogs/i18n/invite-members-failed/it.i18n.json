@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "Alcuni membri non sono stati invitati",
+  "invite_member_failed_by_registrable_user": "La configurazione attuale degli Utenti Registrabili nell'Amministrazione del Sito ha impedito l'aggiunta dei seguenti utenti:",
+  "invite_member_failed_other_reason": "Non è stato possibile aggiungere i seguenti utenti:"
+}

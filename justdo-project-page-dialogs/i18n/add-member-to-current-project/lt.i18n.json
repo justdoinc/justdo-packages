@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Pakviesti naujus narius",
+  "add_project_member_email_input_placeholder": "Įveskite arba įklijuokite el. paštą/-us, pvz.: vardas@pavyzdys.com, vardas2@pavyzdys.com",
+  "add_project_member_no_members": "Narių nėra",
+  "add_project_member_select_tasks_or_projects_to_invite": "Pasirinkite pagrindines užduotis arba projektus, kurie bus prieinami naujiems vartotojams",
+  "add_project_member_no_root_tasks": "Nerasta pagrindinių užduočių",
+  "add_project_member_no_projects": "Projektų nerasta",
+  "add_project_member_set_all_as": "Nustatyti visus kaip: ",
+  "add_project_member_search_root_tasks_or_projects": "Ieškoti pagrindinių užduočių / projektų",
+  "add_project_member_new_users": "Nauji vartotojai",
+  "add_project_member_registered_users": "Registruoti vartotojai",
+  "add_project_member_existing_members": "Esami šio JustDo nariai"
+}

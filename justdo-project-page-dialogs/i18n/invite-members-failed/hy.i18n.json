@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "Որոշ անդամներ չեն հրավիրվել",
+  "invite_member_failed_by_registrable_user": "Կայքի ադմինիստրատորի ընթացիկ Գրանցվող օգտատերերի կարգավորումները խոչընդոտել են հետևյալ օգտատերերի ավելացմանը.",
+  "invite_member_failed_other_reason": "Հետևյալ օգտատերերը չեն կարողացել ավելացվել."
+}

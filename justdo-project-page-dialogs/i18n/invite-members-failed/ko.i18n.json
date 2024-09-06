@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "일부 회원이 초대되지 않았습니다",
+  "invite_member_failed_by_registrable_user": "현재 사이트 관리자의 등록 가능 사용자 설정으로 인해 다음 사용자를 추가할 수 없었습니다:",
+  "invite_member_failed_other_reason": "다음 사용자를 추가할 수 없었습니다:"
+}

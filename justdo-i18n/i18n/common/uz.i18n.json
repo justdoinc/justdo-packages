@@ -48,6 +48,18 @@
   "reset": "Qayta o'rnatish",
   "import": "Import",
   "select": "Tanlash",
+  "select_all": "Hammasini tanlash",
+  "clear_all": "Hammasini tozalash",
   "invalid_email": "Noto'g'ri elektron pochta",
-  "others": "Boshqalar"
+  "others": "Boshqalar",
+  "invite": "Taklif qilish",
+  "root_tasks": "Asosiy vazifalar",
+  "apply": "Qo'llash",
+  "projects_label": "Loyihalar",
+  "member": "A'zo",
+  "guest": "Mehmon",
+  "proxy": "Vakil",
+  "type": "tur",
+  "full_name": "to'liq ism",
+  "email": "elektron pochta"
 }

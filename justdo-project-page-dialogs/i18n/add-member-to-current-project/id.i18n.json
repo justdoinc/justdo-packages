@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Undang Anggota Baru",
+  "add_project_member_email_input_placeholder": "Ketik Enter atau tempel email, mis: nama@contoh.com, nama2@contoh.com",
+  "add_project_member_no_members": "Tidak ada anggota",
+  "add_project_member_select_tasks_or_projects_to_invite": "Pilih tugas utama atau proyek yang akan tersedia untuk pengguna baru",
+  "add_project_member_no_root_tasks": "Tidak ditemukan tugas utama",
+  "add_project_member_no_projects": "Tidak ditemukan proyek",
+  "add_project_member_set_all_as": "Atur semua sebagai: ",
+  "add_project_member_search_root_tasks_or_projects": "Cari tugas utama / proyek",
+  "add_project_member_new_users": "Pengguna Baru",
+  "add_project_member_registered_users": "Pengguna Terdaftar",
+  "add_project_member_existing_members": "Anggota yang Sudah Ada di JustDo ini"
+}

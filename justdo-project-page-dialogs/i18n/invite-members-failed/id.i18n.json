@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "Beberapa anggota tidak berhasil diundang",
+  "invite_member_failed_by_registrable_user": "Konfigurasi Pengguna yang Dapat Didaftarkan saat ini di Admin Situs mencegah penambahan pengguna berikut:",
+  "invite_member_failed_other_reason": "Pengguna berikut tidak dapat ditambahkan:"
+}

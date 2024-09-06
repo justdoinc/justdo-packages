@@ -48,6 +48,18 @@
   "reset": "إعادة تعيين",
   "import": "استيراد",
   "select": "اختيار",
+  "select_all": "اختيار الكل",
+  "clear_all": "مسح الكل",
   "invalid_email": "بريد إلكتروني غير صالح",
-  "others": "آخرون"
+  "others": "آخرون",
+  "invite": "دعوة",
+  "root_tasks": "المهام الرئيسية",
+  "apply": "تطبيق",
+  "projects_label": "المشاريع",
+  "member": "عضو",
+  "guest": "ضيف",
+  "proxy": "وكيل",
+  "type": "النوع",
+  "full_name": "الاسم الكامل",
+  "email": "البريد الإلكتروني"
 }

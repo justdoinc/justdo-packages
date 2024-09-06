@@ -48,6 +48,18 @@
   "reset": "Sıfırla",
   "import": "İçe Aktar",
   "select": "Seç",
+  "select_all": "Tümünü seç",
+  "clear_all": "Tümünü temizle",
   "invalid_email": "Geçersiz e-posta",
-  "others": "Diğerleri"
+  "others": "Diğerleri",
+  "invite": "Davet Et",
+  "root_tasks": "Ana görevler",
+  "apply": "Uygula",
+  "projects_label": "Projeler",
+  "member": "Üye",
+  "guest": "Misafir",
+  "proxy": "Vekil",
+  "type": "tür",
+  "full_name": "tam ad",
+  "email": "e-posta"
 }

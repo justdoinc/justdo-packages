@@ -10,7 +10,5 @@
   "print_grid_columns_settings_label": "Postavke kolona",
   "print_grid_columns_options_label": "Opcije kolona",
   "print_grid_print": "Štampaj",
-  "print_grid_export_csv": "Izvezi CSV",
-  "print_grid_select_all": "Označi sve",
-  "print_grid_apply": "Primijeni"
+  "print_grid_export_csv": "Izvezi CSV"
 }

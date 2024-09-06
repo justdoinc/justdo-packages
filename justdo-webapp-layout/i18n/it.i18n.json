@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "Invito avanzato",
   "members_dropdown_invite_no_projects_found": "Nessun progetto trovato",
   "members_dropdown_invite_no_projects_html": "Non ci sono progetti in questa JustDo Board.<br>Fai clic con il tasto destro su un'attività per impostarla come progetto.",
-  "member_dropdown_invite_clear_all": "Cancella tutto",
-  "member_dropdown_invite_select_all": "Seleziona tutto",
   "member_dropdown_invite_select_with_number": "Seleziona __count__",
   "member_dropdown_invite_share_all_with_number_html": "Condividi tutte le <span>__count__</span> attività",
   "member_dropdown_invite_share_all_with_number_html_plural": "Condividi tutte le <span>__count__</span> attività",

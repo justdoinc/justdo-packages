@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Nooi Nuwe Lede",
+  "add_project_member_email_input_placeholder": "Tik Enter of plak e-pos/se, bv: naam@voorbeeld.com, naam2@voorbeeld.com",
+  "add_project_member_no_members": "Geen lede",
+  "add_project_member_select_tasks_or_projects_to_invite": "Kies hooftake of projekte wat beskikbaar sal wees vir nuwe gebruikers",
+  "add_project_member_no_root_tasks": "Geen hooftake gevind nie",
+  "add_project_member_no_projects": "Geen projekte gevind nie",
+  "add_project_member_set_all_as": "Stel alles as: ",
+  "add_project_member_search_root_tasks_or_projects": "Soek hooftake / projekte",
+  "add_project_member_new_users": "Nuwe Gebruikers",
+  "add_project_member_registered_users": "Geregistreerde Gebruikers",
+  "add_project_member_existing_members": "Bestaande Lede van hierdie JustDo-bord"
+}

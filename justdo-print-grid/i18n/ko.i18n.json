@@ -10,7 +10,5 @@
   "print_grid_columns_settings_label": "열 설정",
   "print_grid_columns_options_label": "열 옵션",
   "print_grid_print": "인쇄",
-  "print_grid_export_csv": "CSV로 내보내기",
-  "print_grid_select_all": "모두 선택",
-  "print_grid_apply": "적용"
+  "print_grid_export_csv": "CSV로 내보내기"
 }

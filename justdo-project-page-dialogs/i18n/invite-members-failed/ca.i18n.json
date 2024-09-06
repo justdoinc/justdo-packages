@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "Alguns membres no s'han pogut convidar",
+  "invite_member_failed_by_registrable_user": "La configuració actual d'Usuaris Registrables a l'Administració del Lloc ha impedit l'addició dels següents usuaris:",
+  "invite_member_failed_other_reason": "Els següents usuaris no s'han pogut afegir:"
+}

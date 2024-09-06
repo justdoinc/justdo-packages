@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "Avancerad inbjudan",
   "members_dropdown_invite_no_projects_found": "Inga projekt hittades",
   "members_dropdown_invite_no_projects_html": "Det finns inga projekt i denna JustDo.<br>Högerklicka på en uppgift för att ställa in den som ett projekt.",
-  "member_dropdown_invite_clear_all": "Rensa alla",
-  "member_dropdown_invite_select_all": "Markera alla",
   "member_dropdown_invite_select_with_number": "Välj __count__",
   "member_dropdown_invite_share_all_with_number_html": "Dela alla <span>__count__</span> uppgift",
   "member_dropdown_invite_share_all_with_number_html_plural": "Dela alla <span>__count__</span> uppgifter",

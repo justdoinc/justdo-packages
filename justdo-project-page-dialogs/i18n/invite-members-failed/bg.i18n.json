@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "Някои от членовете не са поканени",
+  "invite_member_failed_by_registrable_user": "Текущата конфигурация на регистрируемите потребители в Администрацията на сайта попречи на добавянето на следните потребители:",
+  "invite_member_failed_other_reason": "Следните потребители не могат да бъдат добавени:"
+}

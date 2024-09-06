@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Kutsu uusia jäseniä",
+  "add_project_member_email_input_placeholder": "Kirjoita Enter tai liitä sähköpostiosoite/osoitteet, esim: nimi@esimerkki.com, nimi2@esimerkki.com",
+  "add_project_member_no_members": "Ei jäseniä",
+  "add_project_member_select_tasks_or_projects_to_invite": "Valitse juuritehtävät tai projektit, jotka ovat uusien käyttäjien saatavilla",
+  "add_project_member_no_root_tasks": "Juuritehtäviä ei löytynyt",
+  "add_project_member_no_projects": "Projekteja ei löytynyt",
+  "add_project_member_set_all_as": "Aseta kaikki seuraavasti: ",
+  "add_project_member_search_root_tasks_or_projects": "Hae juuritehtäviä / projekteja",
+  "add_project_member_new_users": "Uudet käyttäjät",
+  "add_project_member_registered_users": "Rekisteröityneet käyttäjät",
+  "add_project_member_existing_members": "Tämän JustDo-taulun nykyiset jäsenet"
+}

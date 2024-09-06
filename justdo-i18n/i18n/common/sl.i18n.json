@@ -48,6 +48,18 @@
   "reset": "Ponastavi",
   "import": "Uvozi",
   "select": "Izberi",
+  "select_all": "Izberi vse",
+  "clear_all": "Počisti vse",
   "invalid_email": "Neveljaven e-poštni naslov",
-  "others": "Drugi"
+  "others": "Drugi",
+  "invite": "Povabi",
+  "root_tasks": "Glavne naloge",
+  "apply": "Uporabi",
+  "projects_label": "Projekti",
+  "member": "Član",
+  "guest": "Gost",
+  "proxy": "Pooblaščenec",
+  "type": "tip",
+  "full_name": "polno ime",
+  "email": "e-pošta"
 }

@@ -48,6 +48,18 @@
   "reset": "Resetuj",
   "import": "Importuj",
   "select": "Wybierz",
+  "select_all": "Wybierz wszystko",
+  "clear_all": "Wyczyść wszystko",
   "invalid_email": "Nieprawidłowy adres e-mail",
-  "others": "Inne"
+  "others": "Inne",
+  "invite": "Zaproś",
+  "root_tasks": "Zadania główne",
+  "apply": "Zastosuj",
+  "projects_label": "Projekty",
+  "member": "Członek",
+  "guest": "Gość",
+  "proxy": "Pełnomocnik",
+  "type": "typ",
+  "full_name": "pełne imię i nazwisko",
+  "email": "e-mail"
 }

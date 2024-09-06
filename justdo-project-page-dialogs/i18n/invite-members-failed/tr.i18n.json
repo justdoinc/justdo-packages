@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "Bazı üyeler davet edilmedi",
+  "invite_member_failed_by_registrable_user": "Site Yönetimindeki mevcut Kaydedilebilir Kullanıcılar yapılandırması, aşağıdaki kullanıcıların eklenmesini engelledi:",
+  "invite_member_failed_other_reason": "Aşağıdaki kullanıcılar eklenemedi:"
+}

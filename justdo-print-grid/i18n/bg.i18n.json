@@ -10,7 +10,5 @@
   "print_grid_columns_settings_label": "Настройки на колоните",
   "print_grid_columns_options_label": "Опции за колоните",
   "print_grid_print": "Отпечатай",
-  "print_grid_export_csv": "Експортирай като CSV",
-  "print_grid_select_all": "Избери всички",
-  "print_grid_apply": "Приложи"
+  "print_grid_export_csv": "Експортирай като CSV"
 }

@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Gonbidatu kide berriak",
+  "add_project_member_email_input_placeholder": "Idatzi Enter edo itsatsi helbide elektronikoak, adib.: izena@adibidea.com, izena2@adibidea.com",
+  "add_project_member_no_members": "Kiderik ez",
+  "add_project_member_select_tasks_or_projects_to_invite": "Hautatu erabiltzaile berrientzat eskuragarri egongo diren erro-atazak edo proiektuak",
+  "add_project_member_no_root_tasks": "Ez da erro-atazarik aurkitu",
+  "add_project_member_no_projects": "Ez da proiekturik aurkitu",
+  "add_project_member_set_all_as": "Ezarri guztiak honela: ",
+  "add_project_member_search_root_tasks_or_projects": "Bilatu erro-atazak / proiektuak",
+  "add_project_member_new_users": "Erabiltzaile berriak",
+  "add_project_member_registered_users": "Erregistratutako erabiltzaileak",
+  "add_project_member_existing_members": "JustDo honen kideak"
+}

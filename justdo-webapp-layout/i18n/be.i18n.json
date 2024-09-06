@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "Пашыранае запрашэнне",
   "members_dropdown_invite_no_projects_found": "Праекты не знойдзены",
   "members_dropdown_invite_no_projects_html": "У гэтым JustDo няма праектаў.<br>Націсніце правай кнопкай мышы на задачу, каб усталяваць яе як праект.",
-  "member_dropdown_invite_clear_all": "Ачысціць усё",
-  "member_dropdown_invite_select_all": "Выбраць усё",
   "member_dropdown_invite_select_with_number": "Выбраць __count__",
   "member_dropdown_invite_share_all_with_number_html": "Падзяліцца ўсімі <span>__count__</span> задачамі",
   "member_dropdown_invite_share_all_with_number_html_plural": "Падзяліцца ўсімі <span>__count__</span> задачамі",

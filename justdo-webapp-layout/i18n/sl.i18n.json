@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "Napredno povabilo",
   "members_dropdown_invite_no_projects_found": "Ni najdenih projektov",
   "members_dropdown_invite_no_projects_html": "V tej JustDo tabli ni projektov.<br>Z desnim klikom na nalogo jo lahko nastavite kot projekt.",
-  "member_dropdown_invite_clear_all": "Počisti vse",
-  "member_dropdown_invite_select_all": "Izberi vse",
   "member_dropdown_invite_select_with_number": "Izberi __count__",
   "member_dropdown_invite_share_all_with_number_html": "Deli vse <span>__count__</span> naloge",
   "member_dropdown_invite_share_all_with_number_html_plural": "Deli vse <span>__count__</span> nalog",

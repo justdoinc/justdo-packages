@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "Προχωρημένη πρόσκληση",
   "members_dropdown_invite_no_projects_found": "Δεν βρέθηκαν έργα",
   "members_dropdown_invite_no_projects_html": "Δεν υπάρχουν έργα σε αυτό το JustDo.<br>Κάντε δεξί κλικ σε μια εργασία για να την ορίσετε ως έργο.",
-  "member_dropdown_invite_clear_all": "Εκκαθάριση όλων",
-  "member_dropdown_invite_select_all": "Επιλογή όλων",
   "member_dropdown_invite_select_with_number": "Επιλογή __count__",
   "member_dropdown_invite_share_all_with_number_html": "Κοινοποίηση όλων των <span>__count__</span> εργασιών",
   "member_dropdown_invite_share_all_with_number_html_plural": "Κοινοποίηση όλων των <span>__count__</span> εργασιών",

@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "部分成员未被邀请",
+  "invite_member_failed_by_registrable_user": "由于当前站点管理员的可注册用户配置，以下用户无法添加：",
+  "invite_member_failed_other_reason": "以下用户无法被添加："
+}

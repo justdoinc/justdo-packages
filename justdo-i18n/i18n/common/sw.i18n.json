@@ -48,6 +48,18 @@
   "reset": "Weka upya",
   "import": "Leta",
   "select": "Chagua",
+  "select_all": "Chagua zote",
+  "clear_all": "Futa zote",
   "invalid_email": "Barua pepe batili",
-  "others": "Wengine"
+  "others": "Wengine",
+  "invite": "Alika",
+  "root_tasks": "Kazi za msingi",
+  "apply": "Tumia",
+  "projects_label": "Miradi",
+  "member": "Mwanachama",
+  "guest": "Mgeni",
+  "proxy": "Wakala",
+  "type": "aina",
+  "full_name": "jina kamili",
+  "email": "barua pepe"
 }

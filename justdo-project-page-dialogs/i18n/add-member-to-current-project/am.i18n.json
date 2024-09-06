@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "አዲስ አባላትን ይጋብዙ",
+  "add_project_member_email_input_placeholder": "ኢሜይሎችን ይጻፉ ወይም ይለጥፉ፣ ለምሳሌ፡ name@example.com, name2@example.com",
+  "add_project_member_no_members": "ምንም አባላት የሉም",
+  "add_project_member_select_tasks_or_projects_to_invite": "ለአዳዲስ ተጠቃሚዎች የሚገኙ የመነሻ ተግባራትን ወይም ፕሮጀክቶችን ይምረጡ",
+  "add_project_member_no_root_tasks": "ምንም የመነሻ ተግባራት አልተገኙም",
+  "add_project_member_no_projects": "ምንም ፕሮጀክቶች አልተገኙም",
+  "add_project_member_set_all_as": "ሁሉንም እንደዚህ አድርግ፡ ",
+  "add_project_member_search_root_tasks_or_projects": "የመነሻ ተግባራትን / ፕሮጀክቶችን ይፈልጉ",
+  "add_project_member_new_users": "አዲስ ተጠቃሚዎች",
+  "add_project_member_registered_users": "የተመዘገቡ ተጠቃሚዎች",
+  "add_project_member_existing_members": "የዚህ JustDo ነባር አባላት"
+}

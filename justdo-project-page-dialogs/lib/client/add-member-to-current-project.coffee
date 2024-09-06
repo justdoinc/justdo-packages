@@ -14,7 +14,8 @@ ProjectPageDialogs.showMemberDialog = (tpl_data) ->
     APP.helpers.renderTemplateInNewNode(Template.invite_new_user_dialog, tpl_data)
 
   bootbox.dialog
-    title: "Invite New Members"
+    rtl_ready: true
+    title: TAPi18n.__ "add_project_member_modal_title"
     message: message_template.node
     animate: false
     className: "bootbox-new-design invite-new-user-dialog"
@@ -369,7 +370,8 @@ Template.invite_new_user_dialog.events
           return
 
         dialog = bootbox.dialog
-          title: "Some of the members are not invited"
+          rtl_ready: true
+          title: TAPi18n.__ "invite_member_failed_partially_added_modal_title"
           message: invite_members_failed_tpl.node
           animate: false
           className: "bootbox-new-design"
@@ -380,7 +382,7 @@ Template.invite_new_user_dialog.events
 
           buttons:
             close:
-              label: "Close"
+              label: TAPi18n.__ "close"
 
               className: "btn-primary"
 
@@ -429,13 +431,13 @@ Template.batch_add_user_group.onCreated ->
   @group_type_to_class_name_and_title =
     new_users:
       wrapper_class: "new-users"
-      title: "New Users"
+      title: TAPi18n.__ "add_project_member_new_users"
     registered_users:
       wrapper_class: "registered-users"
-      title: "Existing Users"
+      title: TAPi18n.__ "add_project_member_registered_users"
     existing_members:
       wrapper_class: "existing-members"
-      title: "Existing Members of this JustDo"
+      title: TAPi18n.__ "add_project_member_existing_members"
   return
 
 Template.batch_add_user_group.helpers

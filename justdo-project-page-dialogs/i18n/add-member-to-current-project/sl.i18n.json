@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Povabi nove člane",
+  "add_project_member_email_input_placeholder": "Vnesite ali prilepite e-pošto/e, npr.: ime@primer.com, ime2@primer.com",
+  "add_project_member_no_members": "Ni članov",
+  "add_project_member_select_tasks_or_projects_to_invite": "Izberite korenske naloge ali projekte, ki bodo na voljo novim uporabnikom",
+  "add_project_member_no_root_tasks": "Ni najdenih korenskih nalog",
+  "add_project_member_no_projects": "Ni najdenih projektov",
+  "add_project_member_set_all_as": "Nastavi vse kot: ",
+  "add_project_member_search_root_tasks_or_projects": "Išči korenske naloge / projekte",
+  "add_project_member_new_users": "Novi uporabniki",
+  "add_project_member_registered_users": "Registrirani uporabniki",
+  "add_project_member_existing_members": "Obstoječi člani tega JustDo-ja"
+}

@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "Neki članovi nisu pozvani",
+  "invite_member_failed_by_registrable_user": "Trenutna konfiguracija Registrabilnih korisnika u Admin panelu spriječila je dodavanje sljedećih korisnika:",
+  "invite_member_failed_other_reason": "Sljedeći korisnici nisu mogli biti dodani:"
+}

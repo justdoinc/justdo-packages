@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "הזמנת חברים חדשים",
+  "add_project_member_email_input_placeholder": "הקלד Enter או הדבק כתובות דוא\"ל, לדוגמה: name@example.com, name2@example.com",
+  "add_project_member_no_members": "אין חברים",
+  "add_project_member_select_tasks_or_projects_to_invite": "בחר משימות ראשיות או פרויקטים שיהיו זמינים למשתמשים חדשים",
+  "add_project_member_no_root_tasks": "לא נמצאו משימות ראשיות",
+  "add_project_member_no_projects": "לא נמצאו פרויקטים",
+  "add_project_member_set_all_as": "הגדר את כולם כ: ",
+  "add_project_member_search_root_tasks_or_projects": "חפש משימות ראשיות / פרויקטים",
+  "add_project_member_new_users": "משתמשים חדשים",
+  "add_project_member_registered_users": "משתמשים רשומים",
+  "add_project_member_existing_members": "חברים קיימים של JustDo זה"
+}

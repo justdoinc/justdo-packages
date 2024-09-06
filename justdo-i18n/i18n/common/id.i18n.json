@@ -48,6 +48,18 @@
   "reset": "Atur Ulang",
   "import": "Impor",
   "select": "Pilih",
+  "select_all": "Pilih semua",
+  "clear_all": "Hapus semua",
   "invalid_email": "Email tidak valid",
-  "others": "Lainnya"
+  "others": "Lainnya",
+  "invite": "Undang",
+  "root_tasks": "Tugas utama",
+  "apply": "Terapkan",
+  "projects_label": "Proyek",
+  "member": "Anggota",
+  "guest": "Tamu",
+  "proxy": "Proxy",
+  "type": "tipe",
+  "full_name": "nama lengkap",
+  "email": "email"
 }

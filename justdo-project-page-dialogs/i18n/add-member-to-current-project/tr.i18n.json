@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Yeni Üyeleri Davet Et",
+  "add_project_member_email_input_placeholder": "Enter tuşuna basın veya e-posta adreslerini yapıştırın, örn: isim@ornek.com, isim2@ornek.com",
+  "add_project_member_no_members": "Üye yok",
+  "add_project_member_select_tasks_or_projects_to_invite": "Yeni kullanıcılar için erişilebilir olacak ana görevleri veya projeleri seçin",
+  "add_project_member_no_root_tasks": "Ana görev bulunamadı",
+  "add_project_member_no_projects": "Proje bulunamadı",
+  "add_project_member_set_all_as": "Tümünü şu şekilde ayarla: ",
+  "add_project_member_search_root_tasks_or_projects": "Ana görevleri / projeleri ara",
+  "add_project_member_new_users": "Yeni Kullanıcılar",
+  "add_project_member_registered_users": "Kayıtlı Kullanıcılar",
+  "add_project_member_existing_members": "Bu JustDo'nun Mevcut Üyeleri"
+}

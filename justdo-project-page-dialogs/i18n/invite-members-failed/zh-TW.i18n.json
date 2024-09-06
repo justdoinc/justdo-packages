@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "部分成員未被邀請",
+  "invite_member_failed_by_registrable_user": "由於網站管理員目前的可註冊用戶設定，以下用戶無法被添加：",
+  "invite_member_failed_other_reason": "以下用戶無法被添加："
+}

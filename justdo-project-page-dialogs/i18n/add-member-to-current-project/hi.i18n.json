@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "नए सदस्यों को आमंत्रित करें",
+  "add_project_member_email_input_placeholder": "ईमेल टाइप करें या पेस्ट करें जैसे: name@example.com, name2@example.com",
+  "add_project_member_no_members": "कोई सदस्य नहीं",
+  "add_project_member_select_tasks_or_projects_to_invite": "नए उपयोगकर्ताओं के लिए उपलब्ध मूल कार्य या परियोजनाएँ चुनें",
+  "add_project_member_no_root_tasks": "कोई मूल कार्य नहीं मिला",
+  "add_project_member_no_projects": "कोई परियोजना नहीं मिली",
+  "add_project_member_set_all_as": "सभी को सेट करें:",
+  "add_project_member_search_root_tasks_or_projects": "मूल कार्य / परियोजनाएँ खोजें",
+  "add_project_member_new_users": "नए उपयोगकर्ता",
+  "add_project_member_registered_users": "पंजीकृत उपयोगकर्ता",
+  "add_project_member_existing_members": "इस जस्टडू बोर्ड के मौजूदा सदस्य"
+}

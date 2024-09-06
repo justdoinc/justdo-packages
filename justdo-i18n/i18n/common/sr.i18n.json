@@ -48,6 +48,18 @@
   "reset": "Ресетуј",
   "import": "Увези",
   "select": "Изабери",
+  "select_all": "Изабери све",
+  "clear_all": "Обриши све",
   "invalid_email": "Неважећа е-пошта",
-  "others": "Остали"
+  "others": "Остали",
+  "invite": "Позови",
+  "root_tasks": "Главни задаци",
+  "apply": "Примени",
+  "projects_label": "Пројекти",
+  "member": "Члан",
+  "guest": "Гост",
+  "proxy": "Посредник",
+  "type": "тип",
+  "full_name": "пуно име",
+  "email": "е-пошта"
 }

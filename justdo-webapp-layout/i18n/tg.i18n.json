@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "Даъвати пешрафта",
   "members_dropdown_invite_no_projects_found": "Лоиҳаҳо ёфт нашуданд",
   "members_dropdown_invite_no_projects_html": "Дар ин JustDo лоиҳаҳо нестанд.<br>Барои лоиҳа таъин кардани вазифа, ба он тугмаи рости мушро пахш кунед.",
-  "member_dropdown_invite_clear_all": "Ҳамаро тоза кардан",
-  "member_dropdown_invite_select_all": "Ҳамаро интихоб кардан",
   "member_dropdown_invite_select_with_number": "__count__-ро интихоб кардан",
   "member_dropdown_invite_share_all_with_number_html": "Ҳамаи <span>__count__</span> вазифаро мубодила кардан",
   "member_dropdown_invite_share_all_with_number_html_plural": "Ҳамаи <span>__count__</span> вазифаҳоро мубодила кардан",

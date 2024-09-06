@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "دعوة متقدمة",
   "members_dropdown_invite_no_projects_found": "لم يتم العثور على مشاريع",
   "members_dropdown_invite_no_projects_html": "لا توجد مشاريع في هذا اللوح (JustDo).<br>انقر بزر الماوس الأيمن على مهمة لتعيينها كمشروع.",
-  "member_dropdown_invite_clear_all": "مسح الكل",
-  "member_dropdown_invite_select_all": "تحديد الكل",
   "member_dropdown_invite_select_with_number": "تحديد __count__",
   "member_dropdown_invite_share_all_with_number_html": "مشاركة كل <span>__count__</span> مهمة",
   "member_dropdown_invite_share_all_with_number_html_plural": "مشاركة كل <span>__count__</span> مهام",

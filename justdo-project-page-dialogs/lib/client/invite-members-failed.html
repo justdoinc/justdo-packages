@@ -1,7 +1,7 @@
 <template name="invite_members_failed">
   {{#if emails_not_added_due_to_strict_registration}}
     <div>
-      <h6>The current Registrable Users configuration in the Site Admin prevented the following users addition:</h6>
+      <h6>{{_ "invite_member_failed_by_registrable_user"}}</h6>
       <ul>
         {{#each emails_not_added_due_to_strict_registration}}
           <li>{{this}}</li>
@@ -10,7 +10,7 @@
     </div>
   {{/if}}
   {{#if emails_not_added_due_to_other_reason}}
-    <div class="invite-members-failed-msg">The following users couldn't be added:</div>
+    <div class="invite-members-failed-msg">{{_ "invite_member_failed_other_reason"}}</div>
     {{#each emails_not_added_due_to_other_reason}}
       <div class="message attention invite-members-failed-item">
         <div class="email">

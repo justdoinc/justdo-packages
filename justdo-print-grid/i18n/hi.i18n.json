@@ -10,7 +10,5 @@
   "print_grid_columns_settings_label": "कॉलम सेटिंग्स",
   "print_grid_columns_options_label": "कॉलम विकल्प",
   "print_grid_print": "प्रिंट करें",
-  "print_grid_export_csv": "CSV निर्यात करें",
-  "print_grid_select_all": "सभी चुनें",
-  "print_grid_apply": "लागू करें"
+  "print_grid_export_csv": "CSV निर्यात करें"
 }

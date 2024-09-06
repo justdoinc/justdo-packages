@@ -48,6 +48,19 @@
   "reset": "Reset",
   "import": "Import",
   "select": "Select",
+  "select_all": "Select all",
+  "clear_all": "Clear all",
   "invalid_email": "Invalid email",
-  "others": "Others"
+  "others": "Others",
+  "invite": "Invite",
+  "root_tasks": "Root tasks",
+  "apply": "Apply",
+  "projects_label": "Projects",
+  "member": "Member",
+  "guest": "Guest",
+  "proxy": "Proxy",
+  "type": "type",
+  "full_name": "full name",
+  "email": "email"
+
 }

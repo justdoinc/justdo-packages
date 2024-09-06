@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "নতুন সদস্য আমন্ত্রণ করুন",
+  "add_project_member_email_input_placeholder": "ইমেইল টাইপ করুন বা পেস্ট করুন যেমন: name@example.com, name2@example.com",
+  "add_project_member_no_members": "কোনো সদস্য নেই",
+  "add_project_member_select_tasks_or_projects_to_invite": "নতুন ব্যবহারকারীদের জন্য উপলব্ধ হবে এমন মূল কাজ বা প্রকল্প নির্বাচন করুন",
+  "add_project_member_no_root_tasks": "কোনো মূল কাজ পাওয়া যায়নি",
+  "add_project_member_no_projects": "কোনো প্রকল্প পাওয়া যায়নি",
+  "add_project_member_set_all_as": "সবগুলোকে এভাবে সেট করুন: ",
+  "add_project_member_search_root_tasks_or_projects": "মূল কাজ / প্রকল্প অনুসন্ধান করুন",
+  "add_project_member_new_users": "নতুন ব্যবহারকারী",
+  "add_project_member_registered_users": "নিবন্ধিত ব্যবহারকারী",
+  "add_project_member_existing_members": "এই JustDo-এর বিদ্যমান সদস্য"
+}

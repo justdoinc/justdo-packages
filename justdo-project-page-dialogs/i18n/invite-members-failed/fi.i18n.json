@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "Joitakin jäseniä ei kutsuttu",
+  "invite_member_failed_by_registrable_user": "Nykyinen Rekisteröityvien käyttäjien (Registrable Users) asetus Sivuston hallinnassa esti seuraavien käyttäjien lisäämisen:",
+  "invite_member_failed_other_reason": "Seuraavia käyttäjiä ei voitu lisätä:"
+}

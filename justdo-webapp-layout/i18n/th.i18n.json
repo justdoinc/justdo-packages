@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "การเชิญขั้นสูง",
   "members_dropdown_invite_no_projects_found": "ไม่พบโครงการ",
   "members_dropdown_invite_no_projects_html": "ไม่มีโครงการใน JustDo นี้<br>คลิกขวาที่งานเพื่อตั้งค่าเป็นโครงการ",
-  "member_dropdown_invite_clear_all": "ล้างทั้งหมด",
-  "member_dropdown_invite_select_all": "เลือกทั้งหมด",
   "member_dropdown_invite_select_with_number": "เลือก __count__",
   "member_dropdown_invite_share_all_with_number_html": "แชร์งาน <span>__count__</span> งานทั้งหมด",
   "member_dropdown_invite_share_all_with_number_html_plural": "แชร์งาน <span>__count__</span> งานทั้งหมด",

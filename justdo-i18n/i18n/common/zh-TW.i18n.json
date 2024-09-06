@@ -48,6 +48,18 @@
   "reset": "重置",
   "import": "匯入",
   "select": "選擇",
+  "select_all": "全選",
+  "clear_all": "清除全部",
   "invalid_email": "無效的電子郵件",
-  "others": "其他"
+  "others": "其他",
+  "invite": "邀請",
+  "root_tasks": "根任務",
+  "apply": "套用",
+  "projects_label": "專案",
+  "member": "成員",
+  "guest": "訪客",
+  "proxy": "代理",
+  "type": "類型",
+  "full_name": "全名",
+  "email": "電子郵件"
 }

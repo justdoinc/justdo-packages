@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "Avanceret invitation",
   "members_dropdown_invite_no_projects_found": "Ingen projekter fundet",
   "members_dropdown_invite_no_projects_html": "Der er ingen projekter i denne JustDo.<br>Højreklik på en opgave for at indstille den som et projekt.",
-  "member_dropdown_invite_clear_all": "Ryd alt",
-  "member_dropdown_invite_select_all": "Vælg alle",
   "member_dropdown_invite_select_with_number": "Vælg __count__",
   "member_dropdown_invite_share_all_with_number_html": "Del alle <span>__count__</span> opgave",
   "member_dropdown_invite_share_all_with_number_html_plural": "Del alle <span>__count__</span> opgaver",

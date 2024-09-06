@@ -156,8 +156,6 @@
   .members-access-menu
     margin-left: 5px
 
-  .invite-settings-advanced
-
 
 #members-invite-projects-selector
   padding: 12px 12px 32px 12px
@@ -230,12 +228,10 @@
         margin-top: 12px
         box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.04)
 
-
   .bulk-selecter-wrapper
     padding: 8px 20px
     display: flex
     justify-content: flex-end
-    .select-all-projects
 
   .project-item
     display: flex
@@ -277,3 +273,60 @@
       opacity: 1
       &::before
         display: flex
+
+// RTL modifications
+.right-to-left
+  .members-dropdown-invite
+    .jd-icon.remove-invite-email
+      margin-left: unset
+      margin-right: 4px       
+
+    .members-dropdown-invite-header
+      .invite-members-input
+        padding-right: 8px
+        padding-left: 50px
+      .invite-members-input-add
+        left: 25px
+        right: unset
+
+    .alerts-container
+      .alert
+        .close
+          margin-left: unset
+          margin-right: 16px
+
+    .members-dropdown-invite-content
+      .invite-list-item
+        padding: 3px 8px 3px 5px
+        .jd-icon
+          margin-left: unset
+          margin-right: 4px
+
+    .invite-menu
+      right: unset
+      left: auto
+      .dropdown-item
+        padding-right: 8px
+        padding-left: 24px
+
+    .members-access-menu
+      margin-left: unset
+      margin-right: 5px
+
+  #members-invite-projects-selector
+    .modal-body
+      .search-projects-wrapper
+        .search-projects-input-wrapper
+          .search-icon
+            left: unset
+            right: 2px
+          .search-projects-input
+            padding: 0 26px 0 30px
+        .clear-projects-search
+          right: unset
+          left: 6px
+
+    .project-item
+      .select-icon
+        margin-right: unset
+        margin-left: 8px

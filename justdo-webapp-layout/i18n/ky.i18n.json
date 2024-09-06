@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "Кеңейтилген чакыруу",
   "members_dropdown_invite_no_projects_found": "Долбоорлор табылган жок",
   "members_dropdown_invite_no_projects_html": "Бул JustDo тактасында долбоорлор жок.<br>Тапшырманы долбоор катары коюу үчүн ага оң жак баскычты басыңыз.",
-  "member_dropdown_invite_clear_all": "Баарын тазалоо",
-  "member_dropdown_invite_select_all": "Баарын тандоо",
   "member_dropdown_invite_select_with_number": "__count__ тандоо",
   "member_dropdown_invite_share_all_with_number_html": "Бардык <span>__count__</span> тапшырманы бөлүшүү",
   "member_dropdown_invite_share_all_with_number_html_plural": "Бардык <span>__count__</span> тапшырманы бөлүшүү",

@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Жаңы мүчөлөрдү чакыруу",
+  "add_project_member_email_input_placeholder": "Электрондук почта дарегин(дарегтерин) киргизиңиз же чаптаңыз, мисалы: name@example.com, name2@example.com",
+  "add_project_member_no_members": "Мүчөлөр жок",
+  "add_project_member_select_tasks_or_projects_to_invite": "Жаңы колдонуучулар үчүн жеткиликтүү болгон негизги тапшырмаларды же долбоорлорду тандаңыз",
+  "add_project_member_no_root_tasks": "Негизги тапшырмалар табылган жок",
+  "add_project_member_no_projects": "Долбоорлор табылган жок",
+  "add_project_member_set_all_as": "Баарын белгилөө: ",
+  "add_project_member_search_root_tasks_or_projects": "Негизги тапшырмаларды / долбоорлорду издөө",
+  "add_project_member_new_users": "Жаңы колдонуучулар",
+  "add_project_member_registered_users": "Катталган колдонуучулар",
+  "add_project_member_existing_members": "Бул JustDo тактасынын учурдагы мүчөлөрү"
+}

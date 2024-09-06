@@ -48,6 +48,18 @@
   "reset": "रीसेट करें",
   "import": "आयात करें",
   "select": "चुनें",
+  "select_all": "सभी चुनें",
+  "clear_all": "सभी हटाएँ",
   "invalid_email": "अमान्य ईमेल",
-  "others": "अन्य"
+  "others": "अन्य",
+  "invite": "आमंत्रित करें",
+  "root_tasks": "मूल कार्य",
+  "apply": "लागू करें",
+  "projects_label": "प्रोजेक्ट्स",
+  "member": "सदस्य",
+  "guest": "अतिथि",
+  "proxy": "प्रॉक्सी",
+  "type": "प्रकार",
+  "full_name": "पूरा नाम",
+  "email": "ईमेल"
 }

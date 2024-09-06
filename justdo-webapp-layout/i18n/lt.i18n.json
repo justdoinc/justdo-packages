@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "Išplėstinis pakvietimas",
   "members_dropdown_invite_no_projects_found": "Projektų nerasta",
   "members_dropdown_invite_no_projects_html": "Šiame JustDo nėra projektų.<br>Dešiniuoju pelės klavišu spustelėkite užduotį, kad nustatytumėte ją kaip projektą.",
-  "member_dropdown_invite_clear_all": "Išvalyti viską",
-  "member_dropdown_invite_select_all": "Pasirinkti viską",
   "member_dropdown_invite_select_with_number": "Pasirinkti __count__",
   "member_dropdown_invite_share_all_with_number_html": "Dalintis visomis <span>__count__</span> užduotimi",
   "member_dropdown_invite_share_all_with_number_html_plural": "Dalintis visomis <span>__count__</span> užduotimis",

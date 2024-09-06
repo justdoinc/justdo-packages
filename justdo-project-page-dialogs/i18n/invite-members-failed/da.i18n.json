@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "Nogle af medlemmerne er ikke inviteret",
+  "invite_member_failed_by_registrable_user": "Den nuværende konfiguration af Registrerbare Brugere i Siteadministrationen forhindrede tilføjelsen af følgende brugere:",
+  "invite_member_failed_other_reason": "Følgende brugere kunne ikke tilføjes:"
+}

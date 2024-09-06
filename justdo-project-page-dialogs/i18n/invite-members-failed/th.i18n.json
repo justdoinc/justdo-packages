@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "สมาชิกบางคนไม่ได้รับเชิญ",
+  "invite_member_failed_by_registrable_user": "การกำหนดค่าผู้ใช้ที่ลงทะเบียนได้ปัจจุบันในการจัดการไซต์ป้องกันการเพิ่มผู้ใช้ต่อไปนี้:",
+  "invite_member_failed_other_reason": "ไม่สามารถเพิ่มผู้ใช้ต่อไปนี้ได้:"
+}

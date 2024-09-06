@@ -48,6 +48,18 @@
   "reset": "Resetovať",
   "import": "Importovať",
   "select": "Vybrať",
+  "select_all": "Vybrať všetko",
+  "clear_all": "Vyčistiť všetko",
   "invalid_email": "Neplatný e-mail",
-  "others": "Ostatní"
+  "others": "Ostatní",
+  "invite": "Pozvať",
+  "root_tasks": "Hlavné úlohy",
+  "apply": "Použiť",
+  "projects_label": "Projekty",
+  "member": "Člen",
+  "guest": "Hosť",
+  "proxy": "Zástupca",
+  "type": "typ",
+  "full_name": "celé meno",
+  "email": "email"
 }

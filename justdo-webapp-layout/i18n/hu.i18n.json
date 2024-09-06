@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "Haladó meghívás",
   "members_dropdown_invite_no_projects_found": "Nem találhatók projektek",
   "members_dropdown_invite_no_projects_html": "Nincsenek projektek ebben a JustDo táblában.<br>Kattints jobb gombbal egy feladatra, hogy projektté tedd.",
-  "member_dropdown_invite_clear_all": "Összes törlése",
-  "member_dropdown_invite_select_all": "Összes kiválasztása",
   "member_dropdown_invite_select_with_number": "__count__ kiválasztása",
   "member_dropdown_invite_share_all_with_number_html": "Összes <span>__count__</span> feladat megosztása",
   "member_dropdown_invite_share_all_with_number_html_plural": "Összes <span>__count__</span> feladat megosztása",

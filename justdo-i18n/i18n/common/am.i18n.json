@@ -48,6 +48,18 @@
   "reset": "ዳግም አስጀምር",
   "import": "አስገባ",
   "select": "ምረጥ",
+  "select_all": "ሁሉንም ምረጥ",
+  "clear_all": "ሁሉንም አጥፋ",
   "invalid_email": "ልክ ያልሆነ ኢሜይል",
-  "others": "ሌሎች"
+  "others": "ሌሎች",
+  "invite": "ጋብዝ",
+  "root_tasks": "መሰረታዊ ተግባራት",
+  "apply": "ተግብር",
+  "projects_label": "ፕሮጀክቶች",
+  "member": "አባል",
+  "guest": "እንግዳ",
+  "proxy": "ወኪል",
+  "type": "አይነት",
+  "full_name": "ሙሉ ስም",
+  "email": "ኢሜይል"
 }

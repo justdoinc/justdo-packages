@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "Napredno pozivanje",
   "members_dropdown_invite_no_projects_found": "Nema pronađenih projekata",
   "members_dropdown_invite_no_projects_html": "Nema projekata u ovom JustDo-u.<br>Desnim klikom na zadatak postavite ga kao projekt.",
-  "member_dropdown_invite_clear_all": "Očisti sve",
-  "member_dropdown_invite_select_all": "Odaberi sve",
   "member_dropdown_invite_select_with_number": "Odaberi __count__",
   "member_dropdown_invite_share_all_with_number_html": "Podijeli sve <span>__count__</span> zadatke",
   "member_dropdown_invite_share_all_with_number_html_plural": "Podijeli sve <span>__count__</span> zadatke",

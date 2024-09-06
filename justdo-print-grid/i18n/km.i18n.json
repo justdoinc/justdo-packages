@@ -10,7 +10,5 @@
   "print_grid_columns_settings_label": "ការកំណត់ជួរឈរ",
   "print_grid_columns_options_label": "ជម្រើសជួរឈរ",
   "print_grid_print": "បោះពុម្ព",
-  "print_grid_export_csv": "នាំចេញជា CSV",
-  "print_grid_select_all": "ជ្រើសរើសទាំងអស់",
-  "print_grid_apply": "អនុវត្ត"
+  "print_grid_export_csv": "នាំចេញជា CSV"
 }

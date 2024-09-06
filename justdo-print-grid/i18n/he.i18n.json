@@ -10,7 +10,5 @@
   "print_grid_columns_settings_label": "הגדרות עמודות",
   "print_grid_columns_options_label": "אפשרויות עמודות",
   "print_grid_print": "הדפס",
-  "print_grid_export_csv": "ייצא ל-CSV",
-  "print_grid_select_all": "בחר הכל",
-  "print_grid_apply": "החל"
+  "print_grid_export_csv": "ייצא ל-CSV"
 }

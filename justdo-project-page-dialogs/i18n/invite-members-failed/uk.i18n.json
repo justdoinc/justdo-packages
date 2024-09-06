@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "Деякі учасники не були запрошені",
+  "invite_member_failed_by_registrable_user": "Поточні налаштування зареєстрованих користувачів у адміністративній панелі сайту завадили додаванню таких користувачів:",
+  "invite_member_failed_other_reason": "Наступних користувачів не вдалося додати:"
+}

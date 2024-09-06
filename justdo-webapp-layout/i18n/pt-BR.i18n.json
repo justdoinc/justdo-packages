@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "Convite avançado",
   "members_dropdown_invite_no_projects_found": "Nenhum projeto encontrado",
   "members_dropdown_invite_no_projects_html": "Não há projetos neste JustDo.<br>Clique com o botão direito em uma tarefa para defini-la como um projeto.",
-  "member_dropdown_invite_clear_all": "Limpar tudo",
-  "member_dropdown_invite_select_all": "Selecionar tudo",
   "member_dropdown_invite_select_with_number": "Selecionar __count__",
   "member_dropdown_invite_share_all_with_number_html": "Compartilhar todas as <span>__count__</span> tarefa",
   "member_dropdown_invite_share_all_with_number_html_plural": "Compartilhar todas as <span>__count__</span> tarefas",

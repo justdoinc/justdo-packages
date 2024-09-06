@@ -48,6 +48,18 @@
   "reset": "Zurücksetzen",
   "import": "Importieren",
   "select": "Auswählen",
+  "select_all": "Alle auswählen",
+  "clear_all": "Alle löschen",
   "invalid_email": "Ungültige E-Mail-Adresse",
-  "others": "Andere"
+  "others": "Andere",
+  "invite": "Einladen",
+  "root_tasks": "Hauptaufgaben",
+  "apply": "Anwenden",
+  "projects_label": "Projekte",
+  "member": "Mitglied",
+  "guest": "Gast",
+  "proxy": "Stellvertreter",
+  "type": "Typ",
+  "full_name": "Vollständiger Name",
+  "email": "E-Mail"
 }

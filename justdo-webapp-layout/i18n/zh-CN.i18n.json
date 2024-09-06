@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "高级邀请",
   "members_dropdown_invite_no_projects_found": "未找到项目",
   "members_dropdown_invite_no_projects_html": "这个JustDo看板中没有项目。<br>右键点击任务将其设置为项目。",
-  "member_dropdown_invite_clear_all": "清除全部",
-  "member_dropdown_invite_select_all": "全选",
   "member_dropdown_invite_select_with_number": "选择__count__个",
   "member_dropdown_invite_share_all_with_number_html": "分享全部 <span>__count__</span> 个任务",
   "member_dropdown_invite_share_all_with_number_html_plural": "分享全部 <span>__count__</span> 个任务",

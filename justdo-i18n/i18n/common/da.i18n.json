@@ -48,6 +48,18 @@
   "reset": "Nulstil",
   "import": "Importer",
   "select": "Vælg",
+  "select_all": "Vælg alle",
+  "clear_all": "Ryd alle",
   "invalid_email": "Ugyldig e-mail",
-  "others": "Andre"
+  "others": "Andre",
+  "invite": "Inviter",
+  "root_tasks": "Hovedopgaver",
+  "apply": "Anvend",
+  "projects_label": "Projekter",
+  "member": "Medlem",
+  "guest": "Gæst",
+  "proxy": "Stedfortræder",
+  "type": "type",
+  "full_name": "fulde navn",
+  "email": "e-mail"
 }

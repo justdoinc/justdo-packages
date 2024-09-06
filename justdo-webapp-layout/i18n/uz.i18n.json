@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "Kengaytirilgan taklif",
   "members_dropdown_invite_no_projects_found": "Loyihalar topilmadi",
   "members_dropdown_invite_no_projects_html": "Bu JustDo-da loyihalar yo'q.<br>Loyiha yaratish uchun vazifani o'ng tugma bilan bosing.",
-  "member_dropdown_invite_clear_all": "Hammasini tozalash",
-  "member_dropdown_invite_select_all": "Hammasini tanlash",
   "member_dropdown_invite_select_with_number": "__count__ tani tanlash",
   "member_dropdown_invite_share_all_with_number_html": "Barcha <span>__count__</span> ta vazifani ulashish",
   "member_dropdown_invite_share_all_with_number_html_plural": "Barcha <span>__count__</span> ta vazifani ulashish",

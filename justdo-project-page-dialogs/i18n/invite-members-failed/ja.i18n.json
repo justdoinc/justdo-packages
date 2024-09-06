@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "一部のメンバーが招待されませんでした",
+  "invite_member_failed_by_registrable_user": "サイト管理者の現在の登録可能ユーザー設定により、以下のユーザーの追加が阻止されました：",
+  "invite_member_failed_other_reason": "以下のユーザーを追加できませんでした："
+}

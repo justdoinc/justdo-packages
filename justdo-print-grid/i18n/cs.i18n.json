@@ -10,7 +10,5 @@
   "print_grid_columns_settings_label": "Nastavení sloupců",
   "print_grid_columns_options_label": "Možnosti sloupců",
   "print_grid_print": "Tisk",
-  "print_grid_export_csv": "Exportovat CSV",
-  "print_grid_select_all": "Vybrat vše",
-  "print_grid_apply": "Použít"
+  "print_grid_export_csv": "Exportovat CSV"
 }

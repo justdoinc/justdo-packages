@@ -48,6 +48,18 @@
   "reset": "אפס",
   "import": "ייבא",
   "select": "בחר",
+  "select_all": "בחר הכל",
+  "clear_all": "נקה הכל",
   "invalid_email": "כתובת אימייל לא תקינה",
-  "others": "אחרים"
+  "others": "אחרים",
+  "invite": "הזמן",
+  "root_tasks": "משימות שורש",
+  "apply": "החל",
+  "projects_label": "פרויקטים",
+  "member": "חבר",
+  "guest": "אורח",
+  "proxy": "פרוקסי",
+  "type": "סוג",
+  "full_name": "שם מלא",
+  "email": "אימייל"
 }

@@ -3,8 +3,8 @@
     <div class="step-one">
       <div class="step-content">
         <div class="users-email-input-wrapper">
-          <input class="users-email-input form-control" placeholder="Type Enter or paste email/s i.e: name@example.com, name2@example.com">
-          <button class="users-email-add btn btn-sm btn-primary {{#if showInviteButton}}show{{/if}}" type="button">invite</button>
+          <input class="users-email-input form-control" placeholder="{{_ "add_project_member_email_input_placeholder"}}">
+          <button class="users-email-add btn btn-sm btn-primary {{#if showInviteButton}}show{{/if}}" type="button">{{_ "invite"}}</button>
         </div>
           {{#with groupedUsers}}
             {{#if new_users}}
@@ -17,22 +17,22 @@
               {{> batch_add_user_group getUserGroupData grouped_users=existing_justdo_members group_type="existing_members"}}
             {{/if}}
           {{else}}
-            <div class="users-wrapper-empty">No members</div>
+            <div class="users-wrapper-empty">{{_ "add_project_member_no_members"}}</div>
           {{/with}}
       </div>
     </div>
     <div class="step-two">
       <div class="step-content">
-        <input class="search-tasks form-control" placeholder="Search root tasks / projects">
+        <input class="search-tasks form-control" placeholder="{{_ "add_project_member_search_root_tasks_or_projects"}}">
         <div class="step-title">
-          Select root tasks or projects that will be available for new users
+          {{_ "add_project_member_select_tasks_or_projects_to_invite"}}
         </div>
         <div class="tasks-list">
           <div class="tasks-list-subtitle pt-2">
-            Root tasks
+            {{_ "root_tasks"}}
             {{#if rootTasks}}
               <div class="select-all root-tasks text-primary">
-                Select All
+                {{_ "select_all"}}
               </div>
             {{/if}}
           </div>
@@ -43,14 +43,14 @@
             </div>
           {{else}}
             <div class="no-tasks">
-              No root tasks found
+              {{_ "add_project_member_no_root_tasks"}}
             </div>
           {{/each}}
           <div class="tasks-list-subtitle pt-3">
-            Projects
+            {{_ "projects_label"}}
             {{#if projects}}
               <div class="select-all projects text-primary">
-                Select All
+                {{_ "select_all"}}
               </div>
             {{/if}}
           </div>
@@ -60,7 +60,7 @@
             </div>
           {{else}}
             <div class="no-tasks">
-              No projects found
+              {{_ "add_project_member_no_projects"}}
             </div>
           {{/each}}
         </div>
@@ -68,12 +68,12 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="cancel btn btn-light">Cancel</button>
+    <button type="button" class="cancel btn btn-light">{{_ "cancel"}}</button>
     {{#if showSelectProjects}}
-      <button type="button" class="prev btn btn-primary">Back</button>
-      <button type="button" class="invite btn btn-primary">Invite</button>
+      <button type="button" class="prev btn btn-primary">{{_ "back"}}</button>
+      <button type="button" class="invite btn btn-primary">{{_ "invite"}}</button>
     {{else}}
-      <button type="button" class="next btn btn-primary {{#if usersExist}}active{{/if}}">Next</button>
+      <button type="button" class="next btn btn-primary {{#if usersExist}}active{{/if}}">{{_ "next"}}</button>
     {{/if}}
   </div>
 </template>
@@ -84,23 +84,23 @@
       <div class="users-table-header-title">{{getGroupTitle}}</div>
       {{#unless $eq getUserGroupType "existing_members"}}
         <div class="users-table-header-roles">
-          Set all as:
-          <div class="toolbar-role-item text-primary members-all">Member</div>
-          <div class="toolbar-role-item text-primary guests-all">Guest</div>
+          {{_ "add_project_member_set_all_as"}}
+          <div class="toolbar-role-item text-primary members-all">{{_ "member"}}</div>
+          <div class="toolbar-role-item text-primary guests-all">{{_ "guest"}}</div>
           {{#if showProxyAll}}
-            <div class="toolbar-role-item text-primary proxy-all">Proxy</div>
+            <div class="toolbar-role-item text-primary proxy-all">{{_ "proxy"}}</div>
           {{/if}}
           <div class="toolbar-role-item text-primary role-info" jd-tt="{{#if isProxyUserEnabled}}add-new-member-dialog-info{{else}}add-new-member-dialog-info-no-proxy{{/if}}">?</div>
         </div>
       {{/unless}}
     </div>
     <div class="users-table-wrapper">
-      <table class="users-table table">
+      <table class="users-table table" dir="{{#if isRtl}}rtl{{else}}ltr{{/if}}">
         <thead>
           <tr>
-            <th class="type">type</th>
-            <th class="full-name">full name</th>
-            <th class="email">email</th>
+            <th class="type">{{_ "type"}}</th>
+            <th class="full-name">{{_ "full_name"}}</th>
+            <th class="email">{{_ "email"}}</th>
           </tr>
         </thead>
         <tbody>
@@ -125,10 +125,10 @@
         {{#if $eq isDisabled "disabled"}}
           <option value={{role}} selected>{{role}}</option>
         {{else}}
-          <option value="member" {{isUserTypeSelected "member"}}>Member</option>
-          <option value="guest" {{isUserTypeSelected "guest"}}>Guest</option>
+          <option value="member" {{isUserTypeSelected "member"}}>{{_ "member"}}</option>
+          <option value="guest" {{isUserTypeSelected "guest"}}>{{_ "guest"}}</option>
           {{#if showProxy}}
-            <option value="proxy" {{isUserTypeSelected "proxy"}}>Proxy</option>
+            <option value="proxy" {{isUserTypeSelected "proxy"}}>{{_ "proxy"}}</option>
           {{/if}}
         {{/if}}
       </select>
@@ -139,8 +139,8 @@
       {{#if registered}}
         <div class="user-full-name">{{first_name}} {{last_name}}</div>
       {{else}}
-        <input class="user-first-name-input form-control form-control-sm last_name_border {{showBorderIfEmpty "first_name"}}" type="text" placeholder="First name" value="{{first_name}}">
-        <input class="user-last-name-input form-control form-control-sm last_name_border {{showBorderIfEmpty "last_name"}}" type="text" placeholder="Last name" value="{{last_name}}">
+        <input class="user-first-name-input form-control form-control-sm last_name_border {{showBorderIfEmpty "first_name"}}" type="text" placeholder="{{_ "first_name"}}" value="{{first_name}}">
+        <input class="user-last-name-input form-control form-control-sm last_name_border {{showBorderIfEmpty "last_name"}}" type="text" placeholder="{{_ "last_name"}}" value="{{last_name}}">
       {{/if}}
     </div>
   </td>

@@ -48,6 +48,18 @@
   "reset": "Επαναφορά",
   "import": "Εισαγωγή",
   "select": "Επιλογή",
+  "select_all": "Επιλογή όλων",
+  "clear_all": "Εκκαθάριση όλων",
   "invalid_email": "Μη έγκυρη διεύθυνση email",
-  "others": "Άλλα"
+  "others": "Άλλα",
+  "invite": "Πρόσκληση",
+  "root_tasks": "Βασικές εργασίες",
+  "apply": "Εφαρμογή",
+  "projects_label": "Έργα",
+  "member": "Μέλος",
+  "guest": "Επισκέπτης",
+  "proxy": "Αντιπρόσωπος",
+  "type": "τύπος",
+  "full_name": "πλήρες όνομα",
+  "email": "email"
 }

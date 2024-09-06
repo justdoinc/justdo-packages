@@ -10,7 +10,5 @@
   "print_grid_columns_settings_label": "إعدادات الأعمدة",
   "print_grid_columns_options_label": "خيارات الأعمدة",
   "print_grid_print": "طباعة",
-  "print_grid_export_csv": "تصدير كملف CSV",
-  "print_grid_select_all": "تحديد الكل",
-  "print_grid_apply": "تطبيق"
+  "print_grid_export_csv": "تصدير كملف CSV"
 }

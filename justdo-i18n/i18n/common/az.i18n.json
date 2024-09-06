@@ -48,6 +48,18 @@
   "reset": "Sıfırla",
   "import": "İdxal et",
   "select": "Seç",
+  "select_all": "Hamısını seç",
+  "clear_all": "Hamısını təmizlə",
   "invalid_email": "Yanlış e-poçt",
-  "others": "Digərləri"
+  "others": "Digərləri",
+  "invite": "Dəvət et",
+  "root_tasks": "Əsas tapşırıqlar",
+  "apply": "Tətbiq et",
+  "projects_label": "Layihələr",
+  "member": "Üzv",
+  "guest": "Qonaq",
+  "proxy": "Vəkil",
+  "type": "növ",
+  "full_name": "tam ad",
+  "email": "e-poçt"
 }

@@ -48,6 +48,18 @@
   "reset": "Berrezarri",
   "import": "Inportatu",
   "select": "Hautatu",
+  "select_all": "Aukeratu guztiak",
+  "clear_all": "Garbitu guztiak",
   "invalid_email": "Baliogabeko helbide elektronikoa",
-  "others": "Besteak"
+  "others": "Besteak",
+  "invite": "Gonbidatu",
+  "root_tasks": "Ataza nagusiak",
+  "apply": "Aplikatu",
+  "projects_label": "Proiektuak",
+  "member": "Kidea",
+  "guest": "Gonbidatua",
+  "proxy": "Ordezkaria",
+  "type": "mota",
+  "full_name": "izen osoa",
+  "email": "helbide elektronikoa"
 }

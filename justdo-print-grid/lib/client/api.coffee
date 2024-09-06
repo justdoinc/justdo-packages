@@ -349,8 +349,8 @@ _.extend JustdoPrintGrid.prototype,
           </div>
           <ul></ul>
           <div class="modal-footer">
-            <label class="print-settings-select-all"><input type="checkbox">#{TAPi18n.__ "print_grid_select_all"}</label>
-            <button class="btn btn-primary print-settings-apply">#{TAPi18n.__ "print_grid_apply"}</button>
+            <label class="print-settings-select-all"><input type="checkbox">#{TAPi18n.__ "select_all"}</label>
+            <button class="btn btn-primary print-settings-apply">#{TAPi18n.__ "apply"}</button>
           </div>
         </div>
       """

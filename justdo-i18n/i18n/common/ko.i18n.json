@@ -48,6 +48,18 @@
   "reset": "초기화",
   "import": "가져오기",
   "select": "선택",
+  "select_all": "모두 선택",
+  "clear_all": "모두 지우기",
   "invalid_email": "유효하지 않은 이메일",
-  "others": "기타"
+  "others": "기타",
+  "invite": "초대",
+  "root_tasks": "최상위 작업",
+  "apply": "적용",
+  "projects_label": "프로젝트",
+  "member": "회원",
+  "guest": "게스트",
+  "proxy": "대리인",
+  "type": "유형",
+  "full_name": "성명",
+  "email": "이메일"
 }

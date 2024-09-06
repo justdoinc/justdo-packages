@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "Advanced invite",
   "members_dropdown_invite_no_projects_found": "No projects found",
   "members_dropdown_invite_no_projects_html": "There're no projects in this JustDo.<br>Right click on a task to set it as a project.",
-  "member_dropdown_invite_clear_all": "Clear all",
-  "member_dropdown_invite_select_all": "Select all",
   "member_dropdown_invite_select_with_number": "Select __count__",
   "member_dropdown_invite_share_all_with_number_html": "Share all <span>__count__</span> task",
   "member_dropdown_invite_share_all_with_number_html_plural": "Share all <span>__count__</span> tasks",

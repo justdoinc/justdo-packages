@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Πρόσκληση Νέων Μελών",
+  "add_project_member_email_input_placeholder": "Πληκτρολογήστε Enter ή επικολλήστε email π.χ: name@example.com, name2@example.com",
+  "add_project_member_no_members": "Δεν υπάρχουν μέλη",
+  "add_project_member_select_tasks_or_projects_to_invite": "Επιλέξτε βασικές εργασίες ή έργα που θα είναι διαθέσιμα για νέους χρήστες",
+  "add_project_member_no_root_tasks": "Δεν βρέθηκαν βασικές εργασίες",
+  "add_project_member_no_projects": "Δεν βρέθηκαν έργα",
+  "add_project_member_set_all_as": "Ορισμός όλων ως: ",
+  "add_project_member_search_root_tasks_or_projects": "Αναζήτηση βασικών εργασιών / έργων",
+  "add_project_member_new_users": "Νέοι Χρήστες",
+  "add_project_member_registered_users": "Εγγεγραμμένοι Χρήστες",
+  "add_project_member_existing_members": "Υπάρχοντα Μέλη αυτού του Πίνακα JustDo"
+}

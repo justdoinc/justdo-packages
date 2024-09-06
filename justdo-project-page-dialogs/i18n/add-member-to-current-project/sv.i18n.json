@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Bjud in nya medlemmar",
+  "add_project_member_email_input_placeholder": "Skriv in eller klistra in e-post/er, t.ex: namn@exempel.com, namn2@exempel.com",
+  "add_project_member_no_members": "Inga medlemmar",
+  "add_project_member_select_tasks_or_projects_to_invite": "Välj rotuppgifter eller projekt som ska vara tillgängliga för nya användare",
+  "add_project_member_no_root_tasks": "Inga rotuppgifter hittades",
+  "add_project_member_no_projects": "Inga projekt hittades",
+  "add_project_member_set_all_as": "Ställ in alla som: ",
+  "add_project_member_search_root_tasks_or_projects": "Sök rotuppgifter / projekt",
+  "add_project_member_new_users": "Nya användare",
+  "add_project_member_registered_users": "Registrerade användare",
+  "add_project_member_existing_members": "Befintliga medlemmar i detta JustDo"
+}

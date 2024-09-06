@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Fto Anëtarë të Rinj",
+  "add_project_member_email_input_placeholder": "Shkruani Enter ose ngjisni email-in/at p.sh: emri@shembull.com, emri2@shembull.com",
+  "add_project_member_no_members": "Nuk ka anëtarë",
+  "add_project_member_select_tasks_or_projects_to_invite": "Zgjidhni detyrat kryesore ose projektet që do të jenë të disponueshme për përdoruesit e rinj",
+  "add_project_member_no_root_tasks": "Nuk u gjetën detyra kryesore",
+  "add_project_member_no_projects": "Nuk u gjetën projekte",
+  "add_project_member_set_all_as": "Vendosni të gjitha si: ",
+  "add_project_member_search_root_tasks_or_projects": "Kërko detyra kryesore / projekte",
+  "add_project_member_new_users": "Përdorues të Rinj",
+  "add_project_member_registered_users": "Përdorues të Regjistruar",
+  "add_project_member_existing_members": "Anëtarë Ekzistues të këtij JustDo"
+}

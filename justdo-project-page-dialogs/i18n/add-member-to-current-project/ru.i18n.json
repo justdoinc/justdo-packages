@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Пригласить новых участников",
+  "add_project_member_email_input_placeholder": "Введите или вставьте email адрес(а), например: name@example.com, name2@example.com",
+  "add_project_member_no_members": "Нет участников",
+  "add_project_member_select_tasks_or_projects_to_invite": "Выберите корневые задачи или проекты, которые будут доступны новым пользователям",
+  "add_project_member_no_root_tasks": "Корневые задачи не найдены",
+  "add_project_member_no_projects": "Проекты не найдены",
+  "add_project_member_set_all_as": "Установить все как: ",
+  "add_project_member_search_root_tasks_or_projects": "Поиск корневых задач / проектов",
+  "add_project_member_new_users": "Новые пользователи",
+  "add_project_member_registered_users": "Зарегистрированные пользователи",
+  "add_project_member_existing_members": "Существующие участники этой доски JustDo"
+}

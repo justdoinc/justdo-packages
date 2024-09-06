@@ -10,7 +10,5 @@
   "print_grid_columns_settings_label": "Kolumninställningar",
   "print_grid_columns_options_label": "Kolumnalternativ",
   "print_grid_print": "Skriv ut",
-  "print_grid_export_csv": "Exportera CSV",
-  "print_grid_select_all": "Markera alla",
-  "print_grid_apply": "Tillämpa"
+  "print_grid_export_csv": "Exportera CSV"
 }

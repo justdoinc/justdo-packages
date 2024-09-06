@@ -48,6 +48,18 @@
   "reset": "Restablir",
   "import": "Importar",
   "select": "Seleccionar",
+  "select_all": "Seleccionar tot",
+  "clear_all": "Esborrar tot",
   "invalid_email": "Correu electrònic no vàlid",
-  "others": "Altres"
+  "others": "Altres",
+  "invite": "Convidar",
+  "root_tasks": "Tasques principals",
+  "apply": "Aplicar",
+  "projects_label": "Projectes",
+  "member": "Membre",
+  "guest": "Convidat",
+  "proxy": "Representant",
+  "type": "tipus",
+  "full_name": "nom complet",
+  "email": "correu electrònic"
 }

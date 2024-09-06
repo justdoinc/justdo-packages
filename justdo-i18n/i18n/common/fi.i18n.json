@@ -48,6 +48,18 @@
   "reset": "Nollaa",
   "import": "Tuo",
   "select": "Valitse",
+  "select_all": "Valitse kaikki",
+  "clear_all": "Tyhjennä kaikki",
   "invalid_email": "Virheellinen sähköpostiosoite",
-  "others": "Muut"
+  "others": "Muut",
+  "invite": "Kutsu",
+  "root_tasks": "Päätehtävät",
+  "apply": "Käytä",
+  "projects_label": "Projektit",
+  "member": "Jäsen",
+  "guest": "Vieras",
+  "proxy": "Välityspalvelin",
+  "type": "tyyppi",
+  "full_name": "koko nimi",
+  "email": "sähköposti"
 }

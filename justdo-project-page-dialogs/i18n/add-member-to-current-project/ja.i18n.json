@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "新しいメンバーを招待",
+  "add_project_member_email_input_placeholder": "Enterキーを押すかメールアドレスを貼り付けてください（例：name@example.com, name2@example.com）",
+  "add_project_member_no_members": "メンバーがいません",
+  "add_project_member_select_tasks_or_projects_to_invite": "新しいユーザーが利用できるルートタスクまたはプロジェクトを選択してください",
+  "add_project_member_no_root_tasks": "ルートタスクが見つかりません",
+  "add_project_member_no_projects": "プロジェクトが見つかりません",
+  "add_project_member_set_all_as": "すべてを設定：",
+  "add_project_member_search_root_tasks_or_projects": "ルートタスク/プロジェクトを検索",
+  "add_project_member_new_users": "新規ユーザー",
+  "add_project_member_registered_users": "登録済みユーザー",
+  "add_project_member_existing_members": "このJustDoの既存メンバー"
+}

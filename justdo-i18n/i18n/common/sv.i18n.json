@@ -48,6 +48,18 @@
   "reset": "Återställ",
   "import": "Importera",
   "select": "Välj",
+  "select_all": "Välj alla",
+  "clear_all": "Rensa alla",
   "invalid_email": "Ogiltig e-postadress",
-  "others": "Andra"
+  "others": "Andra",
+  "invite": "Bjud in",
+  "root_tasks": "Huvuduppgifter",
+  "apply": "Tillämpa",
+  "projects_label": "Projekt",
+  "member": "Medlem",
+  "guest": "Gäst",
+  "proxy": "Proxy",
+  "type": "typ",
+  "full_name": "fullständigt namn",
+  "email": "e-post"
 }

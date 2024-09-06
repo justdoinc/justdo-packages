@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "進階邀請",
   "members_dropdown_invite_no_projects_found": "找不到專案",
   "members_dropdown_invite_no_projects_html": "這個JustDo暫時未有專案<br>右鍵點擊任務以將其設置為專案",
-  "member_dropdown_invite_clear_all": "清除全部",
-  "member_dropdown_invite_select_all": "選擇全部",
   "member_dropdown_invite_select_with_number": "選擇__count__個",
   "member_dropdown_invite_share_all_with_number_html": "分享全部<span>__count__</span>個任務",
   "member_dropdown_invite_share_all_with_number_html_plural": "分享全部<span>__count__</span>個任務",
@@ -41,11 +39,9 @@
   "member_dropdown_invite_share_projects_with_number_html_plural": "分享<span>__count__</span>個專案",
   "member_dropdown_invite_share_none": "不分享任何任務",
   "member_dropdown_invite_cannot_recognize_email_with_input": "無法從以下輸入辨識電郵地址：__input__",
-
   "member_management_dialog_add_members": "增加成員：",
   "members_management_dialog_keep_members": "保留成員：",
   "members_management_dialog_members": "成員：",
-
   "new_child_task_label": "創建子任務",
   "new_sibling_task_label": "創建任務",
   "remove_task_label": "移除任務",

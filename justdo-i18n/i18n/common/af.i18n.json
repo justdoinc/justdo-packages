@@ -48,6 +48,18 @@
   "reset": "Herstel",
   "import": "Invoer",
   "select": "Kies",
+  "select_all": "Kies alles",
+  "clear_all": "Vee alles uit",
   "invalid_email": "Ongeldige e-posadres",
-  "others": "Ander"
+  "others": "Ander",
+  "invite": "Nooi uit",
+  "root_tasks": "Hooftake",
+  "apply": "Pas toe",
+  "projects_label": "Projekte",
+  "member": "Lid",
+  "guest": "Gas",
+  "proxy": "Gevolmagtigde",
+  "type": "tipe",
+  "full_name": "volle naam",
+  "email": "e-pos"
 }

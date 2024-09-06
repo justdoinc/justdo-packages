@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Nieuwe leden uitnodigen",
+  "add_project_member_email_input_placeholder": "Typ Enter of plak e-mail(s), bijv.: naam@voorbeeld.com, naam2@voorbeeld.com",
+  "add_project_member_no_members": "Geen leden",
+  "add_project_member_select_tasks_or_projects_to_invite": "Selecteer hoofdtaken of projecten die beschikbaar zullen zijn voor nieuwe gebruikers",
+  "add_project_member_no_root_tasks": "Geen hoofdtaken gevonden",
+  "add_project_member_no_projects": "Geen projecten gevonden",
+  "add_project_member_set_all_as": "Stel alles in als: ",
+  "add_project_member_search_root_tasks_or_projects": "Zoek hoofdtaken / projecten",
+  "add_project_member_new_users": "Nieuwe gebruikers",
+  "add_project_member_registered_users": "Geregistreerde gebruikers",
+  "add_project_member_existing_members": "Bestaande leden van dit JustDo"
+}

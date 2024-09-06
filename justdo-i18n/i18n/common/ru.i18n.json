@@ -48,6 +48,18 @@
   "reset": "Сбросить",
   "import": "Импорт",
   "select": "Выбрать",
+  "select_all": "Выбрать все",
+  "clear_all": "Очистить все",
   "invalid_email": "Неверный email",
-  "others": "Другие"
+  "others": "Другие",
+  "invite": "Пригласить",
+  "root_tasks": "Корневые задачи",
+  "apply": "Применить",
+  "projects_label": "Проекты",
+  "member": "Участник",
+  "guest": "Гость",
+  "proxy": "Прокси",
+  "type": "тип",
+  "full_name": "полное имя",
+  "email": "email"
 }

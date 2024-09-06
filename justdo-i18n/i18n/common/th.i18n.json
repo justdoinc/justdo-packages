@@ -48,6 +48,18 @@
   "reset": "รีเซ็ต",
   "import": "นำเข้า",
   "select": "เลือก",
+  "select_all": "เลือกทั้งหมด",
+  "clear_all": "ล้างทั้งหมด",
   "invalid_email": "อีเมลไม่ถูกต้อง",
-  "others": "อื่นๆ"
+  "others": "อื่นๆ",
+  "invite": "เชิญ",
+  "root_tasks": "งานหลัก",
+  "apply": "นำไปใช้",
+  "projects_label": "โครงการ",
+  "member": "สมาชิก",
+  "guest": "ผู้เยี่ยมชม",
+  "proxy": "ตัวแทน",
+  "type": "ประเภท",
+  "full_name": "ชื่อเต็ม",
+  "email": "อีเมล"
 }

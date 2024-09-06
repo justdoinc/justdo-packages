@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "Niektórzy członkowie nie zostali zaproszeni",
+  "invite_member_failed_by_registrable_user": "Aktualna konfiguracja Rejestrowanych Użytkowników w Panelu Administratora uniemożliwiła dodanie następujących użytkowników:",
+  "invite_member_failed_other_reason": "Następujący użytkownicy nie mogli zostać dodani:"
+}

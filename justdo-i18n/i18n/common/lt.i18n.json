@@ -48,6 +48,18 @@
   "reset": "Atstatyti",
   "import": "Importuoti",
   "select": "Pasirinkti",
+  "select_all": "Pasirinkti visus",
+  "clear_all": "Išvalyti visus",
   "invalid_email": "Neteisingas el. pašto adresas",
-  "others": "Kiti"
+  "others": "Kiti",
+  "invite": "Pakviesti",
+  "root_tasks": "Pagrindinės užduotys",
+  "apply": "Taikyti",
+  "projects_label": "Projektai",
+  "member": "Narys",
+  "guest": "Svečias",
+  "proxy": "Įgaliotinis",
+  "type": "tipas",
+  "full_name": "pilnas vardas",
+  "email": "el. paštas"
 }

@@ -48,6 +48,18 @@
   "reset": "Set Semula",
   "import": "Import",
   "select": "Pilih",
+  "select_all": "Pilih semua",
+  "clear_all": "Kosongkan semua",
   "invalid_email": "E-mel tidak sah",
-  "others": "Lain-lain"
+  "others": "Lain-lain",
+  "invite": "Jemput",
+  "root_tasks": "Tugas utama",
+  "apply": "Guna",
+  "projects_label": "Projek",
+  "member": "Ahli",
+  "guest": "Tetamu",
+  "proxy": "Proksi",
+  "type": "jenis",
+  "full_name": "nama penuh",
+  "email": "e-mel"
 }

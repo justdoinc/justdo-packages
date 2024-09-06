@@ -48,6 +48,18 @@
   "reset": "Resetează",
   "import": "Importă",
   "select": "Selectează",
+  "select_all": "Selectează tot",
+  "clear_all": "Șterge tot",
   "invalid_email": "Email invalid",
-  "others": "Alții"
+  "others": "Alții",
+  "invite": "Invită",
+  "root_tasks": "Sarcini principale",
+  "apply": "Aplică",
+  "projects_label": "Proiecte",
+  "member": "Membru",
+  "guest": "Invitat",
+  "proxy": "Proxy",
+  "type": "tip",
+  "full_name": "nume complet",
+  "email": "email"
 }

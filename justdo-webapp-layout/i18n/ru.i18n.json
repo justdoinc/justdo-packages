@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "Расширенное приглашение",
   "members_dropdown_invite_no_projects_found": "Проекты не найдены",
   "members_dropdown_invite_no_projects_html": "В этом JustDo нет проектов.<br>Щелкните правой кнопкой мыши на задаче, чтобы установить ее как проект.",
-  "member_dropdown_invite_clear_all": "Очистить все",
-  "member_dropdown_invite_select_all": "Выбрать все",
   "member_dropdown_invite_select_with_number": "Выбрать __count__",
   "member_dropdown_invite_share_all_with_number_html": "Поделиться всеми <span>__count__</span> задачами",
   "member_dropdown_invite_share_all_with_number_html_plural": "Поделиться всеми <span>__count__</span> задачами",

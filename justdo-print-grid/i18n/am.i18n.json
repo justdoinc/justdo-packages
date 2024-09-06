@@ -10,7 +10,5 @@
   "print_grid_columns_settings_label": "የአምዶች ቅንብሮች",
   "print_grid_columns_options_label": "የአምዶች አማራጮች",
   "print_grid_print": "አትም",
-  "print_grid_export_csv": "CSV ወደ ውጭ ላክ",
-  "print_grid_select_all": "ሁሉንም ምረጥ",
-  "print_grid_apply": "ተግብር"
+  "print_grid_export_csv": "CSV ወደ ውጭ ላክ"
 }

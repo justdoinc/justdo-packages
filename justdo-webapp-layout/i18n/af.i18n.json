@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "Gevorderde uitnodiging",
   "members_dropdown_invite_no_projects_found": "Geen projekte gevind nie",
   "members_dropdown_invite_no_projects_html": "Daar is geen projekte in hierdie JustDo nie.<br>Regs-klik op 'n taak om dit as 'n projek op te stel.",
-  "member_dropdown_invite_clear_all": "Maak alles skoon",
-  "member_dropdown_invite_select_all": "Kies alles",
   "member_dropdown_invite_select_with_number": "Kies __count__",
   "member_dropdown_invite_share_all_with_number_html": "Deel alle <span>__count__</span> taak",
   "member_dropdown_invite_share_all_with_number_html_plural": "Deel alle <span>__count__</span> take",

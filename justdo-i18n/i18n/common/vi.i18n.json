@@ -48,6 +48,18 @@
   "reset": "Đặt lại",
   "import": "Nhập",
   "select": "Chọn",
+  "select_all": "Chọn tất cả",
+  "clear_all": "Xóa tất cả",
   "invalid_email": "Email không hợp lệ",
-  "others": "Khác"
+  "others": "Khác",
+  "invite": "Mời",
+  "root_tasks": "Công việc gốc",
+  "apply": "Áp dụng",
+  "projects_label": "Dự án",
+  "member": "Thành viên",
+  "guest": "Khách",
+  "proxy": "Người đại diện",
+  "type": "loại",
+  "full_name": "họ và tên",
+  "email": "email"
 }

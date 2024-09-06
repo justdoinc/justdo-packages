@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "Invitație avansată",
   "members_dropdown_invite_no_projects_found": "Nu s-au găsit proiecte",
   "members_dropdown_invite_no_projects_html": "Nu există proiecte în acest Panou JustDo.<br>Faceți clic dreapta pe o sarcină pentru a o seta ca proiect.",
-  "member_dropdown_invite_clear_all": "Șterge tot",
-  "member_dropdown_invite_select_all": "Selectează tot",
   "member_dropdown_invite_select_with_number": "Selectează __count__",
   "member_dropdown_invite_share_all_with_number_html": "Distribuie toate <span>__count__</span> sarcină",
   "member_dropdown_invite_share_all_with_number_html_plural": "Distribuie toate <span>__count__</span> sarcinile",

@@ -10,7 +10,5 @@
   "print_grid_columns_settings_label": "Nastavitve stolpcev",
   "print_grid_columns_options_label": "Možnosti stolpcev",
   "print_grid_print": "Natisni",
-  "print_grid_export_csv": "Izvozi CSV",
-  "print_grid_select_all": "Izberi vse",
-  "print_grid_apply": "Uporabi"
+  "print_grid_export_csv": "Izvozi CSV"
 }

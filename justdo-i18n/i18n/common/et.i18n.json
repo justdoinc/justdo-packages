@@ -48,6 +48,18 @@
   "reset": "Lähtesta",
   "import": "Impordi",
   "select": "Vali",
+  "select_all": "Vali kõik",
+  "clear_all": "Tühjenda kõik",
   "invalid_email": "Vigane e-posti aadress",
-  "others": "Teised"
+  "others": "Teised",
+  "invite": "Kutsu",
+  "root_tasks": "Peamised ülesanded",
+  "apply": "Rakenda",
+  "projects_label": "Projektid",
+  "member": "Liige",
+  "guest": "Külaline",
+  "proxy": "Esindaja",
+  "type": "tüüp",
+  "full_name": "täisnimi",
+  "email": "e-post"
 }

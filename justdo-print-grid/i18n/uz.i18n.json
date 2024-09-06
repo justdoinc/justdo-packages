@@ -10,7 +10,5 @@
   "print_grid_columns_settings_label": "Ustunlar sozlamalari",
   "print_grid_columns_options_label": "Ustunlar variantlari",
   "print_grid_print": "Chop etish",
-  "print_grid_export_csv": "CSV formatida eksport qilish",
-  "print_grid_select_all": "Hammasini tanlash",
-  "print_grid_apply": "Qo'llash"
+  "print_grid_export_csv": "CSV formatida eksport qilish"
 }

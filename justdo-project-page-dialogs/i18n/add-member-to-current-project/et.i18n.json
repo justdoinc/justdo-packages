@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Kutsu uued liikmed",
+  "add_project_member_email_input_placeholder": "Sisesta või kleebi e-posti aadress(id), nt: nimi@näide.com, nimi2@näide.com",
+  "add_project_member_no_members": "Liikmeid pole",
+  "add_project_member_select_tasks_or_projects_to_invite": "Vali põhiülesanded või projektid, mis on uutele kasutajatele kättesaadavad",
+  "add_project_member_no_root_tasks": "Põhiülesandeid ei leitud",
+  "add_project_member_no_projects": "Projekte ei leitud",
+  "add_project_member_set_all_as": "Määra kõik kui: ",
+  "add_project_member_search_root_tasks_or_projects": "Otsi põhiülesandeid / projekte",
+  "add_project_member_new_users": "Uued kasutajad",
+  "add_project_member_registered_users": "Registreeritud kasutajad",
+  "add_project_member_existing_members": "Selle JustDo olemasolevad liikmed"
+}

@@ -48,6 +48,18 @@
   "reset": "Скінуць",
   "import": "Імпарт",
   "select": "Выбраць",
+  "select_all": "Выбраць усё",
+  "clear_all": "Ачысціць усё",
   "invalid_email": "Няправільны email",
-  "others": "Іншыя"
+  "others": "Іншыя",
+  "invite": "Запрасіць",
+  "root_tasks": "Карнявыя задачы",
+  "apply": "Прымяніць",
+  "projects_label": "Праекты",
+  "member": "Удзельнік",
+  "guest": "Госць",
+  "proxy": "Проксі",
+  "type": "тып",
+  "full_name": "поўнае імя",
+  "email": "email"
 }

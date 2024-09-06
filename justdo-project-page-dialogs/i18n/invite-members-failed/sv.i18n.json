@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "Vissa medlemmar har inte bjudits in",
+  "invite_member_failed_by_registrable_user": "Den nuvarande konfigurationen för registrerbara användare i Webbplatsadministrationen förhindrade tillägg av följande användare:",
+  "invite_member_failed_other_reason": "Följande användare kunde inte läggas till:"
+}

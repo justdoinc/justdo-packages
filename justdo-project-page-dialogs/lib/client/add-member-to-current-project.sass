@@ -270,3 +270,63 @@
     .task-item-title
       text-overflow: ellipsis
       overflow: hidden
+
+// RTL modifications
+.right-to-left
+  .invite-new-user-dialog
+    .modal-footer
+      .next,
+      .invite
+        margin-left: unset
+        margin-right: 8px
+
+    .step-one,
+    .step-two
+      transition: right 0.35s
+
+    .step-one
+      left: unset
+      right: 0%
+
+    .step-two
+      left: unset
+      right: 100%
+
+    .show-select-projects
+      .step-one
+        left: unset
+        right: -100%
+      .step-two
+        left: unset
+        right: 0%
+
+    .users-email-input-wrapper
+      .users-email-input
+        padding: 12px 12px 12px 80px
+      .users-email-add
+        right: unset
+        left: 4px
+
+    .toolbar-role-item
+      margin-left: unset
+      margin-right: 6px
+
+    .users-table
+      th
+        padding: 8px 0px 8px 8px
+
+    .users-table-item
+      .user-first-name-input
+        margin-right: unset
+        margin-left: 4px
+      .user-email-wrapper
+        padding-right: unset
+        padding-left: 12px
+
+    .task-item
+      .task-item-id
+        margin-right: unset
+        margin-left: 2px
+      &.selected
+        margin-right: unset
+        margin-left: 4px

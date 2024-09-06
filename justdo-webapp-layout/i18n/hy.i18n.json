@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "Ընդլայնված հրավեր",
   "members_dropdown_invite_no_projects_found": "Նախագծեր չեն գտնվել",
   "members_dropdown_invite_no_projects_html": "Այս JustDo-ում նախագծեր չկան:<br>Աջ սեղմեք առաջադրանքի վրա՝ այն որպես նախագիծ սահմանելու համար:",
-  "member_dropdown_invite_clear_all": "Մաքրել բոլորը",
-  "member_dropdown_invite_select_all": "Ընտրել բոլորը",
   "member_dropdown_invite_select_with_number": "Ընտրել __count__",
   "member_dropdown_invite_share_all_with_number_html": "Կիսվել բոլոր <span>__count__</span> առաջադրանքով",
   "member_dropdown_invite_share_all_with_number_html_plural": "Կիսվել բոլոր <span>__count__</span> առաջադրանքներով",

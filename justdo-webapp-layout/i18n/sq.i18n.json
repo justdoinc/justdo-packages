@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "Ftesë e avancuar",
   "members_dropdown_invite_no_projects_found": "Nuk u gjetën projekte",
   "members_dropdown_invite_no_projects_html": "Nuk ka projekte në këtë JustDo.<br>Klikoni me të djathtën mbi një detyrë për ta vendosur si projekt.",
-  "member_dropdown_invite_clear_all": "Pastro të gjitha",
-  "member_dropdown_invite_select_all": "Zgjidh të gjitha",
   "member_dropdown_invite_select_with_number": "Zgjidh __count__",
   "member_dropdown_invite_share_all_with_number_html": "Ndaj të gjitha <span>__count__</span> detyrë",
   "member_dropdown_invite_share_all_with_number_html_plural": "Ndaj të gjitha <span>__count__</span> detyrat",

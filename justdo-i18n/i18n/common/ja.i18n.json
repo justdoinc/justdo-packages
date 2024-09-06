@@ -48,6 +48,18 @@
   "reset": "リセット",
   "import": "インポート",
   "select": "選択",
+  "select_all": "すべて選択",
+  "clear_all": "すべてクリア",
   "invalid_email": "無効なメールアドレス",
-  "others": "その他"
+  "others": "その他",
+  "invite": "招待",
+  "root_tasks": "ルートタスク",
+  "apply": "適用",
+  "projects_label": "プロジェクト",
+  "member": "メンバー",
+  "guest": "ゲスト",
+  "proxy": "プロキシ",
+  "type": "タイプ",
+  "full_name": "氏名",
+  "email": "メールアドレス"
 }

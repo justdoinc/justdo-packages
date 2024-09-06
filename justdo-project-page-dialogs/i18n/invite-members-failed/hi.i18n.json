@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "कुछ सदस्यों को आमंत्रित नहीं किया गया",
+  "invite_member_failed_by_registrable_user": "साइट एडमिन में वर्तमान पंजीकरण योग्य उपयोगकर्ता कॉन्फ़िगरेशन ने निम्नलिखित उपयोगकर्ताओं को जोड़ने से रोका:",
+  "invite_member_failed_other_reason": "निम्नलिखित उपयोगकर्ताओं को जोड़ा नहीं जा सका:"
+}

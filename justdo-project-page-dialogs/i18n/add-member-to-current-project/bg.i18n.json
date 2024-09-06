@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Поканете нови членове",
+  "add_project_member_email_input_placeholder": "Въведете или поставете имейл/и, напр.: име@пример.com, име2@пример.com",
+  "add_project_member_no_members": "Няма членове",
+  "add_project_member_select_tasks_or_projects_to_invite": "Изберете основни задачи или проекти, които ще бъдат достъпни за новите потребители",
+  "add_project_member_no_root_tasks": "Не са намерени основни задачи",
+  "add_project_member_no_projects": "Няма намерени проекти",
+  "add_project_member_set_all_as": "Задайте всички като: ",
+  "add_project_member_search_root_tasks_or_projects": "Търсете основни задачи / проекти",
+  "add_project_member_new_users": "Нови потребители",
+  "add_project_member_registered_users": "Регистрирани потребители",
+  "add_project_member_existing_members": "Съществуващи членове на този JustDo"
+}

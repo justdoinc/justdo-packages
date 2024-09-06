@@ -48,6 +48,18 @@
   "reset": "Atiestatīt",
   "import": "Importēt",
   "select": "Izvēlēties",
+  "select_all": "Izvēlēties visus",
+  "clear_all": "Notīrīt visu",
   "invalid_email": "Nederīga e-pasta adrese",
-  "others": "Citi"
+  "others": "Citi",
+  "invite": "Uzaicināt",
+  "root_tasks": "Galvenie uzdevumi",
+  "apply": "Pielietot",
+  "projects_label": "Projekti",
+  "member": "Dalībnieks",
+  "guest": "Viesis",
+  "proxy": "Starpnieks",
+  "type": "tips",
+  "full_name": "pilns vārds",
+  "email": "e-pasts"
 }

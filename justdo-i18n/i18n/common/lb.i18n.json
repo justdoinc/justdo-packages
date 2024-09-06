@@ -48,6 +48,18 @@
   "reset": "Zerécksetzen",
   "import": "Importéieren",
   "select": "Auswielen",
+  "select_all": "All auswielen",
+  "clear_all": "All läschen",
   "invalid_email": "Ongëlteg E-Mail",
-  "others": "Anerer"
+  "others": "Anerer",
+  "invite": "Alueden",
+  "root_tasks": "Haaptaufgaben",
+  "apply": "Uwenden",
+  "projects_label": "Projeten",
+  "member": "Member",
+  "guest": "Gaascht",
+  "proxy": "Proxy",
+  "type": "Typ",
+  "full_name": "Vollstännegen Numm",
+  "email": "E-Mail"
 }

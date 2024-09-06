@@ -10,7 +10,5 @@
   "print_grid_columns_settings_label": "การตั้งค่าคอลัมน์",
   "print_grid_columns_options_label": "ตัวเลือกคอลัมน์",
   "print_grid_print": "พิมพ์",
-  "print_grid_export_csv": "ส่งออกเป็น CSV",
-  "print_grid_select_all": "เลือกทั้งหมด",
-  "print_grid_apply": "นำไปใช้"
+  "print_grid_export_csv": "ส่งออกเป็น CSV"
 }

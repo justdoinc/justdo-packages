@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "አንዳንድ አባላት አልተጋበዙም",
+  "invite_member_failed_by_registrable_user": "በአሁኑ ጊዜ በጣቢያ አስተዳዳሪው ውስጥ ያለው የሚመዘገቡ ተጠቃሚዎች ውቅር (Registrable Users configuration) የሚከተሉትን ተጠቃሚዎች እንዳይጨመሩ አግዷል፡",
+  "invite_member_failed_other_reason": "የሚከተሉት ተጠቃሚዎች ሊጨመሩ አልቻሉም፡"
+}

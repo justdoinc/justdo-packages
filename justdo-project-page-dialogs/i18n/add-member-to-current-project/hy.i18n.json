@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Հրավիրել նոր անդամներ",
+  "add_project_member_email_input_placeholder": "Մուտքագրեք կամ տեղադրեք էլ. փոստ/ներ, օրինակ՝ անուն@օրինակ.com, անուն2@օրինակ.com",
+  "add_project_member_no_members": "Անդամներ չկան",
+  "add_project_member_select_tasks_or_projects_to_invite": "Ընտրեք հիմնական առաջադրանքներ կամ նախագծեր, որոնք հասանելի կլինեն նոր օգտատերերի համար",
+  "add_project_member_no_root_tasks": "Հիմնական առաջադրանքներ չեն գտնվել",
+  "add_project_member_no_projects": "Նախագծեր չեն գտնվել",
+  "add_project_member_set_all_as": "Բոլորը սահմանել որպես՝ ",
+  "add_project_member_search_root_tasks_or_projects": "Որոնել հիմնական առաջադրանքներ / նախագծեր",
+  "add_project_member_new_users": "Նոր օգտատերեր",
+  "add_project_member_registered_users": "Գրանցված օգտատերեր",
+  "add_project_member_existing_members": "Այս JustDo-ի առկա անդամներ"
+}

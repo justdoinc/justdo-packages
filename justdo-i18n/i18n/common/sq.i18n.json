@@ -48,6 +48,18 @@
   "reset": "Rivendos",
   "import": "Importo",
   "select": "Zgjidh",
+  "select_all": "Zgjidh të gjitha",
+  "clear_all": "Pastro të gjitha",
   "invalid_email": "Email i pavlefshëm",
-  "others": "Të tjerë"
+  "others": "Të tjerë",
+  "invite": "Fto",
+  "root_tasks": "Detyrat kryesore",
+  "apply": "Apliko",
+  "projects_label": "Projekte",
+  "member": "Anëtar",
+  "guest": "Mysafir",
+  "proxy": "Përfaqësues",
+  "type": "lloji",
+  "full_name": "emri i plotë",
+  "email": "email"
 }

@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "לאַדן נײַע מיטגלידער",
+  "add_project_member_email_input_placeholder": "דרוקט אַרײַן אָדער פּאַסט אימעיל/ן, למשל: name@example.com, name2@example.com",
+  "add_project_member_no_members": "קיין מיטגלידער",
+  "add_project_member_select_tasks_or_projects_to_invite": "קלײַבט אויס הויפּט אויפֿגאַבן אָדער פּראָיעקטן וואָס וועלן זײַן פֿאַראַן פֿאַר נײַע באַניצער",
+  "add_project_member_no_root_tasks": "קיין הויפּט אויפֿגאַבן געפֿונען",
+  "add_project_member_no_projects": "קיין פּראָיעקטן געפֿונען",
+  "add_project_member_set_all_as": "שטעלן אַלע ווי: ",
+  "add_project_member_search_root_tasks_or_projects": "זוכן הויפּט אויפֿגאַבן / פּראָיעקטן",
+  "add_project_member_new_users": "נײַע באַניצער",
+  "add_project_member_registered_users": "רעגיסטרירטע באַניצער",
+  "add_project_member_existing_members": "עקזיסטירנדע מיטגלידער פֿון דעם JustDo טאָוול"
+}

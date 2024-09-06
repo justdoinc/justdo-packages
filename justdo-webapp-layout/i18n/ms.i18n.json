@@ -31,8 +31,6 @@
   "members_dropdown_invite_advanced_invite": "Jemputan lanjutan",
   "members_dropdown_invite_no_projects_found": "Tiada projek ditemui",
   "members_dropdown_invite_no_projects_html": "Tiada projek dalam JustDo ini.<br>Klik kanan pada tugas untuk menetapkannya sebagai projek.",
-  "member_dropdown_invite_clear_all": "Kosongkan semua",
-  "member_dropdown_invite_select_all": "Pilih semua",
   "member_dropdown_invite_select_with_number": "Pilih __count__",
   "member_dropdown_invite_share_all_with_number_html": "Kongsi semua <span>__count__</span> tugas",
   "member_dropdown_invite_share_all_with_number_html_plural": "Kongsi semua <span>__count__</span> tugas",

@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "Invitar nuevos miembros",
+  "add_project_member_email_input_placeholder": "Escribe Enter o pega correo/s electrónico/s, ej: nombre@ejemplo.com, nombre2@ejemplo.com",
+  "add_project_member_no_members": "No hay miembros",
+  "add_project_member_select_tasks_or_projects_to_invite": "Selecciona tareas principales o proyectos que estarán disponibles para los nuevos usuarios",
+  "add_project_member_no_root_tasks": "No se encontraron tareas principales",
+  "add_project_member_no_projects": "No se encontraron proyectos",
+  "add_project_member_set_all_as": "Establecer todos como: ",
+  "add_project_member_search_root_tasks_or_projects": "Buscar tareas principales / proyectos",
+  "add_project_member_new_users": "Nuevos usuarios",
+  "add_project_member_registered_users": "Usuarios registrados",
+  "add_project_member_existing_members": "Miembros existentes de este JustDo"
+}

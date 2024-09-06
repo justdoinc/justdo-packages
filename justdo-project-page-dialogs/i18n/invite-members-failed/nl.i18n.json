@@ -1,0 +1,5 @@
+{
+  "invite_member_failed_partially_added_modal_title": "Sommige leden zijn niet uitgenodigd",
+  "invite_member_failed_by_registrable_user": "De huidige configuratie voor Registreerbare Gebruikers in de Sitebeheer heeft de toevoeging van de volgende gebruikers verhinderd:",
+  "invite_member_failed_other_reason": "De volgende gebruikers konden niet worden toegevoegd:"
+}

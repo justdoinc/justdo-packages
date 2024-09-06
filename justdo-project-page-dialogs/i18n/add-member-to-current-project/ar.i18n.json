@@ -1,0 +1,13 @@
+{
+  "add_project_member_modal_title": "دعوة أعضاء جدد",
+  "add_project_member_email_input_placeholder": "اكتب أو الصق البريد الإلكتروني مثل: name@example.com, name2@example.com",
+  "add_project_member_no_members": "لا يوجد أعضاء",
+  "add_project_member_select_tasks_or_projects_to_invite": "حدد المهام الرئيسية أو المشاريع التي ستكون متاحة للمستخدمين الجدد",
+  "add_project_member_no_root_tasks": "لم يتم العثور على مهام رئيسية",
+  "add_project_member_no_projects": "لم يتم العثور على مشاريع",
+  "add_project_member_set_all_as": "تعيين الكل كـ: ",
+  "add_project_member_search_root_tasks_or_projects": "البحث عن المهام الرئيسية / المشاريع",
+  "add_project_member_new_users": "مستخدمون جدد",
+  "add_project_member_registered_users": "المستخدمون المسجلون",
+  "add_project_member_existing_members": "الأعضاء الحاليون في هذا اللوح (JustDo)"
+}
