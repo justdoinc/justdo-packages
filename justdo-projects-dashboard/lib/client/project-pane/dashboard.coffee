@@ -141,6 +141,9 @@ Template.justdo_projects_dashboard.onCreated ->
 Template.justdo_projects_dashboard.onRendered ->
   self = @
   @autorun =>
+    if not APP.justdo_highcharts.isHighchartLoaded()
+      return
+      
     main_part_data = self.main_part_data_rv.get()
     field_of_interest = APP.justdo_projects_dashboard.main_part_interest.get()
     grid_values =  APP.justdo_projects_dashboard.field_ids_to_grid_values_rv.get()
