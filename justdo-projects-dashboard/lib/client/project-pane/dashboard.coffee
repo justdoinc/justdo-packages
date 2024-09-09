@@ -185,7 +185,7 @@ Template.justdo_projects_dashboard.onRendered ->
         title = "(Unselected)"
         color = "#ebead1"
 
-      if option.bg_color?
+      if option.bg_color? and (option.bg_color isnt "00000000")
         if /^#/.test option.bg_color
           color = "#{option.bg_color}"
         else
@@ -263,7 +263,7 @@ Template.justdo_projects_dashboard.onRendered ->
           data: data
           animation: false
 
-        if option.bg_color?
+        if option.bg_color? and (option.bg_color isnt "00000000")
           if /^#/.test option.bg_color
             series_obj.color = "#{option.bg_color}"
           else
@@ -368,7 +368,7 @@ Template.justdo_projects_dashboard.onRendered ->
           name: option.txt
           data: data
           animation: false
-        if option.bg_color?
+        if option.bg_color? and (option.bg_color isnt "00000000")
           if /^#/.test option.bg_color
             series_obj.color = "#{option.bg_color}"
           else
