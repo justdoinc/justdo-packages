@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "Aucune action en attente. Bien joué !",
+  "required_actions_transfer_request": "Demande de transfert de propriété",
+  "required_actions_transfer_rejected": "Transfert de propriété refusé"
+}

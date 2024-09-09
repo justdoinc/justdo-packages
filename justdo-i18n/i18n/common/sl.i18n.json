@@ -61,5 +61,8 @@
   "proxy": "Pooblaščenec",
   "type": "tip",
   "full_name": "polno ime",
-  "email": "e-pošta"
+  "email": "e-pošta",
+  "dismiss": "Opusti",
+  "read_more": "Preberi več",
+  "view": "Poglej"
 }

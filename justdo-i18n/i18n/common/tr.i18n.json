@@ -61,5 +61,8 @@
   "proxy": "Vekil",
   "type": "tür",
   "full_name": "tam ad",
-  "email": "e-posta"
+  "email": "e-posta",
+  "dismiss": "Kapat",
+  "read_more": "Devamını oku",
+  "view": "Görüntüle"
 }

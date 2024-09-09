@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "কোনো অপেক্ষমান কাজ নেই। চমৎকার!",
+  "required_actions_transfer_request": "মালিকানা হস্তান্তর",
+  "required_actions_transfer_rejected": "মালিকানা হস্তান্তর প্রত্যাখ্যান করা হয়েছে"
+}

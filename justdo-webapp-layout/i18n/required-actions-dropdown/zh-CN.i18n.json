@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "没有待处理的操作。干得好！",
+  "required_actions_transfer_request": "所有权转让",
+  "required_actions_transfer_rejected": "所有权转让被拒绝"
+}

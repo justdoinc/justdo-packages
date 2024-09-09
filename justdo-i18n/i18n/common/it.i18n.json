@@ -61,5 +61,8 @@
   "proxy": "Proxy",
   "type": "tipo",
   "full_name": "nome completo",
-  "email": "email"
+  "email": "email",
+  "dismiss": "Chiudi",
+  "read_more": "Leggi di più",
+  "view": "Visualizza"
 }

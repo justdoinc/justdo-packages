@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "Keine ausstehenden Aktionen. Gut gemacht!",
+  "required_actions_transfer_request": "Eigentumsübertragung",
+  "required_actions_transfer_rejected": "Eigentumsübertragung abgelehnt"
+}

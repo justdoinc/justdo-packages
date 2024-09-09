@@ -61,5 +61,8 @@
   "proxy": "Người đại diện",
   "type": "loại",
   "full_name": "họ và tên",
-  "email": "email"
+  "email": "email",
+  "dismiss": "Bỏ qua",
+  "read_more": "Đọc thêm",
+  "view": "Xem"
 }

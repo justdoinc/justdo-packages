@@ -1,0 +1,7 @@
+{
+  "transfer_request_card_transfer_request": "__user__ <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> tapşırığının sahibliyini sizə ötürmək istəyir",
+  "transfer_request_card_submit_shortcut": "Təsdiqləmək üçün Ctrl+Enter",
+  "transfer_request_card_leave_a_reject_message": "İmtina mesajı yazın",
+  "transfer_request_card_task_accepted": "__task_common_name__ tapşırığı <strong>Qəbul edildi</strong>",
+  "transfer_request_card_task_rejected": "__task_common_name__ tapşırığı <strong>Rədd edildi</strong>"
+}

@@ -2,9 +2,13 @@ Template.required_action_card_ownership_transfer_rejected.onCreated ->
   @show_all = new ReactiveVar false
 
 Template.required_action_card_ownership_transfer_rejected.helpers
-  getActionProject: -> APP.collections.Projects.findOne(@project_id, {fields: {title: 1}})
+  getActionProjectTitle: -> APP.collections.Projects.findOne(@project_id, {fields: {title: 1}})?.title or TAPi18n.__("untitled_project_title")
 
-  rejecting_user_obj: -> Meteor.users.findOne(@reject_ownership_message_by, {allow_undefined_fields: true})
+  rejectingUserObj: -> Meteor.users.findOne(@reject_ownership_message_by, {allow_undefined_fields: true})
+
+  rejectingUserName: -> 
+    user = Meteor.users.findOne(@reject_ownership_message_by, {allow_undefined_fields: true})
+    return JustdoHelpers.displayName user
 
   showReadMore: -> @reject_ownership_message.length > 80
 

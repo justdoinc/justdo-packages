@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "Ootel toiminguid pole. Tubli töö!",
+  "required_actions_transfer_request": "Omandiõiguse üleandmine",
+  "required_actions_transfer_rejected": "Omandiõiguse üleandmine lükati tagasi"
+}

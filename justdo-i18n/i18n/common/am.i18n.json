@@ -61,5 +61,8 @@
   "proxy": "ወኪል",
   "type": "አይነት",
   "full_name": "ሙሉ ስም",
-  "email": "ኢሜይል"
+  "email": "ኢሜይል",
+  "dismiss": "አሰናብት",
+  "read_more": "ተጨማሪ አንብብ",
+  "view": "ተመልከት"
 }

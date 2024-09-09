@@ -61,5 +61,8 @@
   "proxy": "Проксі",
   "type": "тып",
   "full_name": "поўнае імя",
-  "email": "email"
+  "email": "email",
+  "dismiss": "Адхіліць",
+  "read_more": "Чытаць далей",
+  "view": "Праглядзець"
 }

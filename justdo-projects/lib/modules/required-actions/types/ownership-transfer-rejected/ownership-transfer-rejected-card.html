@@ -2,13 +2,14 @@
   <div class="card-with-avatar">
     <div class="card-with-avatar-content">
       <div class="card-avatar">
-        {{#with rejecting_user_obj}}
+        {{#with rejectingUserObj}}
           {{> justdo_avatar}}
         {{/with}}
       </div>
-      <div class="card-details">
-        {{#with rejecting_user_obj}}{{displayName}}{{/with}} rejected your ownership transfer request for task
-        <a href="{{taskURL}}" class="task-link text-primary"><strong>{{#with getActionProject}}{{#if title}}{{title}}{{else}}Untitled JustDo{{/if}}{{/with}}:</strong> #{{seqId}} - {{cutString title 80}}</a>
+      <div class="card-details">{{_ "ownership_transfer_rejected_by" name=rejectingUserName}}
+        <a href="{{taskURL}}" class="task-link text-primary">
+          {{{xssGuard(_ "ownership_transfer_rejected_task" project_title=getActionProjectTitle seqId=seqId task_title=(cutString title 80))}}}
+        </a>
         {{#if reject_ownership_message}}
           <div class="reject-message-box my-1">
             {{#if showAll}}
@@ -16,7 +17,7 @@
             {{else}}
               {{cutString reject_ownership_message 80}}
 
-              {{#if showReadMore}}<span class="rm-read-more text-primary">Read more</span>{{/if}}
+              {{#if showReadMore}}<span class="rm-read-more text-primary">{{_ "read_more"}}</span>{{/if}}
             {{/if}}
           </div>
         {{/if}}
@@ -24,7 +25,7 @@
     </div>
     <div class="card-footer bg-white border-0 p-0">
       <div class="card-actions">
-        <button type="button" class="dismiss btn btn-sm btn-primary">Dismiss</button>
+        <button type="button" class="dismiss btn btn-sm btn-primary">{{_ "dismiss"}}</button>
       </div>
     </div>
   </div>

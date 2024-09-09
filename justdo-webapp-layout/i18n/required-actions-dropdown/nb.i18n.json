@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "Ingen ventende handlinger. Godt jobbet!",
+  "required_actions_transfer_request": "Overføring av eierskap",
+  "required_actions_transfer_rejected": "Overføring av eierskap avslått"
+}

@@ -61,5 +61,8 @@
   "proxy": "대리인",
   "type": "유형",
   "full_name": "성명",
-  "email": "이메일"
+  "email": "이메일",
+  "dismiss": "무시",
+  "read_more": "더 보기",
+  "view": "보기"
 }

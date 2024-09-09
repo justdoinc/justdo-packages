@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "Нема активности на чекање. Браво!",
+  "required_actions_transfer_request": "Барање за пренос на сопственост",
+  "required_actions_transfer_rejected": "Одбиено барање за пренос на сопственост"
+}

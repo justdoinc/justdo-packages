@@ -1,0 +1,7 @@
+{
+  "transfer_request_card_transfer_request": "__user__ soovib üle anda ülesande <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> omandiõiguse teile",
+  "transfer_request_card_submit_shortcut": "Ctrl+Enter esitamiseks",
+  "transfer_request_card_leave_a_reject_message": "Jäta tagasilükkamise sõnum",
+  "transfer_request_card_task_accepted": "Ülesanne __task_common_name__ <strong>Vastu võetud</strong>",
+  "transfer_request_card_task_rejected": "Ülesanne __task_common_name__ <strong>Tagasi lükatud</strong>"
+}

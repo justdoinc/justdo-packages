@@ -61,5 +61,8 @@
   "proxy": "Proxy",
   "type": "Typ",
   "full_name": "Vollstännegen Numm",
-  "email": "E-Mail"
+  "email": "E-Mail",
+  "dismiss": "Ofbriechen",
+  "read_more": "Méi liesen",
+  "view": "Ukucken"
 }

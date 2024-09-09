@@ -61,5 +61,8 @@
   "proxy": "Representant",
   "type": "tipus",
   "full_name": "nom complet",
-  "email": "correu electrònic"
+  "email": "correu electrònic",
+  "dismiss": "Descartar",
+  "read_more": "Llegir més",
+  "view": "Veure"
 }

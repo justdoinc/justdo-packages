@@ -1,0 +1,4 @@
+{
+  "ownership_transfer_rejected_by": "رفض __name__ طلبك لنقل ملكية المهمة",
+  "ownership_transfer_rejected_task": "<strong>__project_title__:</strong> #__seqId__ - __task_title__</strong>"
+}

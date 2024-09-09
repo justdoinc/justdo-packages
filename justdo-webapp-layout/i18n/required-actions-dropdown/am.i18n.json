@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "ምንም ያልተጠናቀቀ እርምጃ የለም። መልካም ስራ!",
+  "required_actions_transfer_request": "የባለቤትነት ዝውውር",
+  "required_actions_transfer_rejected": "የባለቤትነት ዝውውር ተቀባይነት አላገኘም"
+}

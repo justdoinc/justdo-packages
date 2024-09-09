@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "Немає дій, що очікують. Молодець!",
+  "required_actions_transfer_request": "Передача права власності",
+  "required_actions_transfer_rejected": "Передачу права власності відхилено"
+}

@@ -3,9 +3,7 @@
     <div class="required-actions-cards-area">
       {{#if $eq 0 requiredActionsCount}}
         <div class="no-actions-card p-3 text-center text-muted">
-          <div class="no-actions-message text-nowrap">
-            No pending actions. Well done!
-          </div>
+          <div class="no-actions-message text-nowrap">{{_ "required_actions_no_pending_action"}}</div>
         </div>
       {{else}}
         {{#each requiredActions}}
@@ -19,7 +17,7 @@
 <template name="required_action_card">
   <div class="required-actions-card required-actions-card-{{type}} pb-2 px-2">
     <div class="card-header p-0 d-flex justify-content-between bg-white border-0 py-2">
-      <small class="type-name text-muted">{{required_action_type_title}}</small>
+      <small class="type-name text-muted">{{_ requiredActionTypeTitle}}</small>
       <small class="date text-muted" title="{{userDateFormat date}}">{{moFromNow negativeDateOrNow}}</small>
     </div>
     {{> Template.dynamic template=getTypeTemplate data=typeTemplateData}}

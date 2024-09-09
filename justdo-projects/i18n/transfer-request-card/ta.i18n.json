@@ -1,0 +1,7 @@
+{
+  "transfer_request_card_transfer_request": "__user__ பணியின் உரிமையை <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> உங்களுக்கு மாற்ற விரும்புகிறார்",
+  "transfer_request_card_submit_shortcut": "சமர்ப்பிக்க Ctrl+Enter ஐ அழுத்தவும்",
+  "transfer_request_card_leave_a_reject_message": "நிராகரிப்பு செய்தியை விடவும்",
+  "transfer_request_card_task_accepted": "__task_common_name__ பணி <strong>ஏற்றுக்கொள்ளப்பட்டது</strong>",
+  "transfer_request_card_task_rejected": "__task_common_name__ பணி <strong>நிராகரிக்கப்பட்டது</strong>"
+}

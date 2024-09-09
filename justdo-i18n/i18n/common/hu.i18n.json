@@ -61,5 +61,8 @@
   "proxy": "Helyettes",
   "type": "típus",
   "full_name": "teljes név",
-  "email": "e-mail"
+  "email": "e-mail",
+  "dismiss": "Elvetés",
+  "read_more": "Bővebben",
+  "view": "Megtekintés"
 }

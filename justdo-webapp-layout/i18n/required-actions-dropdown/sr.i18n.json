@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "Nema aktivnosti na čekanju. Odlično urađeno!",
+  "required_actions_transfer_request": "Zahtev za prenos vlasništva",
+  "required_actions_transfer_rejected": "Zahtev za prenos vlasništva odbijen"
+}

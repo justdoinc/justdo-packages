@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "Nincsenek függőben lévő teendők. Szép munka!",
+  "required_actions_transfer_request": "Tulajdonjog átruházása",
+  "required_actions_transfer_rejected": "Tulajdonjog átruházása elutasítva"
+}

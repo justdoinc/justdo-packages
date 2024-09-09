@@ -61,5 +61,8 @@
   "proxy": "Zástupce",
   "type": "typ",
   "full_name": "celé jméno",
-  "email": "e-mail"
+  "email": "e-mail",
+  "dismiss": "Zavřít",
+  "read_more": "Číst více",
+  "view": "Zobrazit"
 }

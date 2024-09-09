@@ -61,5 +61,8 @@
   "proxy": "Proxy",
   "type": "tipe",
   "full_name": "nama lengkap",
-  "email": "email"
+  "email": "email",
+  "dismiss": "Tutup",
+  "read_more": "Baca selengkapnya",
+  "view": "Lihat"
 }

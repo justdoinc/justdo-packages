@@ -8,12 +8,6 @@ APP.executeAfterAppLibCode ->
 
     requiredActionsCount: -> projects.modules.required_actions.getCursor({fields: {_id: 1}}).count()
 
-  # XXX in the future will be defined as part
-  # of each required action definition
-  required_actions_titles_map =
-    "transfer_request": "Ownership Transfer"
-    "ownership_transfer_rejected": "Ownership Transfer Rejected"
-
   Template.required_action_card.helpers
     negativeDateOrNow: -> JustdoHelpers.negativeDateOrNow(@date)
 
@@ -28,8 +22,14 @@ APP.executeAfterAppLibCode ->
 
       return data
 
-    required_action_type_title: ->
-      required_actions_titles_map[@type]
+    requiredActionTypeTitle: ->
+      # XXX in the future will be defined as part
+      # of each required action definition
+      required_actions_titles_map =
+        "transfer_request": "required_actions_transfer_request"
+        "ownership_transfer_rejected": "required_actions_transfer_rejected"
+
+      return required_actions_titles_map[@type]
 
   Template.required_actions_dropdown.events
     "click .required-actions-card": (e, tpl) ->

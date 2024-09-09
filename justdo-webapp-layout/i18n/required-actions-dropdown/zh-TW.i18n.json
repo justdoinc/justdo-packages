@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "沒有待處理的事項。做得好！",
+  "required_actions_transfer_request": "所有權轉移",
+  "required_actions_transfer_rejected": "所有權轉移被拒絕"
+}

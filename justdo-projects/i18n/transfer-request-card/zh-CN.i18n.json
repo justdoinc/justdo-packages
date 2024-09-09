@@ -1,0 +1,7 @@
+{
+  "transfer_request_card_transfer_request": "__user__ 想要将任务 <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__：</strong>#__seqId__ - __task_title__</a> 的所有权转让给你",
+  "transfer_request_card_submit_shortcut": "按 Ctrl+Enter 提交",
+  "transfer_request_card_leave_a_reject_message": "留下拒绝原因",
+  "transfer_request_card_task_accepted": "任务 __task_common_name__ <strong>已接受</strong>",
+  "transfer_request_card_task_rejected": "任务 __task_common_name__ <strong>已拒绝</strong>"
+}

@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "Nessuna azione in sospeso. Ben fatto!",
+  "required_actions_transfer_request": "Richiesta di trasferimento di proprietà",
+  "required_actions_transfer_rejected": "Trasferimento di proprietà rifiutato"
+}

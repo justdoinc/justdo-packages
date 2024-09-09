@@ -1,0 +1,4 @@
+{
+  "ownership_transfer_rejected_by": "__name__ ปฏิเสธคำขอโอนความเป็นเจ้าของงานของคุณ",
+  "ownership_transfer_rejected_task": "<strong>__project_title__:</strong> #__seqId__ - __task_title__</strong>"
+}

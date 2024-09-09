@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "Geen openstaande acties. Goed gedaan!",
+  "required_actions_transfer_request": "Eigendomsoverdracht",
+  "required_actions_transfer_rejected": "Eigendomsoverdracht afgewezen"
+}

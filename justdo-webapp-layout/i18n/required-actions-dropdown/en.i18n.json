@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "No pending actions. Well done!",
+  "required_actions_transfer_request": "Ownership Transfer",
+  "required_actions_transfer_rejected": "Ownership Transfer Rejected"
+}

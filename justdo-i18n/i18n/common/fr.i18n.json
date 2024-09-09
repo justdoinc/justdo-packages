@@ -61,5 +61,8 @@
   "proxy": "Mandataire",
   "type": "type",
   "full_name": "nom complet",
-  "email": "e-mail"
+  "email": "e-mail",
+  "dismiss": "Ignorer",
+  "read_more": "Lire la suite",
+  "view": "Voir"
 }

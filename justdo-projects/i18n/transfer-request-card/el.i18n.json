@@ -1,0 +1,7 @@
+{
+  "transfer_request_card_transfer_request": "Ο/Η __user__ θέλει να μεταφέρει την κυριότητα της εργασίας <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> σε εσάς",
+  "transfer_request_card_submit_shortcut": "Ctrl+Enter για υποβολή",
+  "transfer_request_card_leave_a_reject_message": "Αφήστε ένα μήνυμα απόρριψης",
+  "transfer_request_card_task_accepted": "Η εργασία __task_common_name__ <strong>Έγινε αποδεκτή</strong>",
+  "transfer_request_card_task_rejected": "Η εργασία __task_common_name__ <strong>Απορρίφθηκε</strong>"
+}

@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "Ei odottavia toimenpiteitä. Hienosti tehty!",
+  "required_actions_transfer_request": "Omistajuuden siirto",
+  "required_actions_transfer_rejected": "Omistajuuden siirto hylätty"
+}

@@ -61,5 +61,8 @@
   "proxy": "Stedfortreder",
   "type": "type",
   "full_name": "fullt navn",
-  "email": "e-post"
+  "email": "e-post",
+  "dismiss": "Avvis",
+  "read_more": "Les mer",
+  "view": "Vis"
 }

@@ -61,5 +61,8 @@
   "proxy": "Proxy",
   "type": "tip",
   "full_name": "nume complet",
-  "email": "email"
+  "email": "email",
+  "dismiss": "Respinge",
+  "read_more": "Citește mai mult",
+  "view": "Vizualizează"
 }

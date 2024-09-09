@@ -61,5 +61,8 @@
   "proxy": "Vəkil",
   "type": "növ",
   "full_name": "tam ad",
-  "email": "e-poçt"
+  "email": "e-poçt",
+  "dismiss": "Rədd et",
+  "read_more": "Daha çox oxu",
+  "view": "Bax"
 }

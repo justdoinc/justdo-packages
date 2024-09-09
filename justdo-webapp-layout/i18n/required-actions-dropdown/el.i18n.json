@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "Δεν υπάρχουν εκκρεμείς ενέργειες. Μπράβο σας!",
+  "required_actions_transfer_request": "Αίτημα Μεταβίβασης Κυριότητας",
+  "required_actions_transfer_rejected": "Το Αίτημα Μεταβίβασης Κυριότητας Απορρίφθηκε"
+}

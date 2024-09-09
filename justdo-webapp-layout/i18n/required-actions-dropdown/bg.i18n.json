@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "Няма чакащи действия. Браво!",
+  "required_actions_transfer_request": "Прехвърляне на собствеността",
+  "required_actions_transfer_rejected": "Отказано прехвърляне на собствеността"
+}

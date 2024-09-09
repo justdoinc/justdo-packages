@@ -61,5 +61,8 @@
   "proxy": "Procurador",
   "type": "tipo",
   "full_name": "nome completo",
-  "email": "email"
+  "email": "email",
+  "dismiss": "Dispensar",
+  "read_more": "Ler mais",
+  "view": "Ver"
 }

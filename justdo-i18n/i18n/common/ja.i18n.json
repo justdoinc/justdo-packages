@@ -61,5 +61,8 @@
   "proxy": "プロキシ",
   "type": "タイプ",
   "full_name": "氏名",
-  "email": "メールアドレス"
+  "email": "メールアドレス",
+  "dismiss": "閉じる",
+  "read_more": "続きを読む",
+  "view": "表示"
 }

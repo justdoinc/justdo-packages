@@ -15,7 +15,9 @@ Template.required_action_card_transfer_request.onCreated ->
   return
 
 Template.required_action_card_transfer_request.helpers
-  current_owner_doc: -> Meteor.users.findOne(@owner_id, {allow_undefined_fields: true})
+  currentOwnerDoc: -> Meteor.users.findOne(@owner_id, {allow_undefined_fields: true})
+
+  currentOwnerDisplayname: -> JustdoHelpers.displayName @owner_id
 
   getState: ->
     tpl = Template.instance()
@@ -27,7 +29,7 @@ Template.required_action_card_transfer_request.helpers
 
     return tpl.show_shortcut_cue.get()
 
-  getActionProject: -> APP.collections.Projects.findOne(@project_id, {fields: {title: 1}})
+  getActionProjectTitle: -> APP.collections.Projects.findOne(@project_id, {fields: {title: 1}})?.title or TAPi18n.__("untitled_project_title")
 
   taskURL: ->
     return JustdoHelpers.getTaskUrl(@project_id, @task_id)
@@ -49,10 +51,10 @@ Template.required_action_card_transfer_request.events
     task = APP.collections.Tasks.findOne @task_id
 
     JustdoSnackbar.show
-      text: "Task #{JustdoHelpers.taskCommonName({title: @title, seqId: @seqId}, 20)} <strong>Rejected</strong>"
+      text: TAPi18n.__ "transfer_request_card_task_rejected", {task_common_name: JustdoHelpers.taskCommonName({title: @title, seqId: @seqId}, 20)}
       duration: 8000
       showDismissButton: true
-      actionText: "View"
+      actionText: TAPi18n.__ "view"
       onActionClick: =>
         jumpToTask(@project_id, @task_id)
         JustdoSnackbar.close()
@@ -70,10 +72,10 @@ Template.required_action_card_transfer_request.events
     @projects_obj.items_collection.update(@task_id, update)
 
     JustdoSnackbar.show
-      text: "Task #{JustdoHelpers.taskCommonName({title: @title, seqId: @seqId}, 20)} <strong>Accepted</strong>"
+      text: TAPi18n.__ "transfer_request_card_task_accepted", {task_common_name: JustdoHelpers.taskCommonName({title: @title, seqId: @seqId}, 20)}
       duration: 8000
       showDismissButton: true
-      actionText: "View"
+      actionText: TAPi18n.__ "view" 
       onActionClick: =>
         jumpToTask(@project_id, @task_id)
         JustdoSnackbar.close()

@@ -17,23 +17,23 @@
 
             {{#if $eq getSubscribedChannelsRecentActivityState "all"}}
               <div class="more-items-container">
-                <span class="no-more-items text-muted">No more messages</span>
+                <span class="no-more-items text-muted">{{_ "chat_dropdown_no_more_messages"}}</span>
               </div>
             {{else}}
               <div class="more-items-container">
-                <a href="#" class="load-more-items">Loading more messages...</a>
+                <a href="#" class="load-more-items">{{_ "chat_dropdown_loading_more_messages"}}</a>
               </div>
             {{/if}}
           </div>
         </div>
         <div class="recent-activity-items-footer">
-          <div class="mark-all-activity-read text-primary">Mark All as Read</div>
+          <div class="mark-all-activity-read text-primary">{{_ "chat_dropdown_mark_all_as_read"}}</div>
         </div>
       </div>
     {{else}}
       <div class="no-recent-activity-items-container">
         <i class="fa fa-comments" aria-hidden="true"></i>
-        <p>You have no messages, yet</p>
+        <p>{{_ "chat_dropdown_you_have_no_messages"}}</p>
       </div>
     {{/with}}
   {{/if}}

@@ -61,5 +61,8 @@
   "proxy": "Pełnomocnik",
   "type": "typ",
   "full_name": "pełne imię i nazwisko",
-  "email": "e-mail"
+  "email": "e-mail",
+  "dismiss": "Odrzuć",
+  "read_more": "Czytaj więcej",
+  "view": "Widok"
 }

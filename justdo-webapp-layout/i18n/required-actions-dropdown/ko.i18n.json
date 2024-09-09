@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "대기 중인 작업이 없습니다. 잘 하셨습니다!",
+  "required_actions_transfer_request": "소유권 이전",
+  "required_actions_transfer_rejected": "소유권 이전 요청이 거부되었습니다"
+}

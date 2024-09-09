@@ -61,5 +61,8 @@
   "proxy": "Esindaja",
   "type": "tüüp",
   "full_name": "täisnimi",
-  "email": "e-post"
+  "email": "e-post",
+  "dismiss": "Loobu",
+  "read_more": "Loe rohkem",
+  "view": "Vaata"
 }

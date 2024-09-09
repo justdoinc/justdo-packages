@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "कुनै बाँकी कार्यहरू छैनन्। राम्रो काम!",
+  "required_actions_transfer_request": "स्वामित्व हस्तान्तरण",
+  "required_actions_transfer_rejected": "स्वामित्व हस्तान्तरण अस्वीकृत गरियो"
+}

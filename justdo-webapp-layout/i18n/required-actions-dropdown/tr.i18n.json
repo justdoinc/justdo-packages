@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "Bekleyen işlem yok. Aferin!",
+  "required_actions_transfer_request": "Sahiplik Devri",
+  "required_actions_transfer_rejected": "Sahiplik Devri Reddedildi"
+}

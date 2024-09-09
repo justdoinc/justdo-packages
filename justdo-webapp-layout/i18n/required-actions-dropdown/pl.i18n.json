@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "Brak oczekujących działań. Dobra robota!",
+  "required_actions_transfer_request": "Prośba o przeniesienie własności",
+  "required_actions_transfer_rejected": "Prośba o przeniesienie własności odrzucona"
+}

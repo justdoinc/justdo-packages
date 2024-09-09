@@ -1,0 +1,7 @@
+{
+  "transfer_request_card_transfer_request": "__user__ רוצה להעביר את הבעלות על המשימה <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> אליך",
+  "transfer_request_card_submit_shortcut": "Ctrl+Enter כדי לשלוח",
+  "transfer_request_card_leave_a_reject_message": "השאר הודעת דחייה",
+  "transfer_request_card_task_accepted": "משימה __task_common_name__ <strong>התקבלה</strong>",
+  "transfer_request_card_task_rejected": "משימה __task_common_name__ <strong>נדחתה</strong>"
+}

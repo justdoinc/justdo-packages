@@ -61,5 +61,8 @@
   "proxy": "代理",
   "type": "类型",
   "full_name": "全名",
-  "email": "电子邮箱"
+  "email": "电子邮箱",
+  "dismiss": "关闭",
+  "read_more": "阅读更多",
+  "view": "查看"
 }

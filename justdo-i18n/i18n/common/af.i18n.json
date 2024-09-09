@@ -61,5 +61,8 @@
   "proxy": "Gevolmagtigde",
   "type": "tipe",
   "full_name": "volle naam",
-  "email": "e-pos"
+  "email": "e-pos",
+  "dismiss": "Sluit",
+  "read_more": "Lees meer",
+  "view": "Bekyk"
 }

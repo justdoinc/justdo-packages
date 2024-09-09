@@ -61,5 +61,8 @@
   "proxy": "Ordezkaria",
   "type": "mota",
   "full_name": "izen osoa",
-  "email": "helbide elektronikoa"
+  "email": "helbide elektronikoa",
+  "dismiss": "Baztertu",
+  "read_more": "Irakurri gehiago",
+  "view": "Ikusi"
 }

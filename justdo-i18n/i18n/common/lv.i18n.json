@@ -61,5 +61,8 @@
   "proxy": "Starpnieks",
   "type": "tips",
   "full_name": "pilns vārds",
-  "email": "e-pasts"
+  "email": "e-pasts",
+  "dismiss": "Aizvērt",
+  "read_more": "Lasīt vairāk",
+  "view": "Skatīt"
 }

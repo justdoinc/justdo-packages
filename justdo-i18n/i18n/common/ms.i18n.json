@@ -61,5 +61,8 @@
   "proxy": "Proksi",
   "type": "jenis",
   "full_name": "nama penuh",
-  "email": "e-mel"
+  "email": "e-mel",
+  "dismiss": "Ketepikan",
+  "read_more": "Baca lanjut",
+  "view": "Lihat"
 }

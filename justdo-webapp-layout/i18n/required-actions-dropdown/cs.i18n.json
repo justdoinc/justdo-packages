@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "Žádné čekající akce. Výborně!",
+  "required_actions_transfer_request": "Žádost o převod vlastnictví",
+  "required_actions_transfer_rejected": "Žádost o převod vlastnictví zamítnuta"
+}

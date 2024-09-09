@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "कोई लंबित कार्रवाई नहीं। बहुत अच्छा!",
+  "required_actions_transfer_request": "स्वामित्व हस्तांतरण",
+  "required_actions_transfer_rejected": "स्वामित्व हस्तांतरण अस्वीकृत"
+}

@@ -61,5 +61,8 @@
   "proxy": "Välityspalvelin",
   "type": "tyyppi",
   "full_name": "koko nimi",
-  "email": "sähköposti"
+  "email": "sähköposti",
+  "dismiss": "Hylkää",
+  "read_more": "Lue lisää",
+  "view": "Näytä"
 }

@@ -1,0 +1,7 @@
+{
+  "transfer_request_card_transfer_request": "__user__ wil eienaarskap van taak <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> na jou oordra",
+  "transfer_request_card_submit_shortcut": "Ctrl+Enter om in te dien",
+  "transfer_request_card_leave_a_reject_message": "Laat 'n verwerpingsboodskap",
+  "transfer_request_card_task_accepted": "Taak __task_common_name__ <strong>Aanvaar</strong>",
+  "transfer_request_card_task_rejected": "Taak __task_common_name__ <strong>Verwerp</strong>"
+}

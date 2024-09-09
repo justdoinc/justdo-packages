@@ -1,0 +1,4 @@
+{
+  "ownership_transfer_rejected_by": "__name__ го одби вашето барање за пренос на сопственост врз задачата",
+  "ownership_transfer_rejected_task": "<strong>__project_title__:</strong> #__seqId__ - __task_title__</strong>"
+}

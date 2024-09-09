@@ -1,15 +1,33 @@
-.card-with-avatar
-  display: flex
-  .card-with-avatar-content
-    margin-right: 12px
-
 .required-actions-card-ownership_transfer_rejected
+  .card-with-avatar
+    display: flex
+    .card-with-avatar-content
+      margin-right: 12px
+    .card-footer
+      button
+        width: max-content
+
   .reject-message-box
     max-height: 280px
     overflow: auto
     font-size: 14px
     border-left: 2px solid #dbe0e6
     padding-left: 8px
+
   .rm-read-more
     text-decoration: underline
     cursor: pointer
+
+// RTL modifications
+.right-to-left
+  .required-actions-card-ownership_transfer_rejected
+    .card-with-avatar
+      .card-with-avatar-content
+        margin-right: unset
+        margin-left: 12px
+    
+    .reject-message-box
+      border-left: unset
+      border-right: 2px solid #dbe0e6
+      padding-left: unset
+      padding-right: 8px

@@ -1,0 +1,7 @@
+{
+  "transfer_request_card_transfer_request": "__user__がタスク<a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a>の所有権をあなたに移譲したいと要求しています",
+  "transfer_request_card_submit_shortcut": "Ctrl+Enterで送信",
+  "transfer_request_card_leave_a_reject_message": "拒否メッセージを残す",
+  "transfer_request_card_task_accepted": "タスク__task_common_name__を<strong>承諾しました</strong>",
+  "transfer_request_card_task_rejected": "タスク__task_common_name__を<strong>拒否しました</strong>"
+}

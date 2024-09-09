@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "ไม่มีการดำเนินการที่รอดำเนินการ ยอดเยี่ยม!",
+  "required_actions_transfer_request": "การโอนความเป็นเจ้าของ",
+  "required_actions_transfer_rejected": "การโอนความเป็นเจ้าของถูกปฏิเสธ"
+}

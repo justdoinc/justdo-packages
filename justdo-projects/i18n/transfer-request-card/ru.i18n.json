@@ -1,0 +1,7 @@
+{
+  "transfer_request_card_transfer_request": "__user__ хочет передать вам право собственности на задачу <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a>",
+  "transfer_request_card_submit_shortcut": "Ctrl+Enter для отправки",
+  "transfer_request_card_leave_a_reject_message": "Оставьте сообщение об отказе",
+  "transfer_request_card_task_accepted": "Задача __task_common_name__ <strong>Принята</strong>",
+  "transfer_request_card_task_rejected": "Задача __task_common_name__ <strong>Отклонена</strong>"
+}

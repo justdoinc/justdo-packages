@@ -61,5 +61,8 @@
   "proxy": "Vakil",
   "type": "tur",
   "full_name": "to'liq ism",
-  "email": "elektron pochta"
+  "email": "elektron pochta",
+  "dismiss": "Yopish",
+  "read_more": "Ko'proq o'qish",
+  "view": "Ko'rish"
 }

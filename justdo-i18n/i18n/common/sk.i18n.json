@@ -61,5 +61,8 @@
   "proxy": "Zástupca",
   "type": "typ",
   "full_name": "celé meno",
-  "email": "email"
+  "email": "email",
+  "dismiss": "Zavrieť",
+  "read_more": "Čítať viac",
+  "view": "Zobraziť"
 }

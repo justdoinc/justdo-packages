@@ -1,0 +1,7 @@
+{
+  "transfer_request_card_transfer_request": "__user__ želi prenesti lastništvo naloge <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> na vas",
+  "transfer_request_card_submit_shortcut": "Ctrl+Enter za potrditev",
+  "transfer_request_card_leave_a_reject_message": "Pustite sporočilo za zavrnitev",
+  "transfer_request_card_task_accepted": "Naloga __task_common_name__ <strong>Sprejeta</strong>",
+  "transfer_request_card_task_rejected": "Naloga __task_common_name__ <strong>Zavrnjena</strong>"
+}

@@ -1,0 +1,7 @@
+{
+  "transfer_request_card_transfer_request": "__user__ আপনাকে টাস্ক <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> এর মালিকানা হস্তান্তর করতে চান",
+  "transfer_request_card_submit_shortcut": "জমা দিতে Ctrl+Enter চাপুন",
+  "transfer_request_card_leave_a_reject_message": "প্রত্যাখ্যান বার্তা লিখুন",
+  "transfer_request_card_task_accepted": "টাস্ক __task_common_name__ <strong>গৃহীত হয়েছে</strong>",
+  "transfer_request_card_task_rejected": "টাস্ক __task_common_name__ <strong>প্রত্যাখ্যাত হয়েছে</strong>"
+}

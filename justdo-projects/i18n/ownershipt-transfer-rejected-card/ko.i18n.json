@@ -1,0 +1,4 @@
+{
+  "ownership_transfer_rejected_by": "__name__님이 태스크의 소유권 이전 요청을 거절했습니다",
+  "ownership_transfer_rejected_task": "<strong>__project_title__:</strong> #__seqId__ - __task_title__</strong>"
+}

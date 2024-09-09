@@ -61,5 +61,8 @@
   "proxy": "Прокси",
   "type": "тип",
   "full_name": "полное имя",
-  "email": "email"
+  "email": "email",
+  "dismiss": "Закрыть",
+  "read_more": "Читать далее",
+  "view": "Просмотр"
 }

@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "Ingen ventende handlinger. Godt klaret!",
+  "required_actions_transfer_request": "Overdragelse af ejerskab",
+  "required_actions_transfer_rejected": "Overdragelse af ejerskab afvist"
+}

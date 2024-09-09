@@ -61,5 +61,8 @@
   "proxy": "Įgaliotinis",
   "type": "tipas",
   "full_name": "pilnas vardas",
-  "email": "el. paštas"
+  "email": "el. paštas",
+  "dismiss": "Atmesti",
+  "read_more": "Skaityti daugiau",
+  "view": "Peržiūrėti"
 }

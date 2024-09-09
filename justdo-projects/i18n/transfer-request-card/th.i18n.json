@@ -1,0 +1,7 @@
+{
+  "transfer_request_card_transfer_request": "__user__ ต้องการโอนความเป็นเจ้าของงาน <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> ให้คุณ",
+  "transfer_request_card_submit_shortcut": "Ctrl+Enter เพื่อส่ง",
+  "transfer_request_card_leave_a_reject_message": "ฝากข้อความปฏิเสธ",
+  "transfer_request_card_task_accepted": "งาน __task_common_name__ <strong>ยอมรับแล้ว</strong>",
+  "transfer_request_card_task_rejected": "งาน __task_common_name__ <strong>ปฏิเสธแล้ว</strong>"
+}

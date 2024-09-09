@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "保留中のアクションはありません。よくできました！",
+  "required_actions_transfer_request": "所有権の譲渡",
+  "required_actions_transfer_rejected": "所有権譲渡が拒否されました"
+}

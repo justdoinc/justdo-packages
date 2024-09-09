@@ -61,5 +61,8 @@
   "proxy": "Stellvertreter",
   "type": "Typ",
   "full_name": "Vollständiger Name",
-  "email": "E-Mail"
+  "email": "E-Mail",
+  "dismiss": "Verwerfen",
+  "read_more": "Mehr lesen",
+  "view": "Ansicht"
 }

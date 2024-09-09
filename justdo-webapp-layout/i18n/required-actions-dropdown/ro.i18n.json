@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "Nu există acțiuni în așteptare. Bine făcut!",
+  "required_actions_transfer_request": "Cerere de transfer al proprietății",
+  "required_actions_transfer_rejected": "Cerere de transfer al proprietății respinsă"
+}

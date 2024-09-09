@@ -61,5 +61,8 @@
   "proxy": "Proxy",
   "type": "typ",
   "full_name": "fullständigt namn",
-  "email": "e-post"
+  "email": "e-post",
+  "dismiss": "Avfärda",
+  "read_more": "Läs mer",
+  "view": "Visa"
 }

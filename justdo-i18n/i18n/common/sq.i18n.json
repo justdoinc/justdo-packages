@@ -61,5 +61,8 @@
   "proxy": "Përfaqësues",
   "type": "lloji",
   "full_name": "emri i plotë",
-  "email": "email"
+  "email": "email",
+  "dismiss": "Largo",
+  "read_more": "Lexo më shumë",
+  "view": "Shiko"
 }

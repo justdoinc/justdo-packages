@@ -61,5 +61,8 @@
   "proxy": "Proxy",
   "type": "type",
   "full_name": "volledige naam",
-  "email": "e-mail"
+  "email": "e-mail",
+  "dismiss": "Sluiten",
+  "read_more": "Meer lezen",
+  "view": "Bekijken"
 }

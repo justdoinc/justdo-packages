@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "Không có hành động đang chờ xử lý. Làm tốt lắm!",
+  "required_actions_transfer_request": "Yêu cầu chuyển quyền sở hữu",
+  "required_actions_transfer_rejected": "Yêu cầu chuyển quyền sở hữu bị từ chối"
+}

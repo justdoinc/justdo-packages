@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "Нет ожидающих действий. Отличная работа!",
+  "required_actions_transfer_request": "Запрос на передачу прав владения",
+  "required_actions_transfer_rejected": "Запрос на передачу прав владения отклонен"
+}

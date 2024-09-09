@@ -1,0 +1,4 @@
+{
+  "ownership_transfer_rejected_by": "__name__ ले तपाईंको कार्य स्वामित्व हस्तान्तरण अनुरोध अस्वीकार गर्नुभयो",
+  "ownership_transfer_rejected_task": "<strong>__project_title__:</strong> #__seqId__ - __task_title__</strong>"
+}

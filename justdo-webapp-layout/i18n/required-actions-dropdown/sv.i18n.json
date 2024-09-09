@@ -1,0 +1,5 @@
+{
+  "required_actions_no_pending_action": "Inga väntande åtgärder. Bra jobbat!",
+  "required_actions_transfer_request": "Ägaröverlåtelse",
+  "required_actions_transfer_rejected": "Ägaröverlåtelse avvisad"
+}

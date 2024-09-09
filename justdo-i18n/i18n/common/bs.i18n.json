@@ -61,5 +61,8 @@
   "proxy": "Proxy",
   "type": "tip",
   "full_name": "puno ime",
-  "email": "e-pošta"
+  "email": "e-pošta",
+  "dismiss": "Odbaci",
+  "read_more": "Pročitaj više",
+  "view": "Pregled"
 }
