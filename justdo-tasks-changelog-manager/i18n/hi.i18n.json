@@ -1,3 +1,5 @@
 {
-  "filter_for_notes_changes_only": "केवल टिप्पणियों (Notes) में बदलाव के लिए फ़िल्टर करें"
+  "filter_for_notes_changes_only": "केवल टिप्पणियों (Notes) में बदलाव के लिए फ़िल्टर करें",
+  "task_changelog_old_value": "था: __old_value__",
+  "task_changelog_reverted_on": "__date__ को <span jd-tt=\"user-info?id=__performer_id__\">__performer_name__</span> द्वारा वापस किया गया"
 }

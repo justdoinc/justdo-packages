@@ -1,3 +1,5 @@
 {
-  "filter_for_notes_changes_only": "Nëmmen Ännerungen an den Notizen filteren"
+  "filter_for_notes_changes_only": "Nëmmen Ännerungen an den Notizen filteren",
+  "task_changelog_old_value": "War: __old_value__",
+  "task_changelog_reverted_on": "Zréckgesat den __date__ vun <span jd-tt=\"user-info?id=__performer_id__\">__performer_name__</span>"
 }

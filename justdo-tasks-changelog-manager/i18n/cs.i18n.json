@@ -1,3 +1,5 @@
 {
-  "filter_for_notes_changes_only": "Filtrovat pouze změny v poznámkách"
+  "filter_for_notes_changes_only": "Filtrovat pouze změny v poznámkách",
+  "task_changelog_old_value": "Bylo: __old_value__",
+  "task_changelog_reverted_on": "Vráceno dne __date__ uživatelem <span jd-tt=\"user-info?id=__performer_id__\">__performer_name__</span>"
 }

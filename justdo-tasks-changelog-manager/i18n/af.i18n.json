@@ -1,3 +1,5 @@
 {
-  "filter_for_notes_changes_only": "Filter slegs vir Nota-veranderinge"
+  "filter_for_notes_changes_only": "Filter slegs vir Nota-veranderinge",
+  "task_changelog_old_value": "Was: __old_value__",
+  "task_changelog_reverted_on": "Teruggestel op __date__ deur <span jd-tt=\"user-info?id=__performer_id__\">__performer_name__</span>"
 }

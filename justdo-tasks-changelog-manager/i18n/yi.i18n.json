@@ -1,3 +1,5 @@
 {
-  "filter_for_notes_changes_only": "פֿילטערן נאר פֿאַר ענדערונגען אין נאָטיצן"
+  "filter_for_notes_changes_only": "פֿילטערן נאר פֿאַר ענדערונגען אין נאָטיצן",
+  "task_changelog_old_value": "איז געווען: __old_value__",
+  "task_changelog_reverted_on": "צוריקגעדרייט אויף __date__ דורך <span jd-tt=\"user-info?id=__performer_id__\">__performer_name__</span>"
 }

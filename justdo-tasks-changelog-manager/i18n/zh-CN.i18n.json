@@ -1,3 +1,5 @@
 {
-  "filter_for_notes_changes_only": "仅筛选备注变更"
+  "filter_for_notes_changes_only": "仅筛选备注变更",
+  "task_changelog_old_value": "原值：__old_value__",
+  "task_changelog_reverted_on": "由 <span jd-tt=\"user-info?id=__performer_id__\">__performer_name__</span> 于 __date__ 撤销"
 }

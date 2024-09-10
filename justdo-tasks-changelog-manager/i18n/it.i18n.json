@@ -1,3 +1,5 @@
 {
-  "filter_for_notes_changes_only": "Filtra solo per le modifiche alle Note"
+  "filter_for_notes_changes_only": "Filtra solo per le modifiche alle Note",
+  "task_changelog_old_value": "Era: __old_value__",
+  "task_changelog_reverted_on": "Ripristinato il __date__ da <span jd-tt=\"user-info?id=__performer_id__\">__performer_name__</span>"
 }

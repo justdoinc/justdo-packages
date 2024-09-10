@@ -1,3 +1,5 @@
 {
-  "filter_for_notes_changes_only": "メモの変更のみをフィルタリング"
+  "filter_for_notes_changes_only": "メモの変更のみをフィルタリング",
+  "task_changelog_old_value": "以前の値: __old_value__",
+  "task_changelog_reverted_on": "__date__に<span jd-tt=\"user-info?id=__performer_id__\">__performer_name__</span>によって元に戻されました"
 }

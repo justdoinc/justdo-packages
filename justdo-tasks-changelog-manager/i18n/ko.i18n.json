@@ -1,3 +1,5 @@
 {
-  "filter_for_notes_changes_only": "메모 변경 사항만 필터링"
+  "filter_for_notes_changes_only": "메모 변경 사항만 필터링",
+  "task_changelog_old_value": "이전 값: __old_value__",
+  "task_changelog_reverted_on": "__date__에 <span jd-tt=\"user-info?id=__performer_id__\">__performer_name__</span>님이 되돌림"
 }

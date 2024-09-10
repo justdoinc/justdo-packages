@@ -33,9 +33,9 @@
 
         {{#if undoable}}
           <small class="date text-muted">
-            Was: {{oldValue}}
+            {{_ "task_changelog_old_value" old_value=oldValue}}
             {{#if undone}}
-             <br>Reverted on {{userDateFormat undone_on}} by <span jd-tt="user-info?id={{undone_by}}">{{displayName undone_by}}</span>
+             <br>{{{xssGuard(_ "task_changelog_reverted_on" date=(userDateFormat undone_on) performer_id=undone_by performer_name=(displayName undone_by))}}}
             {{/if}}
             .
           </small>
@@ -44,7 +44,7 @@
         <div class="d-flex">
           <small class="date text-muted {{#if undone}}undone{{/if}}">{{userDateFormat when}}</small>
           {{#if $and ($not undone) undoable}}
-            <small class="undo text-primary">Undo</small>
+            <small class="undo text-primary">{{_ "undo"}}</small>
           {{/if}}
         </div>
       </div>

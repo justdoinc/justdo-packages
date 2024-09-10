@@ -1,3 +1,5 @@
 {
-  "filter_for_notes_changes_only": "Faqat Qaydlar o'zgarishlarini filtrlash"
+  "filter_for_notes_changes_only": "Faqat Qaydlar o'zgarishlarini filtrlash",
+  "task_changelog_old_value": "Eski qiymati: __old_value__",
+  "task_changelog_reverted_on": "__date__ sanasida <span jd-tt=\"user-info?id=__performer_id__\">__performer_name__</span> tomonidan qaytarildi"
 }

@@ -1,3 +1,5 @@
 {
-  "filter_for_notes_changes_only": "تصفية للتغييرات في الملاحظات فقط"
+  "filter_for_notes_changes_only": "تصفية للتغييرات في الملاحظات فقط",
+  "task_changelog_old_value": "كانت: __old_value__",
+  "task_changelog_reverted_on": "تم التراجع في __date__ بواسطة <span jd-tt=\"user-info?id=__performer_id__\">__performer_name__</span>"
 }

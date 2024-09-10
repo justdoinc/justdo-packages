@@ -1,3 +1,5 @@
 {
-  "filter_for_notes_changes_only": "Filtriraj samo promene u beleškama"
+  "filter_for_notes_changes_only": "Filtriraj samo promene u beleškama",
+  "task_changelog_old_value": "Bilo je: __old_value__",
+  "task_changelog_reverted_on": "Vraćeno __date__ od strane <span jd-tt=\"user-info?id=__performer_id__\">__performer_name__</span>"
 }

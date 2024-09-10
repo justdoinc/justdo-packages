@@ -1,3 +1,5 @@
 {
-  "filter_for_notes_changes_only": "Filtreeri ainult märkmete muudatusi"
+  "filter_for_notes_changes_only": "Filtreeri ainult märkmete muudatusi",
+  "task_changelog_old_value": "Oli: __old_value__",
+  "task_changelog_reverted_on": "Taastatud __date__ kasutaja <span jd-tt=\"user-info?id=__performer_id__\">__performer_name__</span> poolt"
 }

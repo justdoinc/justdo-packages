@@ -1,3 +1,5 @@
 {
-  "filter_for_notes_changes_only": "Filtrează doar pentru modificări în Note"
+  "filter_for_notes_changes_only": "Filtrează doar pentru modificări în Note",
+  "task_changelog_old_value": "A fost: __old_value__",
+  "task_changelog_reverted_on": "Revenit la __date__ de către <span jd-tt=\"user-info?id=__performer_id__\">__performer_name__</span>"
 }

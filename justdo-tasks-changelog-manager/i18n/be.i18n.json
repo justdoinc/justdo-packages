@@ -1,3 +1,5 @@
 {
-  "filter_for_notes_changes_only": "Фільтраваць толькі змены ў нататках"
+  "filter_for_notes_changes_only": "Фільтраваць толькі змены ў нататках",
+  "task_changelog_old_value": "Было: __old_value__",
+  "task_changelog_reverted_on": "Адменена __date__ карыстальнікам <span jd-tt=\"user-info?id=__performer_id__\">__performer_name__</span>"
 }

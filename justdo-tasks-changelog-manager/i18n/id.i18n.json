@@ -1,3 +1,5 @@
 {
-  "filter_for_notes_changes_only": "Filter hanya untuk perubahan Catatan"
+  "filter_for_notes_changes_only": "Filter hanya untuk perubahan Catatan",
+  "task_changelog_old_value": "Sebelumnya: __old_value__",
+  "task_changelog_reverted_on": "Dikembalikan pada __date__ oleh <span jd-tt=\"user-info?id=__performer_id__\">__performer_name__</span>"
 }
