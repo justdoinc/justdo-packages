@@ -38,9 +38,9 @@ _.extend TasksChangelogManager.prototype,
       return ret_val + "."
 
     parentChangeMsg = (activity_obj, op) ->
-      old_parent = APP.collections.Tasks.findOne(activity_obj.old_value, {fields: {seqId: 1}})
+      old_parent = APP.collections.Tasks.find(activity_obj.old_value, {fields: {seqId: 1}}).fetch()?[0]
 
-      if activity_obj.new_value is "0"
+      if parseInt(activity_obj.new_value, 10) is 0
         op_name = ""
         if op == "add"
           op_name = "added"
@@ -53,7 +53,7 @@ _.extend TasksChangelogManager.prototype,
           ret_val += " (Was under ##{old_parent.seqId})"
         return ret_val + "."
 
-      if (task = APP.collections.Tasks.findOne(activity_obj.new_value, {fields: {seqId: 1, title: 1}}))?
+      if (task = APP.collections.Tasks.find(activity_obj.new_value, {fields: {seqId: 1, title: 1}}).fetch()?[0])?
         op_name = ""
         if op == "add"
           op_name = "added"
