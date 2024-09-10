@@ -1,0 +1,8 @@
+{
+  "justdo_projects_dashboard_tab_label": "Tauler de control",
+  "justdo_projects_dashboard_all_members": "Tots els membres",
+  "justdo_projects_dashboard_dashboard_start_message": "El tauler de control es mostrarà un cop s'hagi assignat una o més tasques com a projectes.",
+  "justdo_projects_dashboard_enable_projects_plugin_first": "(Primer cal habilitar el connector de projectes)",
+  "justdo_projects_dashboard_unselected": "(No seleccionat)",
+  "justdo_projects_dashboard_project_owners": "Propietaris del projecte"
+}

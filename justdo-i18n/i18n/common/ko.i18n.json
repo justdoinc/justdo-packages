@@ -55,7 +55,10 @@
   "invite": "초대",
   "root_tasks": "최상위 작업",
   "apply": "적용",
-  "projects_label": "프로젝트",
+  "project": "프로젝트",
+  "projects": "프로젝트",
+  "task": "작업",
+  "tasks": "작업",
   "member": "회원",
   "guest": "게스트",
   "proxy": "대리인",
@@ -64,5 +67,6 @@
   "email": "이메일",
   "dismiss": "무시",
   "read_more": "더 보기",
-  "view": "보기"
+  "view": "보기",
+  "owner": "소유자"
 }

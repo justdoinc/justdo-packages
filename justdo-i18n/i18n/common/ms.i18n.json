@@ -55,7 +55,10 @@
   "invite": "Jemput",
   "root_tasks": "Tugas utama",
   "apply": "Guna",
-  "projects_label": "Projek",
+  "project": "projek",
+  "projects": "Projek",
+  "task": "tugas",
+  "tasks": "tugas",
   "member": "Ahli",
   "guest": "Tetamu",
   "proxy": "Proksi",
@@ -64,5 +67,6 @@
   "email": "e-mel",
   "dismiss": "Ketepikan",
   "read_more": "Baca lanjut",
-  "view": "Lihat"
+  "view": "Lihat",
+  "owner": "Pemilik"
 }

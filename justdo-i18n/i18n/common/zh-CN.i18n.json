@@ -55,7 +55,10 @@
   "invite": "邀请",
   "root_tasks": "根任务",
   "apply": "应用",
-  "projects_label": "项目",
+  "project": "项目",
+  "projects": "项目",
+  "task": "任务",
+  "tasks": "任务",
   "member": "成员",
   "guest": "访客",
   "proxy": "代理",
@@ -64,5 +67,6 @@
   "email": "电子邮箱",
   "dismiss": "关闭",
   "read_more": "阅读更多",
-  "view": "查看"
+  "view": "查看",
+  "owner": "所有者"
 }

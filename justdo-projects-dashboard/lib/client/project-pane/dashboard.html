@@ -7,7 +7,7 @@
           <!-- Project Manager Dropdown -->
           <div class="dropdown projects-dropdown mb-1 justdo-projects-dashboard-owner-selector">
             <button class="btn btn-primary btn-sm px-3 py-2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dashboard-member-list">
-              All Members
+              {{_ "justdo_projects_dashboard_all_members"}}
             </button>
             <div class="dropdown-menu shadow-lg border-0 member-selector-dropdown" aria-labelledby="dashboard-member-list">
               {{> member_list_widget members=projectsOwnersList onMemberClick=onMemberClick special_options=membersSpeicalOptions function_caller_rv=memberListWidgetFunctionCaller}}
@@ -24,7 +24,13 @@
             </button>
             <ul class="dropdown-menu shadow-lg border-0">
               {{#each gridOptionFields}}
-                <li><a href="#" class="dropdown-item px-3">{{options.label}}</a></li>
+                <li><a href="#" class="dropdown-item px-3">
+                  {{#if options.label_i18n}}
+                    {{_ options.label_i18n}}
+                  {{else}}
+                    {{options.label}}
+                  {{/if}}
+                </a></li>
               {{/each}}
             </ul>
           </div>
@@ -33,12 +39,12 @@
             <div class="projects-operations-divider"></div>
           </div>
           <div class="big-picture-data">
-            <div class="title text-white">Projects</div>
+            <div class="title text-white">{{_ "projects"}}</div>
             <div class="data text-white">{{numberOfProjects}}</div>
             <div class="units"></div>
           </div>
           <div class="big-picture-data">
-            <div class="title text-white">Tasks</div>
+            <div class="title text-white">{{_ "tasks"}}</div>
             <div class="data text-white">{{totalNumberOfTasks}}</div>
             <div class="units"></div>
           </div>
@@ -52,10 +58,10 @@
         <div class="projects-table projects-item">
           <table>
             <tr>
-              <th>Project</th>
-              <th>Owner</th>
-              <th>Start Date</th>
-              <th>End Date</th>
+              <th>{{_ "projects"}}</th>
+              <th>{{_ "owner"}}</th>
+              <th>{{_ "start_date_schema_label"}}</th>
+              <th>{{_ "end_date_schema_label"}}</th>
               {{#each tableFieldsOfInterestTitles}}
                 <th width="{{columnWidthPercent}}%">
                   {{this}}
@@ -70,13 +76,9 @@
       </div>
     {{else}}
       <div class="dashboard-start-message">
-        <div>
-          Dashboard will be presented once one or more tasks are assigned as projects.
-        </div>
+        <div>{{_ "justdo_projects_dashboard_dashboard_start_message"}}</div>
         {{#unless isProjectsModuleEnabled}}
-          <div>
-            (Projects plugin should be enabled first)
-          </div>
+          <div>{{_ "justdo_projects_dashboard_enable_projects_plugin_first"}} </div>
         {{/unless}}
       </div>
     {{/if}}

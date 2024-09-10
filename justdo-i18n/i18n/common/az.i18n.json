@@ -55,7 +55,10 @@
   "invite": "Dəvət et",
   "root_tasks": "Əsas tapşırıqlar",
   "apply": "Tətbiq et",
-  "projects_label": "Layihələr",
+  "project": "layihə",
+  "projects": "Layihələr",
+  "task": "tapşırıq",
+  "tasks": "tapşırıqlar",
   "member": "Üzv",
   "guest": "Qonaq",
   "proxy": "Vəkil",
@@ -64,5 +67,6 @@
   "email": "e-poçt",
   "dismiss": "Rədd et",
   "read_more": "Daha çox oxu",
-  "view": "Bax"
+  "view": "Bax",
+  "owner": "Sahib"
 }

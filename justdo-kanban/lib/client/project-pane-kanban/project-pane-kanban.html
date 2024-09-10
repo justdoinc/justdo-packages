@@ -29,7 +29,7 @@
             <svg class="jd-icon kanban-member-selector-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#users"/></svg>
           {{/if}}
           <div class="dropdown-menu jd-p-075 shadow-lg border-0">
-            <input class="kanban-member-selector-search form-control form-control-sm bg-light border-0" type="text" placeholder="Search members" name="" value="">
+            <input class="kanban-member-selector-search form-control form-control-sm bg-light border-0" type="text" placeholder="{{_ "search_members"}}" name="" value="">
             {{#each members}}
               <a href="#" class="dropdown-item kanban-filter-member-item {{#if thisIsActiveMember this}}active{{/if}}">
                 <img class="kanban-member-avatar" src="{{memberAvatar this}}"> {{memberName this}}

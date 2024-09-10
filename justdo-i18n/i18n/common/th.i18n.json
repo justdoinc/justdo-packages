@@ -55,7 +55,10 @@
   "invite": "เชิญ",
   "root_tasks": "งานหลัก",
   "apply": "นำไปใช้",
-  "projects_label": "โครงการ",
+  "project": "โครงการ",
+  "projects": "โครงการ",
+  "task": "งาน",
+  "tasks": "งาน",
   "member": "สมาชิก",
   "guest": "ผู้เยี่ยมชม",
   "proxy": "ตัวแทน",
@@ -64,5 +67,6 @@
   "email": "อีเมล",
   "dismiss": "ปิด",
   "read_more": "อ่านเพิ่มเติม",
-  "view": "ดู"
+  "view": "ดู",
+  "owner": "เจ้าของ"
 }

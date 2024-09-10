@@ -189,10 +189,7 @@
 
 // RTL modifications
 .right-to-left
-  .justdo-projects-dashboard-wrapper
-    text-align: right
-    .btn
-      text-align: right
+  .justdo-projects-dashboard
     .dropdown-item
       padding-right: 10px
       padding-left: 24px
@@ -200,8 +197,34 @@
       .member-item-avatar
         margin-right: unset
         margin-left: 6px
-    .project-item
-      .jd-icon
-        margin-right: unset
-        margin-left: 4px
         
+    .projects-dropdown
+      button
+        text-align: right
+
+    .projects-chart
+      margin: 1rem 0rem 1rem 1rem
+
+    .projects-table
+      table
+        th
+          padding-right: unset
+          border-left: 1px dashed #eaeaea
+          &:last-child
+            border-right: unset
+            border-left: none
+        td
+          border-right: unset
+          border-left: 1px dashed #eaeaea
+          &:last-child
+            border-right: unset
+            border-left: none
+
+      .project-item
+        svg
+          margin-right: unset
+          margin-left: 0.25rem
+
+    .progress-bar-label
+      left: unset
+      right: 4px

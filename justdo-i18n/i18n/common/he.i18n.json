@@ -55,7 +55,10 @@
   "invite": "הזמן",
   "root_tasks": "משימות שורש",
   "apply": "החל",
-  "projects_label": "פרויקטים",
+  "project": "פרויקט",
+  "projects": "פרויקטים",
+  "task": "משימה",
+  "tasks": "משימות",
   "member": "חבר",
   "guest": "אורח",
   "proxy": "פרוקסי",
@@ -64,5 +67,6 @@
   "email": "אימייל",
   "dismiss": "סגור",
   "read_more": "קרא עוד",
-  "view": "צפה"
+  "view": "צפה",
+  "owner": "בעלים"
 }

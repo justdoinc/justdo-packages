@@ -55,7 +55,10 @@
   "invite": "Mời",
   "root_tasks": "Công việc gốc",
   "apply": "Áp dụng",
-  "projects_label": "Dự án",
+  "project": "dự án",
+  "projects": "Dự án",
+  "task": "công việc",
+  "tasks": "công việc",
   "member": "Thành viên",
   "guest": "Khách",
   "proxy": "Người đại diện",
@@ -64,5 +67,6 @@
   "email": "email",
   "dismiss": "Bỏ qua",
   "read_more": "Đọc thêm",
-  "view": "Xem"
+  "view": "Xem",
+  "owner": "Chủ sở hữu"
 }

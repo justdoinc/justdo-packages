@@ -55,7 +55,10 @@
   "invite": "Invitar",
   "root_tasks": "Tareas principales",
   "apply": "Aplicar",
-  "projects_label": "Proyectos",
+  "project": "proyecto",
+  "projects": "Proyectos",
+  "task": "tarea",
+  "tasks": "tareas",
   "member": "Miembro",
   "guest": "Invitado",
   "proxy": "Proxy",
@@ -64,5 +67,6 @@
   "email": "correo electrónico",
   "dismiss": "Descartar",
   "read_more": "Leer más",
-  "view": "Ver"
+  "view": "Ver",
+  "owner": "Propietario"
 }

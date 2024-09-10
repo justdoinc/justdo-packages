@@ -55,7 +55,10 @@
   "invite": "Pakviesti",
   "root_tasks": "Pagrindinės užduotys",
   "apply": "Taikyti",
-  "projects_label": "Projektai",
+  "project": "projektas",
+  "projects": "Projektai",
+  "task": "užduotis",
+  "tasks": "užduotys",
   "member": "Narys",
   "guest": "Svečias",
   "proxy": "Įgaliotinis",
@@ -64,5 +67,6 @@
   "email": "el. paštas",
   "dismiss": "Atmesti",
   "read_more": "Skaityti daugiau",
-  "view": "Peržiūrėti"
+  "view": "Peržiūrėti",
+  "owner": "Savininkas"
 }

@@ -710,7 +710,7 @@ _.extend JustdoTasksContextMenu.prototype,
         position: 400
         data:
           label: "Projects"
-          label_i18n: "projects_label"
+          label_i18n: "projects"
         listingCondition: ->
           if not (gc = APP.modules.project_page?.gridControl())?
             return false

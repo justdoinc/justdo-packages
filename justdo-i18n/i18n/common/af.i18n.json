@@ -55,7 +55,10 @@
   "invite": "Nooi uit",
   "root_tasks": "Hooftake",
   "apply": "Pas toe",
-  "projects_label": "Projekte",
+  "project": "projek",
+  "projects": "Projekte",
+  "task": "taak",
+  "tasks": "take",
   "member": "Lid",
   "guest": "Gas",
   "proxy": "Gevolmagtigde",
@@ -64,5 +67,6 @@
   "email": "e-pos",
   "dismiss": "Sluit",
   "read_more": "Lees meer",
-  "view": "Bekyk"
+  "view": "Bekyk",
+  "owner": "Eienaar"
 }

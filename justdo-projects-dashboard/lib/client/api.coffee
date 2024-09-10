@@ -19,7 +19,7 @@ _.extend JustdoProjectsDashboard.prototype,
             tab_id: "justdo-projects-dashboard"
             order: 1
             tab_template: "justdo_projects_dashboard"
-            tab_label: "Dashboard"
+            tab_label: "justdo_projects_dashboard_tab_label"
           return
 
         destroyer: =>

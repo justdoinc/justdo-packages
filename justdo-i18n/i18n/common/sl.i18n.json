@@ -55,7 +55,10 @@
   "invite": "Povabi",
   "root_tasks": "Glavne naloge",
   "apply": "Uporabi",
-  "projects_label": "Projekti",
+  "project": "projekt",
+  "projects": "Projekti",
+  "task": "naloga",
+  "tasks": "naloge",
   "member": "Član",
   "guest": "Gost",
   "proxy": "Pooblaščenec",
@@ -64,5 +67,6 @@
   "email": "e-pošta",
   "dismiss": "Opusti",
   "read_more": "Preberi več",
-  "view": "Poglej"
+  "view": "Poglej",
+  "owner": "Lastnik"
 }

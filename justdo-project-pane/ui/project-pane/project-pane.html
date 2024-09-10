@@ -18,7 +18,7 @@
       {{#each getTabs}}
         <div class="project-pane-tab-wrapper">
           <div tab-id="{{tab_id}}" class="project-pane-tab {{#if $eq getActiveTabId tab_id}}active{{/if}}">
-            {{tab_label}}
+            {{_ tab_label}}
             <div class="active-tab-bottom-border bg-primary"></div>
           </div>
         </div>

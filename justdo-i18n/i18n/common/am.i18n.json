@@ -55,7 +55,10 @@
   "invite": "ጋብዝ",
   "root_tasks": "መሰረታዊ ተግባራት",
   "apply": "ተግብር",
-  "projects_label": "ፕሮጀክቶች",
+  "project": "ፕሮጀክት",
+  "projects": "ፕሮጀክቶች",
+  "task": "ተግባር",
+  "tasks": "ተግባራት",
   "member": "አባል",
   "guest": "እንግዳ",
   "proxy": "ወኪል",
@@ -64,5 +67,6 @@
   "email": "ኢሜይል",
   "dismiss": "አሰናብት",
   "read_more": "ተጨማሪ አንብብ",
-  "view": "ተመልከት"
+  "view": "ተመልከት",
+  "owner": "ባለቤት"
 }

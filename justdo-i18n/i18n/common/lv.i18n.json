@@ -55,7 +55,10 @@
   "invite": "Uzaicināt",
   "root_tasks": "Galvenie uzdevumi",
   "apply": "Pielietot",
-  "projects_label": "Projekti",
+  "project": "projekts",
+  "projects": "Projekti",
+  "task": "uzdevums",
+  "tasks": "uzdevumi",
   "member": "Dalībnieks",
   "guest": "Viesis",
   "proxy": "Starpnieks",
@@ -64,5 +67,6 @@
   "email": "e-pasts",
   "dismiss": "Aizvērt",
   "read_more": "Lasīt vairāk",
-  "view": "Skatīt"
+  "view": "Skatīt",
+  "owner": "Īpašnieks"
 }

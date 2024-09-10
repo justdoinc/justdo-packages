@@ -55,7 +55,10 @@
   "invite": "邀請",
   "root_tasks": "根任務",
   "apply": "套用",
-  "projects_label": "專案",
+  "project": "專案",
+  "projects": "專案",
+  "task": "任務",
+  "tasks": "任務",
   "member": "成員",
   "guest": "訪客",
   "proxy": "代理",
@@ -64,5 +67,6 @@
   "email": "電子郵件",
   "dismiss": "關閉",
   "read_more": "閱讀更多",
-  "view": "查看"
+  "view": "查看",
+  "owner": "擁有者"
 }

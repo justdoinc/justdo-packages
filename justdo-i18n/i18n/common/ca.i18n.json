@@ -55,7 +55,10 @@
   "invite": "Convidar",
   "root_tasks": "Tasques principals",
   "apply": "Aplicar",
-  "projects_label": "Projectes",
+  "project": "projecte",
+  "projects": "Projectes",
+  "task": "tasca",
+  "tasks": "tasques",
   "member": "Membre",
   "guest": "Convidat",
   "proxy": "Representant",
@@ -64,5 +67,6 @@
   "email": "correu electrònic",
   "dismiss": "Descartar",
   "read_more": "Llegir més",
-  "view": "Veure"
+  "view": "Veure",
+  "owner": "Propietari"
 }

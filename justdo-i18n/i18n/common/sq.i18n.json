@@ -55,7 +55,10 @@
   "invite": "Fto",
   "root_tasks": "Detyrat kryesore",
   "apply": "Apliko",
-  "projects_label": "Projekte",
+  "project": "projekt",
+  "projects": "Projekte",
+  "task": "detyrë",
+  "tasks": "detyra",
   "member": "Anëtar",
   "guest": "Mysafir",
   "proxy": "Përfaqësues",
@@ -64,5 +67,6 @@
   "email": "email",
   "dismiss": "Largo",
   "read_more": "Lexo më shumë",
-  "view": "Shiko"
+  "view": "Shiko",
+  "owner": "Pronar"
 }

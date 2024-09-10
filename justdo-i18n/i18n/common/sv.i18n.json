@@ -55,7 +55,10 @@
   "invite": "Bjud in",
   "root_tasks": "Huvuduppgifter",
   "apply": "Tillämpa",
-  "projects_label": "Projekt",
+  "project": "projekt",
+  "projects": "Projekt",
+  "task": "uppgift",
+  "tasks": "uppgifter",
   "member": "Medlem",
   "guest": "Gäst",
   "proxy": "Proxy",
@@ -64,5 +67,6 @@
   "email": "e-post",
   "dismiss": "Avfärda",
   "read_more": "Läs mer",
-  "view": "Visa"
+  "view": "Visa",
+  "owner": "Ägare"
 }

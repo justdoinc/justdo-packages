@@ -55,7 +55,10 @@
   "invite": "Kutsu",
   "root_tasks": "Peamised ülesanded",
   "apply": "Rakenda",
-  "projects_label": "Projektid",
+  "project": "projekt",
+  "projects": "Projektid",
+  "task": "ülesanne",
+  "tasks": "ülesanded",
   "member": "Liige",
   "guest": "Külaline",
   "proxy": "Esindaja",
@@ -64,5 +67,6 @@
   "email": "e-post",
   "dismiss": "Loobu",
   "read_more": "Loe rohkem",
-  "view": "Vaata"
+  "view": "Vaata",
+  "owner": "Omanik"
 }

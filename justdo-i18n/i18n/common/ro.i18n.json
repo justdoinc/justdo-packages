@@ -55,7 +55,10 @@
   "invite": "Invită",
   "root_tasks": "Sarcini principale",
   "apply": "Aplică",
-  "projects_label": "Proiecte",
+  "project": "proiect",
+  "projects": "Proiecte",
+  "task": "sarcină",
+  "tasks": "sarcini",
   "member": "Membru",
   "guest": "Invitat",
   "proxy": "Proxy",
@@ -64,5 +67,6 @@
   "email": "email",
   "dismiss": "Respinge",
   "read_more": "Citește mai mult",
-  "view": "Vizualizează"
+  "view": "Vizualizează",
+  "owner": "Proprietar"
 }

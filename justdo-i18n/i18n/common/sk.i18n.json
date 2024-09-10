@@ -55,7 +55,10 @@
   "invite": "Pozvať",
   "root_tasks": "Hlavné úlohy",
   "apply": "Použiť",
-  "projects_label": "Projekty",
+  "project": "projekt",
+  "projects": "Projekty",
+  "task": "úloha",
+  "tasks": "úlohy",
   "member": "Člen",
   "guest": "Hosť",
   "proxy": "Zástupca",
@@ -64,5 +67,6 @@
   "email": "email",
   "dismiss": "Zavrieť",
   "read_more": "Čítať viac",
-  "view": "Zobraziť"
+  "view": "Zobraziť",
+  "owner": "Vlastník"
 }

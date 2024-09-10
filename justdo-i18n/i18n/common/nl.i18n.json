@@ -55,7 +55,10 @@
   "invite": "Uitnodigen",
   "root_tasks": "Hoofdtaken",
   "apply": "Toepassen",
-  "projects_label": "Projecten",
+  "project": "project",
+  "projects": "Projecten",
+  "task": "taak",
+  "tasks": "taken",
   "member": "Lid",
   "guest": "Gast",
   "proxy": "Proxy",
@@ -64,5 +67,6 @@
   "email": "e-mail",
   "dismiss": "Sluiten",
   "read_more": "Meer lezen",
-  "view": "Bekijken"
+  "view": "Bekijken",
+  "owner": "Eigenaar"
 }

@@ -55,7 +55,10 @@
   "invite": "Convidar",
   "root_tasks": "Tarefas principais",
   "apply": "Aplicar",
-  "projects_label": "Projetos",
+  "project": "projeto",
+  "projects": "Projetos",
+  "task": "tarefa",
+  "tasks": "tarefas",
   "member": "Membro",
   "guest": "Convidado",
   "proxy": "Procurador",
@@ -64,5 +67,6 @@
   "email": "email",
   "dismiss": "Dispensar",
   "read_more": "Ler mais",
-  "view": "Ver"
+  "view": "Ver",
+  "owner": "Proprietário"
 }

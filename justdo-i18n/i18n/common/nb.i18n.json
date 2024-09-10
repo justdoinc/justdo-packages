@@ -55,7 +55,10 @@
   "invite": "Inviter",
   "root_tasks": "Hovedoppgaver",
   "apply": "Bruk",
-  "projects_label": "Prosjekter",
+  "project": "prosjekt",
+  "projects": "Prosjekter",
+  "task": "oppgave",
+  "tasks": "oppgaver",
   "member": "Medlem",
   "guest": "Gjest",
   "proxy": "Stedfortreder",
@@ -64,5 +67,6 @@
   "email": "e-post",
   "dismiss": "Avvis",
   "read_more": "Les mer",
-  "view": "Vis"
+  "view": "Vis",
+  "owner": "Eier"
 }

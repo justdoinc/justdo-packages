@@ -6,7 +6,7 @@
     </div>
     <div class="dropdown-menu jd-p-075 shadow-lg border-0">
       {{#if showDropdownMenu}}
-        <input class="members-multi-selector-search form-control form-control-sm mb-2 bg-light border-0" type="text" placeholder="Search members" name="" value="">
+        <input class="members-multi-selector-search form-control form-control-sm mb-2 bg-light border-0" type="text" placeholder="{{_ "search_members"}}" name="" value="">
         {{#with filteredMembers this.members}}
           {{#if $gt this.length 0}}
             <div class="dropdown-header text-primary font-weight-bold px-2">

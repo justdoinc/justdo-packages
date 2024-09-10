@@ -143,7 +143,7 @@ Template.justdo_projects_dashboard.onRendered ->
   @autorun =>
     if not APP.justdo_highcharts.isHighchartLoaded()
       return
-      
+
     main_part_data = self.main_part_data_rv.get()
     field_of_interest = APP.justdo_projects_dashboard.main_part_interest.get()
     grid_values =  APP.justdo_projects_dashboard.field_ids_to_grid_values_rv.get()
@@ -153,7 +153,7 @@ Template.justdo_projects_dashboard.onRendered ->
     if $("#justdo-projects-dashboard-chart-1").length == 0
       return
 
-    field_label = grid_values[field_of_interest].label
+    field_label = APP.justdo_i18n.getI18nTextOrFallback {i18n_key: grid_values[field_of_interest].label_i18n, fallback_text: grid_values[field_of_interest].label}
 
     common_charts_width = 300
 
@@ -172,17 +172,17 @@ Template.justdo_projects_dashboard.onRendered ->
 
     data = []
     for option_id, option of field_options
-      title = option.txt
+      title = APP.justdo_i18n.getI18nTextOrFallback {i18n_key: option.txt_i18n, fallback_text: option.txt}
       count = field_type_count[option_id] or 0
       color = null
 
       if option_id == ""
         count = field_type_count.undefined
-        title = "(Unselected)"
+        title = TAPi18n.__ "justdo_projects_dashboard_unselected"
         color = "#ebead1"
 
       if option_id == "nil" # there is inconsistency here - the state field has 'nil' and all others ""
-        title = "(Unselected)"
+        title = TAPi18n.__ "justdo_projects_dashboard_unselected"
         color = "#ebead1"
 
       if option.bg_color? and (option.bg_color isnt "00000000")
@@ -211,7 +211,12 @@ Template.justdo_projects_dashboard.onRendered ->
         enabled: false
 
       title:
-        text: "Projects"
+        text: TAPi18n.__ "projects"
+      
+      tooltip:
+        useHTML: true
+        style: {}
+
       plotOptions:
         pie:
           innerSize: 100
@@ -224,6 +229,12 @@ Template.justdo_projects_dashboard.onRendered ->
           distance: -20
         data: data
       ]
+
+    if APP.justdo_i18n.isRtl()
+      chart.tooltip.style.direction = "rtl"
+      chart.tooltip.style["text-align"] = "right"
+
+
     Highcharts.chart "justdo-projects-dashboard-chart-1", chart
 
     #######################################################
@@ -259,7 +270,7 @@ Template.justdo_projects_dashboard.onRendered ->
           data.push projects[item.id][option_id]
 
         series_obj =
-          name: option.txt
+          name: APP.justdo_i18n.getI18nTextOrFallback {i18n_key: option.txt_i18n, fallback_text: option.txt}
           data: data
           animation: false
 
@@ -313,6 +324,8 @@ Template.justdo_projects_dashboard.onRendered ->
       tooltip:
         headerFormat: "<b>{point.key}</b><br>"
         pointFormat: """<span style="color:{series.color}">\u25CF</span> {series.name}: {point.y} / {point.stackTotal}"""
+        style: {}
+        useHTML: true
 
       plotOptions:
         column:
@@ -320,6 +333,16 @@ Template.justdo_projects_dashboard.onRendered ->
           depth: 40
 
       series: series
+    
+    if APP.justdo_i18n.isRtl()
+      chart.chart.options3d.beta = -chart.chart.options3d.beta
+      chart.xAxis.reversed = true
+      chart.yAxis.opposite = true
+      chart.legend.rtl = true
+      chart.legend.align = APP.justdo_i18n.getRtlAwareDirection chart.legend.align
+      chart.tooltip.style.direction = "rtl"
+      chart.tooltip.style["text-align"] = "right"
+
 
     Highcharts.chart "justdo-projects-dashboard-chart-2", chart
 
@@ -365,7 +388,7 @@ Template.justdo_projects_dashboard.onRendered ->
         for owner in owners_list
           data.push owners[owner.id][option_id]
         series_obj =
-          name: option.txt
+          name: APP.justdo_i18n.getI18nTextOrFallback {i18n_key: option.txt_i18n, fallback_text: option.txt}
           data: data
           animation: false
         if option.bg_color? and (option.bg_color isnt "00000000")
@@ -393,7 +416,7 @@ Template.justdo_projects_dashboard.onRendered ->
         enabled: false
 
       title:
-        text: "project owners"
+        text: TAPi18n.__ "justdo_projects_dashboard_project_owners"
 
       xAxis:
         categories: categories
@@ -412,6 +435,8 @@ Template.justdo_projects_dashboard.onRendered ->
       tooltip:
         headerFormat: "<b>{point.key}</b><br>"
         pointFormat: """<span style="color:{series.color}">\u25CF</span> {series.name}: {point.y} / {point.stackTotal}"""
+        useHTML: true
+        style: {}
 
       plotOptions:
         series:
@@ -419,6 +444,14 @@ Template.justdo_projects_dashboard.onRendered ->
           depth: 40
 
       series: series
+
+    if APP.justdo_i18n.isRtl()
+      chart.chart.options3d.beta = -chart.chart.options3d.beta
+      chart.yAxis.reversed = true
+      chart.xAxis.opposite = true
+      chart.legend.rtl = true
+      chart.tooltip.style.direction = "rtl"
+      chart.tooltip.style["text-align"] = "right"
 
     Highcharts.chart "justdo-projects-dashboard-chart-3", chart
     return # end of autorun
@@ -437,7 +470,7 @@ Template.justdo_projects_dashboard.helpers
   membersSpeicalOptions: ->
     return [{
       _id: "all-members"
-      label: "All Members"
+      label: TAPi18n.__ "justdo_projects_dashboard_all_members"
     }]
 
   memberListWidgetFunctionCaller: ->
@@ -446,9 +479,8 @@ Template.justdo_projects_dashboard.helpers
   selectedFieldLabel: ->
     main_part_interest = APP.justdo_projects_dashboard.main_part_interest.get()
     field_options = APP.justdo_projects_dashboard.field_ids_to_grid_values_rv.get()[main_part_interest]
-    if (ret = field_options?.label)?
-      return ret
-    return ""
+
+    return APP.justdo_i18n.getI18nTextOrFallback {i18n_key: field_options.label_i18n, fallback_text: field_options.label}
 
   gridOptionFields: ->
     if not (gc = APP.modules.project_page.mainGridControl())?
@@ -505,7 +537,9 @@ Template.justdo_projects_dashboard.helpers
       return []
     ret = []
     for option_id, option of field_options
-      if option.txt? and option.txt != ""
+      if option.txt_i18n? and option.txt_i18n != ""
+        ret.push TAPi18n.__ option.txt_i18n
+      else if option.txt? and option.txt != ""
         ret.push option.txt
     return ret
 
@@ -637,7 +671,7 @@ Template.justdo_projects_dashboard_project_line.helpers
       if option.txt? and option.txt != ""
         if not (count = collected_data_for_field[option_id])?
           count = 0
-        if not (color = option.bg_color)?
+        if not (color = option.bg_color)? or (option.bg_color is "00000000")
           color = "c3dafc"
         ret.push
           count: count

@@ -55,7 +55,10 @@
   "invite": "Davet Et",
   "root_tasks": "Ana görevler",
   "apply": "Uygula",
-  "projects_label": "Projeler",
+  "project": "proje",
+  "projects": "Projeler",
+  "task": "görev",
+  "tasks": "görevler",
   "member": "Üye",
   "guest": "Misafir",
   "proxy": "Vekil",
@@ -64,5 +67,6 @@
   "email": "e-posta",
   "dismiss": "Kapat",
   "read_more": "Devamını oku",
-  "view": "Görüntüle"
+  "view": "Görüntüle",
+  "owner": "Sahip"
 }

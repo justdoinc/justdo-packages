@@ -55,7 +55,10 @@
   "invite": "Einladen",
   "root_tasks": "Hauptaufgaben",
   "apply": "Anwenden",
-  "projects_label": "Projekte",
+  "project": "Projekt",
+  "projects": "Projekte",
+  "task": "Aufgabe",
+  "tasks": "Aufgaben",
   "member": "Mitglied",
   "guest": "Gast",
   "proxy": "Stellvertreter",
@@ -64,5 +67,6 @@
   "email": "E-Mail",
   "dismiss": "Verwerfen",
   "read_more": "Mehr lesen",
-  "view": "Ansicht"
+  "view": "Ansicht",
+  "owner": "Besitzer"
 }

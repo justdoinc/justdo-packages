@@ -55,7 +55,10 @@
   "invite": "Taklif qilish",
   "root_tasks": "Asosiy vazifalar",
   "apply": "Qo'llash",
-  "projects_label": "Loyihalar",
+  "project": "loyiha",
+  "projects": "Loyihalar",
+  "task": "vazifa",
+  "tasks": "vazifalar",
   "member": "A'zo",
   "guest": "Mehmon",
   "proxy": "Vakil",
@@ -64,5 +67,6 @@
   "email": "elektron pochta",
   "dismiss": "Yopish",
   "read_more": "Ko'proq o'qish",
-  "view": "Ko'rish"
+  "view": "Ko'rish",
+  "owner": "Egasi"
 }

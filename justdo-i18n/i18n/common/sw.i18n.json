@@ -55,7 +55,10 @@
   "invite": "Alika",
   "root_tasks": "Kazi za msingi",
   "apply": "Tumia",
-  "projects_label": "Miradi",
+  "project": "mradi",
+  "projects": "Miradi",
+  "task": "kazi",
+  "tasks": "kazi",
   "member": "Mwanachama",
   "guest": "Mgeni",
   "proxy": "Wakala",
@@ -64,5 +67,6 @@
   "email": "barua pepe",
   "dismiss": "Ondoa",
   "read_more": "Soma zaidi",
-  "view": "Tazama"
+  "view": "Tazama",
+  "owner": "Mmiliki"
 }

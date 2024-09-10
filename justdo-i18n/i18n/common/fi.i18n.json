@@ -55,7 +55,10 @@
   "invite": "Kutsu",
   "root_tasks": "Päätehtävät",
   "apply": "Käytä",
-  "projects_label": "Projektit",
+  "project": "projekti",
+  "projects": "Projektit",
+  "task": "tehtävä",
+  "tasks": "tehtävät",
   "member": "Jäsen",
   "guest": "Vieras",
   "proxy": "Välityspalvelin",
@@ -64,5 +67,6 @@
   "email": "sähköposti",
   "dismiss": "Hylkää",
   "read_more": "Lue lisää",
-  "view": "Näytä"
+  "view": "Näytä",
+  "owner": "Omistaja"
 }

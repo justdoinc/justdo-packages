@@ -55,7 +55,10 @@
   "invite": "Pozovi",
   "root_tasks": "Glavni zadaci",
   "apply": "Primijeni",
-  "projects_label": "Projekti",
+  "project": "projekat",
+  "projects": "Projekti",
+  "task": "zadatak",
+  "tasks": "zadaci",
   "member": "Član",
   "guest": "Gost",
   "proxy": "Proxy",
@@ -64,5 +67,6 @@
   "email": "e-pošta",
   "dismiss": "Odbaci",
   "read_more": "Pročitaj više",
-  "view": "Pregled"
+  "view": "Pregled",
+  "owner": "Vlasnik"
 }

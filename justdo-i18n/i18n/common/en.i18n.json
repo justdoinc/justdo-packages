@@ -55,7 +55,10 @@
   "invite": "Invite",
   "root_tasks": "Root tasks",
   "apply": "Apply",
-  "projects_label": "Projects",
+  "project": "project",
+  "projects": "Projects",
+  "task": "task",
+  "tasks": "tasks",
   "member": "Member",
   "guest": "Guest",
   "proxy": "Proxy",
@@ -64,5 +67,7 @@
   "email": "email",
   "dismiss": "Dismiss",
   "read_more": "Read more",
-  "view": "View"
+  "view": "View",
+  "owner": "Owner",
+  "search_members": "Search members"
 }
