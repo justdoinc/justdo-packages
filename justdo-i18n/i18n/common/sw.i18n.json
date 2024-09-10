@@ -68,5 +68,10 @@
   "dismiss": "Ondoa",
   "read_more": "Soma zaidi",
   "view": "Tazama",
-  "owner": "Mmiliki"
+  "owner": "Mmiliki",
+  "search_members": "Tafuta wanachama",
+  "settings": "Mipangilio",
+  "load_more": "Pakia zaidi",
+  "copy": "Nakili",
+  "loading": "Inapakia..."
 }

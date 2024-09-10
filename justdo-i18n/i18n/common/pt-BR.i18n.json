@@ -68,5 +68,10 @@
   "dismiss": "Dispensar",
   "read_more": "Leia mais",
   "view": "Visualizar",
-  "owner": "Proprietário"
+  "owner": "Proprietário",
+  "search_members": "Pesquisar membros",
+  "settings": "Configurações",
+  "load_more": "Carregar mais",
+  "copy": "Copiar",
+  "loading": "Carregando..."
 }

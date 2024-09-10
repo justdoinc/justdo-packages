@@ -68,5 +68,10 @@
   "dismiss": "Descartar",
   "read_more": "Llegir més",
   "view": "Veure",
-  "owner": "Propietari"
+  "owner": "Propietari",
+  "search_members": "Cercar membres",
+  "settings": "Configuració",
+  "load_more": "Carregar més",
+  "copy": "Copiar",
+  "loading": "Carregant..."
 }

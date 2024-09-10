@@ -68,5 +68,10 @@
   "dismiss": "Avfärda",
   "read_more": "Läs mer",
   "view": "Visa",
-  "owner": "Ägare"
+  "owner": "Ägare",
+  "search_members": "Sök medlemmar",
+  "settings": "Inställningar",
+  "load_more": "Ladda mer",
+  "copy": "Kopiera",
+  "loading": "Laddar..."
 }

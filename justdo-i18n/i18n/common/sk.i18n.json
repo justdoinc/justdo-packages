@@ -68,5 +68,10 @@
   "dismiss": "Zavrieť",
   "read_more": "Čítať viac",
   "view": "Zobraziť",
-  "owner": "Vlastník"
+  "owner": "Vlastník",
+  "search_members": "Vyhľadať členov",
+  "settings": "Nastavenia",
+  "load_more": "Načítať viac",
+  "copy": "Kopírovať",
+  "loading": "Načítava sa..."
 }

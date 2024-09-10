@@ -2,7 +2,6 @@
   "owners_mgmt_reject_transfer_from": "Отхвърляне на прехвърляне на собственост от",
   "owners_mgmt_accept_transfer_from": "Приемане на прехвърляне на собственост от",
   "owners_mgmt_cancel_transfer_to": "Отмяна на прехвърляне на собственост към",
-  "owners_mgmt_loading": "Зареждане...",
   "owners_mgmt_transfer_ownership_to": "Прехвърляне на собственост към...",
   "owners_mgmt_task_only_visible_to_you": "Тази задача е видима само за вас",
   "owners_mgmt_take_ownership_from_removed_owner": "Поемане на собствеността от премахнат собственик",

@@ -68,5 +68,10 @@
   "dismiss": "Elvetés",
   "read_more": "Bővebben",
   "view": "Megtekintés",
-  "owner": "Tulajdonos"
+  "owner": "Tulajdonos",
+  "search_members": "Tagok keresése",
+  "settings": "Beállítások",
+  "load_more": "További betöltése",
+  "copy": "Másolás",
+  "loading": "Betöltés..."
 }

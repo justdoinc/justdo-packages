@@ -68,5 +68,10 @@
   "dismiss": "Yopish",
   "read_more": "Ko'proq o'qish",
   "view": "Ko'rish",
-  "owner": "Egasi"
+  "owner": "Egasi",
+  "search_members": "Aʼzolarni qidirish",
+  "settings": "Sozlamalar",
+  "load_more": "Koʻproq yuklash",
+  "copy": "Nusxalash",
+  "loading": "Yuklanmoqda..."
 }

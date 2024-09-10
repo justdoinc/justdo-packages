@@ -2,7 +2,6 @@
   "owners_mgmt_reject_transfer_from": "拒絕所有權轉移來自",
   "owners_mgmt_accept_transfer_from": "接受所有權轉移來自",
   "owners_mgmt_cancel_transfer_to": "取消所有權轉移至",
-  "owners_mgmt_loading": "載入中...",
   "owners_mgmt_transfer_ownership_to": "轉移所有權至...",
   "owners_mgmt_task_only_visible_to_you": "此任務只有您可見",
   "owners_mgmt_take_ownership_from_removed_owner": "從已移除的擁有者取得所有權",

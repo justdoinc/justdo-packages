@@ -69,5 +69,9 @@
   "read_more": "Read more",
   "view": "View",
   "owner": "Owner",
-  "search_members": "Search members"
+  "search_members": "Search members",
+  "settings": "Settings",
+  "load_more": "Load More",
+  "copy": "Copy",
+  "loading": "Loading..."
 }

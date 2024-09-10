@@ -2,7 +2,6 @@
   "owners_mgmt_reject_transfer_from": "Odmítnout převod vlastnictví od",
   "owners_mgmt_accept_transfer_from": "Přijmout převod vlastnictví od",
   "owners_mgmt_cancel_transfer_to": "Zrušit převod vlastnictví na",
-  "owners_mgmt_loading": "Načítání...",
   "owners_mgmt_transfer_ownership_to": "Převést vlastnictví na...",
   "owners_mgmt_task_only_visible_to_you": "Tento úkol je viditelný pouze pro vás",
   "owners_mgmt_take_ownership_from_removed_owner": "Převzít vlastnictví od odstraněného vlastníka",

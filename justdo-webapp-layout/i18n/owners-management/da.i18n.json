@@ -2,7 +2,6 @@
   "owners_mgmt_reject_transfer_from": "Afvis ejerskabsoverførsel fra",
   "owners_mgmt_accept_transfer_from": "Accepter ejerskabsoverførsel fra",
   "owners_mgmt_cancel_transfer_to": "Annuller ejerskabsoverførsel til",
-  "owners_mgmt_loading": "Indlæser...",
   "owners_mgmt_transfer_ownership_to": "Overfør ejerskab til...",
   "owners_mgmt_task_only_visible_to_you": "Denne opgave er kun synlig for dig",
   "owners_mgmt_take_ownership_from_removed_owner": "Overtag ejerskab fra fjernet ejer",

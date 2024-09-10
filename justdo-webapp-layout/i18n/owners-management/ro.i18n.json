@@ -2,7 +2,6 @@
   "owners_mgmt_reject_transfer_from": "Respinge transferul de proprietate de la",
   "owners_mgmt_accept_transfer_from": "Acceptă transferul de proprietate de la",
   "owners_mgmt_cancel_transfer_to": "Anulează transferul de proprietate către",
-  "owners_mgmt_loading": "Se încarcă...",
   "owners_mgmt_transfer_ownership_to": "Transferă proprietatea către...",
   "owners_mgmt_task_only_visible_to_you": "Această sarcină este vizibilă doar pentru tine",
   "owners_mgmt_take_ownership_from_removed_owner": "Preia proprietatea de la proprietarul eliminat",

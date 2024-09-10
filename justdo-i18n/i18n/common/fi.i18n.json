@@ -68,5 +68,10 @@
   "dismiss": "Hylkää",
   "read_more": "Lue lisää",
   "view": "Näytä",
-  "owner": "Omistaja"
+  "owner": "Omistaja",
+  "search_members": "Hae jäseniä",
+  "settings": "Asetukset",
+  "load_more": "Lataa lisää",
+  "copy": "Kopioi",
+  "loading": "Ladataan..."
 }

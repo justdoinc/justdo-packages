@@ -68,5 +68,10 @@
   "dismiss": "무시",
   "read_more": "더 보기",
   "view": "보기",
-  "owner": "소유자"
+  "owner": "소유자",
+  "search_members": "멤버 검색",
+  "settings": "설정",
+  "load_more": "더 불러오기",
+  "copy": "복사",
+  "loading": "로딩 중..."
 }

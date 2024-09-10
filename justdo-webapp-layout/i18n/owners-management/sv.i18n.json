@@ -2,7 +2,6 @@
   "owners_mgmt_reject_transfer_from": "Avvisa ägarskapsöverföring från",
   "owners_mgmt_accept_transfer_from": "Acceptera ägarskapsöverföring från",
   "owners_mgmt_cancel_transfer_to": "Avbryt ägarskapsöverföring till",
-  "owners_mgmt_loading": "Laddar...",
   "owners_mgmt_transfer_ownership_to": "Överför ägarskap till...",
   "owners_mgmt_task_only_visible_to_you": "Denna uppgift är endast synlig för dig",
   "owners_mgmt_take_ownership_from_removed_owner": "Ta över ägarskap från borttagen ägare",

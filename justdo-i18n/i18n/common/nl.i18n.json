@@ -68,5 +68,10 @@
   "dismiss": "Sluiten",
   "read_more": "Meer lezen",
   "view": "Bekijken",
-  "owner": "Eigenaar"
+  "owner": "Eigenaar",
+  "search_members": "Leden zoeken",
+  "settings": "Instellingen",
+  "load_more": "Meer laden",
+  "copy": "Kopiëren",
+  "loading": "Laden..."
 }

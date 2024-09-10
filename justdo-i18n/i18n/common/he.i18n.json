@@ -68,5 +68,10 @@
   "dismiss": "סגור",
   "read_more": "קרא עוד",
   "view": "צפה",
-  "owner": "בעלים"
+  "owner": "בעלים",
+  "search_members": "חפש חברים",
+  "settings": "הגדרות",
+  "load_more": "טען עוד",
+  "copy": "העתק",
+  "loading": "טוען..."
 }

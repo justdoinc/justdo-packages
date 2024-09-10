@@ -2,7 +2,6 @@
   "owners_mgmt_reject_transfer_from": "Відхилити передачу права власності від",
   "owners_mgmt_accept_transfer_from": "Прийняти передачу права власності від",
   "owners_mgmt_cancel_transfer_to": "Скасувати передачу права власності",
-  "owners_mgmt_loading": "Завантаження...",
   "owners_mgmt_transfer_ownership_to": "Передати право власності...",
   "owners_mgmt_task_only_visible_to_you": "Це завдання видно лише вам",
   "owners_mgmt_take_ownership_from_removed_owner": "Взяти право власності від видаленого власника",

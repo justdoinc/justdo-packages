@@ -2,7 +2,6 @@
   "owners_mgmt_reject_transfer_from": "Менчик укугун өткөрүүдөн баш тартуу",
   "owners_mgmt_accept_transfer_from": "Менчик укугун өткөрүүнү кабыл алуу",
   "owners_mgmt_cancel_transfer_to": "Менчик укугун өткөрүүнү жокко чыгаруу",
-  "owners_mgmt_loading": "Жүктөлүүдө...",
   "owners_mgmt_transfer_ownership_to": "Менчик укугун өткөрүү...",
   "owners_mgmt_task_only_visible_to_you": "Бул тапшырма сизге гана көрүнөт",
   "owners_mgmt_take_ownership_from_removed_owner": "Алынып салынган ээсинен менчик укугун алуу",

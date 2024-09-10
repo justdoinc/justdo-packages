@@ -2,7 +2,6 @@
   "owners_mgmt_reject_transfer_from": "Eigendomsoverdracht afwijzen van",
   "owners_mgmt_accept_transfer_from": "Eigendomsoverdracht accepteren van",
   "owners_mgmt_cancel_transfer_to": "Eigendomsoverdracht annuleren naar",
-  "owners_mgmt_loading": "Laden...",
   "owners_mgmt_transfer_ownership_to": "Eigendom overdragen aan...",
   "owners_mgmt_task_only_visible_to_you": "Deze taak is alleen zichtbaar voor jou",
   "owners_mgmt_take_ownership_from_removed_owner": "Eigendom overnemen van verwijderde eigenaar",

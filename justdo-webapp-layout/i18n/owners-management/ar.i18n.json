@@ -2,7 +2,6 @@
   "owners_mgmt_reject_transfer_from": "رفض نقل الملكية من",
   "owners_mgmt_accept_transfer_from": "قبول نقل الملكية من",
   "owners_mgmt_cancel_transfer_to": "إلغاء نقل الملكية إلى",
-  "owners_mgmt_loading": "جارٍ التحميل...",
   "owners_mgmt_transfer_ownership_to": "نقل الملكية إلى...",
   "owners_mgmt_task_only_visible_to_you": "هذه المهمة مرئية لك فقط",
   "owners_mgmt_take_ownership_from_removed_owner": "استلام الملكية من المالك المحذوف",

@@ -68,5 +68,10 @@
   "dismiss": "Loobu",
   "read_more": "Loe rohkem",
   "view": "Vaata",
-  "owner": "Omanik"
+  "owner": "Omanik",
+  "search_members": "Otsi liikmeid",
+  "settings": "Seaded",
+  "load_more": "Lae rohkem",
+  "copy": "Kopeeri",
+  "loading": "Laadimine..."
 }

@@ -68,5 +68,10 @@
   "dismiss": "Rədd et",
   "read_more": "Daha çox oxu",
   "view": "Bax",
-  "owner": "Sahib"
+  "owner": "Sahib",
+  "search_members": "Üzvləri axtar",
+  "settings": "Parametrlər",
+  "load_more": "Daha çox yüklə",
+  "copy": "Kopyala",
+  "loading": "Yüklənir..."
 }

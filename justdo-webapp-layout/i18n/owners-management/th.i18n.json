@@ -2,7 +2,6 @@
   "owners_mgmt_reject_transfer_from": "ปฏิเสธการโอนความเป็นเจ้าของจาก",
   "owners_mgmt_accept_transfer_from": "ยอมรับการโอนความเป็นเจ้าของจาก",
   "owners_mgmt_cancel_transfer_to": "ยกเลิกการโอนความเป็นเจ้าของไปยัง",
-  "owners_mgmt_loading": "กำลังโหลด...",
   "owners_mgmt_transfer_ownership_to": "โอนความเป็นเจ้าของไปยัง...",
   "owners_mgmt_task_only_visible_to_you": "งานนี้มองเห็นได้เฉพาะคุณเท่านั้น",
   "owners_mgmt_take_ownership_from_removed_owner": "รับความเป็นเจ้าของจากเจ้าของที่ถูกลบออก",

@@ -2,7 +2,6 @@
   "owners_mgmt_reject_transfer_from": "Rebutjar la transferència de propietat de",
   "owners_mgmt_accept_transfer_from": "Acceptar la transferència de propietat de",
   "owners_mgmt_cancel_transfer_to": "Cancel·lar la transferència de propietat a",
-  "owners_mgmt_loading": "Carregant...",
   "owners_mgmt_transfer_ownership_to": "Transferir la propietat a...",
   "owners_mgmt_task_only_visible_to_you": "Aquesta tasca només és visible per a tu",
   "owners_mgmt_take_ownership_from_removed_owner": "Prendre la propietat del propietari eliminat",

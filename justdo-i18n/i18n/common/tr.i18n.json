@@ -68,5 +68,10 @@
   "dismiss": "Kapat",
   "read_more": "Devamını oku",
   "view": "Görüntüle",
-  "owner": "Sahip"
+  "owner": "Sahip",
+  "search_members": "Üye ara",
+  "settings": "Ayarlar",
+  "load_more": "Daha Fazla Yükle",
+  "copy": "Kopyala",
+  "loading": "Yükleniyor..."
 }

@@ -68,5 +68,10 @@
   "dismiss": "Afvis",
   "read_more": "Læs mere",
   "view": "Vis",
-  "owner": "Ejer"
+  "owner": "Ejer",
+  "search_members": "Søg medlemmer",
+  "settings": "Indstillinger",
+  "load_more": "Indlæs mere",
+  "copy": "Kopier",
+  "loading": "Indlæser..."
 }

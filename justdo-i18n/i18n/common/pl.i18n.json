@@ -68,5 +68,10 @@
   "dismiss": "Odrzuć",
   "read_more": "Czytaj więcej",
   "view": "Widok",
-  "owner": "Właściciel"
+  "owner": "Właściciel",
+  "search_members": "Szukaj członków",
+  "settings": "Ustawienia",
+  "load_more": "Wczytaj więcej",
+  "copy": "Kopiuj",
+  "loading": "Ładowanie..."
 }

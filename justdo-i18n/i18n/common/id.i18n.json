@@ -68,5 +68,10 @@
   "dismiss": "Tutup",
   "read_more": "Baca selengkapnya",
   "view": "Lihat",
-  "owner": "Pemilik"
+  "owner": "Pemilik",
+  "search_members": "Cari anggota",
+  "settings": "Pengaturan",
+  "load_more": "Muat Lebih Banyak",
+  "copy": "Salin",
+  "loading": "Memuat..."
 }

@@ -2,7 +2,6 @@
   "owners_mgmt_reject_transfer_from": "মালিকানা হস্তান্তর প্রত্যাখ্যান করুন",
   "owners_mgmt_accept_transfer_from": "মালিকানা হস্তান্তর গ্রহণ করুন",
   "owners_mgmt_cancel_transfer_to": "মালিকানা হস্তান্তর বাতিল করুন",
-  "owners_mgmt_loading": "লোড হচ্ছে...",
   "owners_mgmt_transfer_ownership_to": "মালিকানা হস্তান্তর করুন...",
   "owners_mgmt_task_only_visible_to_you": "এই কাজটি শুধুমাত্র আপনার কাছে দৃশ্যমান",
   "owners_mgmt_take_ownership_from_removed_owner": "অপসারিত মালিকের কাছ থেকে মালিকানা নিন",

@@ -68,5 +68,10 @@
   "dismiss": "Aizvērt",
   "read_more": "Lasīt vairāk",
   "view": "Skatīt",
-  "owner": "Īpašnieks"
+  "owner": "Īpašnieks",
+  "search_members": "Meklēt dalībniekus",
+  "settings": "Iestatījumi",
+  "load_more": "Ielādēt vairāk",
+  "copy": "Kopēt",
+  "loading": "Ielāde..."
 }

@@ -68,5 +68,10 @@
   "dismiss": "Largo",
   "read_more": "Lexo më shumë",
   "view": "Shiko",
-  "owner": "Pronar"
+  "owner": "Pronar",
+  "search_members": "Kërko anëtarë",
+  "settings": "Cilësimet",
+  "load_more": "Ngarko më shumë",
+  "copy": "Kopjo",
+  "loading": "Po ngarkohet..."
 }

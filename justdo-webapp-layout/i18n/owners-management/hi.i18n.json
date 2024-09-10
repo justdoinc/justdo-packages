@@ -2,7 +2,6 @@
   "owners_mgmt_reject_transfer_from": "से स्वामित्व हस्तांतरण अस्वीकार करें",
   "owners_mgmt_accept_transfer_from": "से स्वामित्व हस्तांतरण स्वीकार करें",
   "owners_mgmt_cancel_transfer_to": "को स्वामित्व हस्तांतरण रद्द करें",
-  "owners_mgmt_loading": "लोड हो रहा है...",
   "owners_mgmt_transfer_ownership_to": "स्वामित्व हस्तांतरण करें...",
   "owners_mgmt_task_only_visible_to_you": "यह कार्य केवल आपको दिखाई देता है",
   "owners_mgmt_take_ownership_from_removed_owner": "हटाए गए मालिक से स्वामित्व लें",

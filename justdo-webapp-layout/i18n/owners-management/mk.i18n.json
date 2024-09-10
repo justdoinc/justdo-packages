@@ -2,7 +2,6 @@
   "owners_mgmt_reject_transfer_from": "Одбиј пренос на сопственост од",
   "owners_mgmt_accept_transfer_from": "Прифати пренос на сопственост од",
   "owners_mgmt_cancel_transfer_to": "Откажи пренос на сопственост кон",
-  "owners_mgmt_loading": "Се вчитува...",
   "owners_mgmt_transfer_ownership_to": "Пренеси сопственост на...",
   "owners_mgmt_task_only_visible_to_you": "Оваа задача е видлива само за вас",
   "owners_mgmt_take_ownership_from_removed_owner": "Преземи сопственост од отстранет сопственик",

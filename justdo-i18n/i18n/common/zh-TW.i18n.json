@@ -68,5 +68,10 @@
   "dismiss": "關閉",
   "read_more": "閱讀更多",
   "view": "查看",
-  "owner": "擁有者"
+  "owner": "擁有者",
+  "search_members": "搜尋成員",
+  "settings": "設定",
+  "load_more": "載入更多",
+  "copy": "複製",
+  "loading": "載入中..."
 }

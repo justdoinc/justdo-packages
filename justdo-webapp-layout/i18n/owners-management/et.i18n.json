@@ -2,7 +2,6 @@
   "owners_mgmt_reject_transfer_from": "Keeldu omandiõiguse üleandmisest kasutajalt",
   "owners_mgmt_accept_transfer_from": "Nõustu omandiõiguse üleandmisega kasutajalt",
   "owners_mgmt_cancel_transfer_to": "Tühista omandiõiguse üleandmine kasutajale",
-  "owners_mgmt_loading": "Laadimine...",
   "owners_mgmt_transfer_ownership_to": "Anna omandiõigus üle...",
   "owners_mgmt_task_only_visible_to_you": "See ülesanne on nähtav ainult sulle",
   "owners_mgmt_take_ownership_from_removed_owner": "Võta omandiõigus eemaldatud omanikult",

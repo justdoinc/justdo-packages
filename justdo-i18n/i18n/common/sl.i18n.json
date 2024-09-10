@@ -68,5 +68,10 @@
   "dismiss": "Opusti",
   "read_more": "Preberi več",
   "view": "Poglej",
-  "owner": "Lastnik"
+  "owner": "Lastnik",
+  "search_members": "Išči člane",
+  "settings": "Nastavitve",
+  "load_more": "Naloži več",
+  "copy": "Kopiraj",
+  "loading": "Nalaganje..."
 }

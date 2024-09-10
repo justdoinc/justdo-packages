@@ -68,5 +68,10 @@
   "dismiss": "አሰናብት",
   "read_more": "ተጨማሪ አንብብ",
   "view": "ተመልከት",
-  "owner": "ባለቤት"
+  "owner": "ባለቤት",
+  "search_members": "አባላትን ፈልግ",
+  "settings": "ቅንብሮች",
+  "load_more": "ተጨማሪ ጫን",
+  "copy": "ቅዳ",
+  "loading": "በመጫን ላይ..."
 }

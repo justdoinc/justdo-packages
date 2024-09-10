@@ -68,5 +68,10 @@
   "dismiss": "Sluit",
   "read_more": "Lees meer",
   "view": "Bekyk",
-  "owner": "Eienaar"
+  "owner": "Eienaar",
+  "search_members": "Soek lede",
+  "settings": "Instellings",
+  "load_more": "Laai meer",
+  "copy": "Kopieer",
+  "loading": "Besig om te laai..."
 }

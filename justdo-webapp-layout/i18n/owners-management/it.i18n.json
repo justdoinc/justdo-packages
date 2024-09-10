@@ -2,7 +2,6 @@
   "owners_mgmt_reject_transfer_from": "Rifiuta il trasferimento di proprietà da",
   "owners_mgmt_accept_transfer_from": "Accetta il trasferimento di proprietà da",
   "owners_mgmt_cancel_transfer_to": "Annulla il trasferimento di proprietà a",
-  "owners_mgmt_loading": "Caricamento...",
   "owners_mgmt_transfer_ownership_to": "Trasferisci la proprietà a...",
   "owners_mgmt_task_only_visible_to_you": "Questa attività è visibile solo a te",
   "owners_mgmt_take_ownership_from_removed_owner": "Prendi la proprietà dal proprietario rimosso",

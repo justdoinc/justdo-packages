@@ -68,5 +68,10 @@
   "dismiss": "Ofbriechen",
   "read_more": "Méi liesen",
   "view": "Ukucken",
-  "owner": "Besëtzer"
+  "owner": "Besëtzer",
+  "search_members": "Membere sichen",
+  "settings": "Astellungen",
+  "load_more": "Méi lueden",
+  "copy": "Kopéieren",
+  "loading": "Lueden..."
 }

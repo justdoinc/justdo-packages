@@ -35,7 +35,7 @@
   {{else if $eq $.Meteor.userId owner_id}}
     {{#if $not pending_owner_id}}
       {{#if $eq taskHasOtherMembers "loading"}}
-        <div class="loading-message">{{_ "owners_mgmt_loading"}}</div>
+        <div class="loading-message">{{_ "loading"}}</div>
       {{else if $eq taskHasOtherMembers "yes"}}
         <div class="ownership-transfer-dialog">
           <div class="members-search-wrapper">
@@ -100,7 +100,7 @@
           {{/if}}
         {{else}}
           <div class="manage-members-loading">
-            {{_ "owners_mgmt_loading"}}
+            {{_ "loading"}}
           </div>
         {{/if}}
       </div>

@@ -2,7 +2,6 @@
   "owners_mgmt_reject_transfer_from": "Zavrni prenos lastništva od",
   "owners_mgmt_accept_transfer_from": "Sprejmi prenos lastništva od",
   "owners_mgmt_cancel_transfer_to": "Prekliči prenos lastništva na",
-  "owners_mgmt_loading": "Nalaganje...",
   "owners_mgmt_transfer_ownership_to": "Prenesi lastništvo na...",
   "owners_mgmt_task_only_visible_to_you": "Ta naloga je vidna samo vam",
   "owners_mgmt_take_ownership_from_removed_owner": "Prevzemi lastništvo od odstranjenega lastnika",

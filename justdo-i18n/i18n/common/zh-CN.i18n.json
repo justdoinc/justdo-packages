@@ -68,5 +68,10 @@
   "dismiss": "关闭",
   "read_more": "阅读更多",
   "view": "查看",
-  "owner": "所有者"
+  "owner": "所有者",
+  "search_members": "搜索成员",
+  "settings": "设置",
+  "load_more": "加载更多",
+  "copy": "复制",
+  "loading": "加载中..."
 }

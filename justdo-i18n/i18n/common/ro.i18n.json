@@ -68,5 +68,10 @@
   "dismiss": "Respinge",
   "read_more": "Citește mai mult",
   "view": "Vizualizează",
-  "owner": "Proprietar"
+  "owner": "Proprietar",
+  "search_members": "Caută membri",
+  "settings": "Setări",
+  "load_more": "Încarcă mai mult",
+  "copy": "Copiază",
+  "loading": "Se încarcă..."
 }

@@ -68,5 +68,10 @@
   "dismiss": "Atmesti",
   "read_more": "Skaityti daugiau",
   "view": "Peržiūrėti",
-  "owner": "Savininkas"
+  "owner": "Savininkas",
+  "search_members": "Ieškoti narių",
+  "settings": "Nustatymai",
+  "load_more": "Įkelti daugiau",
+  "copy": "Kopijuoti",
+  "loading": "Įkeliama..."
 }

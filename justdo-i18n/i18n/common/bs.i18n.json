@@ -68,5 +68,10 @@
   "dismiss": "Odbaci",
   "read_more": "Pročitaj više",
   "view": "Pregled",
-  "owner": "Vlasnik"
+  "owner": "Vlasnik",
+  "search_members": "Pretraži članove",
+  "settings": "Postavke",
+  "load_more": "Učitaj više",
+  "copy": "Kopiraj",
+  "loading": "Učitavanje..."
 }

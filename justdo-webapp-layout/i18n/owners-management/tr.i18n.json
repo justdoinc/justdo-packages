@@ -2,7 +2,6 @@
   "owners_mgmt_reject_transfer_from": "Şundan gelen sahiplik transferini reddet",
   "owners_mgmt_accept_transfer_from": "Şundan gelen sahiplik transferini kabul et",
   "owners_mgmt_cancel_transfer_to": "Şuna yapılan sahiplik transferini iptal et",
-  "owners_mgmt_loading": "Yükleniyor...",
   "owners_mgmt_transfer_ownership_to": "Sahipliği şuna devret...",
   "owners_mgmt_task_only_visible_to_you": "Bu görev sadece size görünür",
   "owners_mgmt_take_ownership_from_removed_owner": "Kaldırılan sahibinden sahipliği al",

@@ -2,7 +2,6 @@
   "owners_mgmt_reject_transfer_from": "Noraidīt īpašumtiesību nodošanu no",
   "owners_mgmt_accept_transfer_from": "Pieņemt īpašumtiesību nodošanu no",
   "owners_mgmt_cancel_transfer_to": "Atcelt īpašumtiesību nodošanu",
-  "owners_mgmt_loading": "Ielāde...",
   "owners_mgmt_transfer_ownership_to": "Nodot īpašumtiesības...",
   "owners_mgmt_task_only_visible_to_you": "Šis uzdevums ir redzams tikai jums",
   "owners_mgmt_take_ownership_from_removed_owner": "Pārņemt īpašumtiesības no noņemtā īpašnieka",

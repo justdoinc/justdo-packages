@@ -68,5 +68,10 @@
   "dismiss": "Bỏ qua",
   "read_more": "Đọc thêm",
   "view": "Xem",
-  "owner": "Chủ sở hữu"
+  "owner": "Chủ sở hữu",
+  "search_members": "Tìm kiếm thành viên",
+  "settings": "Cài đặt",
+  "load_more": "Tải thêm",
+  "copy": "Sao chép",
+  "loading": "Đang tải..."
 }

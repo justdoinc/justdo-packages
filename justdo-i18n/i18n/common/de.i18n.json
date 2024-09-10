@@ -68,5 +68,10 @@
   "dismiss": "Verwerfen",
   "read_more": "Mehr lesen",
   "view": "Ansicht",
-  "owner": "Besitzer"
+  "owner": "Besitzer",
+  "search_members": "Mitglieder suchen",
+  "settings": "Einstellungen",
+  "load_more": "Mehr laden",
+  "copy": "Kopieren",
+  "loading": "Wird geladen..."
 }

@@ -68,5 +68,10 @@
   "dismiss": "Baztertu",
   "read_more": "Irakurri gehiago",
   "view": "Ikusi",
-  "owner": "Jabea"
+  "owner": "Jabea",
+  "search_members": "Bilatu kideak",
+  "settings": "Ezarpenak",
+  "load_more": "Kargatu gehiago",
+  "copy": "Kopiatu",
+  "loading": "Kargatzen..."
 }

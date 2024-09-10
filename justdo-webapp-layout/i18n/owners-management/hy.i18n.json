@@ -2,7 +2,6 @@
   "owners_mgmt_reject_transfer_from": "Մերժել սեփականության փոխանցումը",
   "owners_mgmt_accept_transfer_from": "Ընդունել սեփականության փոխանցումը",
   "owners_mgmt_cancel_transfer_to": "Չեղարկել սեփականության փոխանցումը",
-  "owners_mgmt_loading": "Բեռնվում է...",
   "owners_mgmt_transfer_ownership_to": "Փոխանցել սեփականությունը...",
   "owners_mgmt_task_only_visible_to_you": "Այս առաջադրանքը տեսանելի է միայն Ձեզ",
   "owners_mgmt_take_ownership_from_removed_owner": "Վերցնել սեփականությունը հեռացված սեփականատիրոջից",

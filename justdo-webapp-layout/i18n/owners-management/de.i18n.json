@@ -2,7 +2,6 @@
   "owners_mgmt_reject_transfer_from": "Eigentumsübertragung ablehnen von",
   "owners_mgmt_accept_transfer_from": "Eigentumsübertragung annehmen von",
   "owners_mgmt_cancel_transfer_to": "Eigentumsübertragung abbrechen an",
-  "owners_mgmt_loading": "Wird geladen...",
   "owners_mgmt_transfer_ownership_to": "Eigentum übertragen an...",
   "owners_mgmt_task_only_visible_to_you": "Diese Aufgabe ist nur für Sie sichtbar",
   "owners_mgmt_take_ownership_from_removed_owner": "Eigentum von entferntem Besitzer übernehmen",
