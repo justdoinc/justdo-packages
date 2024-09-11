@@ -18,7 +18,7 @@ _.extend JustdoNews.prototype,
     if _.isEmpty category or not _.isString category
       throw @_error "invalid-argument"
 
-    if _.has @news, category
+    if @isNewsCategoryExists category
       throw @_error "news-category-already-exists"
 
     @news[category] = []
@@ -36,13 +36,22 @@ _.extend JustdoNews.prototype,
 
     return
 
+  isNewsCategoryExists: (category) ->
+    return _.has @news, category
+  
+  requireNewsCategoryExists: (category) ->
+    if not @isNewsCategoryExists category
+      throw @_error "news-category-not-found"
+    
+    return true
+
   getAllNewsByCategory: (category) ->
     if Meteor.isClient
       @category_dep.depend()
       @news_dep.depend()
 
-    if _.has @news, category
       return JSON.parse(JSON.stringify(@news[category]))
+    if @isNewsCategoryExists category
     return []
 
   getMostRecentNewsIdUnderCategory: (category) ->
@@ -214,8 +223,7 @@ _.extend JustdoNews.prototype,
     if not (_.find news_obj?.templates, (template_obj) -> template_obj._id is JustdoNews.default_news_template)?
       throw @_error "no-main-template"
 
-    if not _.has @news, category
-      throw @_error "news-category-not-found"
+    @requireNewsCategoryExists category
 
     @news[category].push news_obj
     @news[category] = _.sortBy(@news[category], "date").reverse() # Ensures the first element is the newest
