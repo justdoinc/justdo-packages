@@ -26,41 +26,30 @@ $meeting-padding: 2rem
 
   .meeting-dialog-header
     position: relative
-    padding: .75rem 0.75rem .25rem 0.75rem
+    padding: 26px 32px
     display: flex
     align-items: center
-    justify-content: flex-end
-
-  .meeting-dialog-close
-    opacity: 0.5
-    cursor: pointer
-    stroke-width: 2
-    color: $meeting_color
-    &:hover
-      opacity: 1
+    justify-content: space-between
 
   .meeting-dialog-state
     background-color: #687B8E
     color: white
     font-size: 12px
-    font-weight: bold
+    font-weight: 600
     text-transform: uppercase
     padding: 4px 8px
-    margin-right: 8px
-    position: absolute
-    top: -9px
-    left: 2rem
+    border-radius: 4px
 
   .meeting-dialog-actions
-    background-color: white
-    position: absolute
-    top: -12px
-    right: 4rem
-    padding: 4px 8px 4px 4px
+    display: flex
+    align-items: center
     .jd-icon
       color: $meeting_color
-      padding: 3px
+      padding: 2px
       cursor: pointer
+      margin: 0 4px
+      width: 22px
+      height: 22px
       &:hover
         background-color: rgba(0, 0, 0, 0.08)
         color: black
@@ -78,7 +67,7 @@ $meeting-padding: 2rem
     font-size: 20px
     text-overflow: ellipsis
     overflow: hidden
-    margin-right: 2rem
+    margin-right: 32px
     transition: all 0.35s
     &:focus
       outline: 0
@@ -224,17 +213,17 @@ $meeting-padding: 2rem
     .justdo-avatars-box
       display: flex
       align-items: center
-      padding: 0.75rem 0
+      padding: 20px 0
       .justdo-avatar
         width: 28px
         height: 28px
       .cont
         margin-bottom: 0px
       .sep
-        margin: 0 7px 0px 5px
+        margin: 0 8px
         border-right: 1px solid #f3f4f5
     .avatar-box-button
-      margin-right: 2px
+      margin-left: 4px
       background-color: #F2F4F5
       min-width: 28px
       width: auto
@@ -361,8 +350,6 @@ $meeting-padding: 2rem
 
   .meeting-task-add-btn
     position: absolute
-    font-weight: bold
-    text-transform: uppercase
     right: 8px
 
   .meeting-task-add
@@ -376,7 +363,7 @@ $meeting-padding: 2rem
       color: #BECDD9
 
   .done-msg
-    margin-right: 1.5rem
+    margin-right: 16px
     color: #A5ABB3
 
   .ui-resizable-se
@@ -415,6 +402,31 @@ $meeting-padding: 2rem
 .thead-logo
   height: 40px
   width: auto
+
+.right-to-left
+  .meeting-dialog-title
+    margin-right: unset
+    margin-left: 32px
+  .meeting-dialog-location-title,
+  .meeting-note-title
+    margin-right: unset !important
+    margin-left: 8px
+  .meetings_meeting-dialog
+    .meeting-task-add-btn
+      right: unset
+      left: 8px
+    .meeting-task-add-text
+      left: unset
+      right: 4px
+    .meeting-task-add
+      padding-left: unset
+      padding-right: 60px
+    .meeting-members .avatar-box-button
+      margin-left: unset
+      margin-right: 4px
+  .meetings_meeting-dialog .done-msg
+    margin-right: unset
+    margin-left: 16px
 
 @media print
   .drawer

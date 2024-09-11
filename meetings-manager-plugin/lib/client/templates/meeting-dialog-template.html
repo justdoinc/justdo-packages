@@ -2,36 +2,33 @@
   <div class="meetings_meeting-dialog {{meeting.status}}">
     <!-- Meeting Header -->
     <div class="meeting-dialog-header">
-      <div class="meeting-dialog-state shadow-sm rounded-sm {{#if $eq meeting.status 'pending'}}bg-primary{{/if}} {{#if $eq meeting.status 'in-progress'}}bg-success{{/if}}">{{meeting.status}}</div>
-      <div class="meeting-dialog-actions shadow-sm rounded d-flex align-items-center">
+      <div class="meeting-dialog-state {{#if $eq meeting.status 'pending'}}bg-primary{{/if}} {{#if $eq meeting.status 'in-progress'}}bg-success{{/if}}">{{meeting.status}}</div>
+      <div class="meeting-dialog-actions">
         <svg class="jd-icon meeting-refresh">
           <use xlink:href="/layout/icons-feather-sprite.svg#refresh-cw"/>
           <title>Refresh</title>
         </svg>
-        <div class="meeting-dialog-divider bg-secondary"></div>
         <svg class="jd-icon meeting-print">
           <use xlink:href="/layout/icons-feather-sprite.svg#printer"/>
           <title>Print meeting</title>
         </svg>
-        <div class="meeting-dialog-divider bg-secondary"></div>
         <svg class="jd-icon meeting-email">
           <use xlink:href="/layout/icons-feather-sprite.svg#mail"/>
           <title>Email meeting details</title>
         </svg>
-        <div class="meeting-dialog-divider bg-secondary"></div>
         <svg class="jd-icon meeting-copy">
           <use xlink:href="/layout/icons-feather-sprite.svg#copy"/>
           <title>Copy meeting details to the clipboard</title>
         </svg>
         {{#if isAllowMeetingsDeletion}}
-        <div class="meeting-dialog-divider bg-secondary"></div>
         <svg class="jd-icon meeting-delete">
           <use xlink:href="/layout/icons-feather-sprite.svg#trash"/>
           <title>Delete</title>
         </svg>
         {{/if}}
+        <div class="meeting-dialog-divider bg-secondary"></div>
+        <svg class="meeting-dialog-close jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
       </div>
-      <svg class="meeting-dialog-close jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
     </div>
     <div class="meetings-meeting-scrollable-area">
       <!-- Meeting Info -->
@@ -144,17 +141,17 @@
         <div class="d-flex align-items-center justify-content-end py-4">
           {{#if mayEditFooter}}
             {{#if $eq meeting.status "draft"}}
-              <button type="button" class="btn btn-primary btn-sm text-uppercase font-weight-bold btn-publish-meeting">Publish</button>
+              <button type="button" class="btn btn-primary btn-sm btn-publish-meeting">Publish</button>
             {{/if}}
             {{#if $eq meeting.status "pending"}}
-              <button type="button" class="btn btn-primary btn-sm text-uppercase font-weight-bold btn-start-meeting">Start Meeting</button>
+              <button type="button" class="btn btn-primary btn-sm btn-start-meeting">Start Meeting</button>
             {{/if}}
             {{#if $eq meeting.status "in-progress"}}
-              <button type="button" class="btn btn-primary btn-sm text-uppercase font-weight-bold btn-end-meeting">End</button>
+              <button type="button" class="btn btn-primary btn-sm btn-end-meeting">End</button>
             {{/if}}
             {{#if $eq meeting.status "ended"}}
               <div class="done-msg">Meeting ended, you can reopen meeting to edit</div>
-              <button type="button" class="btn btn-secondary btn-sm text-uppercase font-weight-bold btn-start-meeting">Reopen</button>
+              <button type="button" class="btn btn-secondary btn-sm btn-start-meeting">Reopen</button>
             {{/if}}
           {{/if}}
         </div>

@@ -6,7 +6,7 @@ Template.meetings_meeting_members.onCreated ->
   @autorun =>
     @editable_rv.set Template.currentData().editable
     return
-  
+
   return
 
 Template.meetings_meeting_members.helpers
@@ -17,12 +17,12 @@ Template.meetings_meeting_members.helpers
 
   secondary_users: -> _.without @users, @organizer_id
 
-  show_button: -> 
+  show_button: ->
     return if Template.instance().editable_rv.get() then "always" else "never"
 
   isAttendee: ->
     return isAttendee(@)
-  
+
   isEditable: -> Template.instance().editable_rv.get()
 
 Template.meetings_meeting_members.events
@@ -39,6 +39,7 @@ Template.meetings_meeting_members.events
       message: message_template.node
       animate: false
       className: "members-editor-dialog bootbox-new-design"
+      rtl_ready: true
 
       onEscape: ->
         return true

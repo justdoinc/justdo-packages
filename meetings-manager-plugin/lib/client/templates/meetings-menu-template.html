@@ -10,15 +10,15 @@
           <input type="text" class="meeting-search-input form-control form-control-sm" placeholder="Meetings">
           <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#search"></use></svg>
         </div>
-        <button class="meetings-menu-schedule btn btn-light text-primary text-nowrap meeting-menu-button"><svg><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg> Schedule </button>
-        <button class="meetings-menu-start btn btn-light text-primary text-nowrap meeting-menu-button"><svg><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg> Start </button>
+        <button class="meetings-menu-schedule btn btn-sm btn-primary meeting-menu-button">+ Schedule</button>
+        <button class="meetings-menu-start btn btn-sm btn-primary text-nowrap meeting-menu-button">+ Start</button>
         <div class="meetings-menu-list">
           {{#with meetings "draft"}}
             {{#if this.exist}}
               <section class="meetings-menu-list-draft">
-                <div class="meetings-menu-section-title text-muted text-uppercase py-1">Unpublished</div>
+                <div class="meetings-menu-section-title">Unpublished</div>
                 {{#each this.meetings}}
-                  <div class="meetings-menu-item d-flex align-items-center bg-light py-1 px-2">
+                  <div class="meetings-menu-item d-flex align-items-center py-1 px-2">
                     {{> meetings_meeting_header}}
                   </div>
                 {{/each}}
@@ -28,9 +28,9 @@
           {{#with meetings "pending"}}
             {{#if this.exist}}
               <section class="meetings-menu-list-pending">
-                <div class="meetings-menu-section-title text-muted text-uppercase py-1">Published</div>
+                <div class="meetings-menu-section-title">Published</div>
                 {{#each this.meetings}}
-                  <div class="meetings-menu-item d-flex align-items-center bg-light py-1 px-2">
+                  <div class="meetings-menu-item d-flex align-items-center py-1 px-2">
                     {{> meetings_meeting_header}}
                   </div>
                 {{/each}}
@@ -40,9 +40,9 @@
           {{#with meetings "in-progress"}}
             {{#if this.exist}}
               <section class="meetings-menu-list-in-progress">
-                <div class="meetings-menu-section-title text-muted text-uppercase py-1">In progress</div>
+                <div class="meetings-menu-section-title">In progress</div>
                 {{#each this.meetings}}
-                  <div class="meetings-menu-item d-flex align-items-center bg-light py-1 px-2">
+                  <div class="meetings-menu-item d-flex align-items-center py-1 px-2">
                     {{> meetings_meeting_header}}
                   </div>
                 {{/each}}
@@ -52,9 +52,9 @@
           {{#with meetings "ended"}}
             {{#if this.exist}}
               <section class="meetings-menu-list-end">
-                <div class="meetings-menu-section-title text-muted text-uppercase py-1">Ended</div>
+                <div class="meetings-menu-section-title">Ended</div>
                 {{#each this.meetings}}
-                  <div class="meetings-menu-item d-flex align-items-center bg-light py-1 px-2">
+                  <div class="meetings-menu-item d-flex align-items-center py-1 px-2">
                     {{> meetings_meeting_header}}
                   </div>
                 {{/each}}
@@ -62,8 +62,6 @@
             {{/if}}
           {{/with}}
         </div>
-
-
       </div>
     </div>
   </div>
