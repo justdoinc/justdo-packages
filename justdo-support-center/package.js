@@ -72,6 +72,14 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
+  api.addFiles("lib/client/support-page/support-page-portal/support-page-portal.sass", client);
+  api.addFiles("lib/client/support-page/support-page-portal/support-page-portal.html", client);
+  api.addFiles("lib/client/support-page/support-page-portal/support-page-portal.coffee", client);
+
+  api.addFiles("lib/client/support-page/support-page-article/support-page-article.sass", client);
+  api.addFiles("lib/client/support-page/support-page-article/support-page-article.html", client);
+  api.addFiles("lib/client/support-page/support-page-article/support-page-article.coffee", client);
+
   api.addFiles("lib/client/task-pane-section/task-pane-section-registrar.coffee", client);
 
   api.addFiles("lib/client/task-pane-section/task-pane-section.sass", client);
