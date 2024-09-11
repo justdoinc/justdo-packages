@@ -76,7 +76,7 @@ _.extend JustdoSystemUpdates.prototype,
     most_recent_system_update_id = system_update_ids[page_number]
 
     system_update_template =
-      JustdoHelpers.renderTemplateInNewNode("news", {router_navigation: false, category: JustdoSystemUpdates.news_category, news_id: most_recent_system_update_id})
+      JustdoHelpers.renderTemplateInNewNode(JustdoSystemUpdates.news_category, {router_navigation: false, category: JustdoSystemUpdates.news_category, news_id: most_recent_system_update_id})
 
     template_instance = system_update_template.template_instance
 
