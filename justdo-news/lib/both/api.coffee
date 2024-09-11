@@ -14,14 +14,28 @@ _.extend JustdoNews.prototype,
 
     return
 
-  registerNewsCategory: (category) ->
+  _registerNewsCategoryOptionsSchema: new SimpleSchema
+    template:
+      label: "News category template"
+      type: String
+      defaultValue: JustdoNews.default_news_category_template
+  registerNewsCategory: (category, options) ->
     if _.isEmpty category or not _.isString category
       throw @_error "invalid-argument"
 
     if @isNewsCategoryExists category
       throw @_error "news-category-already-exists"
 
-    @news[category] = []
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_registerNewsCategoryOptionsSchema,
+        options or {},
+        {self: @, throw_on_error: true}
+      )
+    options = cleaned_val
+    options.news = []
+
+    @news[category] = options
 
     if @register_news_routes
       for route_path, {routingFunction, route_options} of @_generateRouteFunctionForNewsCategory category
@@ -45,13 +59,17 @@ _.extend JustdoNews.prototype,
     
     return true
 
+  getNewsCategoryTemplate: (category) ->
+    @requireNewsCategoryExists category
+    return @news[category].template
+
   getAllNewsByCategory: (category) ->
     if Meteor.isClient
       @category_dep.depend()
       @news_dep.depend()
 
-      return JSON.parse(JSON.stringify(@news[category]))
     if @isNewsCategoryExists category
+      return JSON.parse(JSON.stringify(@news[category].news))
     return []
 
   getMostRecentNewsIdUnderCategory: (category) ->
@@ -59,7 +77,7 @@ _.extend JustdoNews.prototype,
       @category_dep.depend()
       @news_dep.depend()
 
-    return @news[category]?[0]?._id
+    return @news[category]?.news?[0]?._id
 
   _generateRouteFunctionForNewsCategory: (category) ->
     self = @
@@ -114,7 +132,7 @@ _.extend JustdoNews.prototype,
           if not self.getNewsIdIfExists(category, news_id)?
             self.redirectToMostRecentNewsPageByCategoryOrFallback category
 
-          @render "news"
+          @render self.getNewsCategoryTemplate category
           @layout "single_frame_layout"
           return
         route_options:
@@ -139,7 +157,7 @@ _.extend JustdoNews.prototype,
           if not self.getNewsTemplateIfExists(category, news_id, news_template)?
             self.redirectToMostRecentNewsPageByCategoryOrFallback category
 
-          @render "news"
+          @render self.getNewsCategoryTemplate category
           @layout "single_frame_layout"
           return
         route_options:
@@ -225,8 +243,8 @@ _.extend JustdoNews.prototype,
 
     @requireNewsCategoryExists category
 
-    @news[category].push news_obj
-    @news[category] = _.sortBy(@news[category], "date").reverse() # Ensures the first element is the newest
+    @news[category].news.push news_obj
+    @news[category].news = _.sortBy(@news[category].news, "date").reverse() # Ensures the first element is the newest
     if Meteor.isClient
       @news_dep.changed()
     return
@@ -239,7 +257,7 @@ _.extend JustdoNews.prototype,
     if not category? or not news_id_or_alias?
       return
 
-    return _.find @news[category], (news) -> 
+    return _.find @news[category].news, (news) -> 
       news_aliases = news.aliases or []
       return (news._id is news_id_or_alias) or (news_id_or_alias in news_aliases)
     
