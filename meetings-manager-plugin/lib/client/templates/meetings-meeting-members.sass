@@ -1,12 +1,15 @@
 .meeting-members-wrapper
   display: flex
 
-  .members-editor-dialog-keep-users-section,
-  .members-editor-dialog-add-users-section
+  .members-editor-dialog-add-users-section,
+  .members-editor-dialog-keep-users-section
     width: 50%
-    padding: 0px 4px
     display: flex
     flex-direction: column
+    padding: 20px 0px 0px 20px
+    .section-caption,
+    .action-users
+      padding-right: 20px
 
   .members-editor-dialog-keep-users-section
     .dont-proceed
@@ -17,6 +20,7 @@
         text-decoration: line-through
 
   .members-editor-dialog-add-users-section
+    border-right: 1px solid #ecf1f8
     .user-x
       display: none
 
