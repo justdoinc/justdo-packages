@@ -14,18 +14,36 @@ _.extend JustdoNews.prototype,
 
     return
 
-  registerNewsCategory: (category) ->
+  _registerNewsCategoryOptionsSchema: new SimpleSchema
+    template:
+      label: "News category template"
+      type: String
+      defaultValue: JustdoNews.default_news_category_template
+    translatable:
+      label: "News category translatable"
+      type: Boolean
+      defaultValue: true
+  registerNewsCategory: (category, options) ->
     if _.isEmpty category or not _.isString category
       throw @_error "invalid-argument"
 
-    if _.has @news, category
+    if @isNewsCategoryExists category
       throw @_error "news-category-already-exists"
 
-    @news[category] = []
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_registerNewsCategoryOptionsSchema,
+        options or {},
+        {self: @, throw_on_error: true}
+      )
+    options = cleaned_val
+    options.news = []
+
+    @news[category] = options
 
     if @register_news_routes
       for route_path, {routingFunction, route_options} of @_generateRouteFunctionForNewsCategory category
-        if APP.justdo_i18n_routes?
+        if options.translatable and APP.justdo_i18n_routes?
           # Register i18n route for news
           APP.justdo_i18n_routes?.registerRoutes {path: route_path, routingFunction: routingFunction, route_options: route_options}
         else
@@ -36,13 +54,26 @@ _.extend JustdoNews.prototype,
 
     return
 
+  isNewsCategoryExists: (category) ->
+    return _.has @news, category
+  
+  requireNewsCategoryExists: (category) ->
+    if not @isNewsCategoryExists category
+      throw @_error "news-category-not-found"
+    
+    return true
+  
+  getNewsCategoryOptions: (category) ->
+    @requireNewsCategoryExists category
+    return @news[category]
+
   getAllNewsByCategory: (category) ->
     if Meteor.isClient
       @category_dep.depend()
       @news_dep.depend()
 
-    if _.has @news, category
-      return JSON.parse(JSON.stringify(@news[category]))
+    if @isNewsCategoryExists category
+      return JSON.parse(JSON.stringify(@news[category].news))
     return []
 
   getMostRecentNewsIdUnderCategory: (category) ->
@@ -50,11 +81,12 @@ _.extend JustdoNews.prototype,
       @category_dep.depend()
       @news_dep.depend()
 
-    return @news[category]?[0]?._id
+    return @news[category]?.news?[0]?._id
 
   _generateRouteFunctionForNewsCategory: (category) ->
     self = @
     underscored_category = category.replace /-/g, "_"
+    news_category_options = @getNewsCategoryOptions category
 
     metadata =
       title_i18n: (path_without_lang, lang) ->
@@ -64,9 +96,10 @@ _.extend JustdoNews.prototype,
           news_template = JustdoNews.default_news_template
 
         news_template_doc = self.getNewsTemplateIfExists category, news_id, news_template
-        fallback_title = APP.justdo_seo.getDefaultPageTitle lang
+        if (page_title = news_template_doc?.page_title)?
+          return TAPi18n.__ page_title, {}, lang
 
-        return APP.justdo_i18n.getI18nTextOrFallback {i18n_key: news_template_doc?.page_title, fallback_text: fallback_title, lang: lang}
+        return APP.justdo_seo.getDefaultPageTitle lang
       description_i18n: (path_without_lang, lang) ->
         {news_id, new_template} = self.getNewsParamFromPath path_without_lang
 
@@ -74,9 +107,10 @@ _.extend JustdoNews.prototype,
           news_template = JustdoNews.default_news_template
 
         news_template_doc = self.getNewsTemplateIfExists category, news_id, news_template
-        fallback_description = APP.justdo_seo.getDefaultPageDescription lang
+        if (page_description = news_template_doc?.page_description)?
+          return TAPi18n.__ page_description, {}, lang
 
-        return APP.justdo_i18n.getI18nTextOrFallback {i18n_key: news_template_doc?.page_description, fallback_text: fallback_description, lang: lang}
+        return APP.justdo_seo.getDefaultPageDescription lang
       preview_image: (path_without_lang) ->
         {news_id} = self.getNewsParamFromPath path_without_lang
 
@@ -91,7 +125,7 @@ _.extend JustdoNews.prototype,
           return
         route_options:
           name: "#{underscored_category}_page"
-          translatable: true
+          translatable: news_category_options.translatable
           mapGenerator: ->
             ret = 
               url: "/#{category}"
@@ -105,12 +139,12 @@ _.extend JustdoNews.prototype,
           if not self.getNewsIdIfExists(category, news_id)?
             self.redirectToMostRecentNewsPageByCategoryOrFallback category
 
-          @render "news"
+          @render news_category_options.template
           @layout "single_frame_layout"
           return
         route_options:
           name: "#{underscored_category}_page_with_news_id"
-          translatable: true
+          translatable: news_category_options.translatable
           mapGenerator: ->
             for news_doc in self.getAllNewsByCategory category
               ret = 
@@ -130,12 +164,12 @@ _.extend JustdoNews.prototype,
           if not self.getNewsTemplateIfExists(category, news_id, news_template)?
             self.redirectToMostRecentNewsPageByCategoryOrFallback category
 
-          @render "news"
+          @render news_category_options.template
           @layout "single_frame_layout"
           return
         route_options:
           name: "#{underscored_category}_page_with_news_id_and_template"
-          translatable: true
+          translatable: news_category_options.translatable
           mapGenerator: ->
             for news_doc in self.getAllNewsByCategory category
               for template_obj in news_doc.templates
@@ -214,11 +248,10 @@ _.extend JustdoNews.prototype,
     if not (_.find news_obj?.templates, (template_obj) -> template_obj._id is JustdoNews.default_news_template)?
       throw @_error "no-main-template"
 
-    if not _.has @news, category
-      throw @_error "news-category-not-found"
+    @requireNewsCategoryExists category
 
-    @news[category].push news_obj
-    @news[category] = _.sortBy(@news[category], "date").reverse() # Ensures the first element is the newest
+    @news[category].news.push news_obj
+    @news[category].news = _.sortBy(@news[category].news, "date").reverse() # Ensures the first element is the newest
     if Meteor.isClient
       @news_dep.changed()
     return
@@ -231,7 +264,7 @@ _.extend JustdoNews.prototype,
     if not category? or not news_id_or_alias?
       return
 
-    return _.find @news[category], (news) -> 
+    return _.find @news[category].news, (news) -> 
       news_aliases = news.aliases or []
       return (news._id is news_id_or_alias) or (news_id_or_alias in news_aliases)
     

@@ -3,4 +3,6 @@ _.extend JustdoNews,
 
   root_path_regex: /^\/([A-Z]|[a-z]|\d|-)+/g
 
+  default_news_category_template: "news"
+
   default_news_template: "main"

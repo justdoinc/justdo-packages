@@ -1,0 +1,59 @@
+<template name="support_article_how_to_use_the_gantt">
+  <p>Gantt charts are a powerful tool for visualizing project timelines. JustDo's Gantt provides the functionality you need to manage projects effectively.</p>
+  <p><img src="{{getSupportCenterAssetUrl "/how-to-use-the-gantt/assets/Gantt.png"}}" alt="Gantt.png" width="624" height="262"></p>
+  <p>Track project progress using the <strong>Current date</strong> line (green vertical line). Adjust the Gantt's column width and viewing area using the +/- buttons and by dragging the column content area. Use the buttons at the top right to jump to the selected task's date or today's date.</p>
+  <p><img src="https://support.justdo.com/hc/article_attachments/5099419301266/2022-04-13_9-09-52_Gantt_Scroll.gif" alt="2022-04-13_9-09-52_Gantt_Scroll.gif"></p>
+  <p>It's recommended to use the Gantt in the zoom-in view of a specific project or sub-project.</p>
+  <p>To print the Gantt chart, use the "Download as PNG" option in the print menu.</p>
+  <p><img src="{{getSupportCenterAssetUrl "/how-to-use-the-gantt/assets/Gantt_viewing_area.GIF"}}" alt="Gantt_viewing_area.GIF" width="386" height="203"></p>
+  <h3><strong>Setup:</strong></h3>
+  <p>An Admin needs to enable the "Gantt" extension in "Configure this JustDo" under the settings button. This replaces the old Gantt Charts, Grid Gantt, Dependencies, and Task Duration Field extensions.</p>
+  <p>Enabling the Gantt extension adds the following:</p>
+  <ol>
+    <li><strong>Additional Grid Columns:</strong>
+      <ol>
+        <li><strong>Gantt:</strong> Graphical representation of the Gantt chart.</li>
+        <li><strong>Duration:</strong> Task duration in working days.</li>
+        <li><strong>Gantt Milestone:</strong> Indicates if a task is a milestone (can be set manually or via the context menu).</li>
+        <li><strong>Predecessors:</strong> Task IDs that must end before this task can start.</li>
+        <li><strong>Frozen:</strong> Indicates if a task is manually scheduled and won't move based on dependencies (can be set manually or via the context menu).</li>
+        <li><strong>% Complete:</strong> Percentage of task completion (can be edited manually or automatically set to 100% when the task is "Done").</li>
+        <li><strong>Baseline Columns (available when a baseline is selected):</strong>
+          <ol>
+            <li><strong>Basket Start Date:</strong> Earliest start date of any child task.</li>
+            <li><strong>Basket End Date:</strong> Latest end date of any child task.</li>
+            <li><strong>Baseline Start Date:</strong> Task's start date based on the selected baseline.</li>
+            <li><strong>Baseline End Date:</strong> Task's end date based on the selected baseline.</li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><strong>"Dependencies" Tab in Task Pane:</strong> Shows the selected task's predecessors and successors.</li>
+    <li><strong>Additional Tabs in Lower Pane:</strong>
+      <ol>
+        <li><strong>Dependencies:</strong> Lists tasks you can start working on, tasks blocking other tasks, and tasks blocked by other tasks.</li>
+        <li><strong>Baselines:</strong> Lists available baselines, allows selecting and deleting baselines.</li>
+      </ol>
+    </li>
+    <li><strong>Gantt Section in Context Menu:</strong> Options to set a task as a milestone, freeze its dates, and save/display a baseline (right-click on a task).</li>
+    <li><strong>"Set Working Days" Option in Settings Menu:</strong> Configure JustDo's workdays, work hours, and holidays. To set specific workdays/hours/holidays for individuals, enable the "Calendar" extension.</li>
+  </ol>
+  <h3><strong>Planning with the Gantt:</strong></h3>
+  <p>The Gantt displays tasks as boxes with <strong>start and end dates</strong>. Reschedule tasks by changing dates in the grid or dragging them on the Gantt. <strong>Parent tasks (baskets)</strong> are shown as wider blue boxes (or red if on the critical path). Basket start/end dates are calculated automatically based on child tasks or can be set manually. Tooltips indicate displayed dates and additional dates if manually set.</p>
+  <p><img src="{{getSupportCenterAssetUrl "/how-to-use-the-gantt/assets/basket_dates.jpg"}}" alt="basket_dates.jpg" width="580" height="97"></p>
+  <p>The <strong>duration</strong> field represents task duration in working days. Entering the start date and duration calculates the end date, and vice versa. JustDo considers workdays/holidays for the entire workspace and the task owner when calculating the end date.</p>
+  <p>Mark tasks as <strong>milestones</strong> using the context menu or by setting the "Milestone" field to "yes". Milestones have zero duration, are displayed as diamonds, and highlight tasks on the <strong>critical path</strong> in red. Each task can have a <strong>due date</strong> (deadline), indicated by a down arrow on the Gantt.</p>
+  <p>Define <strong>dependencies</strong> graphically or using the "Predecessors" column. See <a href="{{i18nPath "/support/5963826490642"}}">Gantt Dependencies</a> for details on dependency types and options. Dependent tasks are rescheduled automatically when a task's schedule changes.</p>
+  <p><img src="{{getSupportCenterAssetUrl "/how-to-use-the-gantt/assets/dependencies.GIF"}}" alt="dependencies.GIF"></p>
+  <p>The "Dependencies" tab in the task pane shows the selected task's predecessors and successors.</p>
+  <p><img src="{{getSupportCenterAssetUrl "/how-to-use-the-gantt/assets/dependencies_tab.png"}}" alt="dependencies_tab.png" width="295" height="349"></p>
+  <p>The Dependencies tab in the lower pane shows tasks you own that are blocking others and tasks blocking your tasks. Task owners receive chat notifications when all dependencies are fulfilled.</p>
+  <p><strong>Freeze</strong> tasks with external commitments to prevent automatic rescheduling based on dependencies. Use the context menu or set the "Frozen" field to "yes". <strong>Critical path</strong> tasks (tasks that delay milestones if they finish late) are marked in red. Hovering over them shows the milestone IDs they are critical for. It's recommended to have a "Project end" milestone to identify the project's critical path.</p>
+  <p><img src="{{getSupportCenterAssetUrl "/how-to-use-the-gantt/assets/critical_path_IDs.png"}}" alt="critical_path_IDs.png" width="177" height="96"></p>
+  <h3><strong>Tracking Progress with the Gantt:</strong></h3>
+  <p>Use the state field to track task stages (Pending, In-progress, Done, etc.). The <strong>% Complete</strong> field and column track task progress (0-100%). Manually enter the percentage or set the task to "Done" to automatically update it to 100%. The completion percentage is shown as a black line within the task box on the Gantt. Use the completion indication and current date line to identify tasks that are on schedule, delayed, or ahead of schedule.</p>
+  <p><img src="{{getSupportCenterAssetUrl "/how-to-use-the-gantt/assets/completion.png"}}" alt="completion.png"></p>
+  <p>Use the <strong>Baseline</strong> feature to compare the original project schedule with the current schedule. Save the current schedule as a baseline with a specific name (e.g., "Q1 2024 Baseline"). Baselines are displayed as gray lines under the current schedule on the Gantt.</p>
+  <p><img src="{{getSupportCenterAssetUrl "/how-to-use-the-gantt/assets/baseline.png"}}" alt="baseline.png"></p>
+  <p>To save a baseline, right-click a task and select "Save a Baseline" from the context menu. An anchor icon appears on the Gantt for tasks with saved baselines. To display a baseline, use the "Display a Baseline" option in the context menu. The "Baselines" tab in the lower pane allows viewing, renaming, and selecting baselines. Only the creator or an Admin can delete a baseline.</p>
+</template>

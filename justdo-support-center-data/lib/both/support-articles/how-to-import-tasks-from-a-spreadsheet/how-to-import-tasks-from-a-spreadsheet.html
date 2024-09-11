@@ -1,0 +1,38 @@
+<template name="support_article_how_to_import_tasks_from_a_spreadsheet">
+        <p>You can easily import tasks from a spreadsheet into JustDo, eliminating the need to recreate them manually. </p>
+        <p>Once the JustDo Admin enables the "Spreadsheet Import" extension, the import button will appear on the top toolbar.</p>
+        <p><img src="{{getSupportCenterAssetUrl "/how-to-import-tasks-from-a-spreadsheet/assets/import_icon.png"}}" alt="import_icon.png"></p>
+        <h3><strong>Steps to Import Tasks from a Spreadsheet:</strong></h3>
+        <ol>
+        <li>Select the task in the grid where you want to add the imported tasks.</li>
+        <li>Copy the relevant section from an Excel spreadsheet (up to 500 rows per import).</li>
+        <li>Click the Spreadsheet Import icon.</li>
+        <li>Paste the copied data into the window that opens.</li>
+        <li>Uncheck any rows you don't want to import.</li>
+        <li>For each column, click the header (labeled "Select") and choose one of the following options:<ul>
+        <li><strong>Skip column:</strong> If you don't want to import this column.</li>
+        <li><strong>Mark the column as an index column:</strong> For importing dependencies (see below).</li>
+        <li><strong>Select a target JustDo field:</strong> Map the column to a JustDo field (you can search for fields by name). This includes system and custom fields of types text, number, date, or options.</li>
+        <li><strong>Manage columns (Admins only):</strong> Add a custom field if needed.</li>
+        <li><strong>Indent level:</strong> Select for a column that indicates indentation levels.</li>
+      </ul>
+    </li>
+    <li>Click "Import".</li>
+    <li>Select the date format of the imported data (if the original data includes time, only the date will be extracted).</li>
+    <li>Click "Ok".</li>
+  </ol>
+  <p><img src="{{getSupportCenterAssetUrl "/how-to-import-tasks-from-a-spreadsheet/assets/Import1.GIF"}}" alt="Import1.GIF"></p>
+  <h3><strong>Dependency Import</strong></h3>
+  <p>If your data includes task dependencies, you can import them using an index column for task IDs. Mark the index column as "Index" to import and update dependencies to the corresponding JustDo IDs. The index column itself won't be imported. Unsupported dependency types will be imported into the predecessor column but ignored and highlighted in red.</p>
+  <p>Supported dependency types: Finish-to-Start (FS), Finish-to-Finish (FF), Start-to-Start (SS), and Start-to-Finish (SF). Use the task ID followed by the relevant acronym (e.g., 123FS). If no acronym is provided, Finish-to-Start is assumed.</p>
+  <p><img src="{{getSupportCenterAssetUrl "/how-to-import-tasks-from-a-spreadsheet/assets/import_dependencies1.gif"}}" alt="import_dependencies1.gif"></p>
+  <h3><strong>State Import</strong></h3>
+  <p>You can import task states. If the value is empty or not imported, the task will be opened with a Pending state.</p>
+  <h3><strong>Owner Import</strong></h3>
+  <p>Import task owners by including their email addresses in a column. Imported tasks will be assigned to the specified owners without requiring ownership transfer acceptance.</p>
+  <p>If an owner's email doesn't exist as a JustDo member, an alert icon will appear, and the importing user will be assigned as the owner.</p>
+  <p><img src="{{getSupportCenterAssetUrl "/how-to-import-tasks-from-a-spreadsheet/assets/wrong_owner_email_in_import.jpg"}}" alt="wrong_owner_email_in_import.jpg" width="257" height="177"></p>
+  <h3><strong>Import Undo</strong></h3>
+  <p>After the import, a snackbar appears at the bottom left. Click "Undo" to revert the import. Click the X to dismiss the snackbar.</p>
+  <p><img src="{{getSupportCenterAssetUrl "/how-to-import-tasks-from-a-spreadsheet/assets/import_undo.jpg"}}" alt="import_undo.jpg" width="243" height="67"></p>
+</template>

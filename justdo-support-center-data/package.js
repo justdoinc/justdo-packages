@@ -1,0 +1,248 @@
+Package.describe({
+  name: "justdoinc:justdo-support-center-data",
+  version: "1.0.0",
+  summary: "",
+  git: "https://github.com/justdoinc/justdo-shared-packages/tree/master/justdo-support-center-data"
+});
+
+client = "client"
+server = "server"
+both = [client, server]
+
+Package.onUse(function (api) {
+  api.use("coffeescript", both);
+  api.use("underscore", both);
+  api.use("mongo", both);
+
+  // Uncomment if you want to use NPM peer dependencies using
+  // checkNpmVersions.
+  //
+  // Introducing new NPM packages procedure:
+  //
+  // * Uncomment the lines below.
+  // * Add your packages to the main web-app package.json dependencies section.
+  // * Call $ meteor npm install
+  // * Call $ meteor npm shrinkwrap
+  //
+  // Add to the peer dependencies checks to one of the JS/Coffee files of your package,
+  // Example:
+  //
+  //   import { checkNpmVersions } from "meteor/tmeasday:check-npm-versions"
+  //
+  //   checkNpmVersions({
+  //     'colors': '1.1.x'
+  //   }, 'justdoinc:justdo-support-center-data')
+  // api.use("ecmascript", both);
+  // api.use("tmeasday:check-npm-versions@0.3.1", both);
+
+  // api.use("stevezhu:lodash@4.17.2", both);
+  api.use("templating", client);
+  api.use('fourseven:scss@3.2.0', client);
+
+  // Uncomment only in packages that integrate with the main applications
+  // Pure logic packages should avoid any app specific integration.
+  api.use("meteorspark:app@0.3.0", both);
+  api.use("justdoinc:justdo-i18n@1.0.0", both);
+  api.use("tap:i18n", both);
+
+  api.addFiles("lib/both/static.coffee", both);
+  api.addFiles("lib/both/news-category-registrar.coffee", both);
+  
+  api.addFiles("lib/client/templates/global-template-helper.coffee", client);
+
+  api.addFiles("lib/client/templates/support-page-article/support-page-article.sass", client);
+  api.addFiles("lib/client/templates/support-page-article/support-page-article.html", client);
+  api.addFiles("lib/client/templates/support-page-article/support-page-article.coffee", client);
+
+  // can-i-install-a-local-copy-of-justdo
+  api.addFiles([
+    "lib/both/support-articles/can-i-install-a-local-copy-of-justdo/can-i-install-a-local-copy-of-justdo.sass",
+    "lib/both/support-articles/can-i-install-a-local-copy-of-justdo/can-i-install-a-local-copy-of-justdo.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/can-i-install-a-local-copy-of-justdo/can-i-install-a-local-copy-of-justdo.coffee"
+  ], both);
+
+  // how-to-use-the-slack-functionality
+  api.addFiles([
+    "lib/both/support-articles/how-to-use-the-slack-functionality/how-to-use-the-slack-functionality.sass",
+    "lib/both/support-articles/how-to-use-the-slack-functionality/how-to-use-the-slack-functionality.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-use-the-slack-functionality/how-to-use-the-slack-functionality.coffee"
+  ], both);
+
+  // how-to-use-buffer-tasks
+  api.addFiles([
+    "lib/both/support-articles/how-to-use-buffer-tasks/how-to-use-buffer-tasks.sass",
+    "lib/both/support-articles/how-to-use-buffer-tasks/how-to-use-buffer-tasks.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-use-buffer-tasks/how-to-use-buffer-tasks.coffee"
+  ], both);
+
+  // how-to-create-custom-grid-views
+  api.addFiles([
+    "lib/both/support-articles/how-to-create-custom-grid-views/how-to-create-custom-grid-views.sass",
+    "lib/both/support-articles/how-to-create-custom-grid-views/how-to-create-custom-grid-views.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-create-custom-grid-views/how-to-create-custom-grid-views.coffee"
+  ], both);
+
+  // how-to-use-gantt-dependencies
+  api.addFiles([
+    "lib/both/support-articles/how-to-use-gantt-dependencies/how-to-use-gantt-dependencies.sass",
+    "lib/both/support-articles/how-to-use-gantt-dependencies/how-to-use-gantt-dependencies.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-use-gantt-dependencies/how-to-use-gantt-dependencies.coffee"
+  ], both);
+
+  // how-to-plan-and-track-working-hours
+  api.addFiles([
+    "lib/both/support-articles/how-to-plan-and-track-working-hours/how-to-plan-and-track-working-hours.sass",
+    "lib/both/support-articles/how-to-plan-and-track-working-hours/how-to-plan-and-track-working-hours.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-plan-and-track-working-hours/how-to-plan-and-track-working-hours.coffee"
+  ], both);
+
+  // justdo-extensions
+  api.addFiles([
+    "lib/both/support-articles/justdo-extensions/justdo-extensions.sass",
+    "lib/both/support-articles/justdo-extensions/justdo-extensions.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/justdo-extensions/justdo-extensions.coffee"
+  ], both);
+
+  // how-to-configure-workdays-and-holidays
+  api.addFiles([
+    "lib/both/support-articles/how-to-configure-workdays-and-holidays/how-to-configure-workdays-and-holidays.sass",
+    "lib/both/support-articles/how-to-configure-workdays-and-holidays/how-to-configure-workdays-and-holidays.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-configure-workdays-and-holidays/how-to-configure-workdays-and-holidays.coffee"
+  ], both);
+
+  // how-to-use-the-gantt
+  api.addFiles([
+    "lib/both/support-articles/how-to-use-the-gantt/how-to-use-the-gantt.sass",
+    "lib/both/support-articles/how-to-use-the-gantt/how-to-use-the-gantt.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-use-the-gantt/how-to-use-the-gantt.coffee"
+  ], both);
+
+  // how-to-import-tasks-from-a-spreadsheet
+  api.addFiles([
+    "lib/both/support-articles/how-to-import-tasks-from-a-spreadsheet/how-to-import-tasks-from-a-spreadsheet.sass",
+    "lib/both/support-articles/how-to-import-tasks-from-a-spreadsheet/how-to-import-tasks-from-a-spreadsheet.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-import-tasks-from-a-spreadsheet/how-to-import-tasks-from-a-spreadsheet.coffee"
+  ], both);
+
+  // what-is-justdo-s-resource-management-extension
+  api.addFiles([
+    "lib/both/support-articles/what-is-justdo-s-resource-management-extension/what-is-justdo-s-resource-management-extension.sass",
+    "lib/both/support-articles/what-is-justdo-s-resource-management-extension/what-is-justdo-s-resource-management-extension.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/what-is-justdo-s-resource-management-extension/what-is-justdo-s-resource-management-extension.coffee"
+  ], both);
+
+  // custom-fields
+  api.addFiles([
+    "lib/both/support-articles/custom-fields/custom-fields.sass",
+    "lib/both/support-articles/custom-fields/custom-fields.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/custom-fields/custom-fields.coffee"
+  ], both);
+
+  // how-to-share-tasks-with-project-members
+  api.addFiles([
+    "lib/both/support-articles/how-to-share-tasks-with-project-members/how-to-share-tasks-with-project-members.sass",
+    "lib/both/support-articles/how-to-share-tasks-with-project-members/how-to-share-tasks-with-project-members.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-share-tasks-with-project-members/how-to-share-tasks-with-project-members.coffee"
+  ], both);
+
+  // how-to-print-and-export
+  api.addFiles([
+    "lib/both/support-articles/how-to-print-and-export/how-to-print-and-export.sass",
+    "lib/both/support-articles/how-to-print-and-export/how-to-print-and-export.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-print-and-export/how-to-print-and-export.coffee"
+  ], both);
+
+  // Always after templates
+  api.addFiles([
+    "i18n/en.i18n.json",
+    "i18n/ar.i18n.json",
+    "i18n/es.i18n.json",
+    "i18n/fr.i18n.json",
+    "i18n/he.i18n.json",
+    "i18n/ja.i18n.json",
+    "i18n/km.i18n.json",
+    "i18n/ko.i18n.json",
+    "i18n/pt-PT.i18n.json",
+    "i18n/pt-BR.i18n.json",
+    "i18n/vi.i18n.json",
+    "i18n/ru.i18n.json",
+    "i18n/yi.i18n.json",
+    "i18n/it.i18n.json",
+    "i18n/de.i18n.json",
+    "i18n/hi.i18n.json",
+    "i18n/tr.i18n.json",
+    "i18n/el.i18n.json",
+    "i18n/da.i18n.json",
+    "i18n/fi.i18n.json",
+    "i18n/nl.i18n.json",
+    "i18n/sv.i18n.json",
+    "i18n/th.i18n.json",
+    "i18n/id.i18n.json",
+    "i18n/pl.i18n.json",
+    "i18n/cs.i18n.json",
+    "i18n/hu.i18n.json",
+    "i18n/ro.i18n.json",
+    "i18n/sk.i18n.json",
+    "i18n/uk.i18n.json",
+    "i18n/bg.i18n.json",
+    "i18n/hr.i18n.json",
+    "i18n/sr.i18n.json",
+    "i18n/sl.i18n.json",
+    "i18n/et.i18n.json",
+    "i18n/lv.i18n.json",
+    "i18n/lt.i18n.json",
+    "i18n/am.i18n.json",
+    "i18n/zh-CN.i18n.json",
+    "i18n/zh-TW.i18n.json",
+    "i18n/sw.i18n.json",
+    "i18n/af.i18n.json",
+    "i18n/az.i18n.json",
+    "i18n/be.i18n.json",
+    "i18n/bn.i18n.json",
+    "i18n/bs.i18n.json",
+    "i18n/ca.i18n.json",
+    "i18n/eu.i18n.json",
+    "i18n/lb.i18n.json",
+    "i18n/mk.i18n.json",
+    "i18n/ne.i18n.json",
+    "i18n/nb.i18n.json",
+    "i18n/sq.i18n.json",
+    "i18n/ta.i18n.json",
+    "i18n/uz.i18n.json",
+    "i18n/hy.i18n.json",
+    "i18n/kk.i18n.json",
+    "i18n/ky.i18n.json",
+    "i18n/ms.i18n.json",
+    "i18n/tg.i18n.json"
+  ], both);
+
+  api.export("JustdoSupportCenterData", both);
+});
