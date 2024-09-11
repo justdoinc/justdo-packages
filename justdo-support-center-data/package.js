@@ -43,9 +43,39 @@ Package.onUse(function (api) {
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", both);
 
-  // Note: app-integration need to load last, so immediateInit procedures in
-  // the server will have the access to the apis loaded after the init.coffee
-  // file. 
+  api.addFiles("lib/both/news-category-registrar.coffee", both);
+
+  api.addFiles("lib/client/templates/support-page-article/support-page-article.sass", client);
+  api.addFiles("lib/client/templates/support-page-article/support-page-article.html", client);
+  api.addFiles("lib/client/templates/support-page-article/support-page-article.coffee", client);
+
+  // can-i-install-a-local-copy-of-justdo
+  api.addFiles([
+    "lib/both/support-articles/can-i-install-a-local-copy-of-justdo/can-i-install-a-local-copy-of-justdo.sass",
+    "lib/both/support-articles/can-i-install-a-local-copy-of-justdo/can-i-install-a-local-copy-of-justdo.html"
+  ], client);
+  api.addFiles(["lib/both/support-articles/can-i-install-a-local-copy-of-justdo/can-i-install-a-local-copy-of-justdo.coffee"], both);
+
+  // how-to-change-my-profile-picture-and-details
+  api.addAssets([
+    "lib/both/support-articles/how-to-change-my-profile-picture-and-details/assets/_how_to_change_a_profile_picture.gif"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-change-my-profile-picture-and-details/how-to-change-my-profile-picture-and-details.sass",
+    "lib/both/support-articles/how-to-change-my-profile-picture-and-details/how-to-change-my-profile-picture-and-details.html"
+  ], client);
+  api.addFiles(["lib/both/support-articles/how-to-change-my-profile-picture-and-details/how-to-change-my-profile-picture-and-details.coffee"], both);
+
+  // custom-fields
+  api.addAssets([
+    "lib/both/support-articles/custom-fields/assets/configure.jpg",
+    "lib/both/support-articles/custom-fields/assets/smart_numbers_menu.jpg"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/custom-fields/custom-fields.sass",
+    "lib/both/support-articles/custom-fields/custom-fields.html"
+  ], client);
+  api.addFiles(["lib/both/support-articles/custom-fields/custom-fields.coffee"], both);
 
   api.export("JustdoSupportCenterData", both);
 });
