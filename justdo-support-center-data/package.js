@@ -65,7 +65,7 @@ Package.onUse(function (api) {
   ], client);
   api.addFiles([
     "lib/both/support-articles/how-to-use-the-slack-functionality/how-to-use-the-slack-functionality.coffee"
-  ], client);
+  ], both);
 
   // how-to-use-buffer-tasks
   api.addAssets([
@@ -78,7 +78,7 @@ Package.onUse(function (api) {
   ], client);
   api.addFiles([
     "lib/both/support-articles/how-to-use-buffer-tasks/how-to-use-buffer-tasks.coffee"
-  ], client);
+  ], both);
 
   // how-to-create-custom-grid-views
   api.addAssets([
@@ -93,7 +93,7 @@ Package.onUse(function (api) {
   ], client);
   api.addFiles([
     "lib/both/support-articles/how-to-create-custom-grid-views/how-to-create-custom-grid-views.coffee"
-  ], client);
+  ], both);
 
   // how-to-use-gantt-dependencies
   api.addAssets([
@@ -107,7 +107,7 @@ Package.onUse(function (api) {
   ], client);
   api.addFiles([
     "lib/both/support-articles/how-to-use-gantt-dependencies/how-to-use-gantt-dependencies.coffee"
-  ], client);
+  ], both);
 
   // how-to-plan-and-track-working-hours
   api.addAssets([
@@ -122,7 +122,7 @@ Package.onUse(function (api) {
   ], client);
   api.addFiles([
     "lib/both/support-articles/how-to-plan-and-track-working-hours/how-to-plan-and-track-working-hours.coffee"
-  ], client);
+  ], both);
 
   // justdo-extensions
   api.addAssets([
@@ -135,7 +135,7 @@ Package.onUse(function (api) {
   ], client);
   api.addFiles([
     "lib/both/support-articles/justdo-extensions/justdo-extensions.coffee"
-  ], client);
+  ], both);
 
   // how-to-configure-workdays-and-holidays
   api.addAssets([
@@ -148,7 +148,7 @@ Package.onUse(function (api) {
   ], client);
   api.addFiles([
     "lib/both/support-articles/how-to-configure-workdays-and-holidays/how-to-configure-workdays-and-holidays.coffee"
-  ], client);
+  ], both);
 
   // how-to-use-the-gantt
   api.addAssets([
@@ -167,7 +167,7 @@ Package.onUse(function (api) {
   ], client);
   api.addFiles([
     "lib/both/support-articles/how-to-use-the-gantt/how-to-use-the-gantt.coffee"
-  ], client);
+  ], both);
 
   // how-to-import-tasks-from-a-spreadsheet
   api.addAssets([
@@ -183,7 +183,7 @@ Package.onUse(function (api) {
   ], client);
   api.addFiles([
     "lib/both/support-articles/how-to-import-tasks-from-a-spreadsheet/how-to-import-tasks-from-a-spreadsheet.coffee"
-  ], client);
+  ], both);
 
   // what-is-justdo-s-resource-management-extension
   api.addFiles([
@@ -192,7 +192,7 @@ Package.onUse(function (api) {
   ], client);
   api.addFiles([
     "lib/both/support-articles/what-is-justdo-s-resource-management-extension/what-is-justdo-s-resource-management-extension.coffee"
-  ], client);
+  ], both);
 
   // custom-fields
   api.addAssets([
@@ -205,7 +205,7 @@ Package.onUse(function (api) {
   ], client);
   api.addFiles([
     "lib/both/support-articles/custom-fields/custom-fields.coffee"
-  ], client);
+  ], both);
 
   // how-to-share-tasks-with-project-members
   api.addAssets([
@@ -225,7 +225,7 @@ Package.onUse(function (api) {
   ], client);
   api.addFiles([
     "lib/both/support-articles/how-to-share-tasks-with-project-members/how-to-share-tasks-with-project-members.coffee"
-  ], client);
+  ], both);
 
   // how-to-print-and-export
   api.addAssets([
@@ -239,7 +239,7 @@ Package.onUse(function (api) {
   ], client);
   api.addFiles([
     "lib/both/support-articles/how-to-print-and-export/how-to-print-and-export.coffee"
-  ], client);
+  ], both);
 
   // how-to-use-the-ticket-queue
   // api.addAssets([
