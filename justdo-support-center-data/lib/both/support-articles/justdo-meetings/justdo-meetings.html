@@ -1,0 +1,60 @@
+<template name="support_article_justdo_meetings">
+  <p> </p>
+  <p>Meetings are an essential part of project management, most often involving people from various business functions. During these meetings the project status is discussed, issues are raised and action items defined.</p>
+  <p>JustDo Meetings capability supports creating meeting agenda prior to the meeting, taking notes during the meeting, showing all relevant meeting notes at the task context and creating and tracking action items.</p>
+  <p>To enable the meetings capability, the Meetings extension must be switched on. If it is not enabled, an Admin can switch it on in the Extensions tab of the JustDo configuration window.</p>
+  <p> </p>
+  <p><strong>Creating an agenda for a future meeting</strong></p>
+  <p>You can open a meeting instance for a future time in order to create an agenda for the meeting and allow others to add to the agenda if you wish.</p>
+  <p>This is done by clicking the option "Schedule a meeting" from the meetings tab of the task pane.</p>
+  <p><img src="{{getCDNUrl "/packages/justdoinc_justdo-support-center-data/lib/both/support-articles/justdo-meetings/assets/schedule_a_meeting.jpg"}}" alt="schedule_a_meeting.jpg" width="518" height="252"></p>
+  <p>When a meeting is scheduled you can add agenda items to it so that when you start it - you will have the list of items for discussion ready.</p>
+  <p>If you want other people to be able to add items you can publish the meeting and let others know (by chat for example) that it is available for them to add agenda items to.</p>
+  <p>Until the meeting is published, only the meeting creator can view and access it. Once it is published all attendees of the meeting can access it.</p>
+  <p> </p>
+  <p><strong>Starting a meeting</strong></p>
+  <p>You can start a pre-scheduled meeting by clicking the "Start" button (or "Publish" and then "Start" if it was not yet published).</p>
+  <p>You can also start a meeting on the spot for a specific task and start taking notes either by selecting the option "Start a meeting" in the context menu or by clicking "Start a meeting" in the Meetings tab in the task pane.</p>
+  <p><img src="{{getCDNUrl "/packages/justdoinc_justdo-support-center-data/lib/both/support-articles/justdo-meetings/assets/start_a_meeting.jpg"}}" alt="start_a_meeting.jpg"></p>
+  <p> </p>
+  <p><strong>Editing the meeting notes</strong></p>
+  <p>Once a meeting was started you can start taking notes.</p>
+  <p>Start with updating the meeting subject if needed, by default it would be named as the task it was opened on. </p>
+  <p>If you are creating the meeting notes at a later time, you can update the meeting start date and time by clicking on the appropriate areas.</p>
+  <p><img src="{{getCDNUrl "/packages/justdoinc_justdo-support-center-data/lib/both/support-articles/justdo-meetings/assets/meeting_date_and_time.gif"}}" alt="meeting_date_and_time.gif" width="589" height="254"></p>
+  <p> </p>
+  <p>Your meeting attendees can be either JustDo users or not, those that are JustDo users can be selected by clicking the + icon. These attendees will have permission to <span class="wysiwyg-underline">view all the meeting notes</span>, even for tasks they are not members of (as the assumption is that they attended the meeting and heard this anyway).</p>
+  <p>Attendees that are not users of JustDo or those who you do not wish to share all notes with, can be added by entering their names in the "Other attendees" section.</p>
+  <p>The "General meeting notes" section is designed for general comments that are not related to a specific task or project. These will only show up when you view the entire meeting notes.</p>
+  <p>For notes that are relevant to a specific task or project you would need to add this task to the agenda of the meeting and use the notes area for that specific task. This can be done by clicking the task on the grid or entering its id manually in the area at the bottom of the screen and clicking enter or "Add to agenda".</p>
+  <p> </p>
+  <p><img src="{{getCDNUrl "/packages/justdoinc_justdo-support-center-data/lib/both/support-articles/justdo-meetings/assets/task_notes.gif"}}" alt="task_notes.gif" width="634" height="439"></p>
+  <p> </p>
+  <p>You can remove an agenda item by clicking the 3 dots menu and selecting "Remove from Meeting's Agenda" and you can control the order of the items by dragging the 3 lines icon.</p>
+  <p><img src="{{getCDNUrl "/packages/justdoinc_justdo-support-center-data/lib/both/support-articles/justdo-meetings/assets/move_agenda_items.gif"}}" alt="move_agenda_items.gif" width="540" height="454"></p>
+  <p> </p>
+  <p><span style="font-weight: bolder;">Action items</span></p>
+  <p>An action item of a meeting is actually a task that needs to be completed. Therefore, the action items created during a meeting are automatically created as sub-tasks to the relevant task so that you can track their progress, define an owner for them etc.</p>
+  <p>To create an action item, select the relevant parent task as an agenda item, click the 3 dots and create a sub-task. You can define its subject, assign an owner to it, set a due date and add notes.</p>
+  <p><img src="{{getCDNUrl "/packages/justdoinc_justdo-support-center-data/lib/both/support-articles/justdo-meetings/assets/action_item.gif"}}" alt="action_item.gif" width="623" height="498"></p>
+  <p> </p>
+  <p><strong>Accessing the meeting notes</strong></p>
+  <p>Specific project or task may be discussed in multiple meetings and the task members or ever owners may not be attendees of them all. In order for the relevant people to be aware of all relevant notes the meeting shows up as part of the meetings tab (of the task pane) for all the items that were part of the agenda. </p>
+  <p>Clicking the meeting will show only the relevant notes and action items. Clicking the "Display meeting notes" button will display the entire meeting notes. Please note that for meeting attendees all the notes will show up, for other users only the notes of tasks they are members of will be included. </p>
+  <p> </p>
+  <p><img src="{{getCDNUrl "/packages/justdoinc_justdo-support-center-data/lib/both/support-articles/justdo-meetings/assets/notes.gif"}}" alt="notes.gif"></p>
+  <p> </p>
+  <p><strong>Distributing meeting notes</strong></p>
+  <p>At any point in time you can send the meeting summary via email. This can be done in two ways: clicking the envelope icon or clicking the copy icon and then using paste in a new email.</p>
+  <p>Clicking the envelope icon would open the default mailer (see <a href="{{i18nPath "/support/how-to-connect-my-email-to-justdo"}}" target="_blank">How to connect my email to JustDo?)</a> with the JustDo attendees in the "To" and the meeting's subject as the mail subject.</p>
+  <p>Copy and paste, however, will not auto-populate the "to" and "subject" yet will show the text in a nicer format, where the tasks are clickable and will lead to the appropriate location within your JustDo..</p>
+  <p><strong>Deleting a meeting</strong></p>
+  <p>If deleting a meeting is allowed for this JustDo any admin or the meeting creator can delete the meeting by clicking the Delete icon at the top right of the meeting window.</p>
+  <p> </p>
+  <p><img src="{{getCDNUrl "/packages/justdoinc_justdo-support-center-data/lib/both/support-articles/justdo-meetings/assets/delete_meeting.jpg"}}" alt="delete_meeting.jpg"></p>
+  <p>Admins can disable the option to delete meetings via the settings of the meetings extension.</p>
+  <p> </p>
+  <p><strong>The Meetings top bar menu</strong></p>
+  <p>At any point in time you can use the top bar meeting icon to get a complete list of all the meetings where you can search for a specific meeting.</p>
+  <p>You can also schedule and start meetings from here, yet be advised that these meetings will be floating and you will be able to access their general notes for example only from the top bar icon. Hence it is always recommended to start meetings from a specific task or project.</p>
+</template>

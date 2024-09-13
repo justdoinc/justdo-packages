@@ -1,0 +1,23 @@
+<template name="support_article_how_to_use_buffer_tasks">
+  <p>When your project is going on, your plan and timeline may need to be revised. Tasks will take longer than expected or may be delayed. You need to be able to control this and at any point in time make sure the overall timeline is not affected.</p>
+  <p>Buffers help you deal with the uncertainty and the on going changes.</p>
+  <p>You can include buffers in your plan to represent a certain duration that doesn't include specific tasks that can be consumed for unexpected activities and will not negatively harm the project end date.</p>
+  <p> </p>
+  <p><span class="wysiwyg-underline"><strong>Buffer tasks</strong></span></p>
+  <p>You can add a buffer task anywhere in the project timeline to indicate a specific duration that you allow for tasks to consume when delayed. The most common place is to place these tasks as the task leading to the milestone.</p>
+  <p>These tasks are marked in gray on the Gantt chart (even if they are part of the critical path) and their duration is being consumed when their predecessors end date is delayed. The duration will get smaller and smaller until it reached zero.</p>
+  <p>On the other hand if their successor task will start later the buffer's duration will increase accordingly.</p>
+  <p>Once a task is defined as a buffer, the buffer icon will show up next to its subject and "Buffer" will show up in the Types column.</p>
+  <p>In order to create a buffer task:</p>
+  <ol>
+    <li>Create a task with the desired duration</li>
+    <li>Add the appropriate predecessors</li>
+    <li>Include this task as the predecessor for the desired milestone or task</li>
+    <li>Right click the task and in the context menu select "Set as a buffer"</li>
+  </ol>
+  <p><img src="{{getCDNUrl "/packages/justdoinc_justdo-support-center-data/lib/both/support-articles/how-to-use-buffer-tasks/assets/buffer.jpg"}}" alt="buffer.jpg"></p>
+  <p> </p>
+  <p>Once the buffer was fully consumed, a chat message for that buffer task will be sent by the platform.</p>
+  <p> </p>
+  <p> </p>
+</template>

@@ -1,0 +1,34 @@
+<template name="support_article_how_to_use_the_slack_functionality">
+  <p>When your project is going on, your plan and timeline may need to be revised. Tasks will take longer than expected or may need to be rescheduled. You need to be able to control this and at any point in time make sure the overall timeline is not affected. </p>
+  <p>Buffers and Slacks help you deal with the uncertainty and the on going changes.</p>
+  <p>For more information on Buffers, please read <a href="{{i18nPath "/support/how-to-use-buffer-tasks"}}" target="_blank">How to use Buffer Tasks</a></p>
+  <p>Slack values help you identify if and how you can rearrange the individual tasks without affecting the overall timeline of the project.</p>
+  <p><span class="wysiwyg-color-black70"><strong>Slack</strong> (aka float) is the amount of time in days that a given task can be delayed without impacting the delivery date of the appropriate Milestone.</span></p>
+  <p> </p>
+  <p><span class="wysiwyg-underline"><strong>Using the Slack functionality </strong></span></p>
+  <p>While your project is going, you may need to change the scheduling of some tasks.</p>
+  <p>When these are part of a path that leads to a milestone, you would want to know what is your wiggle room. When "Slack" functionality is enabled, each of the tasks that are part of the path to a milestone will have 6 additional values:</p>
+  <ol>
+    <li>
+    <strong>Early start</strong> - the earliest date that the task can start without impacting the milestone date</li>
+    <li>
+    <strong>Late start</strong> - the latest date that the task can start without impacting the milestone date</li>
+    <li>
+    <strong>Early finish</strong> - the earliest date that the task can end without impacting the milestone date</li>
+    <li>
+    <strong>Late finish</strong> - the latest date that the task can end without impacting the milestone date</li>
+    <li>
+    <strong>Free slack</strong> - how many work days can the task be delayed without delaying the tasks after it (its successor(s))</li>
+    <li>
+    <strong>Total slack</strong> - how many work days can the task be delayed without delaying the milestone. This value takes into account all the free slack of the tasks after this one until the milestone.</li>
+  </ol>
+  <p><span class="wysiwyg-underline">Please note:</span></p>
+  <ol>
+    <li>Tasks on the critical path will always have zero slack times and the early and late values will match the actual task start/end dates. </li>
+    <li>Slack times show up only for tasks on a path to a milestone, and only take into account FS dependency type.</li>
+    <li>Slack is calculated only for tasks with manual dates (i.e., values will not show up for basket tasks with auto calculated dates).</li>
+  </ol>
+  <p> </p>
+  <p>To enable the slack functionality, an admin would need to enable it using the setting of the Gantt extension. By default it is disabled.</p>
+  <p><img src="https://support.justdo.com/hc/article_attachments/5837648413596/slack_settings.jpg" alt="slack_settings.jpg" width="418" height="367"></p>
+</template>
