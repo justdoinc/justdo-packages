@@ -127,7 +127,6 @@ Template.support_page_article.helpers
 
     return tpl.getNewsPath template_name, {news_category: active_category, news_id: news_id, news_template: news_template}
 
-
 Template.support_page_article.events
   "click .news-navigation-item": (e, tpl) ->
     tab_id = $(e.target).closest(".support-navigation-item").data "tab_id"
