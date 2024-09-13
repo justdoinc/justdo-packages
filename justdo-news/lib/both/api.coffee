@@ -19,6 +19,10 @@ _.extend JustdoNews.prototype,
       label: "News category template"
       type: String
       defaultValue: JustdoNews.default_news_category_template
+    translatable:
+      label: "News category translatable"
+      type: Boolean
+      defaultValue: true
   registerNewsCategory: (category, options) ->
     if _.isEmpty category or not _.isString category
       throw @_error "invalid-argument"
@@ -39,7 +43,7 @@ _.extend JustdoNews.prototype,
 
     if @register_news_routes
       for route_path, {routingFunction, route_options} of @_generateRouteFunctionForNewsCategory category
-        if APP.justdo_i18n_routes?
+        if options.translatable and APP.justdo_i18n_routes?
           # Register i18n route for news
           APP.justdo_i18n_routes?.registerRoutes {path: route_path, routingFunction: routingFunction, route_options: route_options}
         else
@@ -58,10 +62,10 @@ _.extend JustdoNews.prototype,
       throw @_error "news-category-not-found"
     
     return true
-
-  getNewsCategoryTemplate: (category) ->
+  
+  getNewsCategoryOptions: (category) ->
     @requireNewsCategoryExists category
-    return @news[category].template
+    return @news[category]
 
   getAllNewsByCategory: (category) ->
     if Meteor.isClient
@@ -82,6 +86,7 @@ _.extend JustdoNews.prototype,
   _generateRouteFunctionForNewsCategory: (category) ->
     self = @
     underscored_category = category.replace /-/g, "_"
+    news_category_options = @getNewsCategoryOptions category
 
     metadata =
       title_i18n: (path_without_lang, lang) ->
@@ -120,7 +125,7 @@ _.extend JustdoNews.prototype,
           return
         route_options:
           name: "#{underscored_category}_page"
-          translatable: true
+          translatable: news_category_options.translatable
           mapGenerator: ->
             ret = 
               url: "/#{category}"
@@ -134,12 +139,12 @@ _.extend JustdoNews.prototype,
           if not self.getNewsIdIfExists(category, news_id)?
             self.redirectToMostRecentNewsPageByCategoryOrFallback category
 
-          @render self.getNewsCategoryTemplate category
+          @render news_category_options.template
           @layout "single_frame_layout"
           return
         route_options:
           name: "#{underscored_category}_page_with_news_id"
-          translatable: true
+          translatable: news_category_options.translatable
           mapGenerator: ->
             for news_doc in self.getAllNewsByCategory category
               ret = 
@@ -159,12 +164,12 @@ _.extend JustdoNews.prototype,
           if not self.getNewsTemplateIfExists(category, news_id, news_template)?
             self.redirectToMostRecentNewsPageByCategoryOrFallback category
 
-          @render self.getNewsCategoryTemplate category
+          @render news_category_options.template
           @layout "single_frame_layout"
           return
         route_options:
           name: "#{underscored_category}_page_with_news_id_and_template"
-          translatable: true
+          translatable: news_category_options.translatable
           mapGenerator: ->
             for news_doc in self.getAllNewsByCategory category
               for template_obj in news_doc.templates
