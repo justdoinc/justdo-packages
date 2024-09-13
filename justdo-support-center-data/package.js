@@ -49,6 +49,15 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/templates/support-page-article/support-page-article.html", client);
   api.addFiles("lib/client/templates/support-page-article/support-page-article.coffee", client);
 
+  // can-i-install-a-local-copy-of-justdo
+  api.addFiles([
+    "lib/both/support-articles/can-i-install-a-local-copy-of-justdo/can-i-install-a-local-copy-of-justdo.sass",
+    "lib/both/support-articles/can-i-install-a-local-copy-of-justdo/can-i-install-a-local-copy-of-justdo.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/can-i-install-a-local-copy-of-justdo/can-i-install-a-local-copy-of-justdo.coffee"
+  ], both);
+
   // how-to-use-the-slack-functionality
   api.addFiles([
     "lib/both/support-articles/how-to-use-the-slack-functionality/how-to-use-the-slack-functionality.sass",
