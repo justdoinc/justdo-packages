@@ -1,7 +1,7 @@
 APP.justdo_news.registerNews "support",
-  _id: "how-to-use-the-gantt"
+  _id: "360016404240"
   title: "Using the Gantt Chart in JustDo: A Guide"
-  aliases: ["360016404240"]
+  aliases: ["how-to-use-the-gantt"]
   date: "2020-09-13"
   templates: [
     {

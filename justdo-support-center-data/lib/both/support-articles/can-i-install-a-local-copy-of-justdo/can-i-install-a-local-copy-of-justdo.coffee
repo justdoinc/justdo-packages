@@ -1,7 +1,7 @@
 APP.justdo_news.registerNews "support",
-  _id: "can-i-install-a-local-copy-of-justdo"
+  _id: "115000229573"
   title: "Can I Install a Local Copy of JustDo?"
-  aliases: ["115000229573"]
+  aliases: ["can-i-install-a-local-copy-of-justdo"]
   date: "2017-06-08"
   templates: [
     {

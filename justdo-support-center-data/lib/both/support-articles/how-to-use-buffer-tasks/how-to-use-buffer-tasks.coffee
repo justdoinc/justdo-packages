@@ -1,7 +1,7 @@
 APP.justdo_news.registerNews "support",
-  _id: "how-to-use-buffer-tasks"
+  _id: "5836183698972"
   title: "Using Buffer Tasks in JustDo for Project Management"
-  aliases: ["5836183698972"]
+  aliases: ["how-to-use-buffer-tasks"]
   date: "2022-09-04"
   templates: [
     {

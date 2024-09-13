@@ -1,7 +1,7 @@
 APP.justdo_news.registerNews "support",
-  _id: "justdo-extensions"
+  _id: "360017510680"
   title: "JustDo Extensions: Enhancing Your Workspace"
-  aliases: ["360017510680"]
+  aliases: ["justdo-extensions"]
   date: "2020-11-17"
   templates: [
     {

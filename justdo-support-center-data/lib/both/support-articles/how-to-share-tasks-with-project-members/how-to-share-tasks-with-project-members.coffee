@@ -1,7 +1,7 @@
 APP.justdo_news.registerNews "support",
-  _id: "how-to-share-tasks-with-project-members"
+  _id: "115003577233"
   title: "Sharing Tasks with Project Members in JustDo"
-  aliases: ["115003577233"]
+  aliases: ["how-to-share-tasks-with-project-members"]
   date: "2017-11-14"
   templates: [
     {

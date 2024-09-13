@@ -1,7 +1,7 @@
 APP.justdo_news.registerNews "support",
-  _id: "how-to-print-and-export"
+  _id: "115000301934"
   title: "Printing and Exporting Data in JustDo"
-  aliases: ["115000301934"]
+  aliases: ["how-to-print-and-export"]
   date: "2017-06-17"
   templates: [
     {

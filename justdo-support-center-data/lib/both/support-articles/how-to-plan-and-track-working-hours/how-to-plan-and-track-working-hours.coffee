@@ -1,7 +1,7 @@
 APP.justdo_news.registerNews "support",
-  _id: "how-to-plan-and-track-working-hours"
+  _id: "360018774900"
   title: "Plan & Track Working Hours in JustDo"
-  aliases: ["360018774900"]
+  aliases: ["how-to-plan-and-track-working-hours"]
   date: "2021-01-12"
   templates: [
     {

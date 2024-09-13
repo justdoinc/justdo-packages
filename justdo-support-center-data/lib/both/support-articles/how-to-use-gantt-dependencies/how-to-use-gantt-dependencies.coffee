@@ -1,7 +1,7 @@
 APP.justdo_news.registerNews "support",
-  _id: "how-to-use-gantt-dependencies"
+  _id: "5963826490642"
   title: "Using Gantt Dependencies in JustDo"
-  aliases: ["5963826490642"]
+  aliases: ["how-to-use-gantt-dependencies"]
   date: "2022-06-08"
   templates: [
     {
