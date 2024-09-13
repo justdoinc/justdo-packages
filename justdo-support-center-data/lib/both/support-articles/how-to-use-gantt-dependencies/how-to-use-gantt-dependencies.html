@@ -1,35 +1,23 @@
 <template name="support_article_how_to_use_gantt_dependencies">
-  <p> </p>
-  <p><span class="wysiwyg-color-black">When you build your task and project structure, some tasks, group of tasks or even projects may be interdependent. In JustDo you can easily map these dependencies at any level of hierarchy and with any level of complexity that you require.</span></p>
-  <p> </p>
-  <p><span class="wysiwyg-color-black">You can easily indicate that a task can only start after one or more tasks end, or that two tasks should start at the same time, or any other dependency. This can be done graphically by dragging the circle shown at the beginning/end of the task on the Gantt to the beginning/end of its dependent task, or by entering the task ID in the "Predecessors" field.</span><br><span class="wysiwyg-color-black">Please note that when a task schedule is changed, its dependent tasks will be rescheduled accordingly.</span></p>
-  <p> </p>
-  <p><strong><span class="wysiwyg-color-black">Dependency Types</span></strong></p>
-  <p><span class="wysiwyg-color-black">JustDo supports all dependency types, yet the default type is Finish-to-Start. That means that if no letters are added to the task number it is considered as </span><span style="color: #000000;">Finish-to-Start.</span></p>
-  <p><span style="color: #000000;">Please note that in order to define the dependency by dragging on the Gantt chart, you always need to start with the circle of the predecessor and end with the dependent task.</span></p>
-  <p><span class="wysiwyg-color-black">Below you can find the definition of the different types of dependencies and how to use it in JustDo:</span></p>
+  <p>When building your project structure in JustDo, you can easily map dependencies between tasks, groups of tasks, or even projects at any level of hierarchy.</p>
+  <p>You can indicate dependencies graphically by dragging the circle at the beginning/end of a task on the Gantt chart to the beginning/end of its dependent task, or by entering the task ID in the "Predecessors" field. When a task's schedule changes, its dependent tasks are automatically rescheduled.</p>
+  <h3><strong>Dependency Types:</strong></h3>
+  <p>JustDo supports all dependency types, with Finish-to-Start as the default. If no letters are added to the task ID, it's considered Finish-to-Start. To define dependencies by dragging on the Gantt chart, always start with the predecessor's circle and end with the dependent task.</p>
   <ul>
-    <li>
-      <span class="wysiwyg-color-black"><u>Finish-to-Start (FS)</u> - Task B can can only start once task A has finished. This is the most commonly used dependency and hence it is the default type in JustDo. If no letters are added to the task ID it is considered as Finish-to-Start. </span><span class="wysiwyg-color-black">It can be implemented by dragging the circle shown at the end of task A to the beginning of task B, or by entering task A's ID in the predecessor column of task B.</span>
-    </li>
-    <li><span class="wysiwyg-color-black"><u>Start-to-Finish (SF)</u> - Task D can only be finished once task C has started. It can be implemented by dragging the circle shown at the beginning of task C to the end of its dependent task, task D, or by entering task C's ID followed by "SF" in the predecessor column of task D.</span></li>
-    <li><span class="wysiwyg-color-black"><u>Finish-to-Finish (FF)</u> - Task C can only be finished once task B has been completely finished, task C is dependent on task B, and both tasks can run in parallel. It can be implemented by dragging the circle shown at the end of task B to the end of its dependent task, task C or by entering task B's ID followed by "FF" in the predecessor column of task C.</span></li>
-    <li><span class="wysiwyg-color-black"><u>Start-to-Start (SS)</u> - Task E can only begin once task D has started, both tasks run in parallel, yet task E's start date can't be earlier than the start date of task D (but it can start later). It can be implemented by dragging the circle shown at the beginning of task D to the beginning of its dependent task, task E, or by entering task D's ID followed by "SS" in the predecessor column of task E.</span></li>
+    <li><strong>Finish-to-Start (FS):</strong> Task B can only start after task A finishes. This is the default type. Implement by dragging the circle at the end of task A to the beginning of task B or entering task A's ID in task B's predecessor column.</li>
+    <li><strong>Start-to-Finish (SF):</strong> Task D can only finish after task C starts. Implement by dragging the circle at the beginning of task C to the end of task D or entering task C's ID followed by "SF" in task D's predecessor column.</li>
+    <li><strong>Finish-to-Finish (FF):</strong> Task C can only finish after task B finishes. Implement by dragging the circle at the end of task B to the end of task C or entering task B's ID followed by "FF" in task C's predecessor column.</li>
+    <li><strong>Start-to-Start (SS):</strong> Task E can only start after task D starts. Implement by dragging the circle at the beginning of task D to the beginning of task E or entering task D's ID followed by "SS" in task E's predecessor column.</li>
   </ul>
   <p><img src="{{getCDNUrl "/packages/justdoinc_justdo-support-center-data/lib/both/support-articles/how-to-use-gantt-dependencies/assets/2022-06-13_9-51-21_Types_of_dependency.gif"}}" alt="2022-06-13_9-51-21_Types_of_dependency.gif"></p>
-  <p> </p>
-  <p><span class="wysiwyg-color-black"><strong>Dependencies Tab of Task Pane</strong></span></p>
-  <p><span class="wysiwyg-color-black">The predecessors and successors of the selected task show up in its "Dependencies" tab of the task pane</span></p>
+  <h3><strong>Dependencies Tab of Task Pane:</strong></h3>
+  <p>The "Dependencies" tab in the task pane displays the predecessors and successors of the selected task.</p>
   <p><img src="{{getCDNUrl "/packages/justdoinc_justdo-support-center-data/lib/both/support-articles/how-to-use-gantt-dependencies/assets/dependencies_tab.jpg"}}" alt="dependencies_tab.jpg" width="422" height="393"></p>
-  <p> </p>
-  <p><span class="wysiwyg-color-black"><strong>Lags and Leads</strong></span></p>
-  <p><span class="wysiwyg-color-black">You can determine that a task can start immediately when another ends, or define a positive or negative lag. A positive lag means that a task can only start X days or weeks after its predecessor ends. If task ID 14 can only start 3 days after Task ID 10 ends, in the predecessor column of task ID 14 enter: 10FS+3d. The lag can be defined in days or in weeks, for example: 125FS+2wks.</span></p>
-  <p><span class="wysiwyg-color-black">A negative lag (also called lead) means that a task can start a few days before its predecessor ends. For example, if task ID 423 can start 2 days before task ID 412 ends, in the predecessor column of task  423 enter: 412FS-2d.</span></p>
-  <p><span class="wysiwyg-color-black">Note that the above examples were given for the default Finish-to-Start dependency, yet lags are supported for <span class="wysiwyg-underline">all</span> dependency types.</span></p>
-  <p> </p>
-  <p><span class="wysiwyg-color-black"><strong>Dependencies Tab of the Lower Pane</strong></span></p>
-  <p><span class="wysiwyg-color-black">At any point in time, one can see all the tasks that they own that are blocking other tasks as well as those that are blocking them from starting their own, in the Dependencies tab at the lower pane.</span><br><span class="wysiwyg-color-black">Once all dependencies of a task are completed (state is "Done"), the owner of that task will receive a notification in the chat: "All dependencies are fulfilled. You can start working on this task."</span></p>
-  <p><strong>Clickable IDs</strong></p>
-  <p>In order to quickly enter the correct task ID as the predecessor or navigate from a task to its predecessor, both the predecessor ID (in the predecessors column) and the task ID in the top of the task pane are clickable.</p>
-  <p><img src="{{getCDNUrl "/packages/justdoinc_justdo-support-center-data/lib/both/support-articles/how-to-use-gantt-dependencies/assets/clickable_ids.jpg"}}" alt="clickable_ids.jpg" width="501" height="113"> </p>
+  <h3><strong>Lags and Leads:</strong></h3>
+  <p>You can define lags (positive or negative) between tasks. A positive lag means a task can only start X days/weeks after its predecessor ends (e.g., 10FS+3d for a 3-day lag). A negative lag (lead) means a task can start before its predecessor ends (e.g., 412FS-2d for a 2-day lead). Lags are supported for all dependency types.</p>
+  <h3><strong>Dependencies Tab of the Lower Pane:</strong></h3>
+  <p>The Dependencies tab in the lower pane shows tasks you own that are blocking others and tasks that are blocking your tasks. When all dependencies of a task are completed ("Done" state), the task owner receives a chat notification: "All dependencies are fulfilled. You can start working on this task."</p>
+  <h3><strong>Clickable IDs:</strong></h3>
+  <p>For quick navigation and predecessor entry, both the predecessor ID in the predecessors column and the task ID at the top of the task pane are clickable.</p>
+  <p><img src="{{getCDNUrl "/packages/justdoinc_justdo-support-center-data/lib/both/support-articles/how-to-use-gantt-dependencies/assets/clickable_ids.jpg"}}" alt="clickable_ids.jpg" width="501" height="113"></p>
 </template>

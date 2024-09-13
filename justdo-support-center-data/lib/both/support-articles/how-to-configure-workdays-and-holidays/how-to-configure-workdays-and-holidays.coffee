@@ -1,14 +1,15 @@
 APP.justdo_news.registerNews "support",
   _id: "how-to-configure-workdays-and-holidays"
-  title: "How to Configure Workdays and Holidays?"
+  title: "Configuring Workdays & Holidays in JustDo"
   aliases: ["360016432579"]
   date: "2020-09-13"
   templates: [
     {
       _id: "main"
       template_name: "support_article_how_to_configure_workdays_and_holidays"
-      name: "How to Configure Workdays and Holidays?"
-      h1: "How to Configure Workdays and Holidays?"
-      page_title: "How to Configure Workdays and Holidays?"
+      name: "Configuring Workdays & Holidays in JustDo"
+      h1: "Configuring Workdays & Holidays in JustDo"
+      page_title: "Configuring Workdays & Holidays in JustDo"
+      page_description: "Learn how to configure workdays, work hours, and holidays for your entire JustDo workspace or individual users to optimize scheduling and resource management."
     }
   ]
