@@ -61,7 +61,7 @@ _.extend JustdoNews.prototype,
       
       # If news_id or news_template is invalid, return 404
       is_news_id_invalid = true
-      if (news_doc = @getNewsByIdOrAlias news_category, news_id)?
+      if (news_doc = @getNewsByIdOrAlias(news_category, news_id)?.news_doc)?
         is_news_id_invalid = false
 
         # The template is the last part of the url (e.g. other-updates here: /news/justdo-ai/other-updates )

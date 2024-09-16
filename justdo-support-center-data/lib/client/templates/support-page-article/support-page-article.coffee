@@ -51,7 +51,7 @@ Template.support_page_article.onCreated ->
 Template.support_page_article.helpers 
   getActiveNewsTitle: ->
     tpl = Template.instance()
-    return TAPi18n.__ APP.justdo_crm.getNewsByIdOrAlias(tpl.category, tpl.active_news_id_rv.get())?.title
+    return TAPi18n.__ APP.justdo_crm.getNewsByIdOrAlias(tpl.category, tpl.active_news_id_rv.get())?.news_doc?.title
 
   showNavigationBar: ->
     tpl = Template.instance()
@@ -78,7 +78,7 @@ Template.support_page_article.helpers
 
   activeNews: ->
     tpl = Template.instance()
-    return APP.justdo_crm.getNewsByIdOrAlias tpl.category, tpl.active_news_id_rv.get()
+    return APP.justdo_crm.getNewsByIdOrAlias(tpl.category, tpl.active_news_id_rv.get())?.news_doc
 
   isTabActive: (tab_id) ->
     active_tab_id = Template.instance().active_news_tab_rv.get()
@@ -88,7 +88,7 @@ Template.support_page_article.helpers
 
   getActiveNewsTemplate: ->
     tpl = Template.instance()
-    news_doc = APP.justdo_crm.getNewsByIdOrAlias tpl.category, tpl.active_news_id_rv.get()
+    news_doc = APP.justdo_crm.getNewsByIdOrAlias(tpl.category, tpl.active_news_id_rv.get())?.news_doc
     active_tab = tpl.active_news_tab_rv.get()
 
     template = _.find news_doc.templates, (template_obj) -> template_obj._id is active_tab

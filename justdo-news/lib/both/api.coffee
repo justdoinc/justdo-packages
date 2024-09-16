@@ -267,12 +267,25 @@ _.extend JustdoNews.prototype,
     if not category? or not news_id_or_alias?
       return
 
-    return _.find @getNewsCategory(category).news, (news) -> 
+    is_alias = false
+    news_doc = _.find @getNewsCategory(category).news, (news) -> 
+      if news._id is news_id_or_alias
+        return true
+
       news_aliases = news.aliases or []
-      return (news._id is news_id_or_alias) or (news_id_or_alias in news_aliases)
+      if news_id_or_alias in news_aliases
+        is_alias = true
+        return true
+
+      return false
+    
+    if not news_doc?
+      return
+    
+    return {news_doc: news_doc, is_alias: is_alias}
     
   getNewsTemplateIfExists: (category, news_id_or_alias, template_name) ->
-    if not (news = @getNewsByIdOrAlias category, news_id_or_alias)
+    if not (news = @getNewsByIdOrAlias(category, news_id_or_alias)?.news_doc)?
       return
     return _.find news.templates, (template_obj) -> template_obj._id is template_name
 

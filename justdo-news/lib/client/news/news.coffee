@@ -77,7 +77,7 @@ Template.news.onRendered ->
 Template.news.helpers
   getActiveNewsTitle: ->
     tpl = Template.instance()
-    return TAPi18n.__ APP.justdo_crm.getNewsByIdOrAlias(tpl.active_category_rv.get(), tpl.active_news_id_rv.get())?.title
+    return TAPi18n.__ APP.justdo_crm.getNewsByIdOrAlias(tpl.active_category_rv.get(), tpl.active_news_id_rv.get())?.news_doc?.title
 
   showNavigationBar: ->
     tpl = Template.instance()
@@ -104,7 +104,7 @@ Template.news.helpers
 
   activeNews: ->
     tpl = Template.instance()
-    return APP.justdo_crm.getNewsByIdOrAlias tpl.active_category_rv.get(), tpl.active_news_id_rv.get()
+    return APP.justdo_crm.getNewsByIdOrAlias(tpl.active_category_rv.get(), tpl.active_news_id_rv.get())?.news_doc
 
   isTabActive: (tab_id) ->
     active_tab_id = Template.instance().active_news_tab_rv.get()
@@ -114,7 +114,7 @@ Template.news.helpers
 
   getActiveNewsTemplate: ->
     tpl = Template.instance()
-    news_doc = APP.justdo_crm.getNewsByIdOrAlias tpl.active_category_rv.get(), tpl.active_news_id_rv.get()
+    news_doc = APP.justdo_crm.getNewsByIdOrAlias(tpl.active_category_rv.get(), tpl.active_news_id_rv.get())?.news_doc
     active_tab = tpl.active_news_tab_rv.get()
 
     template = _.find news_doc.templates, (template_obj) -> template_obj._id is active_tab

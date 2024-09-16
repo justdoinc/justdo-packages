@@ -16,7 +16,7 @@ _.extend JustdoNews.prototype,
     return cur_path.match(JustdoNews.root_path_regex)?[0]?.replace "/", ""
 
   getNewsIdIfExists: (category, news_id_or_alias) ->
-    news_doc = @getNewsByIdOrAlias category, news_id_or_alias
+    news_doc = @getNewsByIdOrAlias(category, news_id_or_alias)?.news_doc
     return news_doc?._id
 
   redirectToMostRecentNewsPageByCategoryOrFallback: (category) ->
