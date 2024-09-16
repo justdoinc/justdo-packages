@@ -61,7 +61,9 @@ _.extend JustdoNews.prototype,
       
       # If news_id or news_template is invalid, return 404
       is_news_id_invalid = true
-      if (news_doc = @getNewsByIdOrAlias(news_category, news_id)?.news_doc)?
+      if (news = @getNewsByIdOrAlias(news_category, news_id))?
+        {news_doc, is_alias} = news
+        news_id = news_doc._id
         is_news_id_invalid = false
 
         # The template is the last part of the url (e.g. other-updates here: /news/justdo-ai/other-updates )
@@ -74,7 +76,7 @@ _.extend JustdoNews.prototype,
         return
       
       # If the news_id is default, redirect to the path without news_template
-      if news_template is JustdoNews.default_news_template
+      if is_alias or (news_template is JustdoNews.default_news_template)
         redirect_url = "/#{news_category}/#{news_id}"
         if lang?
           redirect_url = APP.justdo_i18n_routes.i18nPath redirect_url, lang
