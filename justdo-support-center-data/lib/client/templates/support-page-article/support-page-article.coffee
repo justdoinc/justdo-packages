@@ -1,6 +1,6 @@
 Template.support_page_article.onCreated ->
   @category = "support"
-  if not (most_recent_news_id = APP.justdo_crm.getMostRecentNewsIdUnderCategory @category)
+  if not (most_recent_news_id = APP.justdo_crm.getMostRecentNewsObjUnderCategory @category)
     throw APP.justdo_crm._error "news-category-not-found"
 
   @active_news_id_rv = new ReactiveVar(@data?.news_id or most_recent_news_id)

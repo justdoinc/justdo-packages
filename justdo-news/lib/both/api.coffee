@@ -78,12 +78,12 @@ _.extend JustdoNews.prototype,
       return JSON.parse(JSON.stringify(@getNewsCategory(category).news))
     return []
 
-  getMostRecentNewsIdUnderCategory: (category) ->
+  getMostRecentNewsObjUnderCategory: (category) ->
     if Meteor.isClient
       @category_dep.depend()
       @news_dep.depend()
 
-    return @getNewsCategory(category)?.news?[0]?._id
+    return @getNewsCategory(category)?.news?[0]
 
   _generateRouteFunctionForNewsCategory: (category) ->
     self = @

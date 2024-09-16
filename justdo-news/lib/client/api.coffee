@@ -20,7 +20,7 @@ _.extend JustdoNews.prototype,
     return news_doc?._id
 
   redirectToMostRecentNewsPageByCategoryOrFallback: (category) ->
-    if not (most_recent_news_id_under_cat = @getMostRecentNewsIdUnderCategory category)?
+    if not (news_doc = @getMostRecentNewsObjUnderCategory category)?
       throw @_error "news-category-not-found"
 
     url = "/#{category}/#{most_recent_news_id_under_cat}"

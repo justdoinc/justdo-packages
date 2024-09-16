@@ -43,7 +43,7 @@ _.extend JustdoNews.prototype,
 
       # If news_category isn't registered, skip.
       # Note that this is a middleware. news_category could be any path (not just /news)
-      if not (most_recent_news_id = @getMostRecentNewsIdUnderCategory news_category)
+      if not (news_category_obj = @getNewsCategory news_category)?
         next()
         return
       
