@@ -35,4 +35,8 @@ if env.ROOT_URL is env.LANDING_APP_ROOT_URL
   # Set register_news_routes to true if we're in landing app
   options.register_news_routes = true
 
+# Originally, the JustdoNews package was created to be a news package, but we
+# ended up using it as a CRM package. So, we're going to create some aliases
+# to make it easier to use the CRM features.
 APP.justdo_news = new JustdoNews(options)
+APP.justdo_crm = APP.justdo_news

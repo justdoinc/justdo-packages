@@ -1,4 +1,4 @@
-APP.justdo_news.registerNews "support",
+APP.justdo_crm.registerNews "support",
   _id: "360015993900"
   title: "Importing Tasks from Spreadsheets into JustDo"
   aliases: ["how-to-import-tasks-from-a-spreadsheet"]

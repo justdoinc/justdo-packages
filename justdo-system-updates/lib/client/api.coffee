@@ -30,7 +30,7 @@ _.extend JustdoSystemUpdates.prototype,
       read_system_updates = []
 
     read_system_updates_ids = _.map read_system_updates, (read_message_doc) -> read_message_doc.update_id
-    all_system_updates_sorted_time_desc = _.sortBy(APP.justdo_news.getAllNewsByCategory(JustdoSystemUpdates.news_category), "date").reverse()
+    all_system_updates_sorted_time_desc = _.sortBy(APP.justdo_crm.getAllNewsByCategory(JustdoSystemUpdates.news_category), "date").reverse()
     unread_system_update_ids = []
 
     # Go through the list of sorted updates DESC. Break when we encountered the first read news, or the first news that is registered before the user.
@@ -62,7 +62,7 @@ _.extend JustdoSystemUpdates.prototype,
     #  skip_mark_as_read: (optional) Skip behaviour of markAsRead and only show "OK" button in popup.
 
     default_options =
-      system_update_ids: [APP.justdo_news.getMostRecentNewsIdUnderCategory JustdoSystemUpdates.news_category]
+      system_update_ids: [APP.justdo_crm.getMostRecentNewsIdUnderCategory JustdoSystemUpdates.news_category]
       skip_mark_as_read: false
 
     options = _.extend default_options, options

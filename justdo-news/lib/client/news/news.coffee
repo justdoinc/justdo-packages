@@ -1,7 +1,7 @@
 Template.news.onCreated ->
-  @active_category_rv = new ReactiveVar(@data?.category or APP.justdo_news.getActiveCategetoryByRootPath())
-  if not (most_recent_news_id = APP.justdo_news.getMostRecentNewsIdUnderCategory @active_category_rv.get())
-    throw APP.justdo_news._error "news-category-not-found"
+  @active_category_rv = new ReactiveVar(@data?.category or APP.justdo_crm.getActiveCategetoryByRootPath())
+  if not (most_recent_news_id = APP.justdo_crm.getMostRecentNewsIdUnderCategory @active_category_rv.get())
+    throw APP.justdo_crm._error "news-category-not-found"
 
   @active_news_id_rv = new ReactiveVar(@data?.news_id or most_recent_news_id)
 
@@ -21,14 +21,14 @@ Template.news.onCreated ->
 
   # If router_navigation and register_news_routes is true, the content of template will react to the active route,
   # and will redirect user to the corresponding route upon clicking.
-  @register_news_routes = APP.justdo_news.register_news_routes
+  @register_news_routes = APP.justdo_crm.register_news_routes
   @router_navigation = @data?.router_navigation
   if not @router_navigation?
     @router_navigation = @register_news_routes
 
   if @router_navigation and @register_news_routes
     @autorun =>
-      active_category = APP.justdo_news.getActiveCategetoryByRootPath()
+      active_category = APP.justdo_crm.getActiveCategetoryByRootPath()
       @active_category_rv.set active_category
 
       params = Router.current()?.params
@@ -77,7 +77,7 @@ Template.news.onRendered ->
 Template.news.helpers
   getActiveNewsTitle: ->
     tpl = Template.instance()
-    return TAPi18n.__ APP.justdo_news.getNewsByIdOrAlias(tpl.active_category_rv.get(), tpl.active_news_id_rv.get())?.title
+    return TAPi18n.__ APP.justdo_crm.getNewsByIdOrAlias(tpl.active_category_rv.get(), tpl.active_news_id_rv.get())?.title
 
   showNavigationBar: ->
     tpl = Template.instance()
@@ -95,7 +95,7 @@ Template.news.helpers
 
   otherNews: ->
     tpl = Template.instance()
-    return APP.justdo_news.getAllNewsByCategory(tpl.active_category_rv.get())
+    return APP.justdo_crm.getAllNewsByCategory(tpl.active_category_rv.get())
 
   isNewsActive: ->
     if @_id is Template.instance().active_news_id_rv.get()
@@ -104,7 +104,7 @@ Template.news.helpers
 
   activeNews: ->
     tpl = Template.instance()
-    return APP.justdo_news.getNewsByIdOrAlias tpl.active_category_rv.get(), tpl.active_news_id_rv.get()
+    return APP.justdo_crm.getNewsByIdOrAlias tpl.active_category_rv.get(), tpl.active_news_id_rv.get()
 
   isTabActive: (tab_id) ->
     active_tab_id = Template.instance().active_news_tab_rv.get()
@@ -114,7 +114,7 @@ Template.news.helpers
 
   getActiveNewsTemplate: ->
     tpl = Template.instance()
-    news_doc = APP.justdo_news.getNewsByIdOrAlias tpl.active_category_rv.get(), tpl.active_news_id_rv.get()
+    news_doc = APP.justdo_crm.getNewsByIdOrAlias tpl.active_category_rv.get(), tpl.active_news_id_rv.get()
     active_tab = tpl.active_news_tab_rv.get()
 
     template = _.find news_doc.templates, (template_obj) -> template_obj._id is active_tab

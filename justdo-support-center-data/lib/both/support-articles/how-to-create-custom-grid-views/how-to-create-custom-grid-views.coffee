@@ -1,4 +1,4 @@
-APP.justdo_news.registerNews "support",
+APP.justdo_crm.registerNews "support",
   _id: "6866979971986"
   title: "Creating and Managing Custom Grid Views in JustDo"
   aliases: ["how-to-create-custom-grid-views"]

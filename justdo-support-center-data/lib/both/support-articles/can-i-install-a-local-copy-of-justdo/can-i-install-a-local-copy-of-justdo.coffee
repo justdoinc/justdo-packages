@@ -1,4 +1,4 @@
-APP.justdo_news.registerNews "support",
+APP.justdo_crm.registerNews "support",
   _id: "115000229573"
   title: "Can I Install a Local Copy of JustDo?"
   aliases: ["can-i-install-a-local-copy-of-justdo"]

@@ -1,4 +1,4 @@
-APP.justdo_news.registerNewsCategory "support", 
+APP.justdo_crm.registerNewsCategory "support", 
   template: "support_page_article"
   # XXX Remove after i18n for support articles is ready
   translatable: false

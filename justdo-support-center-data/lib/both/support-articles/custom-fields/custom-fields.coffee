@@ -1,4 +1,4 @@
-APP.justdo_news.registerNews "support",
+APP.justdo_crm.registerNews "support",
   _id: "115003761733"
   title: "Using Custom Fields in JustDo: A Comprehensive Guide"
   aliases: ["custom-fields"]

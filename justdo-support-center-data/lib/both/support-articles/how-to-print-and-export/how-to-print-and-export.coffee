@@ -1,4 +1,4 @@
-APP.justdo_news.registerNews "support",
+APP.justdo_crm.registerNews "support",
   _id: "115000301934"
   title: "Printing and Exporting Data in JustDo"
   aliases: ["how-to-print-and-export"]

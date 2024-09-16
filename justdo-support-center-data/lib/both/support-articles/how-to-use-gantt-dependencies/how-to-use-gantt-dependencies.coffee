@@ -1,4 +1,4 @@
-APP.justdo_news.registerNews "support",
+APP.justdo_crm.registerNews "support",
   _id: "5963826490642"
   title: "Using Gantt Dependencies in JustDo"
   aliases: ["how-to-use-gantt-dependencies"]
