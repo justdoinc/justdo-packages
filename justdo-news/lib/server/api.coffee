@@ -76,13 +76,13 @@ _.extend JustdoNews.prototype,
         return
       
       # If the news_id is default, redirect to the path without news_template
-      if is_alias or (news_template is JustdoNews.default_news_template)
         redirect_url = "/#{news_category}/#{news_id}"
         if lang?
           redirect_url = APP.justdo_i18n_routes.i18nPath redirect_url, lang
           
         url_obj.pathname = redirect_url
         redirectToNewsUrl 301, url_obj, res
+      if is_alias or @isDefaultNewsTemplate(news_template)
         return
 
       # Everything is valid. Continue.
