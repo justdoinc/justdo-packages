@@ -55,7 +55,7 @@ Package.onUse(function (api) {
   api.use("matb33:collection-hooks@0.8.4", both);
 
   api.use("reactive-var", both);
-  api.use("tracker", client);
+  api.use("tracker", both);
   api.use("webapp", server);
 
   api.addFiles("lib/both/analytics.coffee", both);

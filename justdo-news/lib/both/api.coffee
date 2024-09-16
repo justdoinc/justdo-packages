@@ -63,8 +63,10 @@ _.extend JustdoNews.prototype,
     
     return true
   
-  getNewsCategoryOptions: (category) ->
-    @requireNewsCategoryExists category
+  getNewsCategory: (category) ->
+    if Meteor.isClient
+      @category_dep.depend()
+
     return @news[category]
 
   getAllNewsByCategory: (category) ->
@@ -73,7 +75,7 @@ _.extend JustdoNews.prototype,
       @news_dep.depend()
 
     if @isNewsCategoryExists category
-      return JSON.parse(JSON.stringify(@news[category].news))
+      return JSON.parse(JSON.stringify(@getNewsCategory(category).news))
     return []
 
   getMostRecentNewsIdUnderCategory: (category) ->
@@ -81,12 +83,13 @@ _.extend JustdoNews.prototype,
       @category_dep.depend()
       @news_dep.depend()
 
-    return @news[category]?.news?[0]?._id
+    return @getNewsCategory(category)?.news?[0]?._id
 
   _generateRouteFunctionForNewsCategory: (category) ->
     self = @
+    @requireNewsCategoryExists category
+    news_category_options = Tracker.nonreactive => @getNewsCategory category
     underscored_category = category.replace /-/g, "_"
-    news_category_options = @getNewsCategoryOptions category
 
     metadata =
       title_i18n: (path_without_lang, lang) ->
@@ -264,7 +267,7 @@ _.extend JustdoNews.prototype,
     if not category? or not news_id_or_alias?
       return
 
-    return _.find @news[category].news, (news) -> 
+    return _.find @getNewsCategory(category).news, (news) -> 
       news_aliases = news.aliases or []
       return (news._id is news_id_or_alias) or (news_id_or_alias in news_aliases)
     
