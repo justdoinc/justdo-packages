@@ -48,6 +48,7 @@ _.extend JustdoNews.prototype,
         return
       
       # By this point we know news_category exists and is valid.
+      most_recent_news_id = news_category_obj.news[0]._id
       
       # If there's no news_id, redirect to the most recent news under the category
       if _.isEmpty news_id

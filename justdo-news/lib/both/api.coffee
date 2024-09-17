@@ -132,7 +132,7 @@ _.extend JustdoNews.prototype,
           mapGenerator: ->
             ret = 
               url: "/#{category}"
-              canonical_to: "/#{category}/#{self.getMostRecentNewsIdUnderCategory category}"
+              canonical_to: "/#{category}/#{self.getMostRecentNewsObjUnderCategory(category)._id}"
             yield ret
             return
       "/#{category}/:news_id":
@@ -301,6 +301,9 @@ _.extend JustdoNews.prototype,
 
   isDefaultNewsTemplate: (template_id) -> template_id is JustdoNews.default_news_template
 
+# Originally, the JustdoNews package was created to be a news package, but we
+# ended up using it as a CRM package. So, we're going to create some aliases
+# to make it easier to use the CRM features.
 _.extend JustdoNews.prototype,
   getAllItemsByCategory: JustdoNews.prototype.getAllNewsByCategory
   getMostRecentItemObjUnderCategory: JustdoNews.prototype.getMostRecentNewsObjUnderCategory
