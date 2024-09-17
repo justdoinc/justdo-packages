@@ -13,10 +13,6 @@ _.extend JustdoI18nRoutes.prototype,
 
   _registerGlobalTemplateHelpers: ->
     Template.registerHelper "i18nCurrentPagePath", (lang) => @i18nCurrentPagePath lang
-    # Note: The difference between i18nPath and i18nRoute is that
-    #   - i18nPath takes a path and returns the path with the lang prefix
-    #   - i18nRoute takes a route name and route options object and returns the path with the lang prefix
-    Template.registerHelper "i18nPath", (options) => @i18nPath options
     Template.registerHelper "i18nRoute", (options) => 
       path = Blaze._globalHelpers.pathFor options
       return @i18nPath(path) or path
