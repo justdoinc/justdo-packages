@@ -145,6 +145,8 @@ _.extend JustdoNews.prototype,
 
           if not self.getNewsIdIfExists(category, news_id)?
             self.redirectToMostRecentNewsPageByCategoryOrFallback category
+          
+          self.redirectToCanonicalPathIfNecessary @url, category, news_id
 
           @render news_category_options.template
           @layout "single_frame_layout"
@@ -170,6 +172,8 @@ _.extend JustdoNews.prototype,
 
           if not self.getNewsTemplateIfExists(category, news_id, news_template)?
             self.redirectToMostRecentNewsPageByCategoryOrFallback category
+          
+          self.redirectToCanonicalPathIfNecessary @url, category, news_id, news_template
 
           @render news_category_options.template
           @layout "single_frame_layout"
@@ -367,6 +371,26 @@ _.extend JustdoNews.prototype,
   
   isDefaultNewsTemplate: (template_id) -> template_id is JustdoNews.default_news_template
 
+  # NOTE: this method uses the Iron Router and should not be used in the middleware level
+  redirectToCanonicalPathIfNecessary: (news_url, category, news, template) ->
+    URL = JustdoHelpers.getURL()
+    news_url_obj = new URL news_url, JustdoHelpers.getRootUrl()
+
+    if Meteor.isServer
+      lang = @getUrlLang(news_url) or JustdoI18n.default_lang
+      canonical_news_url = @getI18nCanonicalNewsPath {lang, category, news, template}
+    else
+      canonical_news_url = @getI18nCanonicalNewsPath {category, news, template}
+
+    # For some reason, "canonical_news_url isnt news_url_obj.pathname" doesn't work
+    # so _.isEqual is used here.
+    # Redirect only received url isn't the same as canonical
+    if not _.isEqual(canonical_news_url, news_url_obj.pathname)
+      news_url_obj.pathname = canonical_news_url
+      Router.current().redirect news_url_obj.toString()
+    
+    return
+  
 # Originally, the JustdoNews package was created to be a news package, but we
 # ended up using it as a CRM package. So, we're going to create some aliases
 # to make it easier to use the CRM features.
