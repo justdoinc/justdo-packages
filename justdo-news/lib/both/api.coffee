@@ -143,7 +143,7 @@ _.extend JustdoNews.prototype,
         routingFunction: ->
           news_id = @params.news_id.toLowerCase()
 
-          if not self.getNewsIdIfExists(category, news_id)?
+          if not self.getNewsByIdOrAlias(category, news_id)?
             self.redirectToMostRecentNewsPageByCategoryOrFallback category
           
           self.redirectToCanonicalPathIfNecessary @url, category, news_id
