@@ -60,6 +60,9 @@ _.extend JustdoNews.prototype,
         redirectToNewsUrl 302, url_obj, res
         return
       
+      # Extract news_id from url component with title (e.g. v5-0--justdo-ai > v5-0)
+      {news_id} = @extractNewsIdAndTitleFromUrlComponent received_news_id
+
       # If news_id or news_template is invalid, return 404
       is_news_id_invalid = true
       if (news = @getNewsByIdOrAlias(news_category, news_id))?

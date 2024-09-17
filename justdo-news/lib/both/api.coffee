@@ -275,6 +275,8 @@ _.extend JustdoNews.prototype,
       
     if not category? or not news_id_or_alias?
       return
+    
+    news_id_or_alias = @extractNewsIdAndTitleFromUrlComponent(news_id_or_alias).news_id
 
     is_alias = false
     news_doc = _.find @getCategory(category).news, (news) -> 
@@ -352,6 +354,17 @@ _.extend JustdoNews.prototype,
 
     return APP.justdo_i18n_routes?.i18nPath(news_path, lang) or news_path
 
+  extractNewsIdAndTitleFromUrlComponent: (url_component) ->
+    url_component = url_component?.split(JustdoNews.url_title_separator)
+    if _.isEmpty url_component
+      return
+    
+    ret = 
+      news_id: url_component[0]
+      url_title: url_component[1]
+    
+    return ret
+  
   isDefaultNewsTemplate: (template_id) -> template_id is JustdoNews.default_news_template
 
 # Originally, the JustdoNews package was created to be a news package, but we
