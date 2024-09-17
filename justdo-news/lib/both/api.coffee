@@ -136,7 +136,7 @@ _.extend JustdoNews.prototype,
           mapGenerator: ->
             ret = 
               url: "/#{category}"
-              canonical_to: "/#{category}/#{self.getMostRecentNewsObjUnderCategory(category)._id}"
+              canonical_to: self.getCanonicalNewsPath(category, self.getMostRecentNewsObjUnderCategory(category))
             yield ret
             return
       "/#{category}/:news_id":
@@ -155,7 +155,7 @@ _.extend JustdoNews.prototype,
           mapGenerator: ->
             for news_doc in self.getAllNewsByCategory category
               ret = 
-                url: "/#{category}/#{news_doc._id}"
+                url: self.getCanonicalNewsPath category, news_doc
               yield ret
             return
           metadata: metadata
@@ -183,7 +183,7 @@ _.extend JustdoNews.prototype,
                 news_template_id = template_obj._id
                 if not self.isDefaultNewsTemplate news_template_id
                   ret = 
-                    url: "/#{category}/#{news_doc._id}/#{news_template_id}"
+                    url: self.getCanonicalNewsPath category, news_doc, news_template_id
                   yield ret
             return
           metadata: metadata
@@ -306,6 +306,41 @@ _.extend JustdoNews.prototype,
 
     [news_category, news_id, news_template] = _.filter path.split("/"), (path_segment) -> not _.isEmpty path_segment
     return {news_category, news_id, news_template}
+  
+  newsTitleToUrlComponent: (title) ->
+    if _.isEmpty title
+      return ""
+
+    title = title
+      .trim()
+      # Replace all non-alphanumeric characters with a dash
+      .replace /\W+/g, "-"
+      # Remove consecutive dashes (since it interferes with the separator)
+      .replace /-+/g, "-"
+      # Remove trailing dashes
+      .replace /-+$/g, ""
+      .toLowerCase()
+
+    return "#{JustdoNews.url_title_separator}#{title}"
+  
+  getCanonicalNewsPath: (news_category, news, template) ->
+    news_category_obj = @getNewsCategory news_category
+
+    if _.isString news
+      news_doc = @getNewsByIdOrAlias(news_category, news).news_doc
+    else
+      news_doc = news
+
+    news_path = news_doc._id
+    if news_category_obj.title_in_url
+      news_path += @newsTitleToUrlComponent news_doc.title
+    
+    news_path = "/#{news_category}/#{news_path}"
+
+    if not _.isEmpty template
+      news_path = "#{news_path}/#{template}"
+    
+    return news_path
 
   isDefaultNewsTemplate: (template_id) -> template_id is JustdoNews.default_news_template
 
