@@ -31,29 +31,6 @@ Template.justdo_plugins_store_plugin_page.onRendered ->
       prevEl: ".swiper-button-prev"
   })
 
-  @autorun ->
-    # Prevent changing between ltr/rtl lang from breaking the swiper content
-    dir = "ltr"
-    if APP.justdo_i18n.isRtl()
-      dir = "rtl"
-    swiper.changeLanguageDirection dir
-  
-    # Ensure navigation is working consistently between ltr/rtl lang
-    swiper.navigation.destroy()
-    if dir is "ltr"
-      nextEl = ".swiper-button-next"
-      prevEl = ".swiper-button-prev"
-    else
-      nextEl = ".swiper-button-prev"
-      prevEl = ".swiper-button-next"
-    swiper.params.navigation.nextEl = nextEl
-    swiper.params.navigation.prevEl = prevEl
-    swiper.navigation.init()
-
-    return
-  
-  return
-
 Template.justdo_plugins_store_plugin_page.helpers
   getActivePluginPageObject: ->
     tpl = Template.instance()
