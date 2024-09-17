@@ -43,7 +43,7 @@
     footer:
       "<div class='modal-footer'></div>",
     closeButton:
-      "<button type='button' class='bootbox-close-button close' data-dismiss='modal' aria-hidden='true'>&times;</button>",
+      "<button type='button' class='bootbox-close-button close' data-dismiss='modal' aria-hidden='true'><svg class='jd-icon'><use xlink:href='/layout/icons-feather-sprite.svg#x'></use></svg></button>",
     form:
       "<form class='bootbox-form'></form>",
     inputs: {
@@ -1027,7 +1027,7 @@
   // To allow gradual RTL support, we've added a new method: rtlTransitionMode. If callsed with true, only
   // dialogs that have rtl_ready option set to true will be affected by RTL mode. The rest will remain in LTR mode,
   // even if the language is RTL.  exports.rtlTransitionMode = function(is_rtl_transition_mode) {
-  exports.rtlTransitionMode = function(is_rtl_transition_mode) { 
+  exports.rtlTransitionMode = function(is_rtl_transition_mode) {
     if (is_rtl_transition_mode) {
       this.setDefaults("rtl_ready", false);
     }
