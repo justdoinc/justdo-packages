@@ -36,16 +36,6 @@ Template.support_page_article.onCreated ->
 
   @isRouterNavigation = -> @router_navigation and @register_news_routes
 
-  @getNewsPath = (template_name, template_data) ->
-    # If the news_template is the default template, we don't need to include it in the path.
-    if APP.justdo_crm.isDefaultItemTemplate template_data.news_template
-      template_name = template_name.replace "_with_news_id_and_template", "_with_news_id"
-
-    news_path = Router.path template_name, template_data
-    news_path = APP.justdo_i18n_routes?.i18nPath(news_path) or news_path
-
-    return news_path
-
   return
 
 Template.support_page_article.helpers 
@@ -113,7 +103,7 @@ Template.support_page_article.helpers
     template_name = "#{active_category.replaceAll "-", "_"}_page_with_news_id"
     news_id = @_id
 
-    return tpl.getNewsPath template_name, {news_category: active_category, news_id: news_id}
+    return APP.justdo_crm.getI18nCanonicalNewsPath {category: active_category, news: news_id}
   
   getNewsTabPath: ->
     tpl = Template.instance()
@@ -125,7 +115,7 @@ Template.support_page_article.helpers
     news_id = tpl.active_news_id_rv.get()
     news_template = @_id
 
-    return tpl.getNewsPath template_name, {news_category: active_category, news_id: news_id, news_template: news_template}
+    return APP.justdo_crm.getI18nCanonicalNewsPath {category: active_category, news: news_id, template: news_template}
 
 Template.support_page_article.events
   "click .news-navigation-item": (e, tpl) ->

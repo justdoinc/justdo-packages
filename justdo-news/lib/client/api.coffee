@@ -23,7 +23,7 @@ _.extend JustdoNews.prototype,
     if not (news_doc = @getMostRecentNewsObjUnderCategory category)?
       throw @_error "news-category-not-found"
 
-    url = "/#{category}/#{news_doc._id}"
+    url = @getI18nCanonicalNewsPath {category, news: news_doc}
     url = APP.justdo_i18n_routes?.i18nPath(url) or url
 
     Router.current().redirect url

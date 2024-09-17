@@ -342,6 +342,16 @@ _.extend JustdoNews.prototype,
     
     return news_path
 
+  getI18nCanonicalNewsPath: (options) ->
+    {category, news, template, lang} = options
+
+    if Meteor.isServer and _.isEmpty lang
+      throw @_error "missing-argument", "options.lang must be provided when calling this method on the server"
+    
+    news_path = @getCanonicalNewsPath category, news, template
+
+    return APP.justdo_i18n_routes?.i18nPath(news_path, lang) or news_path
+
   isDefaultNewsTemplate: (template_id) -> template_id is JustdoNews.default_news_template
 
 # Originally, the JustdoNews package was created to be a news package, but we
