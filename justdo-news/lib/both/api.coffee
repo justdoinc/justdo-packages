@@ -280,7 +280,7 @@ _.extend JustdoNews.prototype,
     if not category? or not news_id_or_alias?
       return
     
-    news_id_or_alias = @extractNewsIdAndTitleFromUrlComponent(news_id_or_alias).news_id
+    {news_id_or_alias} = @extractNewsIdAndTitleFromUrlComponent(news_id_or_alias)
 
     is_alias = false
     news_doc = _.find @getCategory(category).news, (news) -> 
@@ -364,7 +364,7 @@ _.extend JustdoNews.prototype,
       return
     
     ret = 
-      news_id: url_component[0]
+      news_id_or_alias: url_component[0]
       url_title: url_component[1]
     
     return ret
