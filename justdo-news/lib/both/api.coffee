@@ -330,7 +330,7 @@ _.extend JustdoNews.prototype,
     return "#{JustdoNews.url_title_separator}#{title}"
   
   getCanonicalNewsPath: (news_category, news, template) ->
-    news_category_obj = @getNewsCategory news_category
+    news_category_obj = @getCategory news_category
 
     if _.isString news
       news_doc = @getNewsByIdOrAlias(news_category, news).news_doc
