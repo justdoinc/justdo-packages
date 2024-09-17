@@ -23,6 +23,10 @@ _.extend JustdoNews.prototype,
       label: "News category translatable"
       type: Boolean
       defaultValue: true
+    title_in_url:
+      label: "Append title to URL"
+      type: Boolean
+      defaultValue: false
   registerCategory: (category, options) ->
     if _.isEmpty category or not _.isString category
       throw @_error "invalid-argument"
