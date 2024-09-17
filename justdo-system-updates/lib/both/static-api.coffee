@@ -20,4 +20,4 @@ system_update_options_schema = new SimpleSchema
 
 _.extend JustdoSystemUpdates,
   systemUpdateExists: (update_id) ->
-    return APP.justdo_crm.getNewsByIdOrAlias("news", update_id)?
+    return APP.justdo_crm.getItemByIdOrAlias("news", update_id)?

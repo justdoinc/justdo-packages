@@ -1,4 +1,4 @@
-APP.justdo_crm.registerNews "support",
+APP.justdo_crm.registerItem "support",
   _id: "115003577233"
   title: "Sharing Tasks with Project Members in JustDo"
   aliases: ["how-to-share-tasks-with-project-members"]

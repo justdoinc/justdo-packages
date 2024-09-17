@@ -1,1 +1,1 @@
-APP.justdo_crm.registerNewsCategory "news"
+APP.justdo_crm.registerCategory "news"

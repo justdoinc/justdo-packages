@@ -1,4 +1,4 @@
-APP.justdo_crm.registerNews "news",
+APP.justdo_crm.registerItem "news",
   _id: "v3-136"
   title: "v3_136_news_title"
   aliases: ["v3-136-x"]

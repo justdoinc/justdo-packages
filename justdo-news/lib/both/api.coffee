@@ -14,7 +14,7 @@ _.extend JustdoNews.prototype,
 
     return
 
-  _registerNewsCategoryOptionsSchema: new SimpleSchema
+  _registerCategoryOptionsSchema: new SimpleSchema
     template:
       label: "News category template"
       type: String
@@ -23,16 +23,16 @@ _.extend JustdoNews.prototype,
       label: "News category translatable"
       type: Boolean
       defaultValue: true
-  registerNewsCategory: (category, options) ->
+  registerCategory: (category, options) ->
     if _.isEmpty category or not _.isString category
       throw @_error "invalid-argument"
 
-    if @isNewsCategoryExists category
+    if @isCategoryExists category
       throw @_error "news-category-already-exists"
 
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
-        @_registerNewsCategoryOptionsSchema,
+        @_registerCategoryOptionsSchema,
         options or {},
         {self: @, throw_on_error: true}
       )
@@ -42,7 +42,7 @@ _.extend JustdoNews.prototype,
     @news[category] = options
 
     if @register_news_routes
-      for route_path, {routingFunction, route_options} of @_generateRouteFunctionForNewsCategory category
+      for route_path, {routingFunction, route_options} of @_generateRouteFunctionForCategory category
         if options.translatable and APP.justdo_i18n_routes?
           # Register i18n route for news
           APP.justdo_i18n_routes?.registerRoutes {path: route_path, routingFunction: routingFunction, route_options: route_options}
@@ -54,16 +54,16 @@ _.extend JustdoNews.prototype,
 
     return
 
-  isNewsCategoryExists: (category) ->
+  isCategoryExists: (category) ->
     return _.has @news, category
   
-  requireNewsCategoryExists: (category) ->
-    if not @isNewsCategoryExists category
+  requireCategoryExists: (category) ->
+    if not @isCategoryExists category
       throw @_error "news-category-not-found"
     
     return true
   
-  getNewsCategory: (category) ->
+  getCategory: (category) ->
     if Meteor.isClient
       @category_dep.depend()
 
@@ -74,8 +74,8 @@ _.extend JustdoNews.prototype,
       @category_dep.depend()
       @news_dep.depend()
 
-    if @isNewsCategoryExists category
-      return JSON.parse(JSON.stringify(@getNewsCategory(category).news))
+    if @isCategoryExists category
+      return JSON.parse(JSON.stringify(@getCategory(category).news))
     return []
 
   getMostRecentNewsObjUnderCategory: (category) ->
@@ -83,12 +83,12 @@ _.extend JustdoNews.prototype,
       @category_dep.depend()
       @news_dep.depend()
 
-    return @getNewsCategory(category)?.news?[0]
+    return @getCategory(category)?.news?[0]
 
-  _generateRouteFunctionForNewsCategory: (category) ->
+  _generateRouteFunctionForCategory: (category) ->
     self = @
-    @requireNewsCategoryExists category
-    news_category_options = Tracker.nonreactive => @getNewsCategory category
+    @requireCategoryExists category
+    news_category_options = Tracker.nonreactive => @getCategory category
     underscored_category = category.replace /-/g, "_"
 
     metadata =
@@ -252,7 +252,7 @@ _.extend JustdoNews.prototype,
     if not (_.find news_obj?.templates, (template_obj) => @isDefaultNewsTemplate template_obj._id)?
       throw @_error "no-main-template"
 
-    @requireNewsCategoryExists category
+    @requireCategoryExists category
 
     @news[category].news.push news_obj
     @news[category].news = _.sortBy(@news[category].news, "date").reverse() # Ensures the first element is the newest
@@ -269,7 +269,7 @@ _.extend JustdoNews.prototype,
       return
 
     is_alias = false
-    news_doc = _.find @getNewsCategory(category).news, (news) -> 
+    news_doc = _.find @getCategory(category).news, (news) -> 
       if news._id is news_id_or_alias
         return true
 
@@ -301,3 +301,9 @@ _.extend JustdoNews.prototype,
 
   isDefaultNewsTemplate: (template_id) -> template_id is JustdoNews.default_news_template
 
+_.extend JustdoNews.prototype,
+  getAllItemsByCategory: JustdoNews.prototype.getAllNewsByCategory
+  getMostRecentItemObjUnderCategory: JustdoNews.prototype.getMostRecentNewsObjUnderCategory
+  registerItem: JustdoNews.prototype.registerNews
+  getItemByIdOrAlias: JustdoNews.prototype.getNewsByIdOrAlias
+  isDefaultItemTemplate: JustdoNews.prototype.isDefaultNewsTemplate
