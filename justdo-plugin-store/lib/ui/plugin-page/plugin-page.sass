@@ -19,7 +19,7 @@
     transition: transform 0.25s
     transform: scale(1)
     &:hover
-      transform: scale(1.1)
+      transform: scale(0.98)
     .jd-icon
       stroke: currentColor
       stroke-width: 2
@@ -73,6 +73,13 @@
       border-radius: 0px 0px 16px 16px
     .swiper-button-next,
     .swiper-button-prev
+      box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2)
+      border-radius: 4px
+      background-color: white
+      transition: transform 0.25s
+      transform: scale(1)
+      &:hover
+        transform: scale(0.98)
       &::after
         font-size: 24px
         color: black
@@ -125,6 +132,8 @@
   .plugin-page-img
     margin-right: unset
     margin-left: 24px
+  .swiper-pagination
+    direction: rtl
 
 @media (max-width: 768px)
   .plugin-page
@@ -134,6 +143,9 @@
     .plugin-page
       .return-to-menu
         right: 0
+  .justdo-plugins-plugin-page
+    .swiper-wrapper
+      height: 400px
 
 @media (max-width: 450px)
   .justdo-plugins-plugin-page
