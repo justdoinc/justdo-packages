@@ -357,7 +357,7 @@ _.extend JustdoNews.prototype,
     
     news_path = "/#{category}/#{news_path}"
 
-    if not _.isEmpty template
+    if (not _.isEmpty template) and (not @isDefaultNewsTemplate template)
       news_path = "#{news_path}/#{template}"
     
     return news_path
@@ -372,6 +372,7 @@ _.extend JustdoNews.prototype,
 
     return APP.justdo_i18n_routes?.i18nPath(news_path, lang) or news_path
 
+  # NOTE: url_component should only contain the news_id part with the title (e.g. v5-0--justdo-ai)
   extractNewsIdAndTitleFromUrlComponent: (url_component) ->
     url_component = url_component?.split(JustdoNews.url_title_separator)
     if _.isEmpty url_component
