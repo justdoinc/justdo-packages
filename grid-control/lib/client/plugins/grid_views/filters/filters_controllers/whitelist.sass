@@ -31,3 +31,13 @@
 
     .fa-check-square-o
       display: inline
+
+// RTL modifications
+.right-to-left
+  .whitelist-alike-filter-dropdown-ul // other filters use these rules as well (for example: grid-control-unicode-dates-filter-plugin)
+    margin-left: unset
+    margin-right: 20px
+
+    .fa-li
+      left: unset
+      right: -26px

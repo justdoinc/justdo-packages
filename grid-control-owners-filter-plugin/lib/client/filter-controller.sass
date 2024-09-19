@@ -65,3 +65,14 @@ $dropdown-user-pic-margin: 6px
       white-space: nowrap
       overflow: hidden
       text-overflow: ellipsis
+
+// RTL modifications
+.right-to-left
+  .owners-filter-controller
+    li.member-item
+      img
+        margin-right: unset
+        margin-left: 5px
+      .display-name
+        margin-left: unset
+        margin-right: $dropdown-user-pic-size + $dropdown-user-pic-margin
