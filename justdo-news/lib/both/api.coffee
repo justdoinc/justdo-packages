@@ -133,6 +133,7 @@ _.extend JustdoNews.prototype,
         route_options:
           name: "#{underscored_category}_page"
           translatable: news_category_options.translatable
+          title_in_url: news_category_options.title_in_url
           mapGenerator: ->
             ret = 
               url: "/#{category}"
@@ -154,6 +155,7 @@ _.extend JustdoNews.prototype,
         route_options:
           name: "#{underscored_category}_page_with_news_id"
           translatable: news_category_options.translatable
+          title_in_url: news_category_options.title_in_url
           mapGenerator: ->
             for news_doc in self.getAllNewsByCategory category
               ret = 
@@ -181,6 +183,7 @@ _.extend JustdoNews.prototype,
         route_options:
           name: "#{underscored_category}_page_with_news_id_and_template"
           translatable: news_category_options.translatable
+          title_in_url: news_category_options.title_in_url
           mapGenerator: ->
             for news_doc in self.getAllNewsByCategory category
               for template_obj in news_doc.templates
