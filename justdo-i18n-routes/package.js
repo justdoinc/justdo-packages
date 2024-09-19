@@ -52,6 +52,7 @@ Package.onUse(function (api) {
 
   api.use("matb33:collection-hooks@0.8.4", both);
 
+  api.use("check", both);
   api.use("reactive-var", both);
   api.use("tracker", client);
   api.use("webapp", server);
