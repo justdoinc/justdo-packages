@@ -20,10 +20,16 @@
 </template>
 
 <template name="news_card">
-  <div class="news-item">
-    <div class="news-title"><div class="text">{{#if title}}{{_ title}}{{/if}}</div></div>
-    <div class="news-subtitle">{{#if subtitle}}{{{xssGuard(_ subtitle)}}}{{/if}}</div>
-    <img class="news-media" src="{{getCDNUrl media_url}}" alt="News Image">
+  <div class="news-item" style="{{#if custom_style}}{{{xssGuard(custom_style)}}}{{/if}}">
+    {{#if title}}
+      <div class="news-title"><div class="text">{{{xssGuard(_ title)}}}</div></div>
+    {{/if}}
+    {{#if subtitle}}
+      <div class="news-subtitle">{{{xssGuard(_ subtitle)}}}</div>
+    {{/if}}
+    {{#if media_url}}
+      <img class="news-media" src="{{getCDNUrl media_url}}" alt="News Image">
+    {{/if}}
   </div>
 </template>
 
