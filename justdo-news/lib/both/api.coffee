@@ -136,7 +136,7 @@ _.extend JustdoNews.prototype,
           mapGenerator: ->
             ret = 
               url: "/#{category}"
-              canonical_to: self.getCanonicalNewsPath(category, self.getMostRecentNewsObjUnderCategory(category))
+              canonical_to: self.getCanonicalNewsPath({category, news: self.getMostRecentNewsObjUnderCategory(category)})
             yield ret
             return
       "/#{category}/:news_id":
@@ -157,7 +157,7 @@ _.extend JustdoNews.prototype,
           mapGenerator: ->
             for news_doc in self.getAllNewsByCategory category
               ret = 
-                url: self.getCanonicalNewsPath category, news_doc
+                url: self.getCanonicalNewsPath {category, news: news_doc}
               yield ret
             return
           metadata: metadata
@@ -187,7 +187,7 @@ _.extend JustdoNews.prototype,
                 news_template_id = template_obj._id
                 if not self.isDefaultNewsTemplate news_template_id
                   ret = 
-                    url: self.getCanonicalNewsPath category, news_doc, news_template_id
+                    url: self.getCanonicalNewsPath {category, news: news_doc, template: news_template_id}
                   yield ret
             return
           metadata: metadata
@@ -329,11 +329,13 @@ _.extend JustdoNews.prototype,
 
     return "#{JustdoNews.url_title_separator}#{title}"
   
-  getCanonicalNewsPath: (news_category, news, template) ->
-    news_category_obj = @getCategory news_category
+  getCanonicalNewsPath: (options) ->
+    {category, news, template, lang} = options
+
+    news_category_obj = @getCategory category
 
     if _.isString news
-      news_doc = @getNewsByIdOrAlias(news_category, news).news_doc
+      news_doc = @getNewsByIdOrAlias(category, news).news_doc
     else
       news_doc = news
 
@@ -341,7 +343,7 @@ _.extend JustdoNews.prototype,
     if news_category_obj.title_in_url
       news_path += @newsTitleToUrlComponent news_doc.title
     
-    news_path = "/#{news_category}/#{news_path}"
+    news_path = "/#{category}/#{news_path}"
 
     if not _.isEmpty template
       news_path = "#{news_path}/#{template}"
@@ -354,7 +356,7 @@ _.extend JustdoNews.prototype,
     if Meteor.isServer and _.isEmpty lang
       throw @_error "missing-argument", "options.lang must be provided when calling this method on the server"
     
-    news_path = @getCanonicalNewsPath category, news, template
+    news_path = @getCanonicalNewsPath options
 
     return APP.justdo_i18n_routes?.i18nPath(news_path, lang) or news_path
 
