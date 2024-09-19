@@ -334,6 +334,12 @@ _.extend JustdoNews.prototype,
 
     return "#{JustdoNews.url_title_separator}#{title}"
   
+  getNewsPageTitle: (news_doc, template) ->
+    if _.isEmpty template
+      template = JustdoNews.default_news_template
+    
+    return _.find(news_doc?.templates, (template_obj) -> template_obj._id is template)?.page_title or news_doc.title
+
   getCanonicalNewsPath: (options) ->
     {category, news, template, lang} = options
 
@@ -346,7 +352,8 @@ _.extend JustdoNews.prototype,
 
     news_path = news_doc._id
     if news_category_obj.title_in_url
-      news_path += @newsTitleToUrlComponent news_doc.title
+      page_title = @getNewsPageTitle news_doc, template
+      news_path += @newsTitleToUrlComponent page_title, lang
     
     news_path = "/#{category}/#{news_path}"
 
