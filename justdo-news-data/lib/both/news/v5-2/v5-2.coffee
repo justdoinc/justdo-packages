@@ -1,18 +1,26 @@
 APP.justdo_news.registerNews "news",
   _id: "v5-2"
-  title: "v5_2_news_title"
   aliases: ["v5-2-x"]
   date: "2024-09-23"
+
+  # title is used in the dropdown as the name of the item (e.g. v5.2)
+  title: "v5_2_news_title"
+
   templates: [
     {
       _id: "main"
+      # name is the tab name (e.g. What's new)
+      name: "v5_2_news_main_name"
+      # The following two properties are used in the SEO meta tags
+      page_title: "v5_2_news_page_title"
+      page_description: "v5_2_news_page_description"
+
+      h1: "v5_2_news_page_title"
+      subtitle: "v5_2_news_main_array_item_0_subtitle"
+
       template_name: "version_release_news"
       template_data: {
         news_array: [
-          {
-            "subtitle": "v5_2_news_main_array_item_0_subtitle"
-            "custom_style": "margin-bottom: 20px; margin-top: -11px;"
-          }
           {
             "title": "v5_2_news_main_array_item_1_title"
             "subtitle": "v5_2_news_main_array_item_1_subtitle"
@@ -35,9 +43,5 @@ APP.justdo_news.registerNews "news",
           }
         ]
       }
-      name: "v5_2_news_main_name"
-      page_title: "v5_2_news_page_title"
-      page_description: "v5_2_news_page_description"
-      h1: "v5_2_news_page_title"
     }
   ]

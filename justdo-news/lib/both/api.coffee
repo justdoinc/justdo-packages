@@ -213,6 +213,10 @@ _.extend JustdoNews.prototype,
       label: "Template H1"
       type: String
       optional: true
+    subtitle:
+      label: "News Subtitle"
+      type: String
+      optional: true      
   _registerNewsSchema: new SimpleSchema
     _id:
       label: "News ID"

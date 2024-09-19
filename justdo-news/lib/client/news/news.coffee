@@ -127,6 +127,7 @@ Template.news.helpers
       page_title: template.page_title
       page_description: template.page_description
       h1: template.h1
+      subtitle: template.subtitle
 
     return template
 

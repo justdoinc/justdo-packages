@@ -1,12 +1,17 @@
 <template name="version_release_news">
-  {{#if h1}}
-    <h1 class="title">{{_ h1}}</h1>
-  {{/if}}
-  <div class="date">{{date}}</div>
-  <div class="news-content">
-    {{#each news_array}}
-      {{> news_card}}
-    {{/each}}
+  <div class="news-wrapper">
+    {{#if h1}}
+      <h1 class="title">{{_ h1}}</h1>
+    {{/if}}
+    <div class="date">{{date}}</div>
+    {{#if subtitle}}
+      <div class="subtitle">{{{xssGuard(_ subtitle)}}}</div>
+    {{/if}}
+    <div class="news-content">
+      {{#each news_array}}
+        {{> news_card}}
+      {{/each}}
+    </div>
   </div>
 </template>
 
@@ -20,7 +25,7 @@
 </template>
 
 <template name="news_card">
-  <div class="news-item" style="{{#if custom_style}}{{{xssGuard(custom_style)}}}{{/if}}">
+  <div class="news-item">
     {{#if title}}
       <div class="news-title"><div class="text">{{{xssGuard(_ title)}}}</div></div>
     {{/if}}
