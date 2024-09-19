@@ -17,3 +17,6 @@ _.extend JustdoSiteAdmins.prototype,
       "unknown-_module-id": "Unknown _module id" # _ added before of the word _module cause babel transpiler breaks the build if that word appears anywhere, even in a comment
       "cannot-deactivate-proxy-user": "Cannot deactivate a proxy user"
       "cannot-promote-proxy-user-to-site-admin": "Cannot promote proxy user to site admin"
+      "cant-remove-hardcoded-site-admin": "Can't remove hard-coded site admin"
+      "cannot-deactivate-site-admin": "Cannot deactivate a site admin"
+      "cannot-promote-deactivated-user-to-site-admin": "Cannot promote deactivated user to site admin"
