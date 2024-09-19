@@ -258,7 +258,9 @@
     //  build up a base set of dialog properties
     var baseOptions = {
       className: "bootbox-" + className,
-      buttons: createLabels.apply(null, labels)
+      buttons: createLabels.apply(null, labels),
+      // The callee of this method are bootbox.alert/confirm/prompt, which are simple dialogs that are by default RTL ready.
+      rtl_ready: true
     };
 
     // ensure the buttons properties generated, *after* merging
