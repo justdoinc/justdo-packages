@@ -62,7 +62,7 @@ _.extend JustdoSystemUpdates.prototype,
     #  skip_mark_as_read: (optional) Skip behaviour of markAsRead and only show "OK" button in popup.
 
     default_options =
-      system_update_ids: [APP.justdo_crm.getMostRecentNewsIdUnderCategory JustdoSystemUpdates.news_category]
+      system_update_ids: [APP.justdo_crm.getMostRecentItemObjUnderCategory(JustdoSystemUpdates.news_category)?._id]
       skip_mark_as_read: false
 
     options = _.extend default_options, options
