@@ -147,7 +147,7 @@ _.extend JustdoNews.prototype,
           if not self.getNewsByIdOrAlias(category, news_id)?
             self.redirectToMostRecentNewsPageByCategoryOrFallback category
           
-          self.redirectToCanonicalPathIfNecessary @url, category, news_id
+          # self.redirectToCanonicalPathIfNecessary @url, category, news_id
 
           @render news_category_options.template
           @layout "single_frame_layout"
@@ -175,7 +175,7 @@ _.extend JustdoNews.prototype,
           if not self.getNewsTemplateIfExists(category, news_id, news_template)?
             self.redirectToMostRecentNewsPageByCategoryOrFallback category
           
-          self.redirectToCanonicalPathIfNecessary @url, category, news_id, news_template
+          # self.redirectToCanonicalPathIfNecessary @url, category, news_id, news_template
 
           @render news_category_options.template
           @layout "single_frame_layout"
