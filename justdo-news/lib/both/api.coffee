@@ -313,14 +313,19 @@ _.extend JustdoNews.prototype,
     [news_category, news_id, news_template] = _.filter path.split("/"), (path_segment) -> not _.isEmpty path_segment
     return {news_category, news_id, news_template}
   
-  newsTitleToUrlComponent: (title) ->
+  newsTitleToUrlComponent: (title, lang) ->
     if _.isEmpty title
       return ""
+    
+    if Meteor.isClient and _.isEmpty(lang)
+      lang = APP.justdo_i18n.getLang()
 
-    title = title
+    title = TAPi18n.__(title, {}, lang)
       .trim()
       # Replace all non-alphanumeric characters with a dash
-      .replace /\W+/g, "-"
+      # Unicode is supported via Unicode character class escape 
+      # (see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Regular_expressions/Unicode_character_class_escape for details)
+      .replace /\P{Letter}+/gu, "-"
       # Remove consecutive dashes (since it interferes with the separator)
       .replace /-+/g, "-"
       # Remove trailing dashes
