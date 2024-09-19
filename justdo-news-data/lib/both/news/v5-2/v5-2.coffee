@@ -2,7 +2,7 @@ APP.justdo_news.registerNews "news",
   _id: "v5-2"
   title: "v5_2_news_title"
   aliases: ["v5-2-x"]
-  date: "2024-09-05"
+  date: "2024-09-23"
   templates: [
     {
       _id: "main"
@@ -10,7 +10,12 @@ APP.justdo_news.registerNews "news",
       template_data: {
         news_array: [
           {
+            "subtitle": "v5_2_news_main_array_item_0_subtitle"
+            "custom_style": "margin-bottom: 20px; margin-top: -11px;"
+          }
+          {
             "title": "v5_2_news_main_array_item_1_title"
+            "subtitle": "v5_2_news_main_array_item_1_subtitle"
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v5-2/assets/1.png"
           },
           {
@@ -25,6 +30,7 @@ APP.justdo_news.registerNews "news",
           },
           {
             "title": "v5_2_news_main_array_item_4_title"
+            "subtitle": "v5_2_news_main_array_item_4_subtitle"
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v5-2/assets/4.png"
           }
         ]
