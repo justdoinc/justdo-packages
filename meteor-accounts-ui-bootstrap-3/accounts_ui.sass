@@ -72,3 +72,23 @@
 .btn-Twitter 
 	color: #fff 
 	background-color: #4099ff 
+
+// RTL modifications
+.right-to-left
+	.login-buttons-dropdown-align-left#login-buttons 
+		& + li 
+			.dropdown-menu 
+				float: right 
+				right: 0 
+				left: auto 
+	.login-buttons-dropdown-align-right#login-buttons 
+		& + li 
+			.dropdown-menu 
+				float: left 
+				left: 0 
+				right: auto 
+	.dropdown-info 
+		.action-buttons 
+			&:before 
+				margin-right: unset
+				margin-left: 2px 

@@ -16,11 +16,11 @@
         {{#if inSettingsEditingFlow}}
           {{#if inChangePasswordFlow}}
             <div class="return-arrow login-buttons-exit-change-password">
-              <svg class="jd-icon jd-c-pointer text-body"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-left"/></svg>
+              <svg class="jd-icon jd-c-pointer text-body"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-{{getRtlAwareDirection "left"}}"/></svg>
             </div>
           {{else}}
             <div class="return-arrow login-buttons-exit-global-settings">
-              <svg class="jd-icon jd-c-pointer text-body"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-left"/></svg>
+              <svg class="jd-icon jd-c-pointer text-body"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-{{getRtlAwareDirection "left"}}"/></svg>
             </div>
           {{/if}}
         {{/if}}
