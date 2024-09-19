@@ -2,7 +2,7 @@
   <div class="members-dropdown-wrapper {{#if inviteMode}}invite-mode{{/if}}">
     <div class="members-dropdown-list {{#if selectMode}}selected-mode{{/if}}">
       <div class="members-search-wrapper d-flex align-items-center">
-        <input type="text" class="members-search-input form-control form-control-sm" placeholder="{{_ "members_dropdown_search_members_placeholder"}}">
+        <input type="text" class="members-search-input form-control form-control-sm" placeholder="{{_ "members_dropdown_search_members_placeholder"}}" dir="ltr">
         {{#if is_project_admin}}
           <div class="member-invite-dropdown animate {{#if isEmptyResults getCurrentMembersFilter}}slideIn{{/if}}">
             <div class="invite-dropdown-btn member-invite-btn-js" tabindex="0">

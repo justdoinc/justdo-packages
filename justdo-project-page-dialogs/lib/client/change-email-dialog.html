@@ -4,19 +4,19 @@
       <div class="form-group">
         <label for="current-email" class="control-label">{{_ "edit_email_dialog_current_email"}}</label>
         <div>
-          <input id="current-email" disabled="disabled" class="form-control" value="{{current_email}}">
+          <input id="current-email" disabled="disabled" class="form-control" value="{{current_email}}" dir="ltr">
         </div>
       </div>
       <div class="form-group {{#if isInvalidEmail}}has-error{{/if}}">
         <label for="new-email" class="control-label">{{_ "edit_email_dialog_new_email"}}</label>
         <div>
-          <input id="new-email" class="form-control">
+          <input id="new-email" class="form-control" dir="ltr">
         </div>
       </div>
       <div class="password-input-container">
         <div class="form-group">
           <label type="text" for="new-email-password-confirmation" class="control-label">{{_ "edit_email_dialog_password"}}</label>
-          <input type="password" id="new-email-password-confirmation" class="form-control">
+          <input type="password" id="new-email-password-confirmation" class="form-control" dir="ltr">
           <div class="forgot-password-btn">{{_ "edit_email_dialog_forgot_password"}}</div>
         </div>
       </div>

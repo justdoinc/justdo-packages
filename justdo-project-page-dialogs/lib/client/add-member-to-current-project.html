@@ -2,7 +2,7 @@
   <div class="invite-new-wrapper {{#if showSelectProjects}}show-select-projects{{/if}}">
     <div class="step-one">
       <div class="step-content">
-        <div class="users-email-input-wrapper">
+        <div class="users-email-input-wrapper" dir="ltr">
           <input class="users-email-input form-control" placeholder="{{_ "add_project_member_email_input_placeholder"}}">
           <button class="users-email-add btn btn-sm btn-primary {{#if showInviteButton}}show{{/if}}" type="button">{{_ "invite"}}</button>
         </div>
@@ -146,7 +146,7 @@
   </td>
   <td>
     <div class="user-email-wrapper">
-      <div class="user-email" title="{{email}}">{{email}}</div>
+      <div class="user-email" title="{{email}}" dir="ltr">{{email}}</div>
       <svg class="user-delete jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
     </div>
   </td>

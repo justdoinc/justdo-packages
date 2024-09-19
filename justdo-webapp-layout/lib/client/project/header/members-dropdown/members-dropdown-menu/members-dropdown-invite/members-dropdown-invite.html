@@ -1,7 +1,7 @@
 <template name="members_dropdown_invite">
   <div class="members-dropdown-invite">
     <div class="members-dropdown-invite-header">
-      <input class="invite-members-input form-control form-control-sm" type="text" placeholder="{{_ "members_dropdown_invite_email_input_placeholder"}}">
+      <input class="invite-members-input form-control form-control-sm" type="text" placeholder="{{_ "members_dropdown_invite_email_input_placeholder"}}" dir="ltr">
       <div class="invite-members-input-add text-primary {{#if showAddButton}}show{{/if}}">{{_ "members_dropdown_invite_add"}}</div>
     </div>
     <div class="alerts-container">
@@ -21,7 +21,7 @@
         <div class="invite-list-wrapper">
           {{#each users}}
             <div class="invite-list-item">
-              <div class="invite-list-item-email">
+              <div class="invite-list-item-email" dir="ltr">
                 {{email}}
               </div>
               <svg class="jd-icon remove-invite-email"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
