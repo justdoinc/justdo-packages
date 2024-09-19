@@ -109,3 +109,11 @@ _.extend JustdoSiteAdmins.prototype,
     return
 
   isUserSuperSiteAdmin: -> false
+
+  isProxyUser: (user) ->
+    if _.isString(user)
+      user = Meteor.users.findOne user,
+        fields:
+          is_proxy: 1
+    
+    return user?.is_proxy == true
