@@ -156,13 +156,16 @@ _.extend JustdoNews.prototype,
           name: "#{underscored_category}_page_with_news_id"
           translatable: news_category_options.translatable
           title_in_url: news_category_options.title_in_url
+          metadata: metadata
           mapGenerator: ->
             for news_doc in self.getAllNewsByCategory category
               ret = 
                 url: self.getCanonicalNewsPath {category, news: news_doc}
               yield ret
             return
-          metadata: metadata
+          i18nPath: (path, lang) ->
+            {news_id} = Router.routes[@name].params path
+            return self.getCanonicalNewsPath {lang, category, news: news_id}
 
       "/#{category}/:news_id/:news_template":
         routingFunction: ->
@@ -184,6 +187,7 @@ _.extend JustdoNews.prototype,
           name: "#{underscored_category}_page_with_news_id_and_template"
           translatable: news_category_options.translatable
           title_in_url: news_category_options.title_in_url
+          metadata: metadata
           mapGenerator: ->
             for news_doc in self.getAllNewsByCategory category
               for template_obj in news_doc.templates
@@ -193,7 +197,9 @@ _.extend JustdoNews.prototype,
                     url: self.getCanonicalNewsPath {category, news: news_doc, template: news_template_id}
                   yield ret
             return
-          metadata: metadata
+          i18nPath: (path, lang) ->
+            {news_id, news_template} = Router.routes[@name].params path
+            return self.getCanonicalNewsPath {lang, category, news: news_id, template: news_template}
 
     return routes
 
