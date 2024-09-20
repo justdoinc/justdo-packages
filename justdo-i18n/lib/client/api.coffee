@@ -340,9 +340,9 @@ _.extend JustdoI18n.prototype,
       r: "l"
     if direction not of direction_map
       throw @_error "invalid-argument", "Direction must be either \"left\", \"right\" or \"l\", \"r\"."
-    
+
     is_rtl = @isRtl()
     if is_rtl
-      return direction_map[direction].toLowerCase()
+      return direction_map[direction]
     
-    return direction.toLowerCase()
+    return direction
