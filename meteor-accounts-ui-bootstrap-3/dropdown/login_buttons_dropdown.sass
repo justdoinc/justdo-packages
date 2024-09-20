@@ -38,3 +38,25 @@
       height: auto
       max-height: calc(100vh - 60px)
       overflow: auto
+
+// RTL modifications
+.right-to-left
+  #login-dropdown-list
+    .user-dropdown-toggle
+      margin-left: unset
+      margin-right: 8px
+
+    .dropdown-avatar
+      margin-right: unset
+      margin-left: 1.5rem
+
+    .dropdown-menu
+      &.settings
+        .dropdown-avatar
+          margin-right: unset
+          margin-left: 0rem
+  #login-old-password,
+  #login-password,
+  #login-password-again
+    direction: ltr
+    text-align: right
