@@ -13,23 +13,36 @@ Template.justdo_plugins_store_plugin_page.onCreated ->
   return
 
 Template.justdo_plugins_store_plugin_page.onRendered ->
-  swiper = new Swiper($(".swiper")[0], {
-    modules: [Navigation, Pagination, Keyboard],
-    speed: 600,
-    initialSlide: 0,
-    grabCursor: true,
-    slidesPerView: 'auto',
-    centeredSlides: true,
-    watchSlidesProgress: true,
-    keyboard: true,
-    loop: true
-    pagination:
-      el: ".swiper-pagination",
-      clickable: true
-    navigation:
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev"
-  })
+  swiper = null
+  @autorun ->
+    is_rtl = APP.justdo_i18n.isRtl()
+
+    if swiper?
+      swiper.destroy?()
+
+    # Wrap the re-init of swiper inside a defer to give time for the DOM to update
+    Meteor.defer ->
+      swiper = new Swiper $(".swiper")[0], 
+        modules: [Navigation, Pagination, Keyboard]
+        speed: 600
+        initialSlide: 0
+        grabCursor: true
+        slidesPerView: 'auto'
+        centeredSlides: true
+        watchSlidesProgress: true
+        keyboard: true
+        loop: true
+        pagination:
+          el: ".swiper-pagination"
+          clickable: true
+        navigation:
+          nextEl: if is_rtl then ".swiper-button-prev" else ".swiper-button-next"
+          prevEl: if is_rtl then ".swiper-button-next" else ".swiper-button-prev"
+      return
+    
+    return
+  
+  return
 
 Template.justdo_plugins_store_plugin_page.helpers
   getActivePluginPageObject: ->
