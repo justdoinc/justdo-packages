@@ -7312,6 +7312,16 @@ $active-row-and-search-result-editable-cell-background-color: #cfbde1
 }
 /* END A4BF4 */
 
+/* RTL modifications */
+.right-to-left .slick-header-column:first-child {
+  border-radius: 0px 8px 8px 0px !important;
+}
+
+.right-to-left .slick-header-column:last-child {
+  border-radius: 8px 0px 0px 8px !important;
+}
+/* RTL modifications - END */
+
 /* Custom Unicorn CSS - END */
 .org-global-header-middle-wrapper .org-name,
 .org-global-header-middle-wrapper .slash {
