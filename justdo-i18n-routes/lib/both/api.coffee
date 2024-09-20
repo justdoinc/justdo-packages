@@ -98,10 +98,6 @@ _.extend JustdoI18nRoutes.prototype,
     if (lang is JustdoI18n.default_lang) or (not @isRouteI18nAble route_name)
       return path or "/"
 
-    # If justdo-site-mapper is available, use it to get the correct path
-    if (path_map_obj = APP.justdo_site_mapper?.map?.urls_index[path])?
-      return _.find(path_map_obj.translations, (translation_obj) -> translation_obj.lang is lang ).url
-
     return "#{JustdoI18nRoutes.langs_url_prefix}/#{lang}#{if path is "/" then "" else path}"
 
   getStrippedPathAndLangFromReq: (req) ->
