@@ -1,8 +1,8 @@
 {
   "plugin_store_title": "Doplnky",
-  "plugin_store_additional_info": "DODATOČNÉ INFORMÁCIE",
+  "plugin_store_additional_info": "Dodatočné informácie",
   "plugin_store_learn_more": "Zistiť viac",
-  "plugin_store_developer": "VÝVOJÁR",
+  "plugin_store_developer": "Vývojár",
   "plugin_store_version": "Verzia: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Spoločnosť: <strong class=\"text-primary\">__company_name__</strong>",
   "plugin_store_developer_website": "Webová stránka: <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",

@@ -1,8 +1,8 @@
 {
   "plugin_store_title": "Complements",
-  "plugin_store_additional_info": "INFORMACIÓ ADDICIONAL",
+  "plugin_store_additional_info": "Informació addicional",
   "plugin_store_learn_more": "Més informació",
-  "plugin_store_developer": "DESENVOLUPADOR",
+  "plugin_store_developer": "Desenvolupador",
   "plugin_store_version": "Versió: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Empresa: <strong class=\"text-primary\">__company_name__</strong>",
   "plugin_store_developer_website": "Lloc web: <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",

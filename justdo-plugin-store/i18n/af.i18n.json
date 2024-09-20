@@ -1,8 +1,8 @@
 {
   "plugin_store_title": "Inproppe",
-  "plugin_store_additional_info": "ADDISIONELE INLIGTING",
+  "plugin_store_additional_info": "Bykomende inligting",
   "plugin_store_learn_more": "Leer Meer",
-  "plugin_store_developer": "ONTWIKKELAAR",
+  "plugin_store_developer": "Ontwikkelaar",
   "plugin_store_version": "Weergawe: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Maatskappy: <strong class=\"text-primary\">__company_name__</strong>",
   "plugin_store_developer_website": "Webwerf: <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",

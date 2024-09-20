@@ -1,8 +1,8 @@
 {
   "plugin_store_title": "Utvidelser",
-  "plugin_store_additional_info": "TILLEGGSINFORMASJON",
+  "plugin_store_additional_info": "Tilleggsinformasjon",
   "plugin_store_learn_more": "Lær mer",
-  "plugin_store_developer": "UTVIKLER",
+  "plugin_store_developer": "Utvikler",
   "plugin_store_version": "Versjon: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Selskap: <strong class=\"text-primary\">__company_name__</strong>",
   "plugin_store_developer_website": "Nettsted: <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",

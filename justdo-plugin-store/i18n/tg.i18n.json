@@ -1,8 +1,8 @@
 {
   "plugin_store_title": "Плагинҳо",
-  "plugin_store_additional_info": "МАЪЛУМОТИ ИЛОВАГӢ",
+  "plugin_store_additional_info": "Маълумоти иловагӣ",
   "plugin_store_learn_more": "Маълумоти бештар",
-  "plugin_store_developer": "ТАҲИЯКУНАНДА",
+  "plugin_store_developer": "Таҳиягар",
   "plugin_store_version": "Версия: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Ширкат: <strong class=\"text-primary\">__company_name__</strong>",
   "plugin_store_developer_website": "Вебсайт: <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",

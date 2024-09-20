@@ -1,8 +1,8 @@
 {
   "plugin_store_title": "Փլագիններ",
-  "plugin_store_additional_info": "ԼՐԱՑՈՒՑԻՉ ՏԵՂԵԿՈՒԹՅՈՒՆՆԵՐ",
+  "plugin_store_additional_info": "Լրացուցիչ տեղեկություններ",
   "plugin_store_learn_more": "Իմանալ ավելին",
-  "plugin_store_developer": "ՄՇԱԿՈՂ",
+  "plugin_store_developer": "Մշակող",
   "plugin_store_version": "Տարբերակ՝ <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Ընկերություն՝ <strong class=\"text-primary\">__company_name__</strong>",
   "plugin_store_developer_website": "Կայք՝ <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",

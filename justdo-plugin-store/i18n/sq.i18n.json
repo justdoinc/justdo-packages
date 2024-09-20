@@ -1,8 +1,8 @@
 {
   "plugin_store_title": "Shtojcat",
-  "plugin_store_additional_info": "INFORMACION SHTESË",
+  "plugin_store_additional_info": "Informacion shtesë",
   "plugin_store_learn_more": "Mëso më shumë",
-  "plugin_store_developer": "ZHVILLUESI",
+  "plugin_store_developer": "Zhvilluesi",
   "plugin_store_version": "Versioni: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Kompania: <strong class=\"text-primary\">__company_name__</strong>",
   "plugin_store_developer_website": "Faqja e internetit: <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",

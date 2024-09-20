@@ -1,8 +1,8 @@
 {
   "plugin_store_title": "Plugins",
-  "plugin_store_additional_info": "YDERLIGERE INFORMATION",
+  "plugin_store_additional_info": "Yderligere information",
   "plugin_store_learn_more": "Lær mere",
-  "plugin_store_developer": "UDVIKLER",
+  "plugin_store_developer": "Udvikler",
   "plugin_store_version": "Version: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Virksomhed: <strong class=\"text-primary\">__company_name__</strong>",
   "plugin_store_developer_website": "Hjemmeside: <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",

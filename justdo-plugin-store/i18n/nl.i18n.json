@@ -1,8 +1,8 @@
 {
   "plugin_store_title": "Plug-ins",
-  "plugin_store_additional_info": "AANVULLENDE INFORMATIE",
+  "plugin_store_additional_info": "Extra informatie",
   "plugin_store_learn_more": "Meer informatie",
-  "plugin_store_developer": "ONTWIKKELAAR",
+  "plugin_store_developer": "Ontwikkelaar",
   "plugin_store_version": "Versie: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Bedrijf: <strong class=\"text-primary\">__company_name__</strong>",
   "plugin_store_developer_website": "Website: <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",

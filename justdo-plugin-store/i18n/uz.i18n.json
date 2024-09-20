@@ -1,8 +1,8 @@
 {
   "plugin_store_title": "Plaginlar",
-  "plugin_store_additional_info": "QO'SHIMCHA MA'LUMOT",
+  "plugin_store_additional_info": "Qo'shimcha ma'lumot",
   "plugin_store_learn_more": "Batafsil",
-  "plugin_store_developer": "ISHLAB CHIQARUVCHI",
+  "plugin_store_developer": "Ishlab chiqaruvchi",
   "plugin_store_version": "Versiya: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Kompaniya: <strong class=\"text-primary\">__company_name__</strong>",
   "plugin_store_developer_website": "Veb-sayt: <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",

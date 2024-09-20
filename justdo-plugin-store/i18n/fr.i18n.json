@@ -1,8 +1,8 @@
 {
   "plugin_store_title": "Extensions",
-  "plugin_store_additional_info": "INFORMATIONS SUPPLÉMENTAIRES",
+  "plugin_store_additional_info": "Informations supplémentaires",
   "plugin_store_learn_more": "En savoir plus",
-  "plugin_store_developer": "DÉVELOPPEUR",
+  "plugin_store_developer": "Développeur",
   "plugin_store_version": "Version : <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Entreprise : <strong class=\"text-primary\">__company_name__</strong>",
   "plugin_store_developer_website": "Site web : <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",

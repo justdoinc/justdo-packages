@@ -1,8 +1,8 @@
 {
   "plugin_store_title": "Įskiepiai",
-  "plugin_store_additional_info": "PAPILDOMA INFORMACIJA",
+  "plugin_store_additional_info": "Papildoma informacija",
   "plugin_store_learn_more": "Sužinoti daugiau",
-  "plugin_store_developer": "KŪRĖJAS",
+  "plugin_store_developer": "Kūrėjas",
   "plugin_store_version": "Versija: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Įmonė: <strong class=\"text-primary\">__company_name__</strong>",
   "plugin_store_developer_website": "Svetainė: <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",

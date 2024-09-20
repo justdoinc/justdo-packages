@@ -1,8 +1,8 @@
 {
   "plugin_store_title": "Lisandmoodulid",
-  "plugin_store_additional_info": "LISAINFO",
+  "plugin_store_additional_info": "Lisateave",
   "plugin_store_learn_more": "Loe lähemalt",
-  "plugin_store_developer": "ARENDAJA",
+  "plugin_store_developer": "Arendaja",
   "plugin_store_version": "Versioon: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Ettevõte: <strong class=\"text-primary\">__company_name__</strong>",
   "plugin_store_developer_website": "Veebisait: <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",

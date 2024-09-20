@@ -1,8 +1,8 @@
 {
   "plugin_store_title": "Plugins",
-  "plugin_store_additional_info": "ZOUSÄTZLECH INFORMATIOUNEN",
+  "plugin_store_additional_info": "Zousätzlech Informatiounen",
   "plugin_store_learn_more": "Méi léieren",
-  "plugin_store_developer": "ENTWÉCKLER",
+  "plugin_store_developer": "Entwéckler",
   "plugin_store_version": "Versioun: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "Firma: <strong class=\"text-primary\">__company_name__</strong>",
   "plugin_store_developer_website": "Websäit: <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",
