@@ -2,9 +2,9 @@
   <div class="controller-template-default-toggle project-conf-unread-notif-email-subscription d-flex">
     <div>
       {{#if isSubscribed}}
-        <svg class="jd-icon-user-settings text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
+        <svg class="jd-icon-user-settings text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "right"}}"/></svg>
       {{else}}
-        <svg class="jd-icon-user-settings text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
+        <svg class="jd-icon-user-settings text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "left"}}"/></svg>
       {{/if}}
     </div>
     <div>{{_ "chat_receive_chat_email_notifications"}}</div>

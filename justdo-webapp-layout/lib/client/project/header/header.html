@@ -67,16 +67,16 @@
 
       <li id="register-project-for-daily-email" class="dropdown-item d-flex align-items-center px-1">
       {{#if isSubscribedToDailyEmail}}
-        <svg class="jd-icon-dropdown text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
+        <svg class="jd-icon-dropdown text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "right"}}"/></svg>
       {{else}}
-        <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
+        <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "left"}}"/></svg>
       {{/if}}
       {{_ "email_daily_update_for_this_justdo_label"}}</li>
       <li class="dropdown-item email-notifications d-flex align-items-center px-1">
       {{#if isSubscribedToEmailNotifications}}
-        <svg class="jd-icon-dropdown text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
+        <svg class="jd-icon-dropdown text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "right"}}"/></svg>
       {{else}}
-        <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
+        <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "left"}}"/></svg>
       {{/if}}
       {{_ "email_ownership_transfer_notifications_label"}}</li>
       {{#if showRolesAndGroupsManager}}
