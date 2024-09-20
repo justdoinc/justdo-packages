@@ -49,6 +49,7 @@
   "import": "Tuo",
   "select": "Valitse",
   "select_all": "Valitse kaikki",
+  "clear": "Tyhjennä",
   "clear_all": "Tyhjennä kaikki",
   "invalid_email": "Virheellinen sähköpostiosoite",
   "others": "Muut",

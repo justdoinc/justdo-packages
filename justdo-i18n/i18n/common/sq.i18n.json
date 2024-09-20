@@ -49,6 +49,7 @@
   "import": "Importo",
   "select": "Zgjidh",
   "select_all": "Zgjidh të gjitha",
+  "clear": "Pastro",
   "clear_all": "Pastro të gjitha",
   "invalid_email": "Email i pavlefshëm",
   "others": "Të tjerë",

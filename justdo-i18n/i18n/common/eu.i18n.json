@@ -49,6 +49,7 @@
   "import": "Inportatu",
   "select": "Hautatu",
   "select_all": "Aukeratu guztiak",
+  "clear": "Garbitu",
   "clear_all": "Garbitu guztiak",
   "invalid_email": "Baliogabeko helbide elektronikoa",
   "others": "Besteak",

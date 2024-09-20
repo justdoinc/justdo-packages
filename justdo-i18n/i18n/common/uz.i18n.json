@@ -49,6 +49,7 @@
   "import": "Import",
   "select": "Tanlash",
   "select_all": "Hammasini tanlash",
+  "clear": "Tozalash",
   "clear_all": "Hammasini tozalash",
   "invalid_email": "Noto'g'ri elektron pochta",
   "others": "Boshqalar",

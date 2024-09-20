@@ -49,6 +49,7 @@
   "import": "Importieren",
   "select": "Auswählen",
   "select_all": "Alle auswählen",
+  "clear": "Löschen",
   "clear_all": "Alle löschen",
   "invalid_email": "Ungültige E-Mail-Adresse",
   "others": "Andere",

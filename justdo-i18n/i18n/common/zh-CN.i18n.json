@@ -49,6 +49,7 @@
   "import": "导入",
   "select": "选择",
   "select_all": "全选",
+  "clear": "清除",
   "clear_all": "清除全部",
   "invalid_email": "无效的电子邮箱",
   "others": "其他",

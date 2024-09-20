@@ -49,6 +49,7 @@
   "import": "インポート",
   "select": "選択",
   "select_all": "すべて選択",
+  "clear": "クリア",
   "clear_all": "すべてクリア",
   "invalid_email": "無効なメールアドレス",
   "others": "その他",

@@ -49,6 +49,7 @@
   "import": "นำเข้า",
   "select": "เลือก",
   "select_all": "เลือกทั้งหมด",
+  "clear": "ล้าง",
   "clear_all": "ล้างทั้งหมด",
   "invalid_email": "อีเมลไม่ถูกต้อง",
   "others": "อื่นๆ",

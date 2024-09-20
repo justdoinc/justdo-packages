@@ -49,6 +49,7 @@
   "import": "Importuoti",
   "select": "Pasirinkti",
   "select_all": "Pasirinkti visus",
+  "clear": "Išvalyti",
   "clear_all": "Išvalyti visus",
   "invalid_email": "Neteisingas el. pašto adresas",
   "others": "Kiti",

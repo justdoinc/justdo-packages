@@ -49,6 +49,7 @@
   "import": "匯入",
   "select": "選擇",
   "select_all": "全選",
+  "clear": "清除",
   "clear_all": "清除全部",
   "invalid_email": "無效的電子郵件",
   "others": "其他",

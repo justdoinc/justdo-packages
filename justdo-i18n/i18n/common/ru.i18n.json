@@ -49,6 +49,7 @@
   "import": "Импорт",
   "select": "Выбрать",
   "select_all": "Выбрать все",
+  "clear": "Очистить",
   "clear_all": "Очистить все",
   "invalid_email": "Неверный email",
   "others": "Другие",

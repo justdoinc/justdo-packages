@@ -49,6 +49,7 @@
   "import": "Importera",
   "select": "Välj",
   "select_all": "Välj alla",
+  "clear": "Rensa",
   "clear_all": "Rensa alla",
   "invalid_email": "Ogiltig e-postadress",
   "others": "Andra",

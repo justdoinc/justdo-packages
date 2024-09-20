@@ -49,6 +49,7 @@
   "import": "Увези",
   "select": "Изабери",
   "select_all": "Изабери све",
+  "clear": "Очисти",
   "clear_all": "Обриши све",
   "invalid_email": "Неважећа е-пошта",
   "others": "Остали",

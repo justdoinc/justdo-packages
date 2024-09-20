@@ -49,6 +49,7 @@
   "import": "Importer",
   "select": "Velg",
   "select_all": "Velg alle",
+  "clear": "Tøm",
   "clear_all": "Fjern alle",
   "invalid_email": "Ugyldig e-postadresse",
   "others": "Andre",

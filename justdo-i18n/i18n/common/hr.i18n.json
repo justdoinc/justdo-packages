@@ -49,6 +49,7 @@
   "import": "Uvezi",
   "select": "Odaberi",
   "select_all": "Odaberi sve",
+  "clear": "Očisti",
   "clear_all": "Očisti sve",
   "invalid_email": "Nevažeća e-pošta",
   "others": "Ostali",

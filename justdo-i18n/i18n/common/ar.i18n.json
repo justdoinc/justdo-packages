@@ -49,6 +49,7 @@
   "import": "استيراد",
   "select": "اختيار",
   "select_all": "اختيار الكل",
+  "clear": "مسح",
   "clear_all": "مسح الكل",
   "invalid_email": "بريد إلكتروني غير صالح",
   "others": "آخرون",

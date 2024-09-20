@@ -49,6 +49,7 @@
   "import": "Nhập",
   "select": "Chọn",
   "select_all": "Chọn tất cả",
+  "clear": "Xóa",
   "clear_all": "Xóa tất cả",
   "invalid_email": "Email không hợp lệ",
   "others": "Khác",

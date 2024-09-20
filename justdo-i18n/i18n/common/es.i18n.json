@@ -49,6 +49,7 @@
   "import": "Importar",
   "select": "Seleccionar",
   "select_all": "Seleccionar todo",
+  "clear": "Limpiar",
   "clear_all": "Borrar todo",
   "invalid_email": "Correo electrónico inválido",
   "others": "Otros",

@@ -49,6 +49,7 @@
   "import": "Importálás",
   "select": "Kiválasztás",
   "select_all": "Összes kiválasztása",
+  "clear": "Törlés",
   "clear_all": "Összes törlése",
   "invalid_email": "Érvénytelen e-mail cím",
   "others": "Egyebek",

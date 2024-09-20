@@ -117,13 +117,13 @@ _.extend GridControl.prototype,
       dropdown_controls = """
         <div role="separator" class="dropdown-divider mt-0"></div>
         <div class="dropdown-filter-controls-container">
-          <button type="button" class="btn btn-light border jd-btn-xsm close-dropdown">Close</button>
-          <button type="button" class="btn btn-light border jd-btn-xsm clear">Clear</button>
+          <button type="button" class="btn btn-light border jd-btn-xsm close-dropdown">#{TAPi18n.__ "close"}</button>
+          <button type="button" class="btn btn-light border jd-btn-xsm clear">#{TAPi18n.__ "clear"}</button>
       """
 
       if _.isFunction(PACK.filters_getSelectAllFilterState[filter_type])
         dropdown_controls += """
-          <button type="button" class="btn btn-light border jd-btn-xsm all">All</button>
+          <button type="button" class="btn btn-light border jd-btn-xsm all">#{TAPi18n.__ "all"}</button>
         """
 
       dropdown_controls += """

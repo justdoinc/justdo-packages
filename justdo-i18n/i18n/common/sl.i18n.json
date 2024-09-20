@@ -49,6 +49,7 @@
   "import": "Uvozi",
   "select": "Izberi",
   "select_all": "Izberi vse",
+  "clear": "Počisti",
   "clear_all": "Počisti vse",
   "invalid_email": "Neveljaven e-poštni naslov",
   "others": "Drugi",

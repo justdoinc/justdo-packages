@@ -49,6 +49,7 @@
   "import": "Invoer",
   "select": "Kies",
   "select_all": "Kies alles",
+  "clear": "Vee uit",
   "clear_all": "Vee alles uit",
   "invalid_email": "Ongeldige e-posadres",
   "others": "Ander",

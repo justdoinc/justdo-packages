@@ -49,6 +49,7 @@
   "import": "Impordi",
   "select": "Vali",
   "select_all": "Vali kõik",
+  "clear": "Puhasta",
   "clear_all": "Tühjenda kõik",
   "invalid_email": "Vigane e-posti aadress",
   "others": "Teised",

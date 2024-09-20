@@ -49,6 +49,7 @@
   "import": "Importer",
   "select": "Vælg",
   "select_all": "Vælg alle",
+  "clear": "Ryd",
   "clear_all": "Ryd alle",
   "invalid_email": "Ugyldig e-mail",
   "others": "Andre",
