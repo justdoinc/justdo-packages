@@ -3933,16 +3933,9 @@ input[type="button"].btn-block {
     border-color: #1b1e21; }
 
 .close {
-  float: right;
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 1;
-  color: #000;
-  text-shadow: 0 1px 0 #fff;
   opacity: .5; }
   .close:hover {
-    color: #000;
-    text-decoration: none; }
+    color: #000; }
   .close:not(:disabled):not(.disabled):hover, .close:not(:disabled):not(.disabled):focus {
     opacity: .75; }
 
@@ -3954,8 +3947,10 @@ button.close {
   appearance: none; }
 
 button.close .jd-icon {
-  width: 22px;
-  height: 22px; }
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  stroke-width: 2; }
 
 a.close.disabled {
   pointer-events: none; }

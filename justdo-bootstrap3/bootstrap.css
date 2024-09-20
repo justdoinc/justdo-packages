@@ -5839,21 +5839,12 @@ button.list-group-item-danger.active:focus {
   border-radius: 3px;
 }
 .close {
-  float: right;
-  font-size: 21px;
-  font-weight: bold;
-  line-height: 1;
   color: #000;
-  text-shadow: 0 1px 0 #fff;
-  filter: alpha(opacity=20);
-  opacity: .2;
+  opacity: .5;
 }
 .close:hover,
 .close:focus {
-  color: #000;
-  text-decoration: none;
   cursor: pointer;
-  filter: alpha(opacity=50);
   opacity: .5;
 }
 button.close {
@@ -5865,8 +5856,10 @@ button.close {
   display: flex;
 }
 button.close .jd-icon {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  stroke-width: 2;
 }
 .modal-open {
   overflow: hidden;
