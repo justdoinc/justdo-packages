@@ -11,7 +11,7 @@
   "profile_pic_schema_label": "프로필 사진",
   "date_format_schema_label": "날짜 형식",
   "time_format_schema_label": "시간 형식",
-  "first_day_of_week_schema_label": "한 주의 시작일",
+  "first_day_of_week_schema_label": "한 주의 시작 요일",
   "timezone_schema_label": "시간대",
   "avatar_fg_schema_label": "아바타 전경색",
   "avatar_bg_schema_label": "아바타 배경색",

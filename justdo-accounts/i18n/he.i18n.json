@@ -11,7 +11,7 @@
   "profile_pic_schema_label": "תמונת פרופיל",
   "date_format_schema_label": "פורמט תאריך",
   "time_format_schema_label": "פורמט שעה",
-  "first_day_of_week_schema_label": "היום הראשון בשבוע",
+  "first_day_of_week_schema_label": "יום ראשון בשבוע",
   "timezone_schema_label": "אזור זמן",
   "avatar_fg_schema_label": "צבע קדמי של האווטאר",
   "avatar_bg_schema_label": "צבע רקע של האווטאר",

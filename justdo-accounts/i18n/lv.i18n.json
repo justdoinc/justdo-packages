@@ -11,7 +11,7 @@
   "profile_pic_schema_label": "Profila attēls",
   "date_format_schema_label": "Datuma formāts",
   "time_format_schema_label": "Laika formāts",
-  "first_day_of_week_schema_label": "Nedēļas pirmā diena",
+  "first_day_of_week_schema_label": "Pirmā nedēļas diena",
   "timezone_schema_label": "Laika josla",
   "avatar_fg_schema_label": "Avatara priekšplāns",
   "avatar_bg_schema_label": "Avatara fons",

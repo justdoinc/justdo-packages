@@ -11,7 +11,7 @@
   "profile_pic_schema_label": "Profilbild",
   "date_format_schema_label": "Datumformat",
   "time_format_schema_label": "Tidsformat",
-  "first_day_of_week_schema_label": "Veckans första dag",
+  "first_day_of_week_schema_label": "Första veckodagen",
   "timezone_schema_label": "Tidszon",
   "avatar_fg_schema_label": "Avatar förgrund",
   "avatar_bg_schema_label": "Avatar bakgrund",

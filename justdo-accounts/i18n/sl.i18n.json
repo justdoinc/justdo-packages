@@ -11,7 +11,7 @@
   "profile_pic_schema_label": "Profilna slika",
   "date_format_schema_label": "Format datuma",
   "time_format_schema_label": "Format časa",
-  "first_day_of_week_schema_label": "Prvi dan tedna",
+  "first_day_of_week_schema_label": "Prvi dan v tednu",
   "timezone_schema_label": "Časovni pas",
   "avatar_fg_schema_label": "Ospredje avatarja",
   "avatar_bg_schema_label": "Ozadje avatarja",

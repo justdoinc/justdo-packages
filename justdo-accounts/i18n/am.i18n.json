@@ -11,7 +11,7 @@
   "profile_pic_schema_label": "የመገለጫ ሥዕል",
   "date_format_schema_label": "የቀን አቀራረብ",
   "time_format_schema_label": "የሰዓት አቀራረብ",
-  "first_day_of_week_schema_label": "የሳምንቱ የመጀመሪያ ቀን",
+  "first_day_of_week_schema_label": "የሳምንቱ መጀመሪያ ቀን",
   "timezone_schema_label": "የሰዓት ሰቅ",
   "avatar_fg_schema_label": "የአቫታር ቅድመ-ገጽታ",
   "avatar_bg_schema_label": "የአቫታር ዳራ",
