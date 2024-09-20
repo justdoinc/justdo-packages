@@ -95,8 +95,12 @@ _.extend JustdoI18nRoutes.prototype,
       return path
     
     route_name = JustdoHelpers.getRouteNameFromPath path
-    if (lang is JustdoI18n.default_lang) or (not @isRouteI18nAble route_name)
+    if (lang is JustdoI18n.default_lang) or not (route_def = @getI18nRouteDef route_name)?
       return path or "/"
+    
+    if _.isFunction route_def.route_options.i18nPath
+      path_without_lang_prefix = @getPathWithoutLangPrefix path
+      path = route_def.route_options.i18nPath path_without_lang_prefix, lang
 
     return "#{JustdoI18nRoutes.langs_url_prefix}/#{lang}#{if path is "/" then "" else path}"
 
