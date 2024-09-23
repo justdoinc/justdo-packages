@@ -1,4 +1,4 @@
-datepicker_default_format = "DD/MM/YYYY"
+datepicker_output_format = "DD/MM/YYYY"
 
 default_filter_options =
   filter_options: [
@@ -225,7 +225,7 @@ UnicodeDatesFilterControllerConstructor = (context) ->
 
   @controller.find(".custom-range-label").on "blur", (e) ->
     $label = $(e.target).closest(".custom-range-label")
-    date_format = datepicker_default_format
+    date_format = datepicker_output_format
     date = $label.text()
 
     if $label.hasClass "custom-range-label-start"
@@ -294,7 +294,7 @@ _.extend UnicodeDatesFilterControllerConstructor.prototype,
       label_start = ""
       label_end = ""
 
-      date_format = datepicker_default_format
+      date_format = datepicker_output_format
       user_date_format = JustdoHelpers.getUserPreferredDateFormat()
 
       if (start = filter_state.custom_range.start) != ""
@@ -413,7 +413,7 @@ columnFilterStateToQuery = (column_filter_state, context) ->
 
   if (custom_range = column_filter_state.custom_range)?
     {start, end} = custom_range
-    date_format = datepicker_default_format
+    date_format = datepicker_output_format
     start = moment(start, date_format).locale(JustdoI18n.default_lang)
     end = moment(end, date_format).locale(JustdoI18n.default_lang)
     range_query = {}
