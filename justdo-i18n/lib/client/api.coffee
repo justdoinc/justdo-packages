@@ -8,6 +8,8 @@ _.extend JustdoI18n.prototype,
     # Use of new Map() instead of {} because it maintains the order of insertion
     @cur_page_i18n_keys = new Map()
 
+    @_updateMomentLocale()
+
     # XXX The APP.executeAfterAppClientCode wrap is necessary because on the first page load,
     # XXX TAPi18n's list of supported languages may not be fully initialized as specified in project-tap.i18n.
     # XXX Therefore we wrap the tracker with APP.executeAfterAppClientCode to give extra time for TAPi18n to be fully initialized.
@@ -60,6 +62,16 @@ _.extend JustdoI18n.prototype,
   _deferredInit: ->
     if @destroyed
       return
+
+    return
+  
+  _updateMomentLocale: ->
+    # Moment uses arabic-indic digits by default, which is not what we want.
+    # We want to use the standard western digits.
+    moment_ar_locale_conf = moment.localeData "ar"
+    moment_ar_locale_conf.preparse = null
+    moment_ar_locale_conf.postformat = null
+    moment.updateLocale "ar", moment_ar_locale_conf
 
     return
 
