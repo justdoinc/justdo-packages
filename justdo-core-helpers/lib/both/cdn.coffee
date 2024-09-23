@@ -33,6 +33,8 @@ _.extend JustdoCoreHelpers,
   #   add_protocol: adds the protocol to the CDN URL - only if it starts with "//". (defualt: false)
   #   add_domain_if_no_cdn: adds the domain to the path if no CDN is configured. (default: false)
   getCDNUrl: (path, options) ->
+    URL = JustdoCoreHelpers.getURL()
+
     if Meteor.isServer
       app_version = process.env.APP_VERSION
     if Meteor.isClient
@@ -64,8 +66,7 @@ _.extend JustdoCoreHelpers,
       cdn_url = "#{cdn_url}#{query_param_prefix}_cv=#{encodeURIComponent app_version}"
 
     if options?.add_protocol and cdn_url.substr(0, 2) == "//"
-      URL = JustdoHelpers.getURL()
-      protocol = new URL(JustdoHelpers.getRootUrl()).protocol # Includes the colon
+      protocol = new URL(JustdoCoreHelpers.getRootUrl()).protocol # Includes the colon
 
       cdn_url = "#{protocol}#{cdn_url}"
 

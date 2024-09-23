@@ -24,6 +24,7 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/init.coffee", both);
 
+  api.addFiles("lib/both/url.coffee", both);
   api.addFiles("lib/both/cdn.coffee", both);
   api.addFiles("lib/both/same-tick-cache.coffee", both);
   api.addFiles("lib/both/same-tick-stats.coffee", both);
@@ -31,6 +32,8 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/event-emitter-helpers.coffee", both);
   api.addFiles("lib/both/flush-manager.coffee", both);
   api.addFiles("lib/both/profiling.coffee", both);
+
+  api.addFiles("lib/server/url.coffee", server);
 
   api.export("JustdoCoreHelpers", both);
 });

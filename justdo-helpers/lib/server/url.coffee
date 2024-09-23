@@ -1,1 +1,1 @@
-JustdoHelpers.url = require "url"
+JustdoHelpers.url = JustdoCoreHelpers.url
