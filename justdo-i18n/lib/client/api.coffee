@@ -351,6 +351,14 @@ _.extend JustdoI18n.prototype,
       download_link.click()
       document.body.removeChild(download_link)
 
+      console.log """
+        *** getProofreaderDoc developers notes:***
+
+        1. this downloads only the keys encountered in the current runtime. In order to download all keys, please run: getProofreaderDoc({all_keys: true})
+
+        2. Following the proofreading you can use the "load-and-apply-translation-proofread-xlsx" development-helper to load the files returned by the proofreader.
+      """
+
       return
     
     return
