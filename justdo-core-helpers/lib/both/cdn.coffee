@@ -29,7 +29,9 @@ _.extend JustdoCoreHelpers,
   # If the path starts with "//", it returns the path as is.
   # If a CDN is not configured, it returns the path as is.
   # If an app version is available in the env/process.env, it appends it as a query parameter to the CDN URL.
-  # If the 'add_protocol' (default: false) option is set to true, it adds the protocol to the CDN URL - only if it starts with "//".
+  # options:
+  #   add_protocol: adds the protocol to the CDN URL - only if it starts with "//". (defualt: false)
+  #   add_domain_if_no_cdn: adds the domain to the path if no CDN is configured. (default: false)
   getCDNUrl: (path, options) ->
     if Meteor.isServer
       app_version = process.env.APP_VERSION
@@ -37,7 +39,10 @@ _.extend JustdoCoreHelpers,
       app_version = env.APP_VERSION
 
     if not cdn?
-      return path
+      if options?.add_domain_if_no_cdn
+        return new URL path, JustdoCoreHelpers.getRootUrl()
+      else
+        return path
 
     if path[0] != "/"
       # console.warn("getCDNUrl: At the moment supporting only paths beginning with /")
