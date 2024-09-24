@@ -126,3 +126,41 @@
 
   hr
     border-style: dashed
+
+// RTL modifications
+.right-to-left
+  .dropdown.grid-tree-control-context-menu
+    left: unset
+    right: 0
+
+    .nested-dropdown-menu
+      left: unset
+      right: 100%
+
+    .jd-icon-context-action
+      margin-right: unset
+      margin-left: 6px
+
+    .context-action-item, .more-info-items
+      padding: 2px 0.25rem 2px 0.5rem
+
+    .context-section-label-container
+      .context-section-label
+        padding-right: unset
+        padding-left: 4px
+
+    .section-filter
+      padding-left: unset
+      padding-right: 29px
+
+    .search-icon
+      left: unset
+      right: 2px
+
+    .context-nested-section-item
+      padding-right: unset
+      padding-left: 18px
+
+      .context-nested-section-item-caret
+        right: unset
+        left: 6px
