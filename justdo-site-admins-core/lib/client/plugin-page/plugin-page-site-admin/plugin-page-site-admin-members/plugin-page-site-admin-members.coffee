@@ -5,7 +5,7 @@ Template.justdo_site_admin_members.onCreated ->
 
   @all_site_users_rv = new ReactiveVar([])
   @licensed_users_crv = JustdoHelpers.newComputedReactiveVar null, ->
-    if not (license = LICENSE_RV?.get())?
+    if not (license = LICENSE_RV.get())?
       return
 
     all_site_users = self.all_site_users_rv.get()
@@ -67,7 +67,7 @@ Template.justdo_site_admin_members.onCreated ->
     name: (user) -> JustdoHelpers.displayName(user)
     email: (user) -> JustdoHelpers.getUserMainEmail(user)
     remarks: (user) ->
-      license = LICENSE_RV?.get()
+      license = LICENSE_RV.get()
       remarks = []
 
       # Excluded remarks can co-exist with site-admin or deactivated, but not expiring/expired.
@@ -190,15 +190,15 @@ Template.justdo_site_admin_members.helpers
     return Template.instance().users_filter_term_rv.get()?
 
   licensingEnabled: ->
-    return LICENSE_RV?.get()?
+    return LICENSE_RV.get()?
 
-  unlimitedLicense: -> LICENSE_RV?.get().unlimited_users
+  unlimitedLicense: -> LICENSE_RV.get().unlimited_users
 
   licensedUsersCount: -> Template.instance().licensed_users_crv.get().size
 
-  licensePermittedUsers: -> LICENSE_RV?.get().licensed_users
+  licensePermittedUsers: -> LICENSE_RV.get().licensed_users
 
-  licenseValidUntil: -> moment(LICENSE_RV?.get().expire_on, "YYYY-MM-DD").format JustdoHelpers.getUserPreferredDateFormat()
+  licenseValidUntil: -> moment(LICENSE_RV.get().expire_on, "YYYY-MM-DD").format JustdoHelpers.getUserPreferredDateFormat()
 
   siteUsers: ->
     tpl = Template.instance()
