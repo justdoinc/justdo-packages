@@ -265,6 +265,11 @@ $member-dropdown-width: 320px
 .right-to-left
   .members-dropdown-wrapper
     text-align: right
+    &.invite-mode
+      .members-dropdown-list,
+      .members-dropdown-invite
+        left: unset
+        right: -$member-dropdown-width
     .members-search-input
       text-align: right
     .members-dropdown-header .label
