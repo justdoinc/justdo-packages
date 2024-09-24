@@ -68,13 +68,13 @@ APP.executeAfterAppLibCode ->
       { "class": "share-none", "title": TAPi18n.__ "member_dropdown_invite_share_none" },
     ]
 
-    tpl.setDefaulSettings = ->
+    tpl.setDefaultSettings = ->
       tpl.users_rv.set []
       tpl.active_share_option.set tpl.share_options[0]
 
       return
 
-    tpl.setDefaulSettings()
+    tpl.setDefaultSettings()
 
     tpl.checkAddButtonVisibility = ->
       if _.isEmpty($(".invite-members-input").val().trim())
@@ -547,7 +547,7 @@ APP.executeAfterAppLibCode ->
 
               return
 
-            tpl.setDefaulSettings()
+            tpl.setDefaultSettings()
             tpl.data.inviteMode.set false
 
           if (tasks_count = selected_tasks_and_children_set.size) > TASKS_COUNT_TO_SHOW_CONFIRM_BOOTBOX
