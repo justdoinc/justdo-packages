@@ -41,7 +41,6 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/both/simple-schema-extensions.coffee", both);
   api.addFiles("lib/both/init.coffee", both);
-  api.addFiles("lib/both/static.coffee", both);
   api.addFiles('lib/both/errors-types.coffee', both);
   api.addFiles('lib/both/meteor-accounts-configuration.coffee', both);
   api.addFiles('lib/both/schemas.coffee', both);

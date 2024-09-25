@@ -114,9 +114,3 @@ _.extend JustdoAccounts.prototype,
       throw new Meteor.Error("invalid-argument")
 
     return user.deactivated is true
-
-  isUserExcluded: (user) ->
-    for email in user.emails
-      if email.address.split("@")[1] in JustdoAccounts.excluded_domains
-        return true
-    return false
