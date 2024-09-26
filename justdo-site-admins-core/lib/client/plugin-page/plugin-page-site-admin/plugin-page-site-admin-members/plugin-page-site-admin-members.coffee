@@ -24,7 +24,7 @@ Template.justdo_site_admin_members.onCreated ->
       return 0
 
     all_site_users
-      .filter (user) -> return (not APP.accounts.isUserDeactivated user) and (not APP.accounts.isUserExcluded user)
+      .filter (user) -> return (not APP.accounts.isUserDeactivated user) and (not APP.accounts.isUserExcluded? user)
       .sort (u1, u2) ->
         # If both users are site admins, simply sort by their createdAt
         if u1.site_admin?.is_site_admin and u2.site_admin?.is_site_admin
@@ -72,7 +72,7 @@ Template.justdo_site_admin_members.onCreated ->
 
       # Excluded remarks can co-exist with site-admin or deactivated, but not expiring/expired.
       if license?
-        if APP.accounts.isUserExcluded(user)
+        if APP.accounts.isUserExcluded?(user)
           remarks.push """<span class="badge badge-success rounded-0 mr-1">Excluded</span>"""
 
       if APP.justdo_site_admins.isUserSiteAdmin(user)
@@ -89,7 +89,7 @@ Template.justdo_site_admin_members.onCreated ->
       if self.licensed_users_crv?
         if not user_id_deactivated
           # We don't check expiration for deactivated users
-          if not self.licensed_users_crv.get().has(user._id) and not APP.accounts.isUserExcluded(user)
+          if not self.licensed_users_crv.get().has(user._id) and not APP.accounts.isUserExcluded?(user)
             # If user isn't licensed, check if the furthest of user grace period and license grace period has passed
             user_grace_period_ends = moment(user.createdAt).add(license.new_users_grace_period, "days")
             license_grace_period_ends = moment(license.license_grace_period, "YYYY-MM-DD")
@@ -169,7 +169,7 @@ Template.justdo_site_admin_members.helpers
     tpl = Template.instance()
     active_user_count = tpl.all_site_users_rv.get()
       .filter (user) ->
-        return (not APP.accounts.isUserDeactivated user) and (not APP.accounts.isUserExcluded user)
+        return (not APP.accounts.isUserDeactivated user) and (not APP.accounts.isUserExcluded? user)
       .length
 
     if not active_user_count?
