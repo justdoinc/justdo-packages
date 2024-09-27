@@ -1,6 +1,6 @@
 # JustDo Packages
 
-Welcome to the [JustDo](https://justdo.com) Packages repository! This is a submodule of the main [JustDo](https://github.com/justdoinc/justdo) project management platform. These Meteor packages form the backbone of JustDo's powerful and flexible functionality.
+Welcome to the [JustDo](https://justdo.com) Packages repository! This is a submodule of the main [JustDo project management platform source-available repository](https://github.com/justdoinc/justdo). These Meteor packages form the backbone of JustDo's powerful and flexible functionality.
 
 ## 🔗 Related Repositories
 
