@@ -4,12 +4,13 @@ _.extend JustdoNews.prototype,
     # {
     #   ["/category/news_id"]:
     #     [lang1]: "/category/news_id--news-title-in-url",
-    #     [lang2]: "/category/news_id--news-title-in-url",
+    #     [lang2]: "pending",
     #     ...
     # }
     # Note: 
-    # 1. news_id is the _id of the news document, WITHOUT the title part (i.e. the part after "--")
-    # 2. For now, it does not store the template part because it doesn't support title-in-url yet and hence can simply be concatenated.
+    # 1. To avoid requesting the same news path multiple times, it uses "pending" to indicate that the request is in progress.
+    # 2. news_id is the _id of the news document, WITHOUT the title part (i.e. the part after "--")
+    # 3. For now, it does not store the template part because it doesn't support title-in-url yet and hence can simply be concatenated.
     @_canonical_news_paths_with_title = {}
     @_canonical_news_paths_with_title_dep = new Tracker.Dependency()
     return
