@@ -7,6 +7,7 @@ Welcome to the [JustDo](https://justdo.com) Packages repository! This is a submo
 - [JustDo Main Repository](https://github.com/justdoinc/justdo)
 - [JustDo Web App](https://github.com/justdoinc/justdo-web-app-ce)
 - [JustDo Landing App](https://github.com/justdoinc/justdo-landing-app-ce)
+- [JustDo Packages](https://github.com/justdoinc/justdo-packages)
 
 ## 🚀 Key Features
 
