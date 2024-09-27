@@ -131,3 +131,49 @@ _.extend JustdoNews.prototype,
       return
 
     return
+
+  newsTitleToUrlComponent: (title, lang) ->
+    check title, Match.Maybe String
+    check lang, Match.Maybe String
+
+    if _.isEmpty title
+      return
+    
+    if _.isEmpty lang
+      lang = JustdoI18n.default_lang
+
+    translated_title = TAPi18n.__(title, {}, lang)
+      .trim()
+      # Replace all non-alphanumeric characters with a dash
+      # Unicode is supported via Unicode character class escape 
+      # (see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Regular_expressions/Unicode_character_class_escape for details)
+      .replace /\P{Letter}+/gu, "-"
+      # Remove consecutive dashes (since it interferes with the separator)
+      .replace /-+/g, "-"
+      # Remove trailing dashes
+      .replace /-+$/g, ""
+      .toLowerCase()
+      
+    return "#{JustdoNews.url_title_separator}#{translated_title}"
+
+  getCanonicalNewsPath: (options) ->
+    {category, news, template, lang} = options
+
+    news_category_obj = @getCategory category
+
+    if _.isString news
+      news_doc = @getNewsByIdOrAlias(category, news).news_doc
+    else
+      news_doc = news
+
+    news_path = news_doc._id
+    if news_category_obj.title_in_url
+      page_title = @getNewsPageTitle news_doc, template
+      news_path += @newsTitleToUrlComponent page_title, lang
+    
+    news_path = "/#{category}/#{news_path}"
+
+    if (not _.isEmpty template) and (not @isDefaultNewsTemplate template)
+      news_path = "#{news_path}/#{template}"
+    
+    return news_path
