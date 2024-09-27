@@ -182,7 +182,21 @@ WebApp.connectHandlers.use (req, res, next) ->
         source_template: request_details.source_template
         message: request_details.message
       if not APP.collections.DemoRequests.findOne(query)?
-        APP.collections.DemoRequests.insert request_details
+        _id = APP.collections.DemoRequests.insert request_details
+
+        if process.env.MAIL_URL
+          previous_requests = APP.collections.DemoRequests.find({_id: {$ne: _id}}, {sort: {createdAt: -1}, limit: 5}).fetch()
+
+          template_data = _.extend {}, request_details, {previous_requests, _id}
+
+          subject = "New user joined mailing list"
+
+          for email in contact_request_recipients
+            JustdoEmails.buildAndSend
+              to: email
+              template: "contact-request"
+              template_data: template_data
+              subject: subject
 
       res.writeHead 200
       res.end "OK"
