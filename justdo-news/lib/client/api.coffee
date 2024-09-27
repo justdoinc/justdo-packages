@@ -54,6 +54,8 @@ _.extend JustdoNews.prototype,
 
     return
 
+  # Note that this function will not return the path with news template.
+  # In most cases, you'll likely want to use getI18nCanonicalNewsPath or getCanonicalNewsPath instead.
   _getCanonicalNewsPathWithTitle: (category, news_id, lang) ->
     @_canonical_news_paths_with_title_dep.depend()
     news_path = "/#{category}/#{news_id}"
@@ -61,6 +63,7 @@ _.extend JustdoNews.prototype,
     if (canonical_news_path = @_canonical_news_paths_with_title[news_path]?[lang])? and not (request_pending = canonical_news_path is "pending")
       return canonical_news_path
     
+    # If the path is not cached and not pending, request it
     if not request_pending
       # If the canonical news path is not cached, generate it
       if not @_canonical_news_paths_with_title[news_path]?
@@ -69,6 +72,8 @@ _.extend JustdoNews.prototype,
 
       @_requestAndCacheCanonicalNewsPathWithTitle category, news_id, lang
     
+    # If the path is pending, return the news path without title for now.
+    # The canonical_news_path will be reactively returned once the request is completed because this function depends on @_canonical_news_paths_with_title_dep
     return news_path
 
   getCanonicalNewsPath: (options) ->
@@ -82,8 +87,8 @@ _.extend JustdoNews.prototype,
       news_doc = @getNewsByIdOrAlias(category, news).news_doc
     else
       news_doc = news
+      
     news_id = news_doc._id
-
     news_path = "/#{category}/#{news_id}"
 
     if news_category_obj.title_in_url
