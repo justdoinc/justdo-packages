@@ -146,8 +146,8 @@ _.extend JustdoNews.prototype,
 
           if not self.getNewsByIdOrAlias(category, news_id)?
             self.redirectToMostRecentNewsPageByCategoryOrFallback category
-          
-          self.redirectToCanonicalPathIfNecessary @url, category, news_id
+
+          self.redirectToCanonicalPathIfNecessary category, news_id
 
           @render news_category_options.template
           @layout "single_frame_layout"
@@ -178,7 +178,7 @@ _.extend JustdoNews.prototype,
           if not self.getNewsTemplateIfExists(category, news_id, news_template)?
             self.redirectToMostRecentNewsPageByCategoryOrFallback category
           
-          self.redirectToCanonicalPathIfNecessary @url, category, news_id, news_template
+          self.redirectToCanonicalPathIfNecessary category, news_id, news_template
 
           @render news_category_options.template
           @layout "single_frame_layout"
@@ -318,6 +318,8 @@ _.extend JustdoNews.prototype,
   getNewsParamFromPath: (path) ->    
     # Remove the search part of the path
     path = JustdoHelpers.getNormalisedUrlPathnameWithoutSearchPart path
+    if APP.justdo_i18n_routes?
+      path = APP.justdo_i18n_routes.getPathWithoutLangPrefix path
 
     [news_category, news_id, news_template] = _.filter path.split("/"), (path_segment) -> not _.isEmpty path_segment
     return {news_category, news_id, news_template}
@@ -353,22 +355,16 @@ _.extend JustdoNews.prototype,
   isDefaultNewsTemplate: (template_id) -> template_id is JustdoNews.default_news_template
 
   # NOTE: this method uses the Iron Router and should not be used in the middleware level
-  redirectToCanonicalPathIfNecessary: (news_url, category, news, template) ->
+  redirectToCanonicalPathIfNecessary: (category, news, template) ->
     # Server-side redirection should happen in the middleware level
     if Meteor.isServer
       return
 
-    URL = JustdoHelpers.getURL()
-    news_url_obj = new URL news_url, JustdoHelpers.getRootUrl()
-
-    canonical_news_url = @getI18nCanonicalNewsPath {category, news, template}
-
-    # For some reason, "canonical_news_url isnt news_url_obj.pathname" doesn't work
-    # so _.isEqual is used here.
-    # Redirect only received url isn't the same as canonical
-    if not _.isEqual(canonical_news_url, news_url_obj.pathname)
-      news_url_obj.pathname = canonical_news_url
-      Router.go news_url_obj.toString(), {}, {replaceState:true}
+    canonical_news_url = Tracker.nonreactive => @getI18nCanonicalNewsPath {category, news, template}
+    canonical_news_id = @getNewsParamFromPath(canonical_news_url).news_id
+    
+    if news isnt canonical_news_id
+      Router.go canonical_news_url, {news_id: canonical_news_id}, {replaceState: true}        
     
     return
   
