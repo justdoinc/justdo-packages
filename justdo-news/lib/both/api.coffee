@@ -336,7 +336,15 @@ _.extend JustdoNews.prototype,
     if Meteor.isServer and _.isEmpty lang
       throw @_error "missing-argument", "options.lang must be provided when calling this method on the server"
     
-    news_path = @getCanonicalNewsPath options
+    route_name = "#{category}_page_with_news_id"
+    options = 
+      news_id: news_id
+
+    if template?
+      route_name = "#{route_name}_and_template"
+      options.news_template = template
+
+    news_path = Router.routes[route_name].path options
 
     return APP.justdo_i18n_routes?.i18nPath(news_path, lang) or news_path
 
