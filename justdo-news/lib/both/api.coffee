@@ -147,7 +147,7 @@ _.extend JustdoNews.prototype,
           if not self.getNewsByIdOrAlias(category, news_id)?
             self.redirectToMostRecentNewsPageByCategoryOrFallback category
           
-          # self.redirectToCanonicalPathIfNecessary @url, category, news_id
+          self.redirectToCanonicalPathIfNecessary @url, category, news_id
 
           @render news_category_options.template
           @layout "single_frame_layout"
@@ -178,7 +178,7 @@ _.extend JustdoNews.prototype,
           if not self.getNewsTemplateIfExists(category, news_id, news_template)?
             self.redirectToMostRecentNewsPageByCategoryOrFallback category
           
-          # self.redirectToCanonicalPathIfNecessary @url, category, news_id, news_template
+          self.redirectToCanonicalPathIfNecessary @url, category, news_id, news_template
 
           @render news_category_options.template
           @layout "single_frame_layout"
@@ -354,21 +354,21 @@ _.extend JustdoNews.prototype,
 
   # NOTE: this method uses the Iron Router and should not be used in the middleware level
   redirectToCanonicalPathIfNecessary: (news_url, category, news, template) ->
+    # Server-side redirection should happen in the middleware level
+    if Meteor.isServer
+      return
+
     URL = JustdoHelpers.getURL()
     news_url_obj = new URL news_url, JustdoHelpers.getRootUrl()
 
-    if Meteor.isServer
-      lang = @getUrlLang(news_url) or JustdoI18n.default_lang
-      canonical_news_url = @getI18nCanonicalNewsPath {lang, category, news, template}
-    else
-      canonical_news_url = @getI18nCanonicalNewsPath {category, news, template}
+    canonical_news_url = @getI18nCanonicalNewsPath {category, news, template}
 
     # For some reason, "canonical_news_url isnt news_url_obj.pathname" doesn't work
     # so _.isEqual is used here.
     # Redirect only received url isn't the same as canonical
     if not _.isEqual(canonical_news_url, news_url_obj.pathname)
       news_url_obj.pathname = canonical_news_url
-      Router.current().redirect news_url_obj.toString()
+      Router.go news_url_obj.toString(), {}, {replaceState:true}
     
     return
   
