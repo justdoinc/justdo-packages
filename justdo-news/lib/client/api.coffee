@@ -26,14 +26,13 @@ _.extend JustdoNews.prototype,
     if not cur_path?
       return
       
-    return cur_path.match(JustdoNews.root_path_regex)?[0]?.replace "/", ""
+    return @getNewsParamFromPath(cur_path).news_category
 
   redirectToMostRecentNewsPageByCategoryOrFallback: (category) ->
     if not (news_doc = @getMostRecentNewsObjUnderCategory category)?
       throw @_error "news-category-not-found"
 
     url = @getI18nCanonicalNewsPath {category, news: news_doc}
-    url = APP.justdo_i18n_routes?.i18nPath(url) or url
 
     Router.go url, {}, {replaceState:true}
     return
