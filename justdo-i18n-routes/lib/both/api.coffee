@@ -98,9 +98,40 @@ _.extend JustdoI18nRoutes.prototype,
     if not (route_def = @getI18nRouteDef route_name)?
       return path or "/"
     
+    # If the route options has custom i18nPath specified, 
+    # we'll use the returned value of it instead of simply adding "/lang/[lang]" to the url
     if _.isFunction route_def.route_options.i18nPath
-      path_without_lang_prefix = @getPathWithoutLangPrefix path
-      path = route_def.route_options.i18nPath path_without_lang_prefix, lang
+      original_path = path
+      
+      # On the server simply return the value
+      if Meteor.isServer
+        path = route_def.route_options.i18nPath original_path, lang
+      # On the client, we call "getI18nPathFromRouteOptions" method to obtain the value we get from the server side (the line above)
+      # We also store the value to @i18n_paths_cache and trigger @i18n_paths_cache_dep.changed()
+      # so subsequent calls to this method with the same params will not trigger another method call.
+      if Meteor.isClient
+        @i18n_paths_cache_dep.depend()
+
+        if (cached_path = @i18n_paths_cache[original_path]?[lang])?
+          # If cached_path is "pending", it means that there's already an ongoing method call for the same params.
+          # In that case we'll first return the path after simply adding "/lang/[lang]".
+          # Upon receiving the value from the method, @i18n_paths_cache_dep.changed() will trigger rerun and return the value from i18n_paths_cache.
+          if cached_path isnt "pending"
+            return cached_path
+        else
+          if not @i18n_paths_cache[original_path]?
+            @i18n_paths_cache[original_path] = {}
+          # Set the value to pending to avoid double-calling the method with the same params.
+          @i18n_paths_cache[original_path][lang] = "pending"
+          @getI18nPathFromRouteOptions path, lang, (err, i18n_path) =>
+            if err?
+              console.error err
+              return
+            
+            @i18n_paths_cache[original_path][lang] = i18n_path
+            @i18n_paths_cache_dep.changed()
+
+            return
     
     if lang is JustdoI18n.default_lang
       return path or "/"

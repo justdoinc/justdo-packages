@@ -1,5 +1,8 @@
 _.extend JustdoI18nRoutes.prototype,
   _immediateInit: ->
+    @i18n_paths_cache = {}
+    @i18n_paths_cache_dep = new Tracker.Dependency()
+
     @_registerGlobalTemplateHelpers()
     @_setupLangUrlTracker()
 
