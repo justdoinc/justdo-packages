@@ -147,8 +147,6 @@ _.extend JustdoNews.prototype,
           if not self.getNewsByIdOrAlias(category, news_id)?
             self.redirectToMostRecentNewsPageByCategoryOrFallback category
 
-          self.redirectToCanonicalPathIfNecessary category, news_id
-
           @render news_category_options.template
           @layout "single_frame_layout"
           return
@@ -178,8 +176,6 @@ _.extend JustdoNews.prototype,
           if not self.getNewsTemplateIfExists(category, news_id, news_template)?
             self.redirectToMostRecentNewsPageByCategoryOrFallback category
           
-          self.redirectToCanonicalPathIfNecessary category, news_id, news_template
-
           @render news_category_options.template
           @layout "single_frame_layout"
           return
@@ -361,20 +357,6 @@ _.extend JustdoNews.prototype,
     return ret
   
   isDefaultNewsTemplate: (template_id) -> template_id is JustdoNews.default_news_template
-
-  # NOTE: this method uses the Iron Router and should not be used in the middleware level
-  redirectToCanonicalPathIfNecessary: (category, news_id, template) ->
-    # Server-side redirection should happen in the middleware level
-    if Meteor.isServer
-      return
-
-    canonical_news_url = Tracker.nonreactive => @getI18nCanonicalNewsPath {category, news_id, template}
-    canonical_news_id = @getNewsParamFromPath(canonical_news_url).news_id
-    
-    if news_id isnt canonical_news_id
-      Router.go canonical_news_url, {news_id: canonical_news_id}, {replaceState: true}        
-    
-    return
   
 # Originally, the JustdoNews package was created to be a news package, but we
 # ended up using it as a CRM package. So, we're going to create some aliases
