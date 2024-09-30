@@ -35,7 +35,7 @@ _.extend JustdoNews.prototype,
     url = @getI18nCanonicalNewsPath {category, news: news_doc}
     url = APP.justdo_i18n_routes?.i18nPath(url) or url
 
-    Router.current().redirect url
+    Router.go url, {}, {replaceState:true}
     return
 
   _requestAndCacheCanonicalNewsPathWithTitle: (category, news_id, lang) ->

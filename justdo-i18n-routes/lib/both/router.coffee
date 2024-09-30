@@ -25,7 +25,7 @@ _.extend JustdoI18nRoutes.prototype,
       router_this.setParams current_params
       route_def.routingFunction.call router_this
     else
-      Router.go path
+      Router.go path, {}, {replaceState:true}
 
     return
 
