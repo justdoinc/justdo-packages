@@ -42,9 +42,24 @@ _.extend JustdoI18nRoutes.prototype,
           Router.go i18n_path, {}, {replaceState: true}
 
         return
-      
+    
+    if not @redirect_path_to_canonical_path_tracker?
+      # This tracker is responsible for redirecting custom i18n path back to the canonical ones
+      # e.g. "/news/v5-2" > "/news/v5-2--justdo-v-introducing-translations-to-languages-and-full-right-to-left-languages-support"
+      @redirect_path_to_canonical_path_tracker = Tracker.autorun =>
+        if not (router = Router.current())?
+          return
+
+        cur_path = @getPathWithoutLangPrefix router.url
+        canonical_path = @i18nPath cur_path
+
+        if cur_path isnt @getPathWithoutLangPrefix canonical_path
+          Router.go canonical_path, {}, {replaceState: true}
+        return
+
     @onDestroy =>
       @set_url_lang_from_active_lang_tracker?.stop?()
+      @redirect_path_to_canonical_path_tracker?.stop?
       return
     
     return

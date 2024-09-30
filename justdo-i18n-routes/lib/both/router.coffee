@@ -11,7 +11,6 @@ _.extend JustdoI18nRoutes.prototype,
     
     if Meteor.isClient
       APP.justdo_i18n.setLang lang_tag, {skip_set_user_lang: true}
-      @redirectToCanonicalPathIfNecessary path
 
     if (route_def = @getI18nRouteDef route_name)?
       # Use the route handler of the original path to parse the parameters,
@@ -87,15 +86,4 @@ _.extend JustdoI18nRoutes.prototype,
         
         return
 
-    return
-
-
-  # NOTE: this method uses the Iron Router and should not be used in the middleware level
-  # Server-side redirection should happen in the middleware level
-  redirectToCanonicalPathIfNecessary: (original_path, lang) ->
-    canonical_path = Tracker.nonreactive => @i18nPath original_path
-    
-    if original_path isnt canonical_path
-      Router.go canonical_path, {}, {replaceState: true}        
-    
     return
