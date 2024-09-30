@@ -331,7 +331,7 @@ _.extend JustdoNews.prototype,
     return _.find(news_doc?.templates, (template_obj) -> template_obj._id is template)?.page_title or news_doc.title
 
   getI18nCanonicalNewsPath: (options) ->
-    {category, news, template, lang} = options
+    {category, news_id, template, lang} = options
 
     if Meteor.isServer and _.isEmpty lang
       throw @_error "missing-argument", "options.lang must be provided when calling this method on the server"
@@ -355,15 +355,15 @@ _.extend JustdoNews.prototype,
   isDefaultNewsTemplate: (template_id) -> template_id is JustdoNews.default_news_template
 
   # NOTE: this method uses the Iron Router and should not be used in the middleware level
-  redirectToCanonicalPathIfNecessary: (category, news, template) ->
+  redirectToCanonicalPathIfNecessary: (category, news_id, template) ->
     # Server-side redirection should happen in the middleware level
     if Meteor.isServer
       return
 
-    canonical_news_url = Tracker.nonreactive => @getI18nCanonicalNewsPath {category, news, template}
+    canonical_news_url = Tracker.nonreactive => @getI18nCanonicalNewsPath {category, news_id, template}
     canonical_news_id = @getNewsParamFromPath(canonical_news_url).news_id
     
-    if news isnt canonical_news_id
+    if news_id isnt canonical_news_id
       Router.go canonical_news_url, {news_id: canonical_news_id}, {replaceState: true}        
     
     return

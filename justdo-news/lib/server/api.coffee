@@ -80,7 +80,7 @@ _.extend JustdoNews.prototype,
       redirectToNewsUrl = (http_code, news_doc) =>
         news_id = news_doc._id
 
-        redirect_url = @getI18nCanonicalNewsPath {lang, category: news_category, news: news_id, template: news_template}
+        redirect_url = @getI18nCanonicalNewsPath {lang, category: news_category, news_id, template: news_template}
         
         # No need to perform redirect if everything's the same
         if redirect_url is original_url_obj.pathname
@@ -119,7 +119,7 @@ _.extend JustdoNews.prototype,
         res.end "404 Not Found"
         return
       
-      isnt_canonical_news_path = decodeURI(original_url_obj.pathname) isnt @getI18nCanonicalNewsPath {lang, category: news_category, news: news_id, template: news_template}
+      isnt_canonical_news_path = decodeURI(original_url_obj.pathname) isnt @getI18nCanonicalNewsPath {lang, category: news_category, news_id, template: news_template}
       # If the news_id is default, redirect to the path without news_template
       if is_alias or @isDefaultNewsTemplate(news_template) or isnt_canonical_news_path
         redirectToNewsUrl 301, news_doc

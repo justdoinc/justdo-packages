@@ -130,7 +130,7 @@ Template.news.helpers
     template_name = "#{active_category.replaceAll "-", "_"}_page_with_news_id"
     news_id = @_id
 
-    return APP.justdo_crm.getI18nCanonicalNewsPath {category: active_category, news: news_id}
+    return APP.justdo_crm.getI18nCanonicalNewsPath {category: active_category, news_id}
   
   getNewsTabPath: ->
     tpl = Template.instance()
@@ -138,11 +138,10 @@ Template.news.helpers
       return
 
     active_category = tpl.active_category_rv.get()
-    template_name = "#{active_category.replaceAll "-", "_"}_page_with_news_id_and_template"
     news_id = tpl.active_news_id_rv.get()
     news_template = @_id
 
-    return APP.justdo_crm.getI18nCanonicalNewsPath {category: active_category, news: news_id, template: news_template}
+    return APP.justdo_crm.getI18nCanonicalNewsPath {category: active_category, news_id, template: news_template}
 
 Template.news.events
   "click .news-navigation-item": (e, tpl) ->

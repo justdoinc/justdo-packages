@@ -19,7 +19,7 @@ _.extend JustdoNews.prototype,
     if not (news_doc = @getMostRecentNewsObjUnderCategory category)?
       throw @_error "news-category-not-found"
 
-    url = @getI18nCanonicalNewsPath {category, news: news_doc}
+    url = @getI18nCanonicalNewsPath {category, news_id: news_doc._id}
 
     Router.go url, {}, {replaceState:true}
     return
