@@ -37,7 +37,7 @@ _.extend JustdoHelpers,
     url = new URL url_pathname, "https://x.com/" # The domain doesn't matter, we do nothing with it
     url = @normaliseUrl url
 
-    return decodeURI(url.pathname + url.search)
+    return url.pathname + url.search
 
   getNormalisedUrlPathnameWithoutSearchPart: (url_pathname) ->
     URL = @getURL()
@@ -45,7 +45,7 @@ _.extend JustdoHelpers,
     url = new URL url_pathname, "https://x.com/" # The domain doesn't matter, we do nothing with it
     url = @normaliseUrl url
 
-    return decodeURI url.pathname
+    return url.pathname
 
   getRootUrl: ->
     if not (root_url = document?.location?.origin)? and not (root_url = process.env.ROOT_URL)?

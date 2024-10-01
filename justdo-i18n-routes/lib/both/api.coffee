@@ -159,7 +159,7 @@ _.extend JustdoI18nRoutes.prototype,
     # mimic the behavior of this function by passing an object with an originalUrl.
 
     URL = JustdoHelpers.getURL()
-    original_url = decodeURI req.originalUrl, JustdoI18n.default_lang
+    original_url = req.originalUrl
 
     if not original_url.startsWith(JustdoI18nRoutes.langs_url_prefix)
       return {processed_path: original_url, lang_tag: undefined}
@@ -178,7 +178,7 @@ _.extend JustdoI18nRoutes.prototype,
     if not (lang_tag = @getLangTagIfSupported(original_lang_tag))?
       return {processed_path: original_url, lang_tag: undefined}
 
-    processed_path = @i18nPath decodeURI("/#{url_segments.join "/"}"), JustdoI18n.default_lang
+    processed_path = @i18nPath "/#{url_segments.join "/"}", JustdoI18n.default_lang
 
     if original_lang_tag isnt lang_tag
       return {processed_path, lang_tag, original_lang_tag}
