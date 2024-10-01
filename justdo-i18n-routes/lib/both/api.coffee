@@ -82,8 +82,14 @@ _.extend JustdoI18nRoutes.prototype,
     return
 
   i18nPath: (path, lang) ->
+    URL = JustdoHelpers.getURL()
+  
     if not path?
       path = "/"
+    
+    # Ensure path is not a full url
+    # E.g. Router.current().url would return the full url on the first few ticks.
+    path = new URL(path, JustdoHelpers.getRootUrl()).pathname
 
     if not lang?
       if Meteor.isClient
