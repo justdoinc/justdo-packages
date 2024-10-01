@@ -11,7 +11,7 @@
   "profile_pic_schema_label": "الصورة الشخصية",
   "date_format_schema_label": "تنسيق التاريخ",
   "time_format_schema_label": "تنسيق الوقت",
-  "first_day_of_week_schema_label": "اليوم الأول من الأسبوع",
+  "first_day_of_week_schema_label": "أول يوم في الأسبوع",
   "timezone_schema_label": "المنطقة الزمنية",
   "avatar_fg_schema_label": "لون الأمامي للصورة الرمزية",
   "avatar_bg_schema_label": "لون الخلفية للصورة الرمزية",

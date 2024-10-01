@@ -1,8 +1,8 @@
 {
   "plugin_store_title": "प्लगइनहरू",
-  "plugin_store_additional_info": "अतिरिक्त जानकारी",
+  "plugin_store_additional_info": "थप जानकारी",
   "plugin_store_learn_more": "थप जान्नुहोस्",
-  "plugin_store_developer": "डेभलपर",
+  "plugin_store_developer": "विकासकर्ता",
   "plugin_store_version": "संस्करण: <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "कम्पनी: <strong class=\"text-primary\">__company_name__</strong>",
   "plugin_store_developer_website": "वेबसाइट: <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",
