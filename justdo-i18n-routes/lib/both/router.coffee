@@ -62,7 +62,7 @@ _.extend JustdoI18nRoutes.prototype,
       postMapGenerator: (sitemap) ->
         for map_obj in sitemap
           if (map_obj.route.options?.translatable is true) and (map_obj.url isnt "/")
-            translations = []
+            map_obj.translations = []
 
             for lang_tag of APP.justdo_i18n.getSupportedLanguages()
               if lang_tag is JustdoI18n.default_lang
@@ -80,10 +80,8 @@ _.extend JustdoI18nRoutes.prototype,
                 if predicate translated_map_obj
                   generator translated_map_obj, lang_tag
                 
-              translations.push translated_map_obj
-            
-            map_obj.translations = translations
-        
+              map_obj.translations.push translated_map_obj
+                    
         return
 
     return
