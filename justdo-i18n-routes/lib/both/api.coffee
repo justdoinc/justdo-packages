@@ -184,7 +184,8 @@ _.extend JustdoI18nRoutes.prototype,
     if not (lang_tag = @getLangTagIfSupported(original_lang_tag))?
       return {processed_path: original_url, lang_tag: undefined}
 
-    processed_path = @i18nPath "/#{url_segments.join "/"}", JustdoI18n.default_lang
+    lang_prefix_regex = new RegExp "^#{JustdoI18nRoutes.langs_url_prefix}/\w+"
+    processed_path = "/#{url_segments.join "/"}".replace lang_prefix_regex, ""
 
     if original_lang_tag isnt lang_tag
       return {processed_path, lang_tag, original_lang_tag}
