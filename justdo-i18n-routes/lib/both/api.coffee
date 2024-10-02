@@ -88,20 +88,8 @@ _.extend JustdoI18nRoutes.prototype,
     # This also support returning a customized i18n path, e.g.
     #   en: /news/justdo-ai--justdo-ai-generate-project-templates-get-ai-recommendations
     #   he: /lang/he/news/justdo-ai--justdo-ai-יצירת-תבניות-פרויקט-וקבלת-המלצות-בינה-מלאכותית
-    # 
-    # To use this feature, you can set route_options.getCustomI18nPath to a function that returns the custom path.
-    # getCustomI18nPath will be called on the server side only, and the returned value will be used and cached on the client side and.
-    # 
-    # To avoid fetching the same value multiple times (like in justdo-news's usecase, the following paths will all return the same value
-    # - /news/justdo-ai, 
-    # - /news/justdo-ai--justdo-ai-generate-project-templates-get-ai-recommendations
-    # - /lang/he/news/justdo-ai
-    # - /lang/he/news/justdo-ai--justdo-ai-יצירת-תבניות-פרויקט-וקבלת-המלצות-בינה-מלאכותית
-    # ),
-    # it is highly recommended to set route_options.getCustomI18nPathCacheKey to a function that returns a unique key for the path
-    # that will be used to cache the value on the client side.
-    # (In the above example, the key would be "/news/justdo-ai" for all the paths above)
-    
+    # Check the comment in _getCustomI18nPath for more details.
+
     URL = JustdoHelpers.getURL()
   
     if not path?
@@ -123,52 +111,80 @@ _.extend JustdoI18nRoutes.prototype,
     route_name = JustdoHelpers.getRouteNameFromPath path
     if not (route_def = @getI18nRouteDef route_name)?
       return path or "/"
-    route_options = route_def.route_options
-    
-    # If the route options has custom i18nPath specified, 
-    # we'll use the returned value of it instead of simply adding "/lang/[lang]" to the url
-    if _.isFunction route_options.getCustomI18nPath
-      original_path = path
-      
-      # On the server simply update the path with the custom i18n path
-      if Meteor.isServer
-        path = route_options.getCustomI18nPath original_path, lang
-      # On the client, we call "getI18nPathFromRouteOptions" method, which calls this method (i18nPath) 
-      # to obtain the value we get from the server side (see the lines above)
-      # We also store the value to @i18n_paths_cache and trigger @i18n_paths_cache_dep.changed()
-      # so subsequent calls to this method with the same params will not trigger another method call.
-      if Meteor.isClient
-        @i18n_paths_cache_dep.depend()
-        cache_key = original_path
-        # If route_options.getCustomI18nPathCacheKey is defined, we'll use it to get the cache key for the path.
-        if _.isFunction route_options.getCustomI18nPathCacheKey
-          cache_key = route_options.getCustomI18nPathCacheKey cache_key
 
-        if (cached_path = @i18n_paths_cache[cache_key]?[lang])?
-          # If cached_path is "pending", it means that there's already an ongoing method call for the same params.
-          # In that case we'll first return the path after simply adding "/lang/[lang]".
-          # Upon receiving the value from the method, @i18n_paths_cache_dep.changed() will trigger rerun and return the value from i18n_paths_cache.
-          if cached_path isnt "pending"
-            path =  cached_path
-        else
-          if not @i18n_paths_cache[cache_key]?
-            @i18n_paths_cache[cache_key] = {}
-          # Set the value to pending to avoid double-calling the method with the same params.
-          @i18n_paths_cache[cache_key][lang] = "pending"
-          @getI18nPathFromRouteOptions path, lang, (err, i18n_path) =>
-            if err?
-              console.error err
-              return
-            
-            @i18n_paths_cache[cache_key][lang] = @getPathWithoutLangPrefix i18n_path
-            @i18n_paths_cache_dep.changed()
+    if (custom_i18n_path = @_getCustomI18nPath path, lang)?
+      path = custom_i18n_path
 
-            return
-    
     if lang is JustdoI18n.default_lang
       return path or "/"
 
     return "#{JustdoI18nRoutes.langs_url_prefix}/#{lang}#{if path is "/" then "" else path}"
+
+    # This is to support returning a customized i18n path, e.g.
+    #   en: /news/justdo-ai--justdo-ai-generate-project-templates-get-ai-recommendations
+    #   he: /lang/he/news/justdo-ai--justdo-ai-יצירת-תבניות-פרויקט-וקבלת-המלצות-בינה-מלאכותית
+    # To setup custom i18n paths, you can set route_options.getCustomI18nPath to a function that returns the custom path.
+    # getCustomI18nPath will be called on the server side only, and the returned value will be used and cached on the client side and.
+    # 
+    # To avoid fetching the same value multiple times (like in justdo-news's usecase, the following paths will all return the same value
+    # - /news/justdo-ai, 
+    # - /news/justdo-ai--justdo-ai-generate-project-templates-get-ai-recommendations
+    # - /lang/he/news/justdo-ai
+    # - /lang/he/news/justdo-ai--justdo-ai-יצירת-תבניות-פרויקט-וקבלת-המלצות-בינה-מלאכותית
+    # ),
+    # it is highly recommended to set route_options.getCustomI18nPathCacheKey to a function that returns a unique key for the path
+    # that will be used to cache the value on the client side.
+    # (In the above example, the key would be "/news/justdo-ai" for all the paths above)
+  _getCustomI18nPath: (path, lang) ->
+    route_name = JustdoHelpers.getRouteNameFromPath path
+    if not (route_options = @getI18nRouteDef(route_name)?.route_options)?
+      return
+
+    # If the route options has custom i18nPath specified, 
+    # we'll use the returned value of it instead of simply adding "/lang/[lang]" to the url
+    if not _.isFunction route_options.getCustomI18nPath
+      return
+
+    original_path = path
+    
+    # On the server simply return the custom i18n path from route_options.getCustomI18nPath
+    if Meteor.isServer
+      return route_options.getCustomI18nPath original_path, lang
+
+    # On the client, we call "getI18nPathFromRouteOptions" method, which obtains the value from the server side (see the lines above).
+    # We also store the value to @i18n_paths_cache and trigger @i18n_paths_cache_dep.changed()
+    # so subsequent calls to this method with the same params will not trigger another method call.
+    if Meteor.isClient
+      @i18n_paths_cache_dep.depend()
+
+      cache_key = original_path
+      # If route_options.getCustomI18nPathCacheKey is defined, we'll use it to get the cache key for the path.
+      if _.isFunction route_options.getCustomI18nPathCacheKey
+        cache_key = route_options.getCustomI18nPathCacheKey cache_key
+
+      if (cached_path = @i18n_paths_cache[cache_key]?[lang])?
+        # If cached_path is "pending", it means that there's already an ongoing method call for the same params.
+        # In that case we'll first return the path after simply adding "/lang/[lang]".
+        # Upon receiving the value from the method, @i18n_paths_cache_dep.changed() will trigger rerun and return the value from i18n_paths_cache.
+        if cached_path isnt "pending"
+          return cached_path
+      else
+        if not @i18n_paths_cache[cache_key]?
+          @i18n_paths_cache[cache_key] = {}
+          
+        # Set the value to pending to avoid double-calling the method with the same params.
+        @i18n_paths_cache[cache_key][lang] = "pending"
+        @getI18nPathFromRouteOptions path, lang, (err, i18n_path) =>
+          if err?
+            console.error err
+            return
+          
+          @i18n_paths_cache[cache_key][lang] = @getPathWithoutLangPrefix i18n_path
+          @i18n_paths_cache_dep.changed()
+
+          return
+  
+    return
 
   getStrippedPathAndLangFromReq: (req) ->
     # processed_path won't include the lang prefix + lang *only* if a valid combination
