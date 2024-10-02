@@ -127,7 +127,7 @@ _.extend JustdoI18nRoutes.prototype,
           # In that case we'll first return the path after simply adding "/lang/[lang]".
           # Upon receiving the value from the method, @i18n_paths_cache_dep.changed() will trigger rerun and return the value from i18n_paths_cache.
           if cached_path isnt "pending"
-            return cached_path
+            path =  cached_path
         else
           if not @i18n_paths_cache[cache_key]?
             @i18n_paths_cache[cache_key] = {}
@@ -138,7 +138,7 @@ _.extend JustdoI18nRoutes.prototype,
               console.error err
               return
             
-            @i18n_paths_cache[cache_key][lang] = i18n_path
+            @i18n_paths_cache[cache_key][lang] = @getPathWithoutLangPrefix i18n_path
             @i18n_paths_cache_dep.changed()
 
             return
