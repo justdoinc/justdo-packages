@@ -82,6 +82,26 @@ _.extend JustdoI18nRoutes.prototype,
     return
 
   i18nPath: (path, lang) ->
+    # Returns the i18n path of the given path and lang.
+    # Basic functionality is to add "/lang/[lang]" to the path if the lang isn't the default lang.
+    # 
+    # This also support returning a customized i18n path, e.g.
+    #   en: /news/justdo-ai--justdo-ai-generate-project-templates-get-ai-recommendations
+    #   he: /lang/he/news/justdo-ai--justdo-ai-יצירת-תבניות-פרויקט-וקבלת-המלצות-בינה-מלאכותית
+    # 
+    # To use this feature, you can set route_options.getCustomI18nPath to a function that returns the custom path.
+    # getCustomI18nPath will be called on the server side only, and the returned value will be used and cached on the client side and.
+    # 
+    # To avoid fetching the same value multiple times (like in justdo-news's usecase, the following paths will all return the same value
+    # - /news/justdo-ai, 
+    # - /news/justdo-ai--justdo-ai-generate-project-templates-get-ai-recommendations
+    # - /lang/he/news/justdo-ai
+    # - /lang/he/news/justdo-ai--justdo-ai-יצירת-תבניות-פרויקט-וקבלת-המלצות-בינה-מלאכותית
+    # ),
+    # it is highly recommended to set route_options.getCustomI18nPathCacheKey to a function that returns a unique key for the path
+    # that will be used to cache the value on the client side.
+    # (In the above example, the key would be "/news/justdo-ai" for all the paths above)
+    
     URL = JustdoHelpers.getURL()
   
     if not path?
@@ -110,15 +130,17 @@ _.extend JustdoI18nRoutes.prototype,
     if _.isFunction route_options.getCustomI18nPath
       original_path = path
       
-      # On the server simply return the value
+      # On the server simply update the path with the custom i18n path
       if Meteor.isServer
         path = route_options.getCustomI18nPath original_path, lang
-      # On the client, we call "getI18nPathFromRouteOptions" method to obtain the value we get from the server side (the line above)
+      # On the client, we call "getI18nPathFromRouteOptions" method, which calls this method (i18nPath) 
+      # to obtain the value we get from the server side (see the lines above)
       # We also store the value to @i18n_paths_cache and trigger @i18n_paths_cache_dep.changed()
       # so subsequent calls to this method with the same params will not trigger another method call.
       if Meteor.isClient
         @i18n_paths_cache_dep.depend()
         cache_key = original_path
+        # If route_options.getCustomI18nPathCacheKey is defined, we'll use it to get the cache key for the path.
         if _.isFunction route_options.getCustomI18nPathCacheKey
           cache_key = route_options.getCustomI18nPathCacheKey cache_key
 
