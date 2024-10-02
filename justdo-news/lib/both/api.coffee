@@ -135,7 +135,11 @@ _.extend JustdoNews.prototype,
       return self.getCanonicalNewsPath options
       
     getCustomI18nPathCacheKey = (path, lang) ->
-      return APP.justdo_i18n_routes.getPathWithoutLangPrefix(path).split(JustdoNews.url_title_separator)[0]
+      {news_category, news_id, news_template} = self.getNewsParamFromPath path
+      cache_key = "/#{news_category}/#{news_id.split(JustdoNews.url_title_separator)[0]}"
+      if news_template? and (not self.isDefaultNewsTemplate news_template)
+        cache_key = "#{cache_key}/#{news_template}"
+      return cache_key
 
     routes =
       "/#{category}":
