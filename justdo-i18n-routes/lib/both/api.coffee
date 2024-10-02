@@ -107,12 +107,12 @@ _.extend JustdoI18nRoutes.prototype,
     
     # If the route options has custom i18nPath specified, 
     # we'll use the returned value of it instead of simply adding "/lang/[lang]" to the url
-    if _.isFunction route_def.route_options.i18nPath
+    if _.isFunction route_options.getCustomI18nPath
       original_path = path
       
       # On the server simply return the value
       if Meteor.isServer
-        path = route_def.route_options.i18nPath original_path, lang
+        path = route_options.getCustomI18nPath original_path, lang
       # On the client, we call "getI18nPathFromRouteOptions" method to obtain the value we get from the server side (the line above)
       # We also store the value to @i18n_paths_cache and trigger @i18n_paths_cache_dep.changed()
       # so subsequent calls to this method with the same params will not trigger another method call.

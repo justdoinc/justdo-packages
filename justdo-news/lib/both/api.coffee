@@ -125,6 +125,14 @@ _.extend JustdoNews.prototype,
 
         return news_template_doc?.template_data?.news_array?[0]?.media_url
 
+    getCustomI18nPath = (path, lang, route_name) =>
+      {news_id, news_template} = Router.routes[route_name].params path
+      options = 
+        lang: lang
+        category: category
+        news: news_id
+        template: news_template
+      return self.getCanonicalNewsPath options
       
     getCustomI18nPathCacheKey = (path, lang) ->
       return APP.justdo_i18n_routes.getPathWithoutLangPrefix(path).split(JustdoNews.url_title_separator)[0]
@@ -165,9 +173,7 @@ _.extend JustdoNews.prototype,
                 url: self.getCanonicalNewsPath {category, news: news_doc}
               yield ret
             return
-          i18nPath: (path, lang) ->
-            {news_id} = Router.routes[@name].params path
-            return self.getCanonicalNewsPath {lang, category, news: news_id}
+          getCustomI18nPath: (path, lang) -> getCustomI18nPath path, lang, @name
           getCustomI18nPathCacheKey: getCustomI18nPathCacheKey
 
       "/#{category}/:news_id/:news_template":
@@ -198,9 +204,7 @@ _.extend JustdoNews.prototype,
                     url: self.getCanonicalNewsPath {category, news: news_doc, template: news_template_id}
                   yield ret
             return
-          i18nPath: (path, lang) ->
-            {news_id, news_template} = Router.routes[@name].params path
-            return self.getCanonicalNewsPath {lang, category, news: news_id, template: news_template}
+          getCustomI18nPath: (path, lang) -> getCustomI18nPath path, lang, @name
           getCustomI18nPathCacheKey: getCustomI18nPathCacheKey
 
     return routes
