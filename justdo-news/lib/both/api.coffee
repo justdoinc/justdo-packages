@@ -346,7 +346,7 @@ _.extend JustdoNews.prototype,
     options = 
       news_id: news_id
 
-    if template?
+    if template? and (not @isDefaultNewsTemplate template)
       route_name = "#{route_name}_and_template"
       options.news_template = template
 
