@@ -103,6 +103,7 @@ _.extend JustdoI18nRoutes.prototype,
     route_name = JustdoHelpers.getRouteNameFromPath path
     if not (route_def = @getI18nRouteDef route_name)?
       return path or "/"
+    route_options = route_def.route_options
     
     # If the route options has custom i18nPath specified, 
     # we'll use the returned value of it instead of simply adding "/lang/[lang]" to the url
@@ -117,24 +118,27 @@ _.extend JustdoI18nRoutes.prototype,
       # so subsequent calls to this method with the same params will not trigger another method call.
       if Meteor.isClient
         @i18n_paths_cache_dep.depend()
+        cache_key = original_path
+        if _.isFunction route_options.getCustomI18nPathCacheKey
+          cache_key = route_options.getCustomI18nPathCacheKey cache_key
 
-        if (cached_path = @i18n_paths_cache[original_path]?[lang])?
+        if (cached_path = @i18n_paths_cache[cache_key]?[lang])?
           # If cached_path is "pending", it means that there's already an ongoing method call for the same params.
           # In that case we'll first return the path after simply adding "/lang/[lang]".
           # Upon receiving the value from the method, @i18n_paths_cache_dep.changed() will trigger rerun and return the value from i18n_paths_cache.
           if cached_path isnt "pending"
             return cached_path
         else
-          if not @i18n_paths_cache[original_path]?
-            @i18n_paths_cache[original_path] = {}
+          if not @i18n_paths_cache[cache_key]?
+            @i18n_paths_cache[cache_key] = {}
           # Set the value to pending to avoid double-calling the method with the same params.
-          @i18n_paths_cache[original_path][lang] = "pending"
+          @i18n_paths_cache[cache_key][lang] = "pending"
           @getI18nPathFromRouteOptions path, lang, (err, i18n_path) =>
             if err?
               console.error err
               return
             
-            @i18n_paths_cache[original_path][lang] = i18n_path
+            @i18n_paths_cache[cache_key][lang] = i18n_path
             @i18n_paths_cache_dep.changed()
 
             return

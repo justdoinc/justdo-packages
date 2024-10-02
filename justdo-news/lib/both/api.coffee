@@ -125,6 +125,10 @@ _.extend JustdoNews.prototype,
 
         return news_template_doc?.template_data?.news_array?[0]?.media_url
 
+      
+    getCustomI18nPathCacheKey = (path, lang) ->
+      return APP.justdo_i18n_routes.getPathWithoutLangPrefix(path).split(JustdoNews.url_title_separator)[0]
+
     routes =
       "/#{category}":
         routingFunction: ->
@@ -164,6 +168,7 @@ _.extend JustdoNews.prototype,
           i18nPath: (path, lang) ->
             {news_id} = Router.routes[@name].params path
             return self.getCanonicalNewsPath {lang, category, news: news_id}
+          getCustomI18nPathCacheKey: getCustomI18nPathCacheKey
 
       "/#{category}/:news_id/:news_template":
         routingFunction: ->
@@ -196,6 +201,7 @@ _.extend JustdoNews.prototype,
           i18nPath: (path, lang) ->
             {news_id, news_template} = Router.routes[@name].params path
             return self.getCanonicalNewsPath {lang, category, news: news_id, template: news_template}
+          getCustomI18nPathCacheKey: getCustomI18nPathCacheKey
 
     return routes
 
