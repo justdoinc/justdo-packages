@@ -4,7 +4,7 @@ Package.describe({
     summary: "exposes npm's bodyParser"
 });
 
-Npm.depends({"body-parser": "1.15.1"});
+Npm.depends({"body-parser": "1.20.3"});
 
 Package.onUse(function (api) {
   api.versionsFrom("1.1.0.2");

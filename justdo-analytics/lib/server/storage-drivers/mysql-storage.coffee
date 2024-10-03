@@ -1,7 +1,7 @@
 import { checkNpmVersions } from "meteor/tmeasday:check-npm-versions"
 
 checkNpmVersions({
-  'mysql': '2.13.x'
+  'mysql': '2.18.x'
 }, 'justdoinc:justdo-analytics')
 
 mysql = require('mysql')

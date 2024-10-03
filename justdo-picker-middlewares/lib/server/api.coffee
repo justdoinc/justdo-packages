@@ -1,7 +1,7 @@
 import { checkNpmVersions } from "meteor/tmeasday:check-npm-versions"
 
 checkNpmVersions({
-  'body-parser': '1.18.3'
+  'body-parser': '1.20.3'
 }, 'justdoinc:justdo-analytics')
 
 bodyParser = require('body-parser')
