@@ -1,10 +1,11 @@
 import { checkNpmVersions } from "meteor/tmeasday:check-npm-versions"
 
 checkNpmVersions({
-  "mathjs": "5.4.x"
+  "mathjs": "13.x.x"
 }, "justdoinc:justdo-formula-fields")
 
-math = require "mathjs"
+{create, all} = require "mathjs"
+math = create all
 
 # Securing math, see: http://mathjs.org/docs/expressions/security.html
 
