@@ -66,7 +66,7 @@ _.extend JustdoFormulaFields.prototype,
           self.processFormula(formula_doc.formula, custom_field_id, self.getCustomFieldsFromProjectDoc(project_doc), {compile: true})
 
         try
-          calculated_value = processed_formula.eval(task_doc)
+          calculated_value = processed_formula.evaluate(task_doc)
         catch e
           console.error "Failed to calculate formula field #{custom_field_id}, for task #{task_doc._id}", e
 

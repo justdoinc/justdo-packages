@@ -199,7 +199,7 @@ _.extend JustdoFormulaFields.prototype,
       fields_projection = _.extend @_createSameValueObjectFromArray(dependent_fields, 1), {_id: 1, "#{custom_field_id}": 1}
       @tasks_collection.find(tasks_to_update_query, {fields: fields_projection}).forEach (task_doc) ->
         try
-          calculated_value = processed_formula.eval(task_doc)
+          calculated_value = processed_formula.evaluate(task_doc)
         catch e
           console.error "Failed to calculate formula field #{custom_field_id}, for task #{task_doc._id}", e
 

@@ -165,7 +165,7 @@ _.extend JustdoFormulaFields.prototype,
     if options?.compile is true
       code = parsed_formula.compile()
 
-      ret.eval = (doc, options) ->
+      ret.evaluate = (doc, options) ->
         if options?.skip_if_fields_are_missing is false
           throw new Meteor.Error "option-not-supported", "At the moment we aren't supporting the false state of the option: skip_if_fields_are_missing"
         
@@ -193,7 +193,7 @@ _.extend JustdoFormulaFields.prototype,
           mathjs_eval_args[symbol] = val
 
         if eval_needed
-          return code.eval(mathjs_eval_args)
+          return code.evaluate(mathjs_eval_args)
         else
           return null
 
