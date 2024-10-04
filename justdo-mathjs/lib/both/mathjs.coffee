@@ -4,8 +4,16 @@ checkNpmVersions({
   "mathjs": "13.x.x"
 }, "justdoinc:justdo-formula-fields")
 
-{create, all} = require "mathjs"
-math = create all
+mathjs = require "mathjs"
+
+required_function_names = _.keys(share.supported_functions)
+# These functions are used internally by us, so we need to include them without adding them to the share.supported_functions
+additional_function_names = ["format", "parse", "subtract"]
+required_function_names = required_function_names.concat additional_function_names
+
+required_dependencies = _.map required_function_names, (function_name) -> "#{function_name}Dependencies"
+
+math = mathjs.create _.pick mathjs, required_dependencies
 
 # Securing math, see: http://mathjs.org/docs/expressions/security.html
 

@@ -47,20 +47,7 @@ forbidden_words_exists_regex = RegExp("(\\b" + forbidden_words.join("\\b|\\b") +
 
 # Object is used for quick access, values are ignored!
 # http://mathjs.org/docs/reference/functions.html
-supported_functions = {
-  abs: null
-  add: null
-  ceil: null
-  fix: null
-  floor: null
-  mod: null
-  round: null
-  sign: null
-  max: null
-  mean: null
-  median: null
-  min: null
-}
+supported_functions = share.supported_functions
 
 parseSingleRestrictedRationalExpression = (expression) ->
   if not _.isString expression

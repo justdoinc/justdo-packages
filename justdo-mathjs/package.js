@@ -60,6 +60,7 @@ Package.onUse(function (api) {
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", both);
   api.use("justdoinc:justdo-webapp-boot@1.0.0", both);
+  api.addFiles("lib/both/mathjs-supported-functions.coffee", both);
   api.addFiles("lib/both/mathjs.coffee", both);
   api.addFiles("lib/both/single-restricted-rational-expressions.coffee", both);
   
