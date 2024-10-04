@@ -158,7 +158,7 @@ _.extend JustdoFormulaFields.prototype,
 
     allowed_symbols = _.values(field_to_symbol)
     parsed_formula.traverse (node, path, parent) ->
-      if node.type == "SymbolNode" and node.name not in allowed_symbols
+      if (node.type is "SymbolNode") and (path isnt "fn") and (node.name not in allowed_symbols)
         # Use the name variable instead of symbol, assuming it is more understandable by humans.
         throw new Meteor.Error "invalid-formula", "Formulas can't have variables (found variable: #{node.name})."
 
