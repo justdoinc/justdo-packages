@@ -183,7 +183,7 @@ _.extend JustdoI18nRoutes.prototype,
     return
 
   getPathWithoutHumanReadablePart: (path) ->
-    human_readable_part_regex = new RegExp "#{JustdoI18nRoutes.human_readable_url_separator}(?:\\w|%|-)+", "g"
+    human_readable_part_regex = new RegExp "#{JustdoI18nRoutes.human_readable_url_separator}#{JustdoI18nRoutes.human_readable_chars_regex_string}+", "g"
     return path.replace human_readable_part_regex, ""
   
   textToUrlComponent: (text, lang) ->
