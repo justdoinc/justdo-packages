@@ -50,5 +50,6 @@ _.extend JustdoPluginStore.prototype,
   
   getCategoryOrPluginIdFromPath: (path_without_lang) ->
     path_without_lang = JustdoHelpers.getNormalisedUrlPathnameWithoutSearchPart path_without_lang
+    path_without_lang_and_hrp = APP.justdo_i18n_routes?.getPathWithoutHumanReadablePart(path_without_lang) or path_without_lang
     category_or_plugin_url_prefix = /\/plugins\/[pc]\//
-    return path_without_lang.replace(category_or_plugin_url_prefix, "").replace(/\//g, "")
+    return path_without_lang_and_hrp.replace(category_or_plugin_url_prefix, "").replace(/\//g, "")
