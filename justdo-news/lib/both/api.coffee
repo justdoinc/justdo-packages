@@ -142,7 +142,6 @@ _.extend JustdoNews.prototype,
         route_options:
           name: "#{underscored_category}_page"
           translatable: news_category_options.translatable
-          title_in_url: news_category_options.title_in_url
           mapGenerator: ->
             ret = 
               url: "/#{category}"
@@ -162,7 +161,6 @@ _.extend JustdoNews.prototype,
         route_options:
           name: "#{underscored_category}_page_with_news_id"
           translatable: news_category_options.translatable
-          title_in_url: news_category_options.title_in_url
           metadata: metadata
           mapGenerator: ->
             for news_doc in self.getAllNewsByCategory category
@@ -170,7 +168,7 @@ _.extend JustdoNews.prototype,
                 url: self.getCanonicalNewsPath {category, news: news_doc}
               yield ret
             return
-          getCustomI18nPath: (path, lang) -> getCustomI18nPath path, lang, @name
+          getCustomI18nPath: if news_category_options.title_in_url then (path, lang) -> getCustomI18nPath path, lang, @name else null
 
       "/#{category}/:news_id/:news_template":
         routingFunction: ->
@@ -200,7 +198,7 @@ _.extend JustdoNews.prototype,
                     url: self.getCanonicalNewsPath {category, news: news_doc, template: news_template_id}
                   yield ret
             return
-          getCustomI18nPath: (path, lang) -> getCustomI18nPath path, lang, @name
+          getCustomI18nPath: if news_category_options.title_in_url then (path, lang) -> getCustomI18nPath path, lang, @name else null
 
     return routes
 
