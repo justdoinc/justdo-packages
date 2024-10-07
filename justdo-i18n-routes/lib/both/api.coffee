@@ -210,6 +210,31 @@ _.extend JustdoI18nRoutes.prototype,
       
     return "#{JustdoI18nRoutes.human_readable_url_separator}#{translated_text}"
   
+  # Returns an array of objects with "hrp" and "non_hrp" keys. (hrp stands for human readable part)
+  # Example:
+  #  input: /lang/he/news/v5-0--justdo-גרסה-חיפוש-משופר-ערכת-נושא-חדשה-ועוד/features--תכונות חדשות
+  #  output: [
+  #    {
+  #      non_hrp: "v5-0",
+  #      hrp: "justdo-%D7%92%D7%A8%D7%A1%D7%94-%D7%97%D7%99%D7%A4%D7%95%D7%A9-%D7%9E%D7%A9%D7%95%D7%A4%D7%A8-%D7%A2%D7%A8%D7%9B%D7%AA-%D7%A0%D7%95%D7%A9%D7%90-%D7%97%D7%93%D7%A9%D7%94-%D7%95%D7%A2%D7%95%D7%93"
+  #    },
+  #    {
+  #      non_hrp: "features",
+  #      hrp: "%D7%AA%D7%9B%D7%95%D7%A0%D7%95%D7%AA%20%D7%97%D7%93%D7%A9%D7%95%D7%AA"
+  #    }
+  #  ]
+  splitHumanReadablePath: (path) ->
+    URL = JustdoHelpers.getURL()
+    path = new URL(path, JustdoHelpers.getRootUrl()).pathname
+    path_segment_regex = new RegExp "(?<non_hrp>(?:\\w|-)+)#{JustdoI18nRoutes.human_readable_url_separator}(?<hrp>#{JustdoI18nRoutes.human_readable_chars_regex_string}+)", "g"
+
+    res = []
+    while (match_result = path_segment_regex.exec path)
+      console.log {path, groups: match_result.groups}
+      res.push match_result.groups
+    
+    return res
+
   getStrippedPathAndLangFromReq: (req) ->
     # processed_path won't include the lang prefix + lang *only* if a valid combination
     # of the form "/lang/:lang_tag" is received, otherwise it will return the originalUrl

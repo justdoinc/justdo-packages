@@ -351,13 +351,17 @@ _.extend JustdoNews.prototype,
 
   # NOTE: url_component should only contain the news_id part with the title (e.g. v5-0--justdo-ai)
   extractNewsIdAndTitleFromUrlComponent: (url_component) ->
-    url_component = url_component?.split(JustdoNews.url_title_separator)
     if _.isEmpty url_component
       return
-    
-    ret = 
-      news_id_or_alias: url_component[0]
-      url_title: url_component[1]
+
+    if (path_components = APP.justdo_i18n_routes.splitHumanReadablePath(url_component)?[0])?
+      ret = 
+        news_id_or_alias: path_components.non_hrp
+        url_title: path_components.hrp
+    else
+      ret = 
+        news_id_or_alias: url_component
+        url_title: null
     
     return ret
   

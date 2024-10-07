@@ -36,7 +36,7 @@ _.extend JustdoNews.prototype,
         page_title = @getNewsPageTitle news_doc, news_template
         existing_url_title = @extractNewsIdAndTitleFromUrlComponent(news_id).url_title
 
-        updated_path = path.replace "--#{existing_url_title}", @newsTitleToUrlComponent(page_title, lang)
+        updated_path = path.replace "--#{existing_url_title}", APP.justdo_i18n_routes.textToUrlComponent(page_title, lang)
 
         if has_canonical_to
           translated_map_obj.canonical_to = updated_path
