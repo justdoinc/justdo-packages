@@ -116,7 +116,7 @@ _.extend JustdoNews.prototype,
       news_doc = news
 
     news_path = news_doc._id
-    if news_category_obj.title_in_url
+    if news_category_obj.title_in_url and APP.justdo_i18n_routes?
       page_title = @getNewsPageTitle news_doc, template
       news_path += APP.justdo_i18n_routes.textToUrlComponent page_title, lang
     

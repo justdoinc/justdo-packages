@@ -351,7 +351,7 @@ _.extend JustdoNews.prototype,
     if _.isEmpty url_component
       return
 
-    if (path_components = APP.justdo_i18n_routes.splitHumanReadablePath(url_component)?[0])?
+    if (path_components = APP.justdo_i18n_routes?.splitHumanReadablePath(url_component)?[0])?
       ret = 
         news_id_or_alias: path_components.non_hrp
         url_title: path_components.hrp

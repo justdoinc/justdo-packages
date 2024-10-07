@@ -55,6 +55,9 @@ _.extend JustdoPluginStore.prototype,
     return path_without_lang_and_hrp.replace(category_or_plugin_url_prefix, "").replace(/\//g, "")
 
   getCanonicalCategoryOrPluginPath: (path_without_lang, lang) -> 
+    if not APP.justdo_i18n_routes?
+      return path_without_lang
+
     category_or_plugin_id = @getCategoryOrPluginIdFromPath path_without_lang
 
     if @isCategoryExists category_or_plugin_id
@@ -67,4 +70,4 @@ _.extend JustdoPluginStore.prototype,
 
     path_without_trailing_slash = path_without_lang.replace /\/$/, ""
 
-    return path_without_trailing_slash +  APP.justdo_i18n_routes.textToUrlComponent title, lang
+    return path_without_trailing_slash + APP.justdo_i18n_routes.textToUrlComponent title, lang
