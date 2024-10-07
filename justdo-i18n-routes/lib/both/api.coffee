@@ -142,6 +142,9 @@ _.extend JustdoI18nRoutes.prototype,
     # we'll use the returned value of it instead of simply adding "/lang/[lang]" to the url
     if not _.isFunction route_options.getCustomI18nPath
       return
+    
+    if route_options.disable_custom_i18n_path_on_default_lang and (lang is JustdoI18n.default_lang)
+      return @getPathWithoutHumanReadablePart path
 
     original_path = path
     
