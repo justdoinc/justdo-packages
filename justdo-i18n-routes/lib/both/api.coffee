@@ -157,11 +157,7 @@ _.extend JustdoI18nRoutes.prototype,
     if Meteor.isClient
       @i18n_paths_cache_dep.depend()
 
-      cache_key = original_path
-      # If route_options.getCustomI18nPathCacheKey is defined, we'll use it to get the cache key for the path.
-      if _.isFunction route_options.getCustomI18nPathCacheKey
-        cache_key = route_options.getCustomI18nPathCacheKey cache_key
-
+      cache_key = @getPathWithoutHumanReadablePart original_path
       if (cached_path = @i18n_paths_cache[cache_key]?[lang])?
         # If cached_path is "pending", it means that there's already an ongoing method call for the same params.
         # In that case we'll first return the path after simply adding "/lang/[lang]".
@@ -186,6 +182,10 @@ _.extend JustdoI18nRoutes.prototype,
   
     return
 
+  getPathWithoutHumanReadablePart: (path) ->
+    human_readable_part_regex = new RegExp "#{JustdoI18nRoutes.human_readable_url_separator}(?:\\w|%|-)+", "g"
+    return path.replace human_readable_part_regex, ""
+  
   getStrippedPathAndLangFromReq: (req) ->
     # processed_path won't include the lang prefix + lang *only* if a valid combination
     # of the form "/lang/:lang_tag" is received, otherwise it will return the originalUrl

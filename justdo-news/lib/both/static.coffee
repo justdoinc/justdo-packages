@@ -6,5 +6,3 @@ _.extend JustdoNews,
   default_news_category_template: "news"
 
   default_news_template: "main"
-
-  url_title_separator: "--"

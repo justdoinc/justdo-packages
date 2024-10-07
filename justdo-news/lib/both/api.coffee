@@ -133,13 +133,6 @@ _.extend JustdoNews.prototype,
         news: news_id
         template: news_template
       return self.getCanonicalNewsPath options
-      
-    getCustomI18nPathCacheKey = (path, lang) ->
-      {news_category, news_id, news_template} = self.getNewsParamFromPath path
-      cache_key = "/#{news_category}/#{news_id.split(JustdoNews.url_title_separator)[0]}"
-      if news_template? and (not self.isDefaultNewsTemplate news_template)
-        cache_key = "#{cache_key}/#{news_template}"
-      return cache_key
 
     routes =
       "/#{category}":
@@ -178,7 +171,6 @@ _.extend JustdoNews.prototype,
               yield ret
             return
           getCustomI18nPath: (path, lang) -> getCustomI18nPath path, lang, @name
-          getCustomI18nPathCacheKey: getCustomI18nPathCacheKey
 
       "/#{category}/:news_id/:news_template":
         routingFunction: ->
@@ -209,7 +201,6 @@ _.extend JustdoNews.prototype,
                   yield ret
             return
           getCustomI18nPath: (path, lang) -> getCustomI18nPath path, lang, @name
-          getCustomI18nPathCacheKey: getCustomI18nPathCacheKey
 
     return routes
 
