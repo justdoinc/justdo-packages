@@ -230,7 +230,6 @@ _.extend JustdoI18nRoutes.prototype,
 
     res = []
     while (match_result = path_segment_regex.exec path)
-      console.log {path, groups: match_result.groups}
       res.push match_result.groups
     
     return res
