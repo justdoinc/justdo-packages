@@ -75,11 +75,7 @@ _.extend JustdoI18nRoutes.prototype,
               if map_obj.canonical_to?
                 # Reminder: map_obj.canonical_to is normalized by JustdoHelpers.getNormalisedUrlPathname
                 translated_map_obj.canonical_to = self.i18nPath map_obj.canonical_to, lang_tag
-              
-              for post_map_generator_id, {predicate, generator} of self.getPostmapGenerators()
-                if predicate translated_map_obj
-                  generator translated_map_obj, lang_tag
-                
+                              
               map_obj.translations.push translated_map_obj
                     
         return

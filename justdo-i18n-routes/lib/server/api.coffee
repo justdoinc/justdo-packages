@@ -1,7 +1,5 @@
 _.extend JustdoI18nRoutes.prototype,
   _immediateInit: ->
-    @post_map_generators = {}
-
     @_setupLangRedirectRules()
     @_setupPreloadLangsDetectors()
     @_setupHtmlAttrHook()
@@ -79,27 +77,3 @@ _.extend JustdoI18nRoutes.prototype,
 
   getUrlLangFromReq: (req) -> @getStrippedPathAndLangFromReq(req).lang_tag
   getUrlLang: (absolute_path) -> @getUrlLangFromReq({originalUrl: absolute_path})
-
-  # This method allows other plugins to register a post map generator that will be called inside the postMapGenerator
-  # of i18n route (see router.coffee). 
-  # An example use case would be the url of justdo-news, where we'll have translated text in the url depending on the lang.
-  _registerPostMapGeneratorOptionsSchema: new SimpleSchema
-    predicate:
-      type: Function
-    generator:
-      type: Function
-  registerPostMapGenerator: (id, options) ->
-    check id, String
-
-    {cleaned_val} = JustdoHelpers.simpleSchemaCleanAndValidate(
-      @_registerPostMapGeneratorOptionsSchema,
-      options,
-      {self: @, throw_on_error: true}
-    )
-    options = cleaned_val
-    
-    @post_map_generators[id] = options
-
-    return
-  
-  getPostmapGenerators: -> @post_map_generators

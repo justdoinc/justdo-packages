@@ -1,7 +1,6 @@
 _.extend JustdoNews.prototype,
   _immediateInit: ->
     @_setupConnectHandlers()
-    @_registerPostmapGenerator()
     return
 
   _deferredInit: ->
@@ -18,32 +17,6 @@ _.extend JustdoNews.prototype,
     @_ensureIndexesExists()
 
     return
-
-  _registerPostmapGenerator: ->
-    APP.justdo_i18n_routes.registerPostMapGenerator "news-title-in-url",
-      predicate: (translated_map_obj) -> translated_map_obj.route.options?.title_in_url
-      generator: (translated_map_obj, lang) =>
-        path = translated_map_obj.url
-
-        has_canonical_to = translated_map_obj.canonical_to?
-        if has_canonical_to
-          path = translated_map_obj.canonical_to
-
-        path_without_lang = APP.justdo_i18n_routes.getPathWithoutLangPrefix path
-
-        {news_category, news_id, news_template} = @getNewsParamFromPath path_without_lang
-        news_doc = @getNewsByIdOrAlias(news_category, news_id).news_doc
-        page_title = @getNewsPageTitle news_doc, news_template
-        existing_url_title = @extractNewsIdAndTitleFromUrlComponent(news_id).url_title
-
-        updated_path = path.replace "--#{existing_url_title}", APP.justdo_i18n_routes.textToUrlComponent(page_title, lang)
-
-        if has_canonical_to
-          translated_map_obj.canonical_to = updated_path
-        else
-          translated_map_obj.url = updated_path
-
-        return
 
   _setupConnectHandlers: ->
     if not @register_news_routes
