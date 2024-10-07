@@ -186,6 +186,30 @@ _.extend JustdoI18nRoutes.prototype,
     human_readable_part_regex = new RegExp "#{JustdoI18nRoutes.human_readable_url_separator}(?:\\w|%|-)+", "g"
     return path.replace human_readable_part_regex, ""
   
+  textToUrlComponent: (text, lang) ->
+    check text, Match.Maybe String
+    check lang, Match.Maybe String
+
+    if _.isEmpty text
+      return
+    
+    if _.isEmpty lang
+      lang = JustdoI18n.default_lang
+
+    translated_text = TAPi18n.__(text, {}, lang)
+      .trim()
+      # Replace all non-alphanumeric characters with a dash
+      # Unicode is supported via Unicode character class escape 
+      # (see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Regular_expressions/Unicode_character_class_escape for details)
+      .replace /\P{Letter}+/gu, "-"
+      # Remove consecutive dashes (since it interferes with the separator)
+      .replace /-+/g, "-"
+      # Remove trailing dashes
+      .replace /-+$/g, ""
+      .toLowerCase()
+      
+    return "#{JustdoI18nRoutes.human_readable_url_separator}#{translated_text}"
+  
   getStrippedPathAndLangFromReq: (req) ->
     # processed_path won't include the lang prefix + lang *only* if a valid combination
     # of the form "/lang/:lang_tag" is received, otherwise it will return the originalUrl
