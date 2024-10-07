@@ -132,9 +132,7 @@ _.extend JustdoI18nRoutes.prototype,
     # - /lang/he/news/justdo-ai
     # - /lang/he/news/justdo-ai--justdo-ai-יצירת-תבניות-פרויקט-וקבלת-המלצות-בינה-מלאכותית
     # ),
-    # it is highly recommended to set route_options.getCustomI18nPathCacheKey to a function that returns a unique key for the path
-    # that will be used to cache the value on the client side.
-    # (In the above example, the key would be "/news/justdo-ai" for all the paths above)
+    # The key used to cache the response is the path without the human readable part (by passing it through getPathWithoutHumanReadablePart).
   _getCustomI18nPath: (path, lang) ->
     route_name = JustdoHelpers.getRouteNameFromPath path
     if not (route_options = @getI18nRouteDef(route_name)?.route_options)?
