@@ -30,8 +30,8 @@ _.extend JustdoCoreHelpers,
   # If a CDN is not configured, it returns the path as is.
   # If an app version is available in the env/process.env, it appends it as a query parameter to the CDN URL.
   # options:
-  #   add_protocol: adds the protocol to the CDN URL - only if it starts with "//". (defualt: false)
-  #   add_domain_if_no_cdn: adds the domain to the path if no CDN is configured. (default: false)
+  #   add_protocol (defualt: false): (RELEVANT ONLY IF a CDN is defined!) adds the protocol to the CDN URL - only if the CDN URL starts with "//". 
+  #   add_domain_if_no_cdn (default: false): (RELEVANT ONLY IN ENVS WITHOUT CDN URL) adds the domain to the path if no CDN URL is configured.
   getCDNUrl: (path, options) ->
     URL = JustdoCoreHelpers.getURL()
 
