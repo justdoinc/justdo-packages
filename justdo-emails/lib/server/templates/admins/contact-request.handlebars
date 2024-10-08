@@ -28,38 +28,40 @@
             {{/if}}
             <li>Request ID: {{_id}}</li>
         </ul>
-        Last 5 requests received:
-        <ul>
-            {{#each previous_requests}}
-            <li>{{name}} @ {{createdAt}}
-                <ul style="color:#68757B;font-size:16px">
-                    <li>Name: {{name}}</li>
-                    <li>Email: {{email}}</li>
-                    {{#if tel}}
-                        <li>Tel: {{tel}}</li>
-                    {{/if}}
-                    {{#if message}}
-                        <li>Message: {{message}}</li>
-                    {{/if}}
-                    {{#if campaign}}
-                        <li>Campaign: {{campaign}}</li>
-                    {{/if}}
-                    {{#if source_template}}
-                        <li>Source Template: {{source_template}}</li>
-                    {{/if}}
-                    {{#if version}}
-                        <li>Version: {{version}}</li>
-                    {{/if}}
-                    {{#if root_url}}
-                        <li>Root URL: {{root_url}}</li>
-                    {{/if}}
-                    {{#if tz}}
-                        <li>Timezone: {{tz}}</li>
-                    {{/if}}
-                    <li>Request ID: {{_id}}</li>
-                </ul>
-            </li>
-            {{/each}}
-        </ul>
+        {{#if previous_requests}}
+            Last {{previous_requests.length}} requests received:
+            <ul>
+                {{#each previous_requests}}
+                <li>{{name}} @ {{createdAt}}
+                    <ul style="color:#68757B;font-size:16px">
+                        <li>Name: {{name}}</li>
+                        <li>Email: {{email}}</li>
+                        {{#if tel}}
+                            <li>Tel: {{tel}}</li>
+                        {{/if}}
+                        {{#if message}}
+                            <li>Message: {{message}}</li>
+                        {{/if}}
+                        {{#if campaign}}
+                            <li>Campaign: {{campaign}}</li>
+                        {{/if}}
+                        {{#if source_template}}
+                            <li>Source Template: {{source_template}}</li>
+                        {{/if}}
+                        {{#if version}}
+                            <li>Version: {{version}}</li>
+                        {{/if}}
+                        {{#if root_url}}
+                            <li>Root URL: {{root_url}}</li>
+                        {{/if}}
+                        {{#if tz}}
+                            <li>Timezone: {{tz}}</li>
+                        {{/if}}
+                        <li>Request ID: {{_id}}</li>
+                    </ul>
+                </li>
+                {{/each}}
+            </ul>
+        {{/if}}
     </td>
 </tr>

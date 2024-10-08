@@ -35,24 +35,23 @@ Schema =
   campaign:
     type: String
     optional: true
-  source_template: 
+  source_template:
     type: String
     optional: true
   tel:
     type: String
     optional: true
   signed_legal_docs:
-      optional: true
-      type: Object
-    "signed_legal_docs.terms_conditions":
-      optional: true
-      type: JustdoAccounts.standard_legal_doc_structure
-    "signed_legal_docs.privacy_policy":
-      optional: true
-      type: JustdoAccounts.standard_legal_doc_structure
+    optional: true
+    type: Object
+  "signed_legal_docs.terms_conditions":
+    optional: true
+    type: JustdoAccounts.standard_legal_doc_structure
+  "signed_legal_docs.privacy_policy":
+    optional: true
+    type: JustdoAccounts.standard_legal_doc_structure
   createdAt:
     label: "Created"
-
     type: Date
     autoValue: ->
       if this.isInsert
@@ -63,7 +62,6 @@ Schema =
         this.unset()
   updatedAt:
     label: "Modified"
-
     type: Date
     denyInsert: true
     optional: true
@@ -76,6 +74,48 @@ DemoRequests = new Mongo.Collection "demo_requests"
 DemoRequests.attachSchema Schema
 
 APP.collections.DemoRequests = DemoRequests
+
+#
+# Helper Function
+#
+
+handleContactRequest = (request_details, subject) ->
+  {cleaned_val} =
+    JustdoHelpers.simpleSchemaCleanAndValidate(
+      DemoDetailsSchema,
+      request_details,
+      {throw_on_error: true}
+    )
+  request_details = cleaned_val
+  _.extend request_details, {version: process.env.APP_VERSION, root_url: process.env.ROOT_URL}
+
+  # perform duplicate check
+  query =
+    name: request_details.name
+    email: request_details.email
+    source_template: request_details.source_template
+    message: request_details.message
+  if APP.collections.DemoRequests.findOne(query)?
+    return
+
+  _id = APP.collections.DemoRequests.insert request_details
+
+  # previous_requests = APP.collections.DemoRequests.find(
+  #   {_id: {$ne: _id}},
+  #   {sort: {createdAt: -1}, limit: 5}
+  # ).fetch()
+  previous_requests = []
+
+  template_data = _.extend {}, request_details, {previous_requests, _id}
+
+  for email in contact_request_recipients
+    JustdoEmails.buildAndSend
+      to: email
+      template: "contact-request"
+      template_data: template_data
+      subject: subject
+
+  return
 
 #
 # Main
@@ -123,33 +163,12 @@ Meteor.methods
     if not process.env.MAIL_URL
       throw new Meteor.Error("smtp-not-set", "This environment doesn't have email server (smtp) configured. Please reach out to us using the emails below.")
 
-    {cleaned_val} =
-      JustdoHelpers.simpleSchemaCleanAndValidate(
-        DemoDetailsSchema,
-        request_details,
-        {throw_on_error: true}
-      )
-
-    request_details = cleaned_val
-
-    _.extend request_details, {version: process.env.APP_VERSION, root_url: process.env.ROOT_URL}
-
-    previous_requests = APP.collections.DemoRequests.find({}, {sort: {createdAt: -1}, limit: 5}).fetch()
-    _id = APP.collections.DemoRequests.insert(request_details)
-
-    template_data = _.extend {}, request_details, {previous_requests, _id}
-
     subject = "New contact request"
 
     if (message = request_details.message)?
       subject += ": #{request_details.message.substr(0,80)}"
 
-    for email in contact_request_recipients
-      JustdoEmails.buildAndSend
-        to: email
-        template: "contact-request"
-        template_data: template_data
-        subject: subject
+    handleContactRequest request_details, subject
 
     return true
 
@@ -165,38 +184,12 @@ WebApp.connectHandlers.use (req, res, next) ->
       request_details = req.body
       request_details.source_template = "source-available-build"
       request_details.message = "join-mailing-list"
-      if not request_details.name?
+      if _.isEmpty(request_details.name)
         request_details.name = request_details.email
-      
-      {cleaned_val} =
-        JustdoHelpers.simpleSchemaCleanAndValidate(
-          DemoDetailsSchema,
-          request_details,
-          {throw_on_error: true}
-        )
-      request_details = cleaned_val
 
-      # Insert request only if it's not a duplicate
-      query = 
-        email: request_details.email
-        source_template: request_details.source_template
-        message: request_details.message
-      if not APP.collections.DemoRequests.findOne(query)?
-        _id = APP.collections.DemoRequests.insert request_details
+      subject = "New user joined mailing list"
 
-        if process.env.MAIL_URL
-          previous_requests = APP.collections.DemoRequests.find({_id: {$ne: _id}}, {sort: {createdAt: -1}, limit: 5}).fetch()
-
-          template_data = _.extend {}, request_details, {previous_requests, _id}
-
-          subject = "New user joined mailing list"
-
-          for email in contact_request_recipients
-            JustdoEmails.buildAndSend
-              to: email
-              template: "contact-request"
-              template_data: template_data
-              subject: subject
+      handleContactRequest request_details, subject
 
       res.writeHead 200
       res.end "OK"
@@ -206,7 +199,7 @@ WebApp.connectHandlers.use (req, res, next) ->
       # Return a JSON object with the error message
       res.end(error.message)
       return
-    
+
   else
     next()
 
