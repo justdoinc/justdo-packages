@@ -43,17 +43,17 @@ _.extend JustdoI18nRoutes.prototype,
         res.end "404 Not Found"
         return
 
-      if processed_lang_details.original_lang_tag?
-        # Getting original_lang_tag means the lang tag was not correctly cased, redirect to the correct case
-        res.writeHead 301,
-          Location: req.originalUrl.replace processed_lang_details.original_lang_tag, processed_lang_details.lang_tag
-        res.end()
-        return
-
       if processed_lang_details.lang_tag is JustdoI18n.default_lang
         # We got a lang tag, but it's the default one, redirect to the path without the lang prefix
         res.writeHead 301,
           Location: processed_lang_details.processed_path
+        res.end()
+        return
+
+      if processed_lang_details.original_lang_tag?
+        # Getting original_lang_tag means the lang tag was not correctly cased, redirect to the correct case
+        res.writeHead 301,
+          Location: req.originalUrl.replace processed_lang_details.original_lang_tag, processed_lang_details.lang_tag
         res.end()
         return
 
