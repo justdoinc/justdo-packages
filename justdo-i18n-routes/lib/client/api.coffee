@@ -69,11 +69,11 @@ _.extend JustdoI18nRoutes.prototype,
     if not (cur_route_name = router.route?.getName())?
       return
       
+    cur_route_params = router.getParams()
     # If current route is not i18n_path, generate path using route name and params
     if cur_route_name.startsWith "i18n_path"
-      cur_route_name = JustdoHelpers.getRouteNameFromPath router.getParams().path
+      cur_route_name = JustdoHelpers.getRouteNameFromPath cur_route_params.path
 
-    cur_route_params = router.getParams()
     path = Router.path cur_route_name, cur_route_params, {query: cur_route_params.query, hash: cur_route_params.hash}
 
     return path
