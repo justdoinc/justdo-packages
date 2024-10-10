@@ -26,5 +26,5 @@ _.extend JustdoNews.prototype,
     url = "/#{category}/#{news_doc._id}"
     url = APP.justdo_i18n_routes?.i18nPath(url) or url
 
-    Router.go url, {}, {replaceState:true}
+    Router.go url, {}, {replaceState: true}
     return

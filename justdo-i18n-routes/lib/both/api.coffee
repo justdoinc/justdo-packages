@@ -82,12 +82,17 @@ _.extend JustdoI18nRoutes.prototype,
     return
 
   i18nPath: (path, lang) ->
+    # path can be either a full url (incl. domain + protocol) or just the absolute
+    # url path.
+    #
+    # We support full url, because we noticed that in the first load, Iron Router
+    # might return the full url, instead of its usual absolute url path.
     if not path?
       path = "/"
 
-    URL = JustdoHelpers.getURL()
-    path = new URL(path, JustdoHelpers.getRootUrl()).pathname
-
+    # Ensure to take only the absolute path from path in case that it got provided with the full url. (see main comment above)
+    path = JustdoHelpers.getNormalisedUrlPathname(path)
+  
     if not lang?
       if Meteor.isClient
         lang = APP.justdo_i18n.getLang()
@@ -125,13 +130,13 @@ _.extend JustdoI18nRoutes.prototype,
 
     URL = JustdoHelpers.getURL()
     original_url = req.originalUrl
-    url_obj = new URL original_url, JustdoHelpers.getRootUrl()
+    path = JustdoHelpers.getNormalisedUrlPathname(original_url)
 
-    if not url_obj.pathname.startsWith(JustdoI18nRoutes.langs_url_prefix)
+    if not path.startsWith(JustdoI18nRoutes.langs_url_prefix)
       return {processed_path: original_url, lang_tag: undefined}
 
     # We got a lang prefixed original_url
-    url_without_lang_prefix = url_obj.pathname.substr JustdoI18nRoutes.langs_url_prefix.length
+    url_without_lang_prefix = path.substr JustdoI18nRoutes.langs_url_prefix.length
     url_segments = _.filter url_without_lang_prefix.split("/"), (url_segment) -> not _.isEmpty url_segment
 
     if _.isEmpty url_segments

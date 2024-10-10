@@ -25,7 +25,8 @@ _.extend JustdoI18nRoutes.prototype,
       router_this.setParams current_params
       route_def.routingFunction.call router_this
     else
-      Router.go path, {}, {replaceState:true}
+      # replaceState is used to prevent the browser from adding the current page to the history
+      Router.go path, {}, {replaceState: true}
 
     return
 
