@@ -163,11 +163,8 @@ _.extend JustdoNews.prototype,
               yield ret
             return
           metadata: metadata
-          hrp_supported: true
+          hrp_supported: news_category_options.title_in_url
           getCanonicalHrpURL: (path_without_hrp_and_lang, lang) ->
-            if not news_category_options.title_in_url
-              return path_without_hrp_and_lang
-
             {news_id} = Router.routes[category_with_news_id_route_name].params path_without_hrp_and_lang
 
             path = "/#{category}/#{news_id}"
@@ -205,11 +202,8 @@ _.extend JustdoNews.prototype,
                   yield ret
             return
           metadata: metadata
-          hrp_supported: true
+          hrp_supported: news_category_options.title_in_url
           getCanonicalHrpURL: (path_without_hrp_and_lang, lang) ->
-            if not news_category_options.title_in_url
-              return path_without_hrp_and_lang
-
             {news_id, news_template} = Router.routes[category_with_news_id_and_template_route_name].params path_without_hrp_and_lang
 
             path = "/#{category}/#{news_id}"
