@@ -155,6 +155,7 @@ _.extend JustdoNews.prototype,
               yield ret
             return
           metadata: metadata
+          hrp_supported: true
 
       "/#{category}/:news_id/:news_template":
         routingFunction: ->
@@ -183,6 +184,7 @@ _.extend JustdoNews.prototype,
                   yield ret
             return
           metadata: metadata
+          hrp_supported: true
 
     return routes
 
