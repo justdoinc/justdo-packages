@@ -169,9 +169,8 @@ _.extend JustdoNews.prototype,
 
             path = "/#{category}/#{news_id}"
 
-            news_title = self.getNewsPageTitle category, news_id
-
-            path += @getHRPForString news_title, lang
+            if (news_title = self.getNewsPageTitle category, news_id)?
+              path += @getHRPForString news_title, lang
 
             return path
             
@@ -208,9 +207,8 @@ _.extend JustdoNews.prototype,
 
             path = "/#{category}/#{news_id}"
 
-            news_title = self.getNewsPageTitle category, news_id
-
-            path += @getHRPForString news_title, lang
+            if (news_title = self.getNewsPageTitle category, news_id)?
+              path += @getHRPForString news_title, lang
 
             if news_template?
               path += "/#{news_template}"
@@ -346,9 +344,12 @@ _.extend JustdoNews.prototype,
 
   getNewsPageTitle: (category, news, template) ->
     if _.isString news
-      {news_doc} = @getNewsByIdOrAlias category, news
+      news_doc = @getNewsByIdOrAlias(category, news)?.news_doc
     else
       news_doc = news
+    
+    if not news_doc?
+      return
 
     if _.isEmpty template
       template = JustdoNews.default_news_template
