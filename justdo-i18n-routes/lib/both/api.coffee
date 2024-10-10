@@ -85,6 +85,9 @@ _.extend JustdoI18nRoutes.prototype,
     if not path?
       path = "/"
 
+    URL = JustdoHelpers.getURL()
+    path = new URL(path, JustdoHelpers.getRootUrl()).pathname
+
     if not lang?
       if Meteor.isClient
         lang = APP.justdo_i18n.getLang()
