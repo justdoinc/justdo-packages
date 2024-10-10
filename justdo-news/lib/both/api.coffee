@@ -23,6 +23,10 @@ _.extend JustdoNews.prototype,
       label: "News category translatable"
       type: Boolean
       defaultValue: true
+    title_in_url:
+      label: "Append title to URL"
+      type: Boolean
+      defaultValue: false
   registerCategory: (category, options) ->
     if _.isEmpty category or not _.isString category
       throw @_error "invalid-argument"
@@ -91,6 +95,10 @@ _.extend JustdoNews.prototype,
     news_category_options = Tracker.nonreactive => @getCategory category
     underscored_category = category.replace /-/g, "_"
 
+    category_route_name = "#{underscored_category}_page"
+    category_with_news_id_route_name = "#{underscored_category}_page_with_news_id"
+    category_with_news_id_and_template_route_name = "#{underscored_category}_page_with_news_id_and_template"
+
     metadata =
       title_i18n: (path_without_lang, lang) ->
         {news_id, new_template} = self.getNewsParamFromPath path_without_lang
@@ -127,7 +135,7 @@ _.extend JustdoNews.prototype,
           self.redirectToMostRecentNewsPageByCategoryOrFallback category
           return
         route_options:
-          name: "#{underscored_category}_page"
+          name: category_route_name
           translatable: news_category_options.translatable
           mapGenerator: ->
             ret = 
@@ -146,7 +154,7 @@ _.extend JustdoNews.prototype,
           @layout "single_frame_layout"
           return
         route_options:
-          name: "#{underscored_category}_page_with_news_id"
+          name: category_with_news_id_route_name
           translatable: news_category_options.translatable
           mapGenerator: ->
             for news_doc in self.getAllNewsByCategory category
@@ -156,7 +164,20 @@ _.extend JustdoNews.prototype,
             return
           metadata: metadata
           hrp_supported: true
+          getCanonicalHrpURL: (path_without_hrp_and_lang, lang) ->
+            if not news_category_options.title_in_url
+              return path_without_hrp_and_lang
 
+            {news_id} = Router.routes[category_with_news_id_route_name].params path_without_hrp_and_lang
+
+            path = "/#{category}/#{news_id}"
+
+            news_title = self.getNewsPageTitle category, news_id
+
+            path += @getHRPForString news_title, lang
+
+            return path
+            
       "/#{category}/:news_id/:news_template":
         routingFunction: ->
           news_id = @params.news_id.toLowerCase()
@@ -172,7 +193,7 @@ _.extend JustdoNews.prototype,
           @layout "single_frame_layout"
           return
         route_options:
-          name: "#{underscored_category}_page_with_news_id_and_template"
+          name: category_with_news_id_and_template_route_name
           translatable: news_category_options.translatable
           mapGenerator: ->
             for news_doc in self.getAllNewsByCategory category
@@ -185,7 +206,23 @@ _.extend JustdoNews.prototype,
             return
           metadata: metadata
           hrp_supported: true
+          getCanonicalHrpURL: (path_without_hrp_and_lang, lang) ->
+            if not news_category_options.title_in_url
+              return path_without_hrp_and_lang
 
+            {news_id, news_template} = Router.routes[category_with_news_id_and_template_route_name].params path_without_hrp_and_lang
+
+            path = "/#{category}/#{news_id}"
+
+            news_title = self.getNewsPageTitle category, news_id
+
+            path += @getHRPForString news_title, lang
+
+            if news_template?
+              path += "/#{news_template}"
+
+            return path
+            
     return routes
 
   _newsTemplateSchema = new SimpleSchema
@@ -273,6 +310,9 @@ _.extend JustdoNews.prototype,
       
     if not category? or not news_id_or_alias?
       return
+    
+    if APP.justdo_seo?
+      news_id_or_alias = APP.justdo_seo.getPathWithoutHumanReadableParts news_id_or_alias
 
     is_alias = false
     news_doc = _.find @getCategory(category).news, (news) -> 
@@ -302,10 +342,24 @@ _.extend JustdoNews.prototype,
     # Remove the search part of the path
     path = JustdoHelpers.getNormalisedUrlPathnameWithoutSearchPart path
 
+    if APP.justdo_seo?
+      path = APP.justdo_seo.getPathWithoutHumanReadableParts path
+
     [news_category, news_id, news_template] = _.filter path.split("/"), (path_segment) -> not _.isEmpty path_segment
     return {news_category, news_id, news_template}
 
   isDefaultNewsTemplate: (template_id) -> template_id is JustdoNews.default_news_template
+
+  getNewsPageTitle: (category, news, template) ->
+    if _.isString news
+      {news_doc} = @getNewsByIdOrAlias category, news
+    else
+      news_doc = news
+
+    if _.isEmpty template
+      template = JustdoNews.default_news_template
+
+    return _.find(news_doc?.templates, (template_obj) -> template_obj._id is template)?.page_title
 
 # Originally, the JustdoNews package was created to be a news package, but we
 # ended up using it as a CRM package. So, we're going to create some aliases
