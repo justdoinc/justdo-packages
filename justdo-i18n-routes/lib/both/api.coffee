@@ -155,5 +155,7 @@ _.extend JustdoI18nRoutes.prototype,
 
     return {processed_path, lang_tag}
   
-  getPathWithoutLangPrefix: (url) -> @getStrippedPathAndLangFromReq({originalUrl: url}).processed_path
+  getStrippedPathAndLang: (url) -> @getStrippedPathAndLangFromReq({originalUrl: url})
+
+  getPathWithoutLangPrefix: (url) -> @getStrippedPathAndLang(url).processed_path
   
