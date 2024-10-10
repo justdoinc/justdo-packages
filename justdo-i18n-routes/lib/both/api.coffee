@@ -125,12 +125,12 @@ _.extend JustdoI18nRoutes.prototype,
 
     URL = JustdoHelpers.getURL()
     original_url = req.originalUrl
+    url_obj = new URL original_url, JustdoHelpers.getRootUrl()
 
-    if not original_url.startsWith(JustdoI18nRoutes.langs_url_prefix)
+    if not url_obj.pathname.startsWith(JustdoI18nRoutes.langs_url_prefix)
       return {processed_path: original_url, lang_tag: undefined}
 
     # We got a lang prefixed original_url
-    url_obj = new URL original_url, JustdoHelpers.getRootUrl()
     url_without_lang_prefix = url_obj.pathname.substr JustdoI18nRoutes.langs_url_prefix.length
     url_segments = _.filter url_without_lang_prefix.split("/"), (url_segment) -> not _.isEmpty url_segment
 
