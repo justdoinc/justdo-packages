@@ -36,7 +36,7 @@ _.extend JustdoI18nRoutes.prototype,
         cur_route_name = @getCurrentRouteName()
 
         if (@isRouteI18nAble cur_route_name) and (i18n_path = @i18nPath cur_path)?
-          Router.go i18n_path
+          Router.go i18n_path, {}, {replaceState:true}
 
         return
       

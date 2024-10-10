@@ -25,7 +25,7 @@ _.extend JustdoI18nRoutes.prototype,
       router_this.setParams current_params
       route_def.routingFunction.call router_this
     else
-      Router.go path
+      Router.go path, {}, {replaceState:true}
 
     return
 
@@ -77,6 +77,7 @@ _.extend JustdoI18nRoutes.prototype,
                 translated_map_obj.canonical_to = self.i18nPath map_obj.canonical_to, lang_tag
                 
               map_obj.translations.push translated_map_obj
+
         return
 
     return
