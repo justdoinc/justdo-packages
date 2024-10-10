@@ -44,11 +44,20 @@ _.extend JustdoPluginStore.prototype,
         return
 
       setActiveCategory: (category) ->
+        if APP.justdo_seo?
+          category = APP.justdo_seo.getPathWithoutHumanReadableParts category
+
         active_category_rv.set category
 
         return
 
-      setActivePluginPage: (plugin_id) -> active_plugin_page_rv.set plugin_id
+      setActivePluginPage: (plugin_id) -> 
+        if APP.justdo_seo?
+          plugin_id = APP.justdo_seo.getPathWithoutHumanReadableParts plugin_id
+
+        active_plugin_page_rv.set plugin_id
+
+        return
 
       getActivePluginPage: -> active_plugin_page_rv.get()
 
