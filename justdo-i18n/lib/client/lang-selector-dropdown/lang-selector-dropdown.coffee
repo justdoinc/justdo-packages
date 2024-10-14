@@ -5,6 +5,7 @@ Template.lang_selector_dropdown.helpers
 
   supportedLangs: ->
     supported_langs = _.map APP.justdo_i18n.getSupportedLanguages(), (lang_obj, lang_key) -> {_id: lang_key, name: lang_obj.name}
+    supported_langs = JustdoHelpers.localeAwareSortCaseInsensitive supported_langs, (lang_obj) -> lang_obj.name
 
     chunked_langs = _.chunk(supported_langs, JustdoI18n.lang_dropdown_max_lang_per_col)
 
