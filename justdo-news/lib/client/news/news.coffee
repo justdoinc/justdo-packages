@@ -45,7 +45,7 @@ Template.news.onCreated ->
       template_name = template_name.replace "_with_news_id_and_template", "_with_news_id"
 
     news_path = Router.path template_name, template_data
-    news_path = APP.justdo_i18n_routes?.i18nPath(news_path) or news_path
+    news_path = APP.justdo_i18n_routes?.i18nPathAndHrp(news_path) or news_path
 
     return news_path
 

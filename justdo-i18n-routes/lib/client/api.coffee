@@ -15,7 +15,7 @@ _.extend JustdoI18nRoutes.prototype,
     Template.registerHelper "i18nCurrentPagePath", (lang) => @i18nCurrentPagePath lang
     Template.registerHelper "i18nRoute", (options) => 
       path = Blaze._globalHelpers.pathFor options
-      return @i18nPath(path) or path
+      return @i18nPathAndHrp(path) or path
 
     return
 
@@ -35,7 +35,7 @@ _.extend JustdoI18nRoutes.prototype,
         cur_path = @getCurrentPathWithoutLangPrefix()
         cur_route_name = @getCurrentRouteName()
 
-        if (@isRouteI18nAble cur_route_name) and (i18n_path = @i18nPath cur_path)?
+        if (@isRouteI18nAble cur_route_name) and (i18n_path = @i18nPathAndHrp cur_path)?
           Router.go i18n_path, {}, {replaceState: true}
 
         return
@@ -55,12 +55,13 @@ _.extend JustdoI18nRoutes.prototype,
     return url_lang
     
   i18nCurrentPagePath: (lang) ->
+    # Note, we will add the HRP parts to the path if it is a HRP route
     if not (router = Router.current())?
       return
 
     path = @getCurrentPathWithoutLangPrefix()
     
-    return @i18nPath path, lang
+    return @i18nPathAndHrp path, lang
 
   getCurrentPathWithoutLangPrefix: ->
     if not (router = Router.current())?

@@ -24,7 +24,7 @@ _.extend JustdoNews.prototype,
       throw @_error "news-category-not-found"
 
     url = "/#{category}/#{news_doc._id}"
-    url = APP.justdo_i18n_routes?.i18nPath(url) or url
+    url = APP.justdo_i18n_routes?.i18nPathAndHrp(url) or url
 
     Router.go url, {}, {replaceState: true}
     return

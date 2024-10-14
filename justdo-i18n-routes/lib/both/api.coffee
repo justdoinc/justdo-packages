@@ -82,15 +82,25 @@ _.extend JustdoI18nRoutes.prototype,
     return
 
   i18nPath: (path, lang) ->
-    # path can be either a full url (incl. domain + protocol) or just the absolute
-    # url path.
+    # This function is used to convert a path to an i18n path.
     #
-    # We support full url, because we noticed that in the first load, Iron Router
-    # might return the full url, instead of its usual absolute url path.
+    # Arguments:
+    #
+    #   path: can be either a full url (incl. domain + protocol) or just the absolute
+    #   url path.
+    #
+    #   lang: is required in the server, but optional in the client.
+    #         note that if lang isn't provided, we will use the current lang in the client.
+    #         this will make this function a reactive resource.
+    #
+
     if not path?
       path = "/"
 
-    # Ensure to take only the absolute path from path in case that it got provided with the full url. (see main comment above)
+    # Ensure to take only the absolute path from path in case that it got provided with the full url
+    #
+    # We support full url, because we noticed that in the first load, Iron Router
+    # might return the full url, instead of its usual absolute url path.
     path = JustdoHelpers.getNormalisedUrlPathname(path)
   
     if not lang?
@@ -104,12 +114,31 @@ _.extend JustdoI18nRoutes.prototype,
     
     route_name = JustdoHelpers.getRouteNameFromPath path
     if (lang is JustdoI18n.default_lang) or (not @isRouteI18nAble route_name)
-      return path or "/"
-
-    if Meteor.isClient and APP.justdo_seo?.isRouteHrpSupported route_name
-      path = APP.justdo_seo.getCanonicalHrpURL path, lang
-
+      return path
+    
     return "#{JustdoI18nRoutes.langs_url_prefix}/#{lang}#{if path is "/" then "" else path}"
+
+  i18nPathAndHrp: (path, lang) ->
+    # The HRP concept is introduced by the justdo_seo package, yet, we found it more
+    # convenient to have a single function that will return both the i18n path and the
+    # human readable path - and place it here, at least for now.
+    #
+    # This function is used to convert a path to an i18n path and a human readable path.
+    #
+    # In environments where JustdoSeo isn't available, this function will return the same
+    # value as @i18nPath().
+    #
+    # Note that in the client side this is a reactive resource.
+
+    if not path?
+      path = "/"
+    
+    path = @i18nPath path, lang
+
+    if APP.justdo_seo?
+      return APP.justdo_seo.getCanonicalHrpURL(path)
+
+    return path
 
   getStrippedPathAndLangFromReq: (req) ->
     # processed_path won't include the lang prefix + lang *only* if a valid combination
