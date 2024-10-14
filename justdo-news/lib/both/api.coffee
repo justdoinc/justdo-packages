@@ -178,7 +178,7 @@ _.extend JustdoNews.prototype,
             path = "/#{category}/#{news_id}"
 
             if (news_title = self.getNewsPageTitle category, news_id)?
-              path += @getHRPForString news_title, lang
+              path += @getHRPForI18nKey news_title, lang
 
             return path
             
@@ -219,7 +219,7 @@ _.extend JustdoNews.prototype,
             path = "/#{category}/#{news_id}"
 
             if (news_title = self.getNewsPageTitle category, news_id)?
-              path += @getHRPForString news_title, lang
+              path += @getHRPForI18nKey news_title, lang
 
             if news_template?
               path += "/#{news_template}"
