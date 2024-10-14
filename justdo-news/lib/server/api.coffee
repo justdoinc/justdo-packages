@@ -34,7 +34,7 @@ _.extend JustdoNews.prototype,
       if APP.justdo_i18n_routes?
         data = APP.justdo_i18n_routes.getStrippedPathAndLangFromReq req
         url = data.processed_path
-        lang = data.lang_tag
+        lang = data.lang_tag or JustdoI18n.default_lang
 
       # The construction of url_obj is necessary to keep the search params and other parts of the url intact when redirecting
       url_obj = new URL url, JustdoHelpers.getRootUrl()
@@ -53,8 +53,10 @@ _.extend JustdoNews.prototype,
       # If there's no news_id, redirect to the most recent news under the category
       if _.isEmpty news_id
         redirect_url = "/#{news_category}/#{most_recent_news_id}"
-        if lang?
+        if APP.justdo_i18n_routes?
           redirect_url = APP.justdo_i18n_routes.i18nPath redirect_url, lang
+        if APP.justdo_seo?
+          redirect_url = APP.justdo_seo.getCanonicalHrpURL redirect_url
 
         url_obj.pathname = redirect_url
         redirectToNewsUrl 302, url_obj, res
@@ -78,8 +80,10 @@ _.extend JustdoNews.prototype,
       
       # If the news_id is default, redirect to the path without news_template
         redirect_url = "/#{news_category}/#{news_id}"
-        if lang?
+        if APP.justdo_i18n_routes?
           redirect_url = APP.justdo_i18n_routes.i18nPath redirect_url, lang
+        if APP.justdo_seo?
+          redirect_url = APP.justdo_seo.getCanonicalHrpURL redirect_url
           
         url_obj.pathname = redirect_url
         redirectToNewsUrl 301, url_obj, res
