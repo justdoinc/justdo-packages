@@ -28,9 +28,14 @@ Template.support_page_article.onCreated ->
 
   if @router_navigation and @register_news_routes
     @autorun =>
-      params = Router.current()?.params
-      @active_news_id_rv.set params?.news_id
-      @active_news_tab_rv.set params?.news_template or JustdoNews.default_news_template
+      if not (params = Router.current()?.params)?
+        return
+      {news_id, news_template} = params
+      if APP.justdo_seo?
+        news_id = APP.justdo_seo.getPathWithoutHumanReadableParts news_id
+        news_template = APP.justdo_seo.getPathWithoutHumanReadableParts news_template
+      @active_news_id_rv.set news_id
+      @active_news_tab_rv.set news_template or JustdoNews.default_news_template
 
       return
 

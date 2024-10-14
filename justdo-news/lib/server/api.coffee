@@ -35,6 +35,8 @@ _.extend JustdoNews.prototype,
         data = APP.justdo_i18n_routes.getStrippedPathAndLangFromReq req
         url = data.processed_path
         lang = data.lang_tag or JustdoI18n.default_lang
+      if APP.justdo_seo?
+        url = APP.justdo_seo.getPathWithoutHumanReadableParts url
 
       # The construction of url_obj is necessary to keep the search params and other parts of the url intact when redirecting
       url_obj = new URL url, JustdoHelpers.getRootUrl()

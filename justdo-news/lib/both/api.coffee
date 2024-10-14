@@ -101,6 +101,8 @@ _.extend JustdoNews.prototype,
 
     metadata =
       title_i18n: (path_without_lang, lang) ->
+        if APP.justdo_seo?
+          path_without_lang = APP.justdo_seo.getPathWithoutHumanReadableParts path_without_lang
         {news_id, new_template} = self.getNewsParamFromPath path_without_lang
 
         if not news_template?
@@ -112,6 +114,8 @@ _.extend JustdoNews.prototype,
 
         return APP.justdo_seo.getDefaultPageTitle lang
       description_i18n: (path_without_lang, lang) ->
+        if APP.justdo_seo?
+          path_without_lang = APP.justdo_seo.getPathWithoutHumanReadableParts path_without_lang
         {news_id, new_template} = self.getNewsParamFromPath path_without_lang
 
         if not news_template?
@@ -123,6 +127,8 @@ _.extend JustdoNews.prototype,
 
         return APP.justdo_seo.getDefaultPageDescription lang
       preview_image: (path_without_lang) ->
+        if APP.justdo_seo?
+          path_without_lang = APP.justdo_seo.getPathWithoutHumanReadableParts path_without_lang
         {news_id} = self.getNewsParamFromPath path_without_lang
 
         news_template_doc = self.getNewsTemplateIfExists category, news_id, JustdoNews.default_news_template
@@ -146,6 +152,8 @@ _.extend JustdoNews.prototype,
       "/#{category}/:news_id":
         routingFunction: ->
           news_id = @params.news_id.toLowerCase()
+          if APP.justdo_seo?
+            news_id = APP.justdo_seo.getPathWithoutHumanReadableParts news_id
 
           if not self.getNewsIdIfExists(category, news_id)?
             self.redirectToMostRecentNewsPageByCategoryOrFallback category
@@ -178,6 +186,9 @@ _.extend JustdoNews.prototype,
         routingFunction: ->
           news_id = @params.news_id.toLowerCase()
           news_template = @params.news_template
+          if APP.justdo_seo?
+            news_id = APP.justdo_seo.getPathWithoutHumanReadableParts news_id
+            news_template = APP.justdo_seo.getPathWithoutHumanReadableParts news_template
 
           if self.isDefaultNewsTemplate news_template
             @redirect "/#{category}/#{news_id}"
@@ -302,9 +313,6 @@ _.extend JustdoNews.prototype,
       
     if not category? or not news_id_or_alias?
       return
-    
-    if APP.justdo_seo?
-      news_id_or_alias = APP.justdo_seo.getPathWithoutHumanReadableParts news_id_or_alias
 
     is_alias = false
     news_doc = _.find @getCategory(category).news, (news) -> 
@@ -333,9 +341,6 @@ _.extend JustdoNews.prototype,
   getNewsParamFromPath: (path) ->    
     # Remove the search part of the path
     path = JustdoHelpers.getNormalisedUrlPathnameWithoutSearchPart path
-
-    if APP.justdo_seo?
-      path = APP.justdo_seo.getPathWithoutHumanReadableParts path
 
     [news_category, news_id, news_template] = _.filter path.split("/"), (path_segment) -> not _.isEmpty path_segment
     return {news_category, news_id, news_template}
