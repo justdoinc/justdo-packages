@@ -49,7 +49,10 @@ _.extend JustdoPluginStore.prototype,
       if url_obj.pathname.startsWith category_base_path
         if url_obj.pathname is "#{category_base_path}/#{JustdoPluginStore.default_category}"
           # Assign the path to url obj to maintain the search params and other parts of the url
-          url_obj.pathname = if lang? then APP.justdo_i18n_routes.i18nPath(base_path, lang) else base_path
+          url_obj.pathname = base_path
+          if APP.justdo_i18n_routes?
+            url_obj.pathname = APP.justdo_i18n_routes.i18nPath base_path, lang
+            
           res.writeHead 301,
             Location: url_obj
           res.end()
