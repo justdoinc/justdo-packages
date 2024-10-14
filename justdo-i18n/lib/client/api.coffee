@@ -357,3 +357,8 @@ _.extend JustdoI18n.prototype,
       return direction_map[direction]
     
     return direction
+
+  getBrowserPreferredLanguages: ->
+    preferred_langs = navigator.languages or [navigator.language]
+    # navigator.languages is immutable, so we need to clone it
+    return preferred_langs.slice()
