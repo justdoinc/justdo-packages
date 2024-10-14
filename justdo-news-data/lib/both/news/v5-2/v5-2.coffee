@@ -1,7 +1,7 @@
 APP.justdo_news.registerNews "news",
   _id: "v5-2"
   aliases: ["v5-2-x"]
-  date: "2024-09-23"
+  date: "2024-10-15"
 
   # title is used in the dropdown as the name of the item (e.g. v5.2)
   title: "v5_2_news_title"
