@@ -47,16 +47,16 @@ _.extend JustdoTooltips.prototype,
       optional: true
 
     pos_my:
-      type: String
+      type: Match.OneOf String, Function
       
-      defaultValue: "left top"
+      defaultValue: -> "#{APP.justdo_i18n.getRtlAwareDirection "left"} top"
 
       optional: true
 
     pos_at:
-      type: String
+      type: Match.OneOf String, Function
       
-      defaultValue: "left bottom+2px"
+      defaultValue: -> "#{APP.justdo_i18n.getRtlAwareDirection "left"} bottom+2px"
 
       optional: true
 

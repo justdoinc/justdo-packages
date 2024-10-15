@@ -38,7 +38,8 @@ Package.onUse(function (api) {
 
   // api.use("stevezhu:lodash@4.17.2", client);
   api.use("templating", client);
-  api.use('fourseven:scss@3.2.0', client);
+  api.use("fourseven:scss@3.2.0", client);
+  api.use("check", client);
 
   api.use("aldeed:simple-schema@1.5.3", both);
   api.use("raix:eventemitter@0.1.1", client);

@@ -414,11 +414,17 @@ _.extend JustdoTooltips.prototype,
     if not tooltip_template_obj?.$node?
       return
 
+    if _.isFunction(pos_my = configured_tooltip_def.pos_my)
+      pos_my = pos_my()
+    
+    if _.isFunction(pos_at = configured_tooltip_def.pos_at)
+      pos_at = pos_at()
+
     tooltip_template_obj.$node
       .position
         of: $target_container
-        my: configured_tooltip_def["pos_my"]
-        at: configured_tooltip_def["pos_at"]
+        my: pos_my
+        at: pos_at
         collision: configured_tooltip_def["pos_collision"]
 
     return
