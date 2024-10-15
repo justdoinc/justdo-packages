@@ -774,7 +774,7 @@ _.extend JustdoTasksContextMenu.prototype,
           label_i18n: "add_to_project_label"
           is_nested_section: true
           icon_type: "feather"
-          icon_val: "corner-right-down"
+          icon_val:  -> "corner-#{APP.justdo_i18n.getRtlAwareDirection "right"}-down"
 
         listingCondition: ->
           # Don't present manage projects if there are no tasks set as projects yet

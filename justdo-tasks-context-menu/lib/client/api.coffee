@@ -238,10 +238,10 @@ _.extend JustdoTasksContextMenu.prototype,
       jquery_ui_position_obj = {}
 
     default_jquery_ui_position_obj =
-      my: "left top"
-      at: "left bottom"
+      my: "#{APP.justdo_i18n.getRtlAwareDirection "left"} top"
+      at: "#{APP.justdo_i18n.getRtlAwareDirection "left"} bottom"
       of: "body"
-      collision: "none flipfit"
+      collision: "flipfit"
 
     jquery_ui_position_obj =
       _.extend default_jquery_ui_position_obj, jquery_ui_position_obj
