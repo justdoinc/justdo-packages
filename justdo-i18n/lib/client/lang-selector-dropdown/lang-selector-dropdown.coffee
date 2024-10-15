@@ -15,11 +15,12 @@ Template.lang_selector_dropdown.helpers
       preferred_lang_tags = _.without preferred_lang_tags, JustdoI18n.default_lang
       
     preferred_langs = _.filter supported_langs, (lang_obj) -> lang_obj._id in preferred_lang_tags
+    supported_langs = _.union(preferred_langs, supported_langs)
 
-    chunked_preferred_langs = _.chunk(preferred_langs, JustdoI18n.lang_dropdown_max_lang_per_col)
     chunked_supported_langs = _.chunk(supported_langs, JustdoI18n.lang_dropdown_max_lang_per_col)
 
-    return {preferred_langs: chunked_preferred_langs, supported_langs: chunked_supported_langs}
+
+    return chunked_supported_langs
 
   isLangActive: (lang_tag) ->
     return APP.justdo_i18n.getLang() is lang_tag

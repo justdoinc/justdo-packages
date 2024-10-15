@@ -6,22 +6,13 @@
     </button>
     <div class="dropdown-menu shadow-lg border-0 {{#if isRtl}}dropdown-menu-right{{else}}dropdown-menu-left{{/if}}">
       <div class="dropdown-content-wrapper">
-        {{#with supportedLangs}}
-          {{#each preferred_langs}}
-            <div class="dropdown-items-wrapper">
-              {{#each this}}
-                <a href="{{i18nCurrentPagePath _id}}" class="dropdown-item {{#if isLangActive _id}}active-lang{{/if}}" data-lang-tag="{{_id}}" >{{name}}</a>
-              {{/each}}
-            </div>
-          {{/each}}
-          {{#each supported_langs}}
-            <div class="dropdown-items-wrapper">
-              {{#each this}}
-                <a href="{{i18nCurrentPagePath _id}}" class="dropdown-item {{#if isLangActive _id}}active-lang{{/if}}" data-lang-tag="{{_id}}" >{{name}}</a>
-              {{/each}}
-            </div>
-          {{/each}}
-        {{/with}}
+        {{#each supportedLangs}}
+          <div class="dropdown-items-wrapper">
+            {{#each this}}
+              <a href="{{i18nCurrentPagePath _id}}" class="dropdown-item {{#if isLangActive _id}}active-lang{{/if}}" data-lang-tag="{{_id}}" >{{name}}</a>
+            {{/each}}
+          </div>
+        {{/each}}
       </div>
     </div>
     <button type="button" class="btn footer-languag-improve-btn">

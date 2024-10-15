@@ -44,7 +44,18 @@
   .dropdown-item
     cursor: pointer
   .active-lang
-    font-weight: 600
+    font-weight: 700
+    position: relative
+    &::before
+      content: ""
+      width: 3px
+      height: auto
+      background-color: #027bff
+      position: absolute
+      top: 4px
+      bottom: 4px
+      left: 14px
+      border-radius: 2px
 
 @media (max-width: 992px)
   .dropdown-content-wrapper
