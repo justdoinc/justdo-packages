@@ -60,3 +60,17 @@
 @media (max-width: 992px)
   .dropdown-content-wrapper
     flex-direction: column !important
+
+// RTL modifications
+.right-to-left
+  .footer-language-selector
+    margin-left: 12px
+    margin-right: unset
+    .btn
+      .jd-icon
+        margin-left: 6px
+        margin-right: unset
+    .active-lang
+      &::before
+        left: unset
+        right: 14px
