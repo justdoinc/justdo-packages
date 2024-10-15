@@ -5,20 +5,14 @@ Template.lang_selector_dropdown.helpers
 
   supportedLangs: ->
     supported_langs = _.map APP.justdo_i18n.getSupportedLanguages(), (lang_obj, lang_key) -> {_id: lang_key, name: lang_obj.name}
-    supported_langs = JustdoHelpers.localeAwareSortCaseInsensitive supported_langs, (lang_obj) -> lang_obj.name
 
     preferred_lang_tags = APP.justdo_i18n.getBrowserPreferredLanguages()
-    # If the user's preferred language is not the default language, we add it to the preferred languages list
-    if APP.justdo_i18n.getLang() isnt JustdoI18n.default_lang
-      preferred_lang_tags.push JustdoI18n.default_lang
-    else
-      preferred_lang_tags = _.without preferred_lang_tags, JustdoI18n.default_lang
+    preferred_lang_tags = _.without preferred_lang_tags, JustdoI18n.default_lang
       
     preferred_langs = _.filter supported_langs, (lang_obj) -> lang_obj._id in preferred_lang_tags
     supported_langs = _.union(preferred_langs, supported_langs)
 
     chunked_supported_langs = _.chunk(supported_langs, JustdoI18n.lang_dropdown_max_lang_per_col)
-
 
     return chunked_supported_langs
 
