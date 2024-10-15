@@ -1,3 +1,3 @@
 {
-  "supported_languages": ["ar", "es", "fr", "he", "ja", "km", "ko", "pt-PT", "pt-BR", "vi", "ru", "yi", "it", "de", "hi", "tr", "el", "da", "fi", "nl", "sv", "th", "id", "pl", "cs", "hu", "ro", "sk", "uk", "bg", "hr", "sr", "sl", "et", "lv", "lt", "am", "zh-CN", "zh-TW", "sw", "af", "az", "be", "bn", "bs", "ca", "eu", "lb", "mk", "ne", "nb", "sq", "ta", "uz", "hy", "kk", "ky", "ms", "tg"]
+  "supported_languages": ["af","az","id","ms","bs","ca","cs","da","de","et","es","eu","fr","hr","it","sw","lv","lb","lt","hu","nl","nb","uz","pl","pt-PT","pt-BR","ro","sq","sk","sl","fi","sv","vi","tr","el","be","bg","ky","kk","mk","ru","sr","tg","uk","hy","yi","he","ar","am","ne","hi","bn","ta","th","km","ko","ja","zh-CN","zh-TW"]
 }
