@@ -7,7 +7,6 @@ Template.lang_selector_dropdown.helpers
     supported_langs = _.map APP.justdo_i18n.getSupportedLanguages(), (lang_obj, lang_key) -> {_id: lang_key, name: lang_obj.name}
 
     preferred_lang_tags = APP.justdo_i18n.getBrowserPreferredLanguages()
-    preferred_lang_tags = _.without preferred_lang_tags, JustdoI18n.default_lang
       
     preferred_langs = _.filter supported_langs, (lang_obj) -> lang_obj._id in preferred_lang_tags
     supported_langs = _.union(preferred_langs, supported_langs)
