@@ -525,7 +525,7 @@ GridControl.installFormatter "textWithTreeControls",
           sprite_icon = "jd-alert"
           transfer_type = "transfer-no-owner"
         else
-          sprite_icon = "arrow-right"
+          sprite_icon = "arrow-#{APP.justdo_i18n.getRtlAwareDirection "right"}"
           transfer_type = "transfer-non-related"
           if Meteor.userId() == pending_owner_id
             transfer_type = "transfer-to-me"
