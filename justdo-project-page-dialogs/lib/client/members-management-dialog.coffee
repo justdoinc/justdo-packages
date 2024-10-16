@@ -517,8 +517,10 @@ APP.executeAfterAppLibCode ->
 
     disabledReason: ->
       @disabled_reasons_dep.depend()
-      return TAPi18n.__ @disabled_reasons.values().next().value
-
+      if (disabled_reason = @disabled_reasons.values().next().value)?
+        return TAPi18n.__ @disabled_reasons.values().next().value
+      
+      return
 
   Template.task_pane_item_details_members_editor_user_btn.events
     "click .user-btn": (e, tpl) ->
