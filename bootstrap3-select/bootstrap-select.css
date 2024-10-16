@@ -270,9 +270,6 @@ select.selectpicker {
 .bootstrap-select .dropdown-menu li + li {
   margin-top: 2px;
 }
-.bootstrap-select .dropdown-menu li.active small {
-  color: rgba(255, 255, 255, 0.5) !important;
-}
 .bootstrap-select .dropdown-menu li.disabled a {
   cursor: not-allowed;
 }
@@ -546,5 +543,9 @@ select.selectpicker {
 }
 
 .right-to-left .bootstrap-select .dropdown-menu li + li {
+  text-align: right;
+}
+
+.right-to-left .bootstrap-select .dropdown-item {
   text-align: right;
 }
