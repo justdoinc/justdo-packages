@@ -8,8 +8,6 @@ _.extend JustdoI18n.prototype,
     # Use of new Map() instead of {} because it maintains the order of insertion
     @cur_page_i18n_keys = new Map()
 
-    @_updateMomentLocale()
-
     # XXX The APP.executeAfterAppClientCode wrap is necessary because on the first page load,
     # XXX TAPi18n's list of supported languages may not be fully initialized as specified in project-tap.i18n.
     # XXX Therefore we wrap the tracker with APP.executeAfterAppClientCode to give extra time for TAPi18n to be fully initialized.
@@ -35,13 +33,7 @@ _.extend JustdoI18n.prototype,
           locale_config = jQuery.datepicker.regional[lang] or jQuery.datepicker.regional[JustdoI18n.default_lang]
           datepicker.setDefaults locale_config
 
-        # Moment.js doesn't have a fallback mechanism, so we need to check if the language is supported
-        # and use the default language if it's not
-        moment_lang = lang.toLowerCase()
-        if moment_lang in moment.locales()
-          moment.locale moment_lang
-        else
-          moment.locale JustdoI18n.default_lang
+        @_setMomentLocale lang
 
         $("html").attr "lang", lang
         return
@@ -64,15 +56,40 @@ _.extend JustdoI18n.prototype,
       return
 
     return
-  
-  _updateMomentLocale: ->
-    # Moment uses arabic-indic digits by default, which is not what we want.
-    # We want to use the standard western digits.
-    moment_ar_locale_conf = moment.localeData "ar"
-    moment_ar_locale_conf.preparse = null
-    moment_ar_locale_conf.postformat = null
-    moment.updateLocale "ar", moment_ar_locale_conf
 
+  _setMomentLocale: (lang) ->
+    # Moment.js doesn't have a fallback mechanism, so we need to check if the language is supported
+    # and use the default language if it's not
+    moment_lang = lang.toLowerCase()
+
+    if moment_lang in moment.locales()
+      # Check the comment of _removeMomentLocalePreparsePostformat for more info
+      @_removeMomentLocalePreparsePostformat moment_lang
+      moment.locale moment_lang
+    else
+      moment.locale JustdoI18n.default_lang
+
+    return
+  
+  _removeMomentLocalePreparsePostformat: (lang) ->
+    # Certain moment locale configurations have preparse and postformat functions that are not needed. 
+    # E.g. In "ar", it uses arabic-indic digits, which is not what we want.
+    # We want to use the standard "western" digits (0-9).
+    locale_conf = moment.localeData lang
+    locale_conf_updated = false
+
+    # Note: _.has is used instead of simple existence check because we don't want to access/change the prototype.
+    if _.has locale_conf, "preparse"
+      locale_conf.preparse = null
+      locale_conf_updated = true
+    
+    if _.has locale_conf, "postformat"
+      locale_conf.postformat = null
+      locale_conf_updated = true
+    
+    if locale_conf_updated
+      moment.updateLocale lang, locale_conf
+    
     return
 
   _setupBeforeUserSignUpHook: ->
