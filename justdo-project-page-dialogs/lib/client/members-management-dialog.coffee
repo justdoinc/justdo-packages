@@ -518,7 +518,7 @@ APP.executeAfterAppLibCode ->
     disabledReason: ->
       @disabled_reasons_dep.depend()
       if (disabled_reason = @disabled_reasons.values().next().value)?
-        return TAPi18n.__ @disabled_reasons.values().next().value
+        return disabled_reason
       
       return
 
