@@ -1,4 +1,4 @@
-APP.justdo_news.registerNews "news",
+APP.justdo_crm.registerNews "news",
   _id: "v5-2"
   aliases: ["v5-2-x"]
   date: "2024-10-15"
