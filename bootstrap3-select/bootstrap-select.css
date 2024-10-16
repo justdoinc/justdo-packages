@@ -506,6 +506,7 @@ select.selectpicker {
   left: 12px;
 }
 .right-to-left .bootstrap-select .dropdown-menu li a.opt {
+  text-align: right;
   padding-left: unset;
   padding-right: 2.25em;
 }
@@ -541,5 +542,9 @@ select.selectpicker {
   float: right;
 }
 .right-to-left .bootstrap-select .dropdown-toggle .filter-option-inner-inner {
+  text-align: right;
+}
+
+.right-to-left .bootstrap-select .dropdown-menu li + li {
   text-align: right;
 }
