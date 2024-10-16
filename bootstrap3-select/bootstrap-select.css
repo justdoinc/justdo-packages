@@ -482,10 +482,6 @@ select.selectpicker {
 .right-to-left .row .bootstrap-select[class*="col-"].dropdown-menu-right {
   float: left;
 }
-.right-to-left .bootstrap-select.bs-container {
-  left: unset;
-  right: 0;
-}
 .right-to-left .bootstrap-select .dropdown-toggle .filter-option {
   left: unset;
   right: 0;
