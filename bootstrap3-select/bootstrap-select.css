@@ -484,6 +484,8 @@ select.selectpicker {
   right: 0;
 
   float: right;
+
+  text-align: right;
 }
 .right-to-left .bs3.bootstrap-select .dropdown-toggle .filter-option {
   padding-right: unset;
@@ -538,14 +540,6 @@ select.selectpicker {
 .right-to-left .bs-donebutton {
   float: right;
 }
-.right-to-left .bootstrap-select .dropdown-toggle .filter-option-inner-inner {
-  text-align: right;
-}
-
-.right-to-left .bootstrap-select .dropdown-menu li + li {
-  text-align: right;
-}
-
-.right-to-left .bootstrap-select .dropdown-item {
+.right-to-left .bootstrap-select .dropdown-menu li {
   text-align: right;
 }
