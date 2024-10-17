@@ -54,3 +54,21 @@ $bottom-windows-elements-margin: 8px
 @media print
   .jdc-bottom-windows
     display: none
+
+// RTL modifications
+.right-to-left
+  .bottom-windows
+    right: 0
+    left: $bottom-windows-control-element-width
+
+  .window-container
+    margin-left: unset
+    margin-right: $bottom-windows-elements-margin
+
+  .extra-windows-button-container
+    right: unset
+    left: -$bottom-windows-control-element-width - $bottom-windows-elements-margin
+
+  .bottom-windows-hide
+    right: unset
+    left: -$bottom-windows-control-element-width - $bottom-windows-elements-margin

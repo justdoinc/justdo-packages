@@ -3,11 +3,23 @@ _.extend BottomWindowsWireframe.prototype,
     #
     # Init dom
     #
-    @$container = $("""<div class="bottom-windows #{@options.window_container_classes}" style="margin-right: #{@options.right_margin}px"></div>""")
+    @$container = $("""<div class="bottom-windows #{@options.window_container_classes}" style="margin-#{APP.justdo_i18n.getRtlAwareDirection "right"}: #{@options.right_margin}px"></div>""")
+    @rtl_aware_margin_tracker = Tracker.autorun =>
+      if APP.justdo_i18n.isRtl()
+        @$container.css
+         ["margin-#{APP.justdo_i18n.getRtlAwareDirection "right"}"]: @options.right_margin + "px"
+         ["margin-#{APP.justdo_i18n.getRtlAwareDirection "left"}"]: ""
+      else
+        @$container.css
+          ["margin-#{APP.justdo_i18n.getRtlAwareDirection "left"}"]: @options.right_margin + "px"
+          ["margin-#{APP.justdo_i18n.getRtlAwareDirection "right"}"]: ""
+      return
+
     $("body").append(@$container)
 
     @onDestroy =>
       @$container.remove()
+      @rtl_aware_margin_tracker.stop()
 
       return
 
@@ -285,7 +297,7 @@ _.extend BottomWindowsWireframe.prototype,
     $node = $(template_obj.node)
 
     $node.addClass("window-container")
-         .attr("style", """width: #{@options["#{window_state}_window_width"]}px;#{if (window_position < @_current_windows_arrangement.length - 1) then " margin-left: #{@options.width_between_windows}px;" else "" }""")
+         .attr("style", """width: #{@options["#{window_state}_window_width"]}px;#{if (window_position < @_current_windows_arrangement.length - 1) then " margin-#{APP.justdo_i18n.getRtlAwareDirection "left"}: #{@options.width_between_windows}px;" else "" }""")
 
     @$container.append($node)
 
@@ -301,9 +313,11 @@ _.extend BottomWindowsWireframe.prototype,
     $node = $(window_arrangement_def.template_obj.node)
 
     if (window_position == @_current_windows_arrangement.length - 1)
-      $node.css("margin-left", "")
+      $node.css("margin-#{APP.justdo_i18n.getRtlAwareDirection "left"}", "")
     else
-      $node.css("margin-left", @options.width_between_windows + "px")
+      $node.css
+        ["margin-#{APP.justdo_i18n.getRtlAwareDirection "left"}"]: @options.width_between_windows + "px"
+        ["margin-#{APP.justdo_i18n.getRtlAwareDirection "right"}"]: ""
 
     return
 
