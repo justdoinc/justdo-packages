@@ -185,7 +185,11 @@ _.extend JustdoHelpers,
   filterUsersDocsArray: (users_docs, niddle, options) ->
     options = _.extend {sort: false}, options
     if niddle?
-      filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(niddle)}", "i")
+      # The "(^|\\W|_)" part of the following regex is used to replace "\b" (word boundry), 
+      # since we found that "\b" it doesn't work well with unicode characters.
+      # (^|\\W|_) is used to match the start of the string, a non-word character, or an underscore (since non-word character excludes undercore),
+      # which is the closest we can get to a word boundry.
+      filter_regexp = new RegExp("(^|\\W|_)#{JustdoHelpers.escapeRegExp(niddle)}", "i")
 
       exist_users = {}
       users_docs = _.filter users_docs, (doc) ->
