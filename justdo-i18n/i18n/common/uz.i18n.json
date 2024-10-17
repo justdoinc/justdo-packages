@@ -49,6 +49,7 @@
   "import": "Import",
   "select": "Tanlash",
   "select_all": "Hammasini tanlash",
+  "deselect_all": "Tanlovni bekor qilish",
   "clear": "Tozalash",
   "clear_all": "Hammasini tozalash",
   "invalid_email": "Noto'g'ri elektron pochta",
@@ -74,5 +75,6 @@
   "settings": "Sozlamalar",
   "load_more": "Koʻproq yuklash",
   "copy": "Nusxalash",
-  "loading": "Yuklanmoqda..."
+  "loading": "Yuklanmoqda...",
+  "no_results": "Natijalar yo'q"
 }

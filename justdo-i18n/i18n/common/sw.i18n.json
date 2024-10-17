@@ -49,6 +49,7 @@
   "import": "Leta",
   "select": "Chagua",
   "select_all": "Chagua zote",
+  "deselect_all": "Toa chaguo zote",
   "clear": "Futa",
   "clear_all": "Futa zote",
   "invalid_email": "Barua pepe batili",
@@ -74,5 +75,6 @@
   "settings": "Mipangilio",
   "load_more": "Pakia zaidi",
   "copy": "Nakili",
-  "loading": "Inapakia..."
+  "loading": "Inapakia...",
+  "no_results": "Hakuna matokeo"
 }

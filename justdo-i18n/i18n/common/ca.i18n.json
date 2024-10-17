@@ -49,6 +49,7 @@
   "import": "Importar",
   "select": "Seleccionar",
   "select_all": "Seleccionar tot",
+  "deselect_all": "Desseleccionar tot",
   "clear": "Esborrar",
   "clear_all": "Esborrar tot",
   "invalid_email": "Correu electrònic no vàlid",
@@ -74,5 +75,6 @@
   "settings": "Configuració",
   "load_more": "Carregar més",
   "copy": "Copiar",
-  "loading": "Carregant..."
+  "loading": "Carregant...",
+  "no_results": "Sense resultats"
 }

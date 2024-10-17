@@ -49,6 +49,7 @@
   "import": "ייבא",
   "select": "בחר",
   "select_all": "בחר הכל",
+  "deselect_all": "בטל בחירת הכל",
   "clear": "נקה",
   "clear_all": "נקה הכל",
   "invalid_email": "כתובת אימייל לא תקינה",
@@ -74,5 +75,6 @@
   "settings": "הגדרות",
   "load_more": "טען עוד",
   "copy": "העתק",
-  "loading": "טוען..."
+  "loading": "טוען...",
+  "no_results": "אין תוצאות"
 }

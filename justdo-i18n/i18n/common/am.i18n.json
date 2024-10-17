@@ -49,6 +49,7 @@
   "import": "አስገባ",
   "select": "ምረጥ",
   "select_all": "ሁሉንም ምረጥ",
+  "deselect_all": "ሁሉንም አትምረጥ",
   "clear": "አጽዳ",
   "clear_all": "ሁሉንም አጥፋ",
   "invalid_email": "ልክ ያልሆነ ኢሜይል",
@@ -74,5 +75,6 @@
   "settings": "ቅንብሮች",
   "load_more": "ተጨማሪ ጫን",
   "copy": "ቅዳ",
-  "loading": "በመጫን ላይ..."
+  "loading": "በመጫን ላይ...",
+  "no_results": "ምንም ውጤት የለም"
 }

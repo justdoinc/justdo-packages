@@ -49,6 +49,7 @@
   "import": "Inportatu",
   "select": "Hautatu",
   "select_all": "Aukeratu guztiak",
+  "deselect_all": "Desautatu guztiak",
   "clear": "Garbitu",
   "clear_all": "Garbitu guztiak",
   "invalid_email": "Baliogabeko helbide elektronikoa",
@@ -74,5 +75,6 @@
   "settings": "Ezarpenak",
   "load_more": "Kargatu gehiago",
   "copy": "Kopiatu",
-  "loading": "Kargatzen..."
+  "loading": "Kargatzen...",
+  "no_results": "Ez dago emaitzarik"
 }

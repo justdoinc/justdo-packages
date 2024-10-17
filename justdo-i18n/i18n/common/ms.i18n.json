@@ -49,6 +49,7 @@
   "import": "Import",
   "select": "Pilih",
   "select_all": "Pilih semua",
+  "deselect_all": "Nyahpilih semua",
   "clear": "Kosongkan",
   "clear_all": "Kosongkan semua",
   "invalid_email": "E-mel tidak sah",
@@ -74,5 +75,6 @@
   "settings": "Tetapan",
   "load_more": "Muat Lebih Banyak",
   "copy": "Salin",
-  "loading": "Sedang dimuat..."
+  "loading": "Sedang dimuat...",
+  "no_results": "Tiada keputusan"
 }

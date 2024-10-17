@@ -49,6 +49,7 @@
   "import": "Importar",
   "select": "Selecionar",
   "select_all": "Selecionar tudo",
+  "deselect_all": "Desselecionar tudo",
   "clear": "Limpar",
   "clear_all": "Limpar tudo",
   "invalid_email": "Email inválido",
@@ -74,5 +75,6 @@
   "settings": "Definições",
   "load_more": "Carregar Mais",
   "copy": "Copiar",
-  "loading": "A carregar..."
+  "loading": "A carregar...",
+  "no_results": "Sem resultados"
 }

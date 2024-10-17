@@ -49,6 +49,7 @@
   "import": "Importo",
   "select": "Zgjidh",
   "select_all": "Zgjidh të gjitha",
+  "deselect_all": "Çzgjidh të gjitha",
   "clear": "Pastro",
   "clear_all": "Pastro të gjitha",
   "invalid_email": "Email i pavlefshëm",
@@ -74,5 +75,6 @@
   "settings": "Cilësimet",
   "load_more": "Ngarko më shumë",
   "copy": "Kopjo",
-  "loading": "Po ngarkohet..."
+  "loading": "Po ngarkohet...",
+  "no_results": "Nuk ka rezultate"
 }

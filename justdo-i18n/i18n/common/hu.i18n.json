@@ -49,6 +49,7 @@
   "import": "Importálás",
   "select": "Kiválasztás",
   "select_all": "Összes kiválasztása",
+  "deselect_all": "Összes kijelölés megszüntetése",
   "clear": "Törlés",
   "clear_all": "Összes törlése",
   "invalid_email": "Érvénytelen e-mail cím",
@@ -74,5 +75,6 @@
   "settings": "Beállítások",
   "load_more": "További betöltése",
   "copy": "Másolás",
-  "loading": "Betöltés..."
+  "loading": "Betöltés...",
+  "no_results": "Nincs találat"
 }

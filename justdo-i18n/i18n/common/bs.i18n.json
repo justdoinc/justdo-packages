@@ -49,6 +49,7 @@
   "import": "Uvezi",
   "select": "Odaberi",
   "select_all": "Odaberi sve",
+  "deselect_all": "Poništi sve odabrano",
   "clear": "Očisti",
   "clear_all": "Očisti sve",
   "invalid_email": "Nevažeća email adresa",
@@ -74,5 +75,6 @@
   "settings": "Postavke",
   "load_more": "Učitaj više",
   "copy": "Kopiraj",
-  "loading": "Učitavanje..."
+  "loading": "Učitavanje...",
+  "no_results": "Nema rezultata"
 }

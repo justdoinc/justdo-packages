@@ -49,6 +49,7 @@
   "import": "Importéieren",
   "select": "Auswielen",
   "select_all": "All auswielen",
+  "deselect_all": "All ofwielen",
   "clear": "Eidel maachen",
   "clear_all": "All läschen",
   "invalid_email": "Ongëlteg E-Mail",
@@ -74,5 +75,6 @@
   "settings": "Astellungen",
   "load_more": "Méi lueden",
   "copy": "Kopéieren",
-  "loading": "Lueden..."
+  "loading": "Lueden...",
+  "no_results": "Keng Resultater"
 }

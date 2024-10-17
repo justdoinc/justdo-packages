@@ -49,6 +49,7 @@
   "import": "导入",
   "select": "选择",
   "select_all": "全选",
+  "deselect_all": "取消全选",
   "clear": "清除",
   "clear_all": "清除全部",
   "invalid_email": "无效的电子邮箱",
@@ -74,5 +75,6 @@
   "settings": "设置",
   "load_more": "加载更多",
   "copy": "复制",
-  "loading": "加载中..."
+  "loading": "加载中...",
+  "no_results": "无结果"
 }

@@ -49,6 +49,7 @@
   "import": "Importuoti",
   "select": "Pasirinkti",
   "select_all": "Pasirinkti visus",
+  "deselect_all": "Atžymėti visus",
   "clear": "Išvalyti",
   "clear_all": "Išvalyti visus",
   "invalid_email": "Neteisingas el. pašto adresas",
@@ -74,5 +75,6 @@
   "settings": "Nustatymai",
   "load_more": "Įkelti daugiau",
   "copy": "Kopijuoti",
-  "loading": "Įkeliama..."
+  "loading": "Įkeliama...",
+  "no_results": "Rezultatų nėra"
 }

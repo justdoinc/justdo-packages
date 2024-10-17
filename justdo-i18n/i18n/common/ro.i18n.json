@@ -49,6 +49,7 @@
   "import": "Importă",
   "select": "Selectează",
   "select_all": "Selectează tot",
+  "deselect_all": "Deselectează tot",
   "clear": "Șterge",
   "clear_all": "Șterge tot",
   "invalid_email": "Email invalid",
@@ -74,5 +75,6 @@
   "settings": "Setări",
   "load_more": "Încarcă mai mult",
   "copy": "Copiază",
-  "loading": "Se încarcă..."
+  "loading": "Se încarcă...",
+  "no_results": "Niciun rezultat"
 }

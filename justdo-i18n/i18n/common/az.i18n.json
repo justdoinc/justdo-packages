@@ -49,6 +49,7 @@
   "import": "İdxal et",
   "select": "Seç",
   "select_all": "Hamısını seç",
+  "deselect_all": "Hamısını ləğv et",
   "clear": "Təmizlə",
   "clear_all": "Hamısını təmizlə",
   "invalid_email": "Yanlış e-poçt",
@@ -74,5 +75,6 @@
   "settings": "Parametrlər",
   "load_more": "Daha çox yüklə",
   "copy": "Kopyala",
-  "loading": "Yüklənir..."
+  "loading": "Yüklənir...",
+  "no_results": "Nəticə yoxdur"
 }

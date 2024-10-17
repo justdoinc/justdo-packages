@@ -49,6 +49,7 @@
   "import": "Importer",
   "select": "Velg",
   "select_all": "Velg alle",
+  "deselect_all": "Velg bort alle",
   "clear": "Tøm",
   "clear_all": "Fjern alle",
   "invalid_email": "Ugyldig e-postadresse",
@@ -74,5 +75,6 @@
   "settings": "Innstillinger",
   "load_more": "Last mer",
   "copy": "Kopier",
-  "loading": "Laster..."
+  "loading": "Laster...",
+  "no_results": "Ingen resultater"
 }

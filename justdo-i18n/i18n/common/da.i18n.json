@@ -49,6 +49,7 @@
   "import": "Importer",
   "select": "Vælg",
   "select_all": "Vælg alle",
+  "deselect_all": "Fravælg alle",
   "clear": "Ryd",
   "clear_all": "Ryd alle",
   "invalid_email": "Ugyldig e-mail",
@@ -74,5 +75,6 @@
   "settings": "Indstillinger",
   "load_more": "Indlæs mere",
   "copy": "Kopier",
-  "loading": "Indlæser..."
+  "loading": "Indlæser...",
+  "no_results": "Ingen resultater"
 }

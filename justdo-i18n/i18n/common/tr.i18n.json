@@ -49,6 +49,7 @@
   "import": "İçe Aktar",
   "select": "Seç",
   "select_all": "Tümünü seç",
+  "deselect_all": "Tüm seçimi kaldır",
   "clear": "Temizle",
   "clear_all": "Tümünü temizle",
   "invalid_email": "Geçersiz e-posta",
@@ -74,5 +75,6 @@
   "settings": "Ayarlar",
   "load_more": "Daha Fazla Yükle",
   "copy": "Kopyala",
-  "loading": "Yükleniyor..."
+  "loading": "Yükleniyor...",
+  "no_results": "Sonuç bulunamadı"
 }

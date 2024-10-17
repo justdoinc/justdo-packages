@@ -49,6 +49,7 @@
   "import": "Importovať",
   "select": "Vybrať",
   "select_all": "Vybrať všetko",
+  "deselect_all": "Zrušiť výber všetkých",
   "clear": "Vyčistiť",
   "clear_all": "Vyčistiť všetko",
   "invalid_email": "Neplatný e-mail",
@@ -74,5 +75,6 @@
   "settings": "Nastavenia",
   "load_more": "Načítať viac",
   "copy": "Kopírovať",
-  "loading": "Načítava sa..."
+  "loading": "Načítava sa...",
+  "no_results": "Žiadne výsledky"
 }

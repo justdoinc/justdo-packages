@@ -49,6 +49,7 @@
   "import": "Importera",
   "select": "Välj",
   "select_all": "Välj alla",
+  "deselect_all": "Avmarkera alla",
   "clear": "Rensa",
   "clear_all": "Rensa alla",
   "invalid_email": "Ogiltig e-postadress",
@@ -74,5 +75,6 @@
   "settings": "Inställningar",
   "load_more": "Ladda mer",
   "copy": "Kopiera",
-  "loading": "Laddar..."
+  "loading": "Laddar...",
+  "no_results": "Inga resultat"
 }

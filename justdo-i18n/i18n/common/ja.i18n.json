@@ -49,6 +49,7 @@
   "import": "インポート",
   "select": "選択",
   "select_all": "すべて選択",
+  "deselect_all": "すべての選択を解除",
   "clear": "クリア",
   "clear_all": "すべてクリア",
   "invalid_email": "無効なメールアドレス",
@@ -74,5 +75,6 @@
   "settings": "設定",
   "load_more": "さらに読み込む",
   "copy": "コピー",
-  "loading": "読み込み中..."
+  "loading": "読み込み中...",
+  "no_results": "結果なし"
 }

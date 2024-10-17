@@ -49,6 +49,7 @@
   "import": "Nhập",
   "select": "Chọn",
   "select_all": "Chọn tất cả",
+  "deselect_all": "Bỏ chọn tất cả",
   "clear": "Xóa",
   "clear_all": "Xóa tất cả",
   "invalid_email": "Email không hợp lệ",
@@ -74,5 +75,6 @@
   "settings": "Cài đặt",
   "load_more": "Tải thêm",
   "copy": "Sao chép",
-  "loading": "Đang tải..."
+  "loading": "Đang tải...",
+  "no_results": "Không có kết quả"
 }

@@ -49,6 +49,7 @@
   "import": "匯入",
   "select": "選擇",
   "select_all": "全選",
+  "deselect_all": "取消全選",
   "clear": "清除",
   "clear_all": "清除全部",
   "invalid_email": "無效的電子郵件",
@@ -74,5 +75,6 @@
   "settings": "設定",
   "load_more": "載入更多",
   "copy": "複製",
-  "loading": "載入中..."
+  "loading": "載入中...",
+  "no_results": "無結果"
 }

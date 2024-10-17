@@ -49,6 +49,7 @@
   "import": "Impordi",
   "select": "Vali",
   "select_all": "Vali kõik",
+  "deselect_all": "Tühista kõik valikud",
   "clear": "Puhasta",
   "clear_all": "Tühjenda kõik",
   "invalid_email": "Vigane e-posti aadress",
@@ -74,5 +75,6 @@
   "settings": "Seaded",
   "load_more": "Lae rohkem",
   "copy": "Kopeeri",
-  "loading": "Laadimine..."
+  "loading": "Laadimine...",
+  "no_results": "Tulemusi pole"
 }

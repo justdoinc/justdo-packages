@@ -49,6 +49,7 @@
   "import": "Importēt",
   "select": "Izvēlēties",
   "select_all": "Izvēlēties visus",
+  "deselect_all": "Noņemt visas izvēles",
   "clear": "Notīrīt",
   "clear_all": "Notīrīt visu",
   "invalid_email": "Nederīga e-pasta adrese",
@@ -74,5 +75,6 @@
   "settings": "Iestatījumi",
   "load_more": "Ielādēt vairāk",
   "copy": "Kopēt",
-  "loading": "Ielāde..."
+  "loading": "Ielāde...",
+  "no_results": "Nav rezultātu"
 }

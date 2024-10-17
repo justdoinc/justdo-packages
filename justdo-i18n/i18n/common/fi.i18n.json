@@ -49,6 +49,7 @@
   "import": "Tuo",
   "select": "Valitse",
   "select_all": "Valitse kaikki",
+  "deselect_all": "Poista kaikki valinnat",
   "clear": "Tyhjennä",
   "clear_all": "Tyhjennä kaikki",
   "invalid_email": "Virheellinen sähköpostiosoite",
@@ -74,5 +75,6 @@
   "settings": "Asetukset",
   "load_more": "Lataa lisää",
   "copy": "Kopioi",
-  "loading": "Ladataan..."
+  "loading": "Ladataan...",
+  "no_results": "Ei tuloksia"
 }

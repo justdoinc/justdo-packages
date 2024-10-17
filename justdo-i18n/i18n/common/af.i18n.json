@@ -49,6 +49,7 @@
   "import": "Invoer",
   "select": "Kies",
   "select_all": "Kies alles",
+  "deselect_all": "Ontkies alles",
   "clear": "Vee uit",
   "clear_all": "Vee alles uit",
   "invalid_email": "Ongeldige e-posadres",
@@ -74,5 +75,6 @@
   "settings": "Instellings",
   "load_more": "Laai meer",
   "copy": "Kopieer",
-  "loading": "Besig om te laai..."
+  "loading": "Besig om te laai...",
+  "no_results": "Geen resultate"
 }
