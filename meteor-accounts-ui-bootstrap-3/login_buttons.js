@@ -194,7 +194,11 @@
       if (password_strength_issue.code === "too-similar") {
         loginButtonsSession.errorMessage("Password is too similar to your first name, last name or email.");
       } else {
-        loginButtonsSession.errorMessage(password_strength_issue.reason);
+        reason = password_strength_issue.reason;
+        if (_.isFunction(reason)) {
+          reason = reason();
+        }
+        loginButtonsSession.errorMessage(`${TAPi18n.__("password_requirements_password_must")} ${JustdoHelpers.lcFirst(reason)}`);
       }
       return false;
     }
