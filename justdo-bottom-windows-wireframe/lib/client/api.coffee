@@ -5,14 +5,9 @@ _.extend BottomWindowsWireframe.prototype,
     #
     @$container = $("""<div class="bottom-windows #{@options.window_container_classes}" style="margin-#{APP.justdo_i18n.getRtlAwareDirection "right"}: #{@options.right_margin}px"></div>""")
     @rtl_aware_margin_tracker = Tracker.autorun =>
-      if APP.justdo_i18n.isRtl()
-        @$container.css
-         ["margin-#{APP.justdo_i18n.getRtlAwareDirection "right"}"]: @options.right_margin + "px"
-         ["margin-#{APP.justdo_i18n.getRtlAwareDirection "left"}"]: ""
-      else
-        @$container.css
-          ["margin-#{APP.justdo_i18n.getRtlAwareDirection "left"}"]: @options.right_margin + "px"
-          ["margin-#{APP.justdo_i18n.getRtlAwareDirection "right"}"]: ""
+      @$container.css
+        ["margin-#{APP.justdo_i18n.getRtlAwareDirection "right"}"]: @options.right_margin + "px"
+        ["margin-#{APP.justdo_i18n.getRtlAwareDirection "left"}"]: ""
       return
 
     $("body").append(@$container)
