@@ -660,7 +660,7 @@
       if (options.title) {
         dialog.find(".modal-header").prepend(closeButton);
       } else {
-        closeButton.css("margin-top", "-10px").prependTo(body);
+        closeButton.prependTo(body);
       }
     }
 
