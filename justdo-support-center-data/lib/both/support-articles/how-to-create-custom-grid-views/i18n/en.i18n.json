@@ -1,0 +1,18 @@
+{
+  "support_article_how_to_create_custom_grid_views_title": "Creating and Managing Custom Grid Views in JustDo",
+  "support_article_how_to_create_custom_grid_views_page_title": "Creating and Managing Custom Grid Views in JustDo",
+  "support_article_how_to_create_custom_grid_views_page_description": "Learn how to create, save, apply, update, remove, and share custom grid views in JustDo to personalize your workspace and enhance productivity.",
+  "support_article_how_to_create_custom_grid_views_content_1": "JustDo allows you to easily customize grid views by adding, removing, resizing, reordering columns, and applying filters.",
+  "support_article_how_to_create_custom_grid_views_content_2": "You can switch between pre-defined system views using the \"switch view\" button at the top left of the screen.",
+  "support_article_how_to_create_custom_grid_views_content_3": "You can also create and manage your own custom views using the \"Grid views\" button. These views are specific to the current JustDo workspace.",
+  "support_article_how_to_create_custom_grid_views_content_4": "Applying a View",
+  "support_article_how_to_create_custom_grid_views_content_5": "Click on a view name in the list to apply it to the grid. Saved views can be applied to any system view, regardless of where they were originally saved. For example, a zoomed-in view can be applied to the main grid view.",
+  "support_article_how_to_create_custom_grid_views_content_6": "Saving a View",
+  "support_article_how_to_create_custom_grid_views_content_7": "Customize the grid view to your liking, then click the \"grid views\" icon, followed by the \"Add current view\" button. Enter a name for your view (a default name will be provided if you don't).",
+  "support_article_how_to_create_custom_grid_views_content_8": "Updating a View",
+  "support_article_how_to_create_custom_grid_views_content_9": "The view creator can rename it using the \"Rename\" option in the three-dots menu. They can also update the view to reflect the current grid view at any time. Note that updating a view overrides the previous version. You can use the \"undo\" option in the snack-bar to revert the change if needed.",
+  "support_article_how_to_create_custom_grid_views_content_10": "Removing a View",
+  "support_article_how_to_create_custom_grid_views_content_11": "The view creator can remove it from the view list.",
+  "support_article_how_to_create_custom_grid_views_content_12": "Sharing a View with Others",
+  "support_article_how_to_create_custom_grid_views_content_13": "Admins can share their created views with all other users. Only the admin who created the view can share it, and any changes made to the view will automatically be reflected for all users."
+}

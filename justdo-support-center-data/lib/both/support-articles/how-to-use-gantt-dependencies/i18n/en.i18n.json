@@ -1,0 +1,21 @@
+{
+  "support_article_how_to_use_gantt_dependencies_title": "Using Gantt Dependencies in JustDo",
+  "support_article_how_to_use_gantt_dependencies_page_title": "Using Gantt Dependencies in JustDo",
+  "support_article_how_to_use_gantt_dependencies_page_description": "Master Gantt chart dependencies in JustDo to effectively manage task relationships, track progress, and ensure smooth project execution.",
+  "support_article_how_to_use_gantt_dependencies_content_1": "When building your project structure in JustDo, you can easily map dependencies between tasks, groups of tasks, or even projects at any level of hierarchy.",
+  "support_article_how_to_use_gantt_dependencies_content_2": "You can indicate dependencies graphically by dragging the circle at the beginning/end of a task on the Gantt chart to the beginning/end of its dependent task, or by entering the task ID in the \"Predecessors\" field. When a task's schedule changes, its dependent tasks are automatically rescheduled.",
+  "support_article_how_to_use_gantt_dependencies_content_3": "Dependency Types:",
+  "support_article_how_to_use_gantt_dependencies_content_4": "JustDo supports all dependency types, with Finish-to-Start as the default. If no letters are added to the task ID, it's considered Finish-to-Start. To define dependencies by dragging on the Gantt chart, always start with the predecessor's circle and end with the dependent task.",
+  "support_article_how_to_use_gantt_dependencies_content_5": "Finish-to-Start (FS): Task B can only start after task A finishes. This is the default type. Implement by dragging the circle at the end of task A to the beginning of task B or entering task A's ID in task B's predecessor column.",
+  "support_article_how_to_use_gantt_dependencies_content_6": "Start-to-Finish (SF): Task D can only finish after task C starts. Implement by dragging the circle at the beginning of task C to the end of task D or entering task C's ID followed by \"SF\" in task D's predecessor column.",
+  "support_article_how_to_use_gantt_dependencies_content_7": "Finish-to-Finish (FF): Task C can only finish after task B finishes. Implement by dragging the circle at the end of task B to the end of task C or entering task B's ID followed by \"FF\" in task C's predecessor column.",
+  "support_article_how_to_use_gantt_dependencies_content_8": "Start-to-Start (SS): Task E can only start after task D starts. Implement by dragging the circle at the beginning of task D to the beginning of task E or entering task D's ID followed by \"SS\" in task E's predecessor column.",
+  "support_article_how_to_use_gantt_dependencies_content_9": "Dependencies Tab of Task Pane:",
+  "support_article_how_to_use_gantt_dependencies_content_10": "The \"Dependencies\" tab in the task pane displays the predecessors and successors of the selected task.",
+  "support_article_how_to_use_gantt_dependencies_content_11": "Lags and Leads:",
+  "support_article_how_to_use_gantt_dependencies_content_12": "You can define lags (positive or negative) between tasks. A positive lag means a task can only start X days/weeks after its predecessor ends (e.g., 10FS+3d for a 3-day lag). A negative lag (lead) means a task can start before its predecessor ends (e.g., 412FS-2d for a 2-day lead). Lags are supported for all dependency types.",
+  "support_article_how_to_use_gantt_dependencies_content_13": "Dependencies Tab of the Lower Pane:",
+  "support_article_how_to_use_gantt_dependencies_content_14": "The Dependencies tab in the lower pane shows tasks you own that are blocking others and tasks that are blocking your tasks. When all dependencies of a task are completed (\"Done\" state), the task owner receives a chat notification: \"All dependencies are fulfilled. You can start working on this task.\"",
+  "support_article_how_to_use_gantt_dependencies_content_15": "Clickable IDs:",
+  "support_article_how_to_use_gantt_dependencies_content_16": "For quick navigation and predecessor entry, both the predecessor ID in the predecessors column and the task ID at the top of the task pane are clickable."
+}

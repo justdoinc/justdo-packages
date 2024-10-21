@@ -1,0 +1,16 @@
+{
+  "support_article_how_to_plan_and_track_working_hours_title": "Plan & Track Working Hours in JustDo",
+  "support_article_how_to_plan_and_track_working_hours_page_title": "Plan & Track Working Hours in JustDo",
+  "support_article_how_to_plan_and_track_working_hours_page_description": "Learn how to effectively plan and track working hours in JustDo using Resource Management and Time Tracker extensions for better project management.",
+  "support_article_how_to_plan_and_track_working_hours_content_1": "Planning and tracking work hours is essential for businesses to evaluate efficiency, track progress, and manage commitments effectively. JustDo offers two extensions to help with this:",
+  "support_article_how_to_plan_and_track_working_hours_content_2": "Resource Management:",
+  "support_article_how_to_plan_and_track_working_hours_content_3": "Allows you to plan and track hours per task or group of tasks. You can assign planned hours and report executed hours against them. Hours can be assigned to specific individuals or left unassigned, which is useful during initial project planning. Hours can be allocated to any task member, not just the owner.",
+  "support_article_how_to_plan_and_track_working_hours_content_4": "When assigning hours to a person, the system will prompt you if there are existing unassigned hours or if that person already has hours allocated at a parent task, ensuring accurate allocation.",
+  "support_article_how_to_plan_and_track_working_hours_content_5": "You can report executed hours (without specific dates and times) in the \"Executed\" tab. The \"Left\" tab shows remaining hours, the \"Summary\" tab provides an overview, and the \"History\" tab logs all changes to planned and executed hours.",
+  "support_article_how_to_plan_and_track_working_hours_content_6": "All planned and executed hours are displayed in the \"Resource management\" tab and can be added as columns to the grid view.",
+  "support_article_how_to_plan_and_track_working_hours_content_7": "Time Tracker:",
+  "support_article_how_to_plan_and_track_working_hours_content_8": "Provides detailed reporting of hours invested in tasks. Employees can report actual hours worked using the \"play\" and \"stop\" buttons on tasks in the grid or manually enter time reports in the Time Tracker tab. Admins can also report hours for other employees.",
+  "support_article_how_to_plan_and_track_working_hours_content_9": "Time Tracker reports are added to the executed hours in the Resource management tab and can be viewed in its \"History\" tab.",
+  "support_article_how_to_plan_and_track_working_hours_content_10": "Time Tracker Reports:",
+  "support_article_how_to_plan_and_track_working_hours_content_11": "Easily generate reports filtered by task, project, people, and timeframe. Access reports through the clock icon in the Time Tracker tab or the Time Tracker option under the printer icon on the top bar."
+}

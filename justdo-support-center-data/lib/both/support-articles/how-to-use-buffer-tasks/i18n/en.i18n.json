@@ -1,0 +1,16 @@
+{
+  "support_article_how_to_use_buffer_tasks_title": "Using Buffer Tasks in JustDo for Project Management",
+  "support_article_how_to_use_buffer_tasks_page_title": "Using Buffer Tasks in JustDo for Project Management",
+  "support_article_how_to_use_buffer_tasks_page_description": "Learn how to utilize buffer tasks in JustDo to manage project uncertainties, absorb delays, and protect your project deadlines.",
+  "support_article_how_to_use_buffer_tasks_content_1": "Project plans and timelines often need adjustments. Buffers help you manage uncertainty and changes by representing durations without specific tasks, allowing for unexpected delays without impacting the overall project end date.",
+  "support_article_how_to_use_buffer_tasks_content_2": "Buffer Tasks:",
+  "support_article_how_to_use_buffer_tasks_content_3": "You can add buffer tasks anywhere in your project timeline to represent time allocated for potential delays. They are commonly placed before milestones. Buffer tasks are displayed in gray on the Gantt chart (even if they are on the critical path).",
+  "support_article_how_to_use_buffer_tasks_content_4": "Their duration is consumed when predecessor tasks are delayed, shrinking until it reaches zero. Conversely, if the successor task starts later, the buffer's duration increases.",
+  "support_article_how_to_use_buffer_tasks_content_5": "Buffer tasks are identified by a buffer icon next to their subject and \"Buffer\" in the Types column.",
+  "support_article_how_to_use_buffer_tasks_content_6": "Creating a Buffer Task:",
+  "support_article_how_to_use_buffer_tasks_content_7": "Create a task with the desired duration.",
+  "support_article_how_to_use_buffer_tasks_content_8": "Add the necessary predecessor tasks.",
+  "support_article_how_to_use_buffer_tasks_content_9": "Make this task a predecessor for the target milestone or task.",
+  "support_article_how_to_use_buffer_tasks_content_10": "Right-click the task and select \"Set as a buffer\" from the context menu.",
+  "support_article_how_to_use_buffer_tasks_content_11": "When a buffer is fully consumed, the platform sends a chat message for that buffer task."
+}

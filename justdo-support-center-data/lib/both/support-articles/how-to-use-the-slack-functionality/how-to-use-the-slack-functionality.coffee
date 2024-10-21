@@ -1,15 +1,15 @@
 APP.justdo_crm.registerItem "support",
   _id: "5913329778076"
-  title: "Utilizing Slack in JustDo for Project Flexibility"
+  title: "support_article_how_to_use_the_slack_functionality_title"
   aliases: ["how-to-use-the-slack-functionality"]
   date: "2022-09-11"
   templates: [
     {
       _id: "main"
       template_name: "support_article_how_to_use_the_slack_functionality"
-      name: "Utilizing Slack in JustDo for Project Flexibility"
-      h1: "Utilizing Slack in JustDo for Project Flexibility"
-      page_title: "Utilizing Slack in JustDo for Project Flexibility"
-      page_description: "Learn how to use slack time in JustDo's Gantt chart to identify scheduling flexibility and manage tasks without impacting project deadlines."
+      name: "support_article_how_to_use_the_slack_functionality_title"
+      h1: "support_article_how_to_use_the_slack_functionality_title"
+      page_title: "support_article_how_to_use_the_slack_functionality_page_title"
+      page_description: "support_article_how_to_use_the_slack_functionality_page_description"
     }
   ]

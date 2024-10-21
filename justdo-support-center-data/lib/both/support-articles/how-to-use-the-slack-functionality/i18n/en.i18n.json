@@ -1,0 +1,21 @@
+{
+  "support_article_how_to_use_the_slack_functionality_title": "Utilizing Slack in JustDo for Project Flexibility",
+  "support_article_how_to_use_the_slack_functionality_page_title": "Utilizing Slack in JustDo for Project Flexibility",
+  "support_article_how_to_use_the_slack_functionality_page_description": "Learn how to use slack time in JustDo's Gantt chart to identify scheduling flexibility and manage tasks without impacting project deadlines.",
+  "support_article_how_to_use_the_slack_functionality_content_1": "Project plans often require adjustments. Buffers and slack help you manage uncertainty and changes. For more information on buffers, see <a href=\"/support/5836183698972\">How to use Buffer Tasks</a>.",
+  "support_article_how_to_use_the_slack_functionality_content_2": "Slack values help you determine how much you can adjust individual tasks without affecting the project's overall timeline.",
+  "support_article_how_to_use_the_slack_functionality_content_3": "Slack (or float) is the amount of time (in days) a task can be delayed without impacting the delivery date of the associated milestone.",
+  "support_article_how_to_use_the_slack_functionality_content_4": "Using Slack Functionality:",
+  "support_article_how_to_use_the_slack_functionality_content_5": "When rescheduling tasks that are part of a path leading to a milestone, it's helpful to know your flexibility. When the \"Slack\" functionality is enabled, tasks on the path to a milestone will display six additional values:",
+  "support_article_how_to_use_the_slack_functionality_content_6": "Early start: The earliest possible start date without affecting the milestone date.",
+  "support_article_how_to_use_the_slack_functionality_content_7": "Late start: The latest possible start date without affecting the milestone date.",
+  "support_article_how_to_use_the_slack_functionality_content_8": "Early finish: The earliest possible finish date without affecting the milestone date.",
+  "support_article_how_to_use_the_slack_functionality_content_9": "Late finish: The latest possible finish date without affecting the milestone date.",
+  "support_article_how_to_use_the_slack_functionality_content_10": "Free slack: The number of workdays a task can be delayed without delaying its successor(s).",
+  "support_article_how_to_use_the_slack_functionality_content_11": "Total slack: The number of workdays a task can be delayed without delaying the milestone. This considers the free slack of all subsequent tasks until the milestone.",
+  "support_article_how_to_use_the_slack_functionality_content_12": "Important Notes:",
+  "support_article_how_to_use_the_slack_functionality_content_13": "Tasks on the critical path always have zero slack, and their early/late values match their actual start/end dates.",
+  "support_article_how_to_use_the_slack_functionality_content_14": "Slack times are only shown for tasks on a path to a milestone and only consider Finish-to-Start (FS) dependencies.",
+  "support_article_how_to_use_the_slack_functionality_content_15": "Slack is calculated only for tasks with manually set dates (not for basket tasks with automatically calculated dates).",
+  "support_article_how_to_use_the_slack_functionality_content_16": "To enable slack functionality, an admin needs to activate it in the Gantt extension settings. It's disabled by default."
+}

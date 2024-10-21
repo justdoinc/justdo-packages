@@ -1,0 +1,23 @@
+{
+  "support_article_custom_fields_title": "Using Custom Fields in JustDo: A Comprehensive Guide",
+  "support_article_custom_fields_page_title": "Using Custom Fields in JustDo: A Comprehensive Guide",
+  "support_article_custom_fields_page_description": "Learn how to use JustDo's custom fields to track project-specific information, enhance workflows, and gain valuable insights into your projects.",
+  "support_article_custom_fields_main_content_1": "Custom fields let you track, monitor, and control project-specific information like workflow stages, options lists, text, dates, and more.",
+  "support_article_custom_fields_main_content_2": "When used with filters, custom fields provide powerful insights into your project data.",
+  "support_article_custom_fields_main_content_3": "Only Admins can create and manage custom fields through \"Configure this JustDo\" under the settings icon.",
+  "support_article_custom_fields_main_content_4": "Supported Field Types:",
+  "support_article_custom_fields_main_content_5": "Text:",
+  "support_article_custom_fields_main_content_6": "For notes, references, links, client information, case numbers, part numbers, commit IDs, etc.",
+  "support_article_custom_fields_main_content_7": "Number:",
+  "support_article_custom_fields_main_content_8": "For entering any numeric value.",
+  "support_article_custom_fields_main_content_9": "Date:",
+  "support_article_custom_fields_main_content_10": "For logging specific dates like delivery dates, transfer dates, report dates, audit dates, etc.",
+  "support_article_custom_fields_main_content_11": "Options:",
+  "support_article_custom_fields_main_content_12": "Define a list of predetermined values with assigned colors. Useful for geographical locations, demographics, workflow stages (e.g., \"draft,\" \"revision,\" \"approval\"), order fulfillment statuses (e.g., \"order placed,\" \"shipped,\" \"delivered\"). Click the edit icon to define the list of values after creating the field.",
+  "support_article_custom_fields_main_content_13": "Multi Options:",
+  "support_article_custom_fields_main_content_14": "Similar to \"Options\" but allows selecting multiple values per task.",
+  "support_article_custom_fields_main_content_15": "Smart numbers:",
+  "support_article_custom_fields_main_content_16": "A text field that can contain numeric formulas to calculate values based on sub-tasks. For example, calculate the total cost of a project based on the cost of each sub-task. Define the formula by right-clicking the cell and selecting the desired action from the context menu.",
+  "support_article_custom_fields_main_content_17": "Formula (requires \"Formulas\" extension):",
+  "support_article_custom_fields_main_content_18": "Calculate values based on other numeric values within the same task. Supports operators (+,-,*,/, (,)) and functions (abs, ceil, fix, floor, mod, round, sign, max, mean, median, min). Click the edit icon to define the formula after creating the field."
+}

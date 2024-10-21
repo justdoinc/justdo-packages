@@ -53,6 +53,25 @@ Template.support_page_article.onCreated ->
 
   return
 
+Template.support_page_article.onRendered ->
+  # This tracker is responsible for converting links in articles to i18n + HRP links,
+  # since we can't hard-code this in the i18n file, 
+  # and calling template helpers won't work from i18n files either.
+  @autorun =>
+    # Reactive to current route
+    Router?.current()
+
+    # Find links that doesn't include the .dropdown-item class (which are navigation items that has i18n + HRP already)
+    $(@firstNode).find("a:not(.dropdown-item)").each (i, el) ->
+      path = $(el).attr("href")
+      i18n_path_with_hrp = APP.justdo_i18n_routes.i18nPathAndHrp path
+      $(el).attr "href", i18n_path_with_hrp
+      return 
+      
+    return
+
+  return
+
 Template.support_page_article.helpers 
   getActiveNewsTitle: ->
     tpl = Template.instance()

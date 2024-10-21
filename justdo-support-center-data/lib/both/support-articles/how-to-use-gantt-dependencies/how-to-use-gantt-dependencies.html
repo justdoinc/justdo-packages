@@ -1,23 +1,23 @@
 <template name="support_article_how_to_use_gantt_dependencies">
-  <p>When building your project structure in JustDo, you can easily map dependencies between tasks, groups of tasks, or even projects at any level of hierarchy.</p>
-  <p>You can indicate dependencies graphically by dragging the circle at the beginning/end of a task on the Gantt chart to the beginning/end of its dependent task, or by entering the task ID in the "Predecessors" field. When a task's schedule changes, its dependent tasks are automatically rescheduled.</p>
-  <h3><strong>Dependency Types:</strong></h3>
-  <p>JustDo supports all dependency types, with Finish-to-Start as the default. If no letters are added to the task ID, it's considered Finish-to-Start. To define dependencies by dragging on the Gantt chart, always start with the predecessor's circle and end with the dependent task.</p>
+  <p>{{_ "support_article_how_to_use_gantt_dependencies_content_1"}}</p>
+  <p>{{_ "support_article_how_to_use_gantt_dependencies_content_2"}}</p>
+  <h3><strong>{{_ "support_article_how_to_use_gantt_dependencies_content_3"}}</strong></h3>
+  <p>{{_ "support_article_how_to_use_gantt_dependencies_content_4"}}</p>
   <ul>
-    <li><strong>Finish-to-Start (FS):</strong> Task B can only start after task A finishes. This is the default type. Implement by dragging the circle at the end of task A to the beginning of task B or entering task A's ID in task B's predecessor column.</li>
-    <li><strong>Start-to-Finish (SF):</strong> Task D can only finish after task C starts. Implement by dragging the circle at the beginning of task C to the end of task D or entering task C's ID followed by "SF" in task D's predecessor column.</li>
-    <li><strong>Finish-to-Finish (FF):</strong> Task C can only finish after task B finishes. Implement by dragging the circle at the end of task B to the end of task C or entering task B's ID followed by "FF" in task C's predecessor column.</li>
-    <li><strong>Start-to-Start (SS):</strong> Task E can only start after task D starts. Implement by dragging the circle at the beginning of task D to the beginning of task E or entering task D's ID followed by "SS" in task E's predecessor column.</li>
+    <li>{{_ "support_article_how_to_use_gantt_dependencies_content_5"}}</li>
+    <li>{{_ "support_article_how_to_use_gantt_dependencies_content_6"}}</li>
+    <li>{{_ "support_article_how_to_use_gantt_dependencies_content_7"}}</li>
+    <li>{{_ "support_article_how_to_use_gantt_dependencies_content_8"}}</li>
   </ul>
   <p><img src="{{getSupportCenterAssetUrl "/how-to-use-gantt-dependencies/assets/2022-06-13_9-51-21_Types_of_dependency.gif"}}" alt="2022-06-13_9-51-21_Types_of_dependency.gif"></p>
-  <h3><strong>Dependencies Tab of Task Pane:</strong></h3>
-  <p>The "Dependencies" tab in the task pane displays the predecessors and successors of the selected task.</p>
+  <h3><strong>{{_ "support_article_how_to_use_gantt_dependencies_content_9"}}</strong></h3>
+  <p>{{_ "support_article_how_to_use_gantt_dependencies_content_10"}}</p>
   <p><img src="{{getSupportCenterAssetUrl "/how-to-use-gantt-dependencies/assets/dependencies_tab.jpg"}}" alt="dependencies_tab.jpg" width="422" height="393"></p>
-  <h3><strong>Lags and Leads:</strong></h3>
-  <p>You can define lags (positive or negative) between tasks. A positive lag means a task can only start X days/weeks after its predecessor ends (e.g., 10FS+3d for a 3-day lag). A negative lag (lead) means a task can start before its predecessor ends (e.g., 412FS-2d for a 2-day lead). Lags are supported for all dependency types.</p>
-  <h3><strong>Dependencies Tab of the Lower Pane:</strong></h3>
-  <p>The Dependencies tab in the lower pane shows tasks you own that are blocking others and tasks that are blocking your tasks. When all dependencies of a task are completed ("Done" state), the task owner receives a chat notification: "All dependencies are fulfilled. You can start working on this task."</p>
-  <h3><strong>Clickable IDs:</strong></h3>
-  <p>For quick navigation and predecessor entry, both the predecessor ID in the predecessors column and the task ID at the top of the task pane are clickable.</p>
+  <h3><strong>{{_ "support_article_how_to_use_gantt_dependencies_content_11"}}</strong></h3>
+  <p>{{_ "support_article_how_to_use_gantt_dependencies_content_12"}}</p>
+  <h3><strong>{{_ "support_article_how_to_use_gantt_dependencies_content_13"}}</strong></h3>
+  <p>{{_ "support_article_how_to_use_gantt_dependencies_content_14"}}</p>
+  <h3><strong>{{_ "support_article_how_to_use_gantt_dependencies_content_15"}}</strong></h3>
+  <p>{{_ "support_article_how_to_use_gantt_dependencies_content_16"}}</p>
   <p><img src="{{getSupportCenterAssetUrl "/how-to-use-gantt-dependencies/assets/clickable_ids.jpg"}}" alt="clickable_ids.jpg" width="501" height="113"></p>
 </template>

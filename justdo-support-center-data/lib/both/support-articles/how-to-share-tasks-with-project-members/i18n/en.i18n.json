@@ -1,0 +1,11 @@
+{
+  "support_article_how_to_share_tasks_with_project_members_title": "Sharing Tasks with Project Members in JustDo",
+  "support_article_how_to_share_tasks_with_project_members_page_title": "Sharing Tasks with Project Members in JustDo",
+  "support_article_how_to_share_tasks_with_project_members_page_description": "Learn how to share tasks with project members in JustDo to enable collaboration and ensure everyone has access to the necessary information.",
+  "support_article_how_to_share_tasks_with_project_members_content_1": "To collaborate and share task information with other JustDo members, you need to explicitly share those tasks. When you invite a new member to a JustDo workspace, they won't see any tasks until you share them.",
+  "support_article_how_to_share_tasks_with_project_members_content_2": "Steps to Share Tasks with JustDo Members:",
+  "support_article_how_to_share_tasks_with_project_members_content_3": "Select the task you want to share.",
+  "support_article_how_to_share_tasks_with_project_members_content_4": "Open the \"Edit task members\" pane from either the Details tab of the Task Pane or the link at the bottom of the Transfer ownership dialog.",
+  "support_article_how_to_share_tasks_with_project_members_content_5": "In the Edit Task Members dialog, select the members you want to add to (or remove from) the task and click the save button.",
+  "support_article_how_to_share_tasks_with_project_members_content_6": "The selected members will immediately have full access to the selected task and all its subtasks."
+}

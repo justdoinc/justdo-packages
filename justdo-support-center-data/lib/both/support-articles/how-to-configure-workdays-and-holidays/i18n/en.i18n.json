@@ -1,0 +1,15 @@
+{
+  "support_article_how_to_configure_workdays_and_holidays_title": "Configuring Workdays & Holidays in JustDo",
+  "support_article_how_to_configure_workdays_and_holidays_page_title": "Configuring Workdays & Holidays in JustDo",
+  "support_article_how_to_configure_workdays_and_holidays_page_description": "Learn how to configure workdays, work hours, and holidays for your entire JustDo workspace or individual users to optimize scheduling and resource management.",
+  "support_article_how_to_configure_workdays_and_holidays_content_1": "Admins can configure workdays, work hours, and holidays in JustDo after enabling the Calendar extension via \"Configure this JustDo\" under the settings button.",
+  "support_article_how_to_configure_workdays_and_holidays_content_2": "Admins can configure these settings for the entire JustDo platform or specific users, while members and guests can configure their own settings.",
+  "support_article_how_to_configure_workdays_and_holidays_content_3": "To configure for the entire JustDo, click \"Set Workdays\" under the settings button:",
+  "support_article_how_to_configure_workdays_and_holidays_content_4": "Note: Configuring workdays and hours for the entire JustDo is also enabled when the Gantt extension is turned on.",
+  "support_article_how_to_configure_workdays_and_holidays_content_5": "You can define different workdays, work hours, and additional holidays for specific users in the Calendar view by clicking the clock icon on the user's name:",
+  "support_article_how_to_configure_workdays_and_holidays_content_6": "In both options, you can enter dates as discrete dates or as a range of dates. Ranges will be converted to a list of discrete dates by the platform.",
+  "support_article_how_to_configure_workdays_and_holidays_content_7": "Example of a valid date sequence:",
+  "support_article_how_to_configure_workdays_and_holidays_content_8": "2022-09-01, 2022-09-25--2022-09-27, 2022-10-04--2022-10-05, 2022-10-09",
+  "support_article_how_to_configure_workdays_and_holidays_content_9": "Status Indicator:",
+  "support_article_how_to_configure_workdays_and_holidays_content_10": "The status indicator column shows if a task's delivery date might be impacted by company-wide holidays or personal time off. \"Holiday\" indicates a company-wide holiday within the task's duration, and \"Leave\" indicates personal time off for the task owner within the task's duration."
+}
