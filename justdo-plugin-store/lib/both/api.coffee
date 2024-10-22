@@ -52,3 +52,6 @@ _.extend JustdoPluginStore.prototype,
     path_without_lang = JustdoHelpers.getNormalisedUrlPathnameWithoutSearchPart path_without_lang
     category_or_plugin_url_prefix = /\/plugins\/[pc]\//
     return path_without_lang.replace(category_or_plugin_url_prefix, "").replace(/\//g, "")
+
+  isDefaultCategory: (category) ->
+    return category is JustdoPluginStore.default_category

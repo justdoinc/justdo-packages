@@ -221,7 +221,7 @@ _.extend JustdoNews.prototype,
             if (news_title = self.getNewsPageTitle category, news_id)?
               path += @getHRPForI18nKey news_title, lang
 
-            if news_template?
+            if news_template? and not self.isDefaultNewsTemplate news_template
               path += "/#{news_template}"
 
             return path

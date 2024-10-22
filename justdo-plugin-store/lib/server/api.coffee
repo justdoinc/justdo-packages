@@ -34,7 +34,7 @@ _.extend JustdoPluginStore.prototype,
       if APP.justdo_i18n_routes?
         data = APP.justdo_i18n_routes.getStrippedPathAndLangFromReq req
         url = data.processed_path
-        lang = data.lang_tag
+        lang = data.lang_tag or JustdoI18n.default_lang
       if APP.justdo_seo?
         url = APP.justdo_seo.getPathWithoutHumanReadableParts url
       
