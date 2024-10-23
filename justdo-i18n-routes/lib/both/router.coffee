@@ -45,9 +45,6 @@ _.extend JustdoI18nRoutes.prototype,
             map_obj.translations = []
 
             for lang_tag of APP.justdo_i18n.getSupportedLanguages()
-              if lang_tag is JustdoI18n.default_lang
-                continue
-              
               translated_map_obj = _.extend {}, map_obj,
                 url: self.i18nPath "/", lang_tag
                 lang: lang_tag
