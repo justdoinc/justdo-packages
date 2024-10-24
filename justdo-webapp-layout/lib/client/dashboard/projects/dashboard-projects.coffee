@@ -25,7 +25,7 @@ APP.executeAfterAppLibCode ->
       if not projects_search_input_rv?
         return modified_projects
 
-      filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(projects_search_input_rv)}", "i")
+      filter_regexp = JustdoHelpers.createUnicodeSupportedSearchTermRegex projects_search_input_rv
 
       modified_projects = _.filter modified_projects, (doc) ->
         if filter_regexp.test(doc.title)

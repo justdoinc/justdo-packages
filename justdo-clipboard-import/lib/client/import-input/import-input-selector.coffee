@@ -58,7 +58,7 @@ Template.justdo_clipboard_import_input_selector.helpers
       char_and_space_regex = /^[\w\s]+$/
       # To facilitate special character searching (e.g. %complete)
       if char_and_space_regex.test search_input
-        filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(search_input)}", "i")
+        filter_regexp = JustdoHelpers.createUnicodeSupportedSearchTermRegex search_input
       else
         filter_regexp = new RegExp(JustdoHelpers.escapeRegExp(search_input), "i")
       filtered_fields = _.filter fields, (doc) ->  filter_regexp.test(doc.label)

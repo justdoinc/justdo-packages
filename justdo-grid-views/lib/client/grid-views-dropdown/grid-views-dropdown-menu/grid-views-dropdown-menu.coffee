@@ -78,7 +78,7 @@ APP.executeAfterAppLibCode ->
       views = APP.collections.GridViews.find().fetch()
 
       if (search_val = Template.instance().search_val_rv.get())?
-        filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(search_val)}", "i")
+        filter_regexp = JustdoHelpers.createUnicodeSupportedSearchTermRegex search_val
         views = _.filter views, (view) -> filter_regexp.test(view.title)
 
       return views

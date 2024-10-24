@@ -178,7 +178,7 @@ Template.invite_new_user_dialog.helpers
 
   projects: ->
     search_val = Template.instance().search_tasks_val_rv.get()
-    filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(search_val)}", "i")
+    filter_regexp = JustdoHelpers.createUnicodeSupportedSearchTermRegex search_val
 
     projects = Template.instance().projects_rv.get()
     filtered_projects = _.filter projects, (doc) ->  filter_regexp.test(doc.title)
@@ -187,7 +187,7 @@ Template.invite_new_user_dialog.helpers
 
   rootTasks: ->
     search_val = Template.instance().search_tasks_val_rv.get()
-    filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(search_val)}", "i")
+    filter_regexp = JustdoHelpers.createUnicodeSupportedSearchTermRegex search_val
 
     root_tasks = Template.instance().root_tasks_rv.get()
     filtered_root_tasks = _.filter root_tasks, (doc) ->  filter_regexp.test(doc.title)
