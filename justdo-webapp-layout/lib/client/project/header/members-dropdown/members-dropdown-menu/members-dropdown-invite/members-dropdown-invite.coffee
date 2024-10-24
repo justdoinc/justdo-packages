@@ -222,7 +222,7 @@ APP.executeAfterAppLibCode ->
       tpl.show_projects_picker_dep.depend() # Re-opening projects picker should trigger refresh of project list
 
       search_val = tpl.search_projects_val_rv.get()
-      filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(search_val)}", "i")
+      filter_regexp = JustdoHelpers.createUnicodeSupportedSearchTermRegex search_val
 
       projects = tpl.projects_rv.get()
       selected_projects_task_id = Tracker.nonreactive -> tpl.selected_projects_rv.get()

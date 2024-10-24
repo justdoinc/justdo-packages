@@ -23,7 +23,7 @@ Template.tasks_list_widget.helpers
       @filtered_tasks = @tasks
       return @
 
-    filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(search_input)}", "i")
+    filter_regexp = JustdoHelpers.createUnicodeSupportedSearchTermRegex search_input
     @filtered_tasks = _.filter @tasks, (doc) ->  filter_regexp.test(doc.title)
 
     return @

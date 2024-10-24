@@ -83,7 +83,7 @@ filterJustdosDocsArray = (justdos_docs, niddle) ->
   if not niddle?
     return justdos_docs
 
-  filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(niddle)}", "i")
+  filter_regexp = JustdoHelpers.createUnicodeSupportedSearchTermRegex niddle
 
   results = _.filter justdos_docs, (doc) ->
     return filter_regexp.test doc.title

@@ -16,7 +16,7 @@ Template.member_list_widget.onCreated ->
     members = JustdoHelpers.filterUsersIdsArray(tpl_data.members or [], search_niddle)
     
     special_options = tpl_data.special_options or []
-    filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(search_niddle)}", "i")
+    filter_regexp = JustdoHelpers.createUnicodeSupportedSearchTermRegex search_niddle
     special_options = _.filter special_options, (opt) ->
       return filter_regexp.test(opt._id) or filter_regexp.test(opt.label)
 
