@@ -129,6 +129,10 @@ APP.executeAfterAppLibCode ->
         if error
           console.log error.reason
         else
+          # Reset search input to ensure newly created view is showing
+          tpl.search_val_rv.set null
+          $(".grid-views-search-input").val ""
+
           Meteor.defer ->
             $views_wrapper = $(".dropdown-items-wrapper")
             $views_wrapper.animate {scrollTop: $views_wrapper.prop("scrollHeight")}, 500
