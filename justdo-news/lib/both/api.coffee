@@ -27,6 +27,15 @@ _.extend JustdoNews.prototype,
       label: "Append title to URL"
       type: Boolean
       defaultValue: false
+    text_embedding:
+      label: "Enable text embedding and semantic search"
+      type: Boolean
+      defaultValue: true
+    text_embedding_content_dom_query:
+      label: "Class selectors to obtain content for text embedding"
+      type: String
+      optional: true
+      defaultValue: ".page"
   registerCategory: (category, options) ->
     if _.isEmpty category or not _.isString category
       throw @_error "invalid-argument"
@@ -164,6 +173,8 @@ _.extend JustdoNews.prototype,
         route_options:
           name: category_with_news_id_route_name
           translatable: news_category_options.translatable
+          text_embedding: news_category_options.text_embedding
+          text_embedding_content_dom_query: news_category_options.text_embedding_content_dom_query
           mapGenerator: ->
             for news_doc in self.getAllNewsByCategory category
               ret = 
@@ -202,6 +213,8 @@ _.extend JustdoNews.prototype,
         route_options:
           name: category_with_news_id_and_template_route_name
           translatable: news_category_options.translatable
+          text_embedding: news_category_options.text_embedding
+          text_embedding_content_dom_query: news_category_options.text_embedding_content_dom_query
           mapGenerator: ->
             for news_doc in self.getAllNewsByCategory category
               for template_obj in news_doc.templates
