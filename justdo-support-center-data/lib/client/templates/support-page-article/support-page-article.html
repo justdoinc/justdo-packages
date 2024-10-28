@@ -31,10 +31,12 @@
         </div>
       {{/if}}
 
-      {{#with getActiveNewsTemplate}}
-        <h1>{{_ h1}}</h1><br>
-        {{> Template.dynamic template=template_name data=template_data}}
-      {{/with}}
+      <div class="support-content">
+        {{#with getActiveNewsTemplate}}
+          <h1>{{_ h1}}</h1><br>
+          {{> Template.dynamic template=template_name data=template_data}}
+        {{/with}}
+      </div>
 
     </div>
   </div>

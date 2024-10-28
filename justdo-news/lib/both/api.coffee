@@ -33,9 +33,9 @@ _.extend JustdoNews.prototype,
       defaultValue: true
     text_embedding_content_dom_query:
       label: "Class selectors to obtain content for text embedding"
-      type: String
+      type: [String]
       optional: true
-      defaultValue: ".page"
+      defaultValue: [".page"]
   registerCategory: (category, options) ->
     if _.isEmpty category or not _.isString category
       throw @_error "invalid-argument"
