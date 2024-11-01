@@ -130,6 +130,11 @@ Template.site_admin_user_dropdown_toggle_site_admin.events
     if method == "unsetUsersAsSiteAdmins"
       message += "Are you sure you don't want <b>#{JustdoHelpers.displayName(@user_data)}</b> to remain a Site Admin?"
     else
+      if not JustdoHelpers.isUserEmailsVerified @user_data
+        JustdoSnackbar.show
+          text: "Cannot promote user with non-verified email to site admin"
+        return
+        
       message += "Are you sure you want <b>#{JustdoHelpers.displayName(@user_data)}</b> to be a Site Admin?"
 
     list = _.compact(_.union.apply(_, _.map APP.justdo_site_admins.modules, (_module) -> _module[if method == "setUsersAsSiteAdmins" then "pre_set_as_admin_warnings" else "pre_unset_as_admin_warnings"]))

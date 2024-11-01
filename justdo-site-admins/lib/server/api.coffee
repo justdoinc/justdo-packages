@@ -24,12 +24,14 @@ _.extend JustdoSiteAdmins.prototype,
     if _.isEmpty(users_ids)
       return
 
-    users = Meteor.users.find({_id: {$in: users_ids}}, {fields: {deactivated: 1, is_proxy: 1}}).fetch()
+    users = Meteor.users.find({_id: {$in: users_ids}}, {fields: {deactivated: 1, is_proxy: 1, emails: 1}}).fetch()
     for user in users
       if user.deactivated
         throw @_error "cannot-promote-deactivated-user-to-site-admin", "Cannot promote deactivated user to site admin"
       if user.is_proxy
         throw @_error "cannot-promote-proxy-user-to-site-admin", "Cannot promote proxy user to site admin"
+      if not JustdoHelpers.isUserEmailsVerified user
+        throw @_error "not-supported", "Cannot promote user with non-verified email to site admin"
 
     if (Meteor.users.find({_id: {$in: users_ids}, deactivated: true}, {fields: {_id: 1}}).count() > 0)
       throw @_error "cannot-promote-deactivated-user-to-site-admin", "Cannot promote deactivated user to site admin"
