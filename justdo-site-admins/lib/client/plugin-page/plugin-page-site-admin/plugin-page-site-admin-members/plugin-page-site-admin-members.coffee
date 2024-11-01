@@ -172,7 +172,7 @@ Template.justdo_site_admin_members.helpers
           return (not APP.accounts.isUserDeactivated user)
       .length
 
-    if not active_user_count
+    if not active_user_count?
       return spinning_icon
 
     return active_user_count
