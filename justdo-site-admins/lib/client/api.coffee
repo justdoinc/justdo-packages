@@ -98,7 +98,7 @@ _.extend JustdoSiteAdmins.prototype,
     return
 
   isLicenseExpiring: (is_site_admin) ->
-    if not LICENSE_RV?
+    if not (license = LICENSE_RV?.get())?
       return false
     
     if not is_site_admin?
@@ -108,7 +108,7 @@ _.extend JustdoSiteAdmins.prototype,
     if is_site_admin
       show_expiring_headsup_threshold = JustdoSiteAdmins.license_expire_headsup_day_for_site_admins
 
-    days_until_license_expire = (new Date(LICENSE_RV.get().expire_on) - new Date()) / (1000 * 60 * 60 * 24)
+    days_until_license_expire = (new Date(license.expire_on) - new Date()) / (1000 * 60 * 60 * 24)
     return days_until_license_expire < show_expiring_headsup_threshold
 
   showLicenseExpirationReminderIfExpiring: ->    
