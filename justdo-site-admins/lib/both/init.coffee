@@ -121,7 +121,7 @@ JustdoSiteAdmins = (options) ->
 
   @_on_destroy_procedures = []
 
-  @_attachCollectionsSchemas()
+  @_attachCollectionsSchemas?()
 
   if Meteor.isClient
     # React to invalidations
