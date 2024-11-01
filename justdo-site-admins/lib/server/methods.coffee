@@ -10,9 +10,12 @@ _.extend JustdoSiteAdmins.prototype,
         return self.getAllSiteAdminsIds(@userId)
 
       saSetUsersAsSiteAdmins: (users_ids) ->
+        if _.isString users_ids
+          users_ids = [users_ids]
+
         if not _.every(users_ids, (user_id) -> JustdoHelpers.isUserEmailsVerified user_id)
           throw self._error "not-supported", "Cannot promote users with non-verified emails to site admin"
-          
+
         # users_ids checks are performed inside self.setUsersAsSiteAdmins
         return self.setUsersAsSiteAdmins(users_ids, @userId)
 
