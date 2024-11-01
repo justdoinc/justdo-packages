@@ -55,6 +55,8 @@ Package.onUse(function (api) {
   api.use("check", both);
   api.use("reactive-var", both);
   api.use("reactive-dict", both);
+  api.use("tap:i18n", both);
+  api.use("justdoinc:justdo-i18n", both);
   api.use("tracker", client);
 
   api.addFiles("lib/both/analytics.coffee", both);
@@ -72,6 +74,14 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/global-template-helpers.coffee", client);
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
+
+  api.addFiles("lib/client/license-info/drawer-license-info/drawer-license-info.sass", client);
+  api.addFiles("lib/client/license-info/drawer-license-info/drawer-license-info.html", client);
+  api.addFiles("lib/client/license-info/drawer-license-info/drawer-license-info.coffee", client);
+
+  api.addFiles("lib/client/license-info/license-info-modal/license-info-modal.sass", client);
+  api.addFiles("lib/client/license-info/license-info-modal/license-info-modal.html", client);
+  api.addFiles("lib/client/license-info/license-info-modal/license-info-modal.coffee", client);
 
   api.addFiles("lib/client/plugin-page/plugin-page.sass", client);
   api.addFiles("lib/client/plugin-page/plugin-page.html", client);
@@ -119,6 +129,70 @@ Package.onUse(function (api) {
   // Note: app-integration need to load last, so immediateInit procedures in
   // the server will have the access to the apis loaded after the init.coffee
   // file.
+
+  // Always after templates
+  api.addFiles([
+    "i18n/license-info/en.i18n.json",
+    // "i18n/license-info/ar.i18n.json",
+    // "i18n/license-info/es.i18n.json",
+    // "i18n/license-info/fr.i18n.json",
+    // "i18n/license-info/he.i18n.json",
+    // "i18n/license-info/ja.i18n.json",
+    // "i18n/license-info/km.i18n.json",
+    // "i18n/license-info/ko.i18n.json",
+    // "i18n/license-info/pt-PT.i18n.json",
+    // "i18n/license-info/pt-BR.i18n.json",
+    // "i18n/license-info/vi.i18n.json",
+    // "i18n/license-info/ru.i18n.json",
+    // "i18n/license-info/yi.i18n.json",
+    // "i18n/license-info/it.i18n.json",
+    // "i18n/license-info/de.i18n.json",
+    // "i18n/license-info/hi.i18n.json",
+    // "i18n/license-info/tr.i18n.json",
+    // "i18n/license-info/el.i18n.json",
+    // "i18n/license-info/da.i18n.json",
+    // "i18n/license-info/fi.i18n.json",
+    // "i18n/license-info/nl.i18n.json",
+    // "i18n/license-info/sv.i18n.json",
+    // "i18n/license-info/th.i18n.json",
+    // "i18n/license-info/id.i18n.json",
+    // "i18n/license-info/pl.i18n.json",
+    // "i18n/license-info/cs.i18n.json",
+    // "i18n/license-info/hu.i18n.json",
+    // "i18n/license-info/ro.i18n.json",
+    // "i18n/license-info/sk.i18n.json",
+    // "i18n/license-info/uk.i18n.json",
+    // "i18n/license-info/bg.i18n.json",
+    // "i18n/license-info/hr.i18n.json",
+    // "i18n/license-info/sr.i18n.json",
+    // "i18n/license-info/sl.i18n.json",
+    // "i18n/license-info/et.i18n.json",
+    // "i18n/license-info/lv.i18n.json",
+    // "i18n/license-info/lt.i18n.json",
+    // "i18n/license-info/am.i18n.json",
+    // "i18n/license-info/zh-CN.i18n.json",
+    // "i18n/license-info/zh-TW.i18n.json",
+    // "i18n/license-info/sw.i18n.json",
+    // "i18n/license-info/af.i18n.json",
+    // "i18n/license-info/az.i18n.json",
+    // "i18n/license-info/be.i18n.json",
+    // "i18n/license-info/bn.i18n.json",
+    // "i18n/license-info/bs.i18n.json",
+    // "i18n/license-info/ca.i18n.json",
+    // "i18n/license-info/eu.i18n.json",
+    // "i18n/license-info/lb.i18n.json",
+    // "i18n/license-info/mk.i18n.json",
+    // "i18n/license-info/ne.i18n.json",
+    // "i18n/license-info/nb.i18n.json",
+    // "i18n/license-info/sq.i18n.json",
+    // "i18n/license-info/ta.i18n.json",
+    // "i18n/license-info/uz.i18n.json",
+    // "i18n/license-info/hy.i18n.json",
+    // "i18n/license-info/kk.i18n.json",
+    // "i18n/license-info/ky.i18n.json",
+    // "i18n/license-info/ms.i18n.json",
+    // "i18n/license-info/tg.i18n.json"
+  ], both);
 
   api.export("JustdoSiteAdmins", both);
 });

@@ -1,0 +1,8 @@
+<template name="drawer_license_info">
+  <span class="drawer-license-info {{isExpiringTextClass}}">
+    {{_ "license_info_licensed_until" date=licensedUntil}} 
+    {{#with isExpiringInDays}}
+      <br>{{_ "license_info_expiring_in_days" days=this}}
+    {{/with}}
+  </span>
+</template>

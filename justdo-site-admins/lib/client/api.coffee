@@ -2,6 +2,7 @@ _.extend JustdoSiteAdmins.prototype,
   _immediateInit: ->
     @registerGlobalTemplateHelpers()
     @_setupMembersPage()
+    @_registerDrawerLicenseInfo()
     @_setupServerVitalsPage()
     @site_admin_page_position = 100
 
@@ -10,7 +11,21 @@ _.extend JustdoSiteAdmins.prototype,
   _deferredInit: ->
     if @destroyed
       return
+    
+    @showLicenseExpirationReminderIfExpiring()
 
+    return
+
+  _registerDrawerLicenseInfo: ->
+    if not LICENSE_RV?
+      return
+
+    JD.registerPlaceholderItem "license-info",
+      data:
+        template: "drawer_license_info"
+      domain: "drawer-after-jd-version"
+      position: 300
+    
     return
 
   _setupMembersPage: ->
@@ -82,3 +97,59 @@ _.extend JustdoSiteAdmins.prototype,
 
     return
 
+  isLicenseExpiring: (is_site_admin) ->
+    if not LICENSE_RV?
+      return false
+    
+    if not is_site_admin?
+      is_site_admin = @isCurrentUserSiteAdmin()
+
+    show_expiring_headsup_threshold = JustdoSiteAdmins.license_expire_headsup_day_for_non_site_admins
+    if is_site_admin
+      show_expiring_headsup_threshold = JustdoSiteAdmins.license_expire_headsup_day_for_site_admins
+
+    days_until_license_expire = (new Date(LICENSE_RV.get().expire_on) - new Date()) / (1000 * 60 * 60 * 24)
+    return days_until_license_expire < show_expiring_headsup_threshold
+
+  showLicenseExpirationReminderIfExpiring: ->    
+    if @isLicenseExpiring()
+      @showLicenseExpirationReminder()
+
+    return
+
+  showLicenseExpirationReminder: ->
+    if not LICENSE_RV?
+      return
+
+    is_user_site_admin = @isCurrentUserSiteAdmin()
+    is_expiring = @isLicenseExpiring()
+
+    modal_template = JustdoHelpers.renderTemplateInNewNode Template.license_info_modal, {is_expiring}
+    title = TAPi18n.__ "license_info_license_information"
+    if is_expiring
+      title = TAPi18n.__ "license_info_your_license_is_about_to_expire"
+    bootbox_options = 
+      size: "extra-large"
+      className: "bootbox-new-design"
+      title: title
+      rtl_ready: true
+      message: modal_template.node
+
+    if is_user_site_admin and is_expiring
+      bootbox_options.buttons =
+        renew:
+          label: TAPi18n.__ "license_info_renew_license"
+          className: "btn-primary"
+          callback: ->
+            return
+    else
+      bootbox_options.buttons =
+        ok:
+          label: "OK"
+          className: "btn-primary"
+          callback: ->
+            return
+
+    dialog = bootbox.dialog bootbox_options
+
+    return

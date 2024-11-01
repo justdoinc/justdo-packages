@@ -1,0 +1,20 @@
+<template name="license_info_modal">
+  {{#with getLicense}}
+    {{#if isExpiring}}
+      <div class="message attention">
+          {{{xssGuard(_ "license_info_expiring_msg" date=(formatDate expire_on))}}}
+      </div>
+    {{/if}}
+    <div class="message primary">
+      {{#if isExpiring}}
+        {{#if isUserSiteAdmin}}
+          {{{xssGuard(_ "license_info_renew_license_instructions")}}}
+        {{else}}
+          {{_ "license_info_please_contact_site_admins"}}
+        {{/if}}
+      {{else}}
+        {{{xssGuard(_ "license_info_valid_until_and_licensed_users" date=(formatDate expire_on) count=getLicensedUsersCount)}}}
+      {{/if}}
+    </div>
+  {{/with}}
+</template>
