@@ -43,6 +43,8 @@ _.extend JustdoSiteAdmins.prototype,
 
     return (user?.site_admin?.is_site_admin is true) and JustdoHelpers.isUserEmailsVerified user
 
+  isUserSuperSiteAdmin: -> false
+
   isCurrentUserSiteAdmin: ->
     return @isUserSiteAdmin(Meteor.userId())
 
