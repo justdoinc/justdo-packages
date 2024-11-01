@@ -139,6 +139,8 @@ _.extend JustdoSiteAdmins.prototype,
 
     return
 
+  addExcludedUsersClauseToQuery: (query, performing_user_id) -> query
+
   getAllUsers: (performing_user_id) ->
     check performing_user_id, String
 
@@ -146,7 +148,7 @@ _.extend JustdoSiteAdmins.prototype,
 
     query = {}
 
-    query = @addExcludedUsersClauseToQuery?(query, performing_user_id) or query
+    query = @addExcludedUsersClauseToQuery(query, performing_user_id) or query
 
     fields = _.extend {}, JustdoHelpers.avatar_required_fields, {"site_admin.is_site_admin": 1, "deactivated": 1, "createdAt": 1}
     if @isUserSuperSiteAdmin performing_user_id
@@ -178,6 +180,6 @@ _.extend JustdoSiteAdmins.prototype,
 
     query = {"site_admin.is_site_admin": true}
 
-    query = @addExcludedUsersClauseToQuery?(query, performing_user_id) or query
+    query = @addExcludedUsersClauseToQuery(query, performing_user_id) or query
 
     return _.map(Meteor.users.find(query, {fields: {_id: 1}}).fetch(), (user_doc) -> return user_doc._id)
