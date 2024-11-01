@@ -97,7 +97,7 @@ Template.site_admin_user_dropdown_toggle_deactivted_user.events
     return
 
 Template.site_admin_user_dropdown_toggle_site_admin.helpers
-  isAdmin: -> @user_data.site_admin?.is_site_admin
+  isAdmin: -> APP.justdo_site_admins.isUserSiteAdmin @user_data
 
 Template.site_admin_user_dropdown_toggle_site_admin.events
   "click .toggle-site-admin": (e, tpl) ->
