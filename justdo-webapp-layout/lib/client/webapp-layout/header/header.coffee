@@ -34,7 +34,9 @@ APP.executeAfterAppLibCode ->
 
     justDoVersion: ->
       return APP.env_rv.get()?.APP_VERSION
-
+    
+    drawerAfterJdVersionItems: -> JD.getPlaceholderItems("drawer-after-jd-version")
+    
   JD.registerPlaceholderItem "justdo-chat-recent-activity",
     data:
       template: "justdo_chat_recent_activity_button"
