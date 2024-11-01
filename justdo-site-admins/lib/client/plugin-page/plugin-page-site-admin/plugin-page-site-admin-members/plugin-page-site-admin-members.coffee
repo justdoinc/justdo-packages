@@ -4,42 +4,44 @@ Template.justdo_site_admin_members.onCreated ->
   self = @
 
   @all_site_users_rv = new ReactiveVar([])
-  if APP.justdo_licensing?
-    @licensed_users_crv = JustdoHelpers.newComputedReactiveVar null, ->
-      all_site_users = self.all_site_users_rv.get()
+  @licensed_users_crv = JustdoHelpers.newComputedReactiveVar null, ->
+    if not (license = LICENSE_RV?.get())?
+      return
 
-      if not (license = APP.justdo_licensing.getLicense())? or license.unlimited
-        return new Set(_.map(all_site_users, (user_obj) -> user_obj._id))
+    all_site_users = self.all_site_users_rv.get()
 
-      licensed_users_set = new Set()
-      licensed_users_count = license.paid_users
+    if license.unlimited_users
+      return new Set(_.map(all_site_users, (user_obj) -> user_obj._id))
 
-      sortByCreatedAtPredicate = (u1, u2) ->
-        if u1.createdAt > u2.createdAt
-          return 1
-        if u1.createdAt < u2.createdAt
-          return -1
-        return 0
+    licensed_users_set = new Set()
+    licensed_users_count = license.licensed_users
 
-      all_site_users
-        .filter (user) -> return (not APP.accounts.isUserDeactivated user) and (not APP.justdo_licensing.isUserExcluded user)
-        .sort (u1, u2) ->
-          # If both users are site admins, simply sort by their createdAt
-          if u1.site_admin?.is_site_admin and u2.site_admin?.is_site_admin
-            return sortByCreatedAtPredicate u1, u2
+    sortByCreatedAtPredicate = (u1, u2) ->
+      if u1.createdAt > u2.createdAt
+        return 1
+      if u1.createdAt < u2.createdAt
+        return -1
+      return 0
 
-          # Site admins always take precedence when compared with normal user
-          if u2.site_admin?.is_site_admin
-            return 1
-          if u1.site_admin?.is_site_admin
-            return -1
-
-          # If both users aren't site admins, simply sort by their createdAt
+    all_site_users
+      .filter (user) -> return (not APP.accounts.isUserDeactivated user) and (not APP.accounts.isUserExcluded? user)
+      .sort (u1, u2) ->
+        # If both users are site admins, simply sort by their createdAt
+        if u1.site_admin?.is_site_admin and u2.site_admin?.is_site_admin
           return sortByCreatedAtPredicate u1, u2
-        .slice(0, licensed_users_count)
-        .forEach (user) -> licensed_users_set.add user._id
 
-      return licensed_users_set
+        # Site admins always take precedence when compared with normal user
+        if u2.site_admin?.is_site_admin
+          return 1
+        if u1.site_admin?.is_site_admin
+          return -1
+
+        # If both users aren't site admins, simply sort by their createdAt
+        return sortByCreatedAtPredicate u1, u2
+      .slice(0, licensed_users_count)
+      .forEach (user) -> licensed_users_set.add user._id
+
+    return licensed_users_set
 
   @users_filter_term_rv = new ReactiveVar(null)
 
@@ -65,11 +67,12 @@ Template.justdo_site_admin_members.onCreated ->
     name: (user) -> JustdoHelpers.displayName(user)
     email: (user) -> JustdoHelpers.getUserMainEmail(user)
     remarks: (user) ->
+      license = LICENSE_RV?.get()
       remarks = []
 
       # Excluded remarks can co-exist with site-admin or deactivated, but not expiring/expired.
-      if APP.justdo_licensing?
-        if APP.justdo_licensing.isUserExcluded(user)
+      if license?
+        if APP.accounts.isUserExcluded?(user)
           remarks.push """<span class="badge badge-success rounded-0 mr-1">Excluded</span>"""
 
       if APP.justdo_site_admins.isUserSiteAdmin(user)
@@ -86,10 +89,10 @@ Template.justdo_site_admin_members.onCreated ->
       if self.licensed_users_crv?
         if not user_id_deactivated
           # We don't check expiration for deactivated users
-          if not self.licensed_users_crv.get().has(user._id) and not APP.justdo_licensing.isUserExcluded(user)
+          if not self.licensed_users_crv.get().has(user._id) and not APP.accounts.isUserExcluded?(user)
             # If user isn't licensed, check if the furthest of user grace period and license grace period has passed
-            user_grace_period_ends = moment(user.createdAt).add(JustdoLicensing.new_users_grace_period, "days")
-            license_grace_period_ends = moment(APP.justdo_licensing.getLicense()?.grace_period_ends, "YYYY-MM-DD")
+            user_grace_period_ends = moment(user.createdAt).add(license.new_users_grace_period, "days")
+            license_grace_period_ends = moment(license.license_grace_period, "YYYY-MM-DD")
 
             if (furthest_grace_period = moment(Math.max user_grace_period_ends, license_grace_period_ends)) >= moment()
               remarks.push """<span class="badge badge-warning rounded-0 mr-1">License expires on #{furthest_grace_period.format(JustdoHelpers.getUserPreferredDateFormat())}</span>"""
@@ -166,10 +169,7 @@ Template.justdo_site_admin_members.helpers
     tpl = Template.instance()
     active_user_count = tpl.all_site_users_rv.get()
       .filter (user) ->
-        if APP.justdo_licensing?
-          return (not APP.accounts.isUserDeactivated user) and (not APP.justdo_licensing.isUserExcluded user)
-        else
-          return (not APP.accounts.isUserDeactivated user)
+        return (not APP.accounts.isUserDeactivated user) and (not APP.accounts.isUserExcluded? user)
       .length
 
     if not active_user_count?
@@ -190,27 +190,15 @@ Template.justdo_site_admin_members.helpers
     return Template.instance().users_filter_term_rv.get()?
 
   licensingEnabled: ->
-    return APP.justdo_licensing?
+    return LICENSE_RV?.get()?
 
-  unlimitedLicense: ->
-    if (license = APP.justdo_licensing.getLicense())?
-      return license.unlimited
-    return spinning_icon
+  unlimitedLicense: -> LICENSE_RV?.get().unlimited_users
 
-  licensedUsersCount: ->
-    if not (licensed_users = Template.instance().licensed_users_crv.get().size)
-      return spinning_icon
-    return licensed_users
+  licensedUsersCount: -> Template.instance().licensed_users_crv.get().size
 
-  licensePermittedUsers: ->
-    if (license = APP.justdo_licensing.getLicense())?
-      return license.paid_users
-    return spinning_icon
+  licensePermittedUsers: -> LICENSE_RV?.get().licensed_users
 
-  licenseValidUntil: ->
-    if (license = APP.justdo_licensing.getLicense())?
-      return moment(license.valid_until, "YYYY-MM-DD").format(JustdoHelpers.getUserPreferredDateFormat())
-    return spinning_icon
+  licenseValidUntil: -> moment(LICENSE_RV?.get().expire_on, "YYYY-MM-DD").format JustdoHelpers.getUserPreferredDateFormat()
 
   siteUsers: ->
     tpl = Template.instance()
