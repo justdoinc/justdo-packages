@@ -5,43 +5,9 @@ Template.justdo_site_admin_members.onCreated ->
 
   @all_site_users_rv = new ReactiveVar([])
   @licensed_users_crv = JustdoHelpers.newComputedReactiveVar null, ->
-    if not (license = LICENSE_RV?.get())?
-      return
-
     all_site_users = self.all_site_users_rv.get()
 
-    if license.unlimited_users
-      return new Set(_.map(all_site_users, (user_obj) -> user_obj._id))
-
-    licensed_users_set = new Set()
-    licensed_users_count = license.licensed_users
-
-    sortByCreatedAtPredicate = (u1, u2) ->
-      if u1.createdAt > u2.createdAt
-        return 1
-      if u1.createdAt < u2.createdAt
-        return -1
-      return 0
-
-    all_site_users
-      .filter (user) -> return (not APP.accounts.isUserDeactivated user) and (not APP.accounts.isUserExcluded? user)
-      .sort (u1, u2) ->
-        # If both users are site admins, simply sort by their createdAt
-        if u1.site_admin?.is_site_admin and u2.site_admin?.is_site_admin
-          return sortByCreatedAtPredicate u1, u2
-
-        # Site admins always take precedence when compared with normal user
-        if u2.site_admin?.is_site_admin
-          return 1
-        if u1.site_admin?.is_site_admin
-          return -1
-
-        # If both users aren't site admins, simply sort by their createdAt
-        return sortByCreatedAtPredicate u1, u2
-      .slice(0, licensed_users_count)
-      .forEach (user) -> licensed_users_set.add user._id
-
-    return licensed_users_set
+    return APP.justdo_site_admins._getLicensedUsersSet all_site_users
 
   @users_filter_term_rv = new ReactiveVar(null)
 
@@ -66,40 +32,7 @@ Template.justdo_site_admin_members.onCreated ->
   @pseudo_fields =
     name: (user) -> JustdoHelpers.displayName(user)
     email: (user) -> JustdoHelpers.getUserMainEmail(user)
-    remarks: (user) ->
-      license = LICENSE_RV?.get()
-      remarks = []
-
-      # Excluded remarks can co-exist with site-admin or deactivated, but not expiring/expired.
-      if license?
-        if APP.accounts.isUserExcluded?(user)
-          remarks.push """<span class="badge badge-success rounded-0 mr-1">Excluded</span>"""
-
-      if APP.justdo_site_admins.isUserSiteAdmin(user)
-        remarks.push """<span class="badge badge-primary rounded-0 mr-1">Site Admin</span>"""
-
-      if APP.justdo_site_admins.isProxyUser?(user)
-        remarks.push """<span class="badge badge-info rounded-0 mr-1">Proxy User</span>"""
-
-      user_id_deactivated = false
-      if APP.accounts.isUserDeactivated(user)
-        user_id_deactivated = true
-        remarks.push """<span class="badge badge-secondary rounded-0 mr-1">Deactivated</span>"""
-
-      if self.licensed_users_crv?
-        if not user_id_deactivated
-          # We don't check expiration for deactivated users
-          if not self.licensed_users_crv.get().has(user._id) and not APP.accounts.isUserExcluded?(user)
-            # If user isn't licensed, check if the furthest of user grace period and license grace period has passed
-            user_grace_period_ends = moment(user.createdAt).add(license.new_users_grace_period, "days")
-            license_grace_period_ends = moment(license.license_grace_period, "YYYY-MM-DD")
-
-            if (furthest_grace_period = moment(Math.max user_grace_period_ends, license_grace_period_ends)) >= moment()
-              remarks.push """<span class="badge badge-warning rounded-0 mr-1">License expires on #{furthest_grace_period.format(JustdoHelpers.getUserPreferredDateFormat())}</span>"""
-            else
-              remarks.push """<span class="badge badge-danger rounded-0 mr-1">License expired</span>"""
-
-      return remarks.join(" ")
+    remarks: (user) -> APP.justdo_site_admins._getMembersPageUserRemarks user, self.licensed_users_crv
 
   @all_sorted_filtered_site_users_rv = new ReactiveVar([])
   @autorun =>
