@@ -208,9 +208,8 @@ _.extend JustdoSiteAdmins.prototype,
       return remarks.join(" ")
 
     # Excluded remarks can co-exist with site-admin or deactivated, but not expiring/expired.
-    if license?
-      if APP.accounts.isUserExcluded?(user)
-        remarks.push """<span class="badge badge-success rounded-0 mr-1">Excluded</span>"""
+    if APP.accounts.isUserExcluded?(user)
+      remarks.push """<span class="badge badge-success rounded-0 mr-1">Excluded</span>"""
 
     if APP.justdo_site_admins.isUserSiteAdmin(user)
       remarks.push """<span class="badge badge-primary rounded-0 mr-1">Site Admin</span>"""
