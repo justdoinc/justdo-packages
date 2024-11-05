@@ -27,6 +27,10 @@ _.extend JustdoNews.prototype,
       label: "Append title to URL"
       type: Boolean
       defaultValue: false
+    disable_title_in_url_for_default_lang:
+      label: "Disable title in URL for default language"
+      type: Boolean
+      defaultValue: false
   registerCategory: (category, options) ->
     if _.isEmpty category or not _.isString category
       throw @_error "invalid-argument"
@@ -177,7 +181,11 @@ _.extend JustdoNews.prototype,
 
             path = "/#{category}/#{news_id}"
 
-            if (news_title = self.getNewsPageTitle category, news_id)?
+            is_default_lang = lang is JustdoI18n.default_lang
+            disable_title_in_url_for_default_lang = news_category_options.disable_title_in_url_for_default_lang
+            should_add_hrp = not (is_default_lang and disable_title_in_url_for_default_lang)
+
+            if should_add_hrp and (news_title = self.getNewsPageTitle category, news_id)?
               path += @getHRPForI18nKey news_title, lang
 
             return path
@@ -218,7 +226,11 @@ _.extend JustdoNews.prototype,
 
             path = "/#{category}/#{news_id}"
 
-            if (news_title = self.getNewsPageTitle category, news_id)?
+            is_default_lang = lang is JustdoI18n.default_lang
+            disable_title_in_url_for_default_lang = news_category_options.disable_title_in_url_for_default_lang
+            should_add_hrp = not (is_default_lang and disable_title_in_url_for_default_lang)
+
+            if should_add_hrp and (news_title = self.getNewsPageTitle category, news_id)?
               path += @getHRPForI18nKey news_title, lang
 
             if news_template? and not self.isDefaultNewsTemplate news_template
