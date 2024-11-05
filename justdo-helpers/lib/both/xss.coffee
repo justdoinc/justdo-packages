@@ -105,6 +105,7 @@ _.extend JustdoHelpers,
       div: true
       svg: true
       use: true
+      cite: true
 
     selfClosingTags =
       use: true
