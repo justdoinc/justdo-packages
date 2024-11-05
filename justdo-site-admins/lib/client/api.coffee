@@ -223,14 +223,15 @@ _.extend JustdoSiteAdmins.prototype,
       remarks.push """<span class="badge badge-secondary rounded-0 mr-1">Deactivated</span>"""
 
     if licensed_users_crv? 
-      is_user_licensed = licensed_users_crv.get().has(user._id)
+      is_user_licensed = licensed_users_crv.get().has(user._id) or is_user_deactivated or is_user_excluded
       license_grace_period = license.license_grace_period
-      new_users_grace_period = license.new_users_grace_period
-      if not (is_user_licensed or is_user_deactivated or is_user_excluded) and (license_grace_period? or new_users_grace_period?)
+      new_user_grace_period = license.new_user_grace_period
+
+      if not is_user_licensed and (license_grace_period? or new_user_grace_period?)
         # If user isn't licensed, check if the furthest of user grace period and license grace period has passed
         user_grace_period_ends = moment().subtract(1, "days")
-        if new_users_grace_period?
-          user_grace_period_ends = moment(user.createdAt).add(new_users_grace_period, "days")
+        if new_user_grace_period?
+          user_grace_period_ends = moment(user.createdAt).add(new_user_grace_period, "days")
         
         license_grace_period_ends = moment().subtract(1, "days")
         if license_grace_period?
