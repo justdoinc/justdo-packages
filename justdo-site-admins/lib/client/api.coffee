@@ -208,7 +208,9 @@ _.extend JustdoSiteAdmins.prototype,
       return remarks.join(" ")
 
     # Excluded remarks can co-exist with site-admin or deactivated, but not expiring/expired.
+    is_user_excluded = false
     if APP.accounts.isUserExcluded?(user)
+      is_user_excluded = true
       remarks.push """<span class="badge badge-success rounded-0 mr-1">Excluded</span>"""
 
     if APP.justdo_site_admins.isUserSiteAdmin(user)
@@ -217,22 +219,28 @@ _.extend JustdoSiteAdmins.prototype,
     if APP.justdo_site_admins.isProxyUser?(user)
       remarks.push """<span class="badge badge-info rounded-0 mr-1">Proxy User</span>"""
 
-    user_id_deactivated = false
-    if APP.accounts.isUserDeactivated(user)
-      user_id_deactivated = true
+    if (is_user_deactivated = APP.accounts.isUserDeactivated(user))
       remarks.push """<span class="badge badge-secondary rounded-0 mr-1">Deactivated</span>"""
 
-    if licensed_users_crv?
-      if not user_id_deactivated
-        # We don't check expiration for deactivated users
-        if not licensed_users_crv.get().has(user._id) and not APP.accounts.isUserExcluded?(user)
-          # If user isn't licensed, check if the furthest of user grace period and license grace period has passed
-          user_grace_period_ends = moment(user.createdAt).add(license.new_users_grace_period, "days")
-          license_grace_period_ends = moment(license.license_grace_period, "YYYY-MM-DD")
+    if licensed_users_crv? 
+      is_user_licensed = licensed_users_crv.get().has(user._id)
+      license_grace_period = license.license_grace_period
+      new_users_grace_period = license.new_users_grace_period
+      if not (is_user_licensed or is_user_deactivated or is_user_excluded) and (license_grace_period? or new_users_grace_period?)
+        # If user isn't licensed, check if the furthest of user grace period and license grace period has passed
+        user_grace_period_ends = moment().subtract(1, "days")
+        if new_users_grace_period?
+          user_grace_period_ends = moment(user.createdAt).add(new_users_grace_period, "days")
+        
+        license_grace_period_ends = moment().subtract(1, "days")
+        if license_grace_period?
+          license_grace_period_ends = moment(license_grace_period, "YYYY-MM-DD")
 
-          if (furthest_grace_period = moment(Math.max user_grace_period_ends, license_grace_period_ends)) >= moment()
-            remarks.push """<span class="badge badge-warning rounded-0 mr-1">License expires on #{furthest_grace_period.format(JustdoHelpers.getUserPreferredDateFormat())}</span>"""
-          else
-            remarks.push """<span class="badge badge-danger rounded-0 mr-1">License expired</span>"""
+        if (furthest_grace_period = moment(Math.max user_grace_period_ends, license_grace_period_ends)) >= moment()
+          is_user_licensed = true
+          remarks.push """<span class="badge badge-warning rounded-0 mr-1">License expires on #{furthest_grace_period.format(JustdoHelpers.getUserPreferredDateFormat())}</span>"""
+        
+      if not is_user_licensed
+        remarks.push """<span class="badge badge-danger rounded-0 mr-1">License expired</span>"""
 
     return remarks.join(" ")
