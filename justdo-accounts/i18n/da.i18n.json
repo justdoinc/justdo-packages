@@ -11,7 +11,7 @@
   "profile_pic_schema_label": "Profilbillede",
   "date_format_schema_label": "Datoformat",
   "time_format_schema_label": "Tidsformat",
-  "first_day_of_week_schema_label": "Ugens første dag",
+  "first_day_of_week_schema_label": "Første dag i ugen",
   "timezone_schema_label": "Tidszone",
   "avatar_fg_schema_label": "Avatar forgrund",
   "avatar_bg_schema_label": "Avatar baggrund",

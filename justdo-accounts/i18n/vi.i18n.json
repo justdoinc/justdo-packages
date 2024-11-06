@@ -11,7 +11,7 @@
   "profile_pic_schema_label": "Ảnh đại diện",
   "date_format_schema_label": "Định dạng ngày",
   "time_format_schema_label": "Định dạng thời gian",
-  "first_day_of_week_schema_label": "Ngày đầu tiên của tuần",
+  "first_day_of_week_schema_label": "Ngày đầu tuần",
   "timezone_schema_label": "Múi giờ",
   "avatar_fg_schema_label": "Màu chữ avatar",
   "avatar_bg_schema_label": "Màu nền avatar",

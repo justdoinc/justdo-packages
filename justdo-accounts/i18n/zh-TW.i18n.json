@@ -11,7 +11,7 @@
   "profile_pic_schema_label": "個人頭像",
   "date_format_schema_label": "日期格式",
   "time_format_schema_label": "時間格式",
-  "first_day_of_week_schema_label": "每週第一天",
+  "first_day_of_week_schema_label": "每週起始日",
   "timezone_schema_label": "時區",
   "avatar_fg_schema_label": "頭像前景色",
   "avatar_bg_schema_label": "頭像背景色",

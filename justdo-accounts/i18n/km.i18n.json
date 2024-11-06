@@ -11,7 +11,7 @@
   "profile_pic_schema_label": "រូបភាពកម្រងព័ត៌មាន",
   "date_format_schema_label": "ទម្រង់កាលបរិច្ឆេទ",
   "time_format_schema_label": "ទម្រង់ម៉ោង",
-  "first_day_of_week_schema_label": "ថ្ងៃទីមួយនៃសប្តាហ៍",
+  "first_day_of_week_schema_label": "ថ្ងៃដំបូងនៃសប្តាហ៍",
   "timezone_schema_label": "តំបន់ពេលវេលា",
   "avatar_fg_schema_label": "ផ្ទៃខាងមុខនៃរូបតំណាង",
   "avatar_bg_schema_label": "ផ្ទៃខាងក្រោយនៃរូបតំណាង",
