@@ -846,12 +846,7 @@ MongoConnection.prototype.createIndex = function (collectionName, index,
   var self = this;
   
 
-  // We expect this function to be called at startup, not from within a method,
-  // so we don't interact with the write fence.
-  var collection = self.rawCollection(collectionName);
-  var future = new Future;
-  var indexName = collection.createIndex(index, options, future.resolver());
-  future.wait();
+  return Future.fromPromise(self.createIndexAsync(collectionName, index, options));
 };
 
 MongoConnection.prototype.countDocuments = function (collectionName, ...args) {
