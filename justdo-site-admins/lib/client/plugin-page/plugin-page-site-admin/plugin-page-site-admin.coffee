@@ -7,7 +7,7 @@ Template.justdo_site_admins_page_site_admin.onCreated ->
   
   # Keep track of browser's prev/next page button
   @autorun =>
-    if (route_name = Router.current()?.route?.getName())?
+    if (route_name = Router.current()?.route?.getName())? and (route_name isnt "justdo_site_admins_page")
       @current_view.set route_name.replaceAll("justdo_site_admins_page_", "").replaceAll "_", "-"
     return
 
