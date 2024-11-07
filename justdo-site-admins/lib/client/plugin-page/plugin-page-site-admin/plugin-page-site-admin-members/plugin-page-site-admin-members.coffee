@@ -45,7 +45,7 @@ Template.justdo_site_admin_members.onCreated ->
     all_site_users = @all_site_users_rv.get()
 
     if (users_filter_term = @users_filter_term_rv.get())?
-      filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(users_filter_term)}", "i")
+      filter_regexp = JustdoHelpers.createUnicodeSupportedSearchTermRegex users_filter_term
 
       all_site_users = _.filter all_site_users, (user) =>
         for pseudo_field_id, pseudo_field_def of @pseudo_fields
