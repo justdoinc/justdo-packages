@@ -343,9 +343,14 @@ _.extend JustdoNews.prototype,
     
     return {news_doc: news_doc, is_alias: is_alias}
     
-  getNewsTemplateIfExists: (category, news_id_or_alias, template_name) ->
-    if not (news = @getNewsByIdOrAlias(category, news_id_or_alias)?.news_doc)?
+  # Note: category is omitted if news is already a news object
+  getNewsTemplateIfExists: (category, news, template_name) ->
+    if _.isString news
+      news = @getNewsByIdOrAlias(category, news)?.news_doc
+
+    if not news?
       return
+
     return _.find news.templates, (template_obj) -> template_obj._id is template_name
 
   getAllRegisteredCategories: -> _.keys @news
