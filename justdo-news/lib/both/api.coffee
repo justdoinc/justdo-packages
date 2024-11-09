@@ -139,6 +139,20 @@ _.extend JustdoNews.prototype,
 
         return news_template_doc?.template_data?.news_array?[0]?.media_url
 
+    supportedLanguages = (path_without_lang) ->
+      if APP.justdo_seo?
+        path_without_lang = APP.justdo_seo.getPathWithoutHumanReadableParts path_without_lang
+
+      {news_id, news_template} = self.getNewsParamFromPath path_without_lang
+
+      if not news_template?
+        news_template = JustdoNews.default_news_template
+
+      if not (news_template_doc = self.getNewsTemplateIfExists category, news_id, news_template)?
+        return
+
+      return self.getNewsTemplateSupportedLanguages news_template_doc
+
     routes =
       "/#{category}":
         routingFunction: ->
@@ -168,11 +182,14 @@ _.extend JustdoNews.prototype,
         route_options:
           name: category_with_news_id_route_name
           translatable: news_category_options.translatable
+          supported_languages: supportedLanguages
           mapGenerator: ->
             for news_doc in self.getAllNewsByCategory category
               ret = 
                 url: "/#{category}/#{news_doc._id}"
+
               yield ret
+
             return
           metadata: metadata
           hrp_supported: news_category_options.title_in_url
@@ -210,6 +227,7 @@ _.extend JustdoNews.prototype,
         route_options:
           name: category_with_news_id_and_template_route_name
           translatable: news_category_options.translatable
+          supported_languages: supportedLanguages
           mapGenerator: ->
             for news_doc in self.getAllNewsByCategory category
               for template_obj in news_doc.templates
@@ -270,7 +288,11 @@ _.extend JustdoNews.prototype,
     subtitle:
       label: "News Subtitle"
       type: String
-      optional: true      
+      optional: true    
+    supported_languages:
+      label: "News Template Supported Languages"
+      type: [String]
+      optional: true  
   _registerNewsSchema: new SimpleSchema
     _id:
       label: "News ID"
@@ -384,6 +406,9 @@ _.extend JustdoNews.prototype,
 
     # Typically, there are very few templates (1-2) for a news item, so don't worry about performance
     return _.find(news_doc?.templates, (template_obj) -> template_obj._id is template)?.page_title or ""
+
+  getNewsTemplateSupportedLanguages: (news_template_doc) ->
+    return news_template_doc.supported_languages
 
 # Originally, the JustdoNews package was created to be a news package, but we
 # ended up using it as a CRM package. So, we're going to create some aliases
