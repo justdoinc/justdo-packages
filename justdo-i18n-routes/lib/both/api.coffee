@@ -112,6 +112,10 @@ _.extend JustdoI18nRoutes.prototype,
     if not (lang = @getLangTagIfSupported lang)?
       return path
     
+    path_specific_supported_languages = @getPathSupportedLanguages path
+    if lang not in path_specific_supported_languages 
+      lang = JustdoI18n.default_lang
+    
     route_name = JustdoHelpers.getRouteNameFromPath path
     if (lang is JustdoI18n.default_lang) or (not @isRouteI18nAble route_name)
       return path
@@ -191,3 +195,35 @@ _.extend JustdoI18nRoutes.prototype,
 
   getPathWithoutLangPrefix: (url) -> @getStrippedPathAndLang(url).processed_path
   
+  getPathSupportedLanguages: (path) ->
+    default_lang = JustdoI18n.default_lang
+    path_without_lang = @getPathWithoutLangPrefix path
+
+    # If route isn't i18n-able, we will return the default lang
+    route_name = JustdoHelpers.getRouteNameFromPath path_without_lang
+    if not (route_def = @getI18nRouteDef route_name)
+      return default_lang
+    
+    all_supported_languages = _.keys APP.justdo_i18n.getSupportedLanguages()
+    
+    # If route is i18n-able, but doesn't have a supported_languages option, we will assume it supports all languages
+    if not (path_specific_supported_languages = route_def.route_options.supported_languages)?
+      return all_supported_languages
+    
+    # supported_languages can be a function that will return the supported languages
+    if _.isFunction path_specific_supported_languages
+      path_specific_supported_languages = path_specific_supported_languages path_without_lang
+    
+    # If the function returned a falsy value, we will assume it supports all languages
+    if not path_specific_supported_languages?
+      return all_supported_languages
+    
+    # If path_specific_supported_languages is a string, we will assume it's a single language
+    if _.isString path_specific_supported_languages
+      path_specific_supported_languages = [path_specific_supported_languages]
+    
+    # If path_specific_supported_languages is an array, we'll make sure it includes the default lang
+    if _.isArray path_specific_supported_languages
+      path_specific_supported_languages = _.uniq path_specific_supported_languages.concat [default_lang]
+    
+    return _.intersection path_specific_supported_languages, all_supported_languages
