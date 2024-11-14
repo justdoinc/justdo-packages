@@ -22,6 +22,8 @@
 APP.getEnv (env) ->
   # If an env variable affect this package load, check its value here
   # remember env vars are Strings
+  if env.USER_ACTIVE_POSITION_ENABLED isnt "true"
+    return
 
   options =
     projects_collection: APP.collections.Projects
