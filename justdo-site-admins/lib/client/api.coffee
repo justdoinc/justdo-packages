@@ -111,9 +111,16 @@ _.extend JustdoSiteAdmins.prototype,
     days_until_license_expire = (new Date(license.expire_on) - new Date()) / (1000 * 60 * 60 * 24)
     return days_until_license_expire < show_expiring_headsup_threshold
 
-  showLicenseExpirationReminderIfExpiring: ->    
-    if @isLicenseExpiring()
-      @showLicenseExpirationReminder()
+  showLicenseExpirationReminderIfExpiring: ->
+    Tracker.autorun (computation) =>
+      if not LICENSE_RV.get()?
+        return
+
+      if @isLicenseExpiring()
+        @showLicenseExpirationReminder()
+      
+      computation.stop()
+      return
 
     return
 
