@@ -222,6 +222,9 @@ _.extend JustdoSiteAdmins.prototype,
     if (is_user_deactivated = APP.accounts.isUserDeactivated(user))
       remarks.push """<span class="badge badge-secondary rounded-0 mr-1">Deactivated</span>"""
 
+    # !!!IMPORTANT!!!
+    # If you change the logic below regarding how we determine whether a user is within the grace period,
+    # you MUST also update the logic under 650-SDK-ONLY-grace-period.coffee.
     if licensed_users_crv? 
       is_user_licensed = licensed_users_crv.get().has(user._id) or is_user_deactivated or is_user_excluded
       license_grace_period = license.license_grace_period
@@ -240,7 +243,8 @@ _.extend JustdoSiteAdmins.prototype,
         if (furthest_grace_period = moment(Math.max user_grace_period_ends, license_grace_period_ends)) >= moment()
           is_user_licensed = true
           remarks.push """<span class="badge badge-warning rounded-0 mr-1">License expires on #{furthest_grace_period.format(JustdoHelpers.getUserPreferredDateFormat())}</span>"""
-        
+    # !!!END IMPORTANT!!!
+
       if not is_user_licensed
         remarks.push """<span class="badge badge-danger rounded-0 mr-1">License expired</span>"""
 
