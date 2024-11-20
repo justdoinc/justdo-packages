@@ -47,7 +47,7 @@ _.extend JustdoI18n.prototype,
   
   # NOTE: This method is meant for internal use only,
   # because it doesn't take into account TAPi18n's supported languages.
-  # Use getSupportedLanguages/getCoreSupportedLanguages/getLangGroup instead.
+  # Use getSupportedLanguages instead.
   _getEnvSupportedLanguages: (type) ->
     if Meteor.isClient
       @env_supported_languages_dep.depend()
@@ -105,15 +105,12 @@ _.extend JustdoI18n.prototype,
 
     return
 
-  getSupportedLanguages: ->
-    env_supported_languages = @_getEnvSupportedLanguages "all"
+  getSupportedLanguages: (lang_group_type="all", return_lang_tag_only=false) ->
+    # Note: TAPi18n.getLanguages() returns an object
+    tapi18n_langs = TAPi18n.getLanguages()
 
-    return _.pick TAPi18n.getLanguages(), ...env_supported_languages
-
-  getLangGroup: (lang_group_type, return_lang_tag_only=true) ->
-    all_langs = @getSupportedLanguages()
     lang_tags_under_group = @_getEnvSupportedLanguages lang_group_type
-    lang_group = _.pick all_langs, ...lang_tags_under_group
+    lang_group = _.pick tapi18n_langs, ...lang_tags_under_group
 
     if return_lang_tag_only
       lang_group = _.keys lang_group

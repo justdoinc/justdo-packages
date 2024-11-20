@@ -219,7 +219,7 @@ _.extend JustdoI18nRoutes.prototype,
     
     # If path_specific_supported_languages is a string, we will assume it's a lang group type
     if _.isString path_specific_supported_languages
-      path_specific_supported_languages = APP.justdo_i18n.getLangGroup path_specific_supported_languages
+      path_specific_supported_languages = APP.justdo_i18n.getSupportedLanguages path_specific_supported_languages, true
     
     # If path_specific_supported_languages is an array, we'll make sure it includes the default lang
     if _.isArray path_specific_supported_languages
