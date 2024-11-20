@@ -36,7 +36,7 @@ _.extend JustdoI18n.prototype,
     # Load supported languages from env
     APP.getEnv (env) =>
       for type in _.without(JustdoI18n.supported_language_group_types, "default")
-        @env_supported_languages[type] = env["I18N_#{type.toUpperCase()}_SUPPORTED_LANGUAGES"].split /\s*,\s*/
+        @env_supported_languages[type] = env["I18N_#{type.toUpperCase()}_SUPPORTED_LANGUAGES"].replace(/\s/g, "").split ","
       
       if Meteor.isClient
         @env_supported_languages_dep.changed()
