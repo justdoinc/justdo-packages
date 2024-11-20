@@ -72,7 +72,36 @@ _.extend JustdoI18n.prototype,
     return
 
   getSupportedLanguages: ->
-    return TAPi18n.getLanguages()
+    env = env or process.env
+    env_supported_languages = env.I18N_ALL_SUPPORTED_LANGUAGES
+
+    return _.pick TAPi18n.getLanguages(), ...env_supported_languages
+  
+  getCoreSupportedLanguages: ->
+    env = env or process.env
+    env_core_supported_languages = env.I18N_CORE_SUPPORTED_LANGUAGES
+
+    return _.pick TAPi18n.getLanguages(), ...env_core_supported_languages
+  
+  getLangGroup: (lang_group_type, return_lang_tag_only=true) ->
+    if lang_group_type not in JustdoI18n.supported_language_group_types
+      throw @_error "invalid-argument", "getLanguageSet: lang_group_type must be one of #{JustdoI18n.supported_language_group_types.join(", ")}. Received #{lang_group_type}"
+    
+    lang_group = null
+
+    if lang_group_type is "all"
+      lang_group = @getSupportedLanguages()
+    
+    if lang_group_type is "core"
+      lang_group = @getCoreSupportedLanguages()
+    
+    if lang_group_type is "default"
+      lang_group = _.pick TAPi18n.getLanguages(), JustdoI18n.default_lang
+    
+    if return_lang_tag_only
+      lang_group = _.keys lang_group
+    
+    return lang_group
   
   getI18nTextOrFallback: (options) ->
     # Object params passed from template helper will be encapsulated inside hash

@@ -12,3 +12,8 @@ _.extend JustdoI18n,
                                                               # {all_keys: true} means that we download all keys in the environment
   default_i18n_route_proofreading_scope: {} # The scope we use when the route is i18nable;
                                             # {} means that we download keys that we've encountered
+  supported_language_group_types: [
+    "all"
+    "core"
+    "default"
+  ]
