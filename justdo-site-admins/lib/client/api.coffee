@@ -112,6 +112,9 @@ _.extend JustdoSiteAdmins.prototype,
     return days_until_license_expire < show_expiring_headsup_threshold
 
   showLicenseExpirationReminderIfExpiring: ->
+    if not LICENSE_RV?
+      return
+      
     Tracker.autorun (computation) =>
       if not LICENSE_RV.get()?
         return
