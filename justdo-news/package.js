@@ -40,6 +40,7 @@ Package.onUse(function (api) {
   // api.use("stevezhu:lodash@4.17.2", both);
   api.use("templating", client);
   api.use('fourseven:scss@3.2.0', client);
+  api.use("check", both);
 
   api.use("aldeed:simple-schema@1.5.3", both);
   api.use('aldeed:collection2@2.3.2', both);
