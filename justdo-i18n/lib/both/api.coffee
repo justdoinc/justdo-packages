@@ -12,6 +12,7 @@ _.extend JustdoI18n.prototype,
       # If called before the app is ready, TAPi18n may not be fully initialized yet and our custom language names will be overrided.
       @_replaceDefaultLanguageNames()
     @setupRouter()
+    @_loadEnvSupportedLanguages()
 
     return
 
@@ -26,6 +27,39 @@ _.extend JustdoI18n.prototype,
 
     return
   
+  _loadEnvSupportedLanguages: ->
+    @env_supported_languages = 
+      default: JustdoI18n.default_lang
+    if Meteor.isClient
+      @env_supported_languages_dep = new Tracker.Dependency()
+
+    # Load supported languages from env
+    APP.getEnv (env) =>
+      for type in _.without(JustdoI18n.supported_language_group_types, "default")
+        @env_supported_languages[type] = env["I18N_#{type.toUpperCase()}_SUPPORTED_LANGUAGES"].split /\s*,\s*/
+      
+      if Meteor.isClient
+        @env_supported_languages_dep.changed()
+
+      return
+
+    return
+  
+  # NOTE: This method is meant for internal use only,
+  # because it doesn't take into account TAPi18n's supported languages.
+  # Use getSupportedLanguages/getCoreSupportedLanguages/getLangGroup instead.
+  _getEnvSupportedLanguages: (type) ->
+    if Meteor.isClient
+      @env_supported_languages_dep.depend()
+
+    if not type?
+      return @env_supported_languages
+
+    if type not in JustdoI18n.supported_language_group_types
+      throw @_error "invalid-argument", "_getEnvSupportedLanguages: type must be one of #{JustdoI18n.supported_language_group_types.join(", ")}. Received #{type}"
+
+    return @env_supported_languages[type]
+
   _setupI18nextPluralRule: ->
     # For some reason Chinese doesn't have built-in plural form. Here we add it back using the same rules as English.
     en_plural_form = TAPi18next.pluralExtensions.rules.en
@@ -72,32 +106,15 @@ _.extend JustdoI18n.prototype,
     return
 
   getSupportedLanguages: ->
-    env = env or process.env
-    env_supported_languages = env.I18N_ALL_SUPPORTED_LANGUAGES
+    env_supported_languages = @_getEnvSupportedLanguages "all"
 
     return _.pick TAPi18n.getLanguages(), ...env_supported_languages
-  
-  getCoreSupportedLanguages: ->
-    env = env or process.env
-    env_core_supported_languages = env.I18N_CORE_SUPPORTED_LANGUAGES
 
-    return _.pick TAPi18n.getLanguages(), ...env_core_supported_languages
-  
   getLangGroup: (lang_group_type, return_lang_tag_only=true) ->
-    if lang_group_type not in JustdoI18n.supported_language_group_types
-      throw @_error "invalid-argument", "getLanguageSet: lang_group_type must be one of #{JustdoI18n.supported_language_group_types.join(", ")}. Received #{lang_group_type}"
-    
-    lang_group = null
+    all_langs = @getSupportedLanguages()
+    lang_tags_under_group = @_getEnvSupportedLanguages lang_group_type
+    lang_group = _.pick all_langs, ...lang_tags_under_group
 
-    if lang_group_type is "all"
-      lang_group = @getSupportedLanguages()
-    
-    if lang_group_type is "core"
-      lang_group = @getCoreSupportedLanguages()
-    
-    if lang_group_type is "default"
-      lang_group = _.pick TAPi18n.getLanguages(), JustdoI18n.default_lang
-    
     if return_lang_tag_only
       lang_group = _.keys lang_group
     
