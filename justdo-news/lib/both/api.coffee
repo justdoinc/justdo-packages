@@ -291,8 +291,10 @@ _.extend JustdoNews.prototype,
       optional: true    
     supported_languages:
       label: "News Template Supported Languages"
-      type: Match.OneOf [String], String
+      type: Match.OneOf String, Array
       optional: true  
+    "supported_languages.$":
+      type: String
   _registerNewsSchema: new SimpleSchema
     _id:
       label: "News ID"
