@@ -1,4 +1,4 @@
 {
   "supported_languages": ["af","az","id","ms","be","bg","bs","ca","cs","sr","da","de","el","et","es","eu","fr","hr","it","kk","sw","ky","lv","lb","lt","hu","mk","nl","nb","uz","pl","pt-PT","pt-BR","ru","ro","sq","sk","sl","fi","sv","vi","tg","tr","uk","hy","yi","he","ar","am","ne","hi","bn","ta","th","km","ko","ja","zh-CN","zh-TW"],
-  "comment": "# Note, if you change this list, it is very likely that you'll also need to update: justdo-devops/utils/default-dev-env-conf.bash and justdo-devops/nodes-launchers/launchers/justdo-sdk/default-config.bash"
+  "comment": "# Note, if you change this list, ensure to update it in both your landing-app and web-app. In addition you'll need to update it also in: Your config.bash, [AND ONLY IF YOU MANAGE JUSTDO BUILD:] justdo-devops/utils/default-dev-env-conf.bash (Relevant for JustDo SDK Builder only, skip if unfamiliar),\nnodes/justdo-web-bundle/build-env-vars.bash (Relevant for JustDo SDK Builder only, skip if unfamiliar),\n justdo-devops/nodes-launchers/launchers/justdo-sdk/default-config.bash (Relevant for JustDo SDK Builder only, skip if unfamiliar)"
 }
