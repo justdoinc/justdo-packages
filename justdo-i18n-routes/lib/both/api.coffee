@@ -224,5 +224,10 @@ _.extend JustdoI18nRoutes.prototype,
     # If path_specific_supported_languages is an array, we'll make sure it includes the default lang
     if _.isArray path_specific_supported_languages
       path_specific_supported_languages = _.uniq path_specific_supported_languages.concat default_lang
-    
-    return _.intersection path_specific_supported_languages, all_supported_languages
+      return _.intersection path_specific_supported_languages, all_supported_languages
+
+    # Eventually we should end up with an array of lang tags.
+    # If supported_languages is defined but path_specific_supported_languages is not an array,
+    # we throw the error here.
+    throw @_error "invalid-argument", "getPathSupportedLanguages: route_options.supported_languages must be/return an array of lang tags, or a string of lang group type. Received #{route_def.route_options?.supported_languages} that evaluates to #{path_specific_supported_languages}"
+        
