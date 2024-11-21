@@ -13,6 +13,7 @@ _.extend JustdoLegalDocsVersionsApi,
       # "NOT-SIGNED" - the doc was never signed
       # "SIGNED" - Signed
       # "OUT-DATED" - Old version of this doc signed, user need to sign this document again
+      # "OPTIONAL-NOT-SIGNED" - Optional doc not signed
 
       # Init a report object.
       report =
@@ -32,6 +33,8 @@ _.extend JustdoLegalDocsVersionsApi,
           if JustdoLegalDocsVersions[doc_id].signature_required == true
             # User didn't sign this required document but signature is required
             all_required_docs_signed_and_up_to_date = false
+          else
+            report.docs[doc_id] = "OPTIONAL-NOT-SIGNED"
 
           continue
 
