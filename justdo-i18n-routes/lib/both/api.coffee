@@ -204,7 +204,7 @@ _.extend JustdoI18nRoutes.prototype,
     if not (route_def = @getI18nRouteDef route_name)
       return default_lang
     
-    all_supported_languages = _.keys APP.justdo_i18n.getSupportedLanguages()
+    all_supported_languages = APP.justdo_i18n.getSupportedLanguages "all", true
 
     path_specific_supported_languages = route_def.route_options?.supported_languages
 
