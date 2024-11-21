@@ -1,4 +1,4 @@
 {
   "supported_languages": ["af","az","id","ms","be","bg","bs","ca","cs","sr","da","de","el","et","es","eu","fr","hr","it","kk","sw","ky","lv","lb","lt","hu","mk","nl","nb","uz","pl","pt-PT","pt-BR","ru","ro","sq","sk","sl","fi","sv","vi","tg","tr","uk","hy","yi","he","ar","am","ne","hi","bn","ta","th","km","ko","ja","zh-CN","zh-TW"],
-  "comment": "# Note, if you change this list, it is very likely that you'll also need to update: application/lib/030-i18n/project-tap.i18n (Landing-app + Web-app)"
+  "comment": "# Note, if you change this list, it is very likely that you'll also need to update: justdo-devops/utils/default-dev-env-conf.bash and justdo-devops/nodes-launchers/launchers/justdo-sdk/default-config.bash"
 }
