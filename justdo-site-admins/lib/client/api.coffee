@@ -112,6 +112,9 @@ _.extend JustdoSiteAdmins.prototype,
     return days_until_license_expire < show_expiring_headsup_threshold
 
   showLicenseExpirationReminderIfExpiring: ->
+    if @client_type isnt "web-app"
+      return
+
     if not LICENSE_RV?
       return
       
