@@ -237,7 +237,7 @@ _.extend JustdoSiteAdmins.prototype,
     # you MUST also update the logic under 650-SDK-ONLY-grace-period.coffee.
     if licensed_users_crv? 
       is_user_licensed = licensed_users_crv.get().has(user._id) or is_user_deactivated or is_user_excluded
-      license_trial_period = license.license_trial_period
+      license_trial_period = license.trial_cutoff
       new_user_grace_period = license.new_user_grace_period
 
       if not is_user_licensed and (license_trial_period? or new_user_grace_period?)
