@@ -196,7 +196,7 @@ _.extend JustdoI18nRoutes.prototype,
   getPathWithoutLangPrefix: (url) -> @getStrippedPathAndLang(url).processed_path
   
   getPathSupportedLanguages: (path) ->
-    default_lang = JustdoI18n.default_lang
+    default_lang = [JustdoI18n.default_lang]
     path_without_lang = @getPathWithoutLangPrefix path
 
     # If route isn't i18n-able, we will return the default lang
@@ -223,6 +223,6 @@ _.extend JustdoI18nRoutes.prototype,
     
     # If path_specific_supported_languages is an array, we'll make sure it includes the default lang
     if _.isArray path_specific_supported_languages
-      path_specific_supported_languages = _.uniq path_specific_supported_languages.concat [default_lang]
+      path_specific_supported_languages = _.uniq path_specific_supported_languages.concat default_lang
     
     return _.intersection path_specific_supported_languages, all_supported_languages

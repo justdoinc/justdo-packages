@@ -29,7 +29,7 @@ _.extend JustdoI18n.prototype,
   
   _loadEnvSupportedLanguages: ->
     @env_supported_languages = 
-      default: JustdoI18n.default_lang
+      default: [JustdoI18n.default_lang]
     if Meteor.isClient
       @env_supported_languages_dep = new Tracker.Dependency()
 
