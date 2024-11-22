@@ -1,5 +1,7 @@
 _.extend JustdoSiteAdmins.prototype,
   _immediateInit: ->
+    @_markServerStarted()
+    @_ensureInstallationId()
     return
 
   _deferredInit: ->
@@ -9,6 +11,50 @@ _.extend JustdoSiteAdmins.prototype,
     @_setupMethods()
 
     return
+  
+  _logCpuUsage: ->
+    @cpu_usage =
+      time: new Date()
+      usage: process.cpuUsage()
+
+    return
+
+  getCpuUsagePercent: ->
+    if not @cpu_usage?
+      @_logCpuUsage()
+
+    now = new Date()
+    elapsed = now.getTime() - @cpu_usage.time.getTime()
+    if elapsed < 1000
+      return null
+
+    usage = process.cpuUsage(@cpu_usage.usage)
+    total_usage = usage.user + usage.system
+    
+    # time * 1000 because process.cpuUsage returns microseconds
+    percent = (100 * total_usage) / (elapsed * 1000)
+
+    return percent
+
+  _ensureInstallationId: ->
+    if not @getInstallationId()
+      APP.justdo_system_records.setRecord JustdoSiteAdmins.installation_id_system_record_key, 
+        value: Random.id()
+    
+    return
+  
+  getInstallationId: -> APP.justdo_system_records.getRecord(JustdoSiteAdmins.installation_id_system_record_key)?.value
+
+  _markServerStarted: ->
+    @start_time = new Date()
+    @_logCpuUsage()
+    @ssid = "#{@start_time.toISOString()}-#{Math.round(Math.random() * 100)}"
+    return
+
+  getAppUptime: ->
+    return new Date().getTime() - @start_time.getTime()
+  
+  getActiveSessionsCount: -> Meteor.server?.sessions?.size
 
   setUsersAsSiteAdmins: (users_ids, performing_user_id) ->
     # If performing_user_id is null we assume secured source
@@ -185,3 +231,77 @@ _.extend JustdoSiteAdmins.prototype,
     query = @addExcludedUsersClauseToQuery(query, performing_user_id) or query
 
     return _.map(Meteor.users.find(query, {fields: {_id: 1}}).fetch(), (user_doc) -> return user_doc._id)
+
+  registerPluginVitalsGenerator: (plugin_id, fn) ->
+    if not @plugin_vitals?
+      @plugin_vitals = {}
+    
+    if @plugin_vitals[plugin_id]?
+      throw @_error "invalid-argument", "Plugin with id #{plugin_id} is already registered"
+    
+    @plugin_vitals[plugin_id] = fn
+
+    return 
+  
+  _getPluginVitalsGenerator: -> @plugin_vitals
+
+  getServerVitalsSnapshot: (user_id) ->
+    if user_id?
+      @requireUserIsSiteAdmin(user_id)
+
+    if not @v8?
+      @v8 = Npm.require "v8"
+    if not @os?
+      @os = Npm.require "os"
+    
+    report = process.report.getReport()
+    mongo_stats = await APP.collections.Tasks.rawDatabase().stats()
+
+    snapshot = 
+      system:
+        # process.arch
+        arch: report.header.arch
+        # process.platform
+        platform: report.header.platform
+        # @os.release()
+        release: report.header.osRelease
+        # @os.hostname()
+        hostname: report.header.host
+        # @os.version()
+        uname: report.header.osVersion
+        # @os.cpus()
+        cpus: report.header.cpus
+        load_avg: @os.loadavg()
+        # @os.uptime()
+        uptime_ms: @os.uptime() * 1000
+        memory:
+          total: @os.totalmem()
+          free: @os.freemem()
+
+      mongo: await mongo_stats
+
+      process:
+        # process.versions
+        versions: report.header.componentVersions
+        uptime_ms: process.uptime() * 1000
+        memory: process.memoryUsage()
+        v8_heap_stats: @v8.getHeapStatistics()
+        cpu_usage_percent: @getCpuUsagePercent() # percentages
+
+      app:
+        version: JustdoHelpers.getAppVersion false
+        installation_id: @getInstallationId()
+        ssid: @ssid
+        current_time: new Date().toISOString()
+        license: global.LICENSE or null
+        start_time: @start_time.toISOString()
+        uptime_ms: @getAppUptime() # in milliseconds
+        active_sessions: @getActiveSessionsCount()
+        app_keys: _.keys APP
+      
+      plugins: {}
+
+    for plugin_id, fn of @_getPluginVitalsGenerator()
+      snapshot.plugins[plugin_id] = await fn()
+      
+    return snapshot

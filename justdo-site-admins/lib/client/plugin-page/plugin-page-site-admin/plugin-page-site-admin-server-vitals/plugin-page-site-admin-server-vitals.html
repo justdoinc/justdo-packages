@@ -1,0 +1,322 @@
+<template name="justdo_site_admin_server_vitals">
+  <div class="server-vitals-container">
+    <div class="server-info-container">
+      {{#with serverVitalSnapshot}}
+        <button class="btn btn-primary btn-sm refresh-server-vitals">Refresh Now</button>
+
+        <div class="server-section-title">Core Vitals</div>
+        <div class="server-info-wrapper">
+          {{#with system}}
+            <div class="server-info-section col px-0">
+              <div class="server-info">
+                <div class="server-info-label">Server Uptime</div>
+                <div class="server-info-value-wrapper">
+                  <div class="server-info-value">
+                    {{msToHumanReadable uptime_ms}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="server-info">
+                <div class="server-info-label">Load Average</div>
+                <div class="server-info-value-wrapper">
+                  <div class="server-info-value">
+                    {{#each load_avg}}
+                      {{#unless $eq @index 0}}
+                        
+                      {{/unless}}
+                      {{toFixed this 2}}
+                    {{/each}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {{/with}}
+          
+          {{#if $or system app}}
+            <div class="server-info-section col pr-0 pl-2">
+              {{#with system.memory}}
+                <div class="server-info">
+                  <div class="server-info-label">Memory Usage</div>
+                  <div class="server-info-value-wrapper">
+                    <div class="server-info-value">
+                      {{bytesToHumanReadable free}} Free, {{bytesToHumanReadable total}} Total
+                    </div>
+                  </div>
+                </div>
+              {{/with}}
+
+              {{#with app}}
+                <div class="server-info">
+                  <div class="server-info-label">Active Sessions</div>
+                  <div class="server-info-value-wrapper">
+                    <div class="server-info-value">{{active_sessions}}</div>
+                  </div>
+                </div>
+              {{/with}}
+            </div>
+          {{/if}}
+        </div>
+
+        {{#with system}}
+          <div class="server-section-title">System Info</div>
+          <div class="server-info-stat-wrapper">
+            <div class="server-info-stat">
+              <div class="server-info-stat-label">Uptime</div>
+              <span class="server-info-stat-value">
+                {{msToHumanReadable uptime_ms}}
+              </span>
+            </div>
+
+            <div class="server-info-stat">
+              <div class="server-info-stat-label">Kernel</div>
+              <span class="server-info-stat-value">
+                {{platform}} {{release}}
+              </span>
+            </div>
+
+            <div class="server-info-stat">
+              <div class="server-info-stat-label">Architecture</div>
+              <span class="server-info-stat-value">
+                {{arch}}
+              </span>
+            </div>
+
+            <div class="server-info-stat">
+              <div class="server-info-stat-label">Load Average</div>
+              <span class="server-info-stat-value">
+                {{#each load_avg}}
+                  {{#unless $eq @index 0}}
+                    
+                  {{/unless}}
+                  {{toFixed this 2}}
+                {{/each}}
+              </span>
+            </div>
+
+            {{#with memory}}
+              <div class="server-info-stat">
+                <div class="server-info-stat-label">Memory usage</div>
+                <span class="server-info-stat-value">
+                  {{bytesToHumanReadable free}} Free, {{bytesToHumanReadable total}} Total
+                </span>
+              </div>
+            {{/with}}
+          </div>
+        {{/with}}
+
+        {{#with mongo}}
+          <div class="server-section-title">MongoDB Info</div>
+          <div class="server-info-stat-wrapper">
+            <div class="server-info-stat">
+              <div class="server-info-stat-label">Disk Space</div>
+              <span class="server-info-stat-value">
+                {{bytesToHumanReadable fsUsedSize}} / {{bytesToHumanReadable fsTotalSize}}
+              </span>
+            </div>
+
+            <div class="server-info-stat">
+              <div class="server-info-stat-label">Database Name</div>
+              <span class="server-info-stat-value">
+                {{db}}
+              </span>
+            </div>
+
+            <div class="server-info-stat">
+              <div class="server-info-stat-label">Total Size</div>
+              <span class="server-info-stat-value">
+                {{bytesToHumanReadable totalSize}}
+              </span>
+            </div>
+
+            <div class="server-info-stat">
+              <div class="server-info-stat-label">Collections Count</div>
+              <span class="server-info-stat-value">
+                {{collections}}
+              </span>
+            </div>
+
+            <div class="server-info-stat">
+              <div class="server-info-stat-label">Objects Count</div>
+              <span class="server-info-stat-value">
+                {{objects}}
+              </span>
+            </div>
+          
+            <div class="server-info-stat">
+              <div class="server-info-stat-label">Total Objects Size</div>
+              <span class="server-info-stat-value">
+                {{bytesToHumanReadable dataSize}}
+              </span>
+            </div>
+          
+            <div class="server-info-stat">
+              <div class="server-info-stat-label">Avg. Objects Size</div>
+              <span class="server-info-stat-value">
+                {{bytesToHumanReadable avgObjSize}}
+              </span>
+            </div>
+
+            <div class="server-info-stat">
+              <div class="server-info-stat-label">Storage Size</div>
+              <span class="server-info-stat-value">
+                {{bytesToHumanReadable storageSize}}
+              </span>
+            </div>
+
+            <div class="server-info-stat">
+              <div class="server-info-stat-label">Indexes Count</div>
+              <span class="server-info-stat-value">
+                {{indexes}}
+              </span>
+            </div>
+
+            <div class="server-info-stat">
+              <div class="server-info-stat-label">Indexes Size</div>
+              <span class="server-info-stat-value">
+                {{bytesToHumanReadable indexSize}}
+              </span>
+            </div>
+          </div>
+        {{/with}}
+
+        {{#with process}}
+          <div class="server-section-title">Node.js Process Info</div>
+          <div class="server-info-stat-wrapper">
+            <div class="server-info-stat">
+              <div class="server-info-stat-label">Uptime</div>
+              <span class="server-info-stat-value">
+                {{msToHumanReadable uptime_ms}}
+              </span>
+            </div>
+
+            {{#if cpu_usage_percent}}
+              <div class="server-info-stat">
+                <div class="server-info-stat-label">Process CPU Usage</div>
+                <span class="server-info-stat-value">
+                  {{toFixed cpu_usage_percent 2}}%
+                </span>
+              </div>
+            {{/if}}
+
+            {{#with versions}}
+              <div class="server-info-stat">
+                <div class="server-info-stat-label">Node.js Version</div>
+                <span class="server-info-stat-value">
+                  {{node}}
+                </span>
+              </div>
+            {{/with}}
+
+            {{#with memory}}
+              <div class="server-info-stat">
+                <div class="server-info-stat-label">RSS</div>
+                <span class="server-info-stat-value">
+                  {{bytesToHumanReadable rss}}
+                </span>
+              </div>
+
+              <div class="server-info-stat">
+                <div class="server-info-stat-label">Heap Total</div>
+                <span class="server-info-stat-value">
+                  {{bytesToHumanReadable heapTotal}}
+                </span>
+              </div>
+
+              <div class="server-info-stat">
+                <div class="server-info-stat-label">Heap Used</div>
+                <span class="server-info-stat-value">
+                  {{bytesToHumanReadable heapUsed}}
+                </span>
+              </div>
+
+              <div class="server-info-stat">
+                <div class="server-info-stat-label">External</div>
+                <span class="server-info-stat-value">
+                  {{bytesToHumanReadable external}}
+                </span>
+              </div>         
+
+              <div class="server-info-stat">
+                <div class="server-info-stat-label">Array Buffers</div>
+                <span class="server-info-stat-value">
+                  {{bytesToHumanReadable arrayBuffers}}
+                </span>
+              </div>
+            {{/with}}
+          </div>
+        {{/with}}
+      
+        {{#with app}}
+          <div class="server-section-title">JustDo Info</div>
+          <div class="server-info-stat-wrapper">
+            <div class="server-info-stat">
+              <div class="server-info-stat-label">Uptime</div>
+              <span class="server-info-stat-value">
+                {{msToHumanReadable uptime_ms}}
+              </span>
+            </div>
+
+            <div class="server-info-stat">
+              <div class="server-info-stat-label">Current Time</div>
+              <span class="server-info-stat-value">
+                {{current_time}}
+              </span>
+            </div>
+
+            <div class="server-info-stat">
+              <div class="server-info-stat-label">Version</div>
+              <span class="server-info-stat-value">
+                {{version}}
+              </span>
+            </div>
+
+            <div class="server-info-stat">
+              <div class="server-info-stat-label">Installation ID</div>
+              <span class="server-info-stat-value">
+                {{installation_id}}
+              </span>
+            </div>
+
+            <div class="server-info-stat">
+              <div class="server-info-stat-label">SSID</div>
+              <span class="server-info-stat-value">
+                {{ssid}}
+              </span>
+            </div>
+
+            <div class="server-info-stat">
+              <div class="server-info-stat-label">Active Sessions</div>
+              <span class="server-info-stat-value">
+                {{active_sessions}}
+              </span>
+            </div>
+          
+          </div>
+        {{/with}}
+
+        {{#each pluginsData}}
+          <div class="server-section-title">{{name}}</div>
+          <div class="server-info-stat-wrapper">
+            {{#each data}}
+              <div class="server-info-stat">
+                <div class="server-info-stat-label">{{key}}</div>
+                <span class="server-info-stat-value">
+                  {{value}}
+                </span>
+              </div>
+            {{/each}}
+          </div>
+        {{/each}}
+
+      {{else}}
+        <div class="server-info-name">
+          <span class="server-name">Loading...</span>
+        </div>
+      {{/with}}
+
+      <div class="mb-5"></div>
+
+    </div>
+  </div>
+</template>

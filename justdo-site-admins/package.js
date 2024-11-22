@@ -96,6 +96,10 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/plugin-page/plugin-page-site-admin/plugin-page-site-admin-members/plugin-page-site-admin-user-dropdown.html", client);
   api.addFiles("lib/client/plugin-page/plugin-page-site-admin/plugin-page-site-admin-members/plugin-page-site-admin-user-dropdown.coffee", client);
 
+  api.addFiles("lib/client/plugin-page/plugin-page-site-admin/plugin-page-site-admin-server-vitals/plugin-page-site-admin-server-vitals.sass", client);
+  api.addFiles("lib/client/plugin-page/plugin-page-site-admin/plugin-page-site-admin-server-vitals/plugin-page-site-admin-server-vitals.html", client);
+  api.addFiles("lib/client/plugin-page/plugin-page-site-admin/plugin-page-site-admin-server-vitals/plugin-page-site-admin-server-vitals.coffee", client);
+
   api.addFiles("lib/modules/admins-list-public/admins-list-public-both.coffee", both);
   api.addFiles("lib/modules/admins-list-public/admins-list-public-client.coffee", client);
   api.addFiles("lib/modules/admins-list-public/admins-list-public-server.coffee", server);

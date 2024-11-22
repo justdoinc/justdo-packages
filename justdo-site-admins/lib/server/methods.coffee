@@ -31,4 +31,8 @@ _.extend JustdoSiteAdmins.prototype,
         # users_ids checks are performed inside self.reactivateUsers
         return self.reactivateUsers(users_ids, @userId)
 
+      saGetServerVitalsSnapshot: ->
+        # users_id check is performed inside self.getServerVitalsSnapshot
+        return self.getServerVitalsSnapshot(@userId)
+
     return

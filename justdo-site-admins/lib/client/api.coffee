@@ -2,6 +2,7 @@ _.extend JustdoSiteAdmins.prototype,
   _immediateInit: ->
     @registerGlobalTemplateHelpers()
     @_setupMembersPage()
+    @_setupServerVitalsPage()
     @site_admin_page_position = 100
 
     return
@@ -23,6 +24,10 @@ _.extend JustdoSiteAdmins.prototype,
           @registerSiteAdminsPage "members-ext", {template: "justdo_super_site_admin_members", title: "Members Ext.", position: 1}
         computation.stop()
       return
+    return
+
+  _setupServerVitalsPage: ->
+    @registerSiteAdminsPage "system-info", {template: "justdo_site_admin_server_vitals", position: 100}
     return
 
   registerSiteAdminsPage: (page_id, options) ->

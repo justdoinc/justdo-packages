@@ -1,0 +1,102 @@
+.server-vitals-container
+  overflow: auto
+  .server-info-container
+    flex-direction: column
+    align-items: flex-start
+
+  .server-info-name
+    display: flex
+    align-items: center
+    .jd-icon
+      color: #76869a
+      background-color: #e8edf3
+      stroke-width: 3
+      padding: 4px
+      cursor: pointer
+      opacity: 0
+      margin-left: 8px
+      &:hover
+        opacity: 1
+
+  .server-info-name
+    font-size: 24px
+    font-weight: 600
+    color: #3D495B
+
+  .server-section-title
+    font-size: 12px
+    color: #3D495B
+    text-transform: uppercase
+    font-weight: 600
+    margin-bottom: 12px
+    margin-top: 20px
+
+  .server-info-wrapper
+    display: flex
+    width: 800px
+
+  .server-info
+    display: flex
+    justify-content: space-between
+    color: rgba(53,68,97,.95)
+    padding: 8px 8px 8px 12px
+    background-color: #f0f4f9
+    margin-bottom: 8px
+    border-radius: 4px
+
+  .server-info-value-wrapper
+    display: flex
+    align-items: center
+
+  .server-info .divider
+    background-color: rgba(103, 112, 135, 0.26)
+    width: 1px
+    height: 16px
+    margin: 0px 6px 0px 12px
+
+  .server-info .jd-icon
+    color: #b1bdcd
+    stroke-width: 2px
+    padding: 4px
+    cursor: pointer
+    &:hover
+      color: #76869a
+      background-color: #e8edf3
+
+  .server-info-value
+    font-weight: 600
+    color: black
+
+  .server-info-stat-wrapper
+    width: 800px
+    border: 1px dashed
+    padding: 6px 20px
+    border-radius: 4px
+    border: 1px dashed rgba(142, 211, 255, 0.75)
+    background-color: rgba(223, 241, 255, 0.50)
+
+  .server-info-stat
+    display: flex
+    justify-content: space-between
+    padding: 8px 0
+
+  .server-info-stat + .server-info-stat
+    border-top: 1px dashed rgba(142, 211, 255, 0.75)
+
+  .server-info-stat-label
+    color: rgba(53, 68, 97, 0.95)
+
+  .server-info-stat-value
+    font-weight: 600
+    color: black
+    display: flex
+    align-items: center
+    .jd-icon
+      width: 20px
+      height: 20px
+      margin-left: 4px
+      stroke-width: 2
+      color: red
+
+  a.server-info-stat-value
+    text-decoration: underline

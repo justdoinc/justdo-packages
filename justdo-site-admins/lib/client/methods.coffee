@@ -16,3 +16,6 @@ _.extend JustdoSiteAdmins.prototype,
 
   reactivateUsers: (users_ids, cb) ->
     return Meteor.call("saReactivateUsers", users_ids, cb)
+
+  getServerVitalsSnapshot: (cb) ->
+    return Meteor.call("saGetServerVitalsSnapshot", cb)
