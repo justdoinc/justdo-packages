@@ -52,7 +52,7 @@ Template.justdo_site_admin_server_vitals.events
       file_name = "justdo-server-vitals-#{new Date().toISOString().replaceAll(":", "_")}.json"
       data_str = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(res))
       download_link = document.createElement("a")
-      download_link.target = '_blank'
+      download_link.target = "_blank"
       download_link.href = data_str
       download_link.download = file_name
 
