@@ -118,23 +118,40 @@ _.extend JustdoHelpers,
 
     return html_str
 
+  numberToHumanReadable: (number, options) ->
+    if _.isString number
+      number = parseFloat number
+
+    if (precision = options?.precision)?
+      number = parseFloat(number.toFixed precision)
+
+    return number.toLocaleString()
+
   bytesToHumanReadable: (size, kb=1000) ->
     mb = kb ** 2
     gb = kb ** 3
 
+    unit = "byte"
+
     if size >= gb
-      size = (size / gb).toFixed(2).toLocaleString() + " GB"
+      size = size / gb
+      unit = "GB"
     else if size >= mb
-      size = (size / mb).toFixed(2).toLocaleString() + " MB"
+      size = size / mb
+      unit = "MB"
     else if size >= kb
-      size = (size / kb).toFixed(2).toLocaleString() + " KB"
+      size = size / kb
+      unit = "KB"
     else if size > 1
-      size = size.toFixed(2).toLocaleString() + " bytes"
+      unit = "bytes"
     else if size == 1
-      size = size + " byte"
+      size = size
     else
-      size = "0 byte"
-    return size
+      size = 0
+    
+    size = @numberToHumanReadable size, {precision: 2}
+
+    return "#{size} #{unit}"
 
   useDarkTextColorForBackground: (background_color) ->
     # true use dark text color
