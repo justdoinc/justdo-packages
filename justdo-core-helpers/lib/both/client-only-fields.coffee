@@ -31,6 +31,9 @@ _.extend JustdoCoreHelpers,
   getFieldsByUpdateTypeFromModifier: (collection, modifier) ->
     # Will return an object of the form: {regular: [], client_only: []}
 
-    all_fields_involved = CollectionHooks.getFields(modifier)
+    if not (collection_hooks_ref = Package["matb33:collection-hooks"].CollectionHooks)?
+      throw new Meteor.Error("collection-hooks-not-found", "The collection-hooks package is required for this method to work. You are likely calling getFieldsByUpdateTypeFromModifier too early.") # Note a dependency to collection-hooks cannot be added due to circular dependency issues.
+
+    all_fields_involved = collection_hooks_ref.getFields(modifier)
 
     return JustdoCoreHelpers.getFieldsByUpdateType(collection, all_fields_involved)
