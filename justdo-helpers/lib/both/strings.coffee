@@ -123,13 +123,13 @@ _.extend JustdoHelpers,
     gb = kb ** 3
 
     if size >= gb
-      size = (size / gb).toFixed(2) + " GB"
+      size = (size / gb).toFixed(2).toLocaleString() + " GB"
     else if size >= mb
-      size = (size / mb).toFixed(2) + " MB"
+      size = (size / mb).toFixed(2).toLocaleString() + " MB"
     else if size >= kb
-      size = (size / kb).toFixed(2) + " KB"
+      size = (size / kb).toFixed(2).toLocaleString() + " KB"
     else if size > 1
-      size = size.toFixed(2) + " bytes"
+      size = size.toFixed(2).toLocaleString() + " bytes"
     else if size == 1
       size = size + " byte"
     else
