@@ -15,5 +15,5 @@ _.extend JustdoI18n,
   supported_language_group_types: [
     "all"
     "core"
-    "default"
+    "default_lang_only"
   ]
