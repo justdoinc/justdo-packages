@@ -247,7 +247,18 @@ _.extend JustdoSiteAdmins.prototype,
 
   getServerVitalsShrinkWrapped: (user_id) ->
     snapshot = await @getServerVitalsSnapshot user_id
+    
+    if snapshot.plugins?
+      plugin_obj = {}
+      for plugin_data in snapshot.plugins
+        plugin_obj[plugin_data.plugin_id] = {}
+        for data in plugin_data.data
+          plugin_obj[plugin_data.plugin_id][data.id] = data.value
+    
+    snapshot.plugins = plugin_obj
 
+    return snapshot
+    
     # XXX 1) convert .plugins to be of the form:
     # {
     #   "plugin-id": {

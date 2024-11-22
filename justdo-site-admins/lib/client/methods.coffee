@@ -19,3 +19,6 @@ _.extend JustdoSiteAdmins.prototype,
 
   getServerVitalsSnapshot: (cb) ->
     return Meteor.call("saGetServerVitalsSnapshot", cb)
+  
+  getServerVitalsShrinkWrapped: (cb) ->
+    return Meteor.call("saGetServerVitalsShrinkWrapped", cb)

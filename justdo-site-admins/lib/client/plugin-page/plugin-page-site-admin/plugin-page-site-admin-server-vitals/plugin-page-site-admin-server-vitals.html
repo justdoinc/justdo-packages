@@ -3,6 +3,11 @@
     <div class="server-info-container">
       {{#with serverVitalSnapshot}}
         <button class="btn btn-primary btn-sm refresh-server-vitals">Refresh Now</button>
+        <button class="btn download-report">
+          <svg class="jd-icon">
+            <use xlink:href="/layout/icons-feather-sprite.svg#download"/>
+          </svg>
+        </button>
 
         <div class="server-section-title">Core Vitals</div>
         <div class="server-info-wrapper">
