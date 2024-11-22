@@ -118,15 +118,18 @@ _.extend JustdoHelpers,
 
     return html_str
 
-  bytesToHumanReadable: (size) ->
-    if size >= 1000000000
-      size = (size / 1000000000).toFixed(2) + " GB"
-    else if size >= 1000000
-      size = (size / 1000000).toFixed(2) + " MB"
-    else if size >= 1000
-      size = (size / 1000).toFixed(2) + " KB"
+  bytesToHumanReadable: (size, kb=1000) ->
+    mb = kb ** 2
+    gb = kb ** 3
+
+    if size >= gb
+      size = (size / gb).toFixed(2) + " GB"
+    else if size >= mb
+      size = (size / mb).toFixed(2) + " MB"
+    else if size >= kb
+      size = (size / kb).toFixed(2) + " KB"
     else if size > 1
-      size = size + " bytes"
+      size = size.toFixed(2) + " bytes"
     else if size == 1
       size = size + " byte"
     else
