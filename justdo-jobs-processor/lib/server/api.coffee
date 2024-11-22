@@ -303,13 +303,34 @@ _.extend JustdoJobsProcessor.prototype,
     self = @
 
     APP.justdo_site_admins.registerPluginVitalsGenerator "justdo-jobs-processor", ->
-      data = 
-        "Group ID": self.group_uid
-        "Group version": self.group_version
-        "In control": self.we_in_control
-        "Owner flag": JustdoJobsProcessor.jobs_processor_collection.findOne({_id: self.group_uid}, {jd_analytics_skip_logging: true})?.owner_flag
-        "Our recent flag": self.our_recent_flag
-        "Our recent flag being replaced": self.our_recent_flag_being_replaced
-      return data
+      return {
+        title: "Justdo Jobs Processor"
+        data: {
+          "group-id": {
+            label: "Group ID"
+            value: self.group_uid
+          }
+          "group-version": {
+            label: "Group Version"
+            value: self.group_version
+          }
+          "in-control": {
+            label: "In Control"
+            value: self.we_in_control
+          }
+          "owner-flag": {
+            label: "Owner Flag"
+            value: JustdoJobsProcessor.jobs_processor_collection.findOne({_id: self.group_uid}, {jd_analytics_skip_logging: true})?.owner_flag
+          }
+          "our-recent-flag": {
+            label: "Our Recent Flag"
+            value: self.our_recent_flag
+          }
+          "our-recent-flag-being-replaced": {
+            label: "Our Recent Flag Being Replaced"
+            value: self.our_recent_flag_being_replaced
+          }
+        }
+      }
     
     return
