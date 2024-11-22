@@ -50,7 +50,7 @@ Template.justdo_site_admin_server_vitals.events
         return
 
       file_name = "justdo-server-vitals-#{new Date().toISOString().replaceAll(":", "_")}.json"
-      data_str = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(res))
+      data_str = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(res, null, 2))
       download_link = document.createElement("a")
       download_link.target = "_blank"
       download_link.href = data_str
