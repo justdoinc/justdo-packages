@@ -295,12 +295,12 @@
           </div>
         {{/with}}
 
-        {{#each pluginsData}}
-          <div class="server-section-title">{{name}}</div>
+        {{#each plugins}}
+          <div class="server-section-title">{{title}}</div>
           <div class="server-info-stat-wrapper">
             {{#each data}}
               <div class="server-info-stat">
-                <div class="server-info-stat-label">{{key}}</div>
+                <div class="server-info-stat-label">{{label}}</div>
                 <span class="server-info-stat-value">
                   {{value}}
                 </span>

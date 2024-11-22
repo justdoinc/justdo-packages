@@ -316,9 +316,13 @@ _.extend JustdoSiteAdmins.prototype,
         active_sessions: @getActiveSessionsCount()
         app_keys: _.keys APP
       
-      plugins: {}
+      plugins: []
 
     for plugin_id, fn of @_getPluginVitalsGenerator()
-      snapshot.plugins[plugin_id] = await fn()
+      payload = await fn()
+      snapshot.plugins.push
+        plugin_id: plugin_id 
+        title: payload.title
+        data: payload.data
       
     return snapshot

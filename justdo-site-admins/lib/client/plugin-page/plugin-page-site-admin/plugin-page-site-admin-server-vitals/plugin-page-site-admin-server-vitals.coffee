@@ -36,18 +36,6 @@ Template.justdo_site_admin_server_vitals.helpers
       return "N/A"
   
     return JustdoHelpers.bytesToHumanReadable bytes, 1024
-  
-  pluginsData: ->
-    plugins = []
-    if not _.isEmpty @plugins
-      for plugin_name, plugin_data of @plugins
-        data = []
-        for key, value of plugin_data
-          data.push {key, value}
-          
-        plugins.push {name: plugin_name, data}
-
-    return plugins
 
 Template.justdo_site_admin_server_vitals.events
   "click .refresh-server-vitals": (e, tpl) ->
