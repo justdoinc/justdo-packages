@@ -41,6 +41,7 @@ Package.onUse(function (api) {
   // Make weak use of Decimal type on client
   api.use('mongo-decimal', 'client', {weak: true});
   api.use('mongo-decimal', 'server');
+  api.use('justdoinc:justdo-core-helpers@1.0.0', ['client', 'server']);
 
   api.use('underscore', 'server');
 

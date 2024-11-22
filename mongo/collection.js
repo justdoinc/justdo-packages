@@ -686,7 +686,7 @@ Object.assign(Mongo.Collection.prototype, {
 
     const wrappedCallback = wrapCallback(callback);
   
-    const fields_by_update_type = JustdoHelpers.getFieldsByUpdateTypeFromModifier(this, modifier);
+    const fields_by_update_type = JustdoCoreHelpers.getFieldsByUpdateTypeFromModifier(this, modifier);
 
     if (fields_by_update_type.regular.length > 0 && fields_by_update_type.client_only.length > 0) {
       throw new Error("A mix of client-only fields (" + fields_by_update_type.client_only.join(", ") + ") and regular fields (" + fields_by_update_type.regular.join(", ") + ") received in the same update request. At the moment, such a call is not supported. Please separate the update to a client-side only fields update and to a regular fields only update.");
