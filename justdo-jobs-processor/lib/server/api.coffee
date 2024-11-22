@@ -108,6 +108,8 @@ _.extend JustdoJobsProcessor.prototype,
       return
     , @take_control_loop_interval
 
+    APP.on "justdo-site-admins-initiated", => @_registerPluginVitals()
+
     return
 
   takeControl: ->
@@ -296,4 +298,18 @@ _.extend JustdoJobsProcessor.prototype,
     @_ensureIndexesExists()
 
     return
+  
+  _registerPluginVitals: ->
+    self = @
 
+    APP.justdo_site_admins.registerPluginVitalsGenerator "justdo-jobs-processor", ->
+      data = 
+        "Group ID": self.group_uid
+        "Group version": self.group_version
+        "In control": self.we_in_control
+        "Owner flag": JustdoJobsProcessor.jobs_processor_collection.findOne({_id: self.group_uid}, {jd_analytics_skip_logging: true})?.owner_flag
+        "Our recent flag": self.our_recent_flag
+        "Our recent flag being replaced": self.our_recent_flag_being_replaced
+      return data
+    
+    return
