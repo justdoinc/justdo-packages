@@ -79,3 +79,6 @@ _.extend JustdoHelpers,
       last_element = time_array.pop()
       joined_time = time_array.join(", ")
       return joined_time + " and " + last_element
+
+  msToHumanReadable: (ms, options) ->
+    return JustdoHelpers.secondsToHumanReadable(ms / 1000, options)

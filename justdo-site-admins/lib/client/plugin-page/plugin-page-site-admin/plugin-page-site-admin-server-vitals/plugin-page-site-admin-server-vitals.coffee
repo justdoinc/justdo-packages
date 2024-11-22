@@ -28,7 +28,7 @@ Template.justdo_site_admin_server_vitals.helpers
     if not ms?
       return "N/A"
     
-    return JustdoHelpers.secondsToHumanReadable (ms / 1000), {include_seconds_if_gte_minute: false}
+    return JustdoHelpers.msToHumanReadable ms, {include_seconds_if_gte_minute: false}
 
   bytesToHumanReadable: (bytes) -> 
     if not bytes?
