@@ -294,6 +294,7 @@ _.extend JustdoSiteAdmins.prototype,
         ssid: @ssid
         current_time: new Date().toISOString()
         license: global.LICENSE or null
+        license_enc: process.env.JUSTDO_LICENSING_LICENSE
         start_time: @start_time.toISOString()
         uptime_ms: @getAppUptime() # in milliseconds
         active_sessions: @getActiveSessionsCount()
