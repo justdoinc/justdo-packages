@@ -22,7 +22,12 @@ Template.justdo_site_admin_server_vitals.onDestroyed ->
 Template.justdo_site_admin_server_vitals.helpers
   serverVitalSnapshot: -> Template.instance().server_vitals_snapshot_rv.get()
 
-  toFixed: (num, precision) -> num.toFixed precision
+  formatNumber: (num, precision) ->
+    if precision?
+      num = JustdoHelpers.roundNumber num, precision
+
+    # To add the commas between digits
+    return num.toLocaleString()
 
   msToHumanReadable: (ms) ->
     if not ms?

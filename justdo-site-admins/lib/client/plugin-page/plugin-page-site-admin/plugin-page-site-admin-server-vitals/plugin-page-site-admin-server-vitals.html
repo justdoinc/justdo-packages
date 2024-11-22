@@ -25,7 +25,7 @@
                       {{#unless $eq @index 0}}
                         
                       {{/unless}}
-                      {{toFixed this 2}}
+                      {{formatNumber this 2}}
                     {{/each}}
                   </div>
                 </div>
@@ -50,7 +50,7 @@
                 <div class="server-info">
                   <div class="server-info-label">Active Sessions</div>
                   <div class="server-info-value-wrapper">
-                    <div class="server-info-value">{{active_sessions}}</div>
+                    <div class="server-info-value">{{formatNumber active_sessions}}</div>
                   </div>
                 </div>
               {{/with}}
@@ -89,7 +89,7 @@
                   {{#unless $eq @index 0}}
                     
                   {{/unless}}
-                  {{toFixed this 2}}
+                  {{formatNumber this 2}}
                 {{/each}}
               </span>
             </div>
@@ -132,14 +132,14 @@
             <div class="server-info-stat">
               <div class="server-info-stat-label">Collections Count</div>
               <span class="server-info-stat-value">
-                {{collections}}
+                {{formatNumber collections}}
               </span>
             </div>
 
             <div class="server-info-stat">
               <div class="server-info-stat-label">Objects Count</div>
               <span class="server-info-stat-value">
-                {{objects}}
+                {{formatNumber objects}}
               </span>
             </div>
           
@@ -167,7 +167,7 @@
             <div class="server-info-stat">
               <div class="server-info-stat-label">Indexes Count</div>
               <span class="server-info-stat-value">
-                {{indexes}}
+                {{formatNumber indexes}}
               </span>
             </div>
 
@@ -194,7 +194,7 @@
               <div class="server-info-stat">
                 <div class="server-info-stat-label">Process CPU Usage</div>
                 <span class="server-info-stat-value">
-                  {{toFixed cpu_usage_percent 2}}%
+                  {{formatNumber cpu_usage_percent 2}}%
                 </span>
               </div>
             {{/if}}
