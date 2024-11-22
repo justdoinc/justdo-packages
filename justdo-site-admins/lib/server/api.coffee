@@ -246,7 +246,11 @@ _.extend JustdoSiteAdmins.prototype,
   _getPluginVitalsGenerator: -> @plugin_vitals
 
   getServerVitalsShrinkWrapped: (user_id) ->
-    # 1) convert .plugins to be of the form:
+
+
+    snapshot = await @getServerVitalsSnapshot user_id
+    
+    # Convert .plugins to be of the form:
     # {
     #   "plugin-id": {
     #     "data-key": value
@@ -254,11 +258,6 @@ _.extend JustdoSiteAdmins.prototype,
     #     "data-key": value
     #   }
     # }
-    # 2) Downloader button should call this method and download the snapshot as a JSON file
-    # Filename: justdo-server-vitals-2024-11-22T05_23_03Z.json
-
-    snapshot = await @getServerVitalsSnapshot user_id
-    
     plugin_obj = {}
     if not _.isEmpty snapshot.plugins
       for plugin_data in snapshot.plugins
