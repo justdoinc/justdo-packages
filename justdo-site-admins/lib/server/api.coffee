@@ -211,7 +211,7 @@ _.extend JustdoSiteAdmins.prototype,
       "profile.first_name": 1
       "profile.last_name": 1
     
-    licensed_user_ids = @getLicensedUserIds?()
+    licensed_user_ids = @getLicensedUserIds? APP.accounts.getRegexForExcludedEmailDomains?()
 
     return Meteor.users.find(query, {fields: fields, sort: sort_criteria}).map (user) ->
       # _publicBasicUserInfoCursorDataOutputTransformer will remove the invited_by field which in the context of SSA
