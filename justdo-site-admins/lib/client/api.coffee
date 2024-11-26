@@ -171,9 +171,6 @@ _.extend JustdoSiteAdmins.prototype,
   _getMembersPageUserRemarks: (user) ->
     remarks = []
 
-    if not (license = LICENSE_RV?.get())?
-      return remarks.join(" ")
-
     # Excluded remarks can co-exist with site-admin or deactivated, but not expiring/expired.
     is_user_excluded = false
     if APP.accounts.isUserExcluded?(user)
@@ -189,25 +186,26 @@ _.extend JustdoSiteAdmins.prototype,
     if (is_user_deactivated = APP.accounts.isUserDeactivated(user))
       remarks.push """<span class="badge badge-secondary rounded-0 mr-1">Deactivated</span>"""
 
-    is_user_licensed = user.licensed or is_user_deactivated or is_user_excluded
-    license_trial_period = license.trial_cutoff
-    new_user_grace_period = license.new_user_grace_period
+    if (license = LICENSE_RV?.get())?
+      is_user_licensed = user.licensed or is_user_deactivated or is_user_excluded
+      license_trial_period = license.trial_cutoff
+      new_user_grace_period = license.new_user_grace_period
 
-    if not is_user_licensed and (license_trial_period? or new_user_grace_period?)
-      # If user isn't licensed, check if the furthest of user grace period and license grace period has passed
-      user_grace_period_ends = moment().subtract(1, "days")
-      if new_user_grace_period?
-        user_grace_period_ends = moment(user.createdAt).add(new_user_grace_period, "days")
-      
-      license_trial_period_ends = moment().subtract(1, "days")
-      if license_trial_period?
-        license_trial_period_ends = moment(license_trial_period, "YYYY-MM-DD")
+      if not is_user_licensed and (license_trial_period? or new_user_grace_period?)
+        # If user isn't licensed, check if the furthest of user grace period and license grace period has passed
+        user_grace_period_ends = moment().subtract(1, "days")
+        if new_user_grace_period?
+          user_grace_period_ends = moment(user.createdAt).add(new_user_grace_period, "days")
+        
+        license_trial_period_ends = moment().subtract(1, "days")
+        if license_trial_period?
+          license_trial_period_ends = moment(license_trial_period, "YYYY-MM-DD")
 
-      if (furthest_grace_period = moment(Math.max user_grace_period_ends, license_trial_period_ends)) >= moment()
-        is_user_licensed = true
-        remarks.push """<span class="badge badge-warning rounded-0 mr-1">License expires on #{furthest_grace_period.format(JustdoHelpers.getUserPreferredDateFormat())}</span>"""
+        if (furthest_grace_period = moment(Math.max user_grace_period_ends, license_trial_period_ends)) >= moment()
+          is_user_licensed = true
+          remarks.push """<span class="badge badge-warning rounded-0 mr-1">License expires on #{furthest_grace_period.format(JustdoHelpers.getUserPreferredDateFormat())}</span>"""
 
-    if not is_user_licensed
-      remarks.push """<span class="badge badge-danger rounded-0 mr-1">License expired</span>"""
+      if not is_user_licensed
+        remarks.push """<span class="badge badge-danger rounded-0 mr-1">License expired</span>"""
 
     return remarks.join(" ")
