@@ -4,10 +4,6 @@ Template.justdo_site_admin_members.onCreated ->
   self = @
 
   @all_site_users_rv = new ReactiveVar([])
-  @licensed_users_crv = JustdoHelpers.newComputedReactiveVar null, ->
-    all_site_users = self.all_site_users_rv.get()
-
-    return APP.justdo_site_admins._getLicensedUsersSet all_site_users
 
   @users_filter_term_rv = new ReactiveVar(null)
 
@@ -32,7 +28,7 @@ Template.justdo_site_admin_members.onCreated ->
   @pseudo_fields =
     name: (user) -> JustdoHelpers.displayName(user)
     email: (user) -> JustdoHelpers.getUserMainEmail(user)
-    remarks: (user) -> APP.justdo_site_admins._getMembersPageUserRemarks user, self.licensed_users_crv
+    remarks: (user) -> APP.justdo_site_admins._getMembersPageUserRemarks user
 
   @all_sorted_filtered_site_users_rv = new ReactiveVar([])
   @autorun =>
@@ -127,7 +123,10 @@ Template.justdo_site_admin_members.helpers
 
   unlimitedLicense: -> LICENSE_RV?.get().unlimited_users
 
-  licensedUsersCount: -> Template.instance().licensed_users_crv.get().size
+  licensedUsersCount: -> 
+    users = Template.instance().all_site_users_rv.get()
+    licensed_users = _.filter users, (user) -> user.licensed
+    return _.size licensed_users
 
   licensePermittedUsers: -> LICENSE_RV?.get().licensed_users
 

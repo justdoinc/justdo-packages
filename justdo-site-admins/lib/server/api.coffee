@@ -210,6 +210,8 @@ _.extend JustdoSiteAdmins.prototype,
       "deactivated": -1
       "profile.first_name": 1
       "profile.last_name": 1
+    
+    licensed_user_ids = @getLicensedUserIds?()
 
     return Meteor.users.find(query, {fields: fields, sort: sort_criteria}).map (user) ->
       # _publicBasicUserInfoCursorDataOutputTransformer will remove the invited_by field which in the context of SSA
@@ -219,6 +221,9 @@ _.extend JustdoSiteAdmins.prototype,
       APP.accounts._publicBasicUserInfoCursorDataOutputTransformer user, performing_user_id
 
       user.invited_by = invited_by
+
+      if licensed_user_ids? and (user._id in licensed_user_ids)
+        user.licensed = true
 
       return user
 
@@ -246,8 +251,6 @@ _.extend JustdoSiteAdmins.prototype,
   _getPluginVitalsGenerator: -> @plugin_vitals
 
   getServerVitalsShrinkWrapped: (user_id) ->
-
-
     snapshot = await @getServerVitalsSnapshot user_id
     
     # Convert .plugins to be of the form:
