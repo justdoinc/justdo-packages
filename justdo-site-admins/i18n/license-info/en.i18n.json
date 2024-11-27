@@ -7,5 +7,5 @@
   "license_info_renew_license_instructions": "To renew your license, please click the \"Renew License\" button below. Our support team is here to help you with any questions.<br><br>Thank you for being a valued member of the JustDo community. We're continuously working on new features to improve your experience!",
   "license_info_please_contact_site_admins": "For more information, please reach out to your site administrators.",
   "license_info_valid_until_and_licensed_users": "This domain is licensed until <b>__date__</b> for <b>__count__</b> users. <br> Thank you for being a valued member of the JustDo community. We're continuously working on new features to improve your experience!",
-  "license_info_expiring_in_days": "(Expiring in __days__)"
+  "license_info_expiring_in_days": "(Expiring __days_string__)"
 }
