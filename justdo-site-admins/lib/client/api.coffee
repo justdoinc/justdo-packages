@@ -240,17 +240,9 @@ _.extend JustdoSiteAdmins.prototype,
       license_trial_period = license.trial_cutoff
       new_user_grace_period = license.new_user_grace_period
 
-      if not is_user_licensed and (license_trial_period? or new_user_grace_period?)
-        # If user isn't licensed, check if the furthest of user grace period and license grace period has passed
-        user_grace_period_ends = moment().subtract(1, "days")
-        if new_user_grace_period?
-          user_grace_period_ends = moment(user.createdAt).add(new_user_grace_period, "days")
-        
-        license_trial_period_ends = moment().subtract(1, "days")
-        if license_trial_period?
-          license_trial_period_ends = moment(license_trial_period, "YYYY-MM-DD")
-
-        if (furthest_grace_period = moment(Math.max user_grace_period_ends, license_trial_period_ends)) >= moment()
+      if not is_user_licensed
+        furthest_grace_period = @getFurthestGracePeriodForUser? license, user.createdAt
+        if furthest_grace_period? and (furthest_grace_period >= moment())
           is_user_licensed = true
           remarks.push """<span class="badge badge-warning rounded-0 mr-1">License expires on #{furthest_grace_period.format(JustdoHelpers.getUserPreferredDateFormat())}</span>"""
     # !!!END IMPORTANT!!!
