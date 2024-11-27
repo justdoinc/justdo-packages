@@ -222,10 +222,7 @@ _.extend JustdoSiteAdmins.prototype,
 
       user.invited_by = invited_by
 
-      is_user_excluded = APP.accounts.isUserExcluded? user
-      is_user_licensed = licensed_user_ids? and (user._id in licensed_user_ids)
-
-      if is_user_licensed or is_user_excluded
+      if licensed_user_ids? and (user._id in licensed_user_ids)
         user.licensed = true
 
       return user
