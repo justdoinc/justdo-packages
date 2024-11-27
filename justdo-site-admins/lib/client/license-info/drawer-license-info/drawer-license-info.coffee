@@ -11,6 +11,8 @@ Template.drawer_license_info.helpers
     
     return
   
+  isExpired: -> APP.justdo_site_admins.isLicenseExpired()
+  
   isExpiringInDays: ->
     if APP.justdo_site_admins.isLicenseExpiring()
       return moment(LICENSE_RV.get().expire_on, "YYYY-MM-DD").fromNow()

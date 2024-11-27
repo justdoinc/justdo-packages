@@ -121,8 +121,10 @@ _.extend JustdoSiteAdmins.prototype,
     if not (license = LICENSE_RV?.get())?
       return
 
-    shutdown_date_moment = moment(license.expire_on, "YYYY-MM-DD").add(license.shutdown_grace, "days")
-
+    shutdown_date_moment = moment(license.expire_on, "YYYY-MM-DD")
+    if (shutdown_grace = license.shutdown_grace)?
+      shutdown_date_moment.add(license.shutdown_grace, "days")
+    
     return shutdown_date_moment.format JustdoHelpers.getUserPreferredDateFormat()
 
   showLicenseExpirationReminderIfExpiring: ->
