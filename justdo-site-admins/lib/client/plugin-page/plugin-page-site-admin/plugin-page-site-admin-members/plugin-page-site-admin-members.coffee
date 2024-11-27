@@ -127,11 +127,15 @@ Template.justdo_site_admin_members.helpers
 
   unlimitedLicense: -> LICENSE_RV?.get().unlimited_users
 
+  isLicenseExpired: -> APP.justdo_site_admins.isLicenseExpired()
+
   licensedUsersCount: -> Template.instance().licensed_users_crv.get().size
 
   licensePermittedUsers: -> LICENSE_RV?.get().licensed_users
 
   licenseValidUntil: -> moment(LICENSE_RV?.get().expire_on, "YYYY-MM-DD").format JustdoHelpers.getUserPreferredDateFormat()
+
+  licenseOperationalUntil: -> APP.justdo_site_admins.getShutdownDate()
 
   siteUsers: ->
     tpl = Template.instance()

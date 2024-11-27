@@ -44,6 +44,15 @@
           <div class="site-admins-info-value">
             {{{xssGuard licenseValidUntil}}}
           </div>
+
+          {{#if isLicenseExpired}}
+            <div class="site-admins-info-divider"></div>
+            Operational until:
+            <div class="site-admins-info-value">
+              {{{xssGuard licenseOperationalUntil}}}
+            </div>
+          {{/if}}
+
         {{/if}}
       </div>
     </div>

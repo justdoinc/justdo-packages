@@ -111,6 +111,20 @@ _.extend JustdoSiteAdmins.prototype,
     days_until_license_expire = (new Date(license.expire_on) - new Date()) / (1000 * 60 * 60 * 24)
     return days_until_license_expire < show_expiring_headsup_threshold
 
+  isLicenseExpired: ->
+    if not (license = LICENSE_RV?.get())?
+      return false
+
+    return new Date(license.expire_on) < new Date()
+  
+  getShutdownDate: ->
+    if not (license = LICENSE_RV?.get())?
+      return
+
+    shutdown_date_moment = moment(license.expire_on, "YYYY-MM-DD").add(license.shutdown_grace, "days")
+
+    return shutdown_date_moment.format JustdoHelpers.getUserPreferredDateFormat()
+
   showLicenseExpirationReminderIfExpiring: ->
     if @client_type isnt "web-app"
       return
@@ -136,10 +150,13 @@ _.extend JustdoSiteAdmins.prototype,
 
     is_user_site_admin = @isCurrentUserSiteAdmin()
     is_expiring = @isLicenseExpiring()
+    is_expired = @isLicenseExpired()
 
-    modal_template = JustdoHelpers.renderTemplateInNewNode Template.license_info_modal, {is_expiring}
+    modal_template = JustdoHelpers.renderTemplateInNewNode Template.license_info_modal, {is_expiring, is_expired}
     title = TAPi18n.__ "license_info_license_information"
-    if is_expiring
+    if is_expired
+      title = TAPi18n.__ "license_info_your_license_has_expired"
+    else if is_expiring
       title = TAPi18n.__ "license_info_your_license_is_about_to_expire"
     bootbox_options = 
       size: "extra-large"
@@ -148,7 +165,7 @@ _.extend JustdoSiteAdmins.prototype,
       rtl_ready: true
       message: modal_template.node
 
-    if is_user_site_admin and is_expiring
+    if is_user_site_admin and (is_expiring or is_expired)
       bootbox_options.buttons =
         renew:
           label: TAPi18n.__ "license_info_renew_license"
