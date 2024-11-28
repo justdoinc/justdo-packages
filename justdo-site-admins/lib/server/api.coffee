@@ -60,7 +60,7 @@ _.extend JustdoSiteAdmins.prototype,
     if not @isLicenseEnabledEnvironment()
       return {state: "none"}
     
-    return {state: "active", license}
+    return {state: "active", license: global.LICENSE}
 
   isLicenseEnabledEnvironment: -> global.LICENSE?
 
