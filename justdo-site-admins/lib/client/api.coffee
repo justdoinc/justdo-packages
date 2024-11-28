@@ -46,7 +46,7 @@ _.extend JustdoSiteAdmins.prototype,
     return
   
   getLicense: -> 
-    if not LICENSE_RV?
+    if not @isLicenseEnabledEnvironment()
       return {state: "none"}
     
     if not (license = LICENSE_RV.get())?
@@ -54,7 +54,7 @@ _.extend JustdoSiteAdmins.prototype,
     
     return {state: "active", license}
 
-  isLicenseEnabledEnvironment: -> @getLicense().state isnt "none"
+  isLicenseEnabledEnvironment: -> LICENSE_RV?
 
   registerSiteAdminsPage: (page_id, options) ->
     self = @
