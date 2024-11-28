@@ -191,7 +191,23 @@ _.extend JustdoSiteAdmins.prototype,
 
     return
 
-  addExcludedUsersClauseToQuery: (query, performing_user_id) -> query
+  addExcludedUsersClauseToQuery: (query, performing_user_id) ->
+    if not APP.accounts.getRegexForExcludedEmailDomains?
+      return query
+
+    # If licensing is enabled for the domain, don't send over the excluded users.
+    if @isLicenseEnabledEnvironment()
+      if performing_user_id?
+        # If performing_user_id is provided, prevent excluding excluded user if the user itself is an excluded user
+        check performing_user_id, String
+        performing_user = Meteor.users.findOne(performing_user_id, {emails: 1})
+        if APP.accounts.isUserExcluded? performing_user
+          return query
+
+      query["emails.address"] =
+        $not: APP.accounts.getRegexForExcludedEmailDomains()
+
+    return query
 
   getAllUsers: (performing_user_id) ->
     check performing_user_id, String
