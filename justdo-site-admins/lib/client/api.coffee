@@ -262,18 +262,11 @@ _.extend JustdoSiteAdmins.prototype,
     if (is_user_deactivated = APP.accounts.isUserDeactivated(user))
       remarks.push """<span class="badge badge-secondary rounded-0 mr-1">Deactivated</span>"""
 
-    if (license = @getLicense().license)?
-      is_user_licensed = licensed_users_crv.get().has(user._id) or is_user_deactivated or is_user_excluded
-      license_trial_period = license.trial_cutoff
-      new_user_grace_period = license.new_user_grace_period
-
-      if not is_user_licensed
-        furthest_grace_period = @getFurthestGracePeriodForUser? license, user.createdAt
-        if furthest_grace_period? and (furthest_grace_period >= moment())
-          is_user_licensed = true
-          remarks.push """<span class="badge badge-warning rounded-0 mr-1">License expires on #{furthest_grace_period.format(JustdoHelpers.getUserPreferredDateFormat())}</span>"""
-
-      if not is_user_licensed
+    if @isLicenseEnabledEnvironment()
+      user_license = user.license
+      if not user_license?.licensed
         remarks.push """<span class="badge badge-danger rounded-0 mr-1">License expired</span>"""
+      else if (user_grace_period = user_license?.expires)?
+        remarks.push """<span class="badge badge-warning rounded-0 mr-1">License expires on #{moment(user_grace_period).format(JustdoHelpers.getUserPreferredDateFormat())}</span>"""
 
     return remarks.join(" ")

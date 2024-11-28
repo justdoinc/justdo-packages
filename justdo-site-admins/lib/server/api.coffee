@@ -231,7 +231,7 @@ _.extend JustdoSiteAdmins.prototype,
       "profile.first_name": 1
       "profile.last_name": 1
 
-    return Meteor.users.find(query, {fields: fields, sort: sort_criteria}).map (user) ->
+    return Meteor.users.find(query, {fields: fields, sort: sort_criteria}).map (user) =>
       # _publicBasicUserInfoCursorDataOutputTransformer will remove the invited_by field which in the context of SSA
       # we want to keep
       invited_by = user.invited_by
@@ -239,6 +239,9 @@ _.extend JustdoSiteAdmins.prototype,
       APP.accounts._publicBasicUserInfoCursorDataOutputTransformer user, performing_user_id
 
       user.invited_by = invited_by
+
+      _.extend user, 
+        license: @isUserLicensed(user)
 
       return user
 
