@@ -56,9 +56,13 @@ _.extend JustdoSiteAdmins.prototype,
   
   getActiveSessionsCount: -> Meteor.server?.sessions?.size
 
-  getLicense: -> global.LICENSE
+  getLicense: -> 
+    if not @isLicenseEnabledEnvironment()
+      return {state: "none"}
+    
+    return {state: "active", license}
 
-  isLicenseEnabledEnvironment: -> @getLicense()?
+  isLicenseEnabledEnvironment: -> global.LICENSE?
 
   setUsersAsSiteAdmins: (users_ids, performing_user_id) ->
     # If performing_user_id is null we assume secured source
