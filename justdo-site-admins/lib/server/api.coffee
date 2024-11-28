@@ -56,6 +56,10 @@ _.extend JustdoSiteAdmins.prototype,
   
   getActiveSessionsCount: -> Meteor.server?.sessions?.size
 
+  getLicense: -> global.LICENSE
+
+  isLicenseEnabledEnvironment: -> @getLicense()?
+
   setUsersAsSiteAdmins: (users_ids, performing_user_id) ->
     # If performing_user_id is null we assume secured source
 
@@ -317,7 +321,7 @@ _.extend JustdoSiteAdmins.prototype,
         installation_id: @getInstallationId()
         ssid: @ssid
         current_time: new Date().toISOString()
-        license: global.LICENSE or null
+        license: @getLicense()
         license_enc: process.env.JUSTDO_LICENSING_LICENSE
         start_time: @start_time.toISOString()
         uptime_ms: @getAppUptime() # in milliseconds

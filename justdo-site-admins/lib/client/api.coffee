@@ -17,7 +17,7 @@ _.extend JustdoSiteAdmins.prototype,
     return
 
   _registerDrawerLicenseInfo: ->
-    if not LICENSE_RV?
+    if not @isLicenseEnabledEnvironment()
       return
 
     JD.registerPlaceholderItem "license-info",
@@ -44,6 +44,17 @@ _.extend JustdoSiteAdmins.prototype,
   _setupServerVitalsPage: ->
     @registerSiteAdminsPage "system-info", {template: "justdo_site_admin_server_vitals", position: 100}
     return
+  
+  getLicense: -> 
+    if not LICENSE_RV?
+      return {state: "none"}
+    
+    if not (license = LICENSE_RV.get())?
+      return {state: "pending"}
+    
+    return {state: "active", license}
+
+  isLicenseEnabledEnvironment: -> @getLicense().state isnt "none"
 
   registerSiteAdminsPage: (page_id, options) ->
     self = @
@@ -98,7 +109,7 @@ _.extend JustdoSiteAdmins.prototype,
     return
 
   isLicenseExpiring: (is_site_admin) ->
-    if not (license = LICENSE_RV?.get())?
+    if not (license = @getLicense().license)?
       return false
     
     if not is_site_admin?
@@ -112,13 +123,13 @@ _.extend JustdoSiteAdmins.prototype,
     return days_until_license_expire < show_expiring_headsup_threshold
 
   isLicenseExpired: ->
-    if not (license = LICENSE_RV?.get())?
+    if not (license = @getLicense().license)?
       return false
 
     return new Date(license.expire_on) < new Date()
   
   getShutdownDate: ->
-    if not (license = LICENSE_RV?.get())?
+    if not (license = @getLicense().license)?
       return
 
     shutdown_date_moment = moment(license.expire_on, "YYYY-MM-DD")
@@ -131,11 +142,11 @@ _.extend JustdoSiteAdmins.prototype,
     if @client_type isnt "web-app"
       return
 
-    if not LICENSE_RV?
+    if not @isLicenseEnabledEnvironment()
       return
       
     Tracker.autorun (computation) =>
-      if not LICENSE_RV.get()?
+      if not @getLicense().license?
         return
 
       if @isLicenseExpiring()
@@ -147,7 +158,7 @@ _.extend JustdoSiteAdmins.prototype,
     return
 
   showLicenseExpirationReminder: ->
-    if not LICENSE_RV?
+    if not @isLicenseEnabledEnvironment()
       return
 
     is_user_site_admin = @isCurrentUserSiteAdmin()
@@ -194,7 +205,7 @@ _.extend JustdoSiteAdmins.prototype,
     
     licensed_users_set = new Set()
 
-    if not (license = LICENSE_RV?.get())?
+    if not (license = @getLicense().license)?
       return licensed_users_set
 
     if license.unlimited_users
@@ -251,10 +262,8 @@ _.extend JustdoSiteAdmins.prototype,
     if (is_user_deactivated = APP.accounts.isUserDeactivated(user))
       remarks.push """<span class="badge badge-secondary rounded-0 mr-1">Deactivated</span>"""
 
-    if licensed_users_crv? 
+    if (license = @getLicense().license)?
       is_user_licensed = licensed_users_crv.get().has(user._id) or is_user_deactivated or is_user_excluded
-    
-    if (license = LICENSE_RV.get())?
       license_trial_period = license.trial_cutoff
       new_user_grace_period = license.new_user_grace_period
 
