@@ -6,7 +6,7 @@
         {{#if filterIsActive}}
           <div class="users-filter-control">
             <div class="users-filter-count bg-primary">
-              {{{xssGuard filteredUsersCount}}}
+              {{filteredUsersCount}}
             </div>
             <svg class="jd-icon jd-c-pointer text-dark users-filter-clear p-1" style=""><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
           </div>
@@ -18,7 +18,7 @@
       <div class="site-admins-stat-container">
         Active users:
         <div class="site-admins-info-value">
-          {{{xssGuard activeUsersCount}}}
+          {{activeUsersCount}}
         </div>
         {{#if licensingEnabled}}
           <div class="site-admins-info-divider"></div>
@@ -30,26 +30,26 @@
           {{else}}
             Licenses available:
             <div class="site-admins-info-value">
-              {{{xssGuard licensePermittedUsers}}}
+              {{licensePermittedUsers}}
             </div>
             <div class="site-admins-info-divider"></div>
             Licenses in use:
             <div class="site-admins-info-value">
-              {{{xssGuard licensedUsersCount}}}
+              {{licensedUsersCount}}
             </div>
           {{/if}}
 
           <div class="site-admins-info-divider"></div>
           Valid until:
           <div class="site-admins-info-value">
-            {{{xssGuard licenseValidUntil}}}
+            {{licenseValidUntil}}
           </div>
 
           {{#if isLicenseExpired}}
             <div class="site-admins-info-divider"></div>
             Operational until:
             <div class="site-admins-info-value">
-              {{{xssGuard licenseOperationalUntil}}}
+              {{licenseOperationalUntil}}
             </div>
           {{/if}}
 
