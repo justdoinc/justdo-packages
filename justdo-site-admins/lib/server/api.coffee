@@ -9,6 +9,9 @@ _.extend JustdoSiteAdmins.prototype,
       return
 
     @_setupMethods()
+    
+    # Defined in collections-indexes.coffee
+    @_ensureIndexesExists()
 
     return
   
