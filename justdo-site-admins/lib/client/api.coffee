@@ -267,6 +267,6 @@ _.extend JustdoSiteAdmins.prototype,
         if soft_license_details?.type is "excluded"
           remarks.push """<span class="badge badge-success rounded-0 mr-1">Excluded</span>"""
         else if soft_license_details?.type is "grace_period"
-          remarks.push """<span class="badge badge-warning rounded-0 mr-1">License expires on #{moment(soft_license_details.expire).format(JustdoHelpers.getUserPreferredDateFormat())}</span>"""
+          remarks.push """<span class="badge badge-warning rounded-0 mr-1">License expires on #{moment(soft_license_details.expires).format(JustdoHelpers.getUserPreferredDateFormat())}</span>"""
 
     return remarks.join(" ")
