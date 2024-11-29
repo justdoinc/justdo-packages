@@ -199,20 +199,20 @@ _.extend JustdoSiteAdmins.prototype,
   
   # IMPORTANT: This method expects the list of all_users returned by APP.justdo_site_admins.getAllUsers.
   # Without this list, the returned value will not be accurate
-  _getLicensedUsersSet: (all_users) ->
+  _getLicensedUsers: (all_users) ->
     if not _.isArray all_users
       throw @_error "invalid-argument", "all_users must be an array"
     
-    licensed_users_set = new Set()
+    licensed_users = []
 
     if not (license = @getLicense().license)?
-      return licensed_users_set
+      return licensed_users
 
     if license.unlimited_users
       for user_obj in all_users
-        licensed_users_set.add user_obj._id
+        licensed_users.push user_obj._id
         
-      return licensed_users_set
+      return licensed_users
     
     licensed_users_count = license.licensed_users
 
@@ -239,12 +239,12 @@ _.extend JustdoSiteAdmins.prototype,
         # If both users aren't site admins, simply sort by their createdAt
         return sortByCreatedAtPredicate u1, u2
       .slice(0, licensed_users_count)
-      .forEach (user) -> licensed_users_set.add user._id
+      .forEach (user) -> licensed_users.push user._id
 
-    return licensed_users_set
+    return _.uniq licensed_users
   
   # NOTE: This method is meant to be used in the members page only
-  _getMembersPageUserRemarks: (user, licensed_users_crv) ->
+  _getMembersPageUserRemarks: (user, licensed_users) ->
     remarks = []
 
     # Excluded remarks can co-exist with site-admin or deactivated, but not expiring/expired.
