@@ -9,7 +9,7 @@ _.extend JustdoSiteAdmins.prototype,
       return
 
     @_setupMethods()
-    
+
     # Defined in collections-indexes.coffee
     @_ensureIndexesExists()
 
@@ -246,9 +246,6 @@ _.extend JustdoSiteAdmins.prototype,
       APP.accounts._publicBasicUserInfoCursorDataOutputTransformer user, performing_user_id
 
       user.invited_by = invited_by
-
-      _.extend user, 
-        license: @isUserLicensed(user)
 
       return user
 

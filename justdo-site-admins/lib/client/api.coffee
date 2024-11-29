@@ -248,11 +248,6 @@ _.extend JustdoSiteAdmins.prototype,
     remarks = []
 
     # Excluded remarks can co-exist with site-admin or deactivated, but not expiring/expired.
-    is_user_excluded = false
-    if APP.accounts.isUserExcluded?(user)
-      is_user_excluded = true
-      remarks.push """<span class="badge badge-success rounded-0 mr-1">Excluded</span>"""
-
     if APP.justdo_site_admins.isUserSiteAdmin(user)
       remarks.push """<span class="badge badge-primary rounded-0 mr-1">Site Admin</span>"""
 
@@ -263,10 +258,15 @@ _.extend JustdoSiteAdmins.prototype,
       remarks.push """<span class="badge badge-secondary rounded-0 mr-1">Deactivated</span>"""
 
     if @isLicenseEnabledEnvironment()
-      user_license = user.license
+      user_license = @isUserLicensed user, licensed_users
+
       if not user_license?.licensed
         remarks.push """<span class="badge badge-danger rounded-0 mr-1">License expired</span>"""
-      else if (user_grace_period = user_license?.expires)?
-        remarks.push """<span class="badge badge-warning rounded-0 mr-1">License expires on #{moment(user_grace_period).format(JustdoHelpers.getUserPreferredDateFormat())}</span>"""
+      else if user_license.type is "soft"
+        soft_license_details = user_license.details
+        if soft_license_details?.type is "excluded"
+          remarks.push """<span class="badge badge-success rounded-0 mr-1">Excluded</span>"""
+        else if soft_license_details?.type is "grace_period"
+          remarks.push """<span class="badge badge-warning rounded-0 mr-1">License expires on #{moment(soft_license_details.expire).format(JustdoHelpers.getUserPreferredDateFormat())}</span>"""
 
     return remarks.join(" ")
