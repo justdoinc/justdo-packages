@@ -257,7 +257,7 @@ _.extend JustdoSiteAdmins.prototype,
     if (is_user_deactivated = APP.accounts.isUserDeactivated(user))
       remarks.push """<span class="badge badge-secondary rounded-0 mr-1">Deactivated</span>"""
 
-    if @isLicenseEnabledEnvironment()
+    if @isLicenseEnabledEnvironment() and not is_user_deactivated
       user_license = @isUserLicensed user, licensed_users
 
       if not user_license?.licensed
