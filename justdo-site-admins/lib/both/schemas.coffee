@@ -55,3 +55,5 @@ _.extend JustdoSiteAdmins.prototype,
             return {$setOnInsert: new Date}
           else
             return @unset()
+
+    return
