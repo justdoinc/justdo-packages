@@ -2,6 +2,11 @@ _.extend JustdoSiteAdmins.prototype,
   _immediateInit: ->
     @_markServerStarted()
     @_ensureInstallationId()
+    @_setupServerVitalsLogInterval()
+    @onDestroy =>
+      @_clearServerVitalsLogInverval()
+      return
+      
     return
 
   _deferredInit: ->
@@ -15,6 +20,34 @@ _.extend JustdoSiteAdmins.prototype,
 
     return
   
+  _logCurrentServerVitallToDb: (mark_as_long_term=false) ->
+    snapshot = await @getServerVitalsShrinkWrapped()
+    if mark_as_long_term
+      snapshot.long_term = true
+    @server_vitals_collection.insert snapshot
+    return
+
+  _setupServerVitalsLogInterval: ->
+    # Log once immediately upon seraver startup
+    Meteor.startup =>
+      @_logCurrentServerVitallToDb true
+      return
+
+    count = 0
+    @server_vital_log_interval = Meteor.setInterval =>
+      mark_as_long_term = count >= JustdoSiteAdmins.long_term_server_vitals_ratio
+      if mark_as_long_term
+        count = 0
+        
+      @_logCurrentServerVitallToDb mark_as_long_term
+      count += 1
+      return
+    , JustdoSiteAdmins.log_server_vitals_interval
+
+    return
+  
+  _clearServerVitalsLogInverval: -> Meteor.clearInterval @server_vital_log_interval
+
   _logCpuUsage: ->
     @cpu_usage =
       time: new Date()
