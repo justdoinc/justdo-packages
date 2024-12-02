@@ -25,7 +25,9 @@ _.extend JustdoSiteAdmins,
 
   # Server vitals logging
   # The server vitals are logged every log_server_vitals_interval_ms minutes,
-  # and the logs will be removed after server_vital_logs_ttl milliseconds.
+  # and the logs will be removed after server_vital_logs_ttl_days milliseconds.
   # For every long_term_server_vitals_ratio_ms logs, the logs will be kept forever.
   log_server_vitals_interval_ms: 1000 * 60 * 5 # 5 minutes
-  server_vital_logs_ttl: 14 # 14 days  long_term_server_vitals_ratio: 96 # Every 96th log will be marked as long_term
+  long_term_server_vitals_ratio: 96 # Every 96th log will be marked as long_term
+  server_vital_logs_ttl_days: 14 # 14 days
+  server_vital_logs_expiry_interval_ms: 1000 * 60 * 60 * 24 # 1 day 

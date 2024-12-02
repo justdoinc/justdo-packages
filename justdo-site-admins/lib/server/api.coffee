@@ -3,6 +3,7 @@ _.extend JustdoSiteAdmins.prototype,
     @_markServerStarted()
     @_ensureInstallationId()
     @_setupServerVitalsLogInterval()
+    @_setupClearServerVitalsLogDbMigration()
     @onDestroy =>
       @_clearServerVitalsLogInverval()
       return
