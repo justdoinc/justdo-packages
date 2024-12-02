@@ -22,3 +22,11 @@ _.extend JustdoSiteAdmins,
   renew_license_endpoint: "/renew-license"
 
   renew_license_fallback_endpoint: "/contact"
+
+  # Server vitals logging
+  # The server vitals are logged every log_server_vitals_interval minutes,
+  # and the logs will be removed after server_vital_logs_ttl milliseconds.
+  # For every long_term_server_vitals_ratio logs, the logs will be kept forever.
+  log_server_vitals_interval: 1000 * 60 * 5 # 5 minutes
+  long_term_server_vitals_ratio: 96 # 96 * 5 minutes = 8 hours
+  server_vital_logs_ttl: 1000 * 60 * 60 * 24 * 14 # 14 days

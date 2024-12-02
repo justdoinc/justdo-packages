@@ -30,6 +30,7 @@ APP.getEnv (env) ->
 
     if Meteor.isServer
       options.site_admins_emails = JustdoHelpers.getNonEmptyValuesFromCsv(env.SITE_ADMINS_EMAILS)
+      options.server_vitals_collection = new Mongo.Collection "server_vitals"
 
     APP.justdo_site_admins = new JustdoSiteAdmins(options)
 

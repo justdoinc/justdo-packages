@@ -17,6 +17,10 @@ options_schema =
       type: [String]
       optional: false
       bind_to_instance: true
+    server_vitals_collection:
+      type: "skip-type-check"
+      blackbox: true
+      bind_to_instance: true
 
 # options_schema
 # ==============
