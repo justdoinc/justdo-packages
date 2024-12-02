@@ -35,14 +35,14 @@ _.extend JustdoSiteAdmins.prototype,
 
     count = 0
     @server_vital_log_interval = Meteor.setInterval =>
-      mark_as_long_term = count >= JustdoSiteAdmins.long_term_server_vitals_ratio
+      mark_as_long_term = count >= JustdoSiteAdmins.long_term_server_vitals_ratio_ms
       if mark_as_long_term
         count = 0
         
       @_logCurrentServerVitallToDb mark_as_long_term
       count += 1
       return
-    , JustdoSiteAdmins.log_server_vitals_interval
+    , JustdoSiteAdmins.log_server_vitals_interval_ms
 
     return
   
