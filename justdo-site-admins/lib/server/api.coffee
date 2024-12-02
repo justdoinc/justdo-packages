@@ -253,11 +253,11 @@ _.extend JustdoSiteAdmins.prototype,
     if not @siteAdminFeatureEnabled("admins-list-public")
       throw @_error "not-supported", "admins-list-public conf isn't enabled in this site"
 
-    query = {"site_admin.is_site_admin": true}
+    query = {"site_admin.is_site_admin": true, "emails.verified": true}
 
     query = @addExcludedUsersClauseToQuery(query, performing_user_id) or query
 
-    return _.map(Meteor.users.find(query, {fields: {_id: 1}}).fetch(), (user_doc) -> return user_doc._id)
+    return Meteor.users.find(query, {fields: {_id: 1}}).map (user_doc) -> return user_doc._id
 
   registerPluginVitalsGenerator: (plugin_id, fn) ->
     if not @plugin_vitals?
