@@ -196,55 +196,9 @@ _.extend JustdoSiteAdmins.prototype,
     dialog = bootbox.dialog bootbox_options
 
     return
-  
-  # IMPORTANT: This method expects the list of all_users returned by APP.justdo_site_admins.getAllUsers.
-  # Without this list, the returned value will not be accurate
-  _getLicensedUsers: (all_users) ->
-    if not _.isArray all_users
-      throw @_error "invalid-argument", "all_users must be an array"
-    
-    licensed_users = []
 
-    if not (license = @getLicense().license)?
-      return licensed_users
-
-    if license.unlimited_users
-      for user_obj in all_users
-        licensed_users.push user_obj._id
-        
-      return licensed_users
-    
-    licensed_users_count = license.licensed_users
-
-    sortByCreatedAtPredicate = (u1, u2) ->
-      if u1.createdAt > u2.createdAt
-        return 1
-      if u1.createdAt < u2.createdAt
-        return -1
-      return 0
-    
-    all_users
-      .filter (user) -> return (not APP.accounts.isUserDeactivated user) and (not APP.accounts.isUserExcluded? user)
-      .sort (u1, u2) ->
-        # If both users are site admins, simply sort by their createdAt
-        if u1.site_admin?.is_site_admin and u2.site_admin?.is_site_admin
-          return sortByCreatedAtPredicate u1, u2
-
-        # Site admins always take precedence when compared with normal user
-        if u2.site_admin?.is_site_admin
-          return 1
-        if u1.site_admin?.is_site_admin
-          return -1
-
-        # If both users aren't site admins, simply sort by their createdAt
-        return sortByCreatedAtPredicate u1, u2
-      .slice(0, licensed_users_count)
-      .forEach (user) -> licensed_users.push user._id
-
-    return _.uniq licensed_users
-  
   # NOTE: This method is meant to be used in the members page only
-  _getMembersPageUserRemarks: (user, licensed_users) ->
+  _getMembersPageUserRemarks: (user, pre_computed_hard_licensed_users) ->
     remarks = []
 
     # Excluded remarks can co-exist with site-admin or deactivated, but not expiring/expired.
@@ -258,7 +212,7 @@ _.extend JustdoSiteAdmins.prototype,
       remarks.push """<span class="badge badge-secondary rounded-0 mr-1">Deactivated</span>"""
 
     if @isLicenseEnabledEnvironment() and not is_user_deactivated
-      user_license = @isUserLicensed user, licensed_users
+      user_license = @isUserLicensed user, pre_computed_hard_licensed_users
 
       if not user_license?.licensed
         remarks.push """<span class="badge badge-danger rounded-0 mr-1">License expired</span>"""
