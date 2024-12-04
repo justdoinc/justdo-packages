@@ -33,6 +33,7 @@ _.extend JustdoSiteAdmins.prototype,
 
     return
 
+  # IMPORTANT: If you update this method, you must also the update 410-is-user-site-admin.coffee
   isUserSiteAdmin: (user) ->
     if not user?
       return false
@@ -42,6 +43,7 @@ _.extend JustdoSiteAdmins.prototype,
       user = Meteor.users.findOne({_id: user, "site_admin.is_site_admin": true}, {fields: {_id: 1, site_admin: 1, emails: 1, all_emails_verified: 1, is_proxy: 1}})
 
     return (user?.site_admin?.is_site_admin is true) and JustdoHelpers.isUserEmailsVerified user
+  # END IMPORTANT
 
   isUserSuperSiteAdmin: -> false
 
