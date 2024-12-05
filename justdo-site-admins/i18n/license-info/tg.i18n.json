@@ -1,0 +1,14 @@
+{
+  "license_info_license_information": "Маълумот дар бораи литсензия",
+  "license_info_your_license_is_about_to_expire": "Мӯҳлати литсензияи шумо ба охир мерасад!",
+  "license_info_your_license_has_expired": "Мӯҳлати литсензияи шумо ба охир расидааст!",
+  "license_info_renew_license": "Дароз кардани литсензия",
+  "license_info_licensed_until": "Литсензия то __date__ эътибор дорад",
+  "license_info_expiring_msg": "Мӯҳлати литсензия барои ин домен дар санаи <b>__date__</b> ба охир мерасад.",
+  "license_info_expired_msg": "Мӯҳлати литсензия барои ин домен дар санаи <b>__expire_date__</b> ба охир расидааст. <br>Лутфан, литсензияро то санаи <b>__shutdown_date__</b> дароз кунед, то ки хизматрасонӣ қатъ нагардад.",
+  "license_info_renew_license_instructions": "Барои дароз кардани литсензия, лутфан тугмаи \"Дароз кардани литсензия\"-ро пахш кунед. Дастаи дастгирии мо барои ҷавоб додан ба саволҳои шумо омода аст.<br><br>Ташаккур барои он ки узви арзишманди ҷомеаи JustDo ҳастед. Мо доимо барои беҳтар кардани таҷрибаи шумо хусусиятҳои навро таҳия мекунем!",
+  "license_info_please_contact_site_admins": "Барои маълумоти бештар, лутфан ба маъмурони сомона муроҷиат кунед ё бо мо дар info@justdo.com тамос гиред.",
+  "license_info_valid_until_and_licensed_users": "Ин домен то <b>__date__</b> барои <b>__count__</b> корбар литсензия дорад. <br> Ташаккур барои он ки узви арзишманди ҷомеаи JustDo ҳастед. Мо доимо барои беҳтар кардани таҷрибаи шумо хусусиятҳои навро таҳия мекунем!",
+  "license_info_expiring_in_days": "(То ба охир расидан __days_string__ мондааст)",
+  "license_info_expired_in_days": "(__days_string__ пеш ба охир расидааст)"
+}

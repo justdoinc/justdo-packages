@@ -1,0 +1,14 @@
+{
+  "license_info_license_information": "लाइसेंस जानकारी",
+  "license_info_your_license_is_about_to_expire": "आपका लाइसेंस समाप्त होने वाला है!",
+  "license_info_your_license_has_expired": "आपका लाइसेंस समाप्त हो गया है!",
+  "license_info_renew_license": "लाइसेंस नवीनीकरण करें",
+  "license_info_licensed_until": "__date__ तक लाइसेंस है",
+  "license_info_expiring_msg": "इस डोमेन का लाइसेंस <b>__date__</b> को समाप्त होगा।",
+  "license_info_expired_msg": "इस डोमेन का लाइसेंस <b>__expire_date__</b> को समाप्त हो गया। <br>किसी भी सेवा व्यवधान से बचने के लिए कृपया <b>__shutdown_date__</b> तक अपना लाइसेंस नवीनीकृत करें।",
+  "license_info_renew_license_instructions": "अपना लाइसेंस नवीनीकृत करने के लिए, कृपया नीचे दिए गए \"लाइसेंस नवीनीकरण करें\" बटन पर क्लिक करें। किसी भी प्रश्न के लिए हमारी सहायता टीम आपकी मदद के लिए उपलब्ध है।<br><br>JustDo समुदाय के मूल्यवान सदस्य होने के लिए धन्यवाद। हम आपके अनुभव को बेहतर बनाने के लिए निरंतर नई सुविधाओं पर काम कर रहे हैं!",
+  "license_info_please_contact_site_admins": "अधिक जानकारी के लिए, कृपया अपने साइट प्रशासकों से संपर्क करें, या हमें info@justdo.com पर संपर्क करें।",
+  "license_info_valid_until_and_licensed_users": "यह डोमेन <b>__date__</b> तक <b>__count__</b> उपयोगकर्ताओं के लिए लाइसेंस प्राप्त है। <br> JustDo समुदाय के मूल्यवान सदस्य होने के लिए धन्यवाद। हम आपके अनुभव को बेहतर बनाने के लिए निरंतर नई सुविधाओं पर काम कर रहे हैं!",
+  "license_info_expiring_in_days": "(__days_string__ में समाप्त हो रहा है)",
+  "license_info_expired_in_days": "(__days_string__ पहले समाप्त हो गया)"
+}

@@ -1,0 +1,14 @@
+{
+  "license_info_license_information": "Информације о лиценци",
+  "license_info_your_license_is_about_to_expire": "Ваша лиценца ускоро истиче!",
+  "license_info_your_license_has_expired": "Ваша лиценца је истекла!",
+  "license_info_renew_license": "Обновите лиценцу",
+  "license_info_licensed_until": "Лиценца важи до __date__",
+  "license_info_expiring_msg": "Лиценца за овај домен истиче <b>__date__</b>.",
+  "license_info_expired_msg": "Лиценца за овај домен је истекла <b>__expire_date__</b>. <br>Молимо вас да обновите лиценцу до <b>__shutdown_date__</b> како бисте избегли прекид услуге.",
+  "license_info_renew_license_instructions": "Да бисте обновили лиценцу, кликните на дугме \"Обновите лиценцу\" испод. Наш тим за подршку је ту да вам помогне са свим питањима.<br><br>Хвала вам што сте цењени члан JustDo заједнице. Непрестано радимо на новим функцијама како бисмо побољшали ваше искуство!",
+  "license_info_please_contact_site_admins": "За више информација, молимо вас да контактирате администраторе сајта или нас контактирајте на info@justdo.com .",
+  "license_info_valid_until_and_licensed_users": "Лиценца за овај домен важи до <b>__date__</b> за <b>__count__</b> корисника. <br> Хвала вам што сте цењени члан JustDo заједнице. Непрестано радимо на новим функцијама како бисмо побољшали ваше искуство!",
+  "license_info_expiring_in_days": "(Истиче за __days_string__)",
+  "license_info_expired_in_days": "(Истекла пре __days_string__)"
+}

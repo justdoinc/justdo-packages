@@ -1,0 +1,14 @@
+{
+  "license_info_license_information": "Informations de licence",
+  "license_info_your_license_is_about_to_expire": "Votre licence est sur le point d'expirer !",
+  "license_info_your_license_has_expired": "Votre licence a expiré !",
+  "license_info_renew_license": "Renouveler la licence",
+  "license_info_licensed_until": "Licence valable jusqu'au __date__",
+  "license_info_expiring_msg": "La licence pour ce domaine expirera le <b>__date__</b>.",
+  "license_info_expired_msg": "La licence pour ce domaine a expiré le <b>__expire_date__</b>. <br>Veuillez renouveler votre licence avant le <b>__shutdown_date__</b> pour éviter toute interruption de service.",
+  "license_info_renew_license_instructions": "Pour renouveler votre licence, veuillez cliquer sur le bouton \"Renouveler la licence\" ci-dessous. Notre équipe de support est là pour répondre à vos questions.<br><br>Merci d'être un membre précieux de la communauté JustDo. Nous travaillons continuellement sur de nouvelles fonctionnalités pour améliorer votre expérience !",
+  "license_info_please_contact_site_admins": "Pour plus d'informations, veuillez contacter vos administrateurs ou nous contacter à info@justdo.com .",
+  "license_info_valid_until_and_licensed_users": "Ce domaine est sous licence jusqu'au <b>__date__</b> pour <b>__count__</b> utilisateurs. <br> Merci d'être un membre précieux de la communauté JustDo. Nous travaillons continuellement sur de nouvelles fonctionnalités pour améliorer votre expérience !",
+  "license_info_expiring_in_days": "(Expire dans __days_string__)",
+  "license_info_expired_in_days": "(Expirée depuis __days_string__)"
+}

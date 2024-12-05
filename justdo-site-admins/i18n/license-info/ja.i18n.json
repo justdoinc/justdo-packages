@@ -1,0 +1,14 @@
+{
+  "license_info_license_information": "ライセンス情報",
+  "license_info_your_license_is_about_to_expire": "ライセンスの有効期限が近づいています！",
+  "license_info_your_license_has_expired": "ライセンスの有効期限が切れました！",
+  "license_info_renew_license": "ライセンス更新",
+  "license_info_licensed_until": "__date__ まで有効",
+  "license_info_expiring_msg": "このドメインのライセンスは<b>__date__</b>に有効期限が切れます。",
+  "license_info_expired_msg": "このドメインのライセンスは<b>__expire_date__</b>に有効期限が切れました。<br>サービスの中断を避けるため、<b>__shutdown_date__</b>までにライセンスを更新してください。",
+  "license_info_renew_license_instructions": "ライセンスを更新するには、下の「ライセンス更新」ボタンをクリックしてください。ご不明な点がございましたら、サポートチームがお手伝いさせていただきます。<br><br>JustDoコミュニティの大切なメンバーとしてご利用いただき、ありがとうございます。私たちは、お客様の体験をより良いものにするため、新機能の開発に継続的に取り組んでいます！",
+  "license_info_please_contact_site_admins": "詳細については、サイト管理者にお問い合わせいただくか、info@justdo.com までご連絡ください。",
+  "license_info_valid_until_and_licensed_users": "このドメインのライセンスは<b>__date__</b>まで有効で、<b>__count__</b>ユーザーまでご利用いただけます。<br>JustDoコミュニティの大切なメンバーとしてご利用いただき、ありがとうございます。私たちは、お客様の体験をより良いものにするため、新機能の開発に継続的に取り組んでいます！",
+  "license_info_expiring_in_days": "（有効期限まで残り__days_string__）",
+  "license_info_expired_in_days": "（有効期限切れから__days_string__経過）"
+}

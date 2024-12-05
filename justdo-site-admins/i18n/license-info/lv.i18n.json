@@ -1,0 +1,14 @@
+{
+  "license_info_license_information": "Licences informācija",
+  "license_info_your_license_is_about_to_expire": "Jūsu licence drīz beigsies!",
+  "license_info_your_license_has_expired": "Jūsu licence ir beigusies!",
+  "license_info_renew_license": "Atjaunot licenci",
+  "license_info_licensed_until": "Licence derīga līdz __date__",
+  "license_info_expiring_msg": "Šī domēna licence beigsies <b>__date__</b>.",
+  "license_info_expired_msg": "Šī domēna licence beidzās <b>__expire_date__</b>. <br>Lūdzu, atjaunojiet licenci līdz <b>__shutdown_date__</b>, lai izvairītos no pakalpojuma pārtraukšanas.",
+  "license_info_renew_license_instructions": "Lai atjaunotu licenci, lūdzu, noklikšķiniet uz pogas \"Atjaunot licenci\" zemāk. Mūsu atbalsta komanda ir gatava palīdzēt ar jebkuriem jautājumiem.<br><br>Paldies, ka esat daļa no JustDo kopienas. Mēs nepārtraukti strādājam pie jauniem uzlabojumiem, lai pilnveidotu Jūsu pieredzi!",
+  "license_info_please_contact_site_admins": "Lai iegūtu vairāk informācijas, lūdzu, sazinieties ar vietnes administratoriem vai rakstiet mums uz info@justdo.com.",
+  "license_info_valid_until_and_licensed_users": "Šī domēna licence ir derīga līdz <b>__date__</b> un paredzēta <b>__count__</b> lietotājiem. <br> Paldies, ka esat daļa no JustDo kopienas. Mēs nepārtraukti strādājam pie jauniem uzlabojumiem, lai pilnveidotu Jūsu pieredzi!",
+  "license_info_expiring_in_days": "(Beigsies pēc __days_string__)",
+  "license_info_expired_in_days": "(Beidzās pirms __days_string__)"
+}

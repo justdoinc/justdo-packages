@@ -1,0 +1,14 @@
+{
+  "license_info_license_information": "உரிம தகவல்",
+  "license_info_your_license_is_about_to_expire": "உங்கள் உரிமம் காலாவதியாக உள்ளது!",
+  "license_info_your_license_has_expired": "உங்கள் உரிமம் காலாவதியாகிவிட்டது!",
+  "license_info_renew_license": "உரிமத்தை புதுப்பிக்கவும்",
+  "license_info_licensed_until": "__date__ வரை உரிமம் பெற்றது",
+  "license_info_expiring_msg": "இந்த டொமைனுக்கான உரிமம் <b>__date__</b> அன்று காலாவதியாகும்.",
+  "license_info_expired_msg": "இந்த டொமைனுக்கான உரிமம் <b>__expire_date__</b> அன்று காலாவதியானது. <br>சேவை தடைபடாமல் இருக்க <b>__shutdown_date__</b>க்குள் உங்கள் உரிமத்தை புதுப்பிக்கவும்.",
+  "license_info_renew_license_instructions": "உங்கள் உரிமத்தை புதுப்பிக்க, கீழே உள்ள \"உரிமத்தை புதுப்பிக்கவும்\" பொத்தானைக் கிளிக் செய்யவும். எந்த கேள்விகளுக்கும் உதவ எங்கள் ஆதரவு குழு உள்ளது.<br><br>JustDo சமூகத்தின் மதிப்புமிக்க உறுப்பினராக இருப்பதற்கு நன்றி. உங்கள் அனுபவத்தை மேம்படுத்த நாங்கள் தொடர்ந்து புதிய அம்சங்களில் பணியாற்றி வருகிறோம்!",
+  "license_info_please_contact_site_admins": "மேலும் தகவலுக்கு, உங்கள் தள நிர்வாகிகளைத் தொடர்பு கொள்ளவும், அல்லது info@justdo.com இல் எங்களைத் தொடர்பு கொள்ளவும்.",
+  "license_info_valid_until_and_licensed_users": "இந்த டொமைன் <b>__date__</b> வரை <b>__count__</b> பயனர்களுக்கு உரிமம் பெற்றுள்ளது. <br> JustDo சமூகத்தின் மதிப்புமிக்க உறுப்பினராக இருப்பதற்கு நன்றி. உங்கள் அனுபவத்தை மேம்படுத்த நாங்கள் தொடர்ந்து புதிய அம்சங்களில் பணியாற்றி வருகிறோம்!",
+  "license_info_expiring_in_days": "(__days_string__ இல் காலாவதியாகிறது)",
+  "license_info_expired_in_days": "(__days_string__ முன்பு காலாவதியானது)"
+}

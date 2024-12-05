@@ -1,0 +1,14 @@
+{
+  "license_info_license_information": "Licencijos informacija",
+  "license_info_your_license_is_about_to_expire": "Jūsų licencijos galiojimas baigiasi!",
+  "license_info_your_license_has_expired": "Jūsų licencija nebegalioja!",
+  "license_info_renew_license": "Atnaujinti licenciją",
+  "license_info_licensed_until": "Licencija galioja iki __date__",
+  "license_info_expiring_msg": "Šios domeno licencija baigs galioti <b>__date__</b>.",
+  "license_info_expired_msg": "Šio domeno licencija baigė galioti <b>__expire_date__</b>. <br>Prašome atnaujinti licenciją iki <b>__shutdown_date__</b>, kad išvengtumėte paslaugų nutraukimo.",
+  "license_info_renew_license_instructions": "Norėdami atnaujinti licenciją, spauskite žemiau esantį mygtuką \"Atnaujinti licenciją\". Mūsų pagalbos komanda pasiruošusi atsakyti į visus jūsų klausimus.<br><br>Dėkojame, kad esate vertingas JustDo bendruomenės narys. Mes nuolat kuriame naujas funkcijas, kad pagerintume jūsų patirtį!",
+  "license_info_please_contact_site_admins": "Norėdami gauti daugiau informacijos, kreipkitės į svetainės administratorius arba susisiekite su mumis adresu info@justdo.com .",
+  "license_info_valid_until_and_licensed_users": "Šio domeno licencija galioja iki <b>__date__</b>, skirta <b>__count__</b> vartotojams. <br> Dėkojame, kad esate vertingas JustDo bendruomenės narys. Mes nuolat kuriame naujas funkcijas, kad pagerintume jūsų patirtį!",
+  "license_info_expiring_in_days": "(Baigia galioti po __days_string__)",
+  "license_info_expired_in_days": "(Baigė galioti prieš __days_string__)"
+}

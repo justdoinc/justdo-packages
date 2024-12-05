@@ -1,0 +1,14 @@
+{
+  "license_info_license_information": "Лицензия маалыматы",
+  "license_info_your_license_is_about_to_expire": "Сиздин лицензияңыздын мөөнөтү бүткөнү жатат!",
+  "license_info_your_license_has_expired": "Сиздин лицензияңыздын мөөнөтү бүттү!",
+  "license_info_renew_license": "Лицензияны жаңылоо",
+  "license_info_licensed_until": "Лицензия мөөнөтү: __date__",
+  "license_info_expiring_msg": "Бул домендин лицензиясы <b>__date__</b> күнү бүтөт.",
+  "license_info_expired_msg": "Бул домендин лицензиясы <b>__expire_date__</b> күнү бүткөн. <br>Кызматтын үзгүлтүккө учурабашы үчүн, лицензияны <b>__shutdown_date__</b> чейин жаңылаңыз.",
+  "license_info_renew_license_instructions": "Лицензияны жаңылоо үчүн, төмөндөгү \"Лицензияны жаңылоо\" баскычын басыңыз. Биздин колдоо тобу суроолоруңузга жардам берүүгө даяр.<br><br>JustDo коомчулугунун баалуу мүчөсү болгонуңуз үчүн рахмат. Биз сиздин тажрыйбаңызды жакшыртуу үчүн жаңы мүмкүнчүлүктөрдү үзгүлтүксүз иштеп жатабыз!",
+  "license_info_please_contact_site_admins": "Кошумча маалымат үчүн, сайттын администраторлоруна кайрылыңыз же info@justdo.com дарегине кат жазыңыз.",
+  "license_info_valid_until_and_licensed_users": "Бул домендин лицензиясы <b>__date__</b> чейин <b>__count__</b> колдонуучуга берилген. <br> JustDo коомчулугунун баалуу мүчөсү болгонуңуз үчүн рахмат. Биз сиздин тажрыйбаңызды жакшыртуу үчүн жаңы мүмкүнчүлүктөрдү үзгүлтүксүз иштеп жатабыз!",
+  "license_info_expiring_in_days": "(__days_string__ күндөн кийин бүтөт)",
+  "license_info_expired_in_days": "(__days_string__ күн мурун бүткөн)"
+}

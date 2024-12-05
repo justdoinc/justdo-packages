@@ -1,0 +1,14 @@
+{
+  "license_info_license_information": "Лицензионна информация",
+  "license_info_your_license_is_about_to_expire": "Вашият лиценз скоро ще изтече!",
+  "license_info_your_license_has_expired": "Вашият лиценз е изтекъл!",
+  "license_info_renew_license": "Подновяване на лиценз",
+  "license_info_licensed_until": "Лицензиран до __date__",
+  "license_info_expiring_msg": "Лицензът за този домейн ще изтече на <b>__date__</b>.",
+  "license_info_expired_msg": "Лицензът за този домейн е изтекъл на <b>__expire_date__</b>. <br>Моля, подновете лиценза си до <b>__shutdown_date__</b>, за да избегнете прекъсване на услугата.",
+  "license_info_renew_license_instructions": "За да подновите лиценза си, моля, кликнете върху бутона \"Подновяване на лиценз\" по-долу. Нашият екип за поддръжка е на разположение да ви помогне с всякакви въпроси.<br><br>Благодарим ви, че сте ценен член на общността на JustDo. Ние непрекъснато работим върху нови функции, за да подобрим вашето преживяване!",
+  "license_info_please_contact_site_admins": "За повече информация, моля, свържете се с администраторите на сайта или се свържете с нас на info@justdo.com .",
+  "license_info_valid_until_and_licensed_users": "Този домейн е лицензиран до <b>__date__</b> за <b>__count__</b> потребители. <br> Благодарим ви, че сте ценен член на общността на JustDo. Ние непрекъснато работим върху нови функции, за да подобрим вашето преживяване!",
+  "license_info_expiring_in_days": "(Изтича след __days_string__)",
+  "license_info_expired_in_days": "(Изтекъл преди __days_string__)"
+}

@@ -1,0 +1,14 @@
+{
+  "license_info_license_information": "Informasi Lisensi",
+  "license_info_your_license_is_about_to_expire": "Lisensi Anda akan segera berakhir!",
+  "license_info_your_license_has_expired": "Lisensi Anda telah berakhir!",
+  "license_info_renew_license": "Perbarui Lisensi",
+  "license_info_licensed_until": "Berlisensi hingga __date__",
+  "license_info_expiring_msg": "Lisensi untuk domain ini akan berakhir pada <b>__date__</b>.",
+  "license_info_expired_msg": "Lisensi untuk domain ini telah berakhir pada <b>__expire_date__</b>. <br>Mohon perbarui lisensi Anda sebelum <b>__shutdown_date__</b> untuk menghindari gangguan layanan.",
+  "license_info_renew_license_instructions": "Untuk memperbarui lisensi Anda, silakan klik tombol \"Perbarui Lisensi\" di bawah ini. Tim dukungan kami siap membantu Anda jika ada pertanyaan.<br><br>Terima kasih telah menjadi anggota komunitas JustDo yang berharga. Kami terus bekerja mengembangkan fitur-fitur baru untuk meningkatkan pengalaman Anda!",
+  "license_info_please_contact_site_admins": "Untuk informasi lebih lanjut, silakan hubungi administrator situs Anda, atau hubungi kami di info@justdo.com .",
+  "license_info_valid_until_and_licensed_users": "Domain ini berlisensi hingga <b>__date__</b> untuk <b>__count__</b> pengguna. <br> Terima kasih telah menjadi anggota komunitas JustDo yang berharga. Kami terus bekerja mengembangkan fitur-fitur baru untuk meningkatkan pengalaman Anda!",
+  "license_info_expiring_in_days": "(Berakhir dalam __days_string__)",
+  "license_info_expired_in_days": "(Telah berakhir __days_string__)"
+}

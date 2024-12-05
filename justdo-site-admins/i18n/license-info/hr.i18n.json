@@ -1,0 +1,14 @@
+{
+  "license_info_license_information": "Informacije o licenci",
+  "license_info_your_license_is_about_to_expire": "Vaša licenca uskoro ističe!",
+  "license_info_your_license_has_expired": "Vaša licenca je istekla!",
+  "license_info_renew_license": "Obnovi licencu",
+  "license_info_licensed_until": "Licenca vrijedi do __date__",
+  "license_info_expiring_msg": "Licenca za ovu domenu ističe <b>__date__</b>.",
+  "license_info_expired_msg": "Licenca za ovu domenu istekla je <b>__expire_date__</b>. <br>Molimo obnovite svoju licencu do <b>__shutdown_date__</b> kako biste izbjegli prekid usluge.",
+  "license_info_renew_license_instructions": "Za obnovu licence, kliknite na gumb \"Obnovi licencu\" ispod. Naš tim za podršku stoji vam na raspolaganju za sva pitanja.<br><br>Hvala vam što ste cijenjeni član JustDo zajednice. Kontinuirano radimo na novim značajkama kako bismo poboljšali vaše iskustvo!",
+  "license_info_please_contact_site_admins": "Za više informacija, obratite se administratorima stranice ili nas kontaktirajte na info@justdo.com .",
+  "license_info_valid_until_and_licensed_users": "Ova domena ima licencu do <b>__date__</b> za <b>__count__</b> korisnika. <br> Hvala vam što ste cijenjeni član JustDo zajednice. Kontinuirano radimo na novim značajkama kako bismo poboljšali vaše iskustvo!",
+  "license_info_expiring_in_days": "(Ističe za __days_string__)",
+  "license_info_expired_in_days": "(Isteklo prije __days_string__)"
+}

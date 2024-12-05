@@ -1,0 +1,14 @@
+{
+  "license_info_license_information": "Lisensinformasjon",
+  "license_info_your_license_is_about_to_expire": "Lisensen din er i ferd med å utløpe!",
+  "license_info_your_license_has_expired": "Lisensen din har utløpt!",
+  "license_info_renew_license": "Forny lisens",
+  "license_info_licensed_until": "Lisensiert til __date__",
+  "license_info_expiring_msg": "Lisensen for dette domenet vil utløpe <b>__date__</b>.",
+  "license_info_expired_msg": "Lisensen for dette domenet utløp <b>__expire_date__</b>. <br>Vennligst forny lisensen innen <b>__shutdown_date__</b> for å unngå avbrudd i tjenesten.",
+  "license_info_renew_license_instructions": "For å fornye lisensen din, klikk på \"Forny lisens\"-knappen nedenfor. Vårt supportteam er her for å hjelpe deg med eventuelle spørsmål.<br><br>Takk for at du er et verdifullt medlem av JustDo-fellesskapet. Vi jobber kontinuerlig med nye funksjoner for å forbedre din opplevelse!",
+  "license_info_please_contact_site_admins": "For mer informasjon, ta kontakt med nettstedets administratorer eller kontakt oss på info@justdo.com .",
+  "license_info_valid_until_and_licensed_users": "Dette domenet er lisensiert til <b>__date__</b> for <b>__count__</b> brukere. <br> Takk for at du er et verdifullt medlem av JustDo-fellesskapet. Vi jobber kontinuerlig med nye funksjoner for å forbedre din opplevelse!",
+  "license_info_expiring_in_days": "(Utløper __days_string__)",
+  "license_info_expired_in_days": "(Utløpt __days_string__)"
+}

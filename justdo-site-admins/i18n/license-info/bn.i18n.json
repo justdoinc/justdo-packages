@@ -1,0 +1,14 @@
+{
+  "license_info_license_information": "লাইসেন্স তথ্য",
+  "license_info_your_license_is_about_to_expire": "আপনার লাইসেন্স মেয়াদ শেষ হতে চলেছে!",
+  "license_info_your_license_has_expired": "আপনার লাইসেন্স মেয়াদ শেষ হয়ে গেছে!",
+  "license_info_renew_license": "লাইসেন্স নবায়ন করুন",
+  "license_info_licensed_until": "__date__ পর্যন্ত লাইসেন্সকৃত",
+  "license_info_expiring_msg": "এই ডোমেনের লাইসেন্স <b>__date__</b> তারিখে মেয়াদ শেষ হবে।",
+  "license_info_expired_msg": "এই ডোমেনের লাইসেন্স <b>__expire_date__</b> তারিখে মেয়াদ শেষ হয়ে গেছে। <br>কোনো সেবা বিঘ্ন এড়াতে অনুগ্রহ করে <b>__shutdown_date__</b> এর মধ্যে আপনার লাইসেন্স নবায়ন করুন।",
+  "license_info_renew_license_instructions": "লাইসেন্স নবায়ন করতে, অনুগ্রহ করে নীচের \"লাইসেন্স নবায়ন করুন\" বাটনে ক্লিক করুন। যেকোনো প্রশ্নে আমাদের সাপোর্ট টিম আপনাকে সহায়তা করতে প্রস্তুত।<br><br>JustDo কমিউনিটির মূল্যবান সদস্য হওয়ার জন্য আপনাকে ধন্যবাদ। আমরা আপনার অভিজ্ঞতা উন্নত করতে নতুন ফিচার নিয়ে নিরন্তর কাজ করছি!",
+  "license_info_please_contact_site_admins": "আরও তথ্যের জন্য, অনুগ্রহ করে আপনার সাইট অ্যাডমিনিস্ট্রেটরদের সাথে যোগাযোগ করুন, অথবা আমাদের সাথে info@justdo.com এ যোগাযোগ করুন।",
+  "license_info_valid_until_and_licensed_users": "এই ডোমেনটি <b>__date__</b> পর্যন্ত <b>__count__</b> ব্যবহারকারীর জন্য লাইসেন্সকৃত। <br> JustDo কমিউনিটির মূল্যবান সদস্য হওয়ার জন্য আপনাকে ধন্যবাদ। আমরা আপনার অভিজ্ঞতা উন্নত করতে নতুন ফিচার নিয়ে নিরন্তর কাজ করছি!",
+  "license_info_expiring_in_days": "(মেয়াদ শেষ হতে __days_string__ বাকি)",
+  "license_info_expired_in_days": "(মেয়াদ শেষ হয়েছে __days_string__)"
+}

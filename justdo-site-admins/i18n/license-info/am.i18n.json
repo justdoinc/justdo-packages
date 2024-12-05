@@ -1,0 +1,14 @@
+{
+  "license_info_license_information": "የፈቃድ መረጃ",
+  "license_info_your_license_is_about_to_expire": "የእርስዎ ፈቃድ ሊያበቃ ነው!",
+  "license_info_your_license_has_expired": "የእርስዎ ፈቃድ አብቅቷል!",
+  "license_info_renew_license": "ፈቃድ ያድሱ",
+  "license_info_licensed_until": "እስከ __date__ ድረስ የተፈቀደ",
+  "license_info_expiring_msg": "ለዚህ ዶሜይን የተሰጠው ፈቃድ በ <b>__date__</b> ያበቃል።",
+  "license_info_expired_msg": "ለዚህ ዶሜይን የተሰጠው ፈቃድ በ <b>__expire_date__</b> አብቅቷል። <br>እባክዎ አገልግሎቱ እንዳይቋረጥ ፈቃድዎን እስከ <b>__shutdown_date__</b> ድረስ ያድሱ።",
+  "license_info_renew_license_instructions": "ፈቃድዎን ለማደስ፣ እባክዎ ከዚህ በታች ያለውን \"ፈቃድ ያድሱ\" የሚለውን ቁልፍ ይጫኑ። የድጋፍ ቡድናችን ማንኛውንም ጥያቄዎች ለመመለስ ዝግጁ ነው።<br><br>የJustDo ማህበረሰብ አባል በመሆንዎ እናመሰግናለን። ልምድዎን ለማሻሻል አዳዲስ ባህሪያትን በቀጣይነት እየሰራን ነው!",
+  "license_info_please_contact_site_admins": "ለተጨማሪ መረጃ፣ እባክዎ የድረ-ገጽ አስተዳዳሪዎችን ያግኙ፣ ወይም በ info@justdo.com ያነጋግሩን።",
+  "license_info_valid_until_and_licensed_users": "ይህ ዶሜይን እስከ <b>__date__</b> ድረስ ለ <b>__count__</b> ተጠቃሚዎች የተፈቀደ ነው። <br> የJustDo ማህበረሰብ አባል በመሆንዎ እናመሰግናለን። ልምድዎን ለማሻሻል አዳዲስ ባህሪያትን በቀጣይነት እየሰራን ነው!",
+  "license_info_expiring_in_days": "(በ __days_string__ ውስጥ ያበቃል)",
+  "license_info_expired_in_days": "(ከ __days_string__ በፊት አብቅቷል)"
+}

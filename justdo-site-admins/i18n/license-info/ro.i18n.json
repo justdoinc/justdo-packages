@@ -1,0 +1,14 @@
+{
+  "license_info_license_information": "Informații licență",
+  "license_info_your_license_is_about_to_expire": "Licența dumneavoastră este pe cale să expire!",
+  "license_info_your_license_has_expired": "Licența dumneavoastră a expirat!",
+  "license_info_renew_license": "Reînnoire licență",
+  "license_info_licensed_until": "Licență valabilă până la __date__",
+  "license_info_expiring_msg": "Licența pentru acest domeniu va expira la data de <b>__date__</b>.",
+  "license_info_expired_msg": "Licența pentru acest domeniu a expirat la data de <b>__expire_date__</b>. <br>Vă rugăm să reînnoiți licența până la data de <b>__shutdown_date__</b> pentru a evita întreruperea serviciului.",
+  "license_info_renew_license_instructions": "Pentru a reînnoi licența, vă rugăm să faceți clic pe butonul \"Reînnoire licență\" de mai jos. Echipa noastră de suport vă stă la dispoziție pentru orice întrebări.<br><br>Vă mulțumim că sunteți un membru valoros al comunității JustDo. Lucrăm constant la noi funcționalități pentru a îmbunătăți experiența dumneavoastră!",
+  "license_info_please_contact_site_admins": "Pentru mai multe informații, vă rugăm să contactați administratorii site-ului sau să ne scrieți la info@justdo.com .",
+  "license_info_valid_until_and_licensed_users": "Acest domeniu este licențiat până la data de <b>__date__</b> pentru <b>__count__</b> utilizatori. <br> Vă mulțumim că sunteți un membru valoros al comunității JustDo. Lucrăm constant la noi funcționalități pentru a îmbunătăți experiența dumneavoastră!",
+  "license_info_expiring_in_days": "(Expiră în __days_string__)",
+  "license_info_expired_in_days": "(A expirat acum __days_string__)"
+}

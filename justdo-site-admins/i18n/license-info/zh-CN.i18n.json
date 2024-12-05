@@ -1,0 +1,14 @@
+{
+  "license_info_license_information": "许可证信息",
+  "license_info_your_license_is_about_to_expire": "您的许可证即将到期！",
+  "license_info_your_license_has_expired": "您的许可证已过期！",
+  "license_info_renew_license": "更新许可证",
+  "license_info_licensed_until": "许可证有效期至 __date__",
+  "license_info_expiring_msg": "此域名的许可证将于 <b>__date__</b> 到期。",
+  "license_info_expired_msg": "此域名的许可证已于 <b>__expire_date__</b> 过期。<br>请在 <b>__shutdown_date__</b> 之前更新您的许可证，以避免服务中断。",
+  "license_info_renew_license_instructions": "如需更新许可证，请点击下方的\"更新许可证\"按钮。如有任何问题，我们的支持团队随时为您提供帮助。<br><br>感谢您作为 JustDo 社区的重要成员。我们正在不断开发新功能以提升您的使用体验！",
+  "license_info_please_contact_site_admins": "如需更多信息，请联系您的站点管理员，或发送邮件至 info@justdo.com 。",
+  "license_info_valid_until_and_licensed_users": "此域名的许可证有效期至 <b>__date__</b>，授权用户数为 <b>__count__</b> 。<br>感谢您作为 JustDo 社区的重要成员。我们正在不断开发新功能以提升您的使用体验！",
+  "license_info_expiring_in_days": "（将在 __days_string__ 后到期）",
+  "license_info_expired_in_days": "（已过期 __days_string__）"
+}

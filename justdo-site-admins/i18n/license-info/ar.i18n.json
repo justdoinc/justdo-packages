@@ -1,0 +1,14 @@
+{
+  "license_info_license_information": "معلومات الترخيص",
+  "license_info_your_license_is_about_to_expire": "ترخيصك على وشك الانتهاء!",
+  "license_info_your_license_has_expired": "انتهى ترخيصك!",
+  "license_info_renew_license": "تجديد الترخيص",
+  "license_info_licensed_until": "مرخص حتى __date__",
+  "license_info_expiring_msg": "سينتهي ترخيص هذا النطاق في <b>__date__</b>.",
+  "license_info_expired_msg": "انتهى ترخيص هذا النطاق في <b>__expire_date__</b>. <br>يرجى تجديد ترخيصك قبل <b>__shutdown_date__</b> لتجنب أي انقطاع في الخدمة.",
+  "license_info_renew_license_instructions": "لتجديد ترخيصك، يرجى النقر على زر \"تجديد الترخيص\" أدناه. فريق الدعم لدينا متواجد لمساعدتك في أي استفسارات.<br><br>شكراً لكونك عضواً قيماً في مجتمع JustDo. نحن نعمل باستمرار على تطوير ميزات جديدة لتحسين تجربتك!",
+  "license_info_please_contact_site_admins": "لمزيد من المعلومات، يرجى التواصل مع مسؤولي الموقع، أو اتصل بنا على info@justdo.com .",
+  "license_info_valid_until_and_licensed_users": "هذا النطاق مرخص حتى <b>__date__</b> لـ <b>__count__</b> مستخدم. <br> شكراً لكونك عضواً قيماً في مجتمع JustDo. نحن نعمل باستمرار على تطوير ميزات جديدة لتحسين تجربتك!",
+  "license_info_expiring_in_days": "(ينتهي في غضون __days_string__)",
+  "license_info_expired_in_days": "(انتهى منذ __days_string__)"
+}

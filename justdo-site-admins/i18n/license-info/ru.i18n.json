@@ -1,0 +1,14 @@
+{
+  "license_info_license_information": "Информация о лицензии",
+  "license_info_your_license_is_about_to_expire": "Срок действия вашей лицензии скоро истекает!",
+  "license_info_your_license_has_expired": "Срок действия вашей лицензии истек!",
+  "license_info_renew_license": "Продлить лицензию",
+  "license_info_licensed_until": "Лицензия действительна до __date__",
+  "license_info_expiring_msg": "Срок действия лицензии для этого домена истекает <b>__date__</b>.",
+  "license_info_expired_msg": "Срок действия лицензии для этого домена истек <b>__expire_date__</b>. <br>Пожалуйста, продлите лицензию до <b>__shutdown_date__</b>, чтобы избежать прерывания обслуживания.",
+  "license_info_renew_license_instructions": "Для продления лицензии нажмите кнопку \"Продлить лицензию\" ниже. Наша служба поддержки готова помочь вам с любыми вопросами.<br><br>Благодарим вас за то, что вы являетесь ценным участником сообщества JustDo. Мы постоянно работаем над новыми функциями для улучшения вашего опыта!",
+  "license_info_please_contact_site_admins": "Для получения дополнительной информации обратитесь к администраторам сайта или свяжитесь с нами по адресу info@justdo.com .",
+  "license_info_valid_until_and_licensed_users": "Лицензия для этого домена действительна до <b>__date__</b> для <b>__count__</b> пользователей. <br> Благодарим вас за то, что вы являетесь ценным участником сообщества JustDo. Мы постоянно работаем над новыми функциями для улучшения вашего опыта!",
+  "license_info_expiring_in_days": "(Истекает через __days_string__)",
+  "license_info_expired_in_days": "(Истекла __days_string__)"
+}

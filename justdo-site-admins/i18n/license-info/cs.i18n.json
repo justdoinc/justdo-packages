@@ -1,0 +1,14 @@
+{
+  "license_info_license_information": "Informace o licenci",
+  "license_info_your_license_is_about_to_expire": "Vaše licence brzy vyprší!",
+  "license_info_your_license_has_expired": "Vaše licence vypršela!",
+  "license_info_renew_license": "Obnovit licenci",
+  "license_info_licensed_until": "Licence platná do __date__",
+  "license_info_expiring_msg": "Licence pro tuto doménu vyprší <b>__date__</b>.",
+  "license_info_expired_msg": "Licence pro tuto doménu vypršela <b>__expire_date__</b>. <br>Prosím obnovte svoji licenci do <b>__shutdown_date__</b>, abyste předešli přerušení služby.",
+  "license_info_renew_license_instructions": "Pro obnovení licence klikněte na tlačítko \"Obnovit licenci\" níže. Náš tým podpory je připraven vám pomoci s jakýmikoli dotazy.<br><br>Děkujeme, že jste váženým členem komunity JustDo. Neustále pracujeme na nových funkcích, abychom vylepšili vaši zkušenost!",
+  "license_info_please_contact_site_admins": "Pro více informací kontaktujte prosím správce vašeho webu nebo nás kontaktujte na info@justdo.com .",
+  "license_info_valid_until_and_licensed_users": "Tato doména je licencována do <b>__date__</b> pro <b>__count__</b> uživatelů. <br> Děkujeme, že jste váženým členem komunity JustDo. Neustále pracujeme na nových funkcích, abychom vylepšili vaši zkušenost!",
+  "license_info_expiring_in_days": "(Vyprší za __days_string__)",
+  "license_info_expired_in_days": "(Vypršelo před __days_string__)"
+}

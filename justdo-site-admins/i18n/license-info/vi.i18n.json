@@ -1,0 +1,14 @@
+{
+  "license_info_license_information": "Thông tin giấy phép",
+  "license_info_your_license_is_about_to_expire": "Giấy phép của bạn sắp hết hạn!",
+  "license_info_your_license_has_expired": "Giấy phép của bạn đã hết hạn!",
+  "license_info_renew_license": "Gia hạn giấy phép",
+  "license_info_licensed_until": "Được cấp phép đến __date__",
+  "license_info_expiring_msg": "Giấy phép cho tên miền này sẽ hết hạn vào <b>__date__</b>.",
+  "license_info_expired_msg": "Giấy phép cho tên miền này đã hết hạn vào <b>__expire_date__</b>. <br>Vui lòng gia hạn giấy phép trước <b>__shutdown_date__</b> để tránh gián đoạn dịch vụ.",
+  "license_info_renew_license_instructions": "Để gia hạn giấy phép, vui lòng nhấp vào nút \"Gia hạn giấy phép\" bên dưới. Đội ngũ hỗ trợ của chúng tôi luôn sẵn sàng giúp đỡ bạn với mọi thắc mắc.<br><br>Cảm ơn bạn đã là thành viên quan trọng của cộng đồng JustDo. Chúng tôi liên tục phát triển các tính năng mới để cải thiện trải nghiệm của bạn!",
+  "license_info_please_contact_site_admins": "Để biết thêm thông tin, vui lòng liên hệ với quản trị viên của trang web hoặc liên hệ với chúng tôi tại info@justdo.com .",
+  "license_info_valid_until_and_licensed_users": "Tên miền này được cấp phép đến <b>__date__</b> cho <b>__count__</b> người dùng. <br> Cảm ơn bạn đã là thành viên quan trọng của cộng đồng JustDo. Chúng tôi liên tục phát triển các tính năng mới để cải thiện trải nghiệm của bạn!",
+  "license_info_expiring_in_days": "(Sẽ hết hạn sau __days_string__)",
+  "license_info_expired_in_days": "(Đã hết hạn __days_string__)"
+}

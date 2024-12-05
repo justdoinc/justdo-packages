@@ -1,0 +1,14 @@
+{
+  "license_info_license_information": "Informació de la Llicència",
+  "license_info_your_license_is_about_to_expire": "La seva llicència està a punt de caducar!",
+  "license_info_your_license_has_expired": "La seva llicència ha caducat!",
+  "license_info_renew_license": "Renovar Llicència",
+  "license_info_licensed_until": "Llicència vàlida fins __date__",
+  "license_info_expiring_msg": "La llicència per aquest domini caducarà el <b>__date__</b>.",
+  "license_info_expired_msg": "La llicència per aquest domini va caducar el <b>__expire_date__</b>. <br>Si us plau, renovi la seva llicència abans del <b>__shutdown_date__</b> per evitar interrupcions del servei.",
+  "license_info_renew_license_instructions": "Per renovar la seva llicència, faci clic al botó \"Renovar Llicència\" a continuació. El nostre equip de suport està disponible per ajudar-lo amb qualsevol pregunta.<br><br>Gràcies per ser un membre valuós de la comunitat JustDo. Continuem treballant en noves funcionalitats per millorar la seva experiència!",
+  "license_info_please_contact_site_admins": "Per a més informació, contacti amb els administradors del lloc o escrigui'ns a info@justdo.com .",
+  "license_info_valid_until_and_licensed_users": "Aquest domini té llicència fins el <b>__date__</b> per a <b>__count__</b> usuaris. <br> Gràcies per ser un membre valuós de la comunitat JustDo. Continuem treballant en noves funcionalitats per millorar la seva experiència!",
+  "license_info_expiring_in_days": "(Caduca en __days_string__)",
+  "license_info_expired_in_days": "(Caducat fa __days_string__)"
+}
