@@ -67,19 +67,15 @@
     {{> _loginButtonsAdditionalLoggedInDropdownActions}}
   {{/if}}
 
-  <div class="dropdown-info-btn d-flex mt-1 mb-3">
+  <div class="dropdown-info-btn mt-1 mb-3">
     <a href="#" class="info-btn-settings login-buttons-global-settings text-nowrap">{{_ "logged_in_dropdown_account_preference"}}</a>
-    <div class="dropdown-info-divider bg-primary my-1 mx-2"></div>
-    <a href="{{landingAppRootUrl}}/privacy-policy" class="info-btn-privacy" target="_blank">{{_ "logged_in_dropdown_privacy"}}</a>
-    <div class="dropdown-info-divider bg-primary my-1 mx-2"></div>
-    <a href="{{landingAppRootUrl}}/terms-and-conditions" class="info-btn-terms" target="_blank">{{_ "logged_in_dropdown_terms"}}</a>
   </div>
 
-  <div class="mt-2 d-flex">
+  <div class="dropdown-info-btn mt-2">
     {{#if isAffiliate}}
-      <button class="btn btn-sm btn-primary shadow-sm affiliates-console-btn mr-1">{{_ "logged_in_dropdown_promoter_console"}}</button>
+      <button class="btn btn-sm btn-primary shadow-sm affiliates-console-btn m{{getRtlAwareDirection "r"}}-1">{{_ "logged_in_dropdown_promoter_console"}}</button>
     {{/if}}
-
+    <button class="btn btn-sm btn-primary shadow-sm become-distributor-btn m{{getRtlAwareDirection "r"}}-1">Become a JustDo Distributor</button>
     <button class="btn btn-sm btn-light" id="login-buttons-logout">
       {{_ "login_buttons_logged_in_dropdown_actions_sign_out"}}
     </button>
