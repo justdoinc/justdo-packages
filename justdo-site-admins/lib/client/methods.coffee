@@ -22,3 +22,6 @@ _.extend JustdoSiteAdmins.prototype,
   
   getServerVitalsShrinkWrapped: (cb) ->
     return Meteor.call("saGetServerVitalsShrinkWrapped", cb)
+  
+  renewalRequest: (request_data, cb) ->
+    return Meteor.call("saRenewalRequest", request_data, cb)

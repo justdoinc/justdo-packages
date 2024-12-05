@@ -179,11 +179,55 @@ _.extend JustdoSiteAdmins.prototype,
       message: modal_template.node
 
     if is_user_site_admin and (is_expiring or is_expired)
+      redirectUserToContactPage = (query_params) ->
+        APP.justdo_analytics.JA({cat: "renew-license", act: "redirected-to-contact-page"})
+        url = new URL JustdoSiteAdmins.renew_license_fallback_endpoint, "https://justdo.com"
+        for key, value of query_params
+          url.searchParams.set key, value
+        window.open url, "_blank"
+        return
+
       bootbox_options.buttons =
         renew:
           label: TAPi18n.__ "license_info_renew_license"
           className: "btn-primary"
-          callback: ->
+          callback: =>
+            cur_user = Meteor.user()
+            license = @getLicense().license
+            request_data = 
+              name: JustdoHelpers.displayName cur_user
+              email: JustdoHelpers.getUserMainEmail cur_user
+              message: "Hello. I would like to renew my site license. My current license is #{JSON.stringify license}"
+              tz: moment.tz.guess()
+              version: JustdoHelpers.getAppVersion()
+              root_url: JustdoHelpers.getRootUrl()
+
+            APP.justdo_analytics.JA({cat: "renew-license", act: "submit-attempt"})
+
+            @renewalRequest request_data, (err, res) ->
+              if err? or (res?.statusCode isnt 200)
+                redirectUserToContactPage request_data
+                APP.justdo_analytics.JA({cat: "renew-license", act: "failed"})
+              else
+                APP.justdo_analytics.JA({cat: "renew-license", act: "success"})
+                dialog.modal("hide")
+                
+                bootbox.dialog
+                  message: """
+                    <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
+                    <span><strong>#{TAPi18n.__ "thank_you"}.</strong><br>#{TAPi18n.__ "we_will_get_back_to_you_soon"}</span>
+                  """
+                  className: "bootbox-new-design bootbox-contact-successful"
+                  closeButton: false
+                  onEscape: ->
+                    return true
+                  buttons:
+                    close: 
+                      label: TAPi18n.__ "close"
+                      callback: ->
+                        return true
+              return
+
             return
     else
       bootbox_options.buttons =

@@ -38,5 +38,9 @@ _.extend JustdoSiteAdmins.prototype,
       saGetServerVitalsShrinkWrapped: ->
         # users_id check is performed inside self.getServerVitalsShrinkWrapped
         return self.getServerVitalsShrinkWrapped(@userId)
+      
+      saRenewalRequest: (request_data) ->
+        endpoint = new URL(JustdoSiteAdmins.renew_license_endpoint, "http://localhost:4000").toString()
+        return HTTP.post endpoint, {data: request_data}
 
     return

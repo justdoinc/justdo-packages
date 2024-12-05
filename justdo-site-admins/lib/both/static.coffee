@@ -16,3 +16,7 @@ _.extend JustdoSiteAdmins,
   site_admins_server_vitals_page_refresh_interval: 1000 * 15 # 15 seconds
 
   installation_id_system_record_key: "installtion-id"
+
+  renew_license_endpoint: "/renew-license"
+
+  renew_license_fallback_endpoint: "/contact"
