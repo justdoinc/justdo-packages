@@ -204,3 +204,32 @@ WebApp.connectHandlers.use (req, res, next) ->
     next()
 
   return
+
+# This middleware is used to handle license renewal requests 
+WebApp.connectHandlers.use (req, res, next) ->
+  if req.url is "/renew-license"
+    if req.method isnt "POST"
+      res.writeHead 405
+      res.end "Method Not Allowed"
+      return
+
+    try
+      request_details = req.body
+
+      subject = "License renewal request"
+
+      handleContactRequest request_details, subject
+
+      res.writeHead 200
+      res.end "OK"
+      return
+    catch error
+      res.writeHead 400
+      # Return a JSON object with the error message
+      res.end(error.message)
+      return
+
+  else
+    next()
+
+  return
