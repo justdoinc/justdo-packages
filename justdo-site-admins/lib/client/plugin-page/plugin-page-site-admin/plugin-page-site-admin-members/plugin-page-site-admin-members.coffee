@@ -131,6 +131,8 @@ Template.justdo_site_admin_members.helpers
 
   licensedUsersCount: -> _.size Template.instance().licensed_users_crv.get()
 
+  trialCutoff: -> APP.justdo_site_admins.getLicense().license?.trial_cutoff
+
   licensePermittedUsers: -> APP.justdo_site_admins.getLicense().license?.licensed_users
 
   licenseValidUntil: -> moment(APP.justdo_site_admins.getLicense().license?.expire_on, "YYYY-MM-DD").format JustdoHelpers.getUserPreferredDateFormat()

@@ -39,6 +39,14 @@
             </div>
           {{/if}}
 
+          {{#with trialCutoff}}
+            <div class="site-admins-info-divider"></div>
+            Trial ends:
+            <div class="site-admins-info-value" title="During the trial period, all users have unlimited licenses. Once the trial ends, any user exceeding the available license count must obtain a license to continue using JustDo. Users who will lose access after the trial are indicated in the Remarks column.">
+              {{this}}
+            </div>
+          {{/with}}
+
           <div class="site-admins-info-divider"></div>
           Valid until:
           <div class="site-admins-info-value">
