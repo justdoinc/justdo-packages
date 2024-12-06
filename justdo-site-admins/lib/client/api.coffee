@@ -12,7 +12,13 @@ _.extend JustdoSiteAdmins.prototype,
     if @destroyed
       return
     
-    @showLicenseExpirationReminderIfExpiring()
+    Tracker.autorun (computation) =>
+      # Wait for user document to be available
+      if not Meteor.user()?
+        return
+      @showLicenseExpirationReminderIfExpiring()
+      computation.stop()
+      return
 
     return
 
