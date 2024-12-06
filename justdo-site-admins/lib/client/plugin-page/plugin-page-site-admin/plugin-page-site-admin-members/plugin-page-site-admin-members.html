@@ -17,7 +17,7 @@
     <div class="site-admins-stat-wrapper">
       <div class="site-admins-stat-container">
         Active users:
-        <div class="site-admins-info-value">
+        <div class="site-admins-info-value" title='"Active users" displays the total number of individuals who currently have access to JustDo. This count includes both licensed users and those who have been granted temporary access, such as during a grace or trial period. Additionally, the "Remarks" column provides details about these temporarily authorized users, including when their access will expire.'>
           {{activeUsersCount}}
         </div>
         {{#if licensingEnabled}}
@@ -49,14 +49,14 @@
 
           <div class="site-admins-info-divider"></div>
           Valid until:
-          <div class="site-admins-info-value">
+          <div class="site-admins-info-value" title="This date represents when your license will expire.">
             {{licenseValidUntil}}
           </div>
 
           {{#if isLicenseExpired}}
             <div class="site-admins-info-divider"></div>
             Operational until:
-            <div class="site-admins-info-value">
+            <div class="site-admins-info-value" title='After the license expires, we provide a brief grace period during which the system remains operational. However, as soon as the date indicated under "Operational until" is reached, the system will cease to function.'>
               {{licenseOperationalUntil}}
             </div>
           {{/if}}
@@ -71,7 +71,7 @@
       <tr>
         <th class="sort-by {{#if $eq activeFilter 'name'}}active{{/if}}" sort-by="name"><div class="sort-by-wrapper">Name<svg class="jd-icon chevron"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if orderByFieldDesc}}chevron-down{{else}}chevron-up{{/if}}"></use></svg></div></th>
         <th class="sort-by {{#if $eq activeFilter 'email'}}active{{/if}}" sort-by="email"><div class="sort-by-wrapper">Email<svg class="jd-icon chevron"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if orderByFieldDesc}}chevron-down{{else}}chevron-up{{/if}}"></use></svg></div></th>
-        <th class="sort-by {{#if $eq activeFilter 'remarks'}}active{{/if}}" sort-by="remarks"><div class="sort-by-wrapper">Role <svg class="jd-icon chevron"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if orderByFieldDesc}}chevron-down{{else}}chevron-up{{/if}}"></use></svg></div></th>
+        <th class="sort-by {{#if $eq activeFilter 'remarks'}}active{{/if}}" sort-by="remarks"><div class="sort-by-wrapper">Remarks <svg class="jd-icon chevron"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if orderByFieldDesc}}chevron-down{{else}}chevron-up{{/if}}"></use></svg></div></th>
         <th class=""></th>
       </tr>
 

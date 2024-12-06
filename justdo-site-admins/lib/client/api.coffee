@@ -260,7 +260,7 @@ _.extend JustdoSiteAdmins.prototype,
       remarks.push """<span class="badge badge-info rounded-0 mr-1">Proxy User</span>"""
 
     if (is_user_deactivated = APP.accounts.isUserDeactivated(user))
-      remarks.push """<span class="badge badge-secondary rounded-0 mr-1">Deactivated</span>"""
+      remarks.push """<span class="badge badge-secondary rounded-0 mr-1" title="This user is deactivated and cannot log in to JustDo. Deactivated users do not count against the available license total.">Deactivated</span>"""
 
     if @isLicenseEnabledEnvironment() and not is_user_deactivated
       user_license = @isUserLicensed user, pre_computed_hard_licensed_users
@@ -276,8 +276,8 @@ _.extend JustdoSiteAdmins.prototype,
           human_readable_grade_period_expires = moment(soft_license_details.expires).format(JustdoHelpers.getUserPreferredDateFormat())
 
           if grace_period_type is "new_user"
-            remarks.push """<span class="badge badge-warning rounded-0 mr-1">New user grace period until #{human_readable_grade_period_expires}</span>"""
+            remarks.push """<span class="badge badge-warning rounded-0 mr-1" title="To prevent disruptions to normal business operations, JustDo grants new users a short, license-free trial period before they must obtain a proper license. This user requires a license, but will continue to enjoy the temporary, license-free access until the stated date.">New user grace period until #{human_readable_grade_period_expires}</span>"""
           if grace_period_type is "trial"
-            remarks.push """<span class="badge badge-warning rounded-0 mr-1">License trial period until #{human_readable_grade_period_expires}</span>"""
+            remarks.push """<span class="badge badge-warning rounded-0 mr-1" title="Because the system is currently in its trial period, this user is granted access until the specified date. After that date, the user will need a valid license to continue using the system.">Trial period until #{human_readable_grade_period_expires}</span>"""
 
     return remarks.join(" ")
