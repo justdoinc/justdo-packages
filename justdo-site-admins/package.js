@@ -57,6 +57,7 @@ Package.onUse(function (api) {
   api.use("reactive-dict", both);
   api.use("tap:i18n", both);
   api.use("justdoinc:justdo-i18n", both);
+  api.use("http", server);
   api.use("tracker", client);
 
   api.addFiles("lib/both/analytics.coffee", both);
