@@ -12,9 +12,9 @@
     <div class="message primary">
       {{#if isExpiring}}
         {{#if isUserSiteAdmin}}
-          {{{xssGuard(_ "license_info_renew_license_instructions")}}}
+          {{{xssGuard(_ "license_info_renew_license_instructions" data=getEncodedRequestData)}}}
         {{else}}
-          {{_ "license_info_please_contact_site_admins"}}
+          {{{xssGuard(_ "license_info_please_contact_site_admins" data=getEncodedRequestData)}}}
         {{/if}}
       {{else}}
         {{{xssGuard(_ "license_info_valid_until_and_licensed_users" date=(formatDate expire_on) count=getLicensedUsersCount)}}}

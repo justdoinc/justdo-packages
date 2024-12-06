@@ -172,7 +172,20 @@ _.extend JustdoSiteAdmins.prototype,
     is_expiring_soon = @isLicenseExpiring false
     is_expired = @isLicenseExpired()
 
-    modal_template = JustdoHelpers.renderTemplateInNewNode Template.license_info_modal, {is_expiring, is_expiring_soon, is_expired}
+    cur_user = Meteor.user()
+    license = _.extend {}, @getLicense().license
+    root_url = JustdoHelpers.getRootUrl()
+    user_email = JustdoHelpers.getUserMainEmail cur_user
+    license.domain = root_url
+    request_data = 
+      name: JustdoHelpers.displayName cur_user
+      email: user_email
+      message: "Hello. I would like to renew my site license.\n\nMy current license is \n#{JSON.stringify license, null, 2}.\n\nSent by #{user_email}"
+      tz: moment.tz.guess()
+      version: JustdoHelpers.getAppVersion()
+      root_url: JustdoHelpers.getRootUrl()
+
+    modal_template = JustdoHelpers.renderTemplateInNewNode Template.license_info_modal, {is_expiring, is_expiring_soon, is_expired, request_data}
     title = TAPi18n.__ "license_info_license_information"
     if is_expired
       title = TAPi18n.__ "license_info_your_license_has_expired"
@@ -199,16 +212,6 @@ _.extend JustdoSiteAdmins.prototype,
           label: TAPi18n.__ "license_info_renew_license"
           className: "btn-primary"
           callback: =>
-            cur_user = Meteor.user()
-            license = @getLicense().license
-            request_data = 
-              name: JustdoHelpers.displayName cur_user
-              email: JustdoHelpers.getUserMainEmail cur_user
-              message: "Hello. I would like to renew my site license.\n\nMy current license is \n#{JSON.stringify license, null, 2}"
-              tz: moment.tz.guess()
-              version: JustdoHelpers.getAppVersion()
-              root_url: JustdoHelpers.getRootUrl()
-
             APP.justdo_analytics.JA({cat: "renew-license", act: "submit-attempt"})
 
             @renewalRequest request_data, (err, res) ->

@@ -11,3 +11,8 @@ Template.license_info_modal.helpers
     
     return license.licensed_users
   formatDate: (date) -> moment(date, "YYYY-MM-DD").format JustdoHelpers.getUserPreferredDateFormat()
+  getEncodedRequestData: -> 
+    if (request_data = Template.instance().data?.request_data)
+      request_data.domain = request_data.root_url
+      return encodeURI request_data.message.replace(/\\n/g, "%0D%0A")
+    return ""
