@@ -55,6 +55,7 @@ $site-admin-menu-width: 260px
         .badge
           font-weight: 600
           &[title]
+            cursor: help
             text-decoration: underline dotted
             &:hover
               text-decoration: underline solid
@@ -154,13 +155,17 @@ $site-admin-menu-width: 260px
   height: 20px
   margin: 0 12px
 
-.site-admins-info-value
-  font-weight: 600
-  margin-left: 4px
+.site-admins-stat-item
+  display: flex
   &[title]
+    cursor: help
     text-decoration: underline dotted
     &:hover
       text-decoration: underline solid
+
+.site-admins-info-value
+  font-weight: 600
+  margin-left: 4px
 
 .site-admins-list-item-action
   cursor: pointer

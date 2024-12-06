@@ -16,48 +16,64 @@
     </div>
     <div class="site-admins-stat-wrapper">
       <div class="site-admins-stat-container">
-        Active users:
-        <div class="site-admins-info-value" title='"Active users" displays the total number of individuals who currently have access to JustDo. This count includes both licensed users and those who have been granted temporary access, such as during a grace or trial period. Additionally, the "Remarks" column provides details about these temporarily authorized users, including when their access will expire.'>
-          {{activeUsersCount}}
+        <div class="site-admins-stat-item" title='"Active users" displays the total number of individuals who currently have access to JustDo.&#10;&#10;This count includes both licensed users and those who have been granted temporary access, such as during a grace or trial period.&#10;&#10;Additionally, the "Remarks" column provides details about these temporarily authorized users, including when their access will expire.'>
+          Active users:
+          <div class="site-admins-info-value">
+            {{activeUsersCount}}
+          </div>
         </div>
         {{#if licensingEnabled}}
           <div class="site-admins-info-divider"></div>
           {{#if unlimitedLicense}}
-            Licensed users:
-            <div class="site-admins-info-value">
-              Unlimited
+            <div class="site-admins-stat-item">
+              Licensed users:
+              <div class="site-admins-info-value">
+                Unlimited
+              </div>
             </div>
           {{else}}
-            Licenses available:
-            <div class="site-admins-info-value">
-              {{licensePermittedUsers}}
+            <div class="site-admins-stat-item">
+              Licenses available:
+              <div class="site-admins-info-value">
+                {{licensePermittedUsers}}
+              </div>
             </div>
             <div class="site-admins-info-divider"></div>
-            Licenses in use:
-            <div class="site-admins-info-value">
-              {{licensedUsersCount}}
+            <div class="site-admins-stat-item">
+              Licenses in use:
+              <div class="site-admins-info-value">
+                {{licensedUsersCount}}
+              </div>
             </div>
           {{/if}}
 
           {{#with trialCutoff}}
             <div class="site-admins-info-divider"></div>
-            Trial ends:
-            <div class="site-admins-info-value" title="During the trial period, all users have unlimited licenses. Once the trial ends, any user exceeding the available license count must obtain a license to continue using JustDo. Users who will lose access after the trial are indicated in the Remarks column.">
-              {{this}}
+            <div class="site-admins-stat-item" title="During the trial period, all users have unlimited licenses.&#10;&#10;Once the trial ends, any user exceeding the available license count must obtain a license to continue using JustDo. Users who will lose access after the trial are indicated in the Remarks column.">
+              Trial ends:
+              <div class="site-admins-info-value">
+                {{this}}
+              </div>
             </div>
           {{/with}}
 
           <div class="site-admins-info-divider"></div>
-          Valid until:
-          <div class="site-admins-info-value" title="This date represents when your license will expire.">
-            {{licenseValidUntil}}
+
+          <div class="site-admins-stat-item" title="This date represents when your license will expire.">
+            Valid until:
+            <div class="site-admins-info-value">
+              {{licenseValidUntil}}
+            </div>
           </div>
 
           {{#if isLicenseExpired}}
             <div class="site-admins-info-divider"></div>
-            Operational until:
-            <div class="site-admins-info-value" title='After the license expires, we provide a brief grace period during which the system remains operational. However, as soon as the date indicated under "Operational until" is reached, the system will cease to function.'>
-              {{licenseOperationalUntil}}
+
+            <div class="site-admins-stat-item" title='After the license expires, we provide a brief grace period during which the system remains operational.&#10;&#10;However, as soon as the date indicated under "Operational until" is reached, the system will cease to function.'>
+              Operational until:
+              <div class="site-admins-info-value">
+                {{licenseOperationalUntil}}
+              </div>
             </div>
           {{/if}}
 

@@ -254,13 +254,13 @@ _.extend JustdoSiteAdmins.prototype,
 
     # Excluded remarks can co-exist with site-admin or deactivated, but not expiring/expired.
     if APP.justdo_site_admins.isUserSiteAdmin(user)
-      remarks.push """<span class="badge badge-primary rounded-0 mr-1">Site Admin</span>"""
+      remarks.push """<span class="badge badge-primary rounded-0 mr-1" title="Site admins have access to the site administration panel, allowing them to view system details and manage licenses.&#10;&#10;However, their role primarily focuses on user administration and does not automatically grant access to all tasks within the system.&#10;&#10;Each site admin must have a verified email address. If a site admin’s email address is changed, they will lose their site admin capabilities until the new email is verified.&#10;&#10;If the number of users exceeds the available licenses, site admins will be granted a license before any non-site admin users.">Site Admin</span>"""
 
     if APP.justdo_site_admins.isProxyUser?(user)
       remarks.push """<span class="badge badge-info rounded-0 mr-1">Proxy User</span>"""
 
     if (is_user_deactivated = APP.accounts.isUserDeactivated(user))
-      remarks.push """<span class="badge badge-secondary rounded-0 mr-1" title="This user is deactivated and cannot log in to JustDo. Deactivated users do not count against the available license total.">Deactivated</span>"""
+      remarks.push """<span class="badge badge-secondary rounded-0 mr-1" title="This user is deactivated and cannot log in to JustDo.&#10;Deactivated users do not count against the available license total.">Deactivated</span>"""
 
     if @isLicenseEnabledEnvironment() and not is_user_deactivated
       user_license = @isUserLicensed user, pre_computed_hard_licensed_users
@@ -276,8 +276,8 @@ _.extend JustdoSiteAdmins.prototype,
           human_readable_grade_period_expires = moment(soft_license_details.expires).format(JustdoHelpers.getUserPreferredDateFormat())
 
           if grace_period_type is "new_user"
-            remarks.push """<span class="badge badge-warning rounded-0 mr-1" title="To prevent disruptions to normal business operations, JustDo grants new users a short, license-free trial period before they must obtain a proper license. This user requires a license, but will continue to enjoy the temporary, license-free access until the stated date.">New user grace period until #{human_readable_grade_period_expires}</span>"""
+            remarks.push """<span class="badge badge-warning rounded-0 mr-1" title="To prevent disruptions to normal business operations, JustDo grants new users a short, license-free trial period before they must obtain a proper license.&#10;&#10;This user requires a license, but will continue to enjoy the temporary, license-free access until the stated date.">New user grace period until #{human_readable_grade_period_expires}</span>"""
           if grace_period_type is "trial"
-            remarks.push """<span class="badge badge-warning rounded-0 mr-1" title="Because the system is currently in its trial period, this user is granted access until the specified date. After that date, the user will need a valid license to continue using the system.">Trial period until #{human_readable_grade_period_expires}</span>"""
+            remarks.push """<span class="badge badge-warning rounded-0 mr-1" title="Because the system is currently in its trial period, this user is granted access until the specified date.&#10;&#10;After that date, the user will need a valid license to continue using the system.">Trial period until #{human_readable_grade_period_expires}</span>"""
 
     return remarks.join(" ")
