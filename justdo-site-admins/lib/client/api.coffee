@@ -268,9 +268,9 @@ _.extend JustdoSiteAdmins.prototype,
           grace_period_type = soft_license_details.grace_type
           human_readable_grade_period_expires = moment(soft_license_details.expires).format(JustdoHelpers.getUserPreferredDateFormat())
 
-          if grace_period_type
+          if grace_period_type is "new_user"
             remarks.push """<span class="badge badge-warning rounded-0 mr-1">New user grace period until #{human_readable_grade_period_expires}</span>"""
-          if grace_period_type
+          if grace_period_type is "trial"
             remarks.push """<span class="badge badge-warning rounded-0 mr-1">Trial grace period until #{human_readable_grade_period_expires}</span>"""
 
     return remarks.join(" ")
