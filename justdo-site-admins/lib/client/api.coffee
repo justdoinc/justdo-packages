@@ -163,9 +163,10 @@ _.extend JustdoSiteAdmins.prototype,
 
     is_user_site_admin = @isCurrentUserSiteAdmin()
     is_expiring = @isLicenseExpiring()
+    is_expiring_soon = @isLicenseExpiring false
     is_expired = @isLicenseExpired()
 
-    modal_template = JustdoHelpers.renderTemplateInNewNode Template.license_info_modal, {is_expiring, is_expired}
+    modal_template = JustdoHelpers.renderTemplateInNewNode Template.license_info_modal, {is_expiring, is_expiring_soon, is_expired}
     title = TAPi18n.__ "license_info_license_information"
     if is_expired
       title = TAPi18n.__ "license_info_your_license_has_expired"

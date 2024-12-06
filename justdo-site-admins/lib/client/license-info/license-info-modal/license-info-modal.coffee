@@ -1,6 +1,7 @@
 Template.license_info_modal.helpers
   isUserSiteAdmin: -> APP.justdo_site_admins.isUserSiteAdmin Meteor.user()
   isExpiring: -> Template.instance().data?.is_expiring
+  isExpiringSoon: -> Template.instance().data?.is_expiring_soon
   isExpired: -> Template.instance().data?.is_expired
   getLicense: -> APP.justdo_site_admins.getLicense().license
   getShutdownDate: -> APP.justdo_site_admins.getShutdownDate()

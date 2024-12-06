@@ -1,11 +1,11 @@
 <template name="license_info_modal">
   {{#with getLicense}}
     {{#if isExpired}}
-      <div class="message attention">
+      <div class="message danger">
           {{{xssGuard(_ "license_info_expired_msg" expire_date=(formatDate expire_on) shutdown_date=getShutdownDate)}}}
       </div>
     {{else if isExpiring}}
-      <div class="message attention">
+      <div class="message {{#if isExpiringSoon}}danger{{else}}attention{{/if}}">
           {{{xssGuard(_ "license_info_expiring_msg" date=(formatDate expire_on))}}}
       </div>
     {{/if}}
