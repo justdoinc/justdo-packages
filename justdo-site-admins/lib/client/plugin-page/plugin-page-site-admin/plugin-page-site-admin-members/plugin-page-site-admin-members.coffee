@@ -7,7 +7,7 @@ Template.justdo_site_admin_members.onCreated ->
   @licensed_users_crv = JustdoHelpers.newComputedReactiveVar null, ->
     all_site_users = self.all_site_users_rv.get()
 
-    return APP.justdo_site_admins.preComputeHardLicensedUsers all_site_users
+    return APP.justdo_site_admins.preComputeHardLicensedUsers?(all_site_users) or []
 
   @users_filter_term_rv = new ReactiveVar(null)
 
