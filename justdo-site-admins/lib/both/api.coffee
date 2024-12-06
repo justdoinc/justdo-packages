@@ -50,7 +50,7 @@ _.extend JustdoSiteAdmins.prototype,
   requireUserIsSuperSiteAdmin: -> throw @_error("site-admin-required")
 
   isCurrentUserSiteAdmin: ->
-    return @isUserSiteAdmin(Meteor.userId())
+    return @isUserSiteAdmin(Meteor.user())
 
   initModules: (type) ->
     @modules = {}
