@@ -40,7 +40,7 @@ _.extend JustdoSiteAdmins.prototype,
         return self.getServerVitalsShrinkWrapped(@userId)
       
       saRenewalRequest: (request_data) ->
-        endpoint = new URL(JustdoSiteAdmins.renew_license_endpoint, "http://localhost:4000").toString()
+        endpoint = new URL(JustdoSiteAdmins.renew_license_endpoint, "https://justdo.com").toString()
         try
           res = HTTP.post endpoint, {data: request_data}
         catch error
