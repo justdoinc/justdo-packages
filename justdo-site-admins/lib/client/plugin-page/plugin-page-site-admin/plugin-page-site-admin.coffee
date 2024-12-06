@@ -1,7 +1,7 @@
 Template.justdo_site_admins_page_site_admin.onCreated ->
   @current_view = new ReactiveVar (@data.view_name or JustdoSiteAdmins.default_site_admin_page_view)
   # In case only /justdo-site-admins is entered in url
-  Router.go "justdo_site_admins_page_#{@current_view.get().replaceAll "-", "_"}"
+  Router.go "justdo_site_admins_page_#{@current_view.get().replaceAll "-", "_"}", {}, {replaceState: true}
 
   @menu_hidden_rv = new ReactiveVar false
   
