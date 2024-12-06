@@ -271,6 +271,6 @@ _.extend JustdoSiteAdmins.prototype,
           if grace_period_type is "new_user"
             remarks.push """<span class="badge badge-warning rounded-0 mr-1">New user grace period until #{human_readable_grade_period_expires}</span>"""
           if grace_period_type is "trial"
-            remarks.push """<span class="badge badge-warning rounded-0 mr-1">Trial grace period until #{human_readable_grade_period_expires}</span>"""
+            remarks.push """<span class="badge badge-warning rounded-0 mr-1">License trial period until #{human_readable_grade_period_expires}</span>"""
 
     return remarks.join(" ")
