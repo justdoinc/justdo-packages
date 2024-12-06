@@ -40,11 +40,11 @@ _.extend JustdoSiteAdmins.prototype,
         return self.getServerVitalsShrinkWrapped(@userId)
       
       saRenewalRequest: (request_data) ->
-        endpoint = new URL(JustdoSiteAdmins.renew_license_endpoint, "https://justdo.com").toString()
+        endpoint = new URL(JustdoSiteAdmins.renew_license_endpoint, "http://localhost:4000").toString()
         try
-          HTTP.post endpoint, {data: request_data}
+          res = HTTP.post endpoint, {data: request_data}
         catch error
           throw self._error "not-supported", "Renewal request did not receive a 200 response"
-        return
+        return _.pick res, "statusCode"
 
     return
