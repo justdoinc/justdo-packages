@@ -215,6 +215,7 @@ WebApp.connectHandlers.use (req, res, next) ->
 
     try
       request_details = req.body
+      request_details.source_template = "renew-license"
 
       subject = "License renewal request"
 
