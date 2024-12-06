@@ -204,7 +204,7 @@ _.extend JustdoSiteAdmins.prototype,
             request_data = 
               name: JustdoHelpers.displayName cur_user
               email: JustdoHelpers.getUserMainEmail cur_user
-              message: "Hello. I would like to renew my site license. My current license is #{JSON.stringify license}"
+              message: "Hello. I would like to renew my site license.\n\nMy current license is \n#{JSON.stringify license, null, 2}"
               tz: moment.tz.guess()
               version: JustdoHelpers.getAppVersion()
               root_url: JustdoHelpers.getRootUrl()
