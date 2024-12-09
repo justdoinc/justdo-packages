@@ -19,10 +19,15 @@ _.extend JustdoLegalDocsVersionsApi,
       report =
         status: false
         docs: {}
+      
+      isDocRequireSignature = (legal_doc) -> legal_doc.signature_required
 
       for doc_id, doc_info of JustdoLegalDocsVersions
-        report.docs[doc_id] = "NOT-SIGNED"
-
+        if isDocRequireSignature doc_info
+          report.docs[doc_id] = "NOT-SIGNED"
+        else
+          report.docs[doc_id] = "OPTIONAL-NOT-SIGNED"
+  
       if not (signed_legal_docs = user_doc?.signed_legal_docs)?
         # User didn't sign any doc
         return report
@@ -30,7 +35,7 @@ _.extend JustdoLegalDocsVersionsApi,
       all_required_docs_signed_and_up_to_date = true
       for doc_id of report.docs
         if not (signed_doc = signed_legal_docs[doc_id])?
-          if JustdoLegalDocsVersions[doc_id].signature_required == true
+          if isDocRequireSignature JustdoLegalDocsVersions[doc_id]
             # User didn't sign this required document but signature is required
             all_required_docs_signed_and_up_to_date = false
           else
