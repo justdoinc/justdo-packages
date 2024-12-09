@@ -115,11 +115,3 @@ _.extend JustdoSiteAdmins.prototype,
       @modules[module_id]["client#{type}Init"]?.call(@)
 
     return
-  
-  isProxyUser: (user) ->
-    if _.isString(user)
-      user = Meteor.users.findOne user,
-        fields:
-          is_proxy: 1
-    
-    return user?.is_proxy == true
