@@ -118,6 +118,14 @@
       return Template._loginButtonsAdditionalLoggedInDropdownActions !== undefined;
     },
 
+    getUserLangIfNotDefault: function() {
+      var lang = APP.justdo_i18n.getLang()
+      if (lang && lang !== JustdoI18n.default_lang) {
+        return lang;
+      }
+      return
+    },
+
     justdoLabsFeaturesEnabled: justdoLabsFeaturesEnabled
   });
 

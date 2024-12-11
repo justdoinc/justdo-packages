@@ -75,7 +75,11 @@
     {{#if isAffiliate}}
       <button class="btn btn-sm btn-primary shadow-sm affiliates-console-btn m{{getRtlAwareDirection "r"}}-1">{{_ "logged_in_dropdown_promoter_console"}}</button>
     {{/if}}
-    <button class="btn btn-sm btn-primary shadow-sm become-distributor-btn m{{getRtlAwareDirection "r"}}-1">{{_ "become_a_justdo_distributor"}}</button>
+    <a href="https://justdo.com/{{#with getUserLangIfNotDefault}}lang/{{this}}/{{/with}}distributors" target="_blank">
+      <button class="btn btn-sm btn-primary shadow-sm become-distributor-btn m{{getRtlAwareDirection "r"}}-1">
+        {{_ "become_a_justdo_distributor"}}
+      </button>
+    </a>
     <button class="btn btn-sm btn-light" id="login-buttons-logout">
       {{_ "login_buttons_logged_in_dropdown_actions_sign_out"}}
     </button>
