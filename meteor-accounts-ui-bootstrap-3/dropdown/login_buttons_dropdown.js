@@ -118,6 +118,10 @@
       return Template._loginButtonsAdditionalLoggedInDropdownActions !== undefined;
     },
 
+    isMarketingEnvironment: function() {
+      return env.LANDING_PAGE_TYPE === "marketing";
+    },
+
     getUserLangIfNotDefault: function() {
       var lang = APP.justdo_i18n.getLang()
       if (lang && lang !== JustdoI18n.default_lang) {
