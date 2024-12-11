@@ -56,6 +56,7 @@
   "change_password_fields_new_password_again": "รหัสผ่านใหม่ (อีกครั้ง)",
   "info_messages_email_sent": "ส่งอีเมลแล้ว",
   "info_messages_password_changed": "เปลี่ยนรหัสผ่านแล้ว",
+  "become_a_justdo_distributor": "สมัครเป็นตัวแทนจำหน่าย JustDo",
   "error_messages_generic_title": "เกิดข้อผิดพลาด",
   "error_messages_user_not_found": "ไม่พบผู้ใช้",
   "error_messages_invalid_email": "อีเมลไม่ถูกต้อง",

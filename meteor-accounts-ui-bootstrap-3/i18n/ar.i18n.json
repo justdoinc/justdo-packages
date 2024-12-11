@@ -56,6 +56,7 @@
   "change_password_fields_new_password_again": "كلمة المرور الجديدة (مرة أخرى)",
   "info_messages_email_sent": "تم إرسال البريد الإلكتروني",
   "info_messages_password_changed": "تم تغيير كلمة المرور",
+  "become_a_justdo_distributor": "كن موزعًا لـ JustDo",
   "error_messages_generic_title": "حدث خطأ",
   "error_messages_user_not_found": "لم يتم العثور على المستخدم",
   "error_messages_invalid_email": "بريد إلكتروني غير صالح",

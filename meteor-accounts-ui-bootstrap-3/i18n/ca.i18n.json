@@ -56,6 +56,7 @@
   "change_password_fields_new_password_again": "Nova contrasenya (una altra vegada)",
   "info_messages_email_sent": "Correu electrònic enviat",
   "info_messages_password_changed": "Contrasenya canviada",
+  "become_a_justdo_distributor": "Converteix-te en distribuïdor de JustDo",
   "error_messages_generic_title": "Hi ha hagut un error",
   "error_messages_user_not_found": "Usuari no trobat",
   "error_messages_invalid_email": "Correu electrònic no vàlid",

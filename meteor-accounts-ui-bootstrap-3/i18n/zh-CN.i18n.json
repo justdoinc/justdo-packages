@@ -56,6 +56,7 @@
   "change_password_fields_new_password_again": "再次输入新密码",
   "info_messages_email_sent": "邮件已发送",
   "info_messages_password_changed": "密码已更改",
+  "become_a_justdo_distributor": "成为JustDo分销商",
   "error_messages_generic_title": "发生错误",
   "error_messages_user_not_found": "未找到用户",
   "error_messages_invalid_email": "无效的邮箱地址",

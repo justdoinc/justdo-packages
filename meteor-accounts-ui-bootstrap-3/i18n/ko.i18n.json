@@ -56,6 +56,7 @@
   "change_password_fields_new_password_again": "새 비밀번호 (확인)",
   "info_messages_email_sent": "이메일 발송 완료",
   "info_messages_password_changed": "비밀번호 변경 완료",
+  "become_a_justdo_distributor": "JustDo 디스트리뷰터 되기",
   "error_messages_generic_title": "오류가 발생했습니다",
   "error_messages_user_not_found": "사용자를 찾을 수 없습니다",
   "error_messages_invalid_email": "유효하지 않은 이메일",

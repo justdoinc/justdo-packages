@@ -56,6 +56,7 @@
   "change_password_fields_new_password_again": "Uus parool (uuesti)",
   "info_messages_email_sent": "E-kiri saadetud",
   "info_messages_password_changed": "Parool muudetud",
+  "become_a_justdo_distributor": "Saa JustDo edasimüüjaks",
   "error_messages_generic_title": "Tekkis viga",
   "error_messages_user_not_found": "Kasutajat ei leitud",
   "error_messages_invalid_email": "Vigane e-posti aadress",

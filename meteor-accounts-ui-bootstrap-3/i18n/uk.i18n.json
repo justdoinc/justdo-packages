@@ -56,6 +56,7 @@
   "change_password_fields_new_password_again": "Новий пароль (ще раз)",
   "info_messages_email_sent": "Email надіслано",
   "info_messages_password_changed": "Пароль змінено",
+  "become_a_justdo_distributor": "Стати дистриб'ютором JustDo",
   "error_messages_generic_title": "Сталася помилка",
   "error_messages_user_not_found": "Користувача не знайдено",
   "error_messages_invalid_email": "Недійсний email",

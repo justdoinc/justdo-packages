@@ -56,6 +56,7 @@
   "change_password_fields_new_password_again": "再次輸入新密碼",
   "info_messages_email_sent": "已發送電子郵件",
   "info_messages_password_changed": "密碼已更改",
+  "become_a_justdo_distributor": "成為 JustDo 經銷商",
   "error_messages_generic_title": "發生錯誤",
   "error_messages_user_not_found": "找不到使用者",
   "error_messages_invalid_email": "無效的電子郵件",

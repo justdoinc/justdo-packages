@@ -56,6 +56,7 @@
   "change_password_fields_new_password_again": "Uusi salasana (uudelleen)",
   "info_messages_email_sent": "Sähköposti lähetetty",
   "info_messages_password_changed": "Salasana vaihdettu",
+  "become_a_justdo_distributor": "Ryhdy JustDo-jälleenmyyjäksi",
   "error_messages_generic_title": "Tapahtui virhe",
   "error_messages_user_not_found": "Käyttäjää ei löytynyt",
   "error_messages_invalid_email": "Virheellinen sähköposti",

@@ -56,6 +56,7 @@
   "change_password_fields_new_password_again": "Nytt lösenord (igen)",
   "info_messages_email_sent": "E-post skickad",
   "info_messages_password_changed": "Lösenord ändrat",
+  "become_a_justdo_distributor": "Bli en JustDo-distributör",
   "error_messages_generic_title": "Det uppstod ett fel",
   "error_messages_user_not_found": "Användaren hittades inte",
   "error_messages_invalid_email": "Ogiltig e-postadress",

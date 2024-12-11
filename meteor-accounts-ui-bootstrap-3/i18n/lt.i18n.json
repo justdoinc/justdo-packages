@@ -56,6 +56,7 @@
   "change_password_fields_new_password_again": "Naujas slaptažodis (dar kartą)",
   "info_messages_email_sent": "El. laiškas išsiųstas",
   "info_messages_password_changed": "Slaptažodis pakeistas",
+  "become_a_justdo_distributor": "Tapkite JustDo platintoju",
   "error_messages_generic_title": "Įvyko klaida",
   "error_messages_user_not_found": "Vartotojas nerastas",
   "error_messages_invalid_email": "Neteisingas el. paštas",

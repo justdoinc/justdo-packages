@@ -56,6 +56,7 @@
   "change_password_fields_new_password_again": "নতুন পাসওয়ার্ড (আবার)",
   "info_messages_email_sent": "ইমেইল পাঠানো হয়েছে",
   "info_messages_password_changed": "পাসওয়ার্ড পরিবর্তন করা হয়েছে",
+  "become_a_justdo_distributor": "JustDo ডিস্ট্রিবিউটর হোন",
   "error_messages_generic_title": "একটি ত্রুটি ঘটেছে",
   "error_messages_user_not_found": "ব্যবহারকারী পাওয়া যায়নি",
   "error_messages_invalid_email": "অবৈধ ইমেইল",

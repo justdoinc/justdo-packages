@@ -56,6 +56,7 @@
   "change_password_fields_new_password_again": "Нова лозинка (поново)",
   "info_messages_email_sent": "Е-пошта послата",
   "info_messages_password_changed": "Лозинка промењена",
+  "become_a_justdo_distributor": "Постаните JustDo дистрибутер",
   "error_messages_generic_title": "Дошло је до грешке",
   "error_messages_user_not_found": "Корисник није пронађен",
   "error_messages_invalid_email": "Неважећа е-пошта",

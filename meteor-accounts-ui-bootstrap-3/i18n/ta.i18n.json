@@ -56,6 +56,7 @@
   "change_password_fields_new_password_again": "புதிய கடவுச்சொல் (மீண்டும்)",
   "info_messages_email_sent": "மின்னஞ்சல் அனுப்பப்பட்டது",
   "info_messages_password_changed": "கடவுச்சொல் மாற்றப்பட்டது",
+  "become_a_justdo_distributor": "JustDo விநியோகஸ்தராகு",
   "error_messages_generic_title": "ஒரு பிழை ஏற்பட்டது",
   "error_messages_user_not_found": "பயனர் கிடைக்கவில்லை",
   "error_messages_invalid_email": "தவறான மின்னஞ்சல்",

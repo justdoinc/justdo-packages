@@ -56,6 +56,7 @@
   "change_password_fields_new_password_again": "Nueva contraseña (otra vez)",
   "info_messages_email_sent": "Correo electrónico enviado",
   "info_messages_password_changed": "Contraseña cambiada",
+  "become_a_justdo_distributor": "Conviértete en distribuidor de JustDo",
   "error_messages_generic_title": "Hubo un error",
   "error_messages_user_not_found": "Usuario no encontrado",
   "error_messages_invalid_email": "Correo electrónico inválido",

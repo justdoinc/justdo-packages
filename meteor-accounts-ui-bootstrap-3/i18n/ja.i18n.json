@@ -56,6 +56,7 @@
   "change_password_fields_new_password_again": "新しいパスワード（確認）",
   "info_messages_email_sent": "メールを送信しました",
   "info_messages_password_changed": "パスワードが変更されました",
+  "become_a_justdo_distributor": "JustDoディストリビューターになる",
   "error_messages_generic_title": "エラーが発生しました",
   "error_messages_user_not_found": "ユーザーが見つかりません",
   "error_messages_invalid_email": "無効なメールアドレス",

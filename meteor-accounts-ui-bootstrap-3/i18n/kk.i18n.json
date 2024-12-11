@@ -56,6 +56,7 @@
   "change_password_fields_new_password_again": "Жаңа құпия сөз (қайтадан)",
   "info_messages_email_sent": "Электрондық хабар жіберілді",
   "info_messages_password_changed": "Құпия сөз өзгертілді",
+  "become_a_justdo_distributor": "JustDo дистрибьюторы болыңыз",
   "error_messages_generic_title": "Қате орын алды",
   "error_messages_user_not_found": "Пайдаланушы табылмады",
   "error_messages_invalid_email": "Жарамсыз электрондық пошта",
