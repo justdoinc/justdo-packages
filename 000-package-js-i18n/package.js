@@ -13,10 +13,25 @@ function csvToArray(csv) {
   return csv.replace(/\s/g, "").split(",");
 }
 
-var DEFAULT_LANG = env.I18N_DEFAULT_LANGUAGE;
+var env_vars_fallback = "en"; // If we can't find the env vars we fallback to
+                              // use the value here
+
+var useEnvVarOrFallback = function (env_var_name) {
+  if (typeof env[env_var_name] !== "string" || env[env_var_name].trim() == "") {
+    console.error("000-package-js-i18n/package.js: Couldn't find env var: " + env_var_name + " falling back to: " + env_vars_fallback + ".");
+    console.error("If you see this error message while running meteor procedures such as `$ meteor install;` you can ignore");
+    console.error("");
+
+    return env_vars_fallback;
+  }
+
+  return env[env_var_name].trim();
+}
+
+var DEFAULT_LANG = useEnvVarOrFallback("I18N_DEFAULT_LANGUAGE");
 var SUPPORTED_LANG_GROUPS = {
-  all: csvToArray(env.I18N_ALL_SUPPORTED_LANGUAGES),
-  core: csvToArray(env.I18N_CORE_SUPPORTED_LANGUAGES),
+  all: csvToArray(useEnvVarOrFallback("I18N_ALL_SUPPORTED_LANGUAGES")),
+  core: csvToArray(useEnvVarOrFallback("I18N_CORE_SUPPORTED_LANGUAGES")),
   default_lang_only: [DEFAULT_LANG]
 };
 var DEFAULT_SUPPORTED_LANG_GROUP = "all";
