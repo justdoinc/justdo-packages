@@ -171,9 +171,6 @@ _.extend JustdoDeliveryPlanner.prototype,
       defaultValue: JustdoDeliveryPlanner.projects_collection_default_fields_to_fetch
   getAllProjectsCollectionsUnderJustdo: (justdo_id, options, user_id) ->
     check justdo_id, String
-    if _.isString(options) and not user_id?
-      user_id = options
-      options = {}
     if not user_id?
       user_id = Meteor.userId()
     check user_id, String
@@ -213,9 +210,6 @@ _.extend JustdoDeliveryPlanner.prototype,
   getProjectsUnderCollectionCursor: (justdo_id, projects_collection_id, options, user_id) ->
     check justdo_id, String
     check projects_collection_id, String
-    if _.isString(options) and not user_id?
-      user_id = options
-      options = {}
     if not user_id?
       user_id = Meteor.userId()
     check user_id, String
@@ -259,9 +253,6 @@ _.extend JustdoDeliveryPlanner.prototype,
   getProjectsCollectionOfProjectCursor: (justdo_id, project_id, options, user_id) ->
     check justdo_id, String
     check project_id, String
-    if _.isString(options) and not user_id?
-      user_id = options
-      options = {}
     if not user_id?
       user_id = Meteor.userId()
     check user_id, String
