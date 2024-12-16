@@ -1,11 +1,19 @@
 {
-  "projects_collection_default_term": "Projects Collection",
-  "projects_collection_all_projects_collections_tab_title": "Projects Collections",
   "projects_collection_tab_title_generator_title": "Projects Collections",
   "projects_collection_grid_view_section_title": "Projects Collections",
-  "projects_collection_context_menu_section_title": "Projects Collections",
-  "projects_collection_set_as_projects_collection": "Set as a Projects Collection",
-  "projects_collection_unset_as_projects_collection": "Unset as a Projects Collection",
-  "projects_collection_close_projects_collection": "Close this Projects Collection",
-  "projects_collection_reopen_projects_collection": "Reopen this Projects Collection"
+
+  "projects_collection_default_type_label": "Projects Collection",
+  "projects_collection_default_type_label_plural": "Projects Collections",
+  "projects_collection_set_as_default_projects_collection": "Set as a Projects Collection",
+  "projects_collection_unset_as_default_projects_collection": "Unset as a Projects Collection",
+  "projects_collection_close_default_projects_collection": "Close this Projects Collection",
+  "projects_collection_reopen_default_projects_collection": "Reopen this Projects Collection",
+
+  "projects_collection_department_label": "Department",
+  "projects_collection_department_label_plural": "Departments",
+  "projects_collection_set_as_department": "Set as a Department",
+  "projects_collection_unset_as_department": "Unset as a Department",
+  "projects_collection_close_department": "Close this Department",
+  "projects_collection_reopen_department": "Reopen this Department"
+
 }
