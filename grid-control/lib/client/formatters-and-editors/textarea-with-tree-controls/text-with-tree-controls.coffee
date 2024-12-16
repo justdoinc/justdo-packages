@@ -393,6 +393,17 @@ GridControl.installFormatter "textWithTreeControls",
         """
 
     if @getCurrentColumnData("delivery_planner_plugin_enabled")
+      if (projects_collection_type_id = APP.justdo_delivery_planner.getTaskObjProjectsCollectionTypeId doc)?
+        projects_collection_type = APP.justdo_delivery_planner.getProjectsCollectionTypeById(projects_collection_type_id)
+
+        if projects_collection_type?
+          tree_control += """
+            <svg class="jd-icon jd-icon-projects-collection-type ongrid-jd-icon text-secondary slick-prevent-edit">
+              <title>#{TAPi18n.__ projects_collection_type.type_label_i18n}</title>
+              <use xlink:href="/layout/icons-feather-sprite.svg##{projects_collection_type.feather_icon}" class="slick-prevent-edit"></use>
+            </svg>
+          """
+
       if (is_project = doc["p:dp:is_project"])?
         is_archived_project = doc["p:dp:is_archived_project"]
 
