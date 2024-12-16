@@ -67,4 +67,34 @@ _.extend JustdoDeliveryPlanner.prototype,
         }
       ] 
 
+    if @isProjectsCollectionEnabled()
+      tabs_definitions.push(
+        {
+          id: "jdp-projects-collection"
+          options:
+            grid_control_options: gcOpsGen(
+              [
+                {
+                  id: "projects-collection"
+                  section_manager: "QuerySection"
+                  options:
+                    permitted_depth: 1
+                    section_item_title: TAPi18n.__ JustdoDeliveryPlanner.projects_collection_term_i18n
+                    expanded_on_init: true
+                    show_if_empty: false
+                  section_manager_options:
+                    query: ->
+                      query = 
+                        project_id: JD.activeJustdoId()
+                        "projects_collection.is_projects_collection": true
+                      
+                      return APP.collections.Tasks.find(query, {sort: {seqId: 1}}).fetch()
+                }
+              ]
+            )
+            removable: true
+            activate_on_init: false
+            tabTitleGenerator: -> TAPi18n.__ JustdoDeliveryPlanner.projects_collection_term_i18n
+        }
+      )
     return tabs_definitions

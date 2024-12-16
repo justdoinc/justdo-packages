@@ -83,6 +83,20 @@ _.extend JustdoDeliveryPlanner.prototype,
         if isInstalledOnCurrentProject() and getAllJustdoActiveProjectsSortedByProjectName().length > 0
           return true
 
+    if @isProjectsCollectionEnabled()
+      APP.modules.project_page.tab_switcher_manager.registerSectionItem "main", "projects_collection",
+        position: 250
+        data:
+          label: TAPi18n.__ JustdoDeliveryPlanner.projects_collection_term_i18n, {}, JustdoI18n.default_lang
+          label_i18n: JustdoDeliveryPlanner.projects_collection_term_i18n
+          tab_id: "jdp-projects-collection"
+          icon_type: "feather"
+          icon_val: "book"
+
+          tab_section_state:
+            global:
+              tracked_field: "projects_collection.is_projects_collection"
+
     installTabsOnGcm = (gcm) =>
       if gcm.destroyed == true
         # Nothing to do
@@ -221,61 +235,3 @@ _.extend JustdoDeliveryPlanner.prototype,
         return is_task_projects_collection and APP.justdo_permissions?.checkTaskPermissions("task-field-edit.projects_collection.is_closed", task_id)
 
     return
-  
-  _registerTabView: ->
-    self = @
-    tab_switcher_manager = APP.modules.project_page.tab_switcher_manager
-
-    tab_switcher_manager.registerSectionItem "main", "projects_collection",
-      position: 500
-      data:
-        label: TAPi18n.__ JustdoDeliveryPlanner.projects_collection_term_i18n, {}, JustdoI18n.default_lang
-        label_i18n: JustdoDeliveryPlanner.projects_collection_term_i18n
-        tab_id: "justdo_projects_collection"
-        icon_type: "feather"
-        icon_val: "book"
-
-        tab_section_state:
-          global:
-            tracked_field: "projects_collection.is_projects_collection"
-
-    return
-
-  _installTabsOnGcm: (gcm) ->
-    if gcm.destroyed == true
-      # Nothing to do
-      return
-    
-    if gcm._projects_collection_tab_installed
-      return
-    
-    self = @
-    gcOpsGen = APP.modules.project_page.generateGridControlOptionsForSections
-    
-    gcm.addTab "justdo_projects_collection",
-      grid_control_options: gcOpsGen [
-        {
-          id: "projects-collection"
-          section_manager: "QuerySection"
-          options:
-            permitted_depth: 1
-            section_item_title: TAPi18n.__ JustdoDeliveryPlanner.projects_collection_term_i18n
-            expanded_on_init: true
-            show_if_empty: false
-          section_manager_options:
-            query: ->
-              query = 
-                project_id: JD.activeJustdoId()
-                "projects_collection.is_projects_collection": true
-              
-              return self.tasks_collection.find(query, {sort: {seqId: 1}}).fetch()
-        }
-      ]
-      removable: true
-      activate_on_init: false
-      tabTitleGenerator: -> TAPi18n.__ JustdoDeliveryPlanner.projects_collection_term_i18n
-    
-    gcm._projects_collection_tab_installed = true
-
-    return
-

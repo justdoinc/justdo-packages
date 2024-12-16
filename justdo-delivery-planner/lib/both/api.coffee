@@ -125,12 +125,6 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     if Meteor.isClient
       @_setupContextmenu()
-      @_registerTabView()
-
-      @features_tracker = Tracker.autorun =>
-        if (gcm = APP.modules.project_page.grid_control_mux.get())?
-          @_installTabsOnGcm gcm 
-        return
         
     return
 
