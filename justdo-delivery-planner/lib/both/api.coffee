@@ -240,13 +240,15 @@ _.extend JustdoDeliveryPlanner.prototype,
     query = 
       project_id: justdo_id
       users: user_id
-      [JustdoDeliveryPlanner.task_is_archived_project_field_name]: false
+      [JustdoDeliveryPlanner.task_is_project_field_name]: true
+      [JustdoDeliveryPlanner.task_is_archived_project_field_name]: 
+        $ne: true
     
     if Meteor.isServer
       query["parents2.parent"] = projects_collection_id
     if Meteor.isClient
-      query["parents.#{projects_collection_id}"] = {$exists: true}
       delete query.users
+      query["parents.#{projects_collection_id}"] = {$ne: null}
     
     if options.include_closed
       delete query[JustdoDeliveryPlanner.task_is_archived_project_field_name]
@@ -303,9 +305,10 @@ _.extend JustdoDeliveryPlanner.prototype,
       users: user_id
       _id: 
         $in: project_parent_ids
-      "projects_collection.is_closed": false
       "projects_collection.projects_collection_type":
         $ne: null
+      "projects_collection.is_closed":
+        $ne: true
     if Meteor.isClient
       delete get_parent_project_collections_query.users
     if options.include_closed
