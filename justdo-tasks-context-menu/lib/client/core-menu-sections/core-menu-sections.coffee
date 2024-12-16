@@ -743,7 +743,13 @@ _.extend JustdoTasksContextMenu.prototype,
               return "jd-folder-unset"
             return "folder"
         listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          return APP.justdo_permissions?.checkTaskPermissions("task-field-edit.p:dp:is_project", task_id)
+          is_allowed_by_permissions = APP.justdo_permissions?.checkTaskPermissions("task-field-edit.p:dp:is_project", task_id)
+
+          if APP.justdo_delivery_planner.isProjectsCollectionEnabled()
+            is_task_projects_collection = APP.justdo_delivery_planner.getTaskObjProjectsCollectionTypeId(dependencies_fields_vals)?
+            return is_allowed_by_permissions and not is_task_projects_collection
+
+          return is_allowed_by_permissions
       
       self.registerSectionItem "projects", "open-close-project",
         position: 300

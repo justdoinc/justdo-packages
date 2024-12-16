@@ -101,12 +101,27 @@ _.extend JustdoDeliveryPlanner.prototype,
     return @tasks_collection.find(query, {fields: options.fields, sort: options.sort_by}).fetch()
 
   isProjectsCollectionEnabled: -> JustdoDeliveryPlanner.is_projects_collection_enabled
-
-  isTaskObjProjectsCollection: (task_obj) ->
-    return task_obj?.projects_collection?.is_projects_collection is true
   
+  getSupportedProjectsCollectionTypes: -> JustdoDeliveryPlanner.projects_collections_types
+
+  getProjectsCollectionTypeById: (type_id) ->
+    if not type_id?
+      return
+
+    return _.find @getSupportedProjectsCollectionTypes(), (type) -> type.type_id is type_id
+
+  isProjectsCollectionTypeIdSupported: (type_id) ->
+    return @getProjectsCollectionTypeById(type_id)?
+
+  getTaskObjProjectsCollectionTypeId: (task_obj) ->
+    type_id = task_obj?.projects_collection?.projects_collection_type
+    if not @isProjectsCollectionTypeIdSupported type_id
+      return
+    
+    return type_id
+
   isProjectsCollectionClosed: (task_obj) ->
-    if not @isTaskObjProjectsCollection task_obj
+    if not @getTaskObjProjectsCollectionTypeId(task_obj)?
       return false
     
     return task_obj?.projects_collection?.is_closed
@@ -124,32 +139,30 @@ _.extend JustdoDeliveryPlanner.prototype,
 
   _setupTaskType: ->
     self = @
-    
-    tags_properties =
-      "is_projects_collection":
-        text: TAPi18n.__ JustdoDeliveryPlanner.projects_collection_term_i18n, {}, JustdoI18n.default_lang
-        text_i18n: JustdoDeliveryPlanner.projects_collection_term_i18n
 
-        filter_list_order: 15
-
-        customFilterQuery: (filter_state_id, column_state_definitions, context) ->
-          return {"projects_collection.is_projects_collection": true}
-
-    APP.justdo_task_type.registerTaskTypesGenerator "default", "is-projects-collection",
-      possible_tags: ["is_projects_collection"]
+    APP.justdo_task_type.registerTaskTypesGenerator "default", "projects-collection-type",
+      possible_tags: _.map self.getSupportedProjectsCollectionTypes(), (type_def) -> type_def.type_id
 
       required_task_fields_to_determine:
         "projects_collection": 1
 
       generator: (task_obj) ->
-        tags = []
+        types = []
 
-        if self.isTaskObjProjectsCollection task_obj
-          tags.push "is_projects_collection"
+        if (type_id = self.getTaskObjProjectsCollectionTypeId task_obj)
+          types.push type_id
 
-        return tags
+        return types
 
-      propertiesGenerator: (tag) -> tags_properties[tag]
+      propertiesGenerator: (type_id) -> 
+        type_def = self.getProjectsCollectionTypeById type_id
+        type_properties = 
+          text: TAPi18n.__ type_def.type_label_i18n, {}, JustdoI18n.default_lang
+          text_i18n: type_def.type_label_i18n
+          filter_list_order: 8
+          customFilterQuery: (filter_state_id, column_state_definitions, context) ->
+            return {"projects_collection.projects_collection_type": type_id}
+        return type_properties
 
     return
 
@@ -158,6 +171,11 @@ _.extend JustdoDeliveryPlanner.prototype,
       type: Boolean
       optional: true
       defaultValue: false
+    projects_collection_type:
+      type: String
+      optional: true
+      defaultValue: 
+        $ne: null
     fields:
       type: Object
       optional: true
@@ -180,7 +198,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     query = 
       project_id: justdo_id
       users: user_id
-      "projects_collection.is_projects_collection": true
+      "projects_collection.projects_collection_type": options.projects_collection_type
       "projects_collection.is_closed": 
         $ne: true
     if options.include_closed
@@ -239,6 +257,11 @@ _.extend JustdoDeliveryPlanner.prototype,
       type: Boolean
       optional: true
       defaultValue: false
+    projects_collection_type:
+      type: String
+      optional: true
+      defaultValue: 
+        $ne: null
     fields:
       type: Object
       optional: true
@@ -277,7 +300,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       users: user_id
       _id: 
         $in: project_parent_ids
-      "projects_collection.is_projects_collection": true
+      "projects_collection.projects_collection_type": options.projects_collection_type
       "projects_collection.is_closed": false
     if options.include_closed
       delete get_parent_project_collections_query["projects_collection.is_closed"]

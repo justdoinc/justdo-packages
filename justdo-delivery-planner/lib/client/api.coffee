@@ -84,18 +84,23 @@ _.extend JustdoDeliveryPlanner.prototype,
           return true
 
     if @isProjectsCollectionEnabled()
-      APP.modules.project_page.tab_switcher_manager.registerSectionItem "main", "projects_collection",
-        position: 250
-        data:
-          label: TAPi18n.__ JustdoDeliveryPlanner.projects_collection_all_projects_collections_tab_title, {}, JustdoI18n.default_lang
-          label_i18n: JustdoDeliveryPlanner.projects_collection_all_projects_collections_tab_title
-          tab_id: "jdp-projects-collection"
-          icon_type: "feather"
-          icon_val: "book"
+      position = 200
+      for projects_collection_type in @getSupportedProjectsCollectionTypes()
+        type_id = projects_collection_type.type_id
+        APP.modules.project_page.tab_switcher_manager.registerSectionItem "main", "projects_collection_#{type_id}",
+          position: position
+          data:
+            label: TAPi18n.__ projects_collection_type.type_label_i18n, {}, JustdoI18n.default_lang
+            label_i18n: projects_collection_type.type_label_i18n
+            tab_id: "jdp-projects-collection"
+            icon_type: "feather"
+            icon_val: projects_collection_type.feather_icon
 
-          tab_section_state:
-            global:
-              tracked_field: "projects_collection.is_projects_collection"
+            tab_section_state:
+              global:
+                tracked_field: "projects_collection.projects_collection_type"
+
+        position += 10
 
     installTabsOnGcm = (gcm) =>
       if gcm.destroyed == true
@@ -159,65 +164,89 @@ _.extend JustdoDeliveryPlanner.prototype,
   _setupContextmenu: ->
     self = @
 
-    APP.justdo_tasks_context_menu.registerSectionItem "projects", "set-unset-as-projects-collection",
-      position: 110
-      data:
-        label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) -> 
-          i18n_data = 
-            label_i18n: "projects_collection_set_as_projects_collection"
+    position = 110
+    for projects_collection_type in @getSupportedProjectsCollectionTypes()
+      do (projects_collection_type) =>
+        type_id = projects_collection_type.type_id
+        dashed_type_id = type_id.replace /_/g, "-"
 
-          if task_id? and self.isTaskObjProjectsCollection dependencies_fields_vals
-            i18n_data.label_i18n = "projects_collection_unset_as_projects_collection"
+        APP.justdo_tasks_context_menu.registerSectionItem "projects", "set-unset-as-projects-collection-#{dashed_type_id}",
+          position: position
+          data:
+            label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) -> 
+              i18n_data = 
+                label_i18n: projects_collection_type.set_as_i18n
+                options_i18n: {}
 
-          return TAPi18n.__ i18n_data.label_i18n, i18n_data.options_i18n, JustdoI18n.default_lang
-        label_i18n: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          i18n_data = 
-            label_i18n: "projects_collection_set_as_projects_collection"
+              task_projects_collection_type_id = self.getTaskObjProjectsCollectionTypeId dependencies_fields_vals
+              if task_id? and (task_projects_collection_type_id is type_id)
+                i18n_data.label_i18n = projects_collection_type.unset_as_i18n
 
-          if task_id? and self.isTaskObjProjectsCollection dependencies_fields_vals
-            i18n_data.label_i18n = "projects_collection_unset_as_projects_collection"
+              return TAPi18n.__ i18n_data.label_i18n, i18n_data.options_i18n, JustdoI18n.default_lang
+            label_i18n: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+              i18n_data = 
+                label_i18n: projects_collection_type.set_as_i18n
+                options_i18n: {}
 
-          return i18n_data
-        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) =>
-          self.toggleTaskAsProjectsCollection task_id
-          return 
-        icon_type: "feather"
-        icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          if task_id? and self.isTaskObjProjectsCollection dependencies_fields_vals
-            return "jd-folder-unset"
-          return "folder"
-      listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-        is_allowed_by_permissions = APP.justdo_permissions.checkTaskPermissions("task-field-edit.projects_collection.is_projects_collection", task_id)
-        is_task_project = self.isTaskObjProject dependencies_fields_vals
-        return is_allowed_by_permissions and not is_task_project
+              task_projects_collection_type_id = self.getTaskObjProjectsCollectionTypeId dependencies_fields_vals
+              if task_id? and (task_projects_collection_type_id is type_id)
+                i18n_data.label_i18n = projects_collection_type.unset_as_i18n
 
-    APP.justdo_tasks_context_menu.registerSectionItem "projects", "open-close-projects-collection",
-      position: 120
-      data:
-        label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          i18n_data = 
-            label_i18n: "projects_collection_close_projects_collection"
+              return i18n_data
+            op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) =>
+              if type_id is self.getTaskObjProjectsCollectionTypeId(dependencies_fields_vals)
+                self.unsetTaskProjectCollectionType task_id
+              else
+                self.setTaskProjectCollectionType task_id, type_id
+              return 
+            icon_type: "feather"
+            icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+              if task_id? and (self.getTaskObjProjectsCollectionTypeId(dependencies_fields_vals) is type_id)
+                # XXX this should return unset icon after the icon is ready
+                return projects_collection_type.feather_icon
+              return projects_collection_type.feather_icon
+          listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+            is_allowed_by_permissions = APP.justdo_permissions.checkTaskPermissions("task-field-edit.projects_collection.projects_collection_type", task_id)
+            is_task_project = self.isTaskObjProject dependencies_fields_vals
+            task_projects_collection_type_id = self.getTaskObjProjectsCollectionTypeId(dependencies_fields_vals)
+            is_type_not_set_or_same = (not task_projects_collection_type_id?) or (task_projects_collection_type_id is type_id)
+            return is_allowed_by_permissions and (not is_task_project) and is_type_not_set_or_same
 
-          if task_id? and self.isProjectsCollectionClosed dependencies_fields_vals
-            i18n_data.label_i18n = "projects_collection_reopen_projects_collection"
+        position += 1
 
-          return TAPi18n.__ i18n_data.label_i18n, i18n_data.options_i18n, JustdoI18n.default_lang 
-        label_i18n: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          i18n_data = 
-            label_i18n: "projects_collection_close_projects_collection"
+        APP.justdo_tasks_context_menu.registerSectionItem "projects", "open-close-projects-collection-#{dashed_type_id}",
+          position: position
+          data:
+            label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+              i18n_data = 
+                label_i18n: projects_collection_type.close_i18n
+                options_i18n: {}
 
-          if task_id? and self.isProjectsCollectionClosed dependencies_fields_vals
-            i18n_data.label_i18n = "projects_collection_reopen_projects_collection"
+              if task_id? and self.isProjectsCollectionClosed dependencies_fields_vals
+                i18n_data.label_i18n = projects_collection_type.reopen_i18n
 
-          return i18n_data
-        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) =>
-          self.toggleProjectsCollectionClosedState task_id
-          return 
-        icon_type: "feather"
-        icon_val: "folder"
-      listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-        is_allowed_by_permissions = APP.justdo_permissions?.checkTaskPermissions("task-field-edit.projects_collection.is_closed", task_id)
-        is_task_projects_collection = self.isTaskObjProjectsCollection dependencies_fields_vals
-        return is_task_projects_collection and is_allowed_by_permissions
+              return TAPi18n.__ i18n_data.label_i18n, i18n_data.options_i18n, JustdoI18n.default_lang 
+            label_i18n: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+              i18n_data = 
+                label_i18n: projects_collection_type.close_i18n
+                options_i18n: {}
+
+              if task_id? and self.isProjectsCollectionClosed dependencies_fields_vals
+                i18n_data.label_i18n = projects_collection_type.reopen_i18n
+
+              return i18n_data
+            op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) =>
+              self.toggleProjectsCollectionClosedState task_id
+              return 
+            icon_type: "feather"
+            icon_val: "folder"
+          listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+            is_allowed_by_permissions = APP.justdo_permissions?.checkTaskPermissions("task-field-edit.projects_collection.is_closed", task_id)
+            is_task_projects_collection = self.getTaskObjProjectsCollectionTypeId(dependencies_fields_vals)?
+            is_task_project_collection_type_the_same = self.getTaskObjProjectsCollectionTypeId(dependencies_fields_vals) is type_id
+
+            return is_task_projects_collection and is_allowed_by_permissions and is_task_project_collection_type_the_same
+
+        position += 1
 
     return
