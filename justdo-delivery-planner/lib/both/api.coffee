@@ -135,6 +135,8 @@ _.extend JustdoDeliveryPlanner.prototype,
     return
 
   _setupTaskType: ->
+    self = @
+    
     tags_properties =
       "is_projects_collection":
         text: TAPi18n.__ JustdoDeliveryPlanner.projects_collection_term_i18n, {}, JustdoI18n.default_lang
@@ -154,7 +156,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       generator: (task_obj) ->
         tags = []
 
-        if task_obj?.projects_collection?.is_projects_collection is true
+        if self.isTaskProjectsCollection task_obj
           tags.push "is_projects_collection"
 
         return tags
