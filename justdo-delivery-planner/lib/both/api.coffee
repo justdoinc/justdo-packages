@@ -174,8 +174,6 @@ _.extend JustdoDeliveryPlanner.prototype,
     projects_collection_type:
       type: String
       optional: true
-      defaultValue: 
-        $ne: null
     fields:
       type: Object
       optional: true
@@ -198,11 +196,14 @@ _.extend JustdoDeliveryPlanner.prototype,
     query = 
       project_id: justdo_id
       users: user_id
-      "projects_collection.projects_collection_type": options.projects_collection_type
+      "projects_collection.projects_collection_type":
+        $ne: null
       "projects_collection.is_closed": 
         $ne: true
     if options.include_closed
       delete query["projects_collection.is_closed"]
+    if _.isString options.projects_collection_type
+      query["projects_collection.projects_collection_type"] = options.projects_collection_type
     
     query_options = 
       fields: options.fields
@@ -260,8 +261,6 @@ _.extend JustdoDeliveryPlanner.prototype,
     projects_collection_type:
       type: String
       optional: true
-      defaultValue: 
-        $ne: null
     fields:
       type: Object
       optional: true
@@ -300,10 +299,13 @@ _.extend JustdoDeliveryPlanner.prototype,
       users: user_id
       _id: 
         $in: project_parent_ids
-      "projects_collection.projects_collection_type": options.projects_collection_type
       "projects_collection.is_closed": false
+      "projects_collection.projects_collection_type":
+        $ne: null
     if options.include_closed
       delete get_parent_project_collections_query["projects_collection.is_closed"]
+    if _.isString options.projects_collection_type
+      get_parent_project_collections_query["projects_collection.projects_collection_type"] = options.projects_collection_type
 
     get_parent_project_collections_query_options =
       fields: options.fields    
