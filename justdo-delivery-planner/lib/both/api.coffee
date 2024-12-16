@@ -151,8 +151,12 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     query = 
       project_id: justdo_id
-      "projects_collection.is_projects_collection": true
       users: user_id
+      "projects_collection.is_projects_collection": true
+      "projects_collection.is_closed": 
+        $ne: true
+    if options.include_closed
+      delete query["projects_collection.is_closed"]
     
     query_options = 
       fields: options.fields
@@ -160,6 +164,10 @@ _.extend JustdoDeliveryPlanner.prototype,
     return @tasks_collection.find(query, query_options).fetch()
 
   getProjectsUnderCollectionOptionsSchema: new SimpleSchema
+    include_closed:
+      type: Boolean
+      optional: true
+      defaultValue: false
     fields:
       type: Object
       optional: true
@@ -186,11 +194,15 @@ _.extend JustdoDeliveryPlanner.prototype,
     query = 
       project_id: justdo_id
       users: user_id
+      [JustdoDeliveryPlanner.task_is_archived_project_field_name]: false
     
     if Meteor.isServer
       query["parents2.parent"] = projects_collection_id
     if Meteor.isClient
       query["parents.#{projects_collection_id}"] = {$exists: true}
+    
+    if options.include_closed
+      delete query[JustdoDeliveryPlanner.task_is_archived_project_field_name]
       
     query_options = 
       fields: options.fields
@@ -198,6 +210,10 @@ _.extend JustdoDeliveryPlanner.prototype,
     return @tasks_collection.find(query, query_options).fetch()
   
   getProjectCollectionOfProjectOptionsSchema: new SimpleSchema
+    include_closed:
+      type: Boolean
+      optional: true
+      defaultValue: false
     fields:
       type: Object
       optional: true
@@ -240,6 +256,10 @@ _.extend JustdoDeliveryPlanner.prototype,
       _id: 
         $in: project_parent_ids
       "projects_collection.is_projects_collection": true
+      "projects_collection.is_closed": false
+    if options.include_closed
+      delete get_parent_project_collections_query["projects_collection.is_closed"]
+
     get_parent_project_collections_query_options =
       fields: options.fields    
     return @tasks_collection.find(get_parent_project_collections_query, get_parent_project_collections_query_options).fetch()
