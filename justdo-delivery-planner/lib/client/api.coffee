@@ -163,7 +163,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       return
     
     APP.justdo_tasks_context_menu.registerMainSection JustdoDeliveryPlanner.projects_collection_custom_feature_id,
-      position: 150
+      position: 399
       data:
         label: TAPi18n.__ JustdoDeliveryPlanner.projects_collection_term_i18n, {}, JustdoI18n.default_lang
         label_i18n: JustdoDeliveryPlanner.projects_collection_term_i18n
