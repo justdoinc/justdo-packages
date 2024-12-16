@@ -12,10 +12,6 @@ options_schema =
       optional: false
       bind_to_instance: true
 
-    app_type:
-      type: String
-      bind_to_instance: true
-
 # options_schema
 # ==============
 #

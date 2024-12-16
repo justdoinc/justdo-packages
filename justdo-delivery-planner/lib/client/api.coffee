@@ -159,9 +159,6 @@ _.extend JustdoDeliveryPlanner.prototype,
   _setupContextmenu: ->
     self = @
 
-    if @app_type isnt "web-app"
-      return
-    
     APP.justdo_tasks_context_menu.registerMainSection JustdoDeliveryPlanner.projects_collection_custom_feature_id,
       position: 399
       data:
