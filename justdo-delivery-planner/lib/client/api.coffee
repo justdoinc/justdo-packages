@@ -174,8 +174,6 @@ _.extend JustdoDeliveryPlanner.prototype,
         label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) -> 
           i18n_data = 
             label_i18n: "projects_collection_set_as_projects_collection"
-            options_i18n: 
-              collection_name: TAPi18n.__ "projects_collection_term", {}, JustdoI18n.default_lang
 
           if task_id? and self.isTaskProjectsCollection task_id
             i18n_data.label_i18n = "projects_collection_unset_as_projects_collection"
@@ -184,8 +182,6 @@ _.extend JustdoDeliveryPlanner.prototype,
         label_i18n: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           i18n_data = 
             label_i18n: "projects_collection_set_as_projects_collection"
-            options_i18n: 
-              collection_name: TAPi18n.__ "projects_collection_term"
 
           if task_id? and self.isTaskProjectsCollection task_id
             i18n_data.label_i18n = "projects_collection_unset_as_projects_collection"
@@ -208,8 +204,6 @@ _.extend JustdoDeliveryPlanner.prototype,
         label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           i18n_data = 
             label_i18n: "projects_collection_close_projects_collection"
-            options_i18n: 
-              collection_name: TAPi18n.__ "projects_collection_term", {}, JustdoI18n.default_lang
 
           if task_id? and self.isProjectsCollectionClosed task_id
             i18n_data.label_i18n = "projects_collection_reopen_projects_collection"
@@ -218,8 +212,6 @@ _.extend JustdoDeliveryPlanner.prototype,
         label_i18n: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           i18n_data = 
             label_i18n: "projects_collection_close_projects_collection"
-            options_i18n: 
-              collection_name: TAPi18n.__ "projects_collection_term"
 
           if task_id? and self.isProjectsCollectionClosed task_id
             i18n_data.label_i18n = "projects_collection_reopen_projects_collection"
