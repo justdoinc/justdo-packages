@@ -153,7 +153,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     return
 
-  getAllProjectsCollectionsUnderJustdoOptionsSchema: new SimpleSchema
+  getAllProjectsCollectionsUnderJustdoCursorOptionsSchema: new SimpleSchema
     include_closed:
       type: Boolean
       optional: true
@@ -163,7 +163,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       optional: true
       blackbox: true
       defaultValue: JustdoDeliveryPlanner.projects_collection_default_fields_to_fetch
-  getAllProjectsCollectionsUnderJustdo: (justdo_id, options, user_id) ->
+  getAllProjectsCollectionsUnderJustdoCursor: (justdo_id, options, user_id) ->
     check justdo_id, String
     if not user_id?
       user_id = Meteor.userId()
@@ -171,7 +171,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
-        @getAllProjectsCollectionsUnderJustdoOptionsSchema,
+        @getAllProjectsCollectionsUnderJustdoCursorOptionsSchema,
         options,
         {self: @, throw_on_error: true}
       )
@@ -189,7 +189,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     query_options = 
       fields: options.fields
       
-    return @tasks_collection.find(query, query_options).fetch()
+    return @tasks_collection.find(query, query_options)
 
   getProjectsUnderCollectionCursorOptionsSchema: new SimpleSchema
     include_closed:
