@@ -131,8 +131,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       type: Object
       optional: true
       blackbox: true
-      defaultValue:
-        title: 1
+      defaultValue: JustdoDeliveryPlanner.projects_collection_default_fields_to_fetch
   getAllProjectsCollectionsUnderJustdo: (justdo_id, options, user_id) ->
     check justdo_id, String
     if _.isString(options) and not user_id?
@@ -165,8 +164,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       type: Object
       optional: true
       blackbox: true
-      defaultValue: 
-        title: 1
+      defaultValue: JustdoDeliveryPlanner.projects_collection_default_fields_to_fetch
   getProjectsUnderCollection: (justdo_id, projects_collection_id, options, user_id) ->
     check justdo_id, String
     check projects_collection_id, String
@@ -204,8 +202,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       type: Object
       optional: true
       blackbox: true
-      defaultValue: 
-        title: 1
+      defaultValue: JustdoDeliveryPlanner.projects_collection_default_fields_to_fetch
   getProjectCollectionOfProject: (justdo_id, project_id, options, user_id) ->
     check justdo_id, String
     check project_id, String

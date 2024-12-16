@@ -20,6 +20,8 @@ _.extend JustdoDeliveryPlanner,
   default_base_project_workdays: [0, 1, 1, 1, 1, 1, 0]
 
   is_projects_collection_enabled: false
+  projects_collection_default_fields_to_fetch: 
+    _id: 1
   projects_collection_term_i18n: "projects_collection_term"
   set_as_projects_collection_i18n: "projects_collection_set_as_projects_collection"
   unset_as_projects_collection_i18n: "projects_collection_unset_as_projects_collection"
