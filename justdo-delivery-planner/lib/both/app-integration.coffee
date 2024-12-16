@@ -24,5 +24,6 @@ APP.getEnv (env) ->
     options =
       projects_collection: APP.collections.Projects
       tasks_collection: APP.collections.Tasks
-      
+      app_type: JustdoHelpers.getClientType env
+
     APP.justdo_delivery_planner = new JustdoDeliveryPlanner(options)

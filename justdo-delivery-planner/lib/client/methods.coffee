@@ -4,3 +4,8 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     return
     
+  toggleTaskAsProjectsCollection: (task_id, cb) ->
+    return Meteor.call "jdpToggleTaskAsProjectsCollection", task_id, cb
+
+  toggleProjectsCollectionClosedState: (task_id, cb) ->
+    return Meteor.call "jdpToggleProjectsCollectionClosedState", task_id, cb

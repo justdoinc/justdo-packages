@@ -18,3 +18,9 @@ _.extend JustdoDeliveryPlanner,
   default_simple_member_daily_availability_seconds: 60 * 60 * 3
 
   default_base_project_workdays: [0, 1, 1, 1, 1, 1, 0]
+
+  is_projects_collection_enabled: false
+  projects_collection_term_i18n: "projects_collection_term"
+  set_as_projects_collection_i18n: "projects_collection_set_as_projects_collection"
+  unset_as_projects_collection_i18n: "projects_collection_unset_as_projects_collection"
+  close_projects_collection_i18n: "projects_collection_close_projects_collection"

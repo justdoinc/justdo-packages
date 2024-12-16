@@ -49,6 +49,8 @@ Package.onUse(function (api) {
   api.use("meteorspark:util@0.2.0", both);
   api.use("meteorspark:logger@0.3.0", both);
   api.use("justdoinc:justdo-helpers@1.0.0", both);
+  api.use("tap:i18n", both);
+  api.use("justdoinc:justdo-i18n@1.0.0", both);
 
   api.use("justdoinc:justdo-analytics@1.0.0", both);
 
@@ -80,6 +82,8 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/tabs-definitions/tab-styling.sass", client);
   api.addFiles("lib/client/tabs-definitions/sections-managers/all-projects.coffee", client);
   api.addFiles("lib/client/tabs-definitions/tabs-definitions.coffee", client);
+
+  this.addI18nFiles(api, "i18n/projects-collection/{}.i18n.json", "default_lang_only");
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.

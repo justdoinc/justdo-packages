@@ -68,3 +68,36 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     return new_state
     
+  toggleTaskAsProjectsCollection: (task_id, user_id) ->
+    check task_id, String
+    check user_id, String
+
+    query = 
+      _id: task_id
+      users: user_id
+    modifier = 
+      $set: 
+        "projects_collection.is_projects_collection": true
+      
+    if @isTaskProjectsCollection(task_id)
+      modifier.$unset = modifier.$set
+      delete modifier.$set
+    
+    return @tasks_collection.update query, modifier
+  
+  toggleProjectsCollectionClosedState: (task_id, user_id) ->
+    check task_id, String
+    check user_id, String
+
+    query = 
+      _id: task_id
+      users: user_id
+    modifier = 
+      $set: 
+        "projects_collection.is_closed": true
+      
+    if @isProjectsCollectionClosed(task_id)
+      modifier.$unset = modifier.$set
+      delete modifier.$set
+    
+    return @tasks_collection.update query, modifier
