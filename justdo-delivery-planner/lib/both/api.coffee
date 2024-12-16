@@ -200,6 +200,8 @@ _.extend JustdoDeliveryPlanner.prototype,
         $ne: null
       "projects_collection.is_closed": 
         $ne: true
+    if Meteor.isClient
+      delete query.users
     if options.include_closed
       delete query["projects_collection.is_closed"]
     if _.isString options.projects_collection_type
@@ -244,6 +246,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       query["parents2.parent"] = projects_collection_id
     if Meteor.isClient
       query["parents.#{projects_collection_id}"] = {$exists: true}
+      delete query.users
     
     if options.include_closed
       delete query[JustdoDeliveryPlanner.task_is_archived_project_field_name]
@@ -291,6 +294,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       get_project_parents_query_options.fields["parents2.parent"] = 1
       project_parent_ids = @tasks_collection.findOne(get_project_parents_query, get_project_parents_query_options)?.parents2?.map (parent) -> parent.parent
     if Meteor.isClient
+      delete get_project_parents_query.users
       get_project_parents_query_options.fields.parents = 1
       project_parent_ids = _.keys @tasks_collection.findOne(get_project_parents_query, get_project_parents_query_options)?.parents
 
@@ -302,6 +306,8 @@ _.extend JustdoDeliveryPlanner.prototype,
       "projects_collection.is_closed": false
       "projects_collection.projects_collection_type":
         $ne: null
+    if Meteor.isClient
+      delete get_parent_project_collections_query.users
     if options.include_closed
       delete get_parent_project_collections_query["projects_collection.is_closed"]
     if _.isString options.projects_collection_type
