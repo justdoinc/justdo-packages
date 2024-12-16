@@ -10,8 +10,6 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     @setupCustomFeatureMaintainer()
 
-    @_setupCustomFeatures()
-
     return
 
   setupCustomFeatureMaintainer: ->
@@ -144,50 +142,6 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     return project_tasks
 
-  _setupCustomFeatures: ->
-    if not @isProjectsCollectionEnabled()
-      return
-
-    @_setupTaskType()
-    @_setupContextmenu()
-    @_registerTabView()
-
-    @features_tracker = Tracker.autorun =>
-      if (gcm = APP.modules.project_page.grid_control_mux.get())?
-        @_installTabsOnGcm gcm 
-      return
-
-    return
-
-  _setupTaskType: ->
-    tags_properties =
-      "is_projects_collection":
-        text: TAPi18n.__ JustdoDeliveryPlanner.projects_collection_term_i18n, {}, JustdoI18n.default_lang
-        text_i18n: JustdoDeliveryPlanner.projects_collection_term_i18n
-
-        filter_list_order: 15
-
-        customFilterQuery: (filter_state_id, column_state_definitions, context) ->
-          return {"projects_collection.is_projects_collection": true}
-
-    APP.justdo_task_type.registerTaskTypesGenerator "default", "is-projects-collection",
-      possible_tags: ["is_projects_collection"]
-
-      required_task_fields_to_determine:
-        "projects_collection.is_projects_collection": 1
-
-      generator: (task_obj) ->
-        tags = []
-
-        if task_obj?.projects_collection?.is_projects_collection is true
-          tags.push "is_projects_collection"
-
-        return tags
-
-      propertiesGenerator: (tag) -> tags_properties[tag]
-
-    return
-  
   _setupContextmenu: ->
     self = @
 
