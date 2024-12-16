@@ -103,12 +103,18 @@ _.extend JustdoDeliveryPlanner.prototype,
   isProjectsCollectionEnabled: -> JustdoDeliveryPlanner.is_projects_collection_enabled
 
   isTaskProjectsCollection: (task) ->
+    if not @isProjectsCollectionEnabled()
+      return false
+
     if _.isString task
       task = @tasks_collection.findOne(task, {fields: {"projects_collection.is_projects_collection": 1}})
     
     return task?.projects_collection?.is_projects_collection is true
   
   isProjectsCollectionClosed: (task) ->
+    if not @isProjectsCollectionEnabled()
+      return false
+      
     if _.isString task
       task = @tasks_collection.findOne(task, {fields: {projects_collection: 1}})
 
