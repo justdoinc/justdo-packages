@@ -163,7 +163,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       
     return @tasks_collection.find(query, query_options).fetch()
 
-  getProjectsUnderCollectionOptionsSchema: new SimpleSchema
+  getProjectsUnderCollectionCursorOptionsSchema: new SimpleSchema
     include_closed:
       type: Boolean
       optional: true
@@ -173,7 +173,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       optional: true
       blackbox: true
       defaultValue: JustdoDeliveryPlanner.projects_collection_default_fields_to_fetch
-  getProjectsUnderCollection: (justdo_id, projects_collection_id, options, user_id) ->
+  getProjectsUnderCollectionCursor: (justdo_id, projects_collection_id, options, user_id) ->
     check justdo_id, String
     check projects_collection_id, String
     if _.isString(options) and not user_id?
@@ -185,7 +185,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
-        @getProjectsUnderCollectionOptionsSchema,
+        @getProjectsUnderCollectionCursorOptionsSchema,
         options,
         {self: @, throw_on_error: true}
       )
@@ -207,9 +207,9 @@ _.extend JustdoDeliveryPlanner.prototype,
     query_options = 
       fields: options.fields
     
-    return @tasks_collection.find(query, query_options).fetch()
+    return @tasks_collection.find(query, query_options)
   
-  getProjectCollectionOfProjectOptionsSchema: new SimpleSchema
+  getProjectsCollectionOfProjectCursorOptionsSchema: new SimpleSchema
     include_closed:
       type: Boolean
       optional: true
@@ -219,7 +219,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       optional: true
       blackbox: true
       defaultValue: JustdoDeliveryPlanner.projects_collection_default_fields_to_fetch
-  getProjectCollectionOfProject: (justdo_id, project_id, options, user_id) ->
+  getProjectsCollectionOfProjectCursor: (justdo_id, project_id, options, user_id) ->
     check justdo_id, String
     check project_id, String
     if _.isString(options) and not user_id?
@@ -231,7 +231,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
-        @getProjectCollectionOfProjectOptionsSchema,
+        @getProjectsCollectionOfProjectCursorOptionsSchema,
         options,
         {self: @, throw_on_error: true}
       )
@@ -262,4 +262,4 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     get_parent_project_collections_query_options =
       fields: options.fields    
-    return @tasks_collection.find(get_parent_project_collections_query, get_parent_project_collections_query_options).fetch()
+    return @tasks_collection.find(get_parent_project_collections_query, get_parent_project_collections_query_options)
