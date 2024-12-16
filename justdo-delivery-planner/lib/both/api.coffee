@@ -145,7 +145,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       possible_tags: ["is_projects_collection"]
 
       required_task_fields_to_determine:
-        "projects_collection.is_projects_collection": 1
+        "projects_collection": 1
 
       generator: (task_obj) ->
         tags = []
