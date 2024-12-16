@@ -103,15 +103,9 @@ _.extend JustdoDeliveryPlanner.prototype,
   isProjectsCollectionEnabled: -> JustdoDeliveryPlanner.is_projects_collection_enabled
 
   isTaskObjProjectsCollection: (task_obj) ->
-    if not @isProjectsCollectionEnabled()
-      return false
-
     return task_obj?.projects_collection?.is_projects_collection is true
   
   isProjectsCollectionClosed: (task_obj) ->
-    if not @isProjectsCollectionEnabled()
-      return false
-
     if not @isTaskObjProjectsCollection task_obj
       return false
     
