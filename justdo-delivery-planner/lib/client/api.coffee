@@ -87,8 +87,8 @@ _.extend JustdoDeliveryPlanner.prototype,
       APP.modules.project_page.tab_switcher_manager.registerSectionItem "main", "projects_collection",
         position: 250
         data:
-          label: TAPi18n.__ JustdoDeliveryPlanner.projects_collection_term_i18n, {}, JustdoI18n.default_lang
-          label_i18n: JustdoDeliveryPlanner.projects_collection_term_i18n
+          label: TAPi18n.__ JustdoDeliveryPlanner.projects_collection_all_projects_collections_tab_title, {}, JustdoI18n.default_lang
+          label_i18n: JustdoDeliveryPlanner.projects_collection_all_projects_collections_tab_title
           tab_id: "jdp-projects-collection"
           icon_type: "feather"
           icon_val: "book"

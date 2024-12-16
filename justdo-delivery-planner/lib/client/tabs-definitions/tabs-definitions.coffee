@@ -79,7 +79,7 @@ _.extend JustdoDeliveryPlanner.prototype,
                   section_manager: "QuerySection"
                   options:
                     permitted_depth: 1
-                    section_item_title: TAPi18n.__ JustdoDeliveryPlanner.projects_collection_term_i18n
+                    section_item_title: TAPi18n.__ JustdoDeliveryPlanner.projects_collection_grid_view_section_title
                     expanded_on_init: true
                     show_if_empty: false
                   section_manager_options:
@@ -94,7 +94,7 @@ _.extend JustdoDeliveryPlanner.prototype,
             )
             removable: true
             activate_on_init: false
-            tabTitleGenerator: -> TAPi18n.__ JustdoDeliveryPlanner.projects_collection_term_i18n
+            tabTitleGenerator: -> TAPi18n.__ JustdoDeliveryPlanner.projects_collection_tab_title_generator_title
         }
       )
     return tabs_definitions
