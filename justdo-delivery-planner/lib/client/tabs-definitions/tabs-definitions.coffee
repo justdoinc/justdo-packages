@@ -78,15 +78,14 @@ _.extend JustdoDeliveryPlanner.prototype,
                   id: "projects-collection"
                   section_manager: "QuerySection"
                   options:
-                    permitted_depth: 1
-                    section_item_title: TAPi18n.__ JustdoDeliveryPlanner.projects_collection_grid_view_section_title
+                    permitted_depth: -1
                     expanded_on_init: true
-                    show_if_empty: false
                   section_manager_options:
                     query: ->
+                      projects_collection_type_id = @getGlobalStateVar "projects-collection-type", ""
                       query = 
                         project_id: JD.activeJustdoId()
-                        "projects_collection.is_projects_collection": true
+                        "projects_collection.projects_collection_type": projects_collection_type_id
                       
                       return APP.collections.Tasks.find(query, {sort: {seqId: 1}}).fetch()
                 }
@@ -94,7 +93,12 @@ _.extend JustdoDeliveryPlanner.prototype,
             )
             removable: true
             activate_on_init: false
-            tabTitleGenerator: -> TAPi18n.__ JustdoDeliveryPlanner.projects_collection_tab_title_generator_title
+            tabTitleGenerator: (tab_id) -> 
+              sections_state = @getTabGridControlSectionsState(tab_id)
+              projects_collection_type_id = sections_state.global["projects-collection-type"]
+              projects_collection_type_def = APP.justdo_delivery_planner.getProjectsCollectionTypeById projects_collection_type_id
+
+              return TAPi18n.__ projects_collection_type_def.type_label_plural_i18n
         }
       )
     return tabs_definitions

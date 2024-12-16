@@ -87,18 +87,20 @@ _.extend JustdoDeliveryPlanner.prototype,
       position = 200
       for projects_collection_type in @getSupportedProjectsCollectionTypes()
         type_id = projects_collection_type.type_id
+
         APP.modules.project_page.tab_switcher_manager.registerSectionItem "main", "projects_collection_#{type_id}",
           position: position
           data:
             label: TAPi18n.__ projects_collection_type.type_label_i18n, {}, JustdoI18n.default_lang
             label_i18n: projects_collection_type.type_label_i18n
             tab_id: "jdp-projects-collection"
+
             icon_type: "feather"
             icon_val: projects_collection_type.feather_icon
 
-            tab_section_state:
+            tab_sections_state:
               global:
-                tracked_field: "projects_collection.projects_collection_type"
+                "projects-collection-type": type_id
 
         position += 10
 
