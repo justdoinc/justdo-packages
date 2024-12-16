@@ -22,7 +22,6 @@ _.extend JustdoDeliveryPlanner,
   is_projects_collection_enabled: false
   projects_collection_default_fields_to_fetch: 
     _id: 1
-  projects_collection_custom_feature_id: "justdo_projects_collection"
   projects_collection_all_projects_collections_tab_title: "projects_collection_all_projects_collections_tab_title"
   projects_collection_grid_view_section_title: "projects_collection_grid_view_section_title"
   projects_collection_tab_title_generator_title: "projects_collection_tab_title_generator_title"

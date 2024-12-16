@@ -159,14 +159,8 @@ _.extend JustdoDeliveryPlanner.prototype,
   _setupContextmenu: ->
     self = @
 
-    APP.justdo_tasks_context_menu.registerMainSection JustdoDeliveryPlanner.projects_collection_custom_feature_id,
-      position: 399
-      data:
-        label: TAPi18n.__ JustdoDeliveryPlanner.projects_collection_term_i18n, {}, JustdoI18n.default_lang
-        label_i18n: JustdoDeliveryPlanner.projects_collection_term_i18n
-
-    APP.justdo_tasks_context_menu.registerSectionItem JustdoDeliveryPlanner.projects_collection_custom_feature_id, "set-unset-as-projects-collection",
-      position: 100
+    APP.justdo_tasks_context_menu.registerSectionItem "projects", "set-unset-as-projects-collection",
+      position: 110
       data:
         label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) -> 
           i18n_data = 
@@ -193,10 +187,12 @@ _.extend JustdoDeliveryPlanner.prototype,
             return "jd-folder-unset"
           return "folder"
       listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-        return APP.justdo_permissions?.checkTaskPermissions("task-field-edit.projects_collection.is_projects_collection", task_id)
+        is_allowed_by_permissions = APP.justdo_permissions.checkTaskPermissions("task-field-edit.projects_collection.is_projects_collection", task_id)
+        is_task_project = self.isTaskObjProject dependencies_fields_vals
+        return is_allowed_by_permissions and not is_task_project
 
-    APP.justdo_tasks_context_menu.registerSectionItem JustdoDeliveryPlanner.projects_collection_custom_feature_id, "open-close-projects-collection",
-      position: 200
+    APP.justdo_tasks_context_menu.registerSectionItem "projects", "open-close-projects-collection",
+      position: 120
       data:
         label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           i18n_data = 
@@ -220,7 +216,8 @@ _.extend JustdoDeliveryPlanner.prototype,
         icon_type: "feather"
         icon_val: "folder"
       listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-        is_task_projects_collection = self.isTaskProjectsCollection task_id
-        return is_task_projects_collection and APP.justdo_permissions?.checkTaskPermissions("task-field-edit.projects_collection.is_closed", task_id)
+        is_allowed_by_permissions = APP.justdo_permissions?.checkTaskPermissions("task-field-edit.projects_collection.is_closed", task_id)
+        is_task_projects_collection = self.isTaskObjProjectsCollection dependencies_fields_vals
+        return is_task_projects_collection and is_allowed_by_permissions
 
     return
