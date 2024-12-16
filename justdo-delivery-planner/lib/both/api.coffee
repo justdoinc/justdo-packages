@@ -99,13 +99,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     return @tasks_collection.find(query, {fields: options.fields, sort: options.sort_by}).fetch()
 
-  isPluginInstalledOnProjectDoc: (project_doc) ->
-    return APP.projects.isPluginInstalledOnProjectDoc(JustdoProjectsCollection.project_custom_feature_id, project_doc)
-
-  getProjectDocIfPluginInstalled: (project_id) ->
-    return @projects_collection.findOne({_id: project_id, "conf.custom_features": JustdoProjectsCollection.project_custom_feature_id})
-
-  isProjectsCollectionEnabled: -> JustdoProjectsCollection.is_projects_collection_enabled
+  isProjectsCollectionEnabled: -> JustdoDeliveryPlanner.is_projects_collection_enabled
 
   isTaskProjectsCollection: (task) ->
     if _.isString task

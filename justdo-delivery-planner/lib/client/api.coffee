@@ -162,8 +162,8 @@ _.extend JustdoDeliveryPlanner.prototype,
   _setupTaskType: ->
     tags_properties =
       "is_projects_collection":
-        text: TAPi18n.__ JustdoProjectsCollection.projects_collection_term_i18n, {}, JustdoI18n.default_lang
-        text_i18n: JustdoProjectsCollection.projects_collection_term_i18n
+        text: TAPi18n.__ JustdoDeliveryPlanner.projects_collection_term_i18n, {}, JustdoI18n.default_lang
+        text_i18n: JustdoDeliveryPlanner.projects_collection_term_i18n
 
         filter_list_order: 15
 
@@ -194,13 +194,13 @@ _.extend JustdoDeliveryPlanner.prototype,
     if @app_type isnt "web-app"
       return
     
-    APP.justdo_tasks_context_menu.registerMainSection JustdoProjectsCollection.project_custom_feature_id,
+    APP.justdo_tasks_context_menu.registerMainSection JustdoDeliveryPlanner.project_custom_feature_id,
       position: 1000
       data:
-        label: TAPi18n.__ JustdoProjectsCollection.projects_collection_term_i18n, {}, JustdoI18n.default_lang
-        label_i18n: JustdoProjectsCollection.projects_collection_term_i18n
+        label: TAPi18n.__ JustdoDeliveryPlanner.projects_collection_term_i18n, {}, JustdoI18n.default_lang
+        label_i18n: JustdoDeliveryPlanner.projects_collection_term_i18n
 
-    APP.justdo_tasks_context_menu.registerSectionItem JustdoProjectsCollection.project_custom_feature_id, "set-unset-as-projects-collection",
+    APP.justdo_tasks_context_menu.registerSectionItem JustdoDeliveryPlanner.project_custom_feature_id, "set-unset-as-projects-collection",
       position: 100
       data:
         label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) -> 
@@ -234,7 +234,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
         return APP.justdo_permissions?.checkTaskPermissions("task-field-edit.projects_collection.is_projects_collection", task_id)
 
-    APP.justdo_tasks_context_menu.registerSectionItem JustdoProjectsCollection.project_custom_feature_id, "open-close-projects-collection",
+    APP.justdo_tasks_context_menu.registerSectionItem JustdoDeliveryPlanner.project_custom_feature_id, "open-close-projects-collection",
       position: 200
       data:
         label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
@@ -275,8 +275,8 @@ _.extend JustdoDeliveryPlanner.prototype,
     tab_switcher_manager.registerSectionItem "main", "projects_collection",
       position: 500
       data:
-        label: TAPi18n.__ JustdoProjectsCollection.projects_collection_term_i18n, {}, JustdoI18n.default_lang
-        label_i18n: JustdoProjectsCollection.projects_collection_term_i18n
+        label: TAPi18n.__ JustdoDeliveryPlanner.projects_collection_term_i18n, {}, JustdoI18n.default_lang
+        label_i18n: JustdoDeliveryPlanner.projects_collection_term_i18n
         tab_id: "justdo_projects_collection"
         icon_type: "feather"
         icon_val: "book"
@@ -305,7 +305,7 @@ _.extend JustdoDeliveryPlanner.prototype,
           section_manager: "QuerySection"
           options:
             permitted_depth: 1
-            section_item_title: TAPi18n.__ JustdoProjectsCollection.projects_collection_term_i18n
+            section_item_title: TAPi18n.__ JustdoDeliveryPlanner.projects_collection_term_i18n
             expanded_on_init: true
             show_if_empty: false
           section_manager_options:
@@ -319,7 +319,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       ]
       removable: true
       activate_on_init: false
-      tabTitleGenerator: -> TAPi18n.__ JustdoProjectsCollection.projects_collection_term_i18n
+      tabTitleGenerator: -> TAPi18n.__ JustdoDeliveryPlanner.projects_collection_term_i18n
     
     gcm._projects_collection_tab_installed = true
 
