@@ -175,7 +175,7 @@ _.extend JustdoDeliveryPlanner.prototype,
           i18n_data = 
             label_i18n: "projects_collection_set_as_projects_collection"
 
-          if task_id? and self.isTaskProjectsCollection task_id
+          if task_id? and self.isTaskObjProjectsCollection dependencies_fields_vals
             i18n_data.label_i18n = "projects_collection_unset_as_projects_collection"
 
           return TAPi18n.__ i18n_data.label_i18n, i18n_data.options_i18n, JustdoI18n.default_lang
@@ -183,7 +183,7 @@ _.extend JustdoDeliveryPlanner.prototype,
           i18n_data = 
             label_i18n: "projects_collection_set_as_projects_collection"
 
-          if task_id? and self.isTaskProjectsCollection task_id
+          if task_id? and self.isTaskObjProjectsCollection dependencies_fields_vals
             i18n_data.label_i18n = "projects_collection_unset_as_projects_collection"
 
           return i18n_data
@@ -192,7 +192,7 @@ _.extend JustdoDeliveryPlanner.prototype,
           return 
         icon_type: "feather"
         icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          if task_id? and self.isTaskProjectsCollection task_id
+          if task_id? and self.isTaskObjProjectsCollection dependencies_fields_vals
             return "jd-folder-unset"
           return "folder"
       listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
@@ -205,7 +205,7 @@ _.extend JustdoDeliveryPlanner.prototype,
           i18n_data = 
             label_i18n: "projects_collection_close_projects_collection"
 
-          if task_id? and self.isProjectsCollectionClosed task_id
+          if task_id? and self.isProjectsCollectionClosed dependencies_fields_vals
             i18n_data.label_i18n = "projects_collection_reopen_projects_collection"
 
           return TAPi18n.__ i18n_data.label_i18n, i18n_data.options_i18n, JustdoI18n.default_lang 
@@ -213,7 +213,7 @@ _.extend JustdoDeliveryPlanner.prototype,
           i18n_data = 
             label_i18n: "projects_collection_close_projects_collection"
 
-          if task_id? and self.isProjectsCollectionClosed task_id
+          if task_id? and self.isProjectsCollectionClosed dependencies_fields_vals
             i18n_data.label_i18n = "projects_collection_reopen_projects_collection"
 
           return i18n_data
