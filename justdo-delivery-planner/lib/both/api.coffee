@@ -106,7 +106,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     if _.isString task
       task = @tasks_collection.findOne(task, {fields: {"projects_collection.is_projects_collection": 1}})
     
-    return task?.projects_collection?.is_projects_collection
+    return task?.projects_collection?.is_projects_collection is true
   
   isProjectsCollectionClosed: (task) ->
     if _.isString task
