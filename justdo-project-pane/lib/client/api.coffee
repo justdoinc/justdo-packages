@@ -213,7 +213,7 @@ _.extend JustdoProjectPane.prototype,
       # because we don't want to store the full screen state in the user's preferences.
       if @_full_screen_rv.get()
         state.full_screen = true
-        state.expand_height = window_height
+        state.expand_height = window_height - APP.helpers.getGlobalSassVars().navbar_height
       else
         min_height = JustdoProjectPane.min_expanded_height
         max_height = Math.floor(Math.min(window_height * .8, window_height - 55))
@@ -327,7 +327,14 @@ _.extend JustdoProjectPane.prototype,
 
   isFullScreen: -> @_full_screen_rv.get()
 
+  enterFullScreen: -> @_full_screen_rv.set true
+
+  exitFullScreen: -> @_full_screen_rv.set false
+
   toggleFullScreen: -> 
-    cur_state = Tracker.nonreactive => @_full_screen_rv.get()
-    @_full_screen_rv.set not cur_state
+    is_full_screen = Tracker.nonreactive => @isFullScreen()
+    if is_full_screen
+      @exitFullScreen()
+    else
+      @enterFullScreen()
     return

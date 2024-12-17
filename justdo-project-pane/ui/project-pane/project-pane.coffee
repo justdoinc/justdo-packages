@@ -14,6 +14,7 @@ Template.justdo_project_pane_expanded.onRendered ->
 
 Template.justdo_project_pane_expanded.onDestroyed ->
   $(".justdo-project-pane-container").resizable("destroy")
+  APP.justdo_project_pane.exitFullScreen()
 
   return
 
