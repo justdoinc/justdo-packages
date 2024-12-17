@@ -19,7 +19,7 @@ _.extend JustdoDeliveryPlanner,
 
   default_base_project_workdays: [0, 1, 1, 1, 1, 1, 0]
 
-  is_projects_collection_enabled: false
+  is_projects_collection_enabled: true
   projects_collections_types: [
     {
       type_id: "projects_collection"
@@ -32,7 +32,21 @@ _.extend JustdoDeliveryPlanner,
       close_i18n: "projects_collection_close_default_projects_collection"
       reopen_i18n: "projects_collection_reopen_default_projects_collection"
 
-      feather_icon: "share-2"
+      type_icon: { # The type icon is used for the - set as Projects Collection, on-grid indicator, the tab switcher dropdown, and other places where we refer to the Project Collection type.
+        type: "feather"
+        val: "jd-ai"
+        class: "ai-icon"
+      },
+      close_op_icon: { # Will appear next to the context menu operation for closing. Note that the closed state is the faded type_icon, this is for the action of closing
+        type: "feather"
+        val: "jd-ai"
+        class: "ai-icon"
+      },
+      unset_op_icon: { # Will appear next to the context menu operation for unsetting a Project Collection.
+        type: "feather"
+        val: "jd-ai"
+        class: "ai-icon"
+      }
     },
     {
       type_id: "pseudo_department_type_for_testing"
@@ -45,7 +59,21 @@ _.extend JustdoDeliveryPlanner,
       close_i18n: "projects_collection_close_department"
       reopen_i18n: "projects_collection_reopen_department"
 
-      feather_icon: "share-2"
+      type_icon: { # The type icon is used for the - set as Projects Collection, on-grid indicator, the tab switcher dropdown, and other places where we refer to the Project Collection type.
+        type: "feather"
+        val: "jd-ai"
+        class: "ai-icon"
+      },
+      close_op_icon: { # Will appear next to the context menu operation for closing. Note that the closed state is the faded type_icon, this is for the action of closing
+        type: "feather"
+        val: "jd-ai"
+        class: "ai-icon"
+      },
+      unset_op_icon: { # Will appear next to the context menu operation for unsetting a Project Collection.
+        type: "feather"
+        val: "jd-ai"
+        class: "ai-icon"
+      }
     }
   ]
   projects_collection_default_fields_to_fetch: 
