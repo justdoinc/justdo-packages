@@ -745,6 +745,7 @@ _.extend JustdoTasksContextMenu.prototype,
         listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           is_allowed_by_permissions = APP.justdo_permissions?.checkTaskPermissions("task-field-edit.p:dp:is_project", task_id)
 
+          # If projects collection is enabled, we won't show the option to set as project if the task is a project collection
           if APP.justdo_delivery_planner.isProjectsCollectionEnabled()
             is_task_projects_collection = APP.justdo_delivery_planner.getTaskObjProjectsCollectionTypeId(dependencies_fields_vals)?
             return is_allowed_by_permissions and not is_task_projects_collection
