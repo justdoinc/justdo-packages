@@ -91,8 +91,8 @@ _.extend JustdoDeliveryPlanner.prototype,
         APP.modules.project_page.tab_switcher_manager.registerSectionItem "main", "projects_collection_#{type_id}",
           position: position
           data:
-            label: TAPi18n.__ projects_collection_type.type_label_i18n, {}, JustdoI18n.default_lang
-            label_i18n: projects_collection_type.type_label_i18n
+            label: TAPi18n.__ projects_collection_type.type_label_plural_i18n, {}, JustdoI18n.default_lang
+            label_i18n: projects_collection_type.type_label_plural_i18n
             tab_id: "jdp-projects-collection"
 
             icon_type: "feather"
