@@ -7,6 +7,7 @@
   "projects_collection_set_as_default_projects_collection": "Set as a Projects Collection",
   "projects_collection_unset_as_default_projects_collection": "Unset as a Projects Collection",
   "projects_collection_close_default_projects_collection": "Close this Projects Collection",
+  "projects_collection_closed_default_projects_collection_label": "Closed Projects Collection",
   "projects_collection_reopen_default_projects_collection": "Reopen this Projects Collection",
 
   "projects_collection_department_label": "Department",
@@ -14,6 +15,7 @@
   "projects_collection_set_as_department": "Set as a Department",
   "projects_collection_unset_as_department": "Unset as a Department",
   "projects_collection_close_department": "Close this Department",
+  "projects_collection_closed_department_label": "Closed Department",
   "projects_collection_reopen_department": "Reopen this Department"
 
 }

@@ -138,6 +138,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     return
 
   _setupTaskType: ->
+    closed_project_collection_prefix = "closed_"
     self = @
 
     APP.justdo_task_type.registerTaskTypesGenerator "default", "projects-collection-type",
@@ -150,16 +151,25 @@ _.extend JustdoDeliveryPlanner.prototype,
         types = []
 
         if (type_id = self.getTaskObjProjectsCollectionTypeId task_obj)
+          if self.isProjectsCollectionClosed task_obj
+            type_id = "#{closed_project_collection_prefix}#{type_id}"
           types.push type_id
 
         return types
 
       propertiesGenerator: (type_id) -> 
+        is_closed = type_id.startsWith closed_project_collection_prefix
+        type_id = type_id.replace closed_project_collection_prefix, ""
         type_def = self.getProjectsCollectionTypeById type_id
+
+        type_label_i18n = type_def.type_label_i18n
+        if is_closed
+          type_label_i18n = type_def.closed_label_i18n
+          
         type_properties = 
-          text: TAPi18n.__ type_def.type_label_i18n, {}, JustdoI18n.default_lang
-          text_i18n: type_def.type_label_i18n
-          filter_list_order: 8
+          text: TAPi18n.__ type_label_i18n, {}, JustdoI18n.default_lang
+          text_i18n: type_label_i18n
+          filter_list_order: 1
           customFilterQuery: (filter_state_id, column_state_definitions, context) ->
             return {"projects_collection.projects_collection_type": type_id}
         return type_properties
