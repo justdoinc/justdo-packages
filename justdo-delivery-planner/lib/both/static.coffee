@@ -98,5 +98,3 @@ _.extend JustdoDeliveryPlanner,
   ]
   projects_collection_default_fields_to_fetch: 
     _id: 1
-  projects_collection_grid_view_section_title: "projects_collection_grid_view_section_title"
-  projects_collection_tab_title_generator_title: "projects_collection_tab_title_generator_title"
