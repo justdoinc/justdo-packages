@@ -10,5 +10,8 @@ _.extend JustdoDeliveryPlanner.prototype,
   unsetTaskProjectCollectionType: (task_id, cb) ->
     return Meteor.call "jdpUnsetTaskProjectCollectionType", task_id, cb
 
-  toggleProjectsCollectionClosedState: (task_id, cb) ->
-    return Meteor.call "jdpToggleProjectsCollectionClosedState", task_id, cb
+  closeProjectsCollection: (task_id) ->
+    return Meteor.call "jdpCloseProjectsCollection", task_id
+
+  reopenProjectsCollection: (task_id) ->
+    return Meteor.call "jdpReopenProjectsCollection", task_id

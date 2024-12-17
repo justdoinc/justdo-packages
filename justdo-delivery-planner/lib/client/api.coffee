@@ -238,7 +238,10 @@ _.extend JustdoDeliveryPlanner.prototype,
 
               return i18n_data
             op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) =>
-              self.toggleProjectsCollectionClosedState task_id
+              if self.isProjectsCollectionClosed dependencies_fields_vals
+                self.reopenProjectsCollection task_id
+              else
+                self.closeProjectsCollection task_id
               return 
             icon_type: "feather"
             icon_val: "folder"

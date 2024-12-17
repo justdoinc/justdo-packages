@@ -19,9 +19,14 @@ _.extend JustdoDeliveryPlanner.prototype,
         check @userId, String
         return self.unsetTaskProjectCollectionType(task_id, @userId)
 
-      jdpToggleProjectsCollectionClosedState: (task_id) ->
+      jdpCloseProjectsCollection: (task_id) ->
         check task_id, String
         check @userId, String
-        return self.toggleProjectsCollectionClosedState(task_id, @userId)
+        return self.closeProjectsCollection(task_id, @userId)
+        
+      jdpReopenProjectsCollection: (task_id) ->
+        check task_id, String
+        check @userId, String
+        return self.reopenProjectsCollection(task_id, @userId)
 
     return

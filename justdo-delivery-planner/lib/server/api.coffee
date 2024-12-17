@@ -106,22 +106,35 @@ _.extend JustdoDeliveryPlanner.prototype,
         projects_collection: 1
           
     return @tasks_collection.update query, modifier
-
-  toggleProjectsCollectionClosedState: (task_obj, user_id) ->
+  
+  closeProjectsCollection: (task_id, user_id) ->
+    check task_id, String
     check user_id, String
 
     query = 
-      _id: task_obj._id
+      _id: task_id
       users: user_id
-    query_options = 
-      fields:
-        "projects_collection.is_closed": 1
-    if not (task_doc = @tasks_collection.findOne(query, query_options))?
-      throw @_error("invalid-argument", "Task does not exist or user does not have access to it")
+      "projects_collection.projects_collection_type": 
+        $ne: null
 
-    cur_state = task_doc?.projects_collection?.is_closed
     modifier = 
       $set: 
-        "projects_collection.is_closed": not cur_state
+        "projects_collection.is_closed": true
+
+    return @tasks_collection.update query, modifier
+  
+  reopenProjectsCollection: (task_id, user_id) ->
+    check task_id, String
+    check user_id, String
+
+    query = 
+      _id: task_id
+      users: user_id
+      "projects_collection.projects_collection_type": 
+        $ne: null
+
+    modifier = 
+      $set: 
+        "projects_collection.is_closed": false
 
     return @tasks_collection.update query, modifier
