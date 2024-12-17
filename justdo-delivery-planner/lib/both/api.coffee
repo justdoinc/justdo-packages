@@ -129,8 +129,9 @@ _.extend JustdoDeliveryPlanner.prototype,
     return
 
   _setupProjectsCollectionTaskType: ->
-    closed_project_collection_prefix = "closed_"
     self = @
+
+    closed_project_collection_prefix = "closed_"
 
     APP.justdo_task_type.registerTaskTypesGenerator "default", "projects-collection-type",
       possible_tags: _.map self.getSupportedProjectsCollectionTypes(), (type_def) -> type_def.type_id
