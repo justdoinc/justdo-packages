@@ -19,7 +19,7 @@ _.extend JustdoDeliveryPlanner,
 
   default_base_project_workdays: [0, 1, 1, 1, 1, 1, 0]
 
-  is_projects_collection_enabled: false
+  is_projects_collection_enabled: true
   projects_collections_types: [
     {
       type_id: "projects_collection"
@@ -35,19 +35,24 @@ _.extend JustdoDeliveryPlanner,
 
       type_icon: { # The type icon is used for the - set as Projects Collection, on-grid indicator, the tab switcher dropdown, and other places where we refer to the Project Collection type.
         type: "feather"
-        val: "jd-ai"
-        class: "ai-icon"
-      },
-      close_op_icon: { # Will appear next to the context menu operation for closing. Note that the closed state is the faded type_icon, this is for the action of closing
-        type: "feather"
-        val: "jd-ai"
-        class: "ai-icon"
+        val: "book-open"
+        class: ""
       },
       unset_op_icon: { # Will appear next to the context menu operation for unsetting a Project Collection.
         type: "feather"
-        val: "jd-ai"
-        class: "ai-icon"
+        val: "x-square"
+        class: ""
       }
+      close_op_icon: { # Will appear next to the context menu operation for closing. Note that the closed state is the faded type_icon, this is for the action of closing
+        type: "feather"
+        val: "book-open"
+        class: "closed-projects-collection"
+      },
+      reopen_op_icon: { # Will appear next to the context menu operation for reopening.
+        type: "feather"
+        val: "book-open"
+        class: ""
+      },
 
       onGridClick: -> # This will be called when the user clicks on the Projects Collection on-grid indicator
         console.log "onGridClick projects_collection"
@@ -71,18 +76,23 @@ _.extend JustdoDeliveryPlanner,
 
       type_icon: { # The type icon is used for the - set as Projects Collection, on-grid indicator, the tab switcher dropdown, and other places where we refer to the Project Collection type.
         type: "feather"
-        val: "jd-ai"
-        class: "ai-icon"
-      },
-      close_op_icon: { # Will appear next to the context menu operation for closing. Note that the closed state is the faded type_icon, this is for the action of closing
-        type: "feather"
-        val: "jd-ai"
-        class: "ai-icon"
+        val: "file"
+        class: ""
       },
       unset_op_icon: { # Will appear next to the context menu operation for unsetting a Project Collection.
         type: "feather"
-        val: "jd-ai"
-        class: "ai-icon"
+        val: "file-minus"
+        class: ""
+      },
+      close_op_icon: { # Will appear next to the context menu operation for closing. Note that the closed state is the faded type_icon, this is for the action of closing
+        type: "feather"
+        val: "file"
+        class: "closed-projects-collection"
+      },
+      reopen_op_icon: { # Will appear next to the context menu operation for reopening.
+        type: "feather"
+        val: "file"
+        class: ""
       },
 
       onGridClick: -> # This will be called when the user clicks on the Projects Collection on-grid indicator
