@@ -90,8 +90,10 @@ _.extend JustdoDeliveryPlanner.prototype,
       _id: task_id
       users: user_id      
     modifier = 
-      $unset: 
-        projects_collection: 1
+      # Note: We set the projects_collection field to an empty object instead of using $unset
+      # because $unset will set projects_collection as null, which interferes with setTaskProjectCollectionType.
+      $set: 
+        projects_collection: {}
           
     return @tasks_collection.update query, modifier
   
