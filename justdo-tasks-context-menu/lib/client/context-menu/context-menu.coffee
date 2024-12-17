@@ -229,7 +229,7 @@ Template.tasks_context_menu_icon.helpers
   getIconClass: ->
     tpl = Template.instance()
     icon_class = ["text-secondary"]
-    if not _.isEmpty @icon_class
+    if not _.isEmpty(@icon_class) or _.isFunction @icon_class
       icon_class = @icon_class
   
     if _.isFunction icon_class
@@ -237,8 +237,6 @@ Template.tasks_context_menu_icon.helpers
       icon_class = icon_class.apply(@, call_args)
     if _.isString icon_class
       icon_class = [icon_class]
-    if _.isArray icon_class
-      icon_class = icon_class
 
     return icon_class.join " "
 
