@@ -96,7 +96,7 @@ _.extend JustdoDeliveryPlanner.prototype,
             tab_id: "jdp-projects-collection"
 
             icon_type: "feather"
-            icon_val: projects_collection_type.feather_icon
+            icon_val: projects_collection_type.type_icon.val
 
             tab_sections_state:
               global:
