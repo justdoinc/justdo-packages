@@ -75,7 +75,7 @@ _.extend JustdoDeliveryPlanner.prototype,
             grid_control_options: gcOpsGen(
               [
                 {
-                  id: "projects-collection"
+                  id: "main"
                   section_manager: "QuerySection"
                   options:
                     permitted_depth: -1
