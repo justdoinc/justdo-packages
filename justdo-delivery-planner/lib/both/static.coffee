@@ -19,7 +19,7 @@ _.extend JustdoDeliveryPlanner,
 
   default_base_project_workdays: [0, 1, 1, 1, 1, 1, 0]
 
-  is_projects_collection_enabled: true
+  is_projects_collection_enabled: false
   projects_collections_types: [
     {
       type_id: "projects_collection"
@@ -47,6 +47,14 @@ _.extend JustdoDeliveryPlanner,
         val: "jd-ai"
         class: "ai-icon"
       }
+
+      onGridClick: -> # This will be called when the user clicks on the Projects Collection on-grid indicator
+        console.log "onGridClick projects_collection"
+        return
+
+      onGridProjectClick: -> # This will be called when the user clicks on a project that is under this projects collection
+        console.log "onGridProjectClick projects_collection"
+        return
     },
     {
       type_id: "pseudo_department_type_for_testing"
@@ -73,7 +81,17 @@ _.extend JustdoDeliveryPlanner,
         type: "feather"
         val: "jd-ai"
         class: "ai-icon"
-      }
+      },
+
+      onGridClick: -> # This will be called when the user clicks on the Projects Collection on-grid indicator
+        console.log "onGridClick department"
+
+        return
+
+      onGridProjectClick: -> # This will be called when the user clicks on a project that is under this projects collection
+        console.log "onGridProjectClick department"
+
+        return
     }
   ]
   projects_collection_default_fields_to_fetch: 
