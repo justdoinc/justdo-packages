@@ -168,16 +168,30 @@ _.extend PACK.Formatters.textWithTreeControls,
         return
     }
     {
+      args: ['click', '.task-is-projects-collection']
+      handler: (e) ->
+        if APP.justdo_delivery_planner.isProjectsCollectionEnabled()
+          event_item = @getEventItem(e)
+          
+          if (projects_collection_type_id = APP.justdo_delivery_planner.getTaskObjProjectsCollectionTypeId(event_item))?
+            projects_collection_type_def = APP.justdo_delivery_planner.getProjectsCollectionTypeById(projects_collection_type_id)=
+            projects_collection_type_def.onGridClick?.call @, e, event_item
+
+    }
+    {
       args: ['click', '.task-is-project']
       handler: (e) ->
-        openTaskPaneAndSetTab("justdo-delivery-planner")
-
-        APP.justdo_delivery_planner.taskPaneSectionSetCurrentTab("project")
-
-        # Update task pane
-        Tracker.flush()
-
-        $(".task-pane-content").scrollTop(0)
+        if APP.justdo_delivery_planner.isProjectsCollectionEnabled()
+          event_item = @getEventItem(e)
+          event_path = @getEventPath(e)
+          event_parent_item_id = GridData.helpers.getPathParentId(event_path)
+          event_parent_item = APP.collections.Tasks.findOne(event_parent_item_id, {fields: {projects_collection: 1}})
+          
+          if (parent_projects_collection_type_id = APP.justdo_delivery_planner.getTaskObjProjectsCollectionTypeId(event_parent_item))?
+            parent_projects_collection_type_def = APP.justdo_delivery_planner.getProjectsCollectionTypeById(parent_projects_collection_type_id)
+            parent_projects_collection_type_def.onGridProjectClick?.call @, e, event_item, event_parent_item
+          
+        return
     }
     {
       args: ['click', '.resource_planner']

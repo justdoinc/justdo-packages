@@ -19,7 +19,7 @@ _.extend JustdoDeliveryPlanner,
 
   default_base_project_workdays: [0, 1, 1, 1, 1, 1, 0]
 
-  is_projects_collection_enabled: true
+  is_projects_collection_enabled: false
   projects_collections_types: [
     {
       type_id: "projects_collection"
@@ -54,12 +54,14 @@ _.extend JustdoDeliveryPlanner,
         class: ""
       },
 
-      onGridClick: -> # This will be called when the user clicks on the Projects Collection on-grid indicator
+      onGridClick: (e, event_item) -> # This will be called when the user clicks on the Projects Collection on-grid indicator
         console.log "onGridClick projects_collection"
+        console.log {e, event_item}
         return
 
-      onGridProjectClick: -> # This will be called when the user clicks on a project that is under this projects collection
+      onGridProjectClick: (e, event_item, event_parent_item) -> # This will be called when the user clicks on a project that is under this projects collection
         console.log "onGridProjectClick projects_collection"
+        console.log {e, event_item, event_parent_item}
         return
     },
     {
@@ -95,13 +97,15 @@ _.extend JustdoDeliveryPlanner,
         class: ""
       },
 
-      onGridClick: -> # This will be called when the user clicks on the Projects Collection on-grid indicator
+      onGridClick: (e, event_item) -> # This will be called when the user clicks on the Projects Collection on-grid indicator
         console.log "onGridClick department"
+        console.log {e, event_item}
 
         return
 
-      onGridProjectClick: -> # This will be called when the user clicks on a project that is under this projects collection
+      onGridProjectClick: (e, event_item, event_parent_item) -> # This will be called when the user clicks on a project that is under this projects collection
         console.log "onGridProjectClick department"
+        console.log {e, event_item, event_parent_item}
 
         return
     }
