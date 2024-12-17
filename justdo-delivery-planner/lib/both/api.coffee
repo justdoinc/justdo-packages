@@ -6,7 +6,8 @@ _.extend JustdoDeliveryPlanner.prototype,
     # tick in which we create the object instance.
 
     @setupRouter()
-    @_setupCustomFeatures()
+    if @isProjectsCollectionEnabled()
+      @_setupProjectsCollectionFeatures()
 
     return
 
@@ -110,15 +111,8 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     return _.find @getSupportedProjectsCollectionTypes(), (type) -> type.type_id is type_id
 
-  isProjectsCollectionTypeIdSupported: (type_id) ->
-    return @getProjectsCollectionTypeById(type_id)?
-
   getTaskObjProjectsCollectionTypeId: (task_obj) ->
-    type_id = task_obj?.projects_collection?.projects_collection_type
-    if not @isProjectsCollectionTypeIdSupported type_id
-      return
-    
-    return type_id
+    return  task_obj?.projects_collection?.projects_collection_type
 
   isProjectsCollectionClosed: (task_obj) ->
     if not @getTaskObjProjectsCollectionTypeId(task_obj)?
@@ -126,18 +120,15 @@ _.extend JustdoDeliveryPlanner.prototype,
     
     return task_obj?.projects_collection?.is_closed
 
-  _setupCustomFeatures: ->
-    if not @isProjectsCollectionEnabled()
-      return
-
-    @_setupTaskType()
+  _setupProjectsCollectionFeatures: ->
+    @_setupProjectsCollectionTaskType()
 
     if Meteor.isClient
-      @_setupContextmenu()
+      @_setupProjectsCollectionContextmenu()
         
     return
 
-  _setupTaskType: ->
+  _setupProjectsCollectionTaskType: ->
     closed_project_collection_prefix = "closed_"
     self = @
 
@@ -268,7 +259,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     
     return @tasks_collection.find(query, query_options)
   
-  getProjectsCollectionOfProjectCursorOptionsSchema: new SimpleSchema
+  getProjectsCollectionsOfProjectCursorOptionsSchema: new SimpleSchema
     include_closed:
       type: Boolean
       optional: true
@@ -281,7 +272,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       optional: true
       blackbox: true
       defaultValue: JustdoDeliveryPlanner.projects_collection_default_fields_to_fetch
-  getProjectsCollectionOfProjectCursor: (justdo_id, project_id, options, user_id) ->
+  getProjectsCollectionsOfProjectCursor: (justdo_id, project_id, options, user_id) ->
     check justdo_id, String
     check project_id, String
     if not user_id?
@@ -290,7 +281,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
-        @getProjectsCollectionOfProjectCursorOptionsSchema,
+        @getProjectsCollectionsOfProjectCursorOptionsSchema,
         options,
         {self: @, throw_on_error: true}
       )

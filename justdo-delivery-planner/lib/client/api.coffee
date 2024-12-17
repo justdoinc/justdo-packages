@@ -163,7 +163,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     return project_tasks
 
-  _setupContextmenu: ->
+  _setupProjectsCollectionContextmenu: ->
     self = @
 
     position = 110
