@@ -7,6 +7,8 @@ _.extend JustdoProjectPane.prototype,
 
     @_last_applied_state = undefined
 
+    @_full_screen_rv = new ReactiveVar false
+
     @_pane_state_tracker = undefined
     @_setupPaneUpdater()
 
@@ -206,20 +208,26 @@ _.extend JustdoProjectPane.prototype,
     else
       window_height =
         APP.modules.main.real_window_dim.get().height # Note, this is a reactive resource
+      
+      # Note: Full screen support is implemented here instead of get/setUserPreferredPaneState
+      # because we don't want to store the full screen state in the user's preferences.
+      if @_full_screen_rv.get()
+        state.full_screen = true
+        state.expand_height = window_height
+      else
+        min_height = JustdoProjectPane.min_expanded_height
+        max_height = Math.floor(Math.min(window_height * .8, window_height - 55))
 
-      min_height = JustdoProjectPane.min_expanded_height
-      max_height = Math.floor(Math.min(window_height * .8, window_height - 55))
+        if max_height < min_height
+          state.is_expanded = false
 
-      if max_height < min_height
-        state.is_expanded = false
+          delete state.expand_height
 
-        delete state.expand_height
+        if state.expand_height < min_height
+          state.expand_height = min_height
 
-      if state.expand_height < min_height
-        state.expand_height = min_height
-
-      if state.expand_height > max_height
-        state.expand_height = max_height
+        if state.expand_height > max_height
+          state.expand_height = max_height
 
     return state
 
@@ -316,3 +324,10 @@ _.extend JustdoProjectPane.prototype,
   collapse: -> @setUserPreferredPaneState({is_expanded: false})
 
   setHeight: (height) -> @setUserPreferredPaneState({expand_height: height})
+
+  isFullScreen: -> @_full_screen_rv.get()
+
+  toggleFullScreen: -> 
+    cur_state = Tracker.nonreactive => @_full_screen_rv.get()
+    @_full_screen_rv.set not cur_state
+    return

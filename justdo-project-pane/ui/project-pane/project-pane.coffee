@@ -33,7 +33,11 @@ Template.justdo_project_pane_expanded_header.helpers
 
   getActiveTabId: -> APP.justdo_project_pane.getActiveTabId()
 
+  isFullScreen: -> APP.justdo_project_pane.isFullScreen()
+
 Template.justdo_project_pane_expanded_header.events
   "click .project-pane-tab": (e) -> APP.justdo_project_pane.setActiveTab $(e.target).attr("tab-id")
 
   "click .justdo-project-pane-close": (e) -> APP.justdo_project_pane.collapse()
+
+  "click .justdo-project-pane-toggle-full-screen": (e) -> APP.justdo_project_pane.toggleFullScreen()
