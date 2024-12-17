@@ -76,12 +76,6 @@ _.extend JustdoDeliveryPlanner.prototype,
     query = 
       _id: task_id
       users: user_id
-    query_options = 
-      fields:
-        _id: 1
-    if not (task_doc = @tasks_collection.findOne(query, query_options))?
-      throw @_error("invalid-argument", "Task does not exist or user does not have access to it")
-      
     modifier = 
       $set: 
         "projects_collection.projects_collection_type": type_id 
@@ -94,13 +88,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     query = 
       _id: task_id
-      users: user_id
-    query_options = 
-      fields:
-        _id: 1
-    if not (task_doc = @tasks_collection.findOne(query, query_options))?
-      throw @_error("invalid-argument", "Task does not exist or user does not have access to it")
-      
+      users: user_id      
     modifier = 
       $unset: 
         projects_collection: 1
@@ -116,7 +104,6 @@ _.extend JustdoDeliveryPlanner.prototype,
       users: user_id
       "projects_collection.projects_collection_type": 
         $ne: null
-
     modifier = 
       $set: 
         "projects_collection.is_closed": true
