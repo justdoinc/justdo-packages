@@ -103,7 +103,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       
     modifier = 
       $unset: 
-        "projects_collection.projects_collection_type": 1
+        projects_collection: 1
           
     return @tasks_collection.update query, modifier
 
