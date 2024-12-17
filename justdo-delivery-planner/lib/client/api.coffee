@@ -169,6 +169,8 @@ _.extend JustdoDeliveryPlanner.prototype,
     APP.justdo_tasks_context_menu.registerSectionItem "projects", "unset-unknown-projects-collection",
       position: 109
       data:
+        icon_type: "feather"
+        icon_val: "x-circle"
         label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) -> 
           i18n_data = 
             label_i18n: "projects_collection_unset_unknown_type_label"
