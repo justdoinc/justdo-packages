@@ -393,14 +393,27 @@ GridControl.installFormatter "textWithTreeControls",
         """
 
     if @getCurrentColumnData("delivery_planner_plugin_enabled")
-      if (projects_collection_type_id = APP.justdo_delivery_planner.getTaskObjProjectsCollectionTypeId doc)?
+      if APP.justdo_delivery_planner.isProjectsCollectionEnabled() and (projects_collection_type_id = APP.justdo_delivery_planner.getTaskObjProjectsCollectionTypeId doc)?
         projects_collection_type = APP.justdo_delivery_planner.getProjectsCollectionTypeById(projects_collection_type_id)
+        is_closed = APP.justdo_delivery_planner.isProjectsCollectionClosed doc
 
         if projects_collection_type?
+          label = projects_collection_type.type_label_i18n
+          icon_val = projects_collection_type.type_icon.val
+          icon_class = projects_collection_type.type_icon.class
+          if is_closed
+            label = projects_collection_type.closed_label_i18n
+            icon_val = projects_collection_type.close_op_icon.val
+            icon_class = projects_collection_type.close_op_icon.class
+          if _.isString icon_class
+            icon_class = [icon_class]
+          if _.isArray icon_class
+            icon_class = icon_class.join(" ")
+
           tree_control += """
-            <svg class="jd-icon jd-icon-projects-collection-type ongrid-jd-icon text-secondary slick-prevent-edit">
-              <title>#{TAPi18n.__ projects_collection_type.type_label_i18n}</title>
-              <use xlink:href="/layout/icons-feather-sprite.svg##{projects_collection_type.feather_icon}" class="slick-prevent-edit"></use>
+            <svg class="jd-icon jd-icon-projects-collection-type task-is-projects-collection ongrid-jd-icon slick-prevent-edit #{icon_class}">
+              <title>#{TAPi18n.__ label}</title>
+              <use xlink:href="/layout/icons-feather-sprite.svg##{icon_val}" class="slick-prevent-edit"></use>
             </svg>
           """
 
