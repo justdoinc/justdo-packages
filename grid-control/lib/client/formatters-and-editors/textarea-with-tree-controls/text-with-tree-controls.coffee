@@ -409,13 +409,17 @@ GridControl.installFormatter "textWithTreeControls",
             icon_class = [icon_class]
           if _.isArray icon_class
             icon_class = icon_class.join(" ")
+        else
+          label = "projects_collection_unknown_type_label"
+          icon_val = "help-circle"
+          icon_class = ""
 
-          tree_control += """
-            <svg class="jd-icon jd-icon-projects-collection-type task-is-projects-collection ongrid-jd-icon slick-prevent-edit #{icon_class}">
-              <title>#{TAPi18n.__ label}</title>
-              <use xlink:href="/layout/icons-feather-sprite.svg##{icon_val}" class="slick-prevent-edit"></use>
-            </svg>
-          """
+        tree_control += """
+          <svg class="jd-icon jd-icon-projects-collection-type task-is-projects-collection ongrid-jd-icon slick-prevent-edit #{icon_class}">
+            <title>#{TAPi18n.__ label}</title>
+            <use xlink:href="/layout/icons-feather-sprite.svg##{icon_val}" class="slick-prevent-edit"></use>
+          </svg>
+        """
 
       if (is_project = doc["p:dp:is_project"])?
         is_archived_project = doc["p:dp:is_archived_project"]

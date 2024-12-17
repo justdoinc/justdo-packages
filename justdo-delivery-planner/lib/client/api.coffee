@@ -166,6 +166,29 @@ _.extend JustdoDeliveryPlanner.prototype,
   _setupProjectsCollectionContextmenu: ->
     self = @
 
+    APP.justdo_tasks_context_menu.registerSectionItem "projects", "unset-unknown-projects-collection",
+      position: 109
+      data:
+        label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) -> 
+          i18n_data = 
+            label_i18n: "projects_collection_unset_unknown_type_label"
+            options_i18n: {}
+          return TAPi18n.__ i18n_data.label_i18n, i18n_data.options_i18n, JustdoI18n.default_lang
+        label_i18n: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          i18n_data = 
+            label_i18n: "projects_collection_unset_unknown_type_label"
+            options_i18n: {}
+          return i18n_data
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) =>
+          self.unsetTaskProjectCollectionType task_id
+          return 
+      listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+        is_allowed_by_permissions = APP.justdo_permissions.checkTaskPermissions("task-field-edit.projects_collection.projects_collection_type", task_id)
+        is_task_project = self.isTaskObjProject dependencies_fields_vals
+        task_projects_collection_type_id = self.getTaskObjProjectsCollectionTypeId(dependencies_fields_vals)
+        is_type_not_recognized = not self.getProjectsCollectionTypeById(task_projects_collection_type_id)?
+        return is_allowed_by_permissions and (not is_task_project) and is_type_not_recognized
+
     position = 110
     for projects_collection_type in @getSupportedProjectsCollectionTypes()
       do (projects_collection_type) =>

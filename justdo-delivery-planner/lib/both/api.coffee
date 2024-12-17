@@ -151,18 +151,21 @@ _.extend JustdoDeliveryPlanner.prototype,
       propertiesGenerator: (type_id) -> 
         is_closed = type_id.startsWith closed_project_collection_prefix
         type_id = type_id.replace closed_project_collection_prefix, ""
-        type_def = self.getProjectsCollectionTypeById type_id
-
-        type_label_i18n = type_def.type_label_i18n
-        if is_closed
-          type_label_i18n = type_def.closed_label_i18n
+        if (type_def = self.getProjectsCollectionTypeById type_id)?
+          type_label_i18n = type_def.type_label_i18n
+          if is_closed
+            type_label_i18n = type_def.closed_label_i18n
+        else
+          type_label_i18n = "projects_collection_unknown_type_label"
           
         type_properties = 
           text: TAPi18n.__ type_label_i18n, {}, JustdoI18n.default_lang
           text_i18n: type_label_i18n
           filter_list_order: 1
+          bg_color: if not type_def? then "#f0f0f0" else null
           customFilterQuery: (filter_state_id, column_state_definitions, context) ->
             return {"projects_collection.projects_collection_type": type_id}
+
         return type_properties
 
     return

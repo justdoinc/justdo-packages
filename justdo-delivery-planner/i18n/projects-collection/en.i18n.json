@@ -1,6 +1,6 @@
 {
-  "projects_collection_tab_title_generator_title": "Projects Collections",
-  "projects_collection_grid_view_section_title": "Projects Collections",
+  "projects_collection_unknown_type_label": "Unrecognized Projects Collection type",
+  "projects_collection_unset_unknown_type_label": "Unset as an Unrecognized Projects Collection",
 
   "projects_collection_default_type_label": "Projects Collection",
   "projects_collection_default_type_label_plural": "Projects Collections",
