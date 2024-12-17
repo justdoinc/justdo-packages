@@ -228,7 +228,9 @@ Template.tasks_context_menu_label_content.helpers
 Template.tasks_context_menu_icon.helpers
   getIconClass: ->
     tpl = Template.instance()
-    icon_class = @icon_class or ["text-secondary"]
+    icon_class = ["text-secondary"]
+    if not _.isEmpty @icon_class
+      icon_class = @icon_class
   
     if _.isFunction icon_class
       call_args = [@].concat(tpl.closestInstance("tasks_context_menu").tasks_context_menu_controller._sectionsAndItemsReactiveItemsListListingConditionCustomArgsGenerator())
