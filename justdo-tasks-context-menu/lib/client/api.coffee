@@ -390,8 +390,7 @@ _.extend JustdoTasksContextMenu.prototype,
           type: "skip-type-check"
         icon_class:
           optional: true
-          type: Match.OneOf String, [String]
-          defaultValue: "text-secondary"
+          type: "skip-type-check"
         close_on_click:
           optional: true
           type: Boolean

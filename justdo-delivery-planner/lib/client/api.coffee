@@ -204,9 +204,12 @@ _.extend JustdoDeliveryPlanner.prototype,
             icon_type: "feather"
             icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
               if task_id? and (self.getTaskObjProjectsCollectionTypeId(dependencies_fields_vals) is type_id)
-                # XXX this should return unset icon after the icon is ready
-                return projects_collection_type.feather_icon
-              return projects_collection_type.feather_icon
+                return projects_collection_type.unset_op_icon.val
+              return projects_collection_type.type_icon.val
+            icon_class: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+              if task_id? and (self.getTaskObjProjectsCollectionTypeId(dependencies_fields_vals) is type_id)
+                return projects_collection_type.unset_op_icon.class
+              return projects_collection_type.type_icon.class
           listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
             is_allowed_by_permissions = APP.justdo_permissions.checkTaskPermissions("task-field-edit.projects_collection.projects_collection_type", task_id)
             is_task_project = self.isTaskObjProject dependencies_fields_vals
@@ -245,6 +248,7 @@ _.extend JustdoDeliveryPlanner.prototype,
               return 
             icon_type: "feather"
             icon_val: "folder"
+              if task_id? and is_closed
           listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
             is_allowed_by_permissions = APP.justdo_permissions?.checkTaskPermissions("task-field-edit.projects_collection.is_closed", task_id)
             is_task_projects_collection = self.getTaskObjProjectsCollectionTypeId(dependencies_fields_vals)?
