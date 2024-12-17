@@ -187,7 +187,7 @@ _.extend JustdoDeliveryPlanner.prototype,
         is_task_project = self.isTaskObjProject dependencies_fields_vals
         task_projects_collection_type_id = self.getTaskObjProjectsCollectionTypeId(dependencies_fields_vals)
         is_type_not_recognized = not self.getProjectsCollectionTypeById(task_projects_collection_type_id)?
-        return is_allowed_by_permissions and (not is_task_project) and is_type_not_recognized
+        return is_allowed_by_permissions and (not is_task_project) and task_projects_collection_type_id? and is_type_not_recognized
 
     position = 110
     for projects_collection_type in @getSupportedProjectsCollectionTypes()
