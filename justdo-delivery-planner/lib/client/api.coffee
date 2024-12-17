@@ -247,8 +247,16 @@ _.extend JustdoDeliveryPlanner.prototype,
                 self.closeProjectsCollection task_id
               return 
             icon_type: "feather"
-            icon_val: "folder"
+            icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+              is_closed = self.isProjectsCollectionClosed dependencies_fields_vals
               if task_id? and is_closed
+                return projects_collection_type.reopen_op_icon.val
+              return projects_collection_type.close_op_icon.val
+            icon_class: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+              is_closed = self.isProjectsCollectionClosed dependencies_fields_vals
+              if task_id? and is_closed
+                return projects_collection_type.reopen_op_icon.class
+              return projects_collection_type.close_op_icon.class
           listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
             is_allowed_by_permissions = APP.justdo_permissions?.checkTaskPermissions("task-field-edit.projects_collection.is_closed", task_id)
             is_task_projects_collection = self.getTaskObjProjectsCollectionTypeId(dependencies_fields_vals)?
