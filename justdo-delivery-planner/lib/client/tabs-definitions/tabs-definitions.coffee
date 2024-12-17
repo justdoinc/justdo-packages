@@ -78,7 +78,7 @@ _.extend JustdoDeliveryPlanner.prototype,
                   id: "main"
                   section_manager: "QuerySection"
                   options:
-                    permitted_depth: -1
+                    permitted_depth: 0
                     expanded_on_init: true
                   section_manager_options:
                     query: ->
