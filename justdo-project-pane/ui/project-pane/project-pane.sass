@@ -24,9 +24,6 @@ $project-pane-border-top: 1px solid #c0c0c0
       height: 2px
       background: #C0C0C0
       position: absolute
-  .justdo-project-pane-close
-    .jd-icon:hover
-      background-color: unset
 
 $project-pane-header-height: 30px // Important! if you change this one, search the entire code for other places in which it is set
 .justdo-project-pane-header
@@ -58,6 +55,9 @@ $project-pane-header-height: 30px // Important! if you change this one, search t
         visibility: visible
         opacity: 1
 
+  .project-pane-divider
+    border-right: 1px solid #dee2e6
+    margin: 4px 0px
 
   .active-tab-bottom-border
     position: absolute
