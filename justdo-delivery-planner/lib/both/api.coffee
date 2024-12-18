@@ -146,29 +146,30 @@ _.extend JustdoDeliveryPlanner.prototype,
     filter_list_order += 1
 
     for collection_type_def in self.getSupportedProjectsCollectionTypes()
-      type_id = collection_type_def.type_id
+      do (collection_type_def, filter_list_order) ->
+        type_id = collection_type_def.type_id
 
-      tags_properties[type_id] =
-        text: TAPi18n.__ collection_type_def.type_label_i18n, {}, JustdoI18n.default_lang
-        text_i18n: collection_type_def.type_label_i18n
-        filter_list_order: filter_list_order
-        bg_color: null
-        customFilterQuery: (filter_state_id, column_state_definitions, context) ->
-          return {"projects_collection.projects_collection_type": filter_state_id, "projects_collection.is_closed": {$ne: true}}
-      
-      filter_list_order += 1
+        tags_properties[type_id] =
+          text: TAPi18n.__ collection_type_def.type_label_i18n, {}, JustdoI18n.default_lang
+          text_i18n: collection_type_def.type_label_i18n
+          filter_list_order: filter_list_order
+          bg_color: null
+          customFilterQuery: (filter_state_id, column_state_definitions, context) ->
+            return {"projects_collection.projects_collection_type": type_id, "projects_collection.is_closed": {$ne: true}}
+        
+        filter_list_order += 1
 
-      tags_properties["#{closed_project_collection_prefix}#{type_id}"] =
-        text: TAPi18n.__ collection_type_def.closed_label_i18n, {}, JustdoI18n.default_lang
-        text_i18n: collection_type_def.closed_label_i18n
-        filter_list_order: filter_list_order
-        bg_color: null
-        is_conditional: true
-        customFilterQuery: (filter_state_id, column_state_definitions, context) ->
-          filter_state_id = filter_state_id.replace closed_project_collection_prefix, ""
-          return {"projects_collection.projects_collection_type": filter_state_id, "projects_collection.is_closed": true}
-      
-      filter_list_order += 1 
+        tags_properties["#{closed_project_collection_prefix}#{type_id}"] =
+          text: TAPi18n.__ collection_type_def.closed_label_i18n, {}, JustdoI18n.default_lang
+          text_i18n: collection_type_def.closed_label_i18n
+          filter_list_order: filter_list_order
+          bg_color: null
+          is_conditional: true
+          customFilterQuery: (filter_state_id, column_state_definitions, context) ->
+            type_id_without_closed_prefix = type_id.replace closed_project_collection_prefix, ""
+            return {"projects_collection.projects_collection_type": type_id_without_closed_prefix, "projects_collection.is_closed": true}
+        
+        filter_list_order += 1 
 
     possible_tags = []
     conditional_tags = []
