@@ -206,7 +206,7 @@ _.extend JustdoDeliveryPlanner.prototype,
                 options_i18n: {}
 
               task_projects_collection_type_id = self.getTaskObjProjectsCollectionTypeId dependencies_fields_vals
-              if task_id? and (task_projects_collection_type_id is type_id)
+              if task_projects_collection_type_id is type_id
                 i18n_data.label_i18n = projects_collection_type.unset_as_i18n
 
               return TAPi18n.__ i18n_data.label_i18n, i18n_data.options_i18n, JustdoI18n.default_lang
@@ -216,7 +216,7 @@ _.extend JustdoDeliveryPlanner.prototype,
                 options_i18n: {}
 
               task_projects_collection_type_id = self.getTaskObjProjectsCollectionTypeId dependencies_fields_vals
-              if task_id? and (task_projects_collection_type_id is type_id)
+              if task_projects_collection_type_id is type_id
                 i18n_data.label_i18n = projects_collection_type.unset_as_i18n
 
               return i18n_data
@@ -228,11 +228,11 @@ _.extend JustdoDeliveryPlanner.prototype,
               return 
             icon_type: "feather"
             icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-              if task_id? and (self.getTaskObjProjectsCollectionTypeId(dependencies_fields_vals) is type_id)
+              if self.getTaskObjProjectsCollectionTypeId(dependencies_fields_vals) is type_id
                 return projects_collection_type.unset_op_icon.val
               return projects_collection_type.type_icon.val
             icon_class: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-              if task_id? and (self.getTaskObjProjectsCollectionTypeId(dependencies_fields_vals) is type_id)
+              if self.getTaskObjProjectsCollectionTypeId(dependencies_fields_vals) is type_id
                 return projects_collection_type.unset_op_icon.class
               return projects_collection_type.type_icon.class
           listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
@@ -252,7 +252,7 @@ _.extend JustdoDeliveryPlanner.prototype,
                 label_i18n: projects_collection_type.close_i18n
                 options_i18n: {}
 
-              if task_id? and self.isProjectsCollectionClosed dependencies_fields_vals
+              if self.isProjectsCollectionClosed dependencies_fields_vals
                 i18n_data.label_i18n = projects_collection_type.reopen_i18n
 
               return TAPi18n.__ i18n_data.label_i18n, i18n_data.options_i18n, JustdoI18n.default_lang 
@@ -261,7 +261,7 @@ _.extend JustdoDeliveryPlanner.prototype,
                 label_i18n: projects_collection_type.close_i18n
                 options_i18n: {}
 
-              if task_id? and self.isProjectsCollectionClosed dependencies_fields_vals
+              if self.isProjectsCollectionClosed dependencies_fields_vals
                 i18n_data.label_i18n = projects_collection_type.reopen_i18n
 
               return i18n_data
@@ -274,12 +274,12 @@ _.extend JustdoDeliveryPlanner.prototype,
             icon_type: "feather"
             icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
               is_closed = self.isProjectsCollectionClosed dependencies_fields_vals
-              if task_id? and is_closed
+              if is_closed
                 return projects_collection_type.reopen_op_icon.val
               return projects_collection_type.close_op_icon.val
             icon_class: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
               is_closed = self.isProjectsCollectionClosed dependencies_fields_vals
-              if task_id? and is_closed
+              if is_closed
                 return projects_collection_type.reopen_op_icon.class
               return projects_collection_type.close_op_icon.class
           listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
