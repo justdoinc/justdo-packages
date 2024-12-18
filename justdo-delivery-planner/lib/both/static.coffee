@@ -19,7 +19,7 @@ _.extend JustdoDeliveryPlanner,
 
   default_base_project_workdays: [0, 1, 1, 1, 1, 1, 0]
 
-  is_projects_collection_enabled: false
+  is_projects_collection_enabled: true
   projects_collections_types: [
     {
       type_id: "projects_collection"
@@ -35,22 +35,22 @@ _.extend JustdoDeliveryPlanner,
 
       type_icon: { # The type icon is used for the - set as Projects Collection, on-grid indicator, the tab switcher dropdown, and other places where we refer to the Project Collection type.
         type: "feather"
-        val: "book-open"
+        val: "folder"
         class: ""
       },
       unset_op_icon: { # Will appear next to the context menu operation for unsetting a Project Collection.
         type: "feather"
-        val: "x-square"
+        val: "jd-folder-unset"
         class: ""
       }
       close_op_icon: { # Will appear next to the context menu operation for closing. Note that the closed state is the faded type_icon, this is for the action of closing
         type: "feather"
-        val: "book-open"
+        val: "jd-folder-close"
         class: "closed-projects-collection"
       },
       reopen_op_icon: { # Will appear next to the context menu operation for reopening.
         type: "feather"
-        val: "book-open"
+        val: "folder"
         class: ""
       },
 
@@ -78,22 +78,22 @@ _.extend JustdoDeliveryPlanner,
 
       type_icon: { # The type icon is used for the - set as Projects Collection, on-grid indicator, the tab switcher dropdown, and other places where we refer to the Project Collection type.
         type: "feather"
-        val: "file"
+        val: "folder"
         class: ""
       },
       unset_op_icon: { # Will appear next to the context menu operation for unsetting a Project Collection.
         type: "feather"
-        val: "file-minus"
+        val: "jd-folder-unset"
         class: ""
       },
       close_op_icon: { # Will appear next to the context menu operation for closing. Note that the closed state is the faded type_icon, this is for the action of closing
         type: "feather"
-        val: "file"
+        val: "jd-folder-close"
         class: "closed-projects-collection"
       },
       reopen_op_icon: { # Will appear next to the context menu operation for reopening.
         type: "feather"
-        val: "file"
+        val: "folder"
         class: ""
       },
 
@@ -110,5 +110,5 @@ _.extend JustdoDeliveryPlanner,
         return
     }
   ]
-  projects_collection_default_fields_to_fetch: 
+  projects_collection_default_fields_to_fetch:
     _id: 1

@@ -740,8 +740,8 @@ _.extend JustdoTasksContextMenu.prototype,
           icon_type: "feather"
           icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
             if task_id? and APP.justdo_delivery_planner.isTaskObjProject(APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "#{JustdoDeliveryPlanner.task_is_project_field_name}": 1}}))
-              return "jd-folder-unset"
-            return "folder"
+              return "jd-briefcase-unset"
+            return "briefcase"
         listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           is_allowed_by_permissions = APP.justdo_permissions?.checkTaskPermissions("task-field-edit.p:dp:is_project", task_id)
 
@@ -767,9 +767,13 @@ _.extend JustdoTasksContextMenu.prototype,
               return "close_project_label"
           op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
             APP.justdo_delivery_planner.toggleTaskArchivedProjectState task_id
-            return 
+            return
           icon_type: "feather"
-          icon_val: "folder"
+          icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+            if dependencies_fields_vals?[JustdoDeliveryPlanner.task_is_archived_project_field_name]
+              return "briefcase"
+            else
+              return "jd-briefcase-close"
         listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           return APP.justdo_permissions?.checkTaskPermissions("task-field-edit.p:dp:is_archived_project", task_id) and
                     dependencies_fields_vals?[JustdoDeliveryPlanner.task_is_project_field_name] is true

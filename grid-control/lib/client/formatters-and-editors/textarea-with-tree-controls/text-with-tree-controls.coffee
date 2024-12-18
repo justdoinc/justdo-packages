@@ -426,7 +426,10 @@ GridControl.installFormatter "textWithTreeControls",
 
         if is_project
           tree_control += """
-              <i class="fa fa-fw fa-briefcase task-is-project #{if is_archived_project then "task-is-archived-project" else ""} slick-prevent-edit" title="#{TAPi18n.__ "tree_control_tooltip_task_is_a_project"}" aria-hidden="true"></i>
+            <svg class="jd-icon task-is-project #{if is_archived_project then "task-is-archived-project" else ""} ongrid-jd-icon slick-prevent-edit #{icon_class}">
+              <title>#{TAPi18n.__ "tree_control_tooltip_task_is_a_project"}</title>
+              <use xlink:href="/layout/icons-feather-sprite.svg##{if is_archived_project then "jd-briefcase-close" else "briefcase"}" class="slick-prevent-edit"></use>
+            </svg>
           """
 
     if @getCurrentColumnData("checklist_plugin_enabled") and not doc._type?
