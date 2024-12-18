@@ -228,7 +228,7 @@ Template.tasks_context_menu_label_content.helpers
 Template.tasks_context_menu_icon.helpers
   getIconClass: ->
     tpl = Template.instance()
-    icon_class = ["text-secondary"]
+    icon_class = []
     if not _.isEmpty(@icon_class) or _.isFunction @icon_class
       icon_class = @icon_class
   
