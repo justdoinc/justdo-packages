@@ -163,6 +163,7 @@ _.extend JustdoDeliveryPlanner.prototype,
         text_i18n: collection_type_def.closed_label_i18n
         filter_list_order: filter_list_order
         bg_color: null
+        is_conditional: true
         customFilterQuery: (filter_state_id, column_state_definitions, context) ->
           filter_state_id = filter_state_id.replace closed_project_collection_prefix, ""
           return {"projects_collection.projects_collection_type": filter_state_id, "projects_collection.is_closed": true}
