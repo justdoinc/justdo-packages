@@ -61,15 +61,12 @@ _.extend JustdoSiteAdmins.prototype,
     return
 
   unsetUsersAsSiteAdmins: (users_ids, performing_user_id) ->
-    # If performing_user_id is null we assume secured source
+    @requireUserIsSiteAdmin(performing_user_id)
 
     if _.isString users_ids
       users_ids = [users_ids]
 
     check users_ids, [String]
-
-    if performing_user_id?
-      @requireUserIsSiteAdmin(performing_user_id)
 
     if _.isEmpty(users_ids)
       return

@@ -1,5 +1,4 @@
 _.extend JustdoSiteAdmins.prototype,
-
   _setupClearServerVitalsLogDbMigration: ->
     APP.executeAfterAppLibCode =>
       common_batched_migration_options =
