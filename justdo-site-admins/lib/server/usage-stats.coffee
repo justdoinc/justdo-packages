@@ -137,9 +137,9 @@ _.extend JustdoSiteAdmins.prototype,
   getServerVitalsSnapshot: (user_id) ->
     @requireUserIsSiteAdmin(user_id)
 
-    return @getServerVitalsSnapshotUserAssumedPermitted(user_id)
+    return @getServerVitalsSnapshotSecureSource()
 
-  getServerVitalsSnapshotUserAssumedPermitted: (user_id) ->
+  getServerVitalsSnapshotSecureSource: ->
     if not @v8?
       @v8 = Npm.require "v8"
     if not @os?

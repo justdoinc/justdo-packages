@@ -14,17 +14,21 @@ _.extend JustdoSiteAdmins.prototype,
     @_ensureIndexesExists()
 
     return
-  
+
   setUsersAsSiteAdmins: (users_ids, performing_user_id) ->
+    @requireUserIsSiteAdmin(performing_user_id)
+
+    return @setUsersAsSiteAdminsSecureSource(users_ids, performing_user_id)
+
+  setUsersAsSiteAdminsSecureSource: (users_ids, performing_user_id) ->
     # If performing_user_id is null we assume secured source
+    # For requests coming from the client, you must use setUsersAsSiteAdmins()
+    # which will require the performing user to be a site admin
 
     if _.isString users_ids
       users_ids = [users_ids]
 
     check users_ids, [String]
-
-    if performing_user_id?
-      @requireUserIsSiteAdmin(performing_user_id)
 
     if _.isEmpty(users_ids)
       return

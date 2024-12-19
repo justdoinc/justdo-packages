@@ -27,6 +27,9 @@ _.extend TasksFileManager.prototype,
     #
     # If provided, the user has to have access to the task.
 
+    # From the perspective of flows received from Meteor Methods, note that all
+    # the methods/publications as of now Dec. 19th, 2024, are all checking for
+    # logged-in user.
     if user_id?
       task = @requireUserTask task_id, user_id
     else

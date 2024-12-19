@@ -1117,7 +1117,7 @@ _.extend Projects.prototype,
     return
 
   removeMember: (project_id, member_id, user_id) ->
-    if user_id != member_id # user can remove himself from project even if not admin
+    if user_id != member_id # user can remove himself from a project even if isn't an admin
       @requireProjectAdmin(project_id, user_id)
 
     project = @projects_collection.findOne project_id
