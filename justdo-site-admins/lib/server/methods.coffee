@@ -31,14 +31,6 @@ _.extend JustdoSiteAdmins.prototype,
         # users_ids checks are performed inside self.reactivateUsers
         return self.reactivateUsers(users_ids, @userId)
 
-      saGetServerVitalsSnapshot: ->
-        # users_id check is performed inside self.getServerVitalsSnapshot
-        return self.getServerVitalsSnapshot(@userId)
-      
-      saGetServerVitalsShrinkWrapped: ->
-        # users_id check is performed inside self.getServerVitalsShrinkWrapped
-        return self.getServerVitalsShrinkWrapped(@userId)
-      
       saRenewalRequest: (request_data) ->
         endpoint = new URL(JustdoSiteAdmins.renew_license_endpoint, "https://justdo.com").toString()
         try
@@ -47,4 +39,13 @@ _.extend JustdoSiteAdmins.prototype,
           throw self._error "not-supported", "Renewal request did not receive a 200 response"
         return _.pick res, "statusCode"
 
+      if @isUsageStatsFrameworkEnabled()
+        saGetServerVitalsSnapshot: ->
+          # users_id check is performed inside self.getServerVitalsSnapshot
+          return self.getServerVitalsSnapshot(@userId)
+        
+        saGetServerVitalsShrinkWrapped: ->
+          # users_id check is performed inside self.getServerVitalsShrinkWrapped
+          return self.getServerVitalsShrinkWrapped(@userId)
+      
     return

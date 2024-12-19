@@ -1,4 +1,23 @@
 _.extend JustdoSiteAdmins.prototype,
+  _setupUsageStatsFramework: =>
+    if @client_type isnt "web-app"
+      @_usage_stats_framework_enabled = false
+
+      return
+
+    @_usage_stats_framework_enabled = true
+
+    @_markServerStarted()
+    @_ensureInstallationId()
+    @_setupServerVitalsLogInterval()
+    @_setupClearServerVitalsLogDbMigration()
+    @onDestroy =>
+      @_clearServerVitalsLogInverval()
+      return
+
+    return
+
+  isUsageStatsFrameworkEnabled: -> @_usage_stats_framework_enabled
 
   _logCurrentServerVitallToDb: (mark_as_long_term=false) ->
     snapshot = await @getServerVitalsShrinkWrapped()

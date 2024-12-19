@@ -1,13 +1,7 @@
 _.extend JustdoSiteAdmins.prototype,
   _immediateInit: ->
-    @_markServerStarted()
-    @_ensureInstallationId()
-    @_setupServerVitalsLogInterval()
-    @_setupClearServerVitalsLogDbMigration()
-    @onDestroy =>
-      @_clearServerVitalsLogInverval()
-      return
-      
+    @_setupUsageStatsFramework()
+
     return
 
   _deferredInit: ->
