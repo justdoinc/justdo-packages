@@ -283,11 +283,12 @@ _.extend JustdoTasksContextMenu.prototype,
 
           return "Apply #{current_selected_value_label} to subtree"
         label_i18n: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          current_selected_value = field_info.column_field_schema?.grid_values?[field_val]
-          current_selected_value_label = current_selected_value?.txt
-          current_selected_value_i18n = current_selected_value?.txt_i18n
+          translated_value_label = ""
+          if (current_selected_value = field_info.column_field_schema?.grid_values?[field_val])?
+            current_selected_value_label = current_selected_value?.txt
+            current_selected_value_i18n = current_selected_value?.txt_i18n
 
-          translated_value_label = APP.justdo_i18n.getDefaultI18nTextOrCustomInput {i18n_key: current_selected_value_i18n, text: current_selected_value_label}
+            translated_value_label = APP.justdo_i18n.getDefaultI18nTextOrCustomInput {i18n_key: current_selected_value_i18n, text: current_selected_value_label}
 
           return {label_i18n: "apply_value_to_subtree", options_i18n: {value: translated_value_label}}
           
