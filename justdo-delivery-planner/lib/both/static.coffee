@@ -19,7 +19,7 @@ _.extend JustdoDeliveryPlanner,
 
   default_base_project_workdays: [0, 1, 1, 1, 1, 1, 0]
 
-  is_projects_collection_enabled: true
+  is_projects_collection_enabled: false
   projects_collections_types: [
     {
       type_id: "projects_collection"
@@ -69,56 +69,56 @@ _.extend JustdoDeliveryPlanner,
         console.log {e, event_item, event_parent_item}
         return
     },
-    {
-      type_id: "pseudo_department_type_for_testing"
+    # {
+    #   type_id: "pseudo_department_type_for_testing"
 
-      type_label_i18n: "projects_collection_department_label"
-      type_label_plural_i18n: "projects_collection_department_label_plural"
+    #   type_label_i18n: "projects_collection_department_label"
+    #   type_label_plural_i18n: "projects_collection_department_label_plural"
 
-      set_as_i18n: "projects_collection_set_as_department"
-      unset_as_i18n: "projects_collection_unset_as_department"
-      close_i18n: "projects_collection_close_department"
-      closed_label_i18n: "projects_collection_closed_department_label"
-      reopen_i18n: "projects_collection_reopen_department"
+    #   set_as_i18n: "projects_collection_set_as_department"
+    #   unset_as_i18n: "projects_collection_unset_as_department"
+    #   close_i18n: "projects_collection_close_department"
+    #   closed_label_i18n: "projects_collection_closed_department_label"
+    #   reopen_i18n: "projects_collection_reopen_department"
 
-      type_icon: { # The type icon is used for the - set as Projects Collection, on-grid indicator, the tab switcher dropdown, and other places where we refer to the Project Collection type.
-        type: "feather"
-        val: "folder"
-        class: ""
-      },
-      unset_op_icon: { # Will appear next to the context menu operation for unsetting a Project Collection.
-        type: "feather"
-        val: "jd-folder-unset"
-        class: ""
-      },
-      close_op_icon: { # Will appear next to the context menu operation for closing. Note that the closed state is the closed_icon, this is for the action of closing
-        type: "feather"
-        val: "jd-folder-close"
-        class: ""
-      },
-      closed_icon: { # Will appear in on-grid indicator. Note that the icon for close op is close_op_icon
-        type: "feather"
-        val: "folder"
-        class: "closed-projects-collection"
-      },
-      reopen_op_icon: { # Will appear next to the context menu operation for reopening.
-        type: "feather"
-        val: "folder"
-        class: ""
-      },
+    #   type_icon: { # The type icon is used for the - set as Projects Collection, on-grid indicator, the tab switcher dropdown, and other places where we refer to the Project Collection type.
+    #     type: "feather"
+    #     val: "folder"
+    #     class: ""
+    #   },
+    #   unset_op_icon: { # Will appear next to the context menu operation for unsetting a Project Collection.
+    #     type: "feather"
+    #     val: "jd-folder-unset"
+    #     class: ""
+    #   },
+    #   close_op_icon: { # Will appear next to the context menu operation for closing. Note that the closed state is the closed_icon, this is for the action of closing
+    #     type: "feather"
+    #     val: "jd-folder-close"
+    #     class: ""
+    #   },
+    #   closed_icon: { # Will appear in on-grid indicator. Note that the icon for close op is close_op_icon
+    #     type: "feather"
+    #     val: "folder"
+    #     class: "closed-projects-collection"
+    #   },
+    #   reopen_op_icon: { # Will appear next to the context menu operation for reopening.
+    #     type: "feather"
+    #     val: "folder"
+    #     class: ""
+    #   },
 
-      onGridClick: (e, event_item) -> # This will be called when the user clicks on the Projects Collection on-grid indicator
-        console.log "onGridClick department"
-        console.log {e, event_item}
+    #   onGridClick: (e, event_item) -> # This will be called when the user clicks on the Projects Collection on-grid indicator
+    #     console.log "onGridClick department"
+    #     console.log {e, event_item}
 
-        return
+    #     return
 
-      onGridProjectClick: (e, event_item, event_parent_item) -> # This will be called when the user clicks on a project that is under this projects collection
-        console.log "onGridProjectClick department"
-        console.log {e, event_item, event_parent_item}
+    #   onGridProjectClick: (e, event_item, event_parent_item) -> # This will be called when the user clicks on a project that is under this projects collection
+    #     console.log "onGridProjectClick department"
+    #     console.log {e, event_item, event_parent_item}
 
-        return
-    }
+    #     return
+    # }
   ]
   projects_collection_default_fields_to_fetch:
     _id: 1
