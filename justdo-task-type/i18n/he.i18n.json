@@ -1,4 +1,5 @@
 {
   "default_type_label": "סוגים",
-  "core_type_archive_label": "ארכיון"
+  "core_type_archive_label": "ארכיון",
+  "closed_project_type_label": "פרויקט סגור"
 }

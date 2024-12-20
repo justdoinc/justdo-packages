@@ -1,4 +1,5 @@
 {
   "default_type_label": "Tipus",
-  "core_type_archive_label": "Arxivat"
+  "core_type_archive_label": "Arxivat",
+  "closed_project_type_label": "Projecte tancat"
 }

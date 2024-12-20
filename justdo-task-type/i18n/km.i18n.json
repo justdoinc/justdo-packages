@@ -1,4 +1,5 @@
 {
   "default_type_label": "ប្រភេទ",
-  "core_type_archive_label": "ដែលបានទុកក្នុងប័ណ្ណសារ"
+  "core_type_archive_label": "ដែលបានទុកក្នុងប័ណ្ណសារ",
+  "closed_project_type_label": "គម្រោងដែលបានបិទ"
 }

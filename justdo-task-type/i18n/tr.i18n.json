@@ -1,4 +1,5 @@
 {
   "default_type_label": "Türler",
-  "core_type_archive_label": "Arşivlenmiş"
+  "core_type_archive_label": "Arşivlenmiş",
+  "closed_project_type_label": "Kapatılmış Proje"
 }

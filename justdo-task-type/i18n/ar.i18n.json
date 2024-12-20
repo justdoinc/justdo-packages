@@ -1,4 +1,5 @@
 {
   "default_type_label": "الأنواع",
-  "core_type_archive_label": "المؤرشف"
+  "core_type_archive_label": "المؤرشف",
+  "closed_project_type_label": "مشروع مغلق"
 }

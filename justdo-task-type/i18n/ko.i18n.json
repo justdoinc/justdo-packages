@@ -1,4 +1,5 @@
 {
   "default_type_label": "유형",
-  "core_type_archive_label": "보관됨"
+  "core_type_archive_label": "보관됨",
+  "closed_project_type_label": "완료된 프로젝트"
 }

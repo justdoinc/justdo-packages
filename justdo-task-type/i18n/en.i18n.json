@@ -1,4 +1,5 @@
 {
   "default_type_label": "Types",
-  "core_type_archive_label": "Archived"
+  "core_type_archive_label": "Archived",
+  "closed_project_type_label": "Closed Project"
 }

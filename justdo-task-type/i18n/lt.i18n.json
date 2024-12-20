@@ -1,4 +1,5 @@
 {
   "default_type_label": "Tipai",
-  "core_type_archive_label": "Archyvuota"
+  "core_type_archive_label": "Archyvuota",
+  "closed_project_type_label": "Užbaigtas projektas"
 }

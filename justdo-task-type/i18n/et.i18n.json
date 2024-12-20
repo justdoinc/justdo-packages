@@ -1,4 +1,5 @@
 {
   "default_type_label": "Tüübid",
-  "core_type_archive_label": "Arhiveeritud"
+  "core_type_archive_label": "Arhiveeritud",
+  "closed_project_type_label": "Suletud projekt"
 }

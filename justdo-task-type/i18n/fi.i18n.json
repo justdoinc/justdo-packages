@@ -1,4 +1,5 @@
 {
   "default_type_label": "Tyypit",
-  "core_type_archive_label": "Arkistoitu"
+  "core_type_archive_label": "Arkistoitu",
+  "closed_project_type_label": "Suljettu projekti"
 }

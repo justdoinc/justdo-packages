@@ -1,4 +1,5 @@
 {
   "default_type_label": "Tipovi",
-  "core_type_archive_label": "Arhivirano"
+  "core_type_archive_label": "Arhivirano",
+  "closed_project_type_label": "Затворен пројекат"
 }

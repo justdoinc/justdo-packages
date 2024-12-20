@@ -1,4 +1,5 @@
 {
   "default_type_label": "Видове",
-  "core_type_archive_label": "Архивирани"
+  "core_type_archive_label": "Архивирани",
+  "closed_project_type_label": "Затворен проект"
 }

@@ -1,4 +1,5 @@
 {
   "default_type_label": "タイプ",
-  "core_type_archive_label": "アーカイブ済み"
+  "core_type_archive_label": "アーカイブ済み",
+  "closed_project_type_label": "完了プロジェクト"
 }

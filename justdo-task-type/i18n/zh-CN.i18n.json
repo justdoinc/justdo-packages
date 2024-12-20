@@ -1,4 +1,5 @@
 {
   "default_type_label": "类型",
-  "core_type_archive_label": "已归档"
+  "core_type_archive_label": "已归档",
+  "closed_project_type_label": "已关闭的项目"
 }

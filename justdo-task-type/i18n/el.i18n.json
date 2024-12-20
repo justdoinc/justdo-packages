@@ -1,4 +1,5 @@
 {
   "default_type_label": "Τύποι",
-  "core_type_archive_label": "Αρχειοθετημένα"
+  "core_type_archive_label": "Αρχειοθετημένα",
+  "closed_project_type_label": "Κλειστό Έργο"
 }
