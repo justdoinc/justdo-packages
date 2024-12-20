@@ -784,8 +784,7 @@ _.extend JustdoTasksContextMenu.prototype,
           is_allowed_by_permissions = APP.justdo_permissions?.checkTaskPermissions("task-field-edit.p:dp:is_archived_project", task_id)
           is_task_project = APP.justdo_delivery_planner.isTaskObjProject(task)
 
-          return APP.justdo_permissions?.checkTaskPermissions("task-field-edit.p:dp:is_archived_project", task_id) and
-                    task?[JustdoDeliveryPlanner.task_is_project_field_name] is true
+          return is_allowed_by_permissions and is_task_project
       
       self.registerSectionItem "projects", "manage-projects",
         position: 100
