@@ -170,8 +170,15 @@
   align-items: center
   font-size: 14px
 
-  .task-is-projects-collection
+  .task-is-project
     cursor: pointer
+    &.task-is-archived-project
+      cursor: default
+  
+    .task-is-projects-collection
+      cursor: pointer
+      &.closed-projects-collection
+        cursor: default
 
   .fa
     cursor: pointer
