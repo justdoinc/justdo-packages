@@ -60,6 +60,18 @@
                           <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
                           Select
                         </li>
+                        {{#each filesDropdownMenuPlaceholderItems}}
+                          {{#with task=../task file=../file dropdown_item=.}}
+                            <li class="file-edit-dropdown-item dropdown-item px-1">
+                              <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#{{dropdown_item.feather_icon file}}"></use></svg>
+                              {{#if dropdown_item.label_i18n}}
+                                {{_(dropdown_item.label_i18n file)}}
+                              {{else}}
+                                {{dropdown_item.label file}}
+                              {{/if}}
+                            </li>
+                          {{/with}}
+                        {{/each}}
                       </div>
                     </div>
                   </div>

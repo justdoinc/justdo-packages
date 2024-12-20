@@ -142,6 +142,7 @@ Template.justdo_files_gallery.helpers
     selected_count = Template.instance().bulk_selected_rv.get().length
     return selected_count > 1
 
+  filesDropdownMenuPlaceholderItems: -> JD.getPlaceholderItems "files-dropdown-menu"
 
 Template.justdo_files_gallery.events
   "click .file-download-link": (e, tmpl) ->
@@ -216,6 +217,11 @@ Template.justdo_files_gallery.events
     tpl.bulkEditModeEnable()
     tpl.bulkEditSelect(@file._id)
 
+    return
+
+  "click .file-edit-dropdown-item": (e, tpl) ->
+    if _.isFunction @dropdown_item.action
+      @dropdown_item.action @file
     return
 
   "click .edit-mode .file": (e, tpl) ->
