@@ -14,5 +14,6 @@
   "tree_control_tooltip_files_count": "__files_count__ filer",
   "tree_control_tooltip_emails_count": "__emails_count__ e-postmeddelanden",
   "tree_control_tooltip_task_is_a_project": "Uppgiften är ett projekt",
+  "tree_control_tooltip_task_is_archived_project": "Uppgiften är ett avslutat projekt",
   "tree_control_tooltip_task_is_archived": "Uppgiften är arkiverad"
 }

@@ -14,5 +14,6 @@
   "tree_control_tooltip_files_count": "__files_count__ Dateien",
   "tree_control_tooltip_emails_count": "__emails_count__ E-Mails",
   "tree_control_tooltip_task_is_a_project": "Aufgabe ist ein Projekt",
+  "tree_control_tooltip_task_is_archived_project": "Aufgabe ist ein abgeschlossenes Projekt",
   "tree_control_tooltip_task_is_archived": "Aufgabe ist archiviert"
 }

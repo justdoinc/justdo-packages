@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "សារជជែក",
   "tree_control_tooltip_files_count": "ឯកសារចំនួន __files_count__",
   "tree_control_tooltip_emails_count": "អ៊ីមែលចំនួន __emails_count__",
-  "tree_control_tooltip_task_is_a_project": "កិច្ចការនេះគឺជាគម្រោង",
+  "tree_control_tooltip_task_is_a_project": "កិច្ចការនេះជាគម្រោង",
+  "tree_control_tooltip_task_is_archived_project": "កិច្ចការនេះជាគម្រោងដែលបានបិទ",
   "tree_control_tooltip_task_is_archived": "កិច្ចការត្រូវបានរក្សាទុក"
 }

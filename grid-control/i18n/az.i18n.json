@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "Çat mesajları",
   "tree_control_tooltip_files_count": "__files_count__ fayl",
   "tree_control_tooltip_emails_count": "__emails_count__ e-poçt",
-  "tree_control_tooltip_task_is_a_project": "Tapşırıq bir layihədir",
+  "tree_control_tooltip_task_is_a_project": "Tapşırıq bir Layihədir",
+  "tree_control_tooltip_task_is_archived_project": "Tapşırıq Bağlanmış Layihədir",
   "tree_control_tooltip_task_is_archived": "Tapşırıq arxivləşdirilib"
 }

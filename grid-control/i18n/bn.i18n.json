@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "চ্যাট বার্তা",
   "tree_control_tooltip_files_count": "__files_count__ টি ফাইল",
   "tree_control_tooltip_emails_count": "__emails_count__ টি ইমেইল",
-  "tree_control_tooltip_task_is_a_project": "কাজটি একটি প্রকল্প",
+  "tree_control_tooltip_task_is_a_project": "টাস্কটি একটি প্রজেক্ট",
+  "tree_control_tooltip_task_is_archived_project": "টাস্কটি একটি বন্ধ প্রজেক্ট",
   "tree_control_tooltip_task_is_archived": "কাজটি সংরক্ষিত করা হয়েছে"
 }

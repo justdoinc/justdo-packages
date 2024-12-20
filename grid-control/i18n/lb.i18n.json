@@ -14,5 +14,6 @@
   "tree_control_tooltip_files_count": "__files_count__ Dateien",
   "tree_control_tooltip_emails_count": "__emails_count__ E-Mailen",
   "tree_control_tooltip_task_is_a_project": "Aufgab ass e Projet",
+  "tree_control_tooltip_task_is_archived_project": "Aufgab ass e geschlossene Projet",
   "tree_control_tooltip_task_is_archived": "Aufgab ass archivéiert"
 }

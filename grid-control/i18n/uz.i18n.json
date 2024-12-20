@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "Chat xabarlari",
   "tree_control_tooltip_files_count": "__files_count__ ta fayl",
   "tree_control_tooltip_emails_count": "__emails_count__ ta xat",
-  "tree_control_tooltip_task_is_a_project": "Vazifa loyihadir",
+  "tree_control_tooltip_task_is_a_project": "Vazifa Loyihadir",
+  "tree_control_tooltip_task_is_archived_project": "Vazifa Yopilgan Loyihadir",
   "tree_control_tooltip_task_is_archived": "Vazifa arxivlangan"
 }

@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "Μηνύματα συνομιλίας",
   "tree_control_tooltip_files_count": "__files_count__ αρχεία",
   "tree_control_tooltip_emails_count": "__emails_count__ emails",
-  "tree_control_tooltip_task_is_a_project": "Η εργασία είναι ένα έργο",
+  "tree_control_tooltip_task_is_a_project": "Η εργασία είναι Έργο",
+  "tree_control_tooltip_task_is_archived_project": "Η εργασία είναι Κλειστό Έργο",
   "tree_control_tooltip_task_is_archived": "Η εργασία έχει αρχειοθετηθεί"
 }

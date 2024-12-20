@@ -14,5 +14,6 @@
   "tree_control_tooltip_files_count": "__files_count__ failai",
   "tree_control_tooltip_emails_count": "__emails_count__ el. laiškai",
   "tree_control_tooltip_task_is_a_project": "Užduotis yra projektas",
+  "tree_control_tooltip_task_is_archived_project": "Užduotis yra uždarytas projektas",
   "tree_control_tooltip_task_is_archived": "Užduotis yra archyvuota"
 }

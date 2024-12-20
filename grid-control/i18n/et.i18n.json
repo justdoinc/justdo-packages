@@ -14,5 +14,6 @@
   "tree_control_tooltip_files_count": "__files_count__ faili",
   "tree_control_tooltip_emails_count": "__emails_count__ e-kirja",
   "tree_control_tooltip_task_is_a_project": "Ülesanne on projekt",
+  "tree_control_tooltip_task_is_archived_project": "Ülesanne on suletud projekt",
   "tree_control_tooltip_task_is_archived": "Ülesanne on arhiveeritud"
 }

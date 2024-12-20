@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "Паёмҳои чат",
   "tree_control_tooltip_files_count": "__files_count__ файлҳо",
   "tree_control_tooltip_emails_count": "__emails_count__ почтаи электронӣ",
-  "tree_control_tooltip_task_is_a_project": "Вазифа лоиҳа аст",
+  "tree_control_tooltip_task_is_a_project": "Вазифа лоиҳа мебошад",
+  "tree_control_tooltip_task_is_archived_project": "Вазифа лоиҳаи басташуда мебошад",
   "tree_control_tooltip_task_is_archived": "Вазифа бойгонӣ шудааст"
 }

@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "Повідомлення чату",
   "tree_control_tooltip_files_count": "__files_count__ файлів",
   "tree_control_tooltip_emails_count": "__emails_count__ електронних листів",
-  "tree_control_tooltip_task_is_a_project": "Завдання є проектом",
+  "tree_control_tooltip_task_is_a_project": "Завдання є Проєктом",
+  "tree_control_tooltip_task_is_archived_project": "Завдання є Закритим Проєктом",
   "tree_control_tooltip_task_is_archived": "Завдання архівовано"
 }

@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "Mesaje de chat",
   "tree_control_tooltip_files_count": "__files_count__ fișiere",
   "tree_control_tooltip_emails_count": "__emails_count__ e-mailuri",
-  "tree_control_tooltip_task_is_a_project": "Sarcina este un proiect",
+  "tree_control_tooltip_task_is_a_project": "Sarcina este un Proiect",
+  "tree_control_tooltip_task_is_archived_project": "Sarcina este un Proiect Închis",
   "tree_control_tooltip_task_is_archived": "Sarcina este arhivată"
 }

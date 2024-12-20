@@ -14,5 +14,6 @@
   "tree_control_tooltip_files_count": "__files_count__ файлаў",
   "tree_control_tooltip_emails_count": "__emails_count__ электронных лістоў",
   "tree_control_tooltip_task_is_a_project": "Задача з'яўляецца праектам",
+  "tree_control_tooltip_task_is_archived_project": "Задача з'яўляецца закрытым праектам",
   "tree_control_tooltip_task_is_archived": "Задача архіваваная"
 }

@@ -14,5 +14,6 @@
   "tree_control_tooltip_files_count": "ファイル __files_count__ 件",
   "tree_control_tooltip_emails_count": "メール __emails_count__ 件",
   "tree_control_tooltip_task_is_a_project": "タスクはプロジェクトです",
+  "tree_control_tooltip_task_is_archived_project": "タスクは終了したプロジェクトです",
   "tree_control_tooltip_task_is_archived": "タスクはアーカイブされています"
 }

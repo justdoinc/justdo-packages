@@ -14,5 +14,6 @@
   "tree_control_tooltip_files_count": "__files_count__ 个文件",
   "tree_control_tooltip_emails_count": "__emails_count__ 封电子邮件",
   "tree_control_tooltip_task_is_a_project": "任务是一个项目",
+  "tree_control_tooltip_task_is_archived_project": "任务是一个已关闭的项目",
   "tree_control_tooltip_task_is_archived": "任务已归档"
 }

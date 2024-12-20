@@ -14,5 +14,6 @@
   "tree_control_tooltip_files_count": "__files_count__ souborů",
   "tree_control_tooltip_emails_count": "__emails_count__ e-mailů",
   "tree_control_tooltip_task_is_a_project": "Úkol je projekt",
+  "tree_control_tooltip_task_is_archived_project": "Úkol je uzavřený projekt",
   "tree_control_tooltip_task_is_archived": "Úkol je archivován"
 }

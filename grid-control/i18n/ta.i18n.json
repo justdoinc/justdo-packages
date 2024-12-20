@@ -14,5 +14,6 @@
   "tree_control_tooltip_files_count": "__files_count__ கோப்புகள்",
   "tree_control_tooltip_emails_count": "__emails_count__ மின்னஞ்சல்கள்",
   "tree_control_tooltip_task_is_a_project": "பணி ஒரு திட்டமாகும்",
+  "tree_control_tooltip_task_is_archived_project": "பணி ஒரு மூடப்பட்ட திட்டமாகும்",
   "tree_control_tooltip_task_is_archived": "பணி காப்பகப்படுத்தப்பட்டுள்ளது"
 }

@@ -14,5 +14,6 @@
   "tree_control_tooltip_files_count": "__files_count__ फ़ाइलें",
   "tree_control_tooltip_emails_count": "__emails_count__ ईमेल",
   "tree_control_tooltip_task_is_a_project": "कार्य एक प्रोजेक्ट है",
+  "tree_control_tooltip_task_is_archived_project": "कार्य एक बंद प्रोजेक्ट है",
   "tree_control_tooltip_task_is_archived": "कार्य संग्रहित किया गया है"
 }

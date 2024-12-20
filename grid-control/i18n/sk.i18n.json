@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "Chatové správy",
   "tree_control_tooltip_files_count": "__files_count__ súborov",
   "tree_control_tooltip_emails_count": "__emails_count__ e-mailov",
-  "tree_control_tooltip_task_is_a_project": "Úloha je projekt",
+  "tree_control_tooltip_task_is_a_project": "Úloha je Projekt",
+  "tree_control_tooltip_task_is_archived_project": "Úloha je Uzavretý projekt",
   "tree_control_tooltip_task_is_archived": "Úloha je archivovaná"
 }

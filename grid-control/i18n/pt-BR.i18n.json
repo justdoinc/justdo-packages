@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "Mensagens de chat",
   "tree_control_tooltip_files_count": "__files_count__ arquivos",
   "tree_control_tooltip_emails_count": "__emails_count__ e-mails",
-  "tree_control_tooltip_task_is_a_project": "Tarefa é um projeto",
+  "tree_control_tooltip_task_is_a_project": "Tarefa é um Projeto",
+  "tree_control_tooltip_task_is_archived_project": "Tarefa é um Projeto Fechado",
   "tree_control_tooltip_task_is_archived": "Tarefa está arquivada"
 }

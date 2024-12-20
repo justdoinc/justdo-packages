@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "Txat mezuak",
   "tree_control_tooltip_files_count": "__files_count__ fitxategi",
   "tree_control_tooltip_emails_count": "__emails_count__ mezu elektroniko",
-  "tree_control_tooltip_task_is_a_project": "Ataza proiektu bat da",
+  "tree_control_tooltip_task_is_a_project": "Zeregina Proiektu bat da",
+  "tree_control_tooltip_task_is_archived_project": "Zeregina Itxitako Proiektu bat da",
   "tree_control_tooltip_task_is_archived": "Ataza artxibatuta dago"
 }

@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "Sohbet mesajları",
   "tree_control_tooltip_files_count": "__files_count__ dosya",
   "tree_control_tooltip_emails_count": "__emails_count__ e-posta",
-  "tree_control_tooltip_task_is_a_project": "Görev bir projedir",
+  "tree_control_tooltip_task_is_a_project": "Görev bir Projedir",
+  "tree_control_tooltip_task_is_archived_project": "Görev Kapatılmış bir Projedir",
   "tree_control_tooltip_task_is_archived": "Görev arşivlendi"
 }

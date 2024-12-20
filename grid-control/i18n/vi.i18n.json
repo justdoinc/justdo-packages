@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "Tin nhắn trò chuyện",
   "tree_control_tooltip_files_count": "__files_count__ tệp",
   "tree_control_tooltip_emails_count": "__emails_count__ email",
-  "tree_control_tooltip_task_is_a_project": "Công việc là một dự án",
+  "tree_control_tooltip_task_is_a_project": "Công việc là một Dự án",
+  "tree_control_tooltip_task_is_archived_project": "Công việc là một Dự án đã Đóng",
   "tree_control_tooltip_task_is_archived": "Công việc đã được lưu trữ"
 }

@@ -14,5 +14,6 @@
   "tree_control_tooltip_files_count": "__files_count__ ፋይሎች",
   "tree_control_tooltip_emails_count": "__emails_count__ ኢሜይሎች",
   "tree_control_tooltip_task_is_a_project": "ተግባሩ ፕሮጀክት ነው",
+  "tree_control_tooltip_task_is_archived_project": "ተግባሩ የተዘጋ ፕሮጀክት ነው",
   "tree_control_tooltip_task_is_archived": "ተግባሩ ተጠብቋል"
 }

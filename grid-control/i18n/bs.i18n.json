@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "Chat poruke",
   "tree_control_tooltip_files_count": "__files_count__ datoteka",
   "tree_control_tooltip_emails_count": "__emails_count__ e-mailova",
-  "tree_control_tooltip_task_is_a_project": "Zadatak je projekat",
+  "tree_control_tooltip_task_is_a_project": "Zadatak je Projekat",
+  "tree_control_tooltip_task_is_archived_project": "Zadatak je Zatvoreni Projekat",
   "tree_control_tooltip_task_is_archived": "Zadatak je arhiviran"
 }

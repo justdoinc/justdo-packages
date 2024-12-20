@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "Ujumbe wa gumzo",
   "tree_control_tooltip_files_count": "Faili __files_count__",
   "tree_control_tooltip_emails_count": "Barua pepe __emails_count__",
-  "tree_control_tooltip_task_is_a_project": "Jukumu ni mradi",
+  "tree_control_tooltip_task_is_a_project": "Kazi ni Mradi",
+  "tree_control_tooltip_task_is_archived_project": "Kazi ni Mradi Uliofungwa",
   "tree_control_tooltip_task_is_archived": "Jukumu limehifadhiwa"
 }

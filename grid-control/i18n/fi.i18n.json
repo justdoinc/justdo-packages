@@ -14,5 +14,6 @@
   "tree_control_tooltip_files_count": "__files_count__ tiedostoa",
   "tree_control_tooltip_emails_count": "__emails_count__ sähköpostia",
   "tree_control_tooltip_task_is_a_project": "Tehtävä on projekti",
+  "tree_control_tooltip_task_is_archived_project": "Tehtävä on suljettu projekti",
   "tree_control_tooltip_task_is_archived": "Tehtävä on arkistoitu"
 }

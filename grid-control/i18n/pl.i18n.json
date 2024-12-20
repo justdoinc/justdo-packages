@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "Wiadomości czatu",
   "tree_control_tooltip_files_count": "__files_count__ plików",
   "tree_control_tooltip_emails_count": "__emails_count__ e-maili",
-  "tree_control_tooltip_task_is_a_project": "Zadanie jest projektem",
+  "tree_control_tooltip_task_is_a_project": "Zadanie jest Projektem",
+  "tree_control_tooltip_task_is_archived_project": "Zadanie jest Zamkniętym Projektem",
   "tree_control_tooltip_task_is_archived": "Zadanie jest zarchiwizowane"
 }

@@ -14,5 +14,6 @@
   "tree_control_tooltip_files_count": "__files_count__ datotek",
   "tree_control_tooltip_emails_count": "__emails_count__ e-poštnih sporočil",
   "tree_control_tooltip_task_is_a_project": "Naloga je projekt",
+  "tree_control_tooltip_task_is_archived_project": "Naloga je zaključen projekt",
   "tree_control_tooltip_task_is_archived": "Naloga je arhivirana"
 }

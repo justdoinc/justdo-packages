@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "채팅 메시지",
   "tree_control_tooltip_files_count": "파일 __files_count__개",
   "tree_control_tooltip_emails_count": "이메일 __emails_count__개",
-  "tree_control_tooltip_task_is_a_project": "태스크가 프로젝트입니다",
+  "tree_control_tooltip_task_is_a_project": "작업이 프로젝트입니다",
+  "tree_control_tooltip_task_is_archived_project": "작업이 종료된 프로젝트입니다",
   "tree_control_tooltip_task_is_archived": "태스크가 보관되었습니다"
 }

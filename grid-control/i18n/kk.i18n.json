@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "Чат хабарламалары",
   "tree_control_tooltip_files_count": "__files_count__ файл",
   "tree_control_tooltip_emails_count": "__emails_count__ электрондық хат",
-  "tree_control_tooltip_task_is_a_project": "Тапсырма жоба болып табылады",
+  "tree_control_tooltip_task_is_a_project": "Тапсырма - жоба",
+  "tree_control_tooltip_task_is_archived_project": "Тапсырма - жабылған жоба",
   "tree_control_tooltip_task_is_archived": "Тапсырма мұрағатталған"
 }

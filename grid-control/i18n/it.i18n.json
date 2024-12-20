@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "Messaggi chat",
   "tree_control_tooltip_files_count": "__files_count__ file",
   "tree_control_tooltip_emails_count": "__emails_count__ email",
-  "tree_control_tooltip_task_is_a_project": "L'attività è un progetto",
+  "tree_control_tooltip_task_is_a_project": "L'attività è un Progetto",
+  "tree_control_tooltip_task_is_archived_project": "L'attività è un Progetto Chiuso",
   "tree_control_tooltip_task_is_archived": "L'attività è archiviata"
 }

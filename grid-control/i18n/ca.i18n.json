@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "Missatges de xat",
   "tree_control_tooltip_files_count": "__files_count__ arxius",
   "tree_control_tooltip_emails_count": "__emails_count__ correus electrònics",
-  "tree_control_tooltip_task_is_a_project": "La tasca és un projecte",
+  "tree_control_tooltip_task_is_a_project": "La tasca és un Projecte",
+  "tree_control_tooltip_task_is_archived_project": "La tasca és un Projecte Tancat",
   "tree_control_tooltip_task_is_archived": "La tasca està arxivada"
 }

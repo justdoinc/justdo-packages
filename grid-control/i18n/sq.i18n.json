@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "Mesazhe chat-i",
   "tree_control_tooltip_files_count": "__files_count__ skedarë",
   "tree_control_tooltip_emails_count": "__emails_count__ emaile",
-  "tree_control_tooltip_task_is_a_project": "Detyra është një projekt",
+  "tree_control_tooltip_task_is_a_project": "Detyra është një Projekt",
+  "tree_control_tooltip_task_is_archived_project": "Detyra është një Projekt i Mbyllur",
   "tree_control_tooltip_task_is_archived": "Detyra është arkivuar"
 }

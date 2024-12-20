@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "ข้อความแชท",
   "tree_control_tooltip_files_count": "ไฟล์ __files_count__ ไฟล์",
   "tree_control_tooltip_emails_count": "อีเมล __emails_count__ ฉบับ",
-  "tree_control_tooltip_task_is_a_project": "งานนี้เป็นโครงการ",
+  "tree_control_tooltip_task_is_a_project": "งานนี้เป็นโปรเจกต์",
+  "tree_control_tooltip_task_is_archived_project": "งานนี้เป็นโปรเจกต์ที่ปิดแล้ว",
   "tree_control_tooltip_task_is_archived": "งานนี้ถูกเก็บถาวรแล้ว"
 }

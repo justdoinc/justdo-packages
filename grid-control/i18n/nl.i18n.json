@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "Chatberichten",
   "tree_control_tooltip_files_count": "__files_count__ bestanden",
   "tree_control_tooltip_emails_count": "__emails_count__ e-mails",
-  "tree_control_tooltip_task_is_a_project": "Taak is een project",
+  "tree_control_tooltip_task_is_a_project": "Taak is een Project",
+  "tree_control_tooltip_task_is_archived_project": "Taak is een Gesloten Project",
   "tree_control_tooltip_task_is_archived": "Taak is gearchiveerd"
 }

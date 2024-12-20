@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "שמועס אָנזאָגן",
   "tree_control_tooltip_files_count": "__files_count__ טעקעס",
   "tree_control_tooltip_emails_count": "__emails_count__ בליצפּאָסט",
-  "tree_control_tooltip_task_is_a_project": "אויפגאַבע איז אַ פּרויעקט",
+  "tree_control_tooltip_task_is_a_project": "די אויפגאַבע איז אַ פּראָיעקט",
+  "tree_control_tooltip_task_is_archived_project": "די אויפגאַבע איז אַ פאַרמאַכטער פּראָיעקט",
   "tree_control_tooltip_task_is_archived": "אויפגאַבע איז אַרכיווירט"
 }

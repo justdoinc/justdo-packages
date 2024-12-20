@@ -3,7 +3,6 @@
   "hide_column_label": "隱藏欄目",
   "freeze_column_label": "凍結欄目",
   "unfreeze_column_label": "解凍欄目",
-
   "tree_control_tooltip_gantt_milestone": "里程碑",
   "tree_control_tooltip_buffer_task": "緩衝任務",
   "tree_control_tooltip_Meetings": "會議記錄",
@@ -14,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "聊天室",
   "tree_control_tooltip_files_count": "__files_count__個檔案",
   "tree_control_tooltip_emails_count": "__emails_count__個電郵",
-  "tree_control_tooltip_task_is_a_project": "此任務為專案",
+  "tree_control_tooltip_task_is_a_project": "此任務是一個專案",
+  "tree_control_tooltip_task_is_archived_project": "此任務是一個已關閉的專案",
   "tree_control_tooltip_task_is_archived": "此任務已歸檔"
 }

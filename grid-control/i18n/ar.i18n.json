@@ -14,5 +14,6 @@
   "tree_control_tooltip_files_count": "__files_count__ ملف",
   "tree_control_tooltip_emails_count": "__emails_count__ بريد إلكتروني",
   "tree_control_tooltip_task_is_a_project": "المهمة هي مشروع",
+  "tree_control_tooltip_task_is_archived_project": "المهمة هي مشروع مغلق",
   "tree_control_tooltip_task_is_archived": "تم أرشفة المهمة"
 }

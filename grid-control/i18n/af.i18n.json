@@ -13,6 +13,7 @@
   "tree_control_tooltip_chat_messages": "Kletsboodskappe",
   "tree_control_tooltip_files_count": "__files_count__ lêers",
   "tree_control_tooltip_emails_count": "__emails_count__ e-posse",
-  "tree_control_tooltip_task_is_a_project": "Taak is 'n projek",
+  "tree_control_tooltip_task_is_a_project": "Taak is 'n Projek",
+  "tree_control_tooltip_task_is_archived_project": "Taak is 'n Geslote Projek",
   "tree_control_tooltip_task_is_archived": "Taak is gearchiveer"
 }
