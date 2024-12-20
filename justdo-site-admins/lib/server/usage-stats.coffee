@@ -1,5 +1,5 @@
 _.extend JustdoSiteAdmins.prototype,
-  _setupUsageStatsFramework: =>
+  _setupUsageStatsFramework: ->
     if @client_type isnt "web-app"
       @_usage_stats_framework_enabled = false
 
