@@ -2,7 +2,7 @@ APP.on "justdo-task-type-initiated", ->
   tags_properties =
     "project":
       text: "Project"
-      text_i18n: "projects"
+      text_i18n: "project"
 
       filter_list_order: 0
 
