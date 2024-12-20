@@ -428,7 +428,7 @@ GridControl.installFormatter "textWithTreeControls",
           tree_control += """
             <svg class="jd-icon task-is-project #{if is_archived_project then "task-is-archived-project" else ""} ongrid-jd-icon slick-prevent-edit #{icon_class}">
               <title>#{TAPi18n.__ "tree_control_tooltip_task_is_a_project"}</title>
-              <use xlink:href="/layout/icons-feather-sprite.svg##{if is_archived_project then "jd-briefcase-close" else "briefcase"}" class="slick-prevent-edit"></use>
+              <use xlink:href="/layout/icons-feather-sprite.svg#briefcase" class="slick-prevent-edit #{if is_archived_project then "task-is-archived-project" else ""}}"></use>
             </svg>
           """
 
