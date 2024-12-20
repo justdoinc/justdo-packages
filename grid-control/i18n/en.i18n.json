@@ -15,6 +15,6 @@
   "tree_control_tooltip_files_count": "__files_count__ files",
   "tree_control_tooltip_emails_count": "__emails_count__ emails",
   "tree_control_tooltip_task_is_a_project": "Task is a Project",
-  "tree_control_tooltip_task_is_archived_project": "Task is an archived Project",
+  "tree_control_tooltip_task_is_archived_project": "Task is an closed Project",
   "tree_control_tooltip_task_is_archived": "Task is archived"
 }
