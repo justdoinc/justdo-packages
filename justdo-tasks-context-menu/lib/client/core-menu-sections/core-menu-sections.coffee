@@ -758,12 +758,14 @@ _.extend JustdoTasksContextMenu.prototype,
         position: 300
         data:
           label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-            if dependencies_fields_vals?[JustdoDeliveryPlanner.task_is_archived_project_field_name]
+            task = APP.collections.Tasks.findOne(task_id, {fields: {[JustdoDeliveryPlanner.task_is_archived_project_field_name]: 1}})
+            if task?[JustdoDeliveryPlanner.task_is_archived_project_field_name]
               return "Reopen Project"
             else
               return "Close Project"
           label_i18n: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-            if dependencies_fields_vals?[JustdoDeliveryPlanner.task_is_archived_project_field_name]
+            task = APP.collections.Tasks.findOne(task_id, {fields: {[JustdoDeliveryPlanner.task_is_archived_project_field_name]: 1}})
+            if task?[JustdoDeliveryPlanner.task_is_archived_project_field_name]
               return "repoen_project_label"
             else
               return "close_project_label"
@@ -772,7 +774,8 @@ _.extend JustdoTasksContextMenu.prototype,
             return
           icon_type: "feather"
           icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-            if dependencies_fields_vals?[JustdoDeliveryPlanner.task_is_archived_project_field_name]
+            task = APP.collections.Tasks.findOne(task_id, {fields: {[JustdoDeliveryPlanner.task_is_archived_project_field_name]: 1}})
+            if task?[JustdoDeliveryPlanner.task_is_archived_project_field_name]
               return "briefcase"
             else
               return "jd-briefcase-close"
