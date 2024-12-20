@@ -403,8 +403,8 @@ GridControl.installFormatter "textWithTreeControls",
           icon_class = projects_collection_type.type_icon.class
           if is_closed
             label = projects_collection_type.closed_label_i18n
-            icon_val = projects_collection_type.close_op_icon.val
-            icon_class = projects_collection_type.close_op_icon.class
+            icon_val = projects_collection_type.closed_icon.val
+            icon_class = projects_collection_type.closed_icon.class
           if _.isString icon_class
             icon_class = [icon_class]
           if _.isArray icon_class

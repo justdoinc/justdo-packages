@@ -43,9 +43,14 @@ _.extend JustdoDeliveryPlanner,
         val: "jd-folder-unset"
         class: ""
       }
-      close_op_icon: { # Will appear next to the context menu operation for closing. Note that the closed state is the faded type_icon, this is for the action of closing
+      close_op_icon: { # Will appear next to the context menu operation for closing. Note that the closed state is the closed_icon, this is for the action of closing
         type: "feather"
         val: "jd-folder-close"
+        class: ""
+      },
+      closed_icon: { # Will appear in on-grid indicator. Note that the icon for close op is close_op_icon
+        type: "feather"
+        val: "folder"
         class: "closed-projects-collection"
       },
       reopen_op_icon: { # Will appear next to the context menu operation for reopening.
@@ -86,9 +91,14 @@ _.extend JustdoDeliveryPlanner,
         val: "jd-folder-unset"
         class: ""
       },
-      close_op_icon: { # Will appear next to the context menu operation for closing. Note that the closed state is the faded type_icon, this is for the action of closing
+      close_op_icon: { # Will appear next to the context menu operation for closing. Note that the closed state is the closed_icon, this is for the action of closing
         type: "feather"
         val: "jd-folder-close"
+        class: ""
+      },
+      closed_icon: { # Will appear in on-grid indicator. Note that the icon for close op is close_op_icon
+        type: "feather"
+        val: "folder"
         class: "closed-projects-collection"
       },
       reopen_op_icon: { # Will appear next to the context menu operation for reopening.
