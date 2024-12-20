@@ -743,11 +743,12 @@ _.extend JustdoTasksContextMenu.prototype,
               return "jd-briefcase-unset"
             return "briefcase"
         listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          task = APP.collections.Tasks.findOne(task_id, {fields: {projects_collection: 1}})
           is_allowed_by_permissions = APP.justdo_permissions?.checkTaskPermissions("task-field-edit.p:dp:is_project", task_id)
 
           # If projects collection is enabled, we won't show the option to set as project if the task is a project collection
           if APP.justdo_delivery_planner.isProjectsCollectionEnabled()
-            is_task_projects_collection = APP.justdo_delivery_planner.getTaskObjProjectsCollectionTypeId(dependencies_fields_vals)?
+            is_task_projects_collection = APP.justdo_delivery_planner.getTaskObjProjectsCollectionTypeId(task)?
             return is_allowed_by_permissions and not is_task_projects_collection
 
           return is_allowed_by_permissions
@@ -775,8 +776,12 @@ _.extend JustdoTasksContextMenu.prototype,
             else
               return "jd-briefcase-close"
         listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          task = APP.collections.Tasks.findOne(task_id, {fields: {[JustdoDeliveryPlanner.task_is_project_field_name]: 1}})
+          is_allowed_by_permissions = APP.justdo_permissions?.checkTaskPermissions("task-field-edit.p:dp:is_archived_project", task_id)
+          is_task_project = APP.justdo_delivery_planner.isTaskObjProject(task)
+
           return APP.justdo_permissions?.checkTaskPermissions("task-field-edit.p:dp:is_archived_project", task_id) and
-                    dependencies_fields_vals?[JustdoDeliveryPlanner.task_is_project_field_name] is true
+                    task?[JustdoDeliveryPlanner.task_is_project_field_name] is true
       
       self.registerSectionItem "projects", "manage-projects",
         position: 100
