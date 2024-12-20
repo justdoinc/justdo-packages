@@ -63,6 +63,8 @@ _.extend JustdoDeliveryPlanner.prototype,
 
       if not task_doc["#{JustdoDeliveryPlanner.task_project_members_availability_field_name}"]?
         update["#{JustdoDeliveryPlanner.task_project_members_availability_field_name}"] = []
+    else
+      update["#{JustdoDeliveryPlanner.task_is_archived_project_field_name}"] = false
 
     @tasks_collection.update(task_id, {$set: update})
 
