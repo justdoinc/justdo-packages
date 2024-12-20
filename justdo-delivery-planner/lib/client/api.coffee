@@ -171,6 +171,9 @@ _.extend JustdoDeliveryPlanner.prototype,
       [JustdoDeliveryPlanner.task_is_archived_project_field_name]: 1
       projects_collection: 1
 
+    getTaskWithDeliveryPlannerRelatedFields = (task_id) ->
+      return APP.collections.Tasks.findOne(task_id, fields_to_determine_task_projects_collection_and_project_type)
+
     APP.justdo_tasks_context_menu.registerSectionItem "projects", "unset-unknown-projects-collection",
       position: 109
       data:
@@ -190,7 +193,7 @@ _.extend JustdoDeliveryPlanner.prototype,
           self.unsetTaskProjectCollectionType task_id
           return 
       listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-        task = APP.collections.Tasks.findOne(task_id, fields_to_determine_task_projects_collection_and_project_type)
+        task = getTaskWithDeliveryPlannerRelatedFields(task_id)
         is_allowed_by_permissions = APP.justdo_permissions.checkTaskPermissions("task-field-edit.projects_collection.projects_collection_type", task_id)
         is_task_project = self.isTaskObjProject task
         task_projects_collection_type_id = self.getTaskObjProjectsCollectionTypeId(task)
@@ -210,7 +213,7 @@ _.extend JustdoDeliveryPlanner.prototype,
               i18n_data = 
                 label_i18n: projects_collection_type.set_as_i18n
                 options_i18n: {}
-              task = APP.collections.Tasks.findOne(task_id, fields_to_determine_task_projects_collection_and_project_type)
+              task = getTaskWithDeliveryPlannerRelatedFields(task_id)
               task_projects_collection_type_id = self.getTaskObjProjectsCollectionTypeId task
               if task_projects_collection_type_id is type_id
                 i18n_data.label_i18n = projects_collection_type.unset_as_i18n
@@ -221,14 +224,14 @@ _.extend JustdoDeliveryPlanner.prototype,
                 label_i18n: projects_collection_type.set_as_i18n
                 options_i18n: {}
               
-              task = APP.collections.Tasks.findOne(task_id, fields_to_determine_task_projects_collection_and_project_type)
+              task = getTaskWithDeliveryPlannerRelatedFields(task_id)
               task_projects_collection_type_id = self.getTaskObjProjectsCollectionTypeId task
               if task_projects_collection_type_id is type_id
                 i18n_data.label_i18n = projects_collection_type.unset_as_i18n
 
               return i18n_data
             op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) =>
-              task = APP.collections.Tasks.findOne(task_id, fields_to_determine_task_projects_collection_and_project_type)
+              task = getTaskWithDeliveryPlannerRelatedFields(task_id)
               if type_id is self.getTaskObjProjectsCollectionTypeId(task)
                 self.unsetTaskProjectCollectionType task_id
               else
@@ -236,17 +239,17 @@ _.extend JustdoDeliveryPlanner.prototype,
               return 
             icon_type: "feather"
             icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-              task = APP.collections.Tasks.findOne(task_id, fields_to_determine_task_projects_collection_and_project_type)
+              task = getTaskWithDeliveryPlannerRelatedFields(task_id)
               if self.getTaskObjProjectsCollectionTypeId(task) is type_id
                 return projects_collection_type.unset_op_icon.val
               return projects_collection_type.type_icon.val
             icon_class: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-              task = APP.collections.Tasks.findOne(task_id, fields_to_determine_task_projects_collection_and_project_type)
+              task = getTaskWithDeliveryPlannerRelatedFields(task_id)
               if self.getTaskObjProjectsCollectionTypeId(task) is type_id
                 return projects_collection_type.unset_op_icon.class
               return projects_collection_type.type_icon.class
           listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-            task = APP.collections.Tasks.findOne(task_id, fields_to_determine_task_projects_collection_and_project_type)
+            task = getTaskWithDeliveryPlannerRelatedFields(task_id)
             is_allowed_by_permissions = APP.justdo_permissions.checkTaskPermissions("task-field-edit.projects_collection.projects_collection_type", task_id)
             is_task_project = self.isTaskObjProject task
             task_projects_collection_type_id = self.getTaskObjProjectsCollectionTypeId(task)
@@ -262,7 +265,7 @@ _.extend JustdoDeliveryPlanner.prototype,
               i18n_data = 
                 label_i18n: projects_collection_type.close_i18n
                 options_i18n: {}
-              task = APP.collections.Tasks.findOne(task_id, fields_to_determine_task_projects_collection_and_project_type)
+              task = getTaskWithDeliveryPlannerRelatedFields(task_id)
 
               if self.isProjectsCollectionClosed task
                 i18n_data.label_i18n = projects_collection_type.reopen_i18n
@@ -272,14 +275,14 @@ _.extend JustdoDeliveryPlanner.prototype,
               i18n_data = 
                 label_i18n: projects_collection_type.close_i18n
                 options_i18n: {}
-              task = APP.collections.Tasks.findOne(task_id, fields_to_determine_task_projects_collection_and_project_type)
+              task = getTaskWithDeliveryPlannerRelatedFields(task_id)
 
               if self.isProjectsCollectionClosed task
                 i18n_data.label_i18n = projects_collection_type.reopen_i18n
 
               return i18n_data
             op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) =>
-              task = APP.collections.Tasks.findOne(task_id, fields_to_determine_task_projects_collection_and_project_type)
+              task = getTaskWithDeliveryPlannerRelatedFields(task_id)
               if self.isProjectsCollectionClosed task
                 self.reopenProjectsCollection task_id
               else
@@ -287,19 +290,19 @@ _.extend JustdoDeliveryPlanner.prototype,
               return 
             icon_type: "feather"
             icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-              task = APP.collections.Tasks.findOne(task_id, fields_to_determine_task_projects_collection_and_project_type)
+              task = getTaskWithDeliveryPlannerRelatedFields(task_id)
               is_closed = self.isProjectsCollectionClosed task
               if is_closed
                 return projects_collection_type.reopen_op_icon.val
               return projects_collection_type.close_op_icon.val
             icon_class: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-              task = APP.collections.Tasks.findOne(task_id, fields_to_determine_task_projects_collection_and_project_type)
+              task = getTaskWithDeliveryPlannerRelatedFields(task_id)
               is_closed = self.isProjectsCollectionClosed task
               if is_closed
                 return projects_collection_type.reopen_op_icon.class
               return projects_collection_type.close_op_icon.class
           listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-            task = APP.collections.Tasks.findOne(task_id, fields_to_determine_task_projects_collection_and_project_type)
+            task = getTaskWithDeliveryPlannerRelatedFields(task_id)
             is_allowed_by_permissions = APP.justdo_permissions?.checkTaskPermissions("task-field-edit.projects_collection.is_closed", task_id)
             is_task_projects_collection = self.getTaskObjProjectsCollectionTypeId(task)?
             is_task_project_collection_type_the_same = self.getTaskObjProjectsCollectionTypeId(task) is type_id
