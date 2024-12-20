@@ -20,7 +20,7 @@ _.extend JustdoSiteAdmins.prototype,
   isUsageStatsFrameworkEnabled: -> @_usage_stats_framework_enabled
 
   _logCurrentServerVitallToDb: (mark_as_long_term=false) ->
-    snapshot = await @getServerVitalsShrinkWrapped()
+    snapshot = await @getServerVitalsShrinkWrappedSecuredSource()
     if mark_as_long_term
       snapshot.long_term = true
     @server_vitals_collection.insert snapshot
@@ -112,9 +112,7 @@ _.extend JustdoSiteAdmins.prototype,
   
   _getPluginVitalsGenerator: -> @plugin_vitals
 
-  getServerVitalsShrinkWrapped: (user_id) ->
-    snapshot = await @getServerVitalsSnapshot user_id
-    
+  produceServerVitalsShrinkWrappedFromSnapshot: (snapshot) ->
     # Convert .plugins to be of the form:
     # {
     #   "plugin-id": {
@@ -134,10 +132,20 @@ _.extend JustdoSiteAdmins.prototype,
 
     return snapshot
 
+  getServerVitalsShrinkWrappedSecuredSource: ->
+    snapshot = await @getServerVitalsSnapshotSecureSource()
+
+    return @produceServerVitalsShrinkWrappedFromSnapshot(snapshot)
+
+  getServerVitalsShrinkWrapped: (user_id) ->
+    snapshot = await @getServerVitalsSnapshot(user_id)
+    
+    return @produceServerVitalsShrinkWrappedFromSnapshot(snapshot)
+
   getServerVitalsSnapshot: (user_id) ->
     @requireUserIsSiteAdmin(user_id)
 
-    return @getServerVitalsSnapshotSecureSource()
+    return await @getServerVitalsSnapshotSecureSource()
 
   getServerVitalsSnapshotSecureSource: ->
     if not @v8?

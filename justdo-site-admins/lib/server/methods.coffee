@@ -40,12 +40,13 @@ _.extend JustdoSiteAdmins.prototype,
         return _.pick res, "statusCode"
 
       if @isUsageStatsFrameworkEnabled()
-        saGetServerVitalsSnapshot: ->
-          # users_id check is performed inside self.getServerVitalsSnapshot
-          return self.getServerVitalsSnapshot(@userId)
+        Meteor.methods
+          saGetServerVitalsSnapshot: ->
+            # users_id check is performed inside self.getServerVitalsSnapshot
+            return self.getServerVitalsSnapshot(@userId)
+          
+          saGetServerVitalsShrinkWrapped: ->
+            # users_id check is performed inside self.getServerVitalsShrinkWrapped
+            return self.getServerVitalsShrinkWrapped(@userId)
         
-        saGetServerVitalsShrinkWrapped: ->
-          # users_id check is performed inside self.getServerVitalsShrinkWrapped
-          return self.getServerVitalsShrinkWrapped(@userId)
-      
     return
