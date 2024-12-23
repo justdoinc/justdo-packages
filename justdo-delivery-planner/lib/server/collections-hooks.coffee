@@ -75,7 +75,6 @@ _.extend JustdoDeliveryPlanner.prototype,
         return
       
       self.tasks_collection.before.upsert (user_id, selector, modifier, options) ->
-        console.log {selector, modifier}
         # Auto set new child task of projects collection as project
         setTaskAsProjectIfNewParentIsProjectsCollection modifier.$set, modifier
 
