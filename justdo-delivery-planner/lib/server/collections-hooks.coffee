@@ -66,11 +66,17 @@ _.extend JustdoDeliveryPlanner.prototype,
 
         parent_task_ids = if _.isArray(parents2) then _.map(parents2, (parent) -> parent.parent) else [parents2.parent]
 
-        # If new parent isn't a projects collection, return
-        added_parent_doc = self.tasks_collection.find({_id: {$in: parent_task_ids}}, {fields: {projects_collection: 1}}).forEach (task_doc) ->
-          if self.getTaskObjProjectsCollectionTypeId(task_doc)?
-            modifier.$set[JustdoDeliveryPlanner.task_is_project_field_name] = true
-            return
+        any_of_parents_is_projects_collection_query = 
+          _id: 
+            $in: parent_task_ids
+          "projects_collection.projects_collection_type": 
+            $ne: null
+        any_of_parents_is_projects_collection_query_options = 
+          limit: 1
+
+        # If any of the parents is a projects collection, then set the task as project
+        if self.tasks_collection.find(any_of_parents_is_projects_collection_query, any_of_parents_is_projects_collection_query_options).count() > 0
+          modifier.$set[JustdoDeliveryPlanner.task_is_project_field_name] = true
 
         return
       
