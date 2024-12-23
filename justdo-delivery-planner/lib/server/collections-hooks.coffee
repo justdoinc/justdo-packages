@@ -53,6 +53,35 @@ _.extend JustdoDeliveryPlanner.prototype,
           modifier.$set.archived = null      
 
       return
+    
+    setTaskAsProjectIfNewParentIsProjectsCollection = (doc, modifier) ->
+      if self.isTaskObjProject doc
+        return
 
+      parents2 = modifier.$addToSet?.parents2 or modifier.$set?.parents2?[0]
+      parents2_modified = parents2?
+      if not parents2_modified
+        return
+
+      # If new parent isn't a projects collection, return
+      added_parent_doc = self.tasks_collection.findOne(parents2.parent, {fields: {projects_collection: 1}})
+      if not self.getTaskObjProjectsCollectionTypeId(added_parent_doc)?
+        return
+      
+      modifier.$set[JustdoDeliveryPlanner.task_is_project_field_name] = true
+
+      return
+    
+    self.tasks_collection.before.upsert (user_id, selector, modifier, options) ->
+      # Auto set new child task of projects collection as project
+      setTaskAsProjectIfNewParentIsProjectsCollection modifier.$set, modifier
+
+      return
+
+    self.tasks_collection.before.update (user_id, doc, field_names, modifier, options) ->
+      # Auto set child task of projects collection as project
+      setTaskAsProjectIfNewParentIsProjectsCollection doc, modifier
+        
+      return
 
     return
