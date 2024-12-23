@@ -94,7 +94,6 @@ Package.onUse(function (api) {
   // the server will have the access to the apis loaded after the init.coffee
   // file.
 
-  api.addFiles("lib/core-generators/task-types/project.coffee", both);
   api.addFiles("lib/core-generators/task-types/archive.coffee", both);
 
   // Always after templates
