@@ -3,7 +3,8 @@ _.extend JustdoDeliveryPlanner.prototype,
     self = @
 
     self.tasks_collection.before.update (user_id, doc, field_names, modifier, options) ->
-      # Auto close/open projects when a task is being archived
+      # 1. Auto close/open Projects when a task is being archived
+      # 2. Unarchive when open Projects
       if not modifier.$set?
         return
 
@@ -22,7 +23,8 @@ _.extend JustdoDeliveryPlanner.prototype,
       return
 
     self.tasks_collection.before.update (user_id, doc, field_names, modifier, options) ->
-      # Auto close/open projects collection when a task is being archived
+      # 1. Auto close/open Projects Collections when a task is being archived
+      # 2. Unarchive when open Projects Collections
       if not modifier.$set?
         return
 
