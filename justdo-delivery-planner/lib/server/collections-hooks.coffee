@@ -21,4 +21,36 @@ _.extend JustdoDeliveryPlanner.prototype,
 
       return
 
+    self.tasks_collection.before.update (user_id, doc, field_names, modifier, options) ->
+      # Auto close/open projects collection when a task is being archived
+      if not modifier.$set?
+        return
+
+      is_task_projects_collection = self.getTaskObjProjectsCollectionTypeId(doc)?
+      if not is_task_projects_collection
+        return
+      
+      is_task_being_archived_or_unarchived = _.has modifier.$set, "archived"
+      is_task_being_closed_or_reopened_as_projects_collection = _.has modifier.$set, "projects_collection.is_closed"
+
+      if ((not is_task_being_archived_or_unarchived) and not (is_task_being_closed_or_reopened_as_projects_collection)) or
+          (is_task_being_archived_or_unarchived and is_task_being_closed_or_reopened_as_projects_collection)
+        return
+      
+      is_task_archived = doc.archived?
+      is_task_being_archived = modifier.$set.archived?
+      is_task_being_closed_as_projects_collection = modifier.$set["projects_collection.is_closed"]
+      is_task_closed_projects_collection = doc.projects_collection.is_closed
+      
+      if is_task_being_archived_or_unarchived
+        if (is_task_being_archived and not is_task_closed_projects_collection) or
+            (not is_task_being_archived and is_task_closed_projects_collection)
+          modifier.$set["projects_collection.is_closed"] = not is_task_closed_projects_collection 
+      else if is_task_being_closed_or_reopened_as_projects_collection
+        if not is_task_being_closed_as_projects_collection and is_task_archived
+          modifier.$set.archived = null      
+
+      return
+
+
     return
