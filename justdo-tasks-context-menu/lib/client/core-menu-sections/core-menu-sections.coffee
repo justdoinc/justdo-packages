@@ -744,13 +744,14 @@ _.extend JustdoTasksContextMenu.prototype,
               return "jd-briefcase-unset"
             return "briefcase"
         listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          task = APP.collections.Tasks.findOne(task_id, {fields: {projects_collection: 1}})
+          task = APP.collections.Tasks.findOne(task_id, {fields: {projects_collection: 1, [JustdoDeliveryPlanner.task_is_project_field_name]: 1}})
           is_allowed_by_permissions = APP.justdo_permissions?.checkTaskPermissions("task-field-edit.p:dp:is_project", task_id)
+          is_task_project = APP.justdo_delivery_planner.isTaskObjProject(task)
 
           # If projects collection is enabled, we won't show the option to set as project if the task is a project collection
           if APP.justdo_delivery_planner.isProjectsCollectionEnabled()
             is_task_projects_collection = APP.justdo_delivery_planner.getTaskObjProjectsCollectionTypeId(task)?
-            return is_allowed_by_permissions and not is_task_projects_collection
+            return is_allowed_by_permissions and (is_task_project or not is_task_projects_collection)
 
           return is_allowed_by_permissions
       

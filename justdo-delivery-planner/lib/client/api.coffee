@@ -253,8 +253,9 @@ _.extend JustdoDeliveryPlanner.prototype,
             is_allowed_by_permissions = APP.justdo_permissions.checkTaskPermissions("task-field-edit.projects_collection.projects_collection_type", task_id)
             is_task_project = self.isTaskObjProject task
             task_projects_collection_type_id = self.getTaskObjProjectsCollectionTypeId(task)
-            is_type_not_set_or_same = (not task_projects_collection_type_id?) or (task_projects_collection_type_id is type_id)
-            return is_allowed_by_permissions and (not is_task_project) and is_type_not_set_or_same
+            is_type_not_set = not task_projects_collection_type_id?
+            is_type_the_same = task_projects_collection_type_id is type_id
+            return is_allowed_by_permissions and (is_type_the_same or (is_type_not_set and not is_task_project))
 
         position += 1
 
