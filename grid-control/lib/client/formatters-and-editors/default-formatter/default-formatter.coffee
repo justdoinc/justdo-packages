@@ -2,7 +2,8 @@ formatDecimals = (decimal) ->
   if not decimal?
     return ""
 
-  return JustdoMathjs.math.format(decimal, {precision: 2, notation: "fixed"}).replace(/\.0+$/, "")
+  num_in_string = JustdoMathjs.math.format(decimal, {precision: 2, notation: "fixed"}).replace(/\.0+$/, "")
+  return JustdoHelpers.localeAwareNumberRepresentation num_in_string
 
 GridControl.installFormatter "defaultFormatter",
   defaultHoverCaption: (friendly_args) -> undefined
