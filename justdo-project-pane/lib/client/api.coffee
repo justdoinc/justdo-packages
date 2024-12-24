@@ -327,9 +327,15 @@ _.extend JustdoProjectPane.prototype,
 
   isFullScreen: -> @_full_screen_rv.get()
 
-  enterFullScreen: -> @_full_screen_rv.set true
+  enterFullScreen: -> 
+    @_full_screen_rv.set true
+    $(".app-wrapper").addClass "no-scroll"
+    return
 
-  exitFullScreen: -> @_full_screen_rv.set false
+  exitFullScreen: -> 
+    $(".app-wrapper").removeClass "no-scroll"
+    @_full_screen_rv.set false
+    return
 
   toggleFullScreen: -> 
     is_full_screen = Tracker.nonreactive => @isFullScreen()
