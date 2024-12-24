@@ -1,10 +1,11 @@
 Template.confirm_edit_members_dialog.helpers
   usersText: (member_ids) ->
-    if member_ids.length is 1
-      return JustdoHelpers.displayName member_ids[0]
-
     first_few_users = ""
     first_few_users_count = 3
+    if member_ids.length <= first_few_users_count
+      names = _.map member_ids, (member_id) -> JustdoHelpers.displayName member_id
+      return names.join ", "
+
     i = 0
     for member_id in member_ids
       if i == first_few_users_count
