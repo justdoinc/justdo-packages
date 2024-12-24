@@ -313,6 +313,10 @@ _.extend JustdoDeliveryPlanner.prototype,
       optional: true
       blackbox: true
       defaultValue: JustdoDeliveryPlanner.projects_collection_default_fields_to_fetch
+    sort:
+      type: Object
+      optional: true
+      blackbox: true
   getProjectsUnderCollectionCursor: (justdo_id, projects_collection_id, options, user_id) ->
     check justdo_id, String
     check projects_collection_id, String
@@ -346,6 +350,8 @@ _.extend JustdoDeliveryPlanner.prototype,
       
     query_options = 
       fields: options.fields
+    if options.sort?
+      query_options.sort = options.sort
     
     return @tasks_collection.find(query, query_options)
   
