@@ -4,7 +4,7 @@ _.extend JustdoHelpers,
       return ""
 
     if _.isString number
-      number = parseInt number, 10
+      number = parseFloat number
     
     if _.isNaN number
       return ""
