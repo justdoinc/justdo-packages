@@ -1,5 +1,8 @@
 Template.confirm_edit_members_dialog.helpers
   usersText: (member_ids) ->
+    if member_ids.length is 1
+      return JustdoHelpers.displayName member_ids[0]
+
     first_few_users = ""
     first_few_users_count = 3
     i = 0
@@ -13,7 +16,11 @@ Template.confirm_edit_members_dialog.helpers
       first_few_users += JustdoHelpers.displayName member_id
       i = i + 1
 
-    return TAPi18n.__ "confirm_edit_member_dialog_and_other_users", {users: first_few_users, count: member_ids.length - first_few_users_count}
+    count = member_ids.length - first_few_users_count
+    if count < 0
+      count = 0
+
+    return TAPi18n.__ "confirm_edit_member_dialog_and_other_users", {users: first_few_users, count: count}
 
   batchedImmediateProcessThreshold: ->
     return JustdoDbMigrations.batched_collection_updates_immediate_process_threshold_docs
