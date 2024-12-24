@@ -1,9 +1,13 @@
 _.extend JustdoHelpers,
   localeAwareNumberRepresentation: (number) ->
     if not number?
-      return
+      return ""
+
     if _.isString number
       number = parseInt number, 10
+    
+    if _.isNaN number
+      return ""
       
     return number.toLocaleString()
 
