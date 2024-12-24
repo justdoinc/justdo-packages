@@ -23,7 +23,12 @@
       {{/if}}
       <div class="search-result-list">
         {{#each resultTasks}}
-          <div class="search-result-item">
+          <div class="search-result-item" data-path="{{path}}">
+            {{#if parent_title}}
+              <div class="task-parent-title">
+                {{{xssGuard parent_title noFormatting=true}}} ┓
+              </div>
+            {{/if}}
             <div class="task-title">
               <span class="task-seq-id">{{{xssGuard(_ "grid_control_search_task_with_seq_id_prefix" seqId=seqId) noFormatting=true}}}</span> {{{xssGuard title noFormatting=true}}}
             </div>

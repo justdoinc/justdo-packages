@@ -93,6 +93,7 @@ Template.grid_control_search_dropdown.helpers
     task_ids = _.map paths, (path) -> GridData.helpers.getPathItemId path
     result_count = tpl.result_count.get()
     tasks = APP.collections.Tasks.find({_id: {$in: task_ids}}, {limit: result_count}).map (task_doc, i) ->
+      corresponding_path = paths[i]
       task_obj = {
         task_id: task_doc._id
         path: paths[i]
@@ -100,7 +101,12 @@ Template.grid_control_search_dropdown.helpers
         title: highlight(task_doc.title, search_val, "title")
         state: highlight(stateFormatter(task_doc.state), search_val, "state")
         note: highlight(task_doc.status, search_val, "status")
+        path: corresponding_path
       }
+
+      parent_task_id = GridData.helpers.getPathParentId corresponding_path
+      if (parent_task = APP.collections.Tasks.findOne(parent_task_id, {fields: {seqId: 1, title: 1}}))?
+        task_obj.parent_title = JustdoHelpers.taskCommonName parent_task
 
       return task_obj
 
