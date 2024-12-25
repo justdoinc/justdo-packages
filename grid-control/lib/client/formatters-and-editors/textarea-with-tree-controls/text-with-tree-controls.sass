@@ -193,9 +193,13 @@
   width: 14px
   height: 20px
   border-radius: 2px
-  transition: opacity 0.2s linear
-  margin-top: 1px
+  transition: all 0.2s linear
+  margin: 0px 2px 
   stroke-width: 2
+  cursor: pointer
+  transform: scale(1)
+  &:hover
+    transform: scale(1.08)
 
   &.jd-icon-context-menu
     opacity: 0.4
@@ -242,15 +246,6 @@
 
   &.task-planned-or-executed-by-current-user
     color: inherit
-
-.task-meetings
-  position: relative
-  top: -2px
-  stroke-width: 2
-  height: 15px
-  width: 19px
-  stroke: currentColor
-  fill: none
 
 .slick-row
   .hl // hierarchy-line

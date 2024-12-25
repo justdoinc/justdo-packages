@@ -294,15 +294,16 @@ GridControl.installFormatter "textWithTreeControls",
 
         if meeting_ids.size > 0
           tree_control += """
-            <svg class="task-meetings slick-prevent-edit jd-c-pointer text-dark">
+            <svg class="jd-icon task-meetings ongrid-jd-icon slick-prevent-edit">
               <title>#{TAPi18n.__ "tree_control_tooltip_Meetings"}</title>
               <use xlink:href="/layout/icons-feather-sprite.svg#jd-meetings" class="slick-prevent-edit"></use>
-            </svg>"""
+            </svg>
+          """
 
     if @getCurrentColumnData("justdo_planning_utilities_plugin_enabled")
       if doc[JustdoPlanningUtilities?.is_milestone_pseudo_field_id] == "true"
         tree_control +=  """
-          <svg class="jd-icon ongrid-jd-icon text-secondary slick-prevent-edit">
+          <svg class="jd-icon ongrid-jd-icon slick-prevent-edit">
             <title>#{TAPi18n.__ "tree_control_tooltip_gantt_milestone"}</title>
             <use xlink:href="/layout/icons-feather-sprite.svg#jd-rhombus" class="slick-prevent-edit"></use>
           </svg>
@@ -310,7 +311,7 @@ GridControl.installFormatter "textWithTreeControls",
 
       if doc[JustdoPlanningUtilities?.is_buffer_task_field_id]
         tree_control +=  """
-          <svg class="jd-icon ongrid-jd-icon text-secondary slick-prevent-edit" style="margin-right:2px; fill:black;">
+          <svg class="jd-icon ongrid-jd-icon slick-prevent-edit" style="margin-right:2px; fill:black;">
             <title>#{TAPi18n.__ "tree_control_tooltip_buffer_task"}</title>
             <use xlink:href="/layout/icons-feather-sprite.svg#jd-buffer-set" class="slick-prevent-edit"></use>
           </svg>
@@ -361,12 +362,15 @@ GridControl.installFormatter "textWithTreeControls",
       # or, didn't read yet.
       if doc[JustdoChat.tasks_chat_channel_last_message_from_field_id] != Meteor.userId() and
          (not (last_read = doc[JustdoChat.tasks_chat_channel_last_read_field_id])? or last_message_date > last_read)
-        chat_classes = "fa-comments chat-messages-new"
+        chat_classes = "chat-messages-new"
       else
-        chat_classes = "fa-comments-o"
+        chat_classes = ""
 
       tree_control += """
-          <i class="fa fa-fw chat-messages #{chat_classes} slick-prevent-edit" title="#{TAPi18n.__ "tree_control_tooltip_chat_messages"}" aria-hidden="true"></i>
+        <svg class="jd-icon chat-messages #{chat_classes} ongrid-jd-icon slick-prevent-edit">
+          <title>#{TAPi18n.__ "tree_control_tooltip_chat_messages"}</title>
+          <use xlink:href="/layout/icons-feather-sprite.svg#message-circle" class="slick-prevent-edit"></use>
+        </svg>
       """
 
     if (doc.iem_emails_count > 0)
@@ -382,14 +386,20 @@ GridControl.installFormatter "textWithTreeControls",
       tasks_file_manager_count = parseInt(tasks_file_manager_count, 10) # Don't open an XSS chance.
       if tasks_file_manager_count > 0
         tree_control += """
-            <i class="fa fa-fw fa-paperclip task-files slick-prevent-edit" title="#{TAPi18n.__ "tree_control_tooltip_files_count", {files_count: tasks_file_manager_count}}" aria-hidden="true"></i>
+          <svg class="jd-icon task-files ongrid-jd-icon slick-prevent-edit">
+            <title>#{TAPi18n.__ "tree_control_tooltip_files_count", {files_count: tasks_file_manager_count}}</title>
+            <use xlink:href="/layout/icons-feather-sprite.svg#paperclip" class="slick-prevent-edit"></use>
+          </svg>
         """
 
     if (justdo_files_count = doc[JustdoFiles.files_count_task_doc_field_id])?
       justdo_files_count = parseInt(justdo_files_count, 10) # Don't open an XSS chance.
       if justdo_files_count > 0
         tree_control += """
-            <i class="fa fa-fw fa-paperclip justdo-files slick-prevent-edit" title="#{TAPi18n.__ "tree_control_tooltip_files_count", {files_count: justdo_files_count}}" aria-hidden="true"></i>
+          <svg class="jd-icon justdo-files ongrid-jd-icon slick-prevent-edit">
+            <title>#{TAPi18n.__ "tree_control_tooltip_files_count", {files_count: justdo_files_count}}</title>
+            <use xlink:href="/layout/icons-feather-sprite.svg#paperclip" class="slick-prevent-edit"></use>
+          </svg>
         """
 
     if @getCurrentColumnData("delivery_planner_plugin_enabled")
