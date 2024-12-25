@@ -143,5 +143,12 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/news/v5-2/v5-2.coffee", both);
   this.addI18nFiles(api, "lib/both/news/v5-2/i18n/{}.i18n.json");
 
+  // v5.4
+  api.addAssets([
+    "lib/both/news/v5-4/assets/1.png",
+    "lib/both/news/v5-4/assets/2.png"
+  ], client);
+  api.addFiles("lib/both/news/v5-4/v5-4.coffee", both);
+
   api.export("JustdoNewsData", both);
 });
