@@ -24,15 +24,18 @@
       <div class="search-result-list">
         {{#each resultTasks}}
           <div class="search-result-item" data-path="{{path}}">
-            {{#if parent_title}}
-              <div class="task-parent-title">
-                {{{xssGuard parent_title noFormatting=true}}} ┓
-              </div>
+            {{#if showContext}}
+              {{#if parent_title}}
+                <div class="task-parent-title">
+                  {{{xssGuard parent_title noFormatting=true}}}
+                  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#corner-down-right"></use></svg>
+                </div>
+              {{/if}}
             {{/if}}
-            <div class="task-title">
+            <div class="task-title {{#if showContext}}{{#if parent_title}}child-element{{/if}}{{/if}}">
               <span class="task-seq-id">{{{xssGuard(_ "grid_control_search_task_with_seq_id_prefix" seqId=seqId) noFormatting=true}}}</span> {{{xssGuard title noFormatting=true}}}
             </div>
-            <div class="task-info">
+            <div class="task-info {{#if showContext}}{{#if parent_title}}child-element{{/if}}{{/if}}">
               {{#if state}}
                 <span class="task-info-state">{{_ "grid_control_search_state_prefix"}}</span>{{{xssGuard state noFormatting=true}}}
               {{/if}}
@@ -45,6 +48,15 @@
             </div>
           </div>
         {{/each}}
+        <div class="search-show-context">
+          {{#if showContext}}
+            <div class="search-show-context-toggle">Hide context</div>
+            <svg class="jd-icon search-show-context-toggle text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"></use></svg>
+          {{else}}
+            <div class="search-show-context-toggle">Show the context</div>
+            <svg class="jd-icon search-show-context-toggle"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"></use></svg>
+          {{/if}}
+        </div>
       </div>
     {{else}}
       <div class="search-result-empty">

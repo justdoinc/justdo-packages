@@ -50,6 +50,7 @@ Template.grid_control_search_dropdown.onCreated ->
 
   tpl.result_count_step = 20
   tpl.result_count = new ReactiveVar tpl.result_count_step
+  tpl.show_context_rv = new ReactiveVar false
 
   # Prototyping data - Start
   @filters = new ReactiveVar [
@@ -122,6 +123,9 @@ Template.grid_control_search_dropdown.helpers
   filters: ->
     return Template.instance().filters.get()
 
+  showContext: ->
+    return Template.instance().show_context_rv.get()
+
 Template.grid_control_search_dropdown.events
   "click .search-dropdown-nav-link": (e, tpl) ->
     $(".search-dropdown-nav-link").removeClass "active"
@@ -147,5 +151,10 @@ Template.grid_control_search_dropdown.events
 
     if Math.round($list.scrollTop() + $list.innerHeight()) >= $list[0].scrollHeight
       tpl.result_count.set tpl.result_count.get() + tpl.result_count_step
+
+    return
+
+  "click .search-show-context-toggle": (e, tpl) ->
+    tpl.show_context_rv.set !tpl.show_context_rv.get()
 
     return
