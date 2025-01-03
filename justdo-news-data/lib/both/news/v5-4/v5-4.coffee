@@ -1,7 +1,7 @@
 APP.justdo_crm.registerNews "news",
   _id: "v5-4"
   aliases: ["v5-4-x"]
-  date: "2024-12-25"
+  date: "2025-01-03"
   title: "v5_4_news_title"
 
   templates: [
@@ -22,11 +22,6 @@ APP.justdo_crm.registerNews "news",
             "subtitle": "v5_4_news_main_array_item_1_subtitle"
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/1.png"
           },
-          {
-            "title": "v5_4_news_main_array_item_2_title"
-            "subtitle": "v5_4_news_main_array_item_2_subtitle"
-            "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/2.png"
-          }
           {
             "title": "v5_4_news_main_array_item_3_title"
             "subtitle": "v5_4_news_main_array_item_3_subtitle"

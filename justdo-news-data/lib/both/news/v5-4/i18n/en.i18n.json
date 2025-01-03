@@ -2,19 +2,16 @@
   "v5_4_news_title": "v5.4",
   "v5_4_news_main_name": "What's new",
 
-  "v5_4_news_page_title": "JustDo v5.4: Bottom Pane updated, new search dropdown introduced, and System Info added for admins.",
-  "v5_4_news_page_description": "Experience the power of global project management with JustDo 5.4! We've updated the Bottom Pane, introduced a new search dropdown, added System Info for admins, and more.",
-  "v5_4_news_main_array_item_0_subtitle": "Today, we are pleased to announce the release of JustDo v5.4. This new version brings a host of features designed to make project management truly borderless.",
+  "v5_4_news_page_title": "JustDo v5.4: Bottom Pane updated and System Info added for admins.",
+  "v5_4_news_page_description": "Experience the power of global project management with JustDo 5.4! We've updated the Bottom Pane and added System Info for admins, and more.",
+  "v5_4_news_main_array_item_0_subtitle": "Today, we are pleased to announce the release of JustDo v5.4.",
 
 
   "v5_4_news_main_array_item_1_title": "Allow the Bottom Pane to expand to the full height of the window",
   "v5_4_news_main_array_item_1_subtitle": "With this update, the bottom panel expands to the full browser window height with a single click.",
 
-  "v5_4_news_main_array_item_2_title": "New Search Dropdown",
-  "v5_4_news_main_array_item_2_subtitle": "New Search Dropdown Description",
-
   "v5_4_news_main_array_item_3_title": "Introduce System Info to the JustDo's site admin section",
-  "v5_4_news_main_array_item_3_subtitle": "A new panel within the JustDo admin dashboard that highlights key server stats.",
+  "v5_4_news_main_array_item_3_subtitle": "A new panel within the JustDo admin dashboard that highlights key server statistics.",
 
   "v5_4_news_features_name": "Other Updates",
   "v5_4_news_features_title": "Improvements",
