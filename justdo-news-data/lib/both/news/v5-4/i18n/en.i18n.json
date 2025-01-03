@@ -6,7 +6,6 @@
   "v5_4_news_page_description": "Experience the power of global project management with JustDo 5.4! We've updated the Bottom Pane and added System Info for admins, and more.",
   "v5_4_news_main_array_item_0_subtitle": "Today, we are pleased to announce the release of JustDo v5.4.",
 
-
   "v5_4_news_main_array_item_1_title": "Allow the Bottom Pane to expand to the full height of the window",
   "v5_4_news_main_array_item_1_subtitle": "With this update, the bottom panel expands to the full browser window height with a single click.",
 
@@ -16,7 +15,7 @@
   "v5_4_news_features_name": "Other Updates",
   "v5_4_news_features_title": "Improvements",
   "v5_4_news_features_update_items": [
-    "1. New icons for Projects - and other icons updates.",
+    "1. New icons for Projects - and other icons updates.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
     "2. Distinguish between Project and Closed Project in the Type field.",
     "3. Format better Numbers and Smart Numbers fields, separate thousands locale aware."
   ]
