@@ -36,25 +36,19 @@ _.extend JustdoTutorials.prototype,
         @is_tutorial_dropdown_allowed_to_close = false
 
         return
-
-      # This take care regular create justdo calls
-      APP.projects.on "post-create-new-project", (project_id) =>
-        showTutorialDropdownAndPrevrentClose()
-        return
       
       # This take care of the first justdo created for user upon registration
       APP.projects.once "post-reg-init-completed", (init_report) =>        
-        if init_report.first_project_created isnt false
-          Tracker.autorun (computation) =>
-            if not (gc = APP.modules.project_page.gridControl(true))?
-              return
-
-            if not (grid_ready = gc.ready?.get?())
-              return
-
-            showTutorialDropdownAndPrevrentClose()
-            computation.stop()
+        Tracker.autorun (computation) =>
+          if not (gc = APP.modules.project_page.gridControl(true))?
             return
+
+          if not (grid_ready = gc.ready?.get?())
+            return
+
+          showTutorialDropdownAndPrevrentClose()
+          computation.stop()
+          return
 
         return
 
