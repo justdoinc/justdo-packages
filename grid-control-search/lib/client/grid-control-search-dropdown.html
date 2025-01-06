@@ -1,6 +1,6 @@
 <template name="grid_control_search_dropdown">
   <div class="search-dropdown">
-    {{#if result_tasks}}
+    {{#if resultTasks}}
       <div class="search-dropdown-nav">
         <div class="search-dropdown-nav-link tasks text-primary active">
           Tasks ({{resultTasksCount}})
@@ -22,7 +22,7 @@
         </div>
       {{/if}}
       <div class="search-result-list">
-        {{#each result_tasks}}
+        {{#each resultTasks}}
           <div class="search-result-item">
             <div class="task-title">
               <span class="task-seq-id">{{{xssGuard(_ "grid_control_search_task_with_seq_id_prefix" seqId=seqId) noFormatting=true}}}</span> {{{xssGuard title noFormatting=true}}}

@@ -83,7 +83,7 @@ Template.grid_control_search_dropdown.onCreated ->
   return
 
 Template.grid_control_search_dropdown.helpers
-  result_tasks: ->
+  resultTasks: ->
     tpl = Template.instance()
 
     search_val = tpl.grid_control_search.getCurrentTerm()
