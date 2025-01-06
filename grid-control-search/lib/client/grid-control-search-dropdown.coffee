@@ -92,9 +92,10 @@ Template.grid_control_search_dropdown.helpers
 
     task_ids = _.map paths, (path) -> GridData.helpers.getPathItemId path
     result_count = tpl.result_count.get()
-    tasks = APP.collections.Tasks.find({_id: {$in: task_ids}}, {limit: result_count}).map (task_doc) ->
+    tasks = APP.collections.Tasks.find({_id: {$in: task_ids}}, {limit: result_count}).map (task_doc, i) ->
       task_obj = {
         task_id: task_doc._id
+        path: paths[i]
         seqId: highlight(task_doc.seqId, search_val, "seqId")
         title: highlight(task_doc.title, search_val, "title")
         state: highlight(stateFormatter(task_doc.state), search_val, "state")
@@ -123,7 +124,7 @@ Template.grid_control_search_dropdown.events
     return
 
   "click .search-result-item": (e, tpl) ->
-    APP.modules.project_page.gridControl().activateCollectionItemId @task_id
+    APP.modules.project_page.gridControl().activatePath @path 
 
     return
 
