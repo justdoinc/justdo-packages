@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Có gì mới",
+  "v5_4_news_page_title": "JustDo v5.4: Cập nhật Khung dưới và thêm Thông tin Hệ thống cho quản trị viên.",
+  "v5_4_news_page_description": "Trải nghiệm sức mạnh quản lý dự án toàn cầu với JustDo 5.4! Chúng tôi đã cập nhật Khung dưới và bổ sung Thông tin Hệ thống cho quản trị viên, và nhiều tính năng khác.",
+  "v5_4_news_main_array_item_0_subtitle": "Hôm nay, chúng tôi vui mừng thông báo về việc ra mắt JustDo v5.4.",
+  "v5_4_news_main_array_item_1_title": "Cho phép Khung dưới mở rộng toàn bộ chiều cao của cửa sổ",
+  "v5_4_news_main_array_item_1_subtitle": "Với bản cập nhật này, khung dưới có thể mở rộng bằng toàn bộ chiều cao cửa sổ trình duyệt chỉ với một cú nhấp chuột.",
+  "v5_4_news_main_array_item_3_title": "Giới thiệu Thông tin Hệ thống trong phần quản trị của JustDo",
+  "v5_4_news_main_array_item_3_subtitle": "Một bảng điều khiển mới trong trang quản trị JustDo hiển thị các thống kê quan trọng của máy chủ.",
+  "v5_4_news_features_name": "Các Cập nhật Khác",
+  "v5_4_news_features_title": "Các Cải tiến",
+  "v5_4_news_features_update_items": [
+    "1. Biểu tượng mới cho Dự án - và các cập nhật biểu tượng khác.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Phân biệt giữa Dự án và Dự án Đã đóng trong trường Loại.",
+    "3. Định dạng tốt hơn cho các trường Số và Số Thông minh, phân cách hàng nghìn theo ngôn ngữ địa phương."
+  ]
+}

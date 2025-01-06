@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Apa yang baru",
+  "v5_4_news_page_title": "JustDo v5.4: Panel Bawah diperbarui & Info Sistem untuk admin.",
+  "v5_4_news_page_description": "Rasakan kekuatan manajemen proyek global dengan JustDo 5.4! Kami telah memperbarui Panel Bawah dan menambahkan Info Sistem untuk admin, dan lainnya.",
+  "v5_4_news_main_array_item_0_subtitle": "Hari ini, kami dengan senang hati mengumumkan peluncuran JustDo v5.4.",
+  "v5_4_news_main_array_item_1_title": "Panel Bawah dapat diperluas hingga tinggi penuh jendela",
+  "v5_4_news_main_array_item_1_subtitle": "Dengan pembaruan ini, panel bawah dapat diperluas hingga tinggi penuh jendela browser dengan satu klik.",
+  "v5_4_news_main_array_item_3_title": "Memperkenalkan Info Sistem di bagian admin situs JustDo",
+  "v5_4_news_main_array_item_3_subtitle": "Panel baru dalam dasbor admin JustDo yang menampilkan statistik server utama.",
+  "v5_4_news_features_name": "Pembaruan Lainnya",
+  "v5_4_news_features_title": "Peningkatan",
+  "v5_4_news_features_update_items": [
+    "1. Ikon baru untuk Proyek - dan pembaruan ikon lainnya.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Membedakan antara Proyek dan Proyek yang Ditutup di kolom Tipe.",
+    "3. Format yang lebih baik untuk kolom Angka dan Angka Pintar (Smart Numbers), pemisahan ribuan sesuai dengan pengaturan lokal."
+  ]
+}

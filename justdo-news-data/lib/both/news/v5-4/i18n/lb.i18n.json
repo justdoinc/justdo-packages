@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Wat ass nei",
+  "v5_4_news_page_title": "JustDo v5.4: Ënneschten Panel iwwerschafft a System Info fir Adminen.",
+  "v5_4_news_page_description": "Entdeckt d'Kraaft vu globalem Projektmanagement mat JustDo 5.4! Mir hunn den Ënneschte Panel aktualiséiert an eng System Info fir Adminen agefügt.",
+  "v5_4_news_main_array_item_0_subtitle": "Haut si mir frou, d'Verëffentlechung vun JustDo v5.4 unzekënnegen.",
+  "v5_4_news_main_array_item_1_title": "Den Ënneschte Panel kann elo op déi komplett Fënsterhéicht vergréissert ginn",
+  "v5_4_news_main_array_item_1_subtitle": "Mat dëser Aktualiséierung gëtt den Ënneschte Panel mat engem eenzege Klick op déi komplett Browser-Fënsterhéicht erweidert.",
+  "v5_4_news_main_array_item_3_title": "System Info am JustDo Admin-Beräich agefügt",
+  "v5_4_news_main_array_item_3_subtitle": "En neie Panel am JustDo Admin-Dashboard, deen wichteg Server-Statistiken uweist.",
+  "v5_4_news_features_name": "Aner Updaten",
+  "v5_4_news_features_title": "Verbesserungen",
+  "v5_4_news_features_update_items": [
+    "1. Nei Symboler fir Projeten - an aner Symbol-Aktualiséierungen.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Ënnerscheedung tëscht Projet an ofgeschlossene Projet am Typ-Feld.",
+    "3. Besser Formatéierung vun Zuelen a Smart Zuele Felder, dausender-Trennung no der lokaler Astellung."
+  ]
+}

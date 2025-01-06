@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Vipya vipya",
+  "v5_4_news_page_title": "JustDo v5.4: Pane ya chini imeboreshwa na Taarifa za Mfumo kwa wasimamizi.",
+  "v5_4_news_page_description": "Gundua uwezo wa usimamizi wa miradi wa kimataifa na JustDo 5.4! Tumeboresha Pane ya chini na kuongeza Taarifa za Mfumo kwa wasimamizi, na zaidi.",
+  "v5_4_news_main_array_item_0_subtitle": "Leo, tunafurahi kutangaza toleo la JustDo v5.4.",
+  "v5_4_news_main_array_item_1_title": "Ruhusu Pane ya chini kupanuka hadi urefu kamili wa dirisha",
+  "v5_4_news_main_array_item_1_subtitle": "Kwa sasisho hili, paneli ya chini inapanuka hadi urefu kamili wa dirisha la kivinjari kwa kubofya mara moja.",
+  "v5_4_news_main_array_item_3_title": "Kuanzisha Taarifa za Mfumo katika sehemu ya msimamizi wa tovuti ya JustDo",
+  "v5_4_news_main_array_item_3_subtitle": "Paneli mpya ndani ya dashibodi ya msimamizi wa JustDo inayoonyesha takwimu muhimu za seva.",
+  "v5_4_news_features_name": "Masasisho Mengine",
+  "v5_4_news_features_title": "Maboresho",
+  "v5_4_news_features_update_items": [
+    "1. Aikoni mpya za Miradi - na masasisho mengine ya aikoni.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Kutofautisha kati ya Mradi na Mradi Uliofungwa katika sehemu ya Aina.",
+    "3. Umbiza vyema Namba na sehemu za Namba Mahiri, tenganisha maelfu kulingana na lugha ya eneo."
+  ]
+}

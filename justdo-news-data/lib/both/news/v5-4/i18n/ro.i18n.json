@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Ce este nou",
+  "v5_4_news_page_title": "JustDo v5.4: Panou inferior actualizat și Info Sistem pentru administratori.",
+  "v5_4_news_page_description": "Experimentați puterea managementului global de proiecte cu JustDo 5.4! Am actualizat Panoul Inferior și am adăugat Info Sistem pentru administratori, și multe altele.",
+  "v5_4_news_main_array_item_0_subtitle": "Astăzi, suntem bucuroși să anunțăm lansarea JustDo v5.4.",
+  "v5_4_news_main_array_item_1_title": "Permite Panoului Inferior să se extindă la înălțimea completă a ferestrei",
+  "v5_4_news_main_array_item_1_subtitle": "Cu această actualizare, panoul inferior se extinde la înălțimea completă a ferestrei browserului cu un singur clic.",
+  "v5_4_news_main_array_item_3_title": "Introducerea Info Sistem în secțiunea de administrare JustDo",
+  "v5_4_news_main_array_item_3_subtitle": "Un nou panou în tabloul de bord al administratorului JustDo care evidențiază statisticile cheie ale serverului.",
+  "v5_4_news_features_name": "Alte Actualizări",
+  "v5_4_news_features_title": "Îmbunătățiri",
+  "v5_4_news_features_update_items": [
+    "1. Pictograme noi pentru Proiecte - și alte actualizări de pictograme.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Distincție între Proiect și Proiect Închis în câmpul Tip.",
+    "3. Formatare îmbunătățită pentru câmpurile Numere și Numere Inteligente (Smart Numbers), cu separarea miilor conform setărilor regionale."
+  ]
+}

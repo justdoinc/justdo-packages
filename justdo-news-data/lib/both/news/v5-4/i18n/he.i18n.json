@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "מה חדש",
+  "v5_4_news_page_title": "JustDo v5.4: חלונית תחתונה משודרגת ומידע מערכת למנהלים",
+  "v5_4_news_page_description": "גלו את עוצמת ניהול הפרויקטים הגלובלי עם JustDo 5.4! שדרגנו את החלונית התחתונה והוספנו מידע מערכת למנהלים, ועוד.",
+  "v5_4_news_main_array_item_0_subtitle": "אנו שמחים להכריז היום על השקת JustDo v5.4.",
+  "v5_4_news_main_array_item_1_title": "אפשרות להרחבת החלונית התחתונה לגובה המלא של החלון",
+  "v5_4_news_main_array_item_1_subtitle": "עם עדכון זה, החלונית התחתונה מתרחבת לגובה המלא של חלון הדפדפן בלחיצה אחת.",
+  "v5_4_news_main_array_item_3_title": "הוספת מידע מערכת לאזור מנהל האתר של JustDo",
+  "v5_4_news_main_array_item_3_subtitle": "לוח חדש בלוח המחוונים של מנהל JustDo המציג סטטיסטיקות שרת חשובות.",
+  "v5_4_news_features_name": "עדכונים נוספים",
+  "v5_4_news_features_title": "שיפורים",
+  "v5_4_news_features_update_items": [
+    "1. סמלים חדשים לפרויקטים - ועדכוני סמלים נוספים.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. הבחנה בין פרויקט לפרויקט סגור בשדה הסוג.",
+    "3. עיצוב משופר לשדות מספרים ומספרים חכמים, הפרדת אלפים בהתאם להגדרות האזוריות."
+  ]
+}

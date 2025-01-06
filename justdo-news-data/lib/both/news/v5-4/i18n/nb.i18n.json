@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Nyheter",
+  "v5_4_news_page_title": "JustDo v5.4: Nedre panel oppdatert og Systeminfo for administratorer.",
+  "v5_4_news_page_description": "Opplev kraften i global prosjektstyring med JustDo 5.4! Vi har oppdatert det nedre panelet og lagt til Systeminfo for administratorer, og mer.",
+  "v5_4_news_main_array_item_0_subtitle": "I dag er vi glade for å kunne kunngjøre lanseringen av JustDo v5.4.",
+  "v5_4_news_main_array_item_1_title": "Nedre panel kan nå utvides til vinduets fulle høyde",
+  "v5_4_news_main_array_item_1_subtitle": "Med denne oppdateringen kan det nedre panelet utvides til nettleservinduets fulle høyde med ett enkelt klikk.",
+  "v5_4_news_main_array_item_3_title": "Introduserer Systeminfo i JustDos administratordel",
+  "v5_4_news_main_array_item_3_subtitle": "Et nytt panel i JustDo-administratorpanelet som viser viktig serverstatistikk.",
+  "v5_4_news_features_name": "Andre oppdateringer",
+  "v5_4_news_features_title": "Forbedringer",
+  "v5_4_news_features_update_items": [
+    "1. Nye ikoner for Prosjekter - og andre ikonoppdateringer.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Skiller mellom Prosjekt og Lukket Prosjekt i Type-feltet.",
+    "3. Bedre formatering av Tall og Smarte Tall-felt, med lokaltilpasset tusenskille."
+  ]
+}

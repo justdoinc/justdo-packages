@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Šta je novo",
+  "v5_4_news_page_title": "JustDo v5.4: Ažurirani donji panel i dodane sistemske informacije za admine",
+  "v5_4_news_page_description": "Doživite snagu globalnog upravljanja projektima sa JustDo 5.4! Ažurirali smo donji panel i dodali sistemske informacije za administratore, i još mnogo toga.",
+  "v5_4_news_main_array_item_0_subtitle": "Danas s ponosom objavljujemo izdanje JustDo v5.4.",
+  "v5_4_news_main_array_item_1_title": "Omogućeno proširenje donjeg panela na punu visinu prozora",
+  "v5_4_news_main_array_item_1_subtitle": "Sa ovom nadogradnjom, donji panel se proširuje na punu visinu prozora preglednika jednim klikom.",
+  "v5_4_news_main_array_item_3_title": "Uvedene sistemske informacije u administratorski dio JustDo-a",
+  "v5_4_news_main_array_item_3_subtitle": "Novi panel unutar JustDo administratorske kontrolne ploče koji prikazuje ključne serverske statistike.",
+  "v5_4_news_features_name": "Ostala ažuriranja",
+  "v5_4_news_features_title": "Poboljšanja",
+  "v5_4_news_features_update_items": [
+    "1. Nove ikone za Projekte - i druga ažuriranja ikona.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Razlikovanje između Projekta i Zatvorenog projekta u polju Tip.",
+    "3. Bolje formatiranje polja Brojevi i Pametni brojevi, odvajanje hiljada prema lokalnim postavkama."
+  ]
+}

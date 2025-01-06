@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Nouveautés",
+  "v5_4_news_page_title": "JustDo v5.4 : Panneau inférieur amélioré et Info Système pour admins",
+  "v5_4_news_page_description": "Découvrez la puissance de la gestion de projet globale avec JustDo 5.4! Panneau inférieur amélioré, Info Système pour administrateurs, et plus encore.",
+  "v5_4_news_main_array_item_0_subtitle": "Aujourd'hui, nous sommes heureux d'annoncer la sortie de JustDo v5.4.",
+  "v5_4_news_main_array_item_1_title": "Le panneau inférieur peut maintenant s'étendre sur toute la hauteur de la fenêtre",
+  "v5_4_news_main_array_item_1_subtitle": "Avec cette mise à jour, le panneau inférieur s'étend sur toute la hauteur de la fenêtre du navigateur en un seul clic.",
+  "v5_4_news_main_array_item_3_title": "Introduction d'Info Système dans la section admin de JustDo",
+  "v5_4_news_main_array_item_3_subtitle": "Un nouveau panneau dans le tableau de bord administrateur de JustDo qui met en évidence les statistiques clés du serveur.",
+  "v5_4_news_features_name": "Autres mises à jour",
+  "v5_4_news_features_title": "Améliorations",
+  "v5_4_news_features_update_items": [
+    "1. Nouvelles icônes pour les Projets - et autres mises à jour d'icônes.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Distinction entre Projet et Projet Fermé dans le champ Type.",
+    "3. Meilleur formatage des champs Nombres et Nombres Intelligents, séparateur de milliers adapté à la langue."
+  ]
+}

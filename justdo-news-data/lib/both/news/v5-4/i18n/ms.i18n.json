@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Yang Terbaru",
+  "v5_4_news_page_title": "JustDo v5.4: Panel Bawah dikemaskini dan Info Sistem untuk pentadbir.",
+  "v5_4_news_page_description": "Rasai kuasa pengurusan projek global dengan JustDo 5.4! Kami telah mengemaskini Panel Bawah dan menambah Info Sistem untuk pentadbir, dan banyak lagi.",
+  "v5_4_news_main_array_item_0_subtitle": "Hari ini, kami dengan sukacitanya mengumumkan pelancaran JustDo v5.4.",
+  "v5_4_news_main_array_item_1_title": "Panel Bawah boleh dikembangkan ke ketinggian penuh tetingkap",
+  "v5_4_news_main_array_item_1_subtitle": "Dengan kemaskini ini, panel bawah boleh dikembangkan ke ketinggian penuh tetingkap pelayar dengan satu klik sahaja.",
+  "v5_4_news_main_array_item_3_title": "Memperkenalkan Info Sistem dalam bahagian pentadbir laman JustDo",
+  "v5_4_news_main_array_item_3_subtitle": "Panel baru dalam papan pemuka pentadbir JustDo yang memaparkan statistik utama pelayan.",
+  "v5_4_news_features_name": "Kemaskini Lain",
+  "v5_4_news_features_title": "Penambahbaikan",
+  "v5_4_news_features_update_items": [
+    "1. Ikon baru untuk Projek - dan kemaskini ikon lain.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Membezakan antara Projek dan Projek Tertutup dalam medan Jenis.",
+    "3. Format yang lebih baik untuk medan Nombor dan Nombor Pintar, pemisahan ribuan mengikut tetapan tempatan."
+  ]
+}

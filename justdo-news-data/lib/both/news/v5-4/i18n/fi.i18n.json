@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Uudet ominaisuudet",
+  "v5_4_news_page_title": "JustDo v5.4: Alapaneeli päivitetty ja järjestelmätiedot lisätty",
+  "v5_4_news_page_description": "Koe globaalin projektinhallinnan teho JustDo 5.4:llä! Olemme päivittäneet alapaneelin ja lisänneet järjestelmätiedot ylläpitäjille, ja paljon muuta.",
+  "v5_4_news_main_array_item_0_subtitle": "Tänään julkaisemme ilolla JustDo versio 5.4:n.",
+  "v5_4_news_main_array_item_1_title": "Alapaneelin laajennus koko ikkunan korkeuteen",
+  "v5_4_news_main_array_item_1_subtitle": "Tällä päivityksellä alapaneeli laajenee yhdellä klikkauksella koko selainikkunan korkuiseksi.",
+  "v5_4_news_main_array_item_3_title": "Järjestelmätiedot lisätty JustDon ylläpito-osioon",
+  "v5_4_news_main_array_item_3_subtitle": "Uusi paneeli JustDon ylläpitonäkymässä, joka näyttää keskeiset palvelintilastot.",
+  "v5_4_news_features_name": "Muut päivitykset",
+  "v5_4_news_features_title": "Parannukset",
+  "v5_4_news_features_update_items": [
+    "1. Uudet kuvakkeet projekteille - ja muut kuvakepäivitykset.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Projektin ja suljetun projektin erottaminen Tyyppi-kentässä.",
+    "3. Parempi numeroiden ja älykkäiden numerokenttien muotoilu, tuhaterottimet paikallisen käytännön mukaan."
+  ]
+}

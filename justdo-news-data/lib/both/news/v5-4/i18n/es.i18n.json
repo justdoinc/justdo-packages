@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Novedades",
+  "v5_4_news_page_title": "JustDo v5.4: Panel inferior actualizado e Info del Sistema para admins.",
+  "v5_4_news_page_description": "¡Experimenta el poder de la gestión global de proyectos con JustDo 5.4! Hemos actualizado el Panel Inferior y añadido Info del Sistema para administradores, y más.",
+  "v5_4_news_main_array_item_0_subtitle": "Hoy nos complace anunciar el lanzamiento de JustDo v5.4.",
+  "v5_4_news_main_array_item_1_title": "Permitir que el Panel Inferior se expanda a la altura completa de la ventana",
+  "v5_4_news_main_array_item_1_subtitle": "Con esta actualización, el panel inferior se expande a la altura completa de la ventana del navegador con un solo clic.",
+  "v5_4_news_main_array_item_3_title": "Introducción de Info del Sistema en la sección de administración de JustDo",
+  "v5_4_news_main_array_item_3_subtitle": "Un nuevo panel dentro del tablero de administración de JustDo que destaca estadísticas clave del servidor.",
+  "v5_4_news_features_name": "Otras Actualizaciones",
+  "v5_4_news_features_title": "Mejoras",
+  "v5_4_news_features_update_items": [
+    "1. Nuevos iconos para Proyectos - y otras actualizaciones de iconos.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Distinción entre Proyecto y Proyecto Cerrado en el campo Tipo.",
+    "3. Mejor formato para campos Numéricos y Números Inteligentes (Smart Numbers), separación de miles según la configuración regional."
+  ]
+}

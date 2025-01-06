@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Nyheder",
+  "v5_4_news_page_title": "JustDo v5.4: Bundpanel opdateret og Systeminfo tilføjet for admins.",
+  "v5_4_news_page_description": "Oplev styrken ved global projektstyring med JustDo 5.4! Vi har opdateret bundpanelet og tilføjet systeminfo for administratorer, og mere.",
+  "v5_4_news_main_array_item_0_subtitle": "I dag er vi glade for at kunne annoncere udgivelsen af JustDo v5.4.",
+  "v5_4_news_main_array_item_1_title": "Tillad bundpanelet at udvide sig til vinduets fulde højde",
+  "v5_4_news_main_array_item_1_subtitle": "Med denne opdatering kan bundpanelet udvides til browservinduets fulde højde med et enkelt klik.",
+  "v5_4_news_main_array_item_3_title": "Introducerer Systeminfo i JustDo's administrationssektion",
+  "v5_4_news_main_array_item_3_subtitle": "Et nyt panel i JustDo's administratordashboard der viser vigtige serverstatistikker.",
+  "v5_4_news_features_name": "Andre Opdateringer",
+  "v5_4_news_features_title": "Forbedringer",
+  "v5_4_news_features_update_items": [
+    "1. Nye ikoner for Projekter - og andre ikonopdateringer.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Skelner mellem Projekt og Lukket Projekt i Typefelt.",
+    "3. Forbedret formatering af Tal og Smarte Tal-felter med lokalitetstilpasset tusindtalsseparator."
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Wat is er nieuw",
+  "v5_4_news_page_title": "JustDo v5.4: Onderpaneel bijgewerkt en Systeeminfo voor beheerders.",
+  "v5_4_news_page_description": "Ervaar de kracht van wereldwijd projectbeheer met JustDo 5.4! We hebben het Onderpaneel geüpdatet en Systeeminfo voor beheerders toegevoegd, en meer.",
+  "v5_4_news_main_array_item_0_subtitle": "Vandaag kondigen we met genoegen de release van JustDo v5.4 aan.",
+  "v5_4_news_main_array_item_1_title": "Het Onderpaneel kan nu worden uitgebreid tot de volledige venstergrootte",
+  "v5_4_news_main_array_item_1_subtitle": "Met deze update breidt het onderpaneel zich met één klik uit tot de volledige browservenstergrootte.",
+  "v5_4_news_main_array_item_3_title": "Introductie van Systeeminfo in het beheerdersgedeelte van JustDo",
+  "v5_4_news_main_array_item_3_subtitle": "Een nieuw paneel binnen het JustDo-beheerderdashboard dat belangrijke serverstatistieken weergeeft.",
+  "v5_4_news_features_name": "Andere Updates",
+  "v5_4_news_features_title": "Verbeteringen",
+  "v5_4_news_features_update_items": [
+    "1. Nieuwe pictogrammen voor Projecten - en andere pictogram-updates.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Onderscheid tussen Project en Afgesloten Project in het Type-veld.",
+    "3. Betere opmaak van Getallen en Slimme Getallen velden, duizendtallen gescheiden op basis van lokale instellingen."
+  ]
+}

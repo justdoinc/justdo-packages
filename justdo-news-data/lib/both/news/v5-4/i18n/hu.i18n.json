@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Újdonságok",
+  "v5_4_news_page_title": "JustDo v5.4: Frissült az alsó panel és rendszerinfók adminoknak.",
+  "v5_4_news_page_description": "Fedezze fel a globális projektmenedzsment erejét a JustDo 5.4-gyel! Frissítettük az alsó panelt, hozzáadtuk a rendszerinformációkat adminoknak, és még több újdonság.",
+  "v5_4_news_main_array_item_0_subtitle": "Örömmel jelentjük be a JustDo v5.4 kiadását.",
+  "v5_4_news_main_array_item_1_title": "Az alsó panel teljes ablakmagasságra bővíthető",
+  "v5_4_news_main_array_item_1_subtitle": "Ezzel a frissítéssel az alsó panel egyetlen kattintással a böngészőablak teljes magasságára bővíthető.",
+  "v5_4_news_main_array_item_3_title": "Rendszerinformációk bevezetése a JustDo adminisztrációs felületén",
+  "v5_4_news_main_array_item_3_subtitle": "Új panel a JustDo admin vezérlőpultján, amely kiemeli a legfontosabb szerver statisztikákat.",
+  "v5_4_news_features_name": "További frissítések",
+  "v5_4_news_features_title": "Fejlesztések",
+  "v5_4_news_features_update_items": [
+    "1. Új ikonok a Projektekhez - és egyéb ikon frissítések.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Különbségtétel a Projekt és a Lezárt Projekt között a Típus mezőben.",
+    "3. Jobb számformázás a Szám és Intelligens Szám mezőkben, ezresek elválasztása a helyi beállítások szerint."
+  ]
+}

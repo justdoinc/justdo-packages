@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "ما الجديد",
+  "v5_4_news_page_title": "JustDo v5.4: تحديث الجزء السفلي وإضافة معلومات النظام للمشرفين.",
+  "v5_4_news_page_description": "اختبر قوة إدارة المشاريع العالمية مع JustDo 5.4! قمنا بتحديث الجزء السفلي وإضافة معلومات النظام للمشرفين، والمزيد.",
+  "v5_4_news_main_array_item_0_subtitle": "يسرنا اليوم الإعلان عن إصدار JustDo v5.4.",
+  "v5_4_news_main_array_item_1_title": "السماح للجزء السفلي بالتوسع إلى الارتفاع الكامل للنافذة",
+  "v5_4_news_main_array_item_1_subtitle": "مع هذا التحديث، يمكن توسيع اللوحة السفلية إلى الارتفاع الكامل لنافذة المتصفح بنقرة واحدة.",
+  "v5_4_news_main_array_item_3_title": "إضافة معلومات النظام إلى قسم مشرف موقع JustDo",
+  "v5_4_news_main_array_item_3_subtitle": "لوحة جديدة داخل لوحة تحكم مشرف JustDo تعرض إحصائيات الخادم الرئيسية.",
+  "v5_4_news_features_name": "تحديثات أخرى",
+  "v5_4_news_features_title": "تحسينات",
+  "v5_4_news_features_update_items": [
+    "1. أيقونات جديدة للمشاريع - وتحديثات أيقونات أخرى.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. التمييز بين المشروع والمشروع المغلق في حقل النوع.",
+    "3. تنسيق أفضل لحقول الأرقام والأرقام الذكية، مع فصل الآلاف حسب اللغة المحلية."
+  ]
+}

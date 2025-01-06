@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Novità",
+  "v5_4_news_page_title": "JustDo v5.4: Pannello inferiore aggiornato e Info Sistema per admin",
+  "v5_4_news_page_description": "Scopri la potenza del Project Management globale con JustDo 5.4! Abbiamo aggiornato il pannello inferiore e aggiunto Info Sistema per gli amministratori.",
+  "v5_4_news_main_array_item_0_subtitle": "Oggi siamo lieti di annunciare il rilascio di JustDo v5.4.",
+  "v5_4_news_main_array_item_1_title": "Il Pannello inferiore si espande a tutta altezza",
+  "v5_4_news_main_array_item_1_subtitle": "Con questo aggiornamento, il pannello inferiore si espande all'altezza completa della finestra del browser con un solo clic.",
+  "v5_4_news_main_array_item_3_title": "Introduzione di Info Sistema nella sezione amministrativa di JustDo",
+  "v5_4_news_main_array_item_3_subtitle": "Un nuovo pannello nella dashboard amministrativa di JustDo che evidenzia le statistiche chiave del server.",
+  "v5_4_news_features_name": "Altri Aggiornamenti",
+  "v5_4_news_features_title": "Miglioramenti",
+  "v5_4_news_features_update_items": [
+    "1. Nuove icone per i Progetti - e altri aggiornamenti delle icone.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Distinzione tra Progetto e Progetto Chiuso nel campo Tipo.",
+    "3. Migliore formattazione dei campi Numeri e Numeri Intelligenti, separazione delle migliaia in base alle impostazioni locali."
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Kas naujo",
+  "v5_4_news_page_title": "JustDo v5.4: Atnaujinta apatinė juosta ir pridėta sistemos informacija administratoriams.",
+  "v5_4_news_page_description": "Pažinkite globalaus projektų valdymo galią su JustDo 5.4! Atnaujinome apatinę juostą, pridėjome sistemos informaciją administratoriams ir dar daugiau.",
+  "v5_4_news_main_array_item_0_subtitle": "Šiandien džiaugiamės galėdami pristatyti JustDo v5.4 versiją.",
+  "v5_4_news_main_array_item_1_title": "Galimybė išplėsti apatinę juostą per visą lango aukštį",
+  "v5_4_news_main_array_item_1_subtitle": "Su šiuo atnaujinimu apatinė juosta vienu paspaudimu išsiplečia per visą naršyklės lango aukštį.",
+  "v5_4_news_main_array_item_3_title": "Sistemos informacijos pridėjimas JustDo svetainės administravimo skyriuje",
+  "v5_4_news_main_array_item_3_subtitle": "Naujas skydelis JustDo administratoriaus valdymo skydelyje (dashboard), rodantis pagrindinę serverio statistiką.",
+  "v5_4_news_features_name": "Kiti atnaujinimai",
+  "v5_4_news_features_title": "Patobulinimai",
+  "v5_4_news_features_update_items": [
+    "1. Naujos projektų piktogramos ir kitų piktogramų atnaujinimai.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Tipo lauke atskirti Projektą nuo Užbaigto projekto.",
+    "3. Patobulinta skaičių ir išmaniųjų skaičių (Smart Numbers) laukų formatavimas, tūkstančiai atskiriami pagal lokalę."
+  ]
+}

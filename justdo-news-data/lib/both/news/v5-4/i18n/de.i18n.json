@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Was ist neu",
+  "v5_4_news_page_title": "JustDo v5.4: Unterer Bereich aktualisiert, System-Info für Admins",
+  "v5_4_news_page_description": "Erleben Sie globales Projektmanagement mit JustDo 5.4! Wir haben den unteren Bereich aktualisiert und System-Info für Administratoren hinzugefügt.",
+  "v5_4_news_main_array_item_0_subtitle": "Heute freuen wir uns, die Veröffentlichung von JustDo v5.4 bekanntzugeben.",
+  "v5_4_news_main_array_item_1_title": "Unterer Bereich kann auf volle Fensterhöhe erweitert werden",
+  "v5_4_news_main_array_item_1_subtitle": "Mit diesem Update lässt sich der untere Bereich mit einem Klick auf die volle Browserfensterhöhe erweitern.",
+  "v5_4_news_main_array_item_3_title": "Einführung der System-Info im Admin-Bereich von JustDo",
+  "v5_4_news_main_array_item_3_subtitle": "Ein neuer Bereich im JustDo-Admin-Dashboard, der wichtige Serverstatistiken anzeigt.",
+  "v5_4_news_features_name": "Weitere Updates",
+  "v5_4_news_features_title": "Verbesserungen",
+  "v5_4_news_features_update_items": [
+    "1. Neue Icons für Projekte - und weitere Icon-Aktualisierungen.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Unterscheidung zwischen Projekt und Geschlossenem Projekt im Typ-Feld.",
+    "3. Verbesserte Formatierung von Zahlen und Smart-Zahlen-Feldern mit lokalisierter Tausendertrennzeichen."
+  ]
+}

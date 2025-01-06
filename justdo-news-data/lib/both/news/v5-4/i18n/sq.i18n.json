@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Çfarë ka të re",
+  "v5_4_news_page_title": "JustDo v5.4: Paneli i poshtëm u përditësua dhe u shtua Info e Sistemit.",
+  "v5_4_news_page_description": "Përjetoni fuqinë e menaxhimit global të projekteve me JustDo 5.4! Kemi përditësuar Panelin e Poshtëm dhe kemi shtuar Info të Sistemit për administratorët.",
+  "v5_4_news_main_array_item_0_subtitle": "Sot, kemi kënaqësinë të njoftojmë lëshimin e JustDo v5.4.",
+  "v5_4_news_main_array_item_1_title": "Lejimi i Panelit të Poshtëm të zgjerohet në lartësinë e plotë të dritares",
+  "v5_4_news_main_array_item_1_subtitle": "Me këtë përditësim, paneli i poshtëm zgjerohet në lartësinë e plotë të dritares së shfletuesit me një klikim të vetëm.",
+  "v5_4_news_main_array_item_3_title": "Prezantimi i Info të Sistemit në seksionin e administratorit të JustDo",
+  "v5_4_news_main_array_item_3_subtitle": "Një panel i ri brenda panelit të administratorit të JustDo që tregon statistikat kryesore të serverit.",
+  "v5_4_news_features_name": "Përditësime të Tjera",
+  "v5_4_news_features_title": "Përmirësime",
+  "v5_4_news_features_update_items": [
+    "1. Ikona të reja për Projektet - dhe përditësime të tjera të ikonave.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Dallimi mes Projektit dhe Projektit të Mbyllur në fushën e Llojit.",
+    "3. Formatim më i mirë i fushave Numra dhe Numra të Mençur (Smart Numbers), ndarja e mijësheve sipas gjuhës së sistemit."
+  ]
+}

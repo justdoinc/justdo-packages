@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Berritasunak",
+  "v5_4_news_page_title": "JustDo v5.4: Beheko panela eguneratua eta Sistema-informazioa administratzaileentzat",
+  "v5_4_news_page_description": "Ezagutu proiektu-kudeaketa globalaren indarra JustDo 5.4-rekin! Beheko panela eguneratu eta Sistema-informazioa gehitu dugu administratzaileentzat, eta gehiago.",
+  "v5_4_news_main_array_item_0_subtitle": "Gaur, pozik gaude JustDo v5.4-ren argitalpena iragartzeko.",
+  "v5_4_news_main_array_item_1_title": "Beheko panela leihoaren altuera osora zabaltzeko aukera",
+  "v5_4_news_main_array_item_1_subtitle": "Eguneraketa honekin, beheko panela nabigatzailearen leiho-altuera osora zabaltzen da klik bakarrarekin.",
+  "v5_4_news_main_array_item_3_title": "Sistema-informazioa gehitu JustDo-ren administratzaile atalean",
+  "v5_4_news_main_array_item_3_subtitle": "Panel berri bat JustDo-ren administratzaile-panelean, zerbitzariaren estatistika garrantzitsuak erakusten dituena.",
+  "v5_4_news_features_name": "Beste Eguneraketak",
+  "v5_4_news_features_title": "Hobekuntzak",
+  "v5_4_news_features_update_items": [
+    "1. Ikono berriak Proiektuetarako - eta beste ikono eguneraketak.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Bereizi Proiektua eta Itxitako Proiektua Mota eremuan.",
+    "3. Zenbakiak eta Zenbaki Adimendunak hobeto formateatu, milakoak bereizita tokiko hizkuntzaren arabera."
+  ]
+}

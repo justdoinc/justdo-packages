@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "新機能",
+  "v5_4_news_page_title": "JustDo v5.4: 下部ペイン改善と管理者向けシステム情報追加",
+  "v5_4_news_page_description": "JustDo 5.4でグローバルプロジェクト管理の力を体験！下部ペインの更新と管理者向けシステム情報の追加など、新機能が登場。",
+  "v5_4_news_main_array_item_0_subtitle": "本日、JustDo v5.4のリリースをお知らせいたします。",
+  "v5_4_news_main_array_item_1_title": "下部ペインをウィンドウの全高に拡大可能に",
+  "v5_4_news_main_array_item_1_subtitle": "今回のアップデートで、下部パネルをワンクリックでブラウザウィンドウの全高まで拡大できるようになりました。",
+  "v5_4_news_main_array_item_3_title": "JustDoの管理者セクションにシステム情報を追加",
+  "v5_4_news_main_array_item_3_subtitle": "JustDo管理ダッシュボードに、主要なサーバー統計を表示する新しいパネルを追加しました。",
+  "v5_4_news_features_name": "その他の更新",
+  "v5_4_news_features_title": "改善点",
+  "v5_4_news_features_update_items": [
+    "1. プロジェクト用の新しいアイコン - その他のアイコン更新。<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. タイプフィールドで、プロジェクトと終了プロジェクトを区別。",
+    "3. 数値フィールドとスマート数値フィールドの表示を改善し、ロケールに応じた桁区切りを実装。"
+  ]
+}

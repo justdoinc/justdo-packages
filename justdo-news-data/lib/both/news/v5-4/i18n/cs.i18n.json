@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Co je nového",
+  "v5_4_news_page_title": "JustDo v5.4: Aktualizace spodního panelu a Systémové info pro správce",
+  "v5_4_news_page_description": "Objevte sílu globálního řízení projektů s JustDo 5.4! Aktualizovali jsme spodní panel, přidali Systémové informace pro správce a další.",
+  "v5_4_news_main_array_item_0_subtitle": "Dnes s potěšením oznamujeme vydání JustDo v5.4.",
+  "v5_4_news_main_array_item_1_title": "Možnost rozšíření spodního panelu na plnou výšku okna",
+  "v5_4_news_main_array_item_1_subtitle": "S touto aktualizací se spodní panel jedním kliknutím rozšíří na plnou výšku okna prohlížeče.",
+  "v5_4_news_main_array_item_3_title": "Zavedení Systémových informací do administrační sekce JustDo",
+  "v5_4_news_main_array_item_3_subtitle": "Nový panel v administrátorském rozhraní JustDo zobrazující klíčové statistiky serveru.",
+  "v5_4_news_features_name": "Další aktualizace",
+  "v5_4_news_features_title": "Vylepšení",
+  "v5_4_news_features_update_items": [
+    "1. Nové ikony pro Projekty - a další aktualizace ikon.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Rozlišení mezi Projektem a Uzavřeným projektem v poli Typ.",
+    "3. Lepší formátování číselných polí a Chytrých číselných polí, oddělování tisíců podle místního nastavení."
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Wat's nuut",
+  "v5_4_news_page_title": "JustDo v5.4: Onderste paneel opgedateer en Stelselinligting bygevoeg.",
+  "v5_4_news_page_description": "Ervaar die krag van globale projekbestuur met JustDo 5.4! Ons het die Onderste Paneel opgedateer en Stelselinligting vir administrateurs bygevoeg.",
+  "v5_4_news_main_array_item_0_subtitle": "Vandag kondig ons met trots die vrystelling van JustDo v5.4 aan.",
+  "v5_4_news_main_array_item_1_title": "Laat die Onderste Paneel toe om na die volle venster hoogte te vergroot",
+  "v5_4_news_main_array_item_1_subtitle": "Met hierdie opdatering kan die onderste paneel met een klik na die volle blaaiervenster hoogte vergroot.",
+  "v5_4_news_main_array_item_3_title": "Stel Stelselinligting bekend aan die JustDo administrasie-afdeling",
+  "v5_4_news_main_array_item_3_subtitle": "'n Nuwe paneel binne die JustDo administrateur-paneelbord wat belangrike bedienerstatistieke vertoon.",
+  "v5_4_news_features_name": "Ander Opdaterings",
+  "v5_4_news_features_title": "Verbeterings",
+  "v5_4_news_features_update_items": [
+    "1. Nuwe ikone vir Projekte - en ander ikoon opdaterings.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Onderskei tussen Projek en Geslote Projek in die Tipe veld.",
+    "3. Verbeterde formatering van Nommers en Slim Nommers velde, met duisende lokaal-bewuste skeiding."
+  ]
+}

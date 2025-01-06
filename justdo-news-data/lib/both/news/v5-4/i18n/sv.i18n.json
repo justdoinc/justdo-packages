@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Nyheter",
+  "v5_4_news_page_title": "JustDo v5.4: Nedre panelen uppdaterad och Systeminfo för admins",
+  "v5_4_news_page_description": "Upplev kraften i global projekthantering med JustDo 5.4! Vi har uppdaterat den nedre panelen och lagt till Systeminfo för administratörer, med mera.",
+  "v5_4_news_main_array_item_0_subtitle": "Idag är vi glada att kunna presentera lanseringen av JustDo v5.4.",
+  "v5_4_news_main_array_item_1_title": "Möjliggör för nedre panelen att expandera till fönstrets fulla höjd",
+  "v5_4_news_main_array_item_1_subtitle": "Med denna uppdatering kan den nedre panelen expanderas till webbläsarfönstrets fulla höjd med ett enda klick.",
+  "v5_4_news_main_array_item_3_title": "Introducerar Systeminfo i JustDos administratörssektion",
+  "v5_4_news_main_array_item_3_subtitle": "En ny panel i JustDos adminpanel som visar viktiga serverstatistik.",
+  "v5_4_news_features_name": "Andra uppdateringar",
+  "v5_4_news_features_title": "Förbättringar",
+  "v5_4_news_features_update_items": [
+    "1. Nya ikoner för Projekt - och andra ikonuppdateringar.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Tydligare skillnad mellan Projekt och Avslutat Projekt i Typ-fältet.",
+    "3. Bättre formatering av Nummer- och Smarta nummer-fält, med lokaliserad tusentalsavgränsare."
+  ]
+}

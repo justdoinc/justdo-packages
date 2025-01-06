@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "更新内容",
+  "v5_4_news_page_title": "JustDo v5.4：底部面板更新及管理员系统信息功能上线",
+  "v5_4_news_page_description": "体验 JustDo 5.4 强大的全球项目管理功能！我们更新了底部面板，为管理员添加了系统信息功能，以及更多改进。",
+  "v5_4_news_main_array_item_0_subtitle": "今天，我们很高兴地宣布 JustDo v5.4 版本发布。",
+  "v5_4_news_main_array_item_1_title": "底部面板支持全屏展开",
+  "v5_4_news_main_array_item_1_subtitle": "通过这次更新，只需单击一下，底部面板就可以展开至浏览器窗口的全部高度。",
+  "v5_4_news_main_array_item_3_title": "在 JustDo 管理员界面新增系统信息",
+  "v5_4_news_main_array_item_3_subtitle": "在 JustDo 管理员控制面板中新增了一个展示关键服务器统计数据的面板。",
+  "v5_4_news_features_name": "其他更新",
+  "v5_4_news_features_title": "改进",
+  "v5_4_news_features_update_items": [
+    "1. 项目新图标 - 及其他图标更新。<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. 在类型字段中区分\"项目\"和\"已关闭项目\"。",
+    "3. 优化数字和智能数字字段的格式，根据区域设置添加千位分隔符。"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Yangiliklar",
+  "v5_4_news_page_title": "JustDo v5.4: Quyi Panel yangilandi va adminlar uchun Tizim ma'lumotlari",
+  "v5_4_news_page_description": "JustDo 5.4 bilan global loyiha boshqaruvining kuchini his eting! Biz Quyi Panelni yangiladik va adminlar uchun Tizim ma'lumotlarini qo'shdik.",
+  "v5_4_news_main_array_item_0_subtitle": "Bugun biz JustDo v5.4 versiyasining chiqarilganini e'lon qilishdan mamnunmiz.",
+  "v5_4_news_main_array_item_1_title": "Quyi Panel oyna balandligiga to'liq kengayishi mumkin",
+  "v5_4_news_main_array_item_1_subtitle": "Ushbu yangilanish bilan quyi panel bir marta bosish orqali brauzer oynasi balandligiga to'liq kengayadi.",
+  "v5_4_news_main_array_item_3_title": "JustDo sayt administratori bo'limiga Tizim ma'lumotlari qo'shildi",
+  "v5_4_news_main_array_item_3_subtitle": "JustDo admin boshqaruv panelida asosiy server statistikasini ko'rsatadigan yangi panel.",
+  "v5_4_news_features_name": "Boshqa yangilanishlar",
+  "v5_4_news_features_title": "Takomillashtirishlar",
+  "v5_4_news_features_update_items": [
+    "1. Loyihalar uchun yangi ikonkalar - va boshqa ikonkalar yangilanishlari.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Tur maydonida Loyiha va Yopilgan Loyiha o'rtasidagi farq.",
+    "3. Raqamlar va Aqlli Raqamlar maydonlarini yaxshiroq formatlash, mingliklar mahalliy xususiyatga ko'ra ajratiladi."
+  ]
+}

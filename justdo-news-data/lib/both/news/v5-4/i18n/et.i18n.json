@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Mis on uut",
+  "v5_4_news_page_title": "JustDo v5.4: Alumine paneel uuendatud ja lisatud süsteemiinfo.",
+  "v5_4_news_page_description": "Koge globaalse projektijuhtimise võimsust JustDo 5.4-ga! Oleme uuendanud alumist paneeli ja lisanud administraatoritele süsteemiinfo.",
+  "v5_4_news_main_array_item_0_subtitle": "Täna on meil hea meel teatada JustDo v5.4 väljalaskest.",
+  "v5_4_news_main_array_item_1_title": "Alumine paneel laieneb nüüd kogu akna kõrguseks",
+  "v5_4_news_main_array_item_1_subtitle": "Selle uuendusega laieneb alumine paneel ühe klõpsuga kogu brauseriakna kõrguseks.",
+  "v5_4_news_main_array_item_3_title": "Süsteemiinfo lisamine JustDo administraatori sektsiooni",
+  "v5_4_news_main_array_item_3_subtitle": "Uus paneel JustDo administraatori töölaual, mis näitab olulisi serveri statistikaid.",
+  "v5_4_news_features_name": "Muud Uuendused",
+  "v5_4_news_features_title": "Täiendused",
+  "v5_4_news_features_update_items": [
+    "1. Uued ikoonid projektidele ja teised ikoonide uuendused.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Projekti ja Suletud Projekti eristamine Tüübi väljas.",
+    "3. Parem numbrite ja nutikate numbriväljade vormindus, tuhandete eraldamine vastavalt lokaadile."
+  ]
+}

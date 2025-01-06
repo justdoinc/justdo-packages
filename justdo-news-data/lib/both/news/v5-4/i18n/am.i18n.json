@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "አዲስ ነገሮች",
+  "v5_4_news_page_title": "JustDo v5.4፦ የታችኛው ፓነል ዘምኗል እና የሲስተም መረጃ ለአስተዳዳሪዎች ተጨምሯል።",
+  "v5_4_news_page_description": "በJustDo 5.4 የዓለም አቀፍ ፕሮጀክት አስተዳደር ጥንካሬን ይሞክሩ! የታችኛውን ፓነል አዘምነናል እና የሲስተም መረጃ ለአስተዳዳሪዎች አክለናል፣ እና ተጨማሪ ነገሮችም አሉ።",
+  "v5_4_news_main_array_item_0_subtitle": "ዛሬ፣ የJustDo v5.4ን መልቀቃችንን በደስታ እናበስራለን።",
+  "v5_4_news_main_array_item_1_title": "የታችኛው ፓነል በሙሉ የመስኮት ከፍታ እንዲዘረጋ ማድረግ",
+  "v5_4_news_main_array_item_1_subtitle": "በዚህ ዝመና፣ የታችኛው ፓነል በአንድ ጠቅታ ወደ ሙሉ የአሳሽ መስኮት ከፍታ ይዘረጋል።",
+  "v5_4_news_main_array_item_3_title": "የሲስተም መረጃን ወደ JustDo የድረ-ገጽ አስተዳዳሪ ክፍል ማስተዋወቅ",
+  "v5_4_news_main_array_item_3_subtitle": "በJustDo አስተዳዳሪ ዳሽቦርድ ውስጥ ያለ አዲስ ፓነል፣ ጠቃሚ የሰርቨር ስታቲስቲክስን የሚያሳይ።",
+  "v5_4_news_features_name": "ሌሎች ዝመናዎች",
+  "v5_4_news_features_title": "ማሻሻያዎች",
+  "v5_4_news_features_update_items": [
+    "1. ለፕሮጀክቶች አዲስ አይኮኖች - እና ሌሎች የአይኮን ዝመናዎች።<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. በType መስክ ውስጥ በፕሮጀክት እና የተዘጋ ፕሮጀክት መካከል ልዩነት ማድረግ።",
+    "3. የቁጥሮች እና ስማርት ቁጥሮች መስኮችን የተሻለ ቅርጸት መስጠት፣ ሺዎችን በአካባቢያዊ ዘይቤ መለየት።"
+  ]
+}

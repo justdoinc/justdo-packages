@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Novetats",
+  "v5_4_news_page_title": "JustDo v5.4: Panell inferior actualitzat i Info del Sistema per a admins.",
+  "v5_4_news_page_description": "Experimenta la potència de la gestió global de projectes amb JustDo 5.4! Hem actualitzat el Panell Inferior i afegit Info del Sistema per a administradors, i més.",
+  "v5_4_news_main_array_item_0_subtitle": "Avui, ens complau anunciar el llançament de JustDo v5.4.",
+  "v5_4_news_main_array_item_1_title": "Permet que el Panell Inferior s'expandeixi a l'alçada completa de la finestra",
+  "v5_4_news_main_array_item_1_subtitle": "Amb aquesta actualització, el panell inferior s'expandeix a l'alçada completa de la finestra del navegador amb un sol clic.",
+  "v5_4_news_main_array_item_3_title": "Introducció d'Info del Sistema a la secció d'administració de JustDo",
+  "v5_4_news_main_array_item_3_subtitle": "Un nou panell dins del tauler d'administració de JustDo que mostra estadístiques clau del servidor.",
+  "v5_4_news_features_name": "Altres Actualitzacions",
+  "v5_4_news_features_title": "Millores",
+  "v5_4_news_features_update_items": [
+    "1. Noves icones per a Projectes - i altres actualitzacions d'icones.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Distinció entre Projecte i Projecte Tancat en el camp Tipus.",
+    "3. Millor formatació dels camps Números i Números Intel·ligents (Smart Numbers), separació de milers segons la configuració regional."
+  ]
+}

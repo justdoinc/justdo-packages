@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "最新消息",
+  "v5_4_news_page_title": "JustDo v5.4：底部窗格更新及管理員系統資訊新功能",
+  "v5_4_news_page_description": "體驗 JustDo 5.4 的全方位專案管理能力！我們更新了底部窗格、新增管理員系統資訊，以及更多功能。",
+  "v5_4_news_main_array_item_0_subtitle": "我們很高興宣布 JustDo v5.4 版本正式發布。",
+  "v5_4_news_main_array_item_1_title": "底部窗格可展開至視窗全高",
+  "v5_4_news_main_array_item_1_subtitle": "透過這次更新，只要單擊一下，底部面板就能展開至瀏覽器視窗的全部高度。",
+  "v5_4_news_main_array_item_3_title": "在 JustDo 站台管理區域引入系統資訊",
+  "v5_4_news_main_array_item_3_subtitle": "JustDo 管理儀表板中的新面板，顯示重要的伺服器統計資料。",
+  "v5_4_news_features_name": "其他更新",
+  "v5_4_news_features_title": "改進項目",
+  "v5_4_news_features_update_items": [
+    "1. 專案新圖示 - 以及其他圖示更新。<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. 在類型欄位中區分專案和已關閉專案。",
+    "3. 優化數字和智慧數字欄位的格式，根據地區設定顯示千位分隔符。"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Kaj je novega",
+  "v5_4_news_page_title": "JustDo v5.4: Posodobljen spodnji panel in Sistemske informacije za skrbnike.",
+  "v5_4_news_page_description": "Doživite moč globalnega upravljanja projektov z JustDo 5.4! Posodobili smo spodnji panel in dodali Sistemske informacije za skrbnike ter več.",
+  "v5_4_news_main_array_item_0_subtitle": "Danes z veseljem najavljamo izdajo JustDo v5.4.",
+  "v5_4_news_main_array_item_1_title": "Spodnji panel se lahko razširi na celotno višino okna",
+  "v5_4_news_main_array_item_1_subtitle": "S to posodobitvijo se spodnji panel z enim klikom razširi na celotno višino brskalnikovega okna.",
+  "v5_4_news_main_array_item_3_title": "Uvedba Sistemskih informacij v skrbniški del JustDo",
+  "v5_4_news_main_array_item_3_subtitle": "Nova plošča v skrbniški nadzorni plošči JustDo, ki prikazuje ključne statistične podatke strežnika.",
+  "v5_4_news_features_name": "Druge posodobitve",
+  "v5_4_news_features_title": "Izboljšave",
+  "v5_4_news_features_update_items": [
+    "1. Nove ikone za Projekte - in druge posodobitve ikon.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Razlikovanje med Projektom in Zaključenim projektom v polju Tip.",
+    "3. Izboljšano oblikovanje polj Številke in Pametne številke s tisočicami glede na lokalne nastavitve."
+  ]
+}

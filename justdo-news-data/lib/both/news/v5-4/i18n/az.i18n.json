@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Yeniliklər",
+  "v5_4_news_page_title": "JustDo v5.4: Alt Panel yeniləndi, adminlər üçün Sistem İnfo əlavə edildi",
+  "v5_4_news_page_description": "JustDo 5.4 ilə qlobal layihə idarəetməsinin gücünü yaşayın! Alt Paneli yenilədik və adminlər üçün Sistem İnfo əlavə etdik, və daha çox.",
+  "v5_4_news_main_array_item_0_subtitle": "Bu gün JustDo v5.4 versiyasının buraxılışını elan etməkdən məmnunluq duyuruq.",
+  "v5_4_news_main_array_item_1_title": "Alt Panelin pəncərənin tam hündürlüyünə qədər genişlənməsi",
+  "v5_4_news_main_array_item_1_subtitle": "Bu yeniləmə ilə alt panel tək kliklə brauzer pəncərəsinin tam hündürlüyünə qədər genişlənir.",
+  "v5_4_news_main_array_item_3_title": "JustDo sayt admin bölməsinə Sistem İnfo (System Info) əlavə edilməsi",
+  "v5_4_news_main_array_item_3_subtitle": "JustDo admin panelində əsas server statistikalarını göstərən yeni panel.",
+  "v5_4_news_features_name": "Digər Yeniləmələr",
+  "v5_4_news_features_title": "Təkmilləşdirmələr",
+  "v5_4_news_features_update_items": [
+    "1. Layihələr üçün yeni ikonlar - və digər ikon yeniləmələri.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Tip sahəsində Layihə və Bağlanmış Layihə arasında fərqləndirmə.",
+    "3. Rəqəmlər və Ağıllı Rəqəmlər sahələrinin daha yaxşı formatlanması, minliklərin yerli dilə uyğun ayrılması."
+  ]
+}

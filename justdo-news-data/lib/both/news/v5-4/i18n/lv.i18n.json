@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Kas jauns",
+  "v5_4_news_page_title": "JustDo v5.4: Atjaunināts Apakšējais Panelis un pievienota Sistēmas Info",
+  "v5_4_news_page_description": "Izbaudiet globālās projektu pārvaldības iespējas ar JustDo 5.4! Esam atjauninājuši Apakšējo Paneli un pievienojuši Sistēmas Info administratoriem.",
+  "v5_4_news_main_array_item_0_subtitle": "Šodien ar prieku paziņojam par JustDo v5.4 izlaišanu.",
+  "v5_4_news_main_array_item_1_title": "Apakšējā Paneļa paplašināšana līdz pilnam loga augstumam",
+  "v5_4_news_main_array_item_1_subtitle": "Ar šo atjauninājumu apakšējais panelis ar vienu klikšķi paplašinās līdz pilnam pārlūka loga augstumam.",
+  "v5_4_news_main_array_item_3_title": "Sistēmas Info ieviešana JustDo vietnes administratora sadaļā",
+  "v5_4_news_main_array_item_3_subtitle": "Jauns panelis JustDo administratora panelī, kas attēlo galvenos servera statistikas datus.",
+  "v5_4_news_features_name": "Citi Atjauninājumi",
+  "v5_4_news_features_title": "Uzlabojumi",
+  "v5_4_news_features_update_items": [
+    "1. Jauna projektu ikonas - un citi ikonu atjauninājumi.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Tipa laukā ieviesta atšķirība starp Projektu un Slēgtu Projektu.",
+    "3. Uzlabots Skaitļu un Viedo Skaitļu lauku formatējums ar tūkstošu atdalītājiem atbilstoši lokālei."
+  ]
+}

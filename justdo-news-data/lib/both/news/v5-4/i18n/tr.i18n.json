@@ -1,0 +1,18 @@
+{
+  "v5_4_news_title": "v5.4",
+  "v5_4_news_main_name": "Yenilikler",
+  "v5_4_news_page_title": "JustDo v5.4: Alt Panel güncellendi ve yöneticiler için Sistem Bilgisi.",
+  "v5_4_news_page_description": "JustDo 5.4 ile küresel proje yönetiminin gücünü deneyimleyin! Alt Paneli güncelledik, yöneticiler için Sistem Bilgisini ekledik ve daha fazlası.",
+  "v5_4_news_main_array_item_0_subtitle": "Bugün, JustDo v5.4'ün yayınlandığını duyurmaktan mutluluk duyuyoruz.",
+  "v5_4_news_main_array_item_1_title": "Alt Panel'in pencere yüksekliğine tam genişlemesine izin verme",
+  "v5_4_news_main_array_item_1_subtitle": "Bu güncellemeyle birlikte, alt panel tek bir tıklamayla tarayıcı penceresi yüksekliğine tam olarak genişler.",
+  "v5_4_news_main_array_item_3_title": "JustDo site yönetici bölümüne Sistem Bilgisi eklendi",
+  "v5_4_news_main_array_item_3_subtitle": "JustDo yönetici panelinde önemli sunucu istatistiklerini gösteren yeni bir panel.",
+  "v5_4_news_features_name": "Diğer Güncellemeler",
+  "v5_4_news_features_title": "İyileştirmeler",
+  "v5_4_news_features_update_items": [
+    "1. Projeler için yeni simgeler - ve diğer simge güncellemeleri.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-4/assets/v5-4-new-icons.png' width='130' style='margin: 10px;' />",
+    "2. Tip alanında Proje ve Kapalı Proje ayrımı.",
+    "3. Sayılar ve Akıllı Sayılar (Smart Numbers) alanlarının daha iyi formatlanması, binlik ayraçların yerel ayarlara göre düzenlenmesi."
+  ]
+}
