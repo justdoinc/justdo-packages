@@ -177,6 +177,7 @@ Template.news.events
 
     # If router navigation is enabled, the href will take care of showing the correct content.
     if not tpl.isRouterNavigation()
+      tpl.active_news_tab_rv.set JustdoNews.default_news_template
       tpl.active_news_id_rv.set news_id
 
     return
