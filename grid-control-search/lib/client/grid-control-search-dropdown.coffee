@@ -104,9 +104,11 @@ Template.grid_control_search_dropdown.helpers
         path: corresponding_path
       }
 
-      parent_task_id = GridData.helpers.getPathParentId corresponding_path
-      if (parent_task = APP.collections.Tasks.findOne(parent_task_id, {fields: {seqId: 1, title: 1}}))?
-        task_obj.parent_title = JustdoHelpers.taskCommonName parent_task
+      if not _.isEmpty corresponding_path
+        parent_ids = GridData.helpers.getPathArray corresponding_path
+        task_obj.parents = APP.collections.Tasks.find({_id: {$in: parent_ids}}, {fields: {seqId: 1, title: 1}}).map (parent_doc) ->
+          parent_doc.title = JustdoHelpers.taskCommonName parent_doc
+          return parent_doc
 
       return task_obj
 
@@ -122,8 +124,12 @@ Template.grid_control_search_dropdown.helpers
   filters: ->
     return Template.instance().filters.get()
 
-  showContext: ->
+  showFullContext: ->
     return Template.instance().show_context_rv.get()
+  
+  immediateParent: -> _.last @parents
+
+  nonImmediateParents: -> @parents.slice 0, @parents.length - 1
 
 Template.grid_control_search_dropdown.events
   "click .search-dropdown-nav-link": (e, tpl) ->
