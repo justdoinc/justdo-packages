@@ -52,9 +52,6 @@ Template.grid_control_search_dropdown.onCreated ->
   tpl.result_count = new ReactiveVar tpl.result_count_step
   tpl.show_context_rv = new ReactiveVar false
 
-  @max_parents_to_show = 4
-  @indent_px = 18
-
   # Prototyping data - Start
   @filters = new ReactiveVar [
     {
@@ -133,10 +130,10 @@ Template.grid_control_search_dropdown.helpers
   
   immediateParent: -> _.last @parents
 
-  taskHasMoreThanXParents: -> @parents.length > Template.instance().max_parents_to_show
+  taskHasMoreThanXParents: -> @parents.length > GridControlSearch.max_result_parents_to_show
 
   lastXParents: -> 
-    max_parents_to_show = Template.instance().max_parents_to_show
+    max_parents_to_show = GridControlSearch.max_result_parents_to_show
 
     if max_parents_to_show >= @parents.length
       return @parents
@@ -144,7 +141,7 @@ Template.grid_control_search_dropdown.helpers
     return @parents.slice max_parents_to_show - 1 
 
   getParentMargin: (index, is_task_has_more_parents) -> 
-    indent_px = Template.instance().indent_px
+    indent_px = GridControlSearch.search_result_indent_px
 
     margin = index * indent_px
     if is_task_has_more_parents
@@ -155,11 +152,11 @@ Template.grid_control_search_dropdown.helpers
   getTaskMargin: -> 
     tpl = Template.instance()
     show_full_context = tpl.show_context_rv.get()
-    indent_px = tpl.indent_px
+    indent_px = GridControlSearch.search_result_indent_px
     if not show_full_context
       return indent_px
 
-    max_parents_to_show = tpl.max_parents_to_show
+    max_parents_to_show = GridControlSearch.max_result_parents_to_show
     return Math.min(@parents.length, max_parents_to_show) * indent_px
 
 Template.grid_control_search_dropdown.events
