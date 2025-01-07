@@ -97,7 +97,6 @@ Template.grid_control_search_dropdown.helpers
       corresponding_path = paths[i]
       task_obj = {
         task_id: task_doc._id
-        path: paths[i]
         seqId: highlight(task_doc.seqId, search_val, "seqId")
         title: highlight(task_doc.title, search_val, "title")
         state: highlight(stateFormatter(task_doc.state), search_val, "state")
