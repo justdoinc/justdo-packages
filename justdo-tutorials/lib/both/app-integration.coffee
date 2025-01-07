@@ -20,11 +20,6 @@
 # them to be ready, and it is better done here.
 
 APP.getEnv (env) ->
-  # If an env variable affect this package load, check its value here
-  # remember env vars are Strings
-  if env.LANDING_PAGE_TYPE isnt "marketing"
-    return
-    
   options = {}
   APP.justdo_tutorials = new JustdoTutorials(options)
 
