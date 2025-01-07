@@ -52,6 +52,9 @@ Template.grid_control_search_dropdown.onCreated ->
   tpl.result_count = new ReactiveVar tpl.result_count_step
   tpl.show_context_rv = new ReactiveVar false
 
+  @max_parents_to_show = 4
+  @indent_px = 18
+
   # Prototyping data - Start
   @filters = new ReactiveVar [
     {
@@ -106,6 +109,7 @@ Template.grid_control_search_dropdown.helpers
 
       if not _.isEmpty corresponding_path
         parent_ids = GridData.helpers.getPathArray corresponding_path
+        parent_ids.pop() # Remove the last id, which is the result item
         task_obj.parents = APP.collections.Tasks.find({_id: {$in: parent_ids}}, {fields: {seqId: 1, title: 1}}).map (parent_doc) ->
           parent_doc.title = JustdoHelpers.taskCommonName parent_doc
           return parent_doc
@@ -129,7 +133,34 @@ Template.grid_control_search_dropdown.helpers
   
   immediateParent: -> _.last @parents
 
-  nonImmediateParents: -> @parents.slice 0, @parents.length - 1
+  taskHasMoreThanXParents: -> @parents.length > Template.instance().max_parents_to_show
+
+  lastXParents: -> 
+    max_parents_to_show = Template.instance().max_parents_to_show
+
+    if max_parents_to_show >= @parents.length
+      return @parents
+
+    return @parents.slice max_parents_to_show - 1 
+
+  getParentMargin: (index, is_task_has_more_parents) -> 
+    indent_px = Template.instance().indent_px
+
+    margin = index * indent_px
+    if is_task_has_more_parents
+      margin += indent_px
+    
+    return margin
+
+  getTaskMargin: -> 
+    tpl = Template.instance()
+    show_full_context = tpl.show_context_rv.get()
+    indent_px = tpl.indent_px
+    if not show_full_context
+      return indent_px
+
+    max_parents_to_show = tpl.max_parents_to_show
+    return Math.min(@parents.length, max_parents_to_show) * indent_px
 
 Template.grid_control_search_dropdown.events
   "click .search-dropdown-nav-link": (e, tpl) ->
