@@ -24,7 +24,7 @@ APP.executeAfterAppLibCode ->
   Template.tutorials_submenu_dropdown.helpers
     tutorials: -> [] # JustdoTutorials.getRelevantTutorialsToState()
 
-    zendeskEnabled: -> JustdoZendesk.enabled_rv.get()
+    zendeskEnabled: -> JustdoZendesk?.enabled_rv.get()
 
     zendeskHost: ->
       host = JustdoZendesk.host # called only if zendeskEnabled returns true, so safe to assume existence
