@@ -28,28 +28,27 @@ _.extend JustdoTutorials.prototype,
     return
   
   _registerEventHooks: ->
-    if APP.justdo_promoters_campaigns?.getCampaignDoc().open_tutorial_dropdown_upon_project_creation is true
-      showTutorialDropdownAndPrevrentClose = =>
-        $(".nav-tutorials > .dropdown-toggle").dropdown("toggle")
-        $(".nav-tutorials.dropdown").addClass "highlighted"
-        
-        @is_tutorial_dropdown_allowed_to_close = false
-
-        return
+    showTutorialDropdownAndPrevrentClose = =>
+      $(".nav-tutorials > .dropdown-toggle").dropdown("toggle")
+      $(".nav-tutorials.dropdown").addClass "highlighted"
       
-      # This take care of the first justdo created for user upon registration
-      APP.projects.once "post-reg-init-completed", (init_report) =>        
-        Tracker.autorun (computation) =>
-          if not (gc = APP.modules.project_page.gridControl(true))?
-            return
+      @is_tutorial_dropdown_allowed_to_close = false
 
-          if not (grid_ready = gc.ready?.get?())
-            return
-
-          showTutorialDropdownAndPrevrentClose()
-          computation.stop()
+      return
+    
+    # This take care of the first justdo created for user upon registration
+    APP.projects.once "post-reg-init-completed", (init_report) =>        
+      Tracker.autorun (computation) =>
+        if not (gc = APP.modules.project_page.gridControl(true))?
           return
 
+        if not (grid_ready = gc.ready?.get?())
+          return
+
+        showTutorialDropdownAndPrevrentClose()
+        computation.stop()
         return
+
+      return
 
     return
