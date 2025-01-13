@@ -105,7 +105,7 @@ Template.justdo_site_admin_members.helpers
     # If current user is excluded, include also excluded users.
     active_user_count = tpl.all_site_users_rv.get()
       .filter (user) ->
-        if not (is_user_licensed = APP.justdo_site_admins.isUserLicensed? user)
+        if not (is_user_licensed = APP.justdo_site_admins.isUserLicensed? user, tpl.licensed_users_crv.get())
           return false
           
         is_user_excluded = APP.accounts.isUserExcluded? user
