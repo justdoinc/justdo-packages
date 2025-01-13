@@ -16,13 +16,13 @@
     </div>
     <div class="site-admins-stat-wrapper">
       <div class="site-admins-stat-container">
-        <div class="site-admins-stat-item" title='"Qualified Users" displays the total number of individuals who currently have access to JustDo.&#10;&#10;This count includes both licensed users and those who have been granted temporary access, such as during a grace or trial period.&#10;&#10;The "Remarks" column provides details about these temporarily authorized users, including when their access will expire.'>
-          Qualified Users:
-          <div class="site-admins-info-value">
-            {{activeUsersCount}}
-          </div>
-        </div>
         {{#if licensingEnabled}}
+          <div class="site-admins-stat-item" title='"Qualified Users" displays the total number of individuals who currently have access to JustDo.&#10;&#10;This count includes both licensed users and those who have been granted temporary access, such as during a grace or trial period, but excluding proxy users.&#10;&#10;The "Remarks" column provides details about these temporarily authorized users, including when their access will expire.'>
+            Qualified Users:
+            <div class="site-admins-info-value">
+              {{activeUsersCount}}
+            </div>
+          </div>
           <div class="site-admins-info-divider"></div>
           {{#if unlimitedLicense}}
             <div class="site-admins-stat-item">
