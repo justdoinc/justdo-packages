@@ -136,7 +136,7 @@ Package.onUse(function (api) {
   // file.
 
   // Always after templates
-  this.addI18nFiles(api, "i18n/{}.i18n.json");
+  this.addI18nFiles(api, "i18n/license-info/{}.i18n.json");
 
   api.export("JustdoSiteAdmins", both);
 });
