@@ -100,9 +100,21 @@ Template.justdo_site_admin_members.onDestroyed ->
 Template.justdo_site_admin_members.helpers
   activeUsersCount: ->
     tpl = Template.instance()
+    is_current_user_excluded = APP.accounts.isUserExcluded? Meteor.user()
+    # Active users are users that are not deactivated and not proxy.
+    # If current user is excluded, include also excluded users.
     active_user_count = tpl.all_site_users_rv.get()
       .filter (user) ->
-        return (not APP.accounts.isUserDeactivated user) and (not APP.accounts.isUserExcluded? user)
+        is_user_deactivated = APP.accounts.isUserDeactivated user
+        # Proxy users are also excluded.
+        is_user_excluded = APP.accounts.isUserExcluded user
+
+        # If current user is excluded, include also excluded users.
+        if is_current_user_excluded
+          is_user_proxy = APP.justdo_site_admins.isProxyUser user
+          return not is_user_deactivated or (not is_user_proxy and is_user_excluded)
+
+        return not is_user_deactivated and not is_user_excluded
       .length
 
     if not active_user_count?
