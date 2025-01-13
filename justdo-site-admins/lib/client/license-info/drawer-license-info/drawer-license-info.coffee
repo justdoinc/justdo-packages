@@ -16,7 +16,7 @@ Template.drawer_license_info.helpers
   isExpiringInDays: ->
     if APP.justdo_site_admins.isLicenseExpiring()
       license = APP.justdo_site_admins.getLicense().license
-      return moment(license.expire_on, "YYYY-MM-DD").fromNow()
+      return moment(license.expire_on, "YYYY-MM-DD").endOf("day").from(moment().endOf("day"))
     return
 Template.drawer_license_info.events
   "click .drawer-license-info": -> APP.justdo_site_admins.showLicenseExpirationReminder()
