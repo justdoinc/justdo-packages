@@ -100,7 +100,7 @@ Template.justdo_site_admin_members.onDestroyed ->
 Template.justdo_site_admin_members.helpers
   activeUsersCount: ->
     tpl = Template.instance()
-    is_current_user_excluded = APP.accounts.isUserExcluded? Meteor.user()
+    is_current_user_excluded = APP.accounts.isUserExcluded?(Meteor.user()) is "excluded"
     pre_computed_hard_licensed_users = tpl.licensed_users_crv.get()
     # Active users are licensed users that are not excluded and not proxy users.
     # If current user is excluded, include also excluded users.

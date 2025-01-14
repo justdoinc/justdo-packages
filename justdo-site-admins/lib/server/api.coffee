@@ -150,7 +150,7 @@ _.extend JustdoSiteAdmins.prototype,
         # If performing_user_id is provided, prevent excluding excluded user if the user itself is an excluded user
         check performing_user_id, String
         performing_user = Meteor.users.findOne(performing_user_id, {emails: 1})
-        if APP.accounts.isUserExcluded? performing_user
+        if APP.accounts.isUserExcluded?(performing_user) is "excluded"
           return query
 
       query["emails.address"] =
