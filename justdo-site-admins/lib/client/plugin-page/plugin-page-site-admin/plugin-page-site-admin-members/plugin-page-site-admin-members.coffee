@@ -114,9 +114,8 @@ Template.justdo_site_admin_members.helpers
           is_user_proxy = APP.justdo_site_admins.isProxyUser? user
           return is_user_licensed and not is_user_proxy
 
-        # Excluded users also include proxy users. We want to exclude both in the count.
-        is_user_excluded = APP.accounts.isUserExcluded? user
-
+        # Note: Proxy users and also considered as excluded users. We want to exclude both in the count.
+        is_user_excluded = APP.accounts.isUserExcluded?(user)?
         return is_user_licensed and not is_user_excluded
       .length
 
