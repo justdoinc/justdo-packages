@@ -109,13 +109,15 @@ Template.justdo_site_admin_members.helpers
         if not (is_user_licensed = APP.justdo_site_admins.isUserLicensed?(user, pre_computed_hard_licensed_users)?.licensed)
           return false
           
-        is_user_excluded = APP.accounts.isUserExcluded? user
-        is_user_proxy = APP.justdo_site_admins.isProxyUser? user
-
+        # If current user is excluded, include also excluded users in the count, but without proxy users.
         if is_current_user_excluded
+          is_user_proxy = APP.justdo_site_admins.isProxyUser? user
           return is_user_licensed and not is_user_proxy
 
-        return is_user_licensed and not is_user_excluded and not is_user_proxy
+        # Excluded users also include proxy users. We want to exclude both in the count.
+        is_user_excluded = APP.accounts.isUserExcluded? user
+
+        return is_user_licensed and not is_user_excluded
       .length
 
     if not active_user_count?
