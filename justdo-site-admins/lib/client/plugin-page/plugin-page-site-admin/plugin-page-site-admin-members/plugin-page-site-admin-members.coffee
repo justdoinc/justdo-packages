@@ -3,6 +3,11 @@ spinning_icon = """<span class="fa fa-spinner fa-spin"></span>"""
 Template.justdo_site_admin_members.onCreated ->
   self = @
 
+
+  @trialCutoff = -> APP.justdo_site_admins.getLicense().license?.trial_cutoff
+  @licensePermittedUsers = -> APP.justdo_site_admins.getLicense().license?.licensed_users
+  @licensesLeft = -> @licensePermittedUsers() - @licensedUsersCount()
+
   @all_site_users_rv = new ReactiveVar([])
   @licensed_users_crv = JustdoHelpers.newComputedReactiveVar null, ->
     all_site_users = self.all_site_users_rv.get()
@@ -98,6 +103,20 @@ Template.justdo_site_admin_members.onDestroyed ->
   return
 
 Template.justdo_site_admin_members.helpers
+  qualifiedUsersExplanation: ->
+    if APP.justdo_site_admins.getLicense()?.license?.is_sdk is true
+      return """"Qualified Users" displays the total number of individuals who currently have access to JustDo.&#10;&#10;This count includes both licensed users and those who have been granted temporary access, such as during the trial period, but excluding proxy users.&#10;&#10;The "Remarks" column provides details about these temporarily authorized users, including when their access will expire."""
+    else
+      return """"Qualified Users" displays the total number of individuals who currently have access to JustDo."""
+  
+  proxyUsersCount: ->
+    # In non-sdk environments - proxies are paid users - hence, no point in showing them separately from Qualified Users (that should already include them in the count (!))
+    unless APP.justdo_site_admins.getLicense()?.license?.is_sdk is true
+      return 0
+
+    # To be implmeneted:
+    return 0
+
   activeUsersCount: ->
     tpl = Template.instance()
     is_current_user_excluded = APP.accounts.isUserExcluded?(Meteor.user()) is "excluded"
@@ -145,9 +164,11 @@ Template.justdo_site_admin_members.helpers
 
   licensedUsersCount: -> _.size Template.instance().licensed_users_crv.get()
 
-  trialCutoff: -> APP.justdo_site_admins.getLicense().license?.trial_cutoff
+  trialCutoff: -> Template.instance().trialCutoff()
 
-  licensePermittedUsers: -> APP.justdo_site_admins.getLicense().license?.licensed_users
+  licensePermittedUsers: -> Template.instance().licensePermittedUsers()
+
+  licensesLeft: -> Template.instance().licensesLeft()
 
   licenseValidUntil: -> moment(APP.justdo_site_admins.getLicense().license?.expire_on, "YYYY-MM-DD").format JustdoHelpers.getUserPreferredDateFormat()
 

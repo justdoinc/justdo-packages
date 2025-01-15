@@ -17,12 +17,21 @@
     <div class="site-admins-stat-wrapper">
       {{#if licensingEnabled}}
         <div class="site-admins-stat-container">
-          <div class="site-admins-stat-item" title='"Qualified Users" displays the total number of individuals who currently have access to JustDo.&#10;&#10;This count includes both licensed users and those who have been granted temporary access, such as during a grace or trial period, but excluding proxy users.&#10;&#10;The "Remarks" column provides details about these temporarily authorized users, including when their access will expire.'>
+          <div class="site-admins-stat-item" title="{{qualifiedUsersExplanation}}">
             Qualified Users:
             <div class="site-admins-info-value">
               {{activeUsersCount}}
             </div>
           </div>
+          {{!-- If you change the explanation regarding what a proxy is here, update also: application/packages/justdo-project-page-dialogs/lib/client/edit-invited-member/edit-invited-member.html --}}
+          {{# if proxyUsersCount}}
+            <div class="site-admins-stat-item" title='Proxy users are individuals who do not log in to JustDo. They can be upgraded to standard members either by a site administrator or by logging on the platform. As long as they remain proxy users and have not become regular members, they do not require a license.'>
+              Proxy Users:
+              <div class="site-admins-info-value">
+                {{activeUsersCount}}
+              </div>
+            </div>
+          {{/if}}
           <div class="site-admins-info-divider"></div>
           {{#if unlimitedLicense}}
             <div class="site-admins-stat-item">
@@ -32,17 +41,10 @@
               </div>
             </div>
           {{else}}
-            <div class="site-admins-stat-item">
-              Licenses available:
+            <div class="site-admins-stat-item" title="Licenses left are the licenses still available for new users. Licenses granted: {{licensePermittedUsers}}. Total licenses in use: {{licensedUsersCount}}">
+              Licenses left:
               <div class="site-admins-info-value">
-                {{licensePermittedUsers}}
-              </div>
-            </div>
-            <div class="site-admins-info-divider"></div>
-            <div class="site-admins-stat-item">
-              Licenses in use:
-              <div class="site-admins-info-value">
-                {{licensedUsersCount}}
+                {{licensesLeft}} of {{licensePermittedUsers}}
               </div>
             </div>
           {{/if}}
