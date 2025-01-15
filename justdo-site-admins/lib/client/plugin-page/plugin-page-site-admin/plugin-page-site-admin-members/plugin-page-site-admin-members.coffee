@@ -6,6 +6,7 @@ Template.justdo_site_admin_members.onCreated ->
 
   @trialCutoff = -> APP.justdo_site_admins.getLicense().license?.trial_cutoff
   @licensePermittedUsers = -> APP.justdo_site_admins.getLicense().license?.licensed_users
+  @licensedUsersCount = -> _.size @licensed_users_crv.get()
   @licensesLeft = -> @licensePermittedUsers() - @licensedUsersCount()
 
   @all_site_users_rv = new ReactiveVar([])
@@ -165,7 +166,7 @@ Template.justdo_site_admin_members.helpers
 
   isLicenseExpired: -> APP.justdo_site_admins.isLicenseExpired()
 
-  licensedUsersCount: -> _.size Template.instance().licensed_users_crv.get()
+  licensedUsersCount: -> Template.instance().licensedUsersCount()
 
   trialCutoff: -> Template.instance().trialCutoff()
 
