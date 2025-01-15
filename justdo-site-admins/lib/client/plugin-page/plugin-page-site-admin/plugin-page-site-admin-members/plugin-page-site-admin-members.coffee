@@ -111,6 +111,8 @@ Template.justdo_site_admin_members.helpers
       return """"Qualified Users" displays the total number of individuals who currently have access to JustDo."""
   
   proxyUsersCount: ->
+    tpl = Template.instance()
+
     # In non-sdk environments - proxies are paid users - hence, no point in showing them separately from Qualified Users (that should already include them in the count (!))
     unless APP.justdo_site_admins.getLicense()?.license?.is_sdk is true
       return 0
