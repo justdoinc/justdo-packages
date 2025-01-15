@@ -104,6 +104,8 @@ Template.justdo_site_admin_members.onDestroyed ->
   return
 
 Template.justdo_site_admin_members.helpers
+  isSdkBuild: -> APP.justdo_site_admins.getLicense()?.license?.is_sdk is true
+
   qualifiedUsersExplanation: ->
     if APP.justdo_site_admins.getLicense()?.license?.is_sdk is true
       return """"Qualified Users" displays the total number of individuals who currently have access to JustDo.\n\nThis count includes both licensed users and those who have been granted temporary access, such as during the trial period, but excluding proxy users.\n\nThe "Remarks" column provides details about these temporarily authorized users, including when their access will expire."""

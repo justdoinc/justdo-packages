@@ -349,6 +349,7 @@ Template.edit_invited_member_dialog.helpers
   inviteeTerm: -> inviteeTerm(@add_as_guest)
   isProxyUserEnabled: -> APP.justdo_site_admins?.siteAdminFeatureEnabled "proxy-users"
   isProxyUserOptionChecked: -> is_proxy_rv.get()
+  isSdkBuild: -> APP.justdo_site_admins.getLicense()?.license?.is_sdk is true
 
 Template.edit_invited_member_dialog.events
   "keyup #new-user-email, change #new-user-email": (e) ->
