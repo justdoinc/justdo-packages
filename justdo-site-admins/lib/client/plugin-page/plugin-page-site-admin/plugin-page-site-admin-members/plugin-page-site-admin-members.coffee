@@ -114,8 +114,11 @@ Template.justdo_site_admin_members.helpers
     unless APP.justdo_site_admins.getLicense()?.license?.is_sdk is true
       return 0
 
-    # To be implmeneted:
-    return 0
+    proxy_user_count = tpl.all_site_users_rv.get()
+      .filter (user) -> APP.justdo_site_admins.isProxyUser? user
+      .length
+    
+    return proxy_user_count or 0
 
   activeUsersCount: ->
     tpl = Template.instance()
