@@ -21,26 +21,9 @@
       </div>
     </div>
   </div>
-  {{#if $and isProxyUserEnabled ($not edit_state)}}
-    <div class="invite-proxy">
-      <div class="invite-proxy-check">
-        <input id="is-proxy-user" type="checkbox" class="check-input" value="{{is_proxy}}" disabled="{{#if view_only}}disabled{{/if}}">
-        <label for="is-proxy-user" class="check-label mb-0">Set as a proxy user</label>
-      </div>
-      <div class="invite-proxy-info">
-        <span class="text-primary">?</span>
-        <div class="invite-proxy-info-tooltip">
-          <div>
-            {{!-- If you change the explanation regarding what a proxy is here, update also: application/packages/justdo-site-admins/lib/client/plugin-page/plugin-page-site-admin/plugin-page-site-admin-members/plugin-page-site-admin-members.html --}}
-            <div>Proxy users are individuals who do not log in to JustDo. They can be upgraded to standard members either by a site administrator or by logging on the platform.{{#if isSdkBuild}} As long as they remain proxy users and have not become regular members, they do not require a license.{{/if}} Proxy users do not receive emails from JustDo, specifically ownership transfer email. Hence, ownership transfers are immediate and do not require acceptance.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  {{/if}}
-  {{#if $not isProxyUserOptionChecked}}
-    <div class="invite-new-user-info bg-light">
-      If no invitation email will be received by the new {{inviteeTerm}}, please ensure correct email entered, and ask the new {{inviteeTerm}} to check the spam folder.
-    </div>
-  {{/if}}
+
+  <div class="invite-new-user-info bg-light">
+    If no invitation email will be received by the new {{inviteeTerm}}, please ensure correct email entered, and ask the new {{inviteeTerm}} to check the spam folder.
+  </div>
+  
 </template>

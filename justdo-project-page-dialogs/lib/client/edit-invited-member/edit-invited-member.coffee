@@ -3,132 +3,8 @@
 #
 
 email_regex = JustdoHelpers.common_regexps.email
-
-#
-# ProjectPageDialogs.addMemberToCurrentProject
-#
-
 inviteeTerm = (guest_term) -> if guest_term then "guest" else "member"
-
-ucFirstInviteeTerm = (guest_term) -> JustdoHelpers.ucFirst(inviteeTerm(guest_term))
-
 getCurrentProject = -> APP.modules.project_page.helpers.curProj()
-
-showAddNewMemberToTaskReminder = ->
-  JustdoSnackbar.show
-    text: "Member added successfully.<br />Add the member to tasks you want to share."
-    actionText: "Learn More"
-    duration: 10000
-    showDismissButton: true
-    onActionClick: ->
-      window.open("https://support.justdo.com/hc/en-us/articles/115003577233")
-
-      return
-
-ProjectPageDialogs.addMemberToCurrentProject = (email, invited_members_dialog_options, cb) ->
-  # This Dialog assumes that the project route is open, it operates on
-  # the loaded project.
-
-  # Notes:
-  #
-  # * The dialog won't show at all if a user with the given email already exists for the
-  #   current project.
-  # * cb will get two parameters: (err, member_doc)
-  #
-  #   err is an error object with a message string under the 'reason' property,
-  #   if the operation failed for any reason.
-  #   If it is null/undefined it means that user was added successfully.
-  #
-  #   member_doc is the user document of the added user, will be provided, if
-  #   operation didn't failed.
-
-  if not email_regex.test(email)
-    JustdoHelpers.callCb cb, {reason: "Invalid email provided"}
-
-    return
-
-  invited_members_dialog_options = _.extend {add_as_guest: false}, invited_members_dialog_options
-
-  APP.accounts.userExists email, (err, exists) ->
-    if err?
-      JustdoHelpers.callCb cb, err
-
-      return
-
-    if exists
-      getCurrentProject().inviteMember {email: email, add_as_guest: invited_members_dialog_options.add_as_guest}, (err, user_id) ->
-        if err?
-          JustdoHelpers.callCb cb, err
-
-          return
-
-        JustdoHelpers.callCb cb, null, user_id
-
-        showAddNewMemberToTaskReminder()
-
-        return
-
-      return
-
-    # ELSE
-    # User doesn't exist in Justdo yet. Show the dialog that asks for some more
-    # details to prepare an invite to Justdo.
-
-    invited_members_dialog_options = _.extend {}, invited_members_dialog_options,
-      title: "Add a New #{ucFirstInviteeTerm(invited_members_dialog_options.add_as_guest)}"
-      edit_state: false
-      buttons:
-        cancel:
-          label: "Cancel"
-
-          className: "btn-light"
-
-          callback: ->
-            return true
-
-        submit:
-          label: "Add #{ucFirstInviteeTerm(invited_members_dialog_options.add_as_guest)}"
-
-          callback: =>
-            submit_attempted_rv.set(true)
-
-            Tracker.flush() # So input validation checks in Template autorun will run following submit_attempted_rv change
-
-            if email_is_valid_rv.get() and first_name_is_valid_rv.get() and last_name_is_valid_rv.get()
-              profile =
-                first_name: first_name_rv.get()
-                last_name: last_name_rv.get()
-
-              email = email_rv.get()
-
-              if is_proxy_rv.get()
-                Meteor.wrapAsync(APP.accounts.createProxyUsers)([{email: email, profile: profile}])
-
-              users_allowed_to_edit_pre_enrollment = _.map APP.modules.project_page.curProj().getAdmins(), (user_def) => user_def.user_id
-              getCurrentProject().inviteMember {email: email, profile: profile, add_as_guest: invited_members_dialog_options.add_as_guest, users_allowed_to_edit_pre_enrollment: users_allowed_to_edit_pre_enrollment}, (err, user_id) ->
-                if err
-                  if err.error == "member-already-exists"
-                    error_message = "#{ucFirstInviteeTerm(invited_members_dialog_options.add_as_guest)} <i>#{JustdoHelpers.xssGuard(JustdoHelpers.displayName(Meteor.users.findOne({"emails.address": email})))}</i> (#{email}) already exist in this project."
-                  else
-                    error_message = err.reason
-                  bootbox.alert
-                    message: error_message
-                    className: "bootbox-new-design members-management-alerts"
-                    closeButton: false
-
-                  return
-
-                JustdoHelpers.callCb cb, null, user_id
-
-                showAddNewMemberToTaskReminder()
-
-                dialog.data("bs.modal").hide()
-
-            return false
-
-    dialog = initInvitedMembersDialog {email}, invited_members_dialog_options
-
-  return
 
 #
 # ProjectPageDialogs.editEnrolledMember
@@ -256,7 +132,7 @@ ProjectPageDialogs.editEnrolledMember = (user_id, invited_members_dialog_options
     edit_state: true
     buttons: buttons
 
-  dialog = initInvitedMembersDialog {email: user.emails?[0]?.address, first_name: user.profile?.first_name,  last_name: user.profile?.last_name, is_proxy: user.is_proxy}, invited_members_dialog_options
+  dialog = initInvitedMembersDialog {email: user.emails?[0]?.address, first_name: user.profile?.first_name,  last_name: user.profile?.last_name}, invited_members_dialog_options
 
   return
 
@@ -270,10 +146,9 @@ email_rv = new ReactiveVar()
 email_is_valid_rv = new ReactiveVar()
 last_name_rv = new ReactiveVar()
 last_name_is_valid_rv = new ReactiveVar()
-is_proxy_rv = new ReactiveVar()
 submit_attempted_rv = new ReactiveVar()
 initReactiveVars = (init_vals) ->
-  {email, first_name, last_name, is_proxy} = init_vals
+  {email, first_name, last_name} = init_vals
 
   first_name_rv.set first_name or ""
   first_name_is_valid_rv.set false
@@ -281,7 +156,6 @@ initReactiveVars = (init_vals) ->
   email_is_valid_rv.set false
   last_name_rv.set last_name or ""
   last_name_is_valid_rv.set false
-  is_proxy_rv.set is_proxy or false
   submit_attempted_rv.set false
 
 initInvitedMembersDialog = (data, options) ->
@@ -347,8 +221,6 @@ Template.edit_invited_member_dialog.helpers
   isInvalidFirstName: -> not first_name_is_valid_rv.get()
   isInvalidLastName: -> not last_name_is_valid_rv.get()
   inviteeTerm: -> inviteeTerm(@add_as_guest)
-  isProxyUserEnabled: -> APP.justdo_site_admins?.siteAdminFeatureEnabled "proxy-users"
-  isProxyUserOptionChecked: -> is_proxy_rv.get()
   isSdkBuild: -> APP.justdo_site_admins.getLicense()?.license?.is_sdk is true
 
 Template.edit_invited_member_dialog.events
@@ -371,8 +243,4 @@ Template.edit_invited_member_dialog.events
     if e.which == 13
       $(".modal-footer .btn-primary").click()
 
-    return
-
-  "change #is-proxy-user": (e) ->
-    is_proxy_rv.set e.currentTarget.checked
     return
