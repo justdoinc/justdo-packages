@@ -3,13 +3,13 @@ Template.site_admin_user_dropdown_toggle_proxy_user.helpers
     # Hide this option if the user is either deactivated or site admin
     return not @user_data.deactivated and not @user_data.site_admin?.is_site_admin
 
-  isProxyUser: -> @user_data.is_proxy
+  isProxyUser: -> APP.accounts.isProxyUser @user_data
 
 Template.site_admin_user_dropdown_toggle_proxy_user.events
   "click .toggle-proxy-user": (e, tpl) ->
     @dropdown.closeDropdown()
 
-    if @user_data.is_proxy
+    if APP.accounts.isProxyUser @user_data
       method_name = "saUnsetAsProxyUsers"
     else
       method_name = "saSetAsProxyUsers"

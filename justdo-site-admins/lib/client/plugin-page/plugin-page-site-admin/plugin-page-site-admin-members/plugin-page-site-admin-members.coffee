@@ -120,7 +120,7 @@ Template.justdo_site_admin_members.helpers
       return 0
 
     proxy_user_count = tpl.all_site_users_rv.get()
-      .filter (user) -> APP.justdo_site_admins.isProxyUser? user
+      .filter (user) -> APP.accounts.isProxyUser user
       .length
     
     return proxy_user_count or 0
@@ -138,7 +138,7 @@ Template.justdo_site_admin_members.helpers
           
         # If current user is excluded, include also excluded users in the count, but without proxy users.
         if is_current_user_excluded
-          is_user_proxy = APP.justdo_site_admins.isProxyUser? user
+          is_user_proxy = APP.accounts.isProxyUser user
           return is_user_licensed and not is_user_proxy
 
         # Note: Proxy users and also considered as excluded users. We want to exclude both in the count.

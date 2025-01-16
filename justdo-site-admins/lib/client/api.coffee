@@ -259,7 +259,7 @@ _.extend JustdoSiteAdmins.prototype,
     if APP.justdo_site_admins.isUserSiteAdmin(user)
       remarks.push """<span class="badge badge-primary rounded-0 mr-1" title="Site admins have access to the site administration panel, allowing them to view system details and manage licenses.&#10;&#10;However, their role primarily focuses on user administration and does not automatically grant access to all tasks within the system.&#10;&#10;Each site admin must have a verified email address. If a site admin’s email address is changed, they will lose their site admin capabilities until the new email is verified.&#10;&#10;If the number of users exceeds the available licenses, site admins will be granted a license before any non-site admin users.">Site Admin</span>"""
 
-    if APP.justdo_site_admins.isProxyUser?(user)
+    if APP.accounts.isProxyUser(user)
       title = "Proxies act as stand-in accounts for individuals who are not actively using or logging into JustDo. For example, you might assign tasks to a proxy to keep track of responsibilities for someone outside the system.&#10;&#10"
       if @getLicense()?.license.is_sdk_build
         title += "Proxies are not counted against the available license total in SDK builds."
