@@ -115,3 +115,29 @@ _.extend JustdoSiteAdmins.prototype,
       @modules[module_id]["client#{type}Init"]?.call(@)
 
     return
+
+  getQualifiedUsersCountInList: (all_users, pre_computed_hard_licensed_users, is_caller_excluded_user=false) ->
+    return all_users.filter (user) =>
+      if not (is_user_licensed = @isUserLicensed?(user, pre_computed_hard_licensed_users)?.licensed)
+        return false
+        
+      # If current user is excluded, include also excluded users in the count, but without proxy users.
+      if is_caller_excluded_user
+        is_user_proxy = APP.accounts.isProxyUser user
+        return is_user_licensed and not is_user_proxy
+
+      # Note: Proxy users and also considered as excluded users. We want to exclude both in the count.
+      is_user_excluded = APP.accounts.isUserExcluded?(user)?
+      return is_user_licensed and not is_user_excluded
+    .length
+  
+  getFreeProxyUsersCountInList: (all_users) ->
+    # In non-sdk environments - proxies are paid users - hence, no point in showing them separately from Qualified Users (that should already include them in the count (!))
+    unless @getLicense()?.license?.is_sdk is true
+      return 0
+
+    proxy_user_count = all_users
+      .filter (user) -> APP.accounts.isProxyUser user
+      .length
+    
+    return proxy_user_count or 0
