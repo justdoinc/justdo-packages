@@ -127,7 +127,13 @@ _.extend JustdoSiteAdmins.prototype,
         return not is_user_proxy
 
       # Note: Proxy users and also considered as excluded users. We want to exclude both in the count.
-      is_user_excluded = APP.accounts.isUserExcluded?(user) is "excluded"
+      is_sdk = @getLicense()?.license?.is_sdk is true
+      exclude_type = APP.accounts.isUserExcluded?(user)
+      if is_sdk
+        is_user_excluded = exclude_type?
+      else
+        is_user_excluded = exclude_type is "excluded"
+        
       return not is_user_excluded
     .length
   
