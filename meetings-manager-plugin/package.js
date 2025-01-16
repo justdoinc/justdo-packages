@@ -31,6 +31,7 @@ Package.onUse(function (api) {
   api.use("justdoinc:meetings-manager", both);
 
   api.use("reactive-var", both);
+  api.use("justdoinc:justdo-accounts@1.0.0", both);
   api.use("tracker", client);
   api.use("jquery", client);
   api.use("useful:forms", client);
