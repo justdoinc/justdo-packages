@@ -124,11 +124,11 @@ _.extend JustdoSiteAdmins.prototype,
       # If current user is excluded, include also excluded users in the count, but without proxy users.
       if is_caller_excluded_user
         is_user_proxy = APP.accounts.isProxyUser user
-        return is_user_licensed and not is_user_proxy
+        return not is_user_proxy
 
       # Note: Proxy users and also considered as excluded users. We want to exclude both in the count.
-      is_user_excluded = APP.accounts.isUserExcluded?(user)?
-      return is_user_licensed and not is_user_excluded
+      is_user_excluded = APP.accounts.isUserExcluded?(user) is "excluded"
+      return not is_user_excluded
     .length
   
   getFreeProxyUsersCountInList: (list) ->
