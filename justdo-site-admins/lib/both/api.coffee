@@ -116,8 +116,8 @@ _.extend JustdoSiteAdmins.prototype,
 
     return
 
-  getQualifiedUsersCountInList: (all_users, pre_computed_hard_licensed_users, is_caller_excluded_user=false) ->
-    return all_users.filter (user) =>
+  getQualifiedUsersCountInList: (list, pre_computed_hard_licensed_users, is_caller_excluded_user=false) ->
+    return list.filter (user) =>
       if not (is_user_licensed = @isUserLicensed?(user, pre_computed_hard_licensed_users)?.licensed)
         return false
         
@@ -131,12 +131,12 @@ _.extend JustdoSiteAdmins.prototype,
       return is_user_licensed and not is_user_excluded
     .length
   
-  getFreeProxyUsersCountInList: (all_users) ->
+  getFreeProxyUsersCountInList: (list) ->
     # In non-sdk environments - proxies are paid users - hence, no point in showing them separately from Qualified Users (that should already include them in the count (!))
     unless @getLicense()?.license?.is_sdk is true
       return 0
 
-    proxy_user_count = all_users
+    proxy_user_count = list
       .filter (user) -> APP.accounts.isProxyUser user
       .length
     
