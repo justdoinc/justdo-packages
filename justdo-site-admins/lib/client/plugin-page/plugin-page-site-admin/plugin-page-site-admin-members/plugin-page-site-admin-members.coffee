@@ -112,6 +112,10 @@ Template.justdo_site_admin_members.helpers
     else
       return """"Qualified Users" displays the total number of individuals who currently have access to JustDo."""
   
+  # 
+  # getFreeProxyUsersCountInList: (list) ->
+
+
   proxyUsersCount: ->
     tpl = Template.instance()
 
@@ -125,31 +129,36 @@ Template.justdo_site_admin_members.helpers
     
     return proxy_user_count or 0
 
-  activeUsersCount: ->
+  Should be on justdo-admins both:
+  getQualifiedUsersCountInList: (list, is_caller_excluded_user=false) ->
+    list.filter (user) ->
+      if not (is_user_licensed = APP.justdo_site_admins.isUserLicensed?(user, pre_computed_hard_licensed_users)?.licensed)
+        return false
+        
+      # If current user is excluded, include also excluded users in the count, but without proxy users.
+      if is_current_user_excluded
+        is_user_proxy = APP.accounts.isProxyUser user
+        return is_user_licensed and not is_user_proxy
+
+      # Note: Proxy users and also considered as excluded users. We want to exclude both in the count.
+      is_user_excluded = APP.accounts.isUserExcluded?(user)?
+      return is_user_licensed and not is_user_excluded
+    .length
+
+  qualifiedUsersCount: ->
     tpl = Template.instance()
     is_current_user_excluded = APP.accounts.isUserExcluded?(Meteor.user()) is "excluded"
     pre_computed_hard_licensed_users = tpl.licensed_users_crv.get()
     # Active users are licensed users that are not excluded and not proxy users.
     # If current user is excluded, include also excluded users.
-    active_user_count = tpl.all_site_users_rv.get()
-      .filter (user) ->
-        if not (is_user_licensed = APP.justdo_site_admins.isUserLicensed?(user, pre_computed_hard_licensed_users)?.licensed)
-          return false
-          
-        # If current user is excluded, include also excluded users in the count, but without proxy users.
-        if is_current_user_excluded
-          is_user_proxy = APP.accounts.isProxyUser user
-          return is_user_licensed and not is_user_proxy
+    qualified_user_count = tpl.all_site_users_rv.get()
+    @getQualifiedUsersCountInList(qualified_user_count, is_current_user_excluded)
 
-        # Note: Proxy users and also considered as excluded users. We want to exclude both in the count.
-        is_user_excluded = APP.accounts.isUserExcluded?(user)?
-        return is_user_licensed and not is_user_excluded
-      .length
 
-    if not active_user_count?
+    if not qualified_user_count?
       return spinning_icon
 
-    return active_user_count
+    return qualified_user_count
 
   filteredUsersCount: ->
     search_term = Template.instance().users_filter_term_rv.get()
