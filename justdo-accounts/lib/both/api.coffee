@@ -114,3 +114,13 @@ _.extend JustdoAccounts.prototype,
       throw new Meteor.Error("invalid-argument")
 
     return user.deactivated is true
+
+  # Note: This function is overridden when the SDK is initialized.
+  # If you changed it, do a full-code-search in the `justdo-devops`.
+  isProxyUser: (user) ->
+    if _.isString(user)
+      user = Meteor.users.findOne user,
+        fields:
+          is_proxy: 1
+    
+    return user?.is_proxy is true
