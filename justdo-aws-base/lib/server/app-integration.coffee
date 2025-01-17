@@ -5,6 +5,7 @@ checkNpmVersions({
 }, 'justdoinc:justdo-aws-base')
 
 aws_sdk = require "aws-sdk"
+require("aws-sdk/lib/maintenance_mode_message").suppress = true
 # Note
 #
 # We require "aws-sdk" but don't make use of it. We do it so when building
