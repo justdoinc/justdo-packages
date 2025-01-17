@@ -203,7 +203,14 @@ UnicodeDatesFilterControllerConstructor = (context) ->
   @controller.find(".custom-range-label-wrapper").on "click", (e) ->
     $el = $(e.currentTarget)
     $(".custom-datepicker").hide()
-    $el.parent().find(".custom-datepicker").fadeToggle()
+    $datepicker = $el.parent().find(".custom-datepicker")
+    $datepicker.fadeToggle()
+    Meteor.defer ->
+      $datepicker.css
+        position: "fixed"
+        top: -> Math.max(0, $el.offset().top - $(window).scrollTop() + $el.outerHeight())
+        left: -> Math.min($(window).width() - $datepicker.outerWidth(), $el.offset().left)
+      return
 
     return
 
