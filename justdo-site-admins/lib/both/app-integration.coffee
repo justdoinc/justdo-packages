@@ -23,19 +23,16 @@ APP.getEnv (env) ->
   # If an env variable affect this package load, check its value here
   # remember env vars are Strings
 
-  if env.SITE_ADMINS_ENABLED is "true"
-    options =
-      site_admins_conf: JustdoHelpers.getNonEmptyValuesFromCsv(env.SITE_ADMINS_CONF)
-      client_type: JustdoHelpers.getClientType(env)
+  options =
+    site_admins_conf: JustdoHelpers.getNonEmptyValuesFromCsv(env.SITE_ADMINS_CONF)
+    client_type: JustdoHelpers.getClientType(env)
 
-    if Meteor.isServer
-      options.site_admins_emails = JustdoHelpers.getNonEmptyValuesFromCsv(env.SITE_ADMINS_EMAILS)
-      options.server_vitals_collection = new Mongo.Collection "server_vitals"
+  if Meteor.isServer
+    options.site_admins_emails = JustdoHelpers.getNonEmptyValuesFromCsv(env.SITE_ADMINS_EMAILS)
+    options.server_vitals_collection = new Mongo.Collection "server_vitals"
 
-    APP.justdo_site_admins = new JustdoSiteAdmins(options)
+  APP.justdo_site_admins = new JustdoSiteAdmins(options)
 
-    APP.emit "justdo-site-admins-initiated"
-  else
-    APP.logger.debug "[justdo-site-admins] Disabled"
+  APP.emit "justdo-site-admins-initiated"
 
   return
