@@ -188,7 +188,7 @@ _.extend JustdoSiteAdmins.prototype,
       
       plugins: []
 
-    for plugin_id, fn of APP.getPluginVitalsGenerator()
+    for plugin_id, fn of APP.getPluginVitalsGenerators()
       payload = await fn()
       snapshot.plugins.push
         plugin_id: plugin_id 
@@ -198,15 +198,14 @@ _.extend JustdoSiteAdmins.prototype,
     return snapshot
 
 _.extend APP,
+  _plugin_vitals_generators: {}
+
   registerPluginVitalsGenerator: (plugin_id, fn) ->
-    if not @plugin_vitals?
-      @plugin_vitals = {}
-    
-    if @plugin_vitals[plugin_id]?
+    if @_plugin_vitals_generators[plugin_id]?
       throw @_error "invalid-argument", "Plugin with id #{plugin_id} is already registered"
     
-    @plugin_vitals[plugin_id] = fn
+    @_plugin_vitals_generators[plugin_id] = fn
 
     return 
   
-  getPluginVitalsGenerator: -> @plugin_vitals
+  getPluginVitalsGenerators: -> @_plugin_vitals_generators
