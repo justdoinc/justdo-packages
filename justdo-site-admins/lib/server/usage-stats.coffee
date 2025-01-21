@@ -99,19 +99,6 @@ _.extend JustdoSiteAdmins.prototype,
 
   isLicenseEnabledEnvironment: -> global.LICENSE?
 
-  registerPluginVitalsGenerator: (plugin_id, fn) ->
-    if not @plugin_vitals?
-      @plugin_vitals = {}
-    
-    if @plugin_vitals[plugin_id]?
-      throw @_error "invalid-argument", "Plugin with id #{plugin_id} is already registered"
-    
-    @plugin_vitals[plugin_id] = fn
-
-    return 
-  
-  _getPluginVitalsGenerator: -> @plugin_vitals
-
   produceServerVitalsShrinkWrappedFromSnapshot: (snapshot) ->
     # Convert .plugins to be of the form:
     # {
@@ -201,7 +188,7 @@ _.extend JustdoSiteAdmins.prototype,
       
       plugins: []
 
-    for plugin_id, fn of @_getPluginVitalsGenerator()
+    for plugin_id, fn of APP.getPluginVitalsGenerator()
       payload = await fn()
       snapshot.plugins.push
         plugin_id: plugin_id 
@@ -209,3 +196,17 @@ _.extend JustdoSiteAdmins.prototype,
         data: payload.data
       
     return snapshot
+
+_.extend APP,
+  registerPluginVitalsGenerator: (plugin_id, fn) ->
+    if not @plugin_vitals?
+      @plugin_vitals = {}
+    
+    if @plugin_vitals[plugin_id]?
+      throw @_error "invalid-argument", "Plugin with id #{plugin_id} is already registered"
+    
+    @plugin_vitals[plugin_id] = fn
+
+    return 
+  
+  getPluginVitalsGenerator: -> @plugin_vitals

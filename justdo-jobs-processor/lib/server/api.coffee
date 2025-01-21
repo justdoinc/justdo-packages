@@ -302,7 +302,7 @@ _.extend JustdoJobsProcessor.prototype,
   _registerPluginVitals: ->
     self = @
 
-    APP.justdo_site_admins.registerPluginVitalsGenerator "justdo-jobs-processor", ->
+    APP.registerPluginVitalsGenerator "justdo-jobs-processor", ->
       payload = 
         title: "Justdo Jobs Processor"
         data: [
