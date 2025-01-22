@@ -76,15 +76,17 @@ _.extend JustdoSiteAdmins.prototype,
       return installation_id
     
     try
-      installation_id = APP.justdo_system_records?.getRecord?(JustdoSiteAdmins.installation_id_system_record_key)?.value
+      installation_id = await JustdoHelpers.runInFiberAndGetResult -> APP.justdo_system_records?.getRecord?(JustdoSiteAdmins.installation_id_system_record_key)?.value
     catch err
       return undefined
     
     if not installation_id?
       installation_id = Random.id()
       try
-        APP.justdo_system_records?.setRecord? JustdoSiteAdmins.installation_id_system_record_key, 
-          value: installation_id
+        await JustdoHelpers.runInFiberAndGetResult ->
+          APP.justdo_system_records?.setRecord? JustdoSiteAdmins.installation_id_system_record_key, 
+            value: installation_id
+          return
       catch err
         return undefined
 
@@ -208,12 +210,12 @@ _.extend JustdoSiteAdmins.prototype,
       
       plugins: []
 
-    # for plugin_id, fn of APP.getPluginVitalsGenerators()
-    #   payload = await fn()
-    #   snapshot.plugins.push
-    #     plugin_id: plugin_id 
-    #     title: payload.title
-    #     data: payload.data
+    for plugin_id, fn of APP.getPluginVitalsGenerators()
+      payload = await JustdoHelpers.runInFiberAndGetResult -> fn()
+      snapshot.plugins.push
+        plugin_id: plugin_id 
+        title: payload.title
+        data: payload.data
       
     return snapshot
 
