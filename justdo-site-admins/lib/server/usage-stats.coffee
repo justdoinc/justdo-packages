@@ -48,23 +48,23 @@ _.extend JustdoSiteAdmins.prototype,
   _clearServerVitalsLogInverval: -> Meteor.clearInterval @server_vital_log_interval
 
   _logCpuUsage: ->
-    if not APP.server_vitals.cpu_usage?
-      APP.server_vitals.cpu_usage =
+    if not APP.server_info.cpu_usage?
+      APP.server_info.cpu_usage =
         time: new Date()
         usage: process.cpuUsage()
 
     return
 
   getCpuUsagePercent: ->
-    if not APP.server_vitals.cpu_usage?
+    if not APP.server_info.cpu_usage?
       @_logCpuUsage()
 
     now = new Date()
-    elapsed = now.getTime() - APP.server_vitals.cpu_usage.time.getTime()
+    elapsed = now.getTime() - APP.server_info.cpu_usage.time.getTime()
     if elapsed < 1000
       return null
 
-    usage = process.cpuUsage(APP.server_vitals.cpu_usage.usage)
+    usage = process.cpuUsage(APP.server_info.cpu_usage.usage)
     total_usage = usage.user + usage.system
     
     # time * 1000 because process.cpuUsage returns microseconds
@@ -85,14 +85,14 @@ _.extend JustdoSiteAdmins.prototype,
   getInstallationId: -> APP.justdo_system_records.getRecord(JustdoSiteAdmins.installation_id_system_record_key)?.value
 
   _markServerStarted: ->
-    if not APP.server_vitals?
-      APP.server_vitals = {}
+    if not APP.server_info?
+      APP.server_info = {}
     
-    if not APP.server_vitals.start_time?
-      APP.server_vitals.start_time = new Date()
+    if not APP.server_info.start_time?
+      APP.server_info.start_time = new Date()
 
-    if not APP.server_vitals.ssid?
-      APP.server_vitals.ssid = "#{APP.server_info.start_time.toISOString()}-#{Math.round(Math.random() * 100)}"
+    if not APP.server_info.ssid?
+      APP.server_info.ssid = "#{APP.server_info.start_time.toISOString()}-#{Math.round(Math.random() * 100)}"
     
     @_logCpuUsage()
     
