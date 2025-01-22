@@ -4,7 +4,10 @@ _.extend JustdoSiteAdmins.prototype,
       @_usage_stats_framework_enabled = false
 
       return
-
+    
+    if not APP.server_info?
+      APP.server_info = {}
+      
     @_usage_stats_framework_enabled = true
 
     @_markServerStarted()
@@ -84,9 +87,6 @@ _.extend JustdoSiteAdmins.prototype,
   getInstallationId: -> APP.justdo_system_records.getRecord(JustdoSiteAdmins.installation_id_system_record_key)?.value
 
   _markServerStarted: ->
-    if not APP.server_info?
-      APP.server_info = {}
-    
     if not APP.server_info.start_time?
       APP.server_info.start_time = new Date()
 
