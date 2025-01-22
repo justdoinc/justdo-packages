@@ -48,10 +48,9 @@ _.extend JustdoSiteAdmins.prototype,
   _clearServerVitalsLogInverval: -> Meteor.clearInterval @server_vital_log_interval
 
   _logCpuUsage: ->
-    if not APP.server_info.cpu_usage?
-      APP.server_info.cpu_usage =
-        time: new Date()
-        usage: process.cpuUsage()
+    APP.server_info.cpu_usage =
+      time: new Date()
+      usage: process.cpuUsage()
 
     return
 
