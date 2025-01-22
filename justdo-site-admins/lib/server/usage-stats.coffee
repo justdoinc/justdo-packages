@@ -165,21 +165,21 @@ _.extend JustdoSiteAdmins.prototype,
 
     snapshot = 
       system:
-        # process.arch
-        arch: report.header.arch
-        # process.platform
-        platform: report.header.platform
-        # @os.release()
-        release: report.header.osRelease
-        # @os.hostname()
-        hostname: report.header.host
-        # @os.version()
-        uname: report.header.osVersion
-        # @os.cpus()
-        cpus: report.header.cpus
+        
+        arch: report.header.arch # Alternative: process.arch
+        
+        platform: report.header.platform # Alternative: process.platform
+        
+        release: report.header.osRelease # Alternative: @os.release()
+        
+        hostname: report.header.host # Alternative: @os.hostname()
+        
+        uname: report.header.osVersion # Alternative: @os.version()
+        
+        cpus: report.header.cpus # Alternative: @os.cpus()
         load_avg: @os.loadavg()
-        # @os.uptime()
-        uptime_ms: @os.uptime() * 1000
+        
+        uptime_ms: @os.uptime() * 1000 # Alternative: @os.uptime()
         memory:
           total: @os.totalmem()
           free: @os.freemem()
