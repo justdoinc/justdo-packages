@@ -191,12 +191,12 @@ _.extend JustdoSiteAdmins.prototype,
       
       plugins: []
 
-    for plugin_id, fn of APP.getPluginVitalsGenerators()
-      payload = await fn()
-      snapshot.plugins.push
-        plugin_id: plugin_id 
-        title: payload.title
-        data: payload.data
+    # for plugin_id, fn of APP.getPluginVitalsGenerators()
+    #   payload = await fn()
+    #   snapshot.plugins.push
+    #     plugin_id: plugin_id 
+    #     title: payload.title
+    #     data: payload.data
       
     return snapshot
 
