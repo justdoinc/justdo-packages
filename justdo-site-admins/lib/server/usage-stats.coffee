@@ -12,7 +12,7 @@ _.extend JustdoSiteAdmins.prototype,
     @_setupServerVitalsLogInterval()
     @_setupClearServerVitalsLogDbMigration()
     @onDestroy =>
-      @_clearServerVitalsLogInverval()
+      @_clearServerVitalsLogInterval()
       return
 
     return
@@ -45,7 +45,7 @@ _.extend JustdoSiteAdmins.prototype,
 
     return
   
-  _clearServerVitalsLogInverval: -> Meteor.clearInterval @server_vital_log_interval
+  _clearServerVitalsLogInterval: -> Meteor.clearInterval @server_vital_log_interval
 
   _logCpuUsage: ->
     APP.server_info.cpu_usage =
