@@ -7,7 +7,7 @@ _.extend JustdoSiteAdmins.prototype,
 
     @_usage_stats_framework_enabled = true
 
-    @_markServerStarted()
+    @_initServerInfoAndMarkServerAsStarted()
     @_ensureInstallationId()
     @_setupServerVitalsLogInterval()
     @_setupClearServerVitalsLogDbMigration()
@@ -83,7 +83,7 @@ _.extend JustdoSiteAdmins.prototype,
   
   getInstallationId: -> APP.justdo_system_records.getRecord(JustdoSiteAdmins.installation_id_system_record_key)?.value
 
-  _markServerStarted: ->
+  _initServerInfoAndMarkServerAsStarted: ->
     if not APP.server_info?
       APP.server_info = {}
     
