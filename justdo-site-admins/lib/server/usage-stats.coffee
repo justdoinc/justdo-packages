@@ -8,7 +8,7 @@ _.extend JustdoSiteAdmins.prototype,
     @_usage_stats_framework_enabled = true
 
     @_initServerInfoAndMarkServerAsStarted()
-    @_ensureInstallationId()
+    @getInstallationId()
     @_setupServerVitalsLogInterval()
     @_setupClearServerVitalsLogDbMigration()
     @onDestroy =>
@@ -70,18 +70,27 @@ _.extend JustdoSiteAdmins.prototype,
     percent = (100 * total_usage) / (elapsed * 1000)
 
     return percent
-
-  _ensureInstallationId: ->
-    if not (installation_id = @getInstallationId())
-      installation_id = Random.id()
-      APP.justdo_system_records.setRecord JustdoSiteAdmins.installation_id_system_record_key, 
-        value: installation_id
-    
-    @installation_id = installation_id
-    
-    return
   
-  getInstallationId: -> APP.justdo_system_records.getRecord(JustdoSiteAdmins.installation_id_system_record_key)?.value
+  getInstallationId: -> 
+    if (installation_id = APP.server_info?.installation_id)?
+      return installation_id
+    
+    try
+      installation_id = APP.justdo_system_records?.getRecord?(JustdoSiteAdmins.installation_id_system_record_key)?.value
+    catch err
+      return undefined
+    
+    if not installation_id?
+      installation_id = Random.id()
+      try
+        APP.justdo_system_records?.setRecord? JustdoSiteAdmins.installation_id_system_record_key, 
+          value: installation_id
+      catch err
+        return undefined
+
+    APP.server_info.installation_id = installation_id
+    
+    return installation_id
 
   _initServerInfoAndMarkServerAsStarted: ->
     if not APP.server_info?
@@ -187,7 +196,7 @@ _.extend JustdoSiteAdmins.prototype,
 
       app:
         version: JustdoHelpers.getAppVersion false
-        installation_id: @installation_id
+        installation_id: APP.server_info.installation_id
         ssid: APP.server_info.ssid
         current_time: new Date().toISOString()
         license: @getLicense()
