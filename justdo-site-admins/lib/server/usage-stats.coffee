@@ -72,9 +72,12 @@ _.extend JustdoSiteAdmins.prototype,
     return percent
 
   _ensureInstallationId: ->
-    if not @getInstallationId()
+    if not (installation_id = @getInstallationId())
+      installation_id = Random.id()
       APP.justdo_system_records.setRecord JustdoSiteAdmins.installation_id_system_record_key, 
-        value: Random.id()
+        value: installation_id
+    
+    @installation_id = installation_id
     
     return
   
@@ -176,7 +179,7 @@ _.extend JustdoSiteAdmins.prototype,
 
       app:
         version: JustdoHelpers.getAppVersion false
-        installation_id: @getInstallationId()
+        installation_id: @installation_id
         ssid: @ssid
         current_time: new Date().toISOString()
         license: @getLicense()
