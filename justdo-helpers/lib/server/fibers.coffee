@@ -26,7 +26,38 @@ _.extend JustdoHelpers,
     #
     # console.log(JustdoHelpers.runInFiber(function () {return Meteor.users.findOne("ZgYhc8GEnH5aQWiRr")}))
     # returned undefined for existing user.
+    #
+    # If you want to get the result of the function, use runInFiberAndGetResult instead.
     return undefined
+
+  # THIS IS AN ASYNC/AWAIT FUNCTION
+  runInFiberAndGetResult: (cb) ->
+    # Usage:
+    #
+    # await JustdoHelpers.runInFiberAndGetResult(cb)
+    #
+    # Retruns a promise that resolves with the result of cb() or rejects with an error
+    #
+    # Note: the following doesn't work (!) probably quirks with the way fibers work
+    # runInFiberAndGetResult: (cb) ->
+    #   result = undefined
+    #
+    #   @runInFiber(() ->
+    #     result = cb()
+    #   )
+    #
+    #   return result
+    return new Promise (resolve, reject) =>
+      @runInFiber(() ->
+        try
+          result = cb()
+
+          process.nextTick(() ->
+            resolve(result)
+          )
+        catch err
+          reject(err)
+      )
 
   getCurrentFiber: ->
     return Fiber.current
