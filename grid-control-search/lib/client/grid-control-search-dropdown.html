@@ -24,32 +24,32 @@
       <div class="search-result-list">
         {{#each resultTasks}}
           <div class="search-result-item" data-path="{{path}}">
-            {{#if parents}}
+            {{#if ancestors}}
               {{#unless showFullContext}}
                 <div class="task-parent-title">
                   {{{xssGuard immediateParent.title noFormatting=true}}}
                   <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#corner-down-right"></use></svg>
                 </div>
               {{else}}
-                {{#if taskHasMoreThanXParents}}
+                {{#if taskHasMoreThanXAncestors}}
                   <div class="task-parent-title">
                     ...
                     <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#corner-down-right"></use></svg>
                   </div>
                 {{/if}} 
 
-                {{#each parent in lastXParents}}
-                  <div class="task-parent-title" style="margin-left: {{getParentMargin @index (taskHasMoreThanXParents)}}px">
+                {{#each parent in lastXAncestors}}
+                  <div class="task-parent-title" style="margin-left: {{getParentMargin @index (taskHasMoreThanXAncestors)}}px">
                     {{{xssGuard parent.title noFormatting=true}}}
                     <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#corner-down-right"></use></svg>
                   </div>
                 {{/each}}
               {{/unless}}
             {{/if}}
-            <div class="task-title" style="{{#if parents}}margin-left: {{getTaskMargin}}px{{/if}}">
+            <div class="task-title" style="{{#if ancestors}}margin-left: {{getTaskMargin}}px{{/if}}">
               <span class="task-seq-id">{{{xssGuard(_ "grid_control_search_task_with_seq_id_prefix" seqId=seqId) noFormatting=true}}}</span> {{{xssGuard title noFormatting=true}}}
             </div>
-            <div class="task-info" style="{{#if parents}}margin-left: {{getTaskMargin}}px{{/if}}">
+            <div class="task-info" style="{{#if ancestors}}margin-left: {{getTaskMargin}}px{{/if}}">
               {{#if state}}
                 <span class="task-info-state">{{_ "grid_control_search_state_prefix"}}</span>{{{xssGuard state noFormatting=true}}}
               {{/if}}

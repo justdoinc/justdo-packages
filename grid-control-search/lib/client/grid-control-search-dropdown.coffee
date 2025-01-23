@@ -102,14 +102,15 @@ Template.grid_control_search_dropdown.helpers
         state: highlight(stateFormatter(task_doc.state), search_val, "state")
         note: highlight(task_doc.status, search_val, "status")
         path: corresponding_path
+        ancestors: []
       }
 
       if not _.isEmpty corresponding_path
         parent_ids = GridData.helpers.getPathArray corresponding_path
         parent_ids.pop() # Remove the last id, which is the result item
-        task_obj.parents = APP.collections.Tasks.find({_id: {$in: parent_ids}}, {fields: {seqId: 1, title: 1}}).map (parent_doc) ->
-          parent_doc.title = JustdoHelpers.taskCommonName parent_doc
-          return parent_doc
+        task_obj.ancestors = APP.collections.Tasks.find({_id: {$in: parent_ids}}, {fields: {seqId: 1, title: 1}}).map (ancestor_doc) ->
+          ancestor_doc.title = JustdoHelpers.taskCommonName ancestor_doc
+          return ancestor_doc
 
       return task_obj
 
@@ -128,23 +129,23 @@ Template.grid_control_search_dropdown.helpers
   showFullContext: ->
     return Template.instance().show_context_rv.get()
   
-  immediateParent: -> _.last @parents
+  immediateParent: -> _.last @ancestors
 
-  taskHasMoreThanXParents: -> @parents.length > GridControlSearch.max_result_parents_to_show
+  taskHasMoreThanXAncestors: -> @ancestors.length > GridControlSearch.max_result_ancestors_to_show
 
-  lastXParents: -> 
-    max_parents_to_show = GridControlSearch.max_result_parents_to_show
+  lastXAncestors: -> 
+    max_ancestors_to_show = GridControlSearch.max_result_ancestors_to_show
 
-    if max_parents_to_show >= @parents.length
-      return @parents
+    if max_ancestors_to_show >= @ancestors.length
+      return @ancestors
 
-    return @parents.slice -max_parents_to_show
+    return @ancestors.slice -max_ancestors_to_show
 
-  getParentMargin: (index, is_task_has_more_parents) -> 
+  getParentMargin: (index, is_task_has_more_ancestors) -> 
     indent_px = GridControlSearch.search_result_indent_px
 
     margin = index * indent_px
-    if is_task_has_more_parents
+    if is_task_has_more_ancestors
       margin += indent_px
     
     return margin
@@ -156,8 +157,8 @@ Template.grid_control_search_dropdown.helpers
     if not show_full_context
       return indent_px
 
-    max_parents_to_show = GridControlSearch.max_result_parents_to_show
-    return Math.min(@parents.length, max_parents_to_show) * indent_px
+    max_ancestors_to_show = GridControlSearch.max_result_ancestors_to_show
+    return Math.min(@ancestors.length, max_ancestors_to_show) * indent_px
 
 Template.grid_control_search_dropdown.events
   "click .search-dropdown-nav-link": (e, tpl) ->
