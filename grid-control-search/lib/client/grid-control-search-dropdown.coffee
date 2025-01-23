@@ -175,7 +175,7 @@ Template.grid_control_search_dropdown.events
   "click .filter-item-remove": (e, tpl) ->
     filter_title = @title
     filters_array = tpl.filters.get()
-    filters_array = _.filter filters_array, (filter) -> filter.title != filter_title
+    filters_array = _.filter filters_array, (filter) -> filter.title isnt filter_title
     tpl.filters.set filters_array
 
     return
@@ -189,6 +189,6 @@ Template.grid_control_search_dropdown.events
     return
 
   "click .search-show-context-toggle": (e, tpl) ->
-    tpl.show_context_rv.set !tpl.show_context_rv.get()
+    tpl.show_context_rv.set not tpl.show_context_rv.get()
 
     return
