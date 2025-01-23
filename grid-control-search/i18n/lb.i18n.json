@@ -1,5 +1,8 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "Aufgab #__seqId__:",
   "grid_control_search_state_prefix": "Status: ",
-  "grid_control_search_note_prefix": "Notiz: "
+  "grid_control_search_note_prefix": "Notiz: ",
+  "grid_control_search_hide_context": "Kontext verstoppen",
+  "grid_control_search_show_full_context": "Komplette Kontext weisen",
+  "grid_control_search_no_results": "Keng Resultater fir är Sich fonnt"
 }

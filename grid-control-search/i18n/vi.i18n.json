@@ -1,5 +1,8 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "Nhiệm vụ #__seqId__:",
   "grid_control_search_state_prefix": "Trạng thái: ",
-  "grid_control_search_note_prefix": "Ghi chú: "
+  "grid_control_search_note_prefix": "Ghi chú: ",
+  "grid_control_search_hide_context": "Ẩn ngữ cảnh",
+  "grid_control_search_show_full_context": "Hiện toàn bộ ngữ cảnh",
+  "grid_control_search_no_results": "Không tìm thấy kết quả nào cho tìm kiếm của bạn"
 }

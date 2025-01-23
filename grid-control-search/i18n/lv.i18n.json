@@ -1,5 +1,8 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "Uzdevums #__seqId__:",
   "grid_control_search_state_prefix": "Stāvoklis: ",
-  "grid_control_search_note_prefix": "Piezīme: "
+  "grid_control_search_note_prefix": "Piezīme: ",
+  "grid_control_search_hide_context": "Slēpt kontekstu",
+  "grid_control_search_show_full_context": "Rādīt pilnu kontekstu",
+  "grid_control_search_no_results": "Jūsu meklēšanai netika atrasti rezultāti"
 }

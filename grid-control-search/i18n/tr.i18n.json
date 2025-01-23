@@ -1,5 +1,8 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "Görev #__seqId__:",
   "grid_control_search_state_prefix": "Durum: ",
-  "grid_control_search_note_prefix": "Not: "
+  "grid_control_search_note_prefix": "Not: ",
+  "grid_control_search_hide_context": "İçeriği gizle",
+  "grid_control_search_show_full_context": "Tam içeriği göster",
+  "grid_control_search_no_results": "Aramanız için sonuç bulunamadı"
 }

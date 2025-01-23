@@ -1,5 +1,8 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "Užduotis #__seqId__:",
   "grid_control_search_state_prefix": "Būsena: ",
-  "grid_control_search_note_prefix": "Pastaba: "
+  "grid_control_search_note_prefix": "Pastaba: ",
+  "grid_control_search_hide_context": "Slėpti kontekstą",
+  "grid_control_search_show_full_context": "Rodyti pilną kontekstą",
+  "grid_control_search_no_results": "Pagal jūsų paiešką nieko nerasta"
 }

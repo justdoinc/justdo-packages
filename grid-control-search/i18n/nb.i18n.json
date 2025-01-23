@@ -1,5 +1,8 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "Oppgave #__seqId__:",
   "grid_control_search_state_prefix": "Status: ",
-  "grid_control_search_note_prefix": "Notat: "
+  "grid_control_search_note_prefix": "Notat: ",
+  "grid_control_search_hide_context": "Skjul kontekst",
+  "grid_control_search_show_full_context": "Vis full kontekst",
+  "grid_control_search_no_results": "Ingen resultater funnet for søket ditt"
 }

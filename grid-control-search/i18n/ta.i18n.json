@@ -1,5 +1,8 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "பணி #__seqId__:",
   "grid_control_search_state_prefix": "நிலை: ",
-  "grid_control_search_note_prefix": "குறிப்பு: "
+  "grid_control_search_note_prefix": "குறிப்பு: ",
+  "grid_control_search_hide_context": "சூழல் மறை",
+  "grid_control_search_show_full_context": "முழு சூழலைக் காட்டு",
+  "grid_control_search_no_results": "உங்கள் தேடலுக்கான முடிவுகள் எதுவும் கிடைக்கவில்லை"
 }

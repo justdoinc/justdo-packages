@@ -1,5 +1,8 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "Tapşırıq #__seqId__:",
   "grid_control_search_state_prefix": "Vəziyyət: ",
-  "grid_control_search_note_prefix": "Qeyd: "
+  "grid_control_search_note_prefix": "Qeyd: ",
+  "grid_control_search_hide_context": "Konteksti gizlət",
+  "grid_control_search_show_full_context": "Tam konteksti göstər",
+  "grid_control_search_no_results": "Axtarışınız üçün heç bir nəticə tapılmadı"
 }

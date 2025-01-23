@@ -1,5 +1,8 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "Tâche #__seqId__ :",
   "grid_control_search_state_prefix": "État : ",
-  "grid_control_search_note_prefix": "Note : "
+  "grid_control_search_note_prefix": "Note : ",
+  "grid_control_search_hide_context": "Masquer le contexte",
+  "grid_control_search_show_full_context": "Afficher le contexte complet",
+  "grid_control_search_no_results": "Aucun résultat trouvé pour votre recherche"
 }

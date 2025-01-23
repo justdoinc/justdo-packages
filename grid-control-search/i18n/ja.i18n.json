@@ -1,5 +1,8 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "タスク #__seqId__：",
   "grid_control_search_state_prefix": "状態：",
-  "grid_control_search_note_prefix": "メモ："
+  "grid_control_search_note_prefix": "メモ：",
+  "grid_control_search_hide_context": "文脈を隠す",
+  "grid_control_search_show_full_context": "文脈を全て表示",
+  "grid_control_search_no_results": "検索結果が見つかりませんでした"
 }

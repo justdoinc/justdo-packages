@@ -64,17 +64,17 @@
         {{/each}}
         <div class="search-show-context">
           {{#if showFullContext}}
-            <div class="search-show-context-toggle">Hide context</div>
+            <div class="search-show-context-toggle">{{_ "grid_control_search_hide_context"}}</div>
             <svg class="jd-icon search-show-context-toggle text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"></use></svg>
           {{else}}
-            <div class="search-show-context-toggle">Show full context</div>
+            <div class="search-show-context-toggle">{{_ "grid_control_search_show_full_context"}}</div>
             <svg class="jd-icon search-show-context-toggle"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"></use></svg>
           {{/if}}
         </div>
       </div>
     {{else}}
       <div class="search-result-empty">
-        No results were found for your search
+        {{_ "grid_control_search_no_results"}}
       </div>
     {{/if}}
   </div>

@@ -1,5 +1,8 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "Вазифаи №__seqId__:",
   "grid_control_search_state_prefix": "Ҳолат: ",
-  "grid_control_search_note_prefix": "Эзоҳ: "
+  "grid_control_search_note_prefix": "Эзоҳ: ",
+  "grid_control_search_hide_context": "Пинҳон кардани матн",
+  "grid_control_search_show_full_context": "Нишон додани матни пурра",
+  "grid_control_search_no_results": "Барои ҷустуҷӯи шумо натиҷае ёфт нашуд"
 }

@@ -1,5 +1,8 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "Εργασία #__seqId__:",
   "grid_control_search_state_prefix": "Κατάσταση: ",
-  "grid_control_search_note_prefix": "Σημείωση: "
+  "grid_control_search_note_prefix": "Σημείωση: ",
+  "grid_control_search_hide_context": "Απόκρυψη πλαισίου",
+  "grid_control_search_show_full_context": "Εμφάνιση πλήρους πλαισίου",
+  "grid_control_search_no_results": "Δεν βρέθηκαν αποτελέσματα για την αναζήτησή σας"
 }

@@ -1,5 +1,8 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "__seqId__. számú feladat:",
   "grid_control_search_state_prefix": "Állapot: ",
-  "grid_control_search_note_prefix": "Megjegyzés: "
+  "grid_control_search_note_prefix": "Megjegyzés: ",
+  "grid_control_search_hide_context": "Kontextus elrejtése",
+  "grid_control_search_show_full_context": "Teljes kontextus mutatása",
+  "grid_control_search_no_results": "Nem található találat a keresésre"
 }

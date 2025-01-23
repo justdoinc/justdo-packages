@@ -1,5 +1,8 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "Tugas #__seqId__:",
   "grid_control_search_state_prefix": "Status: ",
-  "grid_control_search_note_prefix": "Catatan: "
+  "grid_control_search_note_prefix": "Catatan: ",
+  "grid_control_search_hide_context": "Sembunyikan konteks",
+  "grid_control_search_show_full_context": "Tampilkan konteks lengkap",
+  "grid_control_search_no_results": "Tidak ada hasil yang ditemukan untuk pencarian Anda"
 }

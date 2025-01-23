@@ -1,5 +1,8 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "Task #__seqId__:",
   "grid_control_search_state_prefix": "State: ",
-  "grid_control_search_note_prefix": "Note: "
+  "grid_control_search_note_prefix": "Note: ",
+  "grid_control_search_hide_context": "Hide context",
+  "grid_control_search_show_full_context": "Show full context",
+  "grid_control_search_no_results": "No results were found for your search"
 }

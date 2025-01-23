@@ -1,5 +1,8 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "Taak #__seqId__:",
   "grid_control_search_state_prefix": "Status: ",
-  "grid_control_search_note_prefix": "Notitie: "
+  "grid_control_search_note_prefix": "Notitie: ",
+  "grid_control_search_hide_context": "Context verbergen",
+  "grid_control_search_show_full_context": "Volledige context tonen",
+  "grid_control_search_no_results": "Geen resultaten gevonden voor uw zoekopdracht"
 }

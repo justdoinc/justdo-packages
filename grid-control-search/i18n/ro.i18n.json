@@ -1,5 +1,8 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "Sarcina #__seqId__:",
   "grid_control_search_state_prefix": "Stare: ",
-  "grid_control_search_note_prefix": "Notă: "
+  "grid_control_search_note_prefix": "Notă: ",
+  "grid_control_search_hide_context": "Ascunde contextul",
+  "grid_control_search_show_full_context": "Arată contextul complet",
+  "grid_control_search_no_results": "Nu s-au găsit rezultate pentru căutarea dvs."
 }

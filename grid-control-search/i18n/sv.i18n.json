@@ -1,5 +1,8 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "Uppgift #__seqId__:",
   "grid_control_search_state_prefix": "Status: ",
-  "grid_control_search_note_prefix": "Anteckning: "
+  "grid_control_search_note_prefix": "Anteckning: ",
+  "grid_control_search_hide_context": "Dölj kontext",
+  "grid_control_search_show_full_context": "Visa full kontext",
+  "grid_control_search_no_results": "Inga sökresultat hittades"
 }

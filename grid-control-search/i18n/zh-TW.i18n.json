@@ -1,5 +1,8 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "任務 #__seqId__：",
   "grid_control_search_state_prefix": "狀態：",
-  "grid_control_search_note_prefix": "備註："
+  "grid_control_search_note_prefix": "備註：",
+  "grid_control_search_hide_context": "隱藏相關內容",
+  "grid_control_search_show_full_context": "顯示完整相關內容",
+  "grid_control_search_no_results": "找不到符合搜尋條件的結果"
 }

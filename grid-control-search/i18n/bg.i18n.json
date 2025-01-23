@@ -1,5 +1,8 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "Задача #__seqId__:",
   "grid_control_search_state_prefix": "Състояние: ",
-  "grid_control_search_note_prefix": "Бележка: "
+  "grid_control_search_note_prefix": "Бележка: ",
+  "grid_control_search_hide_context": "Скрий контекста",
+  "grid_control_search_show_full_context": "Покажи пълния контекст",
+  "grid_control_search_no_results": "Не са намерени резултати за вашето търсене"
 }
