@@ -138,7 +138,7 @@ Template.grid_control_search_dropdown.helpers
     if max_parents_to_show >= @parents.length
       return @parents
 
-    return @parents.slice max_parents_to_show - 1 
+    return @parents.slice -max_parents_to_show
 
   getParentMargin: (index, is_task_has_more_parents) -> 
     indent_px = GridControlSearch.search_result_indent_px
