@@ -80,6 +80,14 @@
     padding: 6px 12px
     &:hover
       background-color: #f8f9fa
+    &.full-context
+      background-color: #f8f9fa
+      border-radius: 4px
+      &:hover
+        background-color: #ebedf0
+
+  .search-result-item.full-context + .search-result-item.full-context
+    margin-bottom: 6px
 
   .task-title
     color: black
@@ -97,12 +105,20 @@
   .task-parent-title
     color: rgba(49, 69, 99, 0.7)
     position: relative
+    font-size: 13px
+    .task-parent-title-text
+      text-overflow: ellipsis
+      overflow: hidden
+      white-space: nowrap
     svg
       position: absolute
-      left: -2px
-      top: 19px
-      width: 22px
-      height: 22px
+      left: -1px
+      top: 18px
+      width: 20px
+      height: 20px
+      color: black
+      stroke-width: 2 !important
+      pointer-events: none
 
   .task-info-state + .task-info-note
     padding-left: 4px
@@ -124,18 +140,14 @@
     box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.08)
     display: flex
     align-items: center
-    justify-content: space-between
+    justify-content: end
     color: #212529
-    cursor: pointer
-    .search-show-context-toggle
-      cursor: pointer
-      &:hover
-        text-decoration: underline
     svg
       color: #6c757d
       stroke-width: 2.5
       width: 28px
       height: 28px
+      cursor: pointer
 
 // RTL modifications
 .right-to-left

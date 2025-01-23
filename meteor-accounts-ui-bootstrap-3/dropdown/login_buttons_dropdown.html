@@ -78,12 +78,12 @@
 
     {{#if isMarketingEnvironment}}
       <a href="https://justdo.com/{{#with getUserLangIfNotDefault}}lang/{{this}}/{{/with}}distributors" target="_blank">
-        <button class="btn btn-sm btn-primary shadow-sm become-distributor-btn m{{getRtlAwareDirection "r"}}-1">
+        <button class="btn btn-sm btn-primary shadow-sm become-distributor-btn m{{getRtlAwareDirection "r"}}-2">
           {{_ "become_a_justdo_distributor"}}
         </button>
       </a>
     {{/if}}
-    
+
     <button class="btn btn-sm btn-light" id="login-buttons-logout">
       {{_ "login_buttons_logged_in_dropdown_actions_sign_out"}}
     </button>
