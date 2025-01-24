@@ -157,8 +157,8 @@ Template.grid_control_search_dropdown.helpers
     if not show_full_context
       return indent_px
 
-    max_ancestors_to_show = GridControlSearch.max_result_ancestors_to_show
-    return Math.min(@ancestors.length, max_ancestors_to_show) * indent_px
+    max_indent_levels = GridControlSearch.max_result_ancestors_to_show + 1 # +1 for the task itself
+    return Math.min(@ancestors.length, max_indent_levels) * indent_px
 
 Template.grid_control_search_dropdown.events
   "click .search-dropdown-nav-link": (e, tpl) ->
