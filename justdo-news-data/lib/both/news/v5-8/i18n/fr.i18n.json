@@ -1,0 +1,11 @@
+{
+  "v5_8_news_title": "v5.8",
+  "v5_8_news_main_name": "Nouveautés",
+  "v5_8_news_page_title": "JustDo v5.8 : Messages directs et recherche avancée",
+  "v5_8_news_page_description": "Découvrez la communication instantanée avec les messages directs et une navigation améliorée grâce à la recherche avancée dans JustDo 5.8 !",
+  "v5_8_news_main_array_item_0_subtitle": "Aujourd'hui, nous sommes heureux d'annoncer la sortie de JustDo v5.8.",
+  "v5_8_news_main_array_item_1_title": "Messages Directs",
+  "v5_8_news_main_array_item_1_subtitle": "Nous sommes ravis d'annoncer que JustDo prend désormais en charge les discussions individuelles entre utilisateurs !<br><br><ul><li><b>Chattez en privé</b> : Envoyez des messages directement à un autre membre de l'équipe sans référencer une tâche spécifique.</li><li><b>Fluidifiez la communication</b> : Clarifiez rapidement des détails ou discutez de sujets non liés aux tâches sans créer un nouveau canal.</li><li><b>Restez organisé</b> : Gardez les discussions liées aux tâches dans les chats de tâches et les conversations personnelles dans les messages directs.</li></ul><br>Essayez la messagerie directe dès aujourd'hui et profitez d'une communication plus fluide et flexible dans JustDo !",
+  "v5_8_news_main_array_item_3_title": "Recherche avancée avec contexte parent",
+  "v5_8_news_main_array_item_3_subtitle": "Nous avons facilité la visualisation de la position de chaque tâche recherchée dans la hiérarchie de votre projet. Avec notre nouveau menu déroulant de résultats de recherche :<br><br><ul><li><b>Visibilité du parent immédiat</b> : Chaque résultat de recherche affiche maintenant son parent direct, vous donnant instantanément le contexte de l'emplacement de l'élément.</li><li><b>Bouton \"Afficher plus de contexte\"</b> : Besoin d'une vue d'ensemble ? Activez le bouton pour révéler des niveaux hiérarchiques supplémentaires au-delà du parent immédiat, pour naviguer rapidement dans la structure plus large de votre projet.</li></ul><br>Cette mise à jour vous aide à comprendre comment chaque tâche ou élément s'intègre dans le flux de travail global, vous faisant gagner du temps. Essayez-la dès maintenant et optimisez votre navigation dans les projets !"
+}

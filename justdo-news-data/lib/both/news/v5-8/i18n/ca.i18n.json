@@ -1,0 +1,11 @@
+{
+  "v5_8_news_title": "v5.8",
+  "v5_8_news_main_name": "Novetats",
+  "v5_8_news_page_title": "JustDo v5.8: Missatges directes i cerca millorada a la graella",
+  "v5_8_news_page_description": "Gaudeix d'una comunicació fluida amb els missatges directes i millor navegació amb la cerca avançada a la graella (Grid) de JustDo 5.8!",
+  "v5_8_news_main_array_item_0_subtitle": "Avui, ens complau anunciar el llançament de JustDo v5.8.",
+  "v5_8_news_main_array_item_1_title": "Missatges directes",
+  "v5_8_news_main_array_item_1_subtitle": "Ens complau anunciar que JustDo ara permet el xat directe entre usuaris!<br><br><ul><li><b>Xateja en privat</b>: Envia missatges directament a un altre membre de l'equip sense necessitat de referenciar una tasca específica.</li><li><b>Comunicació simplificada</b>: Aclareix detalls ràpidament o parla de temes no relacionats amb tasques sense crear un nou canal.</li><li><b>Mantén-ho organitzat</b>: Mantingues les discussions relacionades amb tasques als xats de tasques i les converses personals als missatges directes.</li></ul><br>Prova els missatges directes avui i gaudeix d'una comunicació més fluida a JustDo!",
+  "v5_8_news_main_array_item_3_title": "Cerca millorada a la graella (Grid) amb context superior",
+  "v5_8_news_main_array_item_3_subtitle": "Hem facilitat veure on encaixa cada tasca cercada dins la jerarquia del projecte. Amb el nou desplegable de resultats de cerca a la graella:<br><br><ul><li><b>Visibilitat immediata del pare</b>: Cada resultat de cerca ara mostra el seu pare directe, donant-te context instantani sobre on es troba l'element.</li><li><b>Commutador \"Mostra més context\"</b>: Necessites una visió més àmplia? Activa el commutador per revelar nivells addicionals de jerarquia més enllà del pare immediat, per navegar ràpidament per l'estructura més àmplia del teu projecte.</li></ul><br>Aquesta actualització t'ajuda a entendre com cada tasca o element es relaciona amb el flux de treball més gran, estalviant-te temps i clics. Prova-ho i agilitza la navegació del teu projecte avui!"
+}

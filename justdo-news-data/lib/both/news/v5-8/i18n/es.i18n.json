@@ -1,0 +1,11 @@
+{
+  "v5_8_news_title": "v5.8",
+  "v5_8_news_main_name": "Novedades",
+  "v5_8_news_page_title": "JustDo v5.8: Mensajes Directos y Búsqueda Mejorada en la Tabla",
+  "v5_8_news_page_description": "¡Experimenta una comunicación fluida con Mensajes Directos y mejor navegación de proyectos con Búsqueda Mejorada en la Tabla en JustDo 5.8!",
+  "v5_8_news_main_array_item_0_subtitle": "Hoy nos complace anunciar el lanzamiento de JustDo v5.8.",
+  "v5_8_news_main_array_item_1_title": "Mensajes Directos",
+  "v5_8_news_main_array_item_1_subtitle": "¡Nos emociona anunciar que JustDo ahora permite chat directo entre usuarios!<br><br><ul><li><b>Chat Privado</b>: Envía mensajes directamente a otro miembro del equipo sin necesidad de referenciar una tarea específica.</li><li><b>Comunicación Optimizada</b>: Aclara detalles rápidamente o discute temas no relacionados con tareas sin crear un nuevo canal.</li><li><b>Mantén el Orden</b>: Conserva las discusiones relacionadas con tareas en los chats de tareas y las conversaciones personales en mensajes directos.</li></ul><br>¡Prueba los mensajes directos hoy y experimenta una comunicación más fluida y flexible en JustDo!",
+  "v5_8_news_main_array_item_3_title": "Búsqueda Mejorada en la Tabla con Contexto Superior",
+  "v5_8_news_main_array_item_3_subtitle": "Hemos facilitado ver dónde encaja cada tarea buscada en tu jerarquía de proyecto. Con nuestro nuevo Desplegable de Resultados de Búsqueda en la Tabla:<br><br><ul><li><b>Visibilidad del Elemento Superior</b>: Cada resultado de búsqueda ahora muestra su elemento superior directo, dándote contexto instantáneo sobre su ubicación.</li><li><b>Interruptor \"Mostrar Más Contexto\"</b>: ¿Necesitas una vista más amplia? Activa el interruptor para revelar niveles adicionales de jerarquía más allá del elemento superior inmediato, para navegar rápidamente por la estructura más amplia de tu proyecto.</li></ul><br>¡Esta actualización te ayuda a entender cómo cada tarea o elemento se relaciona con el flujo de trabajo más amplio, ahorrándote tiempo y clics. ¡Pruébalo y optimiza tu navegación de proyecto hoy!"
+}
