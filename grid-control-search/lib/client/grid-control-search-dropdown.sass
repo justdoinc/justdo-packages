@@ -84,7 +84,7 @@
       background-color: #f8f9fa
       border-radius: 4px
       &:hover
-        background-color: #ebedf0
+        background-color: #f5f6f7
 
   .search-result-item.full-context + .search-result-item.full-context
     margin-top: 6px
@@ -129,7 +129,7 @@
     color: black
     border-radius: 2px
 
-  .search-show-context
+  .search-result-bottom
     position: absolute
     background: #ffffff
     width: 100%
@@ -139,15 +139,22 @@
     z-index: 1
     box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.08)
     display: flex
+    justify-content: flex-end
+
+  .search-show-context
+    cursor: pointer
+    display: flex
     align-items: center
-    justify-content: end
     color: #212529
     svg
       color: #6c757d
-      stroke-width: 2.5
-      width: 28px
-      height: 28px
-      cursor: pointer
+      stroke: currentColor
+      stroke-width: 1.5
+      stroke-linecap: round
+      stroke-linejoin: round
+      fill: none
+      width: 20px
+      height: 20px
 
 // RTL modifications
 .right-to-left

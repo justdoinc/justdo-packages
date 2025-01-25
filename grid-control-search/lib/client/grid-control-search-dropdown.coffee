@@ -188,7 +188,7 @@ Template.grid_control_search_dropdown.events
 
     return
 
-  "click .search-show-context-toggle": (e, tpl) ->
+  "click .search-show-context": (e, tpl) ->
     tpl.show_context_rv.set not tpl.show_context_rv.get()
 
     return

@@ -66,14 +66,16 @@
             </div>
           </div>
         {{/each}}
-        <div class="search-show-context">
-          {{#if showFullContext}}
-            <div class="m{{getRtlAwareDirection "r"}}-1">{{_ "grid_control_search_hide_context"}}</div>
-            <svg class="jd-icon search-show-context-toggle text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"></use></svg>
-          {{else}}
-            <div class="m{{getRtlAwareDirection "r"}}-1">{{_ "grid_control_search_show_full_context"}}</div>
-            <svg class="jd-icon search-show-context-toggle"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"></use></svg>
-          {{/if}}
+        <div class="search-result-bottom">
+          <div class="search-show-context">
+            {{#if showFullContext}}
+              <div class="m{{getRtlAwareDirection "r"}}-2">{{_ "grid_control_search_hide_context"}}</div>
+              <svg class="text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"></use></svg>
+            {{else}}
+              <div class="m{{getRtlAwareDirection "r"}}-2">{{_ "grid_control_search_show_full_context"}}</div>
+              <svg><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"></use></svg>
+            {{/if}}
+          </div>
         </div>
       </div>
     {{else}}
