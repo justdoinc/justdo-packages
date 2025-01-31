@@ -61,6 +61,12 @@ default_filter_options =
       type: "custom-range"
       label: "Between"
     }
+    {
+      type: "relative-range",
+      id: "no-date",
+      label: "No date",
+      is_empty: true
+    }
   ]
 
 #
@@ -526,8 +532,13 @@ columnFilterStateToQuery = (column_filter_state, context) ->
         if filter_option.type == "relative-range" and filter_option.id == relative_range_id
           filter_option_id_found = true
 
+          if filter_option.is_empty
+            ranges_queries.push({ $exists: false })
+            continue
+
           if not (relative_range = filter_option.relative_range)?
             console.warn "relative-range #{filter_option.id} has no relative_range prop - skipping"
+            continue
 
           [gte, lte] = relative_range
 

@@ -567,6 +567,12 @@ _.extend GridControlCustomFields,
                 {
                   type: "custom-range"
                 }
+                {
+                  type: "relative-range",
+                  id: "no-date",
+                  label: "No date",
+                  is_empty: true
+                }
               ]
 
           # END IF field_type "date"

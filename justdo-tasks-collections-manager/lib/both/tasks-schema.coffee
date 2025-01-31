@@ -351,6 +351,12 @@ _.extend JustdoTasksCollectionsManager.prototype,
               {
                 type: "custom-range"
               }
+              {
+                type: "relative-range",
+                id: "no-date",
+                label: "No date",
+                is_empty: true
+              }
             ]
           }
 
@@ -496,6 +502,12 @@ _.extend JustdoTasksCollectionsManager.prototype,
               }
               {
                 type: "custom-range"
+              }
+              {
+                type: "relative-range",
+                id: "no-date",
+                label: "No date",
+                is_empty: true
               }
             ]
           }
