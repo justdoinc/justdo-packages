@@ -5,7 +5,7 @@ firebase_admin = Npm.require("firebase-admin")
 _.extend JustdoFirebase.prototype,
   _immediateInit: ->
     @firebase = firebase_admin.initializeApp
-      credential: firebase_admin.credential.cert JSON.parse @server_key
+      credential: firebase_admin.credential.cert JSON.parse @server_key.replace(/\'/g, "\"")
     @fcm = @firebase.messaging()
 
     # Test
