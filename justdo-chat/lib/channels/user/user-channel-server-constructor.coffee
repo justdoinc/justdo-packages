@@ -68,6 +68,15 @@ _.extend UserChannelServer.prototype,
 
     return result_array
 
+  getCounterpartUser: (fields) ->
+    if not fields?
+      fields = 
+        profile: 1
+
+    counterpart_user_id = _.without(@channel_identifier.user_ids, @performing_user)[0]
+
+    return Meteor.users.findOne(counterpart_user_id, {fields})
+
 share.UserChannelServer = UserChannelServer
 
 _.extend JustdoChat.prototype, 
