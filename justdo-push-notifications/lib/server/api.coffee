@@ -173,11 +173,16 @@ _.extend JustdoPushNotifications.prototype,
 
         user_device_ids_submitted[device_id] = true
 
-        message.to = device_id
+        message.token = device_id
         message.data.recipient = user_doc._id
 
         if token_obj.network_id == "apns"
-          message.content_available = true
+          message.apns =
+            headers:
+              "apns-priority": "5"
+            payload:
+              aps:
+                contentAvailable: true
 
           message.notification =
             title: message.data.title
@@ -195,10 +200,11 @@ _.extend JustdoPushNotifications.prototype,
 
           # https://rnfirebase.io/messaging/usage#message-handlers
 
-          message.priority = "high"
+          message.android =
+            priority: "high"
 
         do (message, token_obj) =>
-          APP.justdo_firebase.send message, (err, response) =>
+          APP.justdo_firebase.send message, false, (err, response) =>
             if err?
               if err == "NotRegistered"
                 @manageToken("unregister", token_obj.network_id, token_obj, message.data.recipient)

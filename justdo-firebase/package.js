@@ -9,6 +9,10 @@ client = "client"
 server = "server"
 both = [client, server]
 
+Npm.depends({
+  "firebase-admin": "12.7.0"
+});
+
 Package.onUse(function (api) {
   api.versionsFrom("1.4.1.1");
 

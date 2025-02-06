@@ -1,14 +1,12 @@
 import { checkNpmVersions } from "meteor/tmeasday:check-npm-versions"
 
-checkNpmVersions
-  'fcm-push': '1.1.x'
-, 'justdoinc:justdo-firebase'
-
-FCM = require('fcm-push')
+firebase_admin = Npm.require("firebase-admin")
 
 _.extend JustdoFirebase.prototype,
   _immediateInit: ->
-    @fcm = new FCM(@server_key)
+    @firebase = firebase_admin.initializeApp
+      credential: firebase_admin.credential.cert JSON.parse @server_key
+    @fcm = @firebase.messaging()
 
     # Test
     #
@@ -48,10 +46,9 @@ _.extend JustdoFirebase.prototype,
 
   isEnabled: -> true
 
-  send: (message, cb) ->
-    JustdoHelpers.runInFiber =>
-      @fcm.send message, Meteor.bindEnvironment(cb)
-
-      return
+  send: (message, dry_run=false, cb) ->
+    @fcm.send message, dry_run
+      .then (res) => cb null, res
+      .catch (err) => cb err
 
     return
