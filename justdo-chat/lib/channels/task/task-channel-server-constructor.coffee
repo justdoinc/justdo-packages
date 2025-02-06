@@ -5,7 +5,7 @@ channel_conf = JustdoChat.getChannelTypeConf("task")
 
 {channel_type, channel_identifier_fields_simple_schema} = channel_conf
 
-# Name should follow task-channel-both-registrar.coffee : channel_type_camel_case + "ChannelServer"
+# Name should follow task-channel-both-register.coffee : channel_type_camel_case + "ChannelServer"
 TaskChannelServer = (options) ->
   ChannelBaseServer.call this, options
 
