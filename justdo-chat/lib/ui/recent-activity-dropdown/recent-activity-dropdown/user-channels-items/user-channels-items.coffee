@@ -4,7 +4,12 @@ Template.recent_activity_item_user.onCreated ->
 Template.recent_activity_item_user.helpers
   channelTitle: ->
     receiving_user = _.find @user_ids, (user_id) -> user_id isnt Meteor.userId()
-    return JustdoHelpers.displayName receiving_user
+    receiving_user = Meteor.users.findOne receiving_user
+
+    if not _.isEmpty(display_name = JustdoHelpers.displayName receiving_user)
+      return display_name
+
+    return JustdoHelpers.getUserMainEmail receiving_user
     
   channel_last_message: -> APP.collections.JDChatRecentActivityMessages.findOne({channel_id: @_id})
 
