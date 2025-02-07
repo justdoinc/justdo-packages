@@ -1,7 +1,7 @@
 APP.justdo_crm.registerNews "news",
   _id: "v5-8"
   aliases: ["v5-8-x"]
-  date: "2025-01-24"
+  date: "2025-02-07"
   title: "v5_8_news_title"
 
   templates: [
