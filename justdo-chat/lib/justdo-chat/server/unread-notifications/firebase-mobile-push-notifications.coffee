@@ -13,7 +13,7 @@ if APP.justdo_push_notifications.isFirebaseEnabled()
     sendNotificationCb: (notification_obj) ->
       {user, channel_obj, channel_type, job_storage} = notification_obj
 
-      if channel_type not in ["task", "user"]
+      if channel_type not in APP.justdo_chat.getSupportedChannelTypes()
         console.warn "JustdoChat: firebase-mobile-unread-notifications: unsupported channel type for firebase-mobile notification: #{channel_type}"
 
         return

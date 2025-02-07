@@ -71,6 +71,8 @@ _.extend JustdoChat.prototype,
 
     return new share[channel_constructor_name](conf)
 
+  getSupportedChannelTypes: ->
+    return share.channel_types
 
   _getSubscribersUnreadUpdateObject: ->
     # Returns the update object that will set the channel for all the subscribers
