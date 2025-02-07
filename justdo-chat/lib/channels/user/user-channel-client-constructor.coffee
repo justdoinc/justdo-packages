@@ -20,9 +20,7 @@ _.extend UserChannelClient.prototype,
 
   channel_name_dash_separated: "#{channel_type}-channel-client" # for logging purposes
 
-  channel_conf_schema: new SimpleSchema
-    user_ids:
-      type: [String]
+  channel_conf_schema: share.user_channel_user_ids_array_schema
 
   getChannelIdentifier: ->
     return @channel_conf

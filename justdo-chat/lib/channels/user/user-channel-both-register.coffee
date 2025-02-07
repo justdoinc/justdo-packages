@@ -1,14 +1,16 @@
+share.user_channel_user_ids_array_schema = new SimpleSchema
+  user_ids:
+    type: [String]
+    minCount: 2
+    maxCount: 2
+
 JustdoChat.registerChannelType
   channel_type: "user" # Must be dash-separated! should be == @channel_type in client/server constructor
   channel_type_camel_case: "User" # Should be the same as the camel case form used in the client/server constructors names
 
   # Read about the identifier fields on the comment for @getChannelIdentifier() under channel-base-client.coffee
   # The information there is comprehensive and essential to understand the purpose and use of that definition!
-  channel_identifier_fields_simple_schema: new SimpleSchema
-    user_ids:
-      type: [String]
-      minCount: 2
-      maxCount: 2
+  channel_identifier_fields_simple_schema: share.user_channel_user_ids_array_schema
 
   # Read about the identifier fields on the comment for @getChannelAugmentedFields() under channel-base-server.coffee
   # The information there is comprehensive and essential to understand the purpose and use of that definition!
