@@ -1,7 +1,7 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "कार्य #__seqId__:",
   "grid_control_search_state_prefix": "स्थिति: ",
-  "grid_control_search_note_prefix": "टिप्पणी: ",
+  "grid_control_search_note_prefix": "__field_title__: ",
   "grid_control_search_hide_context": "सन्दर्भ लुकाउनुहोस्",
   "grid_control_search_show_full_context": "पूर्ण सन्दर्भ देखाउनुहोस्",
   "grid_control_search_no_results": "तपाईंको खोजीको लागि कुनै नतिजा फेला परेन"

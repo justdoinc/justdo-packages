@@ -1,7 +1,7 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "Tarefa #__seqId__:",
   "grid_control_search_state_prefix": "Estado: ",
-  "grid_control_search_note_prefix": "Nota: ",
+  "grid_control_search_note_prefix": "__field_title__: ",
   "grid_control_search_hide_context": "Ocultar contexto",
   "grid_control_search_show_full_context": "Mostrar contexto completo",
   "grid_control_search_no_results": "Não foram encontrados resultados para a sua pesquisa"

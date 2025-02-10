@@ -159,6 +159,8 @@ Template.grid_control_search_dropdown.helpers
 
     max_indent_levels = GridControlSearch.max_result_ancestors_to_show + 1 # +1 for the task itself
     return Math.min(@ancestors.length, max_indent_levels) * indent_px
+  
+  notesFieldI18nKey: -> TAPi18n.__ APP.collections.Tasks.simpleSchema()?._schema.status.label_i18n
 
 Template.grid_control_search_dropdown.events
   "click .search-dropdown-nav-link": (e, tpl) ->
