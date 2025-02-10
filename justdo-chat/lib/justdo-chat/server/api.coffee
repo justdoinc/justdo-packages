@@ -53,12 +53,10 @@ _.extend JustdoChat.prototype,
   # Channels related
   #
   generateServerChannelObject: (channel_type, channel_identifier, user_id) ->
-    check user_id, String
+    check user_id, Match.MayBe String
 
     @requireAllowedChannelType(channel_type)
     check channel_identifier, Object
-
-    @requireUserProvided(user_id) # At the moment we don't support generate by the system, so user_id is necessary
 
     # See both/static-channel-registrar.coffee
     channel_constructor_name = channel_type_to_channels_constructors[channel_type].server
@@ -419,6 +417,8 @@ _.extend JustdoChat.prototype,
           update =
             $pull:
               subscribers:
+                user_id: user_id
+              admins: 
                 user_id: user_id
 
           # rawCollection is used since the update is to complex for Simple Schema
@@ -1031,6 +1031,9 @@ _.extend JustdoChat.prototype,
 
     return channel_obj.sendMessage(data, "data", send_message_options)
 
+  insertLogMessageToChannel: (channel_type, channel_identifier, data, send_message_options) ->
+    return @sendDataMessageAsBot channel_type, channel_identifier, "bot:log", data, send_message_options
+
   _registerIntegralBots: ->
     @_registerBot "bot:your-assistant",
       profile:
@@ -1098,9 +1101,11 @@ _.extend JustdoChat.prototype,
               blackbox: true
               optional: true
 
+    @_registerBot "bot:log"
+
     return
 
-  _registerBot: (bot_id, bot_def) ->
+  _registerBot: (bot_id, bot_def={}) ->
     #
     # Build bot definition
     #

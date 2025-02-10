@@ -210,6 +210,8 @@ _.extend JustdoChatBottomWindowsManager.prototype,
           channel_conf =
             tasks_collection: APP.justdo_chat.bottom_windows_supplementary_pseudo_collections.tasks
             task_id: channel_identifier.task_id
+        if channel_type is "group"
+          channel_conf = channel_identifier
 
         channel_object =
           @justdo_chat.generateClientChannelObject channel_type, channel_conf
@@ -347,6 +349,12 @@ _.extend JustdoChatBottomWindowsManager.prototype,
       receiving_user_doc = Meteor.users.findOne(receiving_user_id, {fields: JustdoAvatar.avatar_required_fields})
       avatar_html = JustdoAvatar.getAvatarHtml receiving_user_doc
       title = "#{avatar_html} <b>#{JustdoHelpers.displayName receiving_user_id}</b>"
+
+    else if window_def.type is "group"
+      icon = window_def.channel_object.getChannelIcon()
+      icon_html = """<img class="justdo-avatar" src="#{icon}"/>"""
+      title = "#{icon_html} <b>#{JustdoHelpers.ellipsis(window_def.channel_object.getChannelTitle())}</b>"
+
     else
       console.warn "Unknown window_def.type: #{window_def.type}"
 

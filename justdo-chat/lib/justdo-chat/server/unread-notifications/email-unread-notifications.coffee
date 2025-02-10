@@ -17,12 +17,22 @@ JustdoChat.registerUnreadChannelsNotificationsManager
   sendNotificationCb: (notification_obj) ->
     {user, channel_obj, channel_type, job_storage} = notification_obj
 
-    if channel_type not in ["task", "user"]
+    if channel_type not in ["task", "group", "user"]
       console.warn "JustdoChat: email-unread-notifications: unsupported channel type for emails notification: #{channel_type}"
 
       return
     
     base_url = JustdoHelpers.getProdUrl("web-app")
+
+    if channel_type is "group"
+      channel_title = channel_obj.getChannelTitle()
+      subject = APP.justdo_i18n.tr "unread_group_chat_notification_subject", {channel_title}, user
+      template = "notifications-iv-unread-group-chat"
+      template_data =
+        user: user
+        channel_title: channel_title
+        read_link: "#{base_url}"
+        unsubscribe_link: "#{base_url}/#?hr-id=unsubscribe-c-iv-unread-emails-notifications"
 
     if channel_type is "user"
       counterpart_user = channel_obj.getCounterpartUser()

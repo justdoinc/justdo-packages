@@ -531,6 +531,34 @@ _.extend JustdoChat.prototype,
       if data.type is "i18n-message"
         return TAPi18n.__ data.i18n_key, data.i18n_options
       
+      # Convert user_ids in group notification data to display names
+      # Note that group notifications are i18n messages,
+      # the format should be "bot_log_message_<underscored_type>".
+      if data.type.includes "group-"
+        if data.performed_by is Meteor.userId()
+          data.performed_by = TAPi18n.__ "you"
+        else
+          data.performed_by = JustdoHelpers.displayName data.performed_by
+
+        if data.type in ["group-subscriber-added", "group-subscriber-removed"]
+          data.subscribers = _.map data.subscribers, (subscriber) -> 
+            if subscriber is Meteor.userId()
+              return TAPi18n.__ "you"
+            else
+              return JustdoHelpers.displayName subscriber
+          data.subscribers = data.subscribers.join ", "
+
+        if data.type in ["group-admin-appointed", "group-admin-removed"]
+          data.admins = _.map data.admins, (admin) -> 
+            if admin is Meteor.userId()
+              return TAPi18n.__ "you"
+            else
+              return JustdoHelpers.displayName admin
+          data.admins = data.admins.join ", "
+
+        msg = TAPi18n.__ "bot_log_message_#{data.type.replaceAll "-", "_"}", data
+        return JustdoHelpers.ucFirst msg
+
       # If msg is from bot and type isn't i18n-message, return the en message and replace any placeholders with variables inside data
       if (en_msg_temlate = bot_info.msgs_types?[data.type]?.rec_msgs_templates.en)?
         return en_msg_temlate.replace /{{(.*?)}}/g, (m, placeholder) ->
