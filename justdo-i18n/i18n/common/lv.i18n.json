@@ -62,6 +62,7 @@
   "task": "uzdevums",
   "tasks": "uzdevumi",
   "member": "Dalībnieks",
+  "members": "Dalībnieki",
   "guest": "Viesis",
   "proxy": "Starpnieks",
   "type": "tips",
