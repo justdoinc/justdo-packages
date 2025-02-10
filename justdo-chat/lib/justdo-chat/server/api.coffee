@@ -53,7 +53,7 @@ _.extend JustdoChat.prototype,
   # Channels related
   #
   generateServerChannelObject: (channel_type, channel_identifier, user_id) ->
-    check user_id, Match.MayBe String
+    check user_id, Match.Maybe String
 
     @requireAllowedChannelType(channel_type)
     check channel_identifier, Object
