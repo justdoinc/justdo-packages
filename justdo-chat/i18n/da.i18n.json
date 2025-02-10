@@ -2,5 +2,10 @@
   "chat_label": "Chat",
   "message_editor_input_placeholder": "Skriv en besked...",
   "chat_config_title": "Chat",
-  "chat_receive_chat_email_notifications": "Modtag chat-e-mailnotifikationer"
+  "chat_receive_chat_email_notifications": "Modtag chat-e-mailnotifikationer",
+  "chat_click_to_unsubscribe": "Du modtager notifikationer fra denne chat, klik for at afmelde",
+  "chat_click_to_subscribe": "Abonnér på notifikationer fra denne chat",
+  "chat_open_in_a_window": "Åbn chat i et vindue",
+  "chat_subscriber_management": "Administrer abonnenter",
+  "chat_send_message": "Send besked"
 }

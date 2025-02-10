@@ -2,5 +2,10 @@
   "chat_label": "الدردشة",
   "message_editor_input_placeholder": "اكتب رسالة...",
   "chat_config_title": "الدردشة",
-  "chat_receive_chat_email_notifications": "تلقي إشعارات البريد الإلكتروني للدردشة"
+  "chat_receive_chat_email_notifications": "تلقي إشعارات البريد الإلكتروني للدردشة",
+  "chat_click_to_unsubscribe": "ستتلقى إشعارات من هذه المحادثة، انقر لإلغاء الاشتراك",
+  "chat_click_to_subscribe": "اشترك في إشعارات هذه المحادثة",
+  "chat_open_in_a_window": "فتح المحادثة في نافذة",
+  "chat_subscriber_management": "إدارة المشتركين",
+  "chat_send_message": "إرسال رسالة"
 }

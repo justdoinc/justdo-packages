@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "Ez dago mezu gehiagorik",
   "chat_dropdown_loading_more_messages": "Mezu gehiago kargatzen...",
   "chat_dropdown_mark_all_as_read": "Markatu guztiak irakurrita bezala",
-  "chat_dropdown_you_have_no_messages": "Oraindik ez duzu mezurik"
+  "chat_dropdown_you_have_no_messages": "Oraindik ez duzu mezurik",
+  "chat_dropdown_mark_as_read": "Markatu irakurrita gisa",
+  "chat_dropdown_mark_as_unread": "Markatu irakurri gabe gisa"
 }

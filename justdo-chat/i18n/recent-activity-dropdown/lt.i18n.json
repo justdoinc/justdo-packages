@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "Daugiau žinučių nėra",
   "chat_dropdown_loading_more_messages": "Įkeliama daugiau žinučių...",
   "chat_dropdown_mark_all_as_read": "Pažymėti visas kaip perskaitytas",
-  "chat_dropdown_you_have_no_messages": "Kol kas neturite žinučių"
+  "chat_dropdown_you_have_no_messages": "Kol kas neturite žinučių",
+  "chat_dropdown_mark_as_read": "Pažymėti kaip perskaitytą",
+  "chat_dropdown_mark_as_unread": "Pažymėti kaip neperskaitytą"
 }

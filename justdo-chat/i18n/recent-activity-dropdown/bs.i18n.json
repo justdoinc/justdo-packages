@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "Nema više poruka",
   "chat_dropdown_loading_more_messages": "Učitavanje više poruka...",
   "chat_dropdown_mark_all_as_read": "Označi sve kao pročitano",
-  "chat_dropdown_you_have_no_messages": "Još nemate poruka"
+  "chat_dropdown_you_have_no_messages": "Još nemate poruka",
+  "chat_dropdown_mark_as_read": "Označi kao pročitano",
+  "chat_dropdown_mark_as_unread": "Označi kao nepročitano"
 }

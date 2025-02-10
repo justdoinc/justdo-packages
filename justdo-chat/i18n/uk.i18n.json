@@ -2,5 +2,10 @@
   "chat_label": "Чат",
   "message_editor_input_placeholder": "Введіть повідомлення...",
   "chat_config_title": "Чат",
-  "chat_receive_chat_email_notifications": "Отримувати сповіщення про чат електронною поштою"
+  "chat_receive_chat_email_notifications": "Отримувати сповіщення про чат електронною поштою",
+  "chat_click_to_unsubscribe": "Ви отримуватимете сповіщення з цього чату, натисніть щоб відписатися",
+  "chat_click_to_subscribe": "Підписатися на сповіщення з цього чату",
+  "chat_open_in_a_window": "Відкрити чат у вікні",
+  "chat_subscriber_management": "Керування підписниками",
+  "chat_send_message": "Надіслати повідомлення"
 }

@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "Keng weider Noriichten",
   "chat_dropdown_loading_more_messages": "Luede méi Noriichten...",
   "chat_dropdown_mark_all_as_read": "All als gelies markéieren",
-  "chat_dropdown_you_have_no_messages": "Dir hutt nach keng Noriichten"
+  "chat_dropdown_you_have_no_messages": "Dir hutt nach keng Noriichten",
+  "chat_dropdown_mark_as_read": "Als gelies markéieren",
+  "chat_dropdown_mark_as_unread": "Als net gelies markéieren"
 }

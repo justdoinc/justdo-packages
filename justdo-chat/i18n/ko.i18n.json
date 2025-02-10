@@ -2,5 +2,10 @@
   "chat_label": "채팅",
   "message_editor_input_placeholder": "메시지를 입력하세요...",
   "chat_config_title": "채팅",
-  "chat_receive_chat_email_notifications": "채팅 이메일 알림 받기"
+  "chat_receive_chat_email_notifications": "채팅 이메일 알림 받기",
+  "chat_click_to_unsubscribe": "이 채팅의 알림을 받고 있습니다. 구독 취소하려면 클릭하세요",
+  "chat_click_to_subscribe": "이 채팅의 알림 구독하기",
+  "chat_open_in_a_window": "새 창에서 채팅 열기",
+  "chat_subscriber_management": "구독자 관리",
+  "chat_send_message": "메시지 보내기"
 }

@@ -2,5 +2,10 @@
   "chat_label": "聊天",
   "message_editor_input_placeholder": "输入消息……",
   "chat_config_title": "聊天",
-  "chat_receive_chat_email_notifications": "接收聊天邮件通知"
+  "chat_receive_chat_email_notifications": "接收聊天邮件通知",
+  "chat_click_to_unsubscribe": "您将收到此聊天的通知，点击取消订阅",
+  "chat_click_to_subscribe": "订阅此聊天的通知",
+  "chat_open_in_a_window": "在新窗口中打开聊天",
+  "chat_subscriber_management": "订阅者管理",
+  "chat_send_message": "发送消息"
 }

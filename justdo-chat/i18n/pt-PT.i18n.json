@@ -2,5 +2,10 @@
   "chat_label": "Chat",
   "message_editor_input_placeholder": "Escreva uma mensagem...",
   "chat_config_title": "Chat",
-  "chat_receive_chat_email_notifications": "Receber notificações de chat por e-mail"
+  "chat_receive_chat_email_notifications": "Receber notificações de chat por e-mail",
+  "chat_click_to_unsubscribe": "Irá receber notificações deste chat, clique para cancelar a subscrição",
+  "chat_click_to_subscribe": "Subscrever notificações deste chat",
+  "chat_open_in_a_window": "Abrir chat numa janela",
+  "chat_subscriber_management": "Gestão de Subscritores",
+  "chat_send_message": "Enviar Mensagem"
 }

@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "Δεν υπάρχουν άλλα μηνύματα",
   "chat_dropdown_loading_more_messages": "Φόρτωση περισσότερων μηνυμάτων...",
   "chat_dropdown_mark_all_as_read": "Επισήμανση όλων ως αναγνωσμένα",
-  "chat_dropdown_you_have_no_messages": "Δεν έχετε ακόμη μηνύματα"
+  "chat_dropdown_you_have_no_messages": "Δεν έχετε ακόμη μηνύματα",
+  "chat_dropdown_mark_as_read": "Επισήμανση ως αναγνωσμένο",
+  "chat_dropdown_mark_as_unread": "Επισήμανση ως μη αναγνωσμένο"
 }

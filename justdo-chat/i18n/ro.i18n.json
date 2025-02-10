@@ -2,5 +2,10 @@
   "chat_label": "Chat",
   "message_editor_input_placeholder": "Scrieți un mesaj...",
   "chat_config_title": "Chat",
-  "chat_receive_chat_email_notifications": "Primiți notificări prin e-mail pentru chat"
+  "chat_receive_chat_email_notifications": "Primiți notificări prin e-mail pentru chat",
+  "chat_click_to_unsubscribe": "Vei primi notificări de la această conversație, click pentru dezabonare",
+  "chat_click_to_subscribe": "Abonează-te la notificări pentru această conversație",
+  "chat_open_in_a_window": "Deschide chat-ul într-o fereastră",
+  "chat_subscriber_management": "Gestionare abonați",
+  "chat_send_message": "Trimite mesaj"
 }

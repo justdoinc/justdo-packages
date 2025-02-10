@@ -2,5 +2,10 @@
   "chat_label": "Συνομιλία",
   "message_editor_input_placeholder": "Πληκτρολογήστε ένα μήνυμα...",
   "chat_config_title": "Συνομιλία",
-  "chat_receive_chat_email_notifications": "Λήψη ειδοποιήσεων email για τις συνομιλίες"
+  "chat_receive_chat_email_notifications": "Λήψη ειδοποιήσεων email για τις συνομιλίες",
+  "chat_click_to_unsubscribe": "Θα λαμβάνετε ειδοποιήσεις από αυτή τη συνομιλία, κάντε κλικ για διακοπή",
+  "chat_click_to_subscribe": "Εγγραφή στις ειδοποιήσεις αυτής της συνομιλίας",
+  "chat_open_in_a_window": "Άνοιγμα συνομιλίας σε παράθυρο",
+  "chat_subscriber_management": "Διαχείριση Συνδρομητών",
+  "chat_send_message": "Αποστολή Μηνύματος"
 }

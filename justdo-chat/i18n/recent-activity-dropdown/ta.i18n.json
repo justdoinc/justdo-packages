@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "மேலும் செய்திகள் இல்லை",
   "chat_dropdown_loading_more_messages": "மேலும் செய்திகள் ஏற்றப்படுகின்றன...",
   "chat_dropdown_mark_all_as_read": "அனைத்தையும் படித்ததாக குறி",
-  "chat_dropdown_you_have_no_messages": "உங்களுக்கு இன்னும் செய்திகள் எதுவும் இல்லை"
+  "chat_dropdown_you_have_no_messages": "உங்களுக்கு இன்னும் செய்திகள் எதுவும் இல்லை",
+  "chat_dropdown_mark_as_read": "படித்ததாக குறி",
+  "chat_dropdown_mark_as_unread": "படிக்காததாக குறி"
 }

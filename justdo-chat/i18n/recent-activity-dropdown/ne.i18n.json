@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "थप सन्देशहरू छैनन्",
   "chat_dropdown_loading_more_messages": "थप सन्देशहरू लोड हुँदैछ...",
   "chat_dropdown_mark_all_as_read": "सबै पढिएको रूपमा चिन्ह लगाउनुहोस्",
-  "chat_dropdown_you_have_no_messages": "तपाईंसँग अहिलेसम्म कुनै सन्देशहरू छैनन्"
+  "chat_dropdown_you_have_no_messages": "तपाईंसँग अहिलेसम्म कुनै सन्देशहरू छैनन्",
+  "chat_dropdown_mark_as_read": "पढिएको रूपमा चिन्ह लगाउनुहोस्",
+  "chat_dropdown_mark_as_unread": "नपढिएको रूपमा चिन्ह लगाउनुहोस्"
 }

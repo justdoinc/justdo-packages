@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "Başka mesaj yok",
   "chat_dropdown_loading_more_messages": "Daha fazla mesaj yükleniyor...",
   "chat_dropdown_mark_all_as_read": "Tümünü Okundu Olarak İşaretle",
-  "chat_dropdown_you_have_no_messages": "Henüz hiç mesajınız yok"
+  "chat_dropdown_you_have_no_messages": "Henüz hiç mesajınız yok",
+  "chat_dropdown_mark_as_read": "Okundu Olarak İşaretle",
+  "chat_dropdown_mark_as_unread": "Okunmadı Olarak İşaretle"
 }

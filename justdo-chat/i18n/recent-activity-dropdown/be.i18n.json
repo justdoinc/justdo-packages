@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "Больш паведамленняў няма",
   "chat_dropdown_loading_more_messages": "Загрузка дадатковых паведамленняў...",
   "chat_dropdown_mark_all_as_read": "Пазначыць усе як прачытаныя",
-  "chat_dropdown_you_have_no_messages": "У вас пакуль няма паведамленняў"
+  "chat_dropdown_you_have_no_messages": "У вас пакуль няма паведамленняў",
+  "chat_dropdown_mark_as_read": "Пазначыць як прачытанае",
+  "chat_dropdown_mark_as_unread": "Пазначыць як непрачытанае"
 }

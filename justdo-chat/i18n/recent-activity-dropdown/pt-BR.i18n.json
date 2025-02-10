@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "Não há mais mensagens",
   "chat_dropdown_loading_more_messages": "Carregando mais mensagens...",
   "chat_dropdown_mark_all_as_read": "Marcar todas como lidas",
-  "chat_dropdown_you_have_no_messages": "Você ainda não tem mensagens"
+  "chat_dropdown_you_have_no_messages": "Você ainda não tem mensagens",
+  "chat_dropdown_mark_as_read": "Marcar como lido",
+  "chat_dropdown_mark_as_unread": "Marcar como não lido"
 }

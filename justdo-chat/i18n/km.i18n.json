@@ -2,5 +2,10 @@
   "chat_label": "ជជែក",
   "message_editor_input_placeholder": "វាយសារ...",
   "chat_config_title": "ជជែកកម្សាន្ត",
-  "chat_receive_chat_email_notifications": "ទទួលការជូនដំណឹងតាមអ៊ីមែលសម្រាប់ការជជែកកម្សាន្ត"
+  "chat_receive_chat_email_notifications": "ទទួលការជូនដំណឹងតាមអ៊ីមែលសម្រាប់ការជជែកកម្សាន្ត",
+  "chat_click_to_unsubscribe": "អ្នកនឹងទទួលបានការជូនដំណឹងពីការជជែកនេះ ចុចដើម្បីលុបការជាវ",
+  "chat_click_to_subscribe": "ជាវការជូនដំណឹងពីការជជែកនេះ",
+  "chat_open_in_a_window": "បើកការជជែកក្នុងវីនដូ",
+  "chat_subscriber_management": "ការគ្រប់គ្រងអ្នកជាវ",
+  "chat_send_message": "ផ្ញើសារ"
 }

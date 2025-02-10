@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "Այլևս հաղորդագրություններ չկան",
   "chat_dropdown_loading_more_messages": "Բեռնվում են ավելի շատ հաղորդագրություններ...",
   "chat_dropdown_mark_all_as_read": "Նշել բոլորը որպես կարդացված",
-  "chat_dropdown_you_have_no_messages": "Դուք դեռ հաղորդագրություններ չունեք"
+  "chat_dropdown_you_have_no_messages": "Դուք դեռ հաղորդագրություններ չունեք",
+  "chat_dropdown_mark_as_read": "Նշել որպես կարդացված",
+  "chat_dropdown_mark_as_unread": "Նշել որպես չկարդացված"
 }

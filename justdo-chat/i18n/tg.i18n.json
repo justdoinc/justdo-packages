@@ -2,5 +2,10 @@
   "chat_label": "Чат",
   "message_editor_input_placeholder": "Паёмро нависед...",
   "chat_config_title": "Чат",
-  "chat_receive_chat_email_notifications": "Огоҳиҳои почтаи электрониро барои чат гиред"
+  "chat_receive_chat_email_notifications": "Огоҳиҳои почтаи электрониро барои чат гиред",
+  "chat_click_to_unsubscribe": "Шумо аз ин чат огоҳӣ мегиред, барои бекор кардани обуна клик кунед",
+  "chat_click_to_subscribe": "Ба огоҳиҳои ин чат обуна шавед",
+  "chat_open_in_a_window": "Чатро дар равзанаи алоҳида кушоед",
+  "chat_subscriber_management": "Идоракунии обуначиён",
+  "chat_send_message": "Фиристодани паём"
 }

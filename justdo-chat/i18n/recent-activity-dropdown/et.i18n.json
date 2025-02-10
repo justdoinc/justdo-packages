@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "Rohkem sõnumeid pole",
   "chat_dropdown_loading_more_messages": "Laadin rohkem sõnumeid...",
   "chat_dropdown_mark_all_as_read": "Märgi kõik loetuks",
-  "chat_dropdown_you_have_no_messages": "Sul pole veel ühtegi sõnumit"
+  "chat_dropdown_you_have_no_messages": "Sul pole veel ühtegi sõnumit",
+  "chat_dropdown_mark_as_read": "Märgi loetuks",
+  "chat_dropdown_mark_as_unread": "Märgi mitteloetuks"
 }

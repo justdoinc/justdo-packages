@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "Vairāk ziņojumu nav",
   "chat_dropdown_loading_more_messages": "Ielādē vairāk ziņojumu...",
   "chat_dropdown_mark_all_as_read": "Atzīmēt visus kā izlasītus",
-  "chat_dropdown_you_have_no_messages": "Jums vēl nav ziņojumu"
+  "chat_dropdown_you_have_no_messages": "Jums vēl nav ziņojumu",
+  "chat_dropdown_mark_as_read": "Atzīmēt kā izlasītu",
+  "chat_dropdown_mark_as_unread": "Atzīmēt kā nelasītu"
 }

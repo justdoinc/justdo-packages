@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "Нема повеќе пораки",
   "chat_dropdown_loading_more_messages": "Вчитување на повеќе пораки...",
   "chat_dropdown_mark_all_as_read": "Означи ги сите како прочитани",
-  "chat_dropdown_you_have_no_messages": "Сè уште немате пораки"
+  "chat_dropdown_you_have_no_messages": "Сè уште немате пораки",
+  "chat_dropdown_mark_as_read": "Означи како прочитано",
+  "chat_dropdown_mark_as_unread": "Означи како непрочитано"
 }

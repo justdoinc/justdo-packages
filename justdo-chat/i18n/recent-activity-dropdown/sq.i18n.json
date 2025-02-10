@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "Nuk ka më mesazhe",
   "chat_dropdown_loading_more_messages": "Duke ngarkuar më shumë mesazhe...",
   "chat_dropdown_mark_all_as_read": "Shënoji të gjitha si të lexuara",
-  "chat_dropdown_you_have_no_messages": "Nuk keni asnjë mesazh, ende"
+  "chat_dropdown_you_have_no_messages": "Nuk keni asnjë mesazh, ende",
+  "chat_dropdown_mark_as_read": "Shënoje si të lexuar",
+  "chat_dropdown_mark_as_unread": "Shënoje si të palexuar"
 }
