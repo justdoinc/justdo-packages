@@ -1,0 +1,149 @@
+.group-channel-settings
+  .members-section
+    height: 100%
+    display: flex
+    .members-list-container
+      width: 100%
+      display: flex
+      flex-direction: column
+
+    .members-list-add-users-container
+      border-right: 1px solid #ecf1f8
+      padding: 0
+      margin-right: 14px
+      .section-caption
+        padding-bottom: 14px
+      .section-caption,
+      .members-list
+        padding-right: 14px
+
+    .members-list-keep-users-container
+      padding: 0
+      .section-caption
+        padding-bottom: 14px
+      .section-caption,
+      .members-list
+        padding-right: 20px
+
+    .members-list
+      overflow: auto
+      flex-grow: 1
+      padding-bottom: 0
+
+    .no-members,
+    .no-results
+      user-select: none
+      cursor: default
+      margin-top: 120px
+      display: flex
+      justify-content: center
+      align-items: center
+      font-size: 14px
+      color: rgba(49, 69, 99, 0.5)
+
+    .members-editor-dialog-keep-users-section
+      .dont-proceed
+        padding: 2px
+        background-color: #f0f4f9
+        border-radius: 17px 4px 4px 16px
+        .jd-icon
+          color: #7d8b9f
+        .user-plus
+          display: none
+        .display-name
+          text-decoration: line-through
+
+        .toggle
+          display: none
+
+        &:hover
+          .toggle
+            display: inline
+
+    .members-editor-dialog-add-users-section
+      .user-x
+        display: none
+
+      .proceed
+        padding: 2px
+        background-color: #f0f4f9
+        border-radius: 17px 4px 4px 16px
+        .display-name
+          color: black
+        .jd-icon
+          color: #7d8b9f
+        .toggle
+          display: none
+
+        &:hover
+          .toggle
+            display: inline
+
+    &.remove-self
+      .select-all,
+      .select-none
+        pointer-events: none
+        opacity: 0.5
+
+  .members-editor-dialog
+    .modal-dialog
+      min-width: 740px
+    .modal-content
+      border: none
+    .modal-body
+      overflow: visible
+      padding: 0px
+    .modal-header
+      padding: 20px 27px
+      border-bottom: 1px solid #EDF1F8
+    .modal-title
+      font-size: 16px
+    .modal-footer
+      padding: 20px 27px
+      border-top: 1px solid #EDF1F8
+    .checkbox
+      position: absolute
+      bottom: -56px
+      left: 27px
+      label
+        user-select: none
+        display: flex
+        align-items: center
+        color: #3D495B
+    .section-caption
+      color: #3D495B
+      display: flex
+      align-items: center
+      justify-content: space-between
+      margin-bottom: 12px
+
+  .user-btn
+    display: flex
+    padding: 2px 0
+    margin-bottom: 4px
+    align-items: center
+    justify-content: space-between
+    transition: padding 0.35s
+    .jd-icon
+      color: #C5CBD3
+      stroke-width: 3
+      padding: 4px
+      &:hover
+        color: #76869a
+        background-color: #e8edf3
+    img
+      width: 26px
+      height: 26px
+      margin-right: 4px
+      position: relative // prevent text from shiftin on click on IE
+    .display-name
+      display: flex
+      text-overflow: ellipsis
+      overflow: hidden
+      white-space: nowrap
+      margin-left: 2px
+      color: #3D495B
+      .unverified-email-warn
+        margin-right: 4px
+    &.disabled
+      opacity: .5
