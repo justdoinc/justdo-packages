@@ -19,7 +19,7 @@ Template.create_group_chat_with_user_btn.helpers
 
     is_user_performing_user = user_id is Meteor.userId()
     is_user_bot = APP.justdo_chat.isBotUserId(user_id)
-    is_user_proxy = APP.justdo_site_admins.isProxyUser(user_id)
+    is_user_proxy = APP.accounts.isProxyUser(user_id)
     is_active_justdo_exists = JD.activeJustdoId()?
 
     return is_active_justdo_exists and (not is_user_performing_user) and (not is_user_bot) and (not is_user_proxy)
