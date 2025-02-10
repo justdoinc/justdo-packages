@@ -2,5 +2,10 @@
   "chat_label": "Gumzo",
   "message_editor_input_placeholder": "Andika ujumbe...",
   "chat_config_title": "Gumzo",
-  "chat_receive_chat_email_notifications": "Pokea arifa za barua pepe za gumzo"
+  "chat_receive_chat_email_notifications": "Pokea arifa za barua pepe za gumzo",
+  "chat_click_to_unsubscribe": "Utapokea arifa kutoka kwenye mazungumzo haya, bonyeza kujitoa",
+  "chat_click_to_subscribe": "Jiandikishe kupokea arifa za mazungumzo haya",
+  "chat_open_in_a_window": "Fungua mazungumzo katika dirisha jipya",
+  "chat_subscriber_management": "Usimamizi wa Waliojisajili",
+  "chat_send_message": "Tuma Ujumbe"
 }

@@ -2,5 +2,10 @@
   "chat_label": "அரட்டை",
   "message_editor_input_placeholder": "ஒரு செய்தியை தட்டச்சு செய்யவும்...",
   "chat_config_title": "அரட்டை",
-  "chat_receive_chat_email_notifications": "அரட்டை மின்னஞ்சல் அறிவிப்புகளைப் பெறுக"
+  "chat_receive_chat_email_notifications": "அரட்டை மின்னஞ்சல் அறிவிப்புகளைப் பெறுக",
+  "chat_click_to_unsubscribe": "இந்த அரட்டையிலிருந்து அறிவிப்புகளைப் பெறுவீர்கள், குழுவிலகல் செய்ய கிளிக் செய்யவும்",
+  "chat_click_to_subscribe": "இந்த அரட்டையின் அறிவிப்புகளுக்கு குழுசேரவும்",
+  "chat_open_in_a_window": "அரட்டையை சாளரத்தில் திறக்கவும்",
+  "chat_subscriber_management": "குழு உறுப்பினர் மேலாண்மை",
+  "chat_send_message": "செய்தி அனுப்பு"
 }

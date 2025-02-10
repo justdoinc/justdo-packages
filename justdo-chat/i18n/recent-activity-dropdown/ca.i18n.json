@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "No hi ha més missatges",
   "chat_dropdown_loading_more_messages": "Carregant més missatges...",
   "chat_dropdown_mark_all_as_read": "Marcar tots com a llegits",
-  "chat_dropdown_you_have_no_messages": "Encara no tens cap missatge"
+  "chat_dropdown_you_have_no_messages": "Encara no tens cap missatge",
+  "chat_dropdown_mark_as_read": "Marca com a llegit",
+  "chat_dropdown_mark_as_unread": "Marca com a no llegit"
 }

@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "Geen meer boodskappe nie",
   "chat_dropdown_loading_more_messages": "Laai meer boodskappe...",
   "chat_dropdown_mark_all_as_read": "Merk alles as gelees",
-  "chat_dropdown_you_have_no_messages": "Jy het nog geen boodskappe nie"
+  "chat_dropdown_you_have_no_messages": "Jy het nog geen boodskappe nie",
+  "chat_dropdown_mark_as_read": "Merk as gelees",
+  "chat_dropdown_mark_as_unread": "Merk as ongelees"
 }

@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "Няма повече съобщения",
   "chat_dropdown_loading_more_messages": "Зареждане на още съобщения...",
   "chat_dropdown_mark_all_as_read": "Маркирай всички като прочетени",
-  "chat_dropdown_you_have_no_messages": "Все още нямате съобщения"
+  "chat_dropdown_you_have_no_messages": "Все още нямате съобщения",
+  "chat_dropdown_mark_as_read": "Маркирай като прочетено",
+  "chat_dropdown_mark_as_unread": "Маркирай като непрочетено"
 }

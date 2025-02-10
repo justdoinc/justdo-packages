@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "קיין מער מעלדונגען",
   "chat_dropdown_loading_more_messages": "לאָדן מער מעלדונגען...",
   "chat_dropdown_mark_all_as_read": "באַצייכן אַלע ווי געלייענט",
-  "chat_dropdown_you_have_no_messages": "איר האָט נאָך קיין מעלדונגען"
+  "chat_dropdown_you_have_no_messages": "איר האָט נאָך קיין מעלדונגען",
+  "chat_dropdown_mark_as_read": "באַצייכן ווי געלייענט",
+  "chat_dropdown_mark_as_unread": "באַצייכן ווי נישט געלייענט"
 }

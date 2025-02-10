@@ -2,5 +2,10 @@
   "chat_label": "צ'אט",
   "message_editor_input_placeholder": "הקלד הודעה...",
   "chat_config_title": "צ'אט",
-  "chat_receive_chat_email_notifications": "קבל התראות דוא\"ל לצ'אט"
+  "chat_receive_chat_email_notifications": "קבל התראות דוא\"ל לצ'אט",
+  "chat_click_to_unsubscribe": "את/ה מקבל/ת התראות מצ'אט זה, לחץ/י לביטול המינוי",
+  "chat_click_to_subscribe": "הירשם/י להתראות מצ'אט זה",
+  "chat_open_in_a_window": "פתח/י צ'אט בחלון",
+  "chat_subscriber_management": "ניהול מנויים",
+  "chat_send_message": "שלח/י הודעה"
 }

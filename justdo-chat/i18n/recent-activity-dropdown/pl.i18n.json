@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "Brak więcej wiadomości",
   "chat_dropdown_loading_more_messages": "Ładowanie kolejnych wiadomości...",
   "chat_dropdown_mark_all_as_read": "Oznacz wszystkie jako przeczytane",
-  "chat_dropdown_you_have_no_messages": "Nie masz jeszcze żadnych wiadomości"
+  "chat_dropdown_you_have_no_messages": "Nie masz jeszcze żadnych wiadomości",
+  "chat_dropdown_mark_as_read": "Oznacz jako przeczytane",
+  "chat_dropdown_mark_as_unread": "Oznacz jako nieprzeczytane"
 }

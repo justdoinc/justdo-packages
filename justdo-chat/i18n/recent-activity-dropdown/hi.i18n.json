@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "और कोई संदेश नहीं",
   "chat_dropdown_loading_more_messages": "अधिक संदेश लोड हो रहे हैं...",
   "chat_dropdown_mark_all_as_read": "सभी को पढ़ा हुआ चिह्नित करें",
-  "chat_dropdown_you_have_no_messages": "आपके पास अभी तक कोई संदेश नहीं है"
+  "chat_dropdown_you_have_no_messages": "आपके पास अभी तक कोई संदेश नहीं है",
+  "chat_dropdown_mark_as_read": "पढ़ा हुआ चिह्नित करें",
+  "chat_dropdown_mark_as_unread": "अपठित चिह्नित करें"
 }

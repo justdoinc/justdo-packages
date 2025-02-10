@@ -2,5 +2,10 @@
   "chat_label": "チャット",
   "message_editor_input_placeholder": "メッセージを入力...",
   "chat_config_title": "チャット",
-  "chat_receive_chat_email_notifications": "チャットのメール通知を受け取る"
+  "chat_receive_chat_email_notifications": "チャットのメール通知を受け取る",
+  "chat_click_to_unsubscribe": "このチャットの通知を受信中です。クリックして登録解除",
+  "chat_click_to_subscribe": "このチャットの通知を受け取る",
+  "chat_open_in_a_window": "ウィンドウでチャットを開く",
+  "chat_subscriber_management": "購読者管理",
+  "chat_send_message": "メッセージを送信"
 }

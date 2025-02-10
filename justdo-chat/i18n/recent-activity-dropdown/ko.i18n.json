@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "더 이상 메시지가 없습니다",
   "chat_dropdown_loading_more_messages": "더 많은 메시지를 불러오는 중...",
   "chat_dropdown_mark_all_as_read": "모두 읽음으로 표시",
-  "chat_dropdown_you_have_no_messages": "아직 메시지가 없습니다"
+  "chat_dropdown_you_have_no_messages": "아직 메시지가 없습니다",
+  "chat_dropdown_mark_as_read": "읽음으로 표시",
+  "chat_dropdown_mark_as_unread": "읽지 않음으로 표시"
 }

@@ -2,5 +2,7 @@
   "chat_dropdown_no_more_messages": "אין הודעות נוספות",
   "chat_dropdown_loading_more_messages": "טוען הודעות נוספות...",
   "chat_dropdown_mark_all_as_read": "סמן הכל כנקרא",
-  "chat_dropdown_you_have_no_messages": "אין לך עדיין הודעות"
+  "chat_dropdown_you_have_no_messages": "אין לך עדיין הודעות",
+  "chat_dropdown_mark_as_read": "סמן כנקרא",
+  "chat_dropdown_mark_as_unread": "סמן כלא נקרא"
 }

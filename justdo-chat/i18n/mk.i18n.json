@@ -2,5 +2,10 @@
   "chat_label": "Разговор",
   "message_editor_input_placeholder": "Напишете порака...",
   "chat_config_title": "Разговор",
-  "chat_receive_chat_email_notifications": "Примајте известувања за разговор преку е-пошта"
+  "chat_receive_chat_email_notifications": "Примајте известувања за разговор преку е-пошта",
+  "chat_click_to_unsubscribe": "Ќе добивате известувања од овој разговор, кликнете за да се отпишете",
+  "chat_click_to_subscribe": "Претплатете се на известувања од овој разговор",
+  "chat_open_in_a_window": "Отвори го разговорот во прозорец",
+  "chat_subscriber_management": "Управување со претплатници",
+  "chat_send_message": "Испрати порака"
 }
