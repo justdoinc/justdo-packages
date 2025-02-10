@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "Sukurti grupės pokalbį",
+  "edit_group_chat_modal_title": "Redaguoti grupės pokalbį",
+  "default_group_chat_title": "Grupės pokalbis",
+  "group_chat_title_input_placeholder": "Grupės pavadinimas",
+  "group_chat_description_input_placeholder": "Grupės aprašymas",
+  "justdo_chat_default_welcome_msg": "Sveiki ir sveiki atvykę į JustDo! Tai jūsų asmeninis pagalbos kanalas. Jei jums reikia pagalbos, prašome palikti mums žinutę. Mes susisieksime su jumis kaip įmanoma greičiau. Geros dienos!",
+  "bot_log_message_group_created": "__performed_by__ sukūrė šį kanalą.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ pakvietė __subscribers__ į šį kanalą.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ pašalino __subscribers__ iš šio kanalo.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ paskyrė __admins__ šio kanalo administratoriais.",
+  "bot_log_message_group_admin_removed": "__performed_by__ pašalino __admins__ iš kanalo administratorių.",
+  "bot_log_message_group_title_changed": "__performed_by__ pervadino šį kanalą į __new_title__.",
+  "bot_log_message_group_description_changed": "__performed_by__ atnaujino grupės aprašymą.",
+  "bot_log_message_group_icon_changed": "__performed_by__ atnaujino grupės piktogramą."
+}

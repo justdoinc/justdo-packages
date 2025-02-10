@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "Креирај групен разговор",
+  "edit_group_chat_modal_title": "Уреди групен разговор",
+  "default_group_chat_title": "Групен разговор",
+  "group_chat_title_input_placeholder": "Наслов на групата",
+  "group_chat_description_input_placeholder": "Опис на групата",
+  "justdo_chat_default_welcome_msg": "Здраво и добредојдовте во JustDo! Ова е вашиот личен канал за поддршка. Доколку ви треба помош, ве молиме оставете ни порака. Ќе стапиме во контакт со вас што е можно поскоро. Ви посакуваме пријатен ден!",
+  "bot_log_message_group_created": "__performed_by__ го создаде овој канал.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ ги покани __subscribers__ во овој канал.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ ги отстрани __subscribers__ од овој канал.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ ги унапреди __admins__ како администратори на овој канал.",
+  "bot_log_message_group_admin_removed": "__performed_by__ ги отстрани __admins__ од администратори на овој канал.",
+  "bot_log_message_group_title_changed": "__performed_by__ го преименуваше овој канал во __new_title__.",
+  "bot_log_message_group_description_changed": "__performed_by__ го ажурираше описот на групата.",
+  "bot_log_message_group_icon_changed": "__performed_by__ ја ажурираше иконата на групата."
+}

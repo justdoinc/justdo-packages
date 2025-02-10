@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "Gruppechat erstellen",
+  "edit_group_chat_modal_title": "Gruppechat änneren",
+  "default_group_chat_title": "Gruppechat",
+  "group_chat_title_input_placeholder": "Gruppentitel",
+  "group_chat_description_input_placeholder": "Gruppebeschreiwung",
+  "justdo_chat_default_welcome_msg": "Moien a wëllkomm bei JustDo! Dëst ass Däi perséinleche Support-Kanal. Wanns Du Hëllef brauchs, hannerlooss eis w.e.g. eng Noriicht. Mir mellen eis esou séier wéi méiglech zeréck. E schéinen Dag nach!",
+  "bot_log_message_group_created": "__performed_by__ huet dëse Kanal erstallt.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ huet __subscribers__ an dëse Kanal agelueden.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ huet __subscribers__ aus dësem Kanal erausgeholl.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ huet __admins__ als Administrateure vun dësem Kanal ernannt.",
+  "bot_log_message_group_admin_removed": "__performed_by__ huet __admins__ als Administrateure vun dësem Kanal ofgesat.",
+  "bot_log_message_group_title_changed": "__performed_by__ huet dëse Kanal an __new_title__ ëmbenannt.",
+  "bot_log_message_group_description_changed": "__performed_by__ huet d'Gruppebeschreiwung aktualiséiert.",
+  "bot_log_message_group_icon_changed": "__performed_by__ huet d'Gruppeikon aktualiséiert."
+}

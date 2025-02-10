@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "그룹 채팅 만들기",
+  "edit_group_chat_modal_title": "그룹 채팅 수정",
+  "default_group_chat_title": "그룹 채팅",
+  "group_chat_title_input_placeholder": "그룹 제목",
+  "group_chat_description_input_placeholder": "그룹 설명",
+  "justdo_chat_default_welcome_msg": "안녕하세요, JustDo에 오신 것을 환영합니다! 이곳은 귀하의 개인 지원 채널입니다. 도움이 필요하시면 메시지를 남겨주세요. 최대한 빨리 연락드리도록 하겠습니다. 좋은 하루 보내세요!",
+  "bot_log_message_group_created": "__performed_by__님이 이 채널을 생성했습니다.",
+  "bot_log_message_group_subscriber_added": "__performed_by__님이 __subscribers__님을 이 채널에 초대했습니다.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__님이 __subscribers__님을 이 채널에서 제거했습니다.",
+  "bot_log_message_group_admin_appointed": "__performed_by__님이 __admins__님을 이 채널의 관리자로 승격시켰습니다.",
+  "bot_log_message_group_admin_removed": "__performed_by__님이 __admins__님의 채널 관리자 권한을 해제했습니다.",
+  "bot_log_message_group_title_changed": "__performed_by__님이 이 채널의 이름을 __new_title__로 변경했습니다.",
+  "bot_log_message_group_description_changed": "__performed_by__님이 그룹 설명을 수정했습니다.",
+  "bot_log_message_group_icon_changed": "__performed_by__님이 그룹 아이콘을 변경했습니다."
+}

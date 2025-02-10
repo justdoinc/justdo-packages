@@ -261,6 +261,9 @@ Package.onUse(function (api) {
   // bottom-window
   this.addI18nFiles(api, "i18n/bottom-window/{}.i18n.json");
 
+  // group-chat
+  this.addI18nFiles(api, "i18n/group-chat/{}.i18n.json");
+
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", both);

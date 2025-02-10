@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "Cipta Perbualan Kumpulan",
+  "edit_group_chat_modal_title": "Edit Perbualan Kumpulan",
+  "default_group_chat_title": "Perbualan Kumpulan",
+  "group_chat_title_input_placeholder": "Tajuk Kumpulan",
+  "group_chat_description_input_placeholder": "Penerangan Kumpulan",
+  "justdo_chat_default_welcome_msg": "Hai dan selamat datang ke JustDo! Ini adalah saluran sokongan peribadi anda. Jika anda memerlukan bantuan, sila tinggalkan mesej untuk kami. Kami akan menghubungi anda secepat mungkin. Selamat sejahtera!",
+  "bot_log_message_group_created": "__performed_by__ telah mencipta saluran ini.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ telah menjemput __subscribers__ ke saluran ini.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ telah mengeluarkan __subscribers__ dari saluran ini.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ telah menaikkan pangkat __admins__ sebagai pentadbir saluran ini.",
+  "bot_log_message_group_admin_removed": "__performed_by__ telah menurunkan pangkat __admins__ sebagai pentadbir saluran ini.",
+  "bot_log_message_group_title_changed": "__performed_by__ telah menukar nama saluran ini kepada __new_title__.",
+  "bot_log_message_group_description_changed": "__performed_by__ telah mengemaskini penerangan kumpulan.",
+  "bot_log_message_group_icon_changed": "__performed_by__ telah mengemaskini ikon kumpulan."
+}

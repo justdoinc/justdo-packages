@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "创建群聊",
+  "edit_group_chat_modal_title": "编辑群聊",
+  "default_group_chat_title": "群聊",
+  "group_chat_title_input_placeholder": "群聊标题",
+  "group_chat_description_input_placeholder": "群聊描述",
+  "justdo_chat_default_welcome_msg": "您好，欢迎使用JustDo！这是您的个人支持频道。如果您需要任何帮助，请给我们留言。我们会尽快与您联系。祝您使用愉快！",
+  "bot_log_message_group_created": "__performed_by__ 创建了此频道。",
+  "bot_log_message_group_subscriber_added": "__performed_by__ 邀请 __subscribers__ 加入此频道。",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ 将 __subscribers__ 从此频道中移除。",
+  "bot_log_message_group_admin_appointed": "__performed_by__ 将 __admins__ 提升为此频道的管理员。",
+  "bot_log_message_group_admin_removed": "__performed_by__ 取消了 __admins__ 的频道管理员身份。",
+  "bot_log_message_group_title_changed": "__performed_by__ 将此频道重命名为 __new_title__。",
+  "bot_log_message_group_description_changed": "__performed_by__ 更新了群组描述。",
+  "bot_log_message_group_icon_changed": "__performed_by__ 更新了群组图标。"
+}

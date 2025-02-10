@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "Qrup Söhbəti Yarat",
+  "edit_group_chat_modal_title": "Qrup Söhbətinə Düzəliş Et",
+  "default_group_chat_title": "Qrup Söhbəti",
+  "group_chat_title_input_placeholder": "Qrup Başlığı",
+  "group_chat_description_input_placeholder": "Qrup Təsviri",
+  "justdo_chat_default_welcome_msg": "Salam və JustDo-ya xoş gəlmisiniz! Bu sizin şəxsi dəstək kanalınızdır. Hər hansı köməyə ehtiyacınız olarsa, bizə mesaj yazın. Sizinlə ən qısa zamanda əlaqə saxlayacağıq. Xoş gününüz olsun!",
+  "bot_log_message_group_created": "__performed_by__ bu kanalı yaratdı.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ __subscribers__ iştirakçısını bu kanala dəvət etdi.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ __subscribers__ iştirakçısını bu kanaldan çıxartdı.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ __admins__ iştirakçısını bu kanalın admini təyin etdi.",
+  "bot_log_message_group_admin_removed": "__performed_by__ __admins__ iştirakçısının admin səlahiyyətlərini ləğv etdi.",
+  "bot_log_message_group_title_changed": "__performed_by__ bu kanalın adını __new_title__ olaraq dəyişdirdi.",
+  "bot_log_message_group_description_changed": "__performed_by__ qrup təsvirini yenilədi.",
+  "bot_log_message_group_icon_changed": "__performed_by__ qrup ikonunu yenilədi."
+}

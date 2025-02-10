@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "समूह च्याट सिर्जना गर्नुहोस्",
+  "edit_group_chat_modal_title": "समूह च्याट सम्पादन गर्नुहोस्",
+  "default_group_chat_title": "समूह च्याट",
+  "group_chat_title_input_placeholder": "समूह शीर्षक",
+  "group_chat_description_input_placeholder": "समूह विवरण",
+  "justdo_chat_default_welcome_msg": "नमस्कार र JustDo मा स्वागत छ! यो तपाईंको व्यक्तिगत सहयोग च्यानल हो। यदि तपाईंलाई कुनै सहयोग चाहिएमा, कृपया हामीलाई सन्देश छोड्नुहोस्। हामी सकेसम्म चाँडो तपाईंलाई सम्पर्क गर्नेछौं। शुभ दिन!",
+  "bot_log_message_group_created": "__performed_by__ ले यो च्यानल सिर्जना गर्नुभयो।",
+  "bot_log_message_group_subscriber_added": "__performed_by__ ले __subscribers__ लाई यो च्यानलमा आमन्त्रित गर्नुभयो।",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ ले __subscribers__ लाई यो च्यानलबाट हटाउनुभयो।",
+  "bot_log_message_group_admin_appointed": "__performed_by__ ले __admins__ लाई यस च्यानलको प्रशासक बनाउनुभयो।",
+  "bot_log_message_group_admin_removed": "__performed_by__ ले __admins__ लाई यस च्यानलको प्रशासक पदबाट हटाउनुभयो।",
+  "bot_log_message_group_title_changed": "__performed_by__ ले यस च्यानलको नाम __new_title__ मा परिवर्तन गर्नुभयो।",
+  "bot_log_message_group_description_changed": "__performed_by__ ले समूह विवरण अपडेट गर्नुभयो।",
+  "bot_log_message_group_icon_changed": "__performed_by__ ले समूह आइकन अपडेट गर्नुभयो।"
+}

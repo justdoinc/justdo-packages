@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "የቡድን ምልልስ ፍጠር",
+  "edit_group_chat_modal_title": "የቡድን ምልልስ አስተካክል",
+  "default_group_chat_title": "የቡድን ምልልስ",
+  "group_chat_title_input_placeholder": "የቡድን ስያሜ",
+  "group_chat_description_input_placeholder": "የቡድን መግለጫ",
+  "justdo_chat_default_welcome_msg": "ሰላም እና እንኳን ወደ JustDo በደህና መጡ! ይህ የእርስዎ የግል የድጋፍ ቻናል ነው። ማንኛውም እገዛ ከፈለጉ፣ እባክዎን መልእክት ይተዉልን። በተቻለን ፍጥነት እናገኝዎታለን። መልካም ቀን ይሁንልዎት!",
+  "bot_log_message_group_created": "__performed_by__ ይህን ቻናል ፈጥረዋል።",
+  "bot_log_message_group_subscriber_added": "__performed_by__ __subscribers__ን ወደዚህ ቻናል ጋብዘዋል።",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ __subscribers__ን ከዚህ ቻናል አስወግደዋል።",
+  "bot_log_message_group_admin_appointed": "__performed_by__ __admins__ን የዚህ ቻናል አስተዳዳሪ አድርገው ሾመዋል።",
+  "bot_log_message_group_admin_removed": "__performed_by__ __admins__ን ከቻናሉ አስተዳዳሪነት ሽመት አውርደዋል።",
+  "bot_log_message_group_title_changed": "__performed_by__ የዚህን ቻናል ስም ወደ __new_title__ ቀይረዋል።",
+  "bot_log_message_group_description_changed": "__performed_by__ የቡድኑን መግለጫ አዘምነዋል።",
+  "bot_log_message_group_icon_changed": "__performed_by__ የቡድኑን አይኮን አዘምነዋል።"
+}

@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "גרופע שמועס מאַכן",
+  "edit_group_chat_modal_title": "רעדאַקטירן גרופע שמועס",
+  "default_group_chat_title": "גרופע שמועס",
+  "group_chat_title_input_placeholder": "גרופע טיטל",
+  "group_chat_description_input_placeholder": "גרופע באַשרייַבונג",
+  "justdo_chat_default_welcome_msg": "שלום און ברוך הבא צו JustDo! דאָס איז אייער פערזענלעכער שטיצע קאַנאַל. אויב איר דאַרפֿט הילף, ביטע לאָזט אונדז אַ מעלדונג. מיר וועלן זיך פֿאַרבינדן מיט אייך ווי שנעל ווי מעגלעך. האָט אַ גוטן טאָג!",
+  "bot_log_message_group_created": "__performed_by__ האָט געשאַפן דעם קאַנאַל.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ האָט איינגעלאדן __subscribers__ צו דעם קאַנאַל.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ האָט אַרויסגענומען __subscribers__ פון דעם קאַנאַל.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ האָט פראמאטעד __admins__ ווי אַדמיניסטראַטאָרן פון דעם קאַנאַל.",
+  "bot_log_message_group_admin_removed": "__performed_by__ האָט אַראָפּגענומען __admins__ ווי אַדמיניסטראַטאָרן פון דעם קאַנאַל.",
+  "bot_log_message_group_title_changed": "__performed_by__ האָט געענדערט דעם קאַנאַל נאָמען צו __new_title__.",
+  "bot_log_message_group_description_changed": "__performed_by__ האָט דערהייַנטיקט די גרופע באַשרייַבונג.",
+  "bot_log_message_group_icon_changed": "__performed_by__ האָט דערהייַנטיקט דעם גרופע צייכן."
+}

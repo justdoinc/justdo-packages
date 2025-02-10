@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "Създаване на групов чат",
+  "edit_group_chat_modal_title": "Редактиране на групов чат",
+  "default_group_chat_title": "Групов чат",
+  "group_chat_title_input_placeholder": "Заглавие на групата",
+  "group_chat_description_input_placeholder": "Описание на групата",
+  "justdo_chat_default_welcome_msg": "Здравейте и добре дошли в JustDo! Това е вашият личен канал за поддръжка. Ако имате нужда от помощ, моля оставете ни съобщение. Ще се свържем с вас възможно най-скоро. Приятен ден!",
+  "bot_log_message_group_created": "__performed_by__ създаде този канал.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ покани __subscribers__ в този канал.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ премахна __subscribers__ от този канал.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ повиши __admins__ като администратори на този канал.",
+  "bot_log_message_group_admin_removed": "__performed_by__ понижи __admins__ от администратори на този канал.",
+  "bot_log_message_group_title_changed": "__performed_by__ преименува този канал на __new_title__.",
+  "bot_log_message_group_description_changed": "__performed_by__ актуализира описанието на групата.",
+  "bot_log_message_group_icon_changed": "__performed_by__ актуализира иконата на групата."
+}

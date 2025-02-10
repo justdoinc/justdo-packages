@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "Skapa Gruppchatt",
+  "edit_group_chat_modal_title": "Redigera Gruppchatt",
+  "default_group_chat_title": "Gruppchatt",
+  "group_chat_title_input_placeholder": "Gruppens titel",
+  "group_chat_description_input_placeholder": "Gruppbeskrivning",
+  "justdo_chat_default_welcome_msg": "Hej och välkommen till JustDo! Detta är din personliga supportkanal. Om du behöver hjälp, lämna gärna ett meddelande. Vi återkommer så snart vi kan. Ha en trevlig dag!",
+  "bot_log_message_group_created": "__performed_by__ skapade denna kanal.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ bjöd in __subscribers__ till denna kanal.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ tog bort __subscribers__ från denna kanal.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ befordrade __admins__ till administratörer för denna kanal.",
+  "bot_log_message_group_admin_removed": "__performed_by__ tog bort __admins__ som administratörer för denna kanal.",
+  "bot_log_message_group_title_changed": "__performed_by__ döpte om denna kanal till __new_title__.",
+  "bot_log_message_group_description_changed": "__performed_by__ uppdaterade gruppbeskrivningen.",
+  "bot_log_message_group_icon_changed": "__performed_by__ uppdaterade gruppikonen."
+}

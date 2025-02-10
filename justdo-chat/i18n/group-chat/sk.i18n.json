@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "Vytvoriť skupinový chat",
+  "edit_group_chat_modal_title": "Upraviť skupinový chat",
+  "default_group_chat_title": "Skupinový chat",
+  "group_chat_title_input_placeholder": "Názov skupiny",
+  "group_chat_description_input_placeholder": "Popis skupiny",
+  "justdo_chat_default_welcome_msg": "Dobrý deň a vitajte v JustDo! Toto je váš osobný podporný kanál. Ak potrebujete pomoc, zanechajte nám správu. Ozveme sa vám hneď, ako budeme môcť. Prajeme vám príjemný deň!",
+  "bot_log_message_group_created": "__performed_by__ vytvoril/a tento kanál.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ pozval/a __subscribers__ do tohto kanála.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ odstránil/a __subscribers__ z tohto kanála.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ povýšil/a __admins__ na administrátorov tohto kanála.",
+  "bot_log_message_group_admin_removed": "__performed_by__ odobral/a __admins__ práva administrátora tohto kanála.",
+  "bot_log_message_group_title_changed": "__performed_by__ premenoval/a tento kanál na __new_title__.",
+  "bot_log_message_group_description_changed": "__performed_by__ aktualizoval/a popis skupiny.",
+  "bot_log_message_group_icon_changed": "__performed_by__ aktualizoval/a ikonu skupiny."
+}

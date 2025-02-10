@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "Groepschat aanmaken",
+  "edit_group_chat_modal_title": "Groepschat bewerken",
+  "default_group_chat_title": "Groepschat",
+  "group_chat_title_input_placeholder": "Groepstitel",
+  "group_chat_description_input_placeholder": "Groepsbeschrijving",
+  "justdo_chat_default_welcome_msg": "Hallo en welkom bij JustDo! Dit is je persoonlijke ondersteuningskanaal. Als je hulp nodig hebt, laat dan een bericht achter. We nemen zo snel mogelijk contact met je op. Fijne dag!",
+  "bot_log_message_group_created": "__performed_by__ heeft dit kanaal aangemaakt.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ heeft __subscribers__ uitgenodigd voor dit kanaal.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ heeft __subscribers__ verwijderd uit dit kanaal.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ heeft __admins__ gepromoveerd tot beheerders van dit kanaal.",
+  "bot_log_message_group_admin_removed": "__performed_by__ heeft __admins__ gedegradeerd als beheerders van dit kanaal.",
+  "bot_log_message_group_title_changed": "__performed_by__ heeft de naam van dit kanaal gewijzigd naar __new_title__.",
+  "bot_log_message_group_description_changed": "__performed_by__ heeft de groepsbeschrijving bijgewerkt.",
+  "bot_log_message_group_icon_changed": "__performed_by__ heeft het groepspictogram bijgewerkt."
+}

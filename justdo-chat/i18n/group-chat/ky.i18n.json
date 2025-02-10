@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "Топтук маек түзүү",
+  "edit_group_chat_modal_title": "Топтук маекти өзгөртүү",
+  "default_group_chat_title": "Топтук маек",
+  "group_chat_title_input_placeholder": "Топтун аталышы",
+  "group_chat_description_input_placeholder": "Топтун сүрөттөмөсү",
+  "justdo_chat_default_welcome_msg": "Салам, JustDo тиркемесине кош келиңиз! Бул сиздин жеке колдоо каналыңыз. Жардам керек болсо, бизге билдирүү калтырыңыз. Биз сиз менен мүмкүн болушунча тезирээк байланышабыз. Жакшы күн каалайбыз!",
+  "bot_log_message_group_created": "__performed_by__ бул каналды түздү.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ __subscribers__ бул каналга чакырды.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ __subscribers__ бул каналдан чыгарды.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ __admins__ бул каналдын администраторлору кылып дайындады.",
+  "bot_log_message_group_admin_removed": "__performed_by__ __admins__ администратор укугунан ажыратты.",
+  "bot_log_message_group_title_changed": "__performed_by__ бул каналдын атын __new_title__ деп өзгөрттү.",
+  "bot_log_message_group_description_changed": "__performed_by__ топтун сүрөттөмөсүн жаңыртты.",
+  "bot_log_message_group_icon_changed": "__performed_by__ топтун сүрөтүн жаңыртты."
+}

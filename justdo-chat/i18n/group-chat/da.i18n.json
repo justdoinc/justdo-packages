@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "Opret Gruppechat",
+  "edit_group_chat_modal_title": "Rediger Gruppechat",
+  "default_group_chat_title": "Gruppechat",
+  "group_chat_title_input_placeholder": "Gruppetitel",
+  "group_chat_description_input_placeholder": "Gruppebeskrivelse",
+  "justdo_chat_default_welcome_msg": "Hej og velkommen til JustDo! Dette er din personlige supportkanal. Hvis du har brug for hjælp, så efterlad os en besked. Vi vil kontakte dig så hurtigt som muligt. Hav en god dag!",
+  "bot_log_message_group_created": "__performed_by__ oprettede denne kanal.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ inviterede __subscribers__ til denne kanal.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ fjernede __subscribers__ fra denne kanal.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ forfremmet __admins__ som administratorer af denne kanal.",
+  "bot_log_message_group_admin_removed": "__performed_by__ degraderede __admins__ som administratorer af denne kanal.",
+  "bot_log_message_group_title_changed": "__performed_by__ omdøbte denne kanal til __new_title__.",
+  "bot_log_message_group_description_changed": "__performed_by__ opdaterede gruppebeskrivelsen.",
+  "bot_log_message_group_icon_changed": "__performed_by__ opdaterede gruppeikonet."
+}
