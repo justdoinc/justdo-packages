@@ -285,10 +285,10 @@ _.extend JustdoChatBottomWindowsManager.prototype,
     return
 
   _getWindowDefForBottomWindowChannelDoc: (bottom_window_channel) ->
+    open_template = "chat_bottom_windows_open"
+    min_template = undefined # If one day, instead of showing the minimized chat windows in the Extra Windows button, you'd want to show it as an actual minimized button in the tray use "chat_bottom_windows_task_min" instead of undefined.
+   
     if (channel_type = bottom_window_channel.channel_type) is "task"
-      open_template = "chat_bottom_windows_open"
-      min_template = undefined # If one day, instead of showing the minimized chat windows in the Extra Windows button, you'd want to show it as an actual minimized button in the tray use "chat_bottom_windows_task_min" instead of undefined.
-
       template_data =
         channel_type: "task"
         channel_identifier: 
@@ -304,9 +304,6 @@ _.extend JustdoChatBottomWindowsManager.prototype,
         task_id: bottom_window_channel.task_id
 
     if channel_type is "user"
-      open_template = "chat_bottom_windows_open"
-      min_template = undefined
-
       user_ids = bottom_window_channel.user_ids
       receiving_user_id = _.find user_ids, (user_id) -> user_id isnt Meteor.userId()
       template_data = 
@@ -318,6 +315,17 @@ _.extend JustdoChatBottomWindowsManager.prototype,
         channelObjectGenerator: -> APP.justdo_chat.generateClientUserChatChannel receiving_user_id, {open_bottom_window: false}
       
       channel_conf = {user_ids}
+
+    if channel_type is "group"
+      channel_conf = 
+        _id: bottom_window_channel._id
+        project_id: bottom_window_channel.project_id
+
+      template_data = 
+        channel_type: "group"
+        channel_identifier: channel_conf
+        header_template: "group_channel_chat_bottom_windows_header"
+        channelObjectGenerator: -> APP.justdo_chat.generateClientGroupChatChannelObject channel_conf, {open_bottom_window: false}
 
     channel_object =
       @justdo_chat.generateClientChannelObject channel_type, channel_conf
