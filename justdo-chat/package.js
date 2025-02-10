@@ -140,6 +140,15 @@ Package.onUse(function (api) {
   api.addFiles("lib/channels/user/user-channel-both-register.coffee", both)
   api.addFiles("lib/channels/user/user-channel-client-constructor.coffee", client)
   api.addFiles("lib/channels/user/user-channel-server-constructor.coffee", server)
+  
+  // Group channel
+  api.addAssets("lib/ui/channels/group/assets/anonymous-users-profile-image.png", client);
+  api.addFiles("lib/ui/channels/group/settings/group-channel-settings.sass", client); 
+  api.addFiles("lib/ui/channels/group/settings/group-channel-settings.html", client); 
+  api.addFiles("lib/ui/channels/group/settings/group-channel-settings.coffee", client); 
+
+  api.addFiles("lib/ui/channels/group/placeholder-items/placeholder-items.html", client); 
+  api.addFiles("lib/ui/channels/group/placeholder-items/placeholder-items.coffee", client); 
 
   //
   // UI
@@ -179,6 +188,8 @@ Package.onUse(function (api) {
   api.addFiles("lib/ui/channels/user/placeholder-items/placeholder-items.coffee", client); 
 
   // Recent channels activity
+  api.addFiles("lib/ui/recent-activity-dropdown/recent-activity-dropdown/group-channels-items/group-channels-items.html", client);
+  api.addFiles("lib/ui/recent-activity-dropdown/recent-activity-dropdown/group-channels-items/group-channels-items.coffee", client);
   api.addFiles("lib/ui/recent-activity-dropdown/recent-activity-dropdown/user-channels-items/user-channels-items.html", client);
   api.addFiles("lib/ui/recent-activity-dropdown/recent-activity-dropdown/user-channels-items/user-channels-items.coffee", client);
   api.addFiles("lib/ui/recent-activity-dropdown/recent-activity-dropdown/tasks-channels-items/tasks-channels-items.sass", client);
@@ -196,6 +207,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/ui/bottom-windows/extra-windows-button.sass", client);
   api.addFiles("lib/ui/bottom-windows/extra-windows-button.coffee", client);
 
+  api.addFiles("lib/ui/bottom-windows/group/bottom-window-header.sass", client);
+  api.addFiles("lib/ui/bottom-windows/group/bottom-window-header.html", client);
+  api.addFiles("lib/ui/bottom-windows/group/bottom-window-header.coffee", client);
 
   api.addFiles("lib/ui/bottom-windows/user/bottom-window-header.sass", client);
   api.addFiles("lib/ui/bottom-windows/user/bottom-window-header.html", client);

@@ -1,0 +1,76 @@
+<template name="group_channel_settings">
+  <div class="group-channel-settings">
+    <div class="d-flex mb-3">
+      <div class="w-100">
+        <label for="group-channel-title">{{_ "group_chat_title_input_placeholder"}}</label>
+        <input id="group-channel-title" data-field="campaign_id" type="text" class="group-channel-title form-control" value="{{title}}" placeholder="{{_ "group_chat_title_input_placeholder"}}" required>
+      </div>
+    </div>
+
+    <div class="d-flex mb-3">
+      <div class="w-100">
+        <label for="group-channel-description">{{_ "group_chat_description_input_placeholder"}}</label>
+        <textarea id="group-channel-description" data-field="description" class="group-channel-description form-control" value="{{description}}" placeholder="{{_ "group_chat_description_input_placeholder"}}"></textarea>
+      </div>
+    </div>
+
+    <div class="d-flex mb-3">
+      <div class="members-section w-100">
+        {{#each sections}}
+          {{> group_channel_members_editor}}
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="group_channel_members_editor">
+  <div class="members-list-container members-list-{{action_id}}-container">
+    <div class="section-caption">
+      <div class="d-flex">
+        {{caption}}
+      </div>
+    </div>
+    {{#if $not action_users_empty}}{{!-- If there are members for this action --}}
+      <div class="members-editor-dialog-{{action_id}}-section members-list">
+        <div class="action-users">
+          {{#each users}}
+            {{> group_channel_settings_user_btn}}
+          {{else}}
+            <div class="no-results">No results found</div>
+          {{/each}}
+        </div>
+      </div>
+    {{else}}
+      <div class="members-editor-dialog-{{action_id}}-section members-list members-list-no-members">
+        <div class="no-members">
+          {{no_members_msg}}<br>
+        </div>
+      </div>
+    {{/if}}
+  </div>
+</template>
+
+<template name="group_channel_settings_user_btn">
+  <div class="user-btn {{#if disabledReason}}disabled{{/if}} {{#if isUserChannelAdmin}}jd-c-pointer{{/if}}"
+      user-id="{{_id}}" data-toggle="tooltip" data-placement="top" title="{{disabledReason}}">
+    <div class="d-flex align-items-center flex-grow-1 pr-3">
+      {{> gtpl_user_profile_pic}}
+      <div class="display-name">
+        {{> display_name_with_graphic_unverified_warning}}
+        {{showYouIfIsOwner}}
+      </div>
+    </div>
+
+    {{#if isUserChannelAdmin}}
+      {{#if isMemberToRemove}}
+        <svg class="jd-icon user-x"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+      {{else if $or isChannelMember isMemberToAdd}}
+        <svg class="jd-icon user-check"><use xlink:href="/layout/icons-feather-sprite.svg#check"/></svg>
+      {{else}}
+        <svg class="jd-icon user-plus"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
+      {{/if}}
+    {{/if}}
+
+  </div>
+</template>
