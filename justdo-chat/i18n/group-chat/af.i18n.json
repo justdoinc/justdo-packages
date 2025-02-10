@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "Skep Groepklets",
+  "edit_group_chat_modal_title": "Wysig Groepklets",
+  "default_group_chat_title": "Groepklets",
+  "group_chat_title_input_placeholder": "Groep Titel",
+  "group_chat_description_input_placeholder": "Groep Beskrywing",
+  "justdo_chat_default_welcome_msg": "Hallo en welkom by JustDo! Dit is jou persoonlike ondersteuningskanaal. As jy enige hulp nodig het, laat asseblief vir ons 'n boodskap. Ons sal so gou moontlik met jou in verbinding tree. Hê 'n lekker dag!",
+  "bot_log_message_group_created": "__performed_by__ het hierdie kanaal geskep.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ het __subscribers__ na hierdie kanaal uitgenooi.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ het __subscribers__ van hierdie kanaal verwyder.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ het __admins__ bevorder tot administrateurs van hierdie kanaal.",
+  "bot_log_message_group_admin_removed": "__performed_by__ het __admins__ as administrateurs van hierdie kanaal ontslaan.",
+  "bot_log_message_group_title_changed": "__performed_by__ het hierdie kanaal se naam verander na __new_title__.",
+  "bot_log_message_group_description_changed": "__performed_by__ het die groep beskrywing opgedateer.",
+  "bot_log_message_group_icon_changed": "__performed_by__ het die groep ikoon opgedateer."
+}

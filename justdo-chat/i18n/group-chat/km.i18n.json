@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "បង្កើតប្រអប់ជជែកជាក្រុម",
+  "edit_group_chat_modal_title": "កែប្រែប្រអប់ជជែកជាក្រុម",
+  "default_group_chat_title": "ការជជែកជាក្រុម",
+  "group_chat_title_input_placeholder": "ចំណងជើងក្រុម",
+  "group_chat_description_input_placeholder": "ការពិពណ៌នាអំពីក្រុម",
+  "justdo_chat_default_welcome_msg": "សួស្តី និងស្វាគមន៍មកកាន់ JustDo! នេះគឺជាប៉ុស្តិ៍គាំទ្រផ្ទាល់ខ្លួនរបស់អ្នក។ ប្រសិនបើអ្នកត្រូវការជំនួយ សូមទុកសារមួយមកយើងខ្ញុំ។ យើងនឹងទាក់ទងទៅអ្នកវិញឱ្យបានឆាប់តាមដែលអាចធ្វើទៅបាន។ សូមឱ្យមានថ្ងៃល្អ!",
+  "bot_log_message_group_created": "__performed_by__ បានបង្កើតប៉ុស្តិ៍នេះ។",
+  "bot_log_message_group_subscriber_added": "__performed_by__ បានអញ្ជើញ __subscribers__ មកកាន់ប៉ុស្តិ៍នេះ។",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ បានដកចេញ __subscribers__ ពីប៉ុស្តិ៍នេះ។",
+  "bot_log_message_group_admin_appointed": "__performed_by__ បានតម្លើងឋានៈ __admins__ ជាអ្នកគ្រប់គ្រងប៉ុស្តិ៍នេះ។",
+  "bot_log_message_group_admin_removed": "__performed_by__ បានដកឋានៈ __admins__ ជាអ្នកគ្រប់គ្រងប៉ុស្តិ៍នេះ។",
+  "bot_log_message_group_title_changed": "__performed_by__ បានប្តូរឈ្មោះប៉ុស្តិ៍នេះទៅជា __new_title__។",
+  "bot_log_message_group_description_changed": "__performed_by__ បានធ្វើបច្ចុប្បន្នភាពការពិពណ៌នារបស់ក្រុម។",
+  "bot_log_message_group_icon_changed": "__performed_by__ បានធ្វើបច្ចុប្បន្នភាពរូបតំណាងក្រុម។"
+}

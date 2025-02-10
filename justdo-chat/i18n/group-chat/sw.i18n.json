@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "Unda Mazungumzo ya Kikundi",
+  "edit_group_chat_modal_title": "Hariri Mazungumzo ya Kikundi",
+  "default_group_chat_title": "Mazungumzo ya Kikundi",
+  "group_chat_title_input_placeholder": "Jina la Kikundi",
+  "group_chat_description_input_placeholder": "Maelezo ya Kikundi",
+  "justdo_chat_default_welcome_msg": "Hujambo na karibu kwenye JustDo! Hii ni njia yako ya kibinafsi ya kupata msaada. Ikiwa unahitaji msaada wowote, tafadhali tuachie ujumbe. Tutawasiliana nawe haraka iwezekanavyo. Uwe na siku njema!",
+  "bot_log_message_group_created": "__performed_by__ ameunda njia hii ya mawasiliano.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ amealika __subscribers__ kwenye njia hii ya mawasiliano.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ ameondoa __subscribers__ kutoka kwenye njia hii ya mawasiliano.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ amempandisha cheo __admins__ kuwa msimamizi wa njia hii ya mawasiliano.",
+  "bot_log_message_group_admin_removed": "__performed_by__ amemteremsha cheo __admins__ kama msimamizi wa njia hii ya mawasiliano.",
+  "bot_log_message_group_title_changed": "__performed_by__ amebadilisha jina la njia hii ya mawasiliano kuwa __new_title__.",
+  "bot_log_message_group_description_changed": "__performed_by__ amebadilisha maelezo ya kikundi.",
+  "bot_log_message_group_icon_changed": "__performed_by__ amebadilisha ikoni ya kikundi."
+}

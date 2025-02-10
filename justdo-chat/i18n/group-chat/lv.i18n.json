@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "Izveidot grupas tērzēšanu",
+  "edit_group_chat_modal_title": "Rediģēt grupas tērzēšanu",
+  "default_group_chat_title": "Grupas tērzēšana",
+  "group_chat_title_input_placeholder": "Grupas nosaukums",
+  "group_chat_description_input_placeholder": "Grupas apraksts",
+  "justdo_chat_default_welcome_msg": "Sveiki un laipni lūgti JustDo! Šis ir jūsu personīgais atbalsta kanāls. Ja jums nepieciešama palīdzība, lūdzu, atstājiet mums ziņu. Mēs ar jums sazināsimies, tiklīdz varēsim. Jauku dienu!",
+  "bot_log_message_group_created": "__performed_by__ izveidoja šo kanālu.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ uzaicināja __subscribers__ pievienoties šim kanālam.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ izslēdza __subscribers__ no šī kanāla.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ paaugstināja __admins__ par šī kanāla administratoriem.",
+  "bot_log_message_group_admin_removed": "__performed_by__ noņēma __admins__ administratora tiesības šajā kanālā.",
+  "bot_log_message_group_title_changed": "__performed_by__ pārdēvēja šo kanālu par __new_title__.",
+  "bot_log_message_group_description_changed": "__performed_by__ atjaunināja grupas aprakstu.",
+  "bot_log_message_group_icon_changed": "__performed_by__ atjaunināja grupas ikonu."
+}

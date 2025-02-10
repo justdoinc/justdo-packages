@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "குழு அரட்டையை உருவாக்கவும்",
+  "edit_group_chat_modal_title": "குழு அரட்டையைத் திருத்தவும்",
+  "default_group_chat_title": "குழு அரட்டை",
+  "group_chat_title_input_placeholder": "குழுவின் தலைப்பு",
+  "group_chat_description_input_placeholder": "குழுவின் விளக்கம்",
+  "justdo_chat_default_welcome_msg": "வணக்கம், JustDo-க்கு வரவேற்கிறோம்! இது உங்கள் தனிப்பட்ட ஆதரவு தளம். உதவி தேவைப்பட்டால், எங்களுக்கு ஒரு செய்தியை விடுங்கள். நாங்கள் விரைவில் உங்களைத் தொடர்புகொள்வோம். இனிய நாள் வாழ்த்துக்கள்!",
+  "bot_log_message_group_created": "__performed_by__ இந்த தளத்தை உருவாக்கினார்.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ இந்த தளத்திற்கு __subscribers__ ஐ அழைத்தார்.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ இந்த தளத்திலிருந்து __subscribers__ ஐ நீக்கினார்.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ இந்த தளத்தின் நிர்வாகிகளாக __admins__ ஐ பதவி உயர்த்தினார்.",
+  "bot_log_message_group_admin_removed": "__performed_by__ இந்த தளத்தின் நிர்வாகி நிலையிலிருந்து __admins__ ஐ நீக்கினார்.",
+  "bot_log_message_group_title_changed": "__performed_by__ இந்த தளத்தின் பெயரை __new_title__ என மாற்றினார்.",
+  "bot_log_message_group_description_changed": "__performed_by__ குழுவின் விளக்கத்தை புதுப்பித்தார்.",
+  "bot_log_message_group_icon_changed": "__performed_by__ குழுவின் சின்னத்தை புதுப்பித்தார்."
+}

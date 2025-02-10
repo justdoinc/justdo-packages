@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "สร้างแชทกลุ่ม",
+  "edit_group_chat_modal_title": "แก้ไขแชทกลุ่ม",
+  "default_group_chat_title": "แชทกลุ่ม",
+  "group_chat_title_input_placeholder": "ชื่อกลุ่ม",
+  "group_chat_description_input_placeholder": "คำอธิบายกลุ่ม",
+  "justdo_chat_default_welcome_msg": "สวัสดีและยินดีต้อนรับสู่ JustDo! นี่คือช่องทางสนับสนุนส่วนตัวของคุณ หากคุณต้องการความช่วยเหลือใดๆ กรุณาฝากข้อความไว้ เราจะติดต่อกลับโดยเร็วที่สุด ขอให้มีวันที่ดี!",
+  "bot_log_message_group_created": "__performed_by__ ได้สร้างช่องนี้",
+  "bot_log_message_group_subscriber_added": "__performed_by__ ได้เชิญ __subscribers__ เข้าร่วมช่องนี้",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ ได้นำ __subscribers__ ออกจากช่องนี้",
+  "bot_log_message_group_admin_appointed": "__performed_by__ ได้เลื่อนตำแหน่ง __admins__ เป็นผู้ดูแลช่องนี้",
+  "bot_log_message_group_admin_removed": "__performed_by__ ได้ลดตำแหน่ง __admins__ จากการเป็นผู้ดูแลช่องนี้",
+  "bot_log_message_group_title_changed": "__performed_by__ ได้เปลี่ยนชื่อช่องนี้เป็น __new_title__",
+  "bot_log_message_group_description_changed": "__performed_by__ ได้อัปเดตคำอธิบายกลุ่ม",
+  "bot_log_message_group_icon_changed": "__performed_by__ ได้อัปเดตไอคอนกลุ่ม"
+}

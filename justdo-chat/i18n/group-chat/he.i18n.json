@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "יצירת צ'אט קבוצתי",
+  "edit_group_chat_modal_title": "עריכת צ'אט קבוצתי",
+  "default_group_chat_title": "צ'אט קבוצתי",
+  "group_chat_title_input_placeholder": "כותרת הקבוצה",
+  "group_chat_description_input_placeholder": "תיאור הקבוצה",
+  "justdo_chat_default_welcome_msg": "שלום וברוכים הבאים ל-JustDo! זהו ערוץ התמיכה האישי שלך. אם תזדקק לעזרה כלשהי, אנא השאר לנו הודעה. ניצור איתך קשר בהקדם האפשרי. יום נעים!",
+  "bot_log_message_group_created": "__performed_by__ יצר ערוץ זה.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ הזמין את __subscribers__ לערוץ זה.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ הסיר את __subscribers__ מערוץ זה.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ קידם את __admins__ למנהלי הערוץ.",
+  "bot_log_message_group_admin_removed": "__performed_by__ הוריד את __admins__ מתפקיד מנהלי הערוץ.",
+  "bot_log_message_group_title_changed": "__performed_by__ שינה את שם הערוץ ל-__new_title__.",
+  "bot_log_message_group_description_changed": "__performed_by__ עדכן את תיאור הקבוצה.",
+  "bot_log_message_group_icon_changed": "__performed_by__ עדכן את סמל הקבוצה."
+}

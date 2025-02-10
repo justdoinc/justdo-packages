@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "グループチャットを作成",
+  "edit_group_chat_modal_title": "グループチャットを編集",
+  "default_group_chat_title": "グループチャット",
+  "group_chat_title_input_placeholder": "グループタイトル",
+  "group_chat_description_input_placeholder": "グループの説明",
+  "justdo_chat_default_welcome_msg": "JustDoへようこそ！これはあなた専用のサポートチャンネルです。お困りの際はメッセージをお送りください。できるだけ早くご連絡させていただきます。良い一日をお過ごしください！",
+  "bot_log_message_group_created": "__performed_by__がこのチャンネルを作成しました。",
+  "bot_log_message_group_subscriber_added": "__performed_by__が__subscribers__をこのチャンネルに招待しました。",
+  "bot_log_message_group_subscriber_removed": "__performed_by__が__subscribers__をこのチャンネルから削除しました。",
+  "bot_log_message_group_admin_appointed": "__performed_by__が__admins__をこのチャンネルの管理者に昇格しました。",
+  "bot_log_message_group_admin_removed": "__performed_by__が__admins__の管理者権限を解除しました。",
+  "bot_log_message_group_title_changed": "__performed_by__がこのチャンネル名を__new_title__に変更しました。",
+  "bot_log_message_group_description_changed": "__performed_by__がグループの説明を更新しました。",
+  "bot_log_message_group_icon_changed": "__performed_by__がグループアイコンを更新しました。"
+}

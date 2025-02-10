@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "Guruh Suhbatini Yaratish",
+  "edit_group_chat_modal_title": "Guruh Suhbatini Tahrirlash",
+  "default_group_chat_title": "Guruh Suhbati",
+  "group_chat_title_input_placeholder": "Guruh Nomi",
+  "group_chat_description_input_placeholder": "Guruh Tavsifi",
+  "justdo_chat_default_welcome_msg": "Salom va JustDo ga xush kelibsiz! Bu sizning shaxsiy qo'llab-quvvatlash kanalingiz. Agar sizga yordam kerak bo'lsa, bizga xabar qoldiring. Biz siz bilan imkon qadar tezroq bog'lanamiz. Yaxshi kun tilaymiz!",
+  "bot_log_message_group_created": "__performed_by__ ushbu kanalni yaratdi.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ __subscribers__ ni ushbu kanalga taklif qildi.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ __subscribers__ ni ushbu kanaldan olib tashladi.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ __admins__ ni ushbu kanal administratori qilib tayinladi.",
+  "bot_log_message_group_admin_removed": "__performed_by__ __admins__ ni kanal administratori vazifasidan ozod qildi.",
+  "bot_log_message_group_title_changed": "__performed_by__ ushbu kanal nomini __new_title__ ga o'zgartirdi.",
+  "bot_log_message_group_description_changed": "__performed_by__ guruh tavsifini yangiladi.",
+  "bot_log_message_group_icon_changed": "__performed_by__ guruh belgisini yangiladi."
+}

@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "গ্রুপ চ্যাট তৈরি করুন",
+  "edit_group_chat_modal_title": "গ্রুপ চ্যাট সম্পাদনা করুন",
+  "default_group_chat_title": "গ্রুপ চ্যাট",
+  "group_chat_title_input_placeholder": "গ্রুপের শিরোনাম",
+  "group_chat_description_input_placeholder": "গ্রুপের বিবরণ",
+  "justdo_chat_default_welcome_msg": "হ্যালো এবং JustDo-তে স্বাগতম! এটি আপনার ব্যক্তিগত সহায়তা চ্যানেল। আপনার কোনো সাহায্যের প্রয়োজন হলে, অনুগ্রহ করে আমাদের একটি বার্তা পাঠান। আমরা যত দ্রুত সম্ভব আপনার সাথে যোগাযোগ করব। আপনার দিনটি শুভ হোক!",
+  "bot_log_message_group_created": "__performed_by__ এই চ্যানেলটি তৈরি করেছেন।",
+  "bot_log_message_group_subscriber_added": "__performed_by__ এই চ্যানেলে __subscribers__ কে আমন্ত্রণ জানিয়েছেন।",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ এই চ্যানেল থেকে __subscribers__ কে সরিয়েছেন।",
+  "bot_log_message_group_admin_appointed": "__performed_by__ এই চ্যানেলের অ্যাডমিন হিসেবে __admins__ কে পদোন্নতি দিয়েছেন।",
+  "bot_log_message_group_admin_removed": "__performed_by__ এই চ্যানেলের অ্যাডমিন পদ থেকে __admins__ কে অপসারণ করেছেন।",
+  "bot_log_message_group_title_changed": "__performed_by__ এই চ্যানেলের নাম পরিবর্তন করে __new_title__ করেছেন।",
+  "bot_log_message_group_description_changed": "__performed_by__ গ্রুপের বিবরণ আপডেট করেছেন।",
+  "bot_log_message_group_icon_changed": "__performed_by__ গ্রুপের আইকন আপডেট করেছেন।"
+}

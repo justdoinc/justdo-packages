@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "Talde Txata Sortu",
+  "edit_group_chat_modal_title": "Talde Txata Editatu",
+  "default_group_chat_title": "Talde Txata",
+  "group_chat_title_input_placeholder": "Taldearen Izenburua",
+  "group_chat_description_input_placeholder": "Taldearen Deskribapena",
+  "justdo_chat_default_welcome_msg": "Kaixo eta ongi etorri JustDo-ra! Hau zure laguntza kanal pertsonala da. Laguntzarik behar izanez gero, utzi mezua. Ahal bezain laster jarriko gara zurekin harremanetan. Egun on izan!",
+  "bot_log_message_group_created": "__performed_by__ kanal hau sortu du.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ erabiltzaileak __subscribers__ gonbidatu ditu kanal honetara.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ erabiltzaileak __subscribers__ ezabatu ditu kanal honetatik.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ erabiltzaileak __admins__ administratzaile izendatu ditu kanal honetan.",
+  "bot_log_message_group_admin_removed": "__performed_by__ erabiltzaileak __admins__ administratzaile kargutik kendu ditu kanal honetan.",
+  "bot_log_message_group_title_changed": "__performed_by__ erabiltzaileak kanalaren izena __new_title__ izatera aldatu du.",
+  "bot_log_message_group_description_changed": "__performed_by__ erabiltzaileak taldearen deskribapena eguneratu du.",
+  "bot_log_message_group_icon_changed": "__performed_by__ erabiltzaileak taldearen ikonoa eguneratu du."
+}

@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "Utwórz czat grupowy",
+  "edit_group_chat_modal_title": "Edytuj czat grupowy",
+  "default_group_chat_title": "Czat grupowy",
+  "group_chat_title_input_placeholder": "Nazwa grupy",
+  "group_chat_description_input_placeholder": "Opis grupy",
+  "justdo_chat_default_welcome_msg": "Witaj w JustDo! To jest Twój osobisty kanał wsparcia. Jeśli potrzebujesz pomocy, zostaw nam wiadomość. Skontaktujemy się z Tobą tak szybko, jak to możliwe. Miłego dnia!",
+  "bot_log_message_group_created": "__performed_by__ utworzył(a) ten kanał.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ zaprosił(a) __subscribers__ do tego kanału.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ usunął(ęła) __subscribers__ z tego kanału.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ awansował(a) __admins__ na administratorów tego kanału.",
+  "bot_log_message_group_admin_removed": "__performed_by__ odebrał(a) __admins__ uprawnienia administratora tego kanału.",
+  "bot_log_message_group_title_changed": "__performed_by__ zmienił(a) nazwę kanału na __new_title__.",
+  "bot_log_message_group_description_changed": "__performed_by__ zaktualizował(a) opis grupy.",
+  "bot_log_message_group_icon_changed": "__performed_by__ zaktualizował(a) ikonę grupy."
+}

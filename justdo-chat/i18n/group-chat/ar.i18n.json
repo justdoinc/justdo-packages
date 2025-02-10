@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "إنشاء دردشة جماعية",
+  "edit_group_chat_modal_title": "تعديل الدردشة الجماعية",
+  "default_group_chat_title": "دردشة جماعية",
+  "group_chat_title_input_placeholder": "عنوان المجموعة",
+  "group_chat_description_input_placeholder": "وصف المجموعة",
+  "justdo_chat_default_welcome_msg": "مرحباً وأهلاً بك في JustDo! هذه قناة الدعم الشخصية الخاصة بك. إذا كنت بحاجة إلى أي مساعدة، يرجى ترك رسالة لنا. سنتواصل معك في أقرب وقت ممكن. نتمنى لك يوماً سعيداً!",
+  "bot_log_message_group_created": "قام __performed_by__ بإنشاء هذه القناة.",
+  "bot_log_message_group_subscriber_added": "قام __performed_by__ بدعوة __subscribers__ إلى هذه القناة.",
+  "bot_log_message_group_subscriber_removed": "قام __performed_by__ بإزالة __subscribers__ من هذه القناة.",
+  "bot_log_message_group_admin_appointed": "قام __performed_by__ بترقية __admins__ كمشرفين على هذه القناة.",
+  "bot_log_message_group_admin_removed": "قام __performed_by__ بإلغاء صلاحيات الإشراف عن __admins__ في هذه القناة.",
+  "bot_log_message_group_title_changed": "قام __performed_by__ بتغيير اسم هذه القناة إلى __new_title__.",
+  "bot_log_message_group_description_changed": "قام __performed_by__ بتحديث وصف المجموعة.",
+  "bot_log_message_group_icon_changed": "قام __performed_by__ بتحديث أيقونة المجموعة."
+}

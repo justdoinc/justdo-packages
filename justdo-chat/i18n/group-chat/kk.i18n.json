@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "Топтық чат құру",
+  "edit_group_chat_modal_title": "Топтық чатты өңдеу",
+  "default_group_chat_title": "Топтық чат",
+  "group_chat_title_input_placeholder": "Топ атауы",
+  "group_chat_description_input_placeholder": "Топ сипаттамасы",
+  "justdo_chat_default_welcome_msg": "Сәлеметсіз бе, JustDo-ға қош келдіңіз! Бұл сіздің жеке қолдау арнаңыз. Көмек қажет болса, бізге хабарлама қалдырыңыз. Біз сізбен мүмкіндігінше тез байланысқа шығамыз. Жақсы күн тілейміз!",
+  "bot_log_message_group_created": "__performed_by__ осы арнаны құрды.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ осы арнаға __subscribers__ шақырды.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ осы арнадан __subscribers__ шығарды.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ __admins__ пайдаланушыны осы арнаның әкімшісі етіп тағайындады.",
+  "bot_log_message_group_admin_removed": "__performed_by__ __admins__ пайдаланушыны әкімші құқығынан айырды.",
+  "bot_log_message_group_title_changed": "__performed_by__ арнаның атауын __new_title__ деп өзгертті.",
+  "bot_log_message_group_description_changed": "__performed_by__ топ сипаттамасын жаңартты.",
+  "bot_log_message_group_icon_changed": "__performed_by__ топ белгішесін жаңартты."
+}

@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "Csoportos Chat létrehozása",
+  "edit_group_chat_modal_title": "Csoportos Chat szerkesztése",
+  "default_group_chat_title": "Csoportos Chat",
+  "group_chat_title_input_placeholder": "Csoport neve",
+  "group_chat_description_input_placeholder": "Csoport leírása",
+  "justdo_chat_default_welcome_msg": "Üdvözöljük a JustDo-ban! Ez az Ön személyes támogatási csatornája. Ha segítségre van szüksége, kérjük, hagyjon üzenetet. A lehető leghamarabb felvesszük Önnel a kapcsolatot. Kellemes napot kívánunk!",
+  "bot_log_message_group_created": "__performed_by__ létrehozta ezt a csatornát.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ meghívta __subscribers__ felhasználót a csatornába.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ eltávolította __subscribers__ felhasználót a csatornából.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ adminisztrátori jogosultságot adott __admins__ felhasználónak.",
+  "bot_log_message_group_admin_removed": "__performed_by__ visszavonta __admins__ adminisztrátori jogosultságát.",
+  "bot_log_message_group_title_changed": "__performed_by__ átnevezte a csatornát erre: __new_title__.",
+  "bot_log_message_group_description_changed": "__performed_by__ frissítette a csoport leírását.",
+  "bot_log_message_group_icon_changed": "__performed_by__ frissítette a csoport ikonját."
+}

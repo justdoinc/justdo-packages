@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "Сохтани чати гурӯҳӣ",
+  "edit_group_chat_modal_title": "Таҳрири чати гурӯҳӣ",
+  "default_group_chat_title": "Чати гурӯҳӣ",
+  "group_chat_title_input_placeholder": "Номи гурӯҳ",
+  "group_chat_description_input_placeholder": "Тавсифи гурӯҳ",
+  "justdo_chat_default_welcome_msg": "Салом ва хуш омадед ба JustDo! Ин канали шахсии дастгирии шумост. Агар ба кӯмак ниёз дошта бошед, лутфан ба мо паём гузоред. Мо ҳарчи зудтар бо шумо тамос мегирем. Рӯзи хуб дошта бошед!",
+  "bot_log_message_group_created": "__performed_by__ ин каналро сохт.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ __subscribers__-ро ба ин канал даъват кард.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ __subscribers__-ро аз ин канал хориҷ кард.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ __admins__-ро ҳамчун администратори ин канал таъин кард.",
+  "bot_log_message_group_admin_removed": "__performed_by__ __admins__-ро аз вазифаи администратори ин канал озод кард.",
+  "bot_log_message_group_title_changed": "__performed_by__ номи каналро ба __new_title__ иваз кард.",
+  "bot_log_message_group_description_changed": "__performed_by__ тавсифи гурӯҳро нав кард.",
+  "bot_log_message_group_icon_changed": "__performed_by__ нишонаи гурӯҳро нав кард."
+}

@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "Buat Obrolan Grup",
+  "edit_group_chat_modal_title": "Edit Obrolan Grup",
+  "default_group_chat_title": "Obrolan Grup",
+  "group_chat_title_input_placeholder": "Judul Grup",
+  "group_chat_description_input_placeholder": "Deskripsi Grup",
+  "justdo_chat_default_welcome_msg": "Halo dan selamat datang di JustDo! Ini adalah saluran dukungan pribadi Anda. Jika Anda memerlukan bantuan, silakan tinggalkan pesan untuk kami. Kami akan segera menghubungi Anda. Semoga hari Anda menyenangkan!",
+  "bot_log_message_group_created": "__performed_by__ membuat saluran ini.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ mengundang __subscribers__ ke saluran ini.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ mengeluarkan __subscribers__ dari saluran ini.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ mempromosikan __admins__ sebagai admin saluran ini.",
+  "bot_log_message_group_admin_removed": "__performed_by__ menurunkan __admins__ dari posisi admin saluran ini.",
+  "bot_log_message_group_title_changed": "__performed_by__ mengubah nama saluran ini menjadi __new_title__.",
+  "bot_log_message_group_description_changed": "__performed_by__ memperbarui deskripsi grup.",
+  "bot_log_message_group_icon_changed": "__performed_by__ memperbarui ikon grup."
+}

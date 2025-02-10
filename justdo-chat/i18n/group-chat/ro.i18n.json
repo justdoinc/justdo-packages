@@ -1,0 +1,16 @@
+{
+  "create_group_chat_modal_title": "Creează Chat de Grup",
+  "edit_group_chat_modal_title": "Editează Chat de Grup",
+  "default_group_chat_title": "Chat de Grup",
+  "group_chat_title_input_placeholder": "Titlul Grupului",
+  "group_chat_description_input_placeholder": "Descrierea Grupului",
+  "justdo_chat_default_welcome_msg": "Bună și bine ai venit la JustDo! Acesta este canalul tău personal de asistență. Dacă ai nevoie de ajutor, te rugăm să ne lași un mesaj. Te vom contacta cât mai curând posibil. O zi frumoasă!",
+  "bot_log_message_group_created": "__performed_by__ a creat acest canal.",
+  "bot_log_message_group_subscriber_added": "__performed_by__ a invitat pe __subscribers__ în acest canal.",
+  "bot_log_message_group_subscriber_removed": "__performed_by__ a eliminat pe __subscribers__ din acest canal.",
+  "bot_log_message_group_admin_appointed": "__performed_by__ a promovat pe __admins__ ca administratori ai acestui canal.",
+  "bot_log_message_group_admin_removed": "__performed_by__ a revocat drepturile de administrator ale lui __admins__ pentru acest canal.",
+  "bot_log_message_group_title_changed": "__performed_by__ a redenumit acest canal în __new_title__.",
+  "bot_log_message_group_description_changed": "__performed_by__ a actualizat descrierea grupului.",
+  "bot_log_message_group_icon_changed": "__performed_by__ a actualizat iconița grupului."
+}
