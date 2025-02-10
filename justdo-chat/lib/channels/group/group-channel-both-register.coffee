@@ -57,8 +57,7 @@ JustdoChat.registerChannelType
   # object.
   #
   # Access by calling the static method: JustdoChat.getChannelTypeConf(channel_type)
-  recent_activity_supplementary_pseudo_collections:
-    users: "Users"
+  recent_activity_supplementary_pseudo_collections: {}
 
   # Read comment for publication jdcBottomWindows under publications.coffee
   # to learn about bottom_windows_supplementary_pseudo_collections purpose.
@@ -75,6 +74,4 @@ JustdoChat.registerChannelType
   # object.
   #
   # Access by calling the static method: JustdoChat.getChannelTypeConf(channel_type)
-  bottom_windows_supplementary_pseudo_collections:
-    users: "Users"
-    
+  bottom_windows_supplementary_pseudo_collections: {}    
