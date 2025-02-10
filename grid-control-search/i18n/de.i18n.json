@@ -1,7 +1,7 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "Aufgabe #__seqId__:",
   "grid_control_search_state_prefix": "Status: ",
-  "grid_control_search_note_prefix": "Notiz: ",
+  "grid_control_search_note_prefix": "__field_title__: ",
   "grid_control_search_hide_context": "Kontext ausblenden",
   "grid_control_search_show_full_context": "Vollständigen Kontext anzeigen",
   "grid_control_search_no_results": "Keine Ergebnisse für Ihre Suche gefunden"

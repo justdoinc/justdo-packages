@@ -1,7 +1,7 @@
 {
   "grid_control_search_task_with_seq_id_prefix": "งาน #__seqId__:",
   "grid_control_search_state_prefix": "สถานะ: ",
-  "grid_control_search_note_prefix": "บันทึก: ",
+  "grid_control_search_note_prefix": "__field_title__: ",
   "grid_control_search_hide_context": "ซ่อนบริบท",
   "grid_control_search_show_full_context": "แสดงบริบททั้งหมด",
   "grid_control_search_no_results": "ไม่พบผลลัพธ์สำหรับการค้นหาของคุณ"
