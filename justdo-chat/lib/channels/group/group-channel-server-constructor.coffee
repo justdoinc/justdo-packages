@@ -222,8 +222,8 @@ _.extend GroupChannelServer.prototype,
       if not @isChannelDocExistsInDB()
         @getChannelDocNonReactive()
 
-      appointed_by = @performing_user or "system"
-      if (appointed_by is @performing_user) or (@justdo_chat.isBotUserId appointed_by)
+      appointed_by = @performing_user
+      if (not appointed_by) or (@justdo_chat.isBotUserId appointed_by)
         appointed_by = "system"
 
       admins_to_add = _.map admins_to_add, (user_id) -> {user_id, appointed_by, appointed_at: new Date()}
