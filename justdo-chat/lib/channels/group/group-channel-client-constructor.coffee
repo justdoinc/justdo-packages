@@ -100,7 +100,6 @@ _.extend GroupChannelClient.prototype,
     return
   
   getChannelIcon: ->
-    # XXX default_icon is using the fallback user icon from JustdoAvatar. It is meant to be changed in the future.
     default_icon = JustdoHelpers.getCDNUrl("/packages/justdoinc_justdo-chat/lib/ui/channels/group/assets/anonymous-users-profile-image.png")
 
     if not (icon = @getMessagesSubscriptionChannelDoc({fields: {group_icon: 1}})?.group_icon)?
