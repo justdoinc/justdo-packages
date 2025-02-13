@@ -24,6 +24,17 @@ JustdoChat.registerUnreadChannelsNotificationsManager
     
     base_url = JustdoHelpers.getProdUrl("web-app")
 
+    if channel_type is "user"
+      counterpart_user = channel_obj.getCounterpartUser()
+      counterpart_user_name = JustdoHelpers.displayName counterpart_user
+      subject = APP.justdo_i18n.tr "unread_dm_notification_subject", {user_name: counterpart_user_name}, user
+      template = "notifications-iv-unread-dm"
+      template_data =
+        user: user
+        counterpart_user_name: counterpart_user_name
+        read_link: "#{base_url}"
+        unsubscribe_link: "#{base_url}/#?hr-id=unsubscribe-c-iv-unread-emails-notifications"
+
     if channel_type is "group"
       channel_title = channel_obj.getChannelTitle()
       subject = APP.justdo_i18n.tr "unread_group_chat_notification_subject", {channel_title}, user
