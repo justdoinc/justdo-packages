@@ -4,6 +4,8 @@
   "unread_task_chat_notification_title": "Tens missatges nous esperant-te a la següent tasca:",
   "unread_group_chat_notification_subject": "Tens missatges nous de __channel_title__ esperant-te",
   "unread_group_chat_notification_title_html": "Tens missatges nous de <span style=\"font-weight: bold;\">__channel_title__</span> esperant-te!",
+  "unread_dm_notification_subject": "Tens missatges nous de __user_name__ esperant",
+  "unread_dm_notification_title_html": "Tens missatges nous de <span style=\"font-weight: bold;\">__user_name__</span> esperant!",
   "open_in_justdo": "Obre a JustDo",
   "unsubscribe_from_justdo": "Cancel·la la subscripció a totes les notificacions d'actualització de JustDo",
   "unsubscribe_from_project": "Cancel·la la subscripció a les actualitzacions de __project_title__",

@@ -4,6 +4,8 @@
   "unread_task_chat_notification_title": "Novas mensagens de chat aguardam você na seguinte tarefa:",
   "unread_group_chat_notification_subject": "Novas mensagens de __channel_title__ aguardam você",
   "unread_group_chat_notification_title_html": "Novas mensagens de <span style=\"font-weight: bold;\">__channel_title__</span> aguardam você!",
+  "unread_dm_notification_subject": "Novas mensagens de __user_name__ estão esperando por você",
+  "unread_dm_notification_title_html": "Novas mensagens de <span style=\"font-weight: bold;\">__user_name__</span> estão esperando por você!",
   "open_in_justdo": "Abrir no JustDo",
   "unsubscribe_from_justdo": "Cancelar inscrição de todas as notificações de atualização do JustDo",
   "unsubscribe_from_project": "Cancelar inscrição de atualizações para __project_title__",

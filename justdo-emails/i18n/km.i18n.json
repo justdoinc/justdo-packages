@@ -4,6 +4,8 @@
   "unread_task_chat_notification_title": "មានសារថ្មីកំពុងរង់ចាំអ្នកនៅក្នុងភារកិច្ចខាងក្រោម៖",
   "unread_group_chat_notification_subject": "មានសារថ្មីពី __channel_title__ កំពុងរង់ចាំអ្នក",
   "unread_group_chat_notification_title_html": "មានសារថ្មីពី <span style=\"font-weight: bold;\">__channel_title__</span> កំពុងរង់ចាំអ្នក!",
+  "unread_dm_notification_subject": "មានសារថ្មីពី __user_name__ កំពុងរង់ចាំអ្នក",
+  "unread_dm_notification_title_html": "មានសារថ្មីពី <span style=\"font-weight: bold;\">__user_name__</span> កំពុងរង់ចាំអ្នក!",
   "open_in_justdo": "បើកនៅក្នុង JustDo",
   "unsubscribe_from_justdo": "ឈប់ជាវការជូនដំណឹងអំពីការធ្វើបច្ចុប្បន្នភាពទាំងអស់ពី JustDo",
   "unsubscribe_from_project": "ឈប់ជាវការធ្វើបច្ចុប្បន្នភាពសម្រាប់ __project_title__",

@@ -4,6 +4,8 @@
   "unread_task_chat_notification_title": "Uued vestlussõnumid ootavad sind järgmises ülesandes:",
   "unread_group_chat_notification_subject": "__channel_title__ ootavad sind uued sõnumid",
   "unread_group_chat_notification_title_html": "<span style=\"font-weight: bold;\">__channel_title__</span> ootavad sind uued sõnumid!",
+  "unread_dm_notification_subject": "Uued sõnumid kasutajalt __user_name__ ootavad sind",
+  "unread_dm_notification_title_html": "Uued sõnumid kasutajalt <span style=\"font-weight: bold;\">__user_name__</span> ootavad sind!",
   "open_in_justdo": "Ava JustDos",
   "unsubscribe_from_justdo": "Loobu kõigist JustDo uuendusteatistest",
   "unsubscribe_from_project": "Loobu __project_title__ uuendustest",

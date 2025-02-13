@@ -4,6 +4,8 @@
   "unread_task_chat_notification_title": "Tevi gaida jauni tērzēšanas ziņojumi šādā uzdevumā:",
   "unread_group_chat_notification_subject": "Tevi gaida jauni ziņojumi no __channel_title__",
   "unread_group_chat_notification_title_html": "Tevi gaida jauni ziņojumi no <span style=\"font-weight: bold;\">__channel_title__</span>!",
+  "unread_dm_notification_subject": "Jūs gaida jauni ziņojumi no __user_name__",
+  "unread_dm_notification_title_html": "Jūs gaida jauni ziņojumi no <span style=\"font-weight: bold;\">__user_name__</span>!",
   "open_in_justdo": "Atvērt JustDo",
   "unsubscribe_from_justdo": "Atrakstīties no visiem JustDo atjauninājumu paziņojumiem",
   "unsubscribe_from_project": "Atrakstīties no __project_title__ atjauninājumiem",

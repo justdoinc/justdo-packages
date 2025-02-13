@@ -4,6 +4,8 @@
   "unread_task_chat_notification_title": "Νέα μηνύματα συνομιλίας σε περιμένουν στην ακόλουθη εργασία:",
   "unread_group_chat_notification_subject": "Νέα μηνύματα από το __channel_title__ σε περιμένουν",
   "unread_group_chat_notification_title_html": "Νέα μηνύματα από το <span style=\"font-weight: bold;\">__channel_title__</span> σε περιμένουν!",
+  "unread_dm_notification_subject": "Νέα μηνύματα από τον/την __user_name__ σας περιμένουν",
+  "unread_dm_notification_title_html": "Νέα μηνύματα από τον/την <span style=\"font-weight: bold;\">__user_name__</span> σας περιμένουν!",
   "open_in_justdo": "Άνοιγμα στο JustDo",
   "unsubscribe_from_justdo": "Κατάργηση εγγραφής από όλες τις ειδοποιήσεις ενημερώσεων του JustDo",
   "unsubscribe_from_project": "Κατάργηση εγγραφής από ενημερώσεις για το __project_title__",

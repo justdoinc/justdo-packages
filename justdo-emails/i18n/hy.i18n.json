@@ -4,6 +4,8 @@
   "unread_task_chat_notification_title": "Նոր զրույցի հաղորդագրություններ են սպասում Ձեզ հետևյալ առաջադրանքում՝",
   "unread_group_chat_notification_subject": "__channel_title__-ից նոր հաղորդագրություններ են սպասում Ձեզ",
   "unread_group_chat_notification_title_html": "<span style=\"font-weight: bold;\">__channel_title__</span>-ից նոր հաղորդագրություններ են սպասում Ձեզ!",
+  "unread_dm_notification_subject": "__user_name__-ից նոր հաղորդագրություններ են սպասում Ձեզ",
+  "unread_dm_notification_title_html": "<span style=\"font-weight: bold;\">__user_name__</span>-ից նոր հաղորդագրություններ են սպասում Ձեզ։",
   "open_in_justdo": "Բացել JustDo-ում",
   "unsubscribe_from_justdo": "Չեղարկել բաժանորդագրությունը JustDo-ի բոլոր թարմացումների ծանուցումներից",
   "unsubscribe_from_project": "Չեղարկել բաժանորդագրությունը __project_title__-ի թարմացումներից",

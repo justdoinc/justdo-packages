@@ -4,6 +4,8 @@
   "unread_task_chat_notification_title": "Aşağıdaki görevde sizi bekleyen yeni sohbet mesajları var:",
   "unread_group_chat_notification_subject": "__channel_title__ kanalından sizi bekleyen yeni mesajlar var",
   "unread_group_chat_notification_title_html": "<span style=\"font-weight: bold;\">__channel_title__</span> kanalından sizi bekleyen yeni mesajlar var!",
+  "unread_dm_notification_subject": "__user_name__ kişisinden sizi bekleyen yeni mesajlar var",
+  "unread_dm_notification_title_html": "<span style=\"font-weight: bold;\">__user_name__</span> kişisinden sizi bekleyen yeni mesajlar var!",
   "open_in_justdo": "JustDo'da aç",
   "unsubscribe_from_justdo": "JustDo'dan gelen tüm güncelleme bildirimlerinden çık",
   "unsubscribe_from_project": "__project_title__ için güncellemelerden çık",

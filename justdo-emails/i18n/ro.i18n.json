@@ -4,6 +4,8 @@
   "unread_task_chat_notification_title": "Aveți mesaje noi în așteptare în următoarea sarcină:",
   "unread_group_chat_notification_subject": "Aveți mesaje noi de la __channel_title__ în așteptare",
   "unread_group_chat_notification_title_html": "Aveți mesaje noi de la <span style=\"font-weight: bold;\">__channel_title__</span> în așteptare!",
+  "unread_dm_notification_subject": "Mesaje noi de la __user_name__ vă așteaptă",
+  "unread_dm_notification_title_html": "Mesaje noi de la <span style=\"font-weight: bold;\">__user_name__</span> vă așteaptă!",
   "open_in_justdo": "Deschide în JustDo",
   "unsubscribe_from_justdo": "Dezabonați-vă de la toate notificările de actualizare din JustDo",
   "unsubscribe_from_project": "Dezabonați-vă de la actualizările pentru __project_title__",

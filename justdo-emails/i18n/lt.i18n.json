@@ -4,6 +4,8 @@
   "unread_task_chat_notification_title": "Jūsų laukia nauji pokalbių pranešimai šioje užduotyje:",
   "unread_group_chat_notification_subject": "Jūsų laukia nauji pranešimai iš __channel_title__",
   "unread_group_chat_notification_title_html": "Jūsų laukia nauji pranešimai iš <span style=\"font-weight: bold;\">__channel_title__</span>!",
+  "unread_dm_notification_subject": "Jūsų laukia nauji pranešimai nuo __user_name__",
+  "unread_dm_notification_title_html": "Jūsų laukia nauji pranešimai nuo <span style=\"font-weight: bold;\">__user_name__</span>!",
   "open_in_justdo": "Atidaryti JustDo",
   "unsubscribe_from_justdo": "Atsisakyti visų JustDo atnaujinimų pranešimų",
   "unsubscribe_from_project": "Atsisakyti atnaujinimų iš __project_title__",

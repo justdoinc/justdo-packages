@@ -4,6 +4,8 @@
   "unread_task_chat_notification_title": "Pesan chat baru menunggu Anda di tugas berikut:",
   "unread_group_chat_notification_subject": "Pesan baru dari __channel_title__ menunggu Anda",
   "unread_group_chat_notification_title_html": "Pesan baru dari <span style=\"font-weight: bold;\">__channel_title__</span> menunggu Anda!",
+  "unread_dm_notification_subject": "Ada pesan baru dari __user_name__ yang menunggu Anda",
+  "unread_dm_notification_title_html": "Ada pesan baru dari <span style=\"font-weight: bold;\">__user_name__</span> yang menunggu Anda!",
   "open_in_justdo": "Buka di JustDo",
   "unsubscribe_from_justdo": "Berhenti berlangganan semua notifikasi pembaruan dari JustDo",
   "unsubscribe_from_project": "Berhenti berlangganan pembaruan untuk __project_title__",

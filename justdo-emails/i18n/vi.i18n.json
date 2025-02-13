@@ -4,6 +4,8 @@
   "unread_task_chat_notification_title": "Có tin nhắn mới đang chờ bạn trong công việc sau:",
   "unread_group_chat_notification_subject": "Có tin nhắn mới từ __channel_title__ đang chờ bạn",
   "unread_group_chat_notification_title_html": "Có tin nhắn mới từ <span style=\"font-weight: bold;\">__channel_title__</span> đang chờ bạn!",
+  "unread_dm_notification_subject": "Bạn có tin nhắn mới từ __user_name__ đang chờ",
+  "unread_dm_notification_title_html": "Bạn có tin nhắn mới từ <span style=\"font-weight: bold;\">__user_name__</span> đang chờ!",
   "open_in_justdo": "Mở trong JustDo",
   "unsubscribe_from_justdo": "Hủy đăng ký tất cả thông báo cập nhật từ JustDo",
   "unsubscribe_from_project": "Hủy đăng ký cập nhật cho __project_title__",

@@ -38,6 +38,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/templates/email-verification.handlebars", server);
   api.addFiles("lib/server/templates/password-recovery.handlebars", server);
 
+  api.addFiles("lib/server/templates/chat-notifications/notifications-iv-unread-dm.handlebars", server);
   api.addFiles("lib/server/templates/chat-notifications/notifications-iv-unread-chat.handlebars", server);
   api.addFiles("lib/server/templates/chat-notifications/notifications-iv-unread-group-chat.handlebars", server);
 

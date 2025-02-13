@@ -4,6 +4,8 @@
   "unread_task_chat_notification_title": "Nye chatmeldinger venter på deg i følgende oppgave:",
   "unread_group_chat_notification_subject": "Nye meldinger fra __channel_title__ venter på deg",
   "unread_group_chat_notification_title_html": "Nye meldinger fra <span style=\"font-weight: bold;\">__channel_title__</span> venter på deg!",
+  "unread_dm_notification_subject": "Nye meldinger fra __user_name__ venter på deg",
+  "unread_dm_notification_title_html": "Nye meldinger fra <span style=\"font-weight: bold;\">__user_name__</span> venter på deg!",
   "open_in_justdo": "Åpne i JustDo",
   "unsubscribe_from_justdo": "Avslutt abonnementet på alle oppdateringsvarslinger fra JustDo",
   "unsubscribe_from_project": "Avslutt abonnementet på oppdateringer for __project_title__",

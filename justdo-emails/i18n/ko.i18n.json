@@ -4,6 +4,8 @@
   "unread_task_chat_notification_title": "다음 작업에서 새로운 채팅 메시지가 기다리고 있습니다:",
   "unread_group_chat_notification_subject": "__channel_title__에서 새 메시지가 기다리고 있습니다",
   "unread_group_chat_notification_title_html": "<span style=\"font-weight: bold;\">__channel_title__</span>에서 새 메시지가 기다리고 있습니다!",
+  "unread_dm_notification_subject": "__user_name__님의 새로운 메시지가 도착했습니다",
+  "unread_dm_notification_title_html": "<span style=\"font-weight: bold;\">__user_name__</span>님의 새로운 메시지가 도착했습니다!",
   "open_in_justdo": "JustDo에서 열기",
   "unsubscribe_from_justdo": "JustDo의 모든 업데이트 알림 구독 해제",
   "unsubscribe_from_project": "__project_title__ 업데이트 구독 해제",

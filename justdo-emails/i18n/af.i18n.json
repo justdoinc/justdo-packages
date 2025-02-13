@@ -4,6 +4,8 @@
   "unread_task_chat_notification_title": "Nuwe kletsboodskappe wag vir jou in die volgende taak:",
   "unread_group_chat_notification_subject": "Nuwe boodskappe van __channel_title__ wag vir jou",
   "unread_group_chat_notification_title_html": "Nuwe boodskappe van <span style=\"font-weight: bold;\">__channel_title__</span> wag vir jou!",
+  "unread_dm_notification_subject": "Nuwe boodskappe van __user_name__ wag vir jou",
+  "unread_dm_notification_title_html": "Nuwe boodskappe van <span style=\"font-weight: bold;\">__user_name__</span> wag vir jou!",
   "open_in_justdo": "Maak oop in JustDo",
   "unsubscribe_from_justdo": "Kanselleer intekening op alle opdateringskennisgewings van JustDo",
   "unsubscribe_from_project": "Kanselleer intekening op opdaterings vir __project_title__",

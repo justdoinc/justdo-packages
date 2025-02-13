@@ -4,6 +4,8 @@
   "unread_task_chat_notification_title": "Nove chat poruke vas čekaju u sljedećem zadatku:",
   "unread_group_chat_notification_subject": "Nove poruke iz __channel_title__ vas čekaju",
   "unread_group_chat_notification_title_html": "Nove poruke iz <span style=\"font-weight: bold;\">__channel_title__</span> vas čekaju!",
+  "unread_dm_notification_subject": "Nove poruke od __user_name__ vas čekaju",
+  "unread_dm_notification_title_html": "Nove poruke od <span style=\"font-weight: bold;\">__user_name__</span> vas čekaju!",
   "open_in_justdo": "Otvori u JustDo",
   "unsubscribe_from_justdo": "Odjavi se sa svih obavještenja o ažuriranjima iz JustDo",
   "unsubscribe_from_project": "Odjavi se sa ažuriranja za __project_title__",

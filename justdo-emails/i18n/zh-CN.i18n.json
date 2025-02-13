@@ -4,6 +4,8 @@
   "unread_task_chat_notification_title": "以下任务中有新的聊天消息等待您：",
   "unread_group_chat_notification_subject": "来自__channel_title__的新消息等待您查看",
   "unread_group_chat_notification_title_html": "来自<span style=\"font-weight: bold;\">__channel_title__</span>的新消息等待您查看！",
+  "unread_dm_notification_subject": "来自 __user_name__ 的新消息等待您查看",
+  "unread_dm_notification_title_html": "来自 <span style=\"font-weight: bold;\">__user_name__</span> 的新消息等待您查看！",
   "open_in_justdo": "在JustDo中打开",
   "unsubscribe_from_justdo": "取消订阅所有来自JustDo的更新通知",
   "unsubscribe_from_project": "取消订阅__project_title__的更新",

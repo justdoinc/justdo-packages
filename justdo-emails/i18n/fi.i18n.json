@@ -4,6 +4,8 @@
   "unread_task_chat_notification_title": "Sinua odottavat uudet chat-viestit seuraavassa tehtävässä:",
   "unread_group_chat_notification_subject": "Sinua odottavat uudet viestit kanavalta __channel_title__",
   "unread_group_chat_notification_title_html": "Sinua odottavat uudet viestit kanavalta <span style=\"font-weight: bold;\">__channel_title__</span>!",
+  "unread_dm_notification_subject": "Uusia viestejä käyttäjältä __user_name__ odottaa sinua",
+  "unread_dm_notification_title_html": "Uusia viestejä käyttäjältä <span style=\"font-weight: bold;\">__user_name__</span> odottaa sinua!",
   "open_in_justdo": "Avaa JustDossa",
   "unsubscribe_from_justdo": "Lopeta kaikkien JustDon päivitysilmoitusten tilaus",
   "unsubscribe_from_project": "Lopeta päivitysten tilaus projektille __project_title__",

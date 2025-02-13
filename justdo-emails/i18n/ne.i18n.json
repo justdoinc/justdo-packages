@@ -4,6 +4,8 @@
   "unread_task_chat_notification_title": "निम्न कार्यमा तपाईंको लागि नयाँ च्याट सन्देशहरू प्रतीक्षारत छन्:",
   "unread_group_chat_notification_subject": "__channel_title__ बाट नयाँ सन्देशहरू तपाईंको लागि प्रतीक्षारत छन्",
   "unread_group_chat_notification_title_html": "<span style=\"font-weight: bold;\">__channel_title__</span> बाट नयाँ सन्देशहरू तपाईंको लागि प्रतीक्षारत छन्!",
+  "unread_dm_notification_subject": "__user_name__ बाट नयाँ सन्देशहरू तपाईंको लागि प्रतीक्षामा छन्",
+  "unread_dm_notification_title_html": "<span style=\"font-weight: bold;\">__user_name__</span> बाट नयाँ सन्देशहरू तपाईंको लागि प्रतीक्षामा छन्!",
   "open_in_justdo": "JustDo मा खोल्नुहोस्",
   "unsubscribe_from_justdo": "JustDo बाट सबै अपडेट सूचनाहरूबाट सदस्यता खारेज गर्नुहोस्",
   "unsubscribe_from_project": "__project_title__ को अपडेटहरूबाट सदस्यता खारेज गर्नुहोस्",

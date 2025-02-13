@@ -4,6 +4,8 @@
   "unread_task_chat_notification_title": "Új chatüzenetek várnak rád a következő feladatban:",
   "unread_group_chat_notification_subject": "Új üzenetek várnak rád a(z) __channel_title__ csatornától",
   "unread_group_chat_notification_title_html": "Új üzenetek várnak rád a(z) <span style=\"font-weight: bold;\">__channel_title__</span> csatornától!",
+  "unread_dm_notification_subject": "Új üzenetek várnak rád __user_name__ felhasználótól",
+  "unread_dm_notification_title_html": "Új üzenetek várnak rád <span style=\"font-weight: bold;\">__user_name__</span> felhasználótól!",
   "open_in_justdo": "Megnyitás a JustDo-ban",
   "unsubscribe_from_justdo": "Leiratkozás az összes JustDo értesítésről",
   "unsubscribe_from_project": "Leiratkozás a(z) __project_title__ frissítéseiről",
