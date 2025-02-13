@@ -48,6 +48,10 @@ if APP.justdo_push_notifications.isFirebaseEnabled()
       if channel_type is "user"
         sender_display_name = JustdoHelpers.displayName channel_obj.getCounterpartUser()
         options.body = "New chat message from #{sender_display_name}"
+      
+      if channel_type is "group"
+        channel_title = channel_obj.getChannelTitle()
+        options.body = "New chat message from \r\n #{JustdoHelpers.ellipsis(channel_title, 70)}"
 
       # APP.justdo_push_notifications.pnUsersViaFirebase
       #   message_type: "chat-msg"
