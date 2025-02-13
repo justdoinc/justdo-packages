@@ -23,6 +23,8 @@ Package.onUse(function (api) {
   api.use("ecmascript", both);
   api.use("random", both);
 
+  api.use("astrocoders:handlebars-server@1.0.3", server);
+
   api.use("justdoinc:justdo-core-helpers@1.0.0", both);
 
   api.use("raix:eventemitter@0.1.1", both);
@@ -122,6 +124,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/users-generator.coffee", server);
   api.addFiles("lib/server/users.coffee", server);
   api.addFiles("lib/server/tasks-generator.coffee", server);
+  api.addFiles("lib/server/xss.coffee", server);
   api.addFiles("lib/server/url.coffee", server);
   api.addFiles("lib/server/iron-router.coffee", server);
 
