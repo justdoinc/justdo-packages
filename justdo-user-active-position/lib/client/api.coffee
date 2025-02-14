@@ -7,6 +7,9 @@ _.extend JustdoUserActivePosition.prototype,
       @setupTabCloseTracker()
       @setupGridHooksMaintainer()
 
+      if @onGridUserActivePositionEnabled()
+        @setupProjectMembersCurrentPositionsSubscriptionTracker()
+        @setupProjectMembersCurrentOnGridPositionsTracker()
       return
 
     return
@@ -115,4 +118,46 @@ _.extend JustdoUserActivePosition.prototype,
   setupGridHooksMaintainer: ->
     Tracker.autorun =>
       return
+    return
+
+  getProjectMembersCurrentPositionsCursor: ->
+    if not (project_id = JD.activeJustdoId())?
+      return
+
+    return @users_active_positions_current_collection.find({justdo_id: project_id})
+
+  # Not to be confused with setupProjectMembersCurrentOnGridPositionsTracker:
+  # This is a Tracker that manages the subscription to the project members current positions
+  # and the cursor to the collection.
+  #
+  # The other one is a Tracker that maintains the current positions of the project members
+  # and updates the UI accordingly.
+  setupProjectMembersCurrentPositionsSubscriptionTracker: ->
+    @_project_member_current_positions_subscription_tracker = Tracker.autorun =>
+      if (not (project_id = JD.activeJustdoId())?)
+        return
+
+      # Note that subscriptions inside a reactive context will be cancelled when the context is invalidated, so we don't need to unsubscribe.
+      APP.justdo_user_active_position.subscribeToProjectMembersCurrentPositions project_id
+
+      return
+
+    return
+
+  # See the comment above for setupProjectMembersCurrentPositionsSubscriptionTracker.
+  setupProjectMembersCurrentOnGridPositionsTracker: ->
+    @_project_members_current_positions_tracker = Tracker.autorun =>
+      if (not (project_id = JD.activeJustdoId())?) or not (grid_control = APP.modules.project_page.gridControl())?
+        return
+        
+      # Remove all search-result class from all rows
+      $(".search-result", grid_control.container).removeClass("search-result")
+      
+      # Add search-result class to the rows that are currently active
+      @getProjectMembersCurrentPositionsCursor().forEach (ledger_doc) =>
+        if (item_index = grid_control._grid_data.getPathGridTreeIndex(ledger_doc.path))?
+          $(".slick-row:nth-child(#{item_index + 1})", grid_control.container).addClass("search-result")
+      
+        return
+
     return
