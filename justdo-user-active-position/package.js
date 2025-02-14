@@ -77,6 +77,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/subscriptions.coffee", client);
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
+  api.addFiles("lib/client/active_project_members_indicator/active_project_members_indicator.sass", client);
+  api.addFiles("lib/client/active_project_members_indicator/active_project_members_indicator.html", client);
+  api.addFiles("lib/client/active_project_members_indicator/active_project_members_indicator.coffee", client);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
