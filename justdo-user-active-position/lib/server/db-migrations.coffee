@@ -1,6 +1,6 @@
 _.extend JustdoUserActivePosition.prototype,
   _setupDbMigrations: ->
-    migration_name = "users_active_positions_ledger-doc-expiry"
+    migration_name = "#{JustdoUserActivePosition.users_active_position_ledger_collection_name}-doc-expiry"
     APP.justdo_db_migrations.registerMigrationScript migration_name, JustdoDbMigrations.docExpiryMigration
       delay_between_batches: 1000
       batch_size: 5000
