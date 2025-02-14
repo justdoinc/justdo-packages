@@ -17,3 +17,5 @@ _.extend JustdoUserActivePosition.prototype,
       return
 
     return
+  
+  onGridUserActivePositionEnabled: -> @on_grid_user_active_position_enabled

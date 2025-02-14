@@ -11,6 +11,10 @@ options_schema =
       type: "skip-type-check"
       optional: false
       bind_to_instance: true
+    
+    on_grid_user_active_position_enabled:
+      type: Boolean
+      bind_to_instance: true
 
   server:
     users_active_positions_ledger_collection:

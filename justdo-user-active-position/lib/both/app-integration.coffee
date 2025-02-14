@@ -28,6 +28,7 @@ APP.getEnv (env) ->
   options =
     projects_collection: APP.collections.Projects
     tasks_collection: APP.collections.Tasks
+    on_grid_user_active_position_enabled: env.ON_GRID_USER_ACTIVE_POSITION_ENABLED is "true"
 
   if Meteor.isServer
     APP.collections.UsersActivePositionsLedger = new Mongo.Collection("users_active_positions_ledger")
