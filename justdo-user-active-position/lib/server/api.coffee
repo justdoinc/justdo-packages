@@ -35,3 +35,29 @@ _.extend JustdoUserActivePosition.prototype,
     @users_active_positions_ledger_collection.insert(doc)
 
     return
+
+  # Returns a cursor for the recent active positions ledger docs
+  #
+  # @param {String} performer_id - The performer ID
+  # @returns {Mongo.Cursor} A cursor for the recent active positions ledger docs
+  getRecentActivePositionsLedgerDocCursor: (performer_id) ->
+    check performer_id, String
+
+    query = 
+      UID: 
+        $ne: performer_id
+      time: 
+        $gte: new Date(Date.now() - JustdoUserActivePosition.idle_time_to_consider_session_inactive)
+    query_options = 
+      sort: 
+        time: -1
+      fields:
+        path: 1
+        UID: 1
+        justdo_id: 1
+        field: 1
+        time: 1
+
+    cursor = @users_active_positions_ledger_collection.find(query, query_options)
+
+    return cursor
