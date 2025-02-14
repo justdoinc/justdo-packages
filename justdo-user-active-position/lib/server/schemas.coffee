@@ -71,7 +71,6 @@ users_active_positions_current_collection_schema_definition.time = _.extend user
 users_active_positions_current_collection_schema_definition.time.autoValue = -> new Date()
 
 UsersActivePositionsLedger = new SimpleSchema users_active_positions_ledger_collection_schema_definition
-UsersActivePositionsCurrent = new SimpleSchema users_active_positions_current_collection_schema_definition
 
 JustdoUserActivePosition.schemas.UsersActivePositionsLedger = UsersActivePositionsLedger
 JustdoUserActivePosition.schemas.PosObjectSchema = UsersActivePositionsLedger.pick("DID", "SID", "page", "justdo_id", "tab", "path", "field")
@@ -79,7 +78,5 @@ JustdoUserActivePosition.schemas.PosObjectSchema = UsersActivePositionsLedger.pi
 _.extend JustdoUserActivePosition.prototype,
   _attachCollectionsSchemas: ->
     @users_active_positions_ledger_collection.attachSchema JustdoUserActivePosition.schemas.UsersActivePositionsLedger
-
-    @users_active_positions_current_collection.attachSchema JustdoUserActivePosition.schemas.UsersActivePositionsCurrent # NOT YET MAINTAINED/IMPLEMENTEDusers_active_positions_ledger_collection
 
     return
