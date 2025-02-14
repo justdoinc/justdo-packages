@@ -10,6 +10,8 @@ _.extend JustdoUserActivePosition.prototype,
       if @onGridUserActivePositionEnabled()
         @setupProjectMembersCurrentPositionsSubscriptionTracker()
         @setupProjectMembersCurrentOnGridPositionsTracker()
+        @setupActiveProjectMembersIndicator()
+
       return
 
     return
@@ -160,4 +162,22 @@ _.extend JustdoUserActivePosition.prototype,
       
         return
 
+    return
+  
+  setupActiveProjectMembersIndicator: ->
+    @_active_project_members_indicator_tracker = Tracker.autorun =>
+      if (not (project_id = JD.activeJustdoId())?) or (@getProjectMembersCurrentPositionsCursor().count() is 0)
+        JD.unregisterPlaceholderItem("active-project-members-indicator")
+        return
+
+      JD.registerPlaceholderItem "active-project-members-indicator",
+        data:
+          template: "active_project_members_indicator"
+          template_data: {}
+
+        domain: "project-right-navbar"
+        position: 101
+
+      return
+      
     return
