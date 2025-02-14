@@ -21,7 +21,8 @@ options_schema =
       type: "skip-type-check"
       optional: false
       bind_to_instance: true
-
+  
+  client:
     users_active_positions_current_collection:
       type: "skip-type-check"
       optional: false

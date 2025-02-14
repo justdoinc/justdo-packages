@@ -32,9 +32,10 @@ APP.getEnv (env) ->
 
   if Meteor.isServer
     APP.collections.UsersActivePositionsLedger = new Mongo.Collection("users_active_positions_ledger")
-    APP.collections.UsersActivePositionsCurrent = new Mongo.Collection("users_active_positions_current")
-    
     options.users_active_positions_ledger_collection = APP.collections.UsersActivePositionsLedger
+
+  if Meteor.isClient
+    APP.collections.UsersActivePositionsCurrent = new Mongo.Collection(JustdoUserActivePosition.users_active_position_current_collection_name)
     options.users_active_positions_current_collection = APP.collections.UsersActivePositionsCurrent
 
   APP.justdo_user_active_position = new JustdoUserActivePosition(options)
