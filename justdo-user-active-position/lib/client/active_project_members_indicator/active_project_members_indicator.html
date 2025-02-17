@@ -2,7 +2,9 @@
   <div class="project-header-toolbar-divider"></div>
   <div class="active-project-members-indicator">
     {{#each curProjectMembers}}
-      {{> justdo_avatar}}
+      <div class="active-project-member-indicator {{#if isUserInactive}}inactive{{/if}}">
+        {{> justdo_avatar}}
+      </div>
     {{/each}}
   </div>
 </Template>
