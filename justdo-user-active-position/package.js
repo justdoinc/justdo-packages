@@ -50,6 +50,8 @@ Package.onUse(function (api) {
   api.use("iron:router@1.1.2", both);
 
   api.use("justdoinc:justdo-analytics@1.0.0", both);
+  api.use("tap:i18n", both);
+  api.use("justdoinc:justdo-i18n", both);
 
   api.use("matb33:collection-hooks@0.8.4", both);
 
@@ -84,6 +86,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/active_project_members_indicator/active_project_members_indicator.html", client);
   api.addFiles("lib/client/active_project_members_indicator/active_project_members_indicator.coffee", client);
 
+  this.addI18nFiles(api, "i18n/{}.i18n.json", "default_lang_only");
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", both);
