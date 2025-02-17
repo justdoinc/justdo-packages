@@ -47,7 +47,7 @@ _.extend JustdoUserActivePosition.prototype,
       UID: 
         $ne: performer_id
       time: 
-        $gte: new Date(Date.now() - JustdoUserActivePosition.idle_time_to_consider_session_inactive)
+        $gte: new Date(Date.now() - JustdoUserActivePosition.idle_time_to_consider_session_ended)
     query_options = 
       sort: 
         time: -1
