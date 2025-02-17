@@ -180,4 +180,7 @@ _.extend JustdoUserActivePosition.prototype,
 
       return
       
-    return
+    return  
+  isUserLedgerDocInactive: (user_id) ->
+    ledger_doc = @users_active_positions_current_collection.findOne({UID: user_id}, {fields: {time: 1}})
+    return ledger_doc.time < (Date.now() - JustdoUserActivePosition.idle_time_to_consider_session_inactive)
