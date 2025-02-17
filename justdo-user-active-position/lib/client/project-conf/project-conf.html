@@ -1,0 +1,13 @@
+<template name="justdo_user_active_position_project_config">
+  <div class="controller-template-extension-item project-conf-justdo-user-active-position-config">
+    <div class="controller-template-extension-indicator {{#if isModuleEnabled}}bg-primary{{/if}}"></div>
+    {{pluginName}}
+    <div class="m{{getRtlAwareDirection "l"}}-auto">
+      {{#if isModuleEnabled}}
+        <svg class="jd-icon-extension text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "right"}}"/></svg>
+      {{else}}
+        <svg class="jd-icon-extension"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "left"}}"/></svg>
+      {{/if}}
+    </div>
+  </div>
+</template>

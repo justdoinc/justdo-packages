@@ -6,11 +6,8 @@ _.extend JustdoUserActivePosition.prototype,
       @setupPosTracker()
       @setupTabCloseTracker()
       @setupGridHooksMaintainer()
-
-      if @onGridUserActivePositionEnabled()
-        @setupProjectMembersCurrentPositionsSubscriptionTracker()
-        @setupProjectMembersCurrentOnGridPositionsTracker()
-        @setupActiveProjectMembersIndicator()
+      @registerConfigTemplate()
+      @setupCustomFeatureMaintainer()
 
       return
 
@@ -18,6 +15,34 @@ _.extend JustdoUserActivePosition.prototype,
 
   _deferredInit: ->
     if @destroyed
+      return
+
+    return
+  
+  isModuleEnabled: ->
+    return APP.modules.project_page.curProj()?.isCustomFeatureEnabled(JustdoUserActivePosition.project_custom_feature_id)
+
+  setupCustomFeatureMaintainer: ->
+    custom_feature_maintainer =
+      APP.modules.project_page.setupProjectCustomFeatureOnProjectPage JustdoUserActivePosition.project_custom_feature_id,
+        installer: =>
+          if @onGridUserActivePositionEnabled()
+            @setupProjectMembersCurrentPositionsSubscriptionTracker()
+            @setupProjectMembersCurrentOnGridPositionsTracker()
+            @setupActiveProjectMembersIndicator()
+          return
+
+        destroyer: =>
+          if @onGridUserActivePositionEnabled()
+            @removeProjectMembersCurrentPositionsSubscriptionTracker()
+            @removeProjectMembersCurrentOnGridPositionsTracker()
+            @removeActiveProjectMembersIndicator()
+
+          return
+
+    @onDestroy =>
+      custom_feature_maintainer.stop()
+
       return
 
     return
@@ -145,6 +170,11 @@ _.extend JustdoUserActivePosition.prototype,
       return
 
     return
+  removeProjectMembersCurrentPositionsSubscriptionTracker: ->
+    @_project_member_current_positions_subscription_tracker?.stop?()
+    @_project_member_current_positions_subscription_tracker = null
+
+    return
 
   # See the comment above for setupProjectMembersCurrentPositionsSubscriptionTracker.
   setupProjectMembersCurrentOnGridPositionsTracker: ->
@@ -161,6 +191,11 @@ _.extend JustdoUserActivePosition.prototype,
           $(".slick-row:nth-child(#{item_index + 1})", grid_control.container).addClass("search-result")
       
         return
+
+    return
+  removeProjectMembersCurrentOnGridPositionsTracker: ->
+    @_project_members_current_positions_tracker?.stop?()
+    @_project_members_current_positions_tracker = null
 
     return
   
@@ -180,7 +215,13 @@ _.extend JustdoUserActivePosition.prototype,
 
       return
       
-    return  
+    return
+  removeActiveProjectMembersIndicator: ->
+    @_active_project_members_indicator_tracker?.stop?()
+    @_active_project_members_indicator_tracker = null
+
+    return
+  
   isUserLedgerDocInactive: (user_id) ->
     ledger_doc = @users_active_positions_current_collection.findOne({UID: user_id}, {fields: {time: 1}})
     return ledger_doc.time < (Date.now() - JustdoUserActivePosition.idle_time_to_consider_session_inactive)
