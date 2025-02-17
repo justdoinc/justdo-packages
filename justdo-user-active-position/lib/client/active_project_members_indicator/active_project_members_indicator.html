@@ -1,6 +1,6 @@
 <Template name="active_project_members_indicator">
   <div class="project-header-toolbar-divider"></div>
-  <div class="active-project-members-indicator">
+  <div class="active-project-members-indicator" title="{{_ "user_active_position_members_indicator_title"}}">
     {{#each curProjectMembers}}
       <div class="active-project-member-indicator {{#if isUserInactive}}inactive{{/if}}">
         {{> justdo_avatar}}

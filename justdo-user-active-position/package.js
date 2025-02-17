@@ -87,6 +87,8 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/active_project_members_indicator/active_project_members_indicator.coffee", client);
 
   this.addI18nFiles(api, "i18n/{}.i18n.json", "default_lang_only");
+  this.addI18nFiles(api, "i18n/collaboration-mode/{}.i18n.json", "default_lang_only");
+
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", both);

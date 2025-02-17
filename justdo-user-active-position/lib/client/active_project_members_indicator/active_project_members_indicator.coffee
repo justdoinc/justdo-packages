@@ -16,6 +16,13 @@ Template.active_project_members_indicator.helpers
     tpl.check_user_inactive_dep.depend()
     return APP.justdo_user_active_position.isUserLedgerDocInactive @_id
 
+Template.active_project_members_indicator.events
+  "click .active-project-member-indicator": ->
+    if not APP.justdo_user_active_position.isProjectMembersCurrentOnGridPositionsTrackerEnabled()
+      APP.justdo_user_active_position.setupProjectMembersCurrentOnGridPositionsTracker()
+    else
+      APP.justdo_user_active_position.removeProjectMembersCurrentOnGridPositionsTracker()
+    return
 Template.active_project_members_indicator.onDestroyed ->
   Meteor.clearInterval @check_user_inactive_interval
   return
