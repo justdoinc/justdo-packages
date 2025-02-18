@@ -21,16 +21,18 @@
       border-radius: 4px
       padding: 6px 12px
       position: absolute
-      transition: opacity 0.25s ease-in-out
+      transition: opacity 0.25s ease-in-out, visibility 0.25s ease-in-out
       box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.12)
       background-color: white
       opacity: 0
+      visibility: hidden
       bottom: 120%
       white-space: break-spaces
       width: 250px
       text-align: left
     &:hover
       .jd-tooltip
+        visibility: visible
         opacity: 1
   .dropdown-menu
     border-radius: 4px
