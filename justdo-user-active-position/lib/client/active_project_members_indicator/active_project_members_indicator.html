@@ -1,11 +1,43 @@
 <Template name="active_project_members_indicator">
-  <div class="project-header-toolbar-divider"></div>
-  <div class="active-project-members-indicator" title="{{_ "user_active_position_members_indicator_title"}}">
-    {{#each curProjectMembers}}
-      <div class="active-project-member-indicator {{#if isUserInactive}}inactive{{/if}}">
-        {{> justdo_avatar}}
+  <div class="active-project-members-wrapper">
+    <div class="active-project-members" title="{{_ "user_active_position_members_indicator_title"}}">
+      {{#each curProjectMembersLimited}}
+        <div class="member-avatar {{#if isUserInactive}}inactive{{/if}}">
+          <div class="member-avatar-indicator"></div>
+          {{> justdo_avatar}}
+        </div>
+      {{/each}}
+    </div>
+
+    {{#if hiddenMembersCount}}
+      <div class="active-project-members-dropdown dropdown">
+        <div class="jd-icon-btn text-primary" data-display="static" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          +{{hiddenMembersCount}}
+          <div class="jd-icon-bg bg-primary"></div>
+        </div>
+
+        <ul class="dropdown-menu dropdown-menu-right jd-p-075 animate slideIn shadow-lg border-0">
+          {{#each curProjectMembersAll}}
+            <li class="dropdown-item">
+              <div class="member-item {{#if isUserInactive}}inactive{{/if}}">
+                <div class="member-avatar">
+                  <div class="member-avatar-indicator"></div>
+                  {{> justdo_avatar}}
+                </div>
+                <span class="member-name">{{profile.first_name}}</span>
+              </div>
+              <div class="member-state">
+                {{#if isUserInactive}}
+                  Away
+                {{else}}
+                  Online
+                {{/if}}
+              </div>
+            </li>
+          {{/each}}
+        </ul>
       </div>
-    {{/each}}
+    {{/if}}
+    <div class="project-header-toolbar-divider"></div>
   </div>
 </Template>
-

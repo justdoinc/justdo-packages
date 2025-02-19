@@ -19,7 +19,7 @@ _.extend JustdoUserActivePosition.prototype,
       return
 
     return
-  
+
   isModuleEnabled: ->
     return APP.modules.project_page.curProj()?.isCustomFeatureEnabled(JustdoUserActivePosition.project_custom_feature_id)
 
@@ -89,7 +89,7 @@ _.extend JustdoUserActivePosition.prototype,
     return
 
   getPos: ->
-    pos = 
+    pos =
       # This client side "time" is for justdo_promoters_campaigns only.
       # It won't be stored to the db; Schema autovalue will handle the actual "time" stored.
       time: new Date()
@@ -186,15 +186,15 @@ _.extend JustdoUserActivePosition.prototype,
     @_project_members_current_positions_tracker = Tracker.autorun =>
       if (not (project_id = JD.activeJustdoId())?) or not (grid_control = APP.modules.project_page.gridControl())?
         return
-        
+
       # Remove all search-result class from all rows
       $(".search-result", grid_control.container).removeClass("search-result")
-      
+
       # Add search-result class to the rows that are currently active
       @getProjectMembersCurrentPositionsCursor().forEach (ledger_doc) =>
         if (item_index = grid_control._grid_data.getPathGridTreeIndex(ledger_doc.path))?
           $(".slick-row:nth-child(#{item_index + 1})", grid_control.container).addClass("search-result")
-      
+
         return
 
     return
@@ -214,7 +214,7 @@ _.extend JustdoUserActivePosition.prototype,
   isProjectMembersCurrentOnGridPositionsTrackerEnabled: ->
     @on_grid_positions_tracker_enabled_dep.depend()
     return amplify.store "justdo_user_active_position_show_user_on_grid_positions"
-  
+
   setupActiveProjectMembersIndicator: ->
     @_active_project_members_indicator_tracker = Tracker.autorun =>
       if (not (project_id = JD.activeJustdoId())?) or (@getProjectMembersCurrentPositionsCursor().count() is 0)
@@ -226,18 +226,18 @@ _.extend JustdoUserActivePosition.prototype,
           template: "active_project_members_indicator"
           template_data: {}
 
-        domain: "project-right-navbar"
+        domain: "project-left-navbar"
         position: 101
 
       return
-      
+
     return
   removeActiveProjectMembersIndicator: ->
     @_active_project_members_indicator_tracker?.stop?()
     @_active_project_members_indicator_tracker = null
 
     return
-  
+
   isUserLedgerDocInactive: (user_id) ->
     ledger_doc = @users_active_positions_current_collection.findOne({UID: user_id}, {fields: {time: 1}})
     if not ledger_doc?
