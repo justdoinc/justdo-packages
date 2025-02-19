@@ -51,6 +51,14 @@ $project-logo-max-width: 0 // With the introduction of the new design, we decide
   height: 16px
   margin: 0 8px
 
+.jd-icon-btn
+  cursor: pointer
+  transition: all 0.2s linear
+  &:hover
+    stroke: black
+    transform: scale(1.02)
+    background-color: rgba(0, 0, 0, 0.08)
+
 #project-members-dropdown
   margin-left: 8px
 
@@ -90,6 +98,6 @@ $project-logo-max-width: 0 // With the introduction of the new design, we decide
     padding: 3px
     &.task-pane-right
       transform: rotate(180deg)
-      
+
   .control-opened
     stroke-width: 2.5

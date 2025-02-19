@@ -1,14 +1,85 @@
-.active-project-members-indicator
-  margin-right: 10px
-  cursor: pointer
+.active-project-members-wrapper
+  display: flex
+  align-items: center
+
+  .active-project-members
+    display: flex
+    .member-avatar
+      cursor: pointer
+    .member-avatar + .member-avatar
+      margin-left: 6px
+    .member-avatar-indicator
+      border: 2px solid #f3f2f1
+
   .justdo-avatar
-    margin-right: -10px
+    width: 26px
+    height: 26px
+
+  .member-avatar
+    position: relative
+
+  .member-avatar-indicator
+    width: 10px
+    height: 10px
+    border-radius: 10px
+    background-color: #36c200
+    position: absolute
+    right: -4px
+
+  .inactive
+    .member-avatar-indicator
+      background-color: #a1b1be
+
+  .active-project-members-dropdown
+    user-select: none
+    .jd-icon-btn
+      padding: 3px 8px
+      border-radius: 25px
+      font-size: 12px
+      font-weight: 600
+      overflow: hidden
+      position: relative
+      margin-left: 6px
+      .jd-icon-bg
+        position: absolute
+        width: 100%
+        height: 100%
+        opacity: 0.12
+        top: 0
+        right: 0
+
+    .dropdown-item
+      display: flex
+      align-items: center
+      justify-content: space-between
+      padding: 4px 8px 4px 4px
+      border-radius: 4px
+      cursor: pointer
+
+    .member-avatar-indicator
+      border: 2px solid white
+
+    .member-item
+      display: flex
+      align-items: center
+      .member-name
+        margin: 0 20px 0 8px
+        text-overflow: ellipsis
+        overflow: hidden
+        white-space: nowrap
+        width: 80px
+
+    .member-state
+      font-size: 12px
+      color: #3D495B
+
 
 // RTL modifications
 .right-to-left
-  .active-project-members-indicator
-    margin-right: unset
-    margin-left: 10px
-    .justdo-avatar
-      margin-right: unset
-      margin-left: -10px
+  .active-project-members-wrapper
+    // .active-project-members
+    //   margin-right: unset
+    //   margin-left: 10px
+    //   .justdo-avatar
+    //     margin-right: unset
+    //     margin-left: -10px
