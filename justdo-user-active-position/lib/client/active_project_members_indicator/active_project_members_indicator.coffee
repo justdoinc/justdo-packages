@@ -36,12 +36,23 @@ Template.active_project_members_indicator.helpers
     return APP.justdo_user_active_position.isUserLedgerDocInactive @_id
 
 Template.active_project_members_indicator.events
-  "click .member-avatar": ->
-    if not APP.justdo_user_active_position.isProjectMembersCurrentOnGridPositionsTrackerEnabled()
-      APP.justdo_user_active_position.setupProjectMembersCurrentOnGridPositionsTracker()
-    else
-      APP.justdo_user_active_position.removeProjectMembersCurrentOnGridPositionsTracker()
+  "click .member-avatar, click .active-project-members-dropdown .dropdown-item": (e) ->
+    # This functionality has been temporarily put on hold. It was decided to open a direct chat when clicking on the avatar.
+
+    # if not APP.justdo_user_active_position.isProjectMembersCurrentOnGridPositionsTrackerEnabled()
+    #   APP.justdo_user_active_position.setupProjectMembersCurrentOnGridPositionsTracker()
+    # else
+    #   APP.justdo_user_active_position.removeProjectMembersCurrentOnGridPositionsTracker()
+
+    user_id = @_id
+
+    APP.justdo_chat.generateClientUserChatChannel(user_id)
+
     return
+
+
+
+
 Template.active_project_members_indicator.onDestroyed ->
   Meteor.clearInterval @check_user_inactive_interval
   return

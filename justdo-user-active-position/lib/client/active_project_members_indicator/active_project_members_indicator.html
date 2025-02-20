@@ -24,7 +24,7 @@
                   <div class="member-avatar-indicator"></div>
                   {{> justdo_avatar}}
                 </div>
-                <span class="member-name">{{profile.first_name}}</span>
+                <span class="member-name">{{profile.first_name}} {{profile.last_name}}</span>
               </div>
               <div class="member-state">
                 {{#if isUserInactive}}
@@ -38,6 +38,7 @@
         </ul>
       </div>
     {{/if}}
+
     <div class="project-header-toolbar-divider"></div>
   </div>
 </Template>
