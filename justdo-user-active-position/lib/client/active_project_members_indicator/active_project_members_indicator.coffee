@@ -10,9 +10,19 @@ Template.active_project_members_indicator.onCreated ->
   @curProjectMembers = (limit = true) ->
     member_ids = _.map APP.justdo_user_active_position.getProjectMembersCurrentPositionsCursor().map (ledger_doc) -> ledger_doc.UID
     member_ids_without_self = _.without member_ids, Meteor.userId()
-    query_options = if limit then {limit: visible_members_limit} else {}
 
-    return Meteor.users.find {_id: {$in: member_ids_without_self}}, query_options
+    # Fetch all users (without limit)
+    users = Meteor.users.find({_id: {$in: member_ids_without_self}}).fetch()
+
+    # Sort users: active first, inactive last
+    sorted_users = _.sortBy users, (user) ->
+      APP.justdo_user_active_position.isUserLedgerDocInactive(user._id)
+
+    # Apply the limit after sorting
+    if limit
+      sorted_users = sorted_users.slice(0, visible_members_limit)
+
+    return sorted_users
 
 
 Template.active_project_members_indicator.helpers
