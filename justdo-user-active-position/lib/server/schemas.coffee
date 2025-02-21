@@ -52,6 +52,13 @@ users_active_positions_ledger_collection_schema_definition =
 
     type: String
 
+  private:
+    label: "Private"
+
+    optional: true
+
+    type: Boolean
+
   time:
     label: "Time"
 
@@ -73,7 +80,7 @@ users_active_positions_current_collection_schema_definition.time.autoValue = -> 
 UsersActivePositionsLedger = new SimpleSchema users_active_positions_ledger_collection_schema_definition
 
 JustdoUserActivePosition.schemas.UsersActivePositionsLedger = UsersActivePositionsLedger
-JustdoUserActivePosition.schemas.PosObjectSchema = UsersActivePositionsLedger.pick("DID", "SID", "page", "justdo_id", "tab", "path", "field")
+JustdoUserActivePosition.schemas.PosObjectSchema = UsersActivePositionsLedger.pick("DID", "SID", "page", "justdo_id", "tab", "path", "field", "private")
 
 users_collection_schema_definition = 
   "justdo_user_active_position.hide_user_active_position":

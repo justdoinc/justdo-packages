@@ -65,7 +65,6 @@ _.extend JustdoUserActivePosition.prototype,
         template: "toggle_private_mode_user_conf"
         priority: 100
 
-
   setupPosTracker: ->
     @last_pos_logged = null
     @pending_pos = null
