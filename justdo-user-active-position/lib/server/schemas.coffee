@@ -75,8 +75,16 @@ UsersActivePositionsLedger = new SimpleSchema users_active_positions_ledger_coll
 JustdoUserActivePosition.schemas.UsersActivePositionsLedger = UsersActivePositionsLedger
 JustdoUserActivePosition.schemas.PosObjectSchema = UsersActivePositionsLedger.pick("DID", "SID", "page", "justdo_id", "tab", "path", "field")
 
+users_collection_schema_definition = 
+  "justdo_user_active_position.hide_user_active_position":
+    type: Boolean
+    optional: true
+UsersCollectionSchema = new SimpleSchema users_collection_schema_definition
+JustdoUserActivePosition.schemas.UsersCollectionSchema = UsersCollectionSchema
+
 _.extend JustdoUserActivePosition.prototype,
   _attachCollectionsSchemas: ->
     @users_active_positions_ledger_collection.attachSchema JustdoUserActivePosition.schemas.UsersActivePositionsLedger
+    Meteor.users.attachSchema JustdoUserActivePosition.schemas.UsersCollectionSchema
 
     return

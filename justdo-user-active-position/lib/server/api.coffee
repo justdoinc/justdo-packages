@@ -61,3 +61,19 @@ _.extend JustdoUserActivePosition.prototype,
     cursor = @users_active_positions_ledger_collection.find(query, query_options)
 
     return cursor
+
+  # Hide user's active position from other users
+  hideUserActivePosition: (user_id) ->
+    check user_id, String
+
+    Meteor.users.update(user_id, {$set: {"justdo_user_active_position.hide_user_active_position": true}})
+
+    return
+
+  # Show user's active position to other users
+  showUserActivePosition: (user_id) ->
+    check user_id, String
+
+    Meteor.users.update(user_id, {$unset: {"justdo_user_active_position.hide_user_active_position": true}})
+
+    return

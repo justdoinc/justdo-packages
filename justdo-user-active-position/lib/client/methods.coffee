@@ -13,3 +13,10 @@ _.extend JustdoUserActivePosition.prototype,
     Meteor.call("logPos", extended_pos, cb)
     
     return
+
+  hideUserActivePosition: (cb) ->
+    Meteor.call("hideUserActivePosition", cb)
+
+  showUserActivePosition: (cb) ->
+    Meteor.call("showUserActivePosition", cb)
+
