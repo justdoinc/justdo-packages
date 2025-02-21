@@ -31,16 +31,12 @@ _.extend JustdoUserActivePosition.prototype,
           if @onGridUserActivePositionEnabled()
             @setupProjectMembersCurrentPositionsSubscriptionTracker()
             @setupActiveProjectMembersIndicator()
-            # Whether to show the project members' on grid positions or not determines on local storage (isProjectMembersCurrentOnGridPositionsTrackerEnabled)
-            if @isProjectMembersCurrentOnGridPositionsTrackerEnabled()
-              @setupProjectMembersCurrentOnGridPositionsTracker()
 
           return
 
         destroyer: =>
           if @onGridUserActivePositionEnabled()
             @removeProjectMembersCurrentPositionsSubscriptionTracker()
-            @removeProjectMembersCurrentOnGridPositionsTracker()
             @removeActiveProjectMembersIndicator()
 
           return
@@ -171,12 +167,8 @@ _.extend JustdoUserActivePosition.prototype,
 
     return @users_active_positions_current_collection.find({justdo_id: project_id})
 
-  # Not to be confused with setupProjectMembersCurrentOnGridPositionsTracker:
   # This is a Tracker that manages the subscription to the project members current positions
   # and the cursor to the collection.
-  #
-  # The other one is a Tracker that maintains the current positions of the project members
-  # and updates the UI accordingly.
   setupProjectMembersCurrentPositionsSubscriptionTracker: ->
     @_project_member_current_positions_subscription_tracker = Tracker.autorun =>
       if (not (project_id = JD.activeJustdoId())?)
@@ -193,41 +185,6 @@ _.extend JustdoUserActivePosition.prototype,
     @_project_member_current_positions_subscription_tracker = null
 
     return
-
-  # See the comment above for setupProjectMembersCurrentPositionsSubscriptionTracker.
-  setupProjectMembersCurrentOnGridPositionsTracker: ->
-    @setProjectMembersCurrentOnGridPositionsTrackerEnabled(true)
-    @_project_members_current_positions_tracker = Tracker.autorun =>
-      if (not (project_id = JD.activeJustdoId())?) or not (grid_control = APP.modules.project_page.gridControl())?
-        return
-
-      # Remove all search-result class from all rows
-      $(".search-result", grid_control.container).removeClass("search-result")
-
-      # Add search-result class to the rows that are currently active
-      @getProjectMembersCurrentPositionsCursor().forEach (ledger_doc) =>
-        if (item_index = grid_control._grid_data.getPathGridTreeIndex(ledger_doc.path))?
-          $(".slick-row:nth-child(#{item_index + 1})", grid_control.container).addClass("search-result")
-
-        return
-
-    return
-  removeProjectMembersCurrentOnGridPositionsTracker: ->
-    @setProjectMembersCurrentOnGridPositionsTrackerEnabled(false)
-    $(".slick-row.search-result").removeClass("search-result")
-    @_project_members_current_positions_tracker?.stop?()
-    @_project_members_current_positions_tracker = null
-
-    return
-
-  setProjectMembersCurrentOnGridPositionsTrackerEnabled: (enabled) ->
-    amplify.store "justdo_user_active_position_show_user_on_grid_positions", enabled
-    @on_grid_positions_tracker_enabled_dep.changed()
-
-    return
-  isProjectMembersCurrentOnGridPositionsTrackerEnabled: ->
-    @on_grid_positions_tracker_enabled_dep.depend()
-    return amplify.store "justdo_user_active_position_show_user_on_grid_positions"
 
   setupActiveProjectMembersIndicator: ->
     @_active_project_members_indicator_tracker = Tracker.autorun =>
