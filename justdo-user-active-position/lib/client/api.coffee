@@ -7,6 +7,7 @@ _.extend JustdoUserActivePosition.prototype,
       @setupTabCloseTracker()
       @setupGridHooksMaintainer()
       @registerConfigTemplate()
+      @setupUserConfigUi()
       @setupCustomFeatureMaintainer()
       @on_grid_positions_tracker_enabled_dep = new Tracker.Dependency()
 
@@ -50,6 +51,20 @@ _.extend JustdoUserActivePosition.prototype,
       return
 
     return
+
+  setupUserConfigUi: ->
+    APP.executeAfterAppLibCode ->
+      main_module = APP.modules.main
+
+      main_module.user_config_ui.registerConfigSection "show-user-active-position",
+        title: "show_user_active_position_config_title"
+        priority: 1100
+
+      main_module.user_config_ui.registerConfigTemplate "show-user-active-position-setter",
+        section: "show-user-active-position"
+        template: "toggle_private_mode_user_conf"
+        priority: 100
+
 
   setupPosTracker: ->
     @last_pos_logged = null
@@ -244,3 +259,6 @@ _.extend JustdoUserActivePosition.prototype,
       return false
 
     return ledger_doc.time < (Date.now() - JustdoUserActivePosition.idle_time_to_consider_session_inactive)
+
+  isCurrentUserShowingActivePosition: ->
+    return APP.justdo_user_active_position.isUserShowingActivePosition(Meteor.user())

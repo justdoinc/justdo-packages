@@ -10,4 +10,14 @@ _.extend JustdoUserActivePosition.prototype,
 
         return self.logPos(pos, @userId)
 
+      hideUserActivePosition: ->
+        check @userId, String
+
+        return self.hideUserActivePosition(@userId)
+
+      showUserActivePosition: ->
+        check @userId, String
+
+        return self.showUserActivePosition(@userId)
+
     return
