@@ -7,3 +7,4 @@ _.extend JustdoUserActivePosition,
   idle_time_to_consider_session_inactive: 1000 * 60 * 10 # 10 minutes
   check_user_inactive_interval: 1000 * 60 * 1 # 1 minute
   idle_time_to_consider_session_ended: 1000 * 60 * 30 # 30 minutes
+  max_visible_project_members: 2
