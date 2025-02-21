@@ -48,6 +48,8 @@ _.extend JustdoUserActivePosition.prototype,
         $ne: performer_id
       time: 
         $gte: new Date(Date.now() - JustdoUserActivePosition.idle_time_to_consider_session_ended)
+      private:
+        $ne: true
     query_options = 
       sort: 
         time: -1
