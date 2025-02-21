@@ -1,5 +1,3 @@
-visible_members_limit = 2
-
 Template.active_project_members_indicator.onCreated ->
   # This dependency is used to trigger a re-render of the template to check if the users are inactive
   @check_user_inactive_dep = new Tracker.Dependency()
@@ -8,8 +6,7 @@ Template.active_project_members_indicator.onCreated ->
   , JustdoUserActivePosition.check_user_inactive_interval
 
   @curProjectMembers = (limit = true) ->
-    member_ids = _.map APP.justdo_user_active_position.getProjectMembersCurrentPositionsCursor().map (ledger_doc) -> ledger_doc.UID
-    member_ids_without_self = _.without member_ids, Meteor.userId()
+    member_ids_without_self = APP.justdo_user_active_position.getProjectMembersCurrentPositionsCursor({UID: {$ne: Meteor.userId()}}, {fields: {UID: 1}}).map (ledger_doc) -> ledger_doc.UID
 
     # Fetch all users (without limit)
     users = Meteor.users.find({_id: {$in: member_ids_without_self}}).fetch()
@@ -20,7 +17,7 @@ Template.active_project_members_indicator.onCreated ->
 
     # Apply the limit after sorting
     if limit
-      sorted_users = sorted_users.slice(0, visible_members_limit)
+      sorted_users = sorted_users.slice(0, JustdoUserActivePosition.max_visible_project_members)
 
     return sorted_users
 
@@ -37,7 +34,7 @@ Template.active_project_members_indicator.helpers
     member_ids_without_self = _.without member_ids, Meteor.userId()
     active_members_count = Meteor.users.find({_id: {$in: member_ids_without_self}}).fetch().length
 
-    hiddenMembersCount = Math.max(0, active_members_count - visible_members_limit)
+    hiddenMembersCount = Math.max(0, active_members_count - JustdoUserActivePosition.max_visible_project_members)
     return hiddenMembersCount
 
   isUserInactive: ->
