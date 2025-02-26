@@ -1736,7 +1736,10 @@ if (typeof Slick === "undefined") {
         }
       }
 
-      stringArray.push("<div class='" + cellCss + "'>");
+      // Add data-field-id attribute to the cell
+      cellDataFieldId = m.field;
+
+      stringArray.push("<div class='" + cellCss + "' data-field-id='" + cellDataFieldId + "'>");
 
       // if there is a corresponding row (if not, this is the Add New row or this data hasn't been loaded yet)
       if (item) {
