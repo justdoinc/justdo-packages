@@ -27,6 +27,6 @@ _.extend JustdoUserActivePosition.prototype,
       user_doc = user
     
     if not user_doc?
-      throw @_error "unknown-user"
+      return false
 
     return not user_doc.justdo_user_active_position?.hide_user_active_position
