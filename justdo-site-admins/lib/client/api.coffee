@@ -261,7 +261,7 @@ _.extend JustdoSiteAdmins.prototype,
 
     if APP.accounts.isProxyUser(user)
       title = "Proxies act as stand-in accounts for individuals who are not actively using or logging into JustDo. For example, you might assign tasks to a proxy to keep track of responsibilities for someone outside the system.&#10;&#10"
-      if @getLicense()?.license?.is_sdk_build
+      if @getLicense()?.license?.is_sdk
         title += "Proxies are not counted against the available license total in SDK builds."
       else
         title += "Proxies are counted against the available license total."
