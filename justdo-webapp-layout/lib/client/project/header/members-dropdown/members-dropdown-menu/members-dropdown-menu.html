@@ -146,6 +146,13 @@
                 <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"></use></svg>
                 <div class="dropdown-item-label">{{_ "members_dropdown_make_a_guest"}}</div>
               </div>
+            {{else}}
+              {{#if isSiteAdmin}}
+                <div class="dropdown-item edit-proxy-user-details">
+                  <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"></use></svg>
+                  <div class="dropdown-item-label">Edit proxy user details</div>
+                </div>
+              {{/if}}
             {{/unless}}
           {{/if}}
           {{#if allow_member_remove user_id}}

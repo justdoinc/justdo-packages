@@ -7,5 +7,12 @@
         Set as proxy user
       {{/if}}
     </div>
+    
+    {{#if isProxyUser}}
+      <div class="dropdown-item edit-proxy-user">
+        <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"></use></svg>
+        <div class="dropdown-item-label">Edit proxy user details</div>
+      </div>
+    {{/if}}
   {{/if}}
 </template>

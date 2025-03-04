@@ -7,6 +7,95 @@ inviteeTerm = (guest_term) -> if guest_term then "guest" else "member"
 getCurrentProject = -> APP.modules.project_page.helpers.curProj()
 
 #
+# ProjectPageDialogs.editProxyUser
+#
+
+ProjectPageDialogs.editProxyUser = (proxy_user_id, callback) ->
+  # This method allows site admins to edit proxy user details
+  # Only site admins can edit proxy users
+  
+  # Verify user is a site admin
+  unless APP.justdo_site_admins.isCurrentUserSiteAdmin()
+    return
+    
+  # Verify the target is a proxy user
+  proxy_user = Meteor.users.findOne {_id: proxy_user_id, is_proxy: true}, 
+                {fields: {profile: 1, emails: 1, is_proxy: 1}}
+  
+  unless proxy_user?.is_proxy
+    APP.logger.debug("[ProjectPageDialogs.editProxyUser] user_id #{proxy_user_id} is not a proxy user")
+    return
+    
+  processProxyUserEdit = (cb) ->
+    if email_is_valid_rv.get() and first_name_is_valid_rv.get() and last_name_is_valid_rv.get()
+      # Get values from reactive vars
+      update_properties = 
+        profile:
+          first_name: first_name_rv.get()
+          last_name: last_name_rv.get()
+      
+      # Add email if it changed
+      if email_rv.get() != proxy_user.emails?[0]?.address
+        update_properties.email = email_rv.get()
+      
+      # Call the server method
+      Meteor.call "saUpdateProxyUser", proxy_user_id, update_properties, (err, result) ->
+        if err?
+          bootbox.alert
+            message: err.reason or "Failed to update proxy user"
+            className: "bootbox-new-design members-management-alerts"
+            closeButton: false
+          cb? err
+          return
+          
+        dialog.data("bs.modal").hide()
+        cb? null, result
+        return
+        
+    return
+  
+  # Set up reactive vars with current values
+  initReactiveVars
+    email: proxy_user.emails?[0]?.address
+    first_name: proxy_user.profile?.first_name
+    last_name: proxy_user.profile?.last_name
+    
+  # Set up buttons
+  buttons = 
+    cancel:
+      label: "Cancel"
+      className: "btn-light"
+      callback: ->
+        return true
+        
+    submit:
+      label: "Update"
+      className: "btn-primary"
+      callback: =>
+        submit_attempted_rv.set(true)
+        Tracker.flush() # So input validation checks in Template autorun will run
+        processProxyUserEdit(callback)
+        return false
+        
+  # Create dialog options
+  dialog_options =
+    title: "Edit Proxy User"
+    view_only: false
+    edit_state: true
+    is_proxy_user: true   # Flag to indicate this is for a proxy user
+    custom_classes: "edit-proxy-user-dialog"
+    buttons: buttons
+    
+  # Show dialog
+  dialog = initInvitedMembersDialog
+    email: proxy_user.emails?[0]?.address
+    first_name: proxy_user.profile?.first_name
+    last_name: proxy_user.profile?.last_name
+  , dialog_options
+  
+  return
+
+#
 # ProjectPageDialogs.editEnrolledMember
 #
 
@@ -222,6 +311,7 @@ Template.edit_invited_member_dialog.helpers
   isInvalidLastName: -> not last_name_is_valid_rv.get()
   inviteeTerm: -> inviteeTerm(@add_as_guest)
   isSdkBuild: -> APP.justdo_site_admins.getLicense()?.license?.is_sdk is true
+  is_proxy_user: -> @is_proxy_user
 
 Template.edit_invited_member_dialog.events
   "keyup #new-user-email, change #new-user-email": (e) ->

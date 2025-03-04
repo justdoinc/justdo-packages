@@ -356,6 +356,27 @@ APP.executeAfterAppLibCode ->
       $(e.target).parents(".member-settings-dropdown-menu").removeClass "open"
 
       return
+      
+    "click .edit-proxy-user-details": (e, tpl) ->
+      # Only site admins can edit proxy users
+      unless APP.justdo_site_admins?.isCurrentUserSiteAdmin()
+        return
+        
+      # Call the edit proxy user dialog
+      ProjectPageDialogs.editProxyUser @user_id, (err, result) =>
+        if err?
+          JustdoSnackbar.show
+            text: err.reason or "Failed to update proxy user."
+          return
+            
+        # Show success message
+        JustdoSnackbar.show
+          text: "Proxy user updated successfully"
+          type: "success"
+          
+        return
+        
+      return
 
     "click .member-invite-btn-js": (e, tpl) ->
       tpl.switch_to_invite_mode()
