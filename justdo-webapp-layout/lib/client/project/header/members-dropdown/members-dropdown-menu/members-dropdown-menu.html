@@ -131,12 +131,12 @@
       {{> gtpl_user_profile_pic}}
       <div class="display-name mx-2">{{> display_name_with_graphic_unverified_warning}}</div>
     </div>
-    {{#if allow_show_member_dropdown_settings user_id}}
+    {{#if allow_show_member_dropdown_settings user_id is_proxy}}
       <div class="member-settings-dropdown">
         <div class="member-role-label text-primary">{{#if is_proxy}}{{_ "members_dropdown_proxy"}}{{else}}{{_ "members_dropdown_member"}}{{/if}}</div>
         <svg class="jd-icon text-secondary member-settings-dropdown-btn"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
         <div class="member-settings-dropdown-menu animate slideIn">
-          {{#if is_project_admin}}
+          {{#if $or (is_project_admin) (is_current_user_site_admin)}}
             {{#unless is_proxy}}
               <div class="dropdown-item upgrade-admin">
                 <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#star"></use></svg>
@@ -145,6 +145,11 @@
               <div class="dropdown-item make-guest">
                 <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"></use></svg>
                 <div class="dropdown-item-label">{{_ "members_dropdown_make_a_guest"}}</div>
+              </div>
+            {{else}}
+              <div class="dropdown-item edit-proxy">
+                <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"></use></svg>
+                <div class="dropdown-item-label">{{_ "edit"}}</div>
               </div>
             {{/unless}}
           {{/if}}
