@@ -75,11 +75,9 @@ Template.loginDropdownEditAvatarColorsBootboxMessage.helpers
 
 Template.loginDropdownEditAvatarColorsBootboxEditor.onCreated ->
   # Find current avatar's initials colors
-  user_doc = Meteor.user()
-
   {avatar_bg, avatar_fg} = 
     JustdoAvatar.getInitialsSvgColors(JustdoHelpers.currentUserMainEmail(),
-      _.pick(user_doc.profile, ["avatar_bg", "avatar_fg"]))
+      _.pick(@data.user_doc.profile, ["avatar_bg", "avatar_fg"]))
 
   @avatar_bg = new ReactiveVar avatar_bg
   @avatar_fg = new ReactiveVar avatar_fg
