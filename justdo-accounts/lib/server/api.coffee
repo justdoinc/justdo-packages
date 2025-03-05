@@ -765,22 +765,33 @@ _.extend JustdoAccounts.prototype,
       }
     ])
   editPreEnrollmentUserData: (user_id, data, requesting_user) ->
+    check user_id, String
+    # data is thoroughly verified by _editPreEnrollmentUserDataSchema
+    check requesting_user, String
+  
     user = @getUserById(user_id)
+    # Note: A user can be both is_enroll and is_proxy.
+    # In that case, if the requesting user is allowed to edit either of the cases, we allow the edit.
+    is_enroll = user.services?.password?.reset?.reason == "enroll"
     is_proxy = @isProxyUser(user)
 
-    if (user.services?.password?.reset?.reason != "enroll") and not is_proxy
+    if not is_enroll and not is_proxy
       throw @_error "permission-denied", "Details can be edited only for unregistered or proxy members. Member #{user?.profile?.first_name} #{user?.profile?.last_name} is registered already."
 
     users_allowed_to_edit_pre_enrollment = (user.users_allowed_to_edit_pre_enrollment or []).slice() # slice to avoid edit by reference
     if _.isString(user.invited_by)
       users_allowed_to_edit_pre_enrollment.push user.invited_by
     
-    is_requesting_user_provided = requesting_user?
-    is_requesting_user_allowed_to_edit_pre_enrollment = requesting_user in users_allowed_to_edit_pre_enrollment
-    is_requesting_user_site_admin = APP.justdo_site_admins?.isUserSiteAdmin(requesting_user)
-    is_requesting_user_allowed_to_edit_proxy_user = is_requesting_user_site_admin and is_proxy
+    is_requesting_user_allowed_to_edit = false
+    # For enrolled members, only the user that invited them can edit their details.
+    if is_enroll
+      is_requesting_user_allowed_to_edit = requesting_user in users_allowed_to_edit_pre_enrollment
+    
+    # For proxy members, only site admins can edit their details.
+    if not is_requesting_user_allowed_to_edit and is_proxy
+      is_requesting_user_allowed_to_edit = APP.justdo_site_admins?.isUserSiteAdmin(requesting_user)
 
-    if not is_requesting_user_provided or not (is_requesting_user_allowed_to_edit_pre_enrollment or is_requesting_user_allowed_to_edit_proxy_user)
+    if not is_requesting_user_allowed_to_edit
       throw @_error "permission-denied", "Only the user that invited a member, can edit its details."
 
     {cleaned_val} =
