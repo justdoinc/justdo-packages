@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "Avatar foni",
   "lang_schema_label": "Afzal ko'rilgan til",
   "email_schema_label": "Elektron pochta",
-  "ignore_invites_schema_label": "Paroli bo'lmagan foydalanuvchilarni e'tiborsiz qoldirish (ularni mavjud emas deb hisoblash)"
+  "ignore_invites_schema_label": "Paroli bo'lmagan foydalanuvchilarni e'tiborsiz qoldirish (ularni mavjud emas deb hisoblash)",
+  "edit_avatar_colors": "Avatar ranglarini tahrirlash"
 }

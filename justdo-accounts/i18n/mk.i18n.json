@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "Позадина на аватар",
   "lang_schema_label": "Претпочитан јазик",
   "email_schema_label": "Е-пошта",
-  "ignore_invites_schema_label": "Игнорирај корисници без лозинка (сметај ги за непостоечки)"
+  "ignore_invites_schema_label": "Игнорирај корисници без лозинка (сметај ги за непостоечки)",
+  "edit_avatar_colors": "Уреди бои на аватар"
 }

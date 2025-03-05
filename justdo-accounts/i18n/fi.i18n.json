@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "Avatarin tausta",
   "lang_schema_label": "Ensisijainen kieli",
   "email_schema_label": "Sähköposti",
-  "ignore_invites_schema_label": "Jätä huomiotta käyttäjät ilman salasanaa (pidä heitä olemattomina)"
+  "ignore_invites_schema_label": "Jätä huomiotta käyttäjät ilman salasanaa (pidä heitä olemattomina)",
+  "edit_avatar_colors": "Muokkaa avatarin värejä"
 }

@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "Cor de Fundo do Avatar",
   "lang_schema_label": "Idioma Preferido",
   "email_schema_label": "E-mail",
-  "ignore_invites_schema_label": "Ignorar utilizadores sem senha (considerá-los inexistentes)"
+  "ignore_invites_schema_label": "Ignorar utilizadores sem senha (considerá-los inexistentes)",
+  "edit_avatar_colors": "Editar Cores do Avatar"
 }

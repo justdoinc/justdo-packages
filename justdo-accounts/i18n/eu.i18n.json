@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "Avatarren Atzeko Planoa",
   "lang_schema_label": "Hobetsitako Hizkuntza",
   "email_schema_label": "Helbide Elektronikoa",
-  "ignore_invites_schema_label": "Pasahitzik gabeko erabiltzaileak baztertu (ez-existentetzat hartu)"
+  "ignore_invites_schema_label": "Pasahitzik gabeko erabiltzaileak baztertu (ez-existentetzat hartu)",
+  "edit_avatar_colors": "Avatararen Koloreak Editatu"
 }

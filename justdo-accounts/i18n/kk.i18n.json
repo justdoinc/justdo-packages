@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "Аватар фоны",
   "lang_schema_label": "Қалаған тіл",
   "email_schema_label": "Электрондық пошта",
-  "ignore_invites_schema_label": "Құпия сөзі жоқ пайдаланушыларды елемеу (оларды жоқ деп есептеу)"
+  "ignore_invites_schema_label": "Құпия сөзі жоқ пайдаланушыларды елемеу (оларды жоқ деп есептеу)",
+  "edit_avatar_colors": "Аватар түстерін өңдеу"
 }

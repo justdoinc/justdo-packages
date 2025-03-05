@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "Fundal avatar",
   "lang_schema_label": "Limba preferată",
   "email_schema_label": "Email",
-  "ignore_invites_schema_label": "Ignoră utilizatorii fără parolă (consideră-i inexistenți)"
+  "ignore_invites_schema_label": "Ignoră utilizatorii fără parolă (consideră-i inexistenți)",
+  "edit_avatar_colors": "Editează culorile avatarului"
 }

@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "Color de fons de l'avatar",
   "lang_schema_label": "Idioma preferit",
   "email_schema_label": "Correu electrònic",
-  "ignore_invites_schema_label": "Ignorar usuaris sense contrasenya (considerar-los inexistents)"
+  "ignore_invites_schema_label": "Ignorar usuaris sense contrasenya (considerar-los inexistents)",
+  "edit_avatar_colors": "Editar colors de l'avatar"
 }

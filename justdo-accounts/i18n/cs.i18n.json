@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "Pozadí avataru",
   "lang_schema_label": "Preferovaný jazyk",
   "email_schema_label": "E-mail",
-  "ignore_invites_schema_label": "Ignorovat uživatele bez hesla (považovat je za neexistující)"
+  "ignore_invites_schema_label": "Ignorovat uživatele bez hesla (považovat je za neexistující)",
+  "edit_avatar_colors": "Upravit barvy avataru"
 }
