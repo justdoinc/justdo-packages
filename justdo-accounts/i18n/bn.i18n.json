@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "অবতার পটভূমি",
   "lang_schema_label": "পছন্দসই ভাষা",
   "email_schema_label": "ইমেইল",
-  "ignore_invites_schema_label": "পাসওয়ার্ডহীন ব্যবহারকারীদের উপেক্ষা করুন (তাদের অবিদ্যমান বলে গণ্য করুন)"
+  "ignore_invites_schema_label": "পাসওয়ার্ডহীন ব্যবহারকারীদের উপেক্ষা করুন (তাদের অবিদ্যমান বলে গণ্য করুন)",
+  "edit_avatar_colors": "অবতার রং সম্পাদনা করুন"
 }

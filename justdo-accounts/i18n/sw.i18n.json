@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "Rangi ya Nyuma ya Avatar",
   "lang_schema_label": "Lugha Unayopendelea",
   "email_schema_label": "Barua pepe",
-  "ignore_invites_schema_label": "Puuza watumiaji wasio na nenosiri (wachukuliwe kama hawapo)"
+  "ignore_invites_schema_label": "Puuza watumiaji wasio na nenosiri (wachukuliwe kama hawapo)",
+  "edit_avatar_colors": "Hariri Rangi za Avatar"
 }

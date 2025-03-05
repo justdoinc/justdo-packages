@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "अवतार पृष्ठभूमि",
   "lang_schema_label": "पसंदीदा भाषा",
   "email_schema_label": "ईमेल",
-  "ignore_invites_schema_label": "बिना पासवर्ड वाले उपयोगकर्ताओं को अनदेखा करें (उन्हें गैर-मौजूद मानें)"
+  "ignore_invites_schema_label": "बिना पासवर्ड वाले उपयोगकर्ताओं को अनदेखा करें (उन्हें गैर-मौजूद मानें)",
+  "edit_avatar_colors": "अवतार के रंग संपादित करें"
 }

@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "Pozadinska boja avatara",
   "lang_schema_label": "Preferirani jezik",
   "email_schema_label": "E-mail",
-  "ignore_invites_schema_label": "Zanemari korisnike bez lozinke (smatraj ih nepostojećima)"
+  "ignore_invites_schema_label": "Zanemari korisnike bez lozinke (smatraj ih nepostojećima)",
+  "edit_avatar_colors": "Uredi boje avatara"
 }

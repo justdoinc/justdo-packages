@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "Фон аватара",
   "lang_schema_label": "Предпочитаемый язык",
   "email_schema_label": "Электронная почта",
-  "ignore_invites_schema_label": "Игнорировать пользователей без пароля (считать их несуществующими)"
+  "ignore_invites_schema_label": "Игнорировать пользователей без пароля (считать их несуществующими)",
+  "edit_avatar_colors": "Изменить цвета аватара"
 }
