@@ -766,15 +766,21 @@ _.extend JustdoAccounts.prototype,
     ])
   editPreEnrollmentUserData: (user_id, data, requesting_user) ->
     user = @getUserById(user_id)
+    is_proxy = @isProxyUser(user)
 
-    if user.services?.password?.reset?.reason != "enroll"
-      throw @_error "permission-denied", "Details can be edited, only for unregistered members, member #{first_name} #{last_name} registered already."
+    if (user.services?.password?.reset?.reason != "enroll") and not is_proxy
+      throw @_error "permission-denied", "Details can be edited only for unregistered or proxy members. Member #{user?.profile?.first_name} #{user?.profile?.last_name} is registered already."
 
     users_allowed_to_edit_pre_enrollment = (user.users_allowed_to_edit_pre_enrollment or []).slice() # slice to avoid edit by reference
     if _.isString(user.invited_by)
       users_allowed_to_edit_pre_enrollment.push user.invited_by
+    
+    is_requesting_user_provided = requesting_user?
+    is_requesting_user_allowed_to_edit_pre_enrollment = requesting_user in users_allowed_to_edit_pre_enrollment
+    is_requesting_user_site_admin = APP.justdo_site_admins?.isUserSiteAdmin(requesting_user)
+    is_requesting_user_allowed_to_edit_proxy_user = is_requesting_user_site_admin and is_proxy
 
-    if not requesting_user? or requesting_user not in users_allowed_to_edit_pre_enrollment
+    if not is_requesting_user_provided or not (is_requesting_user_allowed_to_edit_pre_enrollment or is_requesting_user_allowed_to_edit_proxy_user)
       throw @_error "permission-denied", "Only the user that invited a member, can edit its details."
 
     {cleaned_val} =
@@ -810,7 +816,7 @@ _.extend JustdoAccounts.prototype,
       email = data.email or JustdoHelpers.getUserMainEmail user
       first_name = data.first_name or user.profile.first_name
       last_name = data.last_name or user.profile.last_name
-      update["$set"]["profile.profile_pic"] = JustdoAvatar.getInitialsSvg email, first_name, last_name
+      update["$set"]["profile.profile_pic"] = JustdoAvatar.getInitialsSvg email, first_name, last_name, {is_proxy: is_proxy}
 
     result = {email_changed}
 
