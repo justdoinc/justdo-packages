@@ -142,6 +142,15 @@ _.extend JustdoAvatar,
       
     return @isAvatarBase64Svg user?.profile?.profile_pic
 
+  isAvatarNotSetOrBase64Svg: (user) ->
+    if _.isString user
+      user = Meteor.users.findOne user, {fields: {"profile.profile_pic": 1}}
+    
+    if not user?
+      throw new Meteor.Error "unknown-user"
+
+    return not user.profile?.profile_pic? or @isAvatarBase64Svg user.profile?.profile_pic
+
   isAvatarBase64Svg: (avatar_url) ->
     return avatar_url?.startsWith @getBase64SvgPrefix() 
 

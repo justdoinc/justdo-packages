@@ -914,7 +914,7 @@ _.extend JustdoAccounts.prototype,
     check performing_user_id, String
 
     user_doc = Meteor.users.findOne(user_id)
-    if not JustdoAvatar.isUserAvatarBase64Svg(user_doc)
+    if not JustdoAvatar.isAvatarNotSetOrBase64Svg(user_doc)
       throw @_error "not-supported", "Cannot override user uploaded avatar."
 
     # User can edit its own avatar colors
