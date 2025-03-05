@@ -127,7 +127,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/modules/proxy-users/proxy-users-server.coffee", server);
   api.addFiles("lib/modules/proxy-users/members-page-dropdown-option/proxy-user-dropdown-option.html", client);
   api.addFiles("lib/modules/proxy-users/members-page-dropdown-option/proxy-user-dropdown-option.coffee", client);
-
+  api.addFiles("lib/modules/proxy-users/members-page-edit-proxy-user-dropdown-option/members-page-edit-proxy-user-dropdown-option.html", client);
+  api.addFiles("lib/modules/proxy-users/members-page-edit-proxy-user-dropdown-option/members-page-edit-proxy-user-dropdown-option.coffee", client);
+  
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", both);
