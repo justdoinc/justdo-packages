@@ -4,37 +4,59 @@ _.extend JustdoAccounts.prototype,
       user_id = Meteor.userId()
 
     performing_user_id = Meteor.userId()
-    message_template =
-      APP.helpers.renderTemplateInNewNode(Template.loginDropdownEditAvatarColorsBootboxMessage)
 
+    APP.projects.ensureUsersPublicBasicUsersInfoLoaded user_id, (err) =>
+      if err?
+        JustdoSnackbar.show
+          text: "Failed to load user details: \n#{err.reason}"
+        return
 
-    bootbox.dialog
-      title: TAPi18n.__ "logged_in_dropdown_avatar_colors_editors"
-      message: message_template.node
-      animate: false
-      className: "avatars-colors-editor bootbox-new-design"
+      if not JustdoAvatar.isUserAvatarBase64Svg(user_id)
+        throw @_error "not-supported", "Cannot override user uploaded avatar."
 
-      onEscape: ->
-        return true
+      message_template =
+        APP.helpers.renderTemplateInNewNode(Template.loginDropdownEditAvatarColorsBootboxMessage, {user_doc: Meteor.users.findOne(user_id)})
 
-      buttons:
-        cancel:
-          label: TAPi18n.__ "cancel"
+      bootbox.dialog
+        title: TAPi18n.__ "logged_in_dropdown_avatar_colors_editors"
+        message: message_template.node
+        animate: false
+        className: "avatars-colors-editor bootbox-new-design"
 
-          className: "btn-light"
+        onEscape: ->
+          return true
 
-          callback: ->
-            return true
+        buttons:
+          cancel:
+            label: TAPi18n.__ "cancel"
 
-        submit:
-          label: TAPi18n.__ "save"
-          callback: =>
-            avatar_bg = $(".bg-color-picker input").val()
-            avatar_fg = $(".fg-color-picker input").val()
+            className: "btn-light"
 
-            Meteor.users.update(user_id, {$set: {"profile.avatar_bg": avatar_bg, "profile.avatar_fg": avatar_fg}})
+            callback: ->
+              return true
 
-            return true
+          submit:
+            label: TAPi18n.__ "save"
+            callback: =>
+              avatar_bg = $(".bg-color-picker input").val()
+              avatar_fg = $(".fg-color-picker input").val()
+
+              # If user is editing its own avatar colors, update the user doc directly
+              if performing_user_id is user_id
+                Meteor.users.update(user_id, {$set: {"profile.avatar_bg": avatar_bg, "profile.avatar_fg": avatar_fg}})
+              else
+                Meteor.call "editUserAvatarColor", avatar_bg, avatar_fg, user_id, (err) ->
+                  if err?
+                    JustdoSnackbar.show
+                      text: "Failed to save avatar colors: \n#{err.reason}"
+
+                  return
+
+              return true
+
+      return
+
+    return
 
 Template.loginDropdownEditAvatarColorsBootboxMessage.onCreated ->
   @color_picker_ready = new ReactiveVar false
@@ -95,9 +117,8 @@ Template.loginDropdownEditAvatarColorsBootboxEditor.onRendered ->
 Template.loginDropdownEditAvatarColorsBootboxEditor.helpers
   profileWithPickedColors: ->
     tpl = Template.instance()
-    parent_tpl = Template.closestInstance "loginDropdownEditAvatarColorsBootboxMessage"
 
-    user_doc = Meteor.user()
+    user_doc = @user_doc
 
     # Avoid affecting real doc
     user_doc.profile = _.extend({}, user_doc.profile)
