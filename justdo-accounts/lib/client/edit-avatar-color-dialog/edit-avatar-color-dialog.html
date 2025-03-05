@@ -1,0 +1,29 @@
+<template name="loginDropdownEditAvatarColorsBootboxMessage">
+  {{#if isPickerReady}}
+    {{> loginDropdownEditAvatarColorsBootboxEditor}}
+  {{else}}
+    Loading
+  {{/if}}
+</template>
+
+<template name="loginDropdownEditAvatarColorsBootboxEditor">
+  <div class="avatar-container">
+    {{#with profileWithPickedColors}}
+      {{> justdo_avatar}}
+    {{/with}}
+  </div>
+
+  <div class="cp-containers-wrapper">
+    <div class="cp-container m-0 w-100 d-flex justify-content-center text-center">
+      <div class="bg-color-picker-wrapper">
+        <div class="bg-color-picker"></div>
+        <div class="picker-caption">{{_ "logged_in_dropdown_background_color"}}</div>
+      </div>
+
+      <div class="fg-color-picker-wrapper">
+        <div class="fg-color-picker"></div>
+        <div class="picker-caption">{{_ "logged_in_dropdown_text_color"}}</div>
+      </div>
+    </div>
+  </div>
+</template>

@@ -23,6 +23,9 @@ Package.onUse(function (api) {
   api.use("sha", both);
   api.use("srp", both);
 
+  api.use("templating", client);
+  api.use('fourseven:scss@3.2.0', client);
+
   api.use("justdoinc:justdo-aws-base", server, {unordered: true});
 
   api.use('raix:eventemitter@0.1.1', both);
@@ -53,6 +56,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/methods.coffee", server);
   api.addFiles("lib/server/publications.coffee", server);
 
+  api.addFiles("lib/client/edit-avatar-color-dialog/edit-avatar-color-dialog.html", client);
+  api.addFiles("lib/client/edit-avatar-color-dialog/edit-avatar-color-dialog.sass", client);
+  api.addFiles("lib/client/edit-avatar-color-dialog/edit-avatar-color-dialog.coffee", client);
   api.addFiles("lib/client/init.coffee", client);
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/collection-hooks.coffee", client);
