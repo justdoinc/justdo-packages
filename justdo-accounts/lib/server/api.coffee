@@ -906,6 +906,30 @@ _.extend JustdoAccounts.prototype,
     # If the avatar was uploaded to Filestack, the method call below wouldn't do anything.
     APP.justdo_files.removeUserAvatar({}, user_ids)
     return
+  
+  editUserAvatarColor: (avatar_bg, avatar_fg, user_id, performing_user_id) ->
+    check avatar_bg, String
+    check avatar_fg, String
+    check user_id, String
+    check performing_user_id, String
+
+    user_doc = Meteor.users.findOne(user_id)
+    if not JustdoAvatar.isUserAvatarBase64Svg(user_doc)
+      throw @_error "not-supported", "Cannot override user uploaded avatar."
+
+    # User can edit its own avatar colors
+    is_user_allowed_to_edit = performing_user_id == user_id
+    # User can edit proxy user's avatar colors if he is a site admin
+    is_user_proxy = @isProxyUser(user_doc)
+    is_performing_user_site_admin = APP.justdo_site_admins?.isUserSiteAdmin(performing_user_id)
+    is_user_allowed_to_edit = is_user_allowed_to_edit or (is_user_proxy and is_performing_user_site_admin)
+    if not is_user_allowed_to_edit
+      throw @_error "permission-denied"
+    
+    base64_avatar_url = JustdoAvatar.getInitialsSvg(JustdoHelpers.getUserMainEmail(user_doc), user_doc.profile.first_name, user_doc.profile.last_name, {is_proxy: is_user_proxy, avatar_bg: avatar_bg, avatar_fg: avatar_fg})
+    Meteor.users.update user_id, {$set: {"profile.avatar_bg": avatar_bg, "profile.avatar_fg": avatar_fg, "profile.profile_pic": base64_avatar_url}}
+
+    return
 
   setJdCreationRequest: (jd_creation_request, user_id) ->
     @requireLogin user_id
