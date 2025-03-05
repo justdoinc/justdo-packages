@@ -105,3 +105,11 @@ _.extend JustdoAccounts.prototype,
       
       setJdCreationRequest: (jd_creation_request) ->
         return accounts_object.setJdCreationRequest jd_creation_request, @userId
+      
+      editUserAvatarColor: (avatar_bg, avatar_fg, user_id) ->
+        check avatar_bg, String
+        check avatar_fg, String
+        check user_id, String
+        check @userId, String
+
+        return accounts_object.editUserAvatarColor avatar_bg, avatar_fg, user_id, @userId
