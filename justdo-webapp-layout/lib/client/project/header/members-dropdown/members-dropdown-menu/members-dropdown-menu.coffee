@@ -389,6 +389,17 @@ APP.executeAfterAppLibCode ->
 
   Template.regular_member_item.events
     "click .edit-proxy": editMember
+    "click .edit-proxy-avatar-colors": (e, tpl) ->
+      APP.accounts.editUserAvatarColor @user_id, (err) =>
+        if err?
+          JustdoSnackbar.show
+            text: "Failed to edit avatar colors: \n#{err.reason}"
+          return
+
+        # Update the dropdown to reflect the changes
+        user = Meteor.users.findOne @user_id, {fields: {profile: 1, emails: 1, is_proxy: 1}}
+        tpl.$(".justdo-avatar").attr "src", JustdoAvatar.showUserAvatarOrFallback user
+      return
 
   Template.enrollment_pending_member.events
     "click .edit-enrolled": editMember
