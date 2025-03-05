@@ -75,13 +75,15 @@ ProjectPageDialogs.editEnrolledMember = (user_id, invited_members_dialog_options
 
     return
 
-  user_allowed_to_edit = APP.justdo_site_admins?.isCurrentUserSiteAdmin()
-  if not user_allowed_to_edit and (user_doc = Meteor.users.findOne(user_id, {fields: {invited_by: 1, users_allowed_to_edit_pre_enrollment: 1}}))?
+  user_allowed_to_edit = false
+  if (user_doc = Meteor.users.findOne(user_id, {fields: {invited_by: 1, users_allowed_to_edit_pre_enrollment: 1}}))?
     users_allowed_to_edit_pre_enrollment = (user_doc.users_allowed_to_edit_pre_enrollment or []).slice() # slice to avoid edit by reference
     if _.isString(user_doc.invited_by)
       users_allowed_to_edit_pre_enrollment.push user_doc.invited_by
-
-    user_allowed_to_edit = Meteor.userId() in users_allowed_to_edit_pre_enrollment
+  user_allowed_to_edit = Meteor.userId() in users_allowed_to_edit_pre_enrollment
+  is_target_user_proxy = APP.accounts.isProxyUser(user_id)
+  is_current_user_site_admin = APP.justdo_site_admins?.isCurrentUserSiteAdmin()
+  user_allowed_to_edit = user_allowed_to_edit or (is_target_user_proxy and is_current_user_site_admin)
 
   buttons = 
     cancel:
