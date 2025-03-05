@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "Kolor tła awatara",
   "lang_schema_label": "Preferowany język",
   "email_schema_label": "E-mail",
-  "ignore_invites_schema_label": "Ignoruj użytkowników bez hasła (uznaj ich za nieistniejących)"
+  "ignore_invites_schema_label": "Ignoruj użytkowników bez hasła (uznaj ich za nieistniejących)",
+  "edit_avatar_colors": "Edytuj kolory awatara"
 }

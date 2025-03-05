@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "ផ្ទៃខាងក្រោយនៃរូបតំណាង",
   "lang_schema_label": "ភាសាដែលចូលចិត្ត",
   "email_schema_label": "អ៊ីមែល",
-  "ignore_invites_schema_label": "មិនអើពើនឹងអ្នកប្រើប្រាស់ដែលគ្មានពាក្យសម្ងាត់ (ចាត់ទុកថាពួកគេមិនមាន)"
+  "ignore_invites_schema_label": "មិនអើពើនឹងអ្នកប្រើប្រាស់ដែលគ្មានពាក្យសម្ងាត់ (ចាត់ទុកថាពួកគេមិនមាន)",
+  "edit_avatar_colors": "កែប្រែពណ៌រូបតំណាង"
 }

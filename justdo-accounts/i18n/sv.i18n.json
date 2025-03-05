@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "Avatar bakgrund",
   "lang_schema_label": "Föredraget språk",
   "email_schema_label": "E-post",
-  "ignore_invites_schema_label": "Ignorera användare utan lösenord (betrakta dem som icke-existerande)"
+  "ignore_invites_schema_label": "Ignorera användare utan lösenord (betrakta dem som icke-existerande)",
+  "edit_avatar_colors": "Redigera avatarfärger"
 }

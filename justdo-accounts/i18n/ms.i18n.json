@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "Latar Belakang Avatar",
   "lang_schema_label": "Bahasa Pilihan",
   "email_schema_label": "E-mel",
-  "ignore_invites_schema_label": "Abaikan pengguna tanpa kata laluan (anggap mereka tidak wujud)"
+  "ignore_invites_schema_label": "Abaikan pengguna tanpa kata laluan (anggap mereka tidak wujud)",
+  "edit_avatar_colors": "Edit Warna Avatar"
 }

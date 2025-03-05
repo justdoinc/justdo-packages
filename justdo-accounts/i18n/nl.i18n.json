@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "Avatar achtergrond",
   "lang_schema_label": "Voorkeurstaal",
   "email_schema_label": "E-mail",
-  "ignore_invites_schema_label": "Negeer gebruikers zonder wachtwoord (beschouw ze als niet-bestaand)"
+  "ignore_invites_schema_label": "Negeer gebruikers zonder wachtwoord (beschouw ze als niet-bestaand)",
+  "edit_avatar_colors": "Avatar-kleuren bewerken"
 }

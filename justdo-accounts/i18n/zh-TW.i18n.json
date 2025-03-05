@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "頭像背景色",
   "lang_schema_label": "偏好語言",
   "email_schema_label": "電子郵件",
-  "ignore_invites_schema_label": "忽略無密碼的用戶（視為不存在）"
+  "ignore_invites_schema_label": "忽略無密碼的用戶（視為不存在）",
+  "edit_avatar_colors": "編輯頭像顏色"
 }

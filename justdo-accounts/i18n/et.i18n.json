@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "Avatari taust",
   "lang_schema_label": "Eelistatud keel",
   "email_schema_label": "E-post",
-  "ignore_invites_schema_label": "Ignoreeri paroolita kasutajaid (käsitle neid mitteolemasolevatena)"
+  "ignore_invites_schema_label": "Ignoreeri paroolita kasutajaid (käsitle neid mitteolemasolevatena)",
+  "edit_avatar_colors": "Muuda avatari värve"
 }

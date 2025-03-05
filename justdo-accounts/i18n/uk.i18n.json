@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "Фон аватара",
   "lang_schema_label": "Бажана мова",
   "email_schema_label": "Електронна пошта",
-  "ignore_invites_schema_label": "Ігнорувати користувачів без пароля (вважати їх неіснуючими)"
+  "ignore_invites_schema_label": "Ігнорувати користувачів без пароля (вважати їх неіснуючими)",
+  "edit_avatar_colors": "Редагувати кольори аватара"
 }

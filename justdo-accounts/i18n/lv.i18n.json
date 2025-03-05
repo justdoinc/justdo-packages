@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "Avatara fons",
   "lang_schema_label": "Vēlamā valoda",
   "email_schema_label": "E-pasts",
-  "ignore_invites_schema_label": "Ignorēt lietotājus bez paroles (uzskatīt tos par neeksistējošiem)"
+  "ignore_invites_schema_label": "Ignorēt lietotājus bez paroles (uzskatīt tos par neeksistējošiem)",
+  "edit_avatar_colors": "Rediģēt avatāra krāsas"
 }

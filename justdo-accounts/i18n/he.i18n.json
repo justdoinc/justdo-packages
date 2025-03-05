@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "צבע רקע של האווטאר",
   "lang_schema_label": "שפה מועדפת",
   "email_schema_label": "אימייל",
-  "ignore_invites_schema_label": "התעלם ממשתמשים ללא סיסמה (התייחס אליהם כלא קיימים)"
+  "ignore_invites_schema_label": "התעלם ממשתמשים ללא סיסמה (התייחס אליהם כלא קיימים)",
+  "edit_avatar_colors": "ערוך צבעי אווטאר"
 }

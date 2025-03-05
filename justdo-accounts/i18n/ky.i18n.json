@@ -11,11 +11,12 @@
   "profile_pic_schema_label": "Профиль сүрөтү",
   "date_format_schema_label": "Күн форматы",
   "time_format_schema_label": "Убакыт форматы",
-  "first_day_of_week_schema_label": "Жуманын биринчи күнү",
+  "first_day_of_week_schema_label": "Аптанын биринчи күнү",
   "timezone_schema_label": "Убакыт алкагы",
   "avatar_fg_schema_label": "Аватар алдыңкы планы",
   "avatar_bg_schema_label": "Аватар фону",
   "lang_schema_label": "Артыкчылык берилген тил",
   "email_schema_label": "Электрондук почта",
-  "ignore_invites_schema_label": "Купуя сөзү жок колдонуучуларды этибарга албоо (жок деп эсептөө)"
+  "ignore_invites_schema_label": "Купуя сөзү жок колдонуучуларды этибарга албоо (жок деп эсептөө)",
+  "edit_avatar_colors": "Аватар түстөрүн өзгөртүү"
 }

@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "Χρώμα Φόντου Avatar",
   "lang_schema_label": "Προτιμώμενη Γλώσσα",
   "email_schema_label": "Email",
-  "ignore_invites_schema_label": "Αγνόηση χρηστών χωρίς κωδικό (θεωρούνται ανύπαρκτοι)"
+  "ignore_invites_schema_label": "Αγνόηση χρηστών χωρίς κωδικό (θεωρούνται ανύπαρκτοι)",
+  "edit_avatar_colors": "Επεξεργασία Χρωμάτων Άβαταρ"
 }

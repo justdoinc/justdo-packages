@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "アバター背景色",
   "lang_schema_label": "希望言語",
   "email_schema_label": "メールアドレス",
-  "ignore_invites_schema_label": "パスワードのないユーザーを無視する（存在しないものとみなす）"
+  "ignore_invites_schema_label": "パスワードのないユーザーを無視する（存在しないものとみなす）",
+  "edit_avatar_colors": "アバターの色を編集"
 }

@@ -17,5 +17,6 @@
   "avatar_bg_schema_label": "Avataro fonas",
   "lang_schema_label": "Pageidaujama kalba",
   "email_schema_label": "El. paštas",
-  "ignore_invites_schema_label": "Ignoruoti vartotojus be slaptažodžio (laikyti juos neegzistuojančiais)"
+  "ignore_invites_schema_label": "Ignoruoti vartotojus be slaptažodžio (laikyti juos neegzistuojančiais)",
+  "edit_avatar_colors": "Redaguoti avataro spalvas"
 }
