@@ -817,10 +817,10 @@ _.extend JustdoAccounts.prototype,
       first_name = data.first_name or user.profile.first_name
       last_name = data.last_name or user.profile.last_name
       new_avatar = JustdoAvatar.getInitialsSvg email, first_name, last_name, {is_proxy: is_proxy}
-      {avatar_bg, avatar_fg} = JustdoAvatar.getInitialsSvgColors email, {is_proxy: is_proxy}
+      avatar_colors = JustdoAvatar.getInitialsSvgColors email, {is_proxy: is_proxy}
       update["$set"]["profile.profile_pic"] = new_avatar
-      update["$set"]["profile.avatar_bg"] = avatar_bg
-      update["$set"]["profile.avatar_fg"] = avatar_fg
+      update["$set"]["profile.avatar_bg"] = avatar_colors.avatar_bg
+      update["$set"]["profile.avatar_fg"] = avatar_colors.avatar_fg
 
     result = {email_changed}
 
