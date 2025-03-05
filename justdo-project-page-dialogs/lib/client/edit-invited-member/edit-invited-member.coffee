@@ -61,7 +61,7 @@ ProjectPageDialogs.editEnrolledMember = (user_id, invited_members_dialog_options
 
           return
 
-        if options.force_enrollment_email_resend or result.email_changed
+        if (options.force_enrollment_email_resend or result.email_changed) and not APP.accounts.isProxyUser(user_id)
           resendEnrollmentEmail (err) ->
             dialog.data("bs.modal").hide()
 
@@ -75,8 +75,8 @@ ProjectPageDialogs.editEnrolledMember = (user_id, invited_members_dialog_options
 
     return
 
-  user_allowed_to_edit = false
-  if (user_doc = Meteor.users.findOne(user_id, {fields: {invited_by: 1, users_allowed_to_edit_pre_enrollment: 1}}))?
+  user_allowed_to_edit = APP.justdo_site_admins?.isCurrentUserSiteAdmin()
+  if not user_allowed_to_edit and (user_doc = Meteor.users.findOne(user_id, {fields: {invited_by: 1, users_allowed_to_edit_pre_enrollment: 1}}))?
     users_allowed_to_edit_pre_enrollment = (user_doc.users_allowed_to_edit_pre_enrollment or []).slice() # slice to avoid edit by reference
     if _.isString(user_doc.invited_by)
       users_allowed_to_edit_pre_enrollment.push user_doc.invited_by

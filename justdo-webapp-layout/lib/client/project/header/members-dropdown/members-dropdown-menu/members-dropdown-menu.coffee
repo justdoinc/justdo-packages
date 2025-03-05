@@ -372,17 +372,23 @@ APP.executeAfterAppLibCode ->
   Template.guest_member_item.helpers project_page_module.template_helpers
   Template.enrollment_pending_member.helpers project_page_module.template_helpers
 
-  Template.enrollment_pending_member.events
-    "click .edit-enrolled": (e, tpl) ->
-      user_id = @user_id
-      ProjectPageDialogs.editEnrolledMember user_id, {add_as_guest: tpl.data.is_guest}, (err, res) =>
+  editMember = (e, tpl) ->
+    user_id = @user_id
+    ProjectPageDialogs.editEnrolledMember user_id, {add_as_guest: tpl.data.is_guest}, (err, res) =>
         if err?
           return
         
-        user = Meteor.users.findOne user_id, {fields: {profile: 1, emails: 1}}
+        # Update the dropdown to reflect the changes
+        user = Meteor.users.findOne user_id, {fields: {profile: 1, emails: 1, is_proxy: 1}}
         tpl.$(".display-name").text JustdoHelpers.displayName user
         tpl.$(".justdo-avatar").attr "src", JustdoAvatar.showUserAvatarOrFallback user
 
-        return
-
       return
+    
+    return
+
+  Template.regular_member_item.events
+    "click .edit-proxy": editMember
+
+  Template.enrollment_pending_member.events
+    "click .edit-enrolled": editMember
