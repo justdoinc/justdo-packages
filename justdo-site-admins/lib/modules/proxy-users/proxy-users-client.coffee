@@ -5,3 +5,9 @@ _.extend JustdoSiteAdmins.modules["proxy-users"],
       domain: "site-admins-members-dropdown-items"
       data:
         template: "site_admin_user_dropdown_toggle_proxy_user"
+    
+    JD.registerPlaceholderItem "site-admins-members-dropdown-edit-proxy-user",
+      position: 200
+      domain: "site-admins-members-dropdown-items"
+      data:
+        template: "site_admin_user_dropdown_edit_proxy_user"
