@@ -7,7 +7,7 @@ _.extend JustdoAccounts.prototype,
         cb? err
         return
 
-      if not JustdoAvatar.isUserAvatarBase64Svg(user_id)
+      if not JustdoAvatar.isAvatarNotSetOrBase64Svg(user_id)
         cb? @_error "not-supported", "Cannot override user uploaded avatar."
         return
 
