@@ -1,18 +1,15 @@
 _.extend JustdoAccounts.prototype,
-  editUserAvatarColor: (user_id) ->
-    if not user_id?
-      user_id = Meteor.userId()
-
+  editUserAvatarColor: (user_id, cb) ->
     performing_user_id = Meteor.userId()
 
     APP.projects.ensureUsersPublicBasicUsersInfoLoaded user_id, (err) =>
       if err?
-        JustdoSnackbar.show
-          text: "Failed to load user details: \n#{err.reason}"
+        cb? err
         return
 
       if not JustdoAvatar.isUserAvatarBase64Svg(user_id)
-        throw @_error "not-supported", "Cannot override user uploaded avatar."
+        cb? @_error "not-supported", "Cannot override user uploaded avatar."
+        return
 
       message_template =
         APP.helpers.renderTemplateInNewNode(Template.loginDropdownEditAvatarColorsBootboxMessage, {user_doc: Meteor.users.findOne(user_id)})
@@ -44,13 +41,9 @@ _.extend JustdoAccounts.prototype,
               # If user is editing its own avatar colors, update the user doc directly
               if performing_user_id is user_id
                 Meteor.users.update(user_id, {$set: {"profile.avatar_bg": avatar_bg, "profile.avatar_fg": avatar_fg}})
+                cb?()
               else
-                Meteor.call "editUserAvatarColor", avatar_bg, avatar_fg, user_id, (err) ->
-                  if err?
-                    JustdoSnackbar.show
-                      text: "Failed to save avatar colors: \n#{err.reason}"
-
-                  return
+                Meteor.call "editUserAvatarColor", avatar_bg, avatar_fg, user_id, cb
 
               return true
 
