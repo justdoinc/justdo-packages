@@ -6,3 +6,5 @@ _.extend JustdoNews,
   default_news_category_template: "news"
 
   default_news_template: "main"
+
+  default_news_template_key_to_determine_supported_langs: "page_title"

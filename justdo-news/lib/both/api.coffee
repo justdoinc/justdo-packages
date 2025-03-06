@@ -139,6 +139,20 @@ _.extend JustdoNews.prototype,
 
         return news_template_doc?.template_data?.news_array?[0]?.media_url
 
+    getI18nKeyToDetermineSupportedLangs = (path_without_hrp_and_lang) ->
+      # For a given path, return the default_news_template_key_to_determine_supported_langs i18n key from the news template
+      # for justdo-i18n-routes to determine the supported languages for the given path.
+      {news_id, news_template} = self.getNewsParamFromPath path_without_hrp_and_lang
+
+      if not news_id?
+        return
+
+      if not news_template?
+        news_template = JustdoNews.default_news_template
+
+      news_template_doc = self.getNewsTemplateIfExists category, news_id, news_template
+      return news_template_doc?[JustdoNews.default_news_template_key_to_determine_supported_langs]
+
     routes =
       "/#{category}":
         routingFunction: ->
@@ -168,6 +182,7 @@ _.extend JustdoNews.prototype,
         route_options:
           name: category_with_news_id_route_name
           translatable: news_category_options.translatable
+          getI18nKeyToDetermineSupportedLangs: getI18nKeyToDetermineSupportedLangs
           mapGenerator: ->
             for news_doc in self.getAllNewsByCategory category
               ret = 
@@ -210,6 +225,7 @@ _.extend JustdoNews.prototype,
         route_options:
           name: category_with_news_id_and_template_route_name
           translatable: news_category_options.translatable
+          getI18nKeyToDetermineSupportedLangs: getI18nKeyToDetermineSupportedLangs
           mapGenerator: ->
             for news_doc in self.getAllNewsByCategory category
               for template_obj in news_doc.templates
