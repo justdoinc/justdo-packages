@@ -258,3 +258,17 @@ _.extend JustdoI18n.prototype,
 
     buffer = await workbook.writeToBuffer()
     return buffer
+  
+  # For a given i18n key and lang, return true if the i18n key is translated in the given lang.
+  isI18nKeyTranslatedInLang: (i18n_key, lang) ->
+    return TAPi18next.options.resStore[lang]?[JustdoI18n.default_i18n_namespace]?[i18n_key]?
+
+  # For a given i18n key, return an array of all the languages that have a translation for the given i18n key.
+  getTranslatedLangsForI18nKey: (i18n_key) ->
+    translated_langs = []
+
+    for lang_tag of @getSupportedLanguages()
+      if @isI18nKeyTranslatedInLang(i18n_key, lang_tag)
+        translated_langs.push lang_tag
+
+    return translated_langs
