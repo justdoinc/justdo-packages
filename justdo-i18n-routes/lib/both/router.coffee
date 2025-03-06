@@ -58,11 +58,21 @@ _.extend JustdoI18nRoutes.prototype,
     ,
       name: "i18n_path"
       postMapGenerator: (sitemap) ->
+        all_supported_langs = _.keys APP.justdo_i18n.getSupportedLanguages()
         for map_obj in sitemap
           if (map_obj.route.options?.translatable is true) and (map_obj.url isnt "/")
             map_obj.translations = []
 
-            for lang_tag of APP.justdo_i18n.getSupportedLanguages()
+            # getI18nKeyToDetermineSupportedLangs is expected to return an array of i18n keys indicating the supported languages of the given path.
+            # If it is not defined, or it returns a falsy value, the supported languages will be all the supported languages.
+            if (i18n_keys_to_determine_supported_langs = map_obj.route.options?.getI18nKeyToDetermineSupportedLangs?(map_obj.url))?
+              supported_langs = APP.justdo_i18n.getTranslatedLangsForI18nKeys i18n_keys_to_determine_supported_langs
+              # Ensure that the supported languages are supported.
+              supported_langs = _.intersection supported_langs, all_supported_langs
+            else
+              supported_langs = all_supported_langs
+
+            for lang_tag in supported_langs
               translated_map_obj = _.extend {}, map_obj,
                 url: self.i18nPath map_obj.url, lang_tag
                 lang: lang_tag
