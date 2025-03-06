@@ -218,8 +218,8 @@ _.extend JustdoI18n.prototype,
       # If it is, default_lang_string and translated_string will be a string of the array joined by "\n".
       # Therefore to check whether the original value is an array, 
       # we'll have to access the original value from the i18n files directly via TAPi18next.options.resStore. 
-      if _.isArray(default_lang_array = TAPi18next.options.resStore[default_lang].project[key])
-        translated_array = TAPi18next.options.resStore[lang].project[key]
+      if _.isArray(default_lang_array = TAPi18next.options.resStore[default_lang][JustdoI18n.default_i18n_namespace][key])
+        translated_array = TAPi18next.options.resStore[lang][JustdoI18n.default_i18n_namespace][key]
         for default_lang_array_element, i in default_lang_array
           translated_array_element = translated_array[i]
           _writeRow translated_array_element, default_lang_array_element, key + "[" + i + "]"
@@ -228,7 +228,7 @@ _.extend JustdoI18n.prototype,
       return
 
     if options.all_keys
-      i18n_keys_to_write = _.keys TAPi18next.options.resStore[JustdoI18n.default_lang].project
+      i18n_keys_to_write = _.keys TAPi18next.options.resStore[JustdoI18n.default_lang][JustdoI18n.default_i18n_namespace]
     else
       options.i18n_keys = _.uniq _.filter options.i18n_keys, (key) -> _.isRegExp(key) or (not _.isEmpty key)
 
