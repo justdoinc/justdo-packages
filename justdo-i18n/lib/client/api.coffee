@@ -309,7 +309,7 @@ _.extend JustdoI18n.prototype,
           i18n_keys_and_depending_templates.push {key: include_key, templates: []}
         # If include_key is a RegExp, add all keys that match the RegExp
         else if _.isRegExp include_key
-          for key of TAPi18next.options.resStore[JustdoI18n.default_lang].project
+          for key of TAPi18next.options.resStore[JustdoI18n.default_lang][JustdoI18n.default_i18n_namespace]
             if include_key.test key
               i18n_keys_and_depending_templates.push {key: key, templates: []}
         
