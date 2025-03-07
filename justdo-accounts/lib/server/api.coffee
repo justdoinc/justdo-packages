@@ -782,10 +782,8 @@ _.extend JustdoAccounts.prototype,
     if _.isString(user.invited_by)
       users_allowed_to_edit_pre_enrollment.push user.invited_by
     
-    is_requesting_user_allowed_to_edit = false
-    # For enrolled members, only the user that invited them can edit their details.
-    if is_enroll
-      is_requesting_user_allowed_to_edit = requesting_user in users_allowed_to_edit_pre_enrollment
+    # Inviting user and users_allowed_to_edit_pre_enrollment can edit details of the invitee, regardless of the proxy status
+    is_requesting_user_allowed_to_edit = requesting_user in users_allowed_to_edit_pre_enrollment
     
     # For proxy members, only site admins can edit their details.
     if not is_requesting_user_allowed_to_edit and is_proxy
@@ -933,12 +931,15 @@ _.extend JustdoAccounts.prototype,
       throw @_error "not-supported", "Cannot override user uploaded avatar."
 
     # User can edit its own avatar colors
-    is_user_allowed_to_edit = performing_user_id == user_id
-    # User can edit proxy user's avatar colors if he is a site admin
-    is_user_proxy = @isProxyUser(user_doc)
-    is_performing_user_site_admin = APP.justdo_site_admins?.isUserSiteAdmin(performing_user_id)
-    is_user_allowed_to_edit = is_user_allowed_to_edit or (is_user_proxy and is_performing_user_site_admin)
-    if not is_user_allowed_to_edit
+    is_performing_user_allowed_to_edit = performing_user_id == user_id
+    # User can edit proxy user's avatar colors if he is a site admin or in the list of users_allowed_to_edit_pre_enrollment
+    if not is_performing_user_allowed_to_edit and (is_user_proxy = @isProxyUser(user_doc))
+      users_allowed_to_edit_pre_enrollment = user_doc.users_allowed_to_edit_pre_enrollment or []
+      users_allowed_to_edit_pre_enrollment.push user_doc.invited_by
+      is_performing_user_allowed_to_edit = performing_user_id in users_allowed_to_edit_pre_enrollment
+      is_performing_user_site_admin = APP.justdo_site_admins?.isUserSiteAdmin(performing_user_id)
+      is_performing_user_allowed_to_edit = is_performing_user_allowed_to_edit or is_performing_user_site_admin
+    if not is_performing_user_allowed_to_edit
       throw @_error "permission-denied"
     
     base64_avatar_url = JustdoAvatar.getInitialsSvg(JustdoHelpers.getUserMainEmail(user_doc), user_doc.profile.first_name, user_doc.profile.last_name, {is_proxy: is_user_proxy, avatar_bg: avatar_bg, avatar_fg: avatar_fg})
