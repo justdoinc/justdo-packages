@@ -783,7 +783,13 @@ _.extend GridDataCom.prototype,
 
     # All the security measures are handled by @addSibling
     for sibling_fields in siblings_fields
-      results.push(@addSibling path, sibling_fields, perform_as)
+      new_sibling_id = @addSibling path, sibling_fields, perform_as
+      results.push new_sibling_id
+      # Because we created a new sibling, we need to update the path to point to the new sibling
+      path_arr = GridData.helpers.getPathArray path
+      path_arr.pop()
+      path_arr.push new_sibling_id
+      path = GridData.helpers.joinPathArray path_arr
 
     return results
 
