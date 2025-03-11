@@ -25,6 +25,15 @@
 #    - Use unique IDs for test data to avoid conflicts
 #    - Create helper functions for common setup/assertions
 #    - Test both success cases and error cases
+
+# Handling async operations (like APP.getEnv)
+#  - In the callback of before/beforeEach, a "done" parameter is provided.
+#    Call "done()" to signal that the async operation is complete.
+#    E.g. In justdo-accounts, the getPasswordRequirements method
+#    depends on the APP.getEnv method. If we run the test directly, on the client side it will fail.
+#    So we need to call 
+#    `before (done) -> APP.getEnv -> done()`
+#    in the before block.
 ###
 
 if Package["stem-capital:grid-data"]?
