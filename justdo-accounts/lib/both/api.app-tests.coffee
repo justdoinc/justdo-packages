@@ -1,7 +1,48 @@
+###
+# TEMPLATE FOR CREATING NEW TEST FILES
+#
+# HOW TO CREATE NEW TEST CASES:
+# 1. File naming: Name your test files with *.app-test.coffee or *.app-tests.coffee extension
+#    - Files with these extensions will be automatically discovered and symlinked
+#    - Files with path containing "server" or "client" will be symlinked into
+#      corresponding directories, otherwise they will be symlinked into "both"
+#
+# 2. Place your test files:
+#    - Put tests in the same directory as the code you're testing
+#    - Our test system will:
+#      a) Find these files and symlink them to app-tests directory
+#      b) Create package-specific subdirectories (package-name/server, package-name/client, package-name/both)
+#      c) Allow Meteor to run these tests via 'meteor test --full-app'
+#
+# 3. Structure your tests:
+#    - Use 'describe' blocks to group related tests
+#    - Use 'it' blocks for individual test cases
+#    - Use 'before/beforeEach' for setup and 'after/afterEach' for cleanup
+#    - Isolate tests by resetting collections in beforeEach
+#
+# 4. Recommended patterns:
+#    - Check for package existence before defining tests (as shown below)
+#    - Use unique IDs for test data to avoid conflicts
+#    - Create helper functions for common setup/assertions
+#    - Test both success cases and error cases
+
+# Handling async operations (like APP.getEnv)
+#  - In the callback of before/beforeEach, a "done" parameter is provided.
+#    Call "done()" to signal that the async operation is complete.
+#    E.g. In justdo-accounts, the getPasswordRequirements method
+#    depends on the APP.getEnv method. If we run the test directly, on the client side it will fail.
+#    So we need to call 
+#    `before (done) -> APP.getEnv -> done()`
+#    in the before block.
+###
+
 if Package["justdoinc:justdo-accounts"]?
   {expect} = require "chai"
 
   describe "JustdoAccounts API", ->
+    before (done) ->
+      APP.getEnv -> done()
+
     describe "_getAvatarUploadPath", ->
       it "should return the correct avatar upload path for a user", ->
         user_id = "user123"
