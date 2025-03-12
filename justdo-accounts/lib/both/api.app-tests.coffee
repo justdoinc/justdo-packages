@@ -42,6 +42,8 @@ if Package["justdoinc:justdo-accounts"]?
   describe "JustdoAccounts API", ->
     before (done) ->
       APP.getEnv -> done()
+      return
+    
 
     describe "_getAvatarUploadPath", ->
       it "should return the correct avatar upload path for a user", ->
