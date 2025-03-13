@@ -210,7 +210,7 @@ _.extend JustdoAiKit.prototype,
     options = cleaned_val
 
     if _.isString options.template
-      template = @requireRequestTemplate template
+      template = @requireRequestTemplate options.template
     else
       template = options.template
 
