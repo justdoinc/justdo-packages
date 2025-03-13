@@ -126,7 +126,10 @@ _.extend JustdoAiKit.prototype,
 
   requireApiProvider: (api_provider) ->
     if not (vendor_apis = @[api_provider])?
-      throw @_error "invalid-argument", "API provider #{api_provider} not found"
+      api_provider = JustdoAiKit.default_api_provider
+      if not (vendor_apis = @[api_provider])?
+        throw @_error "invalid-argument", "API provider #{api_provider} not found"
+
     return vendor_apis
 
   _logRequestOptionsSchema: new SimpleSchema

@@ -1,4 +1,8 @@
 _.extend JustdoAiKit,
+  default_api_provider: "justdo"
+
+  default_api_provider_endpoint: "https://app.justdo.com/"
+
   openai_template_generation_model: "gpt-4o-mini"
 
   supported_streamed_response_types:
