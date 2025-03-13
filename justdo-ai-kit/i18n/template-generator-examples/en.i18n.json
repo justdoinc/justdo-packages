@@ -1,0 +1,39 @@
+{
+  "ai_kit_template_example_make_a_plan": "Make a plan",
+  "ai_kit_template_example_global_product_launch": "<b>Make a plan</b> for a Global Product Launch",
+  "ai_kit_template_example_company_wide_rebranding_initiative": "<b>Make a plan</b> for a Company-Wide Rebranding Initiative",
+  "ai_kit_template_example_strategic_partnership_program": "<b>Make a plan</b> for a Strategic Partnership Program",
+  "ai_kit_template_example_cross_departmental_training_program": "<b>Make a plan</b> for a Cross-Departmental Training Program",
+  
+  "ai_kit_template_example_develop_a_strategy": "Develop a strategy",
+  "ai_kit_template_example_digital_transformation": "<b>Develop a strategy</b> for Digital Transformation",
+  "ai_kit_template_example_market_expansion": "<b>Develop a strategy</b> for Market Expansion into New Regions",
+  "ai_kit_template_example_customer_engagement": "<b>Develop a strategy</b> for Enhancing Customer Engagement",
+  "ai_kit_template_example_sustainable_business_practices": "<b>Develop a strategy</b> for Sustainable Business Practices",
+  
+  "ai_kit_template_example_implement_a_system": "Implement a system",
+  "ai_kit_template_example_erp": "<b>Implement a system</b> for Enterprise Resource Planning (ERP)",
+  "ai_kit_template_example_crm": "<b>Implement a system</b> for Customer Relationship Management (CRM)",
+  "ai_kit_template_example_data_security": "<b>Implement a system</b> for Data Security and Compliance",
+  "ai_kit_template_example_remote_collaboration": "<b>Implement a system</b> for Remote Collaboration and Communication",
+  
+  "ai_kit_template_example_organize_an_event": "Organize an event",
+  "ai_kit_template_example_global_annual_conference": "<b>Organize an event</b> for a Global Annual Conference",
+  "ai_kit_template_example_cross_functional_team_workshop": "<b>Organize an event</b> for a Cross-Functional Team Workshop",
+  "ai_kit_template_example_investor_relations_summit": "<b>Organize an event</b> for an Investor Relations Summit",
+  "ai_kit_template_example_innovation_challenge": "<b>Organize an event</b> for a Multi-Departmental Innovation Challenge",
+  
+  "ai_kit_template_example_launch_an_initiative": "Launch an initiative",
+  "ai_kit_template_example_corporate_sustainability_program": "<b>Launch an initiative</b> for a Corporate Sustainability Program",
+  "ai_kit_template_example_employee_wellness_program": "<b>Launch an initiative</b> for an Employee Wellness Program",
+  "ai_kit_template_example_customer_loyalty_program": "<b>Launch an initiative</b> for a Customer Loyalty Program",
+  "ai_kit_template_example_community_engagement": "<b>Launch an initiative</b> for Community Engagement and CSR",
+
+  "ai_kit_template_example_plan_trip": "<b>Plan</b> a trip to Paris",
+  "ai_kit_template_example_plan_wedding": "<b>Plan</b> a wedding",
+  "ai_kit_template_example_create_mobile_app": "<b>Create</b> a new mobile app",
+  "ai_kit_template_example_write_childrens_book": "<b>Write</b> a new children's book",
+  "ai_kit_template_example_design_spaceship": "<b>Design</b> a spaceship for Mars",
+
+  "ai_kit_template_example_simplify_prompt": "__prompt__ and explain to me like I am 7 years old"
+}

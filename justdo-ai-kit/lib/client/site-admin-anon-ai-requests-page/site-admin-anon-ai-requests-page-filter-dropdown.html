@@ -1,0 +1,45 @@
+<template name="site_admin_ai_requests_filter_dropdown">
+  {{#each dropdownItems}}
+    {{#if template}}
+      {{> Template.dynamic template=template data=templateData}}
+    {{else if html}}
+      {{{html}}}
+    {{/if}}
+  {{/each}}
+</template>
+
+<template name="site_admin_ai_requests_filter_dropdown_toggle_accepted">
+  <div class="dropdown-item toggle-accepted" data-type="accepted">
+    <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if isFilterChecked "accepted"}}check-square{{else}}square{{/if}}"></use></svg>Accepted
+  </div>
+</template>
+
+<template name="site_admin_ai_requests_filter_dropdown_toggle_partial_accepted">
+  <div class="dropdown-item toggle-partial-accepted" data-type="partial_accepted">
+  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if isFilterChecked "partial_accepted"}}check-square{{else}}square{{/if}}"></use></svg>Partial Accepted
+  </div>
+</template>
+
+<template name="site_admin_ai_requests_filter_dropdown_toggle_declined">
+  <div class="dropdown-item toggle-declined" data-type="declined">
+  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if isFilterChecked "declined"}}check-square{{else}}square{{/if}}"></use></svg>Declined
+  </div>
+</template>
+
+<template name="site_admin_ai_requests_filter_dropdown_toggle_anon_only">
+  <div class="dropdown-item toggle-anon_only" data-type="anon_only">
+  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if isFilterChecked "anon_only"}}check-square{{else}}square{{/if}}"></use></svg>Anon Only
+  </div>
+</template>
+
+<template name="site_admin_ai_requests_filter_dropdown_toggle_has_error">
+  <div class="dropdown-item toggle-has-error" data-type="has_error">
+  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if isFilterChecked "has_error"}}check-square{{else}}square{{/if}}"></use></svg>Has Error
+  </div>
+</template>
+
+<template name="site_admin_ai_requests_filter_dropdown_toggle_aborted">
+  <div class="dropdown-item toggle-aborted" data-type="aborted">
+  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if isFilterChecked "aborted"}}check-square{{else}}square{{/if}}"></use></svg>Aborted
+  </div>
+</template>

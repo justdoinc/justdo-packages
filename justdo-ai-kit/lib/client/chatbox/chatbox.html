@@ -1,0 +1,68 @@
+<template name="ai_kit_chatbox_dropdown_btn">
+  <div id="ai-kit-chatbox-dropdown-button">
+    <svg class="jd-icon jd-c-pointer text-dark">
+      <title>{{_ "ai_kit_chatbox_dropdown_btn_label"}}</title>
+      <use xlink:href="/layout/icons-feather-sprite.svg#cpu"></use>
+    </svg>
+  </div>
+</template>
+
+<template name="ai_kit_dropdown_chatbox">
+  <div class="ai-kit-dropdown-chatbox bg-light">
+    <div class="ai-wizard-header">
+      <div class="ai-wizard-title">
+        <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#jd-ai"></use></svg>
+        DoPilot
+        {{!-- {{_ "ai_kit_chatbox_dropdown_title"}} --}}
+      </div>
+      <svg class="jd-icon jd-c-pointer ai-wizard-close"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+    </div>
+    <div class="ai-wizard-body">
+      <div class="ai-wizard-spacer"></div>
+      {{#each dropdownChatboxMessages}}
+        {{#if $eq role "bot"}}
+          <div class="ai-wizard-message bot">
+            <img class="ai-wizard-avatar" src="/packages/justdoinc_justdo-projects-templates/lib/client/assets/bot_avatar.png" alt="JustDo Bot">
+            <div class="ai-wizard-text-wrapper">
+              <div class="ai-wizard-author">
+                {{_ "ai_kit_chatbox_dropdown_btn_label"}}
+              </div>
+              <div class="ai-wizard-text">
+                {{#if msg_i18n}}
+                  {{_  msg_i18n}}
+                {{else}}
+                  {{{xssGuard msg}}}
+                {{/if}}
+              </div>
+            </div>
+          </div>
+        {{else}}
+          <div class="ai-wizard-message user">
+            <div class="ai-wizard-text">
+              {{msg}}
+            </div>
+          </div>
+        {{/if}}
+      {{/each}}
+      {{#if showBotThinking}}
+        <div class="ai-wizard-message bot">
+          <img class="ai-wizard-avatar" src="/packages/justdoinc_justdo-projects-templates/lib/client/assets/bot_avatar.png" alt="JustDo Bot">
+            <div class="ai-wizard-text-wrapper">
+              <div class="ai-wizard-author">
+                {{_ "ai_kit_chatbox_dropdown_btn_label"}}
+              </div>
+              <div class="ai-wizard-text">
+                <div class="typing">
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+            </div>
+        </div>
+      {{/if}}
+    </div>
+    <div class="ai-wizard-footer">
+      <input class="ai-wizard-input" type="text" placeholder="{{_ 'ai_wizard_input_placeholder'}}">
+      <button class="ai-wizard-send btn {{#if isInputLocked}}btn-secondary{{else}}btn-primary{{/if}} btn-sm" type="button">{{_ "send"}}</button>
+    </div>
+  </div>
+</template>

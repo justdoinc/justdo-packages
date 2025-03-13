@@ -1,0 +1,106 @@
+.project-template-ai-modal
+  .modal-dialog .modal-content
+    background-color: rgba(255, 255, 255, 1)
+    backdrop-filter: blur(8px)
+    overflow: hidden
+
+    .modal-body
+      overflow: visible
+
+  .bootbox-body > div
+    height: inherit
+
+  .project-template-welcome-ai
+    display: flex
+    justify-content: center
+    align-items: center
+    height: 100%
+    position: relative
+
+    .welcome-ai-input
+      font-size: 18px
+
+    .content
+      display: flex
+      flex-direction: column
+      width: 70%
+      height: 100%
+      position: relative
+      justify-content: center
+      padding-bottom: 150px
+      &.show-results
+        justify-content: flex-start
+        padding-bottom: 0
+      .welcome-ai-input-wrapper
+        width: 100%
+      .welcome-ai-results
+        max-height: 80vh
+
+    .welcome-ai-title
+      font-weight: 500
+      font-size: 24px
+      color: #000000
+      text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.16)
+
+    .welcome-ai-subtitle
+      font-weight: 450
+      font-size: 18px
+      margin-bottom: 32px
+      color: rgba(53, 68, 97, 0.85)
+
+    .welcome-ai-skip-wrapper
+      position: absolute
+      right: 0
+      top: 0
+      display: flex
+      align-items: center
+      .jd-icon
+        width: 32px
+        height: 32px
+        stroke-width: 2
+        box-shadow: 0 0px 40px rgba(50, 50, 93, 0.16), 0 0px 8px rgba(50, 50, 93, 0.08)
+        padding: 4px
+        cursor: pointer
+        color: white
+        border-radius: 6px
+        transition: all 0.12s ease-in-out
+        transform: scale(0)
+        &:hover
+          transform: scale(1.05) !important
+          box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.16)
+
+    .welcome-ai-skip-wrapper.show
+      .jd-icon
+        transform: scale(1)
+
+// RTL modification
+.right-to-left
+  .project-template-welcome-ai
+    text-align: right
+    .welcome-ai-typed
+      padding: 20px 16px 20px 100px
+    .welcome-ai-btn-wrapper
+      left: 16px
+      right: unset
+      .loader
+        margin-right: unset
+        margin-left: 6px
+    .welcome-ai-input-wrapper .welcome-ai-input
+      padding: 20px 16px 20px 100px
+    .welcome-ai-result-item
+      padding-left: unset
+      padding-right: 16px
+      .welcome-ai-result-item-checkbox
+        margin-right: unset
+        margin-left: 8px
+    .welcome-ai-skip-wrapper
+      left: 0
+      right: unset
+    .welcome-ai-skip-tooltip
+      margin-left: -10px
+      margin-right: unset
+    .welcome-ai-skip-wrapper.show
+      .welcome-ai-skip-tooltip
+        opacity: 1
+        margin-right: unset
+        margin-left: 8px

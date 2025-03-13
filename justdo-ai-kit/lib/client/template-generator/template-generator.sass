@@ -1,0 +1,273 @@
+.welcome-ai-input-title
+  display: flex
+  justify-content: center
+  margin-bottom: 24px
+  font-size: 22px
+  font-weight: 600
+  margin-bottom: 7px
+  font-size: 18px
+  color: #382e49
+  text-align: center
+
+.welcome-ai-input-wrapper
+  background: linear-gradient(to right, #1EB2F2, #C660EA)
+  padding: 2px
+  border-radius: 8px
+  box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.08)
+  position: relative
+  display: flex
+  align-items: center
+  width: 640px
+  transition: all 0.32s
+
+  .welcome-ai-input
+    width: 100%
+    border: none
+    border-radius: 6px
+    padding: 20px 100px 20px 16px
+    &::placeholder
+      color: #A9B1C3
+    &:disabled
+      background-color: white
+      cursor: wait
+
+  .welcome-ai-clear
+    cursor: pointer
+    display: flex
+    align-items: center
+    border-right: 1px solid rgba(49, 69, 99, 0.25)
+    &:hover
+      .jd-icon
+        transform: scale(1.1)
+    &:active
+      .jd-icon
+        transform: scale(1)
+    .jd-icon
+      width: 20px
+      height: 20px
+      stroke-width: 3
+      color: #65738a
+      transition: all 0.12s linear
+      transform: scale(1)
+
+  .welcome-ai-btn-wrapper
+    position: absolute
+    right: 16px
+    display: flex
+    align-items: center
+    .loader
+      width: 20px
+      height: 20px
+      position: relative
+      margin-right: 6px
+      opacity: 0.75
+      .double-bounce1
+        width: 100%
+        height: 100%
+        border-radius: 50%
+        opacity: 0.15
+        position: absolute
+        top: 0
+        left: 0
+        animation: sk-bounce 2.0s infinite ease-in-out
+      .double-bounce2
+        width: 100%
+        height: 100%
+        border-radius: 50%
+        opacity: 0.15
+        position: absolute
+        top: 0
+        left: 0
+        animation: sk-bounce 2.0s infinite ease-in-out
+        animation-delay: -1.0s
+
+  .welcome-ai-btn
+    font-weight: 600
+    cursor: pointer
+    transform: scale(1)
+    transition: all 0.28s
+    &:hover
+      transform: scale(1.01)
+    &:active
+      transform: scale(0.98)
+
+  .welcome-ai-dropdown
+    display: flex
+    flex-direction: column
+    background-color: white
+    border-radius: 6px
+    box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.08)
+    width: 100%
+    opacity: 0
+    pointer-events: none
+    transition: all 0.32s
+    position: absolute
+    top: 40px
+    padding: 8px 0px
+    &.show
+      pointer-events: all
+      opacity: 1
+      top: 50px
+      z-index: 2
+
+  .welcome-ai-prompt-example
+    padding: 3px 16px
+    color: #495057
+    cursor: pointer
+    transition: background-color 0.32s
+    span
+      color: black
+      font-weight: 600
+    &:hover
+      background-color: #eff1f4
+
+  .jd-style-bg-grid
+    background-image: url(/packages/justdoinc_justdo-projects-templates/lib/client/assets/style_grid.png)
+    background-size: cover
+    background-position: center
+    background-repeat: no-repeat
+    position: absolute
+    width: 798px
+    height: 810px
+    top: -400px
+    left: -150px
+    pointer-events: none
+    z-index: -1
+
+  .jd-style-bg-circle
+    position: absolute
+    width: 600px
+    height: 600px
+    border-radius: 100%
+    z-index: -2
+    pointer-events: none
+    &.left
+      bottom: -300px
+      right: 50%
+      background: radial-gradient(50% 50% at 50% 50%,rgba(7,166,255,.35) 0,rgba(7,166,255,0) 100%)
+    &.right
+      bottom: -200px
+      left: 50%
+      background: radial-gradient(50% 50% at 50% 50%, rgba(189, 102, 235, 0.25) 0%, rgba(189, 102, 235, 0) 100%)
+
+  &.hide-typed-element
+    .welcome-ai-typed
+      display: none
+
+  .welcome-ai-typed
+    position: absolute
+    display: flex
+    padding: 20px 100px 20px 16px
+    pointer-events: none
+    font-size: 18px
+    width: 100%
+    display: none
+    .welcome-ai-typed-text
+      background-color: white
+      width: inherit
+      text-overflow: ellipsis
+      white-space: nowrap
+      overflow: hidden
+      span
+        span
+          color: black
+          font-weight: 600
+
+.welcome-ai-prompt-bubbles
+  padding: 16px 0px
+  display: flex
+  gap: 8px
+  justify-content: center
+  flex-wrap: wrap
+  .welcome-ai-prompt-bubble,
+  .simplified-ai-prompt-bubble
+    border: 2px solid
+    background: white
+    padding: 4px 10px
+    border-radius: 8px
+    box-shadow: 0px 2px 24px rgba(0, 0, 0, 0.16)
+    cursor: pointer
+    transition: transform, box-shadow 0.32s linear
+    &:hover
+      transform: scale(1.01)
+      box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.16)
+    &:active
+      transform: scale(1)
+      box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.12)
+    .jd-icon
+      stroke-width: 3px
+      width: 16px
+      height: 16px
+  .welcome-ai-prompt-bubble
+    display: flex
+    align-items: center
+
+.welcome-ai-results
+  overflow: hidden
+  display: flex
+  flex-direction: column
+  border-radius: 6px
+  width: 100%
+  margin-top: 8px
+  flex-grow: 1
+  background-color: white
+  box-shadow: 0px 10px 24px rgba(0, 0, 0, 0.12)
+  z-index: 100 !important
+  &.hide
+    display: none
+
+  .welcome-ai-results-items
+    display: flex
+    flex-direction: column
+    overflow: auto
+    padding: 12px 0px
+    flex-grow: 1
+
+  .welcome-ai-result-item
+    padding-left: 16px
+    color: #495057
+    cursor: pointer
+    span
+      color: black
+      font-weight: 600
+
+  .welcome-ai-result-item-content
+    display: flex
+    align-items: center
+    transition: background-color 0.32s
+    padding: 4px
+    cursor: pointer
+    &:hover
+      background-color: #eff1f4
+
+  .welcome-ai-result-item-checkbox
+    cursor: pointer
+    width: 18px
+    height: 18px
+    border-radius: 4px
+    border: 2px solid rgba(49, 69, 99, 0.5)
+    margin-right: 8px
+    align-items: center
+    justify-content: center
+    display: flex
+    &::before
+      display: none
+    &.checked::before
+      content: ""
+      width: 65%
+      height: 65%
+      background: rgba(49, 69, 99, 0.75)
+      border-radius: 2px
+      display: flex
+
+  .welcome-ai-create-btn-wrapper
+    padding: 16px
+    border-top: 1px solid rgba(207, 216, 220, 0.5)
+    .welcome-ai-create-btn
+      padding: 8px
+      cursor: pointer
+
+.right-to-left
+  .welcome-ai-input-wrapper .welcome-ai-clear
+    border-left: 1px solid rgba(49, 69, 99, 0.25)
+    border-right: unset

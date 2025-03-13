@@ -1,0 +1,45 @@
+<template name="ai_wizard_tooltip">
+  <div class="ai-wizard-tooltip shadow-lg">
+    <div class="ai-wizard-input-container">
+      <textarea class="ai-wizard-input form-control" rows="1" placeholder="{{_ "ai_wizard_tooltip_input_placeholder"}}">{{previousInputOrActiveTaskTitle}}</textarea>
+    </div>
+    {{#if $or isLoading isResponseExists}}
+      <div class="ai-wizard-list">
+        {{#if isResponseExists}}
+          {{#each rootTemplate}}
+            {{> ai_wizard_item}}
+          {{/each}}
+        {{else}}
+          {{#if isLoading}}
+            <div class="ai-wizard-loader-wrapper">
+              <div class="loader">
+                <div class="double-bounce1 bg-primary"></div>
+                <div class="double-bounce2 bg-primary"></div>
+              </div>
+            </div>
+          {{/if}}
+        {{/if}}
+      </div>
+      <div class="ai-wizard-footer">
+        <div class="btn btn-sm btn-light {{#if isLoading}}ai-wizard-stop{{else}}ai-wizard-generate{{/if}}">{{#if isLoading}}{{ucFirst (_ "stop")}}{{else}}{{ucFirst (_ "regenerate")}}{{/if}}</div>
+        <div class="ai-wizard-create btn btn-sm btn-primary {{#if isLoading}}disabled{{/if}}">{{_ "create"}}</div>
+      </div>
+    {{else if isActiveTaskTitleEmpty}}
+      <div class="ai-wizard-footer">
+        <div class="ai-wizard-generate btn btn-sm btn-primary {{#if isLoading}}disabled{{/if}}">{{_ "generate"}}</div>
+      </div>
+    {{/if}}
+  </div>
+</template>
+
+<template name="ai_wizard_item">
+  <div class="ai-wizard-item">
+    <div class="ai-wizard-item-content">
+      <div class="ai-wizard-item-checkbox {{#unless unchecked}}checked{{/unless}}" data-key="{{key}}"></div>
+      {{data.title}}
+    </div>
+    {{#each childTemplate}}
+      {{> ai_wizard_item}}
+    {{/each}}
+  </div>
+</template>

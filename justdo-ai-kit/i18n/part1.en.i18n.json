@@ -1,0 +1,39 @@
+{
+  "ai_kit_chatbox_dropdown_btn_label": "DoPilot",
+  "ai_kit_chatbox_dropdown_title": "Generate tasks with DoPilot",
+  "ai_kit_chatbox_dropdown_welcome_msg": "Hello! Let me know what kind of tasks you want me to generate.",
+  "ai_kit_chatbox_dropdown_loading_msg": "Got it! Generating tasks based on your requirement, please give me a miniute~",
+  "ai_kit_chatbox_dropdown_generated_msg": "It's ready! Please check the generated tasks on the grid.",
+  "ai_kit_chatbox_dropdown_error_msg": "Oops! Something went wrong, please try again.",
+  "ai_kit_chatbox_dropdown_delayed_response_msg": "I'm still working on it...",
+
+  "stream_response_generic_err": "Oops! Something went wrong. Please try again.",
+  "subtask_generation_parent_has_no_title_err": "To see how DoPilot expands your idea into subtasks, please first set a title for the active task.",
+
+  "ai_wizard_title": "AI Wizard",
+  "ai_wizard_bot_name": "JustDo Bot",
+  "ai_wizard_welcome_msg": "Hello, tell me about your project and I will help you create a JustDo",
+  "ai_wizard_waiting_for_template_msg": "Generating a template based on your requirement... It should take less than a minute.",
+  "ai_wizard_error_msg": "Due to the high demand, we can't process your request right now :(  please select a template from the picker.",
+  "ai_wizard_input_placeholder": "Message...",
+
+  "ai_wizard_what_kind_of_project_do_you_want_to_create": "What project do you want to create?",
+  "ai_wizard_give_it_a_try": "Give it a try! What are your clients' needs? What projects do you want to create?",
+
+  "ai_wizard_loading_btn_new_user_label": "Generating Your First JustDo 🎉 Please Hold...",
+  "ai_wizard_loading_btn_existing_user_label": "Generating Your JustDo 🎉 Please Hold...",
+
+  "ai_wizard_create_btn_new_user_label": "Create Your First JustDo 🎉",
+  "ai_wizard_create_btn_existing_user_label": "Create Your JustDo 🎉",
+
+  "ai_tasks_summary_label": "Summary",
+  "ai_wizard_task_summary_default_msg": "Hello! What can I help you with the tasks?",
+  "ai_kit_chatbox_dropdown_copied_msg": "Copied to clipboard!",
+
+  "ai_wizard_summary_default_input": "Generate a summary for the selected tasks",
+
+  "ai_wizard_created_task_msg": "Created __count__ task",
+  "ai_wizard_created_task_msg_pural": "Created __count__ tasks",
+  "ai_wizard_tooltip_input_placeholder": "Enter instructions or paste a list of tasks",
+  "ai_wizard_tooltip_generated_description": "This tree was generated from this prompt:\n\n__prompt__"
+}

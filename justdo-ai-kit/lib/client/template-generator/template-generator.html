@@ -1,0 +1,108 @@
+<template name="ai_template_generator">
+    {{#if isLandingPage}}
+      <div class="welcome-ai-input-title">
+        {{_ prePromptTxtI18n}}
+      </div>
+    {{/if}}
+    <div class="welcome-ai-input-wrapper">
+      {{#unless $or isResponseExists isLoading}}
+        <div class="welcome-ai-typed">
+          <div class="welcome-ai-typed-text"><span></span></div>
+        </div>
+      {{/unless}}
+      <input class="welcome-ai-input form-control form-control-md" type="text" placeholder="{{_ "ai_wizard_what_kind_of_project_do_you_want_to_create"}}">
+      <div class="welcome-ai-btn-wrapper">
+        {{#if isLoading}}
+          <div class="loader">
+            <div class="double-bounce1 bg-primary"></div>
+            <div class="double-bounce2 bg-primary"></div>
+          </div>
+        {{/if}}
+        {{#unless isLoading}}
+          {{#if $or hasInput isResponseExists}}
+            <div class="welcome-ai-clear m{{getRtlAwareDirection "r"}}-2">
+              <svg class="jd-icon m{{getRtlAwareDirection "r"}}-2">
+                <use xlink:href="/layout/icons-feather-sprite.svg#x"></use>
+              </svg>
+            </div>
+          {{/if}}
+        {{/unless}}
+        <div class="welcome-ai-btn text-primary {{#if isLoading}}welcome-ai-stop-generation{{else}}welcome-ai-btn-generate{{/if}}">
+          {{#if isLoading}}
+            {{_ "stop"}}
+          {{else if isResponseExists}}
+            {{_ "regenerate"}}
+          {{else}}
+            {{_ "generate"}}
+          {{/if}}
+        </div>
+      </div>
+      
+      <div class="welcome-ai-dropdown {{#if shouldShowExamplesDropdown}}show{{/if}}">
+        {{#each promptExampleItems}}
+          <div class="welcome-ai-prompt-example">
+            {{{xssGuard(_ title)}}}
+          </div>
+        {{/each}}
+      </div>
+
+      <div class="jd-style-bg-circle left"></div>
+      <div class="jd-style-bg-circle right"></div>
+      <div class="jd-style-bg-grid"></div>
+    </div>
+
+    {{#unless $or isLoading isResponseExists}}
+      <div class="welcome-ai-prompt-bubbles">
+        {{#if showSimpleSmartBubble}}
+          {{#each simplePromptExampleItems}}
+            <div class="simplified-ai-prompt-bubble" style="border-color: {{promptBubbleBorderColor hexColor}}">
+              <svg class="jd-icon m{{getRtlAwareDirection "r"}}-2" style="color: {{hexColor}}">
+                <use xlink:href="/layout/icons-feather-sprite.svg#{{icon_name}}"></use>
+              </svg>
+              {{{xssGuard(_ title)}}}
+            </div>
+          {{/each}}
+        {{else}}
+          {{#each promptBubbles}}
+            <div class="welcome-ai-prompt-bubble" style="border-color: {{promptBubbleBorderColor hexColor}}" data-id="{{_id}}">
+              <svg class="jd-icon m{{getRtlAwareDirection "r"}}-2" style="color: {{hexColor}}">
+                <use xlink:href="/layout/icons-feather-sprite.svg#{{icon_name}}"></use>
+              </svg>
+              {{_ prompt}}
+            </div>
+          {{/each}}
+        {{/if}}
+      </div>
+    {{/unless}}
+
+    {{#if isResponseExists}}
+      <div class="welcome-ai-results">
+        <div class="welcome-ai-results-items">
+          {{#each rootTemplate}}
+            {{> ai_template_item}}
+          {{/each}}
+        </div>
+        <div class="welcome-ai-create-btn-wrapper">
+          <div class="welcome-ai-create-btn btn-primary btn-sm text-center">
+            {{#if isLoading}}
+              {{_ loadingBtnLabelI18n}}
+            {{else}}
+              {{_ createBtnLabelI18n}}
+            {{/if}}
+          </div>
+        </div>
+      </div>
+    {{/if}}
+</template>
+
+<template name="ai_template_item">
+  <div class="welcome-ai-result-item">
+      <div class="welcome-ai-result-item-content">
+        <div class="welcome-ai-result-item-checkbox checked" data-key="{{key}}"></div>
+        {{data.title}}
+      </div>
+      {{#each childTemplate}}
+        {{> ai_template_item}}
+      {{/each}}
+  </div>
+</template>

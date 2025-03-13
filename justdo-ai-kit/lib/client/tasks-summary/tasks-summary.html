@@ -1,0 +1,69 @@
+<template name="tasks_summary">
+  <div class="tasks-summary">
+    <div class="ai-wizard-header">
+      <div class="ai-wizard-header-title">
+        <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#jd-ai"></use></svg>
+        DoPilot Summary
+      </div>
+      <svg class="jd-icon ai-wizard-close"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+    </div>
+    <div class="ai-wizard-body">
+      <div>
+        <div class="ai-wizard-spacer"></div>
+        {{#each messages}}
+          {{#if $eq role "bot"}}
+            {{> bot_message_card}}
+          {{else}}
+            <div class="ai-wizard-message user">
+              <div class="ai-wizard-text">
+                {{msg}}
+              </div>
+            </div>
+          {{/if}}
+        {{/each}}
+      </div>
+    </div>
+    <div class="ai-wizard-footer">
+      <input class="ai-wizard-input" type="text" placeholder="{{_ 'ai_wizard_input_placeholder'}}" value="{{_ 'ai_wizard_summary_default_input'}}">
+      <button class="btn {{#if isLoading}}ai-wizard-stop btn-danger{{else}}ai-wizard-send btn-primary{{/if}} btn-sm" type="button">
+        {{#if isLoading}}
+          {{ucFirst (_ "stop")}}
+        {{else}}
+          {{_ "send"}}
+        {{/if}}
+      </button>
+    </div>
+  </div>
+</template>
+
+<template name="bot_message_card">
+  <div class="ai-wizard-message bot">
+    <img class="ai-wizard-avatar" src="/packages/justdoinc_justdo-projects-templates/lib/client/assets/bot_avatar.png" alt="JustDo Bot">
+      <div class="ai-wizard-text-wrapper">
+        <div class="ai-wizard-author">
+          {{_ "ai_kit_chatbox_dropdown_btn_label"}}
+        </div>
+        <div class="ai-wizard-text">
+          {{#if isLoading}}
+            <div class="typing">
+              <span></span><span></span><span></span>
+            </div>
+          {{/if}}
+          {{#if msg_i18n}}
+            <div class="ai-wizard-text-content">
+              {{_ msg_i18n}}
+            </div>
+          {{else if msg}}
+            <span class="copy"><svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#clipboard"></use></svg></span>
+            <div class="ai-wizard-text-content">
+              {{{msg}}}
+            </div>
+          {{else}}
+            <div class="ai-wizard-text-content">
+              {{{streamMsg}}}
+            </div>
+          {{/if}}
+        </div>
+      </div>
+  </div>
+</template>

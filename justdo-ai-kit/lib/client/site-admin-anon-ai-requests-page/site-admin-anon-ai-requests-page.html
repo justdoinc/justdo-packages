@@ -1,0 +1,64 @@
+<template name="justdo_site_admin_ai_requests">
+  <div class="site-admins-header">
+    <div class="filter-wrapper">
+      <div class="input-wrapper">
+        <input type="text" class="form-control form-control-sm filter" placeholder="Search" />
+        {{#if filterIsActive}}
+          <div class="filter-control">
+            <div class="filter-count bg-primary">
+              {{{xssGuard filteredLogsCount}}}
+            </div>
+            <svg class="jd-icon jd-c-pointer text-dark filter-clear p-1" style=""><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+          </div>
+        {{/if}}
+      </div>
+      {{#if isUserSuperSiteAdmin}}
+        <input type="date" class="date-controller start-date form-control form-control-sm" name="start-date" value="{{defaultStartDate}}" min="2016-01-01" max={{defaultEndDate}}>
+        <input type="date" class="date-controller end-date form-control form-control-sm" name="end-date" value="{{defaultEndDate}}" min="2016-01-01" max={{defaultEndDate}}>
+      {{/if}}
+      <div class="filter-icon">
+        {{#if activeFilterCount}}
+          <div class="active-filter-count bg-primary">
+            {{activeFilterCount}}
+          </div>
+        {{/if}}
+        <svg class="jd-icon jd-c-pointer"><use xlink:href="/layout/icons-feather-sprite.svg#grid"></use></svg>
+      </div>
+      <button class="btn btn-primary btn-sm refresh-all">Refresh</button>
+    </div>
+  </div>
+
+  <div class="site-admins-content">
+    <table class="table site-admins-table">
+      <tr>
+        <th class="sort-by {{#if $eq activeFilter 'createdAt'}}active{{/if}}" sort-by="createdAt"><div class="sort-by-wrapper">Date <svg class="jd-icon chevron"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if orderByFieldDesc}}chevron-down{{else}}chevron-up{{/if}}"></use></svg></div></th>
+        <th class="sort-by {{#if $eq activeFilter 'performedByDisplayName'}}active{{/if}}" sort-by="performedByDisplayName"><div class="sort-by-wrapper">User <svg class="jd-icon chevron"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if orderByFieldDesc}}chevron-down{{else}}chevron-up{{/if}}"></use></svg></div></th>
+        {{!-- <th class="sort-by {{#if $eq activeFilter 'preRegisterId'}}active{{/if}}" sort-by="preRegisterId" title="Pre-register ID"><div class="sort-by-wrapper">PR ID <svg class="jd-icon chevron"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if orderByFieldDesc}}chevron-down{{else}}chevron-up{{/if}}"></use></svg></div></th> --}}
+        <th class="sort-by {{#if $eq activeFilter 'templateId'}}active{{/if}}" sort-by="templateId"><div class="sort-by-wrapper">Template ID <svg class="jd-icon chevron"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if orderByFieldDesc}}chevron-down{{else}}chevron-up{{/if}}"></use></svg></div></th>
+        <th class="sort-by {{#if $eq activeFilter 'templateData'}}active{{/if}}" sort-by="templateData"><div class="sort-by-wrapper">Template Data <svg class="jd-icon chevron"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if orderByFieldDesc}}chevron-down{{else}}chevron-up{{/if}}"></use></svg></div></th>
+        <th class="sort-by {{#if $eq activeFilter 'response'}}active{{/if}}" sort-by="response"><div class="sort-by-wrapper">Response <svg class="jd-icon chevron"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if orderByFieldDesc}}chevron-down{{else}}chevron-up{{/if}}"></use></svg></div></th>
+        {{!-- <th class="sort-by {{#if $eq activeFilter 'choice'}}active{{/if}}" sort-by="choice"><div class="sort-by-wrapper">User Choice <svg class="jd-icon chevron"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if orderByFieldDesc}}chevron-down{{else}}chevron-up{{/if}}"></use></svg></div></th> --}}
+        <th class="sort-by {{#if $eq activeFilter 'remarks'}}active{{/if}}" sort-by="remarks"><div class="sort-by-wrapper">Remarks <svg class="jd-icon chevron"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if orderByFieldDesc}}chevron-down{{else}}chevron-up{{/if}}"></use></svg></div></th>
+        <th class=""></th>
+      </tr>
+      {{#each logs}}
+        <tr class="table-{{rowClassByUserChoice}}">
+          <td title="{{detailedHumanReadableCreatedAt}}"><span>{{humanReadableCreatedAt}}</span></td>
+          <td class="log-performed-by jd-c-pointer" title="{{#if preRegisterId}}This record has pre-register ID: {{preRegisterId}}{{/if}}"><span>
+              {{performedBy}}
+              {{#if preRegisterId}}
+                <svg class="jd-icon text-dark filter-clear p-1" style=""><use xlink:href="/layout/icons-feather-sprite.svg#alert-circle"></use></svg>
+              {{/if}}
+          </span></td>
+          {{!-- <td><span>{{preRegisterId}}</span></td> --}}
+          <td><span>{{templateId}}</span></td>
+          <td class="req-data jd-c-pointer" title="{{stringifiedTemplateData}}"><span>{{stringifiedTemplateData 30}}</span></td>
+          <td class="res-data jd-c-pointer" title="{{stringifiedResponse}}"><span>{{stringifiedResponse 30}}</span></td>
+          {{!-- <td><span>{{choice}}</span></td> --}}
+          <td>{{{xssGuard getPseudoRemarksVal}}}</td>
+          <td class="copy-full-log jd-c-pointer"><svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#clipboard"></use></svg></td>
+        </tr>
+      {{/each}}
+    </table>
+  </div>
+</template>

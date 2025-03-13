@@ -1,0 +1,137 @@
+.ai-summary-bootbox
+  .modal-dialog
+    max-width: 850px
+  .modal-body
+    padding: 0px
+  .ai-wizard-header
+    display: flex
+    justify-content: space-between
+    border-bottom: 1px solid #EDF1F8
+    font-weight: 600
+    font-size: 15px
+    color: #3D495B
+    padding: 14px 16px
+    .ai-wizard-header-title
+      display: flex
+      align-items: center
+      .jd-icon
+        stroke-width: 0px
+        margin-right: 4px
+        color: #C660EA
+    .ai-wizard-close
+      cursor: pointer
+      stroke-width: 2px
+
+.tasks-summary
+  display: flex
+  flex-direction: column
+  .ai-wizard-body
+    display: flex
+  .ai-wizard-footer
+    display: flex
+    padding: 14px 16px
+    justify-content: space-between
+  .ai-wizard-title
+    font-weight: 600
+    color: #3D495B
+    font-size: 15px
+    display: flex
+    align-items: center
+    .jd-icon
+      stroke-width: 0.5
+      padding: 3px
+      color: #2b7fdf
+  .ai-wizard-body
+    overflow: auto
+    border-bottom: 1px solid #E3EBF8
+    height: 60vh
+    padding: 16px
+    display: flex
+    flex-direction: column-reverse
+  .ai-wizard-input
+    border: none
+    width: 90%
+    margin-right: 8px
+    background-color: white
+    &::placeholder
+      color: #ABB9C6
+    &:focus
+      outline: none
+  .ai-wizard-spacer
+    display: flex
+    flex-grow: 1
+  .ai-wizard-message
+    display: flex
+    margin-bottom: 12px
+    &.bot
+      justify-content: start
+      .ai-wizard-text
+        max-width: 754px
+        background-color: #F0F6FD
+        color: #3C495B
+        .copy
+          float: right
+          opacity: 0
+          transition: all 0.16s linear
+          cursor: pointer
+          pointer-events: none
+          .jd-icon
+            padding: 3px
+            stroke-width: 2
+            transform: scale(1)
+        &:hover
+          .copy
+            opacity: 1
+            pointer-events: all
+
+        .copy .jd-icon:active
+          transform: scale(0.95)
+
+        pre
+          text-wrap: wrap
+          word-break: break-word
+          white-space: pre-line
+          p
+            margin: 0
+        h1
+          font-size: 1.6em
+        h2
+          font-size: 1.5em
+        h3
+          font-size: 1.4em
+        h4
+          font-size: 1.3em
+        h5
+          font-size: 1.2em
+        h6
+          font-size: 1.1em
+        ol
+          margin-bottom: 4px
+        ul li
+          list-style-type: disc
+          margin-left: 8px
+
+    &.user
+      justify-content: end
+      .ai-wizard-text
+        background-color: #2c7fdf
+        color: white
+  .ai-wizard-avatar
+    width: 36px
+    height: 36px
+    border-radius: 100%
+    margin-right: 8px
+  .ai-wizard-author
+    font-size: 12px
+    font-weight: 600
+    color: black
+    margin-bottom: 6px
+  .ai-wizard-text
+    border-radius: 8px
+    padding: 8px 12px
+  .ai-wizard-close
+    stroke-width: 2
+    opacity: 0.75
+    &:hover
+      opacity: 1
+      transform: scale(1.02)

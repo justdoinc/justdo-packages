@@ -1,0 +1,29 @@
+<template name="ai_analytics_user_journey_dialog_section">
+  <div class="h6">AI requests & responses</div>
+  <table class="table ai-requests-user-journey-table table-hover">
+    <tr>
+      <th>Time</th>
+      <th>Template ID</th>
+      <th>Template Data</th>
+      <th>Response</th>
+      <th>Aborted</th>
+      <th>Error</th>
+      <th>User Choice</th>
+      <th></th>
+    </tr>
+    <tbody>
+      {{#each log}}
+        <tr class="table-{{rowClassByUserChoice}}">
+          <td>{{createdAtToHumanReadable}}</td>
+          <td>{{req.template_id}}</td>
+          <td class="req-container" title="{{stringifiedReq}}">{{stringifiedReq 30}}</td>
+          <td class="res-container" title="{{stringifiedRes}}">{{stringifiedRes 30}}</td>
+          <td>{{#if aborted}}<svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>{{/if}}</td>
+          <td>{{#if err}}<svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>{{/if}}</td>
+          <td>{{userChoice}}</td>
+          <td class="copy-to-clipboard"><svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#clipboard"></use></svg></td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</template>

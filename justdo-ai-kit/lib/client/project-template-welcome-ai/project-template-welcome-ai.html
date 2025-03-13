@@ -1,0 +1,18 @@
+<template name="project_template_welcome_ai">
+  <div class="project-template-welcome-ai">
+    <div class="content {{#if isResponseExists}}show-results{{/if}}">
+      <div class="welcome-ai-title">
+        {{_ "welcome_to_justdo"}}
+      </div>
+
+      <div class="welcome-ai-subtitle">
+        {{_ "welcome_to_justdo_subtitle"}}
+      </div>
+      {{> ai_template_generator childTemplateData}}
+    </div>
+
+    <div class="welcome-ai-skip-wrapper">
+      <svg class="jd-icon welcome-ai-skip bg-primary"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+    </div>
+  </div>
+</template>
