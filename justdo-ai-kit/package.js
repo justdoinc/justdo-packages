@@ -81,6 +81,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/schemas.coffee", both);
 
   api.addFiles("lib/server/static.coffee", server);
+  api.addFiles("lib/server/vendor-api/justdo.coffee", server);
   api.addFiles("lib/server/vendor-api/openai.coffee", server);
   api.addFiles("lib/server/api.coffee", server);
   api.addFiles("lib/server/collections-hooks.coffee", server);
