@@ -3,6 +3,8 @@ _.extend JustdoAiKit.prototype,
     @apis = {}
     @request_templates = {}
 
+    @_setupJustdo()
+
     if @secret_conf.vendors?.openai?
       # Defined in verdor-api/openai.coffee
       @_setupOpenAI()
