@@ -149,6 +149,10 @@ _.extend JustdoAiKit.prototype,
     simplify_response:
       type: Boolean
       optional: true
+    external_request:
+      type: Object
+      blackbox: true
+      optional: true
   _logRequest: (options, user_id) ->
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
@@ -179,6 +183,7 @@ _.extend JustdoAiKit.prototype,
       simplify_response: simplify_response
       performed_by: user_id
       pre_register_id: pre_register_id
+      external_request: options.external_request
     return @query_collection.insert query_log
 
   _newStream: ->
@@ -202,6 +207,10 @@ _.extend JustdoAiKit.prototype,
       optional: true
     simplify_response:
       type: Boolean
+      optional: true
+    external_request:
+      type: Object
+      blackbox: true
       optional: true
   newStream: (options, user_id) ->
     {cleaned_val} =
@@ -241,6 +250,7 @@ _.extend JustdoAiKit.prototype,
       req_id: options.req_id
       pre_register_id: pre_register_id
       simplify_response: options.simplify_response
+      external_request: options.external_request
     log_id = @_logRequest log_request_options, user_id
 
     await return vendor_apis._newStream(stream_type, template, template_data, log_id, user_id)
@@ -261,6 +271,10 @@ _.extend JustdoAiKit.prototype,
       blackbox: true
     pre_register_id:
       type: String
+      optional: true
+    external_request:
+      type: Object
+      blackbox: true
       optional: true
   newChatCompletion: (options, user_id) ->
     {cleaned_val} =
@@ -297,6 +311,7 @@ _.extend JustdoAiKit.prototype,
       template_data: template_data
       req_id: req_id
       pre_register_id: pre_register_id
+      external_request: options.external_request
     log_id = @_logRequest log_request_options, user_id
 
     res = await vendor_apis._newChatCompletion(template, template_data, log_id, user_id)
@@ -336,6 +351,10 @@ _.extend JustdoAiKit.prototype,
     ending_ts:
       type: Number
       optional: true
+    external_request:
+      type: Object
+      optional: true
+      blackbox: true
     fields:
       type: Object
       blackbox: true

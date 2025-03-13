@@ -39,6 +39,15 @@ _.extend JustdoAiKit.prototype,
           blackbox: true
         "req.jdv": # Stands for JustDo Version
           type: String
+        "external_request.ip":
+          type: String
+          optional: true
+        "external_request.installation_id":
+          type: String
+          optional: true
+        "external_request.user_agent":
+          type: String
+          optional: true
         simplify_response:
           type: Boolean
           optional: true
