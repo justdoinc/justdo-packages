@@ -51,13 +51,66 @@ _.extend JustdoAiKit.prototype,
             throw new Error("External server returned status code #{httpRequest.statusCode}")
         catch err
           # Log the error and mark the request as failed
-          console.error "Error setting up stream with external server:", err
+          console.error "Error handling chat completion request:", err
           modifier = 
             $set:
               err: 
                 message: err.message
           self.query_collection.update log_id, modifier
           throw err
+
+      # Helper function to process SSE events
+      _processSSEEvent: (event, ret, stream_type_def, stream_state, connection_active) ->
+        if not event.type? or not event.data? or not connection_active
+          return connection_active
+        
+        try
+          switch event.type
+            when "chunk"
+              data = JSON.parse(event.data)
+              ret.emit "chunk", data.chunk, data.snapshot
+              if (parsed_item = stream_type_def.parser data.chunk, data.snapshot, stream_state)
+                ret.emit "parsed_item", parsed_item
+            when "abort"
+              ret.emit "abort", JSON.parse(event.data)
+              return false
+            when "error"
+              ret.emit "error", JSON.parse(event.data)
+              return false
+            when "end"
+              ret.emit "end"
+              return false
+        catch parse_error
+          console.error "Error parsing SSE data:", parse_error, "Event type:", event.type
+        
+        return connection_active
+
+      # Helper function to parse SSE data chunks
+      _parseSSEData: (buffer, ret, stream_type_def, stream_state, connection_active) ->
+        events_processed = 0
+        
+        # Process events until we can't find more double newlines
+        while connection_active and (eventEnd = buffer.indexOf("\n\n")) != -1
+          # Extract the event data
+          eventData = buffer.substring(0, eventEnd)
+          # Remove the processed event from the buffer
+          buffer = buffer.substring(eventEnd + 2)
+          
+          # Parse the event
+          eventLines = eventData.split("\n")
+          event = {}
+          
+          for line in eventLines
+            if line.indexOf("event: ") == 0
+              event.type = line.substring(7)
+            else if line.indexOf("data: ") == 0
+              event.data = line.substring(6)
+          
+          # Process the event
+          connection_active = @_processSSEEvent(event, ret, stream_type_def, stream_state, connection_active)
+          events_processed++
+        
+        return {buffer, connection_active, events_processed}
 
       # For future devs: When supporting other API vendors (Google Gemini, Mixtral, etc.), if you wish to support streamed responses,
       # you should implement _newStream with the same name and parameters so the higher level newStream can call it properly.
@@ -97,10 +150,10 @@ _.extend JustdoAiKit.prototype,
           # Prepare the request options
           post_data = JSON.stringify(request_data)
           request_options = 
-            method: 'POST'
+            method: "POST"
             headers:
-              'Content-Type': 'application/json'
-              'Content-Length': Buffer.byteLength(post_data)
+              "Content-Type": "application/json"
+              "Content-Length": Buffer.byteLength(post_data)
           
           # For SSE parsing
           buffer = ""
@@ -109,74 +162,44 @@ _.extend JustdoAiKit.prototype,
           # Create a flag to track if the connection is active
           connection_active = true
           
+          # Helper function to log errors and update the query collection
+          logError = (error) ->
+            console.error "Stream error:", error
+            modifier = 
+              $set:
+                err: 
+                  message: error.message
+            self.query_collection.update log_id, modifier
+            return
+          
           req = http_module.request endpoint, request_options, Meteor.bindEnvironment (res) ->
             if res.statusCode isnt 200
               connection_active = false
               error = new Error("External server returned status code #{res.statusCode}")
               ret.emit "error", error
-              
-              # Log the error
-              modifier = 
-                $set:
-                  err: 
-                    message: error.message
-              self.query_collection.update log_id, modifier
-              
+              logError(error)
               return
             
             # Set encoding to UTF-8 for text processing
-            res.setEncoding('utf8')
+            res.setEncoding("utf8")
             
             # Process data chunks as they arrive
-            res.on 'data', Meteor.bindEnvironment (chunk) ->
+            res.on "data", Meteor.bindEnvironment (chunk) ->
               if not connection_active
                 return
                 
               # Add the chunk to our buffer
               buffer += chunk
               
-              # Process events until we can't find more double newlines
-              while (eventEnd = buffer.indexOf("\n\n")) != -1
-                # Extract the event data
-                eventData = buffer.substring(0, eventEnd)
-                # Remove the processed event from the buffer
-                buffer = buffer.substring(eventEnd + 2)
-                
-                # Parse the event
-                eventLines = eventData.split("\n")
-                event = {}
-                
-                for line in eventLines
-                  if line.indexOf("event: ") == 0
-                    event.type = line.substring(7)
-                  else if line.indexOf("data: ") == 0
-                    event.data = line.substring(6)
-                
-                # Process the event if we have both type and data
-                if event.type? and event.data?
-                  try
-                    switch event.type
-                      when "chunk"
-                        data = JSON.parse(event.data)
-                        ret.emit "chunk", data.chunk, data.snapshot
-                        if (parsed_item = stream_type_def.parser data.chunk, data.snapshot, stream_state)
-                          ret.emit "parsed_item", parsed_item
-                      when "abort"
-                        ret.emit "abort", JSON.parse(event.data)
-                        connection_active = false
-                      when "error"
-                        ret.emit "error", JSON.parse(event.data)
-                        connection_active = false
-                      when "end"
-                        ret.emit "end"
-                        connection_active = false
-                  catch parse_error
-                    console.error "Error parsing SSE data:", parse_error, "Event data:", event
+              # Parse and process events from the buffer
+              result = self.justdo._parseSSEData(buffer, ret, stream_type_def, stream_state, connection_active)
+              buffer = result.buffer
+              connection_active = result.connection_active
               
               return
             
             # Handle end of response
-            res.on 'end', Meteor.bindEnvironment ->
+            res.on "end", Meteor.bindEnvironment ->
               if not connection_active
                 return
                 
@@ -194,44 +217,21 @@ _.extend JustdoAiKit.prototype,
                   else if line.indexOf("data: ") == 0
                     event.data = line.substring(6)
                 
-                # Process the event if we have both type and data
-                if event.type? and event.data?
-                  try
-                    switch event.type
-                      when "chunk"
-                        data = JSON.parse(event.data)
-                        ret.emit "chunk", data.chunk, data.snapshot
-                        if (parsed_item = stream_type_def.parser data.chunk, data.snapshot, stream_state)
-                          ret.emit "parsed_item", parsed_item
-                      when "abort"
-                        ret.emit "abort", JSON.parse(event.data)
-                      when "error"
-                        ret.emit "error", JSON.parse(event.data)
-                      when "end"
-                        ret.emit "end"
-                  catch parse_error
-                    console.error "Error parsing remaining SSE data:", parse_error
+                # Process any final event
+                self.justdo._processSSEEvent(event, ret, stream_type_def, stream_state, true)
               
-              # Signal completion if we haven't already
+              # Signal completion if we haven"t already
               ret.emit "end"
               return
           
           # Handle request errors
-          req.on 'error', Meteor.bindEnvironment (err) ->
+          req.on "error", Meteor.bindEnvironment (err) ->
             if not connection_active
               return
               
             connection_active = false
-            console.error "Error in stream request:", err
             ret.emit "error", err
-            
-            # Log the error
-            modifier = 
-              $set:
-                err: 
-                  message: err.message
-            self.query_collection.update log_id, modifier
-            
+            logError(err)
             return
           
           # Implement stop method to abort the stream
@@ -250,13 +250,13 @@ _.extend JustdoAiKit.prototype,
               stop_data = JSON.stringify({req_id})
               
               stop_options = 
-                method: 'POST'
+                method: "POST"
                 headers:
-                  'Content-Type': 'application/json'
-                  'Content-Length': Buffer.byteLength(stop_data)
+                  "Content-Type": "application/json"
+                  "Content-Length": Buffer.byteLength(stop_data)
               
               stop_req = http_module.request stop_endpoint, stop_options
-              stop_req.on 'error', (err) ->
+              stop_req.on "error", (err) ->
                 console.error "Error sending stop request:", err
               
               stop_req.write(stop_data)
