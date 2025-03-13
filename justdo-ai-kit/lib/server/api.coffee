@@ -110,7 +110,7 @@ _.extend JustdoAiKit.prototype,
     if not (request_template = @request_templates[template_id])?
       return 
     
-    return request_template
+    return _.extend {}, request_template
     
   requireRequestTemplate: (template_id) ->
     if not (request_template = @getRequestTemplate template_id)?
