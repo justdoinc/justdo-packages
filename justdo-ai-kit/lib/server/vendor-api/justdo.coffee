@@ -161,8 +161,6 @@ _.extend JustdoAiKit.prototype,
                         ret.emit "chunk", data.chunk, data.snapshot
                         if (parsed_item = stream_type_def.parser data.chunk, data.snapshot, stream_state)
                           ret.emit "parsed_item", parsed_item
-                      when "parsed_item"
-                        ret.emit "parsed_item", JSON.parse(event.data)
                       when "abort"
                         ret.emit "abort", JSON.parse(event.data)
                         connection_active = false
@@ -205,8 +203,6 @@ _.extend JustdoAiKit.prototype,
                         ret.emit "chunk", data.chunk, data.snapshot
                         if (parsed_item = stream_type_def.parser data.chunk, data.snapshot, stream_state)
                           ret.emit "parsed_item", parsed_item
-                      when "parsed_item"
-                        ret.emit "parsed_item", JSON.parse(event.data)
                       when "abort"
                         ret.emit "abort", JSON.parse(event.data)
                       when "error"
