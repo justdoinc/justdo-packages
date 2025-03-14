@@ -33,14 +33,14 @@ if Package["justdoinc:justdo-quick-notes"]?
       # Clean up quick notes before each test
       APP.collections.QuickNotes.remove({user_id: test_user_id})
     
-    describe "addQuickNote", ->
+    describe "addQuickNoteAsync", ->
       it "should add a new quick note", ->
         # Setup
         fields = 
           title: "Test Quick Note"
         
         # Execute
-        APP.justdo_quick_notes.addQuickNote(fields, test_user_id)
+        await APP.justdo_quick_notes.addQuickNoteAsync(fields, test_user_id)
         
         # Verify
         quick_note = APP.collections.QuickNotes.findOne({user_id: test_user_id, title: "Test Quick Note"})
@@ -57,14 +57,14 @@ if Package["justdoinc:justdo-quick-notes"]?
         
         # Execute and Verify
         try
-          APP.justdo_quick_notes.addQuickNote(fields, test_user_id)
+          await APP.justdo_quick_notes.addQuickNoteAsync(fields, test_user_id)
           assert.fail("Expected to throw error")
         catch error
           expect(error).to.exist
         
         return
     
-    describe "editQuickNote", ->
+    describe "editQuickNoteAsync", ->
       beforeEach ->
         # Create a test quick note
         fields = 
@@ -82,7 +82,7 @@ if Package["justdoinc:justdo-quick-notes"]?
           title: "Updated Quick Note"
         
         # Execute
-        APP.justdo_quick_notes.editQuickNote(test_quick_note_id, options, test_user_id)
+        await APP.justdo_quick_notes.editQuickNoteAsync(test_quick_note_id, options, test_user_id)
         
         # Verify
         quick_note = APP.collections.QuickNotes.findOne({_id: test_quick_note_id})
@@ -96,7 +96,7 @@ if Package["justdoinc:justdo-quick-notes"]?
           completed: true
         
         # Execute
-        APP.justdo_quick_notes.editQuickNote(test_quick_note_id, options, test_user_id)
+        await APP.justdo_quick_notes.editQuickNoteAsync(test_quick_note_id, options, test_user_id)
         
         # Verify
         quick_note = APP.collections.QuickNotes.findOne({_id: test_quick_note_id})
@@ -110,7 +110,7 @@ if Package["justdoinc:justdo-quick-notes"]?
           deleted: true
         
         # Execute
-        APP.justdo_quick_notes.editQuickNote(test_quick_note_id, options, test_user_id)
+        await APP.justdo_quick_notes.editQuickNoteAsync(test_quick_note_id, options, test_user_id)
         
         # Verify
         quick_note = APP.collections.QuickNotes.findOne({_id: test_quick_note_id})
@@ -125,7 +125,7 @@ if Package["justdoinc:justdo-quick-notes"]?
         
         # Execute and Verify
         try
-          APP.justdo_quick_notes.editQuickNote("non_existent_id", options, test_user_id)
+          await APP.justdo_quick_notes.editQuickNoteAsync("non_existent_id", options, test_user_id)
           assert.fail("Expected to throw error")
         catch error
           expect(error).to.exist
@@ -136,7 +136,7 @@ if Package["justdoinc:justdo-quick-notes"]?
       it "should throw an error if options is empty", ->
         # Execute and Verify
         try
-          APP.justdo_quick_notes.editQuickNote(test_quick_note_id, {}, test_user_id)
+          await APP.justdo_quick_notes.editQuickNoteAsync(test_quick_note_id, {}, test_user_id)
           assert.fail("Expected to throw error")
         catch error
           expect(error).to.exist
@@ -144,7 +144,7 @@ if Package["justdoinc:justdo-quick-notes"]?
         
         return
     
-    describe "reorderQuickNote", ->
+    describe "reorderQuickNoteAsync", ->
       beforeEach ->
         # Create test quick notes
         APP.collections.QuickNotes.insert({
@@ -167,7 +167,7 @@ if Package["justdoinc:justdo-quick-notes"]?
       
       it "should reorder a quick note to the top", ->
         # Execute
-        APP.justdo_quick_notes.reorderQuickNote(test_quick_note_id, null, test_user_id)
+        await APP.justdo_quick_notes.reorderQuickNoteAsync(test_quick_note_id, null, test_user_id)
         
         # Verify
         quick_note = APP.collections.QuickNotes.findOne({_id: test_quick_note_id})
@@ -180,7 +180,7 @@ if Package["justdoinc:justdo-quick-notes"]?
         put_after_quick_note = APP.collections.QuickNotes.findOne({title: "Quick Note 1"})
         
         # Execute
-        APP.justdo_quick_notes.reorderQuickNote(test_quick_note_id, put_after_quick_note._id, test_user_id)
+        await APP.justdo_quick_notes.reorderQuickNoteAsync(test_quick_note_id, put_after_quick_note._id, test_user_id)
         
         # Verify
         quick_note = APP.collections.QuickNotes.findOne({_id: test_quick_note_id})
@@ -193,7 +193,7 @@ if Package["justdoinc:justdo-quick-notes"]?
       it "should throw an error if target quick note doesn't exist", ->
         # Execute and Verify
         try
-          APP.justdo_quick_notes.reorderQuickNote("non_existent_id", null, test_user_id)
+          await APP.justdo_quick_notes.reorderQuickNoteAsync("non_existent_id", null, test_user_id)
           assert.fail("Expected to throw error")
         catch error
           expect(error).to.exist
@@ -204,7 +204,7 @@ if Package["justdoinc:justdo-quick-notes"]?
       it "should throw an error if trying to put a quick note after itself", ->
         # Execute and Verify
         try
-          APP.justdo_quick_notes.reorderQuickNote(test_quick_note_id, test_quick_note_id, test_user_id)
+          await APP.justdo_quick_notes.reorderQuickNoteAsync(test_quick_note_id, test_quick_note_id, test_user_id)
           assert.fail("Expected to throw error")
         catch error
           expect(error).to.exist
@@ -212,7 +212,7 @@ if Package["justdoinc:justdo-quick-notes"]?
         
         return
     
-    describe "createTaskFromQuickNote", ->
+    describe "createTaskFromQuickNoteAsync", ->
       beforeEach ->
         # Create a test quick note
         test_quick_note_id = APP.collections.QuickNotes.insert({
@@ -223,7 +223,7 @@ if Package["justdoinc:justdo-quick-notes"]?
       
       it "should create a task from a quick note", ->
         # Execute
-        created_task_id = APP.justdo_quick_notes.createTaskFromQuickNote(
+        created_task_id = await APP.justdo_quick_notes.createTaskFromQuickNoteAsync(
           test_quick_note_id, 
           test_project_id, 
           "0", 
@@ -251,7 +251,7 @@ if Package["justdoinc:justdo-quick-notes"]?
       
       it "should throw an error if a task was already created from the quick note", ->
         # Setup - Create a task from the quick note
-        created_task_id = APP.justdo_quick_notes.createTaskFromQuickNote(
+        created_task_id = await APP.justdo_quick_notes.createTaskFromQuickNoteAsync(
           test_quick_note_id, 
           test_project_id, 
           "0", 
@@ -261,7 +261,7 @@ if Package["justdoinc:justdo-quick-notes"]?
         
         # Execute and Verify
         try
-          APP.justdo_quick_notes.createTaskFromQuickNote(
+          await APP.justdo_quick_notes.createTaskFromQuickNoteAsync(
             test_quick_note_id, 
             test_project_id, 
             "0", 
@@ -275,7 +275,7 @@ if Package["justdoinc:justdo-quick-notes"]?
         
         return
     
-    describe "undoCreateTaskFromQuickNote", ->
+    describe "undoCreateTaskFromQuickNoteAsync", ->
       beforeEach ->
         # Create a test quick note
         test_quick_note_id = APP.collections.QuickNotes.insert({
@@ -285,7 +285,7 @@ if Package["justdoinc:justdo-quick-notes"]?
         })
         
         # Create a task from the quick note
-        created_task_id = APP.justdo_quick_notes.createTaskFromQuickNote(
+        created_task_id = await APP.justdo_quick_notes.createTaskFromQuickNoteAsync(
           test_quick_note_id, 
           test_project_id, 
           "0", 
@@ -304,7 +304,7 @@ if Package["justdoinc:justdo-quick-notes"]?
         expect(task_before._raw_removed_date).to.not.exist
         
         # Execute
-        APP.justdo_quick_notes.undoCreateTaskFromQuickNote(test_quick_note_id, test_user_id)
+        await APP.justdo_quick_notes.undoCreateTaskFromQuickNoteAsync(test_quick_note_id, test_user_id)
         
         # Verify quick note is restored
         quick_note = APP.collections.QuickNotes.findOne({_id: test_quick_note_id})
@@ -324,7 +324,7 @@ if Package["justdoinc:justdo-quick-notes"]?
         
         # Execute and Verify
         try
-          APP.justdo_quick_notes.undoCreateTaskFromQuickNote(test_quick_note_id, test_user_id)
+          await APP.justdo_quick_notes.undoCreateTaskFromQuickNoteAsync(test_quick_note_id, test_user_id)
           assert.fail("Expected to throw error")
         catch error
           expect(error).to.exist
