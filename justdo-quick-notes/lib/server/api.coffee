@@ -39,23 +39,23 @@ _.extend JustdoQuickNotes.prototype,
 
     return
 
-  getQuickNoteDoc: (quick_note_id, user_id, fields) ->
+  getQuickNoteDocAsync: (quick_note_id, user_id, fields) ->
     check user_id, String
     check quick_note_id, String
     check fields, Object
 
-    return @quick_notes_collection.findOne {_id: quick_note_id, user_id: user_id}, {fields: fields}
+    return await @quick_notes_collection.findOneAsync {_id: quick_note_id, user_id: user_id}, {fields: fields}
 
-  requireQuickNoteDoc: (quick_note_id, user_id, fields={_id: 1}) ->
+  requireQuickNoteDocAsync: (quick_note_id, user_id, fields={_id: 1}) ->
     # Checks on parameter will be performed in getQuickNoteDoc()
-    if not (quick_note_doc = @getQuickNoteDoc quick_note_id, user_id, fields)?
+    if not (quick_note_doc = await @getQuickNoteDocAsync quick_note_id, user_id, fields)?
       throw @_error "unknown-quick-note", "Unknown Quick Note"
     return quick_note_doc
 
   _addQuickNoteFieldsSchema: new SimpleSchema
     title:
       type: String
-  addQuickNote: (fields, user_id) ->
+  addQuickNoteAsync: (fields, user_id) ->
     check user_id, String
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
@@ -69,7 +69,7 @@ _.extend JustdoQuickNotes.prototype,
       user_id: user_id
       order: _.now()
 
-    @quick_notes_collection.insert fields
+    await @quick_notes_collection.insertAsync fields
     return
 
   _editQuickNoteOptionsSchema: new SimpleSchema
@@ -84,7 +84,7 @@ _.extend JustdoQuickNotes.prototype,
     deleted:
       type: Boolean
       optional: true
-  editQuickNote: (quick_note_id, options, user_id) ->
+  editQuickNoteAsync: (quick_note_id, options, user_id) ->
     check user_id, String
     check quick_note_id, String
     {cleaned_val} =
@@ -109,12 +109,12 @@ _.extend JustdoQuickNotes.prototype,
 
     # Below is to ensure quick_note_id is valid and the note belongs to user_id
     # Error will be thrown by requireQuickNoteDoc() if any of the two is invalid.
-    @requireQuickNoteDoc quick_note_id, user_id
+    await @requireQuickNoteDocAsync quick_note_id, user_id
 
-    @quick_notes_collection.update quick_note_id, {$set: options}
+    await @quick_notes_collection.updateAsync quick_note_id, {$set: options}
     return
 
-  reorderQuickNote: (target_quick_note_id, put_after_quick_note_id, user_id) ->
+  reorderQuickNoteAsync: (target_quick_note_id, put_after_quick_note_id, user_id) ->
     check user_id, String
     check target_quick_note_id, String
     check put_after_quick_note_id, Match.Maybe String
@@ -126,16 +126,16 @@ _.extend JustdoQuickNotes.prototype,
       throw @_error "invalid-argument", "You cannot put a quick note after itself"
 
     # Check if target quick note exists and user has access to this quick note
-    @requireQuickNoteDoc target_quick_note_id, user_id
+    await @requireQuickNoteDocAsync target_quick_note_id, user_id
 
     # Putting the target quick note to the top
     if not put_after_quick_note_id?
-      @quick_notes_collection.update target_quick_note_id,
+      await @quick_notes_collection.updateAsync target_quick_note_id,
         $set:
           order: _.now()
       return
 
-    put_after_quick_note_order = @requireQuickNoteDoc(put_after_quick_note_id, user_id, {order: 1}).order
+    put_after_quick_note_order = (await @requireQuickNoteDocAsync(put_after_quick_note_id, user_id, {order: 1})).order
 
     #
     # IMPORTANT, if you change put_before_quick_note_query, don't forget to update the collections-indexes.coffee
@@ -154,7 +154,7 @@ _.extend JustdoQuickNotes.prototype,
         order: -1
       limit: 1
 
-    put_before_quick_note_order = @quick_notes_collection.findOne(put_before_quick_note_query, put_before_quick_note_options)?.order
+    put_before_quick_note_order = (await @quick_notes_collection.findOneAsync(put_before_quick_note_query, put_before_quick_note_options))?.order
 
     # If put_before_quick_note exists, squeeze target_quick_note in between put_before_quick_note and put_after_quick_note
     if put_before_quick_note_order?
@@ -167,22 +167,22 @@ _.extend JustdoQuickNotes.prototype,
         $set:
           order: put_after_quick_note_order - space_between_the_last_quick_note
 
-    @quick_notes_collection.update target_quick_note_id, target_quick_note_update_op
+    await @quick_notes_collection.updateAsync target_quick_note_id, target_quick_note_update_op
     return
 
-  createTaskFromQuickNote: (quick_note_id, project_id, parent_id, order=0, user_id) ->
+  createTaskFromQuickNoteAsync: (quick_note_id, project_id, parent_id, order=0, user_id) ->
     check quick_note_id, String
     check project_id, String
     check parent_id, String
     check order, Number
     check user_id, String
 
-    quick_note_doc = @requireQuickNoteDoc(quick_note_id, user_id, {title: 1, created_task_id: 1})
+    quick_note_doc = await @requireQuickNoteDocAsync(quick_note_id, user_id, {title: 1, created_task_id: 1})
     if quick_note_doc.created_task_id?
       throw @_error "task-created-already", "A task was already created from this Quick Note"
 
     # Check if user is a member of this project
-    APP.projects.requireUserIsMemberOfProject project_id, user_id
+    await APP.projects.requireUserIsMemberOfProject project_id, user_id
 
     task_fields =
       project_id: project_id
@@ -197,7 +197,7 @@ _.extend JustdoQuickNotes.prototype,
     else
       target_path = "/#{parent_id}/"
 
-    if not (created_task_id = grid_data.addChild target_path, task_fields, user_id)?
+    if not (created_task_id = await grid_data.addChild target_path, task_fields, user_id)?
       throw @_error "add-task-failed", "Failed to create task from Quick Note"
 
     if parent_id is "0"
@@ -206,39 +206,39 @@ _.extend JustdoQuickNotes.prototype,
       created_task_path = "/#{parent_id}/#{created_task_id}/"
 
     # Move the order of the created task
-    add_task_existing_parents = APP.collections.Tasks.findOne(created_task_id, {fields: {parents: 1}}).parents
+    add_task_existing_parents = (await APP.collections.Tasks.findOneAsync(created_task_id, {fields: {parents: 1}})).parents
     if add_task_existing_parents[parent_id].order != order
-      grid_data.movePath created_task_path, {parent: parent_id, order: order}, user_id
+      await grid_data.movePath created_task_path, {parent: parent_id, order: order}, user_id
 
     quick_note_op =
       $set:
         deleted: new Date
         created_task_id: created_task_id
 
-    @quick_notes_collection.update quick_note_id, quick_note_op
+    await @quick_notes_collection.updateAsync quick_note_id, quick_note_op
 
     return created_task_id
 
-  undoCreateTaskFromQuickNote: (quick_note_id, user_id) ->
+  undoCreateTaskFromQuickNoteAsync: (quick_note_id, user_id) ->
     check user_id, String
     check quick_note_id, String
 
     # One could simply use quick_note_id to query for task doc,
     # but since we'll need requireQuickNoteDoc() to check if the quick note belongs to the user,
     # the created_task_id is obtained for better query performance on the tasks collection
-    if not (task_id = @requireQuickNoteDoc(quick_note_id, user_id, {created_task_id: 1}).created_task_id)?
+    if not (task_id = (await @requireQuickNoteDocAsync(quick_note_id, user_id, {created_task_id: 1})).created_task_id)?
       throw @_error "invalid-argument", "No task was created by this Quick Note"
 
-    if not (task_parent = _.keys @tasks_collection.findOne({_id: task_id, users: user_id}, {fields: {parents: 1}})?.parents)?
+    if not (task_parent = _.keys (await @tasks_collection.findOneAsync({_id: task_id, users: user_id}, {fields: {parents: 1}}))?.parents)?
       throw @_error "task-not-found", "Task not found"
 
     if (task_parent.length > 1)
       throw @_error "cannot-undo", "Undo not supported for this task"
 
     path_to_created_task = "/#{task_parent[0]}/#{task_id}/"
-    APP.projects._grid_data_com.removeParent path_to_created_task, user_id
+    await APP.projects._grid_data_com.removeParent path_to_created_task, user_id
 
-    @quick_notes_collection.update quick_note_id,
+    await @quick_notes_collection.updateAsync quick_note_id,
       $set:
         created_task_id: null
         deleted: null
