@@ -7,7 +7,7 @@ _.extend JustdoQuickNotes.prototype,
         check @userId, String
         # Check on fields will be performed in self.addQuickNote()
 
-        self.addQuickNote fields, @userId
+        self.addQuickNoteAsync fields, @userId
         return
 
       "editQuickNote": (quick_note_id, options) ->
@@ -15,7 +15,7 @@ _.extend JustdoQuickNotes.prototype,
         check quick_note_id, String
         # Check on options will be performed in self.editQuickNote()
 
-        self.editQuickNote quick_note_id, options, @userId
+        self.editQuickNoteAsync quick_note_id, options, @userId
         return
 
       "reorderQuickNote": (target_quick_note_id, put_after_quick_note_id) ->
@@ -23,7 +23,7 @@ _.extend JustdoQuickNotes.prototype,
         check target_quick_note_id, String
         check put_after_quick_note_id, Match.Maybe String
 
-        self.reorderQuickNote target_quick_note_id, put_after_quick_note_id, @userId
+        self.reorderQuickNoteAsync target_quick_note_id, put_after_quick_note_id, @userId
         return
 
       "createTaskFromQuickNote": (quick_note_id, project_id, parent_path, order) ->
@@ -33,13 +33,13 @@ _.extend JustdoQuickNotes.prototype,
         check parent_path, String
         check order, Number
 
-        return self.createTaskFromQuickNote quick_note_id, project_id, parent_path, order, @userId
+        return self.createTaskFromQuickNoteAsync quick_note_id, project_id, parent_path, order, @userId
 
       "undoCreateTaskFromQuickNote": (quick_note_id) ->
         check @userId, String
         check quick_note_id, String
 
-        self.undoCreateTaskFromQuickNote quick_note_id, @userId
+        self.undoCreateTaskFromQuickNoteAsync quick_note_id, @userId
         return
         
     return
