@@ -61,24 +61,16 @@ _.extend JustdoI18nRoutes.prototype,
       # Check if this path with this language is supported
       # This uses the same logic as in router.coffee's postMapGenerator
       hrp_path_without_lang = processed_lang_details.processed_path
-      # Remove HRP portion if present
-      url_without_hrp_and_lang = APP.justdo_seo?.getPathWithoutHumanReadableParts(hrp_path_without_lang) or hrp_path_without_lang
-      route_name = JustdoHelpers.getRouteNameFromPath url_without_hrp_and_lang
-      route = Router.routes[route_name]
       
-      if route?.options?.getI18nKeyToDetermineSupportedLangs?
-        i18n_key_to_determine_supported_langs = route.options.getI18nKeyToDetermineSupportedLangs(url_without_hrp_and_lang)
-        if i18n_key_to_determine_supported_langs?
-          all_supported_langs = _.keys APP.justdo_i18n.getSupportedLanguages()
-          supported_langs = APP.justdo_i18n.getTranslatedLangsForI18nKey i18n_key_to_determine_supported_langs
-          supported_langs = _.intersection supported_langs, all_supported_langs
-          
-          if processed_lang_details.lang_tag not in supported_langs
-            # The content doesn't support this language - redirect to default lang
-            res.writeHead 302, 
-              Location: hrp_path_without_lang
-            res.end()
-            return
+      # Get supported languages for this path using our helper
+      supported_langs = @getSupportedLangsForPath(hrp_path_without_lang)
+      
+      if not _.isEmpty(supported_langs) and (processed_lang_details.lang_tag not in supported_langs)
+        # The content doesn't support this language - redirect to default lang
+        res.writeHead 302, 
+          Location: hrp_path_without_lang
+        res.end()
+        return
 
       # Case was fine, and it's not the default lang, continue
       next()
@@ -100,3 +92,39 @@ _.extend JustdoI18nRoutes.prototype,
 
   getUrlLangFromReq: (req) -> @getStrippedPathAndLangFromReq(req).lang_tag
   getUrlLang: (absolute_path) -> @getUrlLangFromReq({originalUrl: absolute_path})
+
+  # Server-only method to get the list of supported languages for a given path/route
+  getSupportedLangsForPath: (path) ->
+    # Remove HRP from path if possible
+    path_without_hrp = if APP.justdo_seo?
+      APP.justdo_seo.getPathWithoutHumanReadableParts(path)
+    else
+      path
+    
+    # Get route and check for language support restrictions
+    route_name = JustdoHelpers.getRouteNameFromPath path_without_hrp
+    route = Router.routes[route_name]
+    
+    # If the route isn't translatable, return only the default language
+    if not route?.options?.translatable
+      return [JustdoI18n.default_lang]
+    
+    all_supported_langs = _.keys APP.justdo_i18n.getSupportedLanguages()
+
+    # Use the extracted function to get the i18n key
+    i18n_key = @getI18nKeyToDetermineSupportedLangFromPath(path)
+    
+    # If no i18n key, return all supported languages
+    if not i18n_key?
+      return all_supported_langs
+      
+    # Get languages that have translations for this i18n key
+    translated_langs = APP.justdo_i18n.getTranslatedLangsForI18nKey(i18n_key)
+    # Ensure the returned languages are valid supported languages
+    supported_langs = _.intersection translated_langs, all_supported_langs
+    
+    # If no translations found, return only default language
+    if _.isEmpty(supported_langs)
+      return [JustdoI18n.default_lang]
+    
+    return supported_langs

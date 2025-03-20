@@ -44,7 +44,10 @@ _.extend JustdoI18nRoutes.prototype,
           if (map_obj.url is "/") and (map_obj.route.options?.translatable is true)
             map_obj.translations = []
 
-            for lang_tag of APP.justdo_i18n.getSupportedLanguages()
+            # For the main page, we usually support all languages, but check with getSupportedLangsForPath to be consistent
+            supported_langs = self.getSupportedLangsForPath("/")
+            
+            for lang_tag in supported_langs
               translated_map_obj = _.extend {}, map_obj,
                 url: self.i18nPath "/", lang_tag
                 lang: lang_tag
@@ -63,14 +66,7 @@ _.extend JustdoI18nRoutes.prototype,
           if (map_obj.route.options?.translatable is true) and (map_obj.url isnt "/")
             map_obj.translations = []
 
-            # getI18nKeyToDetermineSupportedLangs is expected to return an i18n key indicating the supported languages of the given path.
-            # If the function not defined, or it returns a falsy value, the supported languages will be all the languages.
-            if (i18n_key_to_determine_supported_langs = map_obj.route.options?.getI18nKeyToDetermineSupportedLangs?(map_obj.url))?
-              supported_langs = APP.justdo_i18n.getTranslatedLangsForI18nKey i18n_key_to_determine_supported_langs
-              # Ensure that the supported languages are supported.
-              supported_langs = _.intersection supported_langs, all_supported_langs
-            else
-              supported_langs = all_supported_langs
+            supported_langs = self.getSupportedLangsForPath(map_obj.url)
 
             for lang_tag in supported_langs
               translated_map_obj = _.extend {}, map_obj,
