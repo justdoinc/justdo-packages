@@ -191,3 +191,22 @@ _.extend JustdoI18nRoutes.prototype,
 
   getPathWithoutLangPrefix: (url) -> @getStrippedPathAndLang(url).processed_path
   
+  # Get the i18n key that determines which languages are supported for a given path
+  getI18nKeyToDetermineSupportedLangFromPath: (path) ->
+    # Remove HRP from path if possible
+    path_without_hrp = if APP.justdo_seo?
+      APP.justdo_seo.getPathWithoutHumanReadableParts(path)
+    else
+      path
+    
+    # Get route and check for language support restrictions
+    route_name = JustdoHelpers.getRouteNameFromPath path_without_hrp
+    route = Router.routes[route_name]
+    
+    # If the route isn't translatable or doesn't have the function, return undefined
+    if not route?.options?.translatable or not route?.options?.getI18nKeyToDetermineSupportedLangs?
+      return undefined
+    
+    # Return the i18n key that determines supported languages for this path
+    return route.options.getI18nKeyToDetermineSupportedLangs(path_without_hrp)
+  

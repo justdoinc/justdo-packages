@@ -35,6 +35,12 @@ _.extend JustdoI18nRoutes.prototype,
         cur_path = @getCurrentPathWithoutLangPrefix()
         cur_route_name = @getCurrentRouteName()
 
+        # Check if the current path has an i18n key restriction.
+        i18n_key = @getI18nKeyToDetermineSupportedLangFromPath cur_path
+        # If the current path has an i18n key restriction, and the current lang is not supported, do nothing.
+        if i18n_key? and not APP.justdo_i18n.isI18nKeyTranslatedInLang(i18n_key)
+          return
+
         if (@isRouteI18nAble cur_route_name) and (i18n_path = @i18nPathAndHrp cur_path)?
           Router.go i18n_path, {}, {replaceState: true}
 
