@@ -34,6 +34,7 @@ _.extend JustdoI18nRoutes.prototype,
       #
       #   1. Redirecting to the default language if the language tag is the default one (/en/pricing -> /pricing)
       #   2. Redirecting to the proper language tag if the language tag is supported but case mismatches (e.g. /zh-tw/pricing -> /zh-TW/pricing)
+      #   3. Redirecting to the default language path if the language tag is not supported for the content
 
       processed_lang_details = @getStrippedPathAndLangFromReq(req)
 
@@ -56,6 +57,28 @@ _.extend JustdoI18nRoutes.prototype,
           Location: req.originalUrl.replace processed_lang_details.original_lang_tag, processed_lang_details.lang_tag
         res.end()
         return
+
+      # Check if this path with this language is supported
+      # This uses the same logic as in router.coffee's postMapGenerator
+      hrp_path_without_lang = processed_lang_details.processed_path
+      # Remove HRP portion if present
+      url_without_hrp_and_lang = APP.justdo_seo?.getPathWithoutHumanReadableParts(hrp_path_without_lang) or hrp_path_without_lang
+      route_name = JustdoHelpers.getRouteNameFromPath url_without_hrp_and_lang
+      route = Router.routes[route_name]
+      
+      if route?.options?.getI18nKeyToDetermineSupportedLangs?
+        i18n_key_to_determine_supported_langs = route.options.getI18nKeyToDetermineSupportedLangs(url_without_hrp_and_lang)
+        if i18n_key_to_determine_supported_langs?
+          all_supported_langs = _.keys APP.justdo_i18n.getSupportedLanguages()
+          supported_langs = APP.justdo_i18n.getTranslatedLangsForI18nKey i18n_key_to_determine_supported_langs
+          supported_langs = _.intersection supported_langs, all_supported_langs
+          
+          if processed_lang_details.lang_tag not in supported_langs
+            # The content doesn't support this language - redirect to default lang
+            res.writeHead 302, 
+              Location: hrp_path_without_lang
+            res.end()
+            return
 
       # Case was fine, and it's not the default lang, continue
       next()
