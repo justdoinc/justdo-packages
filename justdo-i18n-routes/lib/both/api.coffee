@@ -81,7 +81,7 @@ _.extend JustdoI18nRoutes.prototype,
 
     return
 
-  i18nPath: (path, lang) ->
+  i18nPath: (path, lang, options = {}) ->
     # This function is used to convert a path to an i18n path.
     #
     # Arguments:
@@ -93,6 +93,8 @@ _.extend JustdoI18nRoutes.prototype,
     #         note that if lang isn't provided, we will use the current lang in the client.
     #         this will make this function a reactive resource.
     #
+    #   options:
+    #     skip_lang_check: if true, we will not check if the lang is supported for this path.
 
     if not path?
       path = "/"
@@ -113,8 +115,21 @@ _.extend JustdoI18nRoutes.prototype,
       return path
     
     route_name = JustdoHelpers.getRouteNameFromPath path
+    
+    # If it's the default language or the route is not i18n-able, return the path as is
     if (lang is JustdoI18n.default_lang) or (not @isRouteI18nAble route_name)
       return path
+    
+    # Server-side language support check
+    if options.skip_lang_check
+      if Meteor.isClient
+        throw @_error "not-supported", "i18nPath: skip_lang_check option is not supported in the client."
+    else if Meteor.isServer
+      # Check if this language is supported for this path
+      supported_langs = @getSupportedLangsForPath(path)
+      # If the current language is not supported, return path without language prefix
+      if not _.isEmpty(supported_langs) and lang not in supported_langs
+        return path
     
     return "#{JustdoI18nRoutes.langs_url_prefix}/#{lang}#{if path is "/" then "" else path}"
 
@@ -133,8 +148,10 @@ _.extend JustdoI18nRoutes.prototype,
     if not path?
       path = "/"
     
+    # First get the i18n path (which now checks for language support)
     path = @i18nPath path, lang
 
+    # Then apply HRP if available
     if APP.justdo_seo?
       return APP.justdo_seo.getCanonicalHrpURL(path)
 
