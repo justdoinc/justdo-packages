@@ -18,6 +18,20 @@ Template.lang_selector_dropdown.helpers
   isLangActive: (lang_tag) ->
     return APP.justdo_i18n.getLang() is lang_tag
 
+  shouldSkipLangOption: (lang_tag) ->
+    # Don't skip if it's the default language
+    if lang_tag is JustdoI18n.default_lang
+      return false 
+    
+    # Get the current path without language prefix
+    current_path = APP.justdo_i18n_routes.getCurrentPathWithoutLangPrefix()
+    
+    # Get the i18n path for this language
+    i18n_path = APP.justdo_i18n_routes.i18nPathAndHrp current_path, lang_tag
+    
+    # Skip if the path is the same as the original path (meaning this language is not supported)
+    return i18n_path is current_path
+
 Template.lang_selector_dropdown.events
   "click .dropdown-item": (e, tpl) ->
     lang_tag =  $(e.target).closest(".dropdown-item").data("lang-tag")

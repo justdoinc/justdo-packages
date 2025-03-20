@@ -9,7 +9,9 @@
         {{#each supportedLangs}}
           <div class="dropdown-items-wrapper">
             {{#each this}}
-              <a href="{{i18nCurrentPagePath _id}}" class="dropdown-item {{#if isLangActive _id}}active-lang{{/if}}" data-lang-tag="{{_id}}" >{{name}}</a>
+              {{#unless shouldSkipLangOption _id}}
+                <a href="{{i18nCurrentPagePath _id}}" class="dropdown-item {{#if isLangActive _id}}active-lang{{/if}}" data-lang-tag="{{_id}}" >{{name}}</a>
+              {{/unless}}
             {{/each}}
           </div>
         {{/each}}
