@@ -155,3 +155,14 @@ _.extend JustdoI18n.prototype,
   isRouteTranslatable: (route_name) ->
     route = Router.routes[route_name]
     return route?.options?.translatable
+  
+  # For a given i18n key and lang, return true if the i18n key is translated in the given lang.
+  isI18nKeyTranslatedInLang: (i18n_key, lang) ->
+    if Meteor.isClient
+      # Client side only supports checking with the current lang or default lang since the translation file will only be loaded upon requested.
+      if lang? and (lang not in [@getLang(), JustdoI18n.default_lang])
+        throw @_error "isI18nKeyTranslatedInLang: client side only supports checking with the current lang or default lang"
+      if not lang?
+        lang = @getLang()
+
+    return TAPi18next.options.resStore[lang]?[JustdoI18n.default_i18n_namespace]?[i18n_key]?
