@@ -198,12 +198,30 @@ _.extend JustdoHelpers,
       return "#ffffff"
 
   hexToRgb: (hex) ->
-    result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
-
-    if not result?
+    # Handle empty or invalid input
+    return [0, 0, 0] unless hex?.length
+    
+    # Remove # if present
+    hex = hex.replace('#', '')
+    
+    # Handle shorthand hex (#fff)
+    if hex.length is 3
+      r = parseInt(hex.charAt(0) + hex.charAt(0), 16)
+      g = parseInt(hex.charAt(1) + hex.charAt(1), 16)
+      b = parseInt(hex.charAt(2) + hex.charAt(2), 16)
+    else if hex.length is 6
+      r = parseInt(hex.substring(0, 2), 16)
+      g = parseInt(hex.substring(2, 4), 16)
+      b = parseInt(hex.substring(4, 6), 16)
+    else
       return [0, 0, 0]
-
-    return [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)]
+    
+    # Handle NaN values that might occur with invalid hex
+    r = if isNaN(r) then 0 else r
+    g = if isNaN(g) then 0 else g
+    b = if isNaN(b) then 0 else b
+    
+    return [r, g, b]
 
 _.extend JustdoHelpers,
   escaped_chars_within_defined_block_encode_map:
