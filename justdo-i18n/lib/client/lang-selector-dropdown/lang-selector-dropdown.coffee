@@ -26,11 +26,14 @@ Template.lang_selector_dropdown.helpers
     # Get the current path without language prefix
     current_path = APP.justdo_i18n_routes.getCurrentPathWithoutLangPrefix()
     
+    # Get the default language path for this current path
+    default_lang_path = APP.justdo_i18n_routes.i18nPathAndHrp current_path, JustdoI18n.default_lang
+    
     # Get the i18n path for this language
     i18n_path = APP.justdo_i18n_routes.i18nPathAndHrp current_path, lang_tag
     
-    # Skip if the path is the same as the original path (meaning this language is not supported)
-    return i18n_path is current_path
+    # Skip if the path is the same as the default language path (meaning this language is not supported)
+    return i18n_path is default_lang_path
 
 Template.lang_selector_dropdown.events
   "click .dropdown-item": (e, tpl) ->
