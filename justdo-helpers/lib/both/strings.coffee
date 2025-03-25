@@ -223,6 +223,11 @@ _.extend JustdoHelpers,
     
     return [r, g, b]
 
+  # Convert hex color to RGB string for use in rgba()
+  hexToRgbStr: (hex) ->
+    rgb = @hexToRgb(hex)
+    return "#{rgb[0]}, #{rgb[1]}, #{rgb[2]}"
+
 _.extend JustdoHelpers,
   escaped_chars_within_defined_block_encode_map:
     ",": "\u000B"
