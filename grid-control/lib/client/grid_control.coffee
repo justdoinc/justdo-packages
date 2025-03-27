@@ -1,4 +1,4 @@
-GridControl = (options, container, operations_container) ->
+GridControl = (options, container) ->
   EventEmitter.call this
 
   default_options =
@@ -26,7 +26,6 @@ GridControl = (options, container, operations_container) ->
 
   @collection = options.items_collection
   @container = container
-  @operations_container = $(operations_container)
 
   @_initialized = false
   @_init_dfd = new $.Deferred() # resolved after init event emition; rejected if destroyed before init
