@@ -181,7 +181,13 @@ _.extend JustdoAccounts.prototype,
       user_options.is_proxy = true
 
       if not user_options.profile.profile_pic?
-        user_options.profile.profile_pic = JustdoAvatar.showUserAvatarOrFallback user_options
+        user_options.profile.profile_pic = JustdoAvatar.showAvatarOrFallback(
+          user_options.profile.profile_pic, 
+          user_options.email, 
+          user_options.profile.first_name, 
+          user_options.profile.last_name, 
+          {avatar_bg: user_options.profile.avatar_bg, avatar_fg: user_options.profile.avatar_fg, is_proxy: true}
+        )
 
       APP.emit("before-create-user", user_options)
       created_user_id = Accounts.createUser user_options
@@ -220,7 +226,13 @@ _.extend JustdoAccounts.prototype,
       throw @_error("invalid-email")
 
     if not profile.profile_pic?
-      profile.profile_pic = JustdoAvatar.showUserAvatarOrFallback options
+      profile.profile_pic = JustdoAvatar.showAvatarOrFallback(
+        profile.profile_pic, 
+        options.email, 
+        profile.first_name, 
+        profile.last_name, 
+        {avatar_bg: profile.avatar_bg, avatar_fg: profile.avatar_fg}
+      )
     
     # If the profile pic is the default avatar, we don't want to save it.
     default_avatar_url = JustdoAvatar.showUserAvatarOrFallback()
