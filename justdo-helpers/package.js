@@ -110,6 +110,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/justdo-events-standardization.coffee", client);
   api.addFiles("lib/client/numbers.coffee", client);
   api.addFiles("lib/client/mods/justdo-direct-ownership-assignment.coffee", client);
+  api.addFiles("lib/client/grid-control.coffee", client);
 
   api.addFiles("lib/server/http-auth.coffee", server);
   api.addFiles("lib/server/app-domains.coffee", server);
