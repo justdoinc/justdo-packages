@@ -29,5 +29,20 @@ APP.justdo_crm.registerNews "news",
           }
         ]
       }
+    },
+    {
+      _id: "features"
+      template_name: "news_features"
+      name: "v5_8_news_features_name"
+      page_title: "v5_8_news_features_page_title"
+      page_description: "v5_8_news_features_page_description"
+      
+      features: [
+        {
+          "title": "v5_8_news_features_proxy_avatar_title"
+          "subtitle": "v5_8_news_features_proxy_avatar_subtitle"
+          "description": "v5_8_news_features_proxy_avatar_description"
+        }
+      ]
     }
   ]
