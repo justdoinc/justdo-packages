@@ -13,9 +13,8 @@
   "v5_8_news_main_array_item_3_subtitle": "We’ve made it easier to see where each searched task fits in your project hierarchy. With our new Grid Search Results Dropdown:<br><br><ul><li><b>Immediate Parent Visibility</b>: Each search result now displays its direct parent, giving you instant context on where the item lives.</li><li><b>“Show More Context” Toggle</b>: Need a bigger picture? Flip the toggle to reveal additional hierarchy levels beyond the immediate parent, so you can quickly navigate the broader structure of your project.</li></ul><br>This update helps you understand how each task or item relates to the bigger workflow, saving you time and clicks. Give it a try and streamline your project navigation today!",
 
   "v5_8_news_features_name": "Other Updates",
-  "v5_8_news_features_page_title": "JustDo v5.8: Additional Features & Improvements",
-  "v5_8_news_features_page_description": "Discover the latest enhancements in JustDo v5.8, including customizable proxy user avatars and more!",
-  "v5_8_news_features_proxy_avatar_title": "Customizable Proxy User Avatars",
-  "v5_8_news_features_proxy_avatar_subtitle": "Greater control for admins and user inviters",
-  "v5_8_news_features_proxy_avatar_description": "We've enhanced proxy user management by allowing site admins and user inviters to edit proxy users' avatar colors. This feature provides better visual differentiation between proxy accounts and improves overall team organization in your JustDo workspace."
+  "v5_8_news_features_title": "Improvements",
+  "v5_8_news_features_update_items": [
+    "1. <b>Customizable Proxy User Avatars</b>: Site administrators and inviters can now edit proxy users' avatar colors, providing better visual differentiation between proxy accounts and improving overall team organization."
+  ]
 }
