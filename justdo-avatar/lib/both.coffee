@@ -162,3 +162,73 @@ _.extend JustdoAvatar,
 
     $svg = $(window.atob(avatar_url))
     return $svg
+  
+  # Extract avatar background and foreground colors from a base64 svg URI
+  # Returns an object of the following structure:
+  # {
+  #   avatar_bg: "#000000",
+  #   avatar_fg: "#000000"
+  # }
+  #
+  # Returns undefined if the avatar is not a base64 svg
+  extractColorsFromBase64Svg: (avatar_url) ->
+    if not @isAvatarBase64Svg avatar_url
+      return
+    
+    avatar_url = avatar_url.replace @getBase64SvgPrefix(), ""
+    
+    svg_str = ""
+    if Meteor.isServer
+      svg_str = Buffer.from(avatar_url, "base64").toString()
+    if Meteor.isClient
+      svg_str = window.atob(avatar_url)
+    
+    # Extract background color from circle fill attribute
+    bg_match = svg_str.match(/<circle[^>]*fill="([^"]+)"/)
+    avatar_bg = bg_match?[1]
+    
+    # Extract foreground color from text fill attribute
+    fg_match = svg_str.match(/<text[^>]*fill="([^"]+)"/)
+    avatar_fg = fg_match?[1]
+    
+    return {avatar_bg, avatar_fg}
+
+  getCachedInitialAvatarDetails: (user) ->
+    # Check for the image stored in the user's profile.
+    # And returns an object of the following structure:
+    #
+    # {
+    #    is_initials_avatar: false/true
+    #
+    #    # The following fields are only relevant if is_avatar is true
+    #    avatar_colors: {
+    #        background: "#000000",
+    #        foreground: "#000000"
+    #    }
+    # }
+
+    if _.isString user
+      user = Meteor.users.findOne user, {fields: {"profile.profile_pic": 1}}
+    if not user?
+      throw new Meteor.Error "unknown-user"
+
+    ret = 
+      is_base64_svg_avatar: false
+
+    if @isUserAvatarBase64Svg user
+      ret.avatar_colors = @extractColorsFromBase64Svg user.profile.profile_pic
+      ret.is_base64_svg_avatar = true
+    
+    return ret
+  
+  isUserCachedInitialAvatarColorsSameAsGeneratedAvatarColors: (user) ->
+    cached_avatar_details = @getCachedInitialAvatarDetails user
+    cached_avatar_colors = cached_avatar_details.avatar_colors
+
+    # No options should be passed to getInitialsSvgColors, since we want to generate the colors based on the user's email.
+    generated_avatar_colors = @getInitialsSvgColors JustdoHelpers.getUserMainEmail(user)
+
+    is_fg_same = cached_avatar_colors?.avatar_fg is generated_avatar_colors.avatar_fg
+    is_bg_same = cached_avatar_colors?.avatar_bg is generated_avatar_colors.avatar_bg
+
+    return is_fg_same and is_bg_same
