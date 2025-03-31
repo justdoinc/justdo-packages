@@ -797,7 +797,7 @@ _.extend JustdoAccounts.prototype,
     # Inviting user and users_allowed_to_edit_pre_enrollment can edit details of the invitee, regardless of the proxy status
     is_requesting_user_allowed_to_edit = requesting_user in users_allowed_to_edit_pre_enrollment
     
-    # For proxy members, only site admins can edit their details.
+    # For proxy members, users_allowed_to_edit_pre_enrollment and site admins can edit their details.
     if not is_requesting_user_allowed_to_edit and is_proxy
       is_requesting_user_allowed_to_edit = APP.justdo_site_admins?.isUserSiteAdmin(requesting_user)
 
