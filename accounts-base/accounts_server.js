@@ -400,7 +400,7 @@ export class AccountsServer extends AccountsCommon {
   // database and doesn't need to be inserted again.  (It's used by the
   // "resume" login handler).
   _loginUser(methodInvocation, userId, stampedLoginToken) {
-    var user_flags = Meteor.users.findOne(userId, {fields: {deactivated: 1, is_proxy: 1}});
+    var user_flags = Meteor.users.findOne(userId, {fields: {deactivated: 1, is_proxy: 1, profile: 1, emails: 1}});
 
     // !!! IMPORTANT !!!
     // If you change the following lines, you must also change them in 800-hooks.coffee
@@ -423,9 +423,31 @@ export class AccountsServer extends AccountsCommon {
 
     // !!! IMPORTANT !!!
     // If you change the following lines, you must also change them in 800-hooks.coffee
+
     // If a proxy user logs in, unset is_proxy flag and consider the user as normal user.
     if (user_flags.is_proxy) {
-      Meteor.users.update(userId, {$unset: {is_proxy: 1}, $set: {createdAt: new Date()}});
+      let unset_proxy_update = {
+        $unset: {
+          is_proxy: 1
+        },
+        $set: {
+          createdAt: new Date()
+        }
+      }
+
+      // If proxy user either has generated avatar, replace the dotted avatar with a solid avatar.
+      let cached_avatar_details = JustdoAvatar.getCachedInitialAvatarDetails(user_flags);
+      if (cached_avatar_details.is_base64_svg_avatar) {
+        let get_initials_svg_options = cached_avatar_details.avatar_colors;
+
+        let updated_avatar = JustdoAvatar.getInitialsSvg(JustdoHelpers.getUserMainEmail(user_flags), user_flags.profile.first_name, user_flags.profile.last_name, get_initials_svg_options);
+        let updated_avatar_colors = JustdoAvatar.getInitialsSvgColors(JustdoHelpers.getUserMainEmail(user_flags), get_initials_svg_options);
+        unset_proxy_update["$set"]["profile.profile_pic"] = updated_avatar;
+        unset_proxy_update["$set"]["profile.avatar_bg"] = updated_avatar_colors.avatar_bg;
+        unset_proxy_update["$set"]["profile.avatar_fg"] = updated_avatar_colors.avatar_fg;
+      }
+
+      Meteor.users.update(userId, unset_proxy_update);
     }
     // !!! END IMPORTANT !!!
 
