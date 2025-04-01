@@ -80,6 +80,25 @@
     <input id="ticket-title" type="text" class="form-control" placeholder="Subject" value="{{defaultTaskTitle}}">
   </div>
 
+  <div class="row">
+    <div class="col-sm task-multi-parent-container">
+      <div class="form-group {{#if isInvalidTicketsQueue}}has-error{{/if}}">
+        <label for="ticket-multi-parent-id" class="control-label">Co-Assignees</label>
+        <div class="{{#if $not selected_destination_id}}no-tq-selected{{/if}}">
+          <select id="ticket-multi-parent-id" class="dropdown-menu-lite dropdown-menu-lite-users ticket-category-select" multiple>
+            {{#each projects_without_selected_destination}}
+              {{#if title}}
+                <option value="{{_id}}">#{{seqId}}: {{cutString title max_printed_task_title}}</option>
+              {{else}}
+                <option value="{{_id}}">#{{seqId}}</option>
+              {{/if}}
+            {{/each}}
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="form-group description-container">
     <div class="form-inline priority-container-container">
       <div class="form-group">

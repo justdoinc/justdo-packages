@@ -51,7 +51,7 @@ APP.executeAfterAppLibCode ->
     destroyer: ->
       return
 
-  target_select_pickers = ["#ticket-queue-id", "#ticket-assigned-user-id"]
+  target_select_pickers = ["#ticket-queue-id", "#ticket-assigned-user-id", "#ticket-multi-parent-id"]
 
   APP.openQuickAddDialog = (template_data) ->
     message_template =
@@ -94,6 +94,8 @@ APP.executeAfterAppLibCode ->
             if destination_type == "ticket-queue"
               if not selected_owner_id?
                 selected_owner_id = getSelectedTicketsQueueDoc().owner_id
+            
+            multi_parent_destinations = selected_multi_parent_ids_reactive_var.get()
 
             if not formIsValid()
               return false
@@ -136,10 +138,8 @@ APP.executeAfterAppLibCode ->
 
                 #   return
 
-              gcm = gridControlMux()
-              gc = gcm?.getActiveGridControl()
-              gc?.once "rebuild_ready", (data) ->
-                gcm.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(item_id)
+              grid_control.once "rebuild_ready", (data) ->
+                gridControlMux()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(item_id)
                 return
 
               return
@@ -180,6 +180,12 @@ APP.executeAfterAppLibCode ->
 
                   releaseOpsLock()
 
+                  if not _.isEmpty(multi_parent_destinations)
+                    for parent_id in multi_parent_destinations
+                      grid_data.addParent task_id, {parent: parent_id}, (err) ->
+                        if err?
+                          project_page_module.logger.error "Failed: #{err}"
+
                   return
 
               return
@@ -209,6 +215,7 @@ APP.executeAfterAppLibCode ->
 
   selected_destination_id = new ReactiveVar null
   selected_destination_type_reactive_var = new ReactiveVar null
+  selected_multi_parent_ids_reactive_var = new ReactiveVar []
   title = new ReactiveVar null
   selected_owner = new ReactiveVar null
   description = new ReactiveVar null
@@ -217,6 +224,7 @@ APP.executeAfterAppLibCode ->
   initReactiveVars = (tpl)->
     selected_destination_id.set null
     selected_destination_type_reactive_var.set null
+    selected_multi_parent_ids_reactive_var.set []
     title.set tpl?.data?.task_title or ""
     selected_owner.set null
     description.set ""
@@ -364,6 +372,18 @@ APP.executeAfterAppLibCode ->
 
         return
       return projects
+    projects_without_selected_destination: ->
+      tpl = Template.instance()
+
+      projects = APP.justdo_delivery_planner.getKnownProjects(JD.activeJustdoId, {active_only: true}, Meteor.userId())
+      projects_without_selected_destination = _.filter projects, (project) -> project._id isnt selected_destination_id.get()
+
+      Meteor.defer =>
+        if tpl.selectpicker_loaded
+          $("#ticket-multi-parent-id").selectpicker("refresh")
+
+        return
+      return projects_without_selected_destination
     selected_destination_id: -> selected_destination_id.get()
     selected_destination_type: -> selected_destination_type_reactive_var.get()
     selected_destination_type_has_users: -> selected_destination_type_reactive_var.get() in ["ticket-queue", "projects"]
@@ -391,6 +411,11 @@ APP.executeAfterAppLibCode ->
       [destination_type, task_id] = $('#ticket-queue-id').val().split("::")
       selected_destination_type_reactive_var.set(destination_type)
       selected_destination_id.set(task_id)
+      return
+    
+    "change #ticket-multi-parent-id": ->
+      multi_parent_destinations = $('#ticket-multi-parent-id').val()
+      selected_multi_parent_ids_reactive_var.set(multi_parent_destinations)
       return
 
     "change #ticket-assigned-user-id": ->
