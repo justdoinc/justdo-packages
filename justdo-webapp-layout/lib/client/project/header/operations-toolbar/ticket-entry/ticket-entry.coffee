@@ -190,8 +190,8 @@ APP.executeAfterAppLibCode ->
     prereq: ->
       prereq = JustdoHelpers.prepareOpreqArgs()
 
-      if not APP.collections.TicketsQueues.findOne({}, {fields: {_id: 1}})?
-        prereq.no_tickets = "No ticket queues are set for this JustDo"
+      # if not APP.collections.TicketsQueues.findOne({}, {fields: {_id: 1}})?
+      #   prereq.no_tickets = "No ticket queues are set for this JustDo"
 
       return prereq
 
