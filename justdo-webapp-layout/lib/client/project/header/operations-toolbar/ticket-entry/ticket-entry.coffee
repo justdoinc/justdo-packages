@@ -115,6 +115,11 @@ APP.executeAfterAppLibCode ->
                 if Meteor.userId() != selected_owner_id \
                   then selected_owner_id \
                   else null
+            
+            additional_fields = template_data.additional_fields
+            if additional_fields?
+              for field_name, field_value of additional_fields
+                task_fields[field_name] = field_value
 
             activateItemId = (item_id, options) ->
               item_doc = APP.collections.Tasks.findOne({_id: item_id, project_id: curProj().id})
