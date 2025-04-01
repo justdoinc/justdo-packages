@@ -53,127 +53,108 @@ APP.executeAfterAppLibCode ->
 
   target_select_pickers = ["#ticket-queue-id", "#ticket-assigned-user-id"]
 
-  project_page_module.setNullaryOperation "ticketEntry",
-    human_description: share.disable_quick_add_custom_plugin_label
-    human_description_i18n: share.disable_quick_add_custom_plugin_label_i18n
-    template:
-      custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#file"/></svg>"""
-    op: ->
-      message_template =
-        APP.helpers.renderTemplateInNewNode(Template.ticket_entry, {})
+  APP.openQuickAddDialog = (template_data) ->
+    message_template =
+      APP.helpers.renderTemplateInNewNode(Template.ticket_entry, template_data)
 
-      preBootboxDestroyProcedures = ->
-        # We destroy the selectors here and not under destroy since
-        # when the bootbox is closed while picker is open, it remains
-        # open until close animation completed, and it looks bad.
-        for selector in target_select_pickers
-          $(selector).selectpicker "destroy"
+    preBootboxDestroyProcedures = ->
+      # We destroy the selectors here and not under destroy since
+      # when the bootbox is closed while picker is open, it remains
+      # open until close animation completed, and it looks bad.
+      for selector in target_select_pickers
+        $(selector).selectpicker "destroy"
 
-      bootbox_title = APP.justdo_i18n.getI18nTextOrFallback {fallback_text: share.disable_quick_add_custom_plugin_label, i18n_key: share.disable_quick_add_custom_plugin_label_i18n}
-      bootbox.dialog
-        title: bootbox_title
-        message: message_template.node
-        className: "ticket-entry-dialog bootbox-new-design"
-        rtl_ready: true
-        onEscape: ->
-          preBootboxDestroyProcedures()
-        buttons:
-          cancel:
-            label: "Cancel"
+    bootbox_title = APP.justdo_i18n.getI18nTextOrFallback {fallback_text: share.disable_quick_add_custom_plugin_label, i18n_key: share.disable_quick_add_custom_plugin_label_i18n}
+    bootbox.dialog
+      title: bootbox_title
+      message: message_template.node
+      className: "ticket-entry-dialog bootbox-new-design"
+      rtl_ready: true
+      onEscape: ->
+        preBootboxDestroyProcedures()
+      buttons:
+        cancel:
+          label: "Cancel"
 
-            className: "btn-light"
+          className: "btn-light"
 
-            callback: =>
-              preBootboxDestroyProcedures()
+          callback: =>
+            preBootboxDestroyProcedures()
 
-          submit:
-            label: "Submit"
+        submit:
+          label: "Submit"
 
-            callback: =>
-              submit_attempted.set true
+          callback: =>
+            submit_attempted.set true
 
-              selected_owner_id = selected_owner.get()
+            selected_owner_id = selected_owner.get()
 
-              destination_type = selected_destination_type_reactive_var.get()
+            destination_type = selected_destination_type_reactive_var.get()
 
+            if destination_type == "ticket-queue"
+              if not selected_owner_id?
+                selected_owner_id = getSelectedTicketsQueueDoc().owner_id
+
+            if not formIsValid()
+              return false
+
+            grid_control = project_page_module.gridControl(false)
+            grid_data = grid_control._grid_data
+
+            # XXX Note that we don't provide path to addChild when destination_type is "ticket-queue". addChild will transform
+            # the queue id to a path under root in the path normalization process:
+            # "/tickets_queue_id/". This might stop working in future API changes
+            # as addChild isn't meant to be used this way.
+            task_fields =
+              title: title.get()
+              priority: priority.get()
+              description: $("#ticket-content").froalaEditor("html.get")
+              pending_owner_id:
+                if Meteor.userId() != selected_owner_id \
+                  then selected_owner_id \
+                  else null
+
+            activateItemId = (item_id, options) ->
+              item_doc = APP.collections.Tasks.findOne({_id: item_id, project_id: curProj().id})
+
+              title = "Task <b>##{item_doc.seqId}: #{JustdoHelpers.ellipsis(item_doc.title, 50)}</b> added"
+              if (destination_title = options.destination_title)?
+                title += " to <b>#{destination_title}</b>"
+
+              if (pending_owner_id = task_fields.pending_owner_id)?
+                title += " assigned to <b>#{JustdoHelpers.displayName(Meteor.users.findOne(pending_owner_id))}</b>"
+
+              JustdoSnackbar.show
+                text: title
+                duration: 7000
+                actionText: "View"
+                showDismissButton: true
+                onActionClick: =>
+                  JustdoSnackbar.close()
+
+                  gridControlMux()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(item_id)
+
+                  return
+
+              return
+
+            grid_control._performLockingOperation (releaseOpsLock, timedout) =>
+              destination_title = $("div.ticket-category-select button")?.attr("title")
               if destination_type == "ticket-queue"
-                if not selected_owner_id?
-                  selected_owner_id = getSelectedTicketsQueueDoc().owner_id
-
-              if not formIsValid()
-                return false
-
-              grid_control = project_page_module.gridControl(false)
-              grid_data = grid_control._grid_data
-
-              # XXX Note that we don't provide path to addChild when destination_type is "ticket-queue". addChild will transform
-              # the queue id to a path under root in the path normalization process:
-              # "/tickets_queue_id/". This might stop working in future API changes
-              # as addChild isn't meant to be used this way.
-              task_fields =
-                title: title.get()
-                priority: priority.get()
-                description: $("#ticket-content").froalaEditor("html.get")
-                pending_owner_id:
-                  if Meteor.userId() != selected_owner_id \
-                    then selected_owner_id \
-                    else null
-
-              activateItemId = (item_id, options) ->
-                item_doc = APP.collections.Tasks.findOne({_id: item_id, project_id: curProj().id})
-
-                title = "Task <b>##{item_doc.seqId}: #{JustdoHelpers.ellipsis(item_doc.title, 50)}</b> added"
-                if (destination_title = options.destination_title)?
-                  title += " to <b>#{destination_title}</b>"
-
-                if (pending_owner_id = task_fields.pending_owner_id)?
-                  title += " assigned to <b>#{JustdoHelpers.displayName(Meteor.users.findOne(pending_owner_id))}</b>"
-
-                JustdoSnackbar.show
-                  text: title
-                  duration: 7000
-                  actionText: "View"
-                  showDismissButton: true
-                  onActionClick: =>
-                    JustdoSnackbar.close()
-
-                    gridControlMux()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(item_id)
-
-                    return
-
-                return
-
-              grid_control._performLockingOperation (releaseOpsLock, timedout) =>
-                destination_title = $("div.ticket-category-select button")?.attr("title")
-                if destination_type == "ticket-queue"
-                  Meteor.call "newTQTicket",
-                    {
-                      project_id: curProj().id,
-                      tq: selected_destination_id.get()
-                    },
-                    task_fields,
-                    (err, task_id) ->
-                      # XXX see above note, can't rely on new_item_path
-                      if err?
-                        project_page_module.logger.error "Failed: #{err}"
-
-                        releaseOpsLock()
-
-                        return
-
-                      activateItemId(task_id, {destination_title})
-
-                      releaseOpsLock()
-
-                      return
-
-                if destination_type == "projects"
-                  task_fields.project_id = JD.activeJustdoId()
-                  grid_data.addChild "/#{selected_destination_id.get()}/", task_fields, (err, task_id) ->
+                Meteor.call "newTQTicket",
+                  {
+                    project_id: curProj().id,
+                    tq: selected_destination_id.get()
+                  },
+                  task_fields,
+                  (err, task_id) ->
+                    # XXX see above note, can't rely on new_item_path
                     if err?
                       project_page_module.logger.error "Failed: #{err}"
 
                       releaseOpsLock()
+
+                      return
 
                     activateItemId(task_id, {destination_title})
 
@@ -181,11 +162,34 @@ APP.executeAfterAppLibCode ->
 
                     return
 
-                return
-              preBootboxDestroyProcedures()
+              if destination_type == "projects"
+                task_fields.project_id = JD.activeJustdoId()
+                grid_data.addChild "/#{selected_destination_id.get()}/", task_fields, (err, task_id) ->
+                  if err?
+                    project_page_module.logger.error "Failed: #{err}"
 
-              return true
+                    releaseOpsLock()
 
+                  activateItemId(task_id, {destination_title})
+
+                  releaseOpsLock()
+
+                  return
+
+              return
+            preBootboxDestroyProcedures()
+
+            return true
+
+    return
+
+  project_page_module.setNullaryOperation "ticketEntry",
+    human_description: share.disable_quick_add_custom_plugin_label
+    human_description_i18n: share.disable_quick_add_custom_plugin_label_i18n
+    template:
+      custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#file"/></svg>"""
+    op: ->
+      APP.openQuickAddDialog()
       return
     prereq: ->
       prereq = JustdoHelpers.prepareOpreqArgs()
@@ -204,10 +208,10 @@ APP.executeAfterAppLibCode ->
   description = new ReactiveVar null
   priority = new ReactiveVar null
   submit_attempted = new ReactiveVar null
-  initReactiveVars = ->
+  initReactiveVars = (tpl)->
     selected_destination_id.set null
     selected_destination_type_reactive_var.set null
-    title.set ""
+    title.set tpl?.data?.task_title or ""
     selected_owner.set null
     description.set ""
     priority.set 0
@@ -222,7 +226,7 @@ APP.executeAfterAppLibCode ->
 
   Template.ticket_entry.onCreated ->
     # Init reactive vars
-    initReactiveVars()
+    initReactiveVars(@)
 
     # Subscribe to task augmented fields when changing destination task for displaying task owner options
     @autorun ->
@@ -371,6 +375,10 @@ APP.executeAfterAppLibCode ->
 
     isInvalidTitle: -> submit_attempted.get() and _.isEmpty(title.get())
     isInvalidTicketsQueue: -> submit_attempted.get() and not selected_destination_id.get()?
+
+    defaultTaskTitle: ->
+      tpl = Template.instance()
+      return tpl.data?.task_title or ""
 
   Template.ticket_entry.events
     "change #ticket-queue-id": ->
