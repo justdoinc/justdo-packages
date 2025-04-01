@@ -127,14 +127,20 @@ APP.executeAfterAppLibCode ->
               JustdoSnackbar.show
                 text: title
                 duration: 7000
-                actionText: "View"
+                # actionText: "View"
                 showDismissButton: true
-                onActionClick: =>
-                  JustdoSnackbar.close()
+                # onActionClick: =>
+                #   JustdoSnackbar.close()
 
-                  gridControlMux()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(item_id)
+                #   gridControlMux()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(item_id)
 
-                  return
+                #   return
+
+              gcm = gridControlMux()
+              gc = gcm?.getActiveGridControl()
+              gc?.once "rebuild_ready", (data) ->
+                gcm.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(item_id)
+                return
 
               return
 
