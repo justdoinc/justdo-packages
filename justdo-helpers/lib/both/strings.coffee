@@ -228,6 +228,49 @@ _.extend JustdoHelpers,
     rgb = @hexToRgb(hex)
     return "#{rgb[0]}, #{rgb[1]}, #{rgb[2]}"
 
+  # Convert RGB to HSL
+  # Parameters:
+  #   r, g, b: RGB values (0-255)
+  # Returns: 
+  #   Array with [h (0-1), s (0-1), l (0-1)]
+  rgbToHsl: (r, g, b) ->
+    r /= 255
+    g /= 255
+    b /= 255
+    
+    max = Math.max(r, g, b)
+    min = Math.min(r, g, b)
+    h = 0
+    s = 0
+    l = (max + min) / 2
+    
+    if max isnt min
+      d = max - min
+      s = if l > 0.5 then d / (2 - max - min) else d / (max + min)
+      
+      switch max
+        when r
+          h = (g - b) / d + (if g < b then 6 else 0)
+        when g
+          h = (b - r) / d + 2
+        when b
+          h = (r - g) / d + 4
+      
+      h /= 6
+    
+    return [h, s, l]
+
+  # Convert Hex to HSL
+  # Parameters:
+  #   hex: Hex color (with or without # prefix)
+  # Returns:
+  #   Array with [h (0-1), s (0-1), l (0-1)]
+  # Note: The conversion mathematically requires RGB as an intermediate step,
+  #       as hex is just a text representation of RGB values
+  hexToHsl: (hex) ->
+    rgb = @hexToRgb(hex)
+    return @rgbToHsl(rgb[0], rgb[1], rgb[2])
+
 _.extend JustdoHelpers,
   escaped_chars_within_defined_block_encode_map:
     ",": "\u000B"
