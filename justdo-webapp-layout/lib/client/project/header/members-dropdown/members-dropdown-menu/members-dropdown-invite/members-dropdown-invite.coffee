@@ -70,7 +70,7 @@ APP.executeAfterAppLibCode ->
 
     tpl.setDefaultSettings = ->
       tpl.users_rv.set []
-      tpl.active_share_option.set tpl.share_options[0]
+      tpl.active_share_option.set tpl.share_options[2]
 
       return
 
