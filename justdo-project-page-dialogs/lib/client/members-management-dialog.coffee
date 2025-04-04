@@ -15,7 +15,7 @@ APP.executeAfterAppLibCode ->
   # Note: we assume only one confirmation dialog at a time
   users_to_keep = new ReactiveVar null
   users_to_add = new ReactiveVar null
-  cascade = new ReactiveVar false
+  cascade = new ReactiveVar true
   notes = new ReactiveVar {}, JustdoHelpers.jsonComp
   proceed_type_rv = new ReactiveVar null
 
@@ -274,7 +274,7 @@ APP.executeAfterAppLibCode ->
 
     @members_filter = new ReactiveVar null
 
-    cascade.set false
+    cascade.set true
     notes.set {}
 
     @autorun ->
