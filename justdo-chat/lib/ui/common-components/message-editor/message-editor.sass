@@ -1,15 +1,29 @@
-@import "{justdoinc:justdo-chat}/lib/ui/common-components/vars.scss";
+@import "{justdoinc:justdo-chat}/lib/ui/common-components/vars.scss"
+
+.message-editor-wrapper
+  display: flex
+  border-top: $parts-separator-border
+  .message-editor-send
+    font-weight: 600
+    cursor: pointer
+    transition: opacity 0.12s
+    opacity: 0
+    margin-top: 10px
+    &.show
+      opacity: 1
 
 .jdc-basic-design
   .message-editor
     width: 100%
     border: none
-    height: 35px
-    padding: 7px 7px 0
+    height: 42px
+    padding: 10px 12px
     resize: none
     outline: none
-    border-top: $parts-separator-border
     text-align: left
+    overflow: auto
+    &::placeholder
+      color: #A9B1C3
 
 // RTL modification
 .right-to-left
