@@ -16,10 +16,12 @@ APP.executeAfterAppLibCode ->
     if not $el.hasClass("slick-row")
       return
 
-    {row} = gc._grid.getCellFromEvent({target: $el.find(".slick-cell").get(0)}) # fake event to use getCellFromEvent
-
-    if gc._grid_data.getItemIsCollectionItem(row)
-      return true
+    cell = gc._grid.getCellFromEvent({target: $el.find(".slick-cell").get(0)}) # fake event to use getCellFromEvent
+    if (row = cell?.row)?
+      if gc._grid_data.getItemIsCollectionItem(row)
+        return true
+      
+    return
 
   getAllActiveItemPaths = ->
     gcm = project_page_module.getCurrentGcm()
