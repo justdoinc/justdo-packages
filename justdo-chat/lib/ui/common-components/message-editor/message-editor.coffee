@@ -16,6 +16,41 @@ Template.common_chat_message_editor.onCreated ->
   @clearError = -> @setError(null)
   @getError = -> @_error.get()
 
+  @sendMessage = ($input) ->
+    if @isSendingState()
+      @data.getChannelObject().logger.log("Sending in progress...")
+      return false
+
+    @clearError()
+
+    input_val = $input.val().trim()
+
+    if _.isEmpty(input_val)
+      return false
+
+    task_chat_object = @data.getChannelObject()
+
+    @setSendingState()
+    task_chat_object.sendMessage input_val, (err) =>
+      @unsetSendingState()
+
+      if err?
+        @setError(err.reason)
+        return
+
+      $input.val("")
+      task_chat_object.clearTempMessage()
+      $sendButton = $input.closest(".message-editor-wrapper").find(".message-editor-send")
+      $sendButton.removeClass "show"
+      $input.trigger("autosize.resize")
+
+      Meteor.defer ->
+        $input.focus()
+
+      return
+
+    return true
+
   return
 
 Template.common_chat_message_editor.onRendered ->
@@ -70,7 +105,16 @@ Template.common_chat_message_editor.helpers
 
 Template.common_chat_message_editor.events
   "keyup .message-editor": (e, tpl) ->
-    @getChannelObject().saveTempMessage $(e.target).val().trim()
+    $input = $(e.target)
+    value = $input.val().trim()
+    @getChannelObject().saveTempMessage value
+
+    $sendButton = $input.closest(".message-editor-wrapper").find(".message-editor-send")
+
+    if value
+      $sendButton.addClass "show"
+    else
+      $sendButton.removeClass "show"
 
     return
 
@@ -82,52 +126,22 @@ Template.common_chat_message_editor.events
 
       if (e.altKey or e.ctrlKey or e.shiftKey)
         current_pos = $input.prop("selectionStart")
-
         $input.val(JustdoHelpers.splice($input.val(), current_pos, 0, "\n"))
-
         $input.prop("selectionStart", current_pos + 1)
-
         $input.trigger("autosize.resize")
 
         return
 
-      if tpl.isSendingState()
-        @getChannelObject().logger.log("Sending in progress...")
-
-        return
-
-      # When user press enter without alt/ctrl key pressed , when we aren't already in
-      # sending state
-      tpl.clearError()
-
-      input_val = $input.val().trim()
-        
-      if _.isEmpty(input_val)
-        # Empty input ...
-        return
-
-      task_chat_object = @getChannelObject()
-
-      tpl.setSendingState()
-      task_chat_object.sendMessage input_val, (err) ->
-        tpl.unsetSendingState()
-
-        if err?
-          tpl.setError(err.reason)
-
-          return
-
-        $input.val("")
-        task_chat_object.clearTempMessage()
-
-        $input.trigger("autosize.resize")
-
-        Meteor.defer ->
-          $input.focus()
-
-        return
+      tpl.sendMessage($input)
 
     return
+
+  "click .message-editor-send": (e, tpl) ->
+    $container = $(e.target).closest(".message-editor-wrapper")
+    $input = $container.find(".message-editor")
+    tpl.sendMessage($input)
+    return
+
 
 Template.common_chat_message_editor.onRendered ->
   $textarea = @$("textarea")
@@ -136,6 +150,7 @@ Template.common_chat_message_editor.onRendered ->
     # The following fixes an issue we got that when the max height of the textarea
     # is reached, the viewport doesn't focus the caret when additional lines are added
     textarea = $textarea.get(0)
+
     if $textarea.val().length == textarea.selectionStart
       Meteor.defer ->
         textarea.scrollTop = textarea.scrollHeight

@@ -1,9 +1,12 @@
 <template name="common_chat_message_editor">
-  <textarea class="message-editor" dir="{{#if isRtl}}rtl{{else}}ltr{{/if}}" disabled="{{#if isSendingState}}disabled{{/if}}" placeholder="{{_ "message_editor_input_placeholder"}}"></textarea>
+  <div class="message-editor-wrapper">
+    <textarea class="message-editor" dir="{{#if isRtl}}rtl{{else}}ltr{{/if}}" disabled="{{#if isSendingState}}disabled{{/if}}" placeholder="{{_ "message_editor_input_placeholder"}}"></textarea>
+    {{!-- {{#if isSendingState}}Sending...{{/if}} --}}
 
-  {{!-- {{#if isSendingState}}Sending...{{/if}} --}}
+    <div class="message-editor-send text-primary m{{getRtlAwareDirection "r"}}-3">Send</div>
 
-  {{#with error}}
-    <div class="chat-error text-danger">{{this}}</div>
-  {{/with}}
+    {{#with error}}
+      <div class="chat-error text-danger">{{this}}</div>
+    {{/with}}
+  </div>
 </template>
