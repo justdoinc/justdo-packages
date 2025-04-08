@@ -11,8 +11,10 @@ _.extend JustdoAccounts.prototype,
         cb? @_error "not-supported", "Cannot override user uploaded avatar."
         return
 
+      user_doc = Meteor.users.findOne(user_id)
+
       message_template =
-        APP.helpers.renderTemplateInNewNode(Template.loginDropdownEditAvatarColorsBootboxMessage, {user_doc: Meteor.users.findOne(user_id)})
+        APP.helpers.renderTemplateInNewNode(Template.loginDropdownEditAvatarColorsBootboxMessage, {user_doc})
 
       bootbox.dialog
         title: TAPi18n.__ "logged_in_dropdown_avatar_colors_editors"
@@ -40,7 +42,8 @@ _.extend JustdoAccounts.prototype,
 
               # If user is editing its own avatar colors, update the user doc directly
               if performing_user_id is user_id
-                Meteor.users.update(user_id, {$set: {"profile.avatar_bg": avatar_bg, "profile.avatar_fg": avatar_fg}})
+                new_avatar = JustdoAvatar.getInitialsSvg JustdoHelpers.getUserMainEmail(user_doc), user_doc.profile.first_name, user_doc.profile.last_name, {avatar_bg, avatar_fg}
+                Meteor.users.update(user_id, {$set: {"profile.avatar_bg": avatar_bg, "profile.avatar_fg": avatar_fg, "profile.profile_pic": new_avatar}})
                 cb?()
               else
                 Meteor.call "editUserAvatarColor", avatar_bg, avatar_fg, user_id, cb
@@ -68,12 +71,12 @@ Template.loginDropdownEditAvatarColorsBootboxMessage.helpers
 
 Template.loginDropdownEditAvatarColorsBootboxEditor.onCreated ->
   # Find current avatar's initials colors
-  {avatar_bg, avatar_fg} = 
-    JustdoAvatar.getInitialsSvgColors(JustdoHelpers.currentUserMainEmail(),
-      _.pick(@data.user_doc.profile, ["avatar_bg", "avatar_fg"]))
+  {avatar_bg, avatar_fg} = JustdoAvatar.extractColorsFromBase64Svg @data.user_doc.profile.profile_pic
 
   @avatar_bg = new ReactiveVar avatar_bg
   @avatar_fg = new ReactiveVar avatar_fg
+
+  return
 
 
 Template.loginDropdownEditAvatarColorsBootboxEditor.onRendered ->
