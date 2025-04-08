@@ -10,7 +10,7 @@
   "unset_as_a_project_label": "ยกเลิกการตั้งเป็นโครงการ",
   "close_project_label": "ปิดโครงการ",
   "repoen_project_label": "เปิดโครงการอีกครั้ง",
-  "add_to_project_label": "เพิ่มไปยังโครงการ",
+  "add_to_project_label": "เพิ่มเข้าโปรเจกต์",
   "apply_value_to_subtree": "ใช้ __value__ กับงานย่อยทั้งหมด",
   "bulk_set_options_label": "ตั้งค่า"
 }

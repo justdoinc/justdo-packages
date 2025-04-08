@@ -10,7 +10,7 @@
   "unset_as_a_project_label": "Desmarcar como proyecto",
   "close_project_label": "Cerrar proyecto",
   "repoen_project_label": "Reabrir proyecto",
-  "add_to_project_label": "Agregar al proyecto",
+  "add_to_project_label": "Añadir al Proyecto",
   "apply_value_to_subtree": "Aplicar __value__ al sub-árbol",
   "bulk_set_options_label": "Establecer opciones en masa"
 }

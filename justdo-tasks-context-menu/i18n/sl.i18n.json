@@ -10,7 +10,7 @@
   "unset_as_a_project_label": "Odstrani nastavitev kot projekt",
   "close_project_label": "Zapri projekt",
   "repoen_project_label": "Ponovno odpri projekt",
-  "add_to_project_label": "Dodaj v projekt",
+  "add_to_project_label": "Dodaj k projektu",
   "apply_value_to_subtree": "Uporabi __value__ za podstrukturo",
   "bulk_set_options_label": "Nastavi"
 }

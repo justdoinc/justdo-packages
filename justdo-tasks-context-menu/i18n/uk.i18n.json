@@ -10,7 +10,7 @@
   "unset_as_a_project_label": "Зняти статус проекту",
   "close_project_label": "Закрити проект",
   "repoen_project_label": "Повторно відкрити проект",
-  "add_to_project_label": "Додати до проекту",
+  "add_to_project_label": "Додати до проєкту",
   "apply_value_to_subtree": "Застосувати __value__ до піддерева",
   "bulk_set_options_label": "Встановити"
 }

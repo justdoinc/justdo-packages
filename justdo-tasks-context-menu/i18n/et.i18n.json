@@ -10,7 +10,7 @@
   "unset_as_a_project_label": "Tühista projekti staatus",
   "close_project_label": "Sulge projekt",
   "repoen_project_label": "Ava projekt uuesti",
-  "add_to_project_label": "Lisa projekti",
+  "add_to_project_label": "Lisa projektile",
   "apply_value_to_subtree": "Rakenda __value__ alamstruktuurile",
   "bulk_set_options_label": "Määra"
 }
