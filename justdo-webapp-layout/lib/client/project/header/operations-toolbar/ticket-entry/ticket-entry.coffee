@@ -111,6 +111,7 @@ APP.executeAfterAppLibCode ->
               title: title.get()
               priority: priority.get()
               description: $("#ticket-content").froalaEditor("html.get")
+              created_from_quick_add: true
               pending_owner_id:
                 if Meteor.userId() != selected_owner_id \
                   then selected_owner_id \
