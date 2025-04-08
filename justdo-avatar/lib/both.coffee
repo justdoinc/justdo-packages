@@ -184,8 +184,25 @@ _.extend JustdoAvatar,
       svg_str = window.atob(avatar_url)
     
     # Extract background color from circle fill attribute
-    bg_match = svg_str.match(/<circle[^>]*fill="([^"]+)"/)
-    avatar_bg = bg_match?[1]
+    # For proxy users, there are two circles - the first with fill="none" and the second with the actual color
+    # So we need to find a circle with fill that's not "none", or get the last circle's fill value
+    bg_matches = svg_str.match(/<circle[^>]*fill="([^"]+)"/g) || []
+    avatar_bg = null
+    
+    if bg_matches.length > 0
+      # Try to find a circle with fill that's not "none"
+      for match in bg_matches
+        color_match = match.match(/fill="([^"]+)"/)
+        color = color_match?[1]
+        if color? and color isnt "none"
+          avatar_bg = color
+          break
+      
+      # If we didn't find a non-none fill, use the last one
+      if not avatar_bg? and bg_matches.length > 0
+        last_match = bg_matches[bg_matches.length - 1]
+        last_color_match = last_match.match(/fill="([^"]+)"/)
+        avatar_bg = last_color_match?[1]
     
     # Extract foreground color from text fill attribute
     fg_match = svg_str.match(/<text[^>]*fill="([^"]+)"/)
