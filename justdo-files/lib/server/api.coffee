@@ -133,9 +133,9 @@ _.extend JustdoFiles.prototype,
         preview_types_whitelist = ["application/pdf", "image/png", "image/gif", "image/jpeg", "image/bmp"]
 
         if http.request.query.preview == "true" and file.type in preview_types_whitelist
-          http.response.setHeader "Content-Disposition", "inline; filename=\"#{file.name}\""
+          http.response.setHeader "Content-Disposition", "inline; filename=\"#{encodeURI file.name}\""
         else
-          http.response.setHeader "Content-Disposition", "attachment; filename=\"#{file.name}\""
+          http.response.setHeader "Content-Disposition", "attachment; filename=\"#{encodeURI file.name}\""
 
         readstream.pipe http.response
 
