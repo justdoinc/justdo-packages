@@ -2480,6 +2480,8 @@ _.extend GridControl.prototype,
                                 # as changing all the fields, so even if option is set to
                                 # ["title", "status"] , add child to the tracked
                                 # collection_item_id will still trigger invalidation.
+      wait_for_queue_processed: false # Whether to wait for data-changes-queue-processed for structure changes
+                                      # This ensures that path data is fully updated before invalidation
     options = _.extend default_options, options
 
     # We always begin from proxying the call to GridDataCore's @invalidateOnCollectionItemDescendantsChanges
@@ -2489,7 +2491,11 @@ _.extend GridControl.prototype,
     # Note, that GridDataCore's invalidateOnCollectionItemDescendantsChanges takes responsibility to
     # destroy its trackers upon current computation invalidation. So, for all the non-filter-aware
     # work we are done right here.
-    @_grid_data._grid_data_core.invalidateOnCollectionItemDescendantsChanges(collection_item_id, {tracked_fields: options.tracked_fields, direct_children_only: options.direct_children_only})
+    @_grid_data._grid_data_core.invalidateOnCollectionItemDescendantsChanges(collection_item_id, {
+      tracked_fields: options.tracked_fields, 
+      direct_children_only: options.direct_children_only,
+      wait_for_queue_processed: options.wait_for_queue_processed
+    })
 
     if not options.filters_aware
       return

@@ -922,11 +922,12 @@ _.extend GridDataCore.prototype,
     #                                                         # tracker options.
     #       tracked_fields: [] # Either undefined, or an array of fields, if undefined, all fields are
     #                          # tracked
+    #       wait_for_queue_processed: true # Whether to wait for queue processing for structure changes
     #     }
     #   ]
     # }
 
-    announceTrackedItemChanged = (tracked_item_id, is_direct_children_changed, fields_affected) =>
+    announceTrackedItemChanged = (tracked_item_id, is_direct_children_changed, fields_affected, is_structure_change) =>
       # fields_affected might be undefined, in which case we assume all the fields
       # are affected
 
@@ -939,8 +940,16 @@ _.extend GridDataCore.prototype,
           # hence no need to check intersection with the tracker tracked fields.
           if tracker.tracked_fields? and _.isEmpty(_.intersection(tracker.tracked_fields, fields_affected))
             continue
-
-        tracker.descendants_changed_dep.changed()
+        
+        # For structure changes, if wait_for_queue_processed is enabled, set up a one-time listener
+        # for the data-changes-queue-processed event
+        if is_structure_change and tracker.wait_for_queue_processed
+          # Create a separate copy of tracker to avoid closure issues
+          dep = tracker.descendants_changed_dep
+          @once "data-changes-queue-processed", ->
+            dep.changed()
+        else
+          tracker.descendants_changed_dep.changed()
 
       return
 
@@ -955,7 +964,7 @@ _.extend GridDataCore.prototype,
 
       for parent_id of changes.items_ids_with_changed_children
         if parent_id of @_collection_items_tracked_for_descendants_changes
-          announceTrackedItemChanged(parent_id, true) 
+          announceTrackedItemChanged(parent_id, true, undefined, true) 
 
       # Go up the tree, for every parent, check if it is in the
       # _collection_items_tracked_for_descendants_changes
@@ -965,7 +974,7 @@ _.extend GridDataCore.prototype,
 
         for parent_doc in parents_docs
           if parent_doc._id of @_collection_items_tracked_for_descendants_changes
-            announceTrackedItemChanged(parent_doc._id, false) # false is for direct parents
+            announceTrackedItemChanged(parent_doc._id, false, undefined, true) # false is for direct parents
 
           items_to_check.push parent_doc._id
 
@@ -986,7 +995,7 @@ _.extend GridDataCore.prototype,
 
         for parent_doc in parents_docs
           if parent_doc._id of @_collection_items_tracked_for_descendants_changes
-            announceTrackedItemChanged(parent_doc._id, direct_parents, changed_fields_array)
+            announceTrackedItemChanged(parent_doc._id, direct_parents, changed_fields_array, false)
 
           items_to_check.push parent_doc._id
 
@@ -1011,6 +1020,8 @@ _.extend GridDataCore.prototype,
                                 # as changing all the fields, so even if option is set to
                                 # ["title", "status"] , add child to the tracked
                                 # collection_item_id will still trigger invalidation.
+      wait_for_queue_processed: false  # Whether to wait for data-changes-queue-processed for structure changes
+    
     options = _.extend default_options, options
 
     tracker_id = Random.id()
@@ -1023,6 +1034,7 @@ _.extend GridDataCore.prototype,
       direct_children_only: options.direct_children_only or false
       tracked_fields: options.tracked_fields or undefined
       descendants_changed_dep: tracker_dep
+      wait_for_queue_processed: options.wait_for_queue_processed
 
     if not @_collection_items_tracked_for_descendants_changes[collection_item_id]?
       @_collection_items_tracked_for_descendants_changes[collection_item_id] = []
