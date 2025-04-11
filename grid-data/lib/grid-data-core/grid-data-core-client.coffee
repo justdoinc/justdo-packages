@@ -922,7 +922,7 @@ _.extend GridDataCore.prototype,
     #                                                         # tracker options.
     #       tracked_fields: [] # Either undefined, or an array of fields, if undefined, all fields are
     #                          # tracked
-    #       wait_for_queue_processed: true # Whether to wait for queue processing for structure changes
+    #       wait_for_queue_processed: false # Whether to wait for queue processing for structure changes
     #     }
     #   ]
     # }
