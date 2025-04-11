@@ -944,10 +944,8 @@ _.extend GridDataCore.prototype,
         # For structure changes, if wait_for_queue_processed is enabled, set up a one-time listener
         # for the data-changes-queue-processed event
         if is_structure_change and tracker.wait_for_queue_processed
-          # Create a separate copy of tracker to avoid closure issues
-          dep = tracker.descendants_changed_dep
           @once "data-changes-queue-processed", ->
-            dep.changed()
+            tracker.descendants_changed_dep.changed()
         else
           tracker.descendants_changed_dep.changed()
 
