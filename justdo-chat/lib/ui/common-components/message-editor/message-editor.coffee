@@ -19,14 +19,15 @@ Template.common_chat_message_editor.onCreated ->
   @sendMessage = ($input) ->
     if @isSendingState()
       @data.getChannelObject().logger.log("Sending in progress...")
-      return false
+      return
 
     @clearError()
 
+    $input = $(e.target).closest(".message-editor-wrapper").find(".message-editor")
     input_val = $input.val().trim()
 
     if _.isEmpty(input_val)
-      return false
+      return
 
     task_chat_object = @data.getChannelObject()
 
@@ -49,7 +50,7 @@ Template.common_chat_message_editor.onCreated ->
 
       return
 
-    return true
+    return
 
   return
 
