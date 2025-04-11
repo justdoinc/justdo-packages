@@ -16,7 +16,17 @@ Template.common_chat_message_editor.onCreated ->
   @clearError = -> @setError(null)
   @getError = -> @_error.get()
 
-  @sendMessage = ($input) ->
+  @showSendButton = (e) ->
+    $send_button = $(e.target).closest(".message-editor-wrapper").find(".message-editor-send")
+    $send_button.addClass "show"
+    return
+
+  @hideSendButton = (e) ->
+    $send_button = $(e.target).closest(".message-editor-wrapper").find(".message-editor-send")
+    $send_button.removeClass "show"
+    return
+
+  @sendMessage = (e) ->
     if @isSendingState()
       @data.getChannelObject().logger.log("Sending in progress...")
       return
@@ -41,8 +51,7 @@ Template.common_chat_message_editor.onCreated ->
 
       $input.val("")
       task_chat_object.clearTempMessage()
-      $sendButton = $input.closest(".message-editor-wrapper").find(".message-editor-send")
-      $sendButton.removeClass "show"
+      @hideSendButton(e)
       $input.trigger("autosize.resize")
 
       Meteor.defer ->
@@ -110,12 +119,10 @@ Template.common_chat_message_editor.events
     value = $input.val().trim()
     @getChannelObject().saveTempMessage value
 
-    $sendButton = $input.closest(".message-editor-wrapper").find(".message-editor-send")
-
     if value
-      $sendButton.addClass "show"
+      tpl.showSendButton(e)
     else
-      $sendButton.removeClass "show"
+      tpl.hideSendButton(e)
 
     return
 
@@ -133,14 +140,12 @@ Template.common_chat_message_editor.events
 
         return
 
-      tpl.sendMessage($input)
+      tpl.sendMessage(e)
 
     return
 
   "click .message-editor-send": (e, tpl) ->
-    $container = $(e.target).closest(".message-editor-wrapper")
-    $input = $container.find(".message-editor")
-    tpl.sendMessage($input)
+    tpl.sendMessage(e)
     return
 
 
