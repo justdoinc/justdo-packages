@@ -6,7 +6,7 @@
     <div class="message-editor-send text-primary m{{getRtlAwareDirection "r"}}-3">Send</div>
 
     {{#with error}}
-      <div class="chat-error text-danger">{{this}}</div>
+      <div class="chat-error text-danger">{{{xssGuard this}}}</div>
     {{/with}}
   </div>
 </template>
