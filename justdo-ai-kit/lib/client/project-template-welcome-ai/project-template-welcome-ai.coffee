@@ -50,7 +50,7 @@ Template.project_template_welcome_ai.onCreated ->
               {earliest_child_start_time, latest_child_end_time} = task_info
               if earliest_child_start_time? and latest_child_end_time?
                 # Set the date range presented in the gantt
-                APP.justdo_planning_utilities.setEpochRange [earliest_child_start_time, latest_child_end_time]
+                APP.justdo_planning_utilities.setEpochRange [earliest_child_start_time, latest_child_end_time], grid_control.getGridUid()
 
             return
 

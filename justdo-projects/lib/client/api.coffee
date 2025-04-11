@@ -281,7 +281,7 @@ _.extend Projects.prototype,
               return
             
             # Set the date range presented in the gantt
-            APP.justdo_planning_utilities.setEpochRange [earliest_child_start_time, latest_child_end_time]
+            APP.justdo_planning_utilities.setEpochRange [earliest_child_start_time, latest_child_end_time], gc.getGridUid()
 
             grid_view = JustDoProjectsTemplates.template_grid_views.gantt
             gc.setView grid_view

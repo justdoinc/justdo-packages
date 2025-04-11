@@ -13,6 +13,7 @@ APP.getEnv (env) ->
         if cur_proj().isCustomFeatureEnabled JustdoPlanningUtilities.project_custom_feature_id
           first_root_task_id = res.first_root_task_id
           grid_view = JustDoProjectsTemplates.template_grid_views.gantt
+          gc = APP.modules.project_page.gridControl()
 
           APP.justdo_planning_utilities.on "changes-queue-processed", ->
             # Note that @off is releasing this event later on once all the conditions are met
@@ -23,13 +24,13 @@ APP.getEnv (env) ->
               return
             
             # Set the date range presented in the gantt
-            APP.justdo_planning_utilities.setEpochRange [earliest_child_start_time, latest_child_end_time]
+            APP.justdo_planning_utilities.setEpochRange [earliest_child_start_time, latest_child_end_time], gc.getGridUid()
 
             # Release the event
             @off()
             return
             
-          APP.modules.project_page.gridControl().setView grid_view
+          gc.setView grid_view
           
       return
     order: 130
