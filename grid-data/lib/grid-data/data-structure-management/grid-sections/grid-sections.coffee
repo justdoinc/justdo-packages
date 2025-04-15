@@ -390,8 +390,12 @@ _.extend GridData.prototype,
 
         return
 
+    item_title = section_obj.options.section_item_title
+    if _.isFunction item_title
+      item_title = JustdoHelpers.xssGuard item_title.call(@)
+
     item_obj =
-      title: section_obj.options.section_item_title
+      title: item_title
 
     absolute_path = section_obj.path
 
