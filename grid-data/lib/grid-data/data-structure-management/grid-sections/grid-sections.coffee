@@ -367,6 +367,12 @@ _.extend GridData.prototype,
     if @items_types_settings[type]?.is_collection_item
       @_registerCollectionItemIndex(index, item_obj._id)
 
+    # Since we called Object.create(item_obj) earlier, we need to get the keys of the __proto__ of the item_obj
+    item_obj_keys = _.keys(item_obj.__proto__)
+    grid_tree_item_index = @getPathGridTreeIndex absolute_path 
+    # Invalidate the item in the grid to ensure the fields are up-to-date
+    @emit "grid-item-changed", grid_tree_item_index, item_obj_keys
+
     return index
 
   _addSectionItem: (section_obj) ->
