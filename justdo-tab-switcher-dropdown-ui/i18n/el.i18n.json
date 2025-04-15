@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "Λίστες Προθεσμιών Μελών",
   "tab_switcher_all_members_due_list_label": "Λίστα Προθεσμιών Όλων των Μελών",
   "tab_switcher_projects_section_label": "Έργα",
-  "tab_switcher_projects_label": "Έργα"
+  "tab_switcher_projects_label": "Έργα",
+  "tab_switcher_projects_in_progress_label": "Έργα σε Εξέλιξη"
 }

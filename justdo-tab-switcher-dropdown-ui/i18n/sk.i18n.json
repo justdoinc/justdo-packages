@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "Zoznamy termínov členov",
   "tab_switcher_all_members_due_list_label": "Zoznam termínov všetkých členov",
   "tab_switcher_projects_section_label": "Projekty",
-  "tab_switcher_projects_label": "Projekty"
+  "tab_switcher_projects_label": "Projekty",
+  "tab_switcher_projects_in_progress_label": "Prebiehajúce projekty"
 }

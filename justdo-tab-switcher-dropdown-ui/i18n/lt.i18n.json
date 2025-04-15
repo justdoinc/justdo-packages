@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "Narių terminų sąrašai",
   "tab_switcher_all_members_due_list_label": "Visų narių terminų sąrašas",
   "tab_switcher_projects_section_label": "Projektai",
-  "tab_switcher_projects_label": "Projektai"
+  "tab_switcher_projects_label": "Projektai",
+  "tab_switcher_projects_in_progress_label": "Vykdomi projektai"
 }

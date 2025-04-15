@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "Listat e Afateve të Anëtarëve",
   "tab_switcher_all_members_due_list_label": "Lista e Afateve e të Gjithë Anëtarëve",
   "tab_switcher_projects_section_label": "Projekte",
-  "tab_switcher_projects_label": "Projekte"
+  "tab_switcher_projects_label": "Projekte",
+  "tab_switcher_projects_in_progress_label": "Projekte në Progres"
 }

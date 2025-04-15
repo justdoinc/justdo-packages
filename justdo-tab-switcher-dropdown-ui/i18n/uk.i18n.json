@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "Списки термінових завдань учасників",
   "tab_switcher_all_members_due_list_label": "Список термінових завдань усіх учасників",
   "tab_switcher_projects_section_label": "Проекти",
-  "tab_switcher_projects_label": "Проекти"
+  "tab_switcher_projects_label": "Проекти",
+  "tab_switcher_projects_in_progress_label": "Проєкти в процесі"
 }

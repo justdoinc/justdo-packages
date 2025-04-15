@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "Листе рокова чланова",
   "tab_switcher_all_members_due_list_label": "Листа рокова свих чланова",
   "tab_switcher_projects_section_label": "Пројекти",
-  "tab_switcher_projects_label": "Пројекти"
+  "tab_switcher_projects_label": "Пројекти",
+  "tab_switcher_projects_in_progress_label": "Пројекти у току"
 }

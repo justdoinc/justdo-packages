@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "Medlemmars förfallodag-listor",
   "tab_switcher_all_members_due_list_label": "Alla medlemmars förfallodag-lista",
   "tab_switcher_projects_section_label": "Projekt",
-  "tab_switcher_projects_label": "Projekt"
+  "tab_switcher_projects_label": "Projekt",
+  "tab_switcher_projects_in_progress_label": "Pågående projekt"
 }

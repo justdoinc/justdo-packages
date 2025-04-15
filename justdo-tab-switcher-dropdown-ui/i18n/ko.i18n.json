@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "멤버 마감 목록",
   "tab_switcher_all_members_due_list_label": "전체 멤버 마감 목록",
   "tab_switcher_projects_section_label": "프로젝트",
-  "tab_switcher_projects_label": "프로젝트"
+  "tab_switcher_projects_label": "프로젝트",
+  "tab_switcher_projects_in_progress_label": "진행 중인 프로젝트"
 }

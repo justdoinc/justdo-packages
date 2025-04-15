@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "Listas de Pendientes de Miembros",
   "tab_switcher_all_members_due_list_label": "Lista de Pendientes de Todos los Miembros",
   "tab_switcher_projects_section_label": "Proyectos",
-  "tab_switcher_projects_label": "Proyectos"
+  "tab_switcher_projects_label": "Proyectos",
+  "tab_switcher_projects_in_progress_label": "Proyectos en Progreso"
 }

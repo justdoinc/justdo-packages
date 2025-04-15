@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "รายการครบกำหนดของสมาชิก",
   "tab_switcher_all_members_due_list_label": "รายการครบกำหนดของสมาชิกทั้งหมด",
   "tab_switcher_projects_section_label": "โครงการ",
-  "tab_switcher_projects_label": "โครงการ"
+  "tab_switcher_projects_label": "โครงการ",
+  "tab_switcher_projects_in_progress_label": "โปรเจกต์ที่กำลังดำเนินการ"
 }

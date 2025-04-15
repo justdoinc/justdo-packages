@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "সদস্যদের বাকি কাজের তালিকা",
   "tab_switcher_all_members_due_list_label": "সকল সদস্যের বাকি কাজের তালিকা",
   "tab_switcher_projects_section_label": "প্রকল্পসমূহ",
-  "tab_switcher_projects_label": "প্রকল্পসমূহ"
+  "tab_switcher_projects_label": "প্রকল্পসমূহ",
+  "tab_switcher_projects_in_progress_label": "চলমান প্রকল্পসমূহ"
 }

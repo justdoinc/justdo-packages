@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "Liste Scadenze dei Membri",
   "tab_switcher_all_members_due_list_label": "Lista Scadenze di Tutti i Membri",
   "tab_switcher_projects_section_label": "Progetti",
-  "tab_switcher_projects_label": "Progetti"
+  "tab_switcher_projects_label": "Progetti",
+  "tab_switcher_projects_in_progress_label": "Progetti in corso"
 }

@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "Members Due Lists",
   "tab_switcher_all_members_due_list_label": "All Members Due List",
   "tab_switcher_projects_section_label": "Projects",
-  "tab_switcher_projects_label": "Projects"
+  "tab_switcher_projects_label": "Projects",
+  "tab_switcher_projects_in_progress_label": "In progress Projects"
 }

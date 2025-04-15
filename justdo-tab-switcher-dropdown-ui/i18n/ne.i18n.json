@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "सदस्यहरूको म्याद सूचीहरू",
   "tab_switcher_all_members_due_list_label": "सबै सदस्यहरूको म्याद सूची",
   "tab_switcher_projects_section_label": "परियोजनाहरू",
-  "tab_switcher_projects_label": "परियोजनाहरू"
+  "tab_switcher_projects_label": "परियोजनाहरू",
+  "tab_switcher_projects_in_progress_label": "प्रगतिमा रहेका परियोजनाहरू"
 }

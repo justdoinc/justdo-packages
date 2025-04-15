@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "Llistes de Venciments dels Membres",
   "tab_switcher_all_members_due_list_label": "Llista de Venciments de Tots els Membres",
   "tab_switcher_projects_section_label": "Projectes",
-  "tab_switcher_projects_label": "Projectes"
+  "tab_switcher_projects_label": "Projectes",
+  "tab_switcher_projects_in_progress_label": "Projectes en Curs"
 }
