@@ -16,7 +16,18 @@ _.extend JustdoDeliveryPlanner.prototype,
 
                   options:
                     permitted_depth: 1
-                    section_item_title: "Active Project"
+                    section_item_title: ->
+                      default_title = "Active Project"
+                      title = @getGlobalStateVar "section-item-title-i18n", default_title
+                      if title isnt default_title
+                        try
+                          title = atob title
+                          title = TAPi18n.__(title)
+                        catch e
+                          title = default_title
+
+                      return title 
+                      
                     expanded_on_init: true
                     show_if_empty: true
 
@@ -25,6 +36,17 @@ _.extend JustdoDeliveryPlanner.prototype,
                       query =
                         "#{JustdoDeliveryPlanner.task_is_archived_project_field_name}": {$ne: true}
                         "#{JustdoDeliveryPlanner.task_is_project_field_name}": true
+                      
+                      custom_query =
+                        @getGlobalStateVar "custom-query", "{}"
+                      if custom_query?
+                        try
+                          custom_query = atob custom_query
+                          custom_query = JSON.parse custom_query
+                        catch e
+                          custom_query = {}
+
+                        query = _.extend query, custom_query
 
                       if (project_id = APP.modules?.project_page?.curProj()?.id)?
                         query.project_id = project_id
