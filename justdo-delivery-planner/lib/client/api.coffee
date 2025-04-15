@@ -54,6 +54,24 @@ _.extend JustdoDeliveryPlanner.prototype,
         icon_type: "feather"
         icon_val: "briefcase"
       listingCondition: isInstalledOnCurrentProject
+
+    APP.modules.project_page.tab_switcher_manager.registerSectionItem "main", "projects-in-progress",
+      position: 310
+      data:
+        label: "In progress Projects"
+        label_i18n: "tab_switcher_projects_in_progress_label"
+        tab_id: "jdp-all-projects"
+
+        icon_type: "feather"
+        icon_val: "briefcase"
+
+        tab_sections_state:
+          global:
+            "custom-query": btoa """#{JSON.stringify({state: JustdoHelpers.getCoreStateOneOfCoreStatesQuery(["in-progress"])})}"""
+            "section-item-title-i18n": btoa "tab_switcher_projects_in_progress_label"
+      listingCondition: isInstalledOnCurrentProject
+
+
     APP.modules.project_page.tab_switcher_manager.registerSection "projects",
       position: 350
       data:
