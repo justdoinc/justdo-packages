@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "Списъци със срокове на членовете",
   "tab_switcher_all_members_due_list_label": "Списък със срокове на всички членове",
   "tab_switcher_projects_section_label": "Проекти",
-  "tab_switcher_projects_label": "Проекти"
+  "tab_switcher_projects_label": "Проекти",
+  "tab_switcher_projects_in_progress_label": "Проекти в процес на изпълнение"
 }

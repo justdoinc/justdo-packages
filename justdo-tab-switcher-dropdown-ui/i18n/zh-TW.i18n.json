@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "其他成員的待辦任務",
   "tab_switcher_all_members_due_list_label": "所有成員的待辦任務",
   "tab_switcher_projects_section_label": "專案",
-  "tab_switcher_projects_label": "專案清單"
+  "tab_switcher_projects_label": "專案清單",
+  "tab_switcher_projects_in_progress_label": "進行中的專案"
 }

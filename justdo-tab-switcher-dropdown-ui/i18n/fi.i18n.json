@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "Jäsenten eräpäivälistat",
   "tab_switcher_all_members_due_list_label": "Kaikkien jäsenten eräpäivälista",
   "tab_switcher_projects_section_label": "Projektit",
-  "tab_switcher_projects_label": "Projektit"
+  "tab_switcher_projects_label": "Projektit",
+  "tab_switcher_projects_in_progress_label": "Käynnissä olevat projektit"
 }

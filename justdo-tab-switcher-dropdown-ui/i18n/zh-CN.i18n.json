@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "成员待办列表",
   "tab_switcher_all_members_due_list_label": "所有成员待办列表",
   "tab_switcher_projects_section_label": "项目",
-  "tab_switcher_projects_label": "项目"
+  "tab_switcher_projects_label": "项目",
+  "tab_switcher_projects_in_progress_label": "进行中的项目"
 }

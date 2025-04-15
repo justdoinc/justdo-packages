@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "Liikmete tähtajalised nimekirjad",
   "tab_switcher_all_members_due_list_label": "Kõigi liikmete tähtajaline nimekiri",
   "tab_switcher_projects_section_label": "Projektid",
-  "tab_switcher_projects_label": "Projektid"
+  "tab_switcher_projects_label": "Projektid",
+  "tab_switcher_projects_in_progress_label": "Käimasolevad projektid"
 }

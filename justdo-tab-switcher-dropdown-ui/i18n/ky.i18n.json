@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "Мүчөлөрдүн мөөнөтү келген тизмелери",
   "tab_switcher_all_members_due_list_label": "Бардык мүчөлөрдүн мөөнөтү келген тизмеси",
   "tab_switcher_projects_section_label": "Долбоорлор",
-  "tab_switcher_projects_label": "Долбоорлор"
+  "tab_switcher_projects_label": "Долбоорлор",
+  "tab_switcher_projects_in_progress_label": "Иштеп жаткан долбоорлор"
 }

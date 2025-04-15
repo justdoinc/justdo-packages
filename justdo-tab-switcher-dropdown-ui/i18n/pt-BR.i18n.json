@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "Listas de Prazos dos Membros",
   "tab_switcher_all_members_due_list_label": "Lista de Prazos de Todos os Membros",
   "tab_switcher_projects_section_label": "Projetos",
-  "tab_switcher_projects_label": "Projetos"
+  "tab_switcher_projects_label": "Projetos",
+  "tab_switcher_projects_in_progress_label": "Projetos em Andamento"
 }

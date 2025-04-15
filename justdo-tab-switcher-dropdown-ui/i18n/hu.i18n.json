@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "Tagok esedékes listái",
   "tab_switcher_all_members_due_list_label": "Minden tag esedékes listája",
   "tab_switcher_projects_section_label": "Projektek",
-  "tab_switcher_projects_label": "Projektek"
+  "tab_switcher_projects_label": "Projektek",
+  "tab_switcher_projects_in_progress_label": "Folyamatban lévő projektek"
 }

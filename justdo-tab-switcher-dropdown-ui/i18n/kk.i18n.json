@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "Мүшелердің мерзімді тізімдері",
   "tab_switcher_all_members_due_list_label": "Барлық мүшелердің мерзімді тізімі",
   "tab_switcher_projects_section_label": "Жобалар",
-  "tab_switcher_projects_label": "Жобалар"
+  "tab_switcher_projects_label": "Жобалар",
+  "tab_switcher_projects_in_progress_label": "Орындалу барысындағы жобалар"
 }

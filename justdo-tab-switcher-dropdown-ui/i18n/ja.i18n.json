@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "メンバーの期限リスト",
   "tab_switcher_all_members_due_list_label": "全メンバーの期限リスト",
   "tab_switcher_projects_section_label": "プロジェクト",
-  "tab_switcher_projects_label": "プロジェクト"
+  "tab_switcher_projects_label": "プロジェクト",
+  "tab_switcher_projects_in_progress_label": "進行中のプロジェクト"
 }

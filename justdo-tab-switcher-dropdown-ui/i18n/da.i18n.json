@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "Medlemmers forfaldslister",
   "tab_switcher_all_members_due_list_label": "Alle medlemmers forfaldsliste",
   "tab_switcher_projects_section_label": "Projekter",
-  "tab_switcher_projects_label": "Projekter"
+  "tab_switcher_projects_label": "Projekter",
+  "tab_switcher_projects_in_progress_label": "Igangværende projekter"
 }

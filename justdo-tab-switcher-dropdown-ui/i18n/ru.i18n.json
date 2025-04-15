@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "Списки задач участников",
   "tab_switcher_all_members_due_list_label": "Список задач всех участников",
   "tab_switcher_projects_section_label": "Проекты",
-  "tab_switcher_projects_label": "Проекты"
+  "tab_switcher_projects_label": "Проекты",
+  "tab_switcher_projects_in_progress_label": "Проекты в работе"
 }

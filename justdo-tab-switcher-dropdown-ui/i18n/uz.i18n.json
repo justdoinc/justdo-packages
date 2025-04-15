@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "A'zolarning muddatli ro'yxatlari",
   "tab_switcher_all_members_due_list_label": "Barcha a'zolarning muddatli ro'yxati",
   "tab_switcher_projects_section_label": "Loyihalar",
-  "tab_switcher_projects_label": "Loyihalar"
+  "tab_switcher_projects_label": "Loyihalar",
+  "tab_switcher_projects_in_progress_label": "Bajarilayotgan loyihalar"
 }

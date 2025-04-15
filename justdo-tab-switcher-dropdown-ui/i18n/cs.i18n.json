@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "Seznamy úkolů členů",
   "tab_switcher_all_members_due_list_label": "Seznam úkolů všech členů",
   "tab_switcher_projects_section_label": "Projekty",
-  "tab_switcher_projects_label": "Projekty"
+  "tab_switcher_projects_label": "Projekty",
+  "tab_switcher_projects_in_progress_label": "Rozpracované projekty"
 }

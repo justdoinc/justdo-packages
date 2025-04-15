@@ -14,5 +14,6 @@
   "tab_switcher_members_due_lists_label": "Üye Vade Listeleri",
   "tab_switcher_all_members_due_list_label": "Tüm Üyelerin Vade Listesi",
   "tab_switcher_projects_section_label": "Projeler",
-  "tab_switcher_projects_label": "Projeler"
+  "tab_switcher_projects_label": "Projeler",
+  "tab_switcher_projects_in_progress_label": "Devam Eden Projeler"
 }
