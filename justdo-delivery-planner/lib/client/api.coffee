@@ -233,9 +233,15 @@ _.extend JustdoDeliveryPlanner.prototype,
             op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) =>
               task = getTaskWithDeliveryPlannerRelatedFields(task_id)
               if type_id is self.getTaskObjProjectsCollectionTypeId(task)
-                self.unsetTaskProjectCollectionType task_id
+                self.unsetTaskProjectCollectionType task_id, (err) ->
+                  if err?
+                    JustdoSnackbar.show 
+                      text: err.reason or err
               else
-                self.setTaskProjectCollectionType task_id, type_id
+                self.setTaskProjectCollectionType task_id, type_id, (err) ->
+                  if err?
+                    JustdoSnackbar.show 
+                      text: err.reason or err
               return 
             icon_type: "feather"
             icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
@@ -323,8 +329,11 @@ _.extend JustdoDeliveryPlanner.prototype,
                 projects_collection:
                   projects_collection_type: type_id
                 
-              APP.modules.project_page.gridControl().addSubItem(fields)
-              return
+              APP.modules.project_page.gridControl().addSubItem fields, (err) ->
+                if err?
+                  JustdoSnackbar.show 
+                    text: err.reason or err
+                return
             icon_type: "feather"
             icon_val: "corner-down-right"
             icon_class: "create-sub-projects-collection"
