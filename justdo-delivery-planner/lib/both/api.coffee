@@ -446,7 +446,7 @@ _.extend JustdoDeliveryPlanner.prototype,
   # returns an array of arrays, where each inner array contains projects collections at that depth
   # e.g. [[task1, task2], [task3, task4], [task5]]
   # where task 1 and 2 are the immediate parents, task 3 and 4 are the parents of either task 1 or 2, and so on.
-  _getParentProjectsCollectionsGroupedByDepth: (parent_task_ids) ->
+  _getParentProjectsCollectionsGroupedByDepth: (parent_task_ids, fields={}) ->
     parent_projects_collections = []
 
     # Convert single ID to array
@@ -462,11 +462,12 @@ _.extend JustdoDeliveryPlanner.prototype,
         $in: parent_task_ids
       "projects_collection.projects_collection_type": 
         $ne: null
+    default_fields = 
+      parents: 1
+      projects_collection: 1
     query_options = 
-      fields:
-        parents: 1
-        projects_collection: 1
-    
+      fields: _.extend {}, fields, default_fields
+      
     collections_cursor = @tasks_collection.find(query, query_options)
     
     # If none are projects collections, depth is 0
@@ -488,7 +489,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       return parent_projects_collections
     
     # Otherwise, depth is 1 + max depth of parents
-    return parent_projects_collections.push @_getParentProjectsCollectionsGroupedByDepth(parent_ids)
+    return parent_projects_collections.push @_getParentProjectsCollectionsGroupedByDepth(parent_ids, fields)
 
   # This method retrieves the parent projects collections grouped by their depth.
   # It first checks if there are any forced parent IDs provided in the options.
@@ -518,7 +519,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
       parent_ids = @_getParentIds(task)
     
-    return @_getParentProjectsCollectionsGroupedByDepth(parent_ids)
+    return @_getParentProjectsCollectionsGroupedByDepth(parent_ids, options.fields)
   
   isProjectsCollectionDepthLteMaxDepth: (options, max_depth) ->
     parent_projects_collections_depth = @getParentProjectsCollectionsGroupedByDepth(options).length
