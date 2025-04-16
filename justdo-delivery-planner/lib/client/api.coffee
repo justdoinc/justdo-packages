@@ -312,4 +312,29 @@ _.extend JustdoDeliveryPlanner.prototype,
 
         position += 1
 
+        APP.justdo_tasks_context_menu.registerSectionItem "projects", "create-sub-projects-collection-#{dashed_type_id}",
+          position: position
+          data:
+            label: TAPi18n.__ projects_collection_type.add_sub_item_i18n, {}, JustdoI18n.default_lang
+            label_i18n: projects_collection_type.add_sub_item_i18n
+            op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) =>
+              fields = 
+                project_id: JD.activeJustdoId()
+                projects_collection:
+                  projects_collection_type: type_id
+                
+              APP.modules.project_page.gridControl().addSubItem(fields)
+              return
+            icon_type: "feather"
+            icon_val: "corner-down-right"
+            icon_class: "create-sub-projects-collection"
+          listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+            task = getTaskWithDeliveryPlannerRelatedFields(task_id)
+            is_task_projects_collection = self.getTaskObjProjectsCollectionTypeId(task)?
+            is_allowed_by_permissions = APP.justdo_permissions?.checkTaskPermissions("grid-structure.add-remove-sort-children", task_id)
+
+            return is_task_projects_collection and is_allowed_by_permissions
+
+        position += 1
+
     return

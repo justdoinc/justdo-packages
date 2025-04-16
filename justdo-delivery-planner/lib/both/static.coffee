@@ -32,6 +32,7 @@ _.extend JustdoDeliveryPlanner,
       close_i18n: "projects_collection_close_default_projects_collection"
       closed_label_i18n: "projects_collection_closed_default_projects_collection_label"
       reopen_i18n: "projects_collection_reopen_default_projects_collection"
+      add_sub_item_i18n: "projects_collection_create_sub_projects_collection"
 
       type_icon: { # The type icon is used for the - set as Projects Collection, on-grid indicator, the tab switcher dropdown, and other places where we refer to the Project Collection type.
         type: "feather"

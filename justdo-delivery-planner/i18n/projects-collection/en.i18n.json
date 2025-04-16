@@ -9,6 +9,7 @@
   "projects_collection_close_default_projects_collection": "Close this Projects Collection",
   "projects_collection_closed_default_projects_collection_label": "Closed Projects Collection",
   "projects_collection_reopen_default_projects_collection": "Reopen this Projects Collection",
+  "projects_collection_create_sub_projects_collection": "Create a sub Projects Collection",
 
   "projects_collection_department_label": "Department",
   "projects_collection_department_label_plural": "Departments",
