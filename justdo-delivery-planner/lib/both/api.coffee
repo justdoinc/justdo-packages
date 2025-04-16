@@ -429,3 +429,104 @@ _.extend JustdoDeliveryPlanner.prototype,
     get_parent_project_collections_query_options =
       fields: options.fields    
     return @tasks_collection.find(get_parent_project_collections_query, get_parent_project_collections_query_options)
+
+  # Helper function to extract parent IDs from a task
+  _getParentIds: (task) ->
+    if not task?.parents?
+      return []
+    
+    return _.chain(task.parents)
+      .keys()
+      .filter((parent_id) -> parent_id isnt "0")
+      .value()
+
+  # This is an internal method that should not be called directly
+  # Use getParentProjectsCollectionsGroupedByDepth instead
+  # Recursively retrieves parent projects collections grouped by their depth
+  # returns an array of arrays, where each inner array contains projects collections at that depth
+  # e.g. [[task1, task2], [task3, task4], [task5]]
+  # where task 1 and 2 are the immediate parents, task 3 and 4 are the parents of either task 1 or 2, and so on.
+  _getParentProjectsCollectionsGroupedByDepth: (parent_task_ids) ->
+    parent_projects_collections = []
+
+    # Convert single ID to array
+    if _.isString parent_task_ids
+      parent_task_ids = [parent_task_ids]
+
+    if _.isEmpty parent_task_ids
+      return parent_projects_collections
+    
+    # Find which tasks are projects collections
+    query = 
+      _id: 
+        $in: parent_task_ids
+      "projects_collection.projects_collection_type": 
+        $ne: null
+    query_options = 
+      fields:
+        parents: 1
+        projects_collection: 1
+    
+    collections_cursor = @tasks_collection.find(query, query_options)
+    
+    # If none are projects collections, depth is 0
+    if collections_cursor.count() is 0
+      return parent_projects_collections
+    
+    parent_projects_collections.push collections_cursor.fetch()
+
+    # Get parent IDs of all projects collections
+    all_parent_ids = []
+    collections_cursor.forEach (task) =>
+      all_parent_ids = all_parent_ids.concat(@_getParentIds(task))
+    
+    # Remove duplicates
+    parent_ids = _.uniq all_parent_ids
+    
+    # If no parents, depth is 1 (base case)
+    if _.isEmpty parent_ids
+      return parent_projects_collections
+    
+    # Otherwise, depth is 1 + max depth of parents
+    return parent_projects_collections.push @_getParentProjectsCollectionsGroupedByDepth(parent_ids)
+
+  # This method retrieves the parent projects collections grouped by their depth.
+  # It first checks if there are any forced parent IDs provided in the options.
+  # If forced parent IDs are provided, it uses them instead of the task's parents.
+  # If no forced parent IDs are provided, it retrieves the task's parent IDs.
+  # It then calls the internal method `_getParentProjectsCollectionsGroupedByDepth`
+  # to get the parent projects collections grouped by their depth.
+  # Finally, it returns the grouped parent projects collections.
+  # options:
+  #   forced_parent_ids: an array of parent IDs to use instead of the task's parents. we prioritize it over the task's parents.
+  #   task: the task id or object to get the parent projects collections for, if forced_parent_ids is not provided
+  # returns: check the comment of _getParentProjectsCollectionsGroupedByDepth
+  getParentProjectsCollectionsGroupedByDepth: (options) ->
+    if options.forced_parent_ids?
+      parent_ids = options.forced_parent_ids
+    else
+      if not (task = options.task)?
+        throw @_error "missing-argument", "options.task is required"
+        
+      if _.isString task
+        query = 
+          _id: task
+        task = @tasks_collection.findOne(query, {fields: {parents: 1}})
+
+      if not task.parents?
+        throw @_error "fatal", "Task document does not have a parent object."
+
+      parent_ids = @_getParentIds(task)
+    
+    return @_getParentProjectsCollectionsGroupedByDepth(parent_ids)
+  
+  isProjectsCollectionDepthLteMaxDepth: (options, max_depth) ->
+    parent_projects_collections_depth = @getParentProjectsCollectionsGroupedByDepth(options).length
+    return parent_projects_collections_depth <= max_depth
+
+  requireProjectsCollectionDepthLteMaxDepth: (options, max_depth) ->
+    if not @isProjectsCollectionDepthLteMaxDepth(options, max_depth)
+      throw @_error "not-supported", "Cannot nest projects collections beyond #{max_depth} level(s)"
+
+    return true
+  
