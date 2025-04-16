@@ -17,7 +17,7 @@ _.extend JustdoDeliveryPlanner.prototype,
                   options:
                     permitted_depth: 1
                     section_item_title: ->
-                      default_title = "Active Project"
+                      default_title = "Active Projects"
                       title = @getGlobalStateVar "section-item-title-i18n", default_title
                       if title isnt default_title
                         try
