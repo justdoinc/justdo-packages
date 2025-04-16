@@ -113,7 +113,20 @@ _.extend JustdoDeliveryPlanner.prototype,
     return _.find @getSupportedProjectsCollectionTypes(), (type) -> type.type_id is type_id
 
   getTaskObjProjectsCollectionTypeId: (task_obj) ->
-    return  task_obj?.projects_collection?.projects_collection_type
+    return task_obj?.projects_collection?.projects_collection_type
+
+  isTaskProjectsCollection: (task) ->
+    if _.isString task
+      query = 
+        _id: task
+        "projects_collection.projects_collection_type": 
+          $ne: null
+      query_options = 
+        fields:
+          "projects_collection.projects_collection_type": 1
+      task = @tasks_collection.findOne(query, query_options)
+
+    return @getTaskObjProjectsCollectionTypeId(task)?
 
   isProjectsCollectionClosed: (task_obj) ->
     if not @getTaskObjProjectsCollectionTypeId(task_obj)?
