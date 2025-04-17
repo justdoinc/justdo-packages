@@ -489,7 +489,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       return parent_projects_collections
     
     # Otherwise, depth is 1 + max depth of parents
-    return parent_projects_collections.push @_getParentProjectsCollectionsGroupedByDepth(parent_ids, fields)
+    return parent_projects_collections.concat @_getParentProjectsCollectionsGroupedByDepth(parent_ids, fields)
 
   # This method retrieves the parent projects collections grouped by their depth.
   # It first checks if there are any forced parent IDs provided in the options.
