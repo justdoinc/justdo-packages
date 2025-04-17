@@ -441,11 +441,8 @@ _.extend JustdoDeliveryPlanner.prototype,
       .value()
 
   # This is an internal method that should not be called directly
-  # Use getParentProjectsCollectionsGroupedByDepth instead
-  # Recursively retrieves parent projects collections grouped by their depth
-  # returns an array of arrays, where each inner array contains projects collections at that depth
-  # e.g. [[task1, task2], [task3, task4], [task5]]
-  # where task 1 and 2 are the immediate parents, task 3 and 4 are the parents of either task 1 or 2, and so on.
+  # Use getParentProjectsCollectionsGroupedByDepth instead it also gives a detailed
+  # documentation for returned value.
   _getParentProjectsCollectionsGroupedByDepth: (parent_task_ids, fields={}) ->
     parent_projects_collections = []
 
@@ -491,17 +488,46 @@ _.extend JustdoDeliveryPlanner.prototype,
     # Otherwise, depth is 1 + max depth of parents
     return parent_projects_collections.concat @_getParentProjectsCollectionsGroupedByDepth(parent_ids, fields)
 
-  # This method retrieves the parent projects collections grouped by their depth.
-  # It first checks if there are any forced parent IDs provided in the options.
-  # If forced parent IDs are provided, it uses them instead of the task's parents.
-  # If no forced parent IDs are provided, it retrieves the task's parent IDs.
-  # It then calls the internal method `_getParentProjectsCollectionsGroupedByDepth`
-  # to get the parent projects collections grouped by their depth.
-  # Finally, it returns the grouped parent projects collections.
+  # A task is considered to belong to a project collections only if they are its immediate parents.
+  # Further, a project collection is considered to be a sub-project collection of another project
+  # collection only if that project collection is its direct parent.
+  #
+  # Examples: PC means PC, P means project and T means regular tasks
+  #
+  # Example 1:
+  #
+  # PC -> T -> P
+  #
+  # P isn't considered to belong to PC, T does.
+  #
+  # Example 2:
+  #
+  # PC1 -> PC2 -> PC3 -> P -> T
+  #
+  # From the perspective of P it belongs to the sub-sub project collection PC3, whose ancestors collections are
+  # PC2 and PC1
+  #
+  # From the perspective of T is doesn't belong to a project collection.
+  #
+  # From the perspective of PC2 it belongs to the project collection PC1.
+  #
+  # This method implements the above description - It returns the parent projects collections grouped by their depth.
+  #
+  # Note, because of multi-parents there might be multi-departments in each depth.
+  #
   # options:
   #   forced_parent_ids: an array of parent IDs to use instead of the task's parents. we prioritize it over the task's parents.
-  #   task: the task id or object to get the parent projects collections for, if forced_parent_ids is not provided
-  # returns: check the comment of _getParentProjectsCollectionsGroupedByDepth
+  #   task: the task id or object to get the ancestor projects collections for, if forced_parent_ids is not provided
+  #   fileds: the fileds to include for every task document.
+  #
+  # To allow situations where tasks aren't yet written to the DB, we allow a mechanism to force
+  # parents ids to appear as the actual parents (the purpose for forced_parent_ids).
+  #
+  # Returned value:
+  #
+  # returns an array of arrays, where each inner array contains projects collections at that depth
+  # e.g. [[task1, task2], [task3, task4], [task5]]
+  # where task 1 and 2 are the immediate parents, task 3 and 4 are the parents of either task 1 or 2, and so on.
   getParentProjectsCollectionsGroupedByDepth: (options) ->
     if options.forced_parent_ids?
       parent_ids = options.forced_parent_ids
