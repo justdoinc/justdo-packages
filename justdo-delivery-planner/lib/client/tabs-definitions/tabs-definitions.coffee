@@ -16,7 +16,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
                   options:
                     permitted_depth: 1
-                    section_item_title: "Active Project"
+                    section_item_title: "Active Projects"
                     expanded_on_init: true
                     show_if_empty: true
 
