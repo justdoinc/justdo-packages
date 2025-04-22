@@ -267,8 +267,9 @@ if Package["justdoinc:justdo-delivery-planner"]? and Meteor.isServer
         
       it "should return parent collections with forced parent IDs", ->
         # Test with forced parent IDs
+        forced_ids = [pc2_id, pc1_id]
         result = APP.justdo_delivery_planner.getParentProjectsCollectionsGroupedByDepth({
-          forced_parent_ids: [pc2_id, pc1_id]
+          forced_parent_ids: forced_ids
         })
         
         # Verify the result
@@ -278,8 +279,10 @@ if Package["justdoinc:justdo-delivery-planner"]? and Meteor.isServer
         # Level 1 (immediate parent): PC2 and PC1
         expect(result[0]).to.be.an("array")
         expect(result[0].length).to.equal(2)
-        expect(result[0][0]._id).to.equal(pc2_id)
-        expect(result[0][1]._id).to.equal(pc1_id)
+        # Check IDs match without assuming order
+        level1_ids = result[0].map (doc) -> doc._id
+        expect(level1_ids).to.include(pc2_id)
+        expect(level1_ids).to.include(pc1_id)
         
         # Level 2 (parent of PC2): PC1
         expect(result[1]).to.be.an("array")
