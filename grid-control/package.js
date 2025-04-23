@@ -145,6 +145,9 @@ Package.onUse(function (api) {
   api.addFiles('lib/client/formatters-and-editors/datetime-formatter/datetime-formatter.sass', client);
 
   api.addFiles('lib/client/formatters-and-editors/array-fields/array-fields.coffee', client);
+  
+  // Preview context
+  api.addFiles('lib/client/preview_context.coffee', client);
 
   // Always after templates
   this.addI18nFiles(api, "i18n/{}.i18n.json");
