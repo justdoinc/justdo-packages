@@ -80,13 +80,24 @@ _.extend PACK.GridOperations,
     prereq: -> @_opreqNotMultiSelectMode(@_opreqUnlocked(@_opreqGridReady()))
 
   addSubItem:
-    op: (fields, cb) -> @addItem @getCurrentPath(), fields, true, cb
+    op: (fields, cb) -> 
+      active_path = @getCurrentPath()
+
+      if (pc = @getCurrentPreviewContext())?
+        return pc.addChild active_path, fields
+      else
+        return @addItem @getCurrentPath(), fields, true, cb
     prereq: -> @_opreqActivePathIsntArchived(@_opreqNotMultiSelectMode(@_opreqActivePathChildrenLevelPermitted(@_opreqActivePathIsCollectionItem(@addItem.prereq()))))
 
   addSiblingItem:
     op: (fields, cb) ->
       active_path = @getCurrentPath()
 
+      # Preview context
+      if (pc = @getCurrentPreviewContext())?
+        return pc.addSibling active_path, fields
+
+      # Actual add sibling
       if active_path?
         @addItem active_path, fields, false, cb
       else
