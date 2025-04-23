@@ -151,11 +151,16 @@ _.extend JustdoTasksContextMenu.prototype,
         label_i18n: "remove_with_subtree_label"
 
         op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          task = APP.collections.Tasks.findOne(task_id, {fields: {seqId: 1, title: 1}})
-          bootbox.confirm "Are you sure you want to remove the task and its entire sub-tree of #{JustdoHelpers.taskCommonName(task)}?", (result) ->
-            if result
-              if (gd = APP.modules.project_page.gridData())?
-                paths = [task_path]
+          gc = APP.modules.project_page.gridControl()
+          # Logic of subtree removal is handled inside pc.removeTasks.
+          if (pc = gc.getCurrentPreviewContext())?
+            pc.removeTasks [task_id]
+          else
+            task = APP.collections.Tasks.findOne(task_id, {fields: {seqId: 1, title: 1}})
+            bootbox.confirm "Are you sure you want to remove the task and its entire sub-tree of #{JustdoHelpers.taskCommonName(task)}?", (result) ->
+              if result
+                if (gd = APP.modules.project_page.gridData())?
+                  paths = [task_path]
 
                 gd.each(task_path, {}, (section, item_type, item_obj, path, expand_state) ->
                   paths.push path
@@ -165,14 +170,14 @@ _.extend JustdoTasksContextMenu.prototype,
                 # Reverse the paths to remove the leaf first
                 paths.reverse()
 
-                gd.removeParent paths, (err) ->
-                  if err?
-                    JustdoSnackbar.show
-                      text: "Cannot remove sub-tree because some tasks have multi-parents."
-                      duration: 5000
+                  gd.removeParent paths, (err) ->
+                    if err?
+                      JustdoSnackbar.show
+                        text: "Cannot remove sub-tree because some tasks have multi-parents."
+                        duration: 5000
 
-                  return
-            return
+                    return
+              return
           return
         icon_type: "feather"
         icon_val: "trash"
