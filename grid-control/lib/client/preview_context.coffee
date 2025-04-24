@@ -1,20 +1,6 @@
 _.extend PACK.Plugins,
   preview_context:
-    init: ->      
-      # Prevent editing of tasks created by preview context
-      @register "BeforeEditCell", (e, args) =>
-        if not (task_id = args.doc?._id)?
-          # This case shouldn't happen
-          return true
-        
-        query = 
-          _id: task_id
-          pc_id:
-            $ne: null
-        is_task_pc_task = @collection.findOne(query, {fields: {_id: 1}})?
-
-        return not is_task_pc_task
-
+    init: ->
       # Defined below
       @_installGcRowsMetadataGenerator()
 
@@ -553,6 +539,26 @@ _.extend PreviewContext.prototype,
     if @destroyed
       throw @_error "destroyed"
     return
+
+
+  edit: (item_id, field, value) ->
+    @_requireNotDestroyed()
+    
+    # Only edit preview tasks
+    query =   
+      _id: item_id
+    @_ensurePcIdInDoc query
+
+    if not (task_doc = @tasks_collection.findOne(query))?
+      throw @_error "unknown-task"
+    
+    # Update the field
+    task_doc[field] = value
+    
+    # Update in minimongo
+    @tasks_collection._collection.update(item_id, {$set: {[field]: value}})
+    
+    return true
 
 _.extend GridControl.prototype,
   createPreviewContext: (options={}) ->
