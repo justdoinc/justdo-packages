@@ -222,8 +222,6 @@ _.extend PreviewContext.prototype,
     return
 
   addChild: (path, fields) ->
-    @_requireNotDestroyed()
-
     if not path?
       throw @_error "not-supported", "Cannot add child without an active path"
     parent_id = GridData.helpers.getPathItemId(path)
@@ -240,7 +238,6 @@ _.extend PreviewContext.prototype,
     return @_createTaskInLocalMinimongo path, fields
 
   addSibling: (path, fields) ->
-    @_requireNotDestroyed()
 
     if path?
       parent_id = GridData.helpers.getPathParentId path
@@ -265,8 +262,6 @@ _.extend PreviewContext.prototype,
   # It will not commit the changes to the server and changes will be lost when refreshing the page
   # unless commit() is called.
   addTasks: (task_docs) ->
-    @_requireNotDestroyed()
-
     if (_.isObject(task_docs)) and (not _.isArray(task_docs))
       task_docs = [task_docs]
     
