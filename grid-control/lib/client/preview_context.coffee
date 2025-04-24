@@ -102,6 +102,8 @@ _.extend PreviewContext.prototype,
     @pc_id = Random.id()
     @order_inc_step = 0.0001
 
+    @commit_in_progress = false
+
     # For creating tasks level by level: We create the tasks using bulkAddChild for pc tasks with a real parent first,
     # then create their pc childrens.
     @real_parents_with_pc_child_set = new Set()
@@ -334,8 +336,22 @@ _.extend PreviewContext.prototype,
     delete task_doc.parents
     return @_removeClientOnlyFields task_doc
 
+  _setCommitInProgress: ->
+    @commit_in_progress = true
+
+  _unsetCommitInProgress: ->
+    @commit_in_progress = false
+  
+  isCommitInProgress: ->
+    return @commit_in_progress
+
   commit: ->
     @_requireNotDestroyed()
+
+    if @isCommitInProgress()
+      return
+
+    @_setCommitInProgress()
 
     error_occured = false
 
@@ -461,6 +477,8 @@ _.extend PreviewContext.prototype,
     return
 
   _commitFailed: ->
+    @_unsetCommitInProgress()
+
     @destroyed = true
     query = {}
     @_ensurePcIdInDoc query
@@ -475,6 +493,8 @@ _.extend PreviewContext.prototype,
     return
 
   _commitFinished: ->
+    @_unsetCommitInProgress()
+
     if @is_commit_finished_called
       return
     
@@ -575,6 +595,10 @@ _.extend GridControl.prototype,
     return @preview_context
   
   getCurrentPreviewContext: ->
+    # If commit is in progress, return null to allow passing grid-data operations to server
+    if @preview_context?.isCommitInProgress()
+      return null
+    
     return @preview_context
 
   _gcMetadataGenerator: (item, item_meta_details, index) ->
