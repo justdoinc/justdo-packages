@@ -141,6 +141,10 @@ _.extend PreviewContext.prototype,
       return
     return
 
+  _ensurePcIdInDoc: (doc) ->
+    doc.pc_id = @pc_id
+    return doc
+
   _createTaskInLocalMinimongo: (path, task_doc, options) ->
     @_requireNotDestroyed()
 
@@ -158,10 +162,10 @@ _.extend PreviewContext.prototype,
       APP.justdo_permissions?.requireTaskPermissions "grid-structure.add-remove-sort-children", parent_id, Meteor.userId()
 
     task_doc.project_id = @project_id
-    task_doc.pc_id = @pc_id
     if not task_doc._id?
       task_doc._id = Random.id()
     task_doc.pc_task_id = task_doc._id
+    @_ensurePcIdInDoc task_doc
 
     created_task_id = @tasks_collection._collection.insert task_doc
     
@@ -320,8 +324,8 @@ _.extend PreviewContext.prototype,
     query = 
       _id:
         $in: pc_task_ids_to_remove
-      pc_id: @pc_id
 
+    @_ensurePcIdInDoc query
     # Remove pc tasks from minimongo
     @tasks_collection._collection.remove query
 
@@ -353,7 +357,7 @@ _.extend PreviewContext.prototype,
       query = 
         _id:
           $in: created_task_ids
-        pc_id: @pc_id
+      @_ensurePcIdInDoc query
       query_options = 
         fields:
           pc_task_id: 1
@@ -391,19 +395,25 @@ _.extend PreviewContext.prototype,
         removePreviewTasks created_task_ids
         @items_to_expand = @items_to_expand.concat created_task_ids
 
-        created_task_id_and_pc_task_id_pairs = @tasks_collection.find({_id: {$in: created_task_ids}, pc_id: @pc_id}, {fields: {pc_task_id: 1}}).map (task_doc) -> {created_task_id: task_doc._id, pc_task_id: task_doc.pc_task_id}
+        query = 
+          _id:
+            $in: created_task_ids
+        @_ensurePcIdInDoc query
+        created_task_id_and_pc_task_id_pairs = @tasks_collection.find(query, {fields: {pc_task_id: 1}}).map (task_doc) -> {created_task_id: task_doc._id, pc_task_id: task_doc.pc_task_id}
         for created_tasks_id_pair in created_task_id_and_pc_task_id_pairs
           subtasks_query = 
-            pc_id: @pc_id
             "parents.#{created_tasks_id_pair.pc_task_id}":
               $ne: null
+          @_ensurePcIdInDoc subtasks_query
 
           if not _.isEmpty(subtasks = @tasks_collection.find(subtasks_query).map (task) => @_removePreviewOnlyFields task)
             recursiveBulkCreateTasks created_tasks_id_pair.created_task_id, subtasks
           else
             # If there're no tasks' _id equals to pc_task_id, consider all the tasks are created.
             is_all_tasks_created = true
-            @tasks_collection.find({pc_id: @pc_id}, {fields: {pc_task_id: 1}}).forEach (task_doc) ->
+            query = {}
+            @_ensurePcIdInDoc query
+            @tasks_collection.find(query, {fields: {pc_task_id: 1}}).forEach (task_doc) ->
               if not is_all_tasks_created
                 return
 
@@ -421,9 +431,9 @@ _.extend PreviewContext.prototype,
     @grid_data._lock()
     @real_parents_with_pc_child_set.forEach (parent_id) =>
       tasks_with_real_parents_query = 
-        pc_id: @pc_id
         "parents.#{parent_id}":
           $ne: null
+      @_ensurePcIdInDoc tasks_with_real_parents_query
 
       if not _.isEmpty(tasks_to_add = @tasks_collection.find(tasks_with_real_parents_query).map (task_to_add) => @_removePreviewOnlyFields task_to_add)
         recursiveBulkCreateTasks parent_id, tasks_to_add
@@ -433,11 +443,10 @@ _.extend PreviewContext.prototype,
   _storePathsForUndoing: ->
     for parent_id in Array.from @real_parents_with_pc_child_set
       query = 
-        pc_id: @pc_id
         "parents.#{parent_id}":
           $ne: null
+      @_ensurePcIdInDoc query
       
-      task_ids = 
       @tasks_collection.find(query, {fields: {_id: 1}}).forEach (task) => 
         if (parseInt parent_id, 10) is 0
           path = "/#{task._id}/"
@@ -467,7 +476,9 @@ _.extend PreviewContext.prototype,
 
   _commitFailed: ->
     @destroyed = true
-    @tasks_collection._collection.remove {pc_id: @pc_id}
+    query = {}
+    @_ensurePcIdInDoc query
+    @tasks_collection._collection.remove query
 
     @_storePathsForUndoing()
     @undoCommit()
@@ -484,7 +495,9 @@ _.extend PreviewContext.prototype,
     @is_commit_finished_called = true
 
     # Save all created_task_ids for unsetting pc_id and pc_task_id
-    created_task_ids = @tasks_collection.find({pc_id: @pc_id}, {fields: {_id: 1}}).map (task_doc) -> task_doc._id
+    query = {}
+    @_ensurePcIdInDoc query
+    created_task_ids = @tasks_collection.find(query, {fields: {_id: 1}}).map (task_doc) -> task_doc._id
 
     @_storePathsForUndoing()
 
@@ -525,7 +538,9 @@ _.extend PreviewContext.prototype,
       
     @destroyed = true
 
-    @tasks_collection._collection.remove {pc_id: @pc_id}
+    query = {}
+    @_ensurePcIdInDoc query
+    @tasks_collection._collection.remove query
     @grid_data._release()
 
     @real_parents_with_pc_child_set.clear()
