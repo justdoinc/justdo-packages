@@ -146,7 +146,6 @@ _.extend PreviewContext.prototype,
 
     default_options = 
       auto_expand_ancestors: @options.auto_expand_ancestors
-      cb: null
     options = _.extend {}, default_options, options
 
     if task_doc.parents["0"]?
@@ -161,22 +160,13 @@ _.extend PreviewContext.prototype,
       task_doc._id = Random.id()
     task_doc.pc_task_id = task_doc._id
 
-    @tasks_collection._collection.insert task_doc, (err, created_task_id) =>
-      if err?
-        @logger.error "Create task failed",  err
-        options.cb? err, null
-        return
-      
-      @_markRealParentsWithPcChild path, task_doc
+    created_task_id = @tasks_collection._collection.insert task_doc
+    
+    @_markRealParentsWithPcChild path, task_doc
+    if options.auto_expand_ancestors
+      @_activateItemOnceTreeChanged created_task_id
 
-      if options.auto_expand_ancestors
-        @_activateItemOnceTreeChanged created_task_id
-
-      options.cb? null, created_task_id
-
-      return
-
-    return task_doc
+    return created_task_id
   
   _getActivePath: -> 
     return JD.activePath()
