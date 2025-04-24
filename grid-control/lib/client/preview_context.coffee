@@ -148,6 +148,9 @@ _.extend PreviewContext.prototype,
       auto_expand_ancestors: @options.auto_expand_ancestors
     options = _.extend {}, default_options, options
 
+    # Apply default task values
+    task_doc = _.extend {}, @default_new_task_doc, task_doc
+
     if task_doc.parents["0"]?
       APP.justdo_permissions?.requireJustdoPermissions "grid-structure.add-remove-sort-root-tasks", @project_id, Meteor.userId()
     else
@@ -229,16 +232,13 @@ _.extend PreviewContext.prototype,
     parent_members.push Meteor.userId()
     parent_members = _.uniq parent_members
 
-    new_task_doc = _.extend {}, @default_new_task_doc, fields
-
-    new_task_doc.parents = 
+    fields = _.extend {}, fields
+    fields.parents = 
       [parent_id]:
         order: @_getNewChildOrder parent_id
-      
-    @_createTaskInLocalMinimongo path, new_task_doc
+    
+    return @_createTaskInLocalMinimongo path, fields
 
-    return
-  
   addSibling: (path, fields) ->
     @_requireNotDestroyed()
 
@@ -247,21 +247,18 @@ _.extend PreviewContext.prototype,
     else
       parent_id = 0
 
-    new_task_doc = _.extend {}, @default_new_task_doc, fields
-
-    new_task_doc.parents = 
+    fields = _.extend {}, fields
+    fields.parents = 
       [parent_id]:
         order: @_getNewSiblingOrder(parent_id, JD.activeItemId())
-
     
     if (not path?) or (GridData.helpers.isRootPath path)
       parent_path = path
     else
       parent_path = GridData.helpers.getParentPath path
       
-    @_createTaskInLocalMinimongo parent_path, new_task_doc
-
-    return
+    return @_createTaskInLocalMinimongo parent_path, fields
+  
 
   # addTasks will only create temporory preview in the client side
   # by inserting documents to minimongo.
@@ -275,11 +272,12 @@ _.extend PreviewContext.prototype,
     
     if _.isEmpty task_docs
       return
-        
+    
+    created_task_ids = []
     for task_doc in task_docs
-      @_createTaskInLocalMinimongo task_doc
+      created_task_ids.push @_createTaskInLocalMinimongo path, task_doc
 
-    return
+    return created_task_ids
   
   removeTasks: (pc_task_ids) ->
     @_requireNotDestroyed()
