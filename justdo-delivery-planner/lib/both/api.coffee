@@ -566,7 +566,11 @@ _.extend JustdoDeliveryPlanner.prototype,
     parent_projects_collections_depth = parent_projects_collections.length
 
     if not @_isProjectsCollectionDepthLteMaxDepth(parent_projects_collections_depth, max_depth)
-      # Attempt to get the type of the nearest parent projects collection for a better error message
+      # If a custom error message is provided, use it
+      if options.custom_error_message?
+        throw @_error "not-supported", TAPi18n.__ options.custom_error_message
+
+      # Else, attempt to get the type of the nearest parent projects collection for a better error message
       parent_projects_collection_type = parent_projects_collections[0]?.projects_collection?.projects_collection_type
       if not parent_projects_collection_type?
         # If no type is found, use the first supported type
