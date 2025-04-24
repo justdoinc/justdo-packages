@@ -17,6 +17,9 @@
   "projects_collection_unset_as_department": "Unset as a Department",
   "projects_collection_close_department": "Close this Department",
   "projects_collection_closed_department_label": "Closed Department",
-  "projects_collection_reopen_department": "Reopen this Department"
+  "projects_collection_reopen_department": "Reopen this Department",
+
+  "projects_collection_depth_gt_max_depth_default_err": "Cannot nest __projects_collection_label__ beyond __count__ level",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Cannot nest __projects_collection_label__ beyond __count__ levels"
 
 }

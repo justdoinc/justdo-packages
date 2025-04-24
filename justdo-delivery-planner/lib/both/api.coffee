@@ -576,8 +576,8 @@ _.extend JustdoDeliveryPlanner.prototype,
         # If no type is found, use the first supported type
         parent_projects_collection_type = JustdoDeliveryPlanner.projects_collections_types[0].type_id
 
-      parent_projects_collection_label = TAPi18n.__ @getProjectsCollectionTypeById(parent_projects_collection_type)?.type_label_plural_i18n, {}, JustdoI18n.default_lang
-      throw @_error "not-supported", "Cannot nest #{parent_projects_collection_label} beyond #{max_depth} level#{if max_depth > 1 then "s" else ""}"
+      parent_projects_collection_label = TAPi18n.__ @getProjectsCollectionTypeById(parent_projects_collection_type)?.type_label_plural_i18n
+      throw @_error "not-supported", TAPi18n.__ "projects_collection_depth_gt_max_depth_default_err", {projects_collection_label: parent_projects_collection_label, count: max_depth}
 
     return true
   
