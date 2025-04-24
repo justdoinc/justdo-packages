@@ -237,8 +237,21 @@ _.extend PreviewContext.prototype,
     
     return @_createTaskInLocalMinimongo path, fields
 
-  addSibling: (path, fields) ->
+  bulkAddChild: (path, childs_fields) ->    
+    if (_.isObject(childs_fields)) and (not _.isArray(childs_fields))
+      childs_fields = [childs_fields]
+    
+    if _.isEmpty childs_fields
+      return
+    
+    created_task_ids = []
+    
+    for child_fields in childs_fields
+      created_task_ids.push @addChild path, child_fields
+    
+    return created_task_ids
 
+  addSibling: (path, fields) ->
     if path?
       parent_id = GridData.helpers.getPathParentId path
     else
@@ -256,12 +269,25 @@ _.extend PreviewContext.prototype,
       
     return @_createTaskInLocalMinimongo parent_path, fields
   
+  bulkAddSibling: (path, siblings_fields) ->    
+    if (_.isObject(siblings_fields)) and (not _.isArray(siblings_fields))
+      siblings_fields = [siblings_fields]
+    
+    if _.isEmpty siblings_fields
+      return
+    
+    created_task_ids = []
+    
+    for sibling_fields in siblings_fields
+      created_task_ids.push @addSibling path, sibling_fields
+    
+    return created_task_ids
 
   # addTasks will only create temporory preview in the client side
   # by inserting documents to minimongo.
   # It will not commit the changes to the server and changes will be lost when refreshing the page
   # unless commit() is called.
-  addTasks: (task_docs) ->
+  addTasks: (path, task_docs) ->
     if (_.isObject(task_docs)) and (not _.isArray(task_docs))
       task_docs = [task_docs]
     
