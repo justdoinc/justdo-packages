@@ -504,6 +504,25 @@ _.extend ChannelBaseClient.prototype,
       subscribers_array.push {user_id: subscriber_id, unread: false}
 
     return subscribers_array
+  
+  getSubscribersWhoReadMessage: (message_obj, options) ->
+    default_options = 
+      include_self: false
+    options = _.extend default_options, options
+    
+    if _.isEmpty message_obj
+      return []
+      
+    subscribers = @getSubscribersArray()
+    return _.filter subscribers, (subscriber) -> 
+      is_subscriber_read = subscriber.last_read > message_obj.createdAt
+      is_subscriber_author = subscriber.user_id is message_obj.author
+      
+      if options.include_self
+        return is_subscriber_read and (not is_subscriber_author)
+      else
+        is_subscriber_self = subscriber.user_id is Meteor.userId()
+        return is_subscriber_read and (not is_subscriber_author) and (not is_subscriber_self)
 
   getChannelSubscriberDoc: (user_id) ->
     # Returns the document from the subscribers array of the channel belonging
