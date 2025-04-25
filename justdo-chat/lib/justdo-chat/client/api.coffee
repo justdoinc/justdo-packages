@@ -18,6 +18,8 @@ _.extend JustdoChat.prototype,
 
     @_setupBotsInfoSubscription()
 
+    @_setupMessageCardDropdown()
+
     return
 
   _deferredInit: ->

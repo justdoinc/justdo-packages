@@ -1,0 +1,45 @@
+.message-card-dropdown-helper
+  position: absolute
+  z-index: -100
+  pointer-events: none
+
+.message-card-dropdown
+  z-index: 1000
+  border-radius: 4px
+  min-width: 120px
+  .message-card-dropdown-container
+    margin: 8px 12px
+    .dropdown-item
+      padding: 0
+      display: flex
+      align-items: center
+      .jd-icon
+        width: 20px
+        height: 20px
+        padding: 2px
+        margin-right: 6px
+    .message-card-dropdown-items
+      .dropdown-item
+        cursor: pointer
+        margin-bottom: 8px
+        &.who-read-message
+          justify-content: space-between
+          &.one-to-one-message,
+          &.no-one-seen
+            cursor: default 
+            &:hover
+              background-color: unset
+          .label-wrapper
+            display: flex
+    .message-card-dropdown-footer
+      padding-top: 8px
+      border-top: 1px dashed #e0e0e0
+      .dropdown-item
+        &:hover
+          background-color: unset
+
+.who-read-message-dropdown
+  z-index: 1000
+  border-radius: 4px
+  .who-read-message-item
+    padding: 8px 16px

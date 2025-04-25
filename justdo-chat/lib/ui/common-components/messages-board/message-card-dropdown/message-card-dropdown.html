@@ -1,0 +1,64 @@
+<template name="message_card_dropdown">
+  <div class="message-card-dropdown-container">
+    <div class="message-card-dropdown-items">
+      {{#each items}}
+        {{#if template}}
+          {{> Template.dynamic template=template data=extendedTemplateData}}
+        {{else if html}}
+          {{{html}}}
+        {{/if}}
+      {{/each}}
+    </div>
+    {{#unless hideFooter}}
+      <div class="message-card-dropdown-footer">
+        {{#each footerItems}}
+          {{#if template}}
+            {{> Template.dynamic template=template data=extendedTemplateData}}
+          {{else if html}}
+            {{{html}}}
+          {{/if}}
+        {{/each}}
+      </div>
+    {{/unless}}
+  </div>
+</template>
+
+<template name="message_card_dropdown_reply_message">
+  <div class="dropdown-item reply-message">
+    <svg class="jd-icon">
+      <use xlink:href="/layout/icons-feather-sprite.svg#corner-up-left"/>
+    </svg>
+    Reply
+  </div>
+</template>
+
+<template name="message_card_dropdown_who_read_message">
+  {{#if myMessage}}
+    <div class="dropdown-item who-read-message {{#unless channelHasMoreThanTwoSubscribers}}one-to-one-message{{/unless}} {{#if $eq readCount 0}}no-one-seen{{/if}}">
+      <div class="label-wrapper">
+        <svg class="jd-icon">
+          <use xlink:href="/layout/icons-feather-sprite.svg#user-check"/>
+        </svg>
+        {{_ "message_seen_count" count=readCount}}
+      </div>
+      {{#if channelHasMoreThanTwoSubscribers}}
+        <span class="caret-right">
+          <i class="fa fa-caret-right"></i>
+        </span>
+      {{/if}}
+    </div>
+  {{/if}}
+</template>
+
+<template name="message_card_dropdown_who_read_message_item">
+  <div class="dropdown-item who-read-message-item">
+    {{> justdo_avatar}}
+    {{displayName}}
+  </div>
+</template>
+
+<template name="message_card_dropdown_footer_created_at">
+  <div class="dropdown-item footer-created-at text-muted small">
+    {{messageCreatedAt}}
+  </div>
+</template>
