@@ -162,6 +162,9 @@ _.extend JustdoTasksContextMenu.prototype,
                   return
                 )
 
+                # Reverse the paths to remove the leaf first
+                paths.reverse()
+
                 gd.removeParent paths, (err) ->
                   if err?
                     JustdoSnackbar.show
