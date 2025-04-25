@@ -63,11 +63,12 @@ _.extend JustdoChat.prototype,
       data:
         template: "message_card_dropdown_who_read_message"
     
-    JD.registerPlaceholderItem "reply-message",
-      domain: "message-card-dropdown"
-      position: 200
-      data:
-        template: "message_card_dropdown_reply_message"
+    # Disabled until implemented
+    # JD.registerPlaceholderItem "reply-message",
+    #   domain: "message-card-dropdown"
+    #   position: 200
+    #   data:
+    #     template: "message_card_dropdown_reply_message"
     
     JD.registerPlaceholderItem "footer-created-at",
       domain: "message-card-dropdown-footer"
