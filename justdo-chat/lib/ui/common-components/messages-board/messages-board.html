@@ -50,7 +50,15 @@
       </div>
       <div dir="auto" class="message-body">
         {{{body}}}
+        {{#if myMessage}}
+          <span class="read-receipt">
+            <svg class="jd-icon">
+              <use xlink:href="/layout/icons-feather-sprite.svg#{{#if isReadByAtLeastOneUser}}user-check{{else}}check{{/if}}"/>
+            </svg>
+          </span>
+        {{/if}}
       </div>
+
     </div>
   </div>
 </template>

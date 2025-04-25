@@ -184,6 +184,13 @@ Template.common_chat_messages_board_message_card.helpers
     is_msg_from_dm_channel = channel_obj?.channel_type is "user"
     return (not is_msg_from_performing_user) and (not is_msg_from_dm_channel)
 
+  isReadByAtLeastOneUser: ->
+    tpl = Template.instance()
+    channel_obj = tpl.closestInstance("common_chat_messages_board")?.data?.getChannelObject()
+
+    is_read_by_at_least_one_user = not _.isEmpty channel_obj.getSubscribersWhoReadMessage(@)
+    return is_read_by_at_least_one_user
+
 Template.common_chat_messages_board_message_card.onCreated ->
   @getChannelObject = @closestInstance("common_chat_messages_board")?.data?.getChannelObject
 
