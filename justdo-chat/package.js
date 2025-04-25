@@ -159,6 +159,11 @@ Package.onUse(function (api) {
   api.addFiles("lib/ui/common-components/messages-board/messages-board.html", client);
   api.addFiles("lib/ui/common-components/messages-board/messages-board.coffee", client);
 
+  // Message card dropdown
+  api.addFiles("lib/ui/common-components/messages-board/message-card-dropdown/message-card-dropdown.html", client);
+  api.addFiles("lib/ui/common-components/messages-board/message-card-dropdown/message-card-dropdown.coffee", client);
+  api.addFiles("lib/ui/common-components/messages-board/message-card-dropdown/message-card-dropdown.sass", client);
+
   // Tasks channel
   api.addFiles("lib/ui/channels/task/tasks-channels-ui/task-pane-details-section/vars.scss", client);
 
