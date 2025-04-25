@@ -157,7 +157,7 @@ _.extend JustdoTasksContextMenu.prototype,
               if (gd = APP.modules.project_page.gridData())?
                 paths = [task_path]
 
-                gd.each(JD.activePath(), {}, (section, item_type, item_obj, path, expand_state) ->
+                gd.each(task_path, {}, (section, item_type, item_obj, path, expand_state) ->
                   paths.push path
                   return
                 )
