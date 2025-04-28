@@ -48,6 +48,12 @@
       background-color: #F1F5FA
       border-radius: 8px
       padding: 4px 8px
+      transition: transform 0.16s
+      transform: scale(1)
+
+    .contextmenu-active
+      .message-body
+        transform: scale(1.02) translateX(-4px)
 
   .message-card + .message-card
     margin-top: 8px
