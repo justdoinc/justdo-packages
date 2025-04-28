@@ -32,10 +32,7 @@
         height: 28px
 
     .message-container
-      background-color: #F1F5FA
       color: black
-      padding: 4px 8px
-      border-radius: 8px
       margin-left: 6px
       max-width: 280px
 
@@ -43,37 +40,34 @@
       display: flex
       align-items: center
       justify-content: space-between
+      padding: 2px 4px
 
     .message-body
       word-wrap: break-word
       text-align: left
+      background-color: #F1F5FA
+      border-radius: 8px
+      padding: 4px 8px
 
   .message-card + .message-card
     margin-top: 8px
 
   .message-card.my-message
     flex-direction: row-reverse
-
     .read-receipt
       float: right
       margin-left: 8px
       .jd-icon
-        width: 16px
-        height: 16px
-
+        width: 18px
+        height: 18px
+        stroke-width: 2
     .message-container,
     .read-receipt
       color: white
-
       .message-header
         justify-content: flex-end
-
       .linkified
         color: white
-
-    .date
-      color: rgba(255, 255, 255, 0.5)
-
     .task-link
       color: white
 
