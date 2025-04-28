@@ -36,13 +36,13 @@ Template.common_chat_message_editor.onCreated ->
       @data.getChannelObject().logger.log("Sending in progress...")
       return
 
-    @clearError()
-
     $input = @getInputElement()
     input_val = @getInputValue()
 
     if _.isEmpty(input_val)
       return
+
+    @clearError()
 
     task_chat_object = @data.getChannelObject()
 
