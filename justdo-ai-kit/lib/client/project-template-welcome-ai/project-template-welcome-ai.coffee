@@ -46,7 +46,7 @@ Template.project_template_welcome_ai.onCreated ->
 
           APP.justdo_planning_utilities?.once "changes-queue-processed", ->
             if (first_task_id = APP.collections.Tasks.findOne({project_id}, {fields: {_id: 1}, sort: {seqId: 1}})?._id)
-              task_info = APP.justdo_planning_utilities.task_id_to_info[first_task_id]
+              task_info = APP.justdo_planning_utilities.getOrCreateTaskInfoObject(first_task_id)
               {earliest_child_start_time, latest_child_end_time} = task_info
               if earliest_child_start_time? and latest_child_end_time?
                 # Set the date range presented in the gantt
