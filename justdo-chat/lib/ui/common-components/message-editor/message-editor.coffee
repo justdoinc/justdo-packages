@@ -16,14 +16,14 @@ Template.common_chat_message_editor.onCreated ->
   @clearError = -> @setError(null)
   @getError = -> @_error.get()
 
-  @showSendButton = (e) ->
-    $send_button = $(e.target).closest(".message-editor-wrapper").find(".message-editor-send")
-    $send_button.addClass "show"
+  @show_send_button_rv = new ReactiveVar false
+  @showSendButton = ->
+    @show_send_button_rv.set true
     return
-
-  @hideSendButton = (e) ->
-    $send_button = $(e.target).closest(".message-editor-wrapper").find(".message-editor-send")
-    $send_button.removeClass "show"
+  @hideSendButton = ->
+    @show_send_button_rv.set false
+    return
+    
     return
 
   @sendMessage = (e) ->
@@ -51,7 +51,7 @@ Template.common_chat_message_editor.onCreated ->
 
       $input.val("")
       task_chat_object.clearTempMessage()
-      @hideSendButton(e)
+      @hideSendButton()
       $input.trigger("autosize.resize")
 
       Meteor.defer ->
@@ -112,6 +112,11 @@ Template.common_chat_message_editor.helpers
     tpl = Template.instance()
 
     return tpl.getError()
+  
+  showSendButton: ->
+    tpl = Template.instance()
+
+    return tpl.show_send_button_rv.get()
 
 Template.common_chat_message_editor.events
   "keyup .message-editor": (e, tpl) ->
@@ -120,9 +125,9 @@ Template.common_chat_message_editor.events
     @getChannelObject().saveTempMessage value
 
     if value
-      tpl.showSendButton(e)
+      tpl.showSendButton()
     else
-      tpl.hideSendButton(e)
+      tpl.hideSendButton()
 
     return
 
