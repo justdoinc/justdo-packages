@@ -31,7 +31,7 @@ _.extend JustdoChat.prototype,
     message_card_dropdown = new MessageCardDropdown($message_card_dropdown_container[0])
 
     # Show dropdown on Right click
-    $("body").on "contextmenu", ".message-card", (e) =>
+    $("body").on "contextmenu", ".message-card.my-message .message-container", (e) =>
       e.preventDefault()
 
       # Move helper to the mouse click position
