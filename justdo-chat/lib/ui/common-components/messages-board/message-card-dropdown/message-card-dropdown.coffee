@@ -34,6 +34,16 @@ _.extend JustdoChat.prototype,
     $("body").on "contextmenu", ".message-card.my-message .message-container", (e) =>
       e.preventDefault()
 
+      # Remove highlight class from any previously highlighted containers
+      $(".message-container.contextmenu-active").removeClass("contextmenu-active")
+
+      # Add highlight class to the current container
+      $currentContainer = $(e.currentTarget)
+      $currentContainer.addClass("contextmenu-active")
+
+      # Store reference to currently active container
+      @activeContextMenuContainer = $currentContainer
+
       # Move helper to the mouse click position
       $message_card_dropdown_container.offset {top: e.pageY, left: e.pageX}
 
@@ -55,8 +65,18 @@ _.extend JustdoChat.prototype,
         message_obj: message_obj
         itemsGenerator: -> JD.getPlaceholderItems("message-card-dropdown")
         footerItemsGenerator: -> JD.getPlaceholderItems("message-card-dropdown-footer")
+
       return
-    
+
+    # Add listener for dropdown close event
+    $(document).on "click", (e) =>
+      # If clicking outside the dropdown or explicitly closing it
+      if @activeContextMenuContainer &&
+         (!$(e.target).closest(".dropdown-container").length ||
+          $(e.target).hasClass("dropdown-close"))
+        @activeContextMenuContainer.removeClass("contextmenu-active")
+        @activeContextMenuContainer = null
+
     JD.registerPlaceholderItem "who-read-message",
       domain: "message-card-dropdown"
       position: 100
