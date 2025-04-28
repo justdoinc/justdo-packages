@@ -23,7 +23,12 @@ Template.common_chat_message_editor.onCreated ->
   @hideSendButton = ->
     @show_send_button_rv.set false
     return
-    
+
+  @getInputElement = -> @$("textarea")
+  @getInputValue = -> @getInputElement().val().trim()
+  @setInputValue = (value) -> 
+    @getInputElement().val(value)
+    @getInputElement().trigger("autosize.resize")
     return
 
   @sendMessage = (e) ->
@@ -33,8 +38,8 @@ Template.common_chat_message_editor.onCreated ->
 
     @clearError()
 
-    $input = $(e.target).closest(".message-editor-wrapper").find(".message-editor")
-    input_val = $input.val().trim()
+    $input = @getInputElement()
+    input_val = @getInputValue()
 
     if _.isEmpty(input_val)
       return
@@ -49,10 +54,9 @@ Template.common_chat_message_editor.onCreated ->
         @setError(err.reason)
         return
 
-      $input.val("")
+      @setInputValue("")
       task_chat_object.clearTempMessage()
       @hideSendButton()
-      $input.trigger("autosize.resize")
 
       Meteor.defer ->
         $input.focus()
@@ -69,9 +73,9 @@ Template.common_chat_message_editor.onRendered ->
 
     $message_editor = $(this.firstNode).parent().find(".message-editor")
     if _.isEmpty(stored_temp_message = channel.getTempMessage())
-      $message_editor.val("")
+      @setInputValue("")
     else
-      $message_editor.val(stored_temp_message)
+      @setInputValue(stored_temp_message)
 
       Tracker.nonreactive ->
         # We don't want potential reactive resources called by handlers of the keyup to trigger invalidation of
@@ -120,8 +124,7 @@ Template.common_chat_message_editor.helpers
 
 Template.common_chat_message_editor.events
   "keyup .message-editor": (e, tpl) ->
-    $input = $(e.target)
-    value = $input.val().trim()
+    value = tpl.getInputValue()
     @getChannelObject().saveTempMessage value
 
     if value
@@ -132,16 +135,15 @@ Template.common_chat_message_editor.events
     return
 
   "keydown .message-editor": (e, tpl) ->
-    $input = $(e.target)
+    $input = tpl.getInputElement()
     if e.which == 13
       # Don't add a new line
       e.preventDefault()
 
       if (e.altKey or e.ctrlKey or e.shiftKey)
         current_pos = $input.prop("selectionStart")
-        $input.val(JustdoHelpers.splice($input.val(), current_pos, 0, "\n"))
+        tpl.setInputValue(JustdoHelpers.splice(tpl.getInputValue(), current_pos, 0, "\n"))
         $input.prop("selectionStart", current_pos + 1)
-        $input.trigger("autosize.resize")
 
         return
 
@@ -155,14 +157,14 @@ Template.common_chat_message_editor.events
 
 
 Template.common_chat_message_editor.onRendered ->
-  $textarea = @$("textarea")
+  $textarea = @getInputElement()
 
-  $textarea.keydown ->
+  $textarea.keydown =>
     # The following fixes an issue we got that when the max height of the textarea
     # is reached, the viewport doesn't focus the caret when additional lines are added
     textarea = $textarea.get(0)
 
-    if $textarea.val().length == textarea.selectionStart
+    if @getInputValue().length == textarea.selectionStart
       Meteor.defer ->
         textarea.scrollTop = textarea.scrollHeight
 
@@ -175,7 +177,7 @@ Template.common_chat_message_editor.onRendered ->
       Meteor.defer =>
         $chat_window = @$(@firstNode).closest(".chat-window")
         $chat_header = $chat_window.find(".chat-header")
-        $message_editor = $chat_window.find(".message-editor")
+        $message_editor = @getInputElement()
         $message_board_viewport = $chat_window.find(".messages-board-viewport")
 
         new_message_board_viewport_height =
