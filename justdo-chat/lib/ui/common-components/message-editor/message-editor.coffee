@@ -47,16 +47,18 @@ Template.common_chat_message_editor.onCreated ->
     task_chat_object = @data.getChannelObject()
 
     @setSendingState()
+    @hideSendButton()
+
     task_chat_object.sendMessage input_val, (err) =>
       @unsetSendingState()
 
       if err?
         @setError(err.reason)
+        @showSendButton()
         return
 
       @setInputValue("")
       task_chat_object.clearTempMessage()
-      @hideSendButton()
 
       Meteor.defer ->
         $input.focus()
