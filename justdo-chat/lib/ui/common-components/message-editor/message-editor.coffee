@@ -84,6 +84,17 @@ Template.common_chat_message_editor.onRendered ->
 
     return
 
+  # Hide the send button when switching between tasks
+  @autorun =>
+    JD.activeItemId() # For reactivity
+    
+    # Wrap the following in a Meteor.defer to allow UI refresh before checking if the input is empty
+    Meteor.defer =>
+      if _.isEmpty @getInputValue()
+        @hideSendButton()
+    
+    return
+
   $(this.firstNode).focus =>
     @data.getChannelObject().enterFocusMode()
 
