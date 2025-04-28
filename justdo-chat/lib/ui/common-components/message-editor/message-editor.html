@@ -5,8 +5,8 @@
 
     <div class="message-editor-send text-primary {{#if showSendButton}}show{{/if}} m{{getRtlAwareDirection "r"}}-3">Send</div>
 
-    {{#with error}}
-      <div class="chat-error text-danger">{{{xssGuard this}}}</div>
-    {{/with}}
   </div>
+  {{#with error}}
+    <div class="chat-error text-danger">{{{xssGuard this}}}</div>
+  {{/with}}
 </template>
