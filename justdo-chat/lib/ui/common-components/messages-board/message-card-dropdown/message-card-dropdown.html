@@ -42,9 +42,11 @@
         {{_ "message_seen_count" count=readCount}}
       </div>
       {{#if channelHasMoreThanTwoSubscribers}}
-        <span class="caret-right">
-          <i class="fa fa-caret-right"></i>
-        </span>
+        {{#if $gt readCount 0}}
+          <span class="caret-right">
+            <i class="fa fa-caret-right"></i>
+          </span>
+        {{/if}}
       {{/if}}
     </div>
   {{/if}}
