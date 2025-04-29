@@ -1,8 +1,10 @@
 $project-logo-max-width: 0 // With the introduction of the new design, we decided to revoke the logo feature
 
 .project-header
-  padding: 0.5rem 0 0.4rem 0
+  height: inherit
   min-width: 1150px // global-vars.coffee min_layout_width - 24
+  .middle-project-header-items
+    height: inherit
 
 .project-header-button
   margin: 0 3px
@@ -90,6 +92,15 @@ $project-logo-max-width: 0 // With the introduction of the new design, we decide
     padding: 3px
     &.task-pane-right
       transform: rotate(180deg)
-      
+
   .control-opened
     stroke-width: 2.5
+
+#settingsDropdown
+  background-color: white
+  border-radius: 6px
+  border: 1px solid #ced4da
+  padding: 0 8px
+  height: 32px
+  display: flex
+  align-items: center
