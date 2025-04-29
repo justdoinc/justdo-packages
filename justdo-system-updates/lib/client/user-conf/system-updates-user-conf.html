@@ -1,12 +1,6 @@
 <template name="justdo_system_updates_config">
   <div class="controller-template-default-toggle justdo-system-updates-config d-flex">
-    <div>
-      {{#if enabled}}
-        <svg class="jd-icon-user-settings text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "right"}}"/></svg>
-      {{else}}
-        <svg class="jd-icon-user-settings text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "left"}}"/></svg>
-      {{/if}}
-    </div>
-    <div>{{_ "system_update_label"}}</div>
+    {{> jdToggle checked=enabled}}
+    <div class="m{{getRtlAwareDirection "l"}}-2">{{_ "system_update_label"}}</div>
   </div>
 </template>

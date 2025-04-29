@@ -5,10 +5,8 @@
     <div class="project-conf-jira-integration-actions">
       {{#if isModuleEnabled}}
         <div class="settings-btn text-primary">Settings</div>
-        <svg class="jd-icon-extension text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "right"}}"/></svg>
-      {{else}}
-        <svg class="jd-icon-extension"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "left"}}"/></svg>
       {{/if}}
+      {{> jdToggle checked=isModuleEnabled}}
     </div>
   </div>
 </template>
