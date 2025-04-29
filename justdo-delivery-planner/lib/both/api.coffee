@@ -321,6 +321,10 @@ _.extend JustdoDeliveryPlanner.prototype,
       type: Boolean
       optional: true
       defaultValue: false
+    query:
+      type: Object
+      optional: true
+      blackbox: true
     fields:
       type: Object
       optional: true
@@ -351,6 +355,9 @@ _.extend JustdoDeliveryPlanner.prototype,
       [JustdoDeliveryPlanner.task_is_project_field_name]: true
       [JustdoDeliveryPlanner.task_is_archived_project_field_name]: 
         $ne: true
+    if options.query?
+      # If query is provided, extend it to the query without overriding the existing query
+      query = _.extend options.query, query
     
     if Meteor.isServer
       query["parents2.parent"] = projects_collection_id
