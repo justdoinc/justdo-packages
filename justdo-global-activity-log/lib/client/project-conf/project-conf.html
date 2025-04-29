@@ -2,10 +2,6 @@
   <div class="controller-template-extension-item project-conf-justdo-global-activity-log-config">
     <div class="controller-template-extension-indicator {{#if isModuleEnabled}}bg-primary{{/if}}"></div>
     Activity Log
-    {{#if isModuleEnabled}}
-      <svg class="jd-icon-extension text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "right"}}"/></svg>
-    {{else}}
-      <svg class="jd-icon-extension"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "left"}}"/></svg>
-    {{/if}}
+    {{> jdToggle checked=isModuleEnabled}}
   </div>
 </template>

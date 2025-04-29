@@ -66,19 +66,17 @@
       {{/each}}
 
       <li id="register-project-for-daily-email" class="dropdown-item d-flex align-items-center px-1">
-      {{#if isSubscribedToDailyEmail}}
-        <svg class="jd-icon-dropdown text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "right"}}"/></svg>
-      {{else}}
-        <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "left"}}"/></svg>
-      {{/if}}
-      {{_ "email_daily_update_for_this_justdo_label"}}</li>
+        {{> jdToggle checked=isSubscribedToDailyEmail}}
+        <div class="m{{getRtlAwareDirection "l"}}-2">
+          {{_ "email_daily_update_for_this_justdo_label"}}
+        </div>
+      </li>
       <li class="dropdown-item email-notifications d-flex align-items-center px-1">
-      {{#if isSubscribedToEmailNotifications}}
-        <svg class="jd-icon-dropdown text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "right"}}"/></svg>
-      {{else}}
-        <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "left"}}"/></svg>
-      {{/if}}
-      {{_ "email_ownership_transfer_notifications_label"}}</li>
+        {{> jdToggle checked=isSubscribedToEmailNotifications}}
+        <div class="m{{getRtlAwareDirection "l"}}-2">
+          {{_ "email_ownership_transfer_notifications_label"}}
+        </div>
+      </li>
       {{#if showRolesAndGroupsManager}}
         <li class="roles-and-groups-manager dropdown-item d-flex align-items-center px-1">
           <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#users"></use></svg> Roles &amp; Groups Manager
