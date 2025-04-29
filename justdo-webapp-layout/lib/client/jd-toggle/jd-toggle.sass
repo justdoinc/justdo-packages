@@ -1,0 +1,25 @@
+.jd-toggle
+  width: 28px
+  height: 18px
+  background-color: #d2dbe0
+  border-radius: 9999px
+  position: relative
+  cursor: pointer
+  transition: background-color 0.25s
+
+.jd-toggle-handle
+  width: 14px
+  height: 14px
+  background-color: white
+  border-radius: 50%
+  position: absolute
+  top: 2px
+  left: 2px
+  transition: left 0.25s
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2)
+
+.jd-toggle.checked
+  background-color: #34c759
+
+.jd-toggle.checked .jd-toggle-handle
+  left: 12px
