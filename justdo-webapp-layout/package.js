@@ -156,6 +156,11 @@ Package.onUse(function (api) {
   api.addAssets("lib/client/assets/layout-sprite.png", "client");
   api.addAssets("lib/client/project/header/members-dropdown/members-dropdown-menu/members-dropdown-invite/assets/set_task_as_project.mp4", "client");
 
+  // JD Toggle
+  api.addFiles("lib/client/jd-toggle/jd-toggle.html", "client");
+  api.addFiles("lib/client/jd-toggle/jd-toggle.sass", "client");
+  api.addFiles("lib/client/jd-toggle/jd-toggle.coffee", "client");
+
   api.use("meteorspark:app@0.3.0", client);
   api.use("justdoinc:justdo-webapp-boot@1.0.0", client);
 
