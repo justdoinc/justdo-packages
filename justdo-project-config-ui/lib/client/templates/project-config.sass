@@ -51,7 +51,7 @@
     flex-direction: column
 
   .project-config-section-container
-    padding: 20px 27px
+    padding: 8px 27px
     overflow: auto
     flex-grow: 1
 
@@ -112,13 +112,15 @@
       cursor: pointer
       user-select: none
       margin-bottom: 0px
-      &:hover
-        background-color: #f8f9fa
+      &:hover,
+      &:active
+        .controller-template-extension-item
+          color: black
       &[controller-template-id="justdo_custom_plugins_project_config"] // special case justdo_custom_plugins_project_config aggregates multiple plugins
         &:hover
           background-color: transparent
       .controller-template-extension-item
-        padding: 8px 8px 8px 12px
+        padding: 8px 0px
         color: #3D495B
         display: flex
         align-items: center
@@ -132,6 +134,7 @@
         width: 3px
         border-radius: 2px
         background-color: rgba(49, 69, 99, 0.12)
+        display: none
       .jd-icon-extension
         cursor: pointer
         stroke: currentColor
@@ -223,7 +226,7 @@
     [section-id="extensions"]
       .config-section-container
         .controller-template-extension-item
-          padding: 8px 12px 8px 8px
+          padding: 8px 0px
         .controller-template-extension-indicator
           left: unset
           right: 0
