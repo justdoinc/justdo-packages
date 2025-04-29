@@ -45,7 +45,7 @@ APP.executeAfterAppLibCode ->
       template_data: {}
 
     domain: "project-right-navbar"
-    position: 300
+    position: 0
 
   JD.registerPlaceholderItem "project-required-actions-dropdown-comp",
     data:
@@ -118,7 +118,7 @@ APP.executeAfterAppLibCode ->
     return
 
   Template.project_name.events
-    "paste .project-name-wrapper #project-name": (e,tpl) -> 
+    "paste .project-name-wrapper #project-name": (e,tpl) ->
       e.preventDefault()
       e = e.originalEvent or e
       new_title = e.clipboardData.getData "text/plain"
@@ -130,7 +130,7 @@ APP.executeAfterAppLibCode ->
         e.preventDefault()
         new_title = $("#project-name").text()
         curProj().updateProjectName new_title
-        
+
         $("#project-name").blur()
 
       return
@@ -140,7 +140,7 @@ APP.executeAfterAppLibCode ->
       curProj().updateProjectName new_title
 
       return
-    
+
   #
   # project_settings template
   #
