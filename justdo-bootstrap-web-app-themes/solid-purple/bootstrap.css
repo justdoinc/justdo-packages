@@ -7037,13 +7037,6 @@ a.text-dark:hover, a.text-dark:focus {
   fill: #ffffff !important;
 }
 
-#project-main,
-.slick-header-columns,
-.slick-headerrow-columns,
-.slick-header-column {
-  background-color: #f3f2f1;
-}
-
 #grid-control-main,
 .slick-viewport,
 .task-pane-header,
@@ -7052,7 +7045,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .project-container {
-  background-color: #f3f2f1
+  background-color: #F3F5F6
 }
 
 .navbar {
@@ -7139,7 +7132,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .grid-tree-control-task-id {
-  background-color: #f3f2f1;
+  background-color: #F3F5F6;
   color: #5e5e5e;
   border: 1px solid rgba(201, 199, 199, 0.65);
   box-shadow: none;
