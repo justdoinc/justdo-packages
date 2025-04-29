@@ -7124,13 +7124,6 @@ a.text-dark:hover, a.text-dark:focus {
   color: white !important;
 }
 
-#project-plugins-store-button button,
-#project-members-dropdown button {
-  border-color: #343a40 !important;
-  background-color: transparent;
-  color: #343a40 !important;
-}
-
 .grid-tree-control-task-id {
   background-color: #F3F5F6;
   color: #5e5e5e;
