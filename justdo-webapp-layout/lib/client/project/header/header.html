@@ -105,13 +105,10 @@
           </li>
         {{/if}}
       {{/if}}
-
       {{#if is_project_admin}}
         <hr class="my-2">
         <li id="project-config" class="dropdown-item d-flex align-items-center px-1"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#settings"/></svg> {{_ "configure_this_justdo_label"}}</li>
-        {{> project_settings_dropdown_remove_project}}
       {{/if}}
-
       {{#each settingsDropdownBottomItems}}
         {{#if template}}
           {{> Template.dynamic template=template data=template_data}}
@@ -119,6 +116,9 @@
           {{{html}}}
         {{/if}}
       {{/each}}
+      {{#if is_project_admin}}
+        {{> project_settings_dropdown_remove_project}}
+      {{/if}}
     </ul>
   </div>
 </template>
