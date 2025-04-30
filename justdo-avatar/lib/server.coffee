@@ -5,7 +5,7 @@ _.extend JustdoAvatar,
     email = options.email or JustdoHelpers.getUserMainEmail user_doc
     first_name = options.first_name or user_doc.profile.first_name
     last_name = options.last_name or user_doc.profile.last_name
-    is_proxy = options.is_proxy or APP.accounts.isProxyUser(user_doc)
+    is_proxy = if options.is_proxy? then options.is_proxy else APP.accounts.isProxyUser(user_doc)
     
     # Create a new mongo_modifiers_obj if none was provided
     if not mongo_modifiers_obj.$set?
