@@ -834,23 +834,12 @@ _.extend JustdoAccounts.prototype,
         console.warn "JustdoAccounts.editPreEnrollmentUserData: unhandled prop: #{prop}"
 
     if (name_changed or email_changed) and JustdoAvatar.isAvatarNotSetOrBase64Svg user
-      email = data.email or JustdoHelpers.getUserMainEmail user
-      first_name = data.first_name or user.profile.first_name
-      last_name = data.last_name or user.profile.last_name
-
-      get_initial_svg_options =
+      # Use the new applyCachedAvatarUpdate function to update the avatar
+      update = JustdoAvatar.applyCachedAvatarUpdate update, user,
+        email: data.email or JustdoHelpers.getUserMainEmail(user)
+        first_name: data.first_name or user.profile.first_name
+        last_name: data.last_name or user.profile.last_name
         is_proxy: is_proxy
-      # If the user's avatar color has been modified, those colors should be used for the new avatar regardless of whether the email has changed.
-      is_user_avatar_color_same_as_generated = JustdoAvatar.isUserCachedInitialAvatarColorsSameAsGeneratedAvatarColors user
-      if not is_user_avatar_color_same_as_generated
-        get_initial_svg_options.avatar_bg = user.profile.avatar_bg
-        get_initial_svg_options.avatar_fg = user.profile.avatar_fg
-
-      new_avatar = JustdoAvatar.getInitialsSvg email, first_name, last_name, get_initial_svg_options
-      avatar_colors = JustdoAvatar.getInitialsSvgColors email, get_initial_svg_options
-      update["$set"]["profile.profile_pic"] = new_avatar
-      update["$set"]["profile.avatar_bg"] = avatar_colors.avatar_bg
-      update["$set"]["profile.avatar_fg"] = avatar_colors.avatar_fg
 
     result = {email_changed}
 

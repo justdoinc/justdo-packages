@@ -32,5 +32,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/avatars-box/avatars-box.sass", client);
   api.addFiles("lib/avatars-box/avatars-box.coffee", client);
 
+  api.addFiles("lib/server.coffee", server);
+
   api.export("JustdoAvatar", both);
 });

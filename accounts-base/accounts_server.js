@@ -438,13 +438,8 @@ export class AccountsServer extends AccountsCommon {
       // If proxy user either has generated avatar, replace the dotted avatar with a solid avatar.
       let cached_avatar_details = JustdoAvatar.getCachedInitialAvatarDetails(user_flags);
       if (cached_avatar_details.is_base64_svg_avatar) {
-        let get_initials_svg_options = cached_avatar_details.avatar_colors;
-
-        let updated_avatar = JustdoAvatar.getInitialsSvg(JustdoHelpers.getUserMainEmail(user_flags), user_flags.profile.first_name, user_flags.profile.last_name, get_initials_svg_options);
-        let updated_avatar_colors = JustdoAvatar.getInitialsSvgColors(JustdoHelpers.getUserMainEmail(user_flags), get_initials_svg_options);
-        unset_proxy_update["$set"]["profile.profile_pic"] = updated_avatar;
-        unset_proxy_update["$set"]["profile.avatar_bg"] = updated_avatar_colors.avatar_bg;
-        unset_proxy_update["$set"]["profile.avatar_fg"] = updated_avatar_colors.avatar_fg;
+        // Use the new applyCachedAvatarUpdate function to update the avatar
+        unset_proxy_update = JustdoAvatar.applyCachedAvatarUpdate(unset_proxy_update, user_flags, {is_proxy: false});
       }
 
       Meteor.users.update(userId, unset_proxy_update);
