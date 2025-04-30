@@ -326,6 +326,7 @@ _.extend JustdoDeliveryPlanner.prototype,
             op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) =>
               fields = 
                 project_id: JD.activeJustdoId()
+                state: "nil"
                 projects_collection:
                   projects_collection_type: type_id
                 
