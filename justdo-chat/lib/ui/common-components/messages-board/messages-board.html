@@ -39,24 +39,27 @@
     {{#if shouldShowAvatar}}
       <div class="avatar">{{#with authorDoc}}{{> justdo_avatar}}{{/with}}</div>
     {{/if}}
-    <div class="message-container">
+    <div class="message-container {{#if myMessage}}bg-primary{{/if}}">
       <div class="message-header">
         {{#if shouldShowAuthorName}}
           <span class="author">
               {{> display_name_with_graphic_unverified_warning authorDoc}}
           </span>
         {{/if}}
-        <span class="date" title="{{userDateFormat createdAt}}">{{friendlyTimeFormat createdAt false}}</span>
       </div>
       <div dir="auto" class="message-body {{#if myMessage}}bg-primary{{/if}}">
         {{{body}}}
-        {{#if myMessage}}
-          <span class="read-receipt">
-            <svg class="jd-icon">
-              <use xlink:href="/layout/icons-feather-sprite.svg#{{#if isReadByAtLeastOneUser}}jd-double-check{{else}}check{{/if}}"/>
-            </svg>
-          </span>
-        {{/if}}
+
+        <div class="message-info">
+          <span class="date" title="{{userDateFormat createdAt}}">{{friendlyTimeFormat createdAt false}}</span>
+          {{#if myMessage}}
+            <span class="read-receipt m{{getRtlAwareDirection "l"}}-1">
+              <svg class="jd-icon">
+                <use xlink:href="/layout/icons-feather-sprite.svg#{{#if isReadByAtLeastOneUser}}jd-double-check{{else}}check{{/if}}"/>
+              </svg>
+            </span>
+          {{/if}}
+        </div>
       </div>
     </div>
   </div>
