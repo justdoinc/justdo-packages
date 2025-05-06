@@ -35,25 +35,28 @@
       color: black
       margin-left: 6px
       max-width: 280px
-
-    .message-header
-      display: flex
-      align-items: center
-      justify-content: space-between
-      padding: 2px 4px
-
-    .message-body
-      word-wrap: break-word
-      text-align: left
       background-color: #F1F5FA
       border-radius: 8px
       padding: 4px 8px
       transition: transform 0.16s
       transform: scale(1)
-
-    .contextmenu-active
-      .message-body
+      &.contextmenu-active
         transform: scale(1.02) translateX(-4px)
+
+    .message-header
+      display: flex
+      align-items: center
+      justify-content: space-between
+
+    .message-body
+      word-wrap: break-word
+      text-align: left
+      transition: transform 0.16s
+      transform: scale(1)
+
+  .my-message
+    .date
+      color: rgba(255, 255, 255, 0.6)
 
   .message-card + .message-card
     margin-top: 8px
@@ -61,12 +64,12 @@
   .message-card.my-message
     flex-direction: row-reverse
     .read-receipt
-      float: right
-      margin-left: 8px
+      line-height: 0
       .jd-icon
-        width: 18px
-        height: 18px
-        stroke-width: 2
+        width: 14px
+        height: 12px
+        stroke-width: 3px
+        padding: 0
     .message-container,
     .read-receipt
       color: white
@@ -76,6 +79,11 @@
         color: white
     .task-link
       color: white
+
+  .message-info
+    display: flex
+    align-items: center
+    justify-content: flex-end
 
 // RTL modification
 .right-to-left
