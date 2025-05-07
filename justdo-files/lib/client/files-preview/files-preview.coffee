@@ -5,7 +5,7 @@ Template.justdo_files_files_preview.onCreated ->
   @active_file_index_rv = new ReactiveVar 0
 
   @autorun =>
-    previewable_files_under_task = APP.justdo_files.tasks_files.find({"meta.task_id": @data.task_id, type: {$in: JustdoFiles.preview_types_whitelist}}, {sort: {"meta.upload_date": -1}}).fetch()
+    previewable_files_under_task = APP.justdo_files.getPreviewableFilesUnderTask(@data.task_id)
     @sorted_previewable_files_under_task_rv.set previewable_files_under_task
     return
 

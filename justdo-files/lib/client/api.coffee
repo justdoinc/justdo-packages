@@ -77,3 +77,14 @@ _.extend JustdoFiles.prototype,
     , false
 
     return upload
+
+  getPreviewableFilesUnderTask: (task_id) ->
+    query = 
+      "meta.task_id": task_id
+      type: 
+        $in: JustdoFiles.preview_types_whitelist
+    options = 
+      sort: 
+        "meta.upload_date": -1
+        
+    return APP.justdo_files.tasks_files.find(query, options).fetch()
