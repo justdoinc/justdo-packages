@@ -18,8 +18,9 @@ _.extend JustdoAvatar,
     # regardless of whether the email has changed
     is_user_avatar_color_same_as_generated = @isUserCachedInitialAvatarColorsSameAsGeneratedAvatarColors user_doc
     if not is_user_avatar_color_same_as_generated
-      get_initial_svg_options.avatar_bg = user_doc.profile.avatar_bg
-      get_initial_svg_options.avatar_fg = user_doc.profile.avatar_fg
+      if (user_avatar_bg = user_doc.profile.avatar_bg) and (user_avatar_fg = user_doc.profile.avatar_fg)
+        get_initial_svg_options.avatar_bg = user_avatar_bg
+        get_initial_svg_options.avatar_fg = user_avatar_fg
     
     new_avatar = @getInitialsSvg email, first_name, last_name, get_initial_svg_options
     avatar_colors = @getInitialsSvgColors email, get_initial_svg_options
