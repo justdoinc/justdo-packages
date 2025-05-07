@@ -77,7 +77,7 @@ WhiteListFilterControllerConstructor = (context) ->
           # Prefer the html label
           label = JustdoHelpers.xssGuard(html, {allow_html_parsing: true, enclosing_char: ''})
       else if (i18n_key = filter_value.txt_i18n)?
-        label = TAPi18n.__ i18n_key
+        label = APP.justdo_i18n.getDefaultI18nTextOrCustomInput {text: filter_value.txt, i18n_key}
       else
         label = filter_value.txt
 
