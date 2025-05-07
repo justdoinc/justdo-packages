@@ -119,3 +119,6 @@ _.extend JustdoFiles.prototype,
         return
 
     return
+
+  isFilePreviewable: (file_type) ->
+    return file_type in JustdoFiles.preview_types_whitelist

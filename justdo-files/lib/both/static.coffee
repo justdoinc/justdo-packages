@@ -5,4 +5,6 @@ _.extend JustdoFiles,
 
   files_count_task_doc_field_id: "p:justdo-files:files_count"
 
-  preview_supported_formats_regex: /^((image|video)\/(\w|-)+)|(application\/pdf)$/
+  # Note that the whitelist for preview types must be selected carefully, 
+  # some file types such as text/html can cause XSS vulnerabilities
+  preview_types_whitelist: ["application/pdf", "image/png", "image/gif", "image/jpeg", "image/bmp"]
