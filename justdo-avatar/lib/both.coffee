@@ -215,32 +215,45 @@ _.extend JustdoAvatar,
     # And returns an object of the following structure:
     #
     # {
-    #    is_initials_avatar: false/true
+    #    profile_pic_field_defined: true/false
+    #    # The following fields are only relevant if profile_pic_field_defined is true
+    #    is_base64_svg_avatar: true/false
     #
-    #    # The following fields are only relevant if is_avatar is true
+    #    # Note: avatar_colors will be undefined when either is_base64_svg_avatar is false or profile_pic_field_defined is false
     #    avatar_colors: {
     #        background: "#000000",
     #        foreground: "#000000"
     #    }
     # }
 
+
     if _.isString user
       user = Meteor.users.findOne user, {fields: {"profile.profile_pic": 1}}
     if not user?
       throw new Meteor.Error "unknown-user"
+    
+    is_profile_pic_field_defined = user?.profile?.profile_pic?
 
     ret = 
-      is_base64_svg_avatar: false
+      profile_pic_field_defined: is_profile_pic_field_defined
+
+    if not is_profile_pic_field_defined
+      return ret
 
     if @isUserAvatarBase64Svg user
       ret.avatar_colors = @extractColorsFromBase64Svg user.profile.profile_pic
       ret.is_base64_svg_avatar = true
+    else
+      ret.is_base64_svg_avatar = false
     
     return ret
   
   isUserCachedInitialAvatarColorsSameAsGeneratedAvatarColors: (user) ->
     cached_avatar_details = @getCachedInitialAvatarDetails user
-    cached_avatar_colors = cached_avatar_details.avatar_colors
+    cached_avatar_colors = cached_avatar_details?.avatar_colors
+
+    if not cached_avatar_colors?
+      return false
 
     # No options should be passed to getInitialsSvgColors, since we want to generate the colors based on the user's email.
     generated_avatar_colors = @getInitialsSvgColors JustdoHelpers.getUserMainEmail(user)
