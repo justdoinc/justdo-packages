@@ -310,14 +310,7 @@ Template.justdo_files_uploader.onCreated ->
 
     for file in files
       try
-        upload = APP.justdo_files.tasks_files.insert
-          file: file
-          meta:
-            task_id: Tracker.nonreactive -> APP.modules.project_page.activeItemId()
-            project_id: Tracker.nonreactive -> JD.activeJustdoId()
-          chunkSize: "dynamic"
-          transport: "ddp" # Need to find out why http doesn't work
-        , false
+        upload = APP.justdo_files.uploadFile(JD.activeItemId(), file)
       catch e
         # create a fake upload object to faciliate the message display
         tpl.addUploadProcess
