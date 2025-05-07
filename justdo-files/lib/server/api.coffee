@@ -126,6 +126,8 @@ _.extend JustdoFiles.prototype,
 
         readstream.on "error", (err) ->
           throw err
+          
+        http.response.setHeader "Content-Type", file.type
         
         # URL with query string "preview=true" will make allow browsers to render the file instead of forcing browsers to download the file
         # Note that the whitelist for preview types must be selected carefully, 
