@@ -47,7 +47,15 @@ _.extend JustdoFiles.prototype,
     return @tasks_files.findOne(file_id).link()
 
   getFilePreviewLink: (file_id) ->
-    return @getShareableLink(file_id) + "?preview=true"
+    file = @tasks_files.findOne(file_id)
+    preview_link = file.link() + "?preview=true"
+    
+    if @isFileTypePdf(file.type)
+      # We found out that in some machines caching might cause an issue with pdf previews,
+      # to avoid that, we use a random string in a custom GET param to prevent caching.
+      preview_link += "&r=#{Math.ceil(Math.random() * 100000000)}"
+
+    return preview_link
 
   _getMaxFileSizeInMb: -> Math.floor(@options.max_file_size * 0.00000095367432)
 

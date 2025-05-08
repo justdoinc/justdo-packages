@@ -84,12 +84,6 @@ Template.justdo_files_files_preview.helpers
 
   isVideo: -> APP.justdo_files.isFileTypeVideo(@type)
 
-  randomString: ->
-    # We found out that in some machines caching might cause an issue with pdf previews,
-    # to avoid that, we use a random string in a custom GET param to prevent caching.
-
-    return Math.ceil(Math.random() * 100000000)
-
   previewLink: ->
     tpl = Template.instance()
 
