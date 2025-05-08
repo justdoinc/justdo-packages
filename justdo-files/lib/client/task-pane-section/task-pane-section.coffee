@@ -94,7 +94,7 @@ Template.justdo_files_gallery.helpers
 
     tpl = Template.instance()
 
-    link = APP.justdo_files.tasks_files.findOne(file._id).link()
+    link = APP.justdo_files.getFilePreviewLink(file._id)
 
     # Load the image
     load_element = $("<img/>").attr("src", link).on "load", =>

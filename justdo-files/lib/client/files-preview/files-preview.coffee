@@ -13,7 +13,7 @@ Template.justdo_files_files_preview.onCreated ->
     active_file = @active_file_rv.get()
     previewable_files_under_task = @sorted_previewable_files_under_task_rv.get()
 
-    @preview_link_rv.set APP.justdo_files.tasks_files.findOne(active_file._id).link() + "?preview=true"
+    @preview_link_rv.set APP.justdo_files.getFilePreviewLink(active_file._id)
     @active_file_index_rv.set _.findIndex previewable_files_under_task, (file_doc) -> file_doc._id is active_file._id
     return
 

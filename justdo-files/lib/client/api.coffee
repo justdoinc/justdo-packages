@@ -50,7 +50,7 @@ _.extend JustdoFiles.prototype,
 
   downloadFile: (file_id) ->
     check file_id, String
-    download_link = new URL @tasks_files.findOne(file_id).link()
+    download_link = new URL @getShareableLink(file_id)
     download_link.searchParams.append "download", true
     window.open download_link, "_blank"
     return
