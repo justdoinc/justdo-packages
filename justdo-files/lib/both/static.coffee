@@ -7,4 +7,16 @@ _.extend JustdoFiles,
 
   # Note that the whitelist for preview types must be selected carefully, 
   # some file types such as text/html can cause XSS vulnerabilities
-  preview_types_whitelist: ["application/pdf", "image/png", "image/gif", "image/jpeg", "image/bmp"]
+  preview_types_whitelist: [
+    "application/pdf"
+    "image/png"
+    "image/gif"
+    "image/jpeg"
+    "image/bmp"
+    "video/mp4"
+    "video/mpeg"
+    "video/webm"
+    "video/quicktime"
+    "video/x-msvideo"
+    "video/x-ms-wmv"
+    ]
