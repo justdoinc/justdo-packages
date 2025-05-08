@@ -56,7 +56,14 @@ _.extend JustdoFiles.prototype,
     return
 
   # Upload a file to the task
-  # Returns a `FileUpload` object (Check https://github.com/veliovgroup/Meteor-Files/blob/master/docs/insert.md for more details)
+  #
+  # Returns a `FileUpload` object (Check https://github.com/veliovgroup/Meteor-Files/blob/master/docs/insert.md | https://archive.is/wip/MmVuS for more details)
+  #
+  # file: The file to upload
+  # task_id: The task id to upload the file to
+  # project_id: The project id to upload the file to
+  #
+  # project_id is optional, if not provided, the task's project_id will be used
   uploadFile: (file, task_id, project_id) ->
     check task_id, String
     check project_id, Match.Maybe String
