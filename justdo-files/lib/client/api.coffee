@@ -77,7 +77,7 @@ _.extend JustdoFiles.prototype,
         task_id: task_id
         project_id: project_id
       chunkSize: "dynamic"
-      transport: "http"
+      transport: "ddp"
     , false
 
     return upload
