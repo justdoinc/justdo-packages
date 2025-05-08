@@ -262,3 +262,7 @@ Template.common_chat_messages_board_message_card.events
       APP.modules.project_page.activateTaskInProject(project_id, task_id)
 
     return
+  
+  "contextmenu .message-container": (e, tmpl) ->
+    APP.justdo_chat._openMessageCardDropdown(e)
+    return
