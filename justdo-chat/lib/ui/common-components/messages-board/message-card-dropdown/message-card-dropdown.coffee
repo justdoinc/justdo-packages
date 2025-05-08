@@ -5,6 +5,13 @@ _.extend JustdoChat.prototype,
       custom_bound_element_options:
         close_button_html: null
         close_on_bound_elements_show: false
+        openedHandler: () ->
+          $(@template_data.event.currentTarget).addClass("contextmenu-active")
+          return
+        
+        closedHandler: () ->
+          $(@template_data.event.currentTarget).removeClass("contextmenu-active")
+          return
 
       updateDropdownPosition: ($connected_element) ->
         @$dropdown
@@ -28,54 +35,7 @@ _.extend JustdoChat.prototype,
     $("body").append("<div class='message-card-dropdown-helper'></div>")
     $message_card_dropdown_container = $(".message-card-dropdown-helper")
 
-    message_card_dropdown = new MessageCardDropdown($message_card_dropdown_container[0])
-
-    # Show dropdown on Right click
-    $("body").on "contextmenu", ".message-card.my-message .message-container", (e) =>
-      e.preventDefault()
-
-      # Remove highlight class from any previously highlighted containers
-      $(".message-container.contextmenu-active").removeClass("contextmenu-active")
-
-      # Add highlight class to the current container
-      $currentContainer = $(e.currentTarget)
-      $currentContainer.addClass("contextmenu-active")
-
-      # Store reference to currently active container
-      @activeContextMenuContainer = $currentContainer
-
-      # Move helper to the mouse click position
-      $message_card_dropdown_container.offset {top: e.pageY, left: e.pageX}
-
-      # Open dropdown
-      Meteor.defer ->
-        message_card_dropdown.openDropdown()
-      
-      # Retrive closest message board data
-      $message_board = $(e.currentTarget).closest(".messages-board-viewport")
-      $message_board_data = Blaze.getData($message_board[0])
-      # Retrive channel object
-      channel_obj = $message_board_data.getChannelObject()
-
-      message_obj = Blaze.getData(e.currentTarget)
-      message_id = message_obj._id
-
-      message_card_dropdown.template_data = 
-        channel_obj: channel_obj
-        message_obj: message_obj
-        itemsGenerator: -> JD.getPlaceholderItems("message-card-dropdown")
-        footerItemsGenerator: -> JD.getPlaceholderItems("message-card-dropdown-footer")
-
-      return
-
-    # Add listener for dropdown close event
-    $(document).on "click", (e) =>
-      # If clicking outside the dropdown or explicitly closing it
-      if @activeContextMenuContainer &&
-         (!$(e.target).closest(".dropdown-container").length ||
-          $(e.target).hasClass("dropdown-close"))
-        @activeContextMenuContainer.removeClass("contextmenu-active")
-        @activeContextMenuContainer = null
+    @message_card_dropdown = new MessageCardDropdown($message_card_dropdown_container[0])
 
     JD.registerPlaceholderItem "who-read-message",
       domain: "message-card-dropdown"
@@ -96,6 +56,35 @@ _.extend JustdoChat.prototype,
       data:
         template: "message_card_dropdown_footer_created_at"
         
+    return
+
+  _openMessageCardDropdown: (e) ->
+    e.preventDefault()
+
+    $message_card_dropdown_container = $(".message-card-dropdown-helper")
+    # Move helper to the mouse click position
+    $message_card_dropdown_container.offset {top: e.pageY, left: e.pageX}
+    
+    # Open dropdown
+    Meteor.defer =>
+      @message_card_dropdown.openDropdown()
+
+    # Retrive closest message board data
+    $message_board = $(e.currentTarget).closest(".messages-board-viewport")
+    $message_board_data = Blaze.getData($message_board[0])
+    # Retrive channel object
+    channel_obj = $message_board_data.getChannelObject()
+
+    message_obj = Blaze.getData(e.currentTarget)
+    message_id = message_obj._id
+
+    @message_card_dropdown.template_data = 
+      channel_obj: channel_obj
+      message_obj: message_obj
+      event: e
+      itemsGenerator: -> JD.getPlaceholderItems("message-card-dropdown")
+      footerItemsGenerator: -> JD.getPlaceholderItems("message-card-dropdown-footer")
+
     return
 
 Template.message_card_dropdown.helpers 
