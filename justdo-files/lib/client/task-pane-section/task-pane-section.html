@@ -79,12 +79,22 @@
               {{/unless}}
             </div>
             {{#if isPreviewable}}
-              <div class="image-preview bg-light mt-2 file-download-link d-flex justify-content-center align-items-center loading {{tempPlaceHolder}}">
-                <div class="loader">
-                  <div class="double-bounce1 bg-primary"></div>
-                  <div class="double-bounce2 bg-primary"></div>
+              {{#if isVideo}}
+                <video class="video-preview w-100" alt="{{name}}" type="{{type}}" muted="true" controls>
+                  <source src="{{previewLink}}" type="{{type}}">
+                </video>
+              {{else if isImage}}
+                <div class="image-preview w-100 bg-light mt-2 file-download-link d-flex justify-content-center align-items-center loading {{tempPlaceHolder}}">
+                  <div class="loader">
+                    <div class="double-bounce1 bg-primary"></div>
+                    <div class="double-bounce2 bg-primary"></div>
+                  </div>
                 </div>
-              </div>
+              {{else if isPdf}}
+                <div class="pdf-preview file-download-link">
+                  <embed class="w-100 h-100" src="{{previewLink}}" type="{{type}}" alt="{{name}}" style="border: 0 none;pointer-events: none;border-radius: 4px;">
+                </div>
+              {{/if}}
             {{/if}}
             {{#if deletion}}
               <div class="msg d-flex justify-content-center align-items-center">

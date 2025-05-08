@@ -116,6 +116,9 @@ Template.justdo_files_gallery.helpers
       return
 
     return placeholder
+  
+  previewLink: ->
+    return APP.justdo_files.getFilePreviewLink(@file._id)
 
   noFiles: ->
     return APP.justdo_files.tasks_files.find({"meta.task_id": APP.modules.project_page.activeItemId()}).count() == 0

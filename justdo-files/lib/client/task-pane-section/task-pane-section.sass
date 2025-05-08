@@ -94,10 +94,11 @@
           background-position: -370px 0px
         &.msword
           background-position: -442px 0px
+        &.mp4, &.mpeg, &.webm, &.quicktime, &.x-msvideo, &.x-ms-wmv
+          background-position: -274px 0px
 
       .image-preview
         background-size: cover
-        width: 100%
         height: 300px
         background-repeat: no-repeat
         background-position: center center
@@ -109,6 +110,15 @@
           .loader
             display: block
 
+      .video-preview
+        height: 300px
+        cursor: pointer
+        border-radius: 4px
+        
+      .pdf-preview
+        height: 250px
+        cursor: pointer
+        
       .content
         overflow: hidden
 
