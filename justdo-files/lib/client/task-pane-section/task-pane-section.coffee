@@ -312,7 +312,7 @@ Template.justdo_files_uploader.onCreated ->
 
     for file in files
       try
-        upload = APP.justdo_files.uploadFile(task_id, file)
+        upload = APP.justdo_files.uploadFile(file, task_id)
       catch e
         # create a fake upload object to faciliate the message display
         tpl.addUploadProcess

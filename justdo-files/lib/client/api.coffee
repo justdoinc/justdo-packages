@@ -57,15 +57,19 @@ _.extend JustdoFiles.prototype,
 
   # Upload a file to the task
   # Returns a `FileUpload` object (Check https://github.com/veliovgroup/Meteor-Files/blob/master/docs/insert.md for more details)
-  uploadFile: (task_id, file) ->
-    query_options = 
-      fields:
-        project_id: 1
-    
-    if not (task = APP.collections.Tasks.findOne(task_id, query_options))?
-      throw @_error "unknown-task"
+  uploadFile: (file, task_id, project_id) ->
+    check task_id, String
+    check project_id, Match.Maybe String
 
-    project_id = task.project_id
+    if not project_id?
+      query_options = 
+        fields:
+          project_id: 1
+      
+      if not (task = APP.collections.Tasks.findOne(task_id, query_options))?
+        throw @_error "unknown-task"
+
+      project_id = task.project_id
 
     upload = APP.justdo_files.tasks_files.insert
       file: file
