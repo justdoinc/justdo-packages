@@ -86,6 +86,15 @@ Template.justdo_files_gallery.helpers
   isPreviewable: ->
     return APP.justdo_files.isFileTypePreviewable(@file.type)
 
+  isVideo: ->
+    return APP.justdo_files.isFileTypeVideo(@file.type)
+
+  isImage: ->
+    return APP.justdo_files.isFileTypeImage(@file.type)
+
+  isPdf: ->
+    return APP.justdo_files.isFileTypePdf(@file.type)
+
   tempPlaceHolder: ->
     task_id = JD.activeItemId({})
     file = @file

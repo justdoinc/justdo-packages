@@ -125,3 +125,12 @@ _.extend JustdoFiles.prototype,
 
   isFileTypePreviewable: (file_type) ->
     return file_type in JustdoFiles.preview_types_whitelist
+
+  isFileTypeVideo: (file_type) ->
+    return file_type.indexOf("video") is 0
+
+  isFileTypeImage: (file_type) ->
+    return file_type.indexOf("image") is 0
+
+  isFileTypePdf: (file_type) ->
+    return file_type is "application/pdf"
