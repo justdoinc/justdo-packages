@@ -130,7 +130,7 @@ _.extend JustdoFiles.prototype,
         http.response.setHeader "Content-Type", file.type
         
         # URL with query string "preview=true" will make allow browsers to render the file instead of forcing browsers to download the file
-        if http.request.query.preview == "true" and justdo_files_this.isFilePreviewable(file.type)
+        if http.request.query.preview == "true" and justdo_files_this.isFileTypePreviewable(file.type)
           http.response.setHeader "Content-Disposition", "inline; filename=\"#{encodeURI file.name}\""
         else
           http.response.setHeader "Content-Disposition", "attachment; filename=\"#{encodeURI file.name}\""

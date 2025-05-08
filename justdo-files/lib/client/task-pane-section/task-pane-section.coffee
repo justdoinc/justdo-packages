@@ -84,7 +84,7 @@ Template.justdo_files_gallery.helpers
   size: -> JustdoHelpers.bytesToHumanReadable(@file.size)
 
   isPreviewable: ->
-    return APP.justdo_files.isFilePreviewable(@file.type)
+    return APP.justdo_files.isFileTypePreviewable(@file.type)
 
   tempPlaceHolder: ->
     task_id = JD.activeItemId({})
