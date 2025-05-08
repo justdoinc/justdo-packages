@@ -82,6 +82,7 @@ _.extend JustdoChat.prototype,
       channel_obj: channel_obj
       message_obj: message_obj
       event: e
+      dropdown: @message_card_dropdown
       itemsGenerator: -> JD.getPlaceholderItems("message-card-dropdown")
       footerItemsGenerator: -> JD.getPlaceholderItems("message-card-dropdown-footer")
 
