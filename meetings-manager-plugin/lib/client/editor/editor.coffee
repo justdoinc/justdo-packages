@@ -56,14 +56,14 @@ Template.locking_text_editor.onCreated ->
         toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontSize",
           "align", "formatOL", "formatUOL", "undo", "redo",
         ]
-        imageEditButtons: ['imageReplace', 'imageAlign', 'imageCaption', 'imageRemove', '|', 'imageLink', 'linkOpen', 
-          'linkEdit', 'linkRemove', '-', 'imageDisplay', 'imageStyle', 'imageAlt', 'imageSize']
         tableStyles:
           "fr-no-borders": "No borders"
           "fr-dashed-borders": "Dashed Borders"
           "fr-alternate-rows": "Alternate Rows"
         quickInsertTags: []
         charCounterCount: false
+        pasteImage: false
+        imageUpload: false
         key: env.FROALA_ACTIVATION_KEY
       })
       .on "froalaEditor.blur", (e, editor) =>
