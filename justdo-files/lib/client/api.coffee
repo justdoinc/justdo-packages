@@ -68,6 +68,15 @@ _.extend JustdoFiles.prototype,
       type: Boolean
       optional: true
       defaultValue: false
+  # Upload a file to the specified collection
+  #
+  # Returns a `FileUpload` object (Check https://github.com/veliovgroup/Meteor-Files/blob/master/docs/insert.md | https://archive.is/wip/MmVuS for more details)
+  #
+  # options:
+  #   file: The file to upload
+  #   meta: Metadata for the file
+  #   collection_name: The collection to upload to (must be in JustdoFiles.supported_collection_names)
+  #   auto_start: Whether to start the upload automatically (default: false)
   _uploadFile: (options) ->
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
@@ -90,16 +99,6 @@ _.extend JustdoFiles.prototype,
 
     return upload
 
-    
-  # Upload a file to the task
-  #
-  # Returns a `FileUpload` object (Check https://github.com/veliovgroup/Meteor-Files/blob/master/docs/insert.md | https://archive.is/wip/MmVuS for more details)
-  #
-  # file: The file to upload
-  # task_id: The task id to upload the file to
-  # project_id: The project id to upload the file to
-  #
-  # project_id is optional, if not provided, the task's project_id will be used
   uploadFile: (file, task_id, project_id) ->
     check task_id, String
     check project_id, Match.Maybe String
@@ -125,11 +124,6 @@ _.extend JustdoFiles.prototype,
 
     return upload
 
-  # Upload an avatar image
-  #
-  # Returns a `FileUpload` object (Check https://github.com/veliovgroup/Meteor-Files/blob/master/docs/insert.md | https://archive.is/wip/MmVuS for more details)
-  #
-  # avatar_image: The avatar image to upload
   uploadAvatar: (avatar_image) ->
     file_upload_options =
       file: avatar_image
