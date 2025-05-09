@@ -13,6 +13,7 @@ _.extend JustdoFiles,
     "image/gif"
     "image/jpeg"
     "image/bmp"
+    "image/webp"
     "video/mp4"
     "video/mpeg"
     "video/webm"
