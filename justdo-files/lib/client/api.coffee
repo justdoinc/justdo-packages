@@ -73,7 +73,7 @@ _.extend JustdoFiles.prototype,
         fields:
           project_id: 1
       
-      if not (task = APP.collections.Tasks.findOne(task_id, query_options))?
+      if not (task = Tracker.nonreactive -> APP.collections.Tasks.findOne(task_id, query_options))?
         throw @_error "unknown-task"
 
       project_id = task.project_id
