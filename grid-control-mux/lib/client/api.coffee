@@ -544,7 +544,7 @@ _.extend GridControlMux.prototype,
       if not current_autorun.stopped
         current_autorun.stop()
 
-  setPath: (path_array, options) ->
+  setPath: (path_array, options, retries_allowed=1) ->
     # path_array should be of the form: [tab_id, path]
     #
     # Activates tab_id, if it isn't yet, and set its path to the
@@ -559,6 +559,10 @@ _.extend GridControlMux.prototype,
     # {
     #   collection_item_id_mode: if set to true, path will be treated as an item_id of a document from the collection associated to the grid, we will find one of the paths in which this item is presented and will highlight it.
     # }
+    #
+    # retries_allowed is the number of times to retry the path activation
+    # if it fails (i.e. the path is unknown). If we fail to find the path
+    # we'll try to look for it again in the next grid_data._grid_data_core.once "data-changes-queue-processed" event.
 
     options = _.extend {collection_item_id_mode: false}, options
 
@@ -612,6 +616,28 @@ _.extend GridControlMux.prototype,
 
           return
 
+        retry = =>
+          if retries_allowed > 0
+            # Wait for the next data-changes-queue-processed event
+            # to retry the path activation
+            @logger.debug "setPath: path #{path} is unknown, waiting for data-changes-queue-processed event to retry (#{retries_allowed} retries left)"
+            grid_control._grid_data._grid_data_core.once "data-changes-queue-processed", =>
+              @setPath(path_array, options, retries_allowed - 1)
+
+              return
+          else
+            @logger.debug "setPath: path #{path} is unknown"
+
+          return
+
+        processActivatePathResult = (res) =>
+          if res
+            @logger.debug "setPath: path #{path} of tab #{tab_id} activated"
+          else
+            retry()
+
+          return
+
         if tab.state == "ready"
           if path?
             # If there's a path to activate, activate it
@@ -619,17 +645,16 @@ _.extend GridControlMux.prototype,
 
             if not options.collection_item_id_mode
               grid_control.forceItemsPassCurrentFilter GridData.helpers.getPathItemId(path), =>
-                if grid_control.activatePath path, 0, {smart_guess: true}
-                  @logger.debug "setPath: path #{path} (or alternative) of tab #{tab_id} activated"
-                else
-                  @logger.debug "setPath: path #{path} is unknown"
+                processActivatePathResult(grid_control.activatePath(path, 0, {smart_guess: true}))
+
+                return
             else
               item_id = path # to ease readability
 
               grid_control.activateCollectionItemId item_id, 0,
                 force_pass_filter: true
-                readyCb: =>
-                  @logger.debug "setPath: item id #{item_id} of tab #{tab_id} activated"
+                readyCb: (res) =>
+                  processActivatePathResult(res)
 
                   return
           else
