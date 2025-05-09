@@ -22,6 +22,7 @@ _.extend JustdoFiles,
     "video/x-ms-wmv"
     ]
   
-  default_file_upload_options:
-    chunkSize: "dynamic"
-    transport: "ddp"
+  supported_collection_names: [
+    "tasks_files"
+    "avatars_collection"
+  ]

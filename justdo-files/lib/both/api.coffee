@@ -38,26 +38,38 @@ _.extend JustdoFiles.prototype,
 
     return true
 
-  isFileExist: (file_id) ->
+  _requireFileIdAndCollectionName: (file_id, collection_name) ->
     check file_id, String
-    return @tasks_files.findOne(file_id)?
+    check collection_name, Match.OneOf(JustdoFiles.supported_collection_names...)
+    return true
+
+  _isFileExist: (file_id, collection_name) ->
+    @_requireFileIdAndCollectionName(file_id, collection_name)
+
+    return @[collection_name].findOne(file_id)?
+
+  isFileExist: (file_id) ->
+    return @_isFileExist(file_id, "tasks_files")
 
   isAvatarExist: (file_id) ->
-    check file_id, String
-    return @avatars_collection.findOne(file_id)?
+    return @_isFileExist(file_id, "avatars_collection")
+
+  _getFileShareableLink: (file_id, collection_name) ->
+    @_requireFileIdAndCollectionName(file_id, collection_name)
+    return @[collection_name].findOne(file_id).link()
 
   getShareableLink: (file_id) ->
-    check file_id, String
-    return @tasks_files.findOne(file_id).link()
+    return @_getFileShareableLink(file_id, "tasks_files")
 
   getAvatarShareableLink: (file_id) ->
-    check file_id, String
-    return @avatars_collection.findOne(file_id).link()
+    return @_getFileShareableLink(file_id, "avatars_collection")
 
-  getFilePreviewLink: (file_id) ->
-    file = @tasks_files.findOne(file_id)
+  _getFilePreviewLink: (file_id, collection_name) ->
+    @_requireFileIdAndCollectionName(file_id, collection_name)
+
+    file = @[collection_name].findOne(file_id)
     preview_link = file.link() + "?preview=true"
-    
+
     if @isFileTypePdf(file.type)
       # We found out that in some machines caching might cause an issue with pdf previews,
       # to avoid that, we use a random string in a custom GET param to prevent caching.
@@ -65,9 +77,11 @@ _.extend JustdoFiles.prototype,
 
     return preview_link
 
+  getFilePreviewLink: (file_id) ->
+    return @_getFilePreviewLink(file_id, "tasks_files")
+
   getAvatarPreviewLink: (file_id) ->
-    preview_link = @getAvatarShareableLink(file_id) + "?preview=true"
-    return preview_link
+    return @_getFilePreviewLink(file_id, "avatars_collection")
 
   _getMaxFileSizeInMb: -> Math.floor(@options.max_file_size * 0.00000095367432)
 

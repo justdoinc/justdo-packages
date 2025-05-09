@@ -55,6 +55,38 @@ _.extend JustdoFiles.prototype,
     window.open download_link, "_blank"
     return
 
+  _uploadFileOptionsSchema: new SimpleSchema
+    file:
+      type: File
+    meta:
+      type: Object
+      blackbox: true
+    collection_name:
+      type: String
+      allowedValues: JustdoFiles.supported_collection_names
+  _uploadFile: (options) ->
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_uploadFileOptionsSchema,
+        options,
+        {throw_on_error: true}
+      )
+    options = cleaned_val
+
+    default_file_upload_options = 
+      chunkSize: "dynamic"
+      transport: "ddp"
+
+    file_upload_options = _.extend default_file_upload_options,
+      file: options.file
+    if options.meta?
+      file_upload_options.meta = options.meta
+
+    upload = @[options.collection_name].insert file_upload_options, false
+
+    return upload
+
+    
   # Upload a file to the task
   #
   # Returns a `FileUpload` object (Check https://github.com/veliovgroup/Meteor-Files/blob/master/docs/insert.md | https://archive.is/wip/MmVuS for more details)
@@ -78,23 +110,30 @@ _.extend JustdoFiles.prototype,
 
       project_id = task.project_id
 
-    file_upload_options = _.extend {}, JustdoFiles.default_file_upload_options,
+    file_upload_options =
       file: file
       meta:
         task_id: task_id
         project_id: project_id
+      collection_name: "tasks_files"
 
-    upload = APP.justdo_files.tasks_files.insert file_upload_options, false
+    upload = @_uploadFile file_upload_options
 
     return upload
-  
+
+  # Upload an avatar image
+  #
+  # Returns a `FileUpload` object (Check https://github.com/veliovgroup/Meteor-Files/blob/master/docs/insert.md | https://archive.is/wip/MmVuS for more details)
+  #
+  # avatar_image: The avatar image to upload
   uploadAvatar: (avatar_image) ->
-    file_upload_options = _.extend {}, JustdoFiles.default_file_upload_options,
+    file_upload_options =
       file: avatar_image
       meta:
         is_avatar: true
+      collection_name: "avatars_collection"
 
-    upload = APP.justdo_files.avatars_collection.insert file_upload_options, false
+    upload = @_uploadFile file_upload_options
 
     return upload
 
