@@ -219,26 +219,29 @@ APP.executeAfterAppLibCode ->
           uploading_files.set (Tracker.nonreactive -> uploading_files.get() - 1)
       else if env.JUSTDO_FILES_ENABLED is "true" # Upload to JustDo Files if available while Filestack isn't
         for file in files
-          try
-            upload = APP.justdo_files.uploadFile(file, task_id)
-          catch e
-            uploading_files.set (Tracker.nonreactive -> uploading_files.get() - 1)
-            console.error e.reason or e
+          do (file) =>
+            try
+              upload = APP.justdo_files.uploadFile(file, task_id)
+            catch e
+              uploading_files.set (Tracker.nonreactive -> uploading_files.get() - 1)
+              console.error e.reason or e
+              return
+
+            upload.on "end", (err, file_obj) ->
+              uploading_files.set (Tracker.nonreactive -> uploading_files.get() - 1)
+              if err?
+                if not upload.err_msg?
+                  upload.err_msg = if err.reason? then err.reason else err
+              file_id = file_obj._id
+              file.filename = file_obj.name
+              download_path = APP.justdo_files.getShareableLink(file_id)
+              replaceEditorImageAndFile file, download_path
+
+              return
+
+            upload.start()
+
             return
-
-          upload.on "end", (err, file_obj) ->
-            uploading_files.set (Tracker.nonreactive -> uploading_files.get() - 1)
-            if err?
-              if not upload.err_msg?
-                upload.err_msg = if err.reason? then err.reason else err
-            file_id = file_obj._id
-            file.filename = file_obj.name
-            download_path = APP.justdo_files.getShareableLink(file_id)
-            replaceEditorImageAndFile file, download_path
-
-            return
-
-          upload.start()
 
       
     return
