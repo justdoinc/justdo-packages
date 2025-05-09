@@ -40,6 +40,9 @@ _.extend JustdoFiles.prototype,
 
   _requireFileIdAndCollectionName: (file_id, collection_name) ->
     check file_id, String
+    # The triple dot (...) is the spread operator in CoffeeScript
+    # It expands the array JustdoFiles.supported_collection_names into individual arguments
+    # So Match.OneOf receives each collection name as a separate argument
     check collection_name, Match.OneOf(JustdoFiles.supported_collection_names...)
     return true
 
