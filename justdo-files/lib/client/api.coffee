@@ -64,6 +64,10 @@ _.extend JustdoFiles.prototype,
     collection_name:
       type: String
       allowedValues: JustdoFiles.supported_collection_names
+    auto_start:
+      type: Boolean
+      optional: true
+      defaultValue: false
   _uploadFile: (options) ->
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
@@ -82,7 +86,7 @@ _.extend JustdoFiles.prototype,
     if options.meta?
       file_upload_options.meta = options.meta
 
-    upload = @[options.collection_name].insert file_upload_options, false
+    upload = @[options.collection_name].insert file_upload_options, options.auto_start
 
     return upload
 
