@@ -107,7 +107,7 @@ _.extend JustdoFiles.prototype,
 
               # We store only the absolute path of the link to avatar in users collection
               # so that the avatar file can be cached by CDN if such is enabled.
-              avatar_link = justdo_files_this.getShareableLink(file._id)
+              avatar_link = justdo_files_this.getAvatarShareableLink(file._id)
               avatar_path = new URL(avatar_link).pathname
               Meteor.users.update(avatar_user_id, {$set: {"profile.profile_pic": avatar_path}})
               return

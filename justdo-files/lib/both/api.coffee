@@ -42,9 +42,17 @@ _.extend JustdoFiles.prototype,
     check file_id, String
     return @tasks_files.findOne(file_id)?
 
+  isAvatarExist: (file_id) ->
+    check file_id, String
+    return @avatars_collection.findOne(file_id)?
+
   getShareableLink: (file_id) ->
     check file_id, String
     return @tasks_files.findOne(file_id).link()
+
+  getAvatarShareableLink: (file_id) ->
+    check file_id, String
+    return @avatars_collection.findOne(file_id).link()
 
   getFilePreviewLink: (file_id) ->
     file = @tasks_files.findOne(file_id)
@@ -55,6 +63,10 @@ _.extend JustdoFiles.prototype,
       # to avoid that, we use a random string in a custom GET param to prevent caching.
       preview_link += "&r=#{Math.ceil(Math.random() * 100000000)}"
 
+    return preview_link
+
+  getAvatarPreviewLink: (file_id) ->
+    preview_link = @getAvatarShareableLink(file_id) + "?preview=true"
     return preview_link
 
   _getMaxFileSizeInMb: -> Math.floor(@options.max_file_size * 0.00000095367432)

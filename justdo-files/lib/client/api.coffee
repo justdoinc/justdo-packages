@@ -88,6 +88,13 @@ _.extend JustdoFiles.prototype,
 
     return upload
   
+  uploadAvatar: (avatar_image) ->
+    file_upload_options = _.extend {}, JustdoFiles.default_file_upload_options,
+      file: avatar_image
+      meta:
+        is_avatar: true
+
+    upload = APP.justdo_files.avatars_collection.insert file_upload_options, false
 
     return upload
 

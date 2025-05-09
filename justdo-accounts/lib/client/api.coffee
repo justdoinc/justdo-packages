@@ -184,13 +184,7 @@ _.extend JustdoAccounts.prototype,
       @resizeAvatarImage img_file, 250, 250
         .then (resized_img) =>
           try
-            upload = APP.justdo_files.avatars_collection.insert
-              file: resized_img
-              meta:
-                is_avatar: true
-              chunkSize: "dynamic"
-              transport: "ddp"
-            , false
+            upload = APP.justdo_files.uploadAvatar resized_img
           catch err
             @logger.error err
             cb(err)
