@@ -78,14 +78,16 @@ _.extend JustdoFiles.prototype,
 
       project_id = task.project_id
 
-    upload = APP.justdo_files.tasks_files.insert
+    file_upload_options = _.extend {}, JustdoFiles.default_file_upload_options,
       file: file
       meta:
         task_id: task_id
         project_id: project_id
-      chunkSize: "dynamic"
-      transport: "ddp"
-    , false
+
+    upload = APP.justdo_files.tasks_files.insert file_upload_options, false
+
+    return upload
+  
 
     return upload
 

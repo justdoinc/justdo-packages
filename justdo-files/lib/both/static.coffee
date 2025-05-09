@@ -20,3 +20,7 @@ _.extend JustdoFiles,
     "video/x-msvideo"
     "video/x-ms-wmv"
     ]
+  
+  default_file_upload_options:
+    chunkSize: "dynamic"
+    transport: "ddp"
