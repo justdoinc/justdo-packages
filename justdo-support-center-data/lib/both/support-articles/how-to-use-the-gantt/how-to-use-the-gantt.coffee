@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem "support",
-  _id: "360016404240"
+  _id: "how-to-use-the-gantt"
   title: "Using the Gantt Chart in JustDo: A Guide"
-  aliases: ["how-to-use-the-gantt"]
+  aliases: ["360016404240"]
   date: "2020-09-13"
   templates: [
     {

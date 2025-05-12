@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem "support",
-  _id: "360018774900"
+  _id: "how-to-plan-and-track-working-hours"
   title: "Plan & Track Working Hours in JustDo"
-  aliases: ["how-to-plan-and-track-working-hours"]
+  aliases: ["360018774900"]
   date: "2021-01-12"
   templates: [
     {

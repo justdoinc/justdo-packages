@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem "support",
-  _id: "360017510680"
+  _id: "justdo-extensions"
   title: "JustDo Extensions: Enhancing Your Workspace"
-  aliases: ["justdo-extensions"]
+  aliases: ["360017510680"]
   date: "2020-11-17"
   templates: [
     {

@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem "support",
-  _id: "115000301934"
+  _id: "how-to-print-and-export"
   title: "Printing and Exporting Data in JustDo"
-  aliases: ["how-to-print-and-export"]
+  aliases: ["115000301934"]
   date: "2017-06-17"
   templates: [
     {

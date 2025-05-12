@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem "support",
-  _id: "115003761733"
+  _id: "custom-fields"
   title: "Using Custom Fields in JustDo: A Comprehensive Guide"
-  aliases: ["custom-fields"]
+  aliases: ["115003761733"]
   date: "2017-11-20"
   templates: [
     {
