@@ -1,0 +1,24 @@
+<template name="support_article_calculated_field">
+  <p>The 'Calculated' field type supports presenting calculated values based on related tasks.</p>
+  <p>At the moment, we support a 'sum' function with few permutations as listed below. More functions will be added over time.</p>
+  <p> </p>
+  <ul>
+    <li>
+      <strong>'=sum()':</strong>
+      <ul>
+        <li>
+        <span class="wysiwyg-color-blue">=sum()</span>  - will present the sum of all the values of the same filed of the direct sub-tasks of the selected task, regardless if those tasks are filtered out or not.</li>
+        <li>
+        <span class="wysiwyg-color-blue">=sum({"filter_aware": true})</span>  - will make the 'sum()' function filter aware.</li>
+        <li>
+        <span class="wysiwyg-color-blue">=sum({"direct_children_only": false})</span>  - will make the 'sum()' function calculate the sum not only of the direct sub-tasks, but rather - all the sub-tasks within the subtree.</li>
+        <li>
+        <span class="wysiwyg-color-blue">=sum({"filter_aware": true,"direct_children_only": false})</span>  - will make the 'sum()' function be filter aware and sum the entire subtree.</li>
+      </ul>
+    </li>
+  </ul>
+  <p> </p>
+  <p> </p>
+  <p> </p>
+  <p> </p>
+</template>

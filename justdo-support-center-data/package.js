@@ -187,6 +187,214 @@ Package.onUse(function (api) {
     "lib/both/support-articles/how-to-print-and-export/how-to-print-and-export.coffee"
   ], both);
 
+  // how-to-change-my-password
+  api.addFiles([
+    "lib/both/support-articles/how-to-change-my-password/how-to-change-my-password.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-change-my-password/how-to-change-my-password.coffee"
+  ], both);
+
+  // how-to-delete-a-task
+  api.addFiles([
+    "lib/both/support-articles/how-to-delete-a-task/how-to-delete-a-task.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-delete-a-task/how-to-delete-a-task.coffee"
+  ], both);
+
+  // who-are-my-justdo-s-administrators
+  api.addFiles([
+    "lib/both/support-articles/who-are-my-justdo-s-administrators/who-are-my-justdo-s-administrators.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/who-are-my-justdo-s-administrators/who-are-my-justdo-s-administrators.coffee"
+  ], both);
+
+  // how-to-change-my-profile-picture-and-details
+  api.addFiles([
+    "lib/both/support-articles/how-to-change-my-profile-picture-and-details/how-to-change-my-profile-picture-and-details.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-change-my-profile-picture-and-details/how-to-change-my-profile-picture-and-details.coffee"
+  ], both);
+
+  // tasks-priorities-how-to-set-and-sort
+  api.addFiles([
+    "lib/both/support-articles/tasks-priorities-how-to-set-and-sort/tasks-priorities-how-to-set-and-sort.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/tasks-priorities-how-to-set-and-sort/tasks-priorities-how-to-set-and-sort.coffee"
+  ], both);
+
+  // how-to-rename-your-justdo
+  api.addFiles([
+    "lib/both/support-articles/how-to-rename-your-justdo/how-to-rename-your-justdo.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-rename-your-justdo/how-to-rename-your-justdo.coffee"
+  ], both);
+
+  // how-to-get-daily-email-notifications
+  api.addFiles([
+    "lib/both/support-articles/how-to-get-daily-email-notifications/how-to-get-daily-email-notifications.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-get-daily-email-notifications/how-to-get-daily-email-notifications.coffee"
+  ], both);
+
+  // how-to-change-the-date-format
+  api.addFiles([
+    "lib/both/support-articles/how-to-change-the-date-format/how-to-change-the-date-format.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-change-the-date-format/how-to-change-the-date-format.coffee"
+  ], both);
+
+  // keyboard-shortcuts
+  api.addFiles([
+    "lib/both/support-articles/keyboard-shortcuts/keyboard-shortcuts.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/keyboard-shortcuts/keyboard-shortcuts.coffee"
+  ], both);
+
+  // how-can-i-expand-collapse-all-tasks
+  api.addFiles([
+    "lib/both/support-articles/how-can-i-expand-collapse-all-tasks/how-can-i-expand-collapse-all-tasks.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-can-i-expand-collapse-all-tasks/how-can-i-expand-collapse-all-tasks.coffee"
+  ], both);
+
+  // how-to-merge-justdos
+  api.addFiles([
+    "lib/both/support-articles/how-to-merge-justdos/how-to-merge-justdos.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-merge-justdos/how-to-merge-justdos.coffee"
+  ], both);
+
+  // justdo-meetings
+  api.addFiles([
+    "lib/both/support-articles/justdo-meetings/justdo-meetings.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/justdo-meetings/justdo-meetings.coffee"
+  ], both);
+
+  // can-the-mobile-apps-work-with-an-on-prem-installation
+  api.addFiles([
+    "lib/both/support-articles/can-the-mobile-apps-work-with-an-on-prem-installation/can-the-mobile-apps-work-with-an-on-prem-installation.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/can-the-mobile-apps-work-with-an-on-prem-installation/can-the-mobile-apps-work-with-an-on-prem-installation.coffee"
+  ], both);
+
+  // how-to-use-the-ticket-queue
+  api.addFiles([
+    "lib/both/support-articles/how-to-use-the-ticket-queue/how-to-use-the-ticket-queue.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-use-the-ticket-queue/how-to-use-the-ticket-queue.coffee"
+  ], both);
+
+  // calculated-field
+  api.addFiles([
+    "lib/both/support-articles/calculated-field/calculated-field.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/calculated-field/calculated-field.coffee"
+  ], both);
+
+  // most-recent-product-updates
+  api.addFiles([
+    "lib/both/support-articles/most-recent-product-updates/most-recent-product-updates.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/most-recent-product-updates/most-recent-product-updates.coffee"
+  ], both);
+
+  // how-to-use-the-archiving-capability
+  api.addFiles([
+    "lib/both/support-articles/how-to-use-the-archiving-capability/how-to-use-the-archiving-capability.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-use-the-archiving-capability/how-to-use-the-archiving-capability.coffee"
+  ], both);
+
+  // how-to-connect-my-email-to-justdo
+  api.addFiles([
+    "lib/both/support-articles/how-to-connect-my-email-to-justdo/how-to-connect-my-email-to-justdo.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-connect-my-email-to-justdo/how-to-connect-my-email-to-justdo.coffee"
+  ], both);
+
+  // how-to-enable-disable-the-justdo-extensions
+  api.addFiles([
+    "lib/both/support-articles/how-to-enable-disable-the-justdo-extensions/how-to-enable-disable-the-justdo-extensions.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-enable-disable-the-justdo-extensions/how-to-enable-disable-the-justdo-extensions.coffee"
+  ], both);
+
+  // what-is-the-difference-between-an-admin-a-member-and-a-guest
+  api.addFiles([
+    "lib/both/support-articles/what-is-the-difference-between-an-admin-a-member-and-a-guest/what-is-the-difference-between-an-admin-a-member-and-a-guest.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/what-is-the-difference-between-an-admin-a-member-and-a-guest/what-is-the-difference-between-an-admin-a-member-and-a-guest.coffee"
+  ], both);
+
+  // how-to-use-the-risk-management-extension
+  api.addFiles([
+    "lib/both/support-articles/how-to-use-the-risk-management-extension/how-to-use-the-risk-management-extension.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-use-the-risk-management-extension/how-to-use-the-risk-management-extension.coffee"
+  ], both);
+
+  // how-to-invite-users-to-a-justdo
+  api.addFiles([
+    "lib/both/support-articles/how-to-invite-users-to-a-justdo/how-to-invite-users-to-a-justdo.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-invite-users-to-a-justdo/how-to-invite-users-to-a-justdo.coffee"
+  ], both);
+
+  // what-to-do-if-i-can-t-can-t-expend-all-tasks
+  api.addFiles([
+    "lib/both/support-articles/what-to-do-if-i-can-t-can-t-expend-all-tasks/what-to-do-if-i-can-t-can-t-expend-all-tasks.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/what-to-do-if-i-can-t-can-t-expend-all-tasks/what-to-do-if-i-can-t-can-t-expend-all-tasks.coffee"
+  ], both);
+
+  // what-is-the-quick-add-button
+  api.addFiles([
+    "lib/both/support-articles/what-is-the-quick-add-button/what-is-the-quick-add-button.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/what-is-the-quick-add-button/what-is-the-quick-add-button.coffee"
+  ], both);
+
+  // how-to-copy-a-task
+  api.addFiles([
+    "lib/both/support-articles/how-to-copy-a-task/how-to-copy-a-task.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-copy-a-task/how-to-copy-a-task.coffee"
+  ], both);
+
+  // how-to-create-tasks-by-email
+  api.addFiles([
+    "lib/both/support-articles/how-to-create-tasks-by-email/how-to-create-tasks-by-email.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-create-tasks-by-email/how-to-create-tasks-by-email.coffee"
+  ], both);
+
   // Always after templates
   this.addI18nFiles(api, "i18n/{}.i18n.json");
 
