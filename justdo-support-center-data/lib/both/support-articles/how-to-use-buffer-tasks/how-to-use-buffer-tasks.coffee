@@ -2,6 +2,7 @@ APP.justdo_crm.registerItem "support",
   _id: "how-to-use-buffer-tasks"
   title: "Using Buffer Tasks in JustDo for Project Management"
   aliases: ["5836183698972"]
+  tags: ["web-version", "plugins", "advanced"]
   date: "2022-09-04"
   templates: [
     {

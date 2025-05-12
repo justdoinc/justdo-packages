@@ -2,6 +2,7 @@ APP.justdo_crm.registerItem "support",
   _id: "custom-fields"
   title: "Using Custom Fields in JustDo: A Comprehensive Guide"
   aliases: ["115003761733"]
+  tags: ["web-version", "plugins", "advanced"]
   date: "2017-11-20"
   templates: [
     {

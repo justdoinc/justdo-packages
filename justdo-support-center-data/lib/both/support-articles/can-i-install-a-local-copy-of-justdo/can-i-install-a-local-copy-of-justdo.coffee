@@ -2,6 +2,7 @@ APP.justdo_crm.registerItem "support",
   _id: "can-i-install-a-local-copy-of-justdo"
   title: "Can I Install a Local Copy of JustDo?"
   aliases: ["115000229573"]
+  tags: ["web-version"]
   date: "2017-06-08"
   templates: [
     {

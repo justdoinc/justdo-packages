@@ -2,6 +2,7 @@ APP.justdo_crm.registerItem "support",
   _id: "how-to-configure-workdays-and-holidays"
   title: "Configuring Workdays & Holidays in JustDo"
   aliases: ["360016432579"]
+  tags: ["web-version", "plugins", "advanced"]
   date: "2020-09-13"
   templates: [
     {
