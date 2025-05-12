@@ -1,1 +1,4 @@
+share.news_category = "support"
+
 share.justdo_support_center_asset_url = "https://justdo-support-media.s3.us-west-2.amazonaws.com"
+
