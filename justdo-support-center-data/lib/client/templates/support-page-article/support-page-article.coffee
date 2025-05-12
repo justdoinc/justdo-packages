@@ -163,7 +163,6 @@ Template.support_page_article.events
   "click .breadcrumb-item": (e, tpl) ->
     $target = $(e.currentTarget)
     if $target.hasClass("back")
-      e.preventDefault()
       history.back()
     else if $target.hasClass("home")
       tpl.active_tag_rv.set share.default_tag
