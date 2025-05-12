@@ -420,4 +420,5 @@ _.extend JustdoNews.prototype,
   getMostRecentItemObjUnderCategory: JustdoNews.prototype.getMostRecentNewsObjUnderCategory
   registerItem: JustdoNews.prototype.registerNews
   getItemByIdOrAlias: JustdoNews.prototype.getNewsByIdOrAlias
+  getItemsByTag: JustdoNews.prototype.getNewsByTag
   isDefaultItemTemplate: JustdoNews.prototype.isDefaultNewsTemplate
