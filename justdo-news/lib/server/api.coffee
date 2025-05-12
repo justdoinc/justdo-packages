@@ -54,14 +54,17 @@ _.extend JustdoNews.prototype,
       
       # If there's no news_id, redirect to the most recent news under the category
       if _.isEmpty news_id
-        redirect_url = "/#{news_category}/#{most_recent_news_id}"
-        if APP.justdo_i18n_routes?
-          redirect_url = APP.justdo_i18n_routes.i18nPath redirect_url, lang
-        if APP.justdo_seo?
-          redirect_url = APP.justdo_seo.getCanonicalHrpURL redirect_url
+        if news_category_obj.auto_redirect_to_most_recent_news
+          redirect_url = "/#{news_category}/#{most_recent_news_id}"
+          if APP.justdo_i18n_routes?
+            redirect_url = APP.justdo_i18n_routes.i18nPath redirect_url, lang
+          if APP.justdo_seo?
+            redirect_url = APP.justdo_seo.getCanonicalHrpURL redirect_url
 
-        url_obj.pathname = redirect_url
-        redirectToNewsUrl 302, url_obj, res
+          url_obj.pathname = redirect_url
+          redirectToNewsUrl 302, url_obj, res
+        else
+          next()
         return
       
       # If news_id or news_template is invalid, return 404
