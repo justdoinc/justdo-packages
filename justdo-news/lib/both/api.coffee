@@ -31,6 +31,10 @@ _.extend JustdoNews.prototype,
       label: "Disable title in URL for default language"
       type: Boolean
       defaultValue: false
+    auto_redirect_to_most_recent_news:
+      label: "Auto redirect to most recent news"
+      type: Boolean
+      defaultValue: true
   registerCategory: (category, options) ->
     if _.isEmpty category or not _.isString category
       throw @_error "invalid-argument"
@@ -156,7 +160,11 @@ _.extend JustdoNews.prototype,
     routes =
       "/#{category}":
         routingFunction: ->
-          self.redirectToMostRecentNewsPageByCategoryOrFallback category
+          if news_category_options.auto_redirect_to_most_recent_news
+            self.redirectToMostRecentNewsPageByCategoryOrFallback category
+          else
+            @render news_category_options.template
+            @layout "single_frame_layout"
           return
         route_options:
           name: category_route_name
@@ -164,7 +172,10 @@ _.extend JustdoNews.prototype,
           mapGenerator: ->
             ret = 
               url: "/#{category}"
-              canonical_to: "/#{category}/#{self.getMostRecentNewsObjUnderCategory(category)._id}"
+            if news_category_options.auto_redirect_to_most_recent_news
+              ret.canonical_to = "/#{category}/#{self.getMostRecentNewsObjUnderCategory(category)._id}"
+            else
+              ret.canonical_to = "/#{category}"
             yield ret
             return
       "/#{category}/:news_id":
