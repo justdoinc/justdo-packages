@@ -1,4 +1,4 @@
-.support-page
+.support-page-article
   display: flex
   flex-direction: column
   flex-grow: 1
@@ -12,8 +12,19 @@
     max-width: 890px
   img
     max-width: 100%
+  .support-page-breadcrumb
+    display: flex
+    align-items: center
+    gap: 8px
+    .jd-icon
+      max-width: 24px
+    .breadcrumb-item
+      padding: unset
+      &:nth-child(2)
+        &:before
+          content: ""
 
-.support-page.fixed-nav
+.support-page-article.fixed-nav
   .support-navigation
     position: fixed
     right: 20px
@@ -82,7 +93,7 @@
 
 @media print
   .system-update-dialog
-    .support-page.fixed-nav
+    .support-page-article.fixed-nav
       margin-top: 0px !important
       .support-navigation
         position: initial

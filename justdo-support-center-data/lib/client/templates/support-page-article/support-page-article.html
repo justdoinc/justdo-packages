@@ -1,6 +1,6 @@
 <template name="support_page_article">
   <div class="container">
-    <div class="support-page">
+    <div class="support-page-article">
       {{#if showNavigationBar}}
         <div class="support-navigation container">
           {{#if showDropdownButton}}
@@ -31,8 +31,21 @@
         </div>
       {{/if}}
 
+      <div class="support-page-breadcrumb">
+        <a class="breadcrumb-item back" href="#">
+          <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-{{getRtlAwareDirection "left"}}"></use></svg>
+        </a>
+        <a class="breadcrumb-item home" href="{{i18nRoute route="support_page"}}">{{_ "support_center_title"}}</a>
+        {{#with activeTag}}
+          <a class="breadcrumb-item active-tag" href="{{i18nRoute route="support_page"}}#{{_id}}">{{_ label}}</a>
+        {{/with}}
+        <a class="breadcrumb-item cur-path" href="{{i18nRoute route="support_page_with_news_id" news_id=getActiveNewsId}}">{{getActiveNewsTitle}}</a>
+      </div>
+
       {{#with getActiveNewsTemplate}}
-        <h1>{{h1}}</h1><br>
+        <h1>{{h1}}</h1>
+        <div class="date">{{template_data.date}}</div>
+        <br>
         {{> Template.dynamic template=template_name data=template_data}}
       {{/with}}
 

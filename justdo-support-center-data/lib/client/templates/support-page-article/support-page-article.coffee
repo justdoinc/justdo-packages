@@ -2,8 +2,10 @@ Template.support_page_article.onCreated ->
   @category = share.news_category
   if not (most_recent_news_id = APP.justdo_crm.getMostRecentItemObjUnderCategory(@category)?._id)?
     throw APP.justdo_crm._error "news-category-not-found"
+  
+  @active_tag_rv = @data?.active_tag_rv or new ReactiveVar(share.default_tag)
 
-  @active_news_id_rv = new ReactiveVar(@data?.news_id or most_recent_news_id)
+  @active_news_id_rv = @data?.news_id_rv or new ReactiveVar(most_recent_news_id)
 
   @active_news_tab_rv = new ReactiveVar(@data?.tab_id or JustdoNews.default_news_template)
 
@@ -90,6 +92,10 @@ Template.support_page_article.helpers
     if tab_id is active_tab_id
       return "active"
     return
+  
+  getActiveNewsId: ->
+    tpl = Template.instance()
+    return tpl.active_news_id_rv.get()
 
   getActiveNewsTemplate: ->
     tpl = Template.instance()
@@ -132,21 +138,37 @@ Template.support_page_article.helpers
 
     return tpl.getNewsPath template_name, {news_category: active_category, news_id: news_id, news_template: news_template}
 
+  activeTag: ->
+    tpl = Template.instance()
+    active_tag_id = tpl.active_tag_rv.get()
+
+    # If the active tag is share.default_tag, we don't need to show it in the breadcrumb.
+    if active_tag_id is share.default_tag
+      return
+    
+    active_tag = share.supported_tags.find((category) -> category._id is active_tag_id)
+
+    return active_tag
+
 Template.support_page_article.events
-  "click .news-navigation-item": (e, tpl) ->
-    tab_id = $(e.target).closest(".support-navigation-item").data "tab_id"
-
-    # If router navigation is enabled, the href will take care of showing the correct content.
-    if not tpl.isRouterNavigation()
-      tpl.active_news_tab_rv.set tab_id
-
-    return
-
   "click .dropdown-item": (e, tpl) ->
     news_id = $(e.target).closest(".dropdown-item").data("news_id")
 
     # If router navigation is enabled, the href will take care of showing the correct content.
     if not tpl.isRouterNavigation()
       tpl.active_news_id_rv.set news_id
+
+    return
+
+  "click .breadcrumb-item": (e, tpl) ->
+    $target = $(e.currentTarget)
+    if $target.hasClass("back")
+      e.preventDefault()
+      history.back()
+    else if $target.hasClass("home")
+      tpl.active_tag_rv.set share.default_tag
+      tpl.active_news_id_rv.set null
+    else if $target.hasClass("active-tag")
+      tpl.active_news_id_rv.set null
 
     return
