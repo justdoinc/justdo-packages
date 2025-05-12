@@ -1,0 +1,25 @@
+<template name="support_page">
+    <div class="support-page">
+      {{#if activeArticle}}
+        {{> support_page_article active_tag_rv=activeTag news_id_rv=activeArticleRv show_navigation_bar=false}}
+      {{else}}
+        <div class="title-container">
+          <h1>{{{xssGuard(_ "support_center_h1_html")}}}</h1>
+        </div>
+        
+        <div class="tags-container">
+          <div class="tags-nav">
+            {{#each tags}}
+              <a href="{{getHashFragment}}" class="support-tag {{_id}}" id="{{_id}}">
+                <h2>{{_ label}}</h2>
+              </a>
+            {{/each}}
+          </div>
+          <div class="tag-content">
+            {{> support_page_article_category active_tag_rv=activeTag}}
+          </div>
+        </div>
+      {{/if}}
+
+    </div>
+</template>
