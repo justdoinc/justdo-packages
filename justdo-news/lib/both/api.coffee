@@ -298,6 +298,10 @@ _.extend JustdoNews.prototype,
       label: "News Aliases"
       type: [String]
       optional: true
+    tags:
+      label: "News Tags"
+      type: [String]
+      optional: true
     date:
       label: "News Date"
       type: String
@@ -358,6 +362,18 @@ _.extend JustdoNews.prototype,
       return
     
     return {news_doc: news_doc, is_alias: is_alias}
+  
+  getNewsByTag: (category, tag) ->
+    if not category? or not tag?
+      return
+
+    @requireCategoryExists category
+
+    return _.filter @getCategory(category).news, (news) -> 
+      if not news.tags?
+        return false
+
+      return tag in news.tags
     
   getNewsTemplateIfExists: (category, news_id_or_alias, template_name) ->
     if not (news = @getNewsByIdOrAlias(category, news_id_or_alias)?.news_doc)?
