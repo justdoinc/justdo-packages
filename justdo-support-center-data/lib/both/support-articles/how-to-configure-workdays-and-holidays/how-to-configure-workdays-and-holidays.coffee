@@ -1,4 +1,4 @@
-APP.justdo_crm.registerItem "support",
+APP.justdo_crm.registerItem share.news_category,
   _id: "how-to-configure-workdays-and-holidays"
   title: "Configuring Workdays & Holidays in JustDo"
   aliases: ["360016432579"]

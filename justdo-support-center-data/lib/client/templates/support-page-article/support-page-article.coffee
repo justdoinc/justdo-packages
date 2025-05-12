@@ -1,5 +1,5 @@
 Template.support_page_article.onCreated ->
-  @category = "support"
+  @category = share.news_category
   if not (most_recent_news_id = APP.justdo_crm.getMostRecentItemObjUnderCategory(@category)?._id)?
     throw APP.justdo_crm._error "news-category-not-found"
 

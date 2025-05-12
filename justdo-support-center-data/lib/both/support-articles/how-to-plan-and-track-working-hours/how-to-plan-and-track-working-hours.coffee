@@ -1,4 +1,4 @@
-APP.justdo_crm.registerItem "support",
+APP.justdo_crm.registerItem share.news_category,
   _id: "how-to-plan-and-track-working-hours"
   title: "Plan & Track Working Hours in JustDo"
   aliases: ["360018774900"]

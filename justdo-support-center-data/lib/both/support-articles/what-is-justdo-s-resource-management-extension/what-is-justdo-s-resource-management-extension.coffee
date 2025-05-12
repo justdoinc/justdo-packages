@@ -1,4 +1,4 @@
-APP.justdo_crm.registerItem "support",
+APP.justdo_crm.registerItem share.news_category,
   _id: "what-is-justdo-s-resource-management-extension"
   title: "JustDo's Resource Management Extension: Explained"
   aliases: ["360001159094"]
