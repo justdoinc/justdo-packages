@@ -1,0 +1,26 @@
+<template name="support_article_how_to_merge_justdos">
+  <p>Below are instructions to including an entire JustDo (the "origin JustDo") under a root parent task in another JustDo (the "target JustDo").</p>
+  <p>The merge can be performed by a user who is an <span class="wysiwyg-underline">admin of both JustDos</span>.</p>
+  <p><strong>Before you perform the merge please note:</strong></p>
+  <ol>
+    <li>All relevant content and history of the tasks will be moved to the target JustDo.</li>
+    <li>After the merge, the origin JustDo will no longer be accessible.</li>
+    <li>Custom fields that were defined in the origin JustDo will automatically be created in the target JustDo. If this field already exists in the target JustDo, you will now have two identical fields in the target JustDo.</li>
+    <li>Members that exist on the origin JustDo and are not part of the target JustDo will be added automatically. Yet, any admin of the origin JustDo will be added as a regular member in the target JustDo.</li>
+    <li>State values and colors will be the target JustDo values and colors.</li>
+    <li>Extensions that were enabled in the origin JustDo and not in the target JustDo will automatically be activated in the target JustDo.</li>
+    <li>Task IDs in the target JustDo for the merged tasks will be different from those in the origin JustDo.</li>
+  </ol>
+  <p><strong>Merging instructions:</strong></p>
+  <ol>
+    <li>Enable the extension: "Merge JustDo" in the origin JustDo<img src="{{getSupportCenterAssetUrl "/how-to-merge-justdos/assets/merge_plugin.png"}}" alt="merge_plugin.png" width="495" height="434"><br><br>
+    </li>
+    <li>Click the new option: "Merge JustDo", under the settings menu. <br><img src="{{getSupportCenterAssetUrl "/how-to-merge-justdos/assets/merge_option.png"}}" alt="merge_option.png"><br><br>
+    </li>
+    <li>Select the target JustDo from the list by clicking on its name. A check mark appears next to the selected name.</li>
+    <li>Click the "Merge" button.</li>
+    <li>As the merge action is irreversible you would need to confirm by typing the word "Confirm" in the text box and then click the "confirm" button. <br><img src="{{getSupportCenterAssetUrl "/how-to-merge-justdos/assets/confirm_merge.png"}}" alt="confirm_merge.png" width="512" height="302"><br><br>
+    </li>
+    <li>The entire origin JustDo will now be added as a root task to the target JustDo with the name "Merged from &lt;Origin JustDo name&gt;"</li>
+  </ol>
+</template>
