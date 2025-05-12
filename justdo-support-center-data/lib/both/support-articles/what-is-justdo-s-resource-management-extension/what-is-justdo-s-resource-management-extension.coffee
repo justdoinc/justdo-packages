@@ -2,6 +2,7 @@ APP.justdo_crm.registerItem "support",
   _id: "what-is-justdo-s-resource-management-extension"
   title: "JustDo's Resource Management Extension: Explained"
   aliases: ["360001159094"]
+  tags: ["web-version", "plugins"]
   date: "2018-02-21"
   templates: [
     {

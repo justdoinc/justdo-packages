@@ -2,6 +2,7 @@ APP.justdo_crm.registerItem "support",
   _id: "how-to-plan-and-track-working-hours"
   title: "Plan & Track Working Hours in JustDo"
   aliases: ["360018774900"]
+  tags: ["web-version", "plugins", "advanced"]
   date: "2021-01-12"
   templates: [
     {

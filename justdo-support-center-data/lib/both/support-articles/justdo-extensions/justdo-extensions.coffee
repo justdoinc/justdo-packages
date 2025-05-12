@@ -2,6 +2,7 @@ APP.justdo_crm.registerItem "support",
   _id: "justdo-extensions"
   title: "JustDo Extensions: Enhancing Your Workspace"
   aliases: ["360017510680"]
+  tags: ["web-version", "plugins"]
   date: "2020-11-17"
   templates: [
     {
