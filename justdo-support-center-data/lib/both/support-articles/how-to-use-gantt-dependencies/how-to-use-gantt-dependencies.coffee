@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem "support",
-  _id: "5963826490642"
+  _id: "how-to-use-gantt-dependencies"
   title: "Using Gantt Dependencies in JustDo"
-  aliases: ["how-to-use-gantt-dependencies"]
+  aliases: ["5963826490642"]
   date: "2022-06-08"
   templates: [
     {

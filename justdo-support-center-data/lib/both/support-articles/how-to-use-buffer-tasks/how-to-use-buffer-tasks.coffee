@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem "support",
-  _id: "5836183698972"
+  _id: "how-to-use-buffer-tasks"
   title: "Using Buffer Tasks in JustDo for Project Management"
-  aliases: ["how-to-use-buffer-tasks"]
+  aliases: ["5836183698972"]
   date: "2022-09-04"
   templates: [
     {

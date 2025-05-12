@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem "support",
-  _id: "6866979971986"
+  _id: "how-to-create-custom-grid-views"
   title: "Creating and Managing Custom Grid Views in JustDo"
-  aliases: ["how-to-create-custom-grid-views"]
+  aliases: ["6866979971986"]
   date: "2022-07-28"
   templates: [
     {
