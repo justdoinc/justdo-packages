@@ -46,7 +46,14 @@ Package.onUse(function (api) {
   api.use("tap:i18n", both);
 
   api.addFiles("lib/both/static.coffee", both);
+  
+  api.addFiles("lib/client/templates/support-page/support-page.sass", client);
+  api.addFiles("lib/client/templates/support-page/support-page.html", client);
+  api.addFiles("lib/client/templates/support-page/support-page.coffee", client);
   api.addFiles("lib/both/news-category-registrar.coffee", both);
+  api.addFiles("lib/client/templates/support-page/article-category/article-category.sass", client);
+  api.addFiles("lib/client/templates/support-page/article-category/article-category.html", client);
+  api.addFiles("lib/client/templates/support-page/article-category/article-category.coffee", client);
   
   api.addFiles("lib/client/templates/global-template-helper.coffee", client);
 
