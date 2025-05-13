@@ -100,7 +100,7 @@ _.extend PreviewContext.prototype,
     @project_id = @options.project_id
 
     @pc_id = Random.id()
-    @order_inc_step = 0.0001
+    @order_inc_step = 1
 
     @commit_in_progress = false
 
@@ -117,11 +117,6 @@ _.extend PreviewContext.prototype,
   
   _deferredInit: ->
     return
-  
-  _getAndIncOrder: ->
-    order = @order
-    @order += @order_inc_step
-    return order
   
   _activateItemOnceTreeChanged: (task_id) ->
     @grid_control.once "tree_change", =>
@@ -157,15 +152,13 @@ _.extend PreviewContext.prototype,
 
     created_task_id = @tasks_collection._collection.insert task_doc
     
-    @_markRealParentsWithPcChild path, task_doc
+    @_markRealParentsWithPcChild path
+      
     if options.auto_expand_ancestors
       @_activateItemOnceTreeChanged created_task_id
 
     return created_task_id
-  
-  _getActivePath: -> 
-    return JD.activePath()
-  
+
   _getNewChildOrder: (parent_id) ->
     query = 
       project_id: @project_id
@@ -177,7 +170,7 @@ _.extend PreviewContext.prototype,
         
     last_child = @tasks_collection.findOne query, query_options
 
-    new_order = (last_child?.parents?[parent_id]?.order + 1) or 0
+    new_order = (last_child?.parents?[parent_id]?.order + @order_inc_step) or 0
 
     return new_order
   
@@ -197,16 +190,19 @@ _.extend PreviewContext.prototype,
   _isTaskCreatedFromThisPc: (task_doc) ->
     return task_doc.pc_id is @pc_id
   
+  _isTaskUncommittedPcTask: (task_doc) ->
+    return task_doc._id is task_doc.pc_task_id
+  
   _markRealParentsWithPcChild: (path) ->
     is_root_path = (not path?) or (GridData.helpers.isRootPath path)
 
     if is_root_path
-      parent_id = 0
+      parent_id = "0"
     else
       parent_id = GridData.helpers.getPathItemId path
 
       parent_task_doc = @tasks_collection.findOne parent_id, {fields: {pc_task_id: 1}}
-      is_parent_real_task = parent_task_doc._id isnt parent_task_doc.pc_task_id
+      is_parent_real_task = not @_isTaskUncommittedPcTask parent_task_doc
 
     if is_root_path or is_parent_real_task 
       @real_parents_with_pc_child_set.add parent_id
@@ -214,13 +210,15 @@ _.extend PreviewContext.prototype,
     return
 
   addChild: (path, fields) ->
+    @_requireNotDestroyed()
+
     if not path?
       throw @_error "not-supported", "Cannot add child without an active path"
-    parent_id = GridData.helpers.getPathItemId(path)
 
-    parent_members = JD.activeItemUsers()
-    parent_members.push Meteor.userId()
-    parent_members = _.uniq parent_members
+    if GridData.helpers.isRootPath(path)
+      parent_id = "0"
+    else
+      parent_id = GridData.helpers.getPathItemId(path)
 
     fields = _.extend {}, fields
     fields.parents = 
@@ -244,22 +242,22 @@ _.extend PreviewContext.prototype,
     return created_task_ids
 
   addSibling: (path, fields) ->
-    if path?
-      parent_id = GridData.helpers.getPathParentId path
-    else
-      parent_id = 0
+    @_requireNotDestroyed()
+
+    parent_id = GridData.helpers.getPathParentId path
 
     fields = _.extend {}, fields
     fields.parents = 
       [parent_id]:
         order: @_getNewSiblingOrder(parent_id, JD.activeItemId())
     
-    if (not path?) or (GridData.helpers.isRootPath path)
-      parent_path = path
-    else
-      parent_path = GridData.helpers.getParentPath path
-      
-    return @_createTaskInLocalMinimongo parent_path, fields
+    # Increment the order of all siblings with order >= the new sibling's order
+    @_incrementChildsOrderGte parent_id, fields.parents[parent_id].order
+
+    if not GridData.helpers.isRootPath path
+      path = GridData.helpers.getParentPath path
+
+    return @_createTaskInLocalMinimongo path, fields
   
   bulkAddSibling: (path, siblings_fields) ->    
     if (_.isObject(siblings_fields)) and (not _.isArray(siblings_fields))
@@ -275,23 +273,6 @@ _.extend PreviewContext.prototype,
     
     return created_task_ids
 
-  # addTasks will only create temporory preview in the client side
-  # by inserting documents to minimongo.
-  # It will not commit the changes to the server and changes will be lost when refreshing the page
-  # unless commit() is called.
-  addTasks: (path, task_docs) ->
-    if (_.isObject(task_docs)) and (not _.isArray(task_docs))
-      task_docs = [task_docs]
-    
-    if _.isEmpty task_docs
-      return
-    
-    created_task_ids = []
-    for task_doc in task_docs
-      created_task_ids.push @_createTaskInLocalMinimongo path, task_doc
-
-    return created_task_ids
-  
   removeTasks: (pc_task_ids) ->
     @_requireNotDestroyed()
 
@@ -333,7 +314,6 @@ _.extend PreviewContext.prototype,
     @_requireNotDestroyed()
 
     delete task_doc._id
-    delete task_doc.parents
     return @_removeClientOnlyFields task_doc
 
   _setCommitInProgress: ->
@@ -374,13 +354,25 @@ _.extend PreviewContext.prototype,
 
       return
 
+    all_created_task_id_and_pc_task_id_pairs = []
     recursiveBulkCreateTasks = (parent_id, tasks) =>
-      if parseInt(parent_id, 10) is 0
+      if parent_id is "0"
         path = "/"
       else
         path = "/#{parent_id}/"
-        
-      @grid_data.bulkAddChild path, tasks, (err, res) =>
+      
+      # Seperate real tasks from uncommitted pc tasks.
+      # For tasks that are real, we simply have to add their parents.
+      tasks_to_add_parent = _.filter tasks, (task) => not @_isTaskUncommittedPcTask task
+      # For tasks that are uncommitted pc tasks, we have to create them.
+      tasks_to_create = _.filter tasks, (task) => @_isTaskUncommittedPcTask task
+
+      for task_to_add_parent in tasks_to_add_parent
+        order = task_to_add_parent.parents[parent_id].order
+        @grid_data.addParent task_to_add_parent._id, {parent: parent_id, order}, (err, res) => console.log {err, res}
+
+      tasks_to_create = tasks_to_create.map (task) => @_removePreviewOnlyFields task
+      @grid_data.bulkAddChild path, tasks_to_create, (err, res) =>
         if err?
           @logger.error "Create tasks from preview failed",  err
           error_occured = true
@@ -393,7 +385,13 @@ _.extend PreviewContext.prototype,
           @_commitFailed()
           return
 
-        created_task_ids = _.map res, (created_task_id_and_path) -> created_task_id_and_path[0]
+        created_task_ids = []
+        created_task_paths_by_id = {}
+
+        for [created_task_id, created_task_path] in res
+          created_task_ids.push created_task_id
+          created_task_paths_by_id[created_task_id] = created_task_path
+
         removePreviewTasks created_task_ids
         @items_to_expand = @items_to_expand.concat created_task_ids
 
@@ -401,28 +399,57 @@ _.extend PreviewContext.prototype,
           _id:
             $in: created_task_ids
         @_ensurePcIdInDoc query
-        created_task_id_and_pc_task_id_pairs = @tasks_collection.find(query, {fields: {pc_task_id: 1}}).map (task_doc) -> {created_task_id: task_doc._id, pc_task_id: task_doc.pc_task_id}
+        created_tasks_cursor = @tasks_collection.find(query, {fields: {pc_task_id: 1, parents: 1}})
+
+        created_task_id_and_pc_task_id_pairs = created_tasks_cursor.map (task_doc) -> {created_task_id: task_doc._id, pc_task_id: task_doc.pc_task_id}
+        all_created_task_id_and_pc_task_id_pairs = all_created_task_id_and_pc_task_id_pairs.concat created_task_id_and_pc_task_id_pairs
+
+        # Handle order discrepency and multi-parent
+        created_tasks_cursor.forEach (created_task) =>
+          corresponding_pc_task = _.find tasks, (pc_task) -> pc_task.pc_task_id is created_task.pc_task_id
+          created_task_order = created_task.parents[parent_id].order
+          pc_task_order = corresponding_pc_task.parents[parent_id].order
+          is_order_the_same = created_task_order is pc_task_order
+          remaining_parents_to_add = _.omit corresponding_pc_task.parents, parent_id
+
+          if not is_order_the_same
+            created_task_path = created_task_paths_by_id[created_task._id]
+            @grid_data.movePath created_task_path, {parent: parent_id, order: pc_task_order}, (err, res) -> console.log {err, res}
+          
+          for parent_id, {order} of remaining_parents_to_add
+            parent_id = _.find(all_created_task_id_and_pc_task_id_pairs, (pair) -> pair.pc_task_id is parent_id)?.created_task_id
+            @grid_data.addParent created_task._id, {parent: parent_id, order}, (err, res) -> console.log {err, res}
+
         for created_tasks_id_pair in created_task_id_and_pc_task_id_pairs
           subtasks_query = 
             "parents.#{created_tasks_id_pair.pc_task_id}":
               $ne: null
           @_ensurePcIdInDoc subtasks_query
 
-          if not _.isEmpty(subtasks = @tasks_collection.find(subtasks_query).map (task) => @_removePreviewOnlyFields task)
+          subtasks_cursor = @tasks_collection.find(subtasks_query)
+          if subtasks_cursor.count() > 0
+            subtasks = subtasks_cursor.map (task_doc) => 
+              # Update the parent id to the created task id
+              task_doc.parents[created_tasks_id_pair.created_task_id] = task_doc.parents[created_tasks_id_pair.pc_task_id]
+              delete task_doc.parents[created_tasks_id_pair.pc_task_id]
+
+              return task_doc
+
             recursiveBulkCreateTasks created_tasks_id_pair.created_task_id, subtasks
           else
             # If there're no tasks' _id equals to pc_task_id, consider all the tasks are created.
             is_all_tasks_created = true
             query = {}
             @_ensurePcIdInDoc query
-            @tasks_collection.find(query, {fields: {pc_task_id: 1}}).forEach (task_doc) ->
+            @tasks_collection.find(query, {fields: {pc_task_id: 1}}).forEach (task_doc) =>
               if not is_all_tasks_created
                 return
 
-              if task_doc._id is task_doc.pc_task_id
+              if @_isTaskUncommittedPcTask task_doc
                 is_all_tasks_created = false
 
               return
+
             if is_all_tasks_created
               @_commitFinished()
 
@@ -437,7 +464,7 @@ _.extend PreviewContext.prototype,
           $ne: null
       @_ensurePcIdInDoc tasks_with_real_parents_query
 
-      if not _.isEmpty(tasks_to_add = @tasks_collection.find(tasks_with_real_parents_query).map (task_to_add) => @_removePreviewOnlyFields task_to_add)
+      if not _.isEmpty(tasks_to_add = @tasks_collection.find(tasks_with_real_parents_query, {sort: {"parents.#{parent_id}.order": 1}}).fetch())
         recursiveBulkCreateTasks parent_id, tasks_to_add
 
       return
@@ -450,7 +477,7 @@ _.extend PreviewContext.prototype,
       @_ensurePcIdInDoc query
       
       @tasks_collection.find(query, {fields: {_id: 1}}).forEach (task) => 
-        if (parseInt parent_id, 10) is 0
+        if parent_id is "0"
           path = "/#{task._id}/"
         else
           path = "/#{parent_id}/#{task._id}/"
@@ -560,6 +587,258 @@ _.extend PreviewContext.prototype,
       throw @_error "destroyed"
     return
 
+  removeParent: (paths) ->
+    @_requireNotDestroyed()
+
+    if _.isString(paths)
+      paths = [paths]
+    
+    for path in paths
+      path = GridData.helpers.normalizePath(path)
+      task_id = GridData.helpers.getPathItemId(path)
+      parent_id = GridData.helpers.getPathParentId(path)
+      
+      # Check permissions
+      if parent_id is "0"
+        APP.justdo_permissions?.requireJustdoPermissions "grid-structure.add-remove-sort-root-tasks", @project_id, Meteor.userId()
+      else
+        APP.justdo_permissions?.requireTaskPermissions "grid-structure.add-remove-sort-children", parent_id, Meteor.userId()
+      
+      # For preview context, we just remove the pc task
+      query = 
+        _id: task_id
+      @_ensurePcIdInDoc query
+      if task_doc = @tasks_collection.findOne(query)
+        # Simulate removal of parent
+        simulated_parents = _.clone(task_doc.parents)
+        delete simulated_parents[parent_id]
+        
+        # Check if this would remove the last parent
+        if _.isEmpty(simulated_parents)
+          # If no parents left, remove the task completely
+          @removeTasks([task_id])
+        else
+          # Otherwise, just update the parents field to remove the reference to this parent
+          update_op = {$unset: {}}
+          update_op.$unset["parents.#{parent_id}"] = ""
+          
+          # Update in minimongo
+          @tasks_collection._collection.update(task_id, update_op)
+
+    return true
+
+  bulkRemoveParents: (paths) ->
+    @_requireNotDestroyed()
+    return @removeParent(paths)
+
+  addParent: (item_id, new_parent) ->
+    @_requireNotDestroyed()
+    
+    # Find the task
+    task_doc = @tasks_collection.findOne(item_id)
+    if not task_doc or not @_isTaskCreatedFromThisPc(task_doc)
+      throw @_error "not-supported", "Cannot add parent to non-preview task"
+    
+    parent_id = new_parent.parent
+    order = new_parent.order or @_getNewChildOrder(parent_id)
+    
+    # Check permissions
+    if parent_id is "0"
+      APP.justdo_permissions?.requireJustdoPermissions "grid-structure.add-remove-sort-root-tasks", @project_id, Meteor.userId()
+    else
+      APP.justdo_permissions?.requireTaskPermissions "grid-structure.add-remove-sort-children", parent_id, Meteor.userId()
+    
+    # Update parents field
+    if not task_doc.parents
+      task_doc.parents = {}
+      
+    task_doc.parents[parent_id] =
+      order: order
+
+    # Update the task in minimongo
+    @tasks_collection._collection.update(item_id, task_doc)
+    
+    # Only mark non-root paths
+    if parent_id isnt "0"
+      @_markRealParentsWithPcChild("/#{parent_id}/")
+    else
+      @_markRealParentsWithPcChild "/"
+
+    return true
+
+  movePath: (paths, new_location) ->
+    @_requireNotDestroyed()
+    
+    # Convert single path to array
+    string_path_provided = false
+    if _.isString(paths)
+      string_path_provided = true
+      paths = [paths]
+    
+    # Process new_location
+    new_location_obj = null
+    if not _.isArray(new_location)
+      new_location_obj = new_location
+    else
+      # Convert [position_path, relation] format to object format
+      [position_path, relation] = new_location
+      position_path = GridData.helpers.normalizePath(position_path)
+      
+      if GridData.helpers.isRootPath position_path
+        # Root path
+        new_location_obj = {parent: "0"}
+        
+        if relation == 0
+          new_location_obj.order = 0
+      else if relation in [0, 2]
+        # Child relation
+        new_location_obj = {
+          parent: GridData.helpers.getPathItemId(position_path)
+        }
+        
+        if relation == 0
+          new_location_obj.order = 0
+      else
+        # Sibling relation (-1 or 1)
+        parent_id = GridData.helpers.getPathParentId(position_path)
+        item_id = GridData.helpers.getPathItemId(position_path)
+        task_doc = @tasks_collection.findOne(item_id)
+        
+        if task_doc?.parents?[parent_id]?.order?
+          order = task_doc.parents[parent_id].order
+          
+          if relation is 1
+            order += @order_inc_step
+          else if relation is -1
+            order -= @order_inc_step
+          
+          new_location_obj = {
+            parent: parent_id
+            order: order
+          }
+        else
+          throw @_error "not-supported", "Cannot determine order for movePath"
+    
+    new_location_parent_id = new_location_obj.parent
+    
+    # Increment the order of items at or after the target position
+    if new_location_obj.order? and paths.length > 0
+      @_incrementChildsOrderGte new_location_parent_id, new_location_obj.order, null, paths.length
+    
+    # For each path, perform the move
+    results = []
+    new_order = new_location_obj.order
+    for path in paths
+      path = GridData.helpers.normalizePath(path)
+      item_id = GridData.helpers.getPathItemId(path)
+      parent_id = GridData.helpers.getPathParentId(path)
+      
+      # Only operate on preview tasks
+      task_doc = @tasks_collection.findOne(item_id)
+      if not task_doc or not @_isTaskCreatedFromThisPc(task_doc)
+        throw @_error "not-supported", "Cannot move non-preview task"
+      
+      # If the new parent is already in the parents field, update the order
+      if _.has task_doc.parents, new_location_parent_id
+        
+        # # On the grid, if the user drag a task to be after it's next sibling, new_location_obj.order would be the same as the next sibling's order.
+        # # So we need to increment the order by 1 to avoid having the same order.
+        # if new_order is task_doc.parents[new_location_parent_id].order
+        #   new_order 
+
+        @tasks_collection._collection.update(item_id, {$set: {"parents.#{new_location_parent_id}.order": new_order}})
+        new_order += 1
+      else
+        # Add the new parent
+        @addParent(item_id, new_location_obj)
+        
+        # Remove the old parent (unless it's the same as new parent)
+        old_parent_id = GridData.helpers.getPathParentId(path)
+        if old_parent_id isnt new_location_obj.parent and task_doc.parents?[old_parent_id]?
+          @removeParent(path)
+      
+      # Build the new path for the result
+      new_path = if new_location_obj.parent is "0"
+        "/#{item_id}/"
+      else 
+        "/#{new_location_obj.parent}/#{item_id}/"
+      
+      results.push(new_path)
+    
+    # Return results based on input format
+    if string_path_provided
+      return results[0]
+    else
+      return results
+
+  sortChildren: (path, field, asc_desc) ->
+    @_requireNotDestroyed()
+    
+    path = GridData.helpers.normalizePath(path)
+    parent_id = GridData.helpers.getPathItemId(path)
+    
+    # Find all children of this parent that are preview tasks
+    query = {
+      project_id: @project_id,
+      ["parents.#{parent_id}"]: {$exists: true}
+    }
+    @_ensurePcIdInDoc query
+    
+    # Get the child tasks
+    children = @tasks_collection.find(query).fetch()
+    
+    # Sort them by the specified field
+    sortMultiplier = if asc_desc == "asc" then 1 else -1
+    children = _.sortBy children, (child) -> 
+      val = child[field]
+      if _.isString(val)
+        return val.toLowerCase()
+      return val
+    
+    if asc_desc == "desc"
+      children = children.reverse()
+    
+    # Update their order
+    base_order = 0
+    order_step = 1
+    
+    for child, index in children
+      order = base_order + (index * order_step)
+      
+      if child.parents?[parent_id]?
+        child.parents[parent_id].order = order
+        
+        # Update in minimongo
+        @tasks_collection._collection.update(child._id, child)
+    
+    return true
+
+  bulkUpdate: (items_ids, modifier) ->
+    @_requireNotDestroyed()
+    
+    if not _.isArray(items_ids)
+      items_ids = [items_ids]
+    
+    count = 0
+    
+    for item_id in items_ids
+      # Only update preview tasks
+      task_doc = @tasks_collection.findOne(item_id)
+      if task_doc and @_isTaskCreatedFromThisPc(task_doc)
+        # Apply the modifier
+        if modifier.$set?
+          for field, value of modifier.$set
+            task_doc[field] = value
+        
+        if modifier.$unset?
+          for field of modifier.$unset
+            delete task_doc[field]
+            
+        # Update in minimongo
+        @tasks_collection._collection.update(item_id, task_doc)
+        count++
+    
+    return count
 
   edit: (item_id, field, value) ->
     @_requireNotDestroyed()
@@ -579,6 +858,33 @@ _.extend PreviewContext.prototype,
     @tasks_collection._collection.update(item_id, {$set: {[field]: value}})
     
     return true
+
+  _incrementChildsOrderGte: (parent_id, min_order_to_inc, item_doc=null, inc_count=1) ->
+    @_requireNotDestroyed()
+    
+    check parent_id, String
+    check min_order_to_inc, Number
+    check inc_count, Number
+    
+    # For preview context, we only need to update tasks with pc_id
+    query = 
+      pc_id: @pc_id
+      project_id: @project_id
+      ["parents.#{parent_id}.order"]: {$gte: min_order_to_inc}
+    
+    # Find all matching tasks and update them
+    @tasks_collection.find(query).forEach (task) =>
+      # Update the order in the document
+      task.parents[parent_id].order += inc_count
+      
+      # Update in minimongo
+      update_op = {$set: {}}
+      update_op.$set["parents.#{parent_id}.order"] = task.parents[parent_id].order
+      @tasks_collection._collection.update(task._id, update_op)
+      
+      return
+    
+    return
 
 _.extend GridControl.prototype,
   createPreviewContext: (options={}) ->
@@ -603,7 +909,9 @@ _.extend GridControl.prototype,
 
   _gcMetadataGenerator: (item, item_meta_details, index) ->
     styles = {}
-    if item.pc_task_id is item._id
+    gc = APP.modules.project_page.gridControl()
+
+    if gc.getCurrentPreviewContext()?._isTaskUncommittedPcTask(item)
       styles["border-style"] = "groove"
     return {style: styles}
   
