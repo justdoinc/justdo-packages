@@ -1,4 +1,6 @@
 _.extend JustdoAiKit,
+  default_api_provider: "openai"
+
   supported_streamed_response_types:
     "token":
       parser: (chunk) ->
@@ -81,7 +83,6 @@ _.extend JustdoAiKit,
 
   request_templates:
     stream_project_template:
-      api_provider: "openai"
       allow_anon: true
       streamed_response_format: "project_template"
       requestGeneratorOptionsSchema: new SimpleSchema
@@ -330,7 +331,6 @@ _.extend JustdoAiKit,
         return fields
 
     stream_child_tasks:
-      api_provider: "openai"
       streamed_response_format: "2d_array"
       requestGeneratorOptionsSchema: new SimpleSchema
         project: 
@@ -525,7 +525,6 @@ _.extend JustdoAiKit,
         return fields
 
     generate_project_title:
-      api_provider: "openai"
       requestGeneratorOptionsSchema: new SimpleSchema
         msg:
           type: String
@@ -560,7 +559,6 @@ _.extend JustdoAiKit,
         return req
 
     generate_task_title:
-      api_provider: "openai"
       requestGeneratorOptionsSchema: new SimpleSchema
         msg:
           type: String
@@ -595,7 +593,6 @@ _.extend JustdoAiKit,
         return req
 
     chat_assistant:
-      api_provider: "openai"
       streamed_response_format: "token"
       requestGeneratorOptionsSchema: new SimpleSchema
         msg:
@@ -842,7 +839,6 @@ _.extend JustdoAiKit,
         return req
 
     stream_tasks_summary:
-      api_provider: "openai"
       allow_anon: true
       streamed_response_format: "token"
       requestGeneratorOptionsSchema: new SimpleSchema
