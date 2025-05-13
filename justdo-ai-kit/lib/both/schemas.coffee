@@ -18,6 +18,9 @@ _.extend JustdoAiKit.prototype,
     simplify_response:
       type: Boolean
       optional: true
+    api_provider:
+      type: String
+      optional: true
 
   _attachCollectionsSchemas: -> 
     self = @
