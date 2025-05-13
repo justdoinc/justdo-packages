@@ -9,6 +9,14 @@ _.extend GridData.prototype,
       $set:
         [field]: value
 
+    if (preview_context = @grid_control?.getCurrentPreviewContext())?
+      try
+        preview_context.edit(item_id, field, value)
+        return
+      catch err
+        # Continue with normal edit procedure if preview context edit fails
+        console.error("Preview context edit failed:", err)
+
     edit_failed = (err) =>
       # XXX We used to think we need the following, now it seems
       # that following a code refactor it became redundant.
@@ -46,6 +54,17 @@ _.extend GridData.prototype,
 
     path = helpers.normalizePath(path)
 
+    if (preview_context = @grid_control?.getCurrentPreviewContext())?
+      try
+        created_task_id = preview_context.addChild path, fields
+      catch err
+        helpers.callCb cb, err
+        return
+      
+      helpers.callCb cb, null, created_task_id, path + created_task_id + "/"
+      
+      return
+
     Meteor.call @getCollectionMethodName("addChild"), path, fields, (err, child_id) ->
       if err?
         helpers.callCb cb, err
@@ -58,6 +77,17 @@ _.extend GridData.prototype,
     # cb(err, [[child_id, child_path]])
 
     path = helpers.normalizePath(path)
+
+    if (preview_context = @grid_control?.getCurrentPreviewContext())?
+      try
+        created_task_ids = preview_context.bulkAddChild path, childs_fields
+      catch err
+        helpers.callCb cb, err
+        return
+      
+      helpers.callCb cb, null, created_task_ids, _.map(created_task_ids, (created_task_id) -> path + created_task_id + "/")
+      
+      return
 
     Meteor.call @getCollectionMethodName("bulkAddChild"), path, childs_fields, (err, childs_ids) ->
       if err?
@@ -80,6 +110,17 @@ _.extend GridData.prototype,
 
     path = helpers.normalizePath(path)
 
+    if (preview_context = @grid_control?.getCurrentPreviewContext())?
+      try
+        created_task_id = preview_context.addSibling path, fields
+      catch err
+        helpers.callCb cb, err
+        return
+      
+      helpers.callCb cb, null, created_task_id, helpers.getParentPath(path) + created_task_id + "/"
+      
+      return
+
     Meteor.call @getCollectionMethodName("addSibling"), path, fields, (err, sibling_id) ->
       if err?
         helpers.callCb cb, err
@@ -92,6 +133,17 @@ _.extend GridData.prototype,
     # cb(err, [[sibling_id, sibling_path]])
 
     path = helpers.normalizePath(path)
+
+    if (preview_context = @grid_control?.getCurrentPreviewContext())?
+      try
+        created_task_ids = preview_context.bulkAddSibling path, siblings_fields
+      catch err
+        helpers.callCb cb, err
+        return
+      
+      helpers.callCb cb, null, created_task_ids, _.map(created_task_ids, (created_task_id) -> helpers.getParentPath(path) + created_task_id + "/")
+      
+      return
 
     Meteor.call @getCollectionMethodName("bulkAddSibling"), path, siblings_fields, (err, siblings_ids) ->
       if err?
@@ -117,6 +169,16 @@ _.extend GridData.prototype,
 
     paths = _.map paths, (paths) -> helpers.normalizePath(paths)
 
+    if (preview_context = @grid_control?.getCurrentPreviewContext())?
+      try
+        preview_context.removeParent(paths)
+      catch err
+        helpers.callCb cb, err
+        return
+      
+      helpers.callCb cb, null
+      return
+
     Meteor.call @getCollectionMethodName("removeParent"), paths, (err) ->
       helpers.callCb cb, err
 
@@ -128,6 +190,16 @@ _.extend GridData.prototype,
     # cb(err)
 
     paths = _.map paths, (path) -> helpers.normalizePath(path)
+
+    if (preview_context = @grid_control?.getCurrentPreviewContext())?
+      try
+        preview_context.bulkRemoveParents(paths)
+      catch err
+        helpers.callCb cb, err
+        return
+      
+      helpers.callCb cb, null
+      return
 
     Meteor.call @getCollectionMethodName("bulkRemoveParents"), paths, (err) ->
       helpers.callCb cb, err
@@ -167,6 +239,16 @@ _.extend GridData.prototype,
     #   cancel: a callback, if called, move operation will cancel
     # if new location is the root we ignore usersDiffConfirmationCb
     new_parent = _.pick new_parent, ["parent", "order"]
+
+    if (preview_context = @grid_control?.getCurrentPreviewContext())?
+      try
+        preview_context.addParent(item_id, new_parent)
+      catch err
+        helpers.callCb cb, err
+        return
+      
+      helpers.callCb cb, null
+      return
 
     performOp = =>
       Meteor.call @getCollectionMethodName("addParent"), item_id, new_parent, (err) ->
@@ -276,6 +358,16 @@ _.extend GridData.prototype,
       paths = [paths]
     
     check paths, [String]
+
+    if (preview_context = @grid_control?.getCurrentPreviewContext())?
+      try
+        result = preview_context.movePath(paths, new_location)
+      catch err
+        helpers.callCb cb, err
+        return
+      
+      helpers.callCb cb, null, result
+      return
 
     if paths.length > 1
       @logger.debug "movePath: more than one path provided, usersDiffConfirmationCb skipped"
@@ -396,11 +488,29 @@ _.extend GridData.prototype,
   sortChildren: (path, field, asc_desc, cb) ->
     path = helpers.normalizePath(path)
 
+    if (preview_context = @grid_control?.getCurrentPreviewContext())?
+      try
+        preview_context.sortChildren(path, field, asc_desc)
+      catch err
+        helpers.callCb cb, err
+        return
+      
+      helpers.callCb cb, null
+      return
+
     Meteor.call @getCollectionMethodName("sortChildren"), path, field, asc_desc, (err) ->
       helpers.callCb cb, err
 
   bulkUpdate: (items_ids, modifier, cb) ->
-    path = helpers.normalizePath(path)
+    if (preview_context = @grid_control?.getCurrentPreviewContext())?
+      try
+        changed_items_count = preview_context.bulkUpdate(items_ids, modifier)
+      catch err
+        helpers.callCb cb, err
+        return
+      
+      helpers.callCb cb, null, changed_items_count
+      return
 
     Meteor.call @getCollectionMethodName("bulkUpdate"), items_ids, modifier, (err, changed_items_count) ->
       helpers.callCb cb, err, changed_items_count
