@@ -7,6 +7,9 @@ _.extend JustdoAiKit.prototype,
       # Defined in verdor-api/openai.coffee
       @_setupOpenAI()
     
+    # Defined in vendor-api/ollama.coffee
+    @_setupOllama()
+    
     @_registerRequestTemplates()
 
     return
