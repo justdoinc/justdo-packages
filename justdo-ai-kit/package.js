@@ -84,6 +84,11 @@ Package.onUse(function (api) {
   // OpenAI
   api.addFiles("lib/server/vendor-api/openai/static.coffee", server);
   api.addFiles("lib/server/vendor-api/openai/openai.coffee", server);
+
+  // Ollama
+  api.addFiles("lib/server/vendor-api/ollama/static.coffee", server);
+  api.addFiles("lib/server/vendor-api/ollama/ollama.coffee", server);
+
   api.addFiles("lib/server/static.coffee", server);
   api.addFiles("lib/server/api.coffee", server);
   api.addFiles("lib/server/collections-hooks.coffee", server);
