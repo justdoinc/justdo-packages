@@ -170,13 +170,13 @@ _.extend JustdoTasksContextMenu.prototype,
                 # Reverse the paths to remove the leaf first
                 paths.reverse()
 
-                  gd.removeParent paths, (err) ->
-                    if err?
-                      JustdoSnackbar.show
-                        text: "Cannot remove sub-tree because some tasks have multi-parents."
-                        duration: 5000
+                gd.removeParent paths, (err) ->
+                  if err?
+                    JustdoSnackbar.show
+                      text: "Cannot remove sub-tree because some tasks have multi-parents."
+                      duration: 5000
 
-                    return
+                  return
               return
           return
         icon_type: "feather"
