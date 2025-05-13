@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "how-to-change-my-profile-picture-and-details"
+  _id: "115000231574"
   title: "How to change my profile picture and details"
-  aliases: ["115000231574"]
+  aliases: ["how-to-change-my-profile-picture-and-details"]
   date: "2017-06-08"
   tags: ["web-version"]
   templates: [

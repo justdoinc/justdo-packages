@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "what-is-the-difference-between-an-admin-a-member-and-a-guest"
+  _id: "360016373759"
   title: "What is the difference between an Admin, a Member and a Guest?"
-  aliases: ["360016373759"]
+  aliases: ["what-is-the-difference-between-an-admin-a-member-and-a-guest"]
   date: "2020-09-09"
   tags: ["web-version"]
   templates: [

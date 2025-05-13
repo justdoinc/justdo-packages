@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "how-can-i-expand-collapse-all-tasks"
+  _id: "115003557694"
   title: "How can I expand/collapse all tasks?"
-  aliases: ["115003557694"]
+  aliases: ["how-can-i-expand-collapse-all-tasks"]
   date: "2017-11-13"
   tags: ["web-version"]
   templates: [

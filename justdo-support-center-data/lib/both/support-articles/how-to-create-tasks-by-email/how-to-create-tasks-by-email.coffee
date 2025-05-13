@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "how-to-create-tasks-by-email"
+  _id: "360016843859"
   title: "How to create tasks by email?"
-  aliases: ["360016843859"]
+  aliases: ["how-to-create-tasks-by-email"]
   date: "2020-10-01"
   tags: ["web-version","plugins"]
   templates: [

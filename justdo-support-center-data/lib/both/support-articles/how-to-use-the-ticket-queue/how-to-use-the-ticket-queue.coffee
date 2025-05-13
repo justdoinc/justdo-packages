@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "how-to-use-the-ticket-queue"
+  _id: "115000297493"
   title: "How to use the Ticket Queue?"
-  aliases: ["115000297493"]
+  aliases: ["how-to-use-the-ticket-queue"]
   date: "2017-06-17"
   tags: ["web-version","advanced"]
   templates: [

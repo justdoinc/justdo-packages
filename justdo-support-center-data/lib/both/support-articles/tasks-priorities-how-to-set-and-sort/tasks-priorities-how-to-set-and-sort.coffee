@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "tasks-priorities-how-to-set-and-sort"
+  _id: "115000229253"
   title: "Tasks priorities - how to set and sort"
-  aliases: ["115000229253"]
+  aliases: ["tasks-priorities-how-to-set-and-sort"]
   date: "2017-06-08"
   tags: ["web-version"]
   templates: [

@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "how-to-enable-disable-the-justdo-extensions"
+  _id: "360000738254"
   title: "How to Enable/Disable the JustDo Extensions?"
-  aliases: ["360000738254"]
+  aliases: ["how-to-enable-disable-the-justdo-extensions"]
   date: "2018-02-06"
   tags: ["web-version","plugins"]
   templates: [

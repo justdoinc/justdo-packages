@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "how-to-print-and-export"
+  _id: "115000301934"
   title: "Printing and Exporting Data in JustDo"
-  aliases: ["115000301934"]
+  aliases: ["how-to-print-and-export"]
   tags: ["web-version"]
   date: "2017-06-17"
   templates: [

@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "custom-fields"
+  _id: "115003761733"
   title: "Using Custom Fields in JustDo: A Comprehensive Guide"
-  aliases: ["115003761733"]
+  aliases: ["custom-fields"]
   tags: ["web-version", "plugins", "advanced"]
   date: "2017-11-20"
   templates: [

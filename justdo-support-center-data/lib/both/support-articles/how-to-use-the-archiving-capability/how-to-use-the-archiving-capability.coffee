@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "how-to-use-the-archiving-capability"
+  _id: "7636060118684"
   title: "How to use the Archiving capability"
-  aliases: ["7636060118684"]
+  aliases: ["how-to-use-the-archiving-capability"]
   date: "2023-02-06"
   tags: ["web-version","advanced"]
   templates: [

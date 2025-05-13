@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "most-recent-product-updates"
+  _id: "360015731240"
   title: "Most Recent Product Updates"
-  aliases: ["360015731240"]
+  aliases: ["most-recent-product-updates"]
   date: "2020-08-06"
   tags: ["web-version","plugins","advanced"]
   templates: [

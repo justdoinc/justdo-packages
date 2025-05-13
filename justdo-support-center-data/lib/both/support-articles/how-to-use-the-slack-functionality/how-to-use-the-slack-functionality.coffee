@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "how-to-use-the-slack-functionality"
+  _id: "5913329778076"
   title: "Utilizing Slack in JustDo for Project Flexibility"
-  aliases: ["5913329778076"]
+  aliases: ["how-to-use-the-slack-functionality"]
   tags: ["web-version", "plugins", "advanced"]
   date: "2022-09-11"
   templates: [

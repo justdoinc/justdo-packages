@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "how-to-connect-my-email-to-justdo"
+  _id: "360020814460"
   title: "How to connect my email to JustDo?"
-  aliases: ["360020814460"]
+  aliases: ["how-to-connect-my-email-to-justdo"]
   date: "2021-03-31"
   tags: ["web-version"]
   templates: [

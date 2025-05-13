@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "who-are-my-justdo-s-administrators"
+  _id: "115000235094"
   title: "Who are my JustDo's administrators?"
-  aliases: ["115000235094"]
+  aliases: ["who-are-my-justdo-s-administrators"]
   date: "2017-06-08"
   tags: ["web-version"]
   templates: [

@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "calculated-field"
+  _id: "115003134733"
   title: "Calculated Field"
-  aliases: ["115003134733"]
+  aliases: ["calculated-field"]
   date: "2017-10-30"
   tags: ["web-version","advanced"]
   templates: [

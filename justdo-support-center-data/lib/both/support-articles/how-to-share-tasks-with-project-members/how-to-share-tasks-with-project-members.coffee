@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "how-to-share-tasks-with-project-members"
+  _id: "115003577233"
   title: "Sharing Tasks with Project Members in JustDo"
-  aliases: ["115003577233"]
+  aliases: ["how-to-share-tasks-with-project-members"]
   tags: ["web-version"]
   date: "2017-11-14"
   templates: [
