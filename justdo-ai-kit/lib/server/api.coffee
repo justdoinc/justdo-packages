@@ -67,6 +67,7 @@ _.extend JustdoAiKit.prototype,
   _registerRequestTemplateOptionsSchema: new SimpleSchema
     api_provider:
       type: String
+      defaultValue: JustdoAiKit.default_api_provider
     template_id:
       type: String
     requestGeneratorOptionsSchema:
@@ -200,6 +201,9 @@ _.extend JustdoAiKit.prototype,
     simplify_response:
       type: Boolean
       optional: true
+    api_provider:
+      type: String
+      defaultValue: JustdoAiKit.default_api_provider
   newStream: (options, user_id) ->
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
@@ -222,7 +226,8 @@ _.extend JustdoAiKit.prototype,
       throw @_error "login-required"
 
     stream_type = template.streamed_response_format
-    vendor_apis = @requireApiProvider template.api_provider
+    api_provider = options.api_provider
+    vendor_apis = @requireApiProvider api_provider
 
     {cleaned_val} = JustdoHelpers.simpleSchemaCleanAndValidate(
       template.requestGeneratorOptionsSchema,
@@ -259,6 +264,9 @@ _.extend JustdoAiKit.prototype,
     pre_register_id:
       type: String
       optional: true
+    api_provider:
+      type: String
+      defaultValue: JustdoAiKit.default_api_provider
   newChatCompletion: (options, user_id) ->
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
@@ -278,7 +286,8 @@ _.extend JustdoAiKit.prototype,
     if (not user_id?) and (template.allow_anon isnt true)
       throw @_error "login-required"
 
-    vendor_apis = @requireApiProvider template.api_provider
+    api_provider = options.api_provider
+    vendor_apis = @requireApiProvider api_provider
 
     {cleaned_val} = JustdoHelpers.simpleSchemaCleanAndValidate(
       template.requestGeneratorOptionsSchema,
