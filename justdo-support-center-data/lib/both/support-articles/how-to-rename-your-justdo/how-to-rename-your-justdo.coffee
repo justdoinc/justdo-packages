@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "how-to-rename-your-justdo"
+  _id: "115000229273"
   title: "How to Rename Your JustDo?"
-  aliases: ["115000229273"]
+  aliases: ["how-to-rename-your-justdo"]
   date: "2017-06-08"
   tags: ["web-version"]
   templates: [

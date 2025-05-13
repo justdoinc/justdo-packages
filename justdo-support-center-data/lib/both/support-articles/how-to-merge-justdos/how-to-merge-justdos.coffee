@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "how-to-merge-justdos"
+  _id: "360016035679"
   title: "How to Merge JustDos"
-  aliases: ["360016035679"]
+  aliases: ["how-to-merge-justdos"]
   date: "2020-08-20"
   tags: ["web-version","plugins","advanced"]
   templates: [

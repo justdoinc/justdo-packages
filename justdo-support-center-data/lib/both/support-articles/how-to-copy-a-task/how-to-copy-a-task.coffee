@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "how-to-copy-a-task"
   title: "How to copy a task"
-  aliases: ["7431175182748"]
+  _id: "7431175182748"
+  aliases: ["how-to-copy-a-task"]
   date: "2023-01-22"
   tags: ["web-version","plugins"]
   templates: [

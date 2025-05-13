@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "how-to-change-the-date-format"
+  _id: "115000226073"
   title: "How to change the date format"
-  aliases: ["115000226073"]
+  aliases: ["how-to-change-the-date-format"]
   date: "2017-06-08"
   tags: ["web-version"]
   templates: [

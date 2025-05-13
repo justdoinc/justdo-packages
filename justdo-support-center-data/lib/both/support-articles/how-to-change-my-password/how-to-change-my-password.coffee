@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "how-to-change-my-password"
+  _id: "115000231614"
   title: "How to change my password"
-  aliases: ["115000231614"]
+  aliases: ["how-to-change-my-password"]
   date: "2017-06-08"
   tags: ["web-version"]
   templates: [

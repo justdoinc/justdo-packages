@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "justdo-meetings"
+  _id: "4536924890258"
   title: "JustDo Meetings"
-  aliases: ["4536924890258"]
+  aliases: ["justdo-meetings"]
   date: "2022-03-06"
   tags: ["web-version","plugins"]
   templates: [

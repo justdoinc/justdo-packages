@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "how-to-delete-a-task"
+  _id: "115000226093"
   title: "How to delete a task"
-  aliases: ["115000226093"]
+  aliases: ["how-to-delete-a-task"]
   date: "2017-06-08"
   tags: ["web-version"]
   templates: [

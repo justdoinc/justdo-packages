@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "can-the-mobile-apps-work-with-an-on-prem-installation"
+  _id: "360017478920"
   title: "Can the Mobile Apps work with an On-Prem installation?"
-  aliases: ["360017478920"]
+  aliases: ["can-the-mobile-apps-work-with-an-on-prem-installation"]
   date: "2020-11-15"
   tags: ["app-version"]
   templates: [

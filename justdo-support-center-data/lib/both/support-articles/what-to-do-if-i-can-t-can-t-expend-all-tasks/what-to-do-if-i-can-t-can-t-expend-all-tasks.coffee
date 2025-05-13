@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "what-to-do-if-i-can-t-can-t-expend-all-tasks"
+  _id: "115003548313"
   title: "What to do if I can't can't expend all tasks?"
-  aliases: ["115003548313"]
+  aliases: ["what-to-do-if-i-can-t-can-t-expend-all-tasks"]
   date: "2017-11-13"
   tags: ["web-version"]
   templates: [

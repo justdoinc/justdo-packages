@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "what-is-the-quick-add-button"
+  _id: "360016843539"
   title: "What is the Quick Add button?"
-  aliases: ["360016843539"]
+  aliases: ["what-is-the-quick-add-button"]
   date: "2020-10-01"
   tags: ["web-version"]
   templates: [

@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "keyboard-shortcuts"
+  _id: "115000281893"
   title: "Keyboard Shortcuts"
-  aliases: ["115000281893"]
+  aliases: ["keyboard-shortcuts"]
   date: "2017-06-15"
   tags: ["web-version"]
   templates: [

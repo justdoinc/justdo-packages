@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "how-to-use-the-risk-management-extension"
+  _id: "7475870869020"
   title: "How to use the Risk Management extension"
-  aliases: ["7475870869020"]
+  aliases: ["how-to-use-the-risk-management-extension"]
   date: "2023-01-25"
   tags: ["web-version","plugins","advanced"]
   templates: [

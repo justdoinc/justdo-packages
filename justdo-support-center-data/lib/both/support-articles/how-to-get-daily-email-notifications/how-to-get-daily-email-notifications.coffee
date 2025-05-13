@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "how-to-get-daily-email-notifications"
+  _id: "115000235014"
   title: "How to get daily email notifications"
-  aliases: ["115000235014"]
+  aliases: ["how-to-get-daily-email-notifications"]
   date: "2017-06-08"
   tags: ["web-version"]
   templates: [

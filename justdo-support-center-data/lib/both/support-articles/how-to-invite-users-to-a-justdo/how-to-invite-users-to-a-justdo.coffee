@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "how-to-invite-users-to-a-justdo"
+  _id: "7636644533660"
   title: "How to invite users to a JustDo"
-  aliases: ["7636644533660"]
+  aliases: ["how-to-invite-users-to-a-justdo"]
   date: "2023-02-06"
   tags: ["web-version","advanced"]
   templates: [

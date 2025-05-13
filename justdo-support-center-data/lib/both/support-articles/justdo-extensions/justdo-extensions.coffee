@@ -1,7 +1,7 @@
 APP.justdo_crm.registerItem share.news_category,
-  _id: "justdo-extensions"
+  _id: "360017510680"
   title: "JustDo Extensions: Enhancing Your Workspace"
-  aliases: ["360017510680"]
+  aliases: ["justdo-extensions"]
   tags: ["web-version", "plugins"]
   date: "2020-11-17"
   templates: [
