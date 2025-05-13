@@ -80,8 +80,11 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/api.coffee", both);
   api.addFiles("lib/both/schemas.coffee", both);
 
+  // Vendor-specific files
+  // OpenAI
+  api.addFiles("lib/server/vendor-api/openai/static.coffee", server);
+  api.addFiles("lib/server/vendor-api/openai/openai.coffee", server);
   api.addFiles("lib/server/static.coffee", server);
-  api.addFiles("lib/server/vendor-api/openai.coffee", server);
   api.addFiles("lib/server/api.coffee", server);
   api.addFiles("lib/server/collections-hooks.coffee", server);
   api.addFiles("lib/server/collections-indexes.coffee", server);

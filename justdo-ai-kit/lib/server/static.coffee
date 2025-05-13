@@ -1,6 +1,4 @@
 _.extend JustdoAiKit,
-  openai_template_generation_model: "gpt-4o-mini"
-
   supported_streamed_response_types:
     "token":
       parser: (chunk) ->
