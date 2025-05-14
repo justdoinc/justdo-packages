@@ -9,6 +9,8 @@ Template.ai_wizard_tooltip.onCreated ->
   tpl.is_loading_rv = new ReactiveVar false
 
   tpl.updateDropdownPosition = ->
+    return
+    
     # Update dropdown position to ensure it is always visible
     $connected_element = APP.justdo_ai_kit.tooltip_dropdown.$connected_element
     APP.justdo_ai_kit.tooltip_dropdown.updateDropdownPosition $connected_element
@@ -137,6 +139,56 @@ Template.ai_wizard_tooltip.onCreated ->
     stream_handler.find({}, {fields: {_id: 1}}).fetch() # for reactivity
     $(".ai-wizard-list").animate(scrollTop: $(".ai-wizard-list").prop("scrollHeight"), 100)
     tpl.updateDropdownPosition()
+    return
+
+  tpl.active_path = JD.activePath()
+
+
+  processGeneratedTaskForAddition = (generated_root_task) ->
+    root_task_to_add = 
+      _id: generated_root_task._id
+      title: generated_root_task.data.title
+      description: generated_root_task.data.description or ""
+    
+    return root_task_to_add
+
+  processed_task_ids = new Set()
+
+  # Create preview context first
+  gc = APP.modules.project_page.gridControl()
+  preview_ctx = gc.createPreviewContext()
+
+  tpl.autorun ->
+    if _.isEmpty(stream_handler = tpl.stream_handler_rv.get())
+      return
+    
+    processed_task_ids_arr = Array.from(processed_task_ids)
+
+    root_tasks_to_add = []
+    generated_root_tasks_query = 
+      "data.parent": -1
+      _id:
+        $nin: processed_task_ids_arr
+    stream_handler.find(generated_root_tasks_query).forEach (generated_root_task) ->
+      root_tasks_to_add.push processGeneratedTaskForAddition generated_root_task
+    
+    if not _.isEmpty root_tasks_to_add
+      created_root_task_ids = preview_ctx.bulkAddChild tpl.active_path, root_tasks_to_add
+      for created_root_task_id in created_root_task_ids
+        processed_task_ids.add created_root_task_id
+
+    generated_child_tasks_query = 
+      "data.parent":
+        $in: _.map processed_task_ids_arr, (task_id) -> parseInt task_id.split("_")[0]
+      _id:
+        $nin: processed_task_ids_arr
+    stream_handler.find(generated_child_tasks_query).forEach (generated_child_task) ->
+      parent_id = _.find processed_task_ids_arr, (root_task_id) -> root_task_id.startsWith "#{generated_child_task.data.parent}_"
+      child_task_to_add = processGeneratedTaskForAddition generated_child_task
+
+      created_child_task_id = preview_ctx.addChild tpl.active_path + "#{parent_id}/", child_task_to_add
+      processed_task_ids.add created_child_task_id
+
     return
 
   active_task = JD.activeItem({title: 1})
