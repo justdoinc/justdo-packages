@@ -887,6 +887,8 @@ _.extend PreviewContext.prototype,
     return
 
 _.extend GridControl.prototype,
+  preview_context_dep: new Tracker.Dependency()
+
   createPreviewContext: (options={}) ->
     if not (project_id = JD.activeJustdoId())?
       throw @_error "not-supported", "Cannot create preview context without a project_id"
@@ -897,10 +899,12 @@ _.extend GridControl.prototype,
     options.project_id = project_id
     options.grid_control = @
     @preview_context = new PreviewContext(options)
-
+    @preview_context_dep.changed()
     return @preview_context
   
   getCurrentPreviewContext: ->
+    @preview_context_dep.depend()
+
     # If commit is in progress, return null to allow passing grid-data operations to server
     if @preview_context?.isCommitInProgress()
       return null
