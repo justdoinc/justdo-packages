@@ -10,6 +10,16 @@
           </div>
         {{/if}}
       </div>
+      
+      {{#if isGridControlReady}}
+        {{#if isPreviewContextActive}}
+          {{> project_operations_commit_preview_context}}
+          {{> project_operations_destroy_preview_context}}
+        {{else}}
+          {{> project_operations_create_preview_context}}
+        {{/if}}
+      {{/if}}
+
       {{#unless isQuickAddDisabled}}
         {{> project_operations_ticket_entry}}
       {{/unless}}

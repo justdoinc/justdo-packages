@@ -43,6 +43,12 @@ Template.project_operations_toolbar.helpers
       return false
 
     return true
+  
+  isGridControlReady: ->
+    return APP.modules.project_page.gridControl()?.ready.get()
+
+  isPreviewContextActive: ->
+    return APP.modules.project_page.gridControl().getCurrentPreviewContext()?
 
 Template.project_operations_toolbar.events
   "click .tab-switcher-exit-btn": (e, tpl) ->
