@@ -3,6 +3,7 @@ _.extend PACK.Plugins,
     init: ->
       # Defined below
       @_installGcRowsMetadataGenerator()
+      @_setupPreviewContextNullaryOperations()
 
       return
     
@@ -941,5 +942,54 @@ _.extend GridControl.prototype,
           gc.unregisterMetadataGenerator @_gcMetadataGenerator
           delete gc._preview_context_rows_styling_installed
     @_gc_rows_metadata_generator_installer_computation = null
+    
+    return
+
+  _setupPreviewContextNullaryOperations: ->
+    project_page_module = APP.modules.project_page
+
+    preview_context_ops = 
+      createPreviewContext:
+        human_description: "Create Preview Context"
+        keyboard_shortcut: "shift+p"
+        template:
+          custom_icon_html: -> """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#edit-2"/></svg>"""
+        op: ->
+          gc = project_page_module.gridControl()
+          gc.createPreviewContext()
+
+          return
+        prereq: -> true
+      commitPreviewContext:
+        human_description: "Commit Preview Context"
+        keyboard_shortcut: "shift+c"
+        template:
+          custom_icon_html: -> """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#check"/></svg>"""
+        op: ->
+          gc = project_page_module.gridControl()
+
+          if (preview_context = gc.getCurrentPreviewContext())?
+            preview_context.commit()
+
+          return
+        prereq: -> true
+      destroyPreviewContext:
+        human_description: "Destroy Preview Context"
+        keyboard_shortcut: "shift+d"
+        template:
+          custom_icon_html: -> """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>"""
+        op: ->
+          gc = project_page_module.gridControl()
+
+          if (preview_context = gc.getCurrentPreviewContext())?
+            preview_context.destroy()
+
+          return
+        prereq: -> true
+
+
+    for op_name, options of preview_context_ops
+      if not project_page_module.getNullaryOperation(op_name)?
+        project_page_module.setNullaryOperation op_name, options
     
     return
