@@ -10,7 +10,7 @@ APP.justdo_crm.registerItem share.news_category,
       template_name: "support_article_how_to_configure_workdays_and_holidays"
       name: "Configuring Workdays & Holidays in JustDo"
       h1: "Configuring Workdays & Holidays in JustDo"
-      page_title: "Configuring Workdays & Holidays in JustDo"
-      page_description: "Learn how to configure workdays, work hours, and holidays for your entire JustDo workspace or individual users to optimize scheduling and resource management."
+      page_title: "Workday & Holiday Configuration in JustDo | Calendar Settings"
+      page_description: "Learn how to set up workdays, work hours, and holidays in JustDo for accurate project timelines. Configure workspace-wide or individual user settings to optimize resource planning and scheduling."
     }
   ]

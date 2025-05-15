@@ -10,7 +10,7 @@ APP.justdo_crm.registerItem share.news_category,
       template_name: "support_article_how_to_use_the_slack_functionality"
       name: "Utilizing Slack in JustDo for Project Flexibility"
       h1: "Utilizing Slack in JustDo for Project Flexibility"
-      page_title: "Utilizing Slack in JustDo for Project Flexibility"
-      page_description: "Learn how to use slack time in JustDo's Gantt chart to identify scheduling flexibility and manage tasks without impacting project deadlines."
+      page_title: "JustDo Slack Time Management | Project Schedule Flexibility"
+      page_description: "Master slack time management in JustDo's Gantt charts to create buffer in project schedules. Learn to identify float, optimize task sequences, and prevent deadline risks while maintaining flexibility."
     }
   ]

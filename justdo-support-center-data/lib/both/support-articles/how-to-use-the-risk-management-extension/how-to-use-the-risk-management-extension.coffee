@@ -10,7 +10,7 @@ APP.justdo_crm.registerItem share.news_category,
       template_name: "support_article_how_to_use_the_risk_management_extension"
       name: "How to use the Risk Management extension"
       h1: "How to use the Risk Management extension"
-      page_title: "How to use the Risk Management extension"
-      page_description: ""
+      page_title: "Risk Management in JustDo | Project Risk Tracking Guide"
+      page_description: "Learn how to use JustDo's Risk Management extension to identify, track, and mitigate project risks. Create risk assessments, prioritize based on likelihood and impact, and implement contingency plans for successful project outcomes."
     }
   ]

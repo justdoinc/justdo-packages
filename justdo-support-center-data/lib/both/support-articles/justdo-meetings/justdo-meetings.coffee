@@ -10,7 +10,7 @@ APP.justdo_crm.registerItem share.news_category,
       template_name: "support_article_justdo_meetings"
       name: "JustDo Meetings"
       h1: "JustDo Meetings"
-      page_title: "JustDo Meetings"
-      page_description: ""
+      page_title: "JustDo Meetings | Efficient Meeting Management Tool"
+      page_description: "Learn how to use JustDo Meetings to create agendas, take notes, track action items, and manage project meetings. Collaborate effectively, assign tasks, and distribute meeting summaries to improve productivity."
     }
   ]

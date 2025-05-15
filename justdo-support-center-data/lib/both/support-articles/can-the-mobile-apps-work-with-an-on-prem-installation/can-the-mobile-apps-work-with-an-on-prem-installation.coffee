@@ -10,7 +10,7 @@ APP.justdo_crm.registerItem share.news_category,
       template_name: "support_article_can_the_mobile_apps_work_with_an_on_prem_installation"
       name: "Can the Mobile Apps work with an On-Prem installation?"
       h1: "Can the Mobile Apps work with an On-Prem installation?"
-      page_title: "Can the Mobile Apps work with an On-Prem installation?"
-      page_description: ""
+      page_title: "Using JustDo Mobile Apps with On-Premises Installation | Compatibility Guide"
+      page_description: "Learn about compatibility between JustDo mobile apps and on-premises installations. Configuration requirements, connection options, and troubleshooting for enterprise deployments."
     }
   ]
