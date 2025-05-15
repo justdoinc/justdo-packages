@@ -10,7 +10,7 @@ APP.justdo_crm.registerItem share.news_category,
       template_name: "support_article_custom_fields"
       name: "Using Custom Fields in JustDo: A Comprehensive Guide"
       h1: "Using Custom Fields in JustDo: A Comprehensive Guide"
-      page_title: "Using Custom Fields in JustDo: A Comprehensive Guide"
-      page_description: "Learn how to use JustDo's custom fields to track project-specific information, enhance workflows, and gain valuable insights into your projects."
+      page_title: "Custom Fields in JustDo | Create & Manage Task Properties"
+      page_description: "Learn how to create, configure and use JustDo's custom fields to track project-specific information, enhance workflows, and organize tasks with advanced data attributes."
     }
   ]

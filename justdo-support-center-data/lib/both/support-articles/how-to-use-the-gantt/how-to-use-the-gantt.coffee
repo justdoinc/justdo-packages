@@ -10,7 +10,7 @@ APP.justdo_crm.registerItem share.news_category,
       template_name: "support_article_how_to_use_the_gantt"
       name: "Using the Gantt Chart in JustDo: A Guide"
       h1: "Using the Gantt Chart in JustDo: A Guide"
-      page_title: "Using the Gantt Chart in JustDo: A Guide"
-      page_description: "Learn how to effectively utilize the Gantt chart in JustDo for project planning, scheduling, dependency management, progress tracking, and baseline comparisons."
+      page_title: "JustDo Gantt Chart Tutorial | Project Timeline Visualization"
+      page_description: "Comprehensive guide to using JustDo's Gantt chart for visual project management. Learn how to create timelines, manage dependencies, track milestones, and adjust schedules for effective project execution."
     }
   ]

@@ -10,7 +10,7 @@ APP.justdo_crm.registerItem share.news_category,
       template_name: "support_article_how_to_merge_justdos"
       name: "How to Merge JustDos"
       h1: "How to Merge JustDos"
-      page_title: "How to Merge JustDos"
-      page_description: ""
+      page_title: "How to Merge JustDos | Combine Project Workspaces"
+      page_description: "Step-by-step guide for combining two JustDo workspaces into one. Learn how to merge projects, what happens to tasks, custom fields, and members, and important considerations before performing this irreversible action."
     }
   ]

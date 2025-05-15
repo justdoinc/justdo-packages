@@ -10,7 +10,7 @@ APP.justdo_crm.registerItem share.news_category,
       template_name: "support_article_how_to_import_tasks_from_a_spreadsheet"
       name: "Importing Tasks from Spreadsheets into JustDo"
       h1: "Importing Tasks from Spreadsheets into JustDo"
-      page_title: "Importing Tasks from Spreadsheets into JustDo"
-      page_description: "Learn how to seamlessly import tasks and dependencies from spreadsheets into JustDo, saving time and effort in project setup."
+      page_title: "Import Tasks from Excel/CSV to JustDo | Spreadsheet Migration"
+      page_description: "Learn how to import tasks from Excel or CSV spreadsheets into JustDo, including task dependencies, custom fields, and hierarchies. Save time on project setup with bulk task imports."
     }
   ]

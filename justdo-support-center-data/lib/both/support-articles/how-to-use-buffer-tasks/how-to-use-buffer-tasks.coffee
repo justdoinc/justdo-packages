@@ -10,7 +10,7 @@ APP.justdo_crm.registerItem share.news_category,
       template_name: "support_article_how_to_use_buffer_tasks"
       name: "Using Buffer Tasks in JustDo for Project Management"
       h1: "Using Buffer Tasks in JustDo for Project Management"
-      page_title: "Using Buffer Tasks in JustDo for Project Management"
-      page_description: "Learn how to utilize buffer tasks in JustDo to manage project uncertainties, absorb delays, and protect your project deadlines."
+      page_title: "Buffer Tasks in JustDo | Protecting Project Deadlines"
+      page_description: "Learn how to create and utilize buffer tasks in JustDo to effectively manage project uncertainties, absorb unexpected delays, and protect your critical project deadlines and milestones."
     }
   ]

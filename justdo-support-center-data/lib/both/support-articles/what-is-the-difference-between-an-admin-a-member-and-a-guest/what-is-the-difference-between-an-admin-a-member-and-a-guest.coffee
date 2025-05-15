@@ -10,7 +10,7 @@ APP.justdo_crm.registerItem share.news_category,
       template_name: "support_article_what_is_the_difference_between_an_admin_a_member_and_a_guest"
       name: "What is the difference between an Admin, a Member and a Guest?"
       h1: "What is the difference between an Admin, a Member and a Guest?"
-      page_title: "What is the difference between an Admin, a Member and a Guest?"
-      page_description: ""
+      page_title: "JustDo User Roles | Admin vs Member vs Guest Permissions"
+      page_description: "Compare JustDo user roles and permissions: Admins manage board settings and users, Members have full task access, and Guests have limited visibility. Learn the differences between each role and when to use them."
     }
   ]

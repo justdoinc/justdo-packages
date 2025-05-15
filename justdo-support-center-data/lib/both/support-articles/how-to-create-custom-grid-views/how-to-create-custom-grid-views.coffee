@@ -10,7 +10,7 @@ APP.justdo_crm.registerItem share.news_category,
       template_name: "support_article_how_to_create_custom_grid_views"
       name: "Creating and Managing Custom Grid Views in JustDo"
       h1: "Creating and Managing Custom Grid Views in JustDo"
-      page_title: "Creating and Managing Custom Grid Views in JustDo"
-      page_description: "Learn how to create, save, apply, update, remove, and share custom grid views in JustDo to personalize your workspace and enhance productivity."
+      page_title: "Custom Grid Views in JustDo | Create Task List Layouts"
+      page_description: "Learn how to create, save, and share custom grid views in JustDo to personalize your task lists with filtered columns, sorting options, and team-specific layouts for enhanced productivity."
     }
   ]

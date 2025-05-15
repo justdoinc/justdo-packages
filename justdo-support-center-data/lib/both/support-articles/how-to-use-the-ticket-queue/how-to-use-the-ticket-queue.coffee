@@ -10,7 +10,7 @@ APP.justdo_crm.registerItem share.news_category,
       template_name: "support_article_how_to_use_the_ticket_queue"
       name: "How to use the Ticket Queue?"
       h1: "How to use the Ticket Queue?"
-      page_title: "How to use the Ticket Queue?"
-      page_description: ""
+      page_title: "JustDo Ticket Queue System | Managing Support Requests"
+      page_description: "Learn how to set up and use JustDo's Ticket Queue system to streamline support requests and task submissions. Create dedicated queues for teams, enable email-to-task functionality, and efficiently manage incoming requests."
     }
   ]
