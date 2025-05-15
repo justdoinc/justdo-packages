@@ -897,9 +897,12 @@ _.extend GridControl.prototype,
     if @preview_context?
       throw @_error "not-supported", "Preview context already exists."
 
-    options.project_id = project_id
-    options.grid_control = @
-    @preview_context = new PreviewContext(options)
+    preview_context_options = 
+      project_id: project_id
+      grid_control: @
+    _.extend preview_context_options, options
+    
+    @preview_context = new PreviewContext(preview_context_options)
     @preview_context_dep.changed()
     return @preview_context
   
