@@ -54,6 +54,7 @@
     display: flex
     gap: 8px
     border-bottom: 1px solid black
+    flex-wrap: wrap
 
     .support-tag
       font-size: 18px
@@ -63,10 +64,19 @@
       border-bottom: 2px solid white
       transition: all 0.28s
       color: black
+      font-weight: 600
       &.active
         text-decoration: none
         border-bottom: 2px solid black
-        font-weight: 600
       &:hover
         text-decoration: none
         border-bottom: 2px solid black
+
+  .support-contact-container
+    display: flex
+    align-items: center
+    justify-content: space-between
+    border-radius: 4px
+    background-color: #eaf6ff
+    padding: 20px 20px 20px 28px
+    margin-top: 60px
