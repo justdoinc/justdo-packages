@@ -1,6 +1,5 @@
 _.extend JustdoAiKit.prototype,
   _immediateInit: ->
-    @apis = {}
     @request_templates = {}
 
     if @secret_conf.vendors?.openai?
