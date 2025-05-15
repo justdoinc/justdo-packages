@@ -118,7 +118,7 @@ _.extend JustdoAiKit.prototype,
 
     return vendor_api_obj
 
-  registerVendorAPiOptionsSchema: new SimpleSchema
+  registerVendorApiOptionsSchema: new SimpleSchema
     sdk_type:
       type: String
       allowedValues: _.keys JustdoAiKit.sdk_map
@@ -134,7 +134,7 @@ _.extend JustdoAiKit.prototype,
   registerVendorApi: (vendor_name, options) ->
     check vendor_name, String
     {cleaned_val} = JustdoHelpers.simpleSchemaCleanAndValidate(
-      @registerVendorAPiOptionsSchema,
+      @registerVendorApiOptionsSchema,
       options,
       {self: @, throw_on_error: true}
     )
