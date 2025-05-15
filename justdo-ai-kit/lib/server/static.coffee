@@ -11,13 +11,16 @@ _.extend JustdoAiKit,
   supported_streamed_response_types:
     "token":
       parser: (chunk) ->
-        return chunk.choices[0].delta.content
+        content = chunk?.choices?[0]?.delta?.content or ""
+        return content
 
     "2d_array":
       parser: (chunk, snapshot, stream_state) ->
         if not stream_state.intermediate_res?
           stream_state.intermediate_res = ""
-        stream_state.intermediate_res += chunk.choices[0].delta.content
+          
+        content = chunk?.choices?[0]?.delta?.content or ""
+        stream_state.intermediate_res += content
         
         if not stream_state.intermediate_res.includes "]"
           return
@@ -37,7 +40,7 @@ _.extend JustdoAiKit,
     
     "project_template":
       parser: (chunk, snapshot, stream_state) ->
-        chunk_content = chunk.choices[0].delta.content
+        chunk_content = chunk?.choices?[0]?.delta?.content
 
         if _.isEmpty chunk_content
           return

@@ -40,6 +40,9 @@ _.extend JustdoAiKit.prototype,
         # For non-stream calls, chat_completion_obj is a Promise object;
         # For stream calls, chat_completion_obj is a ChatCompletionStreamingRunner object (refer to OpenAI Node API Lib).
         if req.stream
+          # For stream calls, we need to explicitly add this option to receive the usage data.
+          req.stream_options = 
+            include_usage: true
           chat_completion_obj = self.apis[vendor_name].beta.chat.completions.stream req
           do (chat_completion_obj, log_id) ->
             chat_completion_obj
