@@ -20,11 +20,15 @@
       max-width: 24px
     .breadcrumb-item
       padding: unset
+      &::before
+        color: #2b71cf
       &.back
         cursor: pointer
       &:nth-child(2)
         &:before
-          content: ""
+          display: none
+      &:last-child
+        pointer-events: none
 
 .support-page-article.fixed-nav
   .support-navigation
@@ -92,6 +96,14 @@
       font-weight: bold
       color: black
       border-bottom: 2px solid black
+
+.right-to-left.support-page-article
+  direction: rtl
+  text-align: right
+  .support-page-breadcrumb
+    .breadcrumb-item + .breadcrumb-item::before
+      padding-right: unset
+      padding-left: 0.5rem
 
 @media print
   .system-update-dialog

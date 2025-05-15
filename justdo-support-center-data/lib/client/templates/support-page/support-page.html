@@ -17,7 +17,7 @@
         <div class="tags-container">
           <div class="tags-nav">
             {{#each tags}}
-              <a href="{{getHashFragment}}" class="support-tag {{_id}} {{tagIsActive}}" id="{{_id}}">{{_ label}}</a>
+              <a href="{{getHashFragment}}" class="support-tag {{_id}} {{tagIsActive}} m{{getRtlAwareDirection 'r'}}-3" id="{{_id}}">{{_ label}}</a>
             {{/each}}
           </div>
           <div class="tag-content">
