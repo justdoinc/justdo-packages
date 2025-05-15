@@ -1,5 +1,12 @@
+OpenAI = Npm.require "openai"
+
 _.extend JustdoAiKit,
   default_api_provider: "openai"
+
+  default_sdk_type: "openai"
+  sdk_map:
+    openai: 
+      constructor: OpenAI
 
   supported_streamed_response_types:
     "token":
