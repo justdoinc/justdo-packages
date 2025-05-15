@@ -4,11 +4,9 @@
       {{#each articles}}
         <div class="list-group-item">
           <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">
-              <a href="{{i18nRoute route="support_page_with_news_id" news_id=_id}}">
-                {{_ title}}
-              </a>
-            </h5>
+            <a href="{{i18nRoute route="support_page_with_news_id" news_id=_id}}">
+              {{_ title}}
+            </a>
           </div>
         </div>
       {{/each}}
