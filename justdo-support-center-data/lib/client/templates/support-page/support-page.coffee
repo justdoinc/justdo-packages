@@ -1,4 +1,6 @@
 Template.support_page.onCreated ->
+  tpl = @
+
   @active_article_rv = new ReactiveVar(null)
   @active_tag_rv = new ReactiveVar(share.default_tag)
   @autorun =>
@@ -21,6 +23,24 @@ Template.support_page.onCreated ->
     Tracker.afterFlush ->
       window.scrollTo 0, 0
 
+    return
+
+  @search_query_rv = new ReactiveVar("")
+  @setSearchQuery = ->
+    query = $(".support-input").val()?.trim()
+    tpl.search_query_rv.set query
+    return
+  @clearSearchQuery = ->
+    tpl.search_query_rv.set ""
+    $(".support-input").val("")
+    return
+  @getSearchQuery = ->
+    return tpl.search_query_rv.get()
+
+  @autorun =>
+    # For reactivity. We want to clear the search query when the active article changes.
+    @getActiveArticle()
+    @clearSearchQuery()
     return
 
   return
@@ -50,8 +70,10 @@ Template.support_page.helpers
     return hash_fragment
 
   activeTag: ->
+  getSearchQuery: ->
     tpl = Template.instance()
     return tpl.active_tag_rv
+    return tpl.getSearchQuery
 
   tagIsActive: ->
     if Template.instance().active_tag_rv.get() == @_id
@@ -64,6 +86,16 @@ Template.support_page.events
 
     window.scrollTo
       top: 0
-      behavior: 'smooth'
+      behavior: "smooth"
 
+    return
+
+  "click .support-input-search-btn": (e, tpl) ->
+    tpl.setSearchQuery()
+
+    return
+
+  "keyup .support-input": (e, tpl) ->
+    tpl.setSearchQuery()
+    
     return
