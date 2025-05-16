@@ -562,6 +562,7 @@ _.extend JustdoAiKit,
                 Summarize user input to a few words that will be used in a project's title.
                 Do not include the word "JustDo" in the response.
                 Ensure to follow the user's input language when generating the response.
+                Respond only with the project title, no other text.
               """
             },
             {
