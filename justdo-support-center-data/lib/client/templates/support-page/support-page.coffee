@@ -2,7 +2,19 @@ Template.support_page.onCreated ->
   tpl = @
 
   @active_article_rv = new ReactiveVar(null)
+  @getActiveArticle = ->
+    return tpl.active_article_rv.get()
+  @setActiveArticle = (article_id) ->
+    tpl.active_article_rv.set article_id
+    return
+
   @active_tag_rv = new ReactiveVar(share.default_tag)
+  @getActiveTag = ->
+    return tpl.active_tag_rv.get()
+  @setActiveTag = (tag_id) ->
+    tpl.active_tag_rv.set tag_id
+    return
+    
   @autorun =>
     # This autorun is used to
     # - set the active article based on the news_id in the url
@@ -15,10 +27,10 @@ Template.support_page.onCreated ->
     if (article_id = params?.news_id)?
       if APP.justdo_seo?
         article_id = APP.justdo_seo.getPathWithoutHumanReadableParts article_id
-      @active_article_rv.set article_id
+      tpl.setActiveArticle article_id
 
     if (hash = router.getParams().hash)? and (tag = share.supported_tags.find((t) -> t._id is hash))?
-      @active_tag_rv.set tag._id
+      tpl.setActiveTag tag._id
 
     Tracker.afterFlush ->
       window.scrollTo 0, 0
@@ -46,13 +58,20 @@ Template.support_page.onCreated ->
   return
 
 Template.support_page.helpers
+  parentTpl: ->
+    return Template.instance()
+
   activeArticle: ->
     tpl = Template.instance()
-    return tpl.active_article_rv.get()
+    return tpl.getActiveArticle()
 
-  activeArticleRv: ->
+  getActiveArticle: ->
     tpl = Template.instance()
-    return tpl.active_article_rv
+    return tpl.getActiveArticle
+  
+  setActiveArticle: ->
+    tpl = Template.instance()
+    return tpl.setActiveArticle
 
   getArticleMainTemplate: ->
     main_template = _.find @templates, (template) -> template._id is JustdoNews.default_news_template
@@ -69,20 +88,26 @@ Template.support_page.helpers
 
     return hash_fragment
 
-  activeTag: ->
+  getActiveTag: ->
+    tpl = Template.instance()
+    return tpl.getActiveTag
+
+  setActiveTag: ->
+    tpl = Template.instance()
+    return tpl.setActiveTag
+
   getSearchQuery: ->
     tpl = Template.instance()
-    return tpl.active_tag_rv
     return tpl.getSearchQuery
 
   tagIsActive: ->
-    if Template.instance().active_tag_rv.get() == @_id
+    if Template.instance().getActiveTag() is @_id
       return "active"
 
 Template.support_page.events
   "click .support-tag": (e, tpl) ->
     active_tag = e.currentTarget.id
-    tpl.active_tag_rv.set active_tag
+    tpl.setActiveTag active_tag
 
     window.scrollTo
       top: 0

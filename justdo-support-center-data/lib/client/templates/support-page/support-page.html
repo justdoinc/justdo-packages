@@ -1,7 +1,7 @@
 <template name="support_page">
     <div class="support-page">
       {{#if activeArticle}}
-        {{> support_page_article active_tag_rv=activeTag news_id_rv=activeArticleRv show_navigation_bar=false}}
+        {{> support_page_article parent_tpl=parentTpl show_navigation_bar=false}}
       {{else}}
         <div class="title-container">
           <h1 class="title">{{{xssGuard(_ "support_center_h1_html")}}}</h1>
