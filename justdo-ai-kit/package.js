@@ -10,7 +10,8 @@ server = "server"
 both = [client, server]
 
 Npm.depends({
-  "openai": "4.51.0"
+  "openai": "4.51.0",
+  "jsonrepair": "3.12.0"
 });
 
 Package.onUse(function (api) {

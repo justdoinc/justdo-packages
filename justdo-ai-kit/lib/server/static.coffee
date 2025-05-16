@@ -1,4 +1,5 @@
 OpenAI = Npm.require "openai"
+{jsonrepair} = Npm.require "jsonrepair"
 
 _.extend JustdoAiKit,
   default_api_provider: "openai"
@@ -8,6 +9,14 @@ _.extend JustdoAiKit,
     openai: 
       constructor: OpenAI
 
+  parseJson: (json_str, retried) ->
+    try
+      return JSON.parse json_str
+    catch error
+      if retried is true
+        throw error
+      else
+        return @parseJson jsonrepair(json_str), true
   supported_streamed_response_types:
     "token":
       parser: (chunk) ->
@@ -36,7 +45,7 @@ _.extend JustdoAiKit,
 
         # Add back the missing bracket from .split()
         finished_intermediate_res += "]"
-        return JSON.parse finished_intermediate_res
+        return JustdoAiKit.parseJson finished_intermediate_res
     
     "project_template":
       parser: (chunk, snapshot, stream_state) ->
@@ -87,7 +96,7 @@ _.extend JustdoAiKit,
 
         stream_state.intermediate_res = incomplete_intermediate_res
 
-        finished_intermediate_res = JSON.parse finished_intermediate_res
+        finished_intermediate_res = JustdoAiKit.parseJson finished_intermediate_res
         
         return finished_intermediate_res
 
