@@ -89,17 +89,6 @@ Template.support_page_article.helpers
     if @_id is Template.instance().getActiveArticle()
       return "active"
     return
-
-  activeNews: ->
-    tpl = Template.instance()
-    active_news_id = tpl.getActiveArticle()
-    return APP.justdo_crm.getItemByIdOrAlias(tpl.category, active_news_id)?.news_doc
-
-  isTabActive: (tab_id) ->
-    active_tab_id = tpl.active_news_tab_rv.get()
-    if tab_id is active_tab_id
-      return "active"
-    return
   
   getActiveNewsId: ->
     tpl = Template.instance()
@@ -136,18 +125,6 @@ Template.support_page_article.helpers
 
     return tpl.getNewsPath template_name, {news_category: active_category, news_id: news_id}
   
-  getNewsTabPath: ->
-    tpl = Template.instance()
-    if not tpl.isRouterNavigation()
-      return
-
-    active_category = tpl.category
-    template_name = "#{active_category.replaceAll "-", "_"}_page_with_news_id_and_template"
-    active_news_id = tpl.getActiveArticle()
-    news_template = @_id
-
-    return tpl.getNewsPath template_name, {news_category: active_category, news_id: news_id, news_template: news_template}
-
   activeTag: ->
     tpl = Template.instance()
     active_tag_id = tpl.parent_tpl?.getActiveTag?()
