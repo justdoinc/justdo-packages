@@ -172,12 +172,7 @@ _.extend JustdoAiKit,
               "content": """
                 You are a sophisticated project planner. You are excellent at breaking down an idea into a series of actionable tasks that are under different categories or departments.
                 Based on the user's input, generate an array of tasks that are highly specific, detailed, and relevant to the input provided.
-
-                **Language Instructions:**
-
-                - **Language Detection:** Determine the language of the user's input.
-                - **Language Consistency:** Ensure all tasks are written strictly in the same language as the user's input.
-
+                
                 **Task Generation Guidelines:**
 
                 - **Overall Structure:**
@@ -242,6 +237,12 @@ _.extend JustdoAiKit,
 
                   - Do not include line breaks, indentation, or any formatting other than the JSON structure.
               
+                - **Language:**
+
+                  - Ensure all tasks are written strictly in the same language as the last user input.
+
+                **Important:** Each user input has no relation to previous inputs. Treat each input as a completely separate request. The only thing that is relevant is maintaining the correct format of your response structure.
+
               """.trim()
             },
             {
@@ -419,7 +420,6 @@ _.extend JustdoAiKit,
                 ### User input JSON schema ends ###
 
                 Note that "parents", "siblings", "children" are provided to you to understand the context of the project.
-                When generating tasks, you must ensure the language of the task is the same as the language of the target_task in the most recent user input.
                 Never generate tasks that are already in the project, or tasks that should be children of other tasks.
 
                 The length of parents indicates the depth of the target task. As the depth increases, the scope of the task should decrease.
@@ -446,6 +446,8 @@ _.extend JustdoAiKit,
                   }
                 }
                 ### JSON schema ends ###
+
+                When generating tasks, you must ensure the language of the task is the same as the language of the target_task in the most recent user input.
 
                 To reduce the size of task definition, use an array to represent a task. The array must contain only the value of the task object, in the order of the schema.
                 Generate 5 to 20 tasks in total. Return only the array without any formatting like whitespaces and line breaks.
