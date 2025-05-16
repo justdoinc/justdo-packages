@@ -1,17 +1,16 @@
 Template.support_page_article_category.onCreated ->
   @parent_tpl = @data.parent_tpl
   @news_category = share.news_category
-  @active_tag_rv = @data.active_tag_rv
   return
 
 Template.support_page_article_category.helpers
   tag: ->
     tpl = Template.instance()
-    return tpl.active_tag_rv.get()
+    return tpl.parent_tpl.getActiveTag()
 
   articles: ->
     tpl = Template.instance()
-    tag = tpl.active_tag_rv.get()
+    tag = tpl.parent_tpl.getActiveTag()    
     # Get articles based on the selected tag
     articles = APP.justdo_crm.getAllNewsByCategory(tpl.news_category)
     if tag isnt share.default_tag
