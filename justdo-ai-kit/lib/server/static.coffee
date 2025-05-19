@@ -289,7 +289,9 @@ _.extend JustdoAiKit,
 
                   - Ensure all tasks are written strictly in the same language as the last user input.
 
-                **Important:** Each user input has no relation to previous inputs. Treat each input as a completely separate request. The only thing that is relevant is maintaining the correct format of your response structure.
+                - **Important:** 
+                  - Each user input has no relation to previous inputs. Treat each input as a completely separate request. The only thing that is relevant is maintaining the correct format of your response structure.
+                  - Respond with only the data in valid JSON string without formatting or any other content.
 
               """.trim()
             },
@@ -500,6 +502,10 @@ _.extend JustdoAiKit,
                 To reduce the size of task definition, use an array to represent a task. The array must contain only the value of the task object, in the order of the schema.
                 Generate 5 to 20 tasks in total. Return only the array without any formatting like whitespaces and line breaks.
 
+
+                **Important:** 
+                - Each user input has no relation to previous inputs. Treat each input as a completely separate request.
+                - Respond with only the data in valid JSON string without formatting or any other content.
               """.trim()
             },
             {
