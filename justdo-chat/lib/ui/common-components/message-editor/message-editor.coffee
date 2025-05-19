@@ -135,6 +135,14 @@ Template.common_chat_message_editor.helpers
     tpl = Template.instance()
 
     return tpl.show_send_button_rv.get()
+  
+  isSendButtonDisabled: ->
+    tpl = Template.instance()
+
+    if not tpl.show_send_button_rv.get()
+      return "disabled"
+
+    return ""
 
 Template.common_chat_message_editor.events
   "keyup .message-editor": (e, tpl) ->
