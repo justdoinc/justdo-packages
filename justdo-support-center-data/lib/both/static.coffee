@@ -24,8 +24,8 @@ share.supported_tags = [
     _id: "advanced"
     label: "support_center_category_advanced"
   }
-  {
-    _id: "ai-integration"
-    label: "support_center_category_ai_integration"
-  }
+  # {
+  #   _id: "ai-integration"
+  #   label: "support_center_category_ai_integration"
+  # }
 ]

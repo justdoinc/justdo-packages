@@ -27,9 +27,9 @@
       {{/if}}
 
       <div class="support-page-breadcrumb">
-        <div class="breadcrumb-item back text-primary">
+        {{!-- <div class="breadcrumb-item back text-primary">
           <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-{{getRtlAwareDirection "left"}}"></use></svg>
-        </div>
+        </div> --}}
         <a class="breadcrumb-item home" href="{{i18nRoute route="support_page"}}">{{_ "support_center_title"}}</a>
         {{#with activeTag}}
           <a class="breadcrumb-item active-tag" href="{{i18nRoute route="support_page"}}#{{_id}}">{{_ label}}</a>
