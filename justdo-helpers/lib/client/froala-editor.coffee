@@ -67,7 +67,7 @@ _.extend JustdoHelpers,
       for file in files
         do (file) =>
           try
-            upload = APP.justdo_files.uploadFile(file, file_upload_destination)
+            upload = APP.justdo_files.uploadFile(file, {task_id: file_upload_destination})
           catch e
             file_upload_counter_rv.set (Tracker.nonreactive -> file_upload_counter_rv.get() - 1)
             console.error e.reason or e
