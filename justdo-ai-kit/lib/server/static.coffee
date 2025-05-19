@@ -8,6 +8,27 @@ _.extend JustdoAiKit,
   sdk_map:
     openai: 
       constructor: OpenAI
+    
+  isThinking: (chunk, snapshot, stream_state) ->
+    chunk_content = chunk?.choices?[0]?.delta?.content
+
+    chunk_is_think_start_tag = chunk_content?.includes JustdoAiKit.think_block_start_tag
+    chunk_is_think_end_tag = chunk_content?.includes JustdoAiKit.think_block_end_tag
+    is_cur_chunk_in_think_block = stream_state.is_cur_chunk_in_think_block
+
+    if chunk_is_think_end_tag
+      # If we receive a `think_block_end_tag`, the next received chunk will be the actual response.
+      # Therefore we set `is_cur_chunk_in_think_block` as false to allow next call of this function to return false.
+      stream_state.is_cur_chunk_in_think_block = false
+      # Meanwhile, we don't want the parser to process this `think_block_end_tag`, so we return true
+      return true
+    
+    if chunk_is_think_start_tag or is_cur_chunk_in_think_block
+      stream_state.is_cur_chunk_in_think_block = true
+      return true
+
+    return false
+  
 
   parseJson: (json_str, retried) ->
     if _.isEmpty json_str
@@ -30,6 +51,8 @@ _.extend JustdoAiKit,
       parser: (chunk, snapshot, stream_state) ->
         if not stream_state.intermediate_res?
           stream_state.intermediate_res = ""
+        if JustdoAiKit.isThinking chunk, snapshot, stream_state
+          return
           
         content = chunk?.choices?[0]?.delta?.content or ""
         stream_state.intermediate_res += content
@@ -55,6 +78,9 @@ _.extend JustdoAiKit,
         chunk_content = chunk?.choices?[0]?.delta?.content
 
         if _.isEmpty chunk_content
+          return
+        
+        if JustdoAiKit.isThinking chunk, snapshot, stream_state
           return
 
         # The response will begin with:
