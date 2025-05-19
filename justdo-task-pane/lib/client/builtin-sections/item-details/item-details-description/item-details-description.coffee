@@ -221,7 +221,7 @@ APP.executeAfterAppLibCode ->
         for file in files
           do (file) =>
             try
-              upload = APP.justdo_files.uploadFile(file, task_id)
+              upload = APP.justdo_files.uploadFile(file, {task_id})
             catch e
               uploading_files.set (Tracker.nonreactive -> uploading_files.get() - 1)
               console.error e.reason or e
