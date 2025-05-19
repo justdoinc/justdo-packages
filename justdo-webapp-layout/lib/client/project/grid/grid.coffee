@@ -118,7 +118,7 @@ APP.executeAfterAppLibCode ->
         shared_grid_control_options:
           expand_all_error_snackbar_text: "Too many tasks to expand the entire tree.<br />Refine your filter and try again"
           expand_all_error_snackbar_action_text: "Learn More"
-          expand_all_error_snackbar_on_action_click: -> window.open("https://support.justdo.com/hc/en-us/articles/115003548313-What-to-do-if-I-can-t-can-t-expend-all-tasks-")
+          expand_all_error_snackbar_on_action_click: -> window.open("https://justdo.com/support/115003557694--expand-or-collapse-all-tasks-in-justdo-view-management")
           usersDiffConfirmationCb:
             ProjectPageDialogs.JustdoTaskMembersDiffDialog.usersDiffConfirmationCb
         use_shared_grid_control_custom_fields_manager: true
