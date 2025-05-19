@@ -29,6 +29,13 @@ _.extend JustdoAiKit,
 
     return false
   
+  addContentToIntermediateRes: (content, stream_state) ->
+    if not stream_state.intermediate_res?
+      stream_state.intermediate_res = ""
+
+    stream_state.intermediate_res += content
+
+    return
 
   parseJson: (json_str, retried) ->
     if _.isEmpty json_str
@@ -49,13 +56,11 @@ _.extend JustdoAiKit,
 
     "2d_array":
       parser: (chunk, snapshot, stream_state) ->
-        if not stream_state.intermediate_res?
-          stream_state.intermediate_res = ""
         if JustdoAiKit.isThinking chunk, snapshot, stream_state
           return
           
         content = chunk?.choices?[0]?.delta?.content or ""
-        stream_state.intermediate_res += content
+        JustdoAiKit.addContentToIntermediateRes content, stream_state
         
         if not stream_state.intermediate_res.includes "]"
           return
@@ -105,9 +110,7 @@ _.extend JustdoAiKit,
         if not stream_state.should_process
           return
         
-        if not stream_state.intermediate_res?
-          stream_state.intermediate_res = ""
-        stream_state.intermediate_res += chunk_content
+        JustdoAiKit.addContentToIntermediateRes chunk_content, stream_state
         
         # If the intermediate_res does not contain the closing bracket, the data is incomplete.
         if not stream_state.intermediate_res.includes "}"
