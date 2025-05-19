@@ -7,7 +7,7 @@ APP.justdo_crm.registerItem share.news_category,
   templates: [
     {
       _id: "main"
-      template_name: "support_article_what_to_do_if_i_can_t_can_t_expend_all_tasks"
+      template_name: "support_article_what_to_do_if_i_can_t_can_t_expand_all_tasks"
       name: "What to do if I can't expand all tasks?"
       h1: "What to do if I can't expand all tasks?"
       page_title: "Troubleshooting Task Expansion in JustDo | Large Projects Solution"

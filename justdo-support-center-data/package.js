@@ -363,12 +363,12 @@ Package.onUse(function (api) {
     "lib/both/support-articles/how-to-invite-users-to-a-justdo/how-to-invite-users-to-a-justdo.coffee"
   ], both);
 
-  // what-to-do-if-i-can-t-can-t-expend-all-tasks
+  // what-to-do-if-i-can-t-can-t-expand-all-tasks
   api.addFiles([
-    "lib/both/support-articles/what-to-do-if-i-can-t-can-t-expend-all-tasks/what-to-do-if-i-can-t-can-t-expend-all-tasks.html"
+    "lib/both/support-articles/what-to-do-if-i-can-t-can-t-expand-all-tasks/what-to-do-if-i-can-t-can-t-expand-all-tasks.html"
   ], client);
   api.addFiles([
-    "lib/both/support-articles/what-to-do-if-i-can-t-can-t-expend-all-tasks/what-to-do-if-i-can-t-can-t-expend-all-tasks.coffee"
+    "lib/both/support-articles/what-to-do-if-i-can-t-can-t-expand-all-tasks/what-to-do-if-i-can-t-can-t-expand-all-tasks.coffee"
   ], both);
 
   // what-is-the-quick-add-button
