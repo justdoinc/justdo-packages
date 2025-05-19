@@ -324,7 +324,7 @@ _.extend JustdoAiKit,
               "content": msg.trim()
             }
           ],
-          "temperature": 0.3,
+          "temperature": 0.1,
           "top_p": 1,
           "n": 1,
           "stream": true,
@@ -401,7 +401,7 @@ _.extend JustdoAiKit,
         return fields
 
     stream_child_tasks:
-      streamed_response_format: "2d_array"
+      streamed_response_format: "project_template"
       requestGeneratorOptionsSchema: new SimpleSchema
         project: 
           type: String
@@ -430,6 +430,35 @@ _.extend JustdoAiKit,
         req = 
           # when model isn't specified, it defaults to JustdoAiKit.openai_template_generation_model
           # "model": JustdoAiKit.openai_template_generation_model,
+          "response_format": 
+            "type": "json_schema"
+            "json_schema": 
+              "strict": true
+              "name": "generate_tasks"
+              "description": "Generate an array of tasks that are highly specific and relevant to the target task."
+              "schema":
+                "type": "object"
+                "properties": 
+                  "tasks":
+                    "type": "array"
+                    "description": "An array of tasks."
+                    "items":
+                      "type": "object"
+                      "description": "A task represented as an object of its attributes."                
+                      "properties":
+                        title:
+                          "type": "string"
+                          "description": "Title of the task describing the task or what the child tasks do if it has child tasks."
+                        key:
+                          "type": "number"
+                          "description": "0-based sequence ID of the task."
+                        parent:
+                          "type": "number"
+                          "description": "Parent task's key. The parent task must exist before referencing. If the task parent is the target task, use -1."
+                      "additionalProperties": false
+                      "required": ["title", "key", "parent"]
+                "additionalProperties": false
+                "required": ["tasks"]
           "messages": [
             {
               "role": "system",
@@ -476,32 +505,23 @@ _.extend JustdoAiKit,
                 Example 1: If there are only a 1 to 2 parents and no children, generated tasks should be broad in scope (like departments, categories, sub-projects, etc. each with their own relevant subtasks).
                 Example 2: If there are multiple parnets and some children, generated tasks should be more specific and are actionable items or examples of the target task.
 
-                Below is the JSON schema of a task object that you will be generating:
-                ### JSON schema begin ###
-                {
-                  "type": "object",
-                  "properties": {
-                    "title": {
-                      "type": "string",
-                      "description": "Title of the task describing the task, or describing what the child tasks does if it has child tasks. You must ensure the language this field is the same as the language of target_task in the most recent user input."
-                    },
-                    "key": {
-                      "type": "number",
-                      "description": "0-based sequence ID of the task."
-                    },
-                    "parent": {
-                      "type": "number",
-                      "description": "Parent task's key. The parent task must exist before referencing. If the task parent is the target task, use -1."
-                    }
-                  }
-                }
-                ### JSON schema ends ###
+                **Task Generation Guidelines:**
 
-                When generating tasks, you must ensure the language of the task is the same as the language of the target_task in the most recent user input.
+                - **Task Relationships:**
+                  - Use the `key` and `parent` fields to define the hierarchy.
+                  - Assign a `parent` value of `-1` to top-level tasks (direct children of the target task).
+                  - Tasks can be generated in any order; the `parent` field will establish the correct relationships.
 
-                To reduce the size of task definition, use an array to represent a task. The array must contain only the value of the task object, in the order of the schema.
-                Generate 5 to 20 tasks in total. Return only the array without any formatting like whitespaces and line breaks.
+                - **Task Details:**
+                  - **Specificity:** Use precise and detailed task titles that clearly describe the work to be done.
+                  - **Avoid Generic Titles:** Each task should add meaningful detail to the plan.
+                  - **Actionable Items:** Break down tasks until they represent specific actions that can be individually assigned and completed.
 
+                **Output Instructions:**
+                - Generate 5 to 20 tasks in total.
+                - When generating tasks, you must ensure the language of the task is the same as the language of the target_task in the most recent user input.
+                - Return only the array of tasks as specified by the function `generate_tasks`.
+                - Do not include any additional text, explanations, examples, or formatting.
 
                 **Important:** 
                 - Each user input has no relation to previous inputs. Treat each input as a completely separate request.
@@ -514,7 +534,7 @@ _.extend JustdoAiKit,
             },
             {
               "role" : "assistant",
-              "content" : """[["Transportation",0,-1],["Book Flight Tickets",1,0],["Arrange Airport Transfer",2,0],["Accommodation",3,-1],["Hotel Reservation",4,3],["Check-in Online",5,3],["Activities",6,-1],["Sightseeing Tours Booking",7,6],["Dining Reservations",8,6],["Shopping Plans",9,6],["Emergency Contact List",10,6]]"""
+              "content" : """{"tasks":[{"title":"Transportation","key":0,"parent":-1},{"title":"Book Flight Tickets","key":1,"parent":0},{"title":"Arrange Airport Transfer","key":2,"parent":0},{"title":"Accommodation","key":3,"parent":-1},{"title":"Hotel Reservation","key":4,"parent":3},{"title":"Check-in Online","key":5,"parent":3},{"title":"Activities","key":6,"parent":-1},{"title":"Sightseeing Tours Booking","key":7,"parent":6},{"title":"Dining Reservations","key":8,"parent":6},{"title":"Shopping Plans","key":9,"parent":6},{"title":"Emergency Contact List","key":10,"parent":6}]}"""
             },
             {
               "role" : "user",
@@ -522,55 +542,7 @@ _.extend JustdoAiKit,
             },
             {
               "role" : "assistant",
-              "content" : """[["Accommodation",0,-1],["Hotel Reservation",1,0],["Check-in Procedures",2,0],["Explore Attractions",3,-1],["Historical Sites Visits",4,3],["Cultural Landmarks Tour",5,3],["Food and Drinks",6,3],["Local Cuisine Tasting",7,6],["Street Food Exploration",8,6],["Modern Bistros Visit",9,6],["Shopping",10,-1],["Souvenir Hunting",11,10],["Local Markets Exploration",12,10],["Specialty Stores Visit",13,16]]"""
-            },
-            {
-              "role" : "user",
-              "content" : """{"target_task":"Pre-Op Procedures", "additional_context":{"project":"Hospital Management","parents":["Clinical Services","Surgical Services"],"siblings":["Surgical Team Coordination","Post-Op Care Plans","Equipment Sterilization"],"children":[]}}"""
-            },
-            {
-              "role" : "assistant",
-              "content" : """[["Patient Assessment",0,-1],["Medical History Review",1,0],["Physical Examination",2,0],["Pre-Surgery Instructions",3,0],["Consent Form Signing",4,0],["Lab Tests",5,-1],["Blood Work",6,5],["X-Rays",7,5],["ECG",8,5],["Pre-Surgery Checklist",9,-1],["Verify Consent",10,9],["Confirm Allergies",11,9],["Prepare Equipment",12,9],["Anesthesia Assessment",13,9]]"""
-            },
-            {
-              "role" : "user",
-              "content" : """{"target_task":"Post-Op Care Plans", "additional_context":{"project":"Hospital Management","parents":["Clinical Services","Surgical Services"],"siblings":["Surgical Team Coordination","Pre-Op Procedures","Equipment Sterilization"]}}"""
-            },
-            {
-              "role" : "assistant",
-              "content" : """[["Patient Monitoring",0,-1],["Vital Signs Tracking",1,0],["Symptom Assessment",2,0],["Medication Administration",3,0],["Progress Notes Documentation",4,0],["Recovery Plan Implementation",5,-1],["Activity Monitoring",6,5],["Diet Supervision",7,5],["Pain Management",8,5],["Follow-up Appointments Scheduling",9,5],["Post-Discharge Care",10,-1],["Home Care Instructions",11,10],["Medication Regimen Explanation",12,10],["Rehabilitation Referrals",13,10],["Symptom Monitoring Plan",14,10]]"""
-            },
-            {
-              "role" : "user",
-              "content" : """{"target_task":"社交媒體宣傳", "additional_context":{"project":"咖啡店管理","parents":["營銷推廣"],"siblings": ["舉辦試喝活動", "優惠促銷策略"]}}"""
-            },
-            {
-              "role" : "assistant",
-              "content" : """[["線上活動",0,-1],["推文創作",1,0],["社群互動",2,0],["市場分析",3,0],["品牌形象",4,-1],["設計視覺元素",5,4],["制定廣告策略",6,4],["品牌定位優化",7,4],["優惠促銷",8,-1],["設計促銷活動",9,8],["製作宣傳物料",10,8],["執行促銷計劃",11,8]]"""
-            },
-            {
-              "role": "user",
-              "content": """{"target_task":"聯絡推廣公司", "additional_context": {"siblings":["In-Store Advertising","Customer Engagement Activities"],"children":[],"parents":["產品開發","研發新飲品","Develop Marketing Strategy","Social Media Promotion"],"project":"咖啡店管理"}}"""
-            },
-            {
-              "role": "assistant",
-              "content": """[["研究推廣公司",0,-1],["分析公司背景",1,0],["檢查過往案例",2,0],["撰寫聯絡信件",3,-1],["介紹自己與目標",4,3],["要求報價與方案",5,3],["安排會議",6,-1],["選擇合適時間",7,6],["準備會議議程",8,6],["跟進回覆",9,-1],["確定合作條款",10,9],["簽署合約",11,9]]"""
-            },
-            {
-              "role": "user",
-              "content": """{"target_task":"Design seasonal drinks", "additional_context": {"siblings":["優化菜單設計","評估產品成本","收集顧客反饋"],"children":[],"parents":["產品開發","研發新飲品"],"project":"咖啡店管理"}}"""
-            },
-            {
-              "role": "assistant",
-              "content": """[["Research Seasonal Trends",0,-1],["Analyze Popular Ingredients",1,0],["Study Competitor Offerings",2,0],["Create Drink Recipes",3,-1],["Develop Flavor Profiles",4,3],["Test Drink Combinations",5,3],["Design Drink Presentation",6,-1],["Select Glassware",7,6],["Create Garnish Ideas",8,6],["Develop Marketing Strategy",9,-1],["Social Media Promotion",10,9],["In-Store Advertising",11,9],["Customer Engagement Activities",12,9]]"""
-            },            
-            {
-              "role" : "user",
-              "content" : """{"target_task":"Backend Development", "additional_context":{"project":"IT firm management","parents":["R&D","Mobile App Development","Sprints","v1.0.0","Implement new feature 1"],"siblings":["Design & UX/UI","Frontend Development","QA"],"children":["Feature B"]}}"""
-            },
-            {
-              "role" : "assistant",
-              "content" : """[["Database Design",0,-1],["ER Diagram Creation",1,0],["Schema Implementation",2,0],["API Development",3,-1],["Endpoint Creation",4,3],["Data Manipulation Functions",5,3],["Security Integration",6,-1],["Authentication Systems",7,6],["Authorization Processes",8,6],["Performance Optimization",9,-1],["Database Queries Refinement",10,9],["Query Caching Implementation",11,9],["Error Handling Enhancement",12,9]]"""
+              "content" : """{"tasks":[{"title":"Accommodation","key":0,"parent":-1},{"title":"Hotel Reservation","key":1,"parent":0},{"title":"Check-in Procedures","key":2,"parent":0},{"title":"Explore Attractions","key":3,"parent":-1},{"title":"Historical Sites Visits","key":4,"parent":3},{"title":"Cultural Landmarks Tour","key":5,"parent":3},{"title":"Food and Drinks","key":6,"parent":3},{"title":"Local Cuisine Tasting","key":7,"parent":6},{"title":"Street Food Exploration","key":8,"parent":6},{"title":"Modern Bistros Visit","key":9,"parent":6},{"title":"Shopping","key":10,"parent":-1},{"title":"Souvenir Hunting","key":11,"parent":10},{"title":"Local Markets Exploration","key":12,"parent":10},{"title":"Specialty Stores Visit","key":13,"parent":10}]}"""
             },
             {
               "role": "user",
@@ -585,8 +557,8 @@ _.extend JustdoAiKit,
           "presence_penalty": 0,
           "frequency_penalty": 0,
         return req
-      streamedResponseParser: (parsed_array, template_data, req_id) ->
-        [title, key, parent] = parsed_array
+      streamedResponseParser: (parsed_item, template_data, req_id) ->
+        {title, key, parent} = parsed_item
 
         fields = 
           _id: "#{key}_#{req_id}"
