@@ -10,6 +10,9 @@ _.extend JustdoAiKit,
       constructor: OpenAI
 
   parseJson: (json_str, retried) ->
+    if _.isEmpty json_str
+      return
+
     try
       return JSON.parse json_str
     catch error
