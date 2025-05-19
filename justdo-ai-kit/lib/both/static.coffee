@@ -21,3 +21,6 @@ _.extend JustdoAiKit,
   chance_simple_smart_bubble_in_use: 0.5
 
   show_simple_smart_bubble_local_storage_key: "justdo_ai_kit_show_simple_smart_bubbles"
+
+  think_block_start_tag: "<think>"
+  think_block_end_tag: "</think>"
