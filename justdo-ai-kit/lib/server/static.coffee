@@ -89,9 +89,12 @@ _.extend JustdoAiKit,
 
         stream_state.intermediate_res = incomplete_intermediate_res
 
-        # Add back the missing bracket from .split()
-        finished_intermediate_res += "]"
-        return JustdoAiKit.parseJson finished_intermediate_res
+        if not _.isEmpty finished_intermediate_res.trim()
+          # Add back the missing bracket from .split()
+          finished_intermediate_res += "]"
+          return JustdoAiKit.parseJson finished_intermediate_res
+        
+        return
     
     "project_template":
       parser: (chunk, snapshot, stream_state) ->
