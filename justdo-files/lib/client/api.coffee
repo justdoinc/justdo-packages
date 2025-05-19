@@ -168,11 +168,32 @@ _.extend JustdoFiles.prototype,
   # file: The file to upload
   # task_id: The task id to upload the file to
   # project_id: The project id to upload the file to
-  #
   # project_id is optional, if not provided, the task's project_id will be used
-  uploadFile: (file, task_id, project_id) ->
-    check task_id, String
-    check project_id, Match.Maybe String
+  # meta: Metadata object for the file.
+  # meta is optional. It's `task_id` and `project_id` will always be the same as the one in options.
+  uploadFileOptionsSchema: new SimpleSchema
+    task_id:
+      type: String
+    project_id:
+      type: String
+      optional: true
+    meta:
+      type: Object
+      blackbox: true
+      defaultValue: {}
+  uploadFile: (file, options) ->
+    check file, File
+    
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @uploadFileOptionsSchema,
+        options,
+        {throw_on_error: true}
+      )
+    options = cleaned_val
+    project_id = options.project_id
+    task_id = options.task_id
+    meta = options.meta
 
     if not project_id?
       query_options = 
@@ -186,7 +207,7 @@ _.extend JustdoFiles.prototype,
 
     file_upload_options =
       file: file
-      meta:
+      meta: _.extend meta,
         task_id: task_id
         project_id: project_id
       collection_name: "tasks_files"
