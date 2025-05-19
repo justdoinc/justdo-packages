@@ -29,6 +29,15 @@ _.extend JustdoAiKit,
 
     return false
   
+  getContentAfterTokenIfExists: (token, chunk, snapshot, stream_state) ->
+    chunk_content = chunk?.choices?[0]?.delta?.content
+
+    if chunk_content.includes token
+      stream_state.should_process = true
+      return chunk_content.split(token)[1]
+    
+    return
+  
   addContentToIntermediateRes: (content, stream_state) ->
     if not stream_state.intermediate_res?
       stream_state.intermediate_res = ""
@@ -60,6 +69,12 @@ _.extend JustdoAiKit,
           return
           
         content = chunk?.choices?[0]?.delta?.content or ""
+        if not stream_state.should_process
+          if (content_after_first_bracket = JustdoAiKit.getContentAfterTokenIfExists "[", chunk, snapshot, stream_state)
+            content = content_after_first_bracket
+          else
+            return
+          
         JustdoAiKit.addContentToIntermediateRes content, stream_state
         
         if not stream_state.intermediate_res.includes "]"
@@ -95,19 +110,17 @@ _.extend JustdoAiKit,
         #   ]
         # }
         # We only need to start parsing when we see the first bracket.
-        if chunk_content.includes "["
-          stream_state.should_process = true
-          chunk_content = chunk_content.split("[")[1]
+        if not stream_state.should_process
+          if (content_after_first_bracket = JustdoAiKit.getContentAfterTokenIfExists "[", chunk, snapshot, stream_state)
+            chunk_content = content_after_first_bracket
+          else
+            return
 
         # If we see the closing bracket, we stop processing.
         # Typically when reaching the end of the response, the chunk_content will only contain "]}".
         # Therefore, we can stop processing if the chunk_content includes "]".
         # Even if this last chunk content includes more than just the closing bracket, it's okay to ignore 1 task.
         if chunk_content.includes "]"
-          return
-
-        # Check the comment above " chunk_content.includes "[" " for more information.
-        if not stream_state.should_process
           return
         
         JustdoAiKit.addContentToIntermediateRes chunk_content, stream_state
