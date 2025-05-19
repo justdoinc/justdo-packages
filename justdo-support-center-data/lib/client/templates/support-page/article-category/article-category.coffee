@@ -12,7 +12,7 @@ Template.support_page_article_category.helpers
     tpl = Template.instance()
     tag = tpl.parent_tpl.getActiveTag()    
     # Get articles based on the selected tag
-    articles = APP.justdo_crm.getAllNewsByCategory(tpl.news_category)
+    articles = APP.justdo_crm.getAllItemsByCategory(tpl.news_category)
     if tag isnt share.default_tag
       articles = APP.justdo_crm.getItemsByTag(tpl.news_category, tag)
 
