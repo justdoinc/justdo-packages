@@ -25,7 +25,8 @@ Template.common_chat_message_editor.onCreated ->
     return
 
   @getInputElement = -> @$("textarea")
-  @getInputValue = -> @getInputElement().val().trim()
+  @getInputValue = -> @getInputElement().val()
+  @getTrimmedInputValue = -> @getInputValue().trim()
   @setInputValue = (value) -> 
     @getInputElement().val(value)
     @getInputElement().trigger("autosize.resize")
@@ -37,7 +38,7 @@ Template.common_chat_message_editor.onCreated ->
       return
 
     $input = @getInputElement()
-    input_val = @getInputValue()
+    input_val = @getTrimmedInputValue()
 
     if _.isEmpty(input_val)
       return
@@ -92,7 +93,7 @@ Template.common_chat_message_editor.onRendered ->
     
     # Wrap the following in a Meteor.defer to allow UI refresh before checking if the input is empty
     Meteor.defer =>
-      if _.isEmpty @getInputValue()
+      if _.isEmpty @getTrimmedInputValue()
         @hideSendButton()
     
     return
@@ -137,10 +138,9 @@ Template.common_chat_message_editor.helpers
 
 Template.common_chat_message_editor.events
   "keyup .message-editor": (e, tpl) ->
-    value = tpl.getInputValue()
-    @getChannelObject().saveTempMessage value
+    @getChannelObject().saveTempMessage tpl.getInputValue()
 
-    if value
+    if tpl.getTrimmedInputValue()
       tpl.showSendButton()
     else
       tpl.hideSendButton()
