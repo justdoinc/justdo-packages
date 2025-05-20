@@ -184,7 +184,7 @@ _.extend JustdoAiKit,
                     "description": "An array of tasks."
                     "items":
                       "type": "object"
-                      "description": "A task represented as an array of its attributes."                
+                      "description": "A task represented as an object of its attributes."                
                       "properties":
                         title:
                           "type": "string"
