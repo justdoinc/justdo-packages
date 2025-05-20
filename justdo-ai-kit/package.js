@@ -90,6 +90,9 @@ Package.onUse(function (api) {
   // Ollama
   api.addFiles("lib/server/vendor-api/ollama/static.coffee", server);
   api.addFiles("lib/server/vendor-api/ollama/ollama.coffee", server);
+  // Gemini
+  api.addFiles("lib/server/vendor-api/gemini/static.coffee", server);
+  api.addFiles("lib/server/vendor-api/gemini/gemini.coffee", server);
   // </Vendor-specific files>
   api.addFiles("lib/server/api.coffee", server);
   api.addFiles("lib/server/collections-hooks.coffee", server);

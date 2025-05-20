@@ -6,6 +6,11 @@ _.extend JustdoAiKit.prototype,
       # Defined in verdor-api/openai.coffee
       @_setupOpenAI()
     
+    
+    if @secret_conf.vendors?.gemini?
+      # Defined in vendor-api/gemini.coffee
+      @_setupGemini()
+    
     # Defined in vendor-api/ollama.coffee
     @_setupOllama()
     
