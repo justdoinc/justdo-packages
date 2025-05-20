@@ -164,7 +164,9 @@ Template.common_chat_message_editor.events
       if (e.altKey or e.ctrlKey or e.shiftKey)
         current_pos = $input.prop("selectionStart")
         tpl.setInputValue(JustdoHelpers.splice(tpl.getInputValue(), current_pos, 0, "\n"))
-        $input.prop("selectionStart", current_pos + 1)
+        new_pos = current_pos + 1
+        $input.prop("selectionStart", new_pos)
+        $input.prop("selectionEnd", new_pos)
 
         return
 
