@@ -59,7 +59,10 @@ _.extend JustdoAiKit,
         return @parseJson jsonrepair(json_str), true
   supported_streamed_response_types:
     "token":
-      parser: (chunk) ->
+      parser: (chunk, snapshot, stream_state) ->
+        if JustdoAiKit.isThinking chunk, snapshot, stream_state
+          return
+
         content = chunk?.choices?[0]?.delta?.content or ""
         return content
 
