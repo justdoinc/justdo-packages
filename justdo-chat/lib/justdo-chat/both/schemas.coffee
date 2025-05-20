@@ -220,6 +220,15 @@ JustdoChat.schemas.MessagesSchema = new SimpleSchema
 
     min: 1
     max: 10000
+  
+  files: 
+    label: "Message files"
+    optional: true
+
+    type: [Object]
+  "files.$":
+    type: Object
+    blackbox: true
 
   "data_msg_type":
     label: "Data Message type"
