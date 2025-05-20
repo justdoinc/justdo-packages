@@ -34,7 +34,9 @@ _.extend JustdoAiKit,
 
     if chunk_content.includes token
       stream_state.should_process = true
-      return chunk_content.split(token)[1]
+      splitted_content = chunk_content.split(token)
+      splitted_content.shift()
+      return splitted_content.join(token)
     
     return
   
@@ -139,7 +141,9 @@ _.extend JustdoAiKit,
         stream_state.intermediate_res = stream_state.intermediate_res.replace /\[|\]/g, ""
 
         # Split the intermediate_res into the finished and incomplete parts.
-        [finished_intermediate_res, incomplete_intermediate_res] = stream_state.intermediate_res.split(/},/)
+        split_res = stream_state.intermediate_res.split(/},/)
+        finished_intermediate_res = split_res.shift()
+        incomplete_intermediate_res = split_res.join("},")
         
         # Add back the missing bracket from .split(), if
         if not finished_intermediate_res.endsWith "}"
