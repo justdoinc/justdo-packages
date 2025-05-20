@@ -586,7 +586,9 @@ _.extend ChannelBaseServer.prototype,
     @emit "channel-unread-state-changed", unread
 
     return
-
+  _sendMessageFilesArraySchema: new SimpleSchema
+    files: JustdoChat.schemas.MessagesSchema._schema.files
+    "files.$": JustdoChat.schemas.MessagesSchema._schema["files.$"]
   _sendMessageMessageObjectSchemaForTxtType: new SimpleSchema
     body:
       # Note, simple schema takes care of .trim() the value for us
@@ -624,6 +626,15 @@ _.extend ChannelBaseServer.prototype,
         {self: @, throw_on_error: true}
       )
     options = cleaned_val
+
+    if not _.isEmpty(files = message_obj.files)
+      {cleaned_val} =
+        JustdoHelpers.simpleSchemaCleanAndValidate(
+          @_sendMessageFilesArraySchema,
+          {files}, # note, we wrap files in an object, since simple schema expects an object
+          {self: @, throw_on_error: true}
+        )
+      {files} = cleaned_val
 
     if message_type == "txt"
       messages_schema = @justdo_chat.getMessagesSchema()
@@ -687,6 +698,9 @@ _.extend ChannelBaseServer.prototype,
       message_doc.body = message_obj.body
     else if message_type == "data"
       message_doc.data = message_obj
+    
+    if not _.isEmpty files
+      message_doc.files = files
 
     # write the message
     @justdo_chat.messages_collection.insert message_doc
@@ -926,6 +940,7 @@ _.extend ChannelBaseServer.prototype,
           data: 1
           author: 1
           createdAt: 1
+          files: 1
 
       messages_collection_name =
         JustdoHelpers.getCollectionNameFromCursor(messages_cursor)
