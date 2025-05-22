@@ -26,7 +26,7 @@ Template.common_chat_message_editor.onCreated ->
 
   @getInputElement = -> @$("textarea")
   @getInputValue = -> @getInputElement().val()
-  @getTrimmedInputValue = -> @getInputValue().trim()
+  @getTrimmedInputValue = -> @getInputValue()?.trim()
   @setInputValue = (value) -> 
     @getInputElement().val(value)
     @getInputElement().trigger("autosize.resize")
