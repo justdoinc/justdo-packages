@@ -32,6 +32,9 @@ _.extend PACK.GridOperations,
 
         if is_multi_select
           paths_to_remove = @getFilterPassingMultiSelectedPathsArray()
+          # Exit multi-select mode to ensure removed tasks aren't selected 
+          # to avoid race condition between computations that are reactive to minimongo, grid data and grid control.
+          @exitMultiSelectMode()
         else
           paths_to_remove = [active_path]
 
