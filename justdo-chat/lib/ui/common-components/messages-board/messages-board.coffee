@@ -59,6 +59,7 @@ Template.common_chat_messages_board.onCreated ->
     # I don't see situation where not removing the event will lead to mem-leak, so we don't
     # remove it on destroy (the channel obj is destroyed/replaced in a way that protects us).
 
+    clearTimeout @current_initial_payload_sealing_timeout
     @initial_messages_payload_rendering_completed = false
 
     return
