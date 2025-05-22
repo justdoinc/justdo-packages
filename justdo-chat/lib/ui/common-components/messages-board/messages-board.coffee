@@ -169,7 +169,7 @@ Template.common_chat_messages_board_message_card.helpers
 
   shouldShowAvatar: ->
     tpl = Template.instance()
-    channel_obj = tpl.closestInstance("common_chat_messages_board")?.data?.getChannelObject()
+    channel_obj = tpl.getChannelObject?()
 
     is_msg_from_current_user = @author is Meteor.userId()
     is_msg_from_dm_channel = channel_obj?.channel_type is "user"
@@ -177,11 +177,16 @@ Template.common_chat_messages_board_message_card.helpers
   
   shouldShowAuthorName: ->
     tpl = Template.instance()
-    channel_obj = tpl.closestInstance("common_chat_messages_board")?.data?.getChannelObject()
+    channel_obj = tpl.getChannelObject?()
 
     is_msg_from_performing_user = @author is Meteor.userId()
     is_msg_from_dm_channel = channel_obj?.channel_type is "user"
     return (not is_msg_from_performing_user) and (not is_msg_from_dm_channel)
+
+Template.common_chat_messages_board_message_card.onCreated ->
+  @getChannelObject = @closestInstance("common_chat_messages_board")?.data?.getChannelObject
+
+  return
 
 Template.common_chat_messages_board_message_card.onRendered ->
   $message_card = @$(".message-card")
