@@ -20,11 +20,14 @@ $member-dropdown-width: 320px
     overflow: hidden
     display: flex
     position: relative
+    .members-dropdown-invite
+      visibility: hidden
     &.invite-mode
       .members-dropdown-list,
       .members-dropdown-invite
         left: -$member-dropdown-width
-
+      .members-dropdown-invite
+        visibility: visible
   .members-search-wrapper
     padding: 16px
     position: relative
