@@ -54,6 +54,8 @@ Template.common_chat_message_editor.onCreated ->
       data = 
         body: input_val
 
+      if not _.isEmpty(files)
+        data.files = files
 
       task_chat_object.sendMessage data, (err) =>
         @unsetSendingState()
@@ -71,6 +73,33 @@ Template.common_chat_message_editor.onCreated ->
 
         return
 
+    # File handling
+    if not _.isEmpty(files = $(".message-editor-file-input").get(0)?.files)
+      uploaded_files = []
+
+      # Note: This callback is used to handle the upload of a single file
+      uploadFileCb = (err, uploaded_file) =>
+        if err?
+          @setError(err.reason or err)
+          @showSendButton()
+          return
+        else 
+          file_meta = _.pick uploaded_file, "_id", "name", "size", "type"
+          uploaded_files.push file_meta
+
+        all_files_uploaded = uploaded_files.length is files.length
+        if all_files_uploaded
+          # Clear the file input
+          $(".message-editor-file-input").val("")
+          callSendMessageMethod input_val, uploaded_files
+        
+        return
+      
+      for file in files
+        APP.justdo_chat.uploadFile(file, {}, task_chat_object, uploadFileCb)
+
+    else
+      callSendMessageMethod input_val
 
     return
 
@@ -149,6 +178,9 @@ Template.common_chat_message_editor.helpers
       return "disabled"
 
     return ""
+  
+  isFilesEnabled: ->
+    return APP.justdo_chat.isFilesEnabled()
 
 Template.common_chat_message_editor.events
   "keyup .message-editor": (e, tpl) ->
