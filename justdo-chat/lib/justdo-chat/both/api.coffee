@@ -100,3 +100,6 @@ _.extend JustdoChat.prototype,
       return true
 
     return false
+
+  isFilesEnabled: ->
+    return not _.isEmpty @file_storage_type
