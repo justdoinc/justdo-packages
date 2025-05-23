@@ -51,7 +51,7 @@ Template.common_chat_messages_board.onCreated ->
     # We run the following within a nonreactive context, so if a subscription is created
     # by it, it won't get destroyed as a result of the computation invalidation/destructino.
     Tracker.nonreactive =>
-      channel.requestChannelMessages({request_authors_details: @request_authors_details}) # Request first messages payload
+      channel.requestChannelMessages({request_authors_details: @request_authors_details, request_files_subscription: true}) # Request first messages payload
 
     # When a new message is sent by the user for this channel - scroll to bottom
     channel.on "message-sent", (@message_sent_handler = @scrollToBottom.bind(@))
@@ -165,6 +165,13 @@ Template.common_chat_messages_board_message_card.helpers
 
     return JustdoHelpers.xssGuard body, {allow_html_parsing: true, enclosing_char: ""}
 
+  files: ->
+    file_ids = _.pluck @files, "_id"
+    return APP.justdo_file_interface.getFilesByIds null, file_ids
+
+  size: ->
+    return JustdoHelpers.bytesToHumanReadable @size
+
   myMessage: ->
     return @author is Meteor.userId()
 
@@ -253,5 +260,15 @@ Template.common_chat_messages_board_message_card.events
       APP.modules.project_page.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(task_id)
     else
       APP.modules.project_page.activateTaskInProject(project_id, task_id)
+
+    return
+
+  "click .download-file": (e, tmpl) ->
+    e.preventDefault()
+
+    file = @
+    channel_obj = tmpl.getChannelObject()
+
+    APP.justdo_chat.downloadFile file._id, channel_obj
 
     return
