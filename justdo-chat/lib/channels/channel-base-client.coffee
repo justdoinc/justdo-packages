@@ -185,7 +185,10 @@ _.extend ChannelBaseClient.prototype,
       # Note, proposed-subscribers-emulation has no effect on existing channels, we aren't
       # worry about turning it off.
 
-    @justdo_chat.sendMessage @channel_type, @getChannelIdentifier(), {body: body}, =>
+    if _.isString body
+      body = {body}
+
+    @justdo_chat.sendMessage @channel_type, @getChannelIdentifier(), body, =>
       @emit "message-sent", {body: body}
 
       JustdoHelpers.callCb cb
