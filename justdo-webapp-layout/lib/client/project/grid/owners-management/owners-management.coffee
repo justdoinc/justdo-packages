@@ -182,6 +182,19 @@ APP.executeAfterAppLibCode ->
     @current_members_filter = new ReactiveVar null
     @task_has_other_members_rv = new ReactiveVar false
 
+    @takeOwnership = (e) ->
+      item_doc = @data
+
+      APP.collections.Tasks.update item_doc._id, 
+        $set:
+          owner_id: Meteor.userId()
+          pending_owner_id: null
+          is_removed_owner: null
+
+      getEventDropdownData(e, "close")()
+
+      return
+
     @autorun =>
       @task_has_other_members_rv.set "loading"
       JD.subscribeItemsAugmentedFields JD.activeItemId(), ["users"], {}, =>
@@ -194,6 +207,8 @@ APP.executeAfterAppLibCode ->
             @$(".members-search-input").focus()
 
           return 
+    
+    return
 
   Template.item_owners_management.onRendered ->
     if ($members_search_input = $(".members-search-input")).length > 0
@@ -330,28 +345,10 @@ APP.executeAfterAppLibCode ->
 
       return
 
-    "click .take-ownership": (e, template) ->
-      item_doc = template.data
+    "click .take-ownership, click .approve-transfer": (e, template) ->
+      template.takeOwnership(e)
 
-      APP.collections.Tasks.update item_doc._id,
-        $set:
-          owner_id: Meteor.userId()
-          pending_owner_id: null
-          is_removed_owner: null
-
-      getEventDropdownData(e, "close")()
-
-    "click .approve-transfer": (e, template) ->
-      item_doc = template.data
-
-      APP.collections.Tasks.update item_doc._id,
-        $set:
-          owner_id: Meteor.userId()
-          pending_owner_id: null
-          is_removed_owner: null
-
-      getEventDropdownData(e, "close")()
-
+      return
 
     "keydown .ownership-transfer-dialog" : (e) ->
       $el = $(e.target).closest(".ownership-dialog-item")
