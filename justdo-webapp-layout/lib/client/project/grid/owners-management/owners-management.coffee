@@ -240,26 +240,19 @@ APP.executeAfterAppLibCode ->
       new_owner_doc = @
       item_doc = template.data
 
-      if new_owner_doc._id == Meteor.userId()
-        # Equiv to take ownership
-        APP.collections.Tasks.update item_doc._id,
-          $set:
-            owner_id: new_owner_doc._id
-            pending_owner_id: null
-            is_removed_owner: null
-      else
+      modifier =
+        $set: {}
+      if new_owner_doc.is_proxy
         # Tasks are transferred to proxy users directly
-        modifier =
-          $set: {}
-        if new_owner_doc.is_proxy
-          modifier.$set =
-            owner_id: new_owner_doc._id
-        else
-          modifier.$set =
-            owner_id: Meteor.userId() # The one that request the transfer becomes the owner
-            is_removed_owner: null
-            pending_owner_id: new_owner_doc._id
-        APP.collections.Tasks.update item_doc._id, modifier
+        modifier.$set =
+          owner_id: new_owner_doc._id
+      else
+        modifier.$set =
+          owner_id: Meteor.userId() # The one that request the transfer becomes the owner
+          is_removed_owner: null
+          pending_owner_id: new_owner_doc._id
+      APP.collections.Tasks.update item_doc._id, modifier
+
       temp_subtree_users_subscription = JD.subscribeItemsAugmentedFields item_doc._id, ["users"], {subscribe_sub_tree: true}, ->
         temp_subtree_users_subscription.stop() # Stop immediately, we need the data only for a short while.
 
