@@ -6,6 +6,10 @@
     <button class="btn p-0 message-editor-send text-primary {{#if showSendButton}}show{{/if}} m{{getRtlAwareDirection "r"}}-3" {{isSendButtonDisabled}}>{{_ "send"}}</button>
 
   </div>
+  {{#if isFilesEnabled}}
+    <input type="file" class="message-editor-file-input" multiple/>
+  {{/if}}
+
   {{#with error}}
     <div class="chat-error text-danger">{{{xssGuard this}}}</div>
   {{/with}}
