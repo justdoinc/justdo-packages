@@ -44,6 +44,66 @@ APP.getEnv (env) ->
     tasks_collection: APP.collections.Tasks
     channels_collection: APP.collections.JDChatChannels
     messages_collection: APP.collections.JDChatMessages
+  
+  files_helpers = 
+    getChannelType: (channel_object) ->
+      return channel_object.channel_type
+    
+  # justdo-files
+  if env.JUSTDO_FILES_ENABLED is "true"
+    _.extend files_helpers,
+      file_storage_type: "justdo-files"
+      subscribeToFilesCollection: (channel_object) ->
+        channel_type = @getChannelType channel_object
+        
+        if channel_type is "task"
+          return Meteor.subscribe "jdfTaskFiles", channel_object.task_id
+
+        return
+      isFileExist: (file_id, channel_object) ->
+        channel_type = @getChannelType channel_object
+
+        if channel_type is "task"
+          return APP.justdo_files.isFileExist file_id, channel_object.task_id
+
+        return false
+      getShareableLink: (file_id, channel_object) ->
+        channel_type = @getChannelType channel_object
+
+        if channel_type is "task"
+          return APP.justdo_files.getShareableLink file_id, channel_object.task_id
+
+        return
+      uploadFile: (file, upload_file_options={}, channel_object, cb) ->
+        if not upload_file_options.meta?
+          upload_file_options.meta = {}
+        _.extend upload_file_options.meta,
+          from_chat: true
+          storage_type: @file_storage_type
+
+        if channel_object.channel_type is "task"
+          upload_file_options.task_id = channel_object.task_id
+          
+          try
+            upload = APP.justdo_files.uploadFile(file, upload_file_options)
+          catch err
+            cb err
+            return
+
+          upload.on "end", (err, file_obj) ->
+            if err?
+              cb err
+              return
+            cb null, file_obj
+            return
+
+          upload.start()
+
+          return
+
+        return
+  
+  _.extend options, files_helpers
 
   if Meteor.isClient
     options.hash_requests_handler = APP.hash_requests_handler
