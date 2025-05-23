@@ -50,21 +50,27 @@ Template.common_chat_message_editor.onCreated ->
     @setSendingState()
     @hideSendButton()
 
-    task_chat_object.sendMessage input_val, (err) =>
-      @unsetSendingState()
+    callSendMessageMethod = (input_val, files) =>
+      data = 
+        body: input_val
 
-      if err?
-        @setError(err.reason)
-        @showSendButton()
+
+      task_chat_object.sendMessage data, (err) =>
+        @unsetSendingState()
+
+        if err?
+          @setError(err.reason)
+          @showSendButton()
+          return
+
+        @setInputValue("")
+        task_chat_object.clearTempMessage()
+
+        Meteor.defer ->
+          $input.focus()
+
         return
 
-      @setInputValue("")
-      task_chat_object.clearTempMessage()
-
-      Meteor.defer ->
-        $input.focus()
-
-      return
 
     return
 
