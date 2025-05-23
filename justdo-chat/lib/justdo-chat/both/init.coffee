@@ -26,6 +26,41 @@ options_schema =
       type: "skip-type-check"
       optional: true
       bind_to_instance: true
+    
+    file_storage_type:
+      type: String
+      optional: true
+      bind_to_instance: true
+
+    getTaskFilesCollection:
+      type: Function
+      optional: true
+      bind_to_instance: true
+
+    subscribeToFilesCollection:
+      type: Function
+      optional: true
+      bind_to_instance: true
+
+    isFileExist:
+      type: Function
+      optional: true
+      bind_to_instance: true
+
+    getShareableLink:
+      type: Function
+      optional: true
+      bind_to_instance: true
+
+    uploadFile:
+      type: Function
+      optional: true
+      bind_to_instance: true
+    
+    getChannelType:
+      type: Function
+      optional: false
+      bind_to_instance: true
 
 # options_schema
 # ==============
