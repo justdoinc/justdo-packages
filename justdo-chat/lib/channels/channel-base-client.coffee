@@ -115,6 +115,8 @@ _.extend ChannelBaseClient.prototype,
     @_initial_subscription_ready = new ReactiveVar false
     @_channel_messages_subscription_dep = new Tracker.Dependency()
 
+    @_files_subscription = null
+
     @_verifyChannelConfObjectAgainstSchema()
 
     # Inits related to the messages subscriptions (note, we don't subscribe automatically)
@@ -317,9 +319,34 @@ _.extend ChannelBaseClient.prototype,
 
       @_channel_messages_subscription?.stop()
 
+      # Clean up files subscription on destroy
+      @_unsubscribeFilesCollectionIfExists()
+
       return
 
     return
+  
+  _unsubscribeFilesCollectionIfExists: ->
+    if @_files_subscription?
+      @_files_subscription.stop?()
+      @_files_subscription = null
+
+    return
+
+  _setupFilesSubscription: ->
+    # Only set up files subscription if files are enabled and justdo_chat supports it
+    if not @justdo_chat.isFilesEnabled()
+      return
+
+    @_unsubscribeFilesCollectionIfExists()
+
+    # Subscribe to files for this channel
+    @_files_subscription = @justdo_chat.subscribeToFilesCollection @
+
+    return
+  
+  _isFilesSubscriptionExists: ->
+    return @_files_subscription?
 
   getMessagesSubscriptionChannelDoc: (query_options) ->
     return @_getChannelsCollection().findOne(@getChannelIdentifier(), query_options)
@@ -418,6 +445,7 @@ _.extend ChannelBaseClient.prototype,
       initial_messages_to_request: 10
       additional_messages_to_request: 30
       request_authors_details: false
+      request_files_subscription: false
       onReady: null
     }, options
 
@@ -425,6 +453,10 @@ _.extend ChannelBaseClient.prototype,
       @logger.debug "Waiting for previous @requestChannelMessages() to complete"
 
       return
+
+    # Set up files subscription if requested and this is the first time requesting messages
+    if options.request_files_subscription and not @_isFilesSubscriptionExists()
+      @_setupFilesSubscription()
 
     channel_messages_subscription_state = Tracker.nonreactive =>
       return @getChannelMessagesSubscriptionState()
