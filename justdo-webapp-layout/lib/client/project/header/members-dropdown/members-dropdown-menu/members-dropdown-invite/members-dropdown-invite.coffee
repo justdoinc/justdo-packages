@@ -303,7 +303,7 @@ APP.executeAfterAppLibCode ->
       return
 
     "keyup .invite-members-input": (e, tpl) ->
-      if e.keyCode == 13
+      if (e.keyCode == 13) and not _.isEmpty($(".invite-members-input").val().trim())
         tpl.recognizeEmails()
 
       tpl.checkAddButtonVisibility()
