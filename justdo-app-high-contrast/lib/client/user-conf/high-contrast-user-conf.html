@@ -1,12 +1,6 @@
 <template name="justdo_user_config_high_contrast_config">
   <div class="controller-template-default-toggle justdo-user-config-high-contrast-config d-flex">
-    <div>
-      {{#if enabledForThisDevice}}
-        <svg class="jd-icon-user-settings text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "right"}}"/></svg>
-      {{else}}
-        <svg class="jd-icon-user-settings text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "left"}}"/></svg>
-      {{/if}}
-    </div>
-    <div>{{{xssGuard(_ "high_contrast_set_for_this_device")}}}</div>
+    {{> jdToggle checked=enabledForThisDevice}}
+    <div class="m{{getRtlAwareDirection "l"}}-2">{{{xssGuard(_ "high_contrast_set_for_this_device")}}}</div>
   </div>
 </template>

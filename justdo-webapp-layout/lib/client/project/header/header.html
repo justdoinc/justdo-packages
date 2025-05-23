@@ -51,9 +51,9 @@
 </template>
 
 <template name="project_settings">
-  <div id="project-settings-dropdown" class="dropdown project-header-button">
-    <div id="settingsDropdown" class="dropdown-toggle" data-display="static" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#settings"/></svg>
+  <div id="project-settings-dropdown" class="dropdown">
+    <div id="settingsDropdown" class="btn btn-white shadow-sm btn-sm dropdown-toggle m{{getRtlAwareDirection "l"}}-1" data-display="static" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#more-horizontal"/></svg>
     </div>
 
     <ul class="dropdown-menu dropdown-menu-right jd-p-075 animate slideIn shadow-lg border-0" aria-labelledby="settingsDropdown">
@@ -66,19 +66,17 @@
       {{/each}}
 
       <li id="register-project-for-daily-email" class="dropdown-item d-flex align-items-center px-1">
-      {{#if isSubscribedToDailyEmail}}
-        <svg class="jd-icon-dropdown text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "right"}}"/></svg>
-      {{else}}
-        <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "left"}}"/></svg>
-      {{/if}}
-      {{_ "email_daily_update_for_this_justdo_label"}}</li>
+        {{> jdToggle checked=isSubscribedToDailyEmail}}
+        <div class="m{{getRtlAwareDirection "l"}}-2">
+          {{_ "email_daily_update_for_this_justdo_label"}}
+        </div>
+      </li>
       <li class="dropdown-item email-notifications d-flex align-items-center px-1">
-      {{#if isSubscribedToEmailNotifications}}
-        <svg class="jd-icon-dropdown text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "right"}}"/></svg>
-      {{else}}
-        <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "left"}}"/></svg>
-      {{/if}}
-      {{_ "email_ownership_transfer_notifications_label"}}</li>
+        {{> jdToggle checked=isSubscribedToEmailNotifications}}
+        <div class="m{{getRtlAwareDirection "l"}}-2">
+          {{_ "email_ownership_transfer_notifications_label"}}
+        </div>
+      </li>
       {{#if showRolesAndGroupsManager}}
         <li class="roles-and-groups-manager dropdown-item d-flex align-items-center px-1">
           <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#users"></use></svg> Roles &amp; Groups Manager
@@ -105,13 +103,10 @@
           </li>
         {{/if}}
       {{/if}}
-
       {{#if is_project_admin}}
         <hr class="my-2">
         <li id="project-config" class="dropdown-item d-flex align-items-center px-1"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#settings"/></svg> {{_ "configure_this_justdo_label"}}</li>
-        {{> project_settings_dropdown_remove_project}}
       {{/if}}
-
       {{#each settingsDropdownBottomItems}}
         {{#if template}}
           {{> Template.dynamic template=template data=template_data}}
@@ -119,6 +114,9 @@
           {{{html}}}
         {{/if}}
       {{/each}}
+      {{#if is_project_admin}}
+        {{> project_settings_dropdown_remove_project}}
+      {{/if}}
     </ul>
   </div>
 </template>

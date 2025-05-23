@@ -11,8 +11,8 @@ APP.executeAfterAppLibCode ->
   curProj = -> APP.modules.project_page.curProj()
 
   Template.disable_quick_add_project_config.helpers
-    isModuleEnabled: ->
-      return curProj().isCustomFeatureEnabled(share.disable_quick_add_custom_plugin_id)
+    notIsModuleEnabled: ->
+      return not curProj().isCustomFeatureEnabled(share.disable_quick_add_custom_plugin_id)
 
     pluginName: ->
       return share.disable_quick_add_custom_plugin_name

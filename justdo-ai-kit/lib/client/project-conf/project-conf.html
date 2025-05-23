@@ -2,11 +2,7 @@
   <div class="project-conf-justdo-ai-kit-config py-2 d-flex align-items-center">
     {{pluginName}}
     <div class="m{{getRtlAwareDirection "l"}}-auto">
-      {{#if isModuleEnabled}}
-        <svg class="jd-icon-extension text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "right"}}"/></svg>
-      {{else}}
-        <svg class="jd-icon-extension text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "left"}}"/></svg>
-      {{/if}}
+      {{> jdToggle checked=isModuleEnabled}}
     </div>
   </div>
 </template>
