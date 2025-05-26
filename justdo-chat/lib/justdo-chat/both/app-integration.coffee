@@ -49,8 +49,63 @@ APP.getEnv (env) ->
     getChannelType: (channel_object) ->
       return channel_object.channel_type
     
+  # Filestack
+  if env.TASKS_FILES_UPLOAD_ENABLED is "true"
+    _.extend files_helpers,
+      file_storage_type: "filestack"
+      subscribeToFilesCollection: (channel_object) ->
+        channel_type = @getChannelType channel_object
+        if channel_type is "task"
+          return JD.subscribeItemsAugmentedFields [channel_object.task_id], ["files"]
+        return
+      isFileExist: (file_id, channel_object) ->
+        channel_type = @getChannelType channel_object
+        if channel_type is "task"
+          query = 
+            _id: channel_object.task_id
+            files: 
+              $elemMatch:
+                id: file_id
+          query_options = 
+            fields:
+              _id: 1
+
+          return APP.collections.TasksAugmentedFields.findOne(query, query_options)?
+        return false
+      downloadFile: (file_id, channel_object) ->
+        channel_type = @getChannelType channel_object  
+        if channel_type is "task"
+          return APP.tasks_file_manager_plugin.tasks_file_manager.downloadFile channel_object.task_id, file_id, (err, url) ->
+            if err?
+              console.error err.reason or err
+            return
+        return
+      uploadFile: (file, upload_file_options={}, channel_object, cb) ->
+        if channel_object.channel_type is "task" 
+          task_id = channel_object.task_id
+          files = [file]
+          APP.tasks_file_manager_plugin.tasks_file_manager.uploadFiles task_id, files, (err, uploaded_files) ->
+            if err?
+              cb err
+              return
+            
+            # While tasks_file_manager support bulk upload,
+            # this uploadFile is atomic to maintain consistency with justdo-files
+            uploaded_file = uploaded_files[0]
+            uploaded_file =
+              _id: APP.tasks_file_manager_plugin.tasks_file_manager.extractFileIdFromUrl uploaded_file.url
+              name: uploaded_file.filename
+              size: uploaded_file.size
+              
+            cb null, uploaded_file
+
+            return
+            
+          return
+        
+        return
   # justdo-files
-  if env.JUSTDO_FILES_ENABLED is "true"
+  else if env.JUSTDO_FILES_ENABLED is "true"
     _.extend files_helpers,
       file_storage_type: "justdo-files"
       subscribeToFilesCollection: (channel_object) ->
