@@ -191,7 +191,7 @@ _.extend ChannelBaseClient.prototype,
       body = {body}
 
     @justdo_chat.sendMessage @channel_type, @getChannelIdentifier(), body, =>
-      @emit "message-sent", {body: body}
+      @emit "message-sent", body
 
       JustdoHelpers.callCb cb
 
