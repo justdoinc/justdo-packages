@@ -508,21 +508,47 @@ _.extend ChannelBaseClient.prototype,
   getSubscribersWhoReadMessage: (message_obj, options) ->
     default_options = 
       include_self: false
+      include_author: false
     options = _.extend default_options, options
     
-    if _.isEmpty message_obj
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        JustdoChat.schemas.MessagesSchema,
+        message_obj,
+        {self: @, throw_on_error: true}
+      )
+    message_obj = cleaned_val    
+
+    if not (subscribers = @getSubscribersArray())?
       return []
       
-    subscribers = @getSubscribersArray()
+    current_user_id = Meteor.userId()
+    
     return _.filter subscribers, (subscriber) -> 
-      is_subscriber_read = subscriber.last_read > message_obj.createdAt
-      is_subscriber_author = subscriber.user_id is message_obj.author
+      user_id = subscriber.user_id
+      last_read = subscriber.last_read
+
+      if not last_read?
+        return false 
       
-      if options.include_self
-        return is_subscriber_read and (not is_subscriber_author)
-      else
-        is_subscriber_self = subscriber.user_id is Meteor.userId()
-        return is_subscriber_read and (not is_subscriber_author) and (not is_subscriber_self)
+      has_read_message = last_read > message_obj.createdAt
+      # Check if subscriber has read the message
+      if not has_read_message
+        return false
+      
+      # Apply filtering options
+      is_subscriber_author = user_id is message_obj.author
+      is_subscriber_self = user_id is current_user_id
+      
+      # Exclude self if not requested
+      if not options.include_self and is_subscriber_self
+        return false
+      
+      # Exclude author if not requested  
+      if not options.include_author and is_subscriber_author
+        return false
+      
+      return true
 
   getChannelSubscriberDoc: (user_id) ->
     # Returns the document from the subscribers array of the channel belonging
@@ -713,3 +739,4 @@ _.extend ChannelBaseClient.prototype,
     return {}
 
 share.ChannelBaseClient = ChannelBaseClient
+
