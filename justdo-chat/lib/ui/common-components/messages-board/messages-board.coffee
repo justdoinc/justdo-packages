@@ -170,11 +170,6 @@ Template.common_chat_messages_board_message_card.helpers
     channel_obj = tpl.getChannelObject()
     return APP.justdo_chat.isFileExist @_id, channel_obj
 
-  shareableLink: ->
-    tpl = Template.instance()
-    channel_obj = tpl.getChannelObject()
-    return APP.justdo_chat.getShareableLink @_id, channel_obj
-
   size: ->
     return JustdoHelpers.bytesToHumanReadable @size
 
@@ -266,5 +261,15 @@ Template.common_chat_messages_board_message_card.events
       APP.modules.project_page.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(task_id)
     else
       APP.modules.project_page.activateTaskInProject(project_id, task_id)
+
+    return
+
+  "click .download-file": (e, tmpl) ->
+    e.preventDefault()
+
+    file = @
+    channel_obj = tmpl.getChannelObject()
+
+    APP.justdo_chat.downloadFile file._id, channel_obj
 
     return

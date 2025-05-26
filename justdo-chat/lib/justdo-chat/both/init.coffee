@@ -47,7 +47,7 @@ options_schema =
       optional: true
       bind_to_instance: true
 
-    getShareableLink:
+    downloadFile:
       type: Function
       optional: true
       bind_to_instance: true
