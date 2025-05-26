@@ -67,11 +67,11 @@ APP.getEnv (env) ->
           return APP.justdo_files.isFileExist file_id, channel_object.task_id
 
         return false
-      getShareableLink: (file_id, channel_object) ->
+      downloadFile: (file_id, channel_object) ->
         channel_type = @getChannelType channel_object
 
         if channel_type is "task"
-          return APP.justdo_files.getShareableLink file_id, channel_object.task_id
+          return APP.justdo_files.downloadFile file_id
 
         return
       uploadFile: (file, upload_file_options={}, channel_object, cb) ->
