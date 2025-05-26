@@ -65,19 +65,10 @@ _.extend TasksFileManager.prototype,
     check files, [Object]
     _.each files, (file) => @requireFilestackUrl file.url
 
-    # takes a url like:          https://www.filestackapi.com/api/file/KW9EJhYtS6y48Whm2S6D
-    # and returns a handle like: KW9EJhYtS6y48Whm2S6D
-    # should be a globally unique id supplied by filestack
-    getHande = (url) =>
-      check(url, String)
-      regex = /[^\\\/]+$/
-      match = url.match(regex)
-      return match?[0]
-
     upload_date = new Date()
 
-    files_to_upload = _.map files, (file) ->
-      id: getHande file.url
+    files_to_upload = _.map files, (file) =>
+      id: @extractFileIdFromUrl file.url
       title: file.filename
       url: file.url
       size: file.size
