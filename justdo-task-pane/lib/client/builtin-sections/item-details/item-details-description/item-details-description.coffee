@@ -212,7 +212,7 @@ APP.executeAfterAppLibCode ->
             return
 
           for file in uploaded_files
-            file_id = file.url.substr(file.url.lastIndexOf("/")+1)
+            file_id = APP.tasks_file_manager_plugin.tasks_file_manager.extractFileIdFromUrl file.url
             download_path = APP.tasks_file_manager_plugin.tasks_file_manager.getFileDownloadPath task_id, file_id
             replaceEditorImageAndFile file, download_path
         

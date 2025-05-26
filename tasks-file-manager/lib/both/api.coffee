@@ -93,3 +93,12 @@ _.extend TasksFileManager.prototype,
   
   getFileDownloadPath: (task_id, file_id) ->
     return "#{TasksFileManager.file_download_route}?task_id=#{encodeURIComponent task_id}&file_id=#{encodeURIComponent file_id}"
+
+  # takes a url like:          https://www.filestackapi.com/api/file/KW9EJhYtS6y48Whm2S6D
+  # and returns a handle like: KW9EJhYtS6y48Whm2S6D
+  # should be a globally unique id supplied by filestack
+  extractFileIdFromUrl: (url) ->
+    check(url, String)
+    regex = /[^\\\/]+$/
+    match = url.match(regex)
+    return match?[0]
