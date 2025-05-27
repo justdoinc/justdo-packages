@@ -59,6 +59,22 @@ _.extend PACK.modules,
 
             return # Keep this return to return undefined (as required by autoValue)
 
+        include_descendants_upon_ownerhsip_transfer:
+          label: "Include Descendants Upon Ownership Transfer"
+          type: Boolean
+          optional: true
+          grid_visible_column: false
+          grid_editable_column: false
+          user_editable_column: true
+
+        limit_owners_upon_decedants_ownerhsip_transfer:
+          label: "Limit Owners Upon Ownership Transfer"
+          type: [String]
+          optional: true
+          grid_visible_column: false
+          grid_editable_column: false
+          user_editable_column: true
+
         #
         # Reject ownership related
         #
