@@ -149,9 +149,9 @@ Template.global_activity_log_project_pane_project_activity.helpers
 
   negativeDateOrNow: -> JustdoHelpers.negativeDateOrNow(@when)
 
-  isActiveMyChangesFilter: -> not getShowMyChangesState()
+  isActiveMyChangesFilter: -> getShowMyChangesState()
 
-  isActiveNotesFilter: -> not getNotesFilterState()
+  isActiveNotesFilter: -> getNotesFilterState()
 
   loadingNewLogs: ->
     tpl = Template.instance()

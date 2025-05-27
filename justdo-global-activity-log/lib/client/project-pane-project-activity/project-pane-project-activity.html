@@ -11,21 +11,13 @@
 
     <div class="filter-toggle show-my-changes px-3 d-flex align-items-center justify-content-end">
       <div class="filter-toggle-icon">
-        {{#if isActiveMyChangesFilter}}
-          <svg class="jd-icon text-secondary mr-0"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "left"}}"/></svg>
-        {{else}}
-          <svg class="jd-icon text-primary mr-0"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "right"}}"/></svg>
-        {{/if}}
+        {{> jdToggle checked=isActiveMyChangesFilter}}
       </div>Show my changes as well
     </div>
 
     <div class="filter-toggle show-notes-only px-3 d-flex align-items-center justify-content-end">
       <div class="filter-toggle-icon">
-        {{#if isActiveNotesFilter}}
-          <svg class="jd-icon text-secondary mr-0"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "left"}}"/></svg>
-        {{else}}
-          <svg class="jd-icon text-primary mr-0"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-{{getRtlAwareDirection "right"}}"/></svg>
-        {{/if}}
+        {{> jdToggle checked=isActiveNotesFilter}}
       </div>Filter for Notes changes only
     </div>
 
