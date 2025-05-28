@@ -256,20 +256,6 @@ APP.executeAfterAppLibCode ->
         # Tasks are transferred to proxy users directly
         APP.projects.modules.owners.takeOwnership(item_doc._id, new_owner_doc._id)
       else
-      temp_subtree_users_subscription = JD.subscribeItemsAugmentedFields item_doc._id, ["users"], {subscribe_sub_tree: true}, ->
-        temp_subtree_users_subscription.stop() # Stop immediately, we need the data only for a short while.
-
-        # find the tasks that belong to 'me' and are visible to the transferee
-        child_tasks = []
-        gc = APP.modules.project_page.mainGridControl()
-        gc._grid_data.each APP.modules.project_page.getCurrentGcm().getPath()[1], (section, item_type, item_obj) ->
-          item_users = APP.collections.TasksAugmentedFields.findOne(item_obj._id, {fields: {users: 1}})?.users or []
-
-          if item_obj.owner_id == Meteor.userId() and
-                new_owner_doc._id in item_users and
-                not item_obj.pending_owner_id?
-            child_tasks.push item_obj._id
-          return
         modifier =
           $set:
             owner_id: Meteor.userId() # The one that request the transfer becomes the owner
@@ -277,9 +263,13 @@ APP.executeAfterAppLibCode ->
             pending_owner_id: new_owner_doc._id
         APP.collections.Tasks.update item_doc._id, modifier
 
+      # if there are relevant child tasks:
+      item_has_child_query = 
+        "parents.#{item_doc._id}": 
+          $ne: null
+        users: new_owner_doc._id
+      item_has_child = APP.collections.Tasks.findOne(item_has_child_query, {fields: {_id: 1}})?
 
-        # if there are relevant child tasks:
-        if child_tasks.length > 0
           JustdoSnackbar.show
             text: TAPi18n.__ "owners_mgmt_transfer_child_tasks_too", {count: child_tasks.length}
             actionText: TAPi18n.__ "owners_mgmt_transfer"
@@ -319,6 +309,7 @@ APP.executeAfterAppLibCode ->
 
         return
 
+      if item_has_child?
       getEventDropdownData(e, "close")()
 
     "click .cancel-transfer": (e, template) ->
