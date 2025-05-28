@@ -281,5 +281,20 @@ _.extend PACK.modules.owners,
         self.items_collection.update(task_id, update)
 
         return
+  
+      bulkUpdateTasksOwner: (project_id, common_parent_id, task_ids, new_owner_id) ->
+        check common_parent_id, String
+        check task_ids, [String]
+        check new_owner_id, String
 
+        data = 
+          project_id: project_id
+          new_owner_id: new_owner_id
+          common_parent_id: common_parent_id
+        APP.justdo_db_migrations.registerBatchedCollectionUpdatesJob "batch-update-owner-id",
+          data: data
+          ids_to_update: task_ids
+          user_id: @userId
+
+        return
     return
