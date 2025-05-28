@@ -260,8 +260,8 @@ _.extend JustdoDbMigrations.prototype,
             _id: data.common_parent_id
           modifier = 
             $set: 
-              include_descendants_upon_ownerhsip_transfer: null
-              limit_owners_upon_decedants_ownerhsip_transfer: null
+              include_descendants_upon_ownership_transfer: null
+              limit_owners_upon_descendants_ownership_transfer: null
           APP.collections.Tasks.update query, modifier
 
           return
