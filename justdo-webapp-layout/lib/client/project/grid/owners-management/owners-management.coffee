@@ -348,9 +348,43 @@ APP.executeAfterAppLibCode ->
 
       return
 
-    "click .take-ownership, click .approve-transfer": (e, template) ->
+    "click .approve-transfer": (e, template) ->
       template.takeOwnership(e)
 
+      return
+    
+    "click .take-ownership": (e, template) ->
+      item_doc = template.data
+      item_owner_doc = JustdoHelpers.getUserDocById(item_doc.owner_id)
+
+      template.takeOwnership(e)
+      
+      JustdoSnackbar.show
+        text: TAPi18n.__ "owners_mgmt_transfer_take_child_tasks_too"
+        showDismissButton: true
+        actionText: TAPi18n.__ "owners_mgmt_transfer_child_tasks_owned_by", {name: JustdoHelpers.displayName(item_owner_doc)}
+        onActionClick: =>
+          transfer_child_tasks_options = 
+            limit_owners: item_owner_doc._id
+            new_owner_id: Meteor.userId()
+            execute_immediately: true
+          template.transferChildTasks item_doc._id, transfer_child_tasks_options
+
+          JustdoSnackbar.close()
+
+          return
+        showSecondButton: true
+        secondButtonText: TAPi18n.__ "owners_mgmt_transfer_all_child_tasks"
+        onSecondButtonClick: =>
+          transfer_child_tasks_options = 
+            new_owner_id: Meteor.userId()
+            execute_immediately: true
+          template.transferChildTasks item_doc._id, transfer_child_tasks_options
+
+          JustdoSnackbar.close()
+
+          return
+      
       return
 
     "keydown .ownership-transfer-dialog" : (e) ->

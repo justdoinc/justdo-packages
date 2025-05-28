@@ -12,7 +12,9 @@
   "owners_mgmt_transfer_child_tasks_too": "Transfer ownership of child-tasks as well?",
   "owners_mgmt_transfer_child_tasks_done": "Transfer ownership of __count__ child-task processed.",
   "owners_mgmt_transfer_child_tasks_done_plural": "Transfer ownership of __count__ child-tasks processed.",
+  "owners_mgmt_transfer_take_child_tasks_too": "Take ownership of child-tasks as well?",
   "owners_mgmt_transfer_all_child_tasks": "All",
   "owners_mgmt_transfer_my_child_tasks": "Mine only",
+  "owners_mgmt_transfer_child_tasks_owned_by": "Child-tasks owned by __name__",
   "owners_mgmt_transfer": "Transfer"
 }
