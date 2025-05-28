@@ -196,4 +196,76 @@ _.extend JustdoDbMigrations.prototype,
 
       return # end of do =>
 
+    do => # Owner ID batch update type
+      job_type = "batch-update-owner-id"
+      @registerBatchedCollectionUpdatesType job_type,
+        collection: APP.collections.Tasks
+        use_raw_collection: true
+        data_schema: new SimpleSchema
+          project_id:
+            type: String
+          new_owner_id:
+            type: String
+            optional: true # null will clear the owner
+          common_parent_id:
+            type: String
+        jobsGatekeeper: (options) ->
+          {data, ids_to_update, user_id} = options
+
+          if user_id? # if user_id is null/undefined, we consider it a system-triggered job
+            APP.projects.requireUserIsMemberOfProject data.project_id, user_id
+
+            # CHECK PERMISSIONS:
+            # Use the legacy BeforeBulkUpdateExecution handler to which the permissions plugin is binding
+            # to set the hooks that ensures the process is allowed permissions wise.
+            modifiers = @modifiersGenerator(data, user_id)
+            for modifier in modifiers
+              if not APP.projects.processHandlers("BeforeBulkUpdateExecution", data.project_id, ids_to_update, modifier, user_id)
+                throw self._error "invalid-job-data", "For jobs of type #{job_type} the BeforeBulkUpdateExecution handler failed"
+
+          new_owner_id = data?.new_owner_id
+          if not new_owner_id?
+            throw self._error "invalid-job-data", "For jobs of type #{job_type} new_owner_id should be provided"
+          APP.projects.requireUserIsMemberOfProject data.project_id, new_owner_id
+
+          user_ids_to_check = [new_owner_id]
+          if user_id?
+            user_ids_to_check.push user_id
+
+          is_affected_users_non_tasks_member_query =
+            _id:
+              $in: ids_to_update
+            users:
+              $nin: user_ids_to_check
+          is_affected_users_non_tasks_member_query_options =
+            fields:
+              _id: 1
+          if APP.collections.Tasks.findOne(is_affected_users_non_tasks_member_query, is_affected_users_non_tasks_member_query_options)?
+            throw self._error "invalid-job-data", "Performing user or new owner is not a member in all the affected tasks."
+
+          return
+
+        modifiersGenerator: (data, perform_as) ->
+          modifiers = [
+            $set:
+              owner_id: data.new_owner_id
+              pending_owner_id: null
+              is_removed_owner: null
+          ]
+
+          return modifiers
+
+        beforeJobMarkedAsDone: (data, perform_as) ->
+          query = 
+            _id: data.common_parent_id
+          modifier = 
+            $set: 
+              include_descendants_upon_ownerhsip_transfer: null
+              limit_owners_upon_decedants_ownerhsip_transfer: null
+          APP.collections.Tasks.update query, modifier
+
+          return
+
+      return # end of do =>
+
     return

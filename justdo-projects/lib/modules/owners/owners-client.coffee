@@ -163,3 +163,14 @@ _.extend PACK.modules.owners,
       self._reactToOwnershipTransferHashRequest("reject", args)
 
       return
+  
+  bulkUpdateTasksOwner: (project_id, common_parent_id, task_ids, new_owner_id) ->
+    check task_ids, [String]
+    check new_owner_id, String
+
+    Meteor.call "bulkUpdateTasksOwner", project_id, common_parent_id, task_ids, new_owner_id, (err) ->
+      if err?
+        JustdoSnackbar.show
+          text: err.message
+
+    return
