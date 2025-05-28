@@ -322,9 +322,9 @@ APP.executeAfterAppLibCode ->
 
             return
       
-        return
-
       getEventDropdownData(e, "close")()
+
+      return
 
     "click .cancel-transfer": (e, template) ->
       item_doc = template.data
