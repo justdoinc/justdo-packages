@@ -176,10 +176,10 @@ _.extend PACK.modules.owners,
 
     modifier = 
       $set:
-        include_descendants_upon_ownerhsip_transfer: true
+        include_descendants_upon_ownership_transfer: true
     
     if not _.isEmpty(limit_owners)
-      modifier.$set.limit_owners_upon_decedants_ownerhsip_transfer = limit_owners
+      modifier.$set.limit_owners_upon_descendants_ownership_transfer = limit_owners
 
     APP.collections.Tasks.update query, modifier
 
@@ -192,8 +192,8 @@ _.extend PACK.modules.owners,
 
     modifier = 
       $set:
-        include_descendants_upon_ownerhsip_transfer: null
-        limit_owners_upon_decedants_ownerhsip_transfer: null
+        include_descendants_upon_ownership_transfer: null
+        limit_owners_upon_descendants_ownership_transfer: null
 
     APP.collections.Tasks.update query, modifier
 
@@ -203,20 +203,20 @@ _.extend PACK.modules.owners,
     check task_id, String
     check new_owner_id, String
 
-    task_doc = APP.collections.Tasks.findOne(task_id, {fields: {project_id: 1, owner_id: 1, include_descendants_upon_ownerhsip_transfer: 1, limit_owners_upon_decedants_ownerhsip_transfer: 1}})
+    task_doc = APP.collections.Tasks.findOne(task_id, {fields: {project_id: 1, owner_id: 1, include_descendants_upon_ownership_transfer: 1, limit_owners_upon_descendants_ownership_transfer: 1}})
     if not task_doc?
       return
     
     project_id = task_doc.project_id
-    include_descendants_upon_ownerhsip_transfer = task_doc.include_descendants_upon_ownerhsip_transfer
-    limit_owners_upon_decedants_ownerhsip_transfer = task_doc.limit_owners_upon_decedants_ownerhsip_transfer
+    include_descendants_upon_ownership_transfer = task_doc.include_descendants_upon_ownership_transfer
+    limit_owners_upon_descendants_ownership_transfer = task_doc.limit_owners_upon_descendants_ownership_transfer
     
     affected_task_ids = []
     if task_doc.owner_id isnt new_owner_id
       affected_task_ids.push task_id
 
-    # Taking ownerhsip of a single task can be done by just updating the task owner
-    if not include_descendants_upon_ownerhsip_transfer
+    # Taking ownership of a single task can be done by just updating the task owner
+    if not include_descendants_upon_ownership_transfer
       query = 
         _id: task_id
       modifier = 
@@ -224,8 +224,8 @@ _.extend PACK.modules.owners,
           owner_id: new_owner_id
           pending_owner_id: null
           is_removed_owner: null
-          include_descendants_upon_ownerhsip_transfer: null
-          limit_owners_upon_decedants_ownerhsip_transfer: null
+          include_descendants_upon_ownership_transfer: null
+          limit_owners_upon_descendants_ownership_transfer: null
       
       APP.collections.Tasks.update query, modifier
       return affected_task_ids
@@ -238,10 +238,10 @@ _.extend PACK.modules.owners,
       if item_owner_id is new_owner_id
         return
       
-      # If limit_owners_upon_decedants_ownerhsip_transfer is set, the item must be owned by one of the limit owners
+      # If limit_owners_upon_descendants_ownership_transfer is set, the item must be owned by one of the limit owners
       is_item_owned_by_limit_owners = true
-      if not _.isEmpty task_doc.limit_owners_upon_decedants_ownerhsip_transfer
-        is_item_owned_by_limit_owners = item_owner_id in task_doc.limit_owners_upon_decedants_ownerhsip_transfer
+      if not _.isEmpty task_doc.limit_owners_upon_descendants_ownership_transfer
+        is_item_owned_by_limit_owners = item_owner_id in task_doc.limit_owners_upon_descendants_ownership_transfer
       
       if not is_item_owned_by_limit_owners
         return
