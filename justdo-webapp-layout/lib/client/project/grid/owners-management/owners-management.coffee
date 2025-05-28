@@ -270,22 +270,6 @@ APP.executeAfterAppLibCode ->
         users: new_owner_doc._id
       item_has_child = APP.collections.Tasks.findOne(item_has_child_query, {fields: {_id: 1}})?
 
-          JustdoSnackbar.show
-            text: TAPi18n.__ "owners_mgmt_transfer_child_tasks_too", {count: child_tasks.length}
-            actionText: TAPi18n.__ "owners_mgmt_transfer"
-            duration: 10000
-            showDismissButton: true
-            onActionClick: =>
-              for task_id in child_tasks
-                modifier =
-                  $set: {}
-                if new_owner_doc.is_proxy
-                  modifier.$set =
-                    owner_id: new_owner_doc._id
-                else
-                  modifier.$set =
-                    pending_owner_id: new_owner_doc._id
-                APP.collections.Tasks.update task_id, modifier
       showChildTasksTransferredSnackbar = (affected_task_ids) ->
         JustdoSnackbar.show
           text: TAPi18n.__ "owners_mgmt_transfer_child_tasks_done", {count: affected_task_ids.length}
@@ -305,6 +289,41 @@ APP.executeAfterAppLibCode ->
         return
 
       if item_has_child?
+        JustdoSnackbar.show
+          text: TAPi18n.__ "owners_mgmt_transfer_child_tasks_too"
+          showDismissButton: true
+          actionText: TAPi18n.__ "owners_mgmt_transfer_my_child_tasks"
+          onActionClick: =>
+            transfer_child_tasks_options = 
+              limit_owners: Meteor.userId()
+            
+            if APP.accounts.isProxyUser(new_owner_doc)
+              transfer_child_tasks_options.new_owner_id = new_owner_doc._id
+              transfer_child_tasks_options.execute_immediately = true
+
+            affected_task_ids = template.transferChildTasks item_doc._id, transfer_child_tasks_options
+
+            showChildTasksTransferredSnackbar(affected_task_ids)
+
+            return
+          showSecondButton: true
+          secondButtonText: TAPi18n.__ "owners_mgmt_transfer_all_child_tasks"
+          onSecondButtonClick: =>
+            transfer_child_tasks_options = 
+              limit_owners: null
+            
+            if APP.accounts.isProxyUser(new_owner_doc)
+              transfer_child_tasks_options.new_owner_id = new_owner_doc._id
+              transfer_child_tasks_options.execute_immediately = true
+
+            affected_task_ids = template.transferChildTasks item_doc._id, transfer_child_tasks_options
+
+            showChildTasksTransferredSnackbar(affected_task_ids)
+
+            return
+      
+        return
+
       getEventDropdownData(e, "close")()
 
     "click .cancel-transfer": (e, template) ->

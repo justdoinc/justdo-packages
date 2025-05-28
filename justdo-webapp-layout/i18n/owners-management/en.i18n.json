@@ -9,9 +9,10 @@
   "owners_mgmt_edit_task_members": "Edit Task Members",
   "owners_mgmt_share_task": "Share Task",
   "owners_mgmt_leave_a_reject_message": "Leave a reject message",
-  "owners_mgmt_transfer_child_tasks_too": "Transfer ownership of __count__ child-task as well?",
-  "owners_mgmt_transfer_child_tasks_too_plural": "Transfer ownership of __count__ child-tasks as well?",
+  "owners_mgmt_transfer_child_tasks_too": "Transfer ownership of child-tasks as well?",
   "owners_mgmt_transfer_child_tasks_done": "Transfer ownership of __count__ child-task processed.",
   "owners_mgmt_transfer_child_tasks_done_plural": "Transfer ownership of __count__ child-tasks processed.",
+  "owners_mgmt_transfer_all_child_tasks": "All",
+  "owners_mgmt_transfer_my_child_tasks": "Mine only",
   "owners_mgmt_transfer": "Transfer"
 }
