@@ -185,12 +185,7 @@ APP.executeAfterAppLibCode ->
     @takeOwnership = (e) ->
       item_doc = @data
 
-      APP.collections.Tasks.update item_doc._id, 
-        $set:
-          owner_id: Meteor.userId()
-          pending_owner_id: null
-          is_removed_owner: null
-
+      APP.projects.modules.owners.takeOwnership(item_doc._id, Meteor.userId())
       getEventDropdownData(e, "close")()
 
       return
@@ -240,19 +235,10 @@ APP.executeAfterAppLibCode ->
       new_owner_doc = @
       item_doc = template.data
 
-      modifier =
-        $set: {}
-      if new_owner_doc.is_proxy
+      if APP.accounts.isProxyUser(new_owner_doc)
         # Tasks are transferred to proxy users directly
-        modifier.$set =
-          owner_id: new_owner_doc._id
+        APP.projects.modules.owners.takeOwnership(item_doc._id, new_owner_doc._id)
       else
-        modifier.$set =
-          owner_id: Meteor.userId() # The one that request the transfer becomes the owner
-          is_removed_owner: null
-          pending_owner_id: new_owner_doc._id
-      APP.collections.Tasks.update item_doc._id, modifier
-
       temp_subtree_users_subscription = JD.subscribeItemsAugmentedFields item_doc._id, ["users"], {subscribe_sub_tree: true}, ->
         temp_subtree_users_subscription.stop() # Stop immediately, we need the data only for a short while.
 
@@ -267,6 +253,13 @@ APP.executeAfterAppLibCode ->
                 not item_obj.pending_owner_id?
             child_tasks.push item_obj._id
           return
+        modifier =
+          $set:
+            owner_id: Meteor.userId() # The one that request the transfer becomes the owner
+            is_removed_owner: null
+            pending_owner_id: new_owner_doc._id
+        APP.collections.Tasks.update item_doc._id, modifier
+
 
         # if there are relevant child tasks:
         if child_tasks.length > 0
@@ -319,12 +312,7 @@ APP.executeAfterAppLibCode ->
         APP.projects.modules.owners.rejectOwnershipTransfer(item_doc._id, reject_message)
       else
         # Cancel transfer
-        doc_updates =
-          $set:
-            owner_id: item_doc.owner_id
-            pending_owner_id: null
-
-        APP.collections.Tasks.update item_doc._id, doc_updates
+        APP.projects.modules.owners.takeOwnership(item_doc._id, item_doc.owner_id)
 
       getEventDropdownData(e, "close")()
 

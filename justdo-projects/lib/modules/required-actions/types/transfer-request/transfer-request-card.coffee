@@ -64,12 +64,7 @@ Template.required_action_card_transfer_request.events
     return
 
   "click .accept": ->
-    update =
-      $set:
-        owner_id: Meteor.userId()
-        pending_owner_id: null
-
-    @projects_obj.items_collection.update(@task_id, update)
+    affected_task_ids = APP.projects.modules.owners.takeOwnership(@task_id, Meteor.userId())
 
     JustdoSnackbar.show
       text: TAPi18n.__ "transfer_request_card_task_accepted", {task_common_name: JustdoHelpers.taskCommonName({title: @title, seqId: @seqId}, 20)}

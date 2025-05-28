@@ -164,6 +164,62 @@ _.extend PACK.modules.owners,
 
       return
   
+  takeOwnership: (task_id, new_owner_id) ->
+    check task_id, String
+    check new_owner_id, String
+
+    task_doc = APP.collections.Tasks.findOne(task_id, {fields: {project_id: 1, owner_id: 1, include_descendants_upon_ownerhsip_transfer: 1, limit_owners_upon_decedants_ownerhsip_transfer: 1}})
+    if not task_doc?
+      return
+    
+    project_id = task_doc.project_id
+    include_descendants_upon_ownerhsip_transfer = task_doc.include_descendants_upon_ownerhsip_transfer
+    limit_owners_upon_decedants_ownerhsip_transfer = task_doc.limit_owners_upon_decedants_ownerhsip_transfer
+    
+    affected_task_ids = []
+    if task_doc.owner_id isnt new_owner_id
+      affected_task_ids.push task_id
+
+    # Taking ownerhsip of a single task can be done by just updating the task owner
+    if not include_descendants_upon_ownerhsip_transfer
+      query = 
+        _id: task_id
+      modifier = 
+        $set: 
+          owner_id: new_owner_id
+          pending_owner_id: null
+          is_removed_owner: null
+          include_descendants_upon_ownerhsip_transfer: null
+          limit_owners_upon_decedants_ownerhsip_transfer: null
+      
+      APP.collections.Tasks.update query, modifier
+      return affected_task_ids
+
+    grid_data = APP.modules.project_page.mainGridData()
+    path = grid_data.getCollectionItemIdPath task_id
+    grid_data.each path, (section, item_type, item_obj) ->
+      item_owner_id = item_obj.owner_id
+      # Already owned by the new owner, no need to update
+      if item_owner_id is new_owner_id
+        return
+      
+      # If limit_owners_upon_decedants_ownerhsip_transfer is set, the item must be owned by one of the limit owners
+      is_item_owned_by_limit_owners = true
+      if not _.isEmpty task_doc.limit_owners_upon_decedants_ownerhsip_transfer
+        is_item_owned_by_limit_owners = item_owner_id in task_doc.limit_owners_upon_decedants_ownerhsip_transfer
+      
+      if not is_item_owned_by_limit_owners
+        return
+      
+      affected_task_ids.push item_obj._id
+
+      return
+    
+    if not _.isEmpty affected_task_ids
+      @bulkUpdateTasksOwner project_id, task_id, affected_task_ids, new_owner_id
+
+    return affected_task_ids
+  
   bulkUpdateTasksOwner: (project_id, common_parent_id, task_ids, new_owner_id) ->
     check task_ids, [String]
     check new_owner_id, String
