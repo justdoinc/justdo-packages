@@ -190,6 +190,23 @@ APP.executeAfterAppLibCode ->
 
       return
 
+    @transferChildTasks = (item_id, options) ->
+      default_options = 
+        new_owner_id: null
+        limit_owners: null
+        execute_immediately: false
+      options = _.extend default_options, options
+
+      APP.projects.modules.owners.createTransferChildTasksRequest(item_id, options.limit_owners)
+
+      affected_task_ids = []
+      # Execute immediately the transfer of the child tasks
+      if options.execute_immediately
+        check options.new_owner_id, String
+        affected_task_ids = APP.projects.modules.owners.takeOwnership(item_id, options.new_owner_id)
+
+      return affected_task_ids
+
     @autorun =>
       @task_has_other_members_rv.set "loading"
       JD.subscribeItemsAugmentedFields JD.activeItemId(), ["users"], {}, =>
