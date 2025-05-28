@@ -163,6 +163,41 @@ _.extend PACK.modules.owners,
       self._reactToOwnershipTransferHashRequest("reject", args)
 
       return
+
+  # Transfer ownership of child tasks under `parent_task_id`.
+  # If `limit_owners` is provided, only the child tasks owned by one of the `limit_owners` will be transferred.
+  # If `limit_owners` is not provided, all the child tasks will be transferred.
+  createTransferChildTasksRequest: (parent_task_id, limit_owners) ->
+    if _.isString limit_owners
+      limit_owners = [limit_owners]
+
+    query = 
+      _id: parent_task_id
+
+    modifier = 
+      $set:
+        include_descendants_upon_ownerhsip_transfer: true
+    
+    if not _.isEmpty(limit_owners)
+      modifier.$set.limit_owners_upon_decedants_ownerhsip_transfer = limit_owners
+
+    APP.collections.Tasks.update query, modifier
+
+    return
+  
+  # Undo the ownership transfer of child tasks under `parent_task_id`.
+  removeTransferChildTasks: (parent_task_id) ->
+    query = 
+      _id: parent_task_id
+
+    modifier = 
+      $set:
+        include_descendants_upon_ownerhsip_transfer: null
+        limit_owners_upon_decedants_ownerhsip_transfer: null
+
+    APP.collections.Tasks.update query, modifier
+
+    return
   
   takeOwnership: (task_id, new_owner_id) ->
     check task_id, String
