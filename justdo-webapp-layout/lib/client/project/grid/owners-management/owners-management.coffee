@@ -286,26 +286,21 @@ APP.executeAfterAppLibCode ->
                   modifier.$set =
                     pending_owner_id: new_owner_doc._id
                 APP.collections.Tasks.update task_id, modifier
+      showChildTasksTransferredSnackbar = (affected_task_ids) ->
+        JustdoSnackbar.show
+          text: TAPi18n.__ "owners_mgmt_transfer_child_tasks_done", {count: affected_task_ids.length}
+          actionText: TAPi18n.__ "undo"
+          duration: 10000
+          showDismissButton: true
+          onActionClick: =>
+            if APP.accounts.isProxyUser(new_owner_doc)
+              # If the new owner is a proxy, undo the transfer of the child tasks owned by the current user
+              APP.projects.modules.owners.bulkUpdateTasksOwner(item_doc.project_id, item_doc._id, affected_task_ids, Meteor.userId())
+            else
+              APP.projects.modules.owners.removeTransferChildTasks(item_doc._id)
 
-              JustdoSnackbar.show
-                text: TAPi18n.__ "owners_mgmt_transfer_child_tasks_done", {count: child_tasks.length}
-                actionText: TAPi18n.__ "undo"
-                duration: 10000
-                showDismissButton: true
-                onActionClick: =>
-                  for task_id in child_tasks
-                    modifier =
-                      $set: {}
-                    if new_owner_doc.is_proxy
-                      modifier.$set =
-                        owner_id: Meteor.userId()
-                    else
-                      modifier.$set =
-                        pending_owner_id: null
-                    APP.collections.Tasks.update task_id, modifier
-                  JustdoSnackbar.close()
-                  return
-              return
+            JustdoSnackbar.close()
+            return
 
         return
 
