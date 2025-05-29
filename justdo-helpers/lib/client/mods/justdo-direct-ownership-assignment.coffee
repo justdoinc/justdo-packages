@@ -1,4 +1,5 @@
 hook = null
+enabled = false
 
 _.extend JustdoHelpers,
   directOwnershipAssignment: (enable=true, options) ->
@@ -16,6 +17,8 @@ _.extend JustdoHelpers,
       if hook?
         hook.remove()
         hook = null
+    
+    enabled = enable
 
     if show_snackbar isnt false
       JustdoSnackbar.show
@@ -23,3 +26,6 @@ _.extend JustdoHelpers,
         duration: 4000
 
     return
+
+  isDirectOwnershipAssignmentEnabled: ->
+    return enabled
