@@ -197,6 +197,8 @@ APP.executeAfterAppLibCode ->
         execute_immediately: false
       options = _.extend default_options, options
       check options.new_owner_id, String
+      if JustdoHelpers.isDirectOwnershipAssignmentEnabled()
+        options.execute_immediately = true
 
       APP.projects.modules.owners.createTransferChildTasksRequest(item_id, options.limit_owners)
 
