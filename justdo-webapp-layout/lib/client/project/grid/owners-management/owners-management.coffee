@@ -199,11 +199,12 @@ APP.executeAfterAppLibCode ->
 
       APP.projects.modules.owners.createTransferChildTasksRequest(item_id, options.limit_owners)
 
-      affected_task_ids = []
+      affected_task_ids = APP.projects.modules.owners.findTasksForOwnershipTransfer item_id, options.new_owner_id
+
       # Execute immediately the transfer of the child tasks
       if options.execute_immediately
         check options.new_owner_id, String
-        affected_task_ids = APP.projects.modules.owners.takeOwnership(item_id, options.new_owner_id)
+        APP.projects.modules.owners.takeOwnership(item_id, options.new_owner_id)
 
       return affected_task_ids
 
