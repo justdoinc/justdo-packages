@@ -235,7 +235,13 @@ _.extend PACK.modules.owners,
     check task_id, String
     check new_owner_id, String
 
-    task_doc = APP.collections.Tasks.findOne(task_id, {fields: {project_id: 1, owner_id: 1, include_descendants_upon_ownership_transfer: 1, limit_owners_upon_descendants_ownership_transfer: 1}})
+    query_options = 
+      fields:
+        project_id: 1
+        owner_id: 1 # required by `findTasksForOwnershipTransfer`
+        include_descendants_upon_ownership_transfer: 1 # required by `findTasksForOwnershipTransfer`
+        limit_owners_upon_descendants_ownership_transfer: 1 # required by `findTasksForOwnershipTransfer`
+    task_doc = APP.collections.Tasks.findOne(task_id, query_options)
     if not task_doc?
       return
     
