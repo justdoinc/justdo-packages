@@ -246,22 +246,19 @@ _.extend PACK.modules.owners,
       return
     
     project_id = task_doc.project_id
-    include_descendants_upon_ownership_transfer = task_doc.include_descendants_upon_ownership_transfer
 
-    # Taking ownership of a single task can be done by just updating the task owner
-    if not include_descendants_upon_ownership_transfer
-      query = 
-        _id: task_id
-      modifier = 
-        $set: 
-          owner_id: new_owner_id
-          pending_owner_id: null
-          is_removed_owner: null
-          include_descendants_upon_ownership_transfer: null
-          limit_owners_upon_descendants_ownership_transfer: null
+    # Update the task owner directly. Processing of child tasks is handled below using `bulkUpdateTasksOwner`
+    query = 
+      _id: task_id
+    modifier = 
+      $set: 
+        owner_id: new_owner_id
+        pending_owner_id: null
+        is_removed_owner: null
+        include_descendants_upon_ownership_transfer: null
+        limit_owners_upon_descendants_ownership_transfer: null
       
-      APP.collections.Tasks.update query, modifier
-      return
+    APP.collections.Tasks.update query, modifier
     
     affected_task_ids = @findTasksForOwnershipTransfer(task_doc, new_owner_id)
     if not _.isEmpty affected_task_ids
