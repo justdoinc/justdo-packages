@@ -254,6 +254,9 @@ APP.executeAfterAppLibCode ->
       item_has_child = APP.collections.Tasks.findOne(item_has_child_query, {fields: {_id: 1}})?
 
       showChildTasksTransferredSnackbar = (affected_task_ids) ->
+        if _.isEmpty affected_task_ids
+          return
+
         JustdoSnackbar.show
           text: TAPi18n.__ "owners_mgmt_transfer_child_tasks_done", {count: affected_task_ids.length}
           actionText: TAPi18n.__ "undo"
