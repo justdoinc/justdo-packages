@@ -190,26 +190,6 @@ APP.executeAfterAppLibCode ->
 
       return
 
-    @transferChildTasks = (item_id, options) ->
-      default_options = 
-        new_owner_id: null
-        limit_owners: null
-        execute_immediately: false
-      options = _.extend default_options, options
-      check options.new_owner_id, String
-      if JustdoHelpers.isDirectOwnershipAssignmentEnabled()
-        options.execute_immediately = true
-
-      APP.projects.modules.owners.createTransferChildTasksRequest(item_id, options.limit_owners)
-
-      affected_task_ids = APP.projects.modules.owners.findTasksForOwnershipTransfer item_id, options.new_owner_id
-
-      # Execute immediately the transfer of the child tasks
-      if options.execute_immediately
-        APP.projects.modules.owners.takeOwnership(item_id, options.new_owner_id)
-
-      return affected_task_ids
-
     @autorun =>
       @task_has_other_members_rv.set "loading"
       JD.subscribeItemsAugmentedFields JD.activeItemId(), ["users"], {}, =>
@@ -300,10 +280,8 @@ APP.executeAfterAppLibCode ->
             transfer_child_tasks_options = 
               limit_owners: Meteor.userId()
               new_owner_id: new_owner_doc._id
-            if APP.accounts.isProxyUser(new_owner_doc)
-              transfer_child_tasks_options.execute_immediately = true
 
-            affected_task_ids = template.transferChildTasks item_doc._id, transfer_child_tasks_options
+            affected_task_ids = APP.projects.modules.owners.transferChildTasks item_doc._id, transfer_child_tasks_options
 
             showChildTasksTransferredSnackbar(affected_task_ids)
 
@@ -314,10 +292,8 @@ APP.executeAfterAppLibCode ->
             transfer_child_tasks_options = 
               limit_owners: null
               new_owner_id: new_owner_doc._id
-            if APP.accounts.isProxyUser(new_owner_doc)
-              transfer_child_tasks_options.execute_immediately = true
 
-            affected_task_ids = template.transferChildTasks item_doc._id, transfer_child_tasks_options
+            affected_task_ids = APP.projects.modules.owners.transferChildTasks item_doc._id, transfer_child_tasks_options
 
             showChildTasksTransferredSnackbar(affected_task_ids)
 
@@ -368,8 +344,7 @@ APP.executeAfterAppLibCode ->
           transfer_child_tasks_options = 
             limit_owners: item_owner_doc._id
             new_owner_id: Meteor.userId()
-            execute_immediately: true
-          template.transferChildTasks item_doc._id, transfer_child_tasks_options
+          APP.projects.modules.owners.transferChildTasks item_doc._id, transfer_child_tasks_options
 
           JustdoSnackbar.close()
 
@@ -379,8 +354,7 @@ APP.executeAfterAppLibCode ->
         onSecondButtonClick: =>
           transfer_child_tasks_options = 
             new_owner_id: Meteor.userId()
-            execute_immediately: true
-          template.transferChildTasks item_doc._id, transfer_child_tasks_options
+          APP.projects.modules.owners.transferChildTasks item_doc._id, transfer_child_tasks_options
 
           JustdoSnackbar.close()
 
