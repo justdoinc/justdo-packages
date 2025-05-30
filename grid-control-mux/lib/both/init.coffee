@@ -31,6 +31,9 @@ default_options =
   # custom fields
   shared_grid_control_removed_custom_fields_manager_options: {}
 
+  # The domain of the grid control mux, defaults to "anonymous"
+  domain: "anonymous"
+
 GridControlMux = (options) ->
   # skeleton-version: v0.0.2
 

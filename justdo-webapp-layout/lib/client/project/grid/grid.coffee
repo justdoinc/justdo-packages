@@ -129,6 +129,7 @@ APP.executeAfterAppLibCode ->
         use_shared_grid_control_removed_custom_fields_manager: true
         shared_grid_control_removed_custom_fields_manager_options:
           custom_fields_definitions: project_removed_custom_fields_definitions_rv
+        domain: "project-page-main-grid"
       project_page_module.grid_control_mux.set grid_control_mux
 
       if not first_grid_loaded

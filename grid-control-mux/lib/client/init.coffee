@@ -62,6 +62,8 @@ _.extend GridControlMux.prototype,
     if @options.shared_grid_control_options? and not _.isObject @options.shared_grid_control_options
       throw @_error("invalid-options", "shared_grid_control_options should be an object")
     @_shared_grid_control_options = @options.shared_grid_control_options or {}
+    # We force the domain of any gridControl objects created by this mux to have the same domain
+    @_shared_grid_control_options.domain = @options.domain
 
     # If the @options.use_shared_grid_control_custom_fields_manager is passed
     # a GridControlCustomFieldsManager object will be init by the grid-control-mux
