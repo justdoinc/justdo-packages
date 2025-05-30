@@ -890,6 +890,9 @@ _.extend GridControlMux.prototype,
     else
       return gc._grid_data.exportSectionsState()
 
+  getDomain: ->
+    return @options.domain
+
   destroy: ->
     if @destroyed
       @logger.debug "Destroyed already"

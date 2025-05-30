@@ -13,6 +13,7 @@ GridControl = (options, container) ->
                                            # Changes to field will trigger row invalidations
                                            # regardless on its schema's grid_effects_metadata_rendering
                                            # setting
+    domain: "anonymous" # The domain of the grid control, defaults to "anonymous"
     preInit: -> return
 
   # Different number than @getGridUid(), it uses for ops that are necessary pre-grid-init
@@ -2722,3 +2723,6 @@ _.extend GridControl.prototype,
     return @_grid_data.items_by_id[item_id]
 
   isFieldDefUserEditable: GridData.helpers.isFieldDefUserEditable
+
+  getDomain: ->
+    return @options.domain
