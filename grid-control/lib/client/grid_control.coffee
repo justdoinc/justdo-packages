@@ -191,6 +191,8 @@ _.extend GridControl,
     # Get grid_control_options from the specified tab
     tab_grid_control_options = _.extend {}, main_grid_control_mux.getTabNonReactive(tab_id)?.grid_control_options
 
+    tab_grid_control_options.domain = options.domain or @default_domain
+
     # If no tab found, throw an error
     if not tab_grid_control_options?
       throw new Meteor.Error("invalid-argument", "Tab '#{tab_id}' not found in GridControlMux")
