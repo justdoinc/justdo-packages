@@ -186,7 +186,7 @@ _.extend PACK.modules.owners,
     return
   
   # Undo the ownership transfer of child tasks under `parent_task_id`.
-  removeTransferChildTasks: (parent_task_id) ->
+  removeTransferChildTasksRequest: (parent_task_id) ->
     query = 
       _id: parent_task_id
 
