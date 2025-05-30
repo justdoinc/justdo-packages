@@ -198,7 +198,34 @@ _.extend PACK.modules.owners,
     APP.collections.Tasks.update query, modifier
 
     return
-  
+
+  transferChildTasks: (item_id, options) ->
+    default_options = 
+      new_owner_id: null
+      limit_owners: null
+    options = _.extend default_options, options
+    check options.new_owner_id, String
+
+    APP.projects.modules.owners.createTransferChildTasksRequest(item_id, options.limit_owners)
+
+    affected_task_ids = APP.projects.modules.owners.findTasksForOwnershipTransfer item_id, options.new_owner_id
+
+    execute_immediately = false
+    # If direct ownership assignment is enabled, execute the transfer immediately
+    if JustdoHelpers.isDirectOwnershipAssignmentEnabled()
+      execute_immediately = true
+    # If the new owner is the current user, execute the transfer immediately
+    else if options.new_owner_id is Meteor.userId()
+      execute_immediately = true
+    # If the new owner is a proxy, execute the transfer immediately
+    else if Meteor.users.findOne({_id: options.new_owner_id, is_proxy: true})?
+      execute_immediately = true
+
+    # Execute immediately the transfer of the child tasks
+    if execute_immediately
+      APP.projects.modules.owners.takeOwnership(item_id, options.new_owner_id)
+
+    return affected_task_ids
   findTasksForOwnershipTransfer: (task, new_owner_id) ->
     check new_owner_id, String
     if _.isString task
