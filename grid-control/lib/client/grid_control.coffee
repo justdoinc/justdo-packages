@@ -1,3 +1,5 @@
+default_grid_control_domain = "anonymous"
+
 GridControl = (options, container) ->
   EventEmitter.call this
 
@@ -13,7 +15,7 @@ GridControl = (options, container) ->
                                            # Changes to field will trigger row invalidations
                                            # regardless on its schema's grid_effects_metadata_rendering
                                            # setting
-    domain: "anonymous" # The domain of the grid control, defaults to "anonymous"
+    domain: @default_domain # The domain of the grid control, defaults to "anonymous"
     preInit: -> return
 
   # Different number than @getGridUid(), it uses for ops that are necessary pre-grid-init
@@ -161,6 +163,8 @@ GridControl = (options, container) ->
   return @
 
 _.extend GridControl,
+  default_domain: default_grid_control_domain
+
   ###
   Creates a new GridControl instance with predefined options from a given tab in a GridControlMux
 
