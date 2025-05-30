@@ -284,7 +284,7 @@ APP.executeAfterAppLibCode ->
               # If the new owner is a proxy, undo the transfer of the child tasks owned by the current user
               APP.projects.modules.owners.bulkUpdateTasksOwner(item_doc.project_id, item_doc._id, affected_task_ids, Meteor.userId())
             else
-              APP.projects.modules.owners.removeTransferChildTasks(item_doc._id)
+              APP.projects.modules.owners.removeTransferChildTasksRequest(item_doc._id)
 
             JustdoSnackbar.close()
             return
