@@ -226,6 +226,24 @@ _.extend PACK.modules.owners,
       APP.projects.modules.owners.takeOwnership(item_id, options.new_owner_id)
 
     return affected_task_ids
+
+  undoTransferChildTasks: (task_id, child_task_ids, new_owner_id) ->
+    execute_immediately = false
+    if JustdoHelpers.isDirectOwnershipAssignmentEnabled()
+      execute_immediately = true
+    # In this context, new_owner_id is the new owner of the child tasks, following a transferChildTasks call.
+    else if Meteor.users.findOne({_id: new_owner_id, is_proxy: true})?
+      execute_immediately = true
+
+    if execute_immediately
+      project_id = APP.collections.Tasks.findOne(task_id, {fields: {project_id: 1}})?.project_id
+      # If the new owner is a proxy, undo the transfer of the child tasks owned by the current user
+      APP.projects.modules.owners.bulkUpdateTasksOwner(project_id, task_id, child_task_ids, Meteor.userId())
+    else
+      APP.projects.modules.owners.removeTransferChildTasksRequest(task_id)
+
+    return
+
   findTasksForOwnershipTransfer: (task, new_owner_id) ->
     check new_owner_id, String
     if _.isString task
