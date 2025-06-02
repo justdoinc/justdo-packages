@@ -1,5 +1,6 @@
 {
   "transfer_request_card_transfer_request": "__user__ wants to transfer ownershipt of task <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> to you",
+  "transfer_request_card_transfer_with_child_task_request": "__user__ wants to transfer ownership of task <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> and its child tasks to you",
   "transfer_request_card_submit_shortcut": "Ctrl+Enter to submit",
   "transfer_request_card_leave_a_reject_message": "Leave a reject message",
   "transfer_request_card_task_accepted": "Task __task_common_name__ <strong>Accepted</strong>",
