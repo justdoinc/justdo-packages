@@ -313,13 +313,6 @@ APP.executeAfterAppLibCode ->
           imageAllowedTypes: ["jpeg", "jpg", "png"]
           direction: if APP.justdo_i18n.isRtl() then "rtl" else "ltr"
           placeholderText: TAPi18n.__ "description_editor_placeholder_text"
-        })
-        .on "froalaEditor.file.beforeUpload", (e, editor, files) ->
-          _uploadFilesAndInsertToEditor task_id, files, editor, "file"
-          return false
-        .on "froalaEditor.file.error", (e, editor, error, resp) ->
-          console.log error
-          return
         .on "froalaEditor.image.beforePasteUpload", (e, editor, img) ->
           file = dataURLtoFile img.src, Random.id()
           _uploadFilesAndInsertToEditor task_id, [file], editor, "image", img
@@ -355,6 +348,12 @@ APP.executeAfterAppLibCode ->
                   return
                 , false # false for the 'first' argument: events.on (name, callback, [first])
 
+              return
+            "file.beforeUpload": (files) ->
+              _uploadFilesAndInsertToEditor task_id, files, current_description_editor, "file"
+              return false
+            "file.error": (error, resp) ->
+              console.log error
               return
 
     return
