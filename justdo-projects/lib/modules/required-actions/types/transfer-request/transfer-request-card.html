@@ -7,7 +7,7 @@
         {{/with}}
       </div>
       <div class="card-details">
-        {{{xssGuard(_ "transfer_request_card_transfer_request" user=currentOwnerDisplayname task_url=taskURL project_name=getActionProjectTitle seqId=seqId task_title=(cutString title 80))}}}
+        {{{xssGuard(_ transferRequestCardI18nKey user=currentOwnerDisplayname task_url=taskURL project_name=getActionProjectTitle seqId=seqId task_title=(cutString title 80))}}}
       </div>
       {{#if $eq getState "pre-reject"}}
         {{> required_action_card_transfer_request_input}}

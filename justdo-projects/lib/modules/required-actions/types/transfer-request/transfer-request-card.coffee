@@ -33,6 +33,20 @@ Template.required_action_card_transfer_request.helpers
 
   taskURL: ->
     return JustdoHelpers.getTaskUrl(@project_id, @task_id)
+  
+  transferRequestCardI18nKey: -> 
+    query = 
+      _id: @task_id
+      include_descendants_upon_ownership_transfer: true
+    query_options = 
+      fields: 
+        _id: 1
+    if APP.collections.Tasks.findOne(query)?
+      return "transfer_request_card_transfer_with_child_task_request"
+    else
+      return "transfer_request_card_transfer_request"
+
+    return
 
 Template.required_action_card_transfer_request.events
   "click .pre-reject": (e, tpl) ->
