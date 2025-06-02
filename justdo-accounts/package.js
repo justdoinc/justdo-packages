@@ -27,6 +27,7 @@ Package.onUse(function (api) {
   api.use('fourseven:scss@3.2.0', client);
 
   api.use("justdoinc:justdo-aws-base", server, {unordered: true});
+  api.use("justdoinc:justdo-db-migrations", server, {unordered: true});
 
   api.use('raix:eventemitter@0.1.1', both);
   api.use('meteorspark:util@0.2.0', both);
@@ -55,6 +56,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/allow-deny.coffee", server);
   api.addFiles("lib/server/methods.coffee", server);
   api.addFiles("lib/server/publications.coffee", server);
+  api.addFiles("lib/server/db-migrations.coffee", server);
 
   api.addFiles("lib/client/edit-avatar-color-dialog/edit-avatar-color-dialog.html", client);
   api.addFiles("lib/client/edit-avatar-color-dialog/edit-avatar-color-dialog.sass", client);

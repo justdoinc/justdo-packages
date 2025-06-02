@@ -15,4 +15,6 @@ _.extend JustdoAccounts.prototype,
     # Defined in publications.coffee
     @_setupPublications()
 
+    @_setupDbMigrations()
+
     return
