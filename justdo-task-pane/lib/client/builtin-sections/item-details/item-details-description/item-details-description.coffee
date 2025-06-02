@@ -373,6 +373,8 @@ APP.executeAfterAppLibCode ->
 
       # if there's editor
       current_description_editor.destroy()
+      # Upon destroy, FroalaEditor adds the `display: block` to the element. We need to remove it.
+      $("#description-editor").css("display", "")
       current_description_editor = null
 
       setEditMode(false)
