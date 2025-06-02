@@ -25,7 +25,7 @@ Package.onUse(function(api) {
     "assets/css/plugins/file.min.css",
     "assets/css/plugins/fullscreen.min.css",
     "assets/css/plugins/help.min.css",
-    "assets/css/plugins/image_manager.min.css",
+    // "assets/css/plugins/image_manager.min.css",
     "assets/css/plugins/image.min.css",
     "assets/css/plugins/line_breaker.min.css",
     "assets/css/plugins/quick_insert.min.css",
@@ -35,7 +35,7 @@ Package.onUse(function(api) {
 
     // 3rd Party
     "assets/css/third_party/embedly.min.css",
-    "assets/css/third_party/spell_checker.min.css",
+    // "assets/css/third_party/spell_checker.min.css",
     "assets/css/third_party/image_tui.min.css",
     "assets/css/third_party/font_awesome.min.css",
 
@@ -57,7 +57,7 @@ Package.onUse(function(api) {
     "assets/js/plugins/fullscreen.min.js",
     "assets/js/plugins/help.min.js",
     "assets/js/plugins/image.min.js",
-    "assets/js/plugins/image_manager.min.js",
+    // "assets/js/plugins/image_manager.min.js",
     "assets/js/plugins/inline_class.min.js",
     "assets/js/plugins/inline_style.min.js",
     "assets/js/plugins/line_breaker.min.js",

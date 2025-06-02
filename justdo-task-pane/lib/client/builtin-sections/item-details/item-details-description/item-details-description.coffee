@@ -295,7 +295,6 @@ APP.executeAfterAppLibCode ->
       .one("froalaEditor.initialized", (e, editor) ->
         setEditMode(true)
 
-        current_description_editor = editor
 
         editor.task_id = task_id
 
@@ -316,8 +315,7 @@ APP.executeAfterAppLibCode ->
       )
 
     APP.getEnv (env) =>
-      $("#description-editor", $container)
-        .froalaEditor({
+      current_description_editor = new FroalaEditor "#description-editor", 
           toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
             "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo",
             "insertFile", "insertImage"
