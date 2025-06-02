@@ -291,29 +291,6 @@ APP.executeAfterAppLibCode ->
     # Lock
     lockTask(task_id)
 
-    $("#description-editor", $container)
-      .one("froalaEditor.initialized", (e, editor) ->
-        setEditMode(true)
-
-
-        editor.task_id = task_id
-
-        save_state.set 0
-
-        editor.html.set(getActiveTaskDescription())
-
-        # set change listeners
-        for change_event in ["contentChanged", "keydown"]
-          editor.events.on change_event, (e) ->
-            initIdleSaveTimeout()
-            initDestroyTimeout()
-
-            return
-          , false # false for the 'first' argument: events.on (name, callback, [first])
-
-        return
-      )
-
     APP.getEnv (env) =>
       current_description_editor = new FroalaEditor "#description-editor", 
           toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
@@ -360,6 +337,25 @@ APP.executeAfterAppLibCode ->
           return
         
         return
+          events:
+            "initialized": ->
+              setEditMode(true)
+              current_description_editor.task_id = task_id
+
+              save_state.set 0
+
+              current_description_editor.html.set(getActiveTaskDescription())
+
+              # set change listeners
+              for change_event in ["contentChanged", "keydown"]
+                current_description_editor.events.on change_event, (e) ->
+                  initIdleSaveTimeout()
+                  initDestroyTimeout()
+
+                  return
+                , false # false for the 'first' argument: events.on (name, callback, [first])
+
+              return
 
     return
 
