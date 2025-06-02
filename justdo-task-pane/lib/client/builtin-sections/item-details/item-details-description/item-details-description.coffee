@@ -313,23 +313,6 @@ APP.executeAfterAppLibCode ->
           imageAllowedTypes: ["jpeg", "jpg", "png"]
           direction: if APP.justdo_i18n.isRtl() then "rtl" else "ltr"
           placeholderText: TAPi18n.__ "description_editor_placeholder_text"
-        .on "froalaEditor.image.beforePasteUpload", (e, editor, img) ->
-          file = dataURLtoFile img.src, Random.id()
-          _uploadFilesAndInsertToEditor task_id, [file], editor, "image", img
-          return false
-        .on "froalaEditor.image.beforeUpload", (e, editor, images) ->
-          _uploadFilesAndInsertToEditor task_id, images, editor, "image", null
-          return false
-        .on "froalaEditor.image.loaded", (e, editor, images, b, c) ->
-          for image in images
-            uploaded_files_count = (Tracker.nonreactive -> uploading_files.get())
-            if uploaded_files_count > 0 and /^http/.test image.currentSrc
-              uploading_files.set(uploaded_files_count - 1)
-        .on "froalaEditor.image.error", (e, editor, error, resp) ->
-          console.log error
-          return
-        
-        return
           events:
             "initialized": ->
               setEditMode(true)
@@ -355,6 +338,22 @@ APP.executeAfterAppLibCode ->
             "file.error": (error, resp) ->
               console.log error
               return
+            "image.beforePasteUpload": (img) ->
+              file = dataURLtoFile img.src, Random.id()
+              _uploadFilesAndInsertToEditor task_id, [file], current_description_editor, "image", img
+              return false
+            "image.beforeUpload": (images) ->
+              _uploadFilesAndInsertToEditor task_id, images, current_description_editor, "image", null
+              return false
+            "image.loaded": (images, b, c) ->
+              for image in images
+                uploaded_files_count = (Tracker.nonreactive -> uploading_files.get())
+                if uploaded_files_count > 0 and /^http/.test image.currentSrc
+                  uploading_files.set(uploaded_files_count - 1)
+            "image.error": (e, editor, error, resp) ->
+              console.log error
+              return
+      return
 
     return
 
