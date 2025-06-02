@@ -176,7 +176,7 @@ APP.executeAfterAppLibCode ->
     replaceEditorImageAndFile = (file, download_path) ->
       if type_to_insert is "image"
         if not $img_to_replace?
-          $org_img = $("[data-temp_id=\"#{file.temp_id}\"]")
+          $org_img = $("img[temp_id=\"#{file.temp_id}\"]")
         else
           $org_img = $(img_to_replace)
         editor.image.insert download_path, false, {src: download_path}, $org_img,
