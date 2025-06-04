@@ -43,6 +43,7 @@ Template.locking_text_editor.onCreated ->
 
   @update_lock_timer = null
   @idle_save_timer = null
+  @editor = null
 
   @beginEditing = =>
     if not @editable.get()
@@ -52,7 +53,7 @@ Template.locking_text_editor.onCreated ->
 
     Tracker.flush()
     APP.getEnv (env) =>
-      @$(".note-froala").froalaEditor({
+      @editor = new FroalaEditor ".note-froala",
         toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontSize",
           "align", "formatOL", "formatUOL", "undo", "redo",
         ]
@@ -65,21 +66,17 @@ Template.locking_text_editor.onCreated ->
         pasteImage: false
         imageUpload: false
         key: env.FROALA_ACTIVATION_KEY
-      })
-      .on "froalaEditor.blur", (e, editor) =>
-        if editor.core.isEmpty()
-          content = ""
-        else
-          content = editor.html.get()
-
-        @endEditing(content)
-        editor.destroy()
-        return
-      .on "froalaEditor.contentChanged", (e, editor) =>
-        @autosave(editor.html.get())
-
-      @$(".note-froala").froalaEditor "html.set", @data.content
-      @$(".note-froala").froalaEditor "events.focus"
+        events:
+          "initialized": =>
+            @editor.html.set(@data.content)
+            @editor.events.focus()
+            return
+          "blur": =>
+            content = @editor.html.get() or ""
+            @endEditing(content)
+            return
+          "contentChanged": =>
+            @autosave(@editor.html.get())
 
   @keepLockCallback = () =>
     @data.onSave { lock: { user_id: Meteor.userId(), date: TimeSync.getServerTime() } }
@@ -99,6 +96,13 @@ Template.locking_text_editor.onCreated ->
     @idle_save_timer = null
     @data.onSave { content: content, lock: { user_id: Meteor.userId(), date: TimeSync.getServerTime() } }
 
+  @destroyFroala = =>
+    if @editor?
+      @editor.destroy()
+      @editor = null
+    
+    return
+
   @endEditing = (content) =>
     if @update_lock_timer?
       Meteor.clearTimeout @update_lock_timer
@@ -110,6 +114,9 @@ Template.locking_text_editor.onCreated ->
 
     @status.set "ready"
     @data.onSave { content: content, lock: {} }
+    @destroyFroala()
+    
+    return
 
 Template.locking_text_editor.helpers
   content: ->
@@ -156,3 +163,7 @@ Template.locking_text_editor.events
 
   # "blur textarea": (e, tmpl) ->
   #   tmpl.endEditing($(e.currentTarget).val())
+
+Template.locking_text_editor.onDestroyed ->
+  @destroyFroala()
+  return
