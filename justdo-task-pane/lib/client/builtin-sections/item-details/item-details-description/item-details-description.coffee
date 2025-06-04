@@ -292,6 +292,12 @@ APP.executeAfterAppLibCode ->
     lockTask(task_id)
 
     APP.getEnv (env) =>
+      max_file_size_in_bytes = 0
+      if env.TASKS_FILES_UPLOAD_ENABLED is "true"
+        max_file_size_in_bytes = env.FILESTACK_MAX_FILE_SIZE_BYTES
+      else if env.JUSTDO_FILES_ENABLED is "true"
+        max_file_size_in_bytes = env.JUSTDO_FILES_MAX_FILESIZE
+
       current_description_editor = new FroalaEditor "#description-editor", 
           toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
             "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo",
@@ -307,9 +313,9 @@ APP.executeAfterAppLibCode ->
           charCounterCount: false
           key: env.FROALA_ACTIVATION_KEY
           fileUpload: true
-          fileMaxSize: env.FILESTACK_MAX_FILE_SIZE_BYTES
+          fileMaxSize: max_file_size_in_bytes
           fileAllowedTypes: ["*"]
-          imageMaxSize: env.FILESTACK_MAX_FILE_SIZE_BYTES
+          imageMaxSize: max_file_size_in_bytes
           imageAllowedTypes: ["jpeg", "jpg", "png"]
           direction: if APP.justdo_i18n.isRtl() then "rtl" else "ltr"
           placeholderText: TAPi18n.__ "description_editor_placeholder_text"
