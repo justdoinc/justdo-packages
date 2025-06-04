@@ -113,7 +113,7 @@ APP.executeAfterAppLibCode ->
               task_fields =
                 title: title.get()
                 priority: priority.get()
-                description: $("#ticket-content").froalaEditor("html.get")
+                description: current_ticket_editor?.html.get() or ""
                 pending_owner_id:
                   if Meteor.userId() != selected_owner_id \
                     then selected_owner_id \
@@ -204,6 +204,8 @@ APP.executeAfterAppLibCode ->
   description = new ReactiveVar null
   priority = new ReactiveVar null
   submit_attempted = new ReactiveVar null
+  current_ticket_editor = null
+  
   initReactiveVars = ->
     selected_destination_id.set null
     selected_destination_type_reactive_var.set null
@@ -300,7 +302,8 @@ APP.executeAfterAppLibCode ->
         $("#ticket-assigned-user-id").selectpicker("refresh")
         return
 
-    $("#ticket-content").froalaEditor({
+    APP.getEnv (env) =>
+      current_ticket_editor = new FroalaEditor "#ticket-content",
         toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
           "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo"]
         pasteImage: false
@@ -311,16 +314,16 @@ APP.executeAfterAppLibCode ->
         quickInsertTags: []
         charCounterCount: false
         key: env.FROALA_ACTIVATION_KEY
-      })
-      .on "froalaEditor.image.beforePasteUpload", (e, editor, img) ->
-        return false
-      .on "froalaEditor.image.beforeUpload", (e, editor, images) ->
-        return false
-      .on "froalaEditor.image.loaded", (e, editor, images, b, c) ->
-        return false
-      .on "froalaEditor.image.error", (e, editor, error, resp) ->
-        console.error error
-        return
+        events:
+          "image.beforePasteUpload": (img) ->
+            return false
+          "image.beforeUpload": (images) ->
+            return false
+          "image.loaded": (images, b, c) ->
+            return false
+          "image.error": (error, resp) ->
+            console.error error
+            return
 
     priority_slider = Template.justdo_priority_slider.getInstance "ticket-entry-priority-slider"
     priority_slider.onChange (value) ->
@@ -329,6 +332,10 @@ APP.executeAfterAppLibCode ->
     return
 
   Template.ticket_entry.onDestroyed ->
+    if current_ticket_editor?
+      current_ticket_editor.destroy()
+      current_ticket_editor = null
+
     tickets_queues_reactive_var.stop()
     tickets_queues_reactive_var = null
 
