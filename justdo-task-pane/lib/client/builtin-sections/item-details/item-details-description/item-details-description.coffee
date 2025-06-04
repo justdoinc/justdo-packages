@@ -83,8 +83,18 @@ APP.executeAfterAppLibCode ->
       clearTimeout destroy_timeout
 
     destroy_timeout = setTimeout ->
-      destroyEditor()
+      is_file_upload_in_progress = Tracker.nonreactive -> uploading_files.get() > 0
+      # Since file upload may take a while, 
+      # we need to reset the destroy timeout to prevent the editor being destroyed while the upload is in progress.
+      if is_file_upload_in_progress
+        initDestroyTimeout()
+      else
+        destroyEditor()
+      
+      return
     , destroy_timeout_ms
+
+    return
 
   getContainer = -> $("#task-description-container")
 
