@@ -201,7 +201,13 @@ APP.executeAfterAppLibCode ->
           console.log error
       )(i)
     
-    uploading_files.set (Tracker.nonreactive -> uploading_files.get() + 2)
+    if type_to_insert is "image"
+      # While is_uploading_files isn't 0, the "done" button will show "uploading..." and disabled
+      # For image uploads, we add the counter by two,
+      # and minus one after uploading is finished, and after the editor's image is replaced with the uploaded version respectively.
+      uploading_files.set (Tracker.nonreactive -> uploading_files.get() + 2)
+    else if type_to_insert is "file"
+      uploading_files.set (Tracker.nonreactive -> uploading_files.get() + 1)
 
     APP.getEnv (env) =>
       if env.TASKS_FILES_UPLOAD_ENABLED is "true" # Upload to Filestack if available
