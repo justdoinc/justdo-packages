@@ -18,6 +18,7 @@ Package.onUse(function (api) {
   api.use("stevezhu:lodash@4.17.2", both);
   api.use('fourseven:scss@3.2.0', client);
   api.use("templating", client);
+  api.use("froala:editor@4.5.2", both);
 
   api.use("raix:eventemitter@0.1.1", both);
   api.use("meteorspark:util@0.2.0", both);
