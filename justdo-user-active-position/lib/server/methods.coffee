@@ -8,6 +8,6 @@ _.extend JustdoUserActivePosition.prototype,
 
         @unblock() # No need to block the next method from executing...
 
-        return self.logPos(pos, @userId)
+        return self.logPosAsync(pos, @userId)
 
     return

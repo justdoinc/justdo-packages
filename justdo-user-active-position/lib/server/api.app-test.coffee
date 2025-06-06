@@ -36,7 +36,7 @@ if Package["justdoinc:justdo-user-active-position"]?
     describe "logPos", ->
       it "should log a valid position for a logged-in user", ->
         # Execute
-        APP.justdo_user_active_position.logPos(test_valid_pos, test_user_id)
+        await APP.justdo_user_active_position.logPosAsync(test_valid_pos, test_user_id)
         
         # Verify the document was inserted
         logged_pos = APP.collections.UsersActivePositionsLedger.findOne({UID: test_user_id})
@@ -58,7 +58,7 @@ if Package["justdoinc:justdo-user-active-position"]?
       
       it "should not log position when user_id is null", ->
         # Execute
-        APP.justdo_user_active_position.logPos(test_valid_pos, null)
+        await APP.justdo_user_active_position.logPosAsync(test_valid_pos, null)
         
         # Verify no document was inserted
         logged_pos = APP.collections.UsersActivePositionsLedger.findOne({UID: test_user_id})
@@ -68,7 +68,7 @@ if Package["justdoinc:justdo-user-active-position"]?
       
       it "should not log position when user_id is undefined", ->
         # Execute
-        APP.justdo_user_active_position.logPos(test_valid_pos, undefined)
+        await APP.justdo_user_active_position.logPosAsync(test_valid_pos, undefined)
         
         # Verify no document was inserted
         logged_pos = APP.collections.UsersActivePositionsLedger.findOne({UID: test_user_id})
@@ -78,7 +78,7 @@ if Package["justdoinc:justdo-user-active-position"]?
       
       it "should not log position when user_id is empty string", ->
         # Execute
-        APP.justdo_user_active_position.logPos(test_valid_pos, "")
+        await APP.justdo_user_active_position.logPosAsync(test_valid_pos, "")
         
         # Verify no document was inserted
         logged_pos = APP.collections.UsersActivePositionsLedger.findOne({UID: test_user_id})
@@ -94,7 +94,7 @@ if Package["justdoinc:justdo-user-active-position"]?
           SID: "zyxwvutsrqponmlkj" # Must be exactly 17 characters
         
         # Execute
-        APP.justdo_user_active_position.logPos(minimal_pos, test_user_id)
+        await APP.justdo_user_active_position.logPosAsync(minimal_pos, test_user_id)
         
         # Verify the document was inserted with minimal data
         logged_pos = APP.collections.UsersActivePositionsLedger.findOne({UID: test_user_id})
@@ -121,17 +121,21 @@ if Package["justdoinc:justdo-user-active-position"]?
           page: "/test/page"
         
         # Execute and Verify
-        expect(->
-          APP.justdo_user_active_position.logPos(invalid_pos, test_user_id)
-        ).to.throw()
+        try
+          await APP.justdo_user_active_position.logPosAsync(invalid_pos, test_user_id)
+          assert.fail("Expected to throw validation error")
+        catch error
+          expect(error).to.exist
         
         return
       
       it "should throw validation error for non-string user_id when provided", ->
         # Execute and Verify - passing number instead of string
-        expect(->
-          APP.justdo_user_active_position.logPos(test_valid_pos, 12345)
-        ).to.throw()
+        try
+          await APP.justdo_user_active_position.logPosAsync(test_valid_pos, 12345)
+          assert.fail("Expected to throw validation error")
+        catch error
+          expect(error).to.exist
         
         return
       
@@ -140,7 +144,7 @@ if Package["justdoinc:justdo-user-active-position"]?
         original_pos = _.clone(test_valid_pos)
         
         # Execute
-        APP.justdo_user_active_position.logPos(test_valid_pos, test_user_id)
+        await APP.justdo_user_active_position.logPosAsync(test_valid_pos, test_user_id)
         
         # Verify original object wasn't modified
         expect(test_valid_pos).to.deep.equal original_pos
@@ -152,11 +156,11 @@ if Package["justdoinc:justdo-user-active-position"]?
       it "should handle multiple log entries for the same user", ->
         # First log entry
         first_pos = _.extend {}, test_valid_pos, {page: "/first/page"}
-        APP.justdo_user_active_position.logPos(first_pos, test_user_id)
+        await APP.justdo_user_active_position.logPosAsync(first_pos, test_user_id)
         
         # Second log entry  
         second_pos = _.extend {}, test_valid_pos, {page: "/second/page"}
-        APP.justdo_user_active_position.logPos(second_pos, test_user_id)
+        await APP.justdo_user_active_position.logPosAsync(second_pos, test_user_id)
         
         # Verify both entries exist
         logged_positions = APP.collections.UsersActivePositionsLedger.find({UID: test_user_id}).fetch()

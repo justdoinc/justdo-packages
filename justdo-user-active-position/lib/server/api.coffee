@@ -22,7 +22,7 @@ _.extend JustdoUserActivePosition.prototype,
 
     return
 
-  logPos: (pos, user_id) ->
+  logPosAsync: (pos, user_id) ->
     check pos, JustdoUserActivePosition.schemas.PosObjectSchema
     check user_id, Match.Maybe(String)
 
@@ -32,6 +32,6 @@ _.extend JustdoUserActivePosition.prototype,
 
     doc = _.extend {}, pos, {UID: user_id, SSID: APP.justdo_analytics.getSSID()}
 
-    @users_active_positions_ledger_collection.insert(doc)
+    await @users_active_positions_ledger_collection.insertAsync(doc)
 
     return
