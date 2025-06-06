@@ -619,7 +619,7 @@ _.extend MeetingsManager.prototype,
 
     if project.conf.block_meetings_deletion == true or
         (meeting.organizer_id != user_id and not is_admin)
-      throw @error "no-permission"
+      throw @_error "no-permission"
 
     @meetings.remove meeting_id
 
