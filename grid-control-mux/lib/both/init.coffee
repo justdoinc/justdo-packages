@@ -53,7 +53,7 @@ GridControlMux = (options) ->
   @options = _.extend {}, default_options, options
 
   JustdoHelpers.loadEventEmitterHelperMethods(@)
-  @loadEventsFromOptions() # loads @options.events, if existsgjm
+  @loadEventsFromOptions() # loads @options.events, if exists
 
   if Meteor.isClient
     # on the client, call @_immediateInit() in an isolated
