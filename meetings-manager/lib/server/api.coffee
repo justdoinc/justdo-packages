@@ -1,58 +1,58 @@
 _.extend MeetingsManager.prototype,
-  createMeeting: (fields, user_id) ->
+  createMeetingAsync: (fields, user_id) ->
     @_requireObject fields, "fields should be an object"
-    @_requireProjectMember fields.project_id, user_id
+    await @_requireProjectMemberAsync fields.project_id, user_id
 
     fields.organizer_id = user_id
     fields.users = [user_id]
 
-    @meetings.insert fields
+    await @meetings.insertAsync fields
 
-  addUsersToMeeting: (meeting_id, user_ids, user_id) ->
+  addUsersToMeetingAsync: (meeting_id, user_ids, user_id) ->
     @_requireString meeting_id, "meeting_id should be a string"
 
-    meeting = @_requireMeetingMember meeting_id, true, user_id
+    meeting = await @_requireMeetingMemberAsync meeting_id, true, user_id
 
     for user in user_ids
-      @_requireProjectMember meeting.project_id, user
+      await @_requireProjectMemberAsync meeting.project_id, user
 
-    @meetings.update
+    await @meetings.updateAsync
       _id: meeting_id
     ,
       $addToSet:
         users:
           $each: user_ids
 
-  removeUsersFromMeeting: (meeting_id, user_ids, user_id) ->
+  removeUsersFromMeetingAsync: (meeting_id, user_ids, user_id) ->
     @_requireString meeting_id, "meeting_id should be a string"
 
-    meeting = @_requireMeetingMember meeting_id, true, user_id
+    meeting = await @_requireMeetingMemberAsync meeting_id, true, user_id
 
     for user in user_ids
       # Don't allow users to remove the meeting organizer
       if user == meeting.organizer_id
         throw @_error "invalid-request", "You can't remove the organizer from a meeting"
 
-    @meetings.update
+    await @meetings.updateAsync
       _id: meeting_id
     ,
       $pullAll:
         users: user_ids
 
 
-  updateMeetingMetadata: (meeting_id, fields, user_id) ->
+  updateMeetingMetadataAsync: (meeting_id, fields, user_id) ->
     @_requireString meeting_id, "meeting_id should be a string"
     @_requireObject fields, "fields should be an object"
-    @_requireMeetingMember meeting_id, true, user_id
+    await @_requireMeetingMemberAsync meeting_id, true, user_id
     @_requireValidatedPartialObject fields, @meeting_metadata_schema
-    @meetings.update { _id: meeting_id }, { $set: fields }
+    await @meetings.updateAsync { _id: meeting_id }, { $set: fields }
 
 
-  updateMeetingStatus: (meeting_id, new_status, user_id) ->
+  updateMeetingStatusAsync: (meeting_id, new_status, user_id) ->
     self = @
     @_requireString meeting_id, "meeting_id should be a string"
     @_requireString new_status, "new_status should be a string"
-    meeting = @_requireMeetingMember meeting_id, true, user_id
+    meeting = await @_requireMeetingMemberAsync meeting_id, true, user_id
 
     update =
       $set:
@@ -60,7 +60,7 @@ _.extend MeetingsManager.prototype,
 
     # XXX which other status changes may only be performed by the organizer?
     if meeting.status == "draft"
-      @_requireMeetingOrganizer meeting_id, user_id
+      await @_requireMeetingOrganizerAsync meeting_id, user_id
 
     if new_status == "in-progress"
       update.$push =
@@ -74,32 +74,31 @@ _.extend MeetingsManager.prototype,
           user_id: user_id
           date: new Date()
 
-    @meetings.update { _id: meeting_id }, update
-    @meetings_tasks.find
+    await @meetings.updateAsync { _id: meeting_id }, update
+    meeting_tasks = await @meetings_tasks.find(
       meeting_id: meeting_id
     ,
       fields:
         task_id: 1
-    .map (meeting_task) ->
-      self.recalTaskMeetingsCache(meeting_task.task_id)
-      return
+    ).forEachAsync (meeting_task) ->
+      await self.recalTaskMeetingsCacheAsync(meeting_task.task_id)
 
     return
-
-  addTaskToMeeting: (meeting_id, task_fields, user_id) ->
+    
+  addTaskToMeetingAsync: (meeting_id, task_fields, user_id) ->
     @_requireString meeting_id, "meeting_id should be a string"
     @_requireObject task_fields, "fields should be an object"
 
-    meeting = @_requireMeetingMember meeting_id, true, user_id
-    task = @_requireTaskFromSearch task_fields, meeting.project_id, user_id
+    meeting = await @_requireMeetingMemberAsync meeting_id, true, user_id
+    task = await @_requireTaskFromSearchAsync task_fields, meeting.project_id, user_id
 
     @_requireTaskIsUnique meeting.tasks, task._id
 
-    meeting_task_id = @meetings_tasks.insert
+    meeting_task_id = await @meetings_tasks.insertAsync
       task_id: task._id
       meeting_id: meeting_id
 
-    @meetings.update
+    await @meetings.updateAsync
       _id: meeting_id
     ,
       $push:
@@ -112,15 +111,15 @@ _.extend MeetingsManager.prototype,
           added_at: new Date
           task_order: meeting.tasks.length
 
-    @recalTaskMeetingsCache(task._id)
+    await @recalTaskMeetingsCacheAsync(task._id)
 
     return meeting_task_id
 
-  removeSubtaskFromMeeting: (meeting_id, parent_task_id, subtask_id, user_id) ->
+  removeSubtaskFromMeetingAsync: (meeting_id, parent_task_id, subtask_id, user_id) ->
     @_requireString meeting_id, "meeting_id should be a string"
     @_requireString parent_task_id, "parent_task_id should be a string"
     @_requireString subtask_id, "subtask_id should be a string"
-    meeting = @_requireMeetingMember meeting_id, true, user_id
+    meeting = await @_requireMeetingMemberAsync meeting_id, true, user_id
 
     query =
       meeting_id: meeting_id
@@ -129,52 +128,52 @@ _.extend MeetingsManager.prototype,
       $pull:
         added_tasks:
           task_id: subtask_id
-    @meetings_tasks.update query, op
+    await @meetings_tasks.updateAsync query, op
 
     APP.projects._grid_data_com.removeParent("/#{parent_task_id}/#{subtask_id}/", user_id)
 
     return true
 
 
-  removeTaskFromMeeting: (meeting_id, task_id, user_id) ->
+  removeTaskFromMeetingAsync: (meeting_id, task_id, user_id) ->
     @_requireString meeting_id, "meeting_id should be a string"
     @_requireString task_id, "task_id should be a string"
 
-    meeting = @_requireMeetingMember meeting_id, true, user_id
+    meeting = await @_requireMeetingMemberAsync meeting_id, true, user_id
 
-    @meetings_tasks.remove
+    await @meetings_tasks.removeAsync
       meeting_id: meeting_id
       task_id: task_id
 
-    @meetings_private_notes.remove
+    await @meetings_private_notes.removeAsync
       meeting_id: meeting_id
       task_id: task_id
 
-    @meetings.update
+    await @meetings.updateAsync
       _id: meeting_id
     ,
       $pull:
         "tasks":
           task_id: task_id
 
-    @recalTaskMeetingsCache(task_id)
+    await @recalTaskMeetingsCacheAsync(task_id)
         
     return true
 
 
-  setMeetingTaskOrder: (meeting_id, task_id, order, user_id) ->
+  setMeetingTaskOrderAsync: (meeting_id, task_id, order, user_id) ->
 
 
     @_requireString meeting_id, "meeting_id should be a string"
     @_requireString task_id, "task_id should be a string"
 
-    meeting = @_requireMeetingMember meeting_id, true, user_id
+    meeting = await @_requireMeetingMemberAsync meeting_id, true, user_id
     meeting_task = _.findWhere meeting.tasks, { task_id: task_id }
 
     if not meeting_task?
       throw @_error "invalid-request", "Task is not part of meeting."
 
-    @meetings.update
+    await @meetings.updateAsync
         _id: meeting_id
         "tasks.task_id": task_id
     ,
@@ -182,18 +181,18 @@ _.extend MeetingsManager.prototype,
 
     return true
 
-  recalTaskMeetingsCache: (task_id) ->
+  recalTaskMeetingsCacheAsync: (task_id) ->
     self = @
     
-    all_meeting_ids = self.meetings_tasks.find(
+    all_meeting_ids = await self.meetings_tasks.find(
       task_id: task_id
     ,
       fields:
         meeting_id: 1
-    ).map (meeting_task) ->
+    ).mapAsync (meeting_task) ->
       return meeting_task.meeting_id
 
-    meeting_ids = self.meetings.find
+    meeting_ids = await self.meetings.find(
       _id:
         $in: all_meeting_ids
       status:
@@ -202,21 +201,21 @@ _.extend MeetingsManager.prototype,
       fields:
         _id: 1
         status: 1
-    .map (meeting) ->
+    ).mapAsync (meeting) ->
       return meeting._id
 
-    APP.collections.Tasks.update task_id,
+    await APP.collections.Tasks.updateAsync task_id,
       $set:
         [MeetingsManagerPlugin.task_meetings_cache_field_id]: meeting_ids
 
     return
 
 # obsolete:
-  moveMeetingTask: (meeting_id, task_id, move_direction, user_id) ->
+  moveMeetingTaskAsync: (meeting_id, task_id, move_direction, user_id) ->
     @_requireString meeting_id, "meeting_id should be a string"
     @_requireString task_id, "task_id should be a string"
 
-    meeting = @_requireMeetingMember meeting_id, true, user_id
+    meeting = await @_requireMeetingMemberAsync meeting_id, true, user_id
     meeting_task = _.findWhere meeting.tasks, { task_id: task_id }
 
     if not meeting_task?
@@ -246,17 +245,17 @@ _.extend MeetingsManager.prototype,
     _.each meeting.tasks, (task, i) =>
       update["tasks.#{i}.task_order"] = tasks.indexOf task
 
-    @meetings.update
+    await @meetings.updateAsync
       _id: meeting_id
     ,
       $set: update
 
-  saveSubTaskSubject: (meeting_id, task_id, added_task_id, added_task_subject, user_id) ->
+  saveSubTaskSubjectAsync: (meeting_id, task_id, added_task_id, added_task_subject, user_id) ->
 
     @_requireString meeting_id, "meeting_id should be a string"
     check task_id, String
     check added_task_id, String
-    meeting = @_requireMeetingMember meeting_id, false, user_id
+    meeting = await @_requireMeetingMemberAsync meeting_id, false, user_id
     meeting_task = _.findWhere meeting.tasks, { task_id: task_id }
 
     if not meeting_task?
@@ -270,19 +269,19 @@ _.extend MeetingsManager.prototype,
       $set:
         'added_tasks.$.title': added_task_subject
 
-    @meetings_tasks.update query, op
+    await @meetings_tasks.updateAsync query, op
 
     return
 
 
 
-  addSubTaskToTask: (meeting_id, task_id, task_fields, user_id) ->
+  addSubTaskToTaskAsync: (meeting_id, task_id, task_fields, user_id) ->
     @_requireString meeting_id, "meeting_id should be a string"
     @_requireObject task_fields, "fields should be an object"
 
     # XXX validate task_fields against a schema
 
-    meeting = @_requireMeetingMember meeting_id, false, user_id
+    meeting = await @_requireMeetingMemberAsync meeting_id, false, user_id
     meeting_task = _.findWhere meeting.tasks, { task_id: task_id }
 
     if not meeting_task?
@@ -298,9 +297,9 @@ _.extend MeetingsManager.prototype,
       user_id
     )
 
-    new_task = @tasks.findOne new_task_id
+    new_task = await @tasks.findOneAsync new_task_id
 
-    @meetings_tasks.update
+    await @meetings_tasks.updateAsync
       _id: meeting_task.id
     ,
       $push:
@@ -313,14 +312,14 @@ _.extend MeetingsManager.prototype,
 
     return new_task_id
 
-  setNoteForTask: (meeting_id, task_id, note_fields, user_id) ->
+  setNoteForTaskAsync: (meeting_id, task_id, note_fields, user_id) ->
     @_requireString meeting_id, "meeting_id should be a string"
     @_requireString task_id, "task_id should be a string"
     @_requireObject note_fields, "fields should be an object"
 
     # TODO: validate note_fields against a schema
 
-    meeting = @_requireMeetingMember meeting_id, false, user_id
+    meeting = await @_requireMeetingMemberAsync meeting_id, false, user_id
     meeting_task = _.findWhere meeting.tasks, { task_id: task_id }
 
     if not meeting_task?
@@ -329,26 +328,26 @@ _.extend MeetingsManager.prototype,
     meeting_task_id = meeting_task.id
 
     # Update the note text
-    @meetings_tasks.update
+    await @meetings_tasks.updateAsync
       _id: meeting_task_id
     ,
       $set:
         "note": note_fields.note
         "note_lock": note_fields.note_lock
 
-  addUserNoteToTask: (...args) ->
+  addUserNoteToTaskAsync: (...args) ->
     # There's actually no difference at the moment between these two methods
     # there might be in the future.
-    @setUserNoteForTask.apply(this, args)
+    await @setUserNoteForTaskAsync.apply(this, args)
 
-  setUserNoteForTask: (meeting_id, task_id, note_fields, user_id) ->
+  setUserNoteForTaskAsync: (meeting_id, task_id, note_fields, user_id) ->
     @_requireString meeting_id, "meeting_id should be a string"
     @_requireString task_id, "task_id should be a string"
     @_requireObject note_fields, "fields should be an object"
 
     # TODO: validate note_fields against a schema
 
-    meeting = @_requireMeetingMember meeting_id, false, user_id
+    meeting = await @_requireMeetingMemberAsync meeting_id, false, user_id
     meeting_task = _.findWhere meeting.tasks, { task_id: task_id }
 
     if not meeting_task?
@@ -370,10 +369,10 @@ _.extend MeetingsManager.prototype,
           date_added: new Date()
 
     # Ensure that the note exists
-    JustdoHelpers.findOneAndUpdate @meetings_tasks, query, update
+    await JustdoHelpers.findOneAndUpdateAsync @meetings_tasks, query, update
 
     # Update the note text
-    @meetings_tasks.update
+    await @meetings_tasks.updateAsync
       _id: meeting_task_id
       user_notes:
         $elemMatch:
@@ -383,19 +382,19 @@ _.extend MeetingsManager.prototype,
         "user_notes.$.note": note_fields.note
         "user_notes.$.date_updated": new Date()
 
-  addPrivateNoteToTask: (...args) ->
+  addPrivateNoteToTaskAsync: (...args) ->
     # There's actually no difference at the moment between these two methods
     # there might be in the future.
-    @setPrivateNoteForTask.apply(this, args)
+    await @setPrivateNoteForTaskAsync.apply(this, args)
 
-  setPrivateNoteForTask: (meeting_id, task_id, note_fields, user_id) ->
+  setPrivateNoteForTaskAsync: (meeting_id, task_id, note_fields, user_id) ->
     @_requireString meeting_id, "meeting_id should be a string"
     @_requireString task_id, "task_id should be a string"
     @_requireObject note_fields, "fields should be an object"
 
     # TODO: validate note_fields against a schema
 
-    meeting = @_requireMeetingMember meeting_id, false, user_id
+    meeting = await @_requireMeetingMemberAsync meeting_id, false, user_id
     meeting_task = _.findWhere meeting.tasks, { task_id: task_id }
 
     if not meeting_task?
@@ -409,26 +408,26 @@ _.extend MeetingsManager.prototype,
     if note_fields.note?
       update.note = note_fields.note
 
-    @meetings_private_notes.upsert
+    await @meetings_private_notes.upsertAsync
       meeting_id: meeting_id
       task_id: task_id
       user_id: user_id
     ,
       $set: update
 
-  updateMeetingLock: (meeting_id, locked, user_id) ->
+  updateMeetingLockAsync: (meeting_id, locked, user_id) ->
     @_requireString meeting_id, "meeting_id should be a string"
     @_requireBoolean locked, "locked should be true or false"
-    @_requireMeetingOrganizer meeting_id, user_id
+    await @_requireMeetingOrganizerAsync meeting_id, user_id
 
-    @meetings.update { _id: meeting_id }, { $set: { locked: locked } }
+    await @meetings.updateAsync { _id: meeting_id }, { $set: { locked: locked } }
 
-  updateMeetingPrivacy: (meeting_id, isPrivate, user_id) ->
+  updateMeetingPrivacyAsync: (meeting_id, isPrivate, user_id) ->
     @_requireString meeting_id, "meeting_id should be a string"
     @_requireBoolean isPrivate, "private should be true or false"
-    @_requireMeetingOrganizer meeting_id, user_id
+    await @_requireMeetingOrganizerAsync meeting_id, user_id
 
-    @meetings.update { _id: meeting_id }, { $set: { private: isPrivate } }
+    await @meetings.updateAsync { _id: meeting_id }, { $set: { private: isPrivate } }
 
   _requireString: (value, message) ->
     if not _.isString value
@@ -442,8 +441,8 @@ _.extend MeetingsManager.prototype,
     if not _.isBoolean obj
       throw @_error "invalid-request", message
 
-  _requireProjectMember: (project_id, user_id) ->
-    project = @projects.findOne { _id: project_id }
+  _requireProjectMemberAsync: (project_id, user_id) ->
+    project = await @projects.findOneAsync { _id: project_id }
 
     if not project?
       throw @_error "not-project-member"
@@ -452,9 +451,9 @@ _.extend MeetingsManager.prototype,
 
     return project
 
-  getMeetingIfAccessible: (meeting_id, user_id) ->
+  getMeetingIfAccessibleAsync: (meeting_id, user_id) ->
     self = @
-    meeting = self.meetings.findOne meeting_id,
+    meeting = await self.meetings.findOneAsync meeting_id,
       fields:
         users: 1
         tasks: 1
@@ -465,14 +464,14 @@ _.extend MeetingsManager.prototype,
     if user_id in meeting.users
       return meeting
     
-    filtered_tasks = self.filterAccessableMeetingTasks meeting.tasks, user_id, "remove"
+    filtered_tasks = await self.filterAccessableMeetingTasksAsync meeting.tasks, user_id, "remove"
     if filtered_tasks?.length > 0
       return meeting
     
     return null
 
-  _isTaskMember: (task_id, user_id) ->
-    task = @tasks.findOne
+  _isTaskMemberAsync: (task_id, user_id) ->
+    task = await @tasks.findOneAsync
       _id: task_id
       users: user_id
     ,
@@ -481,14 +480,14 @@ _.extend MeetingsManager.prototype,
         
     return task?
 
-  _requireTaskMember: (task_id, fields, user_id) ->
+  _requireTaskMemberAsync: (task_id, fields, user_id) ->
     check fields, Object
     
     fields = _.extend {}, fields,
       _id: 1
       users: 1
       
-    task = @tasks.findOne { _id: task_id }, {fields: fields}
+    task = await @tasks.findOneAsync { _id: task_id }, {fields: fields}
 
     if not task?
       throw @_error "not-task-member"
@@ -497,8 +496,8 @@ _.extend MeetingsManager.prototype,
 
     return task
 
-  _requireMeetingMember: (meeting_id, needs_unlock, user_id) ->
-    meeting = @meetings.findOne { _id: meeting_id }
+  _requireMeetingMemberAsync: (meeting_id, needs_unlock, user_id) ->
+    meeting = await @meetings.findOneAsync { _id: meeting_id }
 
     if not meeting?
       throw @_error "not-meeting-member"
@@ -516,8 +515,8 @@ _.extend MeetingsManager.prototype,
 
     return meeting
 
-  _requireProjectMemberOrPublic: (meeting_id, user_id) ->
-    meeting = @meetings.findOne { _id: meeting_id }
+  _requireProjectMemberOrPublicAsync: (meeting_id, user_id) ->
+    meeting = await @meetings.findOneAsync { _id: meeting_id }
 
     if not meeting?
       throw @_error "not-meeting-member"
@@ -532,8 +531,8 @@ _.extend MeetingsManager.prototype,
 
     return meeting
 
-  _requireMeetingOrganizer: (meeting_id, user_id) ->
-    meeting = @meetings.findOne { _id: meeting_id }
+  _requireMeetingOrganizerAsync: (meeting_id, user_id) ->
+    meeting = await @meetings.findOneAsync { _id: meeting_id }
 
     if not meeting?
       throw @_error "not-meeting-member"
@@ -548,9 +547,9 @@ _.extend MeetingsManager.prototype,
     if (_.findWhere tasks_list, { task_id: task_id })?
       throw @_error "duplicate-task"
 
-  _requireTaskFromSearch: (search, project_id, user_id) ->
+  _requireTaskFromSearchAsync: (search, project_id, user_id) ->
 
-    project = @projects.findOne { _id: project_id }
+    project = await @projects.findOneAsync { _id: project_id }
 
     query =
       users: user_id
@@ -562,7 +561,7 @@ _.extend MeetingsManager.prototype,
     else if search.seqId?
       query.seqId = Number(search.seqId)
 
-    task = @tasks.findOne query
+    task = await @tasks.findOneAsync query
 
     if not task?
       throw @_error "not-task-member", "Could not find the specified task."
@@ -592,18 +591,18 @@ _.extend MeetingsManager.prototype,
 
     schema.validate obj
 
-  deleteMeeting: (meeting_id, user_id) ->
+  deleteMeetingAsync: (meeting_id, user_id) ->
     self = @
 
     check meeting_id, String
     check user_id, String
 
-    meeting = @meetings.findOne meeting_id,
+    meeting = await @meetings.findOneAsync meeting_id,
       fields:
         organizer_id: 1
         project_id: 1
     
-    project = APP.collections.Projects.findOne 
+    project = await APP.collections.Projects.findOneAsync 
       _id: meeting.project_id
     ,
       fields:
@@ -621,20 +620,19 @@ _.extend MeetingsManager.prototype,
         (meeting.organizer_id != user_id and not is_admin)
       throw @_error "permission-denied"
 
-    @meetings.remove meeting_id
+    await @meetings.removeAsync meeting_id
 
-    @meetings_tasks.find
+    await @meetings_tasks.find(
       meeting_id: meeting_id
     ,
       fields:
         task_id: 1
-    .map (meeting_task) ->
-      self.recalTaskMeetingsCache(meeting_task.task_id)
-      return
+    ).forEachAsync (meeting_task) ->
+      await self.recalTaskMeetingsCacheAsync(meeting_task.task_id)
 
     return
 
-  updateAddedTaskNote: (meeting_task_id, added_task_id, changes, user_id) ->
+  updateAddedTaskNoteAsync: (meeting_task_id, added_task_id, changes, user_id) ->
     check meeting_task_id, String
     check added_task_id, String
     check changes, Object
@@ -644,7 +642,7 @@ _.extend MeetingsManager.prototype,
     for field, val of changes
       set_modifier["added_tasks.$.#{field}"] = val
 
-    @meetings_tasks.update
+    await @meetings_tasks.updateAsync
       _id: meeting_task_id
       "added_tasks.task_id": added_task_id
     ,
@@ -652,17 +650,18 @@ _.extend MeetingsManager.prototype,
 
     return
 
-  filterAccessableMeetingTasks: (tasks, user_id, action="remove") ->
+  filterAccessableMeetingTasksAsync: (tasks, user_id, action="remove") ->
     task_ids = _.map tasks, (task) -> task.task_id
     accessable_task_ids = []
-    APP.collections.Tasks.find
+    
+    await APP.collections.Tasks.find
       _id:
         $in: task_ids
       users: user_id
     ,
       fields:
         _id: 1
-    .forEach (task) ->
+    .forEachAsync (task) ->
       accessable_task_ids.push task._id
       return
     

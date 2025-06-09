@@ -74,7 +74,7 @@ if Package["justdoinc:meetings-manager"]?
           status: "draft"
         
         # Execute
-        meeting_id = meetings_manager.createMeeting(fields, test_user_id)
+        meeting_id = await meetings_manager.createMeetingAsync(fields, test_user_id)
         
         # Verify
         expect(meeting_id).to.exist
@@ -94,7 +94,7 @@ if Package["justdoinc:meetings-manager"]?
       it "should throw an error if fields is not an object", ->
         # Execute and Verify
         try
-          meetings_manager.createMeeting("invalid", test_user_id)
+          await meetings_manager.createMeetingAsync("invalid", test_user_id)
           assert.fail("Expected to throw error")
         catch error
           expect(error).to.exist
@@ -111,7 +111,7 @@ if Package["justdoinc:meetings-manager"]?
         
         # Execute and Verify
         try
-          meetings_manager.createMeeting(fields, "non_member_user")
+          await meetings_manager.createMeetingAsync(fields, "non_member_user")
           assert.fail("Expected to throw error")
         catch error
           expect(error).to.exist
@@ -127,11 +127,11 @@ if Package["justdoinc:meetings-manager"]?
           project_id: test_project_id
           status: "draft"
         
-        test_meeting_id = meetings_manager.createMeeting(fields, test_user_id)
+        test_meeting_id = await meetings_manager.createMeetingAsync(fields, test_user_id)
       
       it "should add users to a meeting", ->
         # Execute
-        meetings_manager.addUsersToMeeting(test_meeting_id, [test_user_id_2], test_user_id)
+        await meetings_manager.addUsersToMeetingAsync(test_meeting_id, [test_user_id_2], test_user_id)
         
         # Verify
         meeting = meetings_manager.meetings.findOne({_id: test_meeting_id})
@@ -142,7 +142,7 @@ if Package["justdoinc:meetings-manager"]?
       it "should throw an error if meeting_id is not a string", ->
         # Execute and Verify
         try
-          meetings_manager.addUsersToMeeting(123, [test_user_id_2], test_user_id)
+          await meetings_manager.addUsersToMeetingAsync(123, [test_user_id_2], test_user_id)
           assert.fail("Expected to throw error")
         catch error
           expect(error).to.exist
@@ -153,7 +153,7 @@ if Package["justdoinc:meetings-manager"]?
       it "should throw an error if user is not a meeting member", ->
         # Execute and Verify
         try
-          meetings_manager.addUsersToMeeting(test_meeting_id, [test_user_id_2], "non_member_user")
+          await meetings_manager.addUsersToMeetingAsync(test_meeting_id, [test_user_id_2], "non_member_user")
           assert.fail("Expected to throw error")
         catch error
           expect(error).to.exist
@@ -169,12 +169,12 @@ if Package["justdoinc:meetings-manager"]?
           project_id: test_project_id
           status: "draft"
         
-        test_meeting_id = meetings_manager.createMeeting(fields, test_user_id)
-        meetings_manager.addUsersToMeeting(test_meeting_id, [test_user_id_2], test_user_id)
+        test_meeting_id = await meetings_manager.createMeetingAsync(fields, test_user_id)
+        await meetings_manager.addUsersToMeetingAsync(test_meeting_id, [test_user_id_2], test_user_id)
       
       it "should remove users from a meeting", ->
         # Execute
-        meetings_manager.removeUsersFromMeeting(test_meeting_id, [test_user_id_2], test_user_id)
+        await meetings_manager.removeUsersFromMeetingAsync(test_meeting_id, [test_user_id_2], test_user_id)
         
         # Verify
         meeting = meetings_manager.meetings.findOne({_id: test_meeting_id})
@@ -185,7 +185,7 @@ if Package["justdoinc:meetings-manager"]?
       it "should throw an error when trying to remove the organizer", ->
         # Execute and Verify
         try
-          meetings_manager.removeUsersFromMeeting(test_meeting_id, [test_user_id], test_user_id)
+          await meetings_manager.removeUsersFromMeetingAsync(test_meeting_id, [test_user_id], test_user_id)
           assert.fail("Expected to throw error")
         catch error
           expect(error).to.exist
@@ -202,7 +202,7 @@ if Package["justdoinc:meetings-manager"]?
           project_id: test_project_id
           status: "draft"
         
-        test_meeting_id = meetings_manager.createMeeting(fields, test_user_id)
+        test_meeting_id = await meetings_manager.createMeetingAsync(fields, test_user_id)
       
       it "should update meeting metadata", ->
         # Setup
@@ -212,7 +212,7 @@ if Package["justdoinc:meetings-manager"]?
           note: "Meeting summary notes"
         
         # Execute
-        meetings_manager.updateMeetingMetadata(test_meeting_id, update_fields, test_user_id)
+        await meetings_manager.updateMeetingMetadataAsync(test_meeting_id, update_fields, test_user_id)
         
         # Verify
         meeting = meetings_manager.meetings.findOne({_id: test_meeting_id})
@@ -225,7 +225,7 @@ if Package["justdoinc:meetings-manager"]?
       it "should throw an error if fields is not an object", ->
         # Execute and Verify
         try
-          meetings_manager.updateMeetingMetadata(test_meeting_id, "invalid", test_user_id)
+          await meetings_manager.updateMeetingMetadataAsync(test_meeting_id, "invalid", test_user_id)
           assert.fail("Expected to throw error")
         catch error
           expect(error).to.exist
@@ -241,11 +241,11 @@ if Package["justdoinc:meetings-manager"]?
           project_id: test_project_id
           status: "draft"
         
-        test_meeting_id = meetings_manager.createMeeting(fields, test_user_id)
+        test_meeting_id = await meetings_manager.createMeetingAsync(fields, test_user_id)
       
       it "should update meeting status to pending", ->
         # Execute
-        meetings_manager.updateMeetingStatus(test_meeting_id, "pending", test_user_id)
+        await meetings_manager.updateMeetingStatusAsync(test_meeting_id, "pending", test_user_id)
         
         # Verify
         meeting = meetings_manager.meetings.findOne({_id: test_meeting_id})
@@ -255,10 +255,10 @@ if Package["justdoinc:meetings-manager"]?
       
       it "should update meeting status to in-progress and add start time", ->
         # First change to pending (only organizer can change from draft)
-        meetings_manager.updateMeetingStatus(test_meeting_id, "pending", test_user_id)
+        await meetings_manager.updateMeetingStatusAsync(test_meeting_id, "pending", test_user_id)
         
         # Execute
-        meetings_manager.updateMeetingStatus(test_meeting_id, "in-progress", test_user_id)
+        await meetings_manager.updateMeetingStatusAsync(test_meeting_id, "in-progress", test_user_id)
         
         # Verify
         meeting = meetings_manager.meetings.findOne({_id: test_meeting_id})
@@ -272,11 +272,11 @@ if Package["justdoinc:meetings-manager"]?
       
       it "should update meeting status to ended and add end time", ->
         # First change to pending, then in-progress
-        meetings_manager.updateMeetingStatus(test_meeting_id, "pending", test_user_id)
-        meetings_manager.updateMeetingStatus(test_meeting_id, "in-progress", test_user_id)
+        await meetings_manager.updateMeetingStatusAsync(test_meeting_id, "pending", test_user_id)
+        await meetings_manager.updateMeetingStatusAsync(test_meeting_id, "in-progress", test_user_id)
         
         # Execute
-        meetings_manager.updateMeetingStatus(test_meeting_id, "ended", test_user_id)
+        await meetings_manager.updateMeetingStatusAsync(test_meeting_id, "ended", test_user_id)
         
         # Verify
         meeting = meetings_manager.meetings.findOne({_id: test_meeting_id})
@@ -290,11 +290,11 @@ if Package["justdoinc:meetings-manager"]?
       
       it "should throw an error if non-organizer tries to change from draft", ->
         # Add another user to the meeting
-        meetings_manager.addUsersToMeeting(test_meeting_id, [test_user_id_2], test_user_id)
+        await meetings_manager.addUsersToMeetingAsync(test_meeting_id, [test_user_id_2], test_user_id)
         
         # Execute and Verify
         try
-          meetings_manager.updateMeetingStatus(test_meeting_id, "pending", test_user_id_2)
+          await meetings_manager.updateMeetingStatusAsync(test_meeting_id, "pending", test_user_id_2)
           assert.fail("Expected to throw error")
         catch error
           expect(error).to.exist
@@ -310,7 +310,7 @@ if Package["justdoinc:meetings-manager"]?
           project_id: test_project_id
           status: "pending"
         
-        test_meeting_id = meetings_manager.createMeeting(fields, test_user_id)
+        test_meeting_id = await meetings_manager.createMeetingAsync(fields, test_user_id)
       
       it "should add a task to a meeting by task_id", ->
         # Setup
@@ -318,7 +318,7 @@ if Package["justdoinc:meetings-manager"]?
           task_id: test_task_id
         
         # Execute
-        meeting_task_id = meetings_manager.addTaskToMeeting(test_meeting_id, task_fields, test_user_id)
+        meeting_task_id = await meetings_manager.addTaskToMeetingAsync(test_meeting_id, task_fields, test_user_id)
         
         # Verify
         expect(meeting_task_id).to.exist
@@ -345,7 +345,7 @@ if Package["justdoinc:meetings-manager"]?
           seqId: task.seqId
         
         # Execute
-        meeting_task_id = meetings_manager.addTaskToMeeting(test_meeting_id, task_fields, test_user_id)
+        meeting_task_id = await meetings_manager.addTaskToMeetingAsync(test_meeting_id, task_fields, test_user_id)
         
         # Verify
         expect(meeting_task_id).to.exist
@@ -359,11 +359,11 @@ if Package["justdoinc:meetings-manager"]?
         task_fields = 
           task_id: test_task_id
         
-        meetings_manager.addTaskToMeeting(test_meeting_id, task_fields, test_user_id)
+        await meetings_manager.addTaskToMeetingAsync(test_meeting_id, task_fields, test_user_id)
         
         # Execute and Verify
         try
-          meetings_manager.addTaskToMeeting(test_meeting_id, task_fields, test_user_id)
+          await meetings_manager.addTaskToMeetingAsync(test_meeting_id, task_fields, test_user_id)
           assert.fail("Expected to throw error")
         catch error
           expect(error).to.exist
@@ -378,7 +378,7 @@ if Package["justdoinc:meetings-manager"]?
         
         # Execute and Verify
         try
-          meetings_manager.addTaskToMeeting(test_meeting_id, task_fields, test_user_id_2)
+          await meetings_manager.addTaskToMeetingAsync(test_meeting_id, task_fields, test_user_id_2)
           assert.fail("Expected to throw error")
         catch error
           expect(error).to.exist
@@ -394,16 +394,16 @@ if Package["justdoinc:meetings-manager"]?
           project_id: test_project_id
           status: "pending"
         
-        test_meeting_id = meetings_manager.createMeeting(fields, test_user_id)
+        test_meeting_id = await meetings_manager.createMeetingAsync(fields, test_user_id)
         
         task_fields = 
           task_id: test_task_id
         
-        meetings_manager.addTaskToMeeting(test_meeting_id, task_fields, test_user_id)
+        await meetings_manager.addTaskToMeetingAsync(test_meeting_id, task_fields, test_user_id)
       
       it "should remove a task from a meeting", ->
         # Execute
-        result = meetings_manager.removeTaskFromMeeting(test_meeting_id, test_task_id, test_user_id)
+        result = await meetings_manager.removeTaskFromMeetingAsync(test_meeting_id, test_task_id, test_user_id)
         
         # Verify
         expect(result).to.be.true
@@ -435,11 +435,11 @@ if Package["justdoinc:meetings-manager"]?
           project_id: test_project_id
           status: "pending"
         
-        test_meeting_id = meetings_manager.createMeeting(fields, test_user_id)
+        test_meeting_id = await meetings_manager.createMeetingAsync(fields, test_user_id)
         
         # Add tasks
-        meetings_manager.addTaskToMeeting(test_meeting_id, {task_id: test_task_id}, test_user_id)
-        meetings_manager.addTaskToMeeting(test_meeting_id, {task_id: test_task_id_2}, test_user_id)
+        await meetings_manager.addTaskToMeetingAsync(test_meeting_id, {task_id: test_task_id}, test_user_id)
+        await meetings_manager.addTaskToMeetingAsync(test_meeting_id, {task_id: test_task_id_2}, test_user_id)
       
       afterEach ->
         # Clean up any dynamically created tasks
@@ -449,7 +449,7 @@ if Package["justdoinc:meetings-manager"]?
       
       it "should set the order of a task in the meeting", ->
         # Execute
-        result = meetings_manager.setMeetingTaskOrder(test_meeting_id, test_task_id, 100, test_user_id)
+        result = await meetings_manager.setMeetingTaskOrderAsync(test_meeting_id, test_task_id, 100, test_user_id)
         
         # Verify
         expect(result).to.be.true
@@ -473,7 +473,7 @@ if Package["justdoinc:meetings-manager"]?
         
         # Execute and Verify
         try
-          meetings_manager.setMeetingTaskOrder(test_meeting_id, another_task_id, 100, test_user_id)
+          await meetings_manager.setMeetingTaskOrderAsync(test_meeting_id, another_task_id, 100, test_user_id)
           assert.fail("Expected to throw error")
         catch error
           expect(error).to.exist
@@ -496,8 +496,8 @@ if Package["justdoinc:meetings-manager"]?
           project_id: test_project_id
           status: "pending"
         
-        test_meeting_id = meetings_manager.createMeeting(fields, test_user_id)
-        meetings_manager.addTaskToMeeting(test_meeting_id, {task_id: test_task_id}, test_user_id)
+        test_meeting_id = await meetings_manager.createMeetingAsync(fields, test_user_id)
+        await meetings_manager.addTaskToMeetingAsync(test_meeting_id, {task_id: test_task_id}, test_user_id)
       
       afterEach ->
         # Clean up any dynamically created subtasks
@@ -511,7 +511,7 @@ if Package["justdoinc:meetings-manager"]?
           title: "New Sub Task from Meeting"
         
         # Execute
-        new_task_id = meetings_manager.addSubTaskToTask(test_meeting_id, test_task_id, task_fields, test_user_id)
+        new_task_id = await meetings_manager.addSubTaskToTaskAsync(test_meeting_id, test_task_id, task_fields, test_user_id)
         
         # Track for cleanup
         created_subtask_ids.push(new_task_id)
@@ -543,7 +543,7 @@ if Package["justdoinc:meetings-manager"]?
         
         # Execute and Verify
         try
-          meetings_manager.addSubTaskToTask(test_meeting_id, test_task_id_2, task_fields, test_user_id)
+          await meetings_manager.addSubTaskToTaskAsync(test_meeting_id, test_task_id_2, task_fields, test_user_id)
           assert.fail("Expected to throw error")
         catch error
           expect(error).to.exist
@@ -560,8 +560,8 @@ if Package["justdoinc:meetings-manager"]?
           project_id: test_project_id
           status: "pending"
         
-        test_meeting_id = meetings_manager.createMeeting(fields, test_user_id)
-        meetings_manager.addTaskToMeeting(test_meeting_id, {task_id: test_task_id}, test_user_id)
+        test_meeting_id = await meetings_manager.createMeetingAsync(fields, test_user_id)
+        await meetings_manager.addTaskToMeetingAsync(test_meeting_id, {task_id: test_task_id}, test_user_id)
       
       it "should set a note for a task in the meeting", ->
         # Setup
@@ -570,7 +570,7 @@ if Package["justdoinc:meetings-manager"]?
           note_lock: {locked_by: test_user_id, locked_at: new Date()}
         
         # Execute
-        meetings_manager.setNoteForTask(test_meeting_id, test_task_id, note_fields, test_user_id)
+        await meetings_manager.setNoteForTaskAsync(test_meeting_id, test_task_id, note_fields, test_user_id)
         
         # Verify
         meeting_task = meetings_manager.meetings_tasks.findOne({
@@ -591,8 +591,8 @@ if Package["justdoinc:meetings-manager"]?
           project_id: test_project_id
           status: "pending"
         
-        test_meeting_id = meetings_manager.createMeeting(fields, test_user_id)
-        meetings_manager.addTaskToMeeting(test_meeting_id, {task_id: test_task_id}, test_user_id)
+        test_meeting_id = await meetings_manager.createMeetingAsync(fields, test_user_id)
+        await meetings_manager.addTaskToMeetingAsync(test_meeting_id, {task_id: test_task_id}, test_user_id)
       
       it "should set a user note for a task in the meeting", ->
         # Setup
@@ -600,7 +600,7 @@ if Package["justdoinc:meetings-manager"]?
           note: "This is my personal note for the task"
         
         # Execute
-        meetings_manager.setUserNoteForTask(test_meeting_id, test_task_id, note_fields, test_user_id)
+        await meetings_manager.setUserNoteForTaskAsync(test_meeting_id, test_task_id, note_fields, test_user_id)
         
         # Verify
         meeting_task = meetings_manager.meetings_tasks.findOne({
@@ -620,14 +620,14 @@ if Package["justdoinc:meetings-manager"]?
         note_fields = 
           note: "Initial note"
         
-        meetings_manager.setUserNoteForTask(test_meeting_id, test_task_id, note_fields, test_user_id)
+        await meetings_manager.setUserNoteForTaskAsync(test_meeting_id, test_task_id, note_fields, test_user_id)
         
         # Update the note
         updated_note_fields = 
           note: "Updated note"
         
         # Execute
-        meetings_manager.setUserNoteForTask(test_meeting_id, test_task_id, updated_note_fields, test_user_id)
+        await meetings_manager.setUserNoteForTaskAsync(test_meeting_id, test_task_id, updated_note_fields, test_user_id)
         
         # Verify
         meeting_task = meetings_manager.meetings_tasks.findOne({
@@ -647,8 +647,8 @@ if Package["justdoinc:meetings-manager"]?
           project_id: test_project_id
           status: "pending"
         
-        test_meeting_id = meetings_manager.createMeeting(fields, test_user_id)
-        meetings_manager.addTaskToMeeting(test_meeting_id, {task_id: test_task_id}, test_user_id)
+        test_meeting_id = await meetings_manager.createMeetingAsync(fields, test_user_id)
+        await meetings_manager.addTaskToMeetingAsync(test_meeting_id, {task_id: test_task_id}, test_user_id)
       
       it "should set a private note for a task in the meeting", ->
         # Setup
@@ -656,7 +656,7 @@ if Package["justdoinc:meetings-manager"]?
           note: "This is my private note"
         
         # Execute
-        meetings_manager.setPrivateNoteForTask(test_meeting_id, test_task_id, note_fields, test_user_id)
+        await meetings_manager.setPrivateNoteForTaskAsync(test_meeting_id, test_task_id, note_fields, test_user_id)
         
         # Verify
         private_note = meetings_manager.meetings_private_notes.findOne({
@@ -675,14 +675,14 @@ if Package["justdoinc:meetings-manager"]?
         note_fields = 
           note: "Initial private note"
         
-        meetings_manager.setPrivateNoteForTask(test_meeting_id, test_task_id, note_fields, test_user_id)
+        await meetings_manager.setPrivateNoteForTaskAsync(test_meeting_id, test_task_id, note_fields, test_user_id)
         
         # Update the note
         updated_note_fields = 
           note: "Updated private note"
         
         # Execute
-        meetings_manager.setPrivateNoteForTask(test_meeting_id, test_task_id, updated_note_fields, test_user_id)
+        await meetings_manager.setPrivateNoteForTaskAsync(test_meeting_id, test_task_id, updated_note_fields, test_user_id)
         
         # Verify
         private_note = meetings_manager.meetings_private_notes.findOne({
@@ -702,11 +702,11 @@ if Package["justdoinc:meetings-manager"]?
           project_id: test_project_id
           status: "pending"
         
-        test_meeting_id = meetings_manager.createMeeting(fields, test_user_id)
+        test_meeting_id = await meetings_manager.createMeetingAsync(fields, test_user_id)
       
       it "should lock a meeting", ->
         # Execute
-        meetings_manager.updateMeetingLock(test_meeting_id, true, test_user_id)
+        await meetings_manager.updateMeetingLockAsync(test_meeting_id, true, test_user_id)
         
         # Verify
         meeting = meetings_manager.meetings.findOne({_id: test_meeting_id})
@@ -716,10 +716,10 @@ if Package["justdoinc:meetings-manager"]?
       
       it "should unlock a meeting", ->
         # Setup - Lock the meeting first
-        meetings_manager.updateMeetingLock(test_meeting_id, true, test_user_id)
+        await meetings_manager.updateMeetingLockAsync(test_meeting_id, true, test_user_id)
         
         # Execute
-        meetings_manager.updateMeetingLock(test_meeting_id, false, test_user_id)
+        await meetings_manager.updateMeetingLockAsync(test_meeting_id, false, test_user_id)
         
         # Verify
         meeting = meetings_manager.meetings.findOne({_id: test_meeting_id})
@@ -730,7 +730,7 @@ if Package["justdoinc:meetings-manager"]?
       it "should throw an error if user is not the organizer", ->
         # Execute and Verify
         try
-          meetings_manager.updateMeetingLock(test_meeting_id, true, test_user_id_2)
+          await meetings_manager.updateMeetingLockAsync(test_meeting_id, true, test_user_id_2)
           assert.fail("Expected to throw error")
         catch error
           expect(error).to.exist
@@ -746,11 +746,11 @@ if Package["justdoinc:meetings-manager"]?
           project_id: test_project_id
           status: "pending"
         
-        test_meeting_id = meetings_manager.createMeeting(fields, test_user_id)
+        test_meeting_id = await meetings_manager.createMeetingAsync(fields, test_user_id)
       
       it "should make a meeting private", ->
         # Execute
-        meetings_manager.updateMeetingPrivacy(test_meeting_id, true, test_user_id)
+        await meetings_manager.updateMeetingPrivacyAsync(test_meeting_id, true, test_user_id)
         
         # Verify
         meeting = meetings_manager.meetings.findOne({_id: test_meeting_id})
@@ -760,10 +760,10 @@ if Package["justdoinc:meetings-manager"]?
       
       it "should make a meeting public", ->
         # Setup - Make the meeting private first
-        meetings_manager.updateMeetingPrivacy(test_meeting_id, true, test_user_id)
+        await meetings_manager.updateMeetingPrivacyAsync(test_meeting_id, true, test_user_id)
         
         # Execute
-        meetings_manager.updateMeetingPrivacy(test_meeting_id, false, test_user_id)
+        await meetings_manager.updateMeetingPrivacyAsync(test_meeting_id, false, test_user_id)
         
         # Verify
         meeting = meetings_manager.meetings.findOne({_id: test_meeting_id})
@@ -774,7 +774,7 @@ if Package["justdoinc:meetings-manager"]?
       it "should throw an error if user is not the organizer", ->
         # Execute and Verify
         try
-          meetings_manager.updateMeetingPrivacy(test_meeting_id, true, test_user_id_2)
+          await meetings_manager.updateMeetingPrivacyAsync(test_meeting_id, true, test_user_id_2)
           assert.fail("Expected to throw error")
         catch error
           expect(error).to.exist
@@ -798,12 +798,12 @@ if Package["justdoinc:meetings-manager"]?
           project_id: test_project_id
           status: "pending"
         
-        test_meeting_id = meetings_manager.createMeeting(fields, test_user_id)
-        meetings_manager.addTaskToMeeting(test_meeting_id, {task_id: test_task_id}, test_user_id)
+        test_meeting_id = await meetings_manager.createMeetingAsync(fields, test_user_id)
+        await meetings_manager.addTaskToMeetingAsync(test_meeting_id, {task_id: test_task_id}, test_user_id)
       
       it "should delete a meeting by organizer", ->
         # Execute
-        meetings_manager.deleteMeeting(test_meeting_id, test_user_id)
+        await meetings_manager.deleteMeetingAsync(test_meeting_id, test_user_id)
         
         # Verify
         meeting = meetings_manager.meetings.findOne({_id: test_meeting_id})
@@ -821,7 +821,7 @@ if Package["justdoinc:meetings-manager"]?
         })
         
         # Execute
-        meetings_manager.deleteMeeting(test_meeting_id, test_user_id_2)
+        await meetings_manager.deleteMeetingAsync(test_meeting_id, test_user_id_2)
         
         # Verify
         meeting = meetings_manager.meetings.findOne({_id: test_meeting_id})
@@ -832,7 +832,7 @@ if Package["justdoinc:meetings-manager"]?
       it "should throw an error if user is not organizer or admin", ->
         # Execute and Verify
         try
-          meetings_manager.deleteMeeting(test_meeting_id, test_user_id_2)
+          await meetings_manager.deleteMeetingAsync(test_meeting_id, test_user_id_2)
           assert.fail("Expected to throw error")
         catch error
           expect(error).to.exist
@@ -853,12 +853,12 @@ if Package["justdoinc:meetings-manager"]?
           project_id: test_project_id
           status: "ended"
         
-        meeting_id_1 = meetings_manager.createMeeting(fields1, test_user_id)
-        meeting_id_2 = meetings_manager.createMeeting(fields2, test_user_id)
+        meeting_id_1 = await meetings_manager.createMeetingAsync(fields1, test_user_id)
+        meeting_id_2 = await meetings_manager.createMeetingAsync(fields2, test_user_id)
         
         # Add the same task to both meetings
-        meetings_manager.addTaskToMeeting(meeting_id_1, {task_id: test_task_id}, test_user_id)
-        meetings_manager.addTaskToMeeting(meeting_id_2, {task_id: test_task_id}, test_user_id)
+        await meetings_manager.addTaskToMeetingAsync(meeting_id_1, {task_id: test_task_id}, test_user_id)
+        await meetings_manager.addTaskToMeetingAsync(meeting_id_2, {task_id: test_task_id}, test_user_id)
       
       afterEach ->
         # Reset the cache field on the task to prevent state pollution
@@ -869,7 +869,7 @@ if Package["justdoinc:meetings-manager"]?
       
       it "should update the task meetings cache", ->
         # Execute
-        meetings_manager.recalTaskMeetingsCache(test_task_id)
+        await meetings_manager.recalTaskMeetingsCacheAsync(test_task_id)
         
         # Verify
         task = APP.collections.Tasks.findOne({_id: test_task_id})
@@ -888,12 +888,12 @@ if Package["justdoinc:meetings-manager"]?
           project_id: test_project_id
           status: "pending"
         
-        test_meeting_id = meetings_manager.createMeeting(fields, test_user_id)
-        meetings_manager.addTaskToMeeting(test_meeting_id, {task_id: test_task_id}, test_user_id)
+        test_meeting_id = await meetings_manager.createMeetingAsync(fields, test_user_id)
+        await meetings_manager.addTaskToMeetingAsync(test_meeting_id, {task_id: test_task_id}, test_user_id)
       
       it "should return meeting if user is a member", ->
         # Execute
-        meeting = meetings_manager.getMeetingIfAccessible(test_meeting_id, test_user_id)
+        meeting = await meetings_manager.getMeetingIfAccessibleAsync(test_meeting_id, test_user_id)
         
         # Verify
         expect(meeting).to.exist
@@ -903,10 +903,10 @@ if Package["justdoinc:meetings-manager"]?
       
       it "should return meeting if user has access to tasks", ->
         # Setup - Add test_user_id_2 to the meeting first to ensure access
-        meetings_manager.addUsersToMeeting(test_meeting_id, [test_user_id_2], test_user_id)
+        await meetings_manager.addUsersToMeetingAsync(test_meeting_id, [test_user_id_2], test_user_id)
         
         # Execute - test_user_id_2 now has access to the meeting
-        meeting = meetings_manager.getMeetingIfAccessible(test_meeting_id, test_user_id_2)
+        meeting = await meetings_manager.getMeetingIfAccessibleAsync(test_meeting_id, test_user_id_2)
         
         # Verify
         expect(meeting).to.exist
@@ -916,7 +916,7 @@ if Package["justdoinc:meetings-manager"]?
       
       it "should return null if user has no access", ->
         # Execute
-        meeting = meetings_manager.getMeetingIfAccessible(test_meeting_id, "no_access_user")
+        meeting = await meetings_manager.getMeetingIfAccessibleAsync(test_meeting_id, "no_access_user")
         
         # Verify
         expect(meeting).to.be.null
@@ -926,21 +926,21 @@ if Package["justdoinc:meetings-manager"]?
     describe "filterAccessableMeetingTasks", ->
       beforeEach ->
         # Create test tasks and meeting structure
-        test_meeting_id = meetings_manager.createMeeting({
+        test_meeting_id = await meetings_manager.createMeetingAsync({
           title: "Test Meeting"
           project_id: test_project_id
           status: "pending"
         }, test_user_id)
         
-        meetings_manager.addTaskToMeeting(test_meeting_id, {task_id: test_task_id}, test_user_id)
-        meetings_manager.addTaskToMeeting(test_meeting_id, {task_id: test_task_id_2}, test_user_id)
+        await meetings_manager.addTaskToMeetingAsync(test_meeting_id, {task_id: test_task_id}, test_user_id)
+        await meetings_manager.addTaskToMeetingAsync(test_meeting_id, {task_id: test_task_id_2}, test_user_id)
       
       it "should filter tasks by removing inaccessible ones", ->
         # Setup
         meeting = meetings_manager.meetings.findOne({_id: test_meeting_id})
         
         # Execute - test_user_id has access to both tasks as organizer
-        filtered_tasks = meetings_manager.filterAccessableMeetingTasks(meeting.tasks, test_user_id, "remove")
+        filtered_tasks = await meetings_manager.filterAccessableMeetingTasksAsync(meeting.tasks, test_user_id, "remove")
         
         # Verify - As organizer, user should have access to all tasks
         expect(filtered_tasks).to.have.length 2
@@ -952,7 +952,7 @@ if Package["justdoinc:meetings-manager"]?
         meeting = meetings_manager.meetings.findOne({_id: test_meeting_id})
         
         # Execute - test_user_id has access to both tasks as organizer
-        filtered_tasks = meetings_manager.filterAccessableMeetingTasks(meeting.tasks, test_user_id, "supress_fields")
+        filtered_tasks = await meetings_manager.filterAccessableMeetingTasksAsync(meeting.tasks, test_user_id, "supress_fields")
         
         # Verify - As organizer, user should have access to all task fields
         expect(filtered_tasks).to.have.length 2

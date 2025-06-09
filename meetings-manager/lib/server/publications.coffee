@@ -3,14 +3,14 @@ _.extend MeetingsManager.prototype,
     if fields.added_tasks?.length > 0
       task_ids = _.map fields.added_tasks, (added_task) -> added_task.task_id
       accessible_task_ids = []
-      APP.collections.Tasks.find
+      await APP.collections.Tasks.find
         _id:
           $in: task_ids
         users: user_id
       ,
         fields:
           _id: 1
-      .forEach (task) ->
+      .forEachAsync (task) ->
         accessible_task_ids.push task._id
         return
       
@@ -42,7 +42,7 @@ _.extend MeetingsManager.prototype,
       sub = @
       user_id = @userId
 
-      if not (meeting = self.getMeetingIfAccessible meeting_id, user_id)?
+      if not (meeting = await self.getMeetingIfAccessibleAsync meeting_id, user_id)?
         throw self._error "meeting-not-found"
 
       cursor = self.meetings.find
@@ -53,16 +53,16 @@ _.extend MeetingsManager.prototype,
 
       filterTasks = (meeting_id, fields, is_changed) ->
         if is_changed
-          meeting = self.meetings.findOne meeting_id,
+          meeting = await self.meetings.findOneAsync meeting_id,
             fields: undefined
           _.extend meeting, fields
         else
           meeting = fields
 
         if user_id in meeting.users
-          filtered_tasks = self.filterAccessableMeetingTasks(meeting.tasks, user_id, "supress_fields")
+          filtered_tasks = await self.filterAccessableMeetingTasksAsync(meeting.tasks, user_id, "supress_fields")
         else
-          filtered_tasks = self.filterAccessableMeetingTasks(meeting.tasks, user_id, "remove")
+          filtered_tasks = await self.filterAccessableMeetingTasksAsync(meeting.tasks, user_id, "remove")
 
         if (not user_id in meeting.users) and filtered_tasks.length == 0 
           return {
@@ -79,13 +79,13 @@ _.extend MeetingsManager.prototype,
 
       meetings_obs = cursor.observeChanges
         added: (id, fields) =>
-          @added self.meetings._name, id, filterTasks(id, fields)
+          @added self.meetings._name, id, await filterTasks(id, fields)
 
           return
         
         changed: (id, fields) =>
           if fields.tasks? or fields.users?
-            fields = filterTasks(id, fields, true)
+            fields = await filterTasks(id, fields, true)
           @changed self.meetings._name, id, fields, true
           
           return
@@ -100,14 +100,14 @@ _.extend MeetingsManager.prototype,
       init = true
       meetings_tasks_obs = cursor.observeChanges
         added: (id, fields) =>
-          if not init and (user_id in meeting.users or self._isTaskMember(fields.task_id, user_id))
-            sub.added self.meetings_tasks._name, id, self._filterAddedTasks(fields, user_id)
+          if not init and (user_id in meeting.users or await self._isTaskMemberAsync(fields.task_id, user_id))
+            sub.added self.meetings_tasks._name, id, await self._filterAddedTasks(fields, user_id)
 
           return
         
         changed: (id, fields) =>
           if not init
-            sub.changed self.meetings_tasks._name, id, self._filterAddedTasks(fields, user_id)
+            sub.changed self.meetings_tasks._name, id, await self._filterAddedTasks(fields, user_id)
           
           return
         
@@ -118,17 +118,17 @@ _.extend MeetingsManager.prototype,
           return
       
       # init optimization
-      meetings_tasks = cursor.fetch()
+      meetings_tasks = await cursor.fetchAsync()
       meetings_tasks_ids = _.map meetings_tasks, (meeting_task) -> meeting_task.task_id
       accessible_task_ids = []
-      APP.collections.Tasks.find
+      await APP.collections.Tasks.find
         _id:
           $in: meetings_tasks_ids
         users: user_id
       ,
         fields:
           _id: 1
-      .forEach (task) ->
+      .forEachAsync (task) ->
         accessible_task_ids.push task._id
         return
 
@@ -136,7 +136,7 @@ _.extend MeetingsManager.prototype,
         if (user_id in meeting.users) or (meeting_task.task_id in accessible_task_ids)
           meeting_task_id = meeting_task._id
           delete meeting_task._id
-          sub.added self.meetings_tasks._name, meeting_task_id, self._filterAddedTasks(meeting_task, user_id)
+          sub.added self.meetings_tasks._name, meeting_task_id, await self._filterAddedTasks(meeting_task, user_id)
       init = false
         
       cursor = self.meetings_private_notes.find
@@ -157,7 +157,7 @@ _.extend MeetingsManager.prototype,
     Meteor.publish "meetings_meetings_list", (project_id) ->
       user_id = @userId
 
-      self._requireProjectMember project_id, user_id
+      await self._requireProjectMemberAsync project_id, user_id
 
       return self.meetings.find
         $or: [
@@ -182,7 +182,7 @@ _.extend MeetingsManager.prototype,
       check task_id, String
       check user_id, String
 
-      task = self._requireTaskMember task_id, 
+      task = await self._requireTaskMemberAsync task_id, 
         _id: 1
         created_from_meeting_id: 1
       , user_id
@@ -252,12 +252,12 @@ _.extend MeetingsManager.prototype,
 
         meetings_tasks_obs = cursor.observeChanges
           added: (id, fields) =>
-            sub.added self.meetings_tasks._name, id, self._filterAddedTasks(fields, user_id)
+            sub.added self.meetings_tasks._name, id, await self._filterAddedTasks(fields, user_id)
 
             return
           
           changed: (id, fields) =>
-            sub.changed self.meetings_tasks._name, id, self._filterAddedTasks(fields, user_id)
+            sub.changed self.meetings_tasks._name, id, await self._filterAddedTasks(fields, user_id)
             
             return
           
