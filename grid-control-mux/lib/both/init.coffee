@@ -44,12 +44,16 @@ GridControlMux = (options) ->
     # custom fields
     shared_grid_control_removed_custom_fields_manager_options: {}
 
-    # The domain of the grid control mux, defaults to GridControl.default_domain
+    # The purpose of `domain` is to mark the place where the grid-control-mux is placed.
+    # E.g. 
+    #   In justdo-planning-utilites, we keep the last viewport (start/end dates) of the gantt chart for grids under the domain `project-page-main-grid`,
+    #   so when the user access the page again, we will load the same range to the viewport.
+    # This property will be inherited by all the grid controls created by the mux.
     domain: GridControl.default_domain
   @options = _.extend {}, default_options, options
 
   JustdoHelpers.loadEventEmitterHelperMethods(@)
-  @loadEventsFromOptions() # loads @options.events, if exists
+  @loadEventsFromOptions() # loads @options.events, if existsgjm
 
   if Meteor.isClient
     # on the client, call @_immediateInit() in an isolated

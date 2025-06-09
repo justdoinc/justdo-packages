@@ -15,7 +15,9 @@ GridControl = (options, container) ->
                                            # Changes to field will trigger row invalidations
                                            # regardless on its schema's grid_effects_metadata_rendering
                                            # setting
-    domain: @default_domain # The domain of the grid control, defaults to "anonymous"
+    # The domain of the grid control allow developers to know where the grid control is placed.
+    # For more details about it's purpose, see the documentation of GridControlMux.
+    domain: @default_domain 
     preInit: -> return
 
   # Different number than @getGridUid(), it uses for ops that are necessary pre-grid-init
