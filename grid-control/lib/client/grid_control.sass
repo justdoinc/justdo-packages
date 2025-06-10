@@ -187,6 +187,36 @@ $standard-cell-padding-bottom: 3px
         &.editable
           background-color: $active-editable-background-color
 
+.grid-columns-search-container
+  position: relative
+  padding: 6px 8px
+  border-bottom: 1px solid #e9ecef
+  margin-bottom: 4px
+
+  .grid-columns-search-input
+    width: 100%
+    height: 28px
+    padding-left: 28px
+    border: 1px solid #dee2e6
+    border-radius: 4px
+    font-size: 13px
+    background-color: #f8f9fa
+    outline: none
+
+    &:focus
+      border-color: #007bff
+      background-color: #ffffff
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25)
+
+  .jd-icon
+    position: absolute
+    top: 10px
+    left: 12px
+    height: 20px
+    width: 20px
+    pointer-events: none
+    color: #6c757d
+
 // RTL modifications
 .right-to-left
   .slick-header.ui-state-default, .slick-header-column
@@ -215,3 +245,12 @@ $standard-cell-padding-bottom: 3px
       .frozen
         border-right: unset
         border-left: 0 none
+          
+  .grid-columns-search-container
+    .grid-columns-search-input
+      padding-left: 8px
+      padding-right: 28px
+
+    .jd-icon
+      left: auto
+      right: 12px

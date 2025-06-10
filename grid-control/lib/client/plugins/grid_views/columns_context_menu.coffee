@@ -45,17 +45,6 @@ _.extend GridControl.prototype,
     # Find missing fields
     missing_fields = @fieldsMissingFromView()
 
-    append_fields_submenu = []
-    extended_schema = @getSchemaExtendedWithCustomFields()
-    for field in missing_fields
-      do (field) =>
-        label = APP.justdo_i18n.getI18nTextOrFallback {fallback_text: extended_schema[field].label, i18n_key: extended_schema[field].label_i18n}
-        append_fields_submenu.push
-          text: JustdoHelpers.xssGuard(label, {allow_html_parsing: true, enclosing_char: ''})
-          action: (e) =>
-            @addFieldToView(field, column_index_of_last_opened_cmenu + 1)
-
-    append_fields_submenu = _.sortBy(append_fields_submenu, (i) -> i.text.toLowerCase())
     # Store reference to this instance for use in event handlers
     grid_control = @
 
@@ -93,6 +82,18 @@ _.extend GridControl.prototype,
               grid_control.addFieldToView(field, column_index_of_last_opened_cmenu + 1)
       
       return JustdoHelpers.localeAwareSortCaseInsensitive submenu, (item) -> item.text.toLowerCase()
+
+    # Initial filtered submenu with all fields
+    initial_filtered_fields = filterFieldsBySearch("")
+    append_fields_submenu = createFilteredSubmenuData(initial_filtered_fields)
+
+    # Create the search header item for the submenu
+    if not _.isEmpty append_fields_submenu
+      # Show search header if there are any fields to show
+      search_header_item = {
+        header: """<div class="grid-columns-search-container" style="position: relative; padding: 4px 8px;"><input type="text" class="grid-columns-search-input form-control form-control-sm" placeholder="#{TAPi18n.__("search")}" style="padding-left: 28px; height: 28px;"><svg class="jd-icon text-secondary" style="position: absolute; top: 8px; left: 12px; height: 20px; width: 20px; pointer-events: none;"><use xlink:href="/layout/icons-feather-sprite.svg#search"></use></svg></div>"""
+      }
+      append_fields_submenu = [search_header_item].concat(append_fields_submenu)
 
     append_fields_menu = [
       {
