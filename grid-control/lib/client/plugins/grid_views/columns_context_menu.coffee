@@ -132,6 +132,45 @@ _.extend GridControl.prototype,
         }
       ]
 
+    # Add search functionality after the context menu is created
+    # In other items we use `action` to handle click events, but here we need to handle the search input `keyup` events,
+    # so we need to add the event listeners to the search input directly.
+    setupSearchFunctionality = (type) =>
+      $menu = $(@_getColumnsManagerContextMenuSelector(type))
+      
+      if _.isEmpty $menu
+        return
+
+      $searchInput = $menu.find(".grid-columns-search-input")
+      
+      if _.isEmpty $searchInput
+        return
+      
+      refreshMenuItems = (e) ->
+        e.stopPropagation()
+        search_term = $(e.target).val()
+        filtered_fields = filterFieldsBySearch(search_term)
+        
+        # Update the submenu items dynamically
+        $submenu = $(e.target).closest(".dropdown-context-sub")
+        $submenu.find("li:not(:first)").remove() # Remove all items except the search header
+        
+        # Add filtered items
+        new_submenu = createFilteredSubmenuData(filtered_fields)
+        # Call the `buildMenu` function to convert the submenu data to a jQuery object
+        $new_submenu = context.buildMenu(new_submenu, grid_control._getColumnsManagerContextMenuId(type), true)
+        # For each child item in the new submenu, append it to the existinhg submenu
+        # We don't replace the entire submenu because we want to keep the search header
+        $new_submenu.children().each (index, $item) ->
+          $submenu.append($item)
+        
+        return
+      
+      $searchInput.off("keyup input", refreshMenuItems)
+      $searchInput.on("keyup input", refreshMenuItems)
+      
+      return
+
     $(@_getColumnsManagerContextMenuSelector("first")).remove() 
     $grid_control_cmenu_target = $(".slick-header-column:first", @container)
     if append_fields_submenu.length > 0
@@ -139,6 +178,7 @@ _.extend GridControl.prototype,
       context.attach $grid_control_cmenu_target,
         id: @_getColumnsManagerContextMenuId("first")
         data: append_fields_menu.concat freeze_unfreeze_column
+      setupSearchFunctionality("first")
     else
       context.attach $grid_control_cmenu_target,
         id: @_getColumnsManagerContextMenuId("first")
@@ -163,6 +203,7 @@ _.extend GridControl.prototype,
             @_hideFieldColumn(@getView()[column_index_of_last_opened_cmenu].field)
         }
       ]
+    setupSearchFunctionality("common")
 
     $common_cmenu_target.bind "mousedown", (e) ->
       return setColumnIndexOfLastOpenedCmenu(e)
