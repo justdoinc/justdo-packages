@@ -56,6 +56,43 @@ _.extend GridControl.prototype,
             @addFieldToView(field, column_index_of_last_opened_cmenu + 1)
 
     append_fields_submenu = _.sortBy(append_fields_submenu, (i) -> i.text.toLowerCase())
+    # Store reference to this instance for use in event handlers
+    grid_control = @
+
+    # Create search and filtering functions
+    filterFieldsBySearch = (search_term) ->
+      search_term = search_term.toLowerCase().trim()
+      if _.isEmpty search_term
+        return missing_fields
+      search_term_regex = new RegExp(JustdoHelpers.escapeRegExp(search_term), "i")
+      
+      extended_schema = grid_control.getSchemaExtendedWithCustomFields()
+      
+      return _.filter missing_fields, (field) ->
+        label = APP.justdo_i18n.getI18nTextOrFallback {
+          fallback_text: extended_schema[field].label, 
+          i18n_key: extended_schema[field].label_i18n
+        }
+        default_label = extended_schema[field].label
+        # Consider a match if the search term is found in the label in the current language or the default language
+        return search_term_regex.test(label) or search_term_regex.test(default_label)
+
+    createFilteredSubmenuData = (filtered_fields) ->
+      submenu = []
+      extended_schema = grid_control.getSchemaExtendedWithCustomFields()
+      
+      for field in filtered_fields
+        do (field) =>
+          label = APP.justdo_i18n.getI18nTextOrFallback {
+            fallback_text: extended_schema[field].label, 
+            i18n_key: extended_schema[field].label_i18n
+          }
+          submenu.push
+            text: JustdoHelpers.xssGuard(label, {allow_html_parsing: true, enclosing_char: ''})
+            action: (e) =>
+              grid_control.addFieldToView(field, column_index_of_last_opened_cmenu + 1)
+      
+      return JustdoHelpers.localeAwareSortCaseInsensitive submenu, (item) -> item.text.toLowerCase()
 
     append_fields_menu = [
       {
