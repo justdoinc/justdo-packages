@@ -88,6 +88,9 @@ _.extend GridControl.prototype,
     append_fields_submenu = createFilteredSubmenuData(initial_filtered_fields)
 
     # Create the search header item for the submenu
+    # IMPORTANT: Although it seems this block can be moved to the `createFilteredSubmenuData`,
+    # it can't be done because `createFilteredSubmenuData` is also used in `refreshMenuItems`
+    # to update the submenu items dynamically without re-creating the search header.
     if not _.isEmpty append_fields_submenu
       # Show search header if there are any fields to show
       search_header_item = {
