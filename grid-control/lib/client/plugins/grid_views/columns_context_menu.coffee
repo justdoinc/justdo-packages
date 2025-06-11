@@ -171,6 +171,28 @@ _.extend GridControl.prototype,
       
       return
 
+    # Setup auto-focus functionality for the search input when submenu opens
+    setupAutoFocusOnSubmenuOpen = (type) =>
+      $menu = $(@_getColumnsManagerContextMenuSelector(type))
+      
+      if _.isEmpty $menu
+        return
+
+      # Find the "Add Column" submenu item
+      $addColumnSubmenu = $menu.find(".dropdown-submenu").first()
+      
+      if _.isEmpty $addColumnSubmenu
+        return
+      
+      # Use the existing mouseenter event from context.js to detect when submenu opens
+      $addColumnSubmenu.off("mouseenter.grid-search-focus")
+      $addColumnSubmenu.on "mouseenter.grid-search-focus", ->
+        $searchInput = $addColumnSubmenu.find(".grid-columns-search-input")
+        if not _.isEmpty $searchInput
+          $searchInput.focus()
+      
+      return
+
     $(@_getColumnsManagerContextMenuSelector("first")).remove() 
     $grid_control_cmenu_target = $(".slick-header-column:first", @container)
     if append_fields_submenu.length > 0
@@ -179,6 +201,7 @@ _.extend GridControl.prototype,
         id: @_getColumnsManagerContextMenuId("first")
         data: append_fields_menu.concat freeze_unfreeze_column
       setupSearchFunctionality("first")
+      setupAutoFocusOnSubmenuOpen("first")
     else
       context.attach $grid_control_cmenu_target,
         id: @_getColumnsManagerContextMenuId("first")
@@ -204,6 +227,7 @@ _.extend GridControl.prototype,
         }
       ]
     setupSearchFunctionality("common")
+    setupAutoFocusOnSubmenuOpen("common")
 
     $common_cmenu_target.bind "mousedown", (e) ->
       return setColumnIndexOfLastOpenedCmenu(e)
