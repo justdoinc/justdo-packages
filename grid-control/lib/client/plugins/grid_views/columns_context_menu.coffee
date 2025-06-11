@@ -163,6 +163,32 @@ _.extend GridControl.prototype,
       
       return
 
+    setupColumnContextMenu = (type, additional_menu_items_arr) =>
+      $(@_getColumnsManagerContextMenuSelector(type)).remove()
+      
+      grid_control_cmenu_target_selector = ".slick-header-column"
+      column_index_of_last_opened_cmenu = undefined
+      if type is "first"
+        grid_control_cmenu_target_selector = grid_control_cmenu_target_selector += ":first"
+        column_index_of_last_opened_cmenu = 0
+      else if type is "common"
+        grid_control_cmenu_target_selector = grid_control_cmenu_target_selector += ":not(:first)"
+      
+      $grid_control_cmenu_target = $(grid_control_cmenu_target_selector, @container)
+      menu = append_fields_menu.concat(additional_menu_items_arr)
+      
+      context.attach $grid_control_cmenu_target,
+        id: @_getColumnsManagerContextMenuId(type)
+        data: menu
+
+      setupSearchFunctionality(type)
+      setupAutoFocusOnSubmenuOpen(type)
+
+      $grid_control_cmenu_target.bind "mousedown", (e) ->
+        return setColumnIndexOfLastOpenedCmenu(e, column_index_of_last_opened_cmenu)
+      
+      return
+
     # At the moment we only support the first column freeze/unfreeze
     if @getView()[0].frozen is true
       freeze_unfreeze_column = [
@@ -192,45 +218,17 @@ _.extend GridControl.prototype,
             return
         }
       ]
+    setupColumnContextMenu("first", freeze_unfreeze_column)
 
-    $(@_getColumnsManagerContextMenuSelector("first")).remove() 
-    $grid_control_cmenu_target = $(".slick-header-column:first", @container)
-    if append_fields_submenu.length > 0
-      # context-menu for grid-control column
-      context.attach $grid_control_cmenu_target,
-        id: @_getColumnsManagerContextMenuId("first")
-        data: append_fields_menu.concat freeze_unfreeze_column
-      setupSearchFunctionality("first")
-      setupAutoFocusOnSubmenuOpen("first")
-    else
-      context.attach $grid_control_cmenu_target,
-        id: @_getColumnsManagerContextMenuId("first")
-        data: [].concat freeze_unfreeze_column
-
-    $grid_control_cmenu_target.bind "mousedown", (e) ->
-      return setColumnIndexOfLastOpenedCmenu(e, 0)
-
+    hide_menu_item = [
+      {
+        text: TAPi18n.__ "hide_column_label"
+        action: (e) =>
+          @_hideFieldColumn(@getView()[column_index_of_last_opened_cmenu].field)
+      }
+    ]
     # common columns context menu
-    $common_cmenu_target = $('.slick-header-columns', @container).children().slice(1)
-    $(@_getColumnsManagerContextMenuSelector("common")).remove()
-    if append_fields_submenu.length > 0
-      menu = append_fields_menu
-    else
-      menu = []
-    context.attach $common_cmenu_target,
-      id: @_getColumnsManagerContextMenuId("common")
-      data: menu.concat [
-        {
-          text: TAPi18n.__ "hide_column_label"
-          action: (e) =>
-            @_hideFieldColumn(@getView()[column_index_of_last_opened_cmenu].field)
-        }
-      ]
-    setupSearchFunctionality("common")
-    setupAutoFocusOnSubmenuOpen("common")
-
-    $common_cmenu_target.bind "mousedown", (e) ->
-      return setColumnIndexOfLastOpenedCmenu(e)
+    setupColumnContextMenu("common", hide_menu_item)
 
   _destroyColumnsManagerContextMenu: ->
     $(@_getColumnsManagerContextMenuSelector("first")).remove()
