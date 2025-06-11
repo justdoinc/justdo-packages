@@ -102,36 +102,6 @@ _.extend GridControl.prototype,
       }
     ]
 
-    # At the moment we only support the first column freeze/unfreeze
-    if @getView()[0].frozen is true
-      freeze_unfreeze_column = [
-        {
-          text: TAPi18n.__ "unfreeze_column_label"
-          action: (e) =>
-            current_view = @getView()
-
-            current_view[0].frozen = false
-
-            @setView(current_view)
-
-            return
-        }
-      ]
-    else
-      freeze_unfreeze_column = [
-        {
-          text: TAPi18n.__ "freeze_column_label"
-          action: (e) =>
-            current_view = @getView()
-
-            current_view[0].frozen = true
-
-            @setView(current_view)
-
-            return
-        }
-      ]
-
     # Add search functionality after the context menu is created
     # In other items we use `action` to handle click events, but here we need to handle the search input `keyup` events,
     # so we need to add the event listeners to the search input directly.
@@ -192,6 +162,36 @@ _.extend GridControl.prototype,
           $searchInput.focus()
       
       return
+
+    # At the moment we only support the first column freeze/unfreeze
+    if @getView()[0].frozen is true
+      freeze_unfreeze_column = [
+        {
+          text: TAPi18n.__ "unfreeze_column_label"
+          action: (e) =>
+            current_view = @getView()
+
+            current_view[0].frozen = false
+
+            @setView(current_view)
+
+            return
+        }
+      ]
+    else
+      freeze_unfreeze_column = [
+        {
+          text: TAPi18n.__ "freeze_column_label"
+          action: (e) =>
+            current_view = @getView()
+
+            current_view[0].frozen = true
+
+            @setView(current_view)
+
+            return
+        }
+      ]
 
     $(@_getColumnsManagerContextMenuSelector("first")).remove() 
     $grid_control_cmenu_target = $(".slick-header-column:first", @container)
