@@ -329,11 +329,9 @@ _.extend JustdoProjectPane.prototype,
 
   enterFullScreen: -> 
     @_full_screen_rv.set true
-    $(".app-wrapper").addClass "no-scroll"
     return
 
   exitFullScreen: -> 
-    $(".app-wrapper").removeClass "no-scroll"
     @_full_screen_rv.set false
     return
 

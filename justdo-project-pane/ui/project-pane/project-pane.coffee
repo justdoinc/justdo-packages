@@ -10,11 +10,19 @@ Template.justdo_project_pane_expanded.onRendered ->
 
       return
 
+  @autorun ->
+    if APP.justdo_project_pane.isFullScreen()
+      $(".app-wrapper").addClass "no-scroll"
+    else
+      $(".app-wrapper").removeClass "no-scroll"
+    
+    return
+
   return
 
 Template.justdo_project_pane_expanded.onDestroyed ->
   $(".justdo-project-pane-container").resizable("destroy")
-  APP.justdo_project_pane.exitFullScreen()
+  $(".app-wrapper").removeClass "no-scroll"
 
   return
 
