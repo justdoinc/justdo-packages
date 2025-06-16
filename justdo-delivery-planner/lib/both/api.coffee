@@ -357,7 +357,7 @@ _.extend JustdoDeliveryPlanner.prototype,
         $ne: true
     if options.query?
       # If query is provided, extend it to the query without overriding the existing query
-      query = _.extend options.query, query
+      query = _.extend {}, options.query, query
     
     if Meteor.isServer
       query["parents2.parent"] = projects_collection_id
