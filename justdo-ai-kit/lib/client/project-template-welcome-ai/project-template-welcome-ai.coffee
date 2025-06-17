@@ -42,8 +42,6 @@ Template.project_template_welcome_ai.onCreated ->
         cur_proj = -> APP.modules.project_page.curProj()
 
         if cur_proj().isCustomFeatureEnabled JustdoPlanningUtilities.project_custom_feature_id
-          grid_control.setView JustDoProjectsTemplates.template_grid_views.gantt
-
           APP.justdo_planning_utilities?.once "changes-queue-processed", ->
             if (first_task_id = APP.collections.Tasks.findOne({project_id}, {fields: {_id: 1}, sort: {seqId: 1}})?._id)
               task_info = APP.justdo_planning_utilities.getOrCreateTaskInfoObject(first_task_id)
