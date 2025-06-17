@@ -196,6 +196,16 @@ $standard-cell-padding-bottom: 3px
         position: sticky
         top: 0
         background-color: white
+        z-index: 10
+
+    // Keep submenu visible when protected from auto-close (override CSS hover behavior)
+    &.context-menu-hover-protection > .dropdown-context-sub,
+    &.context-menu-hover-protection:hover > .dropdown-context-sub
+      display: block !important
+      
+    // Ensure protected submenus stay visible even when not hovering
+    &.context-menu-hover-protection > .dropdown-context-sub
+      visibility: visible !important
 
 .grid-columns-search-container
   position: relative

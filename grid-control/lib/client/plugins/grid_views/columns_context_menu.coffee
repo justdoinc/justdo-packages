@@ -166,6 +166,45 @@ _.extend GridControl.prototype,
       
       return
 
+    setupSubmenuProtection = (type) =>
+      $menu = $(@_getColumnsManagerContextMenuSelector(type))
+      
+      if _.isEmpty $menu
+        return
+
+      submenuCloseTimer = null
+      
+      
+      # When search input gains focus, keep submenu open
+      $menu.on "focus", ".grid-columns-search-input", (e) ->
+        $submenu = $(e.target).closest(".dropdown-submenu")
+        $submenu.addClass("context-menu-hover-protection")
+        
+        # Clear any existing close timer
+        if submenuCloseTimer
+          Meteor.clearTimeout(submenuCloseTimer)
+          submenuCloseTimer = null
+        return
+
+      # When mouse enters submenu with search, clear any pending close timer
+      $menu.on "mouseenter", ".dropdown-submenu", (e) ->
+        if submenuCloseTimer
+          Meteor.clearTimeout(submenuCloseTimer)
+          submenuCloseTimer = null
+        return
+
+      # When mouse leaves submenu, protect if search input has content or is focused
+      $menu.on "mouseleave", ".dropdown-submenu", (e) ->
+        $submenu = $(e.currentTarget)
+        submenuCloseTimer = Meteor.setTimeout ->
+          if not $submenu.is(":hover")
+            $submenu.removeClass("context-menu-hover-protection")
+          return
+        , 500
+        return
+      
+      return
+
     setupColumnContextMenu = (type, additional_menu_items_arr) =>
       $(@_getColumnsManagerContextMenuSelector(type)).remove()
       
@@ -186,6 +225,7 @@ _.extend GridControl.prototype,
 
       setupSearchFunctionality(type)
       setupAutoFocusOnSubmenuOpen(type)
+      setupSubmenuProtection(type)
 
       $grid_control_cmenu_target.bind "mousedown", (e) ->
         return setColumnIndexOfLastOpenedCmenu(e, column_index_of_last_opened_cmenu)
