@@ -10,7 +10,7 @@ _.extend JustDoProjectsTemplates,
           },
           {
               "field": "justdo_grid_gantt",
-              "width": 500
+              "width": 400
           },
           {
               "field": "jpu:basket_start_date_formatter",
