@@ -235,7 +235,7 @@ _.extend Projects.prototype,
     options = _.extend default_options, options
 
     conf = options.conf or {
-      custom_features: ["justdo_private_follow_up", "justdo_inbound_emails", "justdo_clipboard_import", "justdo-item-duplicate-control", "disable-quick-add"]
+      custom_features: ["justdo_private_follow_up", "justdo_planning_utilities", "justdo_inbound_emails", "justdo_clipboard_import", "justdo-item-duplicate-control", "disable-quick-add"]
     }
 
     user_lang = APP.justdo_i18n.getUserLang(user_id) or JustdoI18n.default_lang
