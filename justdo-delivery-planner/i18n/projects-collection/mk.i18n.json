@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Непознат тип на Колекција на Проекти",
+  "projects_collection_unset_unknown_type_label": "Неподесена Непозната Колекција на Проекти",
+  "projects_collection_default_type_label": "Колекција на Проекти",
+  "projects_collection_default_type_label_plural": "Колекции на Проекти",
+  "projects_collection_set_as_default_projects_collection": "Подеси како Колекција на Проекти",
+  "projects_collection_unset_as_default_projects_collection": "Отстрани како Колекција на Проекти",
+  "projects_collection_close_default_projects_collection": "Затвори ја оваа Колекција на Проекти",
+  "projects_collection_closed_default_projects_collection_label": "Затворена Колекција на Проекти",
+  "projects_collection_reopen_default_projects_collection": "Повторно отвори ја оваа Колекција на Проекти",
+  "projects_collection_create_sub_projects_collection": "Создај под-Колекција на Проекти",
+  "projects_collection_department_label": "Одделение",
+  "projects_collection_department_label_plural": "Одделенија",
+  "projects_collection_set_as_department": "Подеси како Одделение",
+  "projects_collection_unset_as_department": "Отстрани како Одделение",
+  "projects_collection_close_department": "Затвори го ова Одделение",
+  "projects_collection_closed_department_label": "Затворено Одделение",
+  "projects_collection_reopen_department": "Повторно отвори го ова Одделение",
+  "projects_collection_depth_gt_max_depth_default_err": "Не може да се вгнезди __projects_collection_label__ повеќе од __count__ ниво",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Не може да се вгнезди __projects_collection_label__ повеќе од __count__ нивоа"
+}

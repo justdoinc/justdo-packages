@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Noma'lum Loyihalar To'plami turi",
+  "projects_collection_unset_unknown_type_label": "O'rnatilmagan Noma'lum Loyihalar To'plami",
+  "projects_collection_default_type_label": "Loyihalar To'plami",
+  "projects_collection_default_type_label_plural": "Loyihalar To'plamlari",
+  "projects_collection_set_as_default_projects_collection": "Loyihalar To'plami sifatida o'rnatish",
+  "projects_collection_unset_as_default_projects_collection": "Loyihalar To'plami sifatida bekor qilish",
+  "projects_collection_close_default_projects_collection": "Ushbu Loyihalar To'plamini yopish",
+  "projects_collection_closed_default_projects_collection_label": "Yopilgan Loyihalar To'plami",
+  "projects_collection_reopen_default_projects_collection": "Ushbu Loyihalar To'plamini qayta ochish",
+  "projects_collection_create_sub_projects_collection": "Ichki Loyihalar To'plamini yaratish",
+  "projects_collection_department_label": "Bo'lim",
+  "projects_collection_department_label_plural": "Bo'limlar",
+  "projects_collection_set_as_department": "Bo'lim sifatida o'rnatish",
+  "projects_collection_unset_as_department": "Bo'lim sifatida bekor qilish",
+  "projects_collection_close_department": "Ushbu Bo'limni yopish",
+  "projects_collection_closed_department_label": "Yopilgan Bo'lim",
+  "projects_collection_reopen_department": "Ushbu Bo'limni qayta ochish",
+  "projects_collection_depth_gt_max_depth_default_err": "__projects_collection_label__ ni __count__ darajadan chuqurroq joylashtirish mumkin emas",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "__projects_collection_label__ ni __count__ darajadan chuqurroq joylashtirish mumkin emas"
+}

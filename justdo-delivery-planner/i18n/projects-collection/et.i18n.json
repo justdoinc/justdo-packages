@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Tundmatu projektide kogumi tüüp",
+  "projects_collection_unset_unknown_type_label": "Määramata tundmatu projektide kogu",
+  "projects_collection_default_type_label": "Projektide kogu",
+  "projects_collection_default_type_label_plural": "Projektide kogud",
+  "projects_collection_set_as_default_projects_collection": "Määra projektide koguks",
+  "projects_collection_unset_as_default_projects_collection": "Eemalda projektide kogu määratlus",
+  "projects_collection_close_default_projects_collection": "Sulge see projektide kogu",
+  "projects_collection_closed_default_projects_collection_label": "Suletud projektide kogu",
+  "projects_collection_reopen_default_projects_collection": "Taasava see projektide kogu",
+  "projects_collection_create_sub_projects_collection": "Loo alam-projektide kogu",
+  "projects_collection_department_label": "Osakond",
+  "projects_collection_department_label_plural": "Osakonnad",
+  "projects_collection_set_as_department": "Määra osakonnaks",
+  "projects_collection_unset_as_department": "Eemalda osakonna määratlus",
+  "projects_collection_close_department": "Sulge see osakond",
+  "projects_collection_closed_department_label": "Suletud osakond",
+  "projects_collection_reopen_department": "Taasava see osakond",
+  "projects_collection_depth_gt_max_depth_default_err": "Ei saa pesastada __projects_collection_label__ rohkem kui __count__ tasandile",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Ei saa pesastada __projects_collection_label__ rohkem kui __count__ tasandile"
+}

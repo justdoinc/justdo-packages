@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "無法識別的專案集合類型",
+  "projects_collection_unset_unknown_type_label": "未設定的無法識別專案集合",
+  "projects_collection_default_type_label": "專案集合",
+  "projects_collection_default_type_label_plural": "專案集合",
+  "projects_collection_set_as_default_projects_collection": "設為專案集合",
+  "projects_collection_unset_as_default_projects_collection": "取消設為專案集合",
+  "projects_collection_close_default_projects_collection": "關閉此專案集合",
+  "projects_collection_closed_default_projects_collection_label": "已關閉的專案集合",
+  "projects_collection_reopen_default_projects_collection": "重新開啟此專案集合",
+  "projects_collection_create_sub_projects_collection": "建立子專案集合",
+  "projects_collection_department_label": "部門",
+  "projects_collection_department_label_plural": "部門",
+  "projects_collection_set_as_department": "設為部門",
+  "projects_collection_unset_as_department": "取消設為部門",
+  "projects_collection_close_department": "關閉此部門",
+  "projects_collection_closed_department_label": "已關閉的部門",
+  "projects_collection_reopen_department": "重新開啟此部門",
+  "projects_collection_depth_gt_max_depth_default_err": "無法將 __projects_collection_label__ 嵌套超過 __count__ 層",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "無法將 __projects_collection_label__ 嵌套超過 __count__ 層"
+}

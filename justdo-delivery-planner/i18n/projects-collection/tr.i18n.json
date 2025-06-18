@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Tanınmayan Proje Koleksiyonu türü",
+  "projects_collection_unset_unknown_type_label": "Ayarlanmamış Tanınmayan Proje Koleksiyonu",
+  "projects_collection_default_type_label": "Proje Koleksiyonu",
+  "projects_collection_default_type_label_plural": "Proje Koleksiyonları",
+  "projects_collection_set_as_default_projects_collection": "Proje Koleksiyonu olarak ayarla",
+  "projects_collection_unset_as_default_projects_collection": "Proje Koleksiyonu olarak ayarı kaldır",
+  "projects_collection_close_default_projects_collection": "Bu Proje Koleksiyonunu kapat",
+  "projects_collection_closed_default_projects_collection_label": "Kapatılmış Proje Koleksiyonu",
+  "projects_collection_reopen_default_projects_collection": "Bu Proje Koleksiyonunu yeniden aç",
+  "projects_collection_create_sub_projects_collection": "Alt Proje Koleksiyonu oluştur",
+  "projects_collection_department_label": "Departman",
+  "projects_collection_department_label_plural": "Departmanlar",
+  "projects_collection_set_as_department": "Departman olarak ayarla",
+  "projects_collection_unset_as_department": "Departman olarak ayarı kaldır",
+  "projects_collection_close_department": "Bu Departmanı kapat",
+  "projects_collection_closed_department_label": "Kapatılmış Departman",
+  "projects_collection_reopen_department": "Bu Departmanı yeniden aç",
+  "projects_collection_depth_gt_max_depth_default_err": "__projects_collection_label__ __count__ seviyeden daha fazla iç içe yerleştirilemez",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "__projects_collection_label__ __count__ seviyeden daha fazla iç içe yerleştirilemez"
+}

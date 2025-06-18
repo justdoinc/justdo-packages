@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "인식되지 않은 프로젝트 컬렉션 유형",
+  "projects_collection_unset_unknown_type_label": "설정 해제된 인식되지 않은 프로젝트 컬렉션",
+  "projects_collection_default_type_label": "프로젝트 컬렉션",
+  "projects_collection_default_type_label_plural": "프로젝트 컬렉션",
+  "projects_collection_set_as_default_projects_collection": "프로젝트 컬렉션으로 설정",
+  "projects_collection_unset_as_default_projects_collection": "프로젝트 컬렉션 설정 해제",
+  "projects_collection_close_default_projects_collection": "이 프로젝트 컬렉션 닫기",
+  "projects_collection_closed_default_projects_collection_label": "닫힌 프로젝트 컬렉션",
+  "projects_collection_reopen_default_projects_collection": "이 프로젝트 컬렉션 다시 열기",
+  "projects_collection_create_sub_projects_collection": "하위 프로젝트 컬렉션 생성",
+  "projects_collection_department_label": "부서",
+  "projects_collection_department_label_plural": "부서",
+  "projects_collection_set_as_department": "부서로 설정",
+  "projects_collection_unset_as_department": "부서 설정 해제",
+  "projects_collection_close_department": "이 부서 닫기",
+  "projects_collection_closed_department_label": "닫힌 부서",
+  "projects_collection_reopen_department": "이 부서 다시 열기",
+  "projects_collection_depth_gt_max_depth_default_err": "__projects_collection_label__을(를) __count__단계를 초과하여 중첩할 수 없습니다",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "__projects_collection_label__을(를) __count__단계를 초과하여 중첩할 수 없습니다"
+}

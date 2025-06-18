@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Nierozpoznany typ kolekcji projektów",
+  "projects_collection_unset_unknown_type_label": "Nieustawiona nierozpoznana kolekcja projektów",
+  "projects_collection_default_type_label": "Kolekcja projektów",
+  "projects_collection_default_type_label_plural": "Kolekcje projektów",
+  "projects_collection_set_as_default_projects_collection": "Ustaw jako kolekcję projektów",
+  "projects_collection_unset_as_default_projects_collection": "Anuluj ustawienie jako kolekcja projektów",
+  "projects_collection_close_default_projects_collection": "Zamknij tę kolekcję projektów",
+  "projects_collection_closed_default_projects_collection_label": "Zamknięta kolekcja projektów",
+  "projects_collection_reopen_default_projects_collection": "Otwórz ponownie tę kolekcję projektów",
+  "projects_collection_create_sub_projects_collection": "Utwórz podkolekcję projektów",
+  "projects_collection_department_label": "Dział",
+  "projects_collection_department_label_plural": "Działy",
+  "projects_collection_set_as_department": "Ustaw jako dział",
+  "projects_collection_unset_as_department": "Anuluj ustawienie jako dział",
+  "projects_collection_close_department": "Zamknij ten dział",
+  "projects_collection_closed_department_label": "Zamknięty dział",
+  "projects_collection_reopen_department": "Otwórz ponownie ten dział",
+  "projects_collection_depth_gt_max_depth_default_err": "Nie można zagnieżdżać __projects_collection_label__ poza __count__ poziom",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Nie można zagnieżdżać __projects_collection_label__ poza __count__ poziomów"
+}

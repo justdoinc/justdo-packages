@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Нерозпізнаний тип Колекції Проектів",
+  "projects_collection_unset_unknown_type_label": "Не встановлена Нерозпізнана Колекція Проектів",
+  "projects_collection_default_type_label": "Колекція Проектів",
+  "projects_collection_default_type_label_plural": "Колекції Проектів",
+  "projects_collection_set_as_default_projects_collection": "Встановити як Колекцію Проектів",
+  "projects_collection_unset_as_default_projects_collection": "Скасувати як Колекцію Проектів",
+  "projects_collection_close_default_projects_collection": "Закрити цю Колекцію Проектів",
+  "projects_collection_closed_default_projects_collection_label": "Закрита Колекція Проектів",
+  "projects_collection_reopen_default_projects_collection": "Відкрити знову цю Колекцію Проектів",
+  "projects_collection_create_sub_projects_collection": "Створити під-Колекцію Проектів",
+  "projects_collection_department_label": "Відділ",
+  "projects_collection_department_label_plural": "Відділи",
+  "projects_collection_set_as_department": "Встановити як Відділ",
+  "projects_collection_unset_as_department": "Скасувати як Відділ",
+  "projects_collection_close_department": "Закрити цей Відділ",
+  "projects_collection_closed_department_label": "Закритий Відділ",
+  "projects_collection_reopen_department": "Відкрити знову цей Відділ",
+  "projects_collection_depth_gt_max_depth_default_err": "Неможливо вкласти __projects_collection_label__ глибше ніж на __count__ рівень",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Неможливо вкласти __projects_collection_label__ глибше ніж на __count__ рівнів"
+}

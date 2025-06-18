@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Tipo di Raccolta Progetti non riconosciuto",
+  "projects_collection_unset_unknown_type_label": "Raccolta Progetti non riconosciuta non impostata",
+  "projects_collection_default_type_label": "Raccolta Progetti",
+  "projects_collection_default_type_label_plural": "Raccolte Progetti",
+  "projects_collection_set_as_default_projects_collection": "Imposta come Raccolta Progetti",
+  "projects_collection_unset_as_default_projects_collection": "Rimuovi come Raccolta Progetti",
+  "projects_collection_close_default_projects_collection": "Chiudi questa Raccolta Progetti",
+  "projects_collection_closed_default_projects_collection_label": "Raccolta Progetti Chiusa",
+  "projects_collection_reopen_default_projects_collection": "Riapri questa Raccolta Progetti",
+  "projects_collection_create_sub_projects_collection": "Crea una sotto Raccolta Progetti",
+  "projects_collection_department_label": "Dipartimento",
+  "projects_collection_department_label_plural": "Dipartimenti",
+  "projects_collection_set_as_department": "Imposta come Dipartimento",
+  "projects_collection_unset_as_department": "Rimuovi come Dipartimento",
+  "projects_collection_close_department": "Chiudi questo Dipartimento",
+  "projects_collection_closed_department_label": "Dipartimento Chiuso",
+  "projects_collection_reopen_department": "Riapri questo Dipartimento",
+  "projects_collection_depth_gt_max_depth_default_err": "Non è possibile annidare __projects_collection_label__ oltre __count__ livello",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Non è possibile annidare __projects_collection_label__ oltre __count__ livelli"
+}

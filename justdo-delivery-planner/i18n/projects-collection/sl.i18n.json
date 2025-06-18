@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Nerazpoznan tip zbirke projektov",
+  "projects_collection_unset_unknown_type_label": "Nenastavljena nerazpoznana zbirka projektov",
+  "projects_collection_default_type_label": "Zbirka projektov",
+  "projects_collection_default_type_label_plural": "Zbirke projektov",
+  "projects_collection_set_as_default_projects_collection": "Nastavi kot zbirko projektov",
+  "projects_collection_unset_as_default_projects_collection": "Odstrani kot zbirko projektov",
+  "projects_collection_close_default_projects_collection": "Zapri to zbirko projektov",
+  "projects_collection_closed_default_projects_collection_label": "Zaprta zbirka projektov",
+  "projects_collection_reopen_default_projects_collection": "Ponovno odpri to zbirko projektov",
+  "projects_collection_create_sub_projects_collection": "Ustvari podzbirko projektov",
+  "projects_collection_department_label": "Oddelek",
+  "projects_collection_department_label_plural": "Oddelki",
+  "projects_collection_set_as_department": "Nastavi kot oddelek",
+  "projects_collection_unset_as_department": "Odstrani kot oddelek",
+  "projects_collection_close_department": "Zapri ta oddelek",
+  "projects_collection_closed_department_label": "Zaprt oddelek",
+  "projects_collection_reopen_department": "Ponovno odpri ta oddelek",
+  "projects_collection_depth_gt_max_depth_default_err": "Ni mogoče gnezditi __projects_collection_label__ preko __count__ nivoja",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Ni mogoče gnezditi __projects_collection_label__ preko __count__ nivojev"
+}

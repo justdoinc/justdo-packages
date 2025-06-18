@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Onbekende Projekte Versameling tipe",
+  "projects_collection_unset_unknown_type_label": "Ongestelde Onbekende Projekte Versameling",
+  "projects_collection_default_type_label": "Projekte Versameling",
+  "projects_collection_default_type_label_plural": "Projekte Versamelings",
+  "projects_collection_set_as_default_projects_collection": "Stel as 'n Projekte Versameling",
+  "projects_collection_unset_as_default_projects_collection": "Ontstel as 'n Projekte Versameling",
+  "projects_collection_close_default_projects_collection": "Sluit hierdie Projekte Versameling",
+  "projects_collection_closed_default_projects_collection_label": "Geslote Projekte Versameling",
+  "projects_collection_reopen_default_projects_collection": "Heropen hierdie Projekte Versameling",
+  "projects_collection_create_sub_projects_collection": "Skep 'n sub Projekte Versameling",
+  "projects_collection_department_label": "Departement",
+  "projects_collection_department_label_plural": "Departemente",
+  "projects_collection_set_as_department": "Stel as 'n Departement",
+  "projects_collection_unset_as_department": "Ontstel as 'n Departement",
+  "projects_collection_close_department": "Sluit hierdie Departement",
+  "projects_collection_closed_department_label": "Geslote Departement",
+  "projects_collection_reopen_department": "Heropen hierdie Departement",
+  "projects_collection_depth_gt_max_depth_default_err": "Kan nie __projects_collection_label__ verder as __count__ vlak nes nie",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Kan nie __projects_collection_label__ verder as __count__ vlakke nes nie"
+}

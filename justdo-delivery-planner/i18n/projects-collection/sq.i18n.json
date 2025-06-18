@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Lloj i panjohur i Koleksionit të Projekteve",
+  "projects_collection_unset_unknown_type_label": "Koleksion i Panjohur Projektesh i Pashënuar",
+  "projects_collection_default_type_label": "Koleksion Projektesh",
+  "projects_collection_default_type_label_plural": "Koleksione Projektesh",
+  "projects_collection_set_as_default_projects_collection": "Cakto si Koleksion Projektesh",
+  "projects_collection_unset_as_default_projects_collection": "Hiq si Koleksion Projektesh",
+  "projects_collection_close_default_projects_collection": "Mbyll këtë Koleksion Projektesh",
+  "projects_collection_closed_default_projects_collection_label": "Koleksion Projektesh i Mbyllur",
+  "projects_collection_reopen_default_projects_collection": "Rihap këtë Koleksion Projektesh",
+  "projects_collection_create_sub_projects_collection": "Krijo një nën-Koleksion Projektesh",
+  "projects_collection_department_label": "Departament",
+  "projects_collection_department_label_plural": "Departamente",
+  "projects_collection_set_as_department": "Cakto si Departament",
+  "projects_collection_unset_as_department": "Hiq si Departament",
+  "projects_collection_close_department": "Mbyll këtë Departament",
+  "projects_collection_closed_department_label": "Departament i Mbyllur",
+  "projects_collection_reopen_department": "Rihap këtë Departament",
+  "projects_collection_depth_gt_max_depth_default_err": "Nuk mund të futësh __projects_collection_label__ më thellë se __count__ nivel",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Nuk mund të futësh __projects_collection_label__ më thellë se __count__ nivele"
+}

@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Tunnistamaton projektikokoelmatyyppi",
+  "projects_collection_unset_unknown_type_label": "Asettamaton tunnistamaton projektikokoelma",
+  "projects_collection_default_type_label": "Projektikokoelma",
+  "projects_collection_default_type_label_plural": "Projektikokoelmat",
+  "projects_collection_set_as_default_projects_collection": "Aseta projektikokoelmaksi",
+  "projects_collection_unset_as_default_projects_collection": "Poista projektikokoelman asetus",
+  "projects_collection_close_default_projects_collection": "Sulje tämä projektikokoelma",
+  "projects_collection_closed_default_projects_collection_label": "Suljettu projektikokoelma",
+  "projects_collection_reopen_default_projects_collection": "Avaa tämä projektikokoelma uudelleen",
+  "projects_collection_create_sub_projects_collection": "Luo aliprojektikokoelma",
+  "projects_collection_department_label": "Osasto",
+  "projects_collection_department_label_plural": "Osastot",
+  "projects_collection_set_as_department": "Aseta osastoksi",
+  "projects_collection_unset_as_department": "Poista osaston asetus",
+  "projects_collection_close_department": "Sulje tämä osasto",
+  "projects_collection_closed_department_label": "Suljettu osasto",
+  "projects_collection_reopen_department": "Avaa tämä osasto uudelleen",
+  "projects_collection_depth_gt_max_depth_default_err": "Ei voida sisällyttää __projects_collection_label__ syvemmälle kuin __count__ taso",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Ei voida sisällyttää __projects_collection_label__ syvemmälle kuin __count__ tasoa"
+}

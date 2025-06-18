@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "அடையாளம் காணப்படாத திட்டங்கள் தொகுப்பு வகை",
+  "projects_collection_unset_unknown_type_label": "அமைக்கப்படாத அடையாளம் காணப்படாத திட்டங்கள் தொகுப்பு",
+  "projects_collection_default_type_label": "திட்டங்கள் தொகுப்பு",
+  "projects_collection_default_type_label_plural": "திட்டங்கள் தொகுப்புகள்",
+  "projects_collection_set_as_default_projects_collection": "திட்டங்கள் தொகுப்பாக அமைக்கவும்",
+  "projects_collection_unset_as_default_projects_collection": "திட்டங்கள் தொகுப்பிலிருந்து நீக்கவும்",
+  "projects_collection_close_default_projects_collection": "இந்த திட்டங்கள் தொகுப்பை மூடவும்",
+  "projects_collection_closed_default_projects_collection_label": "மூடப்பட்ட திட்டங்கள் தொகுப்பு",
+  "projects_collection_reopen_default_projects_collection": "இந்த திட்டங்கள் தொகுப்பை மீண்டும் திறக்கவும்",
+  "projects_collection_create_sub_projects_collection": "துணை திட்டங்கள் தொகுப்பை உருவாக்கவும்",
+  "projects_collection_department_label": "துறை",
+  "projects_collection_department_label_plural": "துறைகள்",
+  "projects_collection_set_as_department": "துறையாக அமைக்கவும்",
+  "projects_collection_unset_as_department": "துறையிலிருந்து நீக்கவும்",
+  "projects_collection_close_department": "இந்த துறையை மூடவும்",
+  "projects_collection_closed_department_label": "மூடப்பட்ட துறை",
+  "projects_collection_reopen_department": "இந்த துறையை மீண்டும் திறக்கவும்",
+  "projects_collection_depth_gt_max_depth_default_err": "__projects_collection_label__ ஐ __count__ நிலைக்கு மேல் உள்ளடக்க முடியாது",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "__projects_collection_label__ ஐ __count__ நிலைகளுக்கு மேல் உள்ளடக்க முடியாது"
+}

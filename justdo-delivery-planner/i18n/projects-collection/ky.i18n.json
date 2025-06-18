@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Тааныл эмес долбоорлор жыйындысынын түрү",
+  "projects_collection_unset_unknown_type_label": "Коюлбаган тааныл эмес долбоорлор жыйындысы",
+  "projects_collection_default_type_label": "Долбоорлор жыйындысы",
+  "projects_collection_default_type_label_plural": "Долбоорлор жыйындылары",
+  "projects_collection_set_as_default_projects_collection": "Долбоорлор жыйындысы катары коюу",
+  "projects_collection_unset_as_default_projects_collection": "Долбоорлор жыйындысы катары алып салуу",
+  "projects_collection_close_default_projects_collection": "Бул долбоорлор жыйындысын жабуу",
+  "projects_collection_closed_default_projects_collection_label": "Жабылган долбоорлор жыйындысы",
+  "projects_collection_reopen_default_projects_collection": "Бул долбоорлор жыйындысын кайра ачуу",
+  "projects_collection_create_sub_projects_collection": "Кичи долбоорлор жыйындысын түзүү",
+  "projects_collection_department_label": "Бөлүм",
+  "projects_collection_department_label_plural": "Бөлүмдөр",
+  "projects_collection_set_as_department": "Бөлүм катары коюу",
+  "projects_collection_unset_as_department": "Бөлүм катары алып салуу",
+  "projects_collection_close_department": "Бул бөлүмдү жабуу",
+  "projects_collection_closed_department_label": "Жабылган бөлүм",
+  "projects_collection_reopen_department": "Бул бөлүмдү кайра ачуу",
+  "projects_collection_depth_gt_max_depth_default_err": "__projects_collection_label__ дегенди __count__ деңгээлден ашык киргизүүгө болбойт",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "__projects_collection_label__ дегенди __count__ деңгээлден ашык киргизүүгө болбойт"
+}

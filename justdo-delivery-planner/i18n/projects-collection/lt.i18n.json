@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Neatpažintas projektų kolekcijos tipas",
+  "projects_collection_unset_unknown_type_label": "Nenustatytas neatpažintas projektų kolekcijos tipas",
+  "projects_collection_default_type_label": "Projektų kolekcija",
+  "projects_collection_default_type_label_plural": "Projektų kolekcijos",
+  "projects_collection_set_as_default_projects_collection": "Nustatyti kaip projektų kolekciją",
+  "projects_collection_unset_as_default_projects_collection": "Panaikinti projektų kolekcijos nustatymą",
+  "projects_collection_close_default_projects_collection": "Uždaryti šią projektų kolekciją",
+  "projects_collection_closed_default_projects_collection_label": "Uždaryta projektų kolekcija",
+  "projects_collection_reopen_default_projects_collection": "Atidaryti šią projektų kolekciją iš naujo",
+  "projects_collection_create_sub_projects_collection": "Sukurti projektų pokolekcijos",
+  "projects_collection_department_label": "Departamentas",
+  "projects_collection_department_label_plural": "Departamentai",
+  "projects_collection_set_as_department": "Nustatyti kaip departamentą",
+  "projects_collection_unset_as_department": "Panaikinti departamento nustatymą",
+  "projects_collection_close_department": "Uždaryti šį departamentą",
+  "projects_collection_closed_department_label": "Uždarytas departamentas",
+  "projects_collection_reopen_department": "Atidaryti šį departamentą iš naujo",
+  "projects_collection_depth_gt_max_depth_default_err": "Negalima įterpti __projects_collection_label__ giliau nei __count__ lygį",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Negalima įterpti __projects_collection_label__ giliau nei __count__ lygius"
+}

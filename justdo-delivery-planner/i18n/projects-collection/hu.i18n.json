@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Fel nem ismert Projektgyűjtemény típus",
+  "projects_collection_unset_unknown_type_label": "Beállítatlan Fel nem ismert Projektgyűjtemény",
+  "projects_collection_default_type_label": "Projektgyűjtemény",
+  "projects_collection_default_type_label_plural": "Projektgyűjtemények",
+  "projects_collection_set_as_default_projects_collection": "Beállítás Projektgyűjteményként",
+  "projects_collection_unset_as_default_projects_collection": "Projektgyűjtemény beállítás megszüntetése",
+  "projects_collection_close_default_projects_collection": "Projektgyűjtemény bezárása",
+  "projects_collection_closed_default_projects_collection_label": "Bezárt Projektgyűjtemény",
+  "projects_collection_reopen_default_projects_collection": "Projektgyűjtemény újranyitása",
+  "projects_collection_create_sub_projects_collection": "Al-projektgyűjtemény létrehozása",
+  "projects_collection_department_label": "Osztály",
+  "projects_collection_department_label_plural": "Osztályok",
+  "projects_collection_set_as_department": "Beállítás Osztályként",
+  "projects_collection_unset_as_department": "Osztály beállítás megszüntetése",
+  "projects_collection_close_department": "Osztály bezárása",
+  "projects_collection_closed_department_label": "Bezárt Osztály",
+  "projects_collection_reopen_department": "Osztály újranyitása",
+  "projects_collection_depth_gt_max_depth_default_err": "Nem lehet __count__ szintnél mélyebbre ágyazni a __projects_collection_label__",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Nem lehet __count__ szintnél mélyebbre ágyazni a __projects_collection_label__"
+}

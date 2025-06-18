@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Навъи ношинохтаи Маҷмӯаи Лоиҳаҳо",
+  "projects_collection_unset_unknown_type_label": "Маҷмӯаи Лоиҳаҳои Ношинохтаи Насбнашуда",
+  "projects_collection_default_type_label": "Маҷмӯаи Лоиҳаҳо",
+  "projects_collection_default_type_label_plural": "Маҷмӯаҳои Лоиҳаҳо",
+  "projects_collection_set_as_default_projects_collection": "Ҳамчун Маҷмӯаи Лоиҳаҳо таъин кардан",
+  "projects_collection_unset_as_default_projects_collection": "Ҳамчун Маҷмӯаи Лоиҳаҳо бекор кардан",
+  "projects_collection_close_default_projects_collection": "Ин Маҷмӯаи Лоиҳаҳоро пӯшидан",
+  "projects_collection_closed_default_projects_collection_label": "Маҷмӯаи Лоиҳаҳои Пӯшида",
+  "projects_collection_reopen_default_projects_collection": "Ин Маҷмӯаи Лоиҳаҳоро аз нав кушодан",
+  "projects_collection_create_sub_projects_collection": "Маҷмӯаи Лоиҳаҳои зеринро эҷод кардан",
+  "projects_collection_department_label": "Шӯъба",
+  "projects_collection_department_label_plural": "Шӯъбаҳо",
+  "projects_collection_set_as_department": "Ҳамчун Шӯъба таъин кардан",
+  "projects_collection_unset_as_department": "Ҳамчун Шӯъба бекор кардан",
+  "projects_collection_close_department": "Ин Шӯъбаро пӯшидан",
+  "projects_collection_closed_department_label": "Шӯъбаи Пӯшида",
+  "projects_collection_reopen_department": "Ин Шӯъбаро аз нав кушодан",
+  "projects_collection_depth_gt_max_depth_default_err": "Наметавон __projects_collection_label__-ро аз __count__ сатҳ зиёдтар ҷойгир кард",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Наметавон __projects_collection_label__-ро аз __count__ сатҳ зиёдтар ҷойгир кард"
+}

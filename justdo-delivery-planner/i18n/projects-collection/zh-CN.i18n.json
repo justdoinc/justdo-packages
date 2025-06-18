@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "未识别的项目集合类型",
+  "projects_collection_unset_unknown_type_label": "取消设置未识别的项目集合",
+  "projects_collection_default_type_label": "项目集合",
+  "projects_collection_default_type_label_plural": "项目集合",
+  "projects_collection_set_as_default_projects_collection": "设置为项目集合",
+  "projects_collection_unset_as_default_projects_collection": "取消设置为项目集合",
+  "projects_collection_close_default_projects_collection": "关闭此项目集合",
+  "projects_collection_closed_default_projects_collection_label": "已关闭的项目集合",
+  "projects_collection_reopen_default_projects_collection": "重新打开此项目集合",
+  "projects_collection_create_sub_projects_collection": "创建子项目集合",
+  "projects_collection_department_label": "部门",
+  "projects_collection_department_label_plural": "部门",
+  "projects_collection_set_as_department": "设置为部门",
+  "projects_collection_unset_as_department": "取消设置为部门",
+  "projects_collection_close_department": "关闭此部门",
+  "projects_collection_closed_department_label": "已关闭的部门",
+  "projects_collection_reopen_department": "重新打开此部门",
+  "projects_collection_depth_gt_max_depth_default_err": "无法将__projects_collection_label__嵌套超过__count__级",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "无法将__projects_collection_label__嵌套超过__count__级"
+}

@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "ប្រភេទបណ្តុំគម្រោងមិនស្គាល់",
+  "projects_collection_unset_unknown_type_label": "បណ្តុំគម្រោងមិនស្គាល់ដែលមិនបានកំណត់",
+  "projects_collection_default_type_label": "បណ្តុំគម្រោង",
+  "projects_collection_default_type_label_plural": "បណ្តុំគម្រោង",
+  "projects_collection_set_as_default_projects_collection": "កំណត់ជាបណ្តុំគម្រោង",
+  "projects_collection_unset_as_default_projects_collection": "លុបចេញពីបណ្តុំគម្រោង",
+  "projects_collection_close_default_projects_collection": "បិទបណ្តុំគម្រោងនេះ",
+  "projects_collection_closed_default_projects_collection_label": "បណ្តុំគម្រោងដែលបានបិទ",
+  "projects_collection_reopen_default_projects_collection": "បើកបណ្តុំគម្រោងនេះឡើងវិញ",
+  "projects_collection_create_sub_projects_collection": "បង្កើតបណ្តុំគម្រោងរង",
+  "projects_collection_department_label": "នាយកដ្ឋាន",
+  "projects_collection_department_label_plural": "នាយកដ្ឋាន",
+  "projects_collection_set_as_department": "កំណត់ជានាយកដ្ឋាន",
+  "projects_collection_unset_as_department": "លុបចេញពីនាយកដ្ឋាន",
+  "projects_collection_close_department": "បិទនាយកដ្ឋាននេះ",
+  "projects_collection_closed_department_label": "នាយកដ្ឋានដែលបានបិទ",
+  "projects_collection_reopen_department": "បើកនាយកដ្ឋាននេះឡើងវិញ",
+  "projects_collection_depth_gt_max_depth_default_err": "មិនអាចរៀប __projects_collection_label__ លើសពី __count__ កម្រិត",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "មិនអាចរៀប __projects_collection_label__ លើសពី __count__ កម្រិត"
+}

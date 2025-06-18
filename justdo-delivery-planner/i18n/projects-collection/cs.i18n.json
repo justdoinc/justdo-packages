@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Nerozpoznaný typ kolekce projektů",
+  "projects_collection_unset_unknown_type_label": "Nenastavená nerozpoznaná kolekce projektů",
+  "projects_collection_default_type_label": "Kolekce projektů",
+  "projects_collection_default_type_label_plural": "Kolekce projektů",
+  "projects_collection_set_as_default_projects_collection": "Nastavit jako kolekci projektů",
+  "projects_collection_unset_as_default_projects_collection": "Zrušit jako kolekci projektů",
+  "projects_collection_close_default_projects_collection": "Zavřít tuto kolekci projektů",
+  "projects_collection_closed_default_projects_collection_label": "Zavřená kolekce projektů",
+  "projects_collection_reopen_default_projects_collection": "Znovu otevřít tuto kolekci projektů",
+  "projects_collection_create_sub_projects_collection": "Vytvořit podřízenou kolekci projektů",
+  "projects_collection_department_label": "Oddělení",
+  "projects_collection_department_label_plural": "Oddělení",
+  "projects_collection_set_as_department": "Nastavit jako oddělení",
+  "projects_collection_unset_as_department": "Zrušit jako oddělení",
+  "projects_collection_close_department": "Zavřít toto oddělení",
+  "projects_collection_closed_department_label": "Zavřené oddělení",
+  "projects_collection_reopen_department": "Znovu otevřít toto oddělení",
+  "projects_collection_depth_gt_max_depth_default_err": "Nelze vnořit __projects_collection_label__ za __count__ úroveň",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Nelze vnořit __projects_collection_label__ za __count__ úrovní"
+}

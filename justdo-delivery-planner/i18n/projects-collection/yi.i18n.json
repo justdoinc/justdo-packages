@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "נישט דערקענטער פּראָיעקטן זאַמלונג טיפּ",
+  "projects_collection_unset_unknown_type_label": "אומבאַשטימטע נישט דערקענטע פּראָיעקטן זאַמלונג",
+  "projects_collection_default_type_label": "פּראָיעקטן זאַמלונג",
+  "projects_collection_default_type_label_plural": "פּראָיעקטן זאַמלונגען",
+  "projects_collection_set_as_default_projects_collection": "באַשטימען ווי אַ פּראָיעקטן זאַמלונג",
+  "projects_collection_unset_as_default_projects_collection": "אָפּבאַשטימען ווי אַ פּראָיעקטן זאַמלונג",
+  "projects_collection_close_default_projects_collection": "פֿאַרמאַכן דעם פּראָיעקטן זאַמלונג",
+  "projects_collection_closed_default_projects_collection_label": "פֿאַרמאַכטע פּראָיעקטן זאַמלונג",
+  "projects_collection_reopen_default_projects_collection": "ווידער עפֿענען דעם פּראָיעקטן זאַמלונג",
+  "projects_collection_create_sub_projects_collection": "שאַפֿן אַ אונטער פּראָיעקטן זאַמלונג",
+  "projects_collection_department_label": "אָפּטיילונג",
+  "projects_collection_department_label_plural": "אָפּטיילונגען",
+  "projects_collection_set_as_department": "באַשטימען ווי אַן אָפּטיילונג",
+  "projects_collection_unset_as_department": "אָפּבאַשטימען ווי אַן אָפּטיילונג",
+  "projects_collection_close_department": "פֿאַרמאַכן דעם אָפּטיילונג",
+  "projects_collection_closed_department_label": "פֿאַרמאַכטע אָפּטיילונג",
+  "projects_collection_reopen_department": "ווידער עפֿענען דעם אָפּטיילונג",
+  "projects_collection_depth_gt_max_depth_default_err": "קען נישט נעסטן __projects_collection_label__ איבער __count__ שטאַפּל",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "קען נישט נעסטן __projects_collection_label__ איבער __count__ שטאַפּלען"
+}

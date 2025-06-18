@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Neprepoznat tip Kolekcije projekata",
+  "projects_collection_unset_unknown_type_label": "Nepostavljeno Neprepoznata kolekcija projekata",
+  "projects_collection_default_type_label": "Kolekcija projekata",
+  "projects_collection_default_type_label_plural": "Kolekcije projekata",
+  "projects_collection_set_as_default_projects_collection": "Postavi kao Kolekciju projekata",
+  "projects_collection_unset_as_default_projects_collection": "Ukloni kao Kolekciju projekata",
+  "projects_collection_close_default_projects_collection": "Zatvori ovu Kolekciju projekata",
+  "projects_collection_closed_default_projects_collection_label": "Zatvorena kolekcija projekata",
+  "projects_collection_reopen_default_projects_collection": "Ponovo otvori ovu Kolekciju projekata",
+  "projects_collection_create_sub_projects_collection": "Kreiraj pod-kolekciju projekata",
+  "projects_collection_department_label": "Odeljenje",
+  "projects_collection_department_label_plural": "Odeljenja",
+  "projects_collection_set_as_department": "Postavi kao Odeljenje",
+  "projects_collection_unset_as_department": "Ukloni kao Odeljenje",
+  "projects_collection_close_department": "Zatvori ovo Odeljenje",
+  "projects_collection_closed_department_label": "Zatvoreno odeljenje",
+  "projects_collection_reopen_department": "Ponovo otvori ovo Odeljenje",
+  "projects_collection_depth_gt_max_depth_default_err": "Ne može se ugnjezditi __projects_collection_label__ preko __count__ nivoa",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Ne može se ugnjezditi __projects_collection_label__ preko __count__ nivoa"
+}

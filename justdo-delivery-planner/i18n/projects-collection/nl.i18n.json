@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Onbekend Projectenverzameling type",
+  "projects_collection_unset_unknown_type_label": "Niet-ingestelde Onbekende Projectenverzameling",
+  "projects_collection_default_type_label": "Projectenverzameling",
+  "projects_collection_default_type_label_plural": "Projectenverzamelingen",
+  "projects_collection_set_as_default_projects_collection": "Instellen als Projectenverzameling",
+  "projects_collection_unset_as_default_projects_collection": "Niet meer instellen als Projectenverzameling",
+  "projects_collection_close_default_projects_collection": "Deze Projectenverzameling sluiten",
+  "projects_collection_closed_default_projects_collection_label": "Gesloten Projectenverzameling",
+  "projects_collection_reopen_default_projects_collection": "Deze Projectenverzameling heropenen",
+  "projects_collection_create_sub_projects_collection": "Een sub-Projectenverzameling aanmaken",
+  "projects_collection_department_label": "Afdeling",
+  "projects_collection_department_label_plural": "Afdelingen",
+  "projects_collection_set_as_department": "Instellen als Afdeling",
+  "projects_collection_unset_as_department": "Niet meer instellen als Afdeling",
+  "projects_collection_close_department": "Deze Afdeling sluiten",
+  "projects_collection_closed_department_label": "Gesloten Afdeling",
+  "projects_collection_reopen_department": "Deze Afdeling heropenen",
+  "projects_collection_depth_gt_max_depth_default_err": "Kan __projects_collection_label__ niet nesten dieper dan __count__ niveau",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Kan __projects_collection_label__ niet nesten dieper dan __count__ niveaus"
+}

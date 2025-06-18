@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "अज्ञात प्रोजेक्ट संग्रह प्रकार",
+  "projects_collection_unset_unknown_type_label": "अनसेट अज्ञात प्रोजेक्ट संग्रह",
+  "projects_collection_default_type_label": "प्रोजेक्ट संग्रह",
+  "projects_collection_default_type_label_plural": "प्रोजेक्ट संग्रह",
+  "projects_collection_set_as_default_projects_collection": "प्रोजेक्ट संग्रह के रूप में सेट करें",
+  "projects_collection_unset_as_default_projects_collection": "प्रोजेक्ट संग्रह से अनसेट करें",
+  "projects_collection_close_default_projects_collection": "इस प्रोजेक्ट संग्रह को बंद करें",
+  "projects_collection_closed_default_projects_collection_label": "बंद प्रोजेक्ट संग्रह",
+  "projects_collection_reopen_default_projects_collection": "इस प्रोजेक्ट संग्रह को पुनः खोलें",
+  "projects_collection_create_sub_projects_collection": "एक उप प्रोजेक्ट संग्रह बनाएं",
+  "projects_collection_department_label": "विभाग",
+  "projects_collection_department_label_plural": "विभाग",
+  "projects_collection_set_as_department": "विभाग के रूप में सेट करें",
+  "projects_collection_unset_as_department": "विभाग से अनसेट करें",
+  "projects_collection_close_department": "इस विभाग को बंद करें",
+  "projects_collection_closed_department_label": "बंद विभाग",
+  "projects_collection_reopen_department": "इस विभाग को पुनः खोलें",
+  "projects_collection_depth_gt_max_depth_default_err": "__projects_collection_label__ को __count__ स्तर से आगे नेस्ट नहीं कर सकते",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "__projects_collection_label__ को __count__ स्तरों से आगे नेस्ट नहीं कर सकते"
+}

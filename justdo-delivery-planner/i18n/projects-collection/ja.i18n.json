@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "認識されないプロジェクトコレクションタイプ",
+  "projects_collection_unset_unknown_type_label": "未設定の認識されないプロジェクトコレクション",
+  "projects_collection_default_type_label": "プロジェクトコレクション",
+  "projects_collection_default_type_label_plural": "プロジェクトコレクション",
+  "projects_collection_set_as_default_projects_collection": "プロジェクトコレクションとして設定",
+  "projects_collection_unset_as_default_projects_collection": "プロジェクトコレクションとして解除",
+  "projects_collection_close_default_projects_collection": "このプロジェクトコレクションを閉じる",
+  "projects_collection_closed_default_projects_collection_label": "閉じられたプロジェクトコレクション",
+  "projects_collection_reopen_default_projects_collection": "このプロジェクトコレクションを再開",
+  "projects_collection_create_sub_projects_collection": "サブプロジェクトコレクションを作成",
+  "projects_collection_department_label": "部門",
+  "projects_collection_department_label_plural": "部門",
+  "projects_collection_set_as_department": "部門として設定",
+  "projects_collection_unset_as_department": "部門として解除",
+  "projects_collection_close_department": "この部門を閉じる",
+  "projects_collection_closed_department_label": "閉じられた部門",
+  "projects_collection_reopen_department": "この部門を再開",
+  "projects_collection_depth_gt_max_depth_default_err": "__projects_collection_label__を__count__レベルを超えてネストすることはできません",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "__projects_collection_label__を__count__レベルを超えてネストすることはできません"
+}

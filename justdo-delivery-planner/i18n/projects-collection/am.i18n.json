@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "ያልታወቀ የፕሮጀክቶች ስብስብ አይነት",
+  "projects_collection_unset_unknown_type_label": "ያልተዋቀረ ያልታወቀ የፕሮጀክቶች ስብስብ",
+  "projects_collection_default_type_label": "የፕሮጀክቶች ስብስብ",
+  "projects_collection_default_type_label_plural": "የፕሮጀክቶች ስብስቦች",
+  "projects_collection_set_as_default_projects_collection": "እንደ የፕሮጀክቶች ስብስብ አደርግ",
+  "projects_collection_unset_as_default_projects_collection": "የፕሮጀክቶች ስብስብነት ተወ",
+  "projects_collection_close_default_projects_collection": "ይህን የፕሮጀክቶች ስብስብ ዝጋ",
+  "projects_collection_closed_default_projects_collection_label": "የተዘጋ የፕሮጀክቶች ስብስብ",
+  "projects_collection_reopen_default_projects_collection": "ይህን የፕሮጀክቶች ስብስብ እንደገና ክፈት",
+  "projects_collection_create_sub_projects_collection": "ንዑስ የፕሮጀክቶች ስብስብ ፍጠር",
+  "projects_collection_department_label": "ክፍል",
+  "projects_collection_department_label_plural": "ክፍሎች",
+  "projects_collection_set_as_department": "እንደ ክፍል አደርግ",
+  "projects_collection_unset_as_department": "ክፍልነት ተወ",
+  "projects_collection_close_department": "ይህን ክፍል ዝጋ",
+  "projects_collection_closed_department_label": "የተዘጋ ክፍል",
+  "projects_collection_reopen_department": "ይህን ክፍል እንደገና ክፈት",
+  "projects_collection_depth_gt_max_depth_default_err": "__projects_collection_label__ ከ __count__ ደረጃ በላይ ማዞር አይቻልም",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "__projects_collection_label__ ከ __count__ ደረጃዎች በላይ ማዞር አይቻልም"
+}

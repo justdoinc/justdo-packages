@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Unbekannter Projektsammlungstyp",
+  "projects_collection_unset_unknown_type_label": "Nicht festgelegte unbekannte Projektsammlung",
+  "projects_collection_default_type_label": "Projektsammlung",
+  "projects_collection_default_type_label_plural": "Projektsammlungen",
+  "projects_collection_set_as_default_projects_collection": "Als Projektsammlung festlegen",
+  "projects_collection_unset_as_default_projects_collection": "Als Projektsammlung aufheben",
+  "projects_collection_close_default_projects_collection": "Diese Projektsammlung schließen",
+  "projects_collection_closed_default_projects_collection_label": "Geschlossene Projektsammlung",
+  "projects_collection_reopen_default_projects_collection": "Diese Projektsammlung wieder öffnen",
+  "projects_collection_create_sub_projects_collection": "Eine Unter-Projektsammlung erstellen",
+  "projects_collection_department_label": "Abteilung",
+  "projects_collection_department_label_plural": "Abteilungen",
+  "projects_collection_set_as_department": "Als Abteilung festlegen",
+  "projects_collection_unset_as_department": "Als Abteilung aufheben",
+  "projects_collection_close_department": "Diese Abteilung schließen",
+  "projects_collection_closed_department_label": "Geschlossene Abteilung",
+  "projects_collection_reopen_department": "Diese Abteilung wieder öffnen",
+  "projects_collection_depth_gt_max_depth_default_err": "__projects_collection_label__ kann nicht über __count__ Ebene hinaus verschachtelt werden",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "__projects_collection_label__ kann nicht über __count__ Ebenen hinaus verschachtelt werden"
+}

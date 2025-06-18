@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Нераспазнаны тып калекцыі праектаў",
+  "projects_collection_unset_unknown_type_label": "Не ўстаноўлена нераспазнаная калекцыя праектаў",
+  "projects_collection_default_type_label": "Калекцыя праектаў",
+  "projects_collection_default_type_label_plural": "Калекцыі праектаў",
+  "projects_collection_set_as_default_projects_collection": "Устанавіць як калекцыю праектаў",
+  "projects_collection_unset_as_default_projects_collection": "Скасаваць як калекцыю праектаў",
+  "projects_collection_close_default_projects_collection": "Закрыць гэтую калекцыю праектаў",
+  "projects_collection_closed_default_projects_collection_label": "Закрытая калекцыя праектаў",
+  "projects_collection_reopen_default_projects_collection": "Адкрыць зноў гэтую калекцыю праектаў",
+  "projects_collection_create_sub_projects_collection": "Стварыць падкалекцыю праектаў",
+  "projects_collection_department_label": "Аддзел",
+  "projects_collection_department_label_plural": "Аддзелы",
+  "projects_collection_set_as_department": "Устанавіць як аддзел",
+  "projects_collection_unset_as_department": "Скасаваць як аддзел",
+  "projects_collection_close_department": "Закрыць гэты аддзел",
+  "projects_collection_closed_department_label": "Закрыты аддзел",
+  "projects_collection_reopen_department": "Адкрыць зноў гэты аддзел",
+  "projects_collection_depth_gt_max_depth_default_err": "Немагчыма ўкласці __projects_collection_label__ больш чым на __count__ узровень",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Немагчыма ўкласці __projects_collection_label__ больш чым на __count__ узроўні"
+}

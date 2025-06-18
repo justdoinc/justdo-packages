@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Tipus de Col·lecció de Projectes no reconegut",
+  "projects_collection_unset_unknown_type_label": "Col·lecció de Projectes no reconeguda sense definir",
+  "projects_collection_default_type_label": "Col·lecció de Projectes",
+  "projects_collection_default_type_label_plural": "Col·leccions de Projectes",
+  "projects_collection_set_as_default_projects_collection": "Establir com a Col·lecció de Projectes",
+  "projects_collection_unset_as_default_projects_collection": "Desestablir com a Col·lecció de Projectes",
+  "projects_collection_close_default_projects_collection": "Tancar aquesta Col·lecció de Projectes",
+  "projects_collection_closed_default_projects_collection_label": "Col·lecció de Projectes Tancada",
+  "projects_collection_reopen_default_projects_collection": "Reobrir aquesta Col·lecció de Projectes",
+  "projects_collection_create_sub_projects_collection": "Crear una sub Col·lecció de Projectes",
+  "projects_collection_department_label": "Departament",
+  "projects_collection_department_label_plural": "Departaments",
+  "projects_collection_set_as_department": "Establir com a Departament",
+  "projects_collection_unset_as_department": "Desestablir com a Departament",
+  "projects_collection_close_department": "Tancar aquest Departament",
+  "projects_collection_closed_department_label": "Departament Tancat",
+  "projects_collection_reopen_department": "Reobrir aquest Departament",
+  "projects_collection_depth_gt_max_depth_default_err": "No es pot anidar __projects_collection_label__ més enllà de __count__ nivell",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "No es pot anidar __projects_collection_label__ més enllà de __count__ nivells"
+}

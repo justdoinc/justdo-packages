@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Net erkannten Typ vun der Projeten-Sammlung",
+  "projects_collection_unset_unknown_type_label": "Net gesetzen net erkannten Projeten-Sammlung",
+  "projects_collection_default_type_label": "Projeten-Sammlung",
+  "projects_collection_default_type_label_plural": "Projeten-Sammlungen",
+  "projects_collection_set_as_default_projects_collection": "Als Projeten-Sammlung setzen",
+  "projects_collection_unset_as_default_projects_collection": "Als Projeten-Sammlung net méi setzen",
+  "projects_collection_close_default_projects_collection": "Dës Projeten-Sammlung zoumaachen",
+  "projects_collection_closed_default_projects_collection_label": "Zougemaach Projeten-Sammlung",
+  "projects_collection_reopen_default_projects_collection": "Dës Projeten-Sammlung erëm opmaachen",
+  "projects_collection_create_sub_projects_collection": "Eng Ënner-Projeten-Sammlung erstellen",
+  "projects_collection_department_label": "Departement",
+  "projects_collection_department_label_plural": "Departementer",
+  "projects_collection_set_as_department": "Als Departement setzen",
+  "projects_collection_unset_as_department": "Als Departement net méi setzen",
+  "projects_collection_close_department": "Dëst Departement zoumaachen",
+  "projects_collection_closed_department_label": "Zougemaacht Departement",
+  "projects_collection_reopen_department": "Dëst Departement erëm opmaachen",
+  "projects_collection_depth_gt_max_depth_default_err": "Kann __projects_collection_label__ net iwwer __count__ Niveau verschachtelen",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Kann __projects_collection_label__ net iwwer __count__ Niveauen verschachtelen"
+}

@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Neatpazīts Projektu kolekcijas tips",
+  "projects_collection_unset_unknown_type_label": "Neatiestatīta Neatpazīta Projektu kolekcija",
+  "projects_collection_default_type_label": "Projektu kolekcija",
+  "projects_collection_default_type_label_plural": "Projektu kolekcijas",
+  "projects_collection_set_as_default_projects_collection": "Iestatīt kā Projektu kolekciju",
+  "projects_collection_unset_as_default_projects_collection": "Noņemt kā Projektu kolekciju",
+  "projects_collection_close_default_projects_collection": "Aizvērt šo Projektu kolekciju",
+  "projects_collection_closed_default_projects_collection_label": "Aizvērta Projektu kolekcija",
+  "projects_collection_reopen_default_projects_collection": "Atkārtoti atvērt šo Projektu kolekciju",
+  "projects_collection_create_sub_projects_collection": "Izveidot apakš Projektu kolekciju",
+  "projects_collection_department_label": "Nodaļa",
+  "projects_collection_department_label_plural": "Nodaļas",
+  "projects_collection_set_as_department": "Iestatīt kā Nodaļu",
+  "projects_collection_unset_as_department": "Noņemt kā Nodaļu",
+  "projects_collection_close_department": "Aizvērt šo Nodaļu",
+  "projects_collection_closed_department_label": "Aizvērta Nodaļa",
+  "projects_collection_reopen_department": "Atkārtoti atvērt šo Nodaļu",
+  "projects_collection_depth_gt_max_depth_default_err": "Nevar ligzdot __projects_collection_label__ dziļāk par __count__ līmeni",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Nevar ligzdot __projects_collection_label__ dziļāk par __count__ līmeņiem"
+}

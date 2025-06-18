@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "Ukjent type prosjektsamling",
+  "projects_collection_unset_unknown_type_label": "Fjern ukjent prosjektsamling",
+  "projects_collection_default_type_label": "Prosjektsamling",
+  "projects_collection_default_type_label_plural": "Prosjektsamlinger",
+  "projects_collection_set_as_default_projects_collection": "Angi som prosjektsamling",
+  "projects_collection_unset_as_default_projects_collection": "Fjern som prosjektsamling",
+  "projects_collection_close_default_projects_collection": "Lukk denne prosjektsamlingen",
+  "projects_collection_closed_default_projects_collection_label": "Lukket prosjektsamling",
+  "projects_collection_reopen_default_projects_collection": "Gjenåpne denne prosjektsamlingen",
+  "projects_collection_create_sub_projects_collection": "Opprett en underprosjektsamling",
+  "projects_collection_department_label": "Avdeling",
+  "projects_collection_department_label_plural": "Avdelinger",
+  "projects_collection_set_as_department": "Angi som avdeling",
+  "projects_collection_unset_as_department": "Fjern som avdeling",
+  "projects_collection_close_department": "Lukk denne avdelingen",
+  "projects_collection_closed_department_label": "Lukket avdeling",
+  "projects_collection_reopen_department": "Gjenåpne denne avdelingen",
+  "projects_collection_depth_gt_max_depth_default_err": "Kan ikke neste __projects_collection_label__ utover __count__ nivå",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Kan ikke neste __projects_collection_label__ utover __count__ nivåer"
+}

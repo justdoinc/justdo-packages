@@ -1,0 +1,21 @@
+{
+  "projects_collection_unknown_type_label": "סוג אוסף פרויקטים לא מזוהה",
+  "projects_collection_unset_unknown_type_label": "ביטול אוסף פרויקטים לא מזוהה",
+  "projects_collection_default_type_label": "אוסף פרויקטים",
+  "projects_collection_default_type_label_plural": "אוספי פרויקטים",
+  "projects_collection_set_as_default_projects_collection": "הגדר כאוסף פרויקטים",
+  "projects_collection_unset_as_default_projects_collection": "בטל הגדרה כאוסף פרויקטים",
+  "projects_collection_close_default_projects_collection": "סגור את אוסף הפרויקטים הזה",
+  "projects_collection_closed_default_projects_collection_label": "אוסף פרויקטים סגור",
+  "projects_collection_reopen_default_projects_collection": "פתח מחדש את אוסף הפרויקטים הזה",
+  "projects_collection_create_sub_projects_collection": "צור אוסף פרויקטים משנה",
+  "projects_collection_department_label": "מחלקה",
+  "projects_collection_department_label_plural": "מחלקות",
+  "projects_collection_set_as_department": "הגדר כמחלקה",
+  "projects_collection_unset_as_department": "בטל הגדרה כמחלקה",
+  "projects_collection_close_department": "סגור את המחלקה הזו",
+  "projects_collection_closed_department_label": "מחלקה סגורה",
+  "projects_collection_reopen_department": "פתח מחדש את המחלקה הזו",
+  "projects_collection_depth_gt_max_depth_default_err": "לא ניתן לקנן __projects_collection_label__ מעבר לרמה __count__",
+  "projects_collection_depth_gt_max_depth_default_err_plural": "לא ניתן לקנן __projects_collection_label__ מעבר ל-__count__ רמות"
+}
