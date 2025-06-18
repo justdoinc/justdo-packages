@@ -59,6 +59,7 @@
   "apply": "Apliko",
   "project": "projekt",
   "projects": "Projekte",
+  "no_projects_found": "Nuk u gjetën projekte",
   "task": "detyrë",
   "tasks": "detyra",
   "member": "Anëtar",

@@ -59,6 +59,7 @@
   "apply": "Qo'llash",
   "project": "loyiha",
   "projects": "Loyihalar",
+  "no_projects_found": "Loyihalar topilmadi",
   "task": "vazifa",
   "tasks": "vazifalar",
   "member": "A'zo",

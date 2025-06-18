@@ -59,6 +59,7 @@
   "apply": "Aplică",
   "project": "proiect",
   "projects": "Proiecte",
+  "no_projects_found": "Nu s-au găsit proiecte",
   "task": "sarcină",
   "tasks": "sarcini",
   "member": "Membru",

@@ -59,6 +59,7 @@
   "apply": "Tillämpa",
   "project": "projekt",
   "projects": "Projekt",
+  "no_projects_found": "Inga projekt hittades",
   "task": "uppgift",
   "tasks": "uppgifter",
   "member": "Medlem",

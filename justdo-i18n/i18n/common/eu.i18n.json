@@ -59,6 +59,7 @@
   "apply": "Aplikatu",
   "project": "proiektua",
   "projects": "Proiektuak",
+  "no_projects_found": "Ez da proiekturik aurkitu",
   "task": "ataza",
   "tasks": "atazak",
   "member": "Kidea",

@@ -59,6 +59,7 @@
   "apply": "適用",
   "project": "プロジェクト",
   "projects": "プロジェクト",
+  "no_projects_found": "プロジェクトが見つかりません",
   "task": "タスク",
   "tasks": "タスク",
   "member": "メンバー",

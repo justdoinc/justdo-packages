@@ -59,6 +59,7 @@
   "apply": "Bruk",
   "project": "prosjekt",
   "projects": "Prosjekter",
+  "no_projects_found": "Ingen prosjekter funnet",
   "task": "oppgave",
   "tasks": "oppgaver",
   "member": "Medlem",

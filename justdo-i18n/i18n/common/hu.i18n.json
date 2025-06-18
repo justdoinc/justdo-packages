@@ -59,6 +59,7 @@
   "apply": "Alkalmazás",
   "project": "projekt",
   "projects": "Projektek",
+  "no_projects_found": "Nem találhatók projektek",
   "task": "feladat",
   "tasks": "feladatok",
   "member": "Tag",

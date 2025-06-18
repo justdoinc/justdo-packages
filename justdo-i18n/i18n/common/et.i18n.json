@@ -59,6 +59,7 @@
   "apply": "Rakenda",
   "project": "projekt",
   "projects": "Projektid",
+  "no_projects_found": "Projekte ei leitud",
   "task": "ülesanne",
   "tasks": "ülesanded",
   "member": "Liige",

@@ -59,6 +59,7 @@
   "apply": "Pielietot",
   "project": "projekts",
   "projects": "Projekti",
+  "no_projects_found": "Nav atrasti projekti",
   "task": "uzdevums",
   "tasks": "uzdevumi",
   "member": "Dalībnieks",

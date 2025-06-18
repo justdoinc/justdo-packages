@@ -59,6 +59,7 @@
   "apply": "Taikyti",
   "project": "projektas",
   "projects": "Projektai",
+  "no_projects_found": "Projektų nerasta",
   "task": "užduotis",
   "tasks": "užduotys",
   "member": "Narys",

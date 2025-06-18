@@ -59,6 +59,7 @@
   "apply": "Käytä",
   "project": "projekti",
   "projects": "Projektit",
+  "no_projects_found": "Projekteja ei löytynyt",
   "task": "tehtävä",
   "tasks": "tehtävät",
   "member": "Jäsen",

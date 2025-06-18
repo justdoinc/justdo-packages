@@ -59,6 +59,7 @@
   "apply": "Aplicar",
   "project": "proyecto",
   "projects": "Proyectos",
+  "no_projects_found": "No se encontraron proyectos",
   "task": "tarea",
   "tasks": "tareas",
   "member": "Miembro",

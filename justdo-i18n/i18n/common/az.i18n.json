@@ -59,6 +59,7 @@
   "apply": "Tətbiq et",
   "project": "layihə",
   "projects": "Layihələr",
+  "no_projects_found": "Layihə tapılmadı",
   "task": "tapşırıq",
   "tasks": "tapşırıqlar",
   "member": "Üzv",

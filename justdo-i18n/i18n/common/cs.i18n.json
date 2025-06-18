@@ -59,6 +59,7 @@
   "apply": "Použít",
   "project": "projekt",
   "projects": "Projekty",
+  "no_projects_found": "Nenalezeny žádné projekty",
   "task": "úkol",
   "tasks": "úkoly",
   "member": "Člen",

@@ -59,6 +59,7 @@
   "apply": "تطبيق",
   "project": "مشروع",
   "projects": "المشاريع",
+  "no_projects_found": "لم يتم العثور على مشاريع",
   "task": "مهمة",
   "tasks": "المهام",
   "member": "عضو",

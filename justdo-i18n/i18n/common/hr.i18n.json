@@ -59,6 +59,7 @@
   "apply": "Primijeni",
   "project": "projekt",
   "projects": "Projekti",
+  "no_projects_found": "Nema pronađenih projekata",
   "task": "zadatak",
   "tasks": "zadaci",
   "member": "Član",

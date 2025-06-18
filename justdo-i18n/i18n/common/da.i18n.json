@@ -59,6 +59,7 @@
   "apply": "Anvend",
   "project": "projekt",
   "projects": "Projekter",
+  "no_projects_found": "Ingen projekter fundet",
   "task": "opgave",
   "tasks": "opgaver",
   "member": "Medlem",

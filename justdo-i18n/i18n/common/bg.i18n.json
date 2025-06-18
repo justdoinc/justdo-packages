@@ -59,6 +59,7 @@
   "apply": "Приложи",
   "project": "проект",
   "projects": "Проекти",
+  "no_projects_found": "Не са намерени проекти",
   "task": "задача",
   "tasks": "задачи",
   "member": "Член",

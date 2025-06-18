@@ -59,6 +59,7 @@
   "apply": "Uygula",
   "project": "proje",
   "projects": "Projeler",
+  "no_projects_found": "Proje bulunamadı",
   "task": "görev",
   "tasks": "görevler",
   "member": "Üye",

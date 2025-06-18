@@ -59,6 +59,7 @@
   "apply": "ተግብር",
   "project": "ፕሮጀክት",
   "projects": "ፕሮጀክቶች",
+  "no_projects_found": "ምንም ፕሮጀክቶች አልተገኙም",
   "task": "ተግባር",
   "tasks": "ተግባራት",
   "member": "አባል",
