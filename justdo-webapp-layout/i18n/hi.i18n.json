@@ -29,7 +29,6 @@
   "members_dropdown_invite_email_input_placeholder": "ईमेल टाइप करें",
   "members_dropdown_invite_enter_or_paste_email": "अल्पविराम से अलग किए गए ईमेल पते दर्ज करें या पेस्ट करें",
   "members_dropdown_invite_advanced_invite": "उन्नत आमंत्रण",
-  "members_dropdown_invite_no_projects_found": "कोई प्रोजेक्ट नहीं मिला",
   "members_dropdown_invite_no_projects_html": "इस JustDo में कोई प्रोजेक्ट नहीं है।<br>किसी कार्य को प्रोजेक्ट के रूप में सेट करने के लिए उस पर राइट क्लिक करें।",
   "member_dropdown_invite_select_with_number": "__count__ चुनें",
   "member_dropdown_invite_share_all_with_number_html": "सभी <span>__count__</span> कार्य साझा करें",

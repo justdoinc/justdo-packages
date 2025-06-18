@@ -29,7 +29,6 @@
   "members_dropdown_invite_email_input_placeholder": "E-Mail-Adresse eingeben",
   "members_dropdown_invite_enter_or_paste_email": "E-Mail-Adressen durch Komma getrennt eingeben oder einfügen",
   "members_dropdown_invite_advanced_invite": "Erweiterte Einladung",
-  "members_dropdown_invite_no_projects_found": "Keine Projekte gefunden",
   "members_dropdown_invite_no_projects_html": "Es gibt keine Projekte in diesem JustDo-Board.<br>Rechtsklick auf eine Aufgabe, um sie als Projekt festzulegen.",
   "member_dropdown_invite_select_with_number": "__count__ auswählen",
   "member_dropdown_invite_share_all_with_number_html": "Alle <span>__count__</span> Aufgabe teilen",

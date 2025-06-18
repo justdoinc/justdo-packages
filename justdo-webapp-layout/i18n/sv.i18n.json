@@ -29,7 +29,6 @@
   "members_dropdown_invite_email_input_placeholder": "Ange e-postadress",
   "members_dropdown_invite_enter_or_paste_email": "Ange eller klistra in kommaseparerade e-postadresser",
   "members_dropdown_invite_advanced_invite": "Avancerad inbjudan",
-  "members_dropdown_invite_no_projects_found": "Inga projekt hittades",
   "members_dropdown_invite_no_projects_html": "Det finns inga projekt i denna JustDo.<br>Högerklicka på en uppgift för att ställa in den som ett projekt.",
   "member_dropdown_invite_select_with_number": "Välj __count__",
   "member_dropdown_invite_share_all_with_number_html": "Dela alla <span>__count__</span> uppgift",

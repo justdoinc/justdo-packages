@@ -29,7 +29,6 @@
   "members_dropdown_invite_email_input_placeholder": "Въведете имейл",
   "members_dropdown_invite_enter_or_paste_email": "Въведете или поставете имейл адреси, разделени със запетая",
   "members_dropdown_invite_advanced_invite": "Разширена покана",
-  "members_dropdown_invite_no_projects_found": "Няма намерени проекти",
   "members_dropdown_invite_no_projects_html": "Няма проекти в този JustDo.<br>Щракнете с десния бутон върху задача, за да я зададете като проект.",
   "member_dropdown_invite_select_with_number": "Избери __count__",
   "member_dropdown_invite_share_all_with_number_html": "Сподели всички <span>__count__</span> задача",

@@ -29,7 +29,6 @@
   "members_dropdown_invite_email_input_placeholder": "اكتب البريد الإلكتروني",
   "members_dropdown_invite_enter_or_paste_email": "أدخل أو الصق عناوين البريد الإلكتروني مفصولة بفواصل",
   "members_dropdown_invite_advanced_invite": "دعوة متقدمة",
-  "members_dropdown_invite_no_projects_found": "لم يتم العثور على مشاريع",
   "members_dropdown_invite_no_projects_html": "لا توجد مشاريع في هذا اللوح (JustDo).<br>انقر بزر الماوس الأيمن على مهمة لتعيينها كمشروع.",
   "member_dropdown_invite_select_with_number": "تحديد __count__",
   "member_dropdown_invite_share_all_with_number_html": "مشاركة كل <span>__count__</span> مهمة",

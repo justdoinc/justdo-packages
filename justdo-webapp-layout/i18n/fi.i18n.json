@@ -29,7 +29,6 @@
   "members_dropdown_invite_email_input_placeholder": "Kirjoita sähköpostiosoite",
   "members_dropdown_invite_enter_or_paste_email": "Syötä tai liitä pilkulla erotettuja sähköpostiosoitteita",
   "members_dropdown_invite_advanced_invite": "Edistynyt kutsu",
-  "members_dropdown_invite_no_projects_found": "Projekteja ei löytynyt",
   "members_dropdown_invite_no_projects_html": "Tässä JustDo-taulussa ei ole projekteja.<br>Napsauta tehtävää hiiren oikealla painikkeella asettaaksesi sen projektiksi.",
   "member_dropdown_invite_select_with_number": "Valitse __count__",
   "member_dropdown_invite_share_all_with_number_html": "Jaa kaikki <span>__count__</span> tehtävä",

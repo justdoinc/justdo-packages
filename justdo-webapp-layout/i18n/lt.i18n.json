@@ -29,7 +29,6 @@
   "members_dropdown_invite_email_input_placeholder": "Įveskite el. paštą",
   "members_dropdown_invite_enter_or_paste_email": "Įveskite arba įklijuokite kableliais atskirtus el. pašto adresus",
   "members_dropdown_invite_advanced_invite": "Išplėstinis pakvietimas",
-  "members_dropdown_invite_no_projects_found": "Projektų nerasta",
   "members_dropdown_invite_no_projects_html": "Šiame JustDo nėra projektų.<br>Dešiniuoju pelės klavišu spustelėkite užduotį, kad nustatytumėte ją kaip projektą.",
   "member_dropdown_invite_select_with_number": "Pasirinkti __count__",
   "member_dropdown_invite_share_all_with_number_html": "Dalintis visomis <span>__count__</span> užduotimi",

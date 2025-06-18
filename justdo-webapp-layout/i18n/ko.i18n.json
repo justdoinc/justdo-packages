@@ -29,7 +29,6 @@
   "members_dropdown_invite_email_input_placeholder": "이메일 입력",
   "members_dropdown_invite_enter_or_paste_email": "이메일 주소를 쉼표로 구분하여 입력하거나 붙여넣기",
   "members_dropdown_invite_advanced_invite": "고급 초대",
-  "members_dropdown_invite_no_projects_found": "프로젝트를 찾을 수 없습니다",
   "members_dropdown_invite_no_projects_html": "이 JustDo 보드에 프로젝트가 없습니다.<br>태스크를 우클릭하여 프로젝트로 설정하세요.",
   "member_dropdown_invite_select_with_number": "__count__개 선택",
   "member_dropdown_invite_share_all_with_number_html": "모든 <span>__count__</span>개의 태스크 공유",

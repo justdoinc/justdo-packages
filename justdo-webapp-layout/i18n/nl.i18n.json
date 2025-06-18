@@ -29,7 +29,6 @@
   "members_dropdown_invite_email_input_placeholder": "Voer e-mail in",
   "members_dropdown_invite_enter_or_paste_email": "Voer e-mailadressen in of plak ze, gescheiden door komma's",
   "members_dropdown_invite_advanced_invite": "Geavanceerd uitnodigen",
-  "members_dropdown_invite_no_projects_found": "Geen projecten gevonden",
   "members_dropdown_invite_no_projects_html": "Er zijn geen projecten in deze JustDo.<br>Klik met de rechtermuisknop op een taak om deze als project in te stellen.",
   "member_dropdown_invite_select_with_number": "Selecteer __count__",
   "member_dropdown_invite_share_all_with_number_html": "Deel alle <span>__count__</span> taak",

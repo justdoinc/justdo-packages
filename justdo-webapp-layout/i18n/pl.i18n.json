@@ -29,7 +29,6 @@
   "members_dropdown_invite_email_input_placeholder": "Wpisz adres e-mail",
   "members_dropdown_invite_enter_or_paste_email": "Wprowadź lub wklej adresy e-mail oddzielone przecinkami",
   "members_dropdown_invite_advanced_invite": "Zaawansowane zaproszenie",
-  "members_dropdown_invite_no_projects_found": "Nie znaleziono projektów",
   "members_dropdown_invite_no_projects_html": "W tej tablicy JustDo nie ma projektów.<br>Kliknij prawym przyciskiem myszy na zadanie, aby ustawić je jako projekt.",
   "member_dropdown_invite_select_with_number": "Wybierz __count__",
   "member_dropdown_invite_share_all_with_number_html": "Udostępnij wszystkie <span>__count__</span> zadanie",

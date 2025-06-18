@@ -29,7 +29,6 @@
   "members_dropdown_invite_email_input_placeholder": "Skriv inn e-postadresse",
   "members_dropdown_invite_enter_or_paste_email": "Skriv inn eller lim inn kommaseparerte e-postadresser",
   "members_dropdown_invite_advanced_invite": "Avansert invitasjon",
-  "members_dropdown_invite_no_projects_found": "Ingen prosjekter funnet",
   "members_dropdown_invite_no_projects_html": "Det er ingen prosjekter i denne JustDo-tavlen.<br>Høyreklikk på en oppgave for å sette den som et prosjekt.",
   "member_dropdown_invite_select_with_number": "Velg __count__",
   "member_dropdown_invite_share_all_with_number_html": "Del alle <span>__count__</span> oppgave",

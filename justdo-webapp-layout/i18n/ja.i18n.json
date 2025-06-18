@@ -29,7 +29,6 @@
   "members_dropdown_invite_email_input_placeholder": "メールアドレスを入力",
   "members_dropdown_invite_enter_or_paste_email": "メールアドレスをカンマ区切りで入力または貼り付け",
   "members_dropdown_invite_advanced_invite": "詳細な招待",
-  "members_dropdown_invite_no_projects_found": "プロジェクトが見つかりません",
   "members_dropdown_invite_no_projects_html": "このJustDoボードにはプロジェクトがありません。<br>タスクを右クリックしてプロジェクトとして設定してください。",
   "member_dropdown_invite_select_with_number": "__count__件選択",
   "member_dropdown_invite_share_all_with_number_html": "すべての <span>__count__</span> 件のタスクを共有",

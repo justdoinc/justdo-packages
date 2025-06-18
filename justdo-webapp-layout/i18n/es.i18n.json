@@ -29,7 +29,6 @@
   "members_dropdown_invite_email_input_placeholder": "Escribe el correo electrónico",
   "members_dropdown_invite_enter_or_paste_email": "Introduce o pega direcciones de correo electrónico separadas por comas",
   "members_dropdown_invite_advanced_invite": "Invitación avanzada",
-  "members_dropdown_invite_no_projects_found": "No se encontraron proyectos",
   "members_dropdown_invite_no_projects_html": "No hay proyectos en este tablero JustDo.<br>Haz clic derecho en una tarea para establecerla como proyecto.",
   "member_dropdown_invite_select_with_number": "Seleccionar __count__",
   "member_dropdown_invite_share_all_with_number_html": "Compartir todas las <span>__count__</span> tarea",

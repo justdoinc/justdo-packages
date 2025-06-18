@@ -29,7 +29,6 @@
   "members_dropdown_invite_email_input_placeholder": "Escriu el correu electrònic",
   "members_dropdown_invite_enter_or_paste_email": "Introdueix o enganxa adreces de correu electrònic separades per comes",
   "members_dropdown_invite_advanced_invite": "Invitació avançada",
-  "members_dropdown_invite_no_projects_found": "No s'han trobat projectes",
   "members_dropdown_invite_no_projects_html": "No hi ha projectes en aquest JustDo.<br>Fes clic dret en una tasca per establir-la com a projecte.",
   "member_dropdown_invite_select_with_number": "Seleccionar __count__",
   "member_dropdown_invite_share_all_with_number_html": "Compartir totes <span>__count__</span> tasca",

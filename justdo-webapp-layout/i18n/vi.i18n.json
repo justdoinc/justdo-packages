@@ -29,7 +29,6 @@
   "members_dropdown_invite_email_input_placeholder": "Nhập email",
   "members_dropdown_invite_enter_or_paste_email": "Nhập hoặc dán các địa chỉ email được phân cách bằng dấu phẩy",
   "members_dropdown_invite_advanced_invite": "Mời nâng cao",
-  "members_dropdown_invite_no_projects_found": "Không tìm thấy dự án nào",
   "members_dropdown_invite_no_projects_html": "Không có dự án nào trong JustDo này.<br>Nhấp chuột phải vào một công việc để đặt nó làm dự án.",
   "member_dropdown_invite_select_with_number": "Chọn __count__",
   "member_dropdown_invite_share_all_with_number_html": "Chia sẻ tất cả <span>__count__</span> công việc",

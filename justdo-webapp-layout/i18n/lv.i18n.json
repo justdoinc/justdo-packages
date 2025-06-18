@@ -29,7 +29,6 @@
   "members_dropdown_invite_email_input_placeholder": "Ievadiet e-pastu",
   "members_dropdown_invite_enter_or_paste_email": "Ievadiet vai ielīmējiet ar komatu atdalītas e-pasta adreses",
   "members_dropdown_invite_advanced_invite": "Paplašināta uzaicināšana",
-  "members_dropdown_invite_no_projects_found": "Projekti nav atrasti",
   "members_dropdown_invite_no_projects_html": "Šajā JustDo tabulā nav projektu.<br>Ar peles labo taustiņu noklikšķiniet uz uzdevuma, lai iestatītu to kā projektu.",
   "member_dropdown_invite_select_with_number": "Atlasīt __count__",
   "member_dropdown_invite_share_all_with_number_html": "Dalīties ar visiem <span>__count__</span> uzdevumu",

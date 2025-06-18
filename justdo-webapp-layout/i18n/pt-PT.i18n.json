@@ -29,7 +29,6 @@
   "members_dropdown_invite_email_input_placeholder": "Digite o email",
   "members_dropdown_invite_enter_or_paste_email": "Introduza ou cole endereços de email separados por vírgulas",
   "members_dropdown_invite_advanced_invite": "Convite avançado",
-  "members_dropdown_invite_no_projects_found": "Nenhum projeto encontrado",
   "members_dropdown_invite_no_projects_html": "Não existem projetos neste JustDo.<br>Clique com o botão direito numa tarefa para defini-la como um projeto.",
   "member_dropdown_invite_select_with_number": "Selecionar __count__",
   "member_dropdown_invite_share_all_with_number_html": "Partilhar todas as <span>__count__</span> tarefa",

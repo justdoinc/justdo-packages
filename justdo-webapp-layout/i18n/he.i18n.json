@@ -29,7 +29,6 @@
   "members_dropdown_invite_email_input_placeholder": "הקלד כתובת דוא\"ל",
   "members_dropdown_invite_enter_or_paste_email": "הזן או הדבק כתובות דוא\"ל מופרדות בפסיקים",
   "members_dropdown_invite_advanced_invite": "הזמנה מתקדמת",
-  "members_dropdown_invite_no_projects_found": "לא נמצאו פרויקטים",
   "members_dropdown_invite_no_projects_html": "אין פרויקטים בלוח JustDo זה.<br>לחץ קליק ימני על משימה כדי להגדיר אותה כפרויקט.",
   "member_dropdown_invite_select_with_number": "בחר __count__",
   "member_dropdown_invite_share_all_with_number_html": "שתף את כל <span>__count__</span> המשימה",

@@ -29,7 +29,6 @@
   "members_dropdown_invite_email_input_placeholder": "Введіть email",
   "members_dropdown_invite_enter_or_paste_email": "Введіть або вставте email-адреси, розділені комами",
   "members_dropdown_invite_advanced_invite": "Розширене запрошення",
-  "members_dropdown_invite_no_projects_found": "Проектів не знайдено",
   "members_dropdown_invite_no_projects_html": "У цій дошці JustDo немає проектів.<br>Клацніть правою кнопкою миші на завданні, щоб встановити його як проект.",
   "member_dropdown_invite_select_with_number": "Вибрати __count__",
   "member_dropdown_invite_share_all_with_number_html": "Поділитися всіма <span>__count__</span> завданнями",

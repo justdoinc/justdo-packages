@@ -29,7 +29,6 @@
   "members_dropdown_invite_email_input_placeholder": "ইমেইল টাইপ করুন",
   "members_dropdown_invite_enter_or_paste_email": "কমা দিয়ে আলাদা করা ইমেইল ঠিকানা লিখুন বা পেস্ট করুন",
   "members_dropdown_invite_advanced_invite": "উন্নত আমন্ত্রণ",
-  "members_dropdown_invite_no_projects_found": "কোনো প্রকল্প পাওয়া যায়নি",
   "members_dropdown_invite_no_projects_html": "এই জাস্টডু বোর্ডে কোনো প্রকল্প নেই।<br>একটি টাস্কের উপর রাইট ক্লিক করে এটিকে একটি প্রকল্প হিসেবে সেট করুন।",
   "member_dropdown_invite_select_with_number": "__count__টি নির্বাচন করুন",
   "member_dropdown_invite_share_all_with_number_html": "সব <span>__count__</span>টি টাস্ক শেয়ার করুন",

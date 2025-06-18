@@ -29,7 +29,6 @@
   "members_dropdown_invite_email_input_placeholder": "Zadajte email",
   "members_dropdown_invite_enter_or_paste_email": "Zadajte alebo vložte e-mailové adresy oddelené čiarkou",
   "members_dropdown_invite_advanced_invite": "Pokročilé pozvanie",
-  "members_dropdown_invite_no_projects_found": "Neboli nájdené žiadne projekty",
   "members_dropdown_invite_no_projects_html": "V tejto JustDo tabuli nie sú žiadne projekty.<br>Kliknite pravým tlačidlom myši na úlohu, aby ste ju nastavili ako projekt.",
   "member_dropdown_invite_select_with_number": "Vybrať __count__",
   "member_dropdown_invite_share_all_with_number_html": "Zdieľať všetky <span>__count__</span> úlohy",
