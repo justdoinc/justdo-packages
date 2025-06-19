@@ -389,7 +389,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     APP.modules.project_page.project_config_ui.registerConfigTemplate JustdoDeliveryPlanner.projects_collection_plugin_id,
       section: "extensions"
       template: "projects_collection_project_config"
-      priority: 300
+      priority: 140
 
     return
   
