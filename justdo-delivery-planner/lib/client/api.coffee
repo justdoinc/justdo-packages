@@ -83,25 +83,26 @@ _.extend JustdoDeliveryPlanner.prototype,
         if isInstalledOnCurrentProject() and getAllJustdoActiveProjectsSortedByProjectName().length > 0
           return true
 
-    if @isProjectsCollectionEnabled()
-      position = 200
-      for projects_collection_type in @getSupportedProjectsCollectionTypes()
-        type_id = projects_collection_type.type_id
+    position = 200
+    for projects_collection_type in @getSupportedProjectsCollectionTypes()
+      type_id = projects_collection_type.type_id
 
-        APP.modules.project_page.tab_switcher_manager.registerSectionItem "main", "projects_collection_#{type_id}",
-          position: position
-          data:
-            label: TAPi18n.__ projects_collection_type.type_label_plural_i18n, {}, JustdoI18n.default_lang
-            label_i18n: projects_collection_type.type_label_plural_i18n
-            tab_id: "jdp-projects-collection"
+      APP.modules.project_page.tab_switcher_manager.registerSectionItem "main", "projects_collection_#{type_id}",
+        position: position
+        data:
+          label: TAPi18n.__ projects_collection_type.type_label_plural_i18n, {}, JustdoI18n.default_lang
+          label_i18n: projects_collection_type.type_label_plural_i18n
+          tab_id: "jdp-projects-collection"
 
-            icon_type: "feather"
-            icon_val: projects_collection_type.type_icon.val
+          icon_type: "feather"
+          icon_val: projects_collection_type.type_icon.val
 
-            tab_sections_state:
-              global:
-                "projects-collection-type": type_id
-
+          tab_sections_state:
+            global:
+              "projects-collection-type": type_id
+        listingCondition: =>
+          return @isProjectsCollectionEnabled()
+          
         position += 10
 
     installTabsOnGcm = (gcm) =>
