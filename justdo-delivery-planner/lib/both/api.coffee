@@ -102,8 +102,20 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     return @tasks_collection.find(query, {fields: options.fields, sort: options.sort_by}).fetch()
 
-  isProjectsCollectionEnabled: -> JustdoDeliveryPlanner.is_projects_collection_enabled
-  
+  isProjectsCollectionEnabledGlobally: -> JustdoDeliveryPlanner.isProjectsCollectionEnabledGlobally()
+
+  isProjectsCollectionEnabledOnProjectId: (project_id) ->
+    return APP.projects.isPluginInstalledOnProjectId(JustdoDeliveryPlanner.projects_collection_plugin_id, project_id)
+
+  isProjectsCollectionEnabled: (project_id) -> 
+    if not project_id?
+      if Meteor.isClient 
+        project_id = JD.activeJustdoId()
+      if Meteor.isServer
+        throw @_error "missing-argument", "project_id is required"
+
+    return @isProjectsCollectionEnabledGlobally() or @isProjectsCollectionEnabledOnProjectId(project_id)
+
   getSupportedProjectsCollectionTypes: -> JustdoDeliveryPlanner.projects_collections_types
 
   getProjectsCollectionTypeById: (type_id) ->
