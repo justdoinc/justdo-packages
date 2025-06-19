@@ -65,10 +65,6 @@ _.extend JustdoDeliveryPlanner.prototype,
             activate_on_init: false
             tabTitleGenerator: "Resource Tracking"
         }
-      ] 
-
-    if @isProjectsCollectionEnabled()
-      tabs_definitions.push(
         {
           id: "jdp-projects-collection"
           options:
@@ -99,6 +95,7 @@ _.extend JustdoDeliveryPlanner.prototype,
               projects_collection_type_def = APP.justdo_delivery_planner.getProjectsCollectionTypeById projects_collection_type_id
 
               return TAPi18n.__ projects_collection_type_def.type_label_plural_i18n
-        }
-      )
+        }        
+      ] 
+
     return tabs_definitions
