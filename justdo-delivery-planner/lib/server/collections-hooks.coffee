@@ -54,44 +54,46 @@ _.extend JustdoDeliveryPlanner.prototype,
 
       return
     
-    if self.isProjectsCollectionEnabled()
-      setTaskAsProjectIfNewParentIsProjectsCollection = (doc, modifier) ->
-        is_task_project = self.isTaskObjProject doc
-        is_task_projects_collection = self.getTaskObjProjectsCollectionTypeId(doc)?
-        if is_task_project or is_task_projects_collection
-          return
-
-        parents2 = modifier.$addToSet?.parents2 or modifier.$set?.parents2
-        parents2_modified = parents2?
-        if not parents2_modified
-          return
-
-        parent_task_ids = if _.isArray(parents2) then _.map(parents2, (parent) -> parent.parent) else [parents2.parent]
-
-        any_of_parents_is_projects_collection_query = 
-          _id: 
-            $in: parent_task_ids
-          "projects_collection.projects_collection_type": 
-            $ne: null
-        any_of_parents_is_projects_collection_query_options = 
-          limit: 1
-
-        # If any of the parents is a projects collection, then set the task as project
-        if self.tasks_collection.find(any_of_parents_is_projects_collection_query, any_of_parents_is_projects_collection_query_options).count() > 0
-          modifier.$set[JustdoDeliveryPlanner.task_is_project_field_name] = true
-
-        return
-      
-      self.tasks_collection.before.upsert (user_id, selector, modifier, options) ->
-        # Auto set new child task of projects collection as project
-        setTaskAsProjectIfNewParentIsProjectsCollection modifier.$set, modifier
-
+    setTaskAsProjectIfNewParentIsProjectsCollection = (doc, modifier) ->
+      if not self.isProjectsCollectionEnabled(doc.project_id)
         return
 
-      self.tasks_collection.before.update (user_id, doc, field_names, modifier, options) ->
-        # Auto set child task of projects collection as project
-        setTaskAsProjectIfNewParentIsProjectsCollection doc, modifier
-          
+      is_task_project = self.isTaskObjProject doc
+      is_task_projects_collection = self.getTaskObjProjectsCollectionTypeId(doc)?
+      if is_task_project or is_task_projects_collection
         return
+
+      parents2 = modifier.$addToSet?.parents2 or modifier.$set?.parents2
+      parents2_modified = parents2?
+      if not parents2_modified
+        return
+
+      parent_task_ids = if _.isArray(parents2) then _.map(parents2, (parent) -> parent.parent) else [parents2.parent]
+
+      any_of_parents_is_projects_collection_query = 
+        _id: 
+          $in: parent_task_ids
+        "projects_collection.projects_collection_type": 
+          $ne: null
+      any_of_parents_is_projects_collection_query_options = 
+        limit: 1
+
+      # If any of the parents is a projects collection, then set the task as project
+      if self.tasks_collection.find(any_of_parents_is_projects_collection_query, any_of_parents_is_projects_collection_query_options).count() > 0
+        modifier.$set[JustdoDeliveryPlanner.task_is_project_field_name] = true
+
+      return
+    
+    self.tasks_collection.before.upsert (user_id, selector, modifier, options) ->
+      # Auto set new child task of projects collection as project
+      setTaskAsProjectIfNewParentIsProjectsCollection modifier.$set, modifier
+
+      return
+
+    self.tasks_collection.before.update (user_id, doc, field_names, modifier, options) ->
+      # Auto set child task of projects collection as project
+      setTaskAsProjectIfNewParentIsProjectsCollection doc, modifier
+        
+      return
 
     return
