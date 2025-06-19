@@ -99,17 +99,17 @@ _.extend JustdoDeliveryPlanner.prototype,
         type: Boolean
         optional: true
 
-    if @isProjectsCollectionEnabled()
-      _.extend Schema,
-        projects_collection:
-          type: Object
-          optional: true
-        "projects_collection.projects_collection_type":
-          type: String
-          optional: true
-        "projects_collection.is_closed":
-          type: Boolean
-          optional: true
+      projects_collection:
+        type: Object
+        optional: true
+
+      "projects_collection.projects_collection_type":
+        type: String
+        optional: true
+        
+      "projects_collection.is_closed":
+        type: Boolean
+        optional: true
 
     @tasks_collection.attachSchema Schema
 
