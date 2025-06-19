@@ -7,8 +7,6 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     @setupRouter()
     @_setupTaskType()
-    if @isProjectsCollectionEnabled()
-      @_setupProjectsCollectionFeatures()
 
     return
 
@@ -195,13 +193,6 @@ _.extend JustdoDeliveryPlanner.prototype,
 
       propertiesGenerator: (tag) -> tags_properties[tag]
 
-    return
-
-  _setupProjectsCollectionFeatures: ->
-
-    if Meteor.isClient
-      @_setupProjectsCollectionContextmenu()
-        
     return
 
   getAllProjectsCollectionsUnderJustdoCursorOptionsSchema: new SimpleSchema

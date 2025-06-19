@@ -1,5 +1,11 @@
 _.extend JustdoDeliveryPlanner.prototype,
   _immediateInit: ->
+    @setup_projects_collection_plugin_tracker = null
+    @_setupProjectsCollectionPluginTracker()
+
+    @setup_projects_collection_features_tracker = null
+    @_setupProjectsCollectionFeaturesTracker()
+
     return
 
   _deferredInit: ->
@@ -491,3 +497,28 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     return
 
+  _setupProjectsCollectionFeatures: ->
+    @_setupProjectsCollectionContextmenu()
+    @_setupProjectsCollectionTaskType()
+        
+    return
+
+  _destroyProjectsCollectionFeatures: ->
+    @_destroyProjectsCollectionContextmenu()
+    @_destroyProjectsCollectionTaskType()
+        
+    return
+
+  _setupProjectsCollectionFeaturesTracker: ->
+    if @setup_projects_collection_features_tracker?
+      return
+  
+    @setup_projects_collection_features_tracker = Tracker.autorun =>
+      if @isProjectsCollectionEnabled()
+        @_setupProjectsCollectionFeatures()
+      else
+        @_destroyProjectsCollectionFeatures()
+      
+      return
+
+    return
