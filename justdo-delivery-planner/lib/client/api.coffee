@@ -349,3 +349,15 @@ _.extend JustdoDeliveryPlanner.prototype,
         position += 1
 
     return
+
+  _destroyProjectsCollectionContextmenu: ->
+    APP.justdo_tasks_context_menu.unregisterSectionItem "projects", "unset-unknown-projects-collection"
+    for projects_collection_type in @getSupportedProjectsCollectionTypes()
+      type_id = projects_collection_type.type_id
+      dashed_type_id = type_id.replace /_/g, "-"
+      APP.justdo_tasks_context_menu.unregisterSectionItem "projects", "set-unset-as-projects-collection-#{dashed_type_id}"
+      APP.justdo_tasks_context_menu.unregisterSectionItem "projects", "open-close-projects-collection-#{dashed_type_id}"
+      APP.justdo_tasks_context_menu.unregisterSectionItem "projects", "create-sub-projects-collection-#{dashed_type_id}"
+    
+    return
+
