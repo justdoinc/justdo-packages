@@ -84,6 +84,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/tabs-definitions/sections-managers/all-projects.coffee", client);
   api.addFiles("lib/client/tabs-definitions/tabs-definitions.coffee", client);
 
+  api.addFiles("lib/client/project-conf/projects-collection/projects-collection-project-conf.html", client);
+  api.addFiles("lib/client/project-conf/projects-collection/projects-collection-project-conf.coffee", client);
+
   this.addI18nFiles(api, "i18n/projects-collection/{}.i18n.json", "default_lang_only");
 
   // Uncomment only in packages that integrate with the main applications

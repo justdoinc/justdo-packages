@@ -361,6 +361,54 @@ _.extend JustdoDeliveryPlanner.prototype,
     
     return
 
+  _registerProjectsCollectionPlugin: ->
+    APP.justdo_custom_plugins.installCustomPlugin
+      # SETTINGS BEGIN
+      #
+      # The following properties should be defined by all custom plugins
+      custom_plugin_id: JustdoDeliveryPlanner.projects_collection_plugin_id
+
+      custom_plugin_readable_name: TAPi18n.__ JustdoDeliveryPlanner.projects_collection_plugin_name_i18n
+
+      # Registration of extensions list is performed below, since this plugin is displayed as enabled when disabled on project doc level.
+      show_in_extensions_list: false
+      # / SETTINGS END
+    
+      installer: ->
+        return
+
+      destroyer: ->
+        return
+
+    APP.modules.project_page.project_config_ui.registerConfigTemplate JustdoDeliveryPlanner.projects_collection_plugin_id,
+      section: "extensions"
+      template: "projects_collection_project_config"
+      priority: 300
+
+    return
+  
+  _unregisterProjectsCollectionPlugin: ->
+    APP.justdo_custom_plugins.uninstallCustomPlugin JustdoDeliveryPlanner.projects_collection_plugin_id
+
+    APP.modules.project_page.project_config_ui.unregisterConfigTemplate "extensions", JustdoDeliveryPlanner.projects_collection_plugin_id
+    
+    return
+
+  _setupProjectsCollectionPluginTracker: ->
+    if @setup_projects_collection_plugin_tracker?
+      return
+
+    @setup_projects_collection_plugin_tracker = Tracker.autorun =>
+      if @isProjectsCollectionEnabledGlobally()
+        @_unregisterProjectsCollectionPlugin()
+      else
+        @_registerProjectsCollectionPlugin()
+      
+      return
+
+    return
+
+
   _setupProjectsCollectionTaskType: ->
     self = @
 

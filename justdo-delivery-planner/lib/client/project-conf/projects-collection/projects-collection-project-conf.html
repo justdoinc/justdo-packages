@@ -1,0 +1,9 @@
+<template name="projects_collection_project_config">
+  <div class="project-conf-projects-collection-config controller-template-extension-item">
+    <div class="controller-template-extension-indicator {{#if notIsModuleEnabled}}bg-primary{{/if}}"></div>
+    {{pluginName}}
+    <div class="project-conf-projects-collection-actions">
+      {{> jdToggle checked=isModuleEnabled}}
+    </div>
+  </div>
+</template>

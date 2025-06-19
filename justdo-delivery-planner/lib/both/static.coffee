@@ -19,6 +19,9 @@ _.extend JustdoDeliveryPlanner,
 
   default_base_project_workdays: [0, 1, 1, 1, 1, 1, 0]
 
+  projects_collection_plugin_id: "projects_collection"
+  projects_collection_plugin_name_i18n: "projects_collection_default_type_label"
+
   is_projects_collection_enabled_globally_rv: new ReactiveVar false
   isProjectsCollectionEnabledGlobally: -> @is_projects_collection_enabled_globally_rv.get()
   enableProjectsCollectionGlobally: -> @is_projects_collection_enabled_globally_rv.set true
