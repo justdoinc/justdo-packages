@@ -100,7 +100,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     return @tasks_collection.find(query, {fields: options.fields, sort: options.sort_by}).fetch()
 
-  isProjectsCollectionEnabledGlobally: -> JustdoDeliveryPlanner.isProjectsCollectionEnabledGlobally()
+  isProjectsCollectionEnabledGlobally: -> JustdoDeliveryPlanner.is_projects_collection_enabled_globally
 
   isProjectsCollectionEnabledOnProjectId: (project_id) ->
     return APP.projects.isPluginInstalledOnProjectId(JustdoDeliveryPlanner.projects_collection_plugin_id, project_id)

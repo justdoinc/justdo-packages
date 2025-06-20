@@ -22,10 +22,7 @@ _.extend JustdoDeliveryPlanner,
   projects_collection_plugin_id: "projects_collection"
   projects_collection_plugin_name_i18n: "projects_collection_default_type_label"
 
-  is_projects_collection_enabled_globally_rv: new ReactiveVar false
-  isProjectsCollectionEnabledGlobally: -> @is_projects_collection_enabled_globally_rv.get()
-  enableProjectsCollectionGlobally: -> @is_projects_collection_enabled_globally_rv.set true
-  disableProjectsCollectionGlobally: -> @is_projects_collection_enabled_globally_rv.set false
+  is_projects_collection_enabled_globally: false
 
   projects_collections_types: [
     {
