@@ -1,7 +1,7 @@
 _.extend JustdoDeliveryPlanner.prototype,
   _immediateInit: ->
     @setup_projects_collection_plugin_tracker = null
-    @_setupProjectsCollectionPluginTracker()
+    @_setupProjectsCollectionPlugin()
 
     @setup_projects_collection_features_tracker = null
     @_setupProjectsCollectionFeaturesTracker()
@@ -442,20 +442,11 @@ _.extend JustdoDeliveryPlanner.prototype,
     
     return
 
-  _setupProjectsCollectionPluginTracker: ->
-    if @setup_projects_collection_plugin_tracker?
-      return
-
-    @setup_projects_collection_plugin_tracker = Tracker.autorun =>
-      if @isProjectsCollectionEnabledGlobally()
-        @_unregisterProjectsCollectionPlugin()
-      else
-        @_registerProjectsCollectionPlugin()
-      
-      return
+  _setupProjectsCollectionPlugin: ->
+    if not @isProjectsCollectionEnabledGlobally()
+      @_registerProjectsCollectionPlugin()
 
     return
-
 
   _setupProjectsCollectionTaskType: ->
     self = @
