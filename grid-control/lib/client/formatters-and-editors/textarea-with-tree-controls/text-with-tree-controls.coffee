@@ -42,6 +42,9 @@ getIsDeliveryPlannerPluginEnabled = ->
   # return APP?.modules?.project_page?.curProj()?.isCustomFeatureEnabled("justdo_delivery_planner")
   return true # In Jul 2nd 2020 projects became a built-in feature
 
+getIsProjectsCollectionPluginEnabled = ->
+  return APP?.justdo_delivery_planner?.isProjectsCollectionEnabled JD.activeJustdoId()
+
 getIsTimeTrackerPluginEnabled = ->
   # The time tracker plugin needs both itself installed, and the resource manager as dependency
   return APP?.modules?.project_page?.curProj()?.isCustomFeatureEnabled(JustdoTimeTracker?.project_custom_feature_id) and APP?.modules?.project_page?.curProj()?.isCustomFeatureEnabled(JustdoResourcePlanner?.project_custom_feature_id)
@@ -97,6 +100,7 @@ GridControl.installFormatter "textWithTreeControls",
 
     highest_seqId_computation = null
     is_delivery_planner_plugin_enabled_computation = null
+    is_projects_collection_plugin_enabled_computation = null
     is_justdo_planning_utilities_plugin_enabled_computation = null
     is_time_tracker_plugin_enabled_computation = null
     is_resource_planner_plugin_enabled_computation = null
@@ -122,6 +126,17 @@ GridControl.installFormatter "textWithTreeControls",
 
         if current_val != cached_val
           @setCurrentColumnData("delivery_planner_plugin_enabled", current_val)
+
+          dep.changed()
+
+        return
+
+      is_projects_collection_plugin_enabled_computation = Tracker.autorun =>
+        current_val = getIsProjectsCollectionPluginEnabled.call(@) # Reactive
+        cached_val = @getCurrentColumnData("project_collection_plugin_enabled") # non reactive
+
+        if current_val != cached_val
+          @setCurrentColumnData("project_collection_plugin_enabled", current_val)
 
           dep.changed()
 
@@ -183,6 +198,7 @@ GridControl.installFormatter "textWithTreeControls",
     Tracker.onInvalidate ->
       highest_seqId_computation.stop()
       is_delivery_planner_plugin_enabled_computation.stop()
+      is_projects_collection_plugin_enabled_computation.stop()
       is_justdo_planning_utilities_plugin_enabled_computation.stop()
       is_time_tracker_plugin_enabled_computation.stop()
       is_resource_planner_plugin_enabled_computation.stop()
@@ -402,8 +418,8 @@ GridControl.installFormatter "textWithTreeControls",
           </svg>
         """
 
-    if @getCurrentColumnData("delivery_planner_plugin_enabled")
-      if APP.justdo_delivery_planner.isProjectsCollectionEnabled() and (projects_collection_type_id = APP.justdo_delivery_planner.getTaskObjProjectsCollectionTypeId doc)?
+    if @getCurrentColumnData("project_collection_plugin_enabled")
+      if (projects_collection_type_id = APP.justdo_delivery_planner.getTaskObjProjectsCollectionTypeId doc)?
         projects_collection_type = APP.justdo_delivery_planner.getProjectsCollectionTypeById(projects_collection_type_id)
         is_closed = APP.justdo_delivery_planner.isProjectsCollectionClosed doc
 
@@ -431,6 +447,7 @@ GridControl.installFormatter "textWithTreeControls",
           </svg>
         """
 
+    if @getCurrentColumnData("delivery_planner_plugin_enabled")
       if (is_project = doc["p:dp:is_project"])?
         is_archived_project = doc["p:dp:is_archived_project"]
 
