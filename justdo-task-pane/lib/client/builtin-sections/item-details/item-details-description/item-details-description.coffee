@@ -185,7 +185,7 @@ APP.executeAfterAppLibCode ->
   _uploadFilesAndInsertToEditor = (task_id, file_list, editor, type_to_insert, img_to_replace) ->
     replaceEditorImageAndFile = (file, download_path) ->
       if type_to_insert is "image"
-        if not $img_to_replace?
+        if not img_to_replace?
           $org_img = $("img[temp_id=\"#{file.temp_id}\"]")
         else
           $org_img = $(img_to_replace)
