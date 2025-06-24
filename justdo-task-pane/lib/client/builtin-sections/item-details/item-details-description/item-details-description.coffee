@@ -326,6 +326,7 @@ APP.executeAfterAppLibCode ->
             "fr-dashed-borders": "Dashed Borders"
             "fr-alternate-rows": "Alternate Rows"
           quickInsertTags: []
+          toolbarSticky: false
           charCounterCount: false
           key: env.FROALA_ACTIVATION_KEY
           fileUpload: true
