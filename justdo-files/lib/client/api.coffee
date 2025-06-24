@@ -57,7 +57,7 @@ _.extend JustdoFiles.prototype,
 
   _uploadFileOptionsSchema: new SimpleSchema
     file:
-      type: File
+      type: Match.OneOf File, Blob
     meta:
       type: Object
       blackbox: true
@@ -85,6 +85,13 @@ _.extend JustdoFiles.prototype,
         {throw_on_error: true}
       )
     options = cleaned_val
+
+    # Convert Blob to File if necessary
+    if options.file instanceof Blob and not (options.file instanceof File)
+      # Generate a default filename if not available
+      filename = options.meta?.name or "untitled"
+      # Create a new File from the Blob
+      options.file = new File([options.file], filename, {type: options.file.type})
 
     default_file_upload_options = 
       chunkSize: "dynamic"
