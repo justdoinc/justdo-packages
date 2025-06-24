@@ -315,9 +315,9 @@ APP.executeAfterAppLibCode ->
         max_file_size_in_bytes = env.JUSTDO_FILES_MAX_FILESIZE
 
       current_description_editor = new FroalaEditor "#description-editor", 
-          toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
-            "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo",
-            "insertFile", "insertImage"
+          toolbarButtons: ["undo", "redo", "fontFamily", "fontSize", "bold", "italic", "underline", "strikeThrough", 
+            "color", "align", "formatUL", "formatOL", "quote", "clearFormatting", "insertLink", "insertTable", 
+            "insertImage", "insertFile"
           ]
           imageEditButtons: ['imageReplace', 'imageAlign', 'imageCaption', 'imageRemove', '|', 'imageLink', 'linkOpen', 
             'linkEdit', 'linkRemove', '-', 'imageDisplay', 'imageStyle', 'imageAlt', 'imageSize']
