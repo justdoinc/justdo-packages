@@ -182,7 +182,7 @@ _.extend GridControl,
 
   Returns a newly created GridControl instance
   ###
-  createGridControl: (options = {}) ->
+  _createGridControl: (options = {}) ->
     # Default tab_id to "main" if not specified
     tab_id = options.tab_id or "main"
     
@@ -247,6 +247,12 @@ _.extend GridControl,
       return
     
     return grid_control 
+
+  # The bootstrapping of a new grid control involves a lot of reactive resources,
+  # we can't map/document all of them for the developer to know what to expect,
+  # hence we decided to make `createGridControl` non-reactive.
+  createGridControl: (options) ->
+    return Tracker.nonreactive => @_createGridControl(options)
 
 Util.inherits GridControl, EventEmitter
 
