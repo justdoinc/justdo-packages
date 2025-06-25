@@ -54,3 +54,12 @@ _.extend JustdoFilesDriver.prototype,
   getDefaultDriverId: ->
     return @_default_driver_id
 
+  # Connect to a driver and return connection object
+  connect: (driver_id) ->
+    if not driver_id?
+      driver_id = @getDefaultDriverId()
+    
+    if not (driver = @_drivers[driver_id])?
+      throw @_error "not-supported", "Driver \"#{driver_id}\" not found"
+
+    return driver
