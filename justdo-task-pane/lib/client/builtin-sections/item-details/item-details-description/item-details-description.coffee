@@ -307,76 +307,51 @@ APP.executeAfterAppLibCode ->
     # Lock
     lockTask(task_id)
 
-    APP.getEnv (env) =>
-      max_file_size_in_bytes = 0
-      if env.TASKS_FILES_UPLOAD_ENABLED is "true"
-        max_file_size_in_bytes = env.FILESTACK_MAX_FILE_SIZE_BYTES
-      else if env.JUSTDO_FILES_ENABLED is "true"
-        max_file_size_in_bytes = env.JUSTDO_FILES_MAX_FILESIZE
+    current_description_editor = JustdoHelpers.createFroalaEditor "#description-editor", 
+      fileUpload: true
+      placeholderText: TAPi18n.__ "description_editor_placeholder_text"
+      events:
+        "initialized": ->
+          setEditMode(true)
+          current_description_editor.task_id = task_id
 
-      current_description_editor = new FroalaEditor "#description-editor", 
-          toolbarButtons: ["undo", "redo", "fontFamily", "fontSize", "bold", "italic", "underline", "strikeThrough", 
-            "color", "align", "formatUL", "formatOL", "quote", "clearFormatting", "insertLink", "insertTable", 
-            "insertImage", "insertFile"
-          ]
-          imageEditButtons: ['imageReplace', 'imageAlign', 'imageCaption', 'imageRemove', '|', 'imageLink', 'linkOpen', 
-            'linkEdit', 'linkRemove', '-', 'imageDisplay', 'imageStyle', 'imageAlt', 'imageSize']
-          tableStyles:
-            "fr-no-borders": "No borders"
-            "fr-dashed-borders": "Dashed Borders"
-            "fr-alternate-rows": "Alternate Rows"
-          quickInsertTags: []
-          toolbarSticky: false
-          charCounterCount: false
-          key: env.FROALA_ACTIVATION_KEY
-          fileUpload: true
-          fileMaxSize: max_file_size_in_bytes
-          fileAllowedTypes: ["*"]
-          imageMaxSize: max_file_size_in_bytes
-          imageAllowedTypes: ["jpeg", "jpg", "png"]
-          direction: if APP.justdo_i18n.isRtl() then "rtl" else "ltr"
-          placeholderText: TAPi18n.__ "description_editor_placeholder_text"
-          events:
-            "initialized": ->
-              setEditMode(true)
-              current_description_editor.task_id = task_id
+          save_state.set 0
 
-              save_state.set 0
+          current_description_editor.html.set(getActiveTaskDescription())
 
-              current_description_editor.html.set(getActiveTaskDescription())
-
-              # set change listeners
-              for change_event in ["contentChanged", "keydown"]
-                current_description_editor.events.on change_event, (e) ->
-                  initIdleSaveTimeout()
-                  initDestroyTimeout()
-
-                  return
-                , false # false for the 'first' argument: events.on (name, callback, [first])
+          # set change listeners
+          for change_event in ["contentChanged", "keydown"]
+            current_description_editor.events.on change_event, (e) ->
+              initIdleSaveTimeout()
+              initDestroyTimeout()
 
               return
-            "file.beforeUpload": (files) ->
-              _uploadFilesAndInsertToEditor task_id, files, current_description_editor, "file"
-              return false
-            "file.error": (error, resp) ->
-              console.log error
-              return
-            "image.beforePasteUpload": (img) ->
-              file = dataURLtoFile img.src, Random.id()
-              _uploadFilesAndInsertToEditor task_id, [file], current_description_editor, "image", img
-              return false
-            "image.beforeUpload": (images) ->
-              _uploadFilesAndInsertToEditor task_id, images, current_description_editor, "image", null
-              return false
-            "image.loaded": (images, b, c) ->
-              for image in images
-                uploaded_files_count = (Tracker.nonreactive -> uploading_files.get())
-                if uploaded_files_count > 0 and /^http/.test image.currentSrc
-                  uploading_files.set(uploaded_files_count - 1)
-            "image.error": (e, editor, error, resp) ->
-              console.log error
-              return
-      return
+            , false # false for the 'first' argument: events.on (name, callback, [first])
+
+          return
+        "file.beforeUpload": (files) ->
+          _uploadFilesAndInsertToEditor task_id, files, current_description_editor, "file"
+          return false
+        "file.error": (error, resp) ->
+          console.log error
+          return
+        "image.beforePasteUpload": (img) ->
+          file = dataURLtoFile img.src, Random.id()
+          _uploadFilesAndInsertToEditor task_id, [file], current_description_editor, "image", img
+          return false
+        "image.beforeUpload": (images) ->
+          _uploadFilesAndInsertToEditor task_id, images, current_description_editor, "image", null
+          return false
+        "image.loaded": (images, b, c) ->
+          for image in images
+            uploaded_files_count = (Tracker.nonreactive -> uploading_files.get())
+            if uploaded_files_count > 0 and /^http/.test image.currentSrc
+              uploading_files.set(uploaded_files_count - 1)
+        "image.error": (e, editor, error, resp) ->
+          console.log error
+          return
+  
+    return
 
     return
 
