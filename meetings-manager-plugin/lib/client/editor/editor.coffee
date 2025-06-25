@@ -52,31 +52,18 @@ Template.locking_text_editor.onCreated ->
     @data.onSave { lock: { user_id: Meteor.userId(), date: TimeSync.getServerTime() } }
 
     Tracker.flush()
-    APP.getEnv (env) =>
-      @editor = new FroalaEditor ".note-froala",
-        toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontSize",
-          "align", "formatOL", "formatUOL", "undo", "redo",
-        ]
-        tableStyles:
-          "fr-no-borders": "No borders"
-          "fr-dashed-borders": "Dashed Borders"
-          "fr-alternate-rows": "Alternate Rows"
-        quickInsertTags: []
-        charCounterCount: false
-        pasteImage: false
-        imageUpload: false
-        key: env.FROALA_ACTIVATION_KEY
-        events:
-          "initialized": =>
-            @editor.html.set(@data.content)
-            @editor.events.focus()
-            return
-          "blur": =>
-            content = @editor.html.get() or ""
-            @endEditing(content)
-            return
-          "contentChanged": =>
-            @autosave(@editor.html.get())
+    @editor = JustdoHelpers.createFroalaEditor ".note-froala",
+      events:
+        "initialized": =>
+          @editor.html.set(@data.content)
+          @editor.events.focus()
+          return
+        "blur": =>
+          content = @editor.html.get() or ""
+          @endEditing(content)
+          return
+        "contentChanged": =>
+          @autosave(@editor.html.get())
 
   @keepLockCallback = () =>
     @data.onSave { lock: { user_id: Meteor.userId(), date: TimeSync.getServerTime() } }

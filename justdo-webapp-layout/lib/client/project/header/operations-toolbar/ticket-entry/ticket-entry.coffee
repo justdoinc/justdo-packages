@@ -302,28 +302,10 @@ APP.executeAfterAppLibCode ->
         $("#ticket-assigned-user-id").selectpicker("refresh")
         return
 
-    APP.getEnv (env) =>
-      current_ticket_editor = new FroalaEditor "#ticket-content",
-        toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
-          "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo"]
-        pasteImage: false
-        imageUpload: false
-        height: 250
-        heightMin: 250
-        heightMax: 250
-        quickInsertTags: []
-        charCounterCount: false
-        key: env.FROALA_ACTIVATION_KEY
-        events:
-          "image.beforePasteUpload": (img) ->
-            return false
-          "image.beforeUpload": (images) ->
-            return false
-          "image.loaded": (images, b, c) ->
-            return false
-          "image.error": (error, resp) ->
-            console.error error
-            return
+    current_ticket_editor = JustdoHelpers.createFroalaEditor "#ticket-content",
+      height: 250
+      heightMin: 250
+      heightMax: 250
 
     priority_slider = Template.justdo_priority_slider.getInstance "ticket-entry-priority-slider"
     priority_slider.onChange (value) ->
