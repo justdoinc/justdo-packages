@@ -102,20 +102,17 @@ _.extend JustdoHelpers,
   createFroalaEditor: (selector, options = {}) ->
     check selector, String
 
-    # Default toolbar configuration
-    default_toolbar_buttons = ["undo", "redo", "fontFamily", "fontSize", "bold", "italic", "underline", "strikeThrough", 
-      "color", "align", "formatUL", "formatOL", "quote", "clearFormatting", "insertLink", "insertTable"]
-    
     editor = null
     self = @
 
     # Default configuration
     default_options = 
-      toolbarButtons: options.toolbarButtons or default_toolbar_buttons
+      toolbarButtons: ["undo", "redo", "fontFamily", "fontSize", "bold", "italic", "underline", "strikeThrough", "color", "align", "formatUL", "formatOL", "quote", "clearFormatting", "insertLink", "insertTable"]
       tableStyles:
         "fr-no-borders": "No borders"
         "fr-dashed-borders": "Dashed Borders" 
         "fr-alternate-rows": "Alternate Rows"
+      direction: if APP.justdo_i18n?.isRtl() then "rtl" else "ltr"
       quickInsertTags: []
       toolbarSticky: false
       charCounterCount: false
@@ -189,7 +186,6 @@ _.extend JustdoHelpers,
         default_options.toolbarButtons.push("insertFile")
     
     # Merge default options with custom options
-    options.direction = if APP.justdo_i18n?.isRtl() then "rtl" else "ltr"
     merged_options = _.extend {}, default_options, options
     # The extend above will override the events object in `default_options`. 
     # We need to extend it again to add the custom events.
