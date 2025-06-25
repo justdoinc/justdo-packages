@@ -22,6 +22,7 @@ Package.onUse(function (api) {
   api.use("meteorspark:util@0.2.0", both);
   api.use("meteorspark:logger@0.3.0", both);
   api.use("justdoinc:justdo-helpers@1.0.0", both);
+  api.use("justdoinc:justdo-files-driver@1.0.0", both);
 
   api.use("matb33:collection-hooks@0.8.4", both);
 
@@ -31,6 +32,7 @@ Package.onUse(function (api) {
   api.use("tracker", client);
 
   api.addFiles("lib/both/init.coffee", both);
+  api.addFiles("lib/both/statics.coffee", both);
   api.addFiles("lib/both/errors-types.coffee", both);
   api.addFiles("lib/both/api.coffee", both);
   api.addFiles("lib/both/schemas.coffee", both);
