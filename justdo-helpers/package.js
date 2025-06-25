@@ -98,6 +98,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/date-time.coffee", client);
   api.addFiles("lib/client/dom-ghost-debugger.sass", client);
   api.addFiles("lib/client/dom-ghost-debugger.coffee", client);
+  api.addFiles("lib/client/froala-editor.coffee", client);
   api.addFiles("lib/client/template-dropdown.coffee", client);
   api.addFiles("lib/client/iron-router.coffee", client);
   api.addFiles("lib/client/jquery.coffee", client);
