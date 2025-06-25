@@ -93,6 +93,12 @@ _.extend JustdoHelpers,
     
   # Create a FroalaEditor instance with common configuration and customization options
   # Refer to https://froala.com/wysiwyg-editor/docs/options/ for complete list of available options.
+  # In addition, we support the following custom options:
+  # fileUploadOptions:
+  #   type: String # Not used yet. Provides future readiness with multiple file upload types.
+  #   destination: String # The destination of the file upload.
+  #   counter_rv: ReactiveVar # A reactive var to track the number of files being uploaded.
+
   createFroalaEditor: (selector, options = {}) ->
     check selector, String
 
@@ -100,6 +106,9 @@ _.extend JustdoHelpers,
     default_toolbar_buttons = ["undo", "redo", "fontFamily", "fontSize", "bold", "italic", "underline", "strikeThrough", 
       "color", "align", "formatUL", "formatOL", "quote", "clearFormatting", "insertLink", "insertTable"]
     
+    editor = null
+    self = @
+
     # Default configuration
     default_options = 
       toolbarButtons: options.toolbarButtons or default_toolbar_buttons
@@ -112,15 +121,57 @@ _.extend JustdoHelpers,
       charCounterCount: false
       key: env.FROALA_ACTIVATION_KEY
       events: {}
-    
+
     # Setup default file upload configuration
-    if options.fileUpload
+    if (file_upload_enabled = options.fileUpload)
+      _file_upload_options_schema = new SimpleSchema
+        type:
+          type: String
+        destination: 
+          type: String
+        counter_rv: 
+          type: ReactiveVar
+
+      {cleaned_val} =
+        JustdoHelpers.simpleSchemaCleanAndValidate(
+          _file_upload_options_schema,
+          options.fileUploadOptions,
+          {throw_on_error: true}
+        )
+      file_upload_options = cleaned_val
+      file_upload_counter_rv = file_upload_options.counter_rv
+      delete options.fileUploadOptions
+
       max_file_size_in_bytes = 0
       if env.TASKS_FILES_UPLOAD_ENABLED is "true"
         max_file_size_in_bytes = env.FILESTACK_MAX_FILE_SIZE_BYTES
       else if env.JUSTDO_FILES_ENABLED is "true"
         max_file_size_in_bytes = env.JUSTDO_FILES_MAX_FILESIZE
 
+      files_upload_events = 
+        "file.beforeUpload": (files) ->
+          self._uploadFilesAndInsertToEditor file_upload_options, files, editor, "file"
+          return false
+        "file.error": (error, resp) ->
+          console.log error
+          return
+        "image.beforePasteUpload": (img) ->
+          file = self._dataURLtoFile img.src, Random.id()
+          self._uploadFilesAndInsertToEditor file_upload_options, [file], editor, "image", img
+          return false
+        "image.beforeUpload": (images) ->
+          self._uploadFilesAndInsertToEditor file_upload_options, images, editor, "image", null
+          return false
+        "image.loaded": (images, b, c) ->
+          for image in images
+            uploaded_files_count = (Tracker.nonreactive -> file_upload_counter_rv.get())
+            if uploaded_files_count > 0 and /^http/.test image.currentSrc
+              file_upload_counter_rv.set(uploaded_files_count - 1)
+          return
+        "image.error": (e, editor, error, resp) ->
+          console.log error
+          return
+      
       # Add file upload configuration
       _.extend default_options,
         fileUpload: true
@@ -129,6 +180,7 @@ _.extend JustdoHelpers,
         imageMaxSize: max_file_size_in_bytes
         imageAllowedTypes: ["jpeg", "jpg", "png"]
         imageEditButtons: ['imageReplace', 'imageAlign', 'imageCaption', 'imageRemove', '|', 'imageLink', 'linkOpen', 'linkEdit', 'linkRemove', '-', 'imageDisplay', 'imageStyle', 'imageAlt', 'imageSize']
+        events: files_upload_events
 
       # Add file upload buttons to toolbar if not already present
       if "insertImage" not in default_options.toolbarButtons
@@ -137,10 +189,13 @@ _.extend JustdoHelpers,
         default_options.toolbarButtons.push("insertFile")
     
     # Merge default options with custom options
-    options = _.extend {}, default_options, options
     options.direction = if APP.justdo_i18n?.isRtl() then "rtl" else "ltr"
+    merged_options = _.extend {}, default_options, options
+    # The extend above will override the events object in `default_options`. 
+    # We need to extend it again to add the custom events.
+    merged_options.events = _.extend {}, default_options.events, options.events
 
     # Create the FroalaEditor instance
-    editor = new FroalaEditor selector, options
+    editor = new FroalaEditor selector, merged_options
 
     return editor 

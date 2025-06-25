@@ -5,6 +5,7 @@ getActiveTaskDescription = ->
 
 APP.executeAfterAppLibCode ->
   project_page_module = APP.modules.project_page
+  task_id = null
 
   save_state = new ReactiveVar 0
   # save_state:
@@ -65,7 +66,7 @@ APP.executeAfterAppLibCode ->
       save_count += 1
       this_save_count = save_count
       do (this_save_count) ->
-        APP.collections.Tasks.update current_description_editor.task_id, op, (err) ->
+        APP.collections.Tasks.update task_id, op, (err) ->
           if save_state.get() == 2 and this_save_count == save_count
             # Change the save_state only if during saving state mode
             # and if no other save requests followed this save request.
@@ -219,12 +220,14 @@ APP.executeAfterAppLibCode ->
 
     current_description_editor = JustdoHelpers.createFroalaEditor "#description-editor", 
       fileUpload: true
+      fileUploadOptions: 
+        type: "tasks"
+        destination: task_id
+        counter_rv: uploading_files
       placeholderText: TAPi18n.__ "description_editor_placeholder_text"
       events:
         "initialized": ->
           setEditMode(true)
-          current_description_editor.task_id = task_id
-
           save_state.set 0
 
           current_description_editor.html.set(getActiveTaskDescription())
@@ -239,29 +242,6 @@ APP.executeAfterAppLibCode ->
             , false # false for the 'first' argument: events.on (name, callback, [first])
 
           return
-        "file.beforeUpload": (files) ->
-          _uploadFilesAndInsertToEditor task_id, files, current_description_editor, "file"
-          return false
-        "file.error": (error, resp) ->
-          console.log error
-          return
-        "image.beforePasteUpload": (img) ->
-          file = dataURLtoFile img.src, Random.id()
-          _uploadFilesAndInsertToEditor task_id, [file], current_description_editor, "image", img
-          return false
-        "image.beforeUpload": (images) ->
-          _uploadFilesAndInsertToEditor task_id, images, current_description_editor, "image", null
-          return false
-        "image.loaded": (images, b, c) ->
-          for image in images
-            uploaded_files_count = (Tracker.nonreactive -> uploading_files.get())
-            if uploaded_files_count > 0 and /^http/.test image.currentSrc
-              uploading_files.set(uploaded_files_count - 1)
-        "image.error": (e, editor, error, resp) ->
-          console.log error
-          return
-  
-    return
 
     return
 
@@ -271,7 +251,7 @@ APP.executeAfterAppLibCode ->
 
       save()
 
-      unlockTask(current_description_editor.task_id)
+      unlockTask(task_id)
 
       # The following is in order to make sure, that by the
       # time we destroy the editor the grid control internal data
