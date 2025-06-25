@@ -177,5 +177,7 @@ _.extend TasksFileManagerPlugin.prototype,
       else
         APP.filestack_base.once "filestack-ready", =>
           @filestackReadyDfd.resolve()
+    
+    @_registerFilesDriver()
 
     return
