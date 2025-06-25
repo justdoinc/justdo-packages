@@ -110,9 +110,9 @@
     border: none !important
 
   .ui-datepicker-today a
-    border: 1px solid #2c70cf
-    background: #ffffff
-    color: #2c70cf
+    border: 1px solid #2c70cf !important
+    background: #ffffff !important
+    color: #2c70cf !important
 
     &.ui-state-active
       color: white
@@ -142,7 +142,7 @@ input.editor-unicode-date
     &:hover
       .udf-action-btn
         float: left
-  
+
   .unicode-date-editor
     .udf-action-btn
       float: left
@@ -150,7 +150,7 @@ input.editor-unicode-date
     .udf-id-date-setter
       margin-right: unset
       margin-left: 2px
-    
+
     .ui-datepicker-header
       .ui-datepicker-prev-hover
         left: unset
@@ -183,4 +183,3 @@ input.editor-unicode-date
 
 .editor-unicode-date::-ms-input-placeholder // MS edge
   @include unicode-date-editor-placeholder-style()
-
