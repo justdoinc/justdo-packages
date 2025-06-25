@@ -5,6 +5,7 @@ _.extend JustdoFilesDriver.prototype,
     # Add here code that should run, in the Server and Client, during the JS
     # tick in which we create the object instance.
 
+    @_drivers = {}
     @_default_driver_id = null
 
     @setupRouter()
@@ -20,6 +21,27 @@ _.extend JustdoFilesDriver.prototype,
     if @destroyed
       return
 
+    return
+
+  # Register a driver
+  registerDriverOptionsSchema: new SimpleSchema JustdoFilesDriver.both_register_driver_options_schema_properties
+  registerDriver: (driver_id, options) ->
+    if not driver_id?
+      throw @_error "missing-argument", "Driver ID is required"
+
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @registerDriverOptionsSchema,
+        options,
+        {throw_on_error: true}
+      )
+    options = cleaned_val  
+
+    @_drivers[driver_id] = options
+    
+    if not @getDefaultDriverId()?
+      @setDefaultDriverId driver_id
+      
     return
 
   setDefaultDriverId: (driver_id) ->
