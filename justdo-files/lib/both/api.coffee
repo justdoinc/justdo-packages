@@ -6,6 +6,7 @@ _.extend JustdoFiles.prototype,
     # tick in which we create the object instance.
 
     @_setupFilesCollection()
+    @_registerFilesDriver()
 
     return
 
@@ -18,6 +19,15 @@ _.extend JustdoFiles.prototype,
     if @destroyed
       return
 
+    return
+  
+  _registerFilesDriver: ->
+    self = @
+
+    tasks_files_driver_options = 
+      max_file_size_in_bytes: self.options.max_file_size
+      instance: self
+    APP.justdo_files_driver.registerDriver "#{JustdoFiles.driver_id}-tasks-files", tasks_files_driver_options
     return
 
   isPluginInstalledOnProjectDoc: (project_doc) ->
