@@ -1,8 +1,8 @@
 Package.describe({
-  name: "justdoinc:justdo-files-driver",
+  name: "justdoinc:justdo-file-interface",
   version: "1.0.0",
   summary: "",
-  git: "https://github.com/justdoinc/justdo-shared-packages/tree/master/justdo-files-driver"
+  git: "https://github.com/justdoinc/justdo-shared-packages/tree/master/justdo-file-interface"
 });
 
 client = "client"
@@ -31,7 +31,7 @@ Package.onUse(function (api) {
   //
   //   checkNpmVersions({
   //     'colors': '1.1.x'
-  //   }, 'justdoinc:justdo-files-driver')
+  //   }, 'justdoinc:justdo-file-interface')
   // api.use("ecmascript", both);
   // api.use("tmeasday:check-npm-versions@0.3.1", both);
 
@@ -81,5 +81,5 @@ Package.onUse(function (api) {
   // the server will have the access to the apis loaded after the init.coffee
   // file. 
 
-  api.export("JustdoFilesDriver", both);
+  api.export("JustdoFilesInterface", both);
 });

@@ -1,4 +1,4 @@
-_.extend JustdoFilesDriver.prototype,
+_.extend JustdoFilesInterface.prototype,
   _bothImmediateInit: ->
     # @_bothImmediateInit runs before the specific env's @_immediateInit()
 
@@ -24,7 +24,7 @@ _.extend JustdoFilesDriver.prototype,
     return
 
   # Register a driver
-  registerDriverOptionsSchema: new SimpleSchema JustdoFilesDriver.both_register_driver_options_schema_properties
+  registerDriverOptionsSchema: new SimpleSchema JustdoFilesInterface.both_register_driver_options_schema_properties
   registerDriver: (driver_id, options) ->
     if not driver_id?
       throw @_error "missing-argument", "Driver ID is required"
