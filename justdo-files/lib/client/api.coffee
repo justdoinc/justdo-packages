@@ -10,6 +10,31 @@ _.extend JustdoFiles.prototype,
 
     return
 
+  _getEnvSpecificFsOptions: ->
+    self = @
+    
+    ret = 
+      uploadFile: (file, options, cb) ->
+        try
+          upload = await self.uploadFile(file, options.task_id, options.project_id)
+        catch err
+          cb err
+          return
+
+        upload.on "end", (err, file_obj) ->
+          if err? and not upload.err_msg?
+            upload.err_msg = err.reason or err
+          
+          cb err, file_obj
+
+          return
+        
+        upload.start()
+
+        return
+
+    return ret
+
   showPreviewOrStartDownload: (task_id, file) ->
     if APP.justdo_files.isFileTypePreviewable(file.type)
       # Show preview in bootbox

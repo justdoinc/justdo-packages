@@ -35,6 +35,19 @@ _.extend JustdoFiles.prototype,
 
     return
 
+  _getEnvSpecificFsOptions: ->
+    self = @
+    
+    ret = 
+      uploadFile: (task_id, file_blob, filename, mimetype, metadata, user_id) ->
+        if _.isString options and not user_id?
+          user_id = options
+          options = {}
+
+        return await self.uploadAndRegisterFile options.task_id, file, file.name, file.type, options.metadata, user_id
+
+    return ret
+
   tasksFilesPublicationHandler: (publish_this, task_id, user_id) ->
     check task_id, String
     check user_id, String
