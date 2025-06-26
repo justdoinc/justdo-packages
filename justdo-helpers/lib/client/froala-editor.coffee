@@ -115,6 +115,9 @@ _.extend JustdoHelpers,
       direction: if APP.justdo_i18n?.isRtl() then "rtl" else "ltr"
       quickInsertTags: []
       quickInsertButtons: ["embedly", "table", "ul", "ol", "hr"]
+      fileUpload: false
+      imageUpload: false
+      imagePaste: false
       toolbarSticky: false
       charCounterCount: false
       key: env.FROALA_ACTIVATION_KEY
@@ -173,6 +176,8 @@ _.extend JustdoHelpers,
       # Add file upload configuration
       _.extend default_options,
         fileUpload: true
+        imageUpload: true
+        imagePaste: true
         fileMaxSize: max_file_size_in_bytes
         fileAllowedTypes: ["*"]
         imageMaxSize: max_file_size_in_bytes
