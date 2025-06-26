@@ -1,1 +1,1 @@
-_.extend JustdoFilesDriver.prototype, {}
+_.extend JustdoFilesInterface.prototype, {}

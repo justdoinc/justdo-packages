@@ -72,7 +72,7 @@ options_schema =
 #         optional: true
 #         defaultValue: 30
 
-JustdoFilesDriver = (options) ->
+JustdoFilesInterface = (options) ->
   # skeleton-version: v3.0.1
 
   # Developer, avoid changing this constuctor, to do stuff on init
@@ -82,8 +82,8 @@ JustdoFilesDriver = (options) ->
 
   @destroyed = false
 
-  @logger = Logger.get("justdo-files-driver")
-  @JA = JustdoAnalytics.setupConstructorJA(@, "justdo-files-driver")
+  @logger = Logger.get("justdo-file-interface")
+  @JA = JustdoAnalytics.setupConstructorJA(@, "justdo-file-interface")
 
   @logger.debug "Init begin"
 
@@ -151,9 +151,9 @@ JustdoFilesDriver = (options) ->
 
   return @
 
-Util.inherits JustdoFilesDriver, EventEmitter
+Util.inherits JustdoFilesInterface, EventEmitter
 
-_.extend JustdoFilesDriver.prototype,
+_.extend JustdoFilesInterface.prototype,
   _error: JustdoHelpers.constructor_error
 
   onDestroy: (proc) ->
