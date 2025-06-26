@@ -280,8 +280,7 @@ APP.executeAfterAppLibCode ->
   Template.task_pane_item_details_description.onCreated ->
     @autorun =>
       APP.getEnv (env) =>
-        # If Filestack is disabled and justdo_files is enabled, subscribe to tasks files
-        if env.TASKS_FILES_UPLOAD_ENABLED isnt "true" and env.JUSTDO_FILES_ENABLED is "true"
+        if env.JUSTDO_FILES_ENABLED is "true"
           Meteor.subscribe "jdfTaskFiles", @data._id
 
         return
