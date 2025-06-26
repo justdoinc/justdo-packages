@@ -1,4 +1,4 @@
-_.extend JustdoFilesDriver.prototype,
+_.extend JustdoFilesInterface.prototype,
   # In an effort to encourage standard errors types we will
   # issue a warning if an error of type other than the following
   # will be used.
