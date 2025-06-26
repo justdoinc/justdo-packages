@@ -27,6 +27,10 @@ _.extend JustdoFiles.prototype,
     tasks_files_driver_options = 
       getFileSizeLimit: -> self.options.max_file_size
       instance: self
+    
+    if @_getEnvSpecificFsOptions?
+      tasks_files_driver_options = _.extend tasks_files_driver_options, @_getEnvSpecificFsOptions()
+      
     APP.justdo_file_interface.registerFs "#{JustdoFiles.fs_id}-tasks-files", tasks_files_driver_options
     return
 
