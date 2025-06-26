@@ -49,6 +49,11 @@ _.extend JustdoFilesInterface.prototype,
 
     return
   
+  _getFs: (fs_id) ->
+    fs_id = fs_id or @_getDefaultFsId()
+    @requireFsRegistered fs_id
+    return @_registered_fs[fs_id]
+
   _setDefaultFsIdIfEmpty: (fs_id) ->
     if _.isEmpty @_getDefaultFsId()
       @setDefaultFsId fs_id
