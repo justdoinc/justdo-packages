@@ -7,7 +7,7 @@ _.extend TasksFileManagerPlugin.prototype,
 
     APP.getEnv (env) ->
       tasks_files_driver_options = 
-        max_file_size_in_bytes: env.FILESTACK_MAX_FILE_SIZE_BYTES
+        getFileSizeLimit: -> env.FILESTACK_MAX_FILE_SIZE_BYTES
         instance: self.tasks_file_manager
 
       APP.justdo_file_interface.registerFs "#{TasksFileManagerPlugin.fs_id}-tasks-files", tasks_files_driver_options
