@@ -1,2 +1,2 @@
 _.extend TasksFileManagerPlugin,
-  driver_id: "filestack"
+  fs_id: "filestack"
