@@ -10,7 +10,7 @@ _.extend TasksFileManagerPlugin.prototype,
         max_file_size_in_bytes: env.FILESTACK_MAX_FILE_SIZE_BYTES
         instance: self.tasks_file_manager
 
-      APP.justdo_files_driver.registerDriver "#{TasksFileManagerPlugin.driver_id}-tasks-files", tasks_files_driver_options
+      APP.justdo_file_interface.registerDriver "#{TasksFileManagerPlugin.driver_id}-tasks-files", tasks_files_driver_options
 
       return
 

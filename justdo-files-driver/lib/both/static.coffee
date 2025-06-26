@@ -1,7 +1,7 @@
-_.extend JustdoFilesDriver,
-  project_custom_feature_id: "justdo_files_driver" # Use underscores
+_.extend JustdoFilesInterface,
+  project_custom_feature_id: "justdo_file_interface" # Use underscores
 
-  plugin_human_readable_name: "justdo-files-driver"
+  plugin_human_readable_name: "justdo-file-interface"
 
   both_register_driver_options_schema_properties:
     max_file_size_in_bytes:
