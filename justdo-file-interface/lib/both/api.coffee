@@ -84,4 +84,8 @@ _.extend JustdoFilesInterface.prototype,
 
     return cloned_obj
 
+  getFileSizeLimit: (fs_id) ->
+    fs = @_getFs fs_id
 
+    return fs.getFileSizeLimit()
+    
