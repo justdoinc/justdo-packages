@@ -40,6 +40,15 @@ _.extend JustdoFilesInterface.prototype,
       
     return
   
+  isFsRegistered: (fs_id) ->
+    return @_registered_fs[fs_id]?
+  
+  requireFsRegistered: (fs_id) ->
+    if not @isFsRegistered(fs_id)
+      throw @_error "not-supported",  "File system '#{fs_id}' not found. Please register it first."
+
+    return
+  
   _setDefaultFsIdIfEmpty: (fs_id) ->
     if _.isEmpty @_getDefaultFsId()
       @setDefaultFsId fs_id
@@ -47,8 +56,7 @@ _.extend JustdoFilesInterface.prototype,
     return
 
   setDefaultFsId: (fs_id) ->
-    if not @_registered_fs[fs_id]?
-      throw @_error "not-supported",  "File system '#{fs_id}' not found. Please register it first."
+    @requireFsRegistered fs_id
 
     @_default_fs_id = fs_id
     return
