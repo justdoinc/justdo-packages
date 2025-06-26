@@ -88,4 +88,8 @@ _.extend JustdoFilesInterface.prototype,
     fs = @_getFs fs_id
 
     return fs.getFileSizeLimit()
-    
+
+  getFileLink: (fs_id, options, cb) ->
+    fs = @_getFs fs_id
+
+    return fs.getFileLink options, cb
