@@ -25,7 +25,7 @@ _.extend JustdoFiles.prototype,
     self = @
 
     tasks_files_driver_options = 
-      max_file_size_in_bytes: self.options.max_file_size
+      getFileSizeLimit: -> self.options.max_file_size
       instance: self
     APP.justdo_file_interface.registerFs "#{JustdoFiles.fs_id}-tasks-files", tasks_files_driver_options
     return
