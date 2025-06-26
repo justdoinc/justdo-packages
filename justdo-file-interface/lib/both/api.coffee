@@ -84,12 +84,4 @@ _.extend JustdoFilesInterface.prototype,
 
     return cloned_obj
 
-  # Connect to a file system and return connection object
-  connect: (fs_id) ->
-    if not fs_id?
-      fs_id = @getDefaultFsId()
-    
-    if not (fs = @_registered_fs[fs_id])?
-      throw @_error "not-supported", "File system \"#{fs_id}\" not found"
 
-    return fs
