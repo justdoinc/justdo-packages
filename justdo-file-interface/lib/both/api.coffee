@@ -24,20 +24,20 @@ _.extend JustdoFilesInterface.prototype,
     return
 
   # Register a file system
-  registerFsOptionsSchema: new SimpleSchema JustdoFilesInterface.both_register_fs_options_schema_properties
-  registerFs: (fs_id, options) ->
+  registerFsObjectSchema: new SimpleSchema JustdoFilesInterface.both_register_fs_options_schema_properties
+  registerFs: (fs_id, fs_obj) ->
     if not fs_id?
       throw @_error "missing-argument", "File system ID is required"
 
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
-        @registerFsOptionsSchema,
-        options,
+        @registerFsObjectSchema,
+        fs_obj,
         {throw_on_error: true}
       )
-    options = cleaned_val  
+    fs_obj = cleaned_val  
 
-    @_registered_fs[fs_id] = options
+    @_registered_fs[fs_id] = fs_obj
     
     if not @getDefaultFsId()?
       @setDefaultFsId fs_id
