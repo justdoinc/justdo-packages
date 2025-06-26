@@ -4,6 +4,6 @@ _.extend JustdoFilesInterface,
   plugin_human_readable_name: "justdo-file-interface"
 
   both_register_fs_options_required_properties:
-    max_file_size_in_bytes: Number
+    getFileSizeLimit: Function
     # Note: Most (if not all) of JustDo plugins are EventEmitter instances, instead of a simple Object.
     instance: EventEmitter
