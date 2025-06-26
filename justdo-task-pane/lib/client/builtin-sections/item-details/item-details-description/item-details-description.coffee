@@ -173,6 +173,10 @@ APP.executeAfterAppLibCode ->
       $container.removeClass("edit-mode")
   
   _uploadFilesAndInsertToEditor = (task_id, file_list, editor, type_to_insert, img_to_replace) ->
+    fs = APP.justdo_file_interface
+    # fs = APP.justdo_file_interface.cloneWithForcedFs "#{JustdoFiles.fs_id}-tasks-files"
+    # fs = APP.justdo_file_interface.cloneWithForcedFs "#{TasksFileManagerPlugin.fs_id}-tasks-files"
+
     replaceEditorImageAndFile = (file, download_path) ->
       if type_to_insert is "image"
         if not $img_to_replace?
@@ -182,7 +186,7 @@ APP.executeAfterAppLibCode ->
         editor.image.insert download_path, false, {src: download_path}, $org_img,
           link: download_path
       else if type_to_insert is "file"
-        editor.file.insert download_path, file.filename, null
+        editor.file.insert download_path, file.name, null
 
     files = []
     for i in [0...file_list.length]
@@ -203,46 +207,26 @@ APP.executeAfterAppLibCode ->
     
     uploading_files.set (Tracker.nonreactive -> uploading_files.get() + 2)
 
-    APP.getEnv (env) =>
-      if env.TASKS_FILES_UPLOAD_ENABLED is "true" # Upload to Filestack if available
-        APP.tasks_file_manager_plugin.tasks_file_manager.uploadFiles task_id, files, (err, uploaded_files) ->
+    uploaded = 0
+    for file in files
+      do (file) =>
+        fs.uploadFile null, file, {task_id: task_id}, (err, file_obj) ->
           if err?
             console.log err
-            uploading_files.set (Tracker.nonreactive -> uploading_files.get() - 1)
-            return
-
-          for file in uploaded_files
-            file_id = file.url.substr(file.url.lastIndexOf("/")+1)
-            download_path = APP.tasks_file_manager_plugin.tasks_file_manager.getFileDownloadPath task_id, file_id
-            replaceEditorImageAndFile file, download_path
-        
-          uploading_files.set (Tracker.nonreactive -> uploading_files.get() - 1)
-      else if env.JUSTDO_FILES_ENABLED is "true" # Upload to JustDo Files if available while Filestack isn't
-        for file in files
-          do (file) =>
-            try
-              upload = APP.justdo_files.uploadFile(file, task_id)
-            catch e
+          else
+            uploaded += 1
+            if uploaded is files.length
               uploading_files.set (Tracker.nonreactive -> uploading_files.get() - 1)
-              console.error e.reason or e
+              
+              fs.getFileLink null, {task_id: task_id, file_id: file_obj._id}, (err, link) ->
+                if err?
+                  console.log err
+                else
+                  replaceEditorImageAndFile file, link
+                
               return
 
-            upload.on "end", (err, file_obj) ->
-              uploading_files.set (Tracker.nonreactive -> uploading_files.get() - 1)
-              if err?
-                if not upload.err_msg?
-                  upload.err_msg = if err.reason? then err.reason else err
-              file_id = file_obj._id
-              file.filename = file_obj.name
-              download_path = APP.justdo_files.getShareableLink(file_id)
-              replaceEditorImageAndFile file, download_path
-
-              return
-
-            upload.start()
-
-            return
-
+          return
       
     return
 
@@ -398,8 +382,7 @@ APP.executeAfterAppLibCode ->
   Template.task_pane_item_details_description.onCreated ->
     @autorun =>
       APP.getEnv (env) =>
-        # If Filestack is disabled and justdo_files is enabled, subscribe to tasks files
-        if env.TASKS_FILES_UPLOAD_ENABLED isnt "true" and env.JUSTDO_FILES_ENABLED is "true"
+        if env.JUSTDO_FILES_ENABLED is "true"
           Meteor.subscribe "jdfTaskFiles", @data._id
 
         return
