@@ -10,3 +10,11 @@ _.extend TasksFileManagerPlugin.prototype,
     @logger.debug "Destroyed"
 
     return
+  
+  _getEnvSpecificFsOptions: ->
+    self = @
+    
+    ret = 
+      uploadFile: (task_id, file_blob, filename, mimetype, metadata, user_id) ->
+        return await self.tasks_file_manager.uploadAndRegisterFile task_id, file_blob, filename, mimetype, metadata, user_id
+    return ret
