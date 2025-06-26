@@ -3,7 +3,7 @@ _.extend JustdoFilesInterface,
 
   plugin_human_readable_name: "justdo-file-interface"
 
-  both_register_driver_options_schema_properties:
+  both_register_fs_options_schema_properties:
     max_file_size_in_bytes:
       type: Number
     instance:
