@@ -114,6 +114,7 @@ _.extend JustdoHelpers,
         "fr-alternate-rows": "Alternate Rows"
       direction: if APP.justdo_i18n?.isRtl() then "rtl" else "ltr"
       quickInsertTags: []
+      quickInsertButtons: ["embedly", "table", "ul", "ol", "hr"]
       toolbarSticky: false
       charCounterCount: false
       key: env.FROALA_ACTIVATION_KEY
@@ -184,6 +185,12 @@ _.extend JustdoHelpers,
         default_options.toolbarButtons.push("insertImage")
       if "insertFile" not in default_options.toolbarButtons
         default_options.toolbarButtons.push("insertFile")
+      
+      # Add quick insert buttons to toolbar if not already present
+      if "image" not in default_options.quickInsertButtons
+        default_options.quickInsertButtons.unshift("image")
+      if "video" not in default_options.quickInsertButtons
+        default_options.quickInsertButtons.unshift("video")
     
     # Merge default options with custom options
     merged_options = _.extend {}, default_options, options
