@@ -5,8 +5,8 @@ _.extend JustdoFilesInterface.prototype,
     # Add here code that should run, in the Server and Client, during the JS
     # tick in which we create the object instance.
 
-    @_drivers = {}
-    @_default_driver_id = null
+    @_registered_fs = {}
+    @_default_fs_id = null
 
     @setupRouter()
 
@@ -23,34 +23,34 @@ _.extend JustdoFilesInterface.prototype,
 
     return
 
-  # Register a driver
-  registerDriverOptionsSchema: new SimpleSchema JustdoFilesInterface.both_register_driver_options_schema_properties
-  registerDriver: (driver_id, options) ->
-    if not driver_id?
-      throw @_error "missing-argument", "Driver ID is required"
+  # Register a file system
+  registerFsOptionsSchema: new SimpleSchema JustdoFilesInterface.both_register_fs_options_schema_properties
+  registerFs: (fs_id, options) ->
+    if not fs_id?
+      throw @_error "missing-argument", "File system ID is required"
 
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
-        @registerDriverOptionsSchema,
+        @registerFsOptionsSchema,
         options,
         {throw_on_error: true}
       )
     options = cleaned_val  
 
-    @_drivers[driver_id] = options
+    @_registered_fs[fs_id] = options
     
-    if not @getDefaultDriverId()?
-      @setDefaultDriverId driver_id
+    if not @getDefaultFsId()?
+      @setDefaultFsId fs_id
       
     return
 
-  setDefaultDriverId: (driver_id) ->
-    if not @_drivers[driver_id]?
-      throw @_error "not-supported",  "Driver '#{driver_id}' not found. Please register it first."
+  setDefaultFsId: (fs_id) ->
+    if not @_registered_fs[fs_id]?
+      throw @_error "not-supported",  "File system '#{fs_id}' not found. Please register it first."
 
-    @_default_driver_id = driver_id
+    @_default_fs_id = fs_id
     return
   
-  getDefaultDriverId: ->
-    return @_default_driver_id
+  getDefaultFsId: ->
+    return @_default_fs_id
 
