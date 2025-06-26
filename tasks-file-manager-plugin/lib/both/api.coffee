@@ -8,6 +8,16 @@ _.extend TasksFileManagerPlugin.prototype,
     APP.getEnv (env) ->
       tasks_files_driver_options = 
         getFileSizeLimit: -> env.FILESTACK_MAX_FILE_SIZE_BYTES
+        getFileLink: (options, cb) ->
+          try
+            link = self.tasks_file_manager.getFileDownloadPath options.task_id, options.file_id
+          catch err
+            cb err
+            return
+
+          cb null, link
+
+          return
         instance: self.tasks_file_manager
 
       if self._getEnvSpecificFsOptions?
