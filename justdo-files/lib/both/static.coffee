@@ -1,7 +1,7 @@
 _.extend JustdoFiles,
   project_custom_feature_id: "justdo_files" # Use underscores
 
-  driver_id: "justdo-files"
+  fs_id: "justdo-files"
 
   plugin_human_readable_name: "JustDo Files"
 
