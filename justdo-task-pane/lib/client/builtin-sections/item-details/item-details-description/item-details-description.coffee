@@ -316,8 +316,6 @@ APP.executeAfterAppLibCode ->
       )
 
     APP.getEnv (env) =>
-      files_driver = APP.justdo_files_driver.connect()
-      console.log "xxx", files_driver.max_file_size_in_bytes
       $("#description-editor", $container)
         .froalaEditor({
           toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
@@ -334,9 +332,9 @@ APP.executeAfterAppLibCode ->
           charCounterCount: false
           key: env.FROALA_ACTIVATION_KEY
           fileUpload: true
-          fileMaxSize: files_driver.max_file_size_in_bytes
+          fileMaxSize: env.FILESTACK_MAX_FILE_SIZE_BYTES
           fileAllowedTypes: ["*"]
-          imageMaxSize: files_driver.max_file_size_in_bytes
+          imageMaxSize: env.FILESTACK_MAX_FILE_SIZE_BYTES
           imageAllowedTypes: ["jpeg", "jpg", "png"]
           direction: if APP.justdo_i18n.isRtl() then "rtl" else "ltr"
           placeholderText: TAPi18n.__ "description_editor_placeholder_text"
