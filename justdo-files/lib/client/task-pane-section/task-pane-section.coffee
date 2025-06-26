@@ -255,6 +255,8 @@ Template.justdo_files_gallery.events
 justdo_files_uploaders_state = {}
 
 Template.justdo_files_uploader.onCreated ->
+  @fs = APP.justdo_file_interface.cloneWithForcedFs "#{JustdoFiles.fs_id}-tasks-files"
+
   @autorun =>
     if (active_item_id = APP.modules.project_page.activeItemId())?
       @prev_task_id = if @task_id? then @task_id else null
@@ -354,6 +356,8 @@ Template.justdo_files_uploader.onCreated ->
   return
 
 Template.justdo_files_uploader.helpers
+  getFileSizeLimit: -> Template.instance().fs.getFileSizeLimit()
+
   getState: -> Template.instance().state.get()
 
   isHovering: ->
