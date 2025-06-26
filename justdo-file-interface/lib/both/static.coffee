@@ -3,10 +3,7 @@ _.extend JustdoFilesInterface,
 
   plugin_human_readable_name: "justdo-file-interface"
 
-  both_register_fs_options_schema_properties:
-    max_file_size_in_bytes:
-      type: Number
-    instance:
-      # Note: Most (if not all) of our plugins are EventEmitter instances, instead of a simple Object.
-      type: EventEmitter
-      blackbox: true
+  both_register_fs_options_required_properties:
+    max_file_size_in_bytes: Number
+    # Note: Most (if not all) of JustDo plugins are EventEmitter instances, instead of a simple Object.
+    instance: EventEmitter
