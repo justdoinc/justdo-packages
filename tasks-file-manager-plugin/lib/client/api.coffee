@@ -1,4 +1,23 @@
 _.extend TasksFileManagerPlugin.prototype,
+  _getEnvSpecificFsOptions: ->
+    self = @
+    
+    ret = 
+      uploadFile: (file, options, cb) ->
+        await self.tasks_file_manager.uploadFiles options.task_id, [file], (err, uploaded_files) ->
+          if err?
+            cb err
+            return
+
+          uploaded_file = uploaded_files[0]
+          # Normalize the file object to match the JustdoFiles file object
+          uploaded_file._id = uploaded_file.url.substr(uploaded_file.url.lastIndexOf("/")+1)
+          cb null, uploaded_file
+
+        return
+
+    return ret
+
   showPreviewOrStartDownload: (task_id, file) ->
     conv_matrix = @tasks_file_manager.getConversionMartix()
     preview_supported_formats = _.union conv_matrix["pdf"], conv_matrix["jpg"]
