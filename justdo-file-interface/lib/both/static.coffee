@@ -5,6 +5,7 @@ _.extend JustdoFilesInterface,
 
   both_register_fs_options_required_properties:
     uploadFile: Function
+    getFileLink: Function
     getFileSizeLimit: Function
     # Note: Most (if not all) of JustDo plugins are EventEmitter instances, instead of a simple Object.
     instance: EventEmitter
