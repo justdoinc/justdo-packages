@@ -1093,6 +1093,7 @@ _.extend GridDataCom.prototype,
     return
 
   movePath: (paths, new_location, perform_as) ->
+    console.time "movePath"
     if _.isString(paths)
       paths = [paths]
 
@@ -1236,9 +1237,19 @@ _.extend GridDataCom.prototype,
       project_id: project_id
     }, _.size(items_map)
 
+    # Remove current parent
+    bulk_remove_ops = _.groupBy(paths_map, (map) => JSON.stringify(map.remove_current_parent_update_op))
+    for stringified_remove_op, path_infos of bulk_remove_ops
+      if not _.isString(stringified_remove_op)
+        continue
+
+      item_ids = _.map path_infos, (path_info) => path_info.item_id
+      remove_current_parent_update_op = JSON.parse(stringified_remove_op)
+      @collection.update {_id: {$in: item_ids}}, remove_current_parent_update_op, {multi: true}
+
     for path, path_info of paths_map
       # Remove current parent
-      @collection.update path_info.item_id, path_info.remove_current_parent_update_op
+      # @collection.update path_info.item_id, path_info.remove_current_parent_update_op
 
       if path_info.set_new_parent_update_op?
         # Add to new parent
@@ -1255,6 +1266,8 @@ _.extend GridDataCom.prototype,
           set_new_parent_update_op: path_info.set_new_parent_update_op
       catch e
         console.error "afterMovePath hook raised an exception", e
+
+    console.timeEnd "movePath"
 
     return
 
