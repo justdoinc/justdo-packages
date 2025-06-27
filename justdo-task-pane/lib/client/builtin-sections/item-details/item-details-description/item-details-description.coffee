@@ -321,10 +321,11 @@ APP.executeAfterAppLibCode ->
     "click #save-description": (e) ->
       save()
 
-    "click #description a": (e) ->
+    "click #task-description-container a": (e) ->
       e.preventDefault();
       url = $(e.target).attr "href"
       window.open(url, "_blank")
+      return
 
     "click .maximize-description": (e, tpl) ->
       description_only_view_rv.set not description_only_view_rv.get()
