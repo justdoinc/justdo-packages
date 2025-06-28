@@ -45,14 +45,9 @@ _.extend PACK.required_actions_definitions,
       # @ is the _module's obj (Even in a comment the transpiler is catching the word mod ule and causing a break to the build hence _ was added)
 
       @items_collection._ensureIndex {
-        "users": 1
         "reject_ownership_message_to": 1
-      }
-
-      @items_collection._ensureIndex {
         "users": 1
         "project_id": 1
-        "reject_ownership_message_to": 1
       }
 
       return
