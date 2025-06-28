@@ -15,6 +15,11 @@ APP.executeAfterAppLibCode ->
       collection: APP.collections.Tasks
     }
     {
+      index_id: "users_1_project_id_1"
+      collection: APP.collections.Tasks
+    }
+    
+    {
       index_id: "users_1_pending_owner_id_1"
       collection: APP.collections.Tasks
     }
