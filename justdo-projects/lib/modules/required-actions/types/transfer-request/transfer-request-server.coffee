@@ -42,15 +42,11 @@ _.extend PACK.required_actions_definitions,
     setupMongoIndices: ->
       # @ is the _module's obj (Even in a comment the transpiler is catching the word mod ule and causing a break to the build hence _ was added)
 
-      @items_collection._ensureIndex {
-        "users": 1
-        "pending_owner_id": 1
-      }
 
       @items_collection._ensureIndex {
+        "pending_owner_id": 1
         "users": 1
         "project_id": 1
-        "pending_owner_id": 1
       }
 
       return
