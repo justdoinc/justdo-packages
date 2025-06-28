@@ -418,3 +418,48 @@ _.extend JustdoHelpers,
     # https://stackoverflow.com/questions/18749591/encode-html-entities-in-javascript#comment94981399_23834738
     return str.replace /[\u00A0-\u9999<>\&]/gim, (i) =>
       return '&#' + i.charCodeAt(0) + ';'
+
+  parseSemanticVersion: (version) ->
+    # Parse a semantic version string into comparable parts
+    # Supports versions with or without 'v' prefix
+    # Returns an object with major, minor, patch as integers
+    check version, String
+    
+    default_ret = 
+      major: 0
+      minor: 0
+      patch: 0
+    
+    if not version?
+      return default_ret
+    
+    version = version.trim()
+    
+    # Remove 'v' prefix if present
+    version_without_prefix = version.replace(/^v/, "")
+    
+    # Split version into parts (major.minor.patch)
+    parts = version_without_prefix.split(".")
+    
+    version_obj = 
+      major: parseInt(parts[0], 10)
+      minor: parseInt(parts[1], 10)
+      patch: parseInt(parts[2], 10)
+    
+    return _.extend default_ret, version_obj
+
+  compareSemanticVersions: (version1, version2) ->
+    # Compare two semantic version objects or strings
+    # Returns: -1 if version1 < version2, 0 if equal, 1 if version1 > version2
+    
+    # Handle string inputs by parsing them first
+    version1 = @parseSemanticVersion(version1)
+    version2 = @parseSemanticVersion(version2)
+
+    if version1.major isnt version2.major
+      return version1.major - version2.major
+    
+    if version1.minor isnt version2.minor
+      return version1.minor - version2.minor
+    
+    return version1.patch - version2.patch
