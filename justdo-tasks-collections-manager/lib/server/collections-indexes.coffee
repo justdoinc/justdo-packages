@@ -35,9 +35,6 @@ _.extend JustdoTasksCollectionsManager.prototype,
     @tasks_private_data_collection._ensureIndex {"task_id": 1, "user_id": 1, "project_id": 1}, {unique: true}
     @tasks_private_data_collection._ensureIndex {"task_id": 1, "user_id": 1}, {unique: true}
 
-    # FETCH_PROJECT_TASKS_PRIVATE_DATA_OF_SPECIFIC_USER_FROZEN_AWARE_INDEX
-    @tasks_private_data_collection._ensureIndex {"project_id": 1, "user_id": 1, "_raw_frozen": 1}
-
     # FETCH_PROJECT_TASKS_PRIVATE_DATA_OF_SPECIFIC_USER_FROZEN_AWARE_WITH_RAW_UPDATED_DATE_INDEX
     @tasks_private_data_collection._ensureIndex {"project_id": 1, "user_id": 1, "_raw_frozen": 1, "_raw_updated_date": 1}
 
