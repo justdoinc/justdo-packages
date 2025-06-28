@@ -48,6 +48,8 @@ _.extend PACK.required_actions_definitions,
         "reject_ownership_message_to": 1
         "users": 1
         "project_id": 1
+      }, {
+        sparse: true
       }
 
       return
