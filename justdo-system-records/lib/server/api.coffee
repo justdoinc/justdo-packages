@@ -79,16 +79,18 @@ _.extend JustdoSystemRecords.prototype,
     # E.g. of valid version: "v3.113.20", "3.113.20". 
     # E.g. of invalid version: "v3.113.20-stm"
     
-    version = version.trim()
     if not JustdoSystemRecords.semver_regex_strict.test version
       throw @_error "invalid-argument", "Input should be in the format of semetic versioning https://semver.org/"
+    
+    # Fetch the installed-versions document
+    installed_version_doc = @system_records_collection.findOne({_id: "installed-versions"}, {fields: {semver: 1}})
+    
+    if not installed_version_doc?.semver?
+      return false
 
-    if version[0] isnt "v"
-      version = "v" + version
+    # Check if any installed version is less than or equal to the target version
+    installed_version_lte_target_version = _.find installed_version_doc.semver, (installed_version) ->
+      return JustdoHelpers.compareSemanticVersions(installed_version, version) <= 0
 
-    query =
-      _id: "installed-versions"
-      semver:
-        $lte: version
+    return installed_version_lte_target_version?
 
-    return @system_records_collection.findOne(query, {fields: {_id: 1}})?
