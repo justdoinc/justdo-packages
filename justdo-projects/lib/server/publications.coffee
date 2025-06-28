@@ -400,7 +400,7 @@ _.extend Projects.prototype,
         #
         # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
         # and to drop obsolete indexes (see
-        # FETCH_PROJECT_TASKS_PRIVATE_DATA_OF_SPECIFIC_USER_FROZEN_AWARE_INDEX/FETCH_PROJECT_TASKS_PRIVATE_DATA_OF_SPECIFIC_USER_FROZEN_AWARE_WITH_RAW_UPDATED_DATE_INDEX there)
+        # FETCH_PROJECT_TASKS_PRIVATE_DATA_OF_SPECIFIC_USER_FROZEN_AWARE_WITH_RAW_UPDATED_DATE_INDEX/FETCH_PROJECT_TASKS_PRIVATE_DATA_OF_SPECIFIC_USER_FROZEN_AWARE_WITH_RAW_UPDATED_DATE_INDEX there)
         #
         private_data_cursor = private_data_collection.find private_data_query, private_data_query_options
 
