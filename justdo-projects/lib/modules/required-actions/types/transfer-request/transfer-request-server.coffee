@@ -47,6 +47,8 @@ _.extend PACK.required_actions_definitions,
         "pending_owner_id": 1
         "users": 1
         "project_id": 1
+      }, {
+        sparse: true
       }
 
       return
