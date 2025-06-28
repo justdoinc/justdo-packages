@@ -417,3 +417,61 @@ JustdoDbMigrations.perpetualMaintainer = (options) ->
       return
 
   return JustdoDbMigrations.commonBatchedMigration(common_batched_migration_options)
+
+JustdoDbMigrations.removeIndexMigration = (options) ->
+  removeIndexOptionsSchema = new SimpleSchema
+    index_id:
+      label: "Index identifier/name to remove"
+      type: String
+
+    collection:
+      label: "Collection from which to remove the index"
+      type: "skip-type-check"
+
+    run_if_lte_version_installed:
+      label: "Version installed that require the migration"
+      type: String
+      optional: true
+
+  {cleaned_val} =
+    JustdoHelpers.simpleSchemaCleanAndValidate(
+      removeIndexOptionsSchema,
+      options,
+      {self: @, throw_on_error: true}
+    )
+  options = cleaned_val
+
+  migration_script_obj =
+    runScript: ->
+      self = @
+
+      raw_collection = options.collection.rawCollection()
+      # check if index exists
+      raw_collection.indexExists(options.index_id)
+        .then (index_exists) =>
+          if index_exists
+            @logProgress "Attempting to remove index '#{options.index_id}' from collection"
+            raw_collection.dropIndex(options.index_id)
+              .then =>
+                @logProgress "Successfully removed index '#{options.index_id}'"
+                @markAsCompleted()
+                return
+              .catch (error) =>
+                @logProgress "Error removing index '#{options.index_id}': #{error.message}", error
+                @halt()
+                return
+          else
+            @logProgress "Index '#{options.index_id}' does not exist. Marking as completed."
+            @markAsCompleted()
+          
+          return
+            
+      return
+
+    haltScript: ->
+      # No cleanup needed for index removal
+      return
+
+    run_if_lte_version_installed: options.run_if_lte_version_installed
+
+  return migration_script_obj
