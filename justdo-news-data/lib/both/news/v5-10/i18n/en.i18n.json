@@ -1,0 +1,32 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "What's new",
+
+  "v5_10_news_page_title": "JustDo v5.10: Enhanced Gantt, File Preview, and Task Editing for Better Workflow",
+  "v5_10_news_page_description": "Experience seamless communication with Direct Chat Messages and improved project navigation with Enhanced Grid Search in JustDo 5.8!",
+  "v5_10_news_main_array_item_0_subtitle": "Today, we are pleased to announce the release of JustDo v5.10.",
+
+  "v5_10_news_main_array_item_1_title": "Add the ability to filter columns in the Add Columns sub-menu.",
+  "v5_10_news_main_array_item_1_subtitle": "You can now easily filter columns in the Add Columns sub-menu, making it faster to find and add the fields you need.",
+
+  "v5_10_news_main_array_item_2_title": "Preview videos and PDFs in the task pane.",
+  "v5_10_news_main_array_item_2_subtitle": "You can now play videos directly from the Files tab in the Task Pane — no extra steps needed.",
+
+  "v5_10_news_main_array_item_3_subtitle": "View PDFs instantly right within the Task Pane, without opening a separate window.",
+
+  "v5_10_news_main_array_item_4_title": "Improve Task Description text editor.",
+  "v5_10_news_main_array_item_4_subtitle": "The Task Description editor has been upgraded for a smoother, more reliable editing experience. Writing and formatting text is now easier than ever.",
+
+  "v5_10_news_main_array_item_5_title": "Support uploading files to Task Description.",
+  "v5_10_news_main_array_item_5_subtitle": "You can now upload and attach files directly to the Task Description, making your tasks more informative and organized.",
+
+  "v5_10_news_main_array_item_6_title": "Introduce range picker for gantt",
+  "v5_10_news_main_array_item_6_subtitle": "The new range picker makes selecting date ranges in Gantt much easier. This update significantly improves the user experience.",
+
+
+  "v5_10_news_features_name": "Other Updates",
+  "v5_10_news_features_title": "Improvements",
+  "v5_10_news_features_update_items": [
+    "1. General design updates to JustDo webapp<br> 2. Add a send button to the Chat"
+  ]
+}

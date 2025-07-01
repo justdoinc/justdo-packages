@@ -160,5 +160,17 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/news/v5-8/v5-8.coffee", both);
   this.addI18nFiles(api, "lib/both/news/v5-8/i18n/{}.i18n.json")
 
+  // v5.10
+  api.addAssets([
+    "lib/both/news/v5-10/assets/1.png",
+    "lib/both/news/v5-10/assets/2.png",
+    "lib/both/news/v5-10/assets/3.png",
+    "lib/both/news/v5-10/assets/4.png",
+    "lib/both/news/v5-10/assets/5.png",
+    "lib/both/news/v5-10/assets/6.mov"
+  ], client);
+  api.addFiles("lib/both/news/v5-10/v5-10.coffee", both);
+  this.addI18nFiles(api, "lib/both/news/v5-10/i18n/{}.i18n.json", ["en"])
+
   api.export("JustdoNewsData", both);
 });
