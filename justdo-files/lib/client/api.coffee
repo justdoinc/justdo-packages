@@ -75,6 +75,17 @@ _.extend JustdoFiles.prototype,
           sub.stop()
 
         return
+      downloadFile: (options) ->
+        sub = @subscribeToFilesCollection {task_id: options.task_id}, (err) =>
+          if err?
+            console.error err
+          else
+            self.downloadFile options.file_id
+          
+          sub.stop()
+          return
+        
+        return
     return ret
 
   showPreviewOrStartDownload: (task_id, file) ->
