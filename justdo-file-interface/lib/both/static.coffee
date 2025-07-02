@@ -7,6 +7,7 @@ _.extend JustdoFilesInterface,
     uploadFile: Function
     getFileLink: Function
     getFileSizeLimit: Function
+    isFileExists: Function
     # Note: Most (if not all) of JustDo plugins are EventEmitter instances, instead of a simple Object.
     instance: EventEmitter
   
