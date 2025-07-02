@@ -14,3 +14,10 @@ _.extend JustdoFilesInterface.prototype,
     await fs.uploadFile file, options, cb
 
     return
+
+  subscribeToFilesCollection: (fs_id, options, cb) ->
+    fs = @_getFs fs_id
+
+    return fs.subscribeToFilesCollection options, cb
+
+    return
