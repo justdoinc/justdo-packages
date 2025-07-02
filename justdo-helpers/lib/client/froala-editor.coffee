@@ -10,6 +10,8 @@ _.extend JustdoHelpers,
     return new File([u8arr], filename, {type:mime})
 
   _uploadFilesAndInsertToEditor: (file_upload_options, file_list, editor, type_to_insert, img_to_replace) ->
+    fs = APP.justdo_file_interface
+
     file_upload_type = file_upload_options.type
     file_upload_destination = file_upload_options.destination
     file_upload_counter_rv = file_upload_options.counter_rv
@@ -23,7 +25,23 @@ _.extend JustdoHelpers,
         editor.image.insert download_path, false, {src: download_path}, $org_img,
           link: download_path
       else if type_to_insert is "file"
-        editor.file.insert download_path, file.filename, null
+        editor.file.insert download_path, file.name, null
+
+    updateFileUploadCounterRv = (minus=false) ->
+      # While is_uploading_files isn't 0, the "done" button will show "uploading..." and disabled
+      # For image uploads, we add the counter by two,
+      # and minus one after uploading is finished, and after the editor's image is replaced with the uploaded version respectively.
+      if type_to_insert is "image"
+        delta = 2
+      else if type_to_insert is "file"
+        delta = 1
+
+      # If minus is true, we need to subtract the delta from the counter instead
+      if minus
+        delta = -delta
+
+      file_upload_counter_rv.set (Tracker.nonreactive -> file_upload_counter_rv.get() + delta)
+      return
 
     files = []
     for i in [0...file_list.length]
@@ -42,53 +60,28 @@ _.extend JustdoHelpers,
           console.log error
       )(i)
     
-    if type_to_insert is "image"
-      # While is_uploading_files isn't 0, the "done" button will show "uploading..." and disabled
-      # For image uploads, we add the counter by two,
-      # and minus one after uploading is finished, and after the editor's image is replaced with the uploaded version respectively.
-      file_upload_counter_rv.set (Tracker.nonreactive -> file_upload_counter_rv.get() + 2)
-    else if type_to_insert is "file"
-      file_upload_counter_rv.set (Tracker.nonreactive -> file_upload_counter_rv.get() + 1)
+    updateFileUploadCounterRv()
 
-    if env.TASKS_FILES_UPLOAD_ENABLED is "true" # Upload to Filestack if available
-      APP.tasks_file_manager_plugin.tasks_file_manager.uploadFiles file_upload_destination, files, (err, uploaded_files) ->
-        if err?
-          console.log err
-          file_upload_counter_rv.set (Tracker.nonreactive -> file_upload_counter_rv.get() - 1)
-          return
+    for file in files
+      do (file) =>
+        fs.uploadFile null, file, {task_id: file_upload_destination}, (err, file_obj) ->
+          if err?
+            console.error err
+          else
+            fs.getFileLink null, {task_id: file_upload_destination, file_id: file_obj._id}, (err, link) ->
+              if err?
+                console.error err
+              else
+                replaceEditorImageAndFile file, link
+              
+              return
 
-        for file in uploaded_files
-          file_id = file.url.substr(file.url.lastIndexOf("/")+1)
-          download_path = APP.tasks_file_manager_plugin.tasks_file_manager.getFileDownloadPath file_upload_destination, file_id
-          replaceEditorImageAndFile file, download_path
-      
-        file_upload_counter_rv.set (Tracker.nonreactive -> file_upload_counter_rv.get() - 1)
-    else if env.JUSTDO_FILES_ENABLED is "true" # Upload to JustDo Files if available while Filestack isn't
-      for file in files
-        do (file) =>
-          try
-            upload = APP.justdo_files.uploadFile(file, file_upload_destination)
-          catch e
-            file_upload_counter_rv.set (Tracker.nonreactive -> file_upload_counter_rv.get() - 1)
-            console.error e.reason or e
-            return
-
-          upload.on "end", (err, file_obj) ->
-            file_upload_counter_rv.set (Tracker.nonreactive -> file_upload_counter_rv.get() - 1)
-            if err?
-              if not upload.err_msg?
-                upload.err_msg = if err.reason? then err.reason else err
-            file_id = file_obj._id
-            file.filename = file_obj.name
-            download_path = APP.justdo_files.getShareableLink(file_id)
-            replaceEditorImageAndFile file, download_path
-
-            return
-
-          upload.start()
+          updateFileUploadCounterRv true
 
           return
-    
+
+        return
+        
     return
     
   # Create a FroalaEditor instance with common configuration and customization options
@@ -102,6 +95,7 @@ _.extend JustdoHelpers,
   createFroalaEditor: (selector, options = {}) ->
     check selector, String
 
+    fs = APP.justdo_file_interface
     editor = null
     self = @
 
@@ -143,12 +137,6 @@ _.extend JustdoHelpers,
       file_upload_counter_rv = file_upload_options.counter_rv
       delete options.fileUploadOptions
 
-      max_file_size_in_bytes = 0
-      if env.TASKS_FILES_UPLOAD_ENABLED is "true"
-        max_file_size_in_bytes = env.FILESTACK_MAX_FILE_SIZE_BYTES
-      else if env.JUSTDO_FILES_ENABLED is "true"
-        max_file_size_in_bytes = env.JUSTDO_FILES_MAX_FILESIZE
-
       files_upload_events = 
         "file.beforeUpload": (files) ->
           self._uploadFilesAndInsertToEditor file_upload_options, files, editor, "file"
@@ -178,9 +166,9 @@ _.extend JustdoHelpers,
         fileUpload: true
         imageUpload: true
         imagePaste: true
-        fileMaxSize: max_file_size_in_bytes
+        fileMaxSize: fs.getFileSizeLimit()
         fileAllowedTypes: ["*"]
-        imageMaxSize: max_file_size_in_bytes
+        imageMaxSize: fs.getFileSizeLimit()
         imageAllowedTypes: ["jpeg", "jpg", "png"]
         imageEditButtons: ['imageReplace', 'imageAlign', 'imageCaption', 'imageRemove', '|', 'imageLink', 'linkOpen', 'linkEdit', 'linkRemove', '-', 'imageDisplay', 'imageStyle', 'imageAlt', 'imageSize']
         events: files_upload_events
