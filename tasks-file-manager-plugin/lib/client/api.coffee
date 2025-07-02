@@ -18,7 +18,20 @@ _.extend TasksFileManagerPlugin.prototype,
       subscribeToFilesCollection: (options, cb) ->
         task_id = options.task_id
         return JD.subscribeItemsAugmentedFields [task_id], ["files"], {}, cb
+      isFileExists: (options, cb) ->
+        task_id = options.task_id
+        file_id = options.file_id
+        sub = @subscribeToFilesCollection {task_id: task_id}, (err) =>
+          if err?
+            cb err
+          else
+            exists = APP.collections.TasksAugmentedFields.findOne(@_getIsFileExistsQuery(options), @_getIsFileExistsQueryOptions())?
+            sub.stop()
+            cb null, exists
+          
+          return
 
+        return
     return ret
 
   showPreviewOrStartDownload: (task_id, file) ->
