@@ -22,7 +22,9 @@ _.extend JustdoFilesInterface.prototype,
 
     return
   
+  downloadFile: (fs_id, options) ->
     fs = @_getFs fs_id
 
+    await fs.downloadFile options
 
     return
