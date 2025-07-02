@@ -53,7 +53,10 @@ _.extend JustdoFiles.prototype,
           cb err
 
         return
+      isFileExists: (options, cb) ->
+        @_isFileExistBoth options.file_id, cb
 
+        return
     return ret
 
   tasksFilesPublicationHandler: (publish_this, task_id, user_id) ->
