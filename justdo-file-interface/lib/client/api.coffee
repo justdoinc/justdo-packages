@@ -21,3 +21,10 @@ _.extend JustdoFilesInterface.prototype,
     await fs.subscribeToFilesCollection options
 
     return
+  
+  isFileExists: (fs_id, options, cb) ->
+    fs = @_getFs fs_id
+
+    await fs.isFileExists options, cb
+
+    return
