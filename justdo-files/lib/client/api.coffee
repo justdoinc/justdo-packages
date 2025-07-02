@@ -32,6 +32,39 @@ _.extend JustdoFiles.prototype,
         upload.start()
 
         return
+      subscribeToFilesCollection: (options, cb) ->
+        task_id = options.task_id
+
+        # Note: If cb is passed directly to the subscribeToFilesCollection directly,
+        # it's treated as the onReady callback, and the onStop callback is ignored.
+        # As such, the cb will not be called with the error if the subscription fails.
+        # So we need to use a sub_options object instead.
+        is_on_ready_cb_called = false
+        sub_options = 
+          onReady: ->
+            is_on_ready_cb_called = true
+            cb?()
+            return
+          onStop: (err) ->
+            if not is_on_ready_cb_called
+              cb? err
+            return
+        
+        return Meteor.subscribe "jdfTaskFiles", task_id, sub_options
+      getFileLink: (options, cb) ->
+        # On the client, we need to subscribe to the files collection to get the link
+        sub = @subscribeToFilesCollection {task_id: options.task_id}, (err) ->
+          if err?
+            cb err
+          else
+            link = self.getShareableLink(options.file_id)
+            cb null, link
+          
+          sub.stop()
+        
+          return
+        
+        return
 
     return ret
 
