@@ -26,6 +26,15 @@ _.extend JustdoFiles.prototype,
 
     tasks_files_driver_options = 
       getFileSizeLimit: -> self.options.max_file_size
+      # Could've named `_isFileExist` but it conflicts with justdo-files' own `_isFileExist`
+      _isFileExistBoth: (file_id, cb) ->
+        try
+          exists = self.isFileExist(file_id)
+          cb null, exists
+        catch err
+          cb err
+
+        return
       instance: self
     
     if @_getEnvSpecificFsOptions?
