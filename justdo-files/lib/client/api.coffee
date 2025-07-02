@@ -16,7 +16,7 @@ _.extend JustdoFiles.prototype,
     ret = 
       uploadFile: (file, options, cb) ->
         try
-          upload = await self.uploadFile(file, options.task_id, options.project_id)
+          upload = await self.uploadFile(file, options)
         catch err
           cb err
           return
