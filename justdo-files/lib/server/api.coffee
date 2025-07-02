@@ -45,6 +45,14 @@ _.extend JustdoFiles.prototype,
           options = {}
 
         return await self.uploadAndRegisterFile options.task_id, file, file.name, file.type, options.metadata, user_id
+      getFileLink: (options, cb) ->
+        try
+          link = self.getShareableLink(options.file_id)
+          cb null, link
+        catch err
+          cb err
+
+        return
 
     return ret
 

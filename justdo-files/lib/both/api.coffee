@@ -26,15 +26,6 @@ _.extend JustdoFiles.prototype,
 
     tasks_files_driver_options = 
       getFileSizeLimit: -> self.options.max_file_size
-      getFileLink: (options, cb) ->
-        try
-          link = self.getShareableLink(options.file_id)
-        catch err
-          cb err
-          return
-
-        cb null, link
-        return
       instance: self
     
     if @_getEnvSpecificFsOptions?
