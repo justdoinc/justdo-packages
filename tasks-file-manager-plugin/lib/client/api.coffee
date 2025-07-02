@@ -20,7 +20,15 @@ _.extend TasksFileManagerPlugin.prototype,
       subscribeToFilesCollection: (options, cb) ->
         task_id = options.task_id
         return JD.subscribeItemsAugmentedFields [task_id], ["files"], {}, cb
-
+      downloadFile: (options) ->
+        task_id = options.task_id
+        file_id = options.file_id
+        self.tasks_file_manager.downloadFile task_id, file_id, (err, url) ->
+          if err
+            console.log(err)
+          return
+        
+        return
     return ret
 
   showPreviewOrStartDownload: (task_id, file) ->
