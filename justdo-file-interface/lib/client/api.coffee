@@ -19,5 +19,8 @@ _.extend JustdoFilesInterface.prototype,
     fs = @_getFs fs_id
 
     return fs.subscribeToFilesCollection options, cb
+  
+  downloadFile: (fs_id, options) ->
+    fs = @_getFs fs_id
 
-    return
+    return fs.downloadFile options
