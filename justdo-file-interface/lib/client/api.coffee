@@ -22,9 +22,7 @@ _.extend JustdoFilesInterface.prototype,
 
     return
   
-  isFileExists: (fs_id, options, cb) ->
     fs = @_getFs fs_id
 
-    await fs.isFileExists options, cb
 
     return
