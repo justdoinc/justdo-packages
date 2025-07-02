@@ -18,6 +18,14 @@ _.extend TasksFileManagerPlugin.prototype,
           cb null, link
 
           return
+        _getIsFileExistsQuery: (options) ->
+          _id: options.task_id
+          files:
+            $elemMatch:
+              id: options.file_id
+        _getIsFileExistsQueryOptions: ->
+          fields:
+            _id: 1
         instance: self.tasks_file_manager
 
       if self._getEnvSpecificFsOptions?
