@@ -32,6 +32,23 @@ _.extend JustdoFiles.prototype,
         upload.start()
 
         return
+      subscribeToFilesCollection: (options, cb) ->
+        task_id = options.task_id
+        return Meteor.subscribe "jdfTaskFiles", task_id, cb
+      getFileLink: (options, cb) ->
+        # On the client, we need to subscribe to the files collection to get the link
+        sub = @subscribeToFilesCollection {task_id: options.task_id}, (err) ->
+          if err?
+            cb err
+          else
+            link = self.getShareableLink(options.file_id)
+            cb null, link
+          
+          sub.stop()
+        
+          return
+        
+        return
 
     return ret
 
