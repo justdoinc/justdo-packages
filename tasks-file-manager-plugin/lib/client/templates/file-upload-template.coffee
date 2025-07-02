@@ -1,5 +1,4 @@
 Template.tasks_file_manager_file_upload.onCreated ->
-  @fs = APP.justdo_file_interface.cloneWithForcedFs "#{TasksFileManagerPlugin.fs_id}-tasks-files"
   @pickerPane = APP.tasks_file_manager_plugin.tasks_file_manager.makeDropPane @data.task_id
   @autorun =>
     task_id = Template.currentData().task_id
@@ -14,8 +13,6 @@ Template.tasks_file_manager_file_upload.onDestroyed ->
     @pickerPane.destroy()
 
 Template.tasks_file_manager_file_upload.helpers
-  getFileSizeLimit: -> Template.instance().fs.getFileSizeLimit()
-
   uploadMessage: ->
     tmpl = Template.instance()
     state = tmpl.pickerPane.status()
