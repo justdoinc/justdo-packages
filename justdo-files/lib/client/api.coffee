@@ -43,11 +43,11 @@ _.extend JustdoFiles.prototype,
         sub_options = 
           onReady: ->
             is_on_ready_cb_called = true
-            cb()
+            cb?()
             return
           onStop: (err) ->
             if not is_on_ready_cb_called
-              cb err
+              cb? err
             return
         
         return Meteor.subscribe "jdfTaskFiles", task_id, sub_options
@@ -68,7 +68,7 @@ _.extend JustdoFiles.prototype,
       isFileExists: (options, cb) ->
         sub = @subscribeToFilesCollection {task_id: options.task_id}, (err) =>
           if err?
-            cb err, false
+            cb? err, false
           else
             @_isFileExistBoth options.file_id, cb
           
