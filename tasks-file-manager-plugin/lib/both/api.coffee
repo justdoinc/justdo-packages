@@ -9,15 +9,10 @@ _.extend TasksFileManagerPlugin.prototype,
       tasks_files_driver_options = 
         getFileSizeLimit: -> env.FILESTACK_MAX_FILE_SIZE_BYTES
         getFileLink: (options, cb) ->
-          try
-            link = self.tasks_file_manager.getFileDownloadPath options.task_id, options.file_id
-          catch err
-            cb err
-            return
+          task_id = options.task_id
+          file_id = options.file_id
 
-          cb null, link
-
-          return
+          return self.tasks_file_manager.getFileDownloadPath task_id, file_id
         isFileExists: (options) ->
           task_id = options.task_id
           file_id = options.file_id
