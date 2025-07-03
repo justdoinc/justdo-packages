@@ -124,6 +124,9 @@ _.extend JustdoFiles.prototype,
         # A user can download a file only if he is a member of the task to which it is
         # associated.
 
+        if not file?
+          return 404
+
         user_id = @user()?._id
         task_id = file.meta.task_id
 
