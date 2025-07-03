@@ -15,12 +15,10 @@ _.extend JustdoFilesInterface.prototype,
 
     return
 
-  subscribeToFilesCollection: (fs_id, options) ->
+  subscribeToFilesCollection: (fs_id, options, cb) ->
     fs = @_getFs fs_id
 
-    await fs.subscribeToFilesCollection options
-
-    return
+    return fs.subscribeToFilesCollection options, cb
   
   downloadFile: (fs_id, options) ->
     fs = @_getFs fs_id
