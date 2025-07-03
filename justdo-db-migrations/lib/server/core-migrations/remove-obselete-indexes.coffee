@@ -9,7 +9,10 @@ APP.executeAfterAppLibCode ->
       index_id: "users_1_project_id_1_reject_ownership_message_to_1"
       collection: APP.collections.Tasks
     }
-
+    {
+      index_id: "project_id_1_reject_ownership_message_to_1"
+      collection: APP.collections.Tasks
+    }
     {
       index_id: "users_1_project_id_1_pending_owner_id_1"
       collection: APP.collections.Tasks
