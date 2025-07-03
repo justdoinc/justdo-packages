@@ -182,7 +182,8 @@ Template.common_chat_message_editor.helpers
     return ""
   
   isFilesEnabled: ->
-    return APP.justdo_chat.isFilesEnabled()
+    tpl = Template.instance()
+    return APP.justdo_chat.isFilesEnabled tpl.data.getChannelObject()?.channel_type
 
 Template.common_chat_message_editor.events
   "keyup .message-editor": (e, tpl) ->
