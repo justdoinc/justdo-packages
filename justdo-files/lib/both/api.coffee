@@ -30,9 +30,9 @@ _.extend JustdoFiles.prototype,
       _isFileExistBoth: (file_id, cb) ->
         try
           exists = self.isFileExist(file_id)
-          cb null, exists
+          cb? null, exists
         catch err
-          cb err
+          cb? err
 
         return
       instance: self
