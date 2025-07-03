@@ -268,7 +268,8 @@ Template.common_chat_messages_board_message_card.events
 
     file = @
     channel_obj = tmpl.getChannelObject()
+    task_id = channel_obj.getChannelIdentifier().task_id
 
-    APP.justdo_chat.downloadFile file._id, channel_obj
+    APP.justdo_file_interface.downloadFile null, {file_id: file._id, task_id: task_id}
 
     return
