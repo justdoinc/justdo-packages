@@ -68,13 +68,8 @@ _.extend JustdoHelpers,
           if err?
             console.error err
           else
-            fs.getFileLink null, {task_id: file_upload_destination, file_id: file_obj._id}, (err, link) ->
-              if err?
-                console.error err
-              else
-                replaceEditorImageAndFile file, link
-              
-              return
+            link = fs.getFileLink null, {task_id: file_upload_destination, file_id: file_obj._id}
+            replaceEditorImageAndFile file, link
 
           updateFileUploadCounterRv true
 

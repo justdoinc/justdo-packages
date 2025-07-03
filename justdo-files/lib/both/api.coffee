@@ -29,6 +29,9 @@ _.extend JustdoFiles.prototype,
       isFileExists: (options) ->
         file_id = options.file_id
         return self.isFileExist(file_id)
+      getFileLink: (options) ->
+        file_id = options.file_id
+        return self.getShareableLink(file_id)
       instance: self
     
     if @_getEnvSpecificFsOptions?
