@@ -335,7 +335,7 @@ _.extend ChannelBaseClient.prototype,
 
   _setupFilesSubscription: ->
     # Only set up files subscription if files are enabled and justdo_chat supports it
-    if not @justdo_chat.isFilesEnabled()
+    if not @justdo_chat.isFilesEnabled(@channel_type)
       return
 
     @_unsubscribeFilesCollectionIfExists()
