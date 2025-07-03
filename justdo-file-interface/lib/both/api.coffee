@@ -101,10 +101,8 @@ _.extend JustdoFilesInterface.prototype,
 
     return fs.getFileLink options, cb
 
-  isFileExists: (fs_id, options, cb) ->
+  isFileExists: (fs_id, options) ->
     fs = @_getFs fs_id
 
-    await fs.isFileExists options, cb
-
-    return
+    return fs.isFileExists options
   
