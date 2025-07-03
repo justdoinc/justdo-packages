@@ -102,10 +102,10 @@ _.extend JustdoFilesInterface.prototype,
 
     return fs.getFileSizeLimit()
 
-  getFileLink: (fs_id, options, cb) ->
+  getFileLink: (fs_id, options) ->
     fs = @_getFs fs_id
 
-    return fs.getFileLink options, cb
+    return fs.getFileLink options
 
   isFileExists: (fs_id, options) ->
     fs = @_getFs fs_id
