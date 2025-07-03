@@ -75,6 +75,7 @@ Template.common_chat_message_editor.onCreated ->
 
     # File handling
     if not _.isEmpty(files = $(".message-editor-file-input").get(0)?.files)
+      fs_id = APP.justdo_file_interface.getDefaultFsId()
       uploaded_files = []
 
       # Note: This callback is used to handle the upload of a single file
@@ -85,6 +86,7 @@ Template.common_chat_message_editor.onCreated ->
           return
         else 
           file_meta = _.pick uploaded_file, "_id", "name", "size", "type"
+          file_meta.fs_id = fs_id
           uploaded_files.push file_meta
 
         all_files_uploaded = uploaded_files.length is files.length
@@ -96,7 +98,7 @@ Template.common_chat_message_editor.onCreated ->
         return
       
       for file in files
-        APP.justdo_chat.uploadFile(file, {}, task_chat_object, uploadFileCb)
+        APP.justdo_file_interface.uploadTaskFile null, file, {task_id: task_chat_object.getChannelIdentifier().task_id}, uploadFileCb
 
     else
       callSendMessageMethod input_val

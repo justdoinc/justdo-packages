@@ -102,4 +102,4 @@ _.extend JustdoChat.prototype,
     return false
 
   isFilesEnabled: ->
-    return not _.isEmpty @file_storage_type
+    return APP.justdo_file_interface.getDefaultFsId()?
