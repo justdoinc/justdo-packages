@@ -1,6 +1,72 @@
-[data-cmd="quote"]
-  .fr-shortcut
+.fr-box
+  [data-cmd="quote"]
+    .fr-shortcut
+      display: none
+
+  .fr-popup
+    z-index: 10000 !important
+    
+  .fr-toolbar
+    .fr-btn-grp
+      margin: 0px 4px 4px 4px
+    .fr-btn
+      height: 24px
+      display: flex
+      align-items: center
+      .fr-svg
+        width: 18px
+        height: 18px
+    .fr-btn.fr-dropdown::after
+      border-left: 3px solid transparent
+      border-right: 3px solid transparent
+      border-top: 3px solid #333333
+      top: 12px
+      right: 4px
+
+  .fr-quick-insert
+    margin-left: 26px
+    .fr-floating-btn
+      box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08)
+      width: 28px
+      height: 28px
+      display: flex
+      align-items: center
+      justify-content: center
+      border-radius: 6px
+      &:hover
+        background: white
+      .fr-svg
+        margin: 4px
+
+  .fr-qi-helper
+    display: flex
+    .fr-btn.fr-floating-btn
+      box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08)
+      width: 28px
+      height: 28px
+      display: flex
+      align-items: center
+      justify-content: center
+      border-radius: 6px
+      padding: 6px
+      &:hover
+        background: white
+      .fr-svg
+        line-height: 100%
+  
+  .fr-table-selector
     display: none
 
-.fr-popup
-  z-index: 10000 !important
+  .fr-buttons.fr-tabs
+    display: flex !important
+
+  &.fr-basic
+    .fr-wrapper,
+    .fr-toolbar,
+    .fr-second-toolbar
+      border-color: #e6e7e8
+
+    .fr-element
+      height: 270px
+      resize: vertical
+      margin-right: 6px
