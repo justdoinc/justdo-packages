@@ -168,7 +168,8 @@ Template.common_chat_messages_board_message_card.helpers
   isFileExist: ->
     tpl = Template.instance()
     channel_obj = tpl.getChannelObject()
-    return APP.justdo_chat.isFileExist @_id, channel_obj
+    task_id = channel_obj.getChannelIdentifier().task_id
+    return APP.justdo_file_interface.isFileExists null, {file_id: @_id, task_id: task_id}
 
   size: ->
     return JustdoHelpers.bytesToHumanReadable @size
@@ -269,7 +270,8 @@ Template.common_chat_messages_board_message_card.events
 
     file = @
     channel_obj = tmpl.getChannelObject()
+    task_id = channel_obj.getChannelIdentifier().task_id
 
-    APP.justdo_chat.downloadFile file._id, channel_obj
+    APP.justdo_file_interface.downloadFile null, {file_id: file._id, task_id: task_id}
 
     return
