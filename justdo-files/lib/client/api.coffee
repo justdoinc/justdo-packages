@@ -52,15 +52,8 @@ _.extend JustdoFiles.prototype,
         
         return Meteor.subscribe "jdfTaskFiles", task_id, sub_options
       downloadFile: (options) ->
-        sub = @subscribeToFilesCollection {task_id: options.task_id}, (err) =>
-          if err?
-            console.error err
-          else
-            self.downloadFile options.file_id
-          
-          sub.stop()
-          return
-        
+        file_id = options.file_id
+        self.downloadFile file_id
         return
     return ret
 
