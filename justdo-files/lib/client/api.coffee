@@ -65,16 +65,6 @@ _.extend JustdoFiles.prototype,
           return
         
         return
-      isFileExists: (options, cb) ->
-        sub = @subscribeToFilesCollection {task_id: options.task_id}, (err) =>
-          if err?
-            cb? err, false
-          else
-            @_isFileExistBoth options.file_id, cb
-          
-          sub.stop()
-
-        return
       downloadFile: (options) ->
         sub = @subscribeToFilesCollection {task_id: options.task_id}, (err) =>
           if err?
