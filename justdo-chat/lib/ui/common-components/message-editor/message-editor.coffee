@@ -95,7 +95,7 @@ Template.common_chat_message_editor.onCreated ->
         return
       
       for file in files
-        APP.justdo_chat.uploadFile(file, {}, task_chat_object, uploadFileCb)
+        APP.justdo_file_interface.uploadFile null, file, {task_id: task_chat_object.getChannelIdentifier().task_id}, uploadFileCb
 
     else
       callSendMessageMethod input_val
