@@ -1160,7 +1160,7 @@ _.extend GridDataCom.prototype,
       throw @_error "invalid-argument", "New parent must be in the same JustDo as the paths."
 
     if not ("order" of new_location)
-      new_location.order = @collection.getNewChildOrder(new_location.parent, {project_id: project_id})
+      new_location.order = await @collection.getNewChildOrderAsync(new_location.parent, {project_id: project_id})
 
     if _.keys(items_map).length != item_ids.size
       # one of the path doesn't exist or user doesn't have access
@@ -1232,7 +1232,7 @@ _.extend GridDataCom.prototype,
       path_info.remove_current_parent_update_op = remove_current_parent_update_op
       path_info.set_new_parent_update_op = set_new_parent_update_op
 
-    @collection.incrementChildsOrderGte new_location.parent, new_location.order, {
+    await @collection.incrementChildsOrderGteAsync new_location.parent, new_location.order, {
       project_id: project_id
     }, _.size(items_map)
 
