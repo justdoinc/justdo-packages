@@ -226,6 +226,24 @@ _.extend Projects.prototype,
       new_order = (current_max_order_child?.parents?[parent_id]?.order + 1) or 0
 
       return new_order
+    @items_collection.getNewChildOrderAsync = (parent_id, new_child_fields=null, options) ->
+      # XXX read getNewChildOrder documentation at
+      # grid-data-com-server.coffee
+
+      project_id = requireProjectIdProvided(new_child_fields)
+
+      query =
+        "project_id": project_id
+        "parents2.parent": parent_id
+
+      sort =
+        "parents.#{parent_id}.order": -1
+      
+      current_max_order_child = await @findOneAsync(query, {sort: sort})
+
+      new_order = (current_max_order_child?.parents?[parent_id]?.order + 1) or 0
+
+      return new_order
 
     @items_collection.getChildrenCount = (item_id, item_doc=null, query_options) ->
       if not item_doc?
@@ -285,6 +303,38 @@ _.extend Projects.prototype,
         return
 
       Meteor.wrapAsync(performIncrementChildsOrderGte)()
+
+      return
+
+    @items_collection.incrementChildsOrderGteAsync = (parent_id, min_order_to_inc, item_doc=null, inc_count=1) ->
+      # note that this function replace grid-data-com-server.coffee's incrementChildsOrderGte
+      check parent_id, String
+      check min_order_to_inc, Number
+      check inc_count, Number
+
+      project_id = requireProjectIdProvided(item_doc)
+
+      query =
+        project_id: project_id
+        parents2:
+          # During conversion period, parents2 may not exist for all tasks documents
+          # We opportunistically attempt to update parents2 in this stage.
+          $elemMatch:
+            parent: parent_id
+            order:
+              $gte: min_order_to_inc
+
+      update_op =
+        $inc:
+          "parents2.$.order": inc_count
+          "parents.#{parent_id}.order": inc_count
+        $currentDate:
+          _raw_updated_date: true
+          _raw_updated_date_sans_users: true
+
+      APP.justdo_analytics.logMongoRawConnectionOp(@_name, "update", query, update_op, {multi: true})
+      # Raw collection update is async by nature
+      await @rawCollection().update query, update_op, {multi: true}
 
       return
 
