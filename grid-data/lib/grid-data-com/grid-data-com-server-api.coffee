@@ -1246,26 +1246,29 @@ _.extend GridDataCom.prototype,
       remove_current_parent_update_op = JSON.parse(stringified_remove_op)
       await @collection.updateAsync {_id: {$in: item_ids}}, remove_current_parent_update_op, {multi: true}
 
+    update_promises = []
     for path, path_info of paths_map
       # Remove current parent
 
       if path_info.set_new_parent_update_op?
         # Add to new parent
-        @collection.update path_info.item_id, path_info.set_new_parent_update_op
+        update_promises.push @collection.updateAsync path_info.item_id, path_info.set_new_parent_update_op
 
-      try
-        @_runGridMethodMiddlewares "afterMovePath", path_info.org_path, perform_as,
-          # the etc obj
-          new_location: _.extend {}, new_location
-          item: items_map[path_info.item_id]
-          current_parent_id: path_info.parent_id
-          new_parent_item: new_parent_item
-          remove_current_parent_update_op: path_info.remove_current_parent_update_op
-          set_new_parent_update_op: path_info.set_new_parent_update_op
-      catch e
-        console.error "afterMovePath hook raised an exception", e
-
-    return
+    all_update_promises = Promise.all(update_promises)
+    all_update_promises.then =>
+      for path, path_info of paths_map
+        try
+          @_runGridMethodMiddlewares "afterMovePath", path_info.org_path, perform_as,
+            # the etc obj
+            new_location: _.extend {}, new_location
+            item: items_map[path_info.item_id]
+            current_parent_id: path_info.parent_id
+            new_parent_item: new_parent_item
+            remove_current_parent_update_op: path_info.remove_current_parent_update_op
+            set_new_parent_update_op: path_info.set_new_parent_update_op
+        catch e
+          console.error "afterMovePath hook raised an exception", e
+    return all_update_promises
 
   sortChildren: (path, field, sort_order, perform_as) ->
     check(path, String)
