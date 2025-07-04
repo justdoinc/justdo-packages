@@ -167,7 +167,9 @@ Package.onUse(function (api) {
     "lib/both/news/v5-10/assets/3.png",
     "lib/both/news/v5-10/assets/4.png",
     "lib/both/news/v5-10/assets/5.png",
-    "lib/both/news/v5-10/assets/6.mov"
+    "lib/both/news/v5-10/assets/6.mov",
+    "lib/both/news/v5-10/assets/before_after_1.png",
+    "lib/both/news/v5-10/assets/before_after_2.png"
   ], client);
   api.addFiles("lib/both/news/v5-10/v5-10.coffee", both);
   this.addI18nFiles(api, "lib/both/news/v5-10/i18n/{}.i18n.json", ["en"])
