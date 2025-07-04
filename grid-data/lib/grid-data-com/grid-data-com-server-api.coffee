@@ -1118,7 +1118,7 @@ _.extend GridDataCom.prototype,
 
     new_parent_item = null
     if new_location.parent != "0"
-      new_parent_item = @collection.findOne(new_location.parent)
+      new_parent_item = await @collection.findOneAsync(new_location.parent)
       if not(new_parent_item? and @collection.isUserBelongToItem(new_parent_item, perform_as))
         throw @_error "unknown-path", 'Error: Can\'t move path: new parent doesn\'t exist' # we don't indicate existance in case no permission
 
@@ -1138,7 +1138,7 @@ _.extend GridDataCom.prototype,
     
     items_map = {}
     project_id = null
-    @collection.find
+    items_cursor = @collection.find
       _id:
         $in: Array.from(item_ids)
       users: perform_as
@@ -1148,7 +1148,7 @@ _.extend GridDataCom.prototype,
         parents: 1
         parents2: 1
         project_id: 1 # *This one is used by middlewares* and later on for optimizations.
-    .forEach (item) ->
+    await items_cursor.forEach (item) ->
       items_map[item._id] = item
       if project_id == null
         project_id = item.project_id
@@ -1244,7 +1244,7 @@ _.extend GridDataCom.prototype,
 
       item_ids = _.map path_infos, (path_info) => path_info.item_id
       remove_current_parent_update_op = JSON.parse(stringified_remove_op)
-      @collection.update {_id: {$in: item_ids}}, remove_current_parent_update_op, {multi: true}
+      await @collection.updateAsync {_id: {$in: item_ids}}, remove_current_parent_update_op, {multi: true}
 
     for path, path_info of paths_map
       # Remove current parent
