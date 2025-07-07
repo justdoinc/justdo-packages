@@ -110,6 +110,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/users-generator.coffee", client);
   api.addFiles("lib/client/justdo-events-standardization.coffee", client);
   api.addFiles("lib/client/numbers.coffee", client);
+  api.addFiles("lib/client/profiler.coffee", client);
   api.addFiles("lib/client/mods/justdo-direct-ownership-assignment.coffee", client);
 
   api.addFiles("lib/server/http-auth.coffee", server);
@@ -121,6 +122,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/ddp-socket.coffee", server);
   api.addFiles("lib/server/mongo.coffee", server);
   api.addFiles("lib/server/network.coffee", server);
+  api.addFiles("lib/server/profiler.coffee", server);
   api.addFiles("lib/server/cpu.coffee", server);
   api.addFiles("lib/server/users-generator.coffee", server);
   api.addFiles("lib/server/users.coffee", server);
