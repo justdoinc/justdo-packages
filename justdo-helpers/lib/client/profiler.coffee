@@ -5,6 +5,8 @@ requireCurrentUserIsSiteAdmin = ->
   APP.justdo_site_admins.requireUserIsSiteAdmin Meteor.userId()
   return
 
+originalMeteorCall = Meteor.call
+
 _.extend JustdoHelpers,
   _downloadJsonFile: (json_obj, filename) ->
     try
@@ -59,3 +61,47 @@ _.extend JustdoHelpers,
       return
     return
   
+  startMeteorMethodProfiling: ->
+    requireCurrentUserIsSiteAdmin()
+
+    Meteor.call = (name, args...) ->
+      last_arg_pos = args.length - 1
+      cb = -> 
+        console.timeEnd "Method time for #{name}"
+        return
+      
+      if _.isFunction args[last_arg_pos]
+        original_cb = args.pop()
+        cb = (err, result) ->
+          console.timeEnd "Method time for #{name}"
+          original_cb err, result
+          return
+
+      args.push cb
+      console.time "Method time for #{name}"
+      result = originalMeteorCall name, args...
+    
+      return result
+    
+    Meteor.call "JDHelpersProfilerStartMeteorMethodProfiling", (err, res) ->
+      if err?
+        JustdoSnackbar.show
+          text: "Error starting Meteor method profiling: #{err.message or err}"
+      return
+
+    return
+
+  stopMeteorMethodProfiling: ->
+    requireCurrentUserIsSiteAdmin()
+
+    Meteor.call = originalMeteorCall
+    Meteor.call "JDHelpersProfilerStopMeteorMethodProfiling", (err, res) =>
+      if err?
+        JustdoSnackbar.show
+          text: "Error stopping Meteor method profiling: #{err.message or err}"
+      else
+        filename = "#{new URL(env.ROOT_URL).host}-meteor-method-profile-#{new Date().toISOString().replace(/[:.]/g, '-')}.json"
+        @_downloadJsonFile res, filename
+      return
+
+    return
