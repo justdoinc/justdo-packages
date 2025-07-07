@@ -153,22 +153,24 @@ _.extend JustdoHelpers,
     mongo_methods_to_wrap = [
       "find"
       "findOne"
-      "findOneAsync"
+      # "findOneAsync"
       "update"
-      "updateAsync"
+      # "updateAsync"
       "upsert"
-      "upsertAsync"
+      # "upsertAsync"
       "remove"
-      "removeAsync"
+      # "removeAsync"
       "insert"
-      "insertAsync"
+      # "insertAsync"
       "count"
-      "countAsync"
+      # "countAsync"
     ]
     for name in mongo_methods_to_wrap
       do (name) ->
         if (original_func = Mongo.Collection.prototype[name])?
           original_mongo_methods_map[name] = original_func
+          # Note: In `mongo_methods_to_wrap`, all the async methods are commented out
+          # since we noticed that async methods calls the sync methods internally
           if name.endsWith "Async"
             Mongo.Collection.prototype[name] = wrapMongoMethodWithBenchmarkAsync name, original_func
           else
@@ -198,15 +200,18 @@ _.extend JustdoHelpers,
     if not meteor_methods_profiling_active
       throw new Meteor.Error "not-supported", "Meteor method profiling not active"
     
-
+    # Restore original mongo methods
     for name, func of original_mongo_methods_map
       Mongo.Collection.prototype[name] = func
 
+    # Restore original meteor method handlers
     for name, func of original_meteor_method_handlers_map
       Meteor.server.method_handlers[name] = func
 
+    # Restore original Meteor.methods
     Meteor.methods = originalMeteorMethods
 
+    # Return the logs
     ret = Array.from meteor_method_logs
     meteor_method_logs = []
     
