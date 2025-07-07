@@ -55,9 +55,6 @@ _.extend JustdoDeliveryPlanner.prototype,
       return
     
     setTaskAsProjectIfNewParentIsProjectsCollection = (doc, modifier) ->
-      if not self.isProjectsCollectionEnabled(doc.project_id)
-        return
-
       is_task_project = self.isTaskObjProject doc
       is_task_projects_collection = self.getTaskObjProjectsCollectionTypeId(doc)?
       if is_task_project or is_task_projects_collection
@@ -66,6 +63,9 @@ _.extend JustdoDeliveryPlanner.prototype,
       parents2 = modifier.$addToSet?.parents2 or modifier.$set?.parents2
       parents2_modified = parents2?
       if not parents2_modified
+        return
+
+      if not self.isProjectsCollectionEnabled(doc.project_id)
         return
 
       parent_task_ids = if _.isArray(parents2) then _.map(parents2, (parent) -> parent.parent) else [parents2.parent]
