@@ -29,6 +29,9 @@ _.extend Projects.prototype,
     @getAdminsIdsFromProjectDoc project_doc, true
 
   isPluginInstalledOnProjectId: (custom_feature_id, project_id) ->
+    if Meteor.isServer
+      return @isPluginIdInstalledOnProjectId project_id, custom_feature_id
+
     project_doc = APP.collections.Projects.findOne project_id,
       fields:
         conf: 1
