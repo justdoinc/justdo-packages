@@ -24,6 +24,18 @@ _.extend JustdoDeliveryPlanner,
 
   is_projects_collection_enabled_globally: false
 
+  defaultOnGridClick: (e, event_item) ->
+    if not APP.justdo_delivery_planner.isProjectsCollectionClosed event_item
+      APP.justdo_ppm.showPcInProjectPane event_item._id
+    return
+
+  defaultOnGridProjectClick: (e, event_item, event_parent_item) ->
+    is_project_closed = APP.justdo_delivery_planner.isTaskObjArchivedProject event_item
+    is_parent_projects_collection_closed = APP.justdo_delivery_planner.isProjectsCollectionClosed event_parent_item
+    if not (is_project_closed or is_parent_projects_collection_closed)
+      APP.justdo_ppm.showProjectInProjectPane event_item._id
+    return
+
   projects_collections_types: [
     {
       type_id: "projects_collection"
@@ -62,17 +74,7 @@ _.extend JustdoDeliveryPlanner,
         type: "feather"
         val: "folder"
         class: ""
-      },
-
-      onGridClick: (e, event_item) -> # This will be called when the user clicks on the Projects Collection on-grid indicator
-        console.log "onGridClick projects_collection"
-        console.log {e, event_item}
-        return
-
-      onGridProjectClick: (e, event_item, event_parent_item) -> # This will be called when the user clicks on a project that is under this projects collection
-        console.log "onGridProjectClick projects_collection"
-        console.log {e, event_item, event_parent_item}
-        return
+      }
     },
     # {
     #   type_id: "pseudo_department_type_for_testing"
