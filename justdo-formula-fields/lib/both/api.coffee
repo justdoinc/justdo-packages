@@ -214,3 +214,28 @@ _.extend JustdoFormulaFields.prototype,
         throw new Meteor.Error "invalid-formula", "Custom fields of type: #{JustdoFormulaFields.custom_field_type_id}, are not supported in formulas."
 
     return
+  
+  _isFieldAvailableForFormulas: (field_def, formula_field_id) ->
+    if not _.isString(field_def._id)
+      throw @_error "invalid-argument", "field_def._id must be a string"
+
+    if JustdoFormulaFields.forbidden_fields_suffixes_regex.test(field_def._id)
+      return false
+
+    if not JustdoFormulaFields.allowed_field_names_chars_pattern_regex.test(field_def._id)
+      return false
+
+    if field_def.type not in JustdoFormulaFields.supported_fields_types
+      return false
+
+    if not field_def.grid_visible_column
+      return false
+
+    if field_def._id == formula_field_id
+      # Can't add itself!
+      return false
+
+    if field_def._id of JustdoFormulaFields.forbidden_fields
+      return false
+    
+    return true

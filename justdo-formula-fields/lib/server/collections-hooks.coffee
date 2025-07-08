@@ -57,6 +57,17 @@ _.extend JustdoFormulaFields.prototype,
     self = @
 
     self.tasks_collection.after.update (user_id, task_doc, changed_fields, modifier, options) ->
+      # Since `findActiveFormulasAffectedByFieldChangesForProject` performs at least 1 query,
+      # it gets expensive if a bulk task update is performed.
+      # Therefore, we check preemptively whether the update involves fields that can affect formulas.
+      # If not, we can skip the formula recalculation.
+      tasks_collection_schema = self.tasks_collection._c2._simpleSchema._schema
+      for field_id in changed_fields
+        field_def = _.extend {}, tasks_collection_schema[field_id]
+        field_def._id = field_id
+        if not self._isFieldAvailableForFormulas field_def, task_doc.formula_field_id
+          return
+
       self.findActiveFormulasAffectedByFieldChangesForProject task_doc.project_id, changed_fields, (formula_doc) ->
         project_doc = APP.collections.Projects.findOne(task_doc.project_id)
 

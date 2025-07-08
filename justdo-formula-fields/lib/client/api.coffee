@@ -83,23 +83,7 @@ _.extend JustdoFormulaFields.prototype,
 
       field_def._id = field_id
 
-      if JustdoFormulaFields.forbidden_fields_suffixes_regex.test(field_def._id)
-        continue
-
-      if not JustdoFormulaFields.allowed_field_names_chars_pattern_regex.test(field_def._id)
-        continue
-
-      if field_def.type not in JustdoFormulaFields.supported_fields_types
-        continue
-
-      if not field_def.grid_visible_column
-        continue
-
-      if field_def._id == formula_field_id
-        # Can't add itself!
-        continue
-
-      if field_def._id of JustdoFormulaFields.forbidden_fields
+      if not @_isFieldAvailableForFormulas(field_def)
         continue
 
       if (custom_field_def = @getCurrentProjectCustomFieldDefinition(field_def._id))?
