@@ -191,9 +191,8 @@ _.extend PACK.Formatters.textWithTreeControls,
           if (parent_projects_collection_type_id = APP.justdo_delivery_planner.getTaskObjProjectsCollectionTypeId(event_parent_item))?
             parent_projects_collection_type_def = APP.justdo_delivery_planner.getProjectsCollectionTypeById(parent_projects_collection_type_id)
 
-          # Note: Even if a project isn't under a projects collection, we still want to show the project pane.
-          handler = parent_projects_collection_type_def?.onGridProjectClick or JustdoDeliveryPlanner.defaultOnGridProjectClick
-          handler.call @, e, event_item, event_parent_item
+            handler = parent_projects_collection_type_def?.onGridProjectClick or JustdoDeliveryPlanner.defaultOnGridProjectClick
+            handler.call @, e, event_item, event_parent_item
           
         return
     }
