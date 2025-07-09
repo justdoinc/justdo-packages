@@ -16,6 +16,9 @@ _.extend JustdoTasksContextMenu.prototype,
     @_context_field_val_reactive_var = new ReactiveVar(null)
     @_context_dependencies_field_val_reactive_var = new ReactiveVar(null)
 
+    # Track which grid control opened the current context menu
+    @_gc_with_opened_context_menu_rv = new ReactiveVar(null)
+
     # Track all grid control instances that should support context menu
     @_registered_grid_controls = new Set()
     
@@ -535,4 +538,9 @@ _.extend JustdoTasksContextMenu.prototype,
     @_registered_grid_controls.delete(grid_control)
     return
   
+  getGridControlWithOpenedContextMenu: ->
+    return @_gc_with_opened_context_menu_rv.get()
+  
+  setGridControlWithOpenedContextMenu: (grid_control) ->
+    @_gc_with_opened_context_menu_rv.set(grid_control)
     return
