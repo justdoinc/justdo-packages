@@ -1785,6 +1785,18 @@ _.extend GridControl.prototype,
 
     return current_obj
 
+  activeItemObj: (fields, _grid_data_structure=true) ->
+    if _grid_data_structure
+      return @getCurrentPathObj(fields)
+
+    # Get data from the collection, not from grid-data's internal data
+    # structures
+    if not (active_item_id = @activeItemId())?
+      @logger.debug "activeItemObj can't find the active item collection_id"
+      return null
+
+    return APP.collections.Tasks.findOne(active_item_id, {fields: fields})
+
   #
   # activate row/path
   #
