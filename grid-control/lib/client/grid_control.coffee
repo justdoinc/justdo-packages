@@ -252,7 +252,9 @@ _.extend GridControl,
   # we can't map/document all of them for the developer to know what to expect,
   # hence we decided to make `createGridControl` non-reactive.
   createGridControl: (options) ->
-    return Tracker.nonreactive => @_createGridControl(options)
+    grid_control = Tracker.nonreactive => @_createGridControl(options)
+    APP.emit "additional-grid-control-created", grid_control
+    return grid_control
 
 Util.inherits GridControl, EventEmitter
 
