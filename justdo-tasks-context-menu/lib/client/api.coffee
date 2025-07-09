@@ -16,6 +16,13 @@ _.extend JustdoTasksContextMenu.prototype,
     @_context_field_val_reactive_var = new ReactiveVar(null)
     @_context_dependencies_field_val_reactive_var = new ReactiveVar(null)
 
+    # Track all grid control instances that should support context menu
+    @_registered_grid_controls = new Set()
+    
+    # Register the main grid control
+    @_register_main_grid_control_tracker = null
+    @_registerMainGridControl()
+
     @sections_reactive_items_list = new JustdoHelpers.ReactiveItemsList() # The "main" domain will be used for the main sections
 
     @field_val_and_dependencies_vals_tracker = Tracker.autorun =>
@@ -25,6 +32,7 @@ _.extend JustdoTasksContextMenu.prototype,
 
     @onDestroy =>
       @field_val_and_dependencies_vals_tracker.stop()
+      @_register_main_grid_control_tracker.stop()
       return
 
     @_sectionsAndItemsReactiveItemsListListingConditionCustomArgsGenerator = (item) =>
@@ -60,6 +68,10 @@ _.extend JustdoTasksContextMenu.prototype,
     return
   
   _setupHandlers: ->
+    APP.on "additional-grid-control-created", (grid_control) =>
+      @registerGridControl(grid_control)
+      return
+
     # Permission check for bulk update
     @register "pre-bulk-update", (task_ids, field_id, field_val, modifier) ->
       if not (res = APP.justdo_permissions.checkTaskPermissions "task-field-edit.#{field_id}", task_ids)
@@ -492,4 +504,35 @@ _.extend JustdoTasksContextMenu.prototype,
       $first_nested_menu_section_filters.val("") # Clear all filters in the submenu
       $first_nested_menu_section_filters.trigger("keyup") # To update the filter reactive var
 
+  _registerMainGridControl: ->
+    # The grid controls from project page grid control mux does not trigger the "additional-grid-control-created" event,
+    # and there are multiple grid controls from the grid control mux, so we need to register it with a tracker.
+    if @_register_main_grid_control_tracker?
+      return
+
+    @_register_main_grid_control_tracker = Tracker.autorun =>
+      if (gc = APP.modules.project_page.gridControl())?
+        @registerGridControl gc
+
+      return
+
+  registerGridControl: (grid_control) ->
+    if not grid_control?
+      throw @_error "missing-argument", "Grid Control is required"
+      
+    if @_registered_grid_controls.has(grid_control)
+      return
+
+    @_registered_grid_controls.add(grid_control)
+    
+    # Auto-cleanup when grid control is destroyed
+    grid_control.once "destroyed", =>
+      @unregisterGridControl(grid_control)
+    
+    return
+
+  unregisterGridControl: (grid_control) ->
+    @_registered_grid_controls.delete(grid_control)
+    return
+  
     return
