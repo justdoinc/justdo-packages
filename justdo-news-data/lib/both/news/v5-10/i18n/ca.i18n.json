@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Novetats",
+  "v5_10_news_page_title": "JustDo v5.10: Gantt millorat, previsualització de fitxers i edició de tasques per a un millor flux de treball",
+  "v5_10_news_page_description": "JustDo v5.10 aporta productivitat millorada amb funcionalitat de diagrama de Gantt optimitzada, millor gestió de fitxers amb previsualitzacions de vídeo i PDF, i un editor de descripció de tasques actualitzat amb capacitats de càrrega de fitxers. Aquesta versió se centra en optimitzar l'eficiència del flux de treball i millorar l'experiència general de l'usuari.",
+  "v5_10_news_main_array_item_0_subtitle": "Avui, ens complau anunciar el llançament de JustDo v5.10.<br><br>Aquesta actualització se centra en millorar l'experiència de l'usuari amb funcionalitat de diagrama de Gantt millorada, millor gestió de fitxers amb previsualitzacions de vídeo i PDF, i un editor de descripció de tasques actualitzat amb capacitats de càrrega de fitxers.",
+  "v5_10_news_main_array_item_1_title": "Afegir la capacitat de filtrar columnes al submenú Afegir Columnes",
+  "v5_10_news_main_array_item_1_subtitle": "Ara pots filtrar fàcilment les columnes al submenú Afegir Columnes, fent que sigui més ràpid trobar i afegir els camps que necessites.",
+  "v5_10_news_main_array_item_2_title": "Previsualitzar vídeos i PDFs al panell de tasques",
+  "v5_10_news_main_array_item_2_subtitle": "Ara pots reproduir vídeos directament des de la pestanya Fitxers al Panell de Tasques — sense passos addicionals.",
+  "v5_10_news_main_array_item_3_subtitle": "Visualitza PDFs instantàniament directament dins del Panell de Tasques, sense obrir una finestra separada.",
+  "v5_10_news_main_array_item_4_title": "Millorar l'editor de text de Descripció de Tasques",
+  "v5_10_news_main_array_item_4_subtitle": "L'editor de Descripció de Tasques ha estat actualitzat per a una experiència d'edició més fluida i fiable. Escriure i formatar text ara és més fàcil que mai.",
+  "v5_10_news_main_array_item_5_title": "Suport per carregar fitxers a la Descripció de Tasques",
+  "v5_10_news_main_array_item_5_subtitle": "Ara pots carregar i adjuntar fitxers directament a la Descripció de Tasques, fent que les teves tasques siguin més informatives i organitzades.",
+  "v5_10_news_main_array_item_6_title": "Introduir selector de rang per al diagrama de Gantt",
+  "v5_10_news_main_array_item_6_subtitle": "El nou selector de rang fa que configurar la vista al diagrama de Gantt sigui molt més fàcil, permetent-te fer seguiment dels aspectes macros i micros dels teus projectes.",
+  "v5_10_news_features_name": "Altres Actualitzacions",
+  "v5_10_news_features_title": "Millores",
+  "v5_10_news_features_update_items": [
+    "1. Actualitzacions generals de disseny a l'aplicació web de JustDo.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Afegir un botó d'enviar al Xat.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

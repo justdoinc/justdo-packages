@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Újdonságok",
+  "v5_10_news_page_title": "JustDo v5.10: Továbbfejlesztett Gantt, Fájl Előnézet és Feladat Szerkesztés",
+  "v5_10_news_page_description": "A JustDo v5.10 javított Gantt diagram funkcionalitással, jobb fájlkezeléssel videó és PDF előnézettel, valamint fejlesztett feladat leírás szerkesztővel és fájl feltöltési lehetőséggel növeli a produktivitást.",
+  "v5_10_news_main_array_item_0_subtitle": "Ma örömmel jelentjük be a JustDo v5.10 megjelenését.<br><br>Ez a frissítés a felhasználói élmény javítására összpontosít a továbbfejlesztett Gantt diagram funkcionalitással, jobb fájlkezeléssel videó és PDF előnézettel, valamint a fejlesztett feladat leírás szerkesztővel és fájl feltöltési lehetőségekkel.",
+  "v5_10_news_main_array_item_1_title": "Oszlopok szűrése az Oszlopok Hozzáadása almenüben",
+  "v5_10_news_main_array_item_1_subtitle": "Most már könnyedén szűrheted az oszlopokat az Oszlopok Hozzáadása almenüben, így gyorsabban megtalálhatod és hozzáadhatod a szükséges mezőket.",
+  "v5_10_news_main_array_item_2_title": "Videók és PDF-ek előnézete a feladat panelen",
+  "v5_10_news_main_array_item_2_subtitle": "Most már közvetlenül lejátszhatod a videókat a Feladat Panel Fájlok fülén — nincs szükség további lépésekre.",
+  "v5_10_news_main_array_item_3_subtitle": "PDF-eket azonnal megtekinthetsz közvetlenül a Feladat Panelen belül, külön ablak megnyitása nélkül.",
+  "v5_10_news_main_array_item_4_title": "Továbbfejlesztett Feladat Leírás szövegszerkesztő",
+  "v5_10_news_main_array_item_4_subtitle": "A Feladat Leírás szerkesztője frissítésre került a simább, megbízhatóbb szerkesztési élmény érdekében. A szöveg írása és formázása most könnyebb, mint valaha.",
+  "v5_10_news_main_array_item_5_title": "Fájlok feltöltése a Feladat Leírásba",
+  "v5_10_news_main_array_item_5_subtitle": "Most már közvetlenül a Feladat Leírásba tölthetsz fel és csatolhatsz fájlokat, így feladataid informatívabbá és szervezettebbé válnak.",
+  "v5_10_news_main_array_item_6_title": "Tartományválasztó a Gantt diagramhoz",
+  "v5_10_news_main_array_item_6_subtitle": "Az új tartományválasztó sokkal könnyebbé teszi a nézet beállítását a Gantt diagramban, lehetővé téve a projektjeid makro és mikro szintű nyomon követését.",
+  "v5_10_news_features_name": "Egyéb Frissítések",
+  "v5_10_news_features_title": "Fejlesztések",
+  "v5_10_news_features_update_items": [
+    "1. Általános design frissítések a JustDo webalkalmazásban.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Küldés gomb hozzáadása a Chat-hez.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

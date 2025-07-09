@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Wat's nuut",
+  "v5_10_news_page_title": "JustDo v5.10: Verbeterde Gantt, Lêervoorskou, en Taakredigering vir Beter Werksvloei",
+  "v5_10_news_page_description": "JustDo v5.10 bring verbeterde produktiwiteit met verbeterde Gantt-kaartfunksionaliteit, beter lêerbestuur met video- en PDF-voorskoue, en 'n opgegradeerde taakbeskrywingsredigeerder met lêeroplaaivermoëns. Hierdie vrystelling fokus op die stroomlyning van werksvloei-effektiwiteit en die verbetering van die algehele gebruikerservaring.",
+  "v5_10_news_main_array_item_0_subtitle": "Vandag is ons verheug om die vrystelling van JustDo v5.10 aan te kondig.<br><br>Hierdie opdatering fokus op die verbetering van die gebruikerservaring met verbeterde Gantt-kaartfunksionaliteit, beter lêerbestuur met video- en PDF-voorskoue, en 'n opgegradeerde taakbeskrywingsredigeerder met lêeroplaaivermoëns.",
+  "v5_10_news_main_array_item_1_title": "Voeg die vermoë by om kolomme te filter in die Voeg Kolomme sub-kieslys",
+  "v5_10_news_main_array_item_1_subtitle": "Jy kan nou maklik kolomme filter in die Voeg Kolomme sub-kieslys, wat dit vinniger maak om die velde wat jy nodig het te vind en by te voeg.",
+  "v5_10_news_main_array_item_2_title": "Voorskou video's en PDF's in die taakpaneel",
+  "v5_10_news_main_array_item_2_subtitle": "Jy kan nou video's direk vanaf die Lêers-oortjie in die Taakpaneel afspeel — geen ekstra stappe nodig nie.",
+  "v5_10_news_main_array_item_3_subtitle": "Bekyk PDF's onmiddellik reg binne die Taakpaneel, sonder om 'n aparte venster oop te maak.",
+  "v5_10_news_main_array_item_4_title": "Verbeter Taakbeskrywing teksredigeerder",
+  "v5_10_news_main_array_item_4_subtitle": "Die Taakbeskrywingsredigeerder is opgegradeer vir 'n gladder, meer betroubare redigeerervaring. Skryf en formateer van teks is nou makliker as ooit.",
+  "v5_10_news_main_array_item_5_title": "Ondersteun die oplaai van lêers na Taakbeskrywing",
+  "v5_10_news_main_array_item_5_subtitle": "Jy kan nou lêers direk na die Taakbeskrywing oplaai en aanheg, wat jou take meer informatief en georganiseerd maak.",
+  "v5_10_news_main_array_item_6_title": "Stel reekskeuser vir die Gantt-kaart bekend",
+  "v5_10_news_main_array_item_6_subtitle": "Die nuwe reekskeuser maak dit veel makliker om die aansig in die Gantt-kaart in te stel, wat jou toelaat om die makro's en mikro's van jou projekte dop te hou.",
+  "v5_10_news_features_name": "Ander Opdaterings",
+  "v5_10_news_features_title": "Verbeterings",
+  "v5_10_news_features_update_items": [
+    "1. Algemene ontwerpupdates aan JustDo webapp.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Voeg 'n stuurknoppie by die Klets.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

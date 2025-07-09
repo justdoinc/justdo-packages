@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Zer berri",
+  "v5_10_news_page_title": "JustDo v5.10: Gantt hobetua, fitxategien aurrebista eta zereginen edizioa lan-fluxu hobea lortzeko",
+  "v5_10_news_page_description": "JustDo v5.10k produktibitate hobetua ekartzen du Gantt diagrama funtzionalitate hobetua, fitxategien kudeaketa hobea bideo eta PDF aurrebistekin, eta zeregin deskripzio editore eguneratua fitxategi karga gaitasunekin. Bertsio honek lan-fluxu eraginkortasuna leuntzea eta erabiltzaile esperientzia orokorra hobetzea du helburu.",
+  "v5_10_news_main_array_item_0_subtitle": "Gaur, pozik iragarri dezakegu JustDo v5.10 bertsioaren kaleratze.<br><br>Eguneratze honek erabiltzaile esperientzia hobetzea du helburu Gantt diagrama funtzionalitate hobetua, fitxategien kudeaketa hobea bideo eta PDF aurrebistekin, eta zeregin deskripzio editore eguneratua fitxategi karga gaitasunekin.",
+  "v5_10_news_main_array_item_1_title": "Zutabeak iragazi ahal izatea gehitu Zutabeak Gehitu azpi-menuan",
+  "v5_10_news_main_array_item_1_subtitle": "Orain zutabeak erraz iragazi ditzakezu Zutabeak Gehitu azpi-menuan, behar dituzun eremuak aurkitu eta gehitzea azkarragoa eginez.",
+  "v5_10_news_main_array_item_2_title": "Bideoak eta PDF-ak aurreikusi zeregin panelean",
+  "v5_10_news_main_array_item_2_subtitle": "Orain bideoak zuzenean erreproduzitu ditzakezu Zeregin Paneleko Fitxategiak fitxatik — ez dira urrats gehigarriak behar.",
+  "v5_10_news_main_array_item_3_subtitle": "PDF-ak berehala ikusi Zeregin Panelean bertan, leiho bereizi bat ireki gabe.",
+  "v5_10_news_main_array_item_4_title": "Zeregin Deskripzio testu editorea hobetu",
+  "v5_10_news_main_array_item_4_subtitle": "Zeregin Deskripzio editorea eguneratu egin da edizio esperientzia leunago eta fidagarriago baterako. Testua idatzi eta formateatzea orain inoiz baino errazagoa da.",
+  "v5_10_news_main_array_item_5_title": "Fitxategiak kargatzeko euskarria Zeregin Deskripzioan",
+  "v5_10_news_main_array_item_5_subtitle": "Orain fitxategiak zuzenean kargatu eta erantsi ditzakezu Zeregin Deskripzioan, zure zereginak informatibo eta antolatuagoak eginez.",
+  "v5_10_news_main_array_item_6_title": "Gantt diagramarako barruti hautatzailea aurkeztu",
+  "v5_10_news_main_array_item_6_subtitle": "Barruti hautatzaile berriak Gantt diagraman ikuspuntua ezartzea askoz errazago egiten du, zure proiektuen makro eta mikroak jarraitzea ahalbidetuz.",
+  "v5_10_news_features_name": "Beste eguneratzeak",
+  "v5_10_news_features_title": "Hobekuntzak",
+  "v5_10_news_features_update_items": [
+    "1. JustDo webapparen diseinu eguneratze orokorrak.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Bidali botoia gehitu Txatean.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

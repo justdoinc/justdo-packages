@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Wat ass nei",
+  "v5_10_news_page_title": "JustDo v5.10: Verbessert Gantt, Fichier Virschau, a Aufgab Bearbeitung fir besseren Workflow",
+  "v5_10_news_page_description": "JustDo v5.10 bréngt verbessert Produktivitéit mat verbesserter Gantt Diagramm Funktionalitéit, besser Fichier Gestioun mat Video a PDF Virschauen, an engem opgegradeelten Aufgab Beschreiwung Editor mat Fichier Upload Méiglechkeeten. Dës Versioun fokusséiert op Workflow Effizienz ze streamlinen an d'Benotzer Erfarung ze verbesseren.",
+  "v5_10_news_main_array_item_0_subtitle": "Haut sinn mir frou d'Verëffentlechung vum JustDo v5.10 unzekënnegen.<br><br>Dës Update fokusséiert op d'Benotzer Erfarung ze verbesseren mat verbesserter Gantt Diagramm Funktionalitéit, besser Fichier Gestioun mat Video a PDF Virschauen, an engem opgegradeelten Aufgab Beschreiwung Editor mat Fichier Upload Méiglechkeeten.",
+  "v5_10_news_main_array_item_1_title": "Méiglechkeet dobäisetzen fir Kolonnen am Add Columns Ënnermenu ze filteren",
+  "v5_10_news_main_array_item_1_subtitle": "Dir kënnt elo einfach Kolonnen am Add Columns Ënnermenu filteren, wat et méi séier mécht déi Felder ze fannen an dobäizesetzen déi Dir braucht.",
+  "v5_10_news_main_array_item_2_title": "Videoen a PDFen am Aufgab Panel virweisen",
+  "v5_10_news_main_array_item_2_subtitle": "Dir kënnt elo Videoen direkt aus dem Fichieren Tab am Aufgab Panel ofspillen — keng zousätzlech Schrëtt néideg.",
+  "v5_10_news_main_array_item_3_subtitle": "PDFen direkt am Aufgab Panel ukucken, ouni e separaten Fënster opzemaachen.",
+  "v5_10_news_main_array_item_4_title": "Aufgab Beschreiwung Text Editor verbesseren",
+  "v5_10_news_main_array_item_4_subtitle": "Den Aufgab Beschreiwung Editor gouf opgegraded fir eng méi glat, méi zouverlässeg Bearbeitung Erfarung. Text schreiwen a formatéieren ass elo méi einfach wéi jee.",
+  "v5_10_news_main_array_item_5_title": "Ënnerstëtzung fir Fichieren an d'Aufgab Beschreiwung eropzelueden",
+  "v5_10_news_main_array_item_5_subtitle": "Dir kënnt elo Fichieren direkt an d'Aufgab Beschreiwung eroplueden an unhänken, wat Är Aufgaben méi informativ an organiséiert mécht.",
+  "v5_10_news_main_array_item_6_title": "Range Picker fir de Gantt Diagramm aféieren",
+  "v5_10_news_main_array_item_6_subtitle": "Den neien Range Picker mécht et vill méi einfach de Viewport am Gantt Diagramm ze setzen, wat Iech erlaabt d'Makroen a Mikroen vun Ären Projeten am Bléck ze behalen.",
+  "v5_10_news_features_name": "Aner Updates",
+  "v5_10_news_features_title": "Verbesserungen",
+  "v5_10_news_features_update_items": [
+    "1. Allgemeng Design Updates op der JustDo Webapp.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. E Schécken Knäppchen am Chat dobäisetzen.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

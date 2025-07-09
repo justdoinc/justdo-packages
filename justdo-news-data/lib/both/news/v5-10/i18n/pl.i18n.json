@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Co nowego",
+  "v5_10_news_page_title": "JustDo v5.10: Ulepszony Gantt, podgląd plików i edycja zadań",
+  "v5_10_news_page_description": "JustDo v5.10 przynosi zwiększoną produktywność dzięki ulepszonej funkcjonalności wykresu Gantta, lepszemu zarządzaniu plikami z podglądem wideo i PDF oraz ulepszonym edytorem opisu zadań z możliwością przesyłania plików.",
+  "v5_10_news_main_array_item_0_subtitle": "Dzisiaj z przyjemnością ogłaszamy wydanie JustDo v5.10.<br><br>Ta aktualizacja skupia się na ulepszeniu doświadczenia użytkownika dzięki ulepszonej funkcjonalności wykresu Gantta, lepszemu zarządzaniu plikami z podglądem wideo i PDF oraz ulepszonym edytorem opisu zadań z możliwością przesyłania plików.",
+  "v5_10_news_main_array_item_1_title": "Dodano możliwość filtrowania kolumn w podmenu Dodaj kolumny",
+  "v5_10_news_main_array_item_1_subtitle": "Teraz możesz łatwo filtrować kolumny w podmenu Dodaj kolumny, dzięki czemu szybciej znajdziesz i dodasz potrzebne pola.",
+  "v5_10_news_main_array_item_2_title": "Podgląd wideo i PDF w panelu zadań",
+  "v5_10_news_main_array_item_2_subtitle": "Teraz możesz odtwarzać filmy bezpośrednio z zakładki Pliki w Panelu zadań — bez dodatkowych kroków.",
+  "v5_10_news_main_array_item_3_subtitle": "Przeglądaj pliki PDF natychmiast w Panelu zadań, bez otwierania oddzielnego okna.",
+  "v5_10_news_main_array_item_4_title": "Ulepszony edytor tekstu opisu zadań",
+  "v5_10_news_main_array_item_4_subtitle": "Edytor opisu zadań został ulepszony dla płynniejszego i bardziej niezawodnego doświadczenia edycji. Pisanie i formatowanie tekstu jest teraz łatwiejsze niż kiedykolwiek.",
+  "v5_10_news_main_array_item_5_title": "Obsługa przesyłania plików do opisu zadań",
+  "v5_10_news_main_array_item_5_subtitle": "Teraz możesz przesyłać i dołączać pliki bezpośrednio do opisu zadań, czyniąc swoje zadania bardziej informacyjnymi i zorganizowanymi.",
+  "v5_10_news_main_array_item_6_title": "Wprowadzenie selektora zakresu dla wykresu Gantta",
+  "v5_10_news_main_array_item_6_subtitle": "Nowy selektor zakresu znacznie ułatwia ustawianie widoku na wykresie Gantta, pozwalając śledzić makro i mikro aspekty projektów.",
+  "v5_10_news_features_name": "Inne aktualizacje",
+  "v5_10_news_features_title": "Ulepszenia",
+  "v5_10_news_features_update_items": [
+    "1. Ogólne aktualizacje designu aplikacji JustDo.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Dodano przycisk wysyłania do Czatu.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

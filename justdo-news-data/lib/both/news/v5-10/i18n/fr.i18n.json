@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Nouveautés",
+  "v5_10_news_page_title": "JustDo v5.10 : Gantt amélioré, aperçu fichiers et édition tâches",
+  "v5_10_news_page_description": "JustDo v5.10 améliore la productivité avec un diagramme de Gantt perfectionné, une meilleure gestion des fichiers avec aperçus vidéo et PDF, et un éditeur de description de tâches amélioré. Cette version optimise l'efficacité du workflow et l'expérience utilisateur.",
+  "v5_10_news_main_array_item_0_subtitle": "Aujourd'hui, nous avons le plaisir d'annoncer la sortie de JustDo v5.10.<br><br>Cette mise à jour se concentre sur l'amélioration de l'expérience utilisateur avec des fonctionnalités de diagramme de Gantt améliorées, une meilleure gestion des fichiers avec aperçus vidéo et PDF, et un éditeur de description de tâches amélioré avec capacité de téléchargement de fichiers.",
+  "v5_10_news_main_array_item_1_title": "Ajouter la possibilité de filtrer les colonnes dans le sous-menu Ajouter des colonnes",
+  "v5_10_news_main_array_item_1_subtitle": "Vous pouvez maintenant facilement filtrer les colonnes dans le sous-menu Ajouter des colonnes, ce qui rend plus rapide la recherche et l'ajout des champs dont vous avez besoin.",
+  "v5_10_news_main_array_item_2_title": "Aperçu des vidéos et PDF dans le panneau de tâches",
+  "v5_10_news_main_array_item_2_subtitle": "Vous pouvez maintenant lire des vidéos directement depuis l'onglet Fichiers dans le panneau de tâches — aucune étape supplémentaire nécessaire.",
+  "v5_10_news_main_array_item_3_subtitle": "Visualisez instantanément les PDF directement dans le panneau de tâches, sans ouvrir une fenêtre séparée.",
+  "v5_10_news_main_array_item_4_title": "Améliorer l'éditeur de texte de description de tâche",
+  "v5_10_news_main_array_item_4_subtitle": "L'éditeur de description de tâche a été amélioré pour une expérience d'édition plus fluide et plus fiable. Écrire et formater du texte est maintenant plus facile que jamais.",
+  "v5_10_news_main_array_item_5_title": "Prise en charge du téléchargement de fichiers dans la description de tâche",
+  "v5_10_news_main_array_item_5_subtitle": "Vous pouvez maintenant télécharger et joindre des fichiers directement à la description de tâche, rendant vos tâches plus informatives et organisées.",
+  "v5_10_news_main_array_item_6_title": "Introduction du sélecteur de plage pour le diagramme de Gantt",
+  "v5_10_news_main_array_item_6_subtitle": "Le nouveau sélecteur de plage rend la définition de la vue dans le diagramme de Gantt beaucoup plus facile, vous permettant de suivre les aspects macro et micro de vos projets.",
+  "v5_10_news_features_name": "Autres mises à jour",
+  "v5_10_news_features_title": "Améliorations",
+  "v5_10_news_features_update_items": [
+    "1. Mises à jour générales du design de l'application web JustDo.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Ajout d'un bouton d'envoi au Chat.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

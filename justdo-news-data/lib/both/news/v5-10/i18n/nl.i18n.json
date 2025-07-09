@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Wat is er nieuw",
+  "v5_10_news_page_title": "JustDo v5.10: Verbeterde Gantt, Bestandsvoorbeeld en Taakbewerking",
+  "v5_10_news_page_description": "JustDo v5.10 biedt verbeterde productiviteit met verbeterde Gantt-functionaliteit, beter bestandsbeheer met video- en PDF-voorbeelden, en een verbeterde taakbeschrijving editor met bestandsupload mogelijkheden.",
+  "v5_10_news_main_array_item_0_subtitle": "Vandaag zijn we blij om de release van JustDo v5.10 aan te kondigen.<br><br>Deze update richt zich op het verbeteren van de gebruikerservaring met verbeterde Gantt-functionaliteit, beter bestandsbeheer met video- en PDF-voorbeelden, en een verbeterde taakbeschrijving editor met bestandsupload mogelijkheden.",
+  "v5_10_news_main_array_item_1_title": "Mogelijkheid toegevoegd om kolommen te filteren in het submenu Kolommen Toevoegen",
+  "v5_10_news_main_array_item_1_subtitle": "Je kunt nu eenvoudig kolommen filteren in het submenu Kolommen Toevoegen, waardoor het sneller wordt om de velden te vinden en toe te voegen die je nodig hebt.",
+  "v5_10_news_main_array_item_2_title": "Bekijk video's en PDF's in het taakvenster",
+  "v5_10_news_main_array_item_2_subtitle": "Je kunt nu video's direct afspelen vanuit het tabblad Bestanden in het Taakvenster — geen extra stappen nodig.",
+  "v5_10_news_main_array_item_3_subtitle": "Bekijk PDF's direct binnen het Taakvenster, zonder een apart venster te openen.",
+  "v5_10_news_main_array_item_4_title": "Verbeterde teksteditor voor Taakbeschrijving",
+  "v5_10_news_main_array_item_4_subtitle": "De Taakbeschrijving editor is verbeterd voor een soepelere, meer betrouwbare bewerkingservaring. Tekst schrijven en formatteren is nu eenvoudiger dan ooit.",
+  "v5_10_news_main_array_item_5_title": "Ondersteuning voor het uploaden van bestanden naar Taakbeschrijving",
+  "v5_10_news_main_array_item_5_subtitle": "Je kunt nu bestanden direct uploaden en koppelen aan de Taakbeschrijving, waardoor je taken informatiever en georganiseerder worden.",
+  "v5_10_news_main_array_item_6_title": "Introduceer bereikkiezer voor de Gantt-grafiek",
+  "v5_10_news_main_array_item_6_subtitle": "De nieuwe bereikkiezer maakt het instellen van de viewport in de Gantt-grafiek veel eenvoudiger, waardoor je de macro's en micro's van je projecten kunt bijhouden.",
+  "v5_10_news_features_name": "Andere Updates",
+  "v5_10_news_features_title": "Verbeteringen",
+  "v5_10_news_features_update_items": [
+    "1. Algemene ontwerp-updates voor JustDo webapp.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Verstuur-knop toegevoegd aan de Chat.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

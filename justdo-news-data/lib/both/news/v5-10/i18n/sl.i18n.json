@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Kaj je novega",
+  "v5_10_news_page_title": "JustDo v5.10: Izboljšan Gantt, Predogled Datotek, Urejanje Opravil",
+  "v5_10_news_page_description": "JustDo v5.10 prinaša izboljšano produktivnost z boljšo funkcionalnostjo Gantt diagrama, boljšo upravo datotek s predogledom videov in PDF-jev ter nadgrajenim urejevalnikom opisa opravil z možnostjo nalaganja datotek. Ta različica se osredotoča na poenostavitev delovnega procesa in izboljšanje uporabniške izkušnje.",
+  "v5_10_news_main_array_item_0_subtitle": "Danes z veseljem naznanjamo izdajo JustDo v5.10.<br><br>Ta posodobitev se osredotoča na izboljšanje uporabniške izkušnje z izboljšano funkcionalnostjo Gantt diagrama, boljšo upravo datotek s predogledom videov in PDF-jev ter nadgrajenim urejevalnikom opisa opravil z možnostjo nalaganja datotek.",
+  "v5_10_news_main_array_item_1_title": "Dodana možnost filtriranja stolpcev v podmeniju Dodaj Stolpce",
+  "v5_10_news_main_array_item_1_subtitle": "Sedaj lahko enostavno filtrirate stolpce v podmeniju Dodaj Stolpce, kar omogoča hitrejše iskanje in dodajanje potrebnih polj.",
+  "v5_10_news_main_array_item_2_title": "Predogled videov in PDF-jev v opravilnem oknu",
+  "v5_10_news_main_array_item_2_subtitle": "Sedaj lahko predvajate videe neposredno iz zavihka Datoteke v Opravilnem Oknu — brez dodatnih korakov.",
+  "v5_10_news_main_array_item_3_subtitle": "Preglejte PDF-je takoj v Opravilnem Oknu, brez odpiranja ločenega okna.",
+  "v5_10_news_main_array_item_4_title": "Izboljšan urejevalnik besedila za Opis Opravila",
+  "v5_10_news_main_array_item_4_subtitle": "Urejevalnik Opisa Opravila je bil nadgrajen za gladkejšo in zanesljivejšo izkušnjo urejanja. Pisanje in formatiranje besedila je zdaj lažje kot kdaj koli prej.",
+  "v5_10_news_main_array_item_5_title": "Podpora nalaganja datotek v Opis Opravila",
+  "v5_10_news_main_array_item_5_subtitle": "Sedaj lahko naložite in pripnete datoteke neposredno v Opis Opravila, kar naredi vaša opravila bolj informativna in organizirana.",
+  "v5_10_news_main_array_item_6_title": "Predstavitev izbirnika obsega za Gantt diagram",
+  "v5_10_news_main_array_item_6_subtitle": "Novi izbirnik obsega omogoča veliko lažje nastavljanje pogleda v Gantt diagramu, kar vam omogoča sledenje makro in mikro vidikov vaših projektov.",
+  "v5_10_news_features_name": "Ostale Posodobitve",
+  "v5_10_news_features_title": "Izboljšave",
+  "v5_10_news_features_update_items": [
+    "1. Splošne oblikovalske posodobitve JustDo spletne aplikacije.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Dodan gumb za pošiljanje v Klepet.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

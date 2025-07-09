@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "አዲሱ ነገር",
+  "v5_10_news_page_title": "JustDo v5.10: የተሻሻለ ጋንት፣ ፋይል ቅድመ-እይታ፣ እና ለተሻለ የስራ ሂደት የተደራጀ ተግባር ማስተካከያ",
+  "v5_10_news_page_description": "JustDo v5.10 የተሻሻለ ፍሬያማነት ያመጣል፣ የተሻሻለ ጋንት ቻርት ተግባር፣ ከቪዲዮ እና PDF ቅድመ-እይታዎች ጋር ተሻሻለ ፋይል አያያዝ፣ እና ፋይል መጫን ችሎታ ያለው የተሻሻለ ተግባር መግለጫ አርታዒ።",
+  "v5_10_news_main_array_item_0_subtitle": "ዛሬ፣ JustDo v5.10 መልቀቅ ማወጅ ሲያስደስተን ነው።<br><br>ይህ ማሻሻያ የተጠቃሚ ተሞክሮን ማሻሻል ላይ ያተኮረ ሲሆን፣ የተሻሻለ ጋንት ቻርት ተግባር፣ ከቪዲዮ እና PDF ቅድመ-እይታዎች ጋር ተሻሻለ ፋይል አያያዝ፣ እና ፋይል መጫን ችሎታ ያለው የተሻሻለ ተግባር መግለጫ አርታዒ።",
+  "v5_10_news_main_array_item_1_title": "በአምዶች ማከል ንዑስ-ሜኑ ውስጥ አምዶችን የማጣራት ችሎታ መጨመር",
+  "v5_10_news_main_array_item_1_subtitle": "አሁን በአምዶች ማከል ንዑስ-ሜኑ ውስጥ አምዶችን በቀላሉ ማጣራት ይችላሉ፣ ይህም የሚያስፈልጓቸውን መስኮች ለማግኘት እና ለማከል ፈጣን ያደርገዋል።",
+  "v5_10_news_main_array_item_2_title": "በተግባር ፓነል ውስጥ ቪዲዮዎችን እና PDFዎችን ቅድመ-እይታ",
+  "v5_10_news_main_array_item_2_subtitle": "አሁን ከተግባር ፓነል ውስጥ ከፋይሎች ትር በቀጥታ ቪዲዮዎችን ማጫወት ይችላሉ — ተጨማሪ ደረጃዎች አያስፈልጉም።",
+  "v5_10_news_main_array_item_3_subtitle": "በተግባር ፓነል ውስጥ ብቻ PDFዎችን ወዲያውኑ ይመልከቱ፣ የተለየ መስኮት ሳይከፍቱ።",
+  "v5_10_news_main_array_item_4_title": "የተግባር መግለጫ ጽሁፍ አርታዒ ማሻሻል",
+  "v5_10_news_main_array_item_4_subtitle": "የተግባር መግለጫ አርታዒ ለተሻለ፣ ተመስጦ የሚታመንበት የማስተካከያ ተሞክሮ ታደሷል። ጽሁፍ መጻፍ እና ማቅረብ ከመቼውም ቀላል ሆኗል።",
+  "v5_10_news_main_array_item_5_title": "ወደ ተግባር መግለጫ ፋይሎች መጫን መድገፍ",
+  "v5_10_news_main_array_item_5_subtitle": "አሁን ወደ ተግባር መግለጫ ፋይሎችን በቀጥታ መጫን እና ማያያዝ ይችላሉ፣ ይህም ተግባራትዎን የበለጠ መረጃ ያሉ እና ተደራጅተው ያደርጋቸዋል።",
+  "v5_10_news_main_array_item_6_title": "ለጋንት ቻርት የክልል መራጭ ማስተዋወቅ",
+  "v5_10_news_main_array_item_6_subtitle": "አዲሱ የክልል መራጭ በጋንት ቻርት ውስጥ እይታን ማቀናጀት በጣም ቀላል ያደርገዋል፣ ይህም የፕሮጀክቶችዎን ማክሮስ እና ማይክሮስ ለመከታተል ያስችላል።",
+  "v5_10_news_features_name": "ሌሎች ማሻሻያዎች",
+  "v5_10_news_features_title": "ማሻሻያዎች",
+  "v5_10_news_features_update_items": [
+    "1. ለJustDo ድር መተግበሪያ አጠቃላይ ዲዛይን ማሻሻያዎች።<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. ለቻት የመላክ ቁልፍ ማከል።<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Mitä uutta",
+  "v5_10_news_page_title": "JustDo v5.10: Parannettu Gantt, tiedostojen esikatselu ja tehtävien muokkaus parempaan työnkulkuun",
+  "v5_10_news_page_description": "JustDo v5.10 tuo tehostettua tuottavuutta parannellulla Gantt-kaaviotoiminnallisuudella, paremmalla tiedostonhallinnalla video- ja PDF-esikatseluineen sekä päivitetyllä tehtäväkuvauseditorilla ja tiedostojen latausmahdollisuudella. Tämä julkaisu keskittyy työnkulun tehostamiseen ja käyttökokemuksen parantamiseen.",
+  "v5_10_news_main_array_item_0_subtitle": "Tänään meillä on ilo ilmoittaa JustDo v5.10:n julkaisusta.<br><br>Tämä päivitys keskittyy käyttökokemuksen parantamiseen parannetulla Gantt-kaaviotoiminnallisuudella, paremmalla tiedostonhallinnalla video- ja PDF-esikatseluineen sekä päivitetyllä tehtäväkuvauseditorilla ja tiedostojen latausmahdollisuudella.",
+  "v5_10_news_main_array_item_1_title": "Sarakkeiden suodatusmahdollisuus Lisää sarakkeita -alavalikossa",
+  "v5_10_news_main_array_item_1_subtitle": "Voit nyt helposti suodattaa sarakkeita Lisää sarakkeita -alavalikossa, mikä nopeuttaa tarvitsemiesi kenttien löytämistä ja lisäämistä.",
+  "v5_10_news_main_array_item_2_title": "Esikatsele videoita ja PDF-tiedostoja tehtäväruudussa",
+  "v5_10_news_main_array_item_2_subtitle": "Voit nyt toistaa videoita suoraan tehtäväruudun Tiedostot-välilehdestä – lisätoimenpiteitä ei tarvita.",
+  "v5_10_news_main_array_item_3_subtitle": "Tarkastele PDF-tiedostoja välittömästi suoraan tehtäväruudussa avaamatta erillistä ikkunaa.",
+  "v5_10_news_main_array_item_4_title": "Parannettu tehtäväkuvauksen tekstieditori",
+  "v5_10_news_main_array_item_4_subtitle": "Tehtäväkuvauksen editori on päivitetty sujuvampaa ja luotettavampaa muokkauskokemusta varten. Tekstin kirjoittaminen ja muotoilu on nyt helpompaa kuin koskaan.",
+  "v5_10_news_main_array_item_5_title": "Tuki tiedostojen lataamiseen tehtäväkuvaukseen",
+  "v5_10_news_main_array_item_5_subtitle": "Voit nyt ladata ja liittää tiedostoja suoraan tehtäväkuvaukseen, mikä tekee tehtävistäsi informatiivisempia ja järjestäytyneempiä.",
+  "v5_10_news_main_array_item_6_title": "Alueen valitsin Gantt-kaaviolle",
+  "v5_10_news_main_array_item_6_subtitle": "Uusi alueen valitsin tekee näkymän asettamisesta Gantt-kaaviossa paljon helpompaa, mahdollistaen projektiesi makro- ja mikrotason seurannan.",
+  "v5_10_news_features_name": "Muut päivitykset",
+  "v5_10_news_features_title": "Parannukset",
+  "v5_10_news_features_update_items": [
+    "1. Yleiset suunnittelupäivitykset JustDo-verkkosovellukseen.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Lähetä-painike keskusteluun.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

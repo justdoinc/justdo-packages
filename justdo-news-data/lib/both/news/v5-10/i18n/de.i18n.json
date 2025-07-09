@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Was ist neu",
+  "v5_10_news_page_title": "JustDo v5.10: Verbessertes Gantt-Diagramm, Datei-Vorschau und Aufgabenbearbeitung für bessere Workflows",
+  "v5_10_news_page_description": "JustDo v5.10 steigert die Produktivität mit verbesserter Gantt-Diagramm-Funktionalität, besserer Dateiverwaltung mit Video- und PDF-Vorschau und einem erweiterten Aufgabenbeschreibungs-Editor mit Datei-Upload-Funktionen. Diese Version fokussiert sich auf die Optimierung der Workflow-Effizienz und Verbesserung der Benutzererfahrung.",
+  "v5_10_news_main_array_item_0_subtitle": "Heute freuen wir uns, die Veröffentlichung von JustDo v5.10 bekannt zu geben.<br><br>Dieses Update konzentriert sich auf die Verbesserung der Benutzererfahrung mit verbesserter Gantt-Diagramm-Funktionalität, besserer Dateiverwaltung mit Video- und PDF-Vorschau und einem erweiterten Aufgabenbeschreibungs-Editor mit Datei-Upload-Funktionen.",
+  "v5_10_news_main_array_item_1_title": "Möglichkeit zum Filtern von Spalten im Untermenü \"Spalten hinzufügen\" hinzugefügt",
+  "v5_10_news_main_array_item_1_subtitle": "Sie können jetzt ganz einfach Spalten im Untermenü \"Spalten hinzufügen\" filtern, was es schneller macht, die benötigten Felder zu finden und hinzuzufügen.",
+  "v5_10_news_main_array_item_2_title": "Vorschau von Videos und PDFs im Aufgabenbereich",
+  "v5_10_news_main_array_item_2_subtitle": "Sie können jetzt Videos direkt aus dem Dateien-Tab im Aufgabenbereich abspielen — ohne zusätzliche Schritte.",
+  "v5_10_news_main_array_item_3_subtitle": "Betrachten Sie PDFs sofort direkt im Aufgabenbereich, ohne ein separates Fenster zu öffnen.",
+  "v5_10_news_main_array_item_4_title": "Verbesserung des Aufgabenbeschreibungs-Texteditors",
+  "v5_10_news_main_array_item_4_subtitle": "Der Aufgabenbeschreibungs-Editor wurde für eine flüssigere, zuverlässigere Bearbeitungserfahrung aktualisiert. Das Schreiben und Formatieren von Text ist jetzt einfacher denn je.",
+  "v5_10_news_main_array_item_5_title": "Unterstützung für das Hochladen von Dateien in die Aufgabenbeschreibung",
+  "v5_10_news_main_array_item_5_subtitle": "Sie können jetzt Dateien direkt in die Aufgabenbeschreibung hochladen und anhängen, was Ihre Aufgaben informativer und organisierter macht.",
+  "v5_10_news_main_array_item_6_title": "Einführung des Bereichsselektors für das Gantt-Diagramm",
+  "v5_10_news_main_array_item_6_subtitle": "Der neue Bereichsselektor macht das Einstellen der Ansicht im Gantt-Diagramm viel einfacher und ermöglicht es Ihnen, sowohl die Makro- als auch die Mikro-Aspekte Ihrer Projekte im Blick zu behalten.",
+  "v5_10_news_features_name": "Weitere Updates",
+  "v5_10_news_features_title": "Verbesserungen",
+  "v5_10_news_features_update_items": [
+    "1. Allgemeine Design-Updates für die JustDo-Webanwendung.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Senden-Button zum Chat hinzugefügt.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

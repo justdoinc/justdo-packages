@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Mis on uut",
+  "v5_10_news_page_title": "JustDo v5.10: Täiustatud Gantt, failide eelvaade ja ülesannete redigeerimine",
+  "v5_10_news_page_description": "JustDo v5.10 toob kaasa suurenenud produktiivsuse täiustatud Gantt-diagrammi funktsioonide, parema failihalduse video- ja PDF-eelvaatega ning uuendatud ülesannete kirjelduse redaktoriga koos failide üleslaadimise võimalusega.",
+  "v5_10_news_main_array_item_0_subtitle": "Täna on meil hea meel teatada JustDo v5.10 väljalaskmisest.<br><br>See uuendus keskendub kasutajakogemuse täiustamisele parandatud Gantt-diagrammi funktsioonide, parema failihalduse video- ja PDF-eelvaatega ning uuendatud ülesannete kirjelduse redaktoriga koos failide üleslaadimise võimalusega.",
+  "v5_10_news_main_array_item_1_title": "Lisatud võimalus filtreerida veerge „Lisa veerge\" alammenüüs",
+  "v5_10_news_main_array_item_1_subtitle": "Nüüd saate hõlpsalt filtreerida veerge „Lisa veerge\" alammenüüs, muutes vajalike väljade leidmise ja lisamise kiiremaks.",
+  "v5_10_news_main_array_item_2_title": "Videote ja PDF-ide eelvaade ülesannete paanil",
+  "v5_10_news_main_array_item_2_subtitle": "Nüüd saate videoid esitada otse ülesannete paani failide sakilt — täiendavad sammud pole vajalikud.",
+  "v5_10_news_main_array_item_3_subtitle": "Vaadake PDF-e koheselt otse ülesannete paanil, avamata eraldi akent.",
+  "v5_10_news_main_array_item_4_title": "Ülesannete kirjelduse tekstiredaktori täiustamine",
+  "v5_10_news_main_array_item_4_subtitle": "Ülesannete kirjelduse redaktor on uuendatud sujuvama ja usaldusväärsema redigeerimiskogemuse jaoks. Teksti kirjutamine ja vormindamine on nüüd lihtsamad kui kunagi varem.",
+  "v5_10_news_main_array_item_5_title": "Failide üleslaadimine ülesannete kirjeldusse",
+  "v5_10_news_main_array_item_5_subtitle": "Nüüd saate faile üles laadida ja otse ülesannete kirjeldusele kinnitada, muutes oma ülesanded informatiivsemaks ja organiseeritumaks.",
+  "v5_10_news_main_array_item_6_title": "Gantt-diagrammi vahemikuvalija",
+  "v5_10_news_main_array_item_6_subtitle": "Uus vahemikuvalija muudab Gantt-diagrammi vaateakna seadistamise palju lihtsamaks, võimaldades teil jälgida oma projektide makro- ja mikroaspekte.",
+  "v5_10_news_features_name": "Muud uuendused",
+  "v5_10_news_features_title": "Täiustused",
+  "v5_10_news_features_update_items": [
+    "1. JustDo veebirakenduse üldised disaini uuendused.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Vestlusse lisatud saatmise nupp.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Yapi mapya",
+  "v5_10_news_page_title": "JustDo v5.10: Gantt Iliyoboreshwa, Uhakiki wa Faili, na Uhariri wa Kazi",
+  "v5_10_news_page_description": "JustDo v5.10 inakuja na uzalishaji ulioboreshwa kwa utendaji wa chati ya Gantt iliyoboreshwa, usimamizi bora wa faili na uhakiki wa video na PDF, na mhariri wa maelezo ya kazi ulioboreshwa na uwezo wa kupakia faili. Toleo hili linalenga kurahisisha ufanisi wa mtiririko wa kazi na kuboresha uzoefu wa mtumiaji kwa ujumla.",
+  "v5_10_news_main_array_item_0_subtitle": "Leo, tunafurahi kutangaza kutolewa kwa JustDo v5.10.<br><br>Sasalishi hili linalenga kuboresha uzoefu wa mtumiaji kwa utendaji ulioboreshwa wa chati ya Gantt, usimamizi bora wa faili na uhakiki wa video na PDF, na mhariri wa maelezo ya kazi ulioboreshwa na uwezo wa kupakia faili.",
+  "v5_10_news_main_array_item_1_title": "Ongeza uwezo wa kuchuja safuwima katika menyu ndogo ya Ongeza Safuwima",
+  "v5_10_news_main_array_item_1_subtitle": "Sasa unaweza kuchuja safuwima kwa urahisi katika menyu ndogo ya Ongeza Safuwima, na kufanya iwe haraka zaidi kupata na kuongeza uga unayohitaji.",
+  "v5_10_news_main_array_item_2_title": "Hakiki video na PDF katika jopo la kazi",
+  "v5_10_news_main_array_item_2_subtitle": "Sasa unaweza kucheza video moja kwa moja kutoka kwenye kichupo cha Faili katika Jopo la Kazi — hakuna hatua za ziada zinazohitajika.",
+  "v5_10_news_main_array_item_3_subtitle": "Ona PDF papo hapo ndani ya Jopo la Kazi, bila kufungua dirisha tofauti.",
+  "v5_10_news_main_array_item_4_title": "Boresha mhariri wa maandishi wa Maelezo ya Kazi",
+  "v5_10_news_main_array_item_4_subtitle": "Mhariri wa Maelezo ya Kazi umebolewa kwa uzoefu wa uhariri ulio laini zaidi na wa kutegemewa. Kuandika na kuunda maandishi sasa ni rahisi kuliko hapo awali.",
+  "v5_10_news_main_array_item_5_title": "Kusaidia kupakia faili kwenye Maelezo ya Kazi",
+  "v5_10_news_main_array_item_5_subtitle": "Sasa unaweza kupakia na kuambatisha faili moja kwa moja kwenye Maelezo ya Kazi, na kufanya kazi zako ziwe na habari zaidi na zikawa zimepangwa vizuri.",
+  "v5_10_news_main_array_item_6_title": "Kuanzisha kichaguzi cha miwani kwa chati ya Gantt",
+  "v5_10_news_main_array_item_6_subtitle": "Kichaguzi kipya cha miwani kinafanya kuweka miwani katika chati ya Gantt kuwe rahisi zaidi, na kukuwezesha kufuatilia mambo makubwa na madogo ya miradi yako.",
+  "v5_10_news_features_name": "Masasisho Mengine",
+  "v5_10_news_features_title": "Maboresho",
+  "v5_10_news_features_update_items": [
+    "1. Masasisho ya jumla ya muundo wa programu ya JustDo.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Ongeza kitufe cha kutuma kwenye Mazungumzo.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

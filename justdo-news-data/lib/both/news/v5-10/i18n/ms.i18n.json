@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Apa yang baharu",
+  "v5_10_news_page_title": "JustDo v5.10: Gantt Dipertingkat, Pratonton Fail, dan Penyuntingan Tugas untuk Aliran Kerja Lebih Baik",
+  "v5_10_news_page_description": "JustDo v5.10 membawa produktiviti yang dipertingkatkan dengan fungsi carta Gantt yang diperbaiki, pengurusan fail yang lebih baik dengan pratonton video dan PDF, dan editor penerangan tugas yang dinaik taraf dengan keupayaan muat naik fail. Keluaran ini memberi tumpuan kepada meningkatkan kecekapan aliran kerja dan memperbaiki pengalaman pengguna keseluruhan.",
+  "v5_10_news_main_array_item_0_subtitle": "Hari ini, kami dengan gembira mengumumkan keluaran JustDo v5.10.<br><br>Kemas kini ini memberi tumpuan kepada meningkatkan pengalaman pengguna dengan fungsi carta Gantt yang diperbaiki, pengurusan fail yang lebih baik dengan pratonton video dan PDF, dan editor penerangan tugas yang dinaik taraf dengan keupayaan muat naik fail.",
+  "v5_10_news_main_array_item_1_title": "Tambah keupayaan untuk menapis lajur dalam sub-menu Tambah Lajur",
+  "v5_10_news_main_array_item_1_subtitle": "Anda kini boleh menapis lajur dengan mudah dalam sub-menu Tambah Lajur, membuatkan ia lebih pantas untuk mencari dan menambah medan yang anda perlukan.",
+  "v5_10_news_main_array_item_2_title": "Pratonton video dan PDF dalam panel tugas",
+  "v5_10_news_main_array_item_2_subtitle": "Anda kini boleh memainkan video terus dari tab Fail dalam Panel Tugas — tiada langkah tambahan diperlukan.",
+  "v5_10_news_main_array_item_3_subtitle": "Lihat PDF dengan serta-merta dalam Panel Tugas, tanpa membuka tetingkap berasingan.",
+  "v5_10_news_main_array_item_4_title": "Perbaiki editor teks Penerangan Tugas",
+  "v5_10_news_main_array_item_4_subtitle": "Editor Penerangan Tugas telah dinaik taraf untuk pengalaman penyuntingan yang lebih lancar dan boleh dipercayai. Menulis dan memformat teks kini lebih mudah berbanding sebelum ini.",
+  "v5_10_news_main_array_item_5_title": "Sokong muat naik fail ke Penerangan Tugas",
+  "v5_10_news_main_array_item_5_subtitle": "Anda kini boleh muat naik dan melampirkan fail terus ke Penerangan Tugas, menjadikan tugas anda lebih bermaklumat dan teratur.",
+  "v5_10_news_main_array_item_6_title": "Perkenalkan pemilih julat untuk carta Gantt",
+  "v5_10_news_main_array_item_6_subtitle": "Pemilih julat baharu memudahkan penetapan pandangan dalam carta Gantt, membolehkan anda menjejaki makro dan mikro projek anda.",
+  "v5_10_news_features_name": "Kemas Kini Lain",
+  "v5_10_news_features_title": "Penambahbaikan",
+  "v5_10_news_features_update_items": [
+    "1. Kemas kini reka bentuk umum untuk aplikasi web JustDo.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Tambah butang hantar ke Chat.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

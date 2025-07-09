@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Vad är nytt",
+  "v5_10_news_page_title": "JustDo v5.10: Förbättrat Gantt, Filförhandsvisning och Uppgiftsredigering",
+  "v5_10_news_page_description": "JustDo v5.10 erbjuder förbättrad produktivitet med förbättrad Gantt-diagramfunktionalitet, bättre filhantering med video- och PDF-förhandsvisning samt en uppgraderad uppgiftsbeskrivningsredigerare med filuppladdningsfunktioner.",
+  "v5_10_news_main_array_item_0_subtitle": "Idag är vi glada att kunna meddela lanseringen av JustDo v5.10.<br><br>Denna uppdatering fokuserar på att förbättra användarupplevelsen med förbättrad Gantt-diagramfunktionalitet, bättre filhantering med video- och PDF-förhandsvisning samt en uppgraderad uppgiftsbeskrivningsredigerare med filuppladdningsfunktioner.",
+  "v5_10_news_main_array_item_1_title": "Lägg till möjlighet att filtrera kolumner i undermenyn Lägg till kolumner",
+  "v5_10_news_main_array_item_1_subtitle": "Du kan nu enkelt filtrera kolumner i undermenyn Lägg till kolumner, vilket gör det snabbare att hitta och lägga till de fält du behöver.",
+  "v5_10_news_main_array_item_2_title": "Förhandsgranska videor och PDF-filer i uppgiftspanelen",
+  "v5_10_news_main_array_item_2_subtitle": "Du kan nu spela videor direkt från fliken Filer i uppgiftspanelen — inga extra steg behövs.",
+  "v5_10_news_main_array_item_3_subtitle": "Visa PDF-filer direkt i uppgiftspanelen, utan att öppna ett separat fönster.",
+  "v5_10_news_main_array_item_4_title": "Förbättra textredigeraren för uppgiftsbeskrivning",
+  "v5_10_news_main_array_item_4_subtitle": "Textredigeraren för uppgiftsbeskrivning har uppgraderats för en smidigare och mer tillförlitlig redigeringsupplevelse. Att skriva och formatera text är nu enklare än någonsin.",
+  "v5_10_news_main_array_item_5_title": "Stöd för att ladda upp filer till uppgiftsbeskrivning",
+  "v5_10_news_main_array_item_5_subtitle": "Du kan nu ladda upp och bifoga filer direkt till uppgiftsbeskrivningen, vilket gör dina uppgifter mer informativa och organiserade.",
+  "v5_10_news_main_array_item_6_title": "Introduktion av intervallväljare för Gantt-diagrammet",
+  "v5_10_news_main_array_item_6_subtitle": "Den nya intervallväljaren gör det mycket enklare att ställa in visningsområdet i Gantt-diagrammet, så att du kan hålla koll på både makro- och mikronivåerna i dina projekt.",
+  "v5_10_news_features_name": "Andra uppdateringar",
+  "v5_10_news_features_title": "Förbättringar",
+  "v5_10_news_features_update_items": [
+    "1. Allmänna designuppdateringar till JustDo-webbappen.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Lägg till en skicka-knapp till chatten.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

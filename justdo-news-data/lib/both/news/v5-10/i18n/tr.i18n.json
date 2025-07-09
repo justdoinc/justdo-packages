@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Yenilikler",
+  "v5_10_news_page_title": "JustDo v5.10: Gelişmiş Gantt, Dosya Önizleme ve Daha İyi İş Akışı için Görev Düzenleme",
+  "v5_10_news_page_description": "JustDo v5.10 gelişmiş Gantt şeması işlevselliği, video ve PDF önizleme ile daha iyi dosya yönetimi ve dosya yükleme özellikli yükseltilmiş görev açıklaması editörü ile artan verimlilik sağlar. Bu sürüm iş akışı verimliliğini kolaylaştırmaya ve genel kullanıcı deneyimini iyileştirmeye odaklanır.",
+  "v5_10_news_main_array_item_0_subtitle": "Bugün, JustDo v5.10 sürümünün yayınlandığını duyurmaktan memnuniyet duyuyoruz.<br><br>Bu güncelleme, gelişmiş Gantt şeması işlevselliği, video ve PDF önizleme ile daha iyi dosya yönetimi ve dosya yükleme özellikli yükseltilmiş görev açıklaması editörü ile kullanıcı deneyimini geliştirmeye odaklanır.",
+  "v5_10_news_main_array_item_1_title": "Sütun Ekle alt menüsünde sütunları filtreleme özelliği eklendi",
+  "v5_10_news_main_array_item_1_subtitle": "Artık Sütun Ekle alt menüsündeki sütunları kolayca filtreleyebilir, ihtiyacınız olan alanları daha hızlı bulabilir ve ekleyebilirsiniz.",
+  "v5_10_news_main_array_item_2_title": "Görev panelinde video ve PDF önizleme",
+  "v5_10_news_main_array_item_2_subtitle": "Artık Görev Paneli'ndeki Dosyalar sekmesinden videoları doğrudan oynatabilirsiniz — ekstra adım gerekmez.",
+  "v5_10_news_main_array_item_3_subtitle": "PDF'leri ayrı bir pencere açmadan doğrudan Görev Paneli içerisinde anında görüntüleyebilirsiniz.",
+  "v5_10_news_main_array_item_4_title": "Görev Açıklaması metin editörü iyileştirildi",
+  "v5_10_news_main_array_item_4_subtitle": "Görev Açıklaması editörü daha akıcı, daha güvenilir bir düzenleme deneyimi için yükseltildi. Metin yazma ve biçimlendirme artık her zamankinden daha kolay.",
+  "v5_10_news_main_array_item_5_title": "Görev Açıklaması'na dosya yükleme desteği",
+  "v5_10_news_main_array_item_5_subtitle": "Artık Görev Açıklaması'na doğrudan dosya yükleyebilir ve ekleyebilirsiniz, görevlerinizi daha bilgilendirici ve organize hale getirebilirsiniz.",
+  "v5_10_news_main_array_item_6_title": "Gantt şeması için aralık seçici tanıtıldı",
+  "v5_10_news_main_array_item_6_subtitle": "Yeni aralık seçici, Gantt şemasında görünüm alanını ayarlamayı çok daha kolay hale getirir ve projelerinizin makro ve mikro detaylarını takip etmenizi sağlar.",
+  "v5_10_news_features_name": "Diğer Güncellemeler",
+  "v5_10_news_features_title": "İyileştirmeler",
+  "v5_10_news_features_update_items": [
+    "1. JustDo web uygulamasında genel tasarım güncellemeleri.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Sohbet'e gönder butonu eklendi.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

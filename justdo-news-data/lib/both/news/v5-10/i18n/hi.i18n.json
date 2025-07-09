@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "नया क्या है",
+  "v5_10_news_page_title": "JustDo v5.10: बेहतर Gantt, फाइल प्रीव्यू और टास्क एडिटिंग",
+  "v5_10_news_page_description": "JustDo v5.10 में बेहतर Gantt चार्ट फीचर्स, वीडियो और PDF प्रीव्यू के साथ फाइल मैनेजमेंट, और फाइल अपलोड सुविधा के साथ अपग्रेडेड टास्क एडिटर शामिल है। यह अपडेट workflow की दक्षता और user experience को बेहतर बनाने पर केंद्रित है।",
+  "v5_10_news_main_array_item_0_subtitle": "आज हम JustDo v5.10 के रिलीज़ की घोषणा करते हुए खुशी महसूस कर रहे हैं।<br><br>यह अपडेट बेहतर Gantt चार्ट फीचर्स, वीडियो और PDF प्रीव्यू के साथ फाइल मैनेजमेंट, और फाइल अपलोड सुविधा के साथ अपग्रेडेड टास्क डिस्क्रिप्शन एडिटर के साथ user experience को बेहतर बनाने पर केंद्रित है।",
+  "v5_10_news_main_array_item_1_title": "Add Columns सब-मेनू में कॉलम फ़िल्टर करने की सुविधा जोड़ी गई",
+  "v5_10_news_main_array_item_1_subtitle": "अब आप Add Columns सब-मेनू में कॉलम्स को आसानी से फ़िल्टर कर सकते हैं, जिससे आपको जरूरी फ़ील्ड्स ढूंढना और जोड़ना तेज़ हो जाता है।",
+  "v5_10_news_main_array_item_2_title": "टास्क पैनल में वीडियो और PDF का प्रीव्यू",
+  "v5_10_news_main_array_item_2_subtitle": "अब आप Task Pane के Files टैब से सीधे वीडियो चला सकते हैं — कोई अतिरिक्त स्टेप की जरूरत नहीं।",
+  "v5_10_news_main_array_item_3_subtitle": "Task Pane के अंदर ही PDF को तुरंत देखें, बिना अलग विंडो खोले।",
+  "v5_10_news_main_array_item_4_title": "Task Description टेक्स्ट एडिटर में सुधार",
+  "v5_10_news_main_array_item_4_subtitle": "Task Description एडिटर को एक smoother और अधिक विश्वसनीय editing experience के लिए अपग्रेड किया गया है। अब टेक्स्ट लिखना और formatting करना पहले से भी आसान है।",
+  "v5_10_news_main_array_item_5_title": "Task Description में फाइल अपलोड करने की सुविधा",
+  "v5_10_news_main_array_item_5_subtitle": "अब आप Task Description में सीधे फाइलें अपलोड और attach कर सकते हैं, जिससे आपके टास्क अधिक जानकारी से भरे और व्यवस्थित होते हैं।",
+  "v5_10_news_main_array_item_6_title": "Gantt चार्ट के लिए range picker की शुरुआत",
+  "v5_10_news_main_array_item_6_subtitle": "नया range picker Gantt चार्ट में viewport सेट करना बहुत आसान बना देता है, जिससे आप अपनी परियोजनाओं के macros और micros दोनों पर नज़र रख सकते हैं।",
+  "v5_10_news_features_name": "अन्य अपडेट्स",
+  "v5_10_news_features_title": "सुधार",
+  "v5_10_news_features_update_items": [
+    "1. JustDo webapp के लिए सामान्य डिज़ाइन अपडेट्स।<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Chat में send बटन जोड़ा गया।<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

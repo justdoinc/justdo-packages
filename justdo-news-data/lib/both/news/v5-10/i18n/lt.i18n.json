@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Kas naujo",
+  "v5_10_news_page_title": "JustDo v5.10: Patobulinta Gantt diagrama, failų peržiūra ir užduočių redagavimas",
+  "v5_10_news_page_description": "JustDo v5.10 atskleidžia patobulintą produktyvumą su patobulintu Gantt diagramos funkcionalumu, geresniu failų valdymu su video ir PDF peržiūromis bei atnaujintu užduočių aprašymo redaktoriumi su failų įkėlimo galimybėmis.",
+  "v5_10_news_main_array_item_0_subtitle": "Šiandien su džiaugsmu pristatome JustDo v5.10 versiją.<br><br>Šis atnaujinimas daugiausia dėmesio skiria naudotojų patirties gerinimui su patobulinta Gantt diagramos funkcionalumu, geresniu failų valdymu su video ir PDF peržiūromis bei atnaujintu užduočių aprašymo redaktoriumi su failų įkėlimo galimybėmis.",
+  "v5_10_news_main_array_item_1_title": "Pridėta galimybė filtruoti stulpelius Stulpelių pridėjimo submeniu",
+  "v5_10_news_main_array_item_1_subtitle": "Dabar galite lengvai filtruoti stulpelius Stulpelių pridėjimo submeniu, grečiau surasti ir pridėti reikiamus laukus.",
+  "v5_10_news_main_array_item_2_title": "Peržiūrėkite vaizdo įrašus ir PDF failus užduočių srityje",
+  "v5_10_news_main_array_item_2_subtitle": "Dabar galite atkurti vaizdo įrašus tiesiai iš Failų skirtuko Užduočių srityje — be papildomų žingsnių.",
+  "v5_10_news_main_array_item_3_subtitle": "Peržiūrėkite PDF failus akimirksniu tiesiai Užduočių srityje, neatidaryant atskiro lango.",
+  "v5_10_news_main_array_item_4_title": "Patobulintas užduočių aprašymo teksto redaktorius",
+  "v5_10_news_main_array_item_4_subtitle": "Užduočių aprašymo redaktorius buvo atnaujintas siekiant sklandesnės ir patikimesnės redagavimo patirties. Teksto rašymas ir formatavimas dabar lengvesnis nei kada nors.",
+  "v5_10_news_main_array_item_5_title": "Palaikomas failų įkėlimas į užduočių aprašymą",
+  "v5_10_news_main_array_item_5_subtitle": "Dabar galite įkelti ir pridėti failus tiesiai prie užduočių aprašymo, padarydami užduotis informatyvesnes ir organizuotesnes.",
+  "v5_10_news_main_array_item_6_title": "Pristatomas diapazono parinkiklis Gantt diagramai",
+  "v5_10_news_main_array_item_6_subtitle": "Naujasis diapazono parinkiklis palengvina peržiūros srities nustatymą Gantt diagramoje, leidžiantis sekti tiek makro, tiek mikro projektų aspektus.",
+  "v5_10_news_features_name": "Kiti atnaujinimai",
+  "v5_10_news_features_title": "Patobulinimai",
+  "v5_10_news_features_update_items": [
+    "1. Bendrieji JustDo žiniatinklio aplikacijos dizaino atnaujinimai.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Pridėtas siuntimo mygtukas pokalbių funkcijai.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "最新功能",
+  "v5_10_news_page_title": "JustDo v5.10：增强甘特图、文件预览和任务编辑功能，优化工作流程",
+  "v5_10_news_page_description": "JustDo v5.10 带来了增强的生产力功能，包括改进的甘特图功能、支持视频和PDF预览的更好文件管理，以及具备文件上传功能的升级任务描述编辑器。本次更新专注于简化工作流程效率并改善整体用户体验。",
+  "v5_10_news_main_array_item_0_subtitle": "今天，我们很高兴地宣布JustDo v5.10正式发布。<br><br>此次更新专注于提升用户体验，改进了甘特图功能、支持视频和PDF预览的更好文件管理，以及具备文件上传功能的升级任务描述编辑器。",
+  "v5_10_news_main_array_item_1_title": "在添加列子菜单中增加筛选列功能",
+  "v5_10_news_main_array_item_1_subtitle": "您现在可以在添加列子菜单中轻松筛选列，让您更快地找到并添加所需的字段。",
+  "v5_10_news_main_array_item_2_title": "在任务面板中预览视频和PDF",
+  "v5_10_news_main_array_item_2_subtitle": "您现在可以直接在任务面板的文件选项卡中播放视频——无需额外步骤。",
+  "v5_10_news_main_array_item_3_subtitle": "在任务面板中即时查看PDF文件，无需打开单独的窗口。",
+  "v5_10_news_main_array_item_4_title": "改进任务描述文本编辑器",
+  "v5_10_news_main_array_item_4_subtitle": "任务描述编辑器已升级，提供更流畅、更可靠的编辑体验。编写和格式化文本现在比以往更容易。",
+  "v5_10_news_main_array_item_5_title": "支持在任务描述中上传文件",
+  "v5_10_news_main_array_item_5_subtitle": "您现在可以直接在任务描述中上传和附加文件，让您的任务更加详尽和有条理。",
+  "v5_10_news_main_array_item_6_title": "为甘特图引入范围选择器",
+  "v5_10_news_main_array_item_6_subtitle": "新的范围选择器让甘特图中的视口设置变得更加容易，让您能够同时掌控项目的宏观和微观情况。",
+  "v5_10_news_features_name": "其他更新",
+  "v5_10_news_features_title": "改进",
+  "v5_10_news_features_update_items": [
+    "1. JustDo 网页应用的整体设计更新。<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. 为聊天功能添加发送按钮。<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

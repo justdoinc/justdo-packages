@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Novedades",
+  "v5_10_news_page_title": "JustDo v5.10: Gantt Mejorado, Vista Previa de Archivos y Edición de Tareas para Mejor Flujo de Trabajo",
+  "v5_10_news_page_description": "JustDo v5.10 mejora la productividad con funcionalidad mejorada del diagrama de Gantt, mejor gestión de archivos con vistas previas de video y PDF, y un editor de descripción de tareas actualizado con capacidades de subida de archivos. Esta versión se enfoca en optimizar la eficiencia del flujo de trabajo y mejorar la experiencia general del usuario.",
+  "v5_10_news_main_array_item_0_subtitle": "Hoy, nos complace anunciar el lanzamiento de JustDo v5.10.<br><br>Esta actualización se enfoca en mejorar la experiencia del usuario con funcionalidad mejorada del diagrama de Gantt, mejor gestión de archivos con vistas previas de video y PDF, y un editor de descripción de tareas actualizado con capacidades de subida de archivos.",
+  "v5_10_news_main_array_item_1_title": "Agregar la capacidad de filtrar columnas en el submenú Agregar Columnas",
+  "v5_10_news_main_array_item_1_subtitle": "Ahora puedes filtrar fácilmente las columnas en el submenú Agregar Columnas, haciendo más rápido encontrar y agregar los campos que necesitas.",
+  "v5_10_news_main_array_item_2_title": "Vista previa de videos y PDFs en el panel de tareas",
+  "v5_10_news_main_array_item_2_subtitle": "Ahora puedes reproducir videos directamente desde la pestaña Archivos en el Panel de Tareas — no necesitas pasos adicionales.",
+  "v5_10_news_main_array_item_3_subtitle": "Ve PDFs instantáneamente directamente dentro del Panel de Tareas, sin abrir una ventana separada.",
+  "v5_10_news_main_array_item_4_title": "Mejorar el editor de texto de Descripción de Tareas",
+  "v5_10_news_main_array_item_4_subtitle": "El editor de Descripción de Tareas ha sido actualizado para una experiencia de edición más fluida y confiable. Escribir y formatear texto ahora es más fácil que nunca.",
+  "v5_10_news_main_array_item_5_title": "Soporte para subir archivos a la Descripción de Tareas",
+  "v5_10_news_main_array_item_5_subtitle": "Ahora puedes subir y adjuntar archivos directamente a la Descripción de Tareas, haciendo tus tareas más informativas y organizadas.",
+  "v5_10_news_main_array_item_6_title": "Introducir selector de rango para el diagrama de Gantt",
+  "v5_10_news_main_array_item_6_subtitle": "El nuevo selector de rango hace que configurar la vista en el diagrama de Gantt sea mucho más fácil, permitiéndote hacer seguimiento de los aspectos macro y micro de tus proyectos.",
+  "v5_10_news_features_name": "Otras Actualizaciones",
+  "v5_10_news_features_title": "Mejoras",
+  "v5_10_news_features_update_items": [
+    "1. Actualizaciones generales de diseño en la aplicación web de JustDo.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Agregar un botón de envío al Chat.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

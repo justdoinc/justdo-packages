@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Šta je novo",
+  "v5_10_news_page_title": "JustDo v5.10: Poboljšani Gantt, Pregled Datoteka i Uređivanje Zadataka za Bolji Radni Tok",
+  "v5_10_news_page_description": "JustDo v5.10 donosi poboljšanu produktivnost sa poboljšanom funkcionalnosti Gantt grafikona, boljim upravljanjem datotekama sa pregledima videa i PDF-ova, i unaprijeđenim editorom opisa zadataka sa mogućnostima učitavanja datoteka. Ovo izdanje se fokusira na poboljšanje efikasnosti radnog toka i poboljšanje korisničkog iskustva.",
+  "v5_10_news_main_array_item_0_subtitle": "Danas smo srećni što objavljujemo izdanje JustDo v5.10.<br><br>Ova nadogradnja se fokusira na poboljšanje korisničkog iskustva sa poboljšanom funkcionalnosti Gantt grafikona, boljim upravljanjem datotekama sa pregledima videa i PDF-ova, i unaprijeđenim editorom opisa zadataka sa mogućnostima učitavanja datoteka.",
+  "v5_10_news_main_array_item_1_title": "Dodana mogućnost filtriranja kolona u podmeniju Dodaj Kolone",
+  "v5_10_news_main_array_item_1_subtitle": "Sada možete lako filtrirati kolone u podmeniju Dodaj Kolone, što čini pronalaženje i dodavanje potrebnih polja bržim.",
+  "v5_10_news_main_array_item_2_title": "Pregledaj videe i PDF-ove u panelu zadataka",
+  "v5_10_news_main_array_item_2_subtitle": "Sada možete reprodukovati videe direktno iz kartice Datoteke u Panelu Zadataka — bez potrebe za dodatnim koracima.",
+  "v5_10_news_main_array_item_3_subtitle": "Pregledajte PDF-ove odmah u okviru Panela Zadataka, bez otvaranja zasebnog prozora.",
+  "v5_10_news_main_array_item_4_title": "Poboljšan editor teksta za Opis Zadatka",
+  "v5_10_news_main_array_item_4_subtitle": "Editor Opisa Zadatka je unaprijeđen za glatko, pouzdanije iskustvo uređivanja. Pisanje i formatiranje teksta je sada lakše nego ikad.",
+  "v5_10_news_main_array_item_5_title": "Podrška za učitavanje datoteka u Opis Zadatka",
+  "v5_10_news_main_array_item_5_subtitle": "Sada možete učitati i priložiti datoteke direktno u Opis Zadatka, čineći vaše zadatke informativnijim i organizovanijim.",
+  "v5_10_news_main_array_item_6_title": "Uveden birač opsega za Gantt grafikon",
+  "v5_10_news_main_array_item_6_subtitle": "Novi birač opsega čini postavljanje prikaza u Gantt grafikonu mnogo lakšim, omogućavajući vam da pratite makro i mikro aspekte vaših projekata.",
+  "v5_10_news_features_name": "Ostale Nadogradnje",
+  "v5_10_news_features_title": "Poboljšanja",
+  "v5_10_news_features_update_items": [
+    "1. Opšta dizajnska nadogradnja JustDo web aplikacije.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Dodano dugme za slanje u Chat.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

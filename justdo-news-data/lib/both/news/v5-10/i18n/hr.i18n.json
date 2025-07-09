@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Što je novo",
+  "v5_10_news_page_title": "JustDo v5.10: Poboljšani Gantt, pregled datoteka i uređivanje zadataka",
+  "v5_10_news_page_description": "JustDo v5.10 donosi poboljšanu produktivnost s poboljšanom funkcionalnosti Gantt grafikona, boljim upravljanjem datoteka s pregledom video i PDF datoteka, te nadograđenim editorom opisa zadataka s mogućnostima prijenosa datoteka.",
+  "v5_10_news_main_array_item_0_subtitle": "Danas smo zadovoljni objaviti izdavanje JustDo v5.10.<br><br>Ova nadogradnja fokusira se na poboljšanje korisničkog iskustva s poboljšanom funkcionalnosti Gantt grafikona, boljim upravljanjem datoteka s pregledom video i PDF datoteka, te nadograđenim editorom opisa zadataka s mogućnostima prijenosa datoteka.",
+  "v5_10_news_main_array_item_1_title": "Dodana mogućnost filtriranja stupaca u podmeniju Dodaj stupce",
+  "v5_10_news_main_array_item_1_subtitle": "Sada možete lako filtrirati stupce u podmeniju Dodaj stupce, što čini pronalaženje i dodavanje potrebnih polja bržim.",
+  "v5_10_news_main_array_item_2_title": "Pregled video i PDF datoteka u oknu zadatka",
+  "v5_10_news_main_array_item_2_subtitle": "Sada možete reproducirati video datoteke direktno iz kartice Datoteke u oknu zadatka — bez potrebe za dodatnim koracima.",
+  "v5_10_news_main_array_item_3_subtitle": "Pregledajte PDF datoteke odmah unutar okna zadatka, bez otvaranja zasebnog prozora.",
+  "v5_10_news_main_array_item_4_title": "Poboljšan tekstni editor opisa zadatka",
+  "v5_10_news_main_array_item_4_subtitle": "Editor opisa zadatka je nadograđen za glađe i pouzdanije iskustvo uređivanja. Pisanje i formatiranje teksta sada je lakše nego ikad.",
+  "v5_10_news_main_array_item_5_title": "Podrška za prijenos datoteka u opis zadatka",
+  "v5_10_news_main_array_item_5_subtitle": "Sada možete prenijeti i priložiti datoteke direktno u opis zadatka, čineći vaše zadatke informatnijima i organiziranijima.",
+  "v5_10_news_main_array_item_6_title": "Uveden birač raspona za Gantt grafikon",
+  "v5_10_news_main_array_item_6_subtitle": "Novi birač raspona čini postavljanje pogleda u Gantt grafikonu mnogo lakšim, omogućavajući vam praćenje makro i mikro aspekata vaših projekata.",
+  "v5_10_news_features_name": "Ostale nadogradnje",
+  "v5_10_news_features_title": "Poboljšanja",
+  "v5_10_news_features_update_items": [
+    "1. Opća poboljšanja dizajna JustDo web aplikacije.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Dodan gumb za slanje u chat.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

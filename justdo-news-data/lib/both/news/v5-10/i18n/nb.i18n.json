@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Hva er nytt",
+  "v5_10_news_page_title": "JustDo v5.10: Forbedret Gantt, Filforhåndsvisning og Oppgaveredigering",
+  "v5_10_news_page_description": "JustDo v5.10 gir forbedret produktivitet med utbedret Gantt-diagram funksjonalitet, bedre filhåndtering med video- og PDF-forhåndsvisning, og en oppgradert oppgavebeskrivelses-editor med filopplastingsmuligheter.",
+  "v5_10_news_main_array_item_0_subtitle": "I dag er vi glade for å kunngjøre utgivelsen av JustDo v5.10.<br><br>Denne oppdateringen fokuserer på å forbedre brukeropplevelsen med utbedret Gantt-diagram funksjonalitet, bedre filhåndtering med video- og PDF-forhåndsvisning, og en oppgradert oppgavebeskrivelses-editor med filopplastingsmuligheter.",
+  "v5_10_news_main_array_item_1_title": "Legg til mulighet for å filtrere kolonner i Legg til kolonner-undermenyen",
+  "v5_10_news_main_array_item_1_subtitle": "Du kan nå enkelt filtrere kolonner i Legg til kolonner-undermenyen, noe som gjør det raskere å finne og legge til feltene du trenger.",
+  "v5_10_news_main_array_item_2_title": "Forhåndsvis videoer og PDFer i oppgavepanelet",
+  "v5_10_news_main_array_item_2_subtitle": "Du kan nå spille av videoer direkte fra Filer-fanen i oppgavepanelet — ingen ekstra trinn nødvendig.",
+  "v5_10_news_main_array_item_3_subtitle": "Vis PDFer umiddelbart rett i oppgavepanelet, uten å åpne et separat vindu.",
+  "v5_10_news_main_array_item_4_title": "Forbedre oppgavebeskrivelses tekstredigerer",
+  "v5_10_news_main_array_item_4_subtitle": "Oppgavebeskrivelses-editoren har blitt oppgradert for en jevnere, mer pålitelig redigeringsopplevelse. Å skrive og formatere tekst er nå enklere enn noen gang.",
+  "v5_10_news_main_array_item_5_title": "Støtte opplasting av filer til oppgavebeskrivelse",
+  "v5_10_news_main_array_item_5_subtitle": "Du kan nå laste opp og legge ved filer direkte til oppgavebeskrivelsen, noe som gjør oppgavene dine mer informative og organiserte.",
+  "v5_10_news_main_array_item_6_title": "Introduser områdevelger for Gantt-diagrammet",
+  "v5_10_news_main_array_item_6_subtitle": "Den nye områdevelgeren gjør det mye enklere å sette visningsområdet i Gantt-diagrammet, slik at du kan holde oversikt over både makro- og mikroaspektene av prosjektene dine.",
+  "v5_10_news_features_name": "Andre oppdateringer",
+  "v5_10_news_features_title": "Forbedringer",
+  "v5_10_news_features_update_items": [
+    "1. Generelle designoppdateringer til JustDo webapp.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Legg til en send-knapp i chatten.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

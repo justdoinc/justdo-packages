@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "新機能",
+  "v5_10_news_page_title": "JustDo v5.10：ガントチャート強化、ファイルプレビュー、タスク編集でワークフローを改善",
+  "v5_10_news_page_description": "JustDo v5.10では、ガントチャート機能の改善、動画・PDFプレビュー機能付きファイル管理の向上、ファイルアップロード機能付きタスク説明エディターのアップグレードにより、生産性を向上させました。このリリースでは、ワークフロー効率の合理化とユーザーエクスペリエンスの全体的な改善に焦点を当てています。",
+  "v5_10_news_main_array_item_0_subtitle": "本日、JustDo v5.10のリリースを発表いたします。<br><br>このアップデートでは、ガントチャート機能の改善、動画・PDFプレビュー機能付きファイル管理の向上、ファイルアップロード機能付きタスク説明エディターのアップグレードにより、ユーザーエクスペリエンスの向上に焦点を当てています。",
+  "v5_10_news_main_array_item_1_title": "列を追加サブメニューで列をフィルタリングする機能を追加",
+  "v5_10_news_main_array_item_1_subtitle": "列を追加サブメニューで列を簡単にフィルタリングできるようになり、必要なフィールドをより速く見つけて追加できるようになりました。",
+  "v5_10_news_main_array_item_2_title": "タスクパネルで動画とPDFをプレビュー",
+  "v5_10_news_main_array_item_2_subtitle": "タスクパネルのファイルタブから直接動画を再生できるようになりました。追加の手順は不要です。",
+  "v5_10_news_main_array_item_3_subtitle": "タスクパネル内でPDFを即座に表示でき、別ウィンドウを開く必要がありません。",
+  "v5_10_news_main_array_item_4_title": "タスク説明テキストエディターの改善",
+  "v5_10_news_main_array_item_4_subtitle": "タスク説明エディターがアップグレードされ、よりスムーズで信頼性の高い編集体験を提供します。テキストの作成と書式設定がこれまで以上に簡単になりました。",
+  "v5_10_news_main_array_item_5_title": "タスク説明へのファイルアップロードをサポート",
+  "v5_10_news_main_array_item_5_subtitle": "タスク説明に直接ファイルをアップロードして添付できるようになり、タスクをより情報豊富で整理された状態にできます。",
+  "v5_10_news_main_array_item_6_title": "ガントチャートの期間選択機能を導入",
+  "v5_10_news_main_array_item_6_subtitle": "新しい期間選択機能により、ガントチャートでのビューポート設定がより簡単になり、プロジェクトのマクロとミクロの両方を追跡できるようになりました。",
+  "v5_10_news_features_name": "その他のアップデート",
+  "v5_10_news_features_title": "改善点",
+  "v5_10_news_features_update_items": [
+    "1. JustDoウェブアプリの全般的なデザインアップデート。<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. チャットに送信ボタンを追加。<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

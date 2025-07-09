@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Novità",
+  "v5_10_news_page_title": "JustDo v5.10: Gantt Migliorato, Anteprima File e Modifica Task per Workflow Migliori",
+  "v5_10_news_page_description": "JustDo v5.10 porta produttività migliorata con funzionalità del diagramma di Gantt potenziate, migliore gestione file con anteprime video e PDF, e un editor di descrizione task aggiornato con capacità di caricamento file. Questo rilascio si concentra sull'ottimizzazione dell'efficienza del flusso di lavoro e sul miglioramento dell'esperienza utente complessiva.",
+  "v5_10_news_main_array_item_0_subtitle": "Oggi siamo lieti di annunciare il rilascio di JustDo v5.10.<br><br>Questo aggiornamento si concentra sul miglioramento dell'esperienza utente con funzionalità del diagramma di Gantt potenziate, migliore gestione file con anteprime video e PDF, e un editor di descrizione task aggiornato con capacità di caricamento file.",
+  "v5_10_news_main_array_item_1_title": "Aggiunta la possibilità di filtrare le colonne nel sottomenu Aggiungi Colonne",
+  "v5_10_news_main_array_item_1_subtitle": "Ora puoi facilmente filtrare le colonne nel sottomenu Aggiungi Colonne, rendendo più veloce trovare e aggiungere i campi di cui hai bisogno.",
+  "v5_10_news_main_array_item_2_title": "Anteprima video e PDF nel pannello task",
+  "v5_10_news_main_array_item_2_subtitle": "Ora puoi riprodurre video direttamente dalla scheda File nel Pannello Task — nessun passaggio aggiuntivo necessario.",
+  "v5_10_news_main_array_item_3_subtitle": "Visualizza i PDF istantaneamente direttamente nel Pannello Task, senza aprire una finestra separata.",
+  "v5_10_news_main_array_item_4_title": "Miglioramento dell'editor di testo della Descrizione Task",
+  "v5_10_news_main_array_item_4_subtitle": "L'editor della Descrizione Task è stato aggiornato per un'esperienza di modifica più fluida e affidabile. Scrivere e formattare il testo è ora più facile che mai.",
+  "v5_10_news_main_array_item_5_title": "Supporto per il caricamento di file nella Descrizione Task",
+  "v5_10_news_main_array_item_5_subtitle": "Ora puoi caricare e allegare file direttamente alla Descrizione Task, rendendo i tuoi task più informativi e organizzati.",
+  "v5_10_news_main_array_item_6_title": "Introduzione del selettore di intervallo per il diagramma di Gantt",
+  "v5_10_news_main_array_item_6_subtitle": "Il nuovo selettore di intervallo rende molto più facile impostare la visualizzazione nel diagramma di Gantt, permettendoti di tenere traccia dei macro e micro aspetti dei tuoi progetti.",
+  "v5_10_news_features_name": "Altri Aggiornamenti",
+  "v5_10_news_features_title": "Miglioramenti",
+  "v5_10_news_features_update_items": [
+    "1. Aggiornamenti generali del design dell'applicazione web JustDo.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Aggiunto un pulsante di invio alla Chat.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Novidades",
+  "v5_10_news_page_title": "JustDo v5.10: Gantt Aprimorado, Prévia de Arquivos e Edição de Tarefas",
+  "v5_10_news_page_description": "JustDo v5.10 traz produtividade aprimorada com funcionalidade melhorada do gráfico de Gantt, melhor gerenciamento de arquivos com prévias de vídeos e PDFs, e editor de descrição de tarefas atualizado com capacidades de upload de arquivos.",
+  "v5_10_news_main_array_item_0_subtitle": "Hoje, temos o prazer de anunciar o lançamento do JustDo v5.10.<br><br>Esta atualização foca em aprimorar a experiência do usuário com funcionalidade melhorada do gráfico de Gantt, melhor gerenciamento de arquivos com prévias de vídeos e PDFs, e um editor de descrição de tarefas atualizado com capacidades de upload de arquivos.",
+  "v5_10_news_main_array_item_1_title": "Adicionar a capacidade de filtrar colunas no submenu Adicionar Colunas",
+  "v5_10_news_main_array_item_1_subtitle": "Agora você pode facilmente filtrar colunas no submenu Adicionar Colunas, tornando mais rápido encontrar e adicionar os campos que você precisa.",
+  "v5_10_news_main_array_item_2_title": "Visualizar vídeos e PDFs no painel de tarefas",
+  "v5_10_news_main_array_item_2_subtitle": "Agora você pode reproduzir vídeos diretamente da aba Arquivos no Painel de Tarefas — sem etapas extras necessárias.",
+  "v5_10_news_main_array_item_3_subtitle": "Visualize PDFs instantaneamente dentro do Painel de Tarefas, sem abrir uma janela separada.",
+  "v5_10_news_main_array_item_4_title": "Melhorar o editor de texto da Descrição da Tarefa",
+  "v5_10_news_main_array_item_4_subtitle": "O editor de Descrição da Tarefa foi atualizado para uma experiência de edição mais suave e confiável. Escrever e formatar texto agora é mais fácil do que nunca.",
+  "v5_10_news_main_array_item_5_title": "Suporte para upload de arquivos na Descrição da Tarefa",
+  "v5_10_news_main_array_item_5_subtitle": "Agora você pode fazer upload e anexar arquivos diretamente à Descrição da Tarefa, tornando suas tarefas mais informativas e organizadas.",
+  "v5_10_news_main_array_item_6_title": "Introduzir seletor de intervalo para o gráfico de Gantt",
+  "v5_10_news_main_array_item_6_subtitle": "O novo seletor de intervalo torna muito mais fácil definir a visualização no gráfico de Gantt, permitindo que você acompanhe os macros e micros de seus projetos.",
+  "v5_10_news_features_name": "Outras Atualizações",
+  "v5_10_news_features_title": "Melhorias",
+  "v5_10_news_features_update_items": [
+    "1. Atualizações gerais de design na aplicação web JustDo.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Adicionar botão enviar ao Chat.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Tính năng mới",
+  "v5_10_news_page_title": "JustDo v5.10: Cải tiến Gantt, Xem trước tệp, Chỉnh sửa tác vụ",
+  "v5_10_news_page_description": "JustDo v5.10 nâng cao hiệu suất với biểu đồ Gantt cải tiến, quản lý tệp tốt hơn với xem trước video và PDF, và trình chỉnh sửa mô tả tác vụ nâng cấp có khả năng tải lên tệp.",
+  "v5_10_news_main_array_item_0_subtitle": "Hôm nay, chúng tôi vui mừng thông báo phát hành JustDo v5.10.<br><br>Bản cập nhật này tập trung vào nâng cao trải nghiệm người dùng với chức năng biểu đồ Gantt cải tiến, quản lý tệp tốt hơn với xem trước video và PDF, và trình chỉnh sửa mô tả tác vụ nâng cấp có khả năng tải lên tệp.",
+  "v5_10_news_main_array_item_1_title": "Thêm khả năng lọc cột trong menu con Thêm cột",
+  "v5_10_news_main_array_item_1_subtitle": "Bây giờ bạn có thể dễ dàng lọc cột trong menu con Thêm cột, giúp tìm và thêm các trường bạn cần nhanh hơn.",
+  "v5_10_news_main_array_item_2_title": "Xem trước video và PDF trong ngăn tác vụ",
+  "v5_10_news_main_array_item_2_subtitle": "Bây giờ bạn có thể phát video trực tiếp từ tab Tệp trong Ngăn tác vụ — không cần thêm bước nào.",
+  "v5_10_news_main_array_item_3_subtitle": "Xem PDF ngay lập tức trong Ngăn tác vụ, không cần mở cửa sổ riêng biệt.",
+  "v5_10_news_main_array_item_4_title": "Cải thiện trình chỉnh sửa văn bản Mô tả tác vụ",
+  "v5_10_news_main_array_item_4_subtitle": "Trình chỉnh sửa Mô tả tác vụ đã được nâng cấp để có trải nghiệm chỉnh sửa mượt mà và đáng tin cậy hơn. Viết và định dạng văn bản giờ đây dễ dàng hơn bao giờ hết.",
+  "v5_10_news_main_array_item_5_title": "Hỗ trợ tải lên tệp vào Mô tả tác vụ",
+  "v5_10_news_main_array_item_5_subtitle": "Bây giờ bạn có thể tải lên và đính kèm tệp trực tiếp vào Mô tả tác vụ, làm cho các tác vụ của bạn có nhiều thông tin và được tổ chức hơn.",
+  "v5_10_news_main_array_item_6_title": "Giới thiệu bộ chọn phạm vi cho biểu đồ Gantt",
+  "v5_10_news_main_array_item_6_subtitle": "Bộ chọn phạm vi mới giúp thiết lập khung nhìn trong biểu đồ Gantt dễ dàng hơn nhiều, cho phép bạn theo dõi cả khía cạnh tổng thể và chi tiết của dự án.",
+  "v5_10_news_features_name": "Cập nhật khác",
+  "v5_10_news_features_title": "Cải tiến",
+  "v5_10_news_features_update_items": [
+    "1. Cập nhật thiết kế tổng thể cho ứng dụng web JustDo.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Thêm nút gửi vào Chat.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Ce este nou",
+  "v5_10_news_page_title": "JustDo v5.10: Gantt îmbunătățit, previzualizare fișiere și editare task-uri pentru un workflow mai bun",
+  "v5_10_news_page_description": "JustDo v5.10 aduce productivitate îmbunătățită cu funcționalitate îmbunătățită pentru diagrama Gantt, gestionarea mai bună a fișierelor cu previzualizări video și PDF, și un editor de descriere task-uri actualizat cu capacități de încărcare fișiere. Această versiune se concentrează pe eficientizarea workflow-ului și îmbunătățirea experienței generale a utilizatorului.",
+  "v5_10_news_main_array_item_0_subtitle": "Astăzi, suntem bucuroși să anunțăm lansarea JustDo v5.10.<br><br>Această actualizare se concentrează pe îmbunătățirea experienței utilizatorului cu funcționalitate îmbunătățită pentru diagrama Gantt, gestionarea mai bună a fișierelor cu previzualizări video și PDF, și un editor de descriere task-uri actualizat cu capacități de încărcare fișiere.",
+  "v5_10_news_main_array_item_1_title": "Adăugarea capacității de filtrare a coloanelor în sub-meniul Adăugare Coloane",
+  "v5_10_news_main_array_item_1_subtitle": "Acum poți filtra cu ușurință coloanele în sub-meniul Adăugare Coloane, facilitând găsirea și adăugarea mai rapidă a câmpurilor de care ai nevoie.",
+  "v5_10_news_main_array_item_2_title": "Previzualizarea videoclipurilor și PDF-urilor în panoul de task-uri",
+  "v5_10_news_main_array_item_2_subtitle": "Acum poți reda videoclipuri direct din fila Fișiere din Panoul de Task-uri — fără pași suplimentari necesari.",
+  "v5_10_news_main_array_item_3_subtitle": "Vizualizează PDF-uri instant direct în Panoul de Task-uri, fără a deschide o fereastră separată.",
+  "v5_10_news_main_array_item_4_title": "Îmbunătățirea editorului de text pentru Descrierea Task-ului",
+  "v5_10_news_main_array_item_4_subtitle": "Editorul pentru Descrierea Task-ului a fost actualizat pentru o experiență de editare mai fluidă și mai fiabilă. Scrierea și formatarea textului este acum mai ușoară ca niciodată.",
+  "v5_10_news_main_array_item_5_title": "Suport pentru încărcarea fișierelor în Descrierea Task-ului",
+  "v5_10_news_main_array_item_5_subtitle": "Acum poți încărca și atașa fișiere direct în Descrierea Task-ului, făcând task-urile tale mai informative și organizate.",
+  "v5_10_news_main_array_item_6_title": "Introducerea selectorului de interval pentru diagrama Gantt",
+  "v5_10_news_main_array_item_6_subtitle": "Noul selector de interval face setarea viewport-ului în diagrama Gantt mult mai ușoară, permițându-ți să urmărești atât aspectele macro, cât și micro ale proiectelor tale.",
+  "v5_10_news_features_name": "Alte actualizări",
+  "v5_10_news_features_title": "Îmbunătățiri",
+  "v5_10_news_features_update_items": [
+    "1. Actualizări generale de design pentru aplicația web JustDo.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Adăugarea unui buton de trimitere la Chat.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

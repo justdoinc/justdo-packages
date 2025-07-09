@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Nə yenilər var",
+  "v5_10_news_page_title": "JustDo v5.10: Təkmilləşdirilmiş Gantt, Fayl Önizləmə və Daha Yaxşı İş Axını üçün Tapşırıq Redaktəsi",
+  "v5_10_news_page_description": "JustDo v5.10 təkmilləşdirilmiş Gantt diaqramı funksionallığı, video və PDF önizləmə ilə daha yaxşı fayl idarəetməsi və fayl yükləmə imkanları ilə təkmilləşdirilmiş tapşırıq təsviri redaktoru ilə məhsuldarlığı artırır. Bu buraxılış iş axını səmərəliliyini sadələşdirməyə və ümumi istifadəçi təcrübəsini yaxşılaşdırmağa yönəlmişdir.",
+  "v5_10_news_main_array_item_0_subtitle": "Bu gün JustDo v5.10 buraxılışını elan etməkdən məmnunyuq.<br><br>Bu yeniləmə təkmilləşdirilmiş Gantt diaqramı funksionallığı, video və PDF önizləmə ilə daha yaxşı fayl idarəetməsi və fayl yükləmə imkanları ilə təkmilləşdirilmiş tapşırıq təsviri redaktoru ilə istifadəçi təcrübəsini yaxşılaşdırmağa yönəlmişdir.",
+  "v5_10_news_main_array_item_1_title": "Sütunları Əlavə Et alt menyusunda sütunları filtrləmə imkanı əlavə edildi",
+  "v5_10_news_main_array_item_1_subtitle": "İndi Sütunları Əlavə Et alt menyusunda sütunları asanlıqla filtrləyə bilərsiniz, bu da lazım olan sahələri tapmağı və əlavə etməyi daha sürətli edir.",
+  "v5_10_news_main_array_item_2_title": "Tapşırıq panelində video və PDF-ləri önizləyin",
+  "v5_10_news_main_array_item_2_subtitle": "İndi videoları birbaşa Tapşırıq Panelindəki Fayllar sekmesindən oynatmaq mümkündür — heç əlavə addım tələb olunmur.",
+  "v5_10_news_main_array_item_3_subtitle": "PDF-ləri ayrı pəncərə açmadan birbaşa Tapşırıq Panelində dərhal baxın.",
+  "v5_10_news_main_array_item_4_title": "Tapşırıq Təsviri mətn redaktoru təkmilləşdirildi",
+  "v5_10_news_main_array_item_4_subtitle": "Tapşırıq Təsviri redaktoru daha hamar və etibarlı redaktə təcrübəsi üçün yenilənmişdir. Mətn yazmaq və formatlaşdırmaq həmişəkindən daha asandır.",
+  "v5_10_news_main_array_item_5_title": "Tapşırıq Təsvirinə faylları yükləmə dəstəyi",
+  "v5_10_news_main_array_item_5_subtitle": "İndi faylları birbaşa Tapşırıq Təsvirinə yükləyə və əlavə edə bilərsiniz, bu da tapşırıqlarınızı daha məlumatlı və mütəşəkkil edir.",
+  "v5_10_news_main_array_item_6_title": "Gantt diaqramı üçün diapazon seçici təqdim edildi",
+  "v5_10_news_main_array_item_6_subtitle": "Yeni diapazon seçici Gantt diaqramında görüntü sahəsini təyin etməyi daha asan edir və layihələrinizin makro və mikro tərəflərini izləməyə imkan verir.",
+  "v5_10_news_features_name": "Digər Yeniliklər",
+  "v5_10_news_features_title": "Təkmilləşdirmələr",
+  "v5_10_news_features_update_items": [
+    "1. JustDo veb tətbiqində ümumi dizayn yenilikləri.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Söhbətə göndər düyməsi əlavə edildi.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

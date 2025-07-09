@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Çfarë është e re",
+  "v5_10_news_page_title": "JustDo v5.10: Gantt i Përmirësuar, Pamje Skedarësh dhe Editim",
+  "v5_10_news_page_description": "JustDo v5.10 sjell produktivitet të përmirësuar me funksionalitet të avancuar të grafikut Gantt, menaxhim më të mirë skedarësh me pamje video dhe PDF, dhe editor të përmirësuar për përshkrimin e detyrave me mundësi ngarkimi skedarësh.",
+  "v5_10_news_main_array_item_0_subtitle": "Sot, jemi të kënaqur të shpallim lançimin e JustDo v5.10.<br><br>Kjo përditësim fokusohet në përmirësimin e përvojës së përdoruesit me funksionalitet të përmirësuar të grafikut Gantt, menaxhim më të mirë skedarësh me pamje video dhe PDF, dhe një editor të përmirësuar për përshkrimin e detyrave me mundësi ngarkimi skedarësh.",
+  "v5_10_news_main_array_item_1_title": "Shtim i mundësisë për të filtruar kolonat në nën-menunë Shto Kolona",
+  "v5_10_news_main_array_item_1_subtitle": "Tani mund të filtroni lehtësisht kolonat në nën-menunë Shto Kolona, duke e bërë më të shpejtë gjetjen dhe shtimin e fushave që ju nevojiten.",
+  "v5_10_news_main_array_item_2_title": "Shiko video dhe PDF në panelin e detyrës",
+  "v5_10_news_main_array_item_2_subtitle": "Tani mund të luani video drejtpërdrejt nga skeda e Skedarëve në Panelin e Detyrës — pa u dashur hapa shtesë.",
+  "v5_10_news_main_array_item_3_subtitle": "Shikoni PDF menjëherë brenda Panelit të Detyrës, pa u dashur të hapni një dritare të veçantë.",
+  "v5_10_news_main_array_item_4_title": "Përmirësim i editorit të tekstit për Përshkrimin e Detyrës",
+  "v5_10_news_main_array_item_4_subtitle": "Editori i Përshkrimit të Detyrës është përmirësuar për një përvojë editimi më të qetë dhe më të besueshme. Shkruarja dhe formatimi i tekstit tani është më i lehtë se kurrë.",
+  "v5_10_news_main_array_item_5_title": "Mbështetje për ngarkimin e skedarëve në Përshkrimin e Detyrës",
+  "v5_10_news_main_array_item_5_subtitle": "Tani mund të ngarkoni dhe bashkëngjitni skedarë drejtpërdrejt në Përshkrimin e Detyrës, duke i bërë detyrat tuaja më informative dhe të organizuara.",
+  "v5_10_news_main_array_item_6_title": "Prezantim i zgjedhësit të intervalit për grafikun Gantt",
+  "v5_10_news_main_array_item_6_subtitle": "Zgjedhësi i ri i intervalit e bën shumë më të lehtë vendosjen e pamjes në grafikun Gantt, duke ju lejuar të ndiqni makrot dhe mikrot e projekteve tuaja.",
+  "v5_10_news_features_name": "Përditësime të Tjera",
+  "v5_10_news_features_title": "Përmirësime",
+  "v5_10_news_features_update_items": [
+    "1. Përditësime të përgjithshme dizajni për aplikacionin web JustDo.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Shtim i butonit për dërgim në Chat.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

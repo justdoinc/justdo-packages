@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Jaunumi",
+  "v5_10_news_page_title": "JustDo v5.10: Uzlabota Gantt shēma, failu priekšskatījums un uzdevumu rediģēšana",
+  "v5_10_news_page_description": "JustDo v5.10 uzlabo produktivitāti ar uzlabotu Gantt shēmas funkcionalitāti, labāku failu pārvaldību ar video un PDF priekšskatījumiem, un uzlabotu uzdevumu apraksta redaktoru ar failu augšupielādes iespējām.",
+  "v5_10_news_main_array_item_0_subtitle": "Šodien mēs ar prieku paziņojam par JustDo v5.10 izlaidi.<br><br>Šis atjauninājums fokusējas uz lietotāju pieredzes uzlabošanu ar uzlabotu Gantt shēmas funkcionalitāti, labāku failu pārvaldību ar video un PDF priekšskatījumiem, un uzlabotu uzdevumu apraksta redaktoru ar failu augšupielādes iespējām.",
+  "v5_10_news_main_array_item_1_title": "Pievienota iespēja filtrēt kolonnas apakšizvēlnē \"Pievienot kolonnas\"",
+  "v5_10_news_main_array_item_1_subtitle": "Tagad jūs varat viegli filtrēt kolonnas apakšizvēlnē \"Pievienot kolonnas\", padarot ātrāku nepieciešamo lauku atrašanu un pievienošanu.",
+  "v5_10_news_main_array_item_2_title": "Priekšskatīt video un PDF uzdevumu panelī",
+  "v5_10_news_main_array_item_2_subtitle": "Tagad jūs varat atskaņot video tieši no failu cilnes uzdevumu panelī — nav nepieciešami papildu soļi.",
+  "v5_10_news_main_array_item_3_subtitle": "Skatīt PDF failus tūlīt uzdevumu panelī, neatverot atsevišķu logu.",
+  "v5_10_news_main_array_item_4_title": "Uzlabots uzdevumu apraksta teksta redaktors",
+  "v5_10_news_main_array_item_4_subtitle": "Uzdevumu apraksta redaktors ir uzlabots, lai nodrošinātu vienmērīgāku un uzticamāku rediģēšanas pieredzi. Teksta rakstīšana un formatēšana tagad ir vieglāka nekā jebkad.",
+  "v5_10_news_main_array_item_5_title": "Atbalsts failu augšupielādei uzdevumu aprakstos",
+  "v5_10_news_main_array_item_5_subtitle": "Tagad jūs varat augšupielādēt un pievienot failus tieši uzdevumu aprakstos, padarot uzdevumus informatīvākus un organizētākus.",
+  "v5_10_news_main_array_item_6_title": "Ieviests diapazonu atlasītājs Gantt shēmai",
+  "v5_10_news_main_array_item_6_subtitle": "Jaunais diapazonu atlasītājs padara skatījuma iestatīšanu Gantt shēmā daudz vieglāku, ļaujot jums sekot līdzi projektu makro un mikro aspektiem.",
+  "v5_10_news_features_name": "Citi atjauninājumi",
+  "v5_10_news_features_title": "Uzlabojumi",
+  "v5_10_news_features_update_items": [
+    "1. Vispārīgi dizaina atjauninājumi JustDo tīmekļa lietotnei.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Pievienota sūtīšanas poga čatam.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

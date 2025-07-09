@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Yangiliklarimiz",
+  "v5_10_news_page_title": "JustDo v5.10: Yaxshilangan Gantt, Fayllarni Ko'rish va Ish Tahrirlash",
+  "v5_10_news_page_description": "JustDo v5.10 yaxshilangan Gantt diagrammasi, video va PDF fayllarini oldindan ko'rish va fayl yuklash imkoniyati bilan yangilangan vazifa tavsifi muharriri orqali ish samaradorligini oshiradi.",
+  "v5_10_news_main_array_item_0_subtitle": "Bugun biz JustDo v5.10 versiyasining chiqarilishini e'lon qilishdan xursandmiz.<br><br>Ushbu yangilanish Gantt diagrammasi funksiyalarini yaxshilash, video va PDF fayllarini oldindan ko'rish bilan fayl boshqaruvini yaxshilash va fayl yuklash imkoniyatlari bilan vazifa tavsifi muharririni yangilash orqali foydalanuvchi tajribasini yaxshilashga qaratilgan.",
+  "v5_10_news_main_array_item_1_title": "Ustunlar qo'shish pastki menyusida ustunlarni filtrlash imkoniyatini qo'shish",
+  "v5_10_news_main_array_item_1_subtitle": "Endi siz Ustunlar qo'shish pastki menyusida ustunlarni osonlikcha filtrlashingiz mumkin, bu sizga kerakli maydonlarni topish va qo'shishni tezlashtiradi.",
+  "v5_10_news_main_array_item_2_title": "Vazifa panelida videolar va PDF fayllarni oldindan ko'rish",
+  "v5_10_news_main_array_item_2_subtitle": "Endi siz videolarni to'g'ridan-to'g'ri Vazifa panelining Fayllar yorlig'idan ijro etishingiz mumkin — qo'shimcha qadamlar kerak emas.",
+  "v5_10_news_main_array_item_3_subtitle": "PDF fayllarni alohida oyna ochmay turib, to'g'ridan-to'g'ri Vazifa panelida darhol ko'ring.",
+  "v5_10_news_main_array_item_4_title": "Vazifa tavsifi matn muharririni yaxshilash",
+  "v5_10_news_main_array_item_4_subtitle": "Vazifa tavsifi muharriri silliqroq va ishonchli tahrirlash tajribasi uchun yangilandi. Matn yozish va formatlash endi har qachongidan ham osonroq.",
+  "v5_10_news_main_array_item_5_title": "Vazifa tavsifiga fayl yuklashni qo'llab-quvvatlash",
+  "v5_10_news_main_array_item_5_subtitle": "Endi siz fayllarni to'g'ridan-to'g'ri Vazifa tavsifiga yuklashingiz va biriktirishingiz mumkin, bu sizning vazifalaringizni yanada ma'lumotli va tartibli qiladi.",
+  "v5_10_news_main_array_item_6_title": "Gantt diagrammasi uchun oraliq tanlagichini kiritish",
+  "v5_10_news_main_array_item_6_subtitle": "Yangi oraliq tanlagich Gantt diagrammasida ko'rinish sohasini o'rnatishni ancha osonlashtiradi, bu sizga loyihalaringizning makro va mikro jihatlarini kuzatib borishga imkon beradi.",
+  "v5_10_news_features_name": "Boshqa Yangilanishlar",
+  "v5_10_news_features_title": "Yaxshilanishlar",
+  "v5_10_news_features_update_items": [
+    "1. JustDo veb-ilovasining umumiy dizayn yangilanishlari.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Suhbatga yuborish tugmasini qo'shish.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

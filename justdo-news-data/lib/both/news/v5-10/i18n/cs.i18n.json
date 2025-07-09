@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Co je nového",
+  "v5_10_news_page_title": "JustDo v5.10: Vylepšený Gantt, náhled souborů a úpravy úkolů",
+  "v5_10_news_page_description": "JustDo v5.10 přináší vylepšenou produktivitu s vylepšenou funkcionalitou Ganttova diagramu, lepší správu souborů s náhledy videí a PDF a vylepšený editor popisu úkolů s možností nahrávání souborů. Tato verze se zaměřuje na zefektivnění workflow a zlepšení celkového uživatelského zážitku.",
+  "v5_10_news_main_array_item_0_subtitle": "Dnes s potěšením oznamujeme vydání JustDo v5.10.<br><br>Tato aktualizace se zaměřuje na zlepšení uživatelského zážitku s vylepšenou funkcionalitou Ganttova diagramu, lepší správou souborů s náhledy videí a PDF a vylepšeným editorem popisu úkolů s možností nahrávání souborů.",
+  "v5_10_news_main_array_item_1_title": "Přidání možnosti filtrování sloupců v podnabídce Přidat sloupce",
+  "v5_10_news_main_array_item_1_subtitle": "Nyní můžete snadno filtrovat sloupce v podnabídce Přidat sloupce, což usnadňuje a urychluje vyhledávání a přidávání polí, která potřebujete.",
+  "v5_10_news_main_array_item_2_title": "Náhled videí a PDF v panelu úkolů",
+  "v5_10_news_main_array_item_2_subtitle": "Nyní můžete přehrávat videa přímo z karty Soubory v panelu úkolů — bez dalších kroků.",
+  "v5_10_news_main_array_item_3_subtitle": "Prohlížejte si PDF okamžitě přímo v panelu úkolů bez otevírání samostatného okna.",
+  "v5_10_news_main_array_item_4_title": "Vylepšení textového editoru popisu úkolů",
+  "v5_10_news_main_array_item_4_subtitle": "Editor popisu úkolů byl vylepšen pro plynulejší a spolehlivější editaci. Psaní a formátování textu je nyní snazší než kdy dříve.",
+  "v5_10_news_main_array_item_5_title": "Podpora nahrávání souborů do popisu úkolů",
+  "v5_10_news_main_array_item_5_subtitle": "Nyní můžete nahrávat a připojovat soubory přímo do popisu úkolů, čímž jsou vaše úkoly informativnější a lépe organizované.",
+  "v5_10_news_main_array_item_6_title": "Představujeme výběr rozsahu pro Ganttův diagram",
+  "v5_10_news_main_array_item_6_subtitle": "Nový výběr rozsahu usnadňuje nastavení zobrazení v Ganttově diagramu, což vám umožní sledovat jak makro, tak mikro aspekty vašich projektů.",
+  "v5_10_news_features_name": "Další aktualizace",
+  "v5_10_news_features_title": "Vylepšení",
+  "v5_10_news_features_update_items": [
+    "1. Obecné aktualizace designu webové aplikace JustDo.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Přidání tlačítka odeslat do chatu.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "v5_10_news_title": "v5.10",
+  "v5_10_news_main_name": "Yang Baru",
+  "v5_10_news_page_title": "JustDo v5.10: Gantt yang Ditingkatkan, Pratinjau File, dan Pengeditan Tugas untuk Alur Kerja yang Lebih Baik",
+  "v5_10_news_page_description": "JustDo v5.10 menghadirkan produktivitas yang ditingkatkan dengan fungsionalitas grafik Gantt yang diperbaiki, manajemen file yang lebih baik dengan pratinjau video dan PDF, serta editor deskripsi tugas yang ditingkatkan dengan kemampuan upload file. Rilis ini fokus pada efisiensi alur kerja dan meningkatkan pengalaman pengguna secara keseluruhan.",
+  "v5_10_news_main_array_item_0_subtitle": "Hari ini, kami dengan senang hati mengumumkan rilis JustDo v5.10.<br><br>Pembaruan ini fokus pada peningkatan pengalaman pengguna dengan fungsionalitas grafik Gantt yang diperbaiki, manajemen file yang lebih baik dengan pratinjau video dan PDF, serta editor deskripsi tugas yang ditingkatkan dengan kemampuan upload file.",
+  "v5_10_news_main_array_item_1_title": "Menambahkan kemampuan untuk memfilter kolom dalam sub-menu Tambah Kolom",
+  "v5_10_news_main_array_item_1_subtitle": "Sekarang Anda dapat dengan mudah memfilter kolom dalam sub-menu Tambah Kolom, membuatnya lebih cepat untuk menemukan dan menambahkan field yang Anda perlukan.",
+  "v5_10_news_main_array_item_2_title": "Pratinjau video dan PDF dalam panel tugas",
+  "v5_10_news_main_array_item_2_subtitle": "Sekarang Anda dapat memutar video langsung dari tab File dalam Panel Tugas — tanpa langkah tambahan yang diperlukan.",
+  "v5_10_news_main_array_item_3_subtitle": "Lihat PDF secara instan langsung dalam Panel Tugas, tanpa membuka jendela terpisah.",
+  "v5_10_news_main_array_item_4_title": "Meningkatkan editor teks Deskripsi Tugas",
+  "v5_10_news_main_array_item_4_subtitle": "Editor Deskripsi Tugas telah ditingkatkan untuk pengalaman pengeditan yang lebih lancar dan andal. Menulis dan memformat teks sekarang lebih mudah dari sebelumnya.",
+  "v5_10_news_main_array_item_5_title": "Mendukung upload file ke Deskripsi Tugas",
+  "v5_10_news_main_array_item_5_subtitle": "Sekarang Anda dapat mengunggah dan melampirkan file langsung ke Deskripsi Tugas, membuat tugas Anda lebih informatif dan terorganisir.",
+  "v5_10_news_main_array_item_6_title": "Memperkenalkan pemilih rentang untuk grafik Gantt",
+  "v5_10_news_main_array_item_6_subtitle": "Pemilih rentang yang baru membuat pengaturan viewport dalam grafik Gantt menjadi lebih mudah, memungkinkan Anda untuk melacak makro dan mikro proyek Anda.",
+  "v5_10_news_features_name": "Pembaruan Lainnya",
+  "v5_10_news_features_title": "Perbaikan",
+  "v5_10_news_features_update_items": [
+    "1. Pembaruan desain umum untuk aplikasi web JustDo.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_1.png' width='340px' style='margin: 10px;' />",
+    "2. Menambahkan tombol kirim ke Chat.<br><img src='/packages/justdoinc_justdo-news-data/lib/both/news/v5-10/assets/before_after_2.png' width='478' style='margin: 10px;' />"
+  ]
+}
