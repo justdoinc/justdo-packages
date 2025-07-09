@@ -101,6 +101,9 @@ _.extend JustdoTasksContextMenu.prototype,
     if not (field_info = @_context_field_info_reactive_var.get())? or not (task_id = @_context_item_id_reactive_var.get())?
       return
 
+    # For reactivity
+    @getGridControlWithOpenedContextMenu()
+
     field_name = field_info.field_name
     tasks_query_projection = {"#{field_name}": 1}
     if (dependencies_fields = field_info.column_field_schema.grid_dependencies_fields)?
@@ -123,9 +126,8 @@ _.extend JustdoTasksContextMenu.prototype,
         # While in edit mode, don't hijack the right click
         return
 
-      if not (gc = APP.modules.project_page.gridControl())?
-        # Can't find the active grid obj
-        return
+      # Find which grid control this event belongs to by traversing up the DOM
+      gc = @_findGridControlFromEvent(e)
 
       if not (event_item = gc.getEventItem(e))?
         # Can't find event's item
@@ -149,6 +151,7 @@ _.extend JustdoTasksContextMenu.prototype,
 
       e.preventDefault()
 
+      @setGridControlWithOpenedContextMenu gc
       @_context_item_id_reactive_var.set event_item._id
       @_context_item_path_reactive_var.set event_path
       @_context_field_info_reactive_var.set field_info
@@ -199,7 +202,7 @@ _.extend JustdoTasksContextMenu.prototype,
     # 2) back button brings back to the projects page, etc.)
     Tracker.autorun =>
       # If the active grid control changes or destroy, hide the context menu
-      APP.modules.project_page.gridControl()
+      context_gc = @getGridControlWithOpenedContextMenu()
 
       @hide()
 
@@ -207,9 +210,11 @@ _.extend JustdoTasksContextMenu.prototype,
 
     Tracker.autorun =>
       # If the active item changes from the item that initiated the opening of the context menu,
-      # close the context menu.
-      if JD.activeItem({_id: 1})?._id != @_context_item_id_reactive_var.get()
-        @hide()
+      # close the context menu. Only check this for the main grid control to maintain backward compatibility
+      context_gc = @getGridControlWithOpenedContextMenu()
+      
+      if context_gc?.activeItemId() isnt @_context_item_id_reactive_var.get()
+          @hide()
 
       return
 
@@ -223,16 +228,16 @@ _.extend JustdoTasksContextMenu.prototype,
 
     # Hide on grid_control scroll (following gmail behavior)
     Tracker.autorun =>
-      gc = APP.modules.project_page.gridControl()
+      context_gc = @getGridControlWithOpenedContextMenu()
 
-      if not gc?
+      if not context_gc?
         return
 
-      if gc._hide_context_on_scroll_initiated
+      if context_gc._hide_context_on_scroll_initiated
         return
-      gc._hide_context_on_scroll_initiated = true
+      context_gc._hide_context_on_scroll_initiated = true
 
-      gc.container.find(".slick-viewport").on "scroll", => @hide()
+      context_gc.container.find(".slick-viewport").on "scroll", => @hide()
 
       return
 
@@ -275,6 +280,9 @@ _.extend JustdoTasksContextMenu.prototype,
     @is_visible.set(false)
 
     @$getNode().removeClass("show").find(".dropdown-menu").removeClass("show")
+    
+    # Clear the context grid control when hiding
+    @setGridControlWithOpenedContextMenu(null)
 
     return
 
@@ -282,7 +290,11 @@ _.extend JustdoTasksContextMenu.prototype,
 
   getContextItemObj: (fields) ->
     if (context_item_id = @getContextItemId())?
-      @tasks_collection.findOne(context_item_id, {fields})
+      # Get the collection from the context grid control, fallback to global Tasks collection
+      context_gc = @getGridControlWithOpenedContextMenu()
+      collection = context_gc?.collection or APP.collections.Tasks
+      
+      collection.findOne(context_item_id, {fields})
     else
       return undefined
 
@@ -506,6 +518,19 @@ _.extend JustdoTasksContextMenu.prototype,
       $first_nested_menu_first_section_filter.focus()
       $first_nested_menu_section_filters.val("") # Clear all filters in the submenu
       $first_nested_menu_section_filters.trigger("keyup") # To update the filter reactive var
+
+    return
+
+  _findGridControlFromEvent: (e) ->
+    # Find the grid control container that contains the event target
+    $target = $(e.target)
+    
+    # Look through all tracked grid controls to find which one contains the event target
+    for grid_control from @_registered_grid_controls
+      if grid_control.container? and $target.closest(grid_control.container).length > 0
+        return grid_control
+    
+    throw @_error "fatal", "Cannot find grid control from event. Please ensure that the grid control is registered with registerGridControl."
 
   _registerMainGridControl: ->
     # The grid controls from project page grid control mux does not trigger the "additional-grid-control-created" event,
