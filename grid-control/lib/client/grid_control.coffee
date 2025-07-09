@@ -1672,7 +1672,23 @@ _.extend GridControl.prototype,
     @current_path.get()
 
     return @getCurrentPathNonReactive()
+  
+  activeItemPath: ->
+    if @isMultiSelectMode()
+      return null
+    
+    return @getCurrentPath()
+  
+  activeItemId: ->
+    if not (active_item_path = @activeItemPath())?
+      return null
 
+    tree_info = @_grid_data.getPathNaturalCollectionTreeInfo(active_item_path)
+
+    if not tree_info?
+      return null
+
+    return tree_info.item_id
   #
   # Row grid tree details
   #
