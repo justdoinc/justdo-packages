@@ -109,7 +109,7 @@ setupContextMenuCalcFieldsControls = ->
     data:
       label: "Set function"
 
-    listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+    listingCondition: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
       if not (gc = APP.modules.project_page?.gridControl())?
         return false
 
@@ -134,7 +134,7 @@ setupContextMenuCalcFieldsControls = ->
 
         return
       icon_type: "none"
-    listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+    listingCondition: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
       return _.isString(field_val) and field_val[0] == "="
 
   supported_funcs = [
