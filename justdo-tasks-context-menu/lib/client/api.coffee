@@ -44,7 +44,8 @@ _.extend JustdoTasksContextMenu.prototype,
         @_context_item_path_reactive_var.get(),
         @_context_field_val_reactive_var.get(),
         @_context_dependencies_field_val_reactive_var.get(),
-        @_context_field_info_reactive_var.get()
+        @_context_field_info_reactive_var.get(),
+        @getGridControlWithOpenedContextMenu()
       ]
 
     @sections_reactive_items_list.registerListingConditionCustomArgsGenerator @_sectionsAndItemsReactiveItemsListListingConditionCustomArgsGenerator
