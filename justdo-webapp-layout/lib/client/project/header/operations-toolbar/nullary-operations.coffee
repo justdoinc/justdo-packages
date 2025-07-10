@@ -11,14 +11,16 @@ APP.executeAfterAppLibCode ->
     alternative_shortcuts: ["alt+\\"]
     template:
       custom_icon_html: -> """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#corner-down-#{APP.justdo_i18n.getRtlAwareDirection "right"}"/></svg>"""
-    op: ->
-      gc = gridControl()
+    op: (gc) ->
+      gc = gc or gridControl()
 
       gc.saveAndExitActiveEditor()
 
       gc.addSubItem({project_id: curProj().id})
 
-    prereq: -> gridControl().addSubItem.prereq()
+    prereq: (gc)->
+      gc = gc or gridControl()
+      return gc.addSubItem.prereq()
 
   isActiveItemSectionHeaderUnderMainTab = ->
     # Returns true only if all the following are true:
@@ -58,8 +60,8 @@ APP.executeAfterAppLibCode ->
     alternative_shortcuts: ["alt+plus"]
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>"""
-    op: ->
-      gc = gridControl()
+    op: (gc) ->
+      gc = gc or gridControl()
 
       gc.saveAndExitActiveEditor()
 
@@ -73,13 +75,15 @@ APP.executeAfterAppLibCode ->
 
         return
 
-      gridControl().addSiblingItem(new_task_custom_fields)
+      gc.addSiblingItem(new_task_custom_fields)
 
-    prereq: ->
-      if not gridControl().isMultiSelectMode() and isActiveItemSectionHeaderUnderMainTab()
+    prereq: (gc) ->
+      gc = gc or gridControl()
+
+      if not gc.isMultiSelectMode() and isActiveItemSectionHeaderUnderMainTab()
         return {} # add new task is allowed in such a case, otherwise, if someone sees only the Shared With Me he won't be able to add tasks to the root once it is activated
 
-      return gridControl().addSiblingItem.prereq()
+      return gc.addSiblingItem.prereq()
 
   project_page_module.setNullaryOperation "removeTask",
     human_description: "Remove Task"
@@ -87,12 +91,12 @@ APP.executeAfterAppLibCode ->
     keyboard_shortcut: "alt+-"
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"/></svg>"""
-    op: ->
-      gc = gridControl()
+    op: (gc) ->
+      gc = gc or gridControl()
 
       current_task_obj = gc.getCurrentPathObj()
 
-      performAction = -> gridControl().removeActivePath()
+      performAction = -> gc.removeActivePath()
 
       # If the task has no title and subject, created by me in the last 5 mins -
       # don't ask for confirmation before remove
@@ -115,7 +119,9 @@ APP.executeAfterAppLibCode ->
 
       return
 
-    prereq: -> gridControl().removeActivePath.prereq()
+    prereq: (gc) ->
+      gc = gc or gridControl()
+      return gc.removeActivePath.prereq()
 
   project_page_module.setNullaryOperation "moveDown",
     human_description: "Move Down"
@@ -123,8 +129,12 @@ APP.executeAfterAppLibCode ->
     keyboard_shortcut: "alt+down"
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-down"/></svg>"""
-    op: -> gridControl().moveActivePathDown()
-    prereq: -> gridControl().moveActivePathDown.prereq()
+    op: (gc) ->
+      gc = gc or gridControl()
+      gc.moveActivePathDown()
+    prereq: (gc) ->
+      gc = gc or gridControl()
+      return gc.moveActivePathDown.prereq()
 
   project_page_module.setNullaryOperation "moveUp",
     human_description: "Move Up"
@@ -132,8 +142,12 @@ APP.executeAfterAppLibCode ->
     keyboard_shortcut: "alt+up"
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-up"/></svg>"""
-    op: -> gridControl().moveActivePathUp()
-    prereq: -> gridControl().moveActivePathUp.prereq()
+    op: (gc) ->
+      gc = gc or gridControl()
+      gc.moveActivePathUp()
+    prereq: (gc) ->
+      gc = gc or gridControl()
+      return gc.moveActivePathUp.prereq()
 
   project_page_module.setNullaryOperation "moveLeft",
     human_description: "Outdent"
@@ -141,8 +155,12 @@ APP.executeAfterAppLibCode ->
     keyboard_shortcut: -> "alt+#{APP.justdo_i18n.getRtlAwareDirection "left"}"
     template:
       custom_icon_html: -> """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-#{APP.justdo_i18n.getRtlAwareDirection "left"}"/></svg>"""
-    op: -> gridControl().moveActivePathLeft()
-    prereq: -> gridControl().moveActivePathLeft.prereq()
+    op: (gc) ->
+      gc = gc or gridControl()
+      gc.moveActivePathLeft()
+    prereq: (gc) ->
+      gc = gc or gridControl()
+      return gc.moveActivePathLeft.prereq()
 
   project_page_module.setNullaryOperation "moveRight",
     human_description: "Indent"
@@ -150,16 +168,24 @@ APP.executeAfterAppLibCode ->
     keyboard_shortcut: -> "alt+#{APP.justdo_i18n.getRtlAwareDirection "right"}"
     template:
       custom_icon_html: -> """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-#{APP.justdo_i18n.getRtlAwareDirection "right"}"/></svg>"""
-    op: -> gridControl().moveActivePathRight()
-    prereq: -> gridControl().moveActivePathRight.prereq()
+    op: (gc) ->
+      gc = gc or gridControl()
+      gc.moveActivePathRight()
+    prereq: (gc) ->
+      gc = gc or gridControl()
+      return gc.moveActivePathRight.prereq()
 
   project_page_module.setNullaryOperation "sortByPriority",
     human_description: "Sort by priority"
     human_description_i18n: "sort_by_priority_label"
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#jd-sort"/></svg>"""
-    op: -> gridControl().sortActivePathByPriorityDesc()
-    prereq: -> gridControl().sortActivePathByPriorityDesc.prereq()
+    op: (gc) ->
+      gc = gc or gridControl()
+      gc.sortActivePathByPriorityDesc()
+    prereq: (gc) ->
+      gc = gc or gridControl()
+      return gc.sortActivePathByPriorityDesc.prereq()
 
   project_page_module.setNullaryOperation "zoomIn",
     human_description: "Zoom in"
@@ -183,27 +209,29 @@ APP.executeAfterAppLibCode ->
   project_page_module.setNullaryOperation "addToFavorites",
     human_description: "Add to Favorites"
     human_description_i18n: "add_to_favorites_label"
-    op: ->
-      active_item_id = project_page_module.activeItemId()
+    op: (gc) ->
+      gc = gc or gridControl()
+      active_item_id = gc.activeItemId()
 
       JD.collections.Tasks.update(active_item_id, {$set: {"priv:favorite": new Date(TimeSync.getServerTime())}})
 
       return
-    prereq: ->
-      gc = gridControl()
+    prereq: (gc) ->
+      gc = gc or gridControl()
 
       return gc._opreqActivePathIsCollectionItem(gc._opreqGridReady())
 
   project_page_module.setNullaryOperation "removeFromFavorites",
     human_description: "Remove from Favorites"
     human_description_i18n: "remove_from_favorites_label"
-    op: ->
-      active_item_id = project_page_module.activeItemId()
+    op: (gc) ->
+      gc = gc or gridControl()
+      active_item_id = gc.activeItemId()
 
       JD.collections.Tasks.update(active_item_id, {$set: {"priv:favorite": null}})
 
       return
-    prereq: ->
-      gc = gridControl()
+    prereq: (gc) ->
+      gc = gc or gridControl()
 
       return gc._opreqActivePathIsCollectionItem(gc._opreqGridReady())
