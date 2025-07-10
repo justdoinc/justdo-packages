@@ -1673,11 +1673,14 @@ _.extend GridControl.prototype,
 
     return @getCurrentPathNonReactive()
   
-  activeItemPath: ->
+  activeItemPath = ->
     if @isMultiSelectMode()
       return null
     
     return @getCurrentPath()
+
+  activeItemPath: activeItemPath
+  activePath: activeItemPath
   
   activeItemId: ->
     if not (active_item_path = @activeItemPath())?
