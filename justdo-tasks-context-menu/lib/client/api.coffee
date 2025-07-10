@@ -297,9 +297,6 @@ _.extend JustdoTasksContextMenu.prototype,
     @is_visible.set(false)
 
     @$getNode().removeClass("show").find(".dropdown-menu").removeClass("show")
-    
-    # Clear the context grid control when hiding
-    @setGridControlWithOpenedContextMenu(null)
 
     return
 
