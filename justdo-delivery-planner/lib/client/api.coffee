@@ -372,14 +372,14 @@ _.extend JustdoDeliveryPlanner.prototype,
           data:
             label: TAPi18n.__ projects_collection_type.add_sub_item_i18n, {}, JustdoI18n.default_lang
             label_i18n: projects_collection_type.add_sub_item_i18n
-            op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) =>
+            op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) =>
               fields = 
                 project_id: JD.activeJustdoId()
                 state: "nil"
                 projects_collection:
                   projects_collection_type: type_id
                 
-              APP.modules.project_page.gridControl().addSubItem fields, (err) ->
+              gc.addSubItem fields, (err) ->
                 if err?
                   JustdoSnackbar.show 
                     text: err.reason or err
