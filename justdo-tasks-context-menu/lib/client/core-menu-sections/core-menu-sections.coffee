@@ -83,8 +83,8 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_type: "feather"
         icon_val: "star"
 
-      listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
         if not (gc = APP.modules.project_page?.gridControl())?
+      listingCondition: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           return false
 
         if gc.isMultiSelectMode()
@@ -254,8 +254,8 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_type: "feather"
         icon_val: "archive"
 
-      listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
         if not (gc = APP.modules.project_page?.gridControl())?
+      listingCondition: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           return false
 
         if gc.isMultiSelectMode()
@@ -329,7 +329,7 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_type: "feather"
         icon_val: "arrow-down-right"
 
-      listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+      listingCondition: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
         if not field_info?
           # Happens when initiating the context menu
           return false
@@ -621,7 +621,7 @@ _.extend JustdoTasksContextMenu.prototype,
     #     icon_type: "feather"
     #     icon_val: "copy"
 
-    # isFieldEditable = (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+    # isFieldEditable = (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
     #   if not field_info?.column_field_schema?.grid_editable_column
     #     return false
 
@@ -746,7 +746,7 @@ _.extend JustdoTasksContextMenu.prototype,
             if task_id? and APP.justdo_delivery_planner.isTaskObjProject(APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "#{JustdoDeliveryPlanner.task_is_project_field_name}": 1}}))
               return "jd-briefcase-unset"
             return "briefcase"
-        listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+        listingCondition: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           task = APP.collections.Tasks.findOne(task_id, {fields: {projects_collection: 1, [JustdoDeliveryPlanner.task_is_project_field_name]: 1}})
           is_allowed_by_permissions = APP.justdo_permissions?.checkTaskPermissions("task-field-edit.p:dp:is_project", task_id)
           is_task_project = APP.justdo_delivery_planner.isTaskObjProject(task)
@@ -783,7 +783,7 @@ _.extend JustdoTasksContextMenu.prototype,
               return "briefcase"
             else
               return "jd-briefcase-close"
-        listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+        listingCondition: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           task = APP.collections.Tasks.findOne(task_id, {fields: {[JustdoDeliveryPlanner.task_is_project_field_name]: 1}})
           is_allowed_by_permissions = APP.justdo_permissions?.checkTaskPermissions("task-field-edit.p:dp:is_archived_project", task_id)
           is_task_project = APP.justdo_delivery_planner.isTaskObjProject(task)
