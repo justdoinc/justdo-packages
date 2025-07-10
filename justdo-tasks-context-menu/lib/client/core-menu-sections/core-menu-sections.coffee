@@ -14,15 +14,15 @@ _.extend JustdoTasksContextMenu.prototype,
       data:
         label: "New Sibling Task"
         label_i18n: "new_sibling_task_label"
-        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          APP.modules.project_page.performOp("addSiblingTask")
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
+          APP.modules.project_page.performOp("addSiblingTask", gc)
 
           return
         icon_type: "feather"
         icon_val: "plus"
 
-      listingCondition: ->
-        unfulfilled_op_req = APP.modules.project_page.getUnfulfilledOpReq("addSiblingTask")
+      listingCondition: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
+        unfulfilled_op_req = APP.modules.project_page.getUnfulfilledOpReq("addSiblingTask", gc)
 
         delete unfulfilled_op_req.ops_locked # We ignore that lock to avoid flickering when locking ops are performed from the contextmenu
 
@@ -33,15 +33,15 @@ _.extend JustdoTasksContextMenu.prototype,
       data:
         label: "New Child Task"
         label_i18n: "new_child_task_label"
-        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          APP.modules.project_page.performOp("addSubTask")
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
+          APP.modules.project_page.performOp("addSubTask", gc)
 
           return
         icon_type: "feather"
         icon_val: -> "corner-down-#{APP.justdo_i18n.getRtlAwareDirection "right"}"
 
-      listingCondition: ->
-        unfulfilled_op_req = APP.modules.project_page.getUnfulfilledOpReq("addSubTask")
+      listingCondition: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
+        unfulfilled_op_req = APP.modules.project_page.getUnfulfilledOpReq("addSubTask", gc)
 
         delete unfulfilled_op_req.ops_locked # We ignore that lock to avoid flickering when locking ops are performed from the contextmenu
 
@@ -69,22 +69,22 @@ _.extend JustdoTasksContextMenu.prototype,
           else
             return "add_to_favorites_label"
 
-        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
           if not (task_doc = APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "priv:favorite": 1}}))?
             # This should never happen
             return
 
           if task_doc["priv:favorite"]?
-            APP.modules.project_page.performOp("removeFromFavorites")
+            APP.modules.project_page.performOp("removeFromFavorites", gc)
           else
-            APP.modules.project_page.performOp("addToFavorites")
+            APP.modules.project_page.performOp("addToFavorites", gc)
 
           return
         icon_type: "feather"
         icon_val: "star"
 
-        if not (gc = APP.modules.project_page?.gridControl())?
-      listingCondition: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+      listingCondition: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
+        if not gc?
           return false
 
         if gc.isMultiSelectMode()
@@ -95,9 +95,9 @@ _.extend JustdoTasksContextMenu.prototype,
           return
 
         if task_doc["priv:favorite"]?
-          unfulfilled_op_req = APP.modules.project_page.getUnfulfilledOpReq("removeFromFavorites")
+          unfulfilled_op_req = APP.modules.project_page.getUnfulfilledOpReq("removeFromFavorites", gc)
         else
-          unfulfilled_op_req = APP.modules.project_page.getUnfulfilledOpReq("addToFavorites")
+          unfulfilled_op_req = APP.modules.project_page.getUnfulfilledOpReq("addToFavorites", gc)
 
         delete unfulfilled_op_req.ops_locked # We ignore that lock to avoid flickering when locking ops are performed from the contextmenu
 
@@ -106,39 +106,33 @@ _.extend JustdoTasksContextMenu.prototype,
     @registerSectionItem "main", "remove-task",
       position: 300
       data:
-        label: ->
-          if not (gc = APP.modules.project_page?.gridControl())?
-            return false
-
+        label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
           if gc.isMultiSelectMode()
             return "Remove Tasks"
 
-          if Object.keys(JD.activeItem({parents: 1}).parents).length > 1
+          if Object.keys(gc.activeItem({parents: 1}).parents).length > 1
             return "Remove From Parent"
 
           return "Remove Task"
 
-        label_i18n: ->
-          if not (gc = APP.modules.project_page?.gridControl())?
-            return false
-
+        label_i18n: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
           if gc.isMultiSelectMode()
             return "remove_tasks_label"
 
-          if Object.keys(JD.activeItem({parents: 1}).parents).length > 1
+          if Object.keys(gc.activeItem({parents: 1}).parents).length > 1
             return "remove_from_parent_label"
 
           return "remove_task_label"
 
-        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          APP.modules.project_page.performOp("removeTask")
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
+          APP.modules.project_page.performOp("removeTask", gc)
 
           return
         icon_type: "feather"
         icon_val: "trash"
 
-      listingCondition: ->
-        unfulfilled_op_req = APP.modules.project_page.getUnfulfilledOpReq("removeTask")
+      listingCondition: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
+        unfulfilled_op_req = APP.modules.project_page.getUnfulfilledOpReq("removeTask", gc)
 
         delete unfulfilled_op_req.ops_locked # We ignore that lock to avoid flickering when locking ops are performed from the contextmenu
 
@@ -150,11 +144,11 @@ _.extend JustdoTasksContextMenu.prototype,
         label: "Remove with Sub-Tree"
         label_i18n: "remove_with_subtree_label"
 
-        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
           task = APP.collections.Tasks.findOne(task_id, {fields: {seqId: 1, title: 1}})
           bootbox.confirm "Are you sure you want to remove the task and its entire sub-tree of #{JustdoHelpers.taskCommonName(task)}?", (result) ->
             if result
-              if (gd = APP.modules.project_page.gridData())?
+              if (gd = gc._grid_data)?
                 paths = [task_path]
 
                 gd.each(task_path, {}, (section, item_type, item_obj, path, expand_state) ->
@@ -177,8 +171,8 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_type: "feather"
         icon_val: "trash"
 
-      listingCondition: ->
-        if not (gc = APP.modules.project_page?.gridControl())?
+      listingCondition: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
+        if not gc?
           return false
 
         if gc.isMultiSelectMode()
@@ -195,7 +189,7 @@ _.extend JustdoTasksContextMenu.prototype,
 
         counter = 0
         condition_is_satisfied = true
-        APP.modules.project_page.gridData().each(JD.activePath(), {}, (section, item_type, item_obj, path, expand_state) ->
+        gc._grid_data.each(gc.activePath(), {}, (section, item_type, item_obj, path, expand_state) ->
           if Object.keys(item_obj.parents).length > 1
             condition_is_satisfied = false
             console.info "Remove subtree prevented: a task with more than one parent found #{item_obj._id}"
@@ -221,15 +215,15 @@ _.extend JustdoTasksContextMenu.prototype,
     @registerSectionItem "main", "archive-unarchive-task",
       position: 500
       data:
-        label: ->
-          task_archived = JD.activeItem({archived: 1}).archived
+        label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
+          task_archived = gc.activeItem({archived: 1}).archived
 
           if _.isDate task_archived
             return "Unarchive Task"
 
           return "Archive Task"
-        label_i18n: ->
-          task_archived = JD.activeItem({archived: 1}).archived
+        label_i18n: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
+          task_archived = gc.activeItem({archived: 1}).archived
 
           if _.isDate task_archived
             return "unarchive_task_label"
@@ -254,8 +248,8 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_type: "feather"
         icon_val: "archive"
 
-        if not (gc = APP.modules.project_page?.gridControl())?
-      listingCondition: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+      listingCondition: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
+        if not gc?
           return false
 
         if gc.isMultiSelectMode()
@@ -263,9 +257,7 @@ _.extend JustdoTasksContextMenu.prototype,
 
         return APP.justdo_permissions.checkTaskPermissions("task-field-edit.archived", task_id)
 
-    getSubtreeItemsWithDifferentVals = (task_path, field_val, field_info) ->
-      gc = APP.modules.project_page.gridControl()
-
+    getSubtreeItemsWithDifferentVals = (task_path, field_val, field_info, gc) ->
       subtasks_with_different_val = {}
       gc._grid_data.each task_path, (section, item_type, item_obj) ->
         if item_obj._type?
@@ -285,7 +277,7 @@ _.extend JustdoTasksContextMenu.prototype,
           current_selected_value_label = field_info.column_field_schema?.grid_values?[field_val]?.txt or "value"
 
           return "Apply #{current_selected_value_label} to subtree"
-        label_i18n: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+        label_i18n: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
           translated_value_label = ""
           if (current_selected_value = field_info.column_field_schema?.grid_values?[field_val])?
             current_selected_value_label = current_selected_value?.txt
@@ -295,8 +287,8 @@ _.extend JustdoTasksContextMenu.prototype,
 
           return {label_i18n: "apply_value_to_subtree", options_i18n: {value: translated_value_label}}
           
-        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          subtasks_with_different_val = getSubtreeItemsWithDifferentVals(task_path, field_val, field_info)
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
+          subtasks_with_different_val = getSubtreeItemsWithDifferentVals(task_path, field_val, field_info, gc)
 
           if _.isEmpty(subtasks_with_different_val)
             return
@@ -340,7 +332,7 @@ _.extend JustdoTasksContextMenu.prototype,
         # Ensure there are *visible* children (when all children are hidden filterAwareGetPathHasChildren returns == 2),
         # IMPORTANT we do apply the value to items that didn't pass the filter as well, it is just going to be weird
         # product wise to show the option to apply the value to children when it isn't clear there are children.
-        if not (gc = APP.modules.project_page.gridControl())?
+        if not gc?
           return false
         
         if gc._grid_data.filterAwareGetPathHasChildren(task_path) != 1
@@ -357,8 +349,8 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_type: "feather"
         icon_val: "jd-sort"
 
-      listingCondition: ->
-        if not (gc = APP.modules.project_page?.gridControl())?
+      listingCondition: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
+        if not gc?
           return false
 
         if gc.isMultiSelectMode()
@@ -419,8 +411,8 @@ _.extend JustdoTasksContextMenu.prototype,
           data:
             label: -> if label then label else getLabelForFieldId(field_id)
             label_i18n: "#{field_id}_schema_label"
-            op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-              if not (gc = APP.modules.project_page?.gridControl())?
+            op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
+              if not gc?
                 return false
               gc._grid_data.sortChildren task_path, field_id, order
               return
@@ -433,8 +425,8 @@ _.extend JustdoTasksContextMenu.prototype,
     @registerMainSection "zoom-in",
       position: 200
       hide_border: true
-      listingCondition: ->
-        if not (gc = APP.modules.project_page?.gridControl())?
+      listingCondition: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
+        if not gc?
           return false
 
         if gc.isMultiSelectMode()
@@ -447,8 +439,8 @@ _.extend JustdoTasksContextMenu.prototype,
       data:
         label: "Zoom in"
         label_i18n: "zoom_in_label"
-        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          APP.modules.project_page.performOp("zoomIn")
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
+          APP.modules.project_page.performOp("zoomIn", gc)
 
           return
         icon_type: "feather"
@@ -457,8 +449,7 @@ _.extend JustdoTasksContextMenu.prototype,
     behavior_by_editor_type = 
       SelectorEditor:
         close_on_click: true
-        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          gc = APP.modules.project_page?.gridControl()
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
           field_id = item_data.field_id
           field_val = item_data.id
           selected_task_ids = _.map gc.getFilterPassingMultiSelectedPathsArray(), (path) -> GridData.helpers.getPathItemId path
@@ -474,8 +465,7 @@ _.extend JustdoTasksContextMenu.prototype,
           return
       MultiSelectEditor:
         close_on_click: false
-        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          gc = APP.modules.project_page?.gridControl()
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
           field_id = item_data.field_id
           field_val = item_data.id
           selected_task_ids = _.map gc.getFilterPassingMultiSelectedPathsArray(), (path) -> GridData.helpers.getPathItemId path
@@ -505,8 +495,7 @@ _.extend JustdoTasksContextMenu.prototype,
           return
         icon_type: "feather"
         icon_class: ""
-        icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          gc = APP.modules.project_page?.gridControl()
+        icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
           field_id = item_data.field_id
           field_val = item_data.id
           selected_task_ids = _.map gc.getFilterPassingMultiSelectedPathsArray(), (path) -> GridData.helpers.getPathItemId path
@@ -531,7 +520,7 @@ _.extend JustdoTasksContextMenu.prototype,
       if not JD.activeJustdoId()?
         return
       
-      if not (gc = APP.modules.project_page?.gridControl())?
+      if not (gc = self.getGridControlWithOpenedContextMenu())?
         return
       
       Tracker.nonreactive =>
@@ -542,8 +531,8 @@ _.extend JustdoTasksContextMenu.prototype,
           data:
             label: "Set"
             label_i18n: "bulk_set_options_label"
-          listingCondition: ->
-            if not (gc = APP.modules.project_page?.gridControl())?
+          listingCondition: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
+            if not gc?
               return false
 
             return gc.isMultiSelectMode() and (_.size(gc.getFilterPassingMultiSelectedPathsArray()) <= 100)
@@ -715,8 +704,8 @@ _.extend JustdoTasksContextMenu.prototype,
         data:
           label: "Projects"
           label_i18n: "projects"
-        listingCondition: ->
-          if not (gc = APP.modules.project_page?.gridControl())?
+        listingCondition: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
+          if not gc?
             return false
 
           if gc.isMultiSelectMode()
@@ -824,8 +813,8 @@ _.extend JustdoTasksContextMenu.prototype,
 
           return justdo_has_projects
 
-      getAllJustdoActiveProjectsSortedByProjectName = (filter_state) ->
-        active_item = APP.collections.Tasks.getDocNonReactive(JD.activeItemId())
+      getAllJustdoActiveProjectsSortedByProjectName = (filter_state, gc) ->
+        active_item = APP.collections.Tasks.getDocNonReactive(gc.activeItemId())
 
         options = 
           active_only: true
@@ -837,7 +826,7 @@ _.extend JustdoTasksContextMenu.prototype,
               $regex: new RegExp(JustdoHelpers.escapeRegExp(filter_state), "i")
 
         project_tasks = APP.justdo_delivery_planner.getKnownProjects(JD.activeJustdo({_id: 1})?._id, options, Meteor.userId())
-        project_tasks = APP.justdo_delivery_planner.excludeProjectsCauseCircularChain project_tasks, JD.activeItemId()
+        project_tasks = APP.justdo_delivery_planner.excludeProjectsCauseCircularChain project_tasks, gc.activeItemId()
 
         project_tasks = project_tasks.sort((project_task_a, project_task_b) =>
           is_in_project_a = project_task_a._id of active_item.parents
@@ -858,10 +847,7 @@ _.extend JustdoTasksContextMenu.prototype,
         
         return project_tasks
         
-      addNewParentToTaskId = (task_id, new_parent_id, cb) ->
-        project_page_module = APP.modules.project_page
-        gc = project_page_module.gridControl()
-        
+      addNewParentToTaskId = (task_id, new_parent_id, gc, cb) ->
         gc.saveAndExitActiveEditor() # Exit edit mode, if any, to make sure result will appear on tree (otherwise, will show only when exit edit mode)
 
         gc._performLockingOperation (releaseOpsLock, timedout) =>
@@ -876,10 +862,7 @@ _.extend JustdoTasksContextMenu.prototype,
 
         return
 
-      removeParent = (item_path, cb) ->
-        project_page_module = APP.modules.project_page
-        gc = project_page_module.gridControl()
-        
+      removeParent = (item_path, gc, cb) ->
         gc._performLockingOperation (releaseOpsLock, timedout) =>
           gc._grid_data?.removeParent item_path, (err) =>
             releaseOpsLock()
@@ -902,6 +885,8 @@ _.extend JustdoTasksContextMenu.prototype,
           limit_rendered_items: true
 
           itemsGenerator: ->
+            gc = self.getGridControlWithOpenedContextMenu()
+
             current_section_filter_state = self.getSectionFilterState("manage-active-projects")
 
             cache_key = "manage-active-projects::#{current_section_filter_state}"
@@ -911,9 +896,9 @@ _.extend JustdoTasksContextMenu.prototype,
 
             res = []
 
-            active_item_id = JD.activeItemId()
+            active_item_id = gc.activeItemId()
             
-            active_projects_docs = getAllJustdoActiveProjectsSortedByProjectName(current_section_filter_state)
+            active_projects_docs = getAllJustdoActiveProjectsSortedByProjectName(current_section_filter_state, gc)
 
             if _.isEmpty(_.filter(active_projects_docs, (active_project_doc) -> active_project_doc._id != active_item_id)) # Show only if there are no other projects (filter myself out, in case I am a project)
               res.push
@@ -929,7 +914,7 @@ _.extend JustdoTasksContextMenu.prototype,
 
                     label: -> return project_task_doc.title or ""
                     label_addendum_template: "manage_active_projects_jump_to_proj"
-                    op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+                    op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
                       query =
                         _id: task_id
                         "parents.#{project_task_doc._id}": {$exists: true}
@@ -941,7 +926,7 @@ _.extend JustdoTasksContextMenu.prototype,
 
                       if (task_doc = APP.collections.Tasks.findOne(query, options))?
                         performRemoveParent = ->
-                          removeParent "/#{project_task_doc._id}/#{task_id}/", (err) ->
+                          removeParent "/#{project_task_doc._id}/#{task_id}/", gc, (err) ->
                             if err?
                               console.error err
                             return
@@ -958,7 +943,7 @@ _.extend JustdoTasksContextMenu.prototype,
                               JustdoSnackbar.close()
                               return
                       else
-                        addNewParentToTaskId task_id, project_task_doc._id, (err) ->
+                        addNewParentToTaskId task_id, project_task_doc._id, gc, (err) ->
                           if err?
                             console.error err
                           return
