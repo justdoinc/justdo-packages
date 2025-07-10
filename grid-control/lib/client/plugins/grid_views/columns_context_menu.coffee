@@ -209,14 +209,13 @@ _.extend GridControl.prototype,
       $(@_getColumnsManagerContextMenuSelector(type)).remove()
       
       grid_control_cmenu_target_selector = ".slick-header-column"
-      column_index_of_last_opened_cmenu = undefined
       if type is "first"
         grid_control_cmenu_target_selector = grid_control_cmenu_target_selector += ":first"
-        column_index_of_last_opened_cmenu = 0
+        $grid_control_cmenu_target = $(grid_control_cmenu_target_selector, @container)
       else if type is "common"
-        grid_control_cmenu_target_selector = grid_control_cmenu_target_selector += ":not(:first)"
+        $grid_control_cmenu_target = $(grid_control_cmenu_target_selector, @container)
+
       
-      $grid_control_cmenu_target = $(grid_control_cmenu_target_selector, @container)
       menu = append_fields_menu.concat(additional_menu_items_arr)
       
       context.attach $grid_control_cmenu_target,
@@ -228,7 +227,7 @@ _.extend GridControl.prototype,
       setupSubmenuProtection(type)
 
       $grid_control_cmenu_target.bind "mousedown", (e) ->
-        return setColumnIndexOfLastOpenedCmenu(e, column_index_of_last_opened_cmenu)
+        return setColumnIndexOfLastOpenedCmenu(e)
       
       return
 
