@@ -277,6 +277,11 @@ _.extend JustdoTasksContextMenu.prototype,
     return
 
   hide: ->
+    is_visible = Tracker.nonreactive => @is_visible.get()
+
+    if not is_visible
+      return
+
     @is_visible.set(false)
 
     @$getNode().removeClass("show").find(".dropdown-menu").removeClass("show")
