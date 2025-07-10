@@ -1788,7 +1788,7 @@ _.extend GridControl.prototype,
 
     return current_obj
 
-  activeItemObj: (fields, _grid_data_structure=true) ->
+  activeItemObj = (fields, _grid_data_structure=true) ->
     if _grid_data_structure
       return @getCurrentPathObj(fields)
 
@@ -1799,6 +1799,8 @@ _.extend GridControl.prototype,
       return null
 
     return APP.collections.Tasks.findOne(active_item_id, {fields: fields})
+  activeItemObj: activeItemObj
+  activeItem: activeItemObj
 
   #
   # activate row/path
