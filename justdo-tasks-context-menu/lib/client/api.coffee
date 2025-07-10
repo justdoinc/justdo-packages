@@ -200,11 +200,22 @@ _.extend JustdoTasksContextMenu.prototype,
     # for example when the browser's back button is pressed, which doesn't trigger the mouse
     # down event), or, if it the active grid gets destroyed (Examples: 1) user is removed from the project,
     # 2) back button brings back to the projects page, etc.)
+    prev_grid_uid = null
     Tracker.autorun =>
       # If the active grid control changes or destroy, hide the context menu
-      context_gc = @getGridControlWithOpenedContextMenu()
+      if not (context_gc = @getGridControlWithOpenedContextMenu())?
+        @hide()
+        return
 
-      @hide()
+      grid_uid = context_gc.getGridUid()
+
+      if not prev_grid_uid?
+        prev_grid_uid = grid_uid
+      
+      if prev_grid_uid isnt grid_uid
+        @hide()
+      
+      prev_grid_uid = grid_uid
 
       return
 
