@@ -71,8 +71,8 @@ _.extend MeetingsManagerPlugin.prototype,
       position: 350
       data:
         label: "Meetings"
-      listingCondition: ->
-        if not (gc = APP.modules.project_page?.gridControl())?
+      listingCondition: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
+        if not gc?
           return false
 
         if gc.isMultiSelectMode()
