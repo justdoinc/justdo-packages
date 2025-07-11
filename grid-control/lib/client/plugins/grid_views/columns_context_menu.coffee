@@ -211,10 +211,10 @@ _.extend GridControl.prototype,
       grid_control_cmenu_target_selector = ".slick-header-column"
       if type is "first"
         grid_control_cmenu_target_selector = grid_control_cmenu_target_selector += ":first"
-        $grid_control_cmenu_target = $(grid_control_cmenu_target_selector, @container)
       else if type is "common"
-        $grid_control_cmenu_target = $(grid_control_cmenu_target_selector, @container)
+        grid_control_cmenu_target_selector = grid_control_cmenu_target_selector += ":not(:first)"
 
+      $grid_control_cmenu_target = $(grid_control_cmenu_target_selector, @container)
       
       menu = append_fields_menu.concat(additional_menu_items_arr)
       
