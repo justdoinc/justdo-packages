@@ -19,6 +19,9 @@ _.extend JustdoFormulaFields.prototype,
       return
 
     return
+  
+  isPluginInstalledOnProjectId: (project_id) ->
+    return APP.projects.isPluginInstalledOnProjectId(JustdoFormulaFields.project_custom_feature_id, project_id)
 
   isPluginInstalledOnProjectDoc: (project_doc) ->
     # XXX need to use APP.projects.isPluginInstalledOnProjectDoc() instead.
