@@ -63,13 +63,27 @@ _.extend JustdoFormulaFields.prototype,
       if not self.isPluginInstalledOnProjectId(task_doc.project_id)
         return
 
+      # Here we check whether the update involves fields that can affect formulas.
       # If not, we can skip the formula recalculation.
+      # Note that this only checks the fields in the tasks collection schema.
+      update_has_potential_formula_affecting_fields = false
       tasks_collection_schema = self.tasks_collection._c2._simpleSchema._schema
       for field_id in changed_fields
-        field_def = _.extend {}, tasks_collection_schema[field_id]
-        field_def._id = field_id
-        if not self._isFieldAvailableForFormulas field_def, task_doc.formula_field_id
-          return
+        if update_has_potential_formula_affecting_fields
+          break
+
+        # Since custom fields aren't defined in the tasks collection schema, 
+        # we set `update_has_potential_formula_affecting_fields` to true.
+        if (field_def = tasks_collection_schema[field_id])?
+          field_def = _.extend {}, field_def
+          field_def._id = field_id
+          if self._isFieldAvailableForFormulas field_def, task_doc.formula_field_id
+            update_has_potential_formula_affecting_fields = true
+        else
+          update_has_potential_formula_affecting_fields = true
+      
+      if not update_has_potential_formula_affecting_fields
+        return
 
       self.findActiveFormulasAffectedByFieldChangesForProject task_doc.project_id, changed_fields, (formula_doc) ->
         project_doc = APP.collections.Projects.findOne(task_doc.project_id)
