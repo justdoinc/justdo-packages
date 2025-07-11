@@ -12,6 +12,9 @@ _.extend JustdoProjectPane.prototype,
     @_pane_state_tracker = undefined
     @_setupPaneUpdater()
 
+    @_set_fullscreen_state_on_project_load_tracker = undefined
+    @_setupDefaultFullScreenStateTracker()
+
     return
 
   _deferredInit: ->
@@ -211,7 +214,7 @@ _.extend JustdoProjectPane.prototype,
       
       # Note: Full screen support is implemented here instead of get/setUserPreferredPaneState
       # because we don't want to store the full screen state in the user's preferences.
-      if @_full_screen_rv.get()
+      if @isFullScreen()
         state.full_screen = true
         state.expand_height = window_height - APP.helpers.getGlobalSassVars().navbar_height
       else
@@ -261,6 +264,35 @@ _.extend JustdoProjectPane.prototype,
 
     return
 
+  _setupDefaultFullScreenStateTracker: ->
+    if @_set_fullscreen_state_on_project_load_tracker?
+      return
+
+    # This tracker is responsible for loading the stored full screen state upon first load into a project
+    @_set_fullscreen_state_on_project_load_tracker = Tracker.autorun =>
+      # For reactivity
+      if not (justdo_id = JD.activeJustdoId())?
+        return
+
+      @_full_screen_rv.set @getFullScreenAmplifyState()
+      return
+    
+    return
+
+    @onDestroy =>
+      @_removeDefaultFullScreenStateTracker()
+
+      return
+  
+  _removeDefaultFullScreenStateTracker: ->
+    if not @_set_fullscreen_state_on_project_load_tracker?
+      return
+
+    @_set_fullscreen_state_on_project_load_tracker.stop()
+    @_set_fullscreen_state_on_project_load_tracker = undefined
+
+    return
+    
   #
   # Tabs registration
   #
@@ -325,13 +357,21 @@ _.extend JustdoProjectPane.prototype,
 
   setHeight: (height) -> @setUserPreferredPaneState({expand_height: height})
 
-  isFullScreen: -> @_full_screen_rv.get()
+  isFullScreen: -> @_full_screen_rv.get() is true
+
+  _generateFullScreenAmplifyKey: -> JustdoProjectPane.full_screen_amplify_key_prefix + "::" + JD.activeJustdoId()
+
+  getFullScreenAmplifyState: -> amplify.store @_generateFullScreenAmplifyKey()
+
+  setFullScreenAmplifyState: (state) -> amplify.store @_generateFullScreenAmplifyKey(), state
 
   enterFullScreen: -> 
+    @setFullScreenAmplifyState true
     @_full_screen_rv.set true
     return
 
   exitFullScreen: -> 
+    @setFullScreenAmplifyState false
     @_full_screen_rv.set false
     return
 
