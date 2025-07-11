@@ -15,22 +15,34 @@ _.extend JustdoProjectPane.prototype,
     @_set_fullscreen_state_on_project_load_tracker = undefined
     @_setupDefaultFullScreenStateTracker()
 
+    @_project_pane_auto_collapse_handler = undefined
+    @_setupProjectPaneAutoCollapseHandler()
+
     return
 
   _deferredInit: ->
     if @destroyed
       return
 
-    # The code below closes the project pane upon switching JustDo,
-    # when the performance issue is addressed, this section can be remoed.
+    return
+
+  _setupProjectPaneAutoCollapseHandler: ->
+    # The main purpose of this tracker is to close the project pane upon switching JustDo.
+    # However, currently it's also used to ensure that the project pane is closed upon first loading a project:
+    # When `_setupProjectPaneAutoCollapseHandler` is called inside `immediateInit`, 
+    # `JD.activeJustdoId()` would always return undefined, thus ensuring that the project pane is closed upon first loading a project.
+    if @_project_pane_auto_collapse_handler?
+      return
+
     @previous_proj_id = JD.activeJustdoId()
     @project_pane_auto_collapse_handler = Tracker.autorun =>
       # Collapses project pane upon swiching JustDo.
-      if @previous_proj_id isnt JD.activeJustdoId()
+      if @previous_proj_id isnt (cur_proj_id = JD.activeJustdoId())
         @collapse()
-        @previous_proj_id = JD.activeJustdoId()
+        @previous_proj_id = cur_proj_id
 
       return
+
     @onDestroy =>
       @project_pane_auto_collapse_handler.stop()
       return
