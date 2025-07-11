@@ -22,8 +22,6 @@ requireUserIsSiteAdmin = (user_id) ->
 
 _.extend JustdoHelpers,
   startV8Profiling: ->
-    if not APP.justdo_site_admins?.isCurrentUserSiteAdmin()
-      throw new Meteor.Error "site-admin-required"
     promise = new Promise (resolve, reject) ->
       if active_profiling_session?
         return reject new Meteor.Error "not-supported", "V8 profiling session already active"
