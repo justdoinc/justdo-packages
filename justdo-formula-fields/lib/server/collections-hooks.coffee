@@ -77,7 +77,7 @@ _.extend JustdoFormulaFields.prototype,
         if (field_def = tasks_collection_schema[field_id])?
           field_def = _.extend {}, field_def
           field_def._id = field_id
-          if self._isFieldAvailableForFormulas field_def, task_doc.formula_field_id
+          if self._isFieldAvailableForFormulas field_def
             update_has_potential_formula_affecting_fields = true
         else
           update_has_potential_formula_affecting_fields = true

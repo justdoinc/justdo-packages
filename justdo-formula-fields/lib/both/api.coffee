@@ -218,7 +218,7 @@ _.extend JustdoFormulaFields.prototype,
 
     return
   
-  _isFieldAvailableForFormulas: (field_def, formula_field_id) ->
+  _isFieldAvailableForFormulas: (field_def) ->
     if not _.isString(field_def._id)
       throw @_error "invalid-argument", "field_def._id must be a string"
 
@@ -232,10 +232,6 @@ _.extend JustdoFormulaFields.prototype,
       return false
 
     if not field_def.grid_visible_column
-      return false
-
-    if field_def._id == formula_field_id
-      # Can't add itself!
       return false
 
     if field_def._id of JustdoFormulaFields.forbidden_fields
