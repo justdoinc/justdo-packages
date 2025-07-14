@@ -169,6 +169,44 @@ _.extend JustdoDeliveryPlanner.prototype,
       return not ancestors[task_id_to_be_added]?
 
     return project_tasks
+  # Note: This is a CLIENT side method. As such, only the tasks visible to the current user is considered.
+  # Returns an object with the following structure:
+  # {
+  #   "/uYRDib7DHETEDbswF/DATQeZkGPKrejewcA/HTynggq3HP2uABW5j/": {
+  #     projects: [item_doc_of_DATQeZkGPKrejewcA, item_doc_of_uYRDib7DHETEDbswF, ...]
+  #   }
+  # }
+  # Where:
+  # - `HTynggq3HP2uABW5j` is the immediate parent of the provided `task_id`
+  # - The `projects` array is sorted by the order of the ancestor path, from closest ancestor to the farthest.
+  getAncestorProjectsOfTask: (task_id, gc) ->
+    if not gc?
+      gc = APP.modules.project_page?.mainGridControl()
+    
+    grid_data_core = gc._grid_data?._grid_data_core
+
+    if (not gc?) or (not grid_data_core?)
+      return []
+    
+    ancestors_paths = grid_data_core.getAllCollectionPaths task_id
+    ret = {}
+
+    for ancestor_path in ancestors_paths
+      path_arr = GridData.helpers.getPathArray ancestor_path
+      # The last item in the path array is the task itself, so we need to remove it
+      path_arr.pop()
+      # Reverse the path array to check from the closest ancestor to the root
+      path_arr.reverse()
+
+      for item_id in path_arr
+        item_doc = grid_data_core.items_by_id[item_id]
+        if @isTaskObjProject item_doc
+          if not ret[ancestor_path]?
+            ret[ancestor_path] = 
+              projects: []
+          ret[ancestor_path].projects.push item_doc
+
+    return ret
 
   _setupProjectsCollectionContextmenu: ->
     self = @
