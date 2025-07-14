@@ -1229,6 +1229,10 @@ _.extend GridDataCom.prototype,
         remove_current_parent_update_op: remove_current_parent_update_op
         set_new_parent_update_op: set_new_parent_update_op
 
+      # Note: Since we're using `rawCollection().bulkWrite` to perform the updates, we need to add the raw fields updates to the update modifier.
+      # If not added, it is observed that the tasks publication will not be reactive to the change.
+      @_addRawFieldsUpdatesToUpdateModifier remove_current_parent_update_op, item
+      @_addRawFieldsUpdatesToUpdateModifier set_new_parent_update_op, item
       path_info.remove_current_parent_update_op = remove_current_parent_update_op
       path_info.set_new_parent_update_op = set_new_parent_update_op
 
@@ -1237,6 +1241,7 @@ _.extend GridDataCom.prototype,
     }, _.size(items_map)
 
     # Remove current parent
+    bulk_write_ops = []
     bulk_remove_ops = _.groupBy(paths_map, (map) => JSON.stringify(map.remove_current_parent_update_op))
     for stringified_remove_op, path_infos of bulk_remove_ops
       if not _.isString(stringified_remove_op)
@@ -1244,31 +1249,41 @@ _.extend GridDataCom.prototype,
 
       item_ids = _.map path_infos, (path_info) => path_info.item_id
       remove_current_parent_update_op = JSON.parse(stringified_remove_op)
-      await @collection.updateAsync {_id: {$in: item_ids}}, remove_current_parent_update_op, {multi: true}
-
-    update_promises = []
+      bulk_write_ops.push
+        updateMany:
+          filter:
+            _id: 
+              $in: item_ids
+          update: remove_current_parent_update_op
+    
     for path, path_info of paths_map
       # Remove current parent
 
       if path_info.set_new_parent_update_op?
         # Add to new parent
-        update_promises.push @collection.updateAsync path_info.item_id, path_info.set_new_parent_update_op
-
-    all_update_promises = Promise.all(update_promises)
-    all_update_promises.then =>
-      for path, path_info of paths_map
-        try
-          @_runGridMethodMiddlewares "afterMovePath", path_info.org_path, perform_as,
-            # the etc obj
-            new_location: _.extend {}, new_location
-            item: items_map[path_info.item_id]
-            current_parent_id: path_info.parent_id
-            new_parent_item: new_parent_item
-            remove_current_parent_update_op: path_info.remove_current_parent_update_op
-            set_new_parent_update_op: path_info.set_new_parent_update_op
-        catch e
-          console.error "afterMovePath hook raised an exception", e
-    return all_update_promises
+        bulk_write_ops.push 
+          updateOne:
+            filter:
+              _id: path_info.item_id
+            update: path_info.set_new_parent_update_op
+    
+    APP.justdo_analytics.logMongoRawConnectionOp(@collection._name, "bulkWrite", bulk_write_ops, {ordered: false})
+    await @collection.rawCollection().bulkWrite bulk_write_ops, {ordered: false}
+    
+    for path, path_info of paths_map
+      try
+        @_runGridMethodMiddlewares "afterMovePath", path_info.org_path, perform_as,
+          # the etc obj
+          new_location: _.extend {}, new_location
+          item: items_map[path_info.item_id]
+          current_parent_id: path_info.parent_id
+          new_parent_item: new_parent_item
+          remove_current_parent_update_op: path_info.remove_current_parent_update_op
+          set_new_parent_update_op: path_info.set_new_parent_update_op
+      catch e
+        console.error "afterMovePath hook raised an exception", e
+        
+    return
 
   sortChildren: (path, field, sort_order, perform_as) ->
     check(path, String)
