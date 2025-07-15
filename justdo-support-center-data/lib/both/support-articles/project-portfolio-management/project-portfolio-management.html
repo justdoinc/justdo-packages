@@ -1,0 +1,72 @@
+<template name="support_article_project_portfolio_management">
+  <p>The <strong>Project Portfolio Management (PPM)</strong> extension lets you see the big picture in a single glance:<br>
+  Every project in the current JustDo, its overall status, key milestones and the sequence of work coming up next.</p>
+
+  <!-- MAIN PORTFOLIO LIST -->
+  <h3>1. Opening the portfolio</h3>
+  <p>Select the <strong>Project Portfolio</strong> tab at the top of the Project Pane. Each row represents a <em>Projects Collection</em> and groups its child Projects underneath. Traffic-light indicators show how many projects are on track (green), need attention (yellow) or blocked/late (red).</p>
+  <p><img src="{{getSupportCenterAssetUrl "/project-portfolio-management/assets/portfolio_list.png"}}" alt="PPM - portfolio list" width="750"></p>
+
+  <ul>
+    <li><strong>Click a project name</strong> to expand or collapse its child Projects.</li>
+    <li><strong>Click the project card</strong> to open the detailed Project view (see below).</li>
+  </ul>
+  <em>Note: Only projects with the following states are included in the portfolio: <strong>In Progress</strong>, <strong>On Hold</strong> and <strong>At Risk</strong>.</em>
+  <br>
+
+  <!-- STATUS COLOURS -->
+  <h3>2. How status colours are determined</h3>
+  <p>JustDo colour-codes each project automatically:</p>
+  <ul>
+    <li><span style="background-color:#40a044"><strong>Green</strong></span> - project and its tasks are progressing <em>as planned</em>.</li>
+    <li><span style="background-color:#faf259"><strong>Yellow</strong></span> - project or its tasks <em>require attention</em>.</li>
+    <li><span style="background-color:#ff1c25"><strong>Red</strong></span> - project or any task is <em>blocked or late</em>.</li>
+  </ul>
+  <p>The colour updates live as you or your colleagues change task states—no manual refresh needed.</p>
+
+  <!-- PROJECT VIEW -->
+  <h3>3. Working inside the Project view</h3>
+  <p>Clicking a project’s card opens the <strong>Project view</strong>.</p>
+  <p><img src="{{getSupportCenterAssetUrl "/project-portfolio-management/assets/project_pane.png"}}" alt="PPM - project pane" width="750"></p>
+
+  <ol>
+    <li><strong>Activities view</strong> (default) - "Last / Current / Next" quickly surfaces overdue, in-progress and upcoming tasks.</li>
+    <li><strong>Gantt view</strong> - displays the same tasks on a timeline so you can adjust schedules graphically.</li>
+    <li><strong>File preview panel</strong> – if files are attached to the project, preview-able files (images, PDFs, Office docs, etc.) appear directly below the Activities/Gantt area. It updates in real-time as files are added or removed.</li>
+  </ol>
+
+  <p>The header also includes <strong>Upload to Gallery</strong> and <strong>Go To Gallery</strong> buttons so you can add new files or open existing ones without leaving the Project view.</p>
+
+  <!-- OBJECTIVE FIELD -->
+  <h3>4. Setting a project objective</h3>
+  <p>Each project includes a dedicated <strong>Project Objective</strong> field, visible in the grid and editable in the Project view header. Use it to capture the project's purpose, success criteria or high-level scope. Keeping this clear helps everyone understand why the project exists.</p>
+
+  <!-- BEST PRACTICES -->
+  <h3>5. Best-practice workflow</h3>
+  <ul>
+    <li><strong>Designate key tasks as "Projects"</strong> (right-click → <em>Mark as Project</em>) so they appear in the portfolio.</li>
+    <li><strong>Task state propagation</strong> – when any child task is moved to <em>In-Progress</em>, PPM automatically moves each ancestor up the hierarchy from <em>Pending</em> to <em>In-Progress</em> until it reaches: (a) a parent already in a different state, or (b) the project root itself. This keeps portfolio health aligned with real activity.</li>
+    <li><strong>Set Start / End dates</strong> for every task to unlock full Gantt timeline insights.</li>
+    <li><strong>Flag risks early</strong> by switching a task’s state to <em>At Risk</em>; stakeholders will see the portfolio turn yellow.</li>
+    <li><strong>Avoid "unknowns"</strong>—a project with no dates or orphaned child tasks can’t be tracked effectively.</li>
+  </ul>
+
+  <!-- ENABLE / DISABLE -->
+  <h3>6. Enabling or disabling PPM</h3>
+  <p>An Admin can toggle the extension in <em>Settings → Configure this JustDo → Extensions</em>. Disabling it simply hides the Project Portfolio tab—your data remains intact and visible in the main Grid.</p>
+
+  <!-- FAQ -->
+  <h3>7. Frequently asked questions</h3>
+  <p><strong>Does changing a task in the Grid update PPM?</strong><br>
+  Yes—PPM listens to the same underlying data and refreshes in real-time.</p>
+
+  <p><strong>Can I customise the traffic-light rules?</strong><br>
+  The default rules (green/yellow/red) fit most teams. If you require different thresholds or additional colours, contact your JustDo administrator—advanced customisations can be added by developers using the <code>JustdoPpm.customProjectStatusProvider</code> API.</p>
+
+  <p><strong>Is PPM available on mobile?</strong><br>
+  The full portfolio view is optimised for desktop browsers. Mobile apps show individual tasks but omit the portfolio tab for clarity.</p>
+
+  <!-- WRAP-UP -->
+  <h3>Next steps</h3>
+  <p>Now that you understand the portfolio overview, explore each project’s Gantt view, link tasks with dependencies and capture baselines to track schedule shifts over time. Happy planning!</p>
+</template>
