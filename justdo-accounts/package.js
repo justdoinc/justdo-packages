@@ -27,7 +27,6 @@ Package.onUse(function (api) {
   api.use('fourseven:scss@3.2.0', client);
 
   api.use("justdoinc:justdo-aws-base", server, {unordered: true});
-  api.use("justdoinc:justdo-db-migrations", server, {unordered: true});
 
   api.use('raix:eventemitter@0.1.1', both);
   api.use('meteorspark:util@0.2.0', both);
