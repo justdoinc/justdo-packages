@@ -1,6 +1,9 @@
 _.extend JustdoAccounts.prototype,
   _setupDbMigrations: ->
     APP.executeAfterAppLibCode -> 
+      if not APP.justdo_db_migrations?
+        return
+        
       migration_name = "remove-proxy-avatar-border-for-non-proxy-users"
 
       APP.justdo_db_migrations.registerMigrationScript migration_name, JustdoDbMigrations.commonBatchedMigration
