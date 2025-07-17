@@ -169,17 +169,18 @@ _.extend JustdoDeliveryPlanner.prototype,
       return not ancestors[task_id_to_be_added]?
 
     return project_tasks
-  # Note: This is a CLIENT side method. As such, only the tasks visible to the current user is considered.
-  # Returns an object with the following structure:
-  # {
-  #   "/uYRDib7DHETEDbswF/DATQeZkGPKrejewcA/HTynggq3HP2uABW5j/": {
-  #     projects: [item_doc_of_DATQeZkGPKrejewcA, item_doc_of_uYRDib7DHETEDbswF, ...]
-  #   }
-  # }
-  # Where:
-  # - `HTynggq3HP2uABW5j` is the immediate parent of the provided `task_id`
-  # - The `projects` array is sorted by the order of the ancestor path, from closest ancestor to the farthest.
+
   getAncestorProjectsOfTask: (task_id, gc) ->
+    # Note: This is a CLIENT side method. As such, only the tasks visible to the current user is considered.
+    # Returns an object with the following structure:
+    # {
+    #   "/uYRDib7DHETEDbswF/DATQeZkGPKrejewcA/HTynggq3HP2uABW5j/": {
+    #     projects: [item_doc_of_DATQeZkGPKrejewcA, item_doc_of_uYRDib7DHETEDbswF, ...]
+    #   }
+    # }
+    # Where:
+    # - `HTynggq3HP2uABW5j` is the immediate parent of the provided `task_id`
+    # - The `projects` array is sorted by the order of the ancestor path, from closest ancestor to the farthest.
     if not gc?
       gc = APP.modules.project_page?.mainGridControl()
     
@@ -188,6 +189,9 @@ _.extend JustdoDeliveryPlanner.prototype,
     if (not gc?) or (not grid_data_core?)
       return []
     
+    # Note, that we use grid_data_core's getAllCollectionPaths and not gd.getAllCollectionItemIdPaths
+    # since we want to be able to work with custom gc's which their gd might not reflect the natural
+    # tree derived from the tasks collections parents.
     ancestors_paths = grid_data_core.getAllCollectionPaths task_id
     ret = {}
 
