@@ -10,6 +10,7 @@
   <ul>
     <li><strong>Click a project name</strong> to expand or collapse its child Projects.</li>
     <li><strong>Click the project card</strong> to open the detailed Project view (see below).</li>
+    <li><strong>Click the <em>briefcase</em> icon</strong> to view the <strong>Project</strong> directly</li>
   </ul>
   <em>Note: Only projects with the following states are included in the portfolio: <strong>In Progress</strong>, <strong>On Hold</strong> and <strong>At Risk</strong>.</em>
   <br>
@@ -31,7 +32,7 @@
 
   <ol>
     <li><strong>Activities view</strong> (default) - "Last / Current / Next" quickly surfaces overdue, in-progress and upcoming tasks.</li>
-    <li><strong>Gantt view</strong> - displays the same tasks on a timeline so you can adjust schedules graphically.</li>
+    <li><strong>Gantt view</strong> - displays the same tasks on a timeline so you can adjust schedules graphically. Task bars adopt the same <span style="background-color:#40a044">green</span>/<span style="background-color:#faf259">yellow</span>/<span style="background-color:#ff1c25">red</span> palette while PPM is enabled, letting you spot issues at a glance.</li>
     <li><strong>File preview panel</strong> – if files are attached to the project, preview-able files (images, PDFs, Office docs, etc.) appear directly below the Activities/Gantt area. It updates in real-time as files are added or removed.</li>
   </ol>
 
@@ -45,7 +46,8 @@
   <h3>5. Best-practice workflow</h3>
   <ul>
     <li><strong>Designate key tasks as "Projects"</strong> (right-click → <em>Mark as Project</em>) so they appear in the portfolio.</li>
-    <li><strong>Task state propagation</strong> – when any child task is moved to <em>In-Progress</em>, PPM automatically moves each ancestor up the hierarchy from <em>Pending</em> to <em>In-Progress</em> until it reaches: (a) a parent already in a different state, or (b) the project root itself. This keeps portfolio health aligned with real activity.</li>
+    <li><strong>Task state propagation</strong> – When a descendant task of a <em>Project</em> moves from <em>Pending</em> to <em>In-Progress</em>, PPM walks up every chain of ancestors (even with multi-parents) and flips each Pending ancestor to <em>In-Progress</em> until it meets (a) an ancestor already in another state, or (b) the Project node itself. If the Project was Pending it becomes In-Progress too, but the propagation stops there.</li>
+    <li><strong>Automatic risk escalation</strong> – If any descendant task of a Project switches to <em>At Risk</em> (a custom state automatically added by PPM) the Project’s traffic-light becomes <strong>Yellow</strong>. If a descendant goes <em>On Hold</em>, the Project turns <strong>Red</strong>. A snackbar appears — e.g. “Project status for “Alpha Website” is now <img src="{{getSupportCenterAssetUrl "/icons/yellow_circle.png"}}" alt="yellow">” — with a <em>Revert</em> option. No snackbar is shown if the colour was already correct.</li>
     <li><strong>Set Start / End dates</strong> for every task to unlock full Gantt timeline insights.</li>
     <li><strong>Flag risks early</strong> by switching a task’s state to <em>At Risk</em>; stakeholders will see the portfolio turn yellow.</li>
     <li><strong>Avoid "unknowns"</strong>—a project with no dates or orphaned child tasks can’t be tracked effectively.</li>
