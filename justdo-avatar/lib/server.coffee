@@ -30,8 +30,9 @@ _.extend JustdoAvatar,
     # 1. If the user isn't using an avatar initials - do nothing.
     # 2. If mongo_modifiers_obj not provided, an empty object will be created.
     # 3. if mongo_modifiers_obj.$set is not provided, it will be created. 
-    # 4. A new avatar will be generated. If the user's cached avatar colors are different from the generated avatar colors,
-    #    the new avatar will have the same colors as the cached avatar (e.g. The avatar initials will be updated when the user's name changes, while the color stays the same).
+    # 4. A new avatar will be generated. If the user's EXISTING cached avatar colors are different from the generated avatar colors,
+    #    it means the avatar color has been manually modified. 
+    #    In this case, we'll force the new avatar to have the same colors as the EXISTING cached avatar
     # 5. mongo_modifiers_obj will be updated with the new avatar and colors.
     # 
     # A reminder:
@@ -59,10 +60,12 @@ _.extend JustdoAvatar,
     get_initial_svg_options =
       is_proxy: is_proxy
     
-    # If the user's avatar color has been modified, ensure that the regenerated avatar has the same colors as the cached avatar.
+    # Check whether the user's EXISTING cached avatar colors are the same as the generated avatar colors.
+    # If they are not, use the cached avatar colors for the new avatar.
+    is_user_avatar_color_same_as_generated = @isUserCachedInitialAvatarColorsSameAsGeneratedAvatarColors user_doc
     # Note that if the user doesn't have an avatar at all, `avatar_colors` will not exist.
     is_cached_avatar_colors_available = not _.isEmpty user_cached_avatar_details.avatar_colors
-    if is_cached_avatar_colors_available
+    if is_cached_avatar_colors_available and not is_user_avatar_color_same_as_generated
       get_initial_svg_options.avatar_bg = user_cached_avatar_details.avatar_colors.avatar_bg
       get_initial_svg_options.avatar_fg = user_cached_avatar_details.avatar_colors.avatar_fg
     
