@@ -13,7 +13,10 @@ _.extend JustdoAccounts.prototype,
         mark_as_completed_upon_batches_exhaustion: true
         queryGenerator: ->
           # Look for avatars that contain the proxy border pattern (dashed stroke)
-          # This ensures we only process users who actually have proxy borders to remove
+          # This ensures we only process users who actually have proxy borders to remove.
+          #
+          # All of the cached avatars SVGs been generated with getInitialsSvg where all the content
+          # that comes before the `stroke-dasharray: 2 5` is exactly of the same length.
           proxy_border_pattern = "stroke-dasharray: 2 5"
           proxy_border_pattern = Buffer.from(proxy_border_pattern).toString("base64")
           proxy_border_pattern = new RegExp(JustdoHelpers.escapeRegExp(proxy_border_pattern))
@@ -33,7 +36,7 @@ _.extend JustdoAccounts.prototype,
         batchProcessor: (users_cursor) ->
           num_processed = 0
           users_cursor.forEach (user) ->
-            console.log user._id
+            @logger.info "Found non-proxy user with proxy border: #{user._id}, removing proxy border."
             num_processed += 1
             existing_user_avatar_details = JustdoAvatar.getCachedInitialAvatarDetails(user)
             if existing_user_avatar_details.is_base64_svg_avatar
@@ -45,6 +48,8 @@ _.extend JustdoAccounts.prototype,
               # If the regenerated avatar is different from the existing avatar, update the user's avatar
               if regenerated_avatar isnt user.profile.profile_pic
                 Meteor.users.update user._id, modifier
+              else
+                @logger.warn "Regenerated avatar for user #{user._id} is the same as the existing avatar - this should not happen."
             return
           return num_processed
       return
