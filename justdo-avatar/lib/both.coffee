@@ -221,8 +221,8 @@ _.extend JustdoAvatar,
     #
     #    # Note: avatar_colors will be undefined when either is_base64_svg_avatar is false or profile_pic_field_defined is false
     #    avatar_colors: {
-    #        background: "#000000",
-    #        foreground: "#000000"
+    #        avatar_bg: "#000000",
+    #        avatar_fg: "#000000"
     #    }
     # }
 
