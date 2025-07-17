@@ -95,13 +95,10 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
   getMigrationFunctionsThis = (original_this) ->
     migration_functions_this = Object.create(original_this)
 
-    console.log "XXX", original_this # this one is here to find out how to add the -<id> to the logger
-
     return _.extend migration_functions_this,
       collection: options.collection
       options: options
       shared: shared_obj # XXX
-      logger: Logger.get("db-migrations")
 
   runTerminationProcedures = (caller_this) ->
     migration_functions_this = getMigrationFunctionsThis(caller_this)
