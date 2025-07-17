@@ -35,8 +35,8 @@ _.extend JustdoAccounts.prototype,
         static_query: true
         batchProcessor: (users_cursor) ->
           num_processed = 0
-          users_cursor.forEach (user) ->
-            @logger.info "Found non-proxy user with proxy border: #{user._id}, removing proxy border."
+          users_cursor.forEach (user) =>
+            @logProgress "Found non-proxy user with proxy border: #{user._id}, removing proxy border."
             num_processed += 1
             existing_user_avatar_details = JustdoAvatar.getCachedInitialAvatarDetails(user)
             if existing_user_avatar_details.is_base64_svg_avatar
@@ -49,7 +49,7 @@ _.extend JustdoAccounts.prototype,
               if regenerated_avatar isnt user.profile.profile_pic
                 Meteor.users.update user._id, modifier
               else
-                @logger.warn "Regenerated avatar for user #{user._id} is the same as the existing avatar - this should not happen."
+                @logWarning "Regenerated avatar for user #{user._id} is the same as the existing avatar - this should not happen."
             return
           return num_processed
       return
