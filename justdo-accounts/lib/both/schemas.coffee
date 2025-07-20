@@ -166,7 +166,7 @@ _.extend JustdoAccounts,
       label_i18n: "avatar_fg_schema_label"
       type: String
 
-      regEx: /^#[0-9a-f]{6}$/i
+      regEx: /^#[0-9a-f]{3}([0-9a-f]{3})?$/i
 
     avatar_bg:
       optional: true
@@ -175,7 +175,7 @@ _.extend JustdoAccounts,
       label_i18n: "avatar_bg_schema_label"
       type: String
 
-      regEx: /^#[0-9a-f]{6}$/i
+      regEx: /^#[0-9a-f]{3}([0-9a-f]{3})?$/i
     
     lang:
       optional: true
