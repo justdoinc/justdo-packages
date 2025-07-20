@@ -53,6 +53,8 @@ _.extend JustdoJiraIntegration.prototype,
     if not issue_type? or not jira_project_id?
       return
 
+    if issue_type is "Epic"
+      return 1
 
     query =
       "jira_projects.#{jira_project_id}.issue_types.name": issue_type
@@ -73,14 +75,6 @@ _.extend JustdoJiraIntegration.prototype,
 
     if not issue_type_def?
       throw @_error "fatal", "Issue type not found"
-
-    # Prioritise hierarchyLevel from Jira's API
-    if issue_type_def.hierarchyLevel?
-      return issue_type_def.hierarchyLevel
-      
-    # If hierarchyLevel is not available, use the following logic
-    if issue_type is "Epic"
-      return 1
 
     if issue_type_def.subtask
       return -1

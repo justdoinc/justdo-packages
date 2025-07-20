@@ -107,14 +107,6 @@ _.extend JustdoJiraIntegration.prototype,
   _getJustdoAdmin: (justdo_id) ->
     return @projects_collection.findOne({_id: justdo_id, "members.is_admin": true}, {fields: {"members.$": 1}}).members[0].user_id
 
-  _getJiraMountpointOwner: (jira_project_id) ->
-    jira_project_id = parseInt jira_project_id, 10
-    return @tasks_collection.findOne({jira_project_id, jira_mountpoint_type: "root"}, {fields: {owner_id: 1}})?.owner_id
-  
-  _getJiraIssueOwner: (jira_issue_id) ->
-    jira_issue_id = parseInt jira_issue_id, 10
-    return @tasks_collection.findOne({jira_issue_id}, {fields: {owner_id: 1}})?.owner_id
-
   _setupInvertedFieldMap: ->
     JustdoJiraIntegration.jira_field_to_justdo_field_map = {}
     for task_field, issue_field_def of JustdoJiraIntegration.justdo_field_to_jira_field_map
@@ -277,9 +269,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     _.extend task_fields, @_mapJiraFieldsToJustdoFields justdo_id, {issue: jira_issue_body}
 
-    if not (parent_task = @tasks_collection.findOne GridDataCom.helpers.getPathItemId parent_path, {fields: {jira_sprint: 1, jira_fix_version: 1, owner_id: 1}})?
-      console.warn "[justdo-jira-integration] Attempted to create #{jira_issue_key} under non-existant parent path #{parent_path}"
-      return
+    parent_task = @tasks_collection.findOne GridDataCom.helpers.getPathItemId parent_path, {fields: {jira_sprint: 1, jira_fix_version: 1, owner_id: 1}}
 
     gc = APP.projects._grid_data_com
     created_task_id = ""
@@ -738,11 +728,6 @@ _.extend JustdoJiraIntegration.prototype,
 
     return
 
-  _getStartAtIfMoreResultsAvailable: (current_start_at, total, max_results) ->
-    if total > (new_start_at = current_start_at + max_results)
-      return new_start_at
-    return
-
   mountTaskWithJiraProject: (task_id, jira_project_id, user_id) ->
     justdo_id = APP.collections.Tasks.findOne(task_id, {fields: {project_id: 1}})?.project_id
     jira_doc_id = @getJiraDocIdFromJustdoId justdo_id
@@ -757,7 +742,7 @@ _.extend JustdoJiraIntegration.prototype,
     client = @getJiraClientForJustdo justdo_id
 
     # Ensure all project members is either normal or proxy users, and add them as member to the target Justdo.
-    @fetchAndStoreAllUsersUnderJiraProject jira_project_id, {justdo_id: justdo_id, client: client.v2, user_id: user_id}
+    @fetchAndStoreAllUsersUnderJiraProject jira_project_id, {justdo_id: justdo_id, client: client.v2}
     # Fetch all sprints and fixed versions under the current Jira project
     @fetchAndStoreAllSprintsUnderJiraProject jira_project_id, {justdo_id: justdo_id, client: client.agile}
     @fetchAndStoreAllFixVersionsUnderJiraProject jira_project_id, {justdo_id: justdo_id, client: client.v2}
@@ -862,7 +847,7 @@ _.extend JustdoJiraIntegration.prototype,
       parent_key = issues[0]?.fields.parent?.key or issues[0]?.fields[JustdoJiraIntegration.epic_link_custom_field_id]
 
       # In case there is more than jql_issue_search_results_limit results, fetch the remaining issues.
-      if (new_start_at = @_getStartAtIfMoreResultsAvailable res.startAt, res.total, res.maxResults)?
+      if res.total > (new_start_at = res.startAt + res.maxResults)
         same_level_issue_search_body = _.extend {}, issue_search_body, {startAt: new_start_at}
         if parent_key?
           same_level_issue_search_body.jql = """project=#{jira_project_id} and "Parent Link"=#{parent_key} and status!=done order by id desc"""
@@ -975,7 +960,6 @@ _.extend JustdoJiraIntegration.prototype,
     client = @getJiraClientForJustdo(justdo_id).v2
 
     projects = await client.projects.getAllProjects()
-    projects = _.filter projects, (project) -> project.style is "classic"
     projects = _.map projects, (project) -> _.pick(project, "name", "key", "id")
 
     return projects
@@ -1069,28 +1053,12 @@ _.extend JustdoJiraIntegration.prototype,
     {client, justdo_id} = options
     if not client?
       client = @getJiraClientForJustdo(justdo_id).agile
-    
-    boards = []
-    
-    api_options = 
-      projectKeyOrId: jira_project_key_or_id
-      startAt: 0
-    loop
-      if new_start_at?
-        api_options.startAt = new_start_at
 
-      {err, res} = @pseudoBlockingJiraApiCallInsideFiber "board.getAllBoards", api_options, client
+    {err, res} = @pseudoBlockingJiraApiCallInsideFiber "board.getAllBoards", {projectKeyOrId: jira_project_key_or_id}, client
+    if err?
+      console.error err
 
-      if err?
-        console.error "getAllBoardsAssociatedToJiraProject:", err
-        break
-
-      boards = boards.concat res.values
-      
-      if not (new_start_at = @_getStartAtIfMoreResultsAvailable res.startAt, res.total, res.maxResults)?
-        break
-
-    return boards
+    return res
 
   # Since sprints are associated with boards instead of Jira project,
   # we will have to fetch all associated Jira projects via API call.
@@ -1133,35 +1101,23 @@ _.extend JustdoJiraIntegration.prototype,
     jira_server_id = @getJiraServerIdFromApiClient client
 
     boards = @getAllBoardsAssociatedToJiraProject jira_project_id, {client}
-    sprints = []
 
-    for board in boards
+    for board in boards.values
       board_id = board.id
-      api_options = 
-        boardId: board_id
-        startAt: 0
+      {err, res} = @pseudoBlockingJiraApiCallInsideFiber "board.getAllSprints", {boardId: board_id}, client
+      if err?
+        console.error err
+        # We can get err simply because the board doesn't have sprints enabled. Just ignore it.
+        continue
 
-      loop
-        if new_start_at?
-          api_options.startAt = new_start_at
+      sprints = res
 
-        {err, res} = @pseudoBlockingJiraApiCallInsideFiber "board.getAllSprints", api_options, client
-        if err?
-          console.error "fetchAndStoreAllSprintsUnderJiraProject:", err
-          # We can get err simply because the board doesn't have sprints enabled. Just ignore it.
-          break
-
-        sprints = sprints.concat res.values
-
-        if not (new_start_at = @_getStartAtIfMoreResultsAvailable res.startAt, res.total, res.maxResults)?
-          break
-
-    query =
-      "server_info.id": jira_server_id
-    ops =
-      $set:
-        "jira_projects.#{jira_project_id}.sprints": sprints
-    @jira_collection.update query, ops, {jd_analytics_skip_logging: true}
+      query =
+        "server_info.id": jira_server_id
+      ops =
+        $set:
+          "jira_projects.#{jira_project_id}.sprints": sprints.values
+      @jira_collection.update query, ops, {jd_analytics_skip_logging: true}
 
     return
 
@@ -1272,7 +1228,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     deleted_jira_users_emails = Array.from deleted_jira_users_emails
 
-    jira_tree_task_owner_id = options?.user_id or @tasks_collection.findOne({jira_project_id}, {fields: {owner_id: 1}})?.owner_id
+    jira_tree_task_owner_id = @tasks_collection.findOne({jira_project_id}, {fields: {owner_id: 1}})?.owner_id
 
     # For case option.justdo_id wasn't provided, fetch it from the db
     if _.isEmpty deleted_jira_users_emails
@@ -1499,7 +1455,7 @@ _.extend JustdoJiraIntegration.prototype,
     await responseProcessor.call @, res, jira_server_time
 
     if @_ensureCheckpointProcessInControl jira_server_time
-      if (new_start_at = @_getStartAtIfMoreResultsAvailable res.startAt, res.total, res.maxResults)?
+      if res.total > (new_start_at = res.startAt + res.maxResults)
         issue_search_body.startAt = new_start_at
         await @_searchIssueUsingJqlUntilMaxResults jira_server_id, issue_search_body, jira_server_time, options, responseProcessor
       else if _.isEmpty @issues_with_discrepancies
@@ -1577,25 +1533,15 @@ _.extend JustdoJiraIntegration.prototype,
       @_stopOngoingCheckpoint()
       @ongoing_checkpoint = server_info.serverTime
 
-      # Resync sprints and fix versions for each project under the Jira instanxce
-      if not _.isEmpty(mounted_jira_project_ids) and not options?.sync_issues_only
-        agile_client = @clients[jira_server_id].agile
-        for jira_project_id in mounted_jira_project_ids
-          @fetchAndStoreAllSprintsUnderJiraProject jira_project_id, {client: agile_client}
-          @fetchAndStoreAllFixVersionsUnderJiraProject jira_project_id, {client: client}
-          @fetchAndStoreAllUsersUnderJiraProject jira_project_id, {client: client}
-          @fetchAndStoreIssueTypesUnderJiraProject jira_project_id, {client: client}
-
       checkIssuesIntegrity = (res, current_checkpoint) =>
         for issue in res.issues
-          jira_issue_id = parseInt issue.id
           if not @_ensureCheckpointProcessInControl current_checkpoint
             return
 
           justdo_id = @getJustdoIdForIssue(issue) or issue.fields[JustdoJiraIntegration.project_id_custom_field_id]
           mapped_task_fields = @_mapJiraFieldsToJustdoFields justdo_id, {issue}, {include_null_values: true}
           if mapped_task_fields.owner_id is null
-            mapped_task_fields.owner_id = @_getJiraIssueOwner jira_issue_id
+            mapped_task_fields.owner_id = @_getJustdoAdmin justdo_id
           if not (@tasks_collection.findOne(_.extend({jira_issue_id: parseInt issue.id}, mapped_task_fields), {fields: {_id: 1}}))?
             @issues_with_discrepancies.push issue.id
         return
@@ -1607,6 +1553,14 @@ _.extend JustdoJiraIntegration.prototype,
 
       @_searchIssueUsingJqlUntilMaxResults jira_server_id, issue_search_body, server_info.serverTime, search_issue_using_jql_until_max_results_options, checkIssuesIntegrity
 
+      # Resync sprints and fix versions for each project under the Jira instanxce
+      if not _.isEmpty(mounted_jira_project_ids) and not options?.sync_issues_only
+        agile_client = @clients[jira_server_id].agile
+        for jira_project_id in mounted_jira_project_ids
+          @fetchAndStoreAllSprintsUnderJiraProject jira_project_id, {client: agile_client}
+          @fetchAndStoreAllFixVersionsUnderJiraProject jira_project_id, {client: client}
+          @fetchAndStoreAllUsersUnderJiraProject jira_project_id, {client: client}
+          @fetchAndStoreIssueTypesUnderJiraProject jira_project_id, {client: client}
     else
       console.info "[justdo-jira-integration] Another checkpoint process is in progress (checkpoint: #{@ongoing_checkpoint})"
 

@@ -229,7 +229,7 @@ APP.on "jira-core-fields-ready", ->
             child_task_ids = @tasks_collection.find({project_id: justdo_id, "parents2.parent": task_id, jira_issue_type: {$in: non_epic_non_subtask_issue_types}}, {fields: {_id: 1}}).map (task_doc) -> "/#{task_id}/#{task_doc._id}/"
             mountpoint_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_mountpoint_type: "roadmap", jira_project_id: jira_project_id, project_id: justdo_id}, {fields: {_id: 1}})?._id
             if not _.isEmpty child_task_ids
-              APP.projects._grid_data_com.movePath child_task_ids, {parent: mountpoint_task_id}, @_getJiraMountpointOwner jira_project_id
+              APP.projects._grid_data_com.movePath child_task_ids, {parent: mountpoint_task_id}, @_getJustdoAdmin justdo_id
             return
 
           if destination is "jira"
@@ -344,23 +344,22 @@ APP.on "jira-core-fields-ready", ->
             return
 
           if destination is "justdo"
-            jira_project_id = parseInt req_body.issue.fields.project.id
-
             # Remove any pending ownership transfer
             if (task_id = req_body?.issue?.fields?[JustdoJiraIntegration.task_id_custom_field_id])?
               @tasks_collection.update task_id, {$unset: {pending_owner_id: 1}}
 
-            # Assignee removed. Use mountpoint owner id as task owner.
+            # Assignee removed. Use justdo admin as task owner.
             if not (jira_account_id_or_email = field?.to or field?.accountId or field?.emailAddress)?
-              return @_getJiraMountpointOwner jira_project_id
+              return @_getJustdoAdmin justdo_id
 
             # Issue changelog from Jira server will not provide email address. In this case we get the user email from issue body.
             if @getAuthTypeIfJiraInstanceIsOnPerm()?
               jira_account_id_or_email = req_body.issue.fields.assignee.emailAddress
 
+            jira_project_id = parseInt req_body.issue.fields.project.id
             # This if statement shouldn't happen as we already fetched all users.
             if not (justdo_user_id = @getJustdoUserIdByJiraAccountIdOrEmail jira_project_id, jira_account_id_or_email)?
-              return @_getJiraMountpointOwner jira_project_id
+              return @_getJustdoAdmin justdo_id
 
             return justdo_user_id
       jira_issue_reporter:

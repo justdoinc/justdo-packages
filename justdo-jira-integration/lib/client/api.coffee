@@ -195,9 +195,6 @@ _.extend JustdoJiraIntegration.prototype,
                 index = 0
                 all_fix_versions_under_current_justdo = {}
                 for jira_project_key, jira_project_metadata of mounted_jira_project_metadata
-                  if not _.isArray jira_project_metadata.fix_versions
-                    continue
-
                   for fix_version in jira_project_metadata.fix_versions
                     fix_version_name = fix_version.name
                     if all_fix_versions_under_current_justdo[fix_version_name]?
@@ -230,9 +227,6 @@ _.extend JustdoJiraIntegration.prototype,
                 index = 0
                 all_sprints_under_current_justdo = {}
                 for jira_project_key, jira_project_metadata of mounted_jira_project_metadata
-                  if not _.isArray jira_project_metadata.sprints
-                    continue
-
                   for sprint in jira_project_metadata.sprints
                     sprint_name = sprint.name
                     if all_sprints_under_current_justdo[sprint_name]?

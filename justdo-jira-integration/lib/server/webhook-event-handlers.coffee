@@ -44,14 +44,14 @@ _.extend JustdoJiraIntegration.prototype,
 
     justdo_id = fix_versions_mountpiont_task_doc.project_id
     jira_doc_id = @getJiraDocIdFromJustdoId justdo_id
-    mountpoint_owner_id = @_getJiraMountpointOwner jira_project_id
+    justdo_admin_id = @_getJustdoAdmin justdo_id
 
     task_fields = _.extend @_convertFixVersionToTaskFields(fix_version),
       jira_project_id: jira_project_id
       project_id: justdo_id
 
     # Create the fix version task
-    fix_version_task_id = APP.projects._grid_data_com.addChild "/#{fix_versions_mountpiont_task_doc._id}/", task_fields, mountpoint_owner_id
+    fix_version_task_id = APP.projects._grid_data_com.addChild "/#{fix_versions_mountpiont_task_doc._id}/", task_fields, justdo_admin_id
 
     # In case of a version reopen/unarchive, move all child tasks back to the fix version task.
     if reopen
@@ -63,7 +63,7 @@ _.extend JustdoJiraIntegration.prototype,
       issue_ids = _.map res.issues, (issue) -> parseInt issue.id
       # XXX bulkAddParent can be used here, but it's not available yet.
       @tasks_collection.find({jira_issue_id: {$in: issue_ids}}, {fields: {_id: 1}}).forEach (task) ->
-        grid_data.addParent task._id, {parent: fix_version_task_id}, mountpoint_owner_id
+        grid_data.addParent task._id, {parent: fix_version_task_id}, justdo_admin_id
         return
 
     if not reopen
@@ -104,12 +104,12 @@ _.extend JustdoJiraIntegration.prototype,
       "jira_projects.#{jira_project_id}.fix_versions.id": fix_version_id
 
     if fix_version_task?
-      mount_tree_owner_id = @_getJiraMountpointOwner jira_project_id
+      justdo_admin_id = @_getJustdoAdmin fix_version_task.project_id
 
       # Update the fix version task itself
       fields_to_update = _.extend @_convertFixVersionToTaskFields(fix_version),
         jira_last_updated: new Date()
-        updated_by: mount_tree_owner_id
+        updated_by: justdo_admin_id
       @tasks_collection.update tasks_query, {$set: fields_to_update}
 
       if _.isEmpty fix_version_task.users
@@ -119,7 +119,7 @@ _.extend JustdoJiraIntegration.prototype,
           $push:
             users:
               $each: fix_version_mountpoint.users
-        APP.projects.bulkUpdate justdo_id, [fix_version_task._id], users_modifier, mount_tree_owner_id
+        APP.projects.bulkUpdate justdo_id, [fix_version_task._id], users_modifier, justdo_admin_id
 
       jira_query_options =
         fields:
@@ -155,7 +155,7 @@ _.extend JustdoJiraIntegration.prototype,
     justdo_id = fix_version_task_doc.project_id
 
     grid_data = APP.projects._grid_data_com
-    mount_tree_owner_id = @_getJiraMountpointOwner jira_project_id
+    justdo_admin_id = @_getJustdoAdmin justdo_id
 
     subtree_tasks = grid_data.collection.findSubTree fix_version_task_doc._id, {base_query: {project_id: justdo_id}, max_level: JustdoJiraIntegration.jira_issue_hierarchy_levels}
     immidiate_child_task_ids = subtree_tasks?[fix_version_task_doc._id]?._children
@@ -167,7 +167,7 @@ _.extend JustdoJiraIntegration.prototype,
       return "/#{fix_version_task_doc._id}/#{task_id}/"
 
     try
-      grid_data.bulkRemoveParents paths_to_remove, mount_tree_owner_id
+      grid_data.bulkRemoveParents paths_to_remove, justdo_admin_id
     catch e
       if e.error not in ["parent-already-exists", "unknown-parent"]
         console.trace()
@@ -176,7 +176,7 @@ _.extend JustdoJiraIntegration.prototype,
     fix_version_mountpoint_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "fix_versions"}, {fields: {_id: 1}})?._id
     @deleted_fix_version_ids.add fix_version_id
     try
-      grid_data.removeParent "/#{fix_version_mountpoint_id}/#{fix_version_task_doc._id}/", mount_tree_owner_id # Remove the fix version task at last
+      grid_data.removeParent "/#{fix_version_mountpoint_id}/#{fix_version_task_doc._id}/", justdo_admin_id # Remove the fix version task at last
     catch e
       if e.error not in ["parent-already-exists", "unknown-parent"]
         console.trace()
@@ -231,16 +231,15 @@ _.extend JustdoJiraIntegration.prototype,
       jira_project_id: jira_project_id
       jira_last_updated: new Date()
 
-    return APP.projects._grid_data_com.addChild "/#{parent}/", task_fields, @_getJiraMountpointOwner jira_project_id
+    return APP.projects._grid_data_com.addChild "/#{parent}/", task_fields, @_getJustdoAdmin justdo_id
 
   _updateSprintTask: (req_body) ->
     {id, name, startDate, endDate, originBoardId, state} = req_body.sprint
 
     tasks_query =
       jira_sprint_mountpoint_id: parseInt id
-    sprint_mountpoint = @tasks_collection.findOne(tasks_query, {fields: {project_id: 1, jira_project_id: 1}})
 
-    if not (justdo_id = sprint_mountpoint?.project_id)?
+    if not (justdo_id = @tasks_collection.findOne(tasks_query, {fields: {project_id: 1}})?.project_id)?
       # If sprint task is not found, the sprint may be closed and then re-opened.
       # Creation of sprint task will be handled below after getting all involved Jira projects.
       if state isnt "closed"
@@ -253,7 +252,7 @@ _.extend JustdoJiraIntegration.prototype,
 
       fields_to_update = _.extend @_convertSprintToTaskFields(req_body.sprint),
         jira_last_updated: new Date()
-        updated_by: @_getJiraMountpointOwner sprint_mountpoint.jira_project_id
+        updated_by: @_getJustdoAdmin justdo_id
 
       @tasks_collection.update tasks_query, {$set: fields_to_update}, {multi: true}
 
@@ -324,7 +323,7 @@ _.extend JustdoJiraIntegration.prototype,
     @tasks_collection.find({jira_sprint_mountpoint_id: sprint_id}, {fields: {project_id: 1, jira_project_id: 1}}).forEach (sprint_task_doc) =>
       justdo_id = sprint_task_doc.project_id
       jira_project_id = sprint_task_doc.jira_project_id
-      mount_tree_owner_id = @_getJiraMountpointOwner jira_project_id
+      justdo_admin_id = @_getJustdoAdmin sprint_task_doc.project_id
 
       sprint_mountpoint_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "sprints"}, {fields: {_id: 1}})?._id
 
@@ -338,7 +337,7 @@ _.extend JustdoJiraIntegration.prototype,
         return "/#{sprint_task_doc._id}/#{task_id}/"
 
       try
-        grid_data.bulkRemoveParents paths_to_remove, mount_tree_owner_id
+        grid_data.bulkRemoveParents paths_to_remove, justdo_admin_id
       catch e
         if e.error not in ["parent-already-exists", "unknown-parent"]
           console.trace()
@@ -346,7 +345,7 @@ _.extend JustdoJiraIntegration.prototype,
 
       sprint_mountpoint_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "sprints"}, {fields: {_id: 1}})?._id
       try
-        grid_data.removeParent "/#{sprint_mountpoint_id}/#{sprint_task_doc._id}/", mount_tree_owner_id # Remove the sprint task at last
+        grid_data.removeParent "/#{sprint_mountpoint_id}/#{sprint_task_doc._id}/", justdo_admin_id # Remove the sprint task at last
       catch e
         if e.error not in ["parent-already-exists", "unknown-parent"]
           console.trace()
@@ -388,26 +387,39 @@ _.extend JustdoJiraIntegration.prototype,
       return
 
     jira_server_id = @getJiraServerIdFromApiClient client
-    jira_doc = @jira_collection.findOne({"server_info.id": jira_server_id}, {fields: {_id: 1, jira_projects: 1}})
-    jira_doc_id = jira_doc?._id
+    jira_doc_id = @jira_collection.findOne({"server_info.id": jira_server_id}, {fields: {_id: 1}})?._id
 
     if not (jira_user_email = @jira_collection.findOne({_id: jira_doc_id, "jira_users.jira_account_id": jira_user_id}, {fields: {"jira_users.$": 1}})?.jira_users?[0]?.email)?
       {jira_user_objects, created_user_ids} = @_createProxyUserIfEmailNotRecognized res
       jira_user_email = jira_user_objects[0].email
 
     created_user_id = created_user_ids?[0] or APP.accounts.getUserByEmail(jira_user_email)._id
-    
+
+    query =
+      "conf.#{JustdoJiraIntegration.projects_collection_jira_doc_id}": jira_doc_id
+    query_options =
+      fields:
+        _id: 1
+        "conf.#{JustdoJiraIntegration.projects_collection_jira_doc_id}": 1
     # Add user to JustDos that are associated with Jira instance
-    for jira_project_id in _.keys(jira_doc.jira_projects)
-      jira_project_id = parseInt jira_project_id
-      jira_mountpoint_task_doc = @tasks_collection.findOne {jira_project_id, jira_mountpoint_type: "root"}, {fields: {owner_id: 1, project_id: 1}}
-      tasks_to_add_members = @tasks_collection.find({jira_project_id: jira_project_id}, {fields: {_id: 1}}).map (task_doc) -> task_doc._id
+    @projects_collection.find(query, query_options).forEach (project_doc) =>
+      justdo_id = project_doc._id
+
+      tasks_query =
+        project_id: justdo_id
+        jira_project_id:
+          $ne: null
+      tasks_to_add_members = @tasks_collection.find(tasks_query, {_id: 1}).map (task_doc) -> task_doc._id
 
       if not _.isEmpty tasks_to_add_members
-        APP.projects.bulkUpdateTasksUsers jira_mountpoint_task_doc.project_id,
+        @addJiraProjectMembersToJustdo justdo_id, jira_user_email
+
+        APP.projects.bulkUpdateTasksUsers justdo_id,
           tasks: tasks_to_add_members
           members_to_add: [created_user_id]
-        , jira_mountpoint_task_doc.owner_id
+        , @_getJustdoAdmin justdo_id
+
+      return
 
     jira_query =
       _id: jira_doc_id
@@ -448,13 +460,18 @@ _.extend JustdoJiraIntegration.prototype,
           if (parent_id = @tasks_collection.findOne({jira_issue_key: parent_issue_key}, {fields: {_id: 1}})._id)?
             path_to_add = "/#{parent_id}/"
 
+        user_ids_to_be_added_to_task = new Set()
+        user_ids_to_be_added_to_task.add @_getJustdoAdmin justdo_id
+        jira_user_emails = @getAllUsersInJiraInstance(@getJiraDocIdFromJustdoId justdo_id).map (user) ->
+          user_ids_to_be_added_to_task.add Accounts.findUserByEmail(user.email)?._id
+          return user.email
+        user_ids_to_be_added_to_task = Array.from user_ids_to_be_added_to_task
         @_createTaskFromJiraIssue justdo_id, path_to_add, req_body.issue
 
       return
     "jira:issue_updated": (req_body) ->
       jira_issue_id = parseInt req_body.issue.id
       jira_project_id = parseInt req_body.issue.fields.project.id
-      jira_mountpoint_owner_id = @_getJiraMountpointOwner jira_project_id
 
       # Updates from Justdo. Either check for a match in pending_connection_test or ignore..
       if (last_updated_changelog_item = _.find req_body.changelog.items, (item) -> item.field is "jd_last_updated")?
@@ -483,7 +500,7 @@ _.extend JustdoJiraIntegration.prototype,
         # Move the target task that was changed to epic back to roadmap
         if (parent_task_id = @tasks_collection.findOne({_id: task_id, jira_issue_id: {$ne: null}}, {fields: {parents2: 1}})?.parents2?[0]?.parent)?
           old_path = "/#{parent_task_id}/#{task_id}/"
-          grid_data.movePath old_path, {parent: jira_project_mountpoint}, @_getJiraMountpointOwner jira_project_id
+          grid_data.movePath old_path, {parent: jira_project_mountpoint}, @_getJustdoAdmin justdo_id
 
       if (changed_issue_parent = _.find req_body.changelog.items, (item) -> item.field in ["IssueParentAssociation", "Parent Issue", "Epic Link"])?
         current_parent_task_id = @tasks_collection.findOne(task_id, {fields: {parents2: 1}}).parents2[0].parent
@@ -504,12 +521,12 @@ _.extend JustdoJiraIntegration.prototype,
           new_order = @tasks_collection.findOne(current_parent_task_id, {fields: {parents2: 1}})?.parents2?[0]?.order
           new_parent = {parent: jira_project_mountpoint, order: new_order + 1}
 
-        grid_data.movePath old_path, new_parent, jira_mountpoint_owner_id
+        grid_data.movePath old_path, new_parent, @_getJustdoAdmin justdo_id
 
       if not _.isEmpty ({$set, $addToSet, $pull} = @_mapJiraFieldsToJustdoFields justdo_id, req_body, {use_changelog: true})
         ops =
           $set:
-            updated_by: jira_mountpoint_owner_id
+            updated_by: @_getJustdoAdmin justdo_id
             jira_last_updated: new Date()
         if not _.isEmpty $set
           _.extend ops.$set, $set
@@ -568,7 +585,7 @@ _.extend JustdoJiraIntegration.prototype,
         paths_to_move = @tasks_collection.find(query, {fields: {_id: 1}}).map (child_task) -> "/#{task_id}/#{child_task._id}/"
 
         try
-          APP.projects._grid_data_com.movePath paths_to_move, {parent: roadmap_task_id}, @_getJiraMountpointOwner jira_project_id
+          APP.projects._grid_data_com.movePath paths_to_move, {parent: roadmap_task_id}, @_getJustdoAdmin justdo_id
         catch e
           console.trace()
           console.error e
