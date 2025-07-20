@@ -80,6 +80,7 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
       label: "Interval between checks for new migration batches."
       type: SimpleSchema.Integer
       optional: true
+      defaultValue: 1000 * 30  # 30 seconds default retry delay
 
 JustdoDbMigrations.commonBatchedMigration = (options) ->
   {cleaned_val} =
