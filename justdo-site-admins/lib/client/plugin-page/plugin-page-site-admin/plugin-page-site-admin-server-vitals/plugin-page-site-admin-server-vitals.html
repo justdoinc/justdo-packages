@@ -120,6 +120,12 @@
           <div class="server-section-title">MongoDB Info</div>
           <div class="server-info-stat-wrapper">
             <div class="server-info-stat">
+              <div class="server-info-stat-label">Version</div>
+              <span class="server-info-stat-value">
+                {{version}}
+              </span>
+            </div>
+            <div class="server-info-stat">
               <div class="server-info-stat-label">Disk Space</div>
               <span class="server-info-stat-value">
                 {{bytesToHumanReadable fsUsedSize}} / {{bytesToHumanReadable fsTotalSize}}

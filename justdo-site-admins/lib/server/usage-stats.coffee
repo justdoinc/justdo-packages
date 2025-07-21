@@ -163,7 +163,11 @@ _.extend JustdoSiteAdmins.prototype,
       @os = Npm.require "os"
     
     report = process.report.getReport()
-    mongo_stats = await APP.collections.Tasks.rawDatabase().stats()
+    raw_db = await APP.collections.Tasks.rawDatabase()
+    raw_admin_db = raw_db.admin()
+    mongo_stats = await raw_db.stats()
+    server_info = await raw_admin_db.serverStatus()
+    mongo_stats.version = server_info.version
 
     snapshot = 
       system:
