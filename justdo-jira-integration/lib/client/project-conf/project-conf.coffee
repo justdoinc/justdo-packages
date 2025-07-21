@@ -21,7 +21,7 @@ Template.justdo_jira_integration_project_config.helpers
     return JustdoJiraIntegration.plugin_human_readable_name
 
 Template.justdo_jira_integration_project_config.events
-  "click .jd-icon-extension": ->
+  "click .project-conf-justdo-jira-integration-config": ->
     proj = curProj()
 
     if proj.isCustomFeatureEnabled(module_id)
