@@ -164,10 +164,18 @@ _.extend JustdoSiteAdmins.prototype,
     
     report = process.report.getReport()
     raw_db = await APP.collections.Tasks.rawDatabase()
-    raw_admin_db = raw_db.admin()
     mongo_stats = await raw_db.stats()
-    server_info = await raw_admin_db.serverStatus()
-    mongo_stats.version = server_info.version
+
+    raw_admin_db = raw_db.admin()
+    # If the current db user is not admin, `serverStatus` (and other admin-only methods)
+    # will throw an error.
+    try
+      server_info = await raw_admin_db.serverStatus()
+      mongo_version = server_info.version
+    catch err
+      mongo_version = "N/A"
+
+    mongo_stats.version = mongo_version
 
     snapshot = 
       system:
