@@ -18,7 +18,6 @@ app_routes = Picker.filter (req, res) ->
 
 env_vars_to_expose = [
   "ENV"
-  "JUSTDO_ENTERPRISE_FEATURES"
   "ROOT_URL"
   "WEB_APP_ROOT_URL"
   "LANDING_APP_ROOT_URL"
