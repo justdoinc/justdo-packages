@@ -26,7 +26,7 @@ _.extend GridControlCustomFieldsManager.prototype,
             state_schema = _.extend {}, APP.collections.Tasks.simpleSchema()._schema.state
             org_grid_values = state_schema.grid_values
             state_schema.grid_values = {}
-            state_schema.grid_removed_values = org_grid_values
+            state_schema.grid_removed_values = _.extend {}, org_grid_values
             # state_schema.grid_removed_values = state_schema.grid_values # Make all the values available under removed values
 
             for state_def, index in custom_states_definitions
