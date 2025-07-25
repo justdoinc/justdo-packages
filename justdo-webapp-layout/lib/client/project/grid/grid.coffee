@@ -279,7 +279,7 @@ APP.executeAfterAppLibCode ->
             # external email updates system updated
             request_path[0] = "due-list"
 
-          grid_control_mux.setPath(request_path)
+          grid_control_mux.setPath(request_path, {}, 3) # Increase retries for case we are waiting for a diff sync after init payload
 
         if (sections_state = project_page_module.getSectionsStateFromQueryString(current_hash))?
           grid_control_mux.setActiveGridControlSectionsState(sections_state) 
