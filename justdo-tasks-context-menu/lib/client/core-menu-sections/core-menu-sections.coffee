@@ -168,7 +168,7 @@ _.extend JustdoTasksContextMenu.prototype,
                 gd.removeParent paths, (err) ->
                   if err?
                     JustdoSnackbar.show
-                      text: "Cannot remove sub-tree because some tasks have multi-parents."
+                      text: err.reason or err
                       duration: 5000
 
                   return
