@@ -42,9 +42,9 @@ APP.executeAfterAppLibCode ->
   ]
 
   for {index_id, collection}, index in indexes_to_remove
-    remove_index_migration_options = 
+    remove_index_migration_options =
       index_id: index_id
       collection: collection
-      run_if_lte_version_installed: "v5.10.0" # Adjust version as needed
+      run_if_lte_version_installed: "v7.0.3" # Adjust version as needed
 
     APP.justdo_db_migrations.registerMigrationScript "remove-obsolete-index-#{index_id}", JustdoDbMigrations.removeIndexMigration(remove_index_migration_options)
