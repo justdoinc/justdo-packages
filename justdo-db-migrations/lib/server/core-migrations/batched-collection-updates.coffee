@@ -89,6 +89,10 @@ APP.executeAfterAppLibCode ->
 
     static_query: false
     queryGenerator: ->
+      #
+      # IMPORTANT, if you change the following, don't forget to update the relevant collections-indexes.coffee
+      # and to drop obsolete indexes (see BATCHED_COLLECTION_UPDATES_INDEX)
+      #
       query =
         process_status:
           $in: ["pending"]
