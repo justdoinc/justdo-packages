@@ -31,7 +31,7 @@ APP.executeAfterAppLibCode ->
   APP.modules.project_page.project_config_ui.registerConfigTemplate share.disable_quick_add_custom_plugin_id,
     section: "extensions"
     template: "disable_quick_add_project_config"
-    priority: 10001
+    priority: 10200
 
   APP.justdo_custom_plugins.installCustomPlugin
     # SETTINGS BEGIN

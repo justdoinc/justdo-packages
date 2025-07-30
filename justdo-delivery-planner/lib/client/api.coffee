@@ -418,20 +418,16 @@ _.extend JustdoDeliveryPlanner.prototype,
 
       custom_plugin_readable_name: TAPi18n.__ JustdoDeliveryPlanner.projects_collection_plugin_name_i18n
 
-      # Registration of extensions list is performed below, since this plugin is displayed as enabled when disabled on project doc level.
-      show_in_extensions_list: false
+      show_in_extensions_list: true
       # / SETTINGS END
+
+      priority: 10050
     
       installer: ->
         return
 
       destroyer: ->
         return
-
-    APP.modules.project_page.project_config_ui.registerConfigTemplate JustdoDeliveryPlanner.projects_collection_plugin_id,
-      section: "extensions"
-      template: "projects_collection_project_config"
-      priority: 140
 
     return
   

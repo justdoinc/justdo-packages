@@ -15,7 +15,7 @@ APP.justdo_custom_plugins.installCustomPlugin
     APP.modules.project_page.project_config_ui.registerConfigTemplate "create-new-justdo-with-same-settings",
       section: "operations"
       template: "create_new_justdo_with_same_settings"
-      priority: 10001
+      priority: 10100
       
     return
 
