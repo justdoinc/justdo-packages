@@ -533,7 +533,7 @@ columnFilterStateToQuery = (column_filter_state, context) ->
           filter_option_id_found = true
 
           if filter_option.is_empty
-            ranges_queries.push({ $exists: false })
+            ranges_queries.push(null)
             continue
 
           if not (relative_range = filter_option.relative_range)?
