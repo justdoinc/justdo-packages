@@ -24,7 +24,7 @@ _.extend JustdoDeliveryPlanner,
 
   is_projects_collection_enabled_globally: false
 
-  defaultOnGridClick: (e, event_item) ->
+  defaultOnGridProjectsCollectionClick: (e, event_item) ->
     if not APP.justdo_delivery_planner.isProjectsCollectionClosed event_item
       APP.justdo_ppm.showPcInProjectPane event_item._id
     return

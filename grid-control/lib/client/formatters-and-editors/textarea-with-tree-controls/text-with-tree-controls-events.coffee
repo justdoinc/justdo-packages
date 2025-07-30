@@ -175,7 +175,7 @@ _.extend PACK.Formatters.textWithTreeControls,
           
           if (projects_collection_type_id = APP.justdo_delivery_planner.getTaskObjProjectsCollectionTypeId(event_item))?
             projects_collection_type_def = APP.justdo_delivery_planner.getProjectsCollectionTypeById(projects_collection_type_id)
-            handler = projects_collection_type_def?.onGridClick or JustdoDeliveryPlanner.defaultOnGridClick
+            handler = projects_collection_type_def?.onGridClick or JustdoDeliveryPlanner.defaultOnGridProjectsCollectionClick
             handler.call @, e, event_item
 
     }
