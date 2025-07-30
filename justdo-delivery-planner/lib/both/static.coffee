@@ -25,15 +25,9 @@ _.extend JustdoDeliveryPlanner,
   is_projects_collection_enabled_globally: false
 
   defaultOnGridProjectsCollectionClick: (e, event_item) ->
-    if not APP.justdo_delivery_planner.isProjectsCollectionClosed event_item
-      APP.justdo_ppm.showPcInProjectPane event_item._id
     return
 
   defaultOnGridProjectClick: (e, event_item, event_parent_item) ->
-    is_project_closed = APP.justdo_delivery_planner.isTaskObjArchivedProject event_item
-    is_parent_projects_collection_closed = APP.justdo_delivery_planner.isProjectsCollectionClosed event_parent_item
-    if not (is_project_closed or is_parent_projects_collection_closed)
-      APP.justdo_ppm.showProjectInProjectPane event_item._id
     return
 
   projects_collections_types: [
