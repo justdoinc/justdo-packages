@@ -58,7 +58,7 @@ GridControl = (options, container) ->
         @custom_fields_manager.getCustomFieldsSchema()
 
         if not first_comp
-          @emit "custom_fields_changed"
+          Tracker.nonreactive => @emit "custom_fields_changed"
         else
           first_comp = false
 
@@ -86,7 +86,7 @@ GridControl = (options, container) ->
         @removed_custom_fields_manager.getCustomFieldsSchema()
 
         if not first_comp
-          @emit "removed_custom_fields_changed"
+          Tracker.nonreactive => @emit "removed_custom_fields_changed"
         else
           first_comp = false
 
