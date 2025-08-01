@@ -1,5 +1,3 @@
-import {Promise} from "bluebird";
-
 Template.task_pane_justdo_files_task_pane_section_section.onCreated ->
   @autorun =>
     if (active_item_id = APP.modules.project_page.activeItemId())?

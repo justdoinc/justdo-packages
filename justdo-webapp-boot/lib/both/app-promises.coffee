@@ -1,11 +1,3 @@
-import { checkNpmVersions } from "meteor/tmeasday:check-npm-versions"
-
-checkNpmVersions({
-  'bluebird': '3.x.x'
-}, 'justdoinc:justdo-webapp-boot')
-
-Promise = require "bluebird"
-
 env_async = new Promise (resolve, reject) ->
   if Meteor.isServer
     resolve(process.env)
