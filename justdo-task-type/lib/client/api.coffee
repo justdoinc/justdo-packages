@@ -9,7 +9,7 @@ _.extend JustdoTaskType.prototype,
     if @destroyed
       return
 
-    @registerConfigTemplate()
+    # @registerConfigTemplate()
     # @registerTaskPaneSection()
     @setupCustomFeatureMaintainer()
 
