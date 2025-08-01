@@ -17,6 +17,9 @@ env_async = new Promise (resolve, reject) ->
   return
 
 APP.getEnv = (cb) ->
+  # Note that even in the server side where we have the process.env readily
+  # available, cb won't be called in the same tick. That's since .then always
+  # calls the callback asynchronously.
   env_async.then Meteor.bindEnvironment (env) -> cb(env)
 
   return
