@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Փակել այս բաժինը",
   "projects_collection_closed_department_label": "Փակված բաժին",
   "projects_collection_reopen_department": "Վերաբացել այս բաժինը",
+  "projects_collection_create_sub_department": "Ստեղծել Ենթաբաժին",
   "projects_collection_depth_gt_max_depth_default_err": "Հնարավոր չէ __projects_collection_label__-ը ներդնել __count__ մակարդակից ավելի",
   "projects_collection_depth_gt_max_depth_default_err_plural": "Հնարավոր չէ __projects_collection_label__-ը ներդնել __count__ մակարդակներից ավելի"
 }

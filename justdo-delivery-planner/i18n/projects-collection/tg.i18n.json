@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Ин Шӯъбаро пӯшидан",
   "projects_collection_closed_department_label": "Шӯъбаи Пӯшида",
   "projects_collection_reopen_department": "Ин Шӯъбаро аз нав кушодан",
+  "projects_collection_create_sub_department": "Зершуъба эҷод кардан",
   "projects_collection_depth_gt_max_depth_default_err": "Наметавон __projects_collection_label__-ро аз __count__ сатҳ зиёдтар ҷойгир кард",
   "projects_collection_depth_gt_max_depth_default_err_plural": "Наметавон __projects_collection_label__-ро аз __count__ сатҳ зиёдтар ҷойгир кард"
 }

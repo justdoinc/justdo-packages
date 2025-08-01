@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Bu Departmanı kapat",
   "projects_collection_closed_department_label": "Kapatılmış Departman",
   "projects_collection_reopen_department": "Bu Departmanı yeniden aç",
+  "projects_collection_create_sub_department": "Alt Departman oluştur",
   "projects_collection_depth_gt_max_depth_default_err": "__projects_collection_label__ __count__ seviyeden daha fazla iç içe yerleştirilemez",
   "projects_collection_depth_gt_max_depth_default_err_plural": "__projects_collection_label__ __count__ seviyeden daha fazla iç içe yerleştirilemez"
 }

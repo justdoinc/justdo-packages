@@ -16,6 +16,7 @@
   "projects_collection_close_department": "ปิดแผนกนี้",
   "projects_collection_closed_department_label": "แผนกที่ปิดแล้ว",
   "projects_collection_reopen_department": "เปิดแผนกนี้อีกครั้ง",
+  "projects_collection_create_sub_department": "สร้างแผนกย่อย",
   "projects_collection_depth_gt_max_depth_default_err": "ไม่สามารถซ้อน __projects_collection_label__ เกิน __count__ ระดับ",
   "projects_collection_depth_gt_max_depth_default_err_plural": "ไม่สามารถซ้อน __projects_collection_label__ เกิน __count__ ระดับ"
 }

@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Dëst Departement zoumaachen",
   "projects_collection_closed_department_label": "Zougemaacht Departement",
   "projects_collection_reopen_department": "Dëst Departement erëm opmaachen",
+  "projects_collection_create_sub_department": "En Ënner-Departement erstellen",
   "projects_collection_depth_gt_max_depth_default_err": "Kann __projects_collection_label__ net iwwer __count__ Niveau verschachtelen",
   "projects_collection_depth_gt_max_depth_default_err_plural": "Kann __projects_collection_label__ net iwwer __count__ Niveauen verschachtelen"
 }

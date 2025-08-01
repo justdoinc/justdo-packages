@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Zamknij ten dział",
   "projects_collection_closed_department_label": "Zamknięty dział",
   "projects_collection_reopen_department": "Otwórz ponownie ten dział",
+  "projects_collection_create_sub_department": "Utwórz Poddział",
   "projects_collection_depth_gt_max_depth_default_err": "Nie można zagnieżdżać __projects_collection_label__ poza __count__ poziom",
   "projects_collection_depth_gt_max_depth_default_err_plural": "Nie można zagnieżdżać __projects_collection_label__ poza __count__ poziomów"
 }

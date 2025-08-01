@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Sulge see osakond",
   "projects_collection_closed_department_label": "Suletud osakond",
   "projects_collection_reopen_department": "Taasava see osakond",
+  "projects_collection_create_sub_department": "Loo alamosakond",
   "projects_collection_depth_gt_max_depth_default_err": "Ei saa pesastada __projects_collection_label__ rohkem kui __count__ tasandile",
   "projects_collection_depth_gt_max_depth_default_err_plural": "Ei saa pesastada __projects_collection_label__ rohkem kui __count__ tasandile"
 }

@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Închide acest Departament",
   "projects_collection_closed_department_label": "Departament Închis",
   "projects_collection_reopen_department": "Redeschide acest Departament",
+  "projects_collection_create_sub_department": "Creează un Sub-Departament",
   "projects_collection_depth_gt_max_depth_default_err": "Nu se poate imbrica __projects_collection_label__ peste __count__ nivel",
   "projects_collection_depth_gt_max_depth_default_err_plural": "Nu se poate imbrica __projects_collection_label__ peste __count__ nivele"
 }

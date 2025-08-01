@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Sulje tämä osasto",
   "projects_collection_closed_department_label": "Suljettu osasto",
   "projects_collection_reopen_department": "Avaa tämä osasto uudelleen",
+  "projects_collection_create_sub_department": "Luo alaosasto",
   "projects_collection_depth_gt_max_depth_default_err": "Ei voida sisällyttää __projects_collection_label__ syvemmälle kuin __count__ taso",
   "projects_collection_depth_gt_max_depth_default_err_plural": "Ei voida sisällyttää __projects_collection_label__ syvemmälle kuin __count__ tasoa"
 }

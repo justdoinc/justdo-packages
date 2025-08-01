@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Закрыць гэты аддзел",
   "projects_collection_closed_department_label": "Закрыты аддзел",
   "projects_collection_reopen_department": "Адкрыць зноў гэты аддзел",
+  "projects_collection_create_sub_department": "Стварыць пададдзел",
   "projects_collection_depth_gt_max_depth_default_err": "Немагчыма ўкласці __projects_collection_label__ больш чым на __count__ узровень",
   "projects_collection_depth_gt_max_depth_default_err_plural": "Немагчыма ўкласці __projects_collection_label__ больш чым на __count__ узроўні"
 }

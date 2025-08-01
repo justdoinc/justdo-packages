@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Zavrieť toto oddelenie",
   "projects_collection_closed_department_label": "Zatvorené oddelenie",
   "projects_collection_reopen_department": "Znovu otvoriť toto oddelenie",
+  "projects_collection_create_sub_department": "Vytvoriť pododdelenie",
   "projects_collection_depth_gt_max_depth_default_err": "Nemožno vnoriť __projects_collection_label__ viac ako __count__ úroveň",
   "projects_collection_depth_gt_max_depth_default_err_plural": "Nemožno vnoriť __projects_collection_label__ viac ako __count__ úrovní"
 }

@@ -16,6 +16,7 @@
   "projects_collection_close_department": "এই বিভাগ বন্ধ করুন",
   "projects_collection_closed_department_label": "বন্ধ বিভাগ",
   "projects_collection_reopen_department": "এই বিভাগ পুনরায় খুলুন",
+  "projects_collection_create_sub_department": "একটি উপ-বিভাগ তৈরি করুন",
   "projects_collection_depth_gt_max_depth_default_err": "__projects_collection_label__ কে __count__ স্তরের বেশি নেস্ট করা যাবে না",
   "projects_collection_depth_gt_max_depth_default_err_plural": "__projects_collection_label__ কে __count__ স্তরের বেশি নেস্ট করা যাবে না"
 }

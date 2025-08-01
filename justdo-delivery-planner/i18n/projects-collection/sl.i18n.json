@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Zapri ta oddelek",
   "projects_collection_closed_department_label": "Zaprt oddelek",
   "projects_collection_reopen_department": "Ponovno odpri ta oddelek",
+  "projects_collection_create_sub_department": "Ustvari pododdelek",
   "projects_collection_depth_gt_max_depth_default_err": "Ni mogoče gnezditi __projects_collection_label__ preko __count__ nivoja",
   "projects_collection_depth_gt_max_depth_default_err_plural": "Ni mogoče gnezditi __projects_collection_label__ preko __count__ nivojev"
 }

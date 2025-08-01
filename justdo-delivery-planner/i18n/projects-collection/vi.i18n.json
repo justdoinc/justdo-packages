@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Đóng Phòng ban này",
   "projects_collection_closed_department_label": "Phòng ban đã đóng",
   "projects_collection_reopen_department": "Mở lại Phòng ban này",
+  "projects_collection_create_sub_department": "Tạo Phòng ban con",
   "projects_collection_depth_gt_max_depth_default_err": "Không thể lồng __projects_collection_label__ quá __count__ cấp",
   "projects_collection_depth_gt_max_depth_default_err_plural": "Không thể lồng __projects_collection_label__ quá __count__ cấp"
 }

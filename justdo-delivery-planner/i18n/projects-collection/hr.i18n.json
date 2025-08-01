@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Zatvori ovaj odjel",
   "projects_collection_closed_department_label": "Zatvoreni odjel",
   "projects_collection_reopen_department": "Ponovno otvori ovaj odjel",
+  "projects_collection_create_sub_department": "Stvori pod-Odjel",
   "projects_collection_depth_gt_max_depth_default_err": "Nije moguće ugniježđivati __projects_collection_label__ dublje od __count__ razine",
   "projects_collection_depth_gt_max_depth_default_err_plural": "Nije moguće ugniježđivati __projects_collection_label__ dublje od __count__ razina"
 }

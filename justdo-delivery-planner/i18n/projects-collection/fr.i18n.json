@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Fermer ce Département",
   "projects_collection_closed_department_label": "Département fermé",
   "projects_collection_reopen_department": "Rouvrir ce Département",
+  "projects_collection_create_sub_department": "Créer un Sous-Département",
   "projects_collection_depth_gt_max_depth_default_err": "Impossible d'imbriquer __projects_collection_label__ au-delà de __count__ niveau",
   "projects_collection_depth_gt_max_depth_default_err_plural": "Impossible d'imbriquer __projects_collection_label__ au-delà de __count__ niveaux"
 }

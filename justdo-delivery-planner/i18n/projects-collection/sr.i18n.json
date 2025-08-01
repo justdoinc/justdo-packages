@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Zatvori ovo Odeljenje",
   "projects_collection_closed_department_label": "Zatvoreno odeljenje",
   "projects_collection_reopen_department": "Ponovo otvori ovo Odeljenje",
+  "projects_collection_create_sub_department": "Kreiraj Pod-odeljenje",
   "projects_collection_depth_gt_max_depth_default_err": "Ne može se ugnjezditi __projects_collection_label__ preko __count__ nivoa",
   "projects_collection_depth_gt_max_depth_default_err_plural": "Ne može se ugnjezditi __projects_collection_label__ preko __count__ nivoa"
 }

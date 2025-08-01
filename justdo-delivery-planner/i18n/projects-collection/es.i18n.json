@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Cerrar este Departamento",
   "projects_collection_closed_department_label": "Departamento Cerrado",
   "projects_collection_reopen_department": "Reabrir este Departamento",
+  "projects_collection_create_sub_department": "Crear un Subdepartamento",
   "projects_collection_depth_gt_max_depth_default_err": "No se puede anidar __projects_collection_label__ más allá de __count__ nivel",
   "projects_collection_depth_gt_max_depth_default_err_plural": "No se puede anidar __projects_collection_label__ más allá de __count__ niveles"
 }

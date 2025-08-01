@@ -16,6 +16,7 @@
   "projects_collection_close_department": "關閉此部門",
   "projects_collection_closed_department_label": "已關閉的部門",
   "projects_collection_reopen_department": "重新開啟此部門",
+  "projects_collection_create_sub_department": "建立子部門",
   "projects_collection_depth_gt_max_depth_default_err": "無法將 __projects_collection_label__ 嵌套超過 __count__ 層",
   "projects_collection_depth_gt_max_depth_default_err_plural": "無法將 __projects_collection_label__ 嵌套超過 __count__ 層"
 }

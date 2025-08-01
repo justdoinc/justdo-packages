@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Закрыть этот отдел",
   "projects_collection_closed_department_label": "Закрытый отдел",
   "projects_collection_reopen_department": "Переоткрыть этот отдел",
+  "projects_collection_create_sub_department": "Создать подотдел",
   "projects_collection_depth_gt_max_depth_default_err": "Нельзя вложить __projects_collection_label__ глубже __count__ уровня",
   "projects_collection_depth_gt_max_depth_default_err_plural": "Нельзя вложить __projects_collection_label__ глубже __count__ уровней"
 }

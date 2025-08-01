@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Osztály bezárása",
   "projects_collection_closed_department_label": "Bezárt Osztály",
   "projects_collection_reopen_department": "Osztály újranyitása",
+  "projects_collection_create_sub_department": "Alosztály létrehozása",
   "projects_collection_depth_gt_max_depth_default_err": "Nem lehet __count__ szintnél mélyebbre ágyazni a __projects_collection_label__",
   "projects_collection_depth_gt_max_depth_default_err_plural": "Nem lehet __count__ szintnél mélyebbre ágyazni a __projects_collection_label__"
 }

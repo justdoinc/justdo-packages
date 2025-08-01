@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Funga Idara hii",
   "projects_collection_closed_department_label": "Idara iliyofungwa",
   "projects_collection_reopen_department": "Fungua upya Idara hii",
+  "projects_collection_create_sub_department": "Unda Idara-ndogo",
   "projects_collection_depth_gt_max_depth_default_err": "Haiwezi kupanga __projects_collection_label__ zaidi ya kiwango __count__",
   "projects_collection_depth_gt_max_depth_default_err_plural": "Haiwezi kupanga __projects_collection_label__ zaidi ya viwango __count__"
 }

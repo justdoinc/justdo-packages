@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Lukk denne avdelingen",
   "projects_collection_closed_department_label": "Lukket avdeling",
   "projects_collection_reopen_department": "Gjenåpne denne avdelingen",
+  "projects_collection_create_sub_department": "Opprett en underavdeling",
   "projects_collection_depth_gt_max_depth_default_err": "Kan ikke neste __projects_collection_label__ utover __count__ nivå",
   "projects_collection_depth_gt_max_depth_default_err_plural": "Kan ikke neste __projects_collection_label__ utover __count__ nivåer"
 }

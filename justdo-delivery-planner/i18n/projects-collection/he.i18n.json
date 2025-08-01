@@ -16,6 +16,7 @@
   "projects_collection_close_department": "סגור את המחלקה הזו",
   "projects_collection_closed_department_label": "מחלקה סגורה",
   "projects_collection_reopen_department": "פתח מחדש את המחלקה הזו",
+  "projects_collection_create_sub_department": "צור תת-מחלקה",
   "projects_collection_depth_gt_max_depth_default_err": "לא ניתן לקנן __projects_collection_label__ מעבר לרמה __count__",
   "projects_collection_depth_gt_max_depth_default_err_plural": "לא ניתן לקנן __projects_collection_label__ מעבר ל-__count__ רמות"
 }

@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Uždaryti šį departamentą",
   "projects_collection_closed_department_label": "Uždarytas departamentas",
   "projects_collection_reopen_department": "Atidaryti šį departamentą iš naujo",
+  "projects_collection_create_sub_department": "Sukurti sub-padalinį",
   "projects_collection_depth_gt_max_depth_default_err": "Negalima įterpti __projects_collection_label__ giliau nei __count__ lygį",
   "projects_collection_depth_gt_max_depth_default_err_plural": "Negalima įterpti __projects_collection_label__ giliau nei __count__ lygius"
 }

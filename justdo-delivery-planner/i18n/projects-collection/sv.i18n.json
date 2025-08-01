@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Stäng denna Avdelning",
   "projects_collection_closed_department_label": "Stängd Avdelning",
   "projects_collection_reopen_department": "Öppna denna Avdelning igen",
+  "projects_collection_create_sub_department": "Skapa en Underavdelning",
   "projects_collection_depth_gt_max_depth_default_err": "Kan inte nesta __projects_collection_label__ djupare än __count__ nivå",
   "projects_collection_depth_gt_max_depth_default_err_plural": "Kan inte nesta __projects_collection_label__ djupare än __count__ nivåer"
 }

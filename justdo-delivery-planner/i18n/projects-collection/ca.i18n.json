@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Tancar aquest Departament",
   "projects_collection_closed_department_label": "Departament Tancat",
   "projects_collection_reopen_department": "Reobrir aquest Departament",
+  "projects_collection_create_sub_department": "Crear un Sub-Departament",
   "projects_collection_depth_gt_max_depth_default_err": "No es pot anidar __projects_collection_label__ més enllà de __count__ nivell",
   "projects_collection_depth_gt_max_depth_default_err_plural": "No es pot anidar __projects_collection_label__ més enllà de __count__ nivells"
 }

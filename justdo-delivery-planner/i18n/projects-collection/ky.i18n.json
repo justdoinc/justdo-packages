@@ -16,6 +16,7 @@
   "projects_collection_close_department": "Бул бөлүмдү жабуу",
   "projects_collection_closed_department_label": "Жабылган бөлүм",
   "projects_collection_reopen_department": "Бул бөлүмдү кайра ачуу",
+  "projects_collection_create_sub_department": "Кичи-Бөлүм түзүү",
   "projects_collection_depth_gt_max_depth_default_err": "__projects_collection_label__ дегенди __count__ деңгээлден ашык киргизүүгө болбойт",
   "projects_collection_depth_gt_max_depth_default_err_plural": "__projects_collection_label__ дегенди __count__ деңгээлден ашык киргизүүгө болбойт"
 }
