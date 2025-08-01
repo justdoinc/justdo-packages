@@ -39,6 +39,8 @@ _.extend GridControlCustomFieldsManager.prototype,
                 state_schema.grid_values[state_def.state_id].bg_color = state_def.bg_color
 
               state_schema.grid_values[state_def.state_id].txt = state_def.txt
+              state_schema.grid_values[state_def.state_id].txt_i18n = state_def.txt_i18n
+
               state_schema.grid_values[state_def.state_id].order = index
 
             state_schema.grid_values["nil"] = org_grid_values["nil"]
@@ -55,6 +57,8 @@ _.extend GridControlCustomFieldsManager.prototype,
                 state_schema.grid_removed_values[state_def.state_id].bg_color = state_def.bg_color
 
               state_schema.grid_removed_values[state_def.state_id].txt = state_def.txt
+              state_schema.grid_removed_values[state_def.state_id].txt_i18n = state_def.txt_i18n
+              
               state_schema.grid_removed_values[state_def.state_id].order = index
 
             @custom_fields_schema.state = state_schema
