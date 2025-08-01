@@ -114,6 +114,10 @@ var _runCallbacks = function(listenerArray, args) {
 // emitter.emit(event, [arg1], [arg2], [...])#
 // Execute each of the listeners in order with the supplied arguments.
 EventEmitter.prototype.emit = function(eventName /* arguments */) {
+  if (typeof Tracker !== 'undefined' && Tracker.currentComputation) {
+    console.warn("EventEmitter.emit called from a Tracker computation. This could cause unexpected behavior. Current computation: ", Tracker.currentComputation);
+  }
+
   var self = this;
   // make argument list to pass on to listeners
   var args = _.rest(arguments);
