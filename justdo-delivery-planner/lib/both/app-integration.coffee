@@ -21,6 +21,7 @@
 
 APP.getEnv (env) ->
   APP.executeAfterAppLibCode ->
+    APP.emit "pre-justdo-delivery-planner-init", env
     options =
       projects_collection: APP.collections.Projects
       tasks_collection: APP.collections.Tasks

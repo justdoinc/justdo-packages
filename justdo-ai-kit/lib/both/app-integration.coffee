@@ -5,6 +5,8 @@ APP.getEnv (env) ->
   if env.JUSTDO_AI_ENABLED isnt "true"
     return
   
+  APP.emit "pre-justdo-ai-kit-init", env
+  
   justdo_ai_conf = env.JUSTDO_AI_CONF or "{}"
   justdo_ai_conf = EJSON.parse(justdo_ai_conf.replace(/'/g, '"'))
 

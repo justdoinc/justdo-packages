@@ -1,4 +1,6 @@
 APP.getEnv (env) ->
+  APP.emit "pre-justdo-task-type-init", env
+  
   options =
     projects_collection: APP.collections.Projects
     tasks_collection: APP.collections.Tasks
