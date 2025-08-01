@@ -1,0 +1,2 @@
+_.extend JustdoHelpers,
+  isBespokePackageEnabled: JustdoCoreHelpers.isBespokePackageEnabled
