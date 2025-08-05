@@ -258,6 +258,24 @@ _.extend GridControl,
 
 Util.inherits GridControl, EventEmitter
 
+activeItemObj = (fields, _grid_data_structure=true) ->
+  if _grid_data_structure
+    return @getCurrentPathObj(fields)
+
+  # Get data from the collection, not from grid-data's internal data
+  # structures
+  if not (active_item_id = @activeItemId())?
+    @logger.debug "activeItemObj can't find the active item collection_id"
+    return null
+
+  return APP.collections.Tasks.findOne(active_item_id, {fields: fields})
+  
+activeItemPath = ->
+  if @isMultiSelectMode()
+    return null
+  
+  return @getCurrentPath()
+
 _.extend GridControl.prototype,
   # init hooks can be added by packages that extends grid-control features keys should
   # be the hooks human-readable names and the values functions that will be called with
@@ -1672,12 +1690,6 @@ _.extend GridControl.prototype,
     @current_path.get()
 
     return @getCurrentPathNonReactive()
-  
-  activeItemPath = ->
-    if @isMultiSelectMode()
-      return null
-    
-    return @getCurrentPath()
 
   activeItemPath: activeItemPath
   activePath: activeItemPath
@@ -1788,17 +1800,6 @@ _.extend GridControl.prototype,
 
     return current_obj
 
-  activeItemObj = (fields, _grid_data_structure=true) ->
-    if _grid_data_structure
-      return @getCurrentPathObj(fields)
-
-    # Get data from the collection, not from grid-data's internal data
-    # structures
-    if not (active_item_id = @activeItemId())?
-      @logger.debug "activeItemObj can't find the active item collection_id"
-      return null
-
-    return APP.collections.Tasks.findOne(active_item_id, {fields: fields})
   activeItemObj: activeItemObj
   activeItem: activeItemObj
 
