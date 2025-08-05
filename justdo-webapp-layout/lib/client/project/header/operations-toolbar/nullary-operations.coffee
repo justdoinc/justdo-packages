@@ -2,7 +2,10 @@ APP.executeAfterAppLibCode ->
   project_page_module = APP.modules.project_page
   curProj = project_page_module.helpers.curProj
 
-  gridControl = -> project_page_module.gridControl(false) # false means we'll get the gridControl even if it isn't init
+  gridControl = ->
+    # The apporach of falling back to default gridControl is deprecated  
+    console.warn "Project page nullary operations falling back to default gridControl: This shouldn't happen!"
+    return project_page_module.gridControl(false) # false means we'll get the gridControl even if it isn't init
 
   project_page_module.setNullaryOperation "addSubTask",
     human_description: "New Child Task"
