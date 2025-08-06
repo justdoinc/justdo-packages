@@ -162,12 +162,56 @@ GridControl = (options, container) ->
     Tracker.onInvalidate =>
       @destroy()
 
+  GridControl.registerGridControl @
+  @onDestroy =>
+    GridControl.unregisterGridControl @
+    return
+
   APP.emit "grid-control-created", @
 
   return @
 
 _.extend GridControl,
   default_domain: default_grid_control_domain
+  
+  registered_grid_controls: new Set()
+
+  registerGridControl: (grid_control) ->
+    @registered_grid_controls.add grid_control
+    return
+  
+  isGridControlRegistered: (grid_control) ->
+    return @registered_grid_controls.has(grid_control)
+  
+  unregisterGridControl: (grid_control) ->
+    @registered_grid_controls.delete grid_control
+    return
+  
+  getRegisteredGridControlWithGridUid: (grid_uid) ->
+    for grid_control from @registered_grid_controls
+      if grid_control.getGridUid() is grid_uid
+        return grid_control
+    
+    console.warn "getRegisteredGridControlWithGridUid: Cannot find grid control with grid uid #{grid_uid}"
+    return
+  
+  getRegisteredGridControlFromEvent: (e) ->
+    # Find the grid control container that contains the event target
+    $target = $(e.target)
+
+    return @getRegisteredGridControlFromJqueryElement($target)
+  
+  getRegisteredGridControlFromJqueryElement: ($el) ->
+    # Look through all tracked grid controls to find which one is the parent of the jquery element
+    for grid_control from @registered_grid_controls
+      if grid_control.container? and $el.closest(grid_control.container).length > 0
+        return grid_control
+    
+    console.warn "getRegisteredGridControlFromJqueryElement: Cannot find grid control from jquery element:", $el
+    return
+  
+  getAllRegisteredGridControls: ->
+    return Array.from @registered_grid_controls
 
   ###
   Creates a new GridControl instance with predefined options from a given tab in a GridControlMux
