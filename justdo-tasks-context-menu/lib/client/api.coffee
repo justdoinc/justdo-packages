@@ -21,10 +21,6 @@ _.extend JustdoTasksContextMenu.prototype,
 
     # Track all grid control instances that should support context menu
     @_registered_grid_controls = new Set()
-    
-    # Register the main grid control
-    @_register_main_grid_control_tracker = null
-    @_registerMainGridControl()
 
     @sections_reactive_items_list = new JustdoHelpers.ReactiveItemsList() # The "main" domain will be used for the main sections
 
@@ -72,7 +68,7 @@ _.extend JustdoTasksContextMenu.prototype,
     return
   
   _setupHandlers: ->
-    APP.on "additional-grid-control-created", (grid_control) =>
+    APP.on "grid-control-created", (grid_control) =>
       @registerGridControl(grid_control)
       return
 
@@ -545,18 +541,6 @@ _.extend JustdoTasksContextMenu.prototype,
         return grid_control
     
     throw @_error "fatal", "Cannot find grid control from event. Please ensure that the grid control is registered with registerGridControl."
-
-  _registerMainGridControl: ->
-    # The grid controls from project page grid control mux does not trigger the "additional-grid-control-created" event,
-    # and there are multiple grid controls from the grid control mux, so we need to register it with a tracker.
-    if @_register_main_grid_control_tracker?
-      return
-
-    @_register_main_grid_control_tracker = Tracker.autorun =>
-      if (gc = APP.modules.project_page.gridControl())?
-        @registerGridControl gc
-
-      return
 
   registerGridControl: (grid_control) ->
     if not grid_control?
