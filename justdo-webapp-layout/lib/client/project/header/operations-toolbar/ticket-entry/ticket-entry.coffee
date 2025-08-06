@@ -58,7 +58,7 @@ APP.executeAfterAppLibCode ->
     human_description_i18n: share.disable_quick_add_custom_plugin_label_i18n
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#file"/></svg>"""
-    op: ->
+    op: (grid_control) ->
       message_template =
         APP.helpers.renderTemplateInNewNode(Template.ticket_entry, {})
 
@@ -103,7 +103,6 @@ APP.executeAfterAppLibCode ->
               if not formIsValid()
                 return false
 
-              grid_control = project_page_module.gridControl(false)
               grid_data = grid_control._grid_data
 
               # XXX Note that we don't provide path to addChild when destination_type is "ticket-queue". addChild will transform

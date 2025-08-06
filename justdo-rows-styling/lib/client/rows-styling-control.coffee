@@ -3,16 +3,14 @@ clicked_since_mouse_enter = false
 APP.executeAfterAppLibCode ->
   project_page_module = APP.modules.project_page
 
-  gridControl = -> project_page_module.gridControl(false) # false means we'll get the gridControl even if it isn't init
-
   project_page_module.setNullaryOperation "changeRowStyle",
     human_description: "Change Font Style"
 
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#jd-a"/></svg>"""
 
-    op: ->
-      task = APP.modules.project_page.gridControl().getCurrentPathObj()
+    op: (gc) ->
+      task = gc.getCurrentPathObj()
 
       style = {}
 
@@ -42,9 +40,7 @@ APP.executeAfterAppLibCode ->
 
       return
 
-    prereq: ->
-      gc = gridControl()
-
+    prereq: (gc) ->
       return gc._opreqActivePathIsCollectionItem(gc._opreqNotMultiSelectMode(gc._opreqUnlocked(gc._opreqGridReady())))
 
   Template.rows_styling_control.helpers
