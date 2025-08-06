@@ -2,11 +2,6 @@ APP.executeAfterAppLibCode ->
   project_page_module = APP.modules.project_page
   curProj = project_page_module.helpers.curProj
 
-  gridControl = ->
-    # The apporach of falling back to default gridControl is deprecated  
-    console.warn "Project page nullary operations falling back to default gridControl: This shouldn't happen!"
-    return project_page_module.gridControl(false) # false means we'll get the gridControl even if it isn't init
-
   project_page_module.setNullaryOperation "addSubTask",
     human_description: "New Child Task"
     human_description_i18n: "new_child_task_label"
@@ -15,14 +10,11 @@ APP.executeAfterAppLibCode ->
     template:
       custom_icon_html: -> """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#corner-down-#{APP.justdo_i18n.getRtlAwareDirection "right"}"/></svg>"""
     op: (gc) ->
-      gc = gc or gridControl()
-
       gc.saveAndExitActiveEditor()
 
       gc.addSubItem({project_id: curProj().id})
 
     prereq: (gc)->
-      gc = gc or gridControl()
       return gc.addSubItem.prereq()
 
   isActiveItemSectionHeaderUnderMainTab = ->
@@ -64,8 +56,6 @@ APP.executeAfterAppLibCode ->
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>"""
     op: (gc) ->
-      gc = gc or gridControl()
-
       gc.saveAndExitActiveEditor()
 
       new_task_custom_fields = {project_id: curProj().id}
@@ -81,8 +71,6 @@ APP.executeAfterAppLibCode ->
       gc.addSiblingItem(new_task_custom_fields)
 
     prereq: (gc) ->
-      gc = gc or gridControl()
-
       if not gc.isMultiSelectMode() and isActiveItemSectionHeaderUnderMainTab()
         return {} # add new task is allowed in such a case, otherwise, if someone sees only the Shared With Me he won't be able to add tasks to the root once it is activated
 
@@ -95,8 +83,6 @@ APP.executeAfterAppLibCode ->
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"/></svg>"""
     op: (gc) ->
-      gc = gc or gridControl()
-
       current_task_obj = gc.getCurrentPathObj()
 
       performAction = -> gc.removeActivePath()
@@ -123,7 +109,6 @@ APP.executeAfterAppLibCode ->
       return
 
     prereq: (gc) ->
-      gc = gc or gridControl()
       return gc.removeActivePath.prereq()
 
   project_page_module.setNullaryOperation "moveDown",
@@ -133,10 +118,8 @@ APP.executeAfterAppLibCode ->
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-down"/></svg>"""
     op: (gc) ->
-      gc = gc or gridControl()
       gc.moveActivePathDown()
     prereq: (gc) ->
-      gc = gc or gridControl()
       return gc.moveActivePathDown.prereq()
 
   project_page_module.setNullaryOperation "moveUp",
@@ -146,10 +129,8 @@ APP.executeAfterAppLibCode ->
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-up"/></svg>"""
     op: (gc) ->
-      gc = gc or gridControl()
       gc.moveActivePathUp()
     prereq: (gc) ->
-      gc = gc or gridControl()
       return gc.moveActivePathUp.prereq()
 
   project_page_module.setNullaryOperation "moveLeft",
@@ -159,10 +140,8 @@ APP.executeAfterAppLibCode ->
     template:
       custom_icon_html: -> """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-#{APP.justdo_i18n.getRtlAwareDirection "left"}"/></svg>"""
     op: (gc) ->
-      gc = gc or gridControl()
       gc.moveActivePathLeft()
     prereq: (gc) ->
-      gc = gc or gridControl()
       return gc.moveActivePathLeft.prereq()
 
   project_page_module.setNullaryOperation "moveRight",
@@ -172,10 +151,8 @@ APP.executeAfterAppLibCode ->
     template:
       custom_icon_html: -> """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-#{APP.justdo_i18n.getRtlAwareDirection "right"}"/></svg>"""
     op: (gc) ->
-      gc = gc or gridControl()
       gc.moveActivePathRight()
     prereq: (gc) ->
-      gc = gc or gridControl()
       return gc.moveActivePathRight.prereq()
 
   project_page_module.setNullaryOperation "sortByPriority",
@@ -184,10 +161,8 @@ APP.executeAfterAppLibCode ->
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#jd-sort"/></svg>"""
     op: (gc) ->
-      gc = gc or gridControl()
       gc.sortActivePathByPriorityDesc()
     prereq: (gc) ->
-      gc = gc or gridControl()
       return gc.sortActivePathByPriorityDesc.prereq()
 
   project_page_module.setNullaryOperation "zoomIn",
@@ -213,28 +188,22 @@ APP.executeAfterAppLibCode ->
     human_description: "Add to Favorites"
     human_description_i18n: "add_to_favorites_label"
     op: (gc) ->
-      gc = gc or gridControl()
       active_item_id = gc.activeItemId()
 
       JD.collections.Tasks.update(active_item_id, {$set: {"priv:favorite": new Date(TimeSync.getServerTime())}})
 
       return
     prereq: (gc) ->
-      gc = gc or gridControl()
-
       return gc._opreqActivePathIsCollectionItem(gc._opreqGridReady())
 
   project_page_module.setNullaryOperation "removeFromFavorites",
     human_description: "Remove from Favorites"
     human_description_i18n: "remove_from_favorites_label"
     op: (gc) ->
-      gc = gc or gridControl()
       active_item_id = gc.activeItemId()
 
       JD.collections.Tasks.update(active_item_id, {$set: {"priv:favorite": null}})
 
       return
     prereq: (gc) ->
-      gc = gc or gridControl()
-
       return gc._opreqActivePathIsCollectionItem(gc._opreqGridReady())
