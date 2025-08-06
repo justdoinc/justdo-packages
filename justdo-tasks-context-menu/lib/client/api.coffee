@@ -19,9 +19,6 @@ _.extend JustdoTasksContextMenu.prototype,
     # Track which grid control opened the current context menu
     @_gc_with_opened_context_menu_rv = new ReactiveVar(null)
 
-    # Track all grid control instances that should support context menu
-    @_registered_grid_controls = new Set()
-
     @sections_reactive_items_list = new JustdoHelpers.ReactiveItemsList() # The "main" domain will be used for the main sections
 
     @field_val_and_dependencies_vals_tracker = Tracker.autorun =>
@@ -68,10 +65,6 @@ _.extend JustdoTasksContextMenu.prototype,
     return
   
   _setupHandlers: ->
-    APP.on "grid-control-created", (grid_control) =>
-      @registerGridControl(grid_control)
-      return
-
     # Permission check for bulk update
     @register "pre-bulk-update", (task_ids, field_id, field_val, modifier) ->
       if not (res = APP.justdo_permissions.checkTaskPermissions "task-field-edit.#{field_id}", task_ids)
@@ -124,7 +117,8 @@ _.extend JustdoTasksContextMenu.prototype,
         return
 
       # Find which grid control this event belongs to by traversing up the DOM
-      gc = @_findGridControlFromEvent(e)
+      if not (gc = GridControl.getRegisteredGridControlFromEvent(e))?
+        throw @_error "fatal", "Cannot find grid control from event."
 
       if not (event_item = gc.getEventItem(e))?
         # Can't find event's item
@@ -529,36 +523,6 @@ _.extend JustdoTasksContextMenu.prototype,
       $first_nested_menu_section_filters.val("") # Clear all filters in the submenu
       $first_nested_menu_section_filters.trigger("keyup") # To update the filter reactive var
 
-    return
-
-  _findGridControlFromEvent: (e) ->
-    # Find the grid control container that contains the event target
-    $target = $(e.target)
-    
-    # Look through all tracked grid controls to find which one contains the event target
-    for grid_control from @_registered_grid_controls
-      if grid_control.container? and $target.closest(grid_control.container).length > 0
-        return grid_control
-    
-    throw @_error "fatal", "Cannot find grid control from event. Please ensure that the grid control is registered with registerGridControl."
-
-  registerGridControl: (grid_control) ->
-    if not grid_control?
-      throw @_error "missing-argument", "Grid Control is required"
-      
-    if @_registered_grid_controls.has(grid_control)
-      return
-
-    @_registered_grid_controls.add(grid_control)
-    
-    # Auto-cleanup when grid control is destroyed
-    grid_control.once "destroyed", =>
-      @unregisterGridControl(grid_control)
-    
-    return
-
-  unregisterGridControl: (grid_control) ->
-    @_registered_grid_controls.delete(grid_control)
     return
   
   getGridControlWithOpenedContextMenu: ->
