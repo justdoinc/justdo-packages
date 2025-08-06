@@ -1664,7 +1664,7 @@ _.extend GridControl.prototype,
   #
   # Current row
   #
-  getCurrentRowNonReactive: -> @_grid.getActiveCell()?.row
+  getCurrentRowNonReactive: -> @_grid?.getActiveCell()?.row
   getCurrentRow: ->
     # We let @current_grid_tree_row trigger reactivity, but we always return
     # the real active cell by checking @_grid.getActiveCell() directly.
