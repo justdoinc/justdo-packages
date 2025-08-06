@@ -9,6 +9,9 @@ APP.executeAfterAppLibCode ->
   # project_header template
   #
   Template.project_header.helpers project_template_helpers
+  Template.project_header.helpers
+    getGridControl: ->
+      return @getGridControl
 
   #
   # project_header_global_layout_header_right, project_header_global_layout_header_middle, project_header_global_layout_header_left templates

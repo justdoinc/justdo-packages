@@ -9,7 +9,7 @@ Template.project_operations_toolbar.onRendered ->
     return
 
   @autorun =>
-    if not (gc = APP.modules.project_page.gridControl())?
+    if not (gc = @data.getGridControl())?
       return
 
     if not gc.isMultiSelectMode() and (task = APP.modules.project_page.activeItemObj())?
@@ -43,6 +43,9 @@ Template.project_operations_toolbar.helpers
       return false
 
     return true
+  
+  getGridControl: ->
+    return @getGridControl
 
 Template.project_operations_toolbar.events
   "click .tab-switcher-exit-btn": (e, tpl) ->

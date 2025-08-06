@@ -1,6 +1,6 @@
 <template name="project">
   <div class="page-container-header">
-    {{> project_header}}
+    {{> project_header getGridControl=getGridControl}}
   </div>
   <div class="project-container {{toolbar_position}}-toolbar  {{#if isToolbarOpen}}open-toolbar{{else}}closed-toolbar{{/if}} {{#if is_project_admin}}project-admin{{/if}}">
     {{!--

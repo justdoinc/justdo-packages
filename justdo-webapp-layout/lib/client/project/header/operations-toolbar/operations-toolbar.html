@@ -2,7 +2,7 @@
   <div id="project-grid-operations">
     <div class="btn-toolbar d-flex align-items-center" role="toolbar">
       <div class="tab-switcher-wrapper {{#if showTabExit}}show-tab-exit btn btn-primary btn-sm{{/if}}">
-        {{> project_operations_tab_switcher}}{{!-- XXX when removing this one, don't forget to remove the tab-switcher folder--}}
+        {{> project_operations_tab_switcher getGridControl=getGridControl}}{{!-- XXX when removing this one, don't forget to remove the tab-switcher folder--}}
 
         {{#if showTabExit}}
           <div class="tab-switcher-exit-btn">
@@ -11,31 +11,31 @@
         {{/if}}
       </div>
       {{#unless isQuickAddDisabled}}
-        {{> project_operations_ticket_entry}}
+        {{> project_operations_ticket_entry getGridControl=getGridControl}}
       {{/unless}}
       <div class="btn-group" role="group">
-        {{> project_operations_add_sibling_task}}
-        {{> project_operations_add_sub_task}}
-        {{> project_operations_remove_task}}
+        {{> project_operations_add_sibling_task getGridControl=getGridControl}}
+        {{> project_operations_add_sub_task getGridControl=getGridControl}}
+        {{> project_operations_remove_task getGridControl=getGridControl}}
       </div>
       <div class="btn-group" role="group" id="project-move-around-btns">
-        {{> project_operations_move_left}}
-        {{> project_operations_move_right}}
-        {{> project_operations_move_up}}
-        {{> project_operations_move_down}}
+        {{> project_operations_move_left getGridControl=getGridControl}}
+        {{> project_operations_move_right getGridControl=getGridControl}}
+        {{> project_operations_move_up getGridControl=getGridControl}}
+        {{> project_operations_move_down getGridControl=getGridControl}}
       </div>
       <div class="btn-group" role="group">
-        {{> project_operations_print_grid}}
+        {{> project_operations_print_grid getGridControl=getGridControl}}
       </div>
       {{#if itemDuplicateControlExist}}
-        {{> item_duplicate_control}} {{!-- Defined in the justdo-item-duplicate-control package --}}
+        {{> item_duplicate_control getGridControl=getGridControl}} {{!-- Defined in the justdo-item-duplicate-control package --}}
       {{/if}}
-      {{> rows_styling_control}} {{!-- Defined in the justdo-rows-styling package --}}
+      {{> rows_styling_control getGridControl=getGridControl}} {{!-- Defined in the justdo-rows-styling package --}}
       <div class="project-header-toolbar-divider"></div>
-      {{> search_comp}}
+      {{> search_comp getGridControl=getGridControl}}
       <div class="project-header-toolbar-divider" style="{{#unless displayPrioritySlider}}display: none{{/unless}}"></div>
       <div style="{{#unless displayPrioritySlider}}display: none{{/unless}}">
-        {{> justdo_priority_slider id="operations_toolbar_priority_slider"}}
+        {{> justdo_priority_slider id="operations_toolbar_priority_slider" getGridControl=getGridControl}}
       </div>
     </div>
   </div>

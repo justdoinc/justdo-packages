@@ -13,6 +13,17 @@ APP.executeAfterAppLibCode ->
     main_module.setCustomHeaderTemplate("middle", "project_header_global_layout_header_middle")
     main_module.setCustomHeaderTemplate("right", "project_header_global_layout_header_right")
 
+    this.grid_control_rv = new ReactiveVar()
+    APP.on "grid-control-created", (grid_control) =>
+      # Ensure the created grid control is under the same domain as the project page grid control mux
+      if grid_control.getDomain() is project_page_module.getGridControlMux().getDomain()
+        this.autorun =>
+          # We setup an autorun here to update grid_control_rv instead of assigning the `grid_control` directly
+          # because grid_control_mux creates multiple grid controls, and we want to keep it up to date
+          this.grid_control_rv.set project_page_module.gridControl()
+          return
+      return
+
     this.autorun ->
       # Set/update project_page_module.project when it changes
       Router.current() # Just so changing to another project will invalidate the computation
@@ -96,5 +107,11 @@ APP.executeAfterAppLibCode ->
   Template.project.helpers project_page_module.template_helpers
 
   Template.project.helpers
+    # Note: `getGridControl` returns a function that returns the active grid control of the project page
+    getGridControl: ->
+      tpl = Template.instance()
+      return ->
+        return tpl.grid_control_rv.get()
+
     belowProjectHeaderItems: ->
       return JD.getPlaceholderItems("below-project-header")
