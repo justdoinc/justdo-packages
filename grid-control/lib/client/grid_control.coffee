@@ -162,6 +162,8 @@ GridControl = (options, container) ->
     Tracker.onInvalidate =>
       @destroy()
 
+  APP.emit "grid-control-created", @
+
   return @
 
 _.extend GridControl,
@@ -253,7 +255,6 @@ _.extend GridControl,
   # hence we decided to make `createGridControl` non-reactive.
   createGridControl: (options) ->
     grid_control = Tracker.nonreactive => @_createGridControl(options)
-    APP.emit "additional-grid-control-created", grid_control
     return grid_control
 
 Util.inherits GridControl, EventEmitter
