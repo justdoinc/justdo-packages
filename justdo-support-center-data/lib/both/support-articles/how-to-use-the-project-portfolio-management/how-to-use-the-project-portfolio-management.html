@@ -1,0 +1,158 @@
+<template name="support_article_how_to_use_the_project_portfolio_management">
+  <p>The Project Portfolio Management (PPM) extension facilitates the simultaneous management of multiple concurrent projects from the planning phase to their execution phase.</p>
+
+  <h2>Installation and Setup</h2>
+  <p>To install the PPM extension:</p>
+  <ol>
+    <li>Navigate to your JustDo settings</li>
+    <li>Click "Configure this JustDo"</li>
+    <li>Go to the "Extensions" section</li>
+    <li>Enable the "Project Portfolio Management" extension</li>
+  </ol>
+  <p>Once installed, you'll see the Project Portfolio tab in the bottom pane that you can open to access all portfolio management features.</p>
+
+  <h2>Main View of the PPM</h2>
+  <p>The PPM categorizes projects into Departments and sub-departments, providing a hierarchical organization structure for your project portfolio.</p>
+
+  <h2>Two Main Purposes of PPM</h2>
+  <p>The PPM serves two primary functions:</p>
+  <ol>
+    <li><strong>Quick Overview:</strong> Provides a brief view to understand which projects need the manager's attention the most right now</li>
+    <li><strong>Periodic Review:</strong> Facilitates Periodical Project Review and planning procedures throughout the project lifecycle (from planning to completion)</li>
+  </ol>
+
+  <h2>Project Visibility and Filtering</h2>
+  <p>To ensure a quick glance is enough to identify which projects need attention, the PPM by default shows only running projects with the following states:</p>
+  <ul>
+    <li>In Progress - Ongoing projects</li>
+    <li>At Risk - Projects that are at risk of not being completed on time</li>
+    <li>On Hold - Projects that need attention</li>
+    <li>On Hold By Business - Projects that are on hold due to external factors</li>
+    <li>Extended states of In Progress or On Hold</li>
+  </ul>
+  <p>To include projects in their planning phase (Pending projects), you can adjust the filter settings in the PPM view.</p>
+
+  <h2>Project Status System</h2>
+  <p>We believe that the state of a project is a qualitative measure rather than a quantitative one. The project state is broken into 3 categories that are manually set by the manager or subordinates to reflect the risk of the project not being completed on time:</p>
+  <ul>
+    <li><strong>Green:</strong> Project is on track</li>
+    <li><strong>Yellow:</strong> Project has some risks or concerns</li>
+    <li><strong>Red:</strong> Project require attention or is significantly delayed</li>
+  </ul>
+
+  <h3>Automatic Status Rules</h3>
+  <p>Certain automatic rules can affect the Project Status:</p>
+  <ol>
+    <li>If you set any sub-tasks of the project to At Risk state, the project status will automatically become Yellow;</li>
+    <li>If you set any sub-tasks of the project to On Hold or On Hold By Business state, the project status will automatically become Red;</li>
+  </ol>
+  <p><strong>Important Note:</strong> A project task has both Project Status and State. The project State reflects the actual state of the project (e.g., Pending, In Progress), while the Project Status reflects the risk of the project being delayed.</p>
+
+  <h2>Project Prioritization</h2>
+  <p>To help see at a glance which projects need the manager's attention most, all running projects are sorted by their Project Status:</p>
+  <ol>
+    <li>Red projects (highest priority)</li>
+    <li>Yellow projects (medium priority)</li>
+    <li>Green projects (lowest priority)</li>
+  </ol>
+
+  <h2>Special Task States</h2>
+  <p>Two special task states are automatically added to a JustDo once the PPM is enabled:</p>
+
+  <h3>1. At Risk</h3>
+  <p>An extension of the standard task states that indicates potential project delays or issues.</p>
+
+  <h3>2. On Hold By Business (OHBB)</h3>
+  <p>This addresses the distinction between internal project issues and external factors causing delays. The project manager often sits between subordinates and upper management, needing to report accurately on delay causes.</p>
+  <p>OHBB helps distinguish between:</p>
+  <ul>
+    <li>Internal project issues</li>
+    <li>External factors (e.g., management requesting work on something else)</li>
+  </ul>
+  <p>When a task is marked as OHBB, its duration will not be regarded as part of the total project duration, better reflecting that external factors (not project management issues) caused the delay.</p>
+  <p><strong>Integration Note:</strong> If the Project Health plugin is installed, OHBB tasks won't be displayed as Late Tasks.</p>
+
+  <h2>Project Structure</h2>
+  <p>Every project in JustDo is structured as follows:</p>
+  <ul>
+    <li>Projects are tasks created under a Department</li>
+    <li>To create a department, right-click on a task and select "Set as a Department"</li>
+    <li>To create a project, either:
+      <ul>
+        <li>Create a sub-task under a department, or</li>
+        <li>Right-click on a task and select "Set as a Project"</li>
+      </ul>
+    </li>
+  </ul>
+  <p>Next to each project, there's a briefcase icon that can be clicked on to show project details in the Project Portfolio bottom pane.</p>
+
+  <h2>Project Details</h2>
+  <p>The key fields presented for each project include:</p>
+  <ul>
+    <li><strong>Project Objective:</strong> Clear description of project goals</li>
+    <li><strong>Priority:</strong> Priority of the project (low, medium, high)</li>
+    <li><strong>Responsible:</strong> Responsible person for the project </li>
+    <li><strong>Department:</strong> Department that the project belongs to</li>
+    <li><strong>Start date:</strong> Basket start date of the project (i.e. earliest start date of child-tasks)</li>
+    <li><strong>End date:</strong> Basket end date of the project (i.e. latest end date of child-tasks)</li>
+  </ul>
+
+  <h2>Periodical Project Review and Planning Procedures</h2>
+  <p>The PPM was designed to facilitate periodic project review procedures through three main tools:</p>
+
+  <h3>1. Activities</h3>
+  <p>Project Activities provide a quick understanding during periodic meetings about:</p>
+  <ul>
+    <li>What was done: Done tasks with an End Date that is in the past</li>
+    <li>What is currently active: In Progress tasks </li>
+    <li>What is planned to be done in the future: Pending tasks with an End Date in the future</li>
+  </ul>
+  <p>The Project Activities view regards only "leaf tasks" (tasks without sub-tasks) as tasks to be presented, treating all non-leaf tasks as "categories" that shouldn't be directly displayed.</p>
+  <p><strong>Note:</strong> Tasks without dates do not appear in the Project Activities view.</p>
+
+  <h3>2. Gantt</h3>
+  <p>The PPM applies special coloring to Gantt chart bars to provide enhanced visual project tracking:</p>
+  <ul>
+    <li>Green - Done tasks</li>
+    <li>Yellow - Tasks that are On Hold </li>
+    <li>Red - Tasks that should have been done by now: In Progress or Pending Tasks with an End Date in the past</li>
+    <li>Blue - Default color for the rest of the tasks</li>
+  </ul>
+  <p>For more information about using the Gantt chart, see <a href="{{i18nRoute route="support_page_with_news_id" news_id="how-to-use-the-gantt"}}">How to Use the Gantt</a>.</p>
+
+  <h3>3. Issues</h3>
+  <p>During meetings, issues often arise that need to be discussed in future meetings. The Issues feature provides:</p>
+  <ul>
+    <li>Date of the issue creation</li>
+    <li>Description of the issue</li>
+    <li>Action items</li>
+    <li>Responsible person for the issue</li>
+  </ul>
+
+  <h2>Meeting Schedule Recommendation</h2>
+  <p>The idea is that once every 1-2 weeks, each active project should be reviewed and updated by stakeholders in meetings using these PPM tools.</p>
+
+  <h2>PPM Dashboard</h2>
+  <p>The PPM dashboard provides:</p>
+  <ul>
+    <li>Projects sorted by priority and status</li>
+    <li>Each project card displays key details at a glance</li>
+    <li>Quick access to project details and management functions</li>
+    <li>Overview of portfolio health and resource allocation</li>
+  </ul>
+
+  <h2>Best Practices</h2>
+  <ul>
+    <li>Regularly update project statuses to maintain accuracy</li>
+    <li>Use OHBB appropriately to distinguish external delays</li>
+    <li>Conduct regular review meetings using the three PPM tools</li>
+    <li>Maintain clear project objectives and success criteria</li>
+    <li>Keep project hierarchies organized by department</li>
+  </ul>
+
+  <h2>Related Articles</h2>
+  <ul>
+    <li><a href="{{i18nRoute route="support_page_with_news_id" news_id="how-to-use-the-gantt"}}">How to Use the Gantt</a></li>
+    <li><a href="{{i18nRoute route="support_page_with_news_id" news_id="justdo-extensions"}}">JustDo Extensions: Enhancing Your Workspace</a></li>
+  </ul>
+</template>
