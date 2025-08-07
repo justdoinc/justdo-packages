@@ -30,7 +30,7 @@ APP.executeAfterAppLibCode ->
     return formatted_val
 
   Template.task_pane_item_details_additional_fields.helpers
-    additionalFields: ->
+    fields: ->
       current_item_id = project_page_module.activeItemId()
       current_item_path = project_page_module.activeItemPath()
 
@@ -48,24 +48,29 @@ APP.executeAfterAppLibCode ->
       fields_missing_from_view = gc.fieldsMissingFromView()
       extended_schema = gc.getSchemaExtendedWithCustomFields()
 
-      additional_fields = []
-      for field_id in fields_missing_from_view
-        if extended_schema[field_id].grid_more_info_visible_column is false
+      fields = []
+      for field_id, field_def of extended_schema 
+        if field_def.grid_more_info_visible_column is false
           continue
         
-        additional_field = 
+        if field_def.grid_visible_column isnt true
+          continue
+
+        formatter = removeTreeControlsFromFormatterOrEditor field_def.grid_column_formatter
+
+        field = 
           field_id: field_id
-          label_i18n: extended_schema[field_id].label_i18n
-          label: extended_schema[field_id].label
-          formatter: extended_schema[field_id].grid_column_formatter
+          label_i18n: field_def.label_i18n
+          label: field_def.label
+          formatter: formatter
 
-        if additional_field.formatter?
-          additional_field.field_invalidate_ancestors_on_change =
-            gc.getFormatterDefinition(additional_field.formatter).invalidate_ancestors_on_change
+        if field.formatter?
+          field.field_invalidate_ancestors_on_change =
+            gc.getFormatterDefinition(field.formatter).invalidate_ancestors_on_change
 
-        additional_fields.push additional_field
+        fields.push field
 
-      return additional_fields
+      return fields
 
   Template.task_pane_item_details_additional_field.helpers
     isEditableField: ->
@@ -124,6 +129,11 @@ APP.executeAfterAppLibCode ->
         gc.invalidateOnCollectionItemDescendantsChanges(current_item_id, options)
 
       return gc.collection.findOne(current_item_id, {fields: JustdoHelpers.fieldsArrayToInclusiveFieldsProjection(field_plus_dependencies)}) or {}
+
+    isFieldOnGrid: ->
+      gc = APP.modules.project_page.gridControl()
+      fields_missing_from_view = gc.fieldsMissingFromView()
+      return @field_id not in fields_missing_from_view
 
   Template.task_pane_item_details_additional_field.events
     "click .add-to-grid": (e) ->
