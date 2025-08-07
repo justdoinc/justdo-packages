@@ -120,8 +120,20 @@ APP.executeAfterAppLibCode ->
     "click .grid-views-add": (e, tpl) ->
       tpl.rename_grid_view_id_rv.set null
 
+      # Default view title: current date and time
+      default_view_title = "View, " + moment(new Date()).format("MMM D") + ", " + moment(new Date()).format("HH:mm")
+      # If the search value is not empty, use it as the view title
+      search_val = tpl.search_val_rv.get()
+      if _.isEmpty search_val
+        title = default_view_title
+      else
+        title = search_val
+        # Clear the search value if the user has entered a value
+        tpl.search_val_rv.set null
+        $(".grid-views-search-input").val ""
+      
       APP.justdo_grid_views.upsert null, {
-        title: "View, " + moment(new Date()).format("MMM D") + ", " + moment(new Date()).format("HH:mm")
+        title: title
         shared: false
         hierarchy: {type: "justdo", justdo_id: JD.activeJustdoId()}
         view: APP.modules.project_page.gridControl().getView()
