@@ -1,6 +1,46 @@
 APP.executeAfterAppLibCode ->
   project_page_module = APP.modules.project_page
 
+  scrollToTargetColumn = (jquery_selector, gc) ->
+    # Shine the row
+    $row_header = $(jquery_selector, gc.container)
+    $row_header.addClass "shine-slick-grid-column-header"
+    setTimeout ->
+      $row_header.removeClass "shine-slick-grid-column-header"
+    , 2000
+
+    # Scroll the row into view if it's not visible
+    row_padding = 8 # px
+
+    $slick_viewport = $(".slick-viewport", gc.container)
+    slick_viewport_scroll_left = $slick_viewport.scrollLeft()
+    slick_viewport_width = $slick_viewport.width()
+
+    frozen_row_width = $(".slick-header-column:not(.slick-header-reorderable)").width() + row_padding
+    row_left_position = $row_header.position().left
+
+    is_row_hidden_to_the_left = slick_viewport_scroll_left > (row_left_position - frozen_row_width)
+    is_row_hidden_to_the_right = (slick_viewport_scroll_left + slick_viewport_width) < row_left_position
+
+    if not (is_row_hidden_to_the_left or is_row_hidden_to_the_right)
+      return
+
+    scroll_left = row_left_position - frozen_row_width
+
+    $slick_viewport.animate { scrollLeft: scroll_left }, 500
+
+    return
+
+  # Prevent the tree controls from being shown in the more info section
+  removeTreeControlsFromFormatterOrEditor = (formatter_or_editor) ->
+    if formatter_or_editor is "TextareaWithTreeControlsEditor"
+      return "TextareaEditor"
+    
+    if formatter_or_editor is "textWithTreeControls"
+      return "defaultFormatter"
+
+    return formatter_or_editor
+
   formatWithPrintFormatter = (gc, item_id, field, val, dependencies_values, path) ->
     schema = gc.getSchemaExtendedWithCustomFields()
     if not (grid_visible_column = schema[field]?.grid_visible_column)? or grid_visible_column is false
@@ -142,14 +182,15 @@ APP.executeAfterAppLibCode ->
       gc.addFieldToView @field_id
 
       Meteor.defer ->
-        # Shine the row
-        $row_header = $(".slick-header-column:last", gc.container)
-        $row_header.addClass "shine-slick-grid-column-header"
-        $slick_viewport = $(".slick-viewport", gc.container)
-        $slick_viewport.animate { scrollLeft: $(".grid-canvas", gc.container).width() }, 500
-        setTimeout ->
-          $row_header.removeClass "shine-slick-grid-column-header"
-        , 2000
+        scrollToTargetColumn(".slick-header-column:last", gc)
+
+      return
+
+    "click .locate-on-grid": (e) ->
+      gc = project_page_module.gridControl()
+      grid_uid = gc.getGridUid()
+
+      scrollToTargetColumn(".slick-header-column[id=\"#{grid_uid}#{@field_id}\"]", gc)
 
       return
 
@@ -173,9 +214,9 @@ APP.executeAfterAppLibCode ->
 
     field_def = gc.getFieldDef(field_id)
 
-    grid_column_editor = field_def.grid_column_editor
+    grid_column_editor = removeTreeControlsFromFormatterOrEditor field_def.grid_column_editor
 
-    field_editor = gc.generateFieldEditor(field_id, current_item_id)
+    field_editor = gc.generateFieldEditor(field_id, current_item_id, grid_column_editor)
 
     $field_editor_container = this.$(".field-editor")
     $field_editor_container.data("editor_field_id", field_id)    
