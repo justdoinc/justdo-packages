@@ -174,6 +174,8 @@ GridControl = (options, container) ->
 _.extend GridControl,
   default_domain: default_grid_control_domain
   
+  # Set is used instead of a key-value map (where the key is the `grid_uid`)
+  # is due to the fact that `grid_uid` comes from grid_control._grid, which isn't available immediately upon GridControl creation.
   registered_grid_controls: new Set()
 
   registerGridControl: (grid_control) ->
