@@ -102,8 +102,16 @@ var _runCallbacks = function(listenerArray, args) {
     _.each(listenerArray, function(listener) {
       // Count listener calls
       count++;
+
       // Send the job to the eventloop
-      listener.apply(self, args);
+      if (typeof Tracker !== 'undefined' && Tracker.currentComputation) {
+        Tracker.nonreactive(function() {
+          console.warn("EventEmitter: .emit() was called inside a Tracker computation. Running listeners in nonreactive context", listener);
+          listener.apply(self, args);
+        });
+      } else {
+        listener.apply(self, args);
+      }
     });
   }
 
@@ -114,10 +122,6 @@ var _runCallbacks = function(listenerArray, args) {
 // emitter.emit(event, [arg1], [arg2], [...])#
 // Execute each of the listeners in order with the supplied arguments.
 EventEmitter.prototype.emit = function(eventName /* arguments */) {
-  if (typeof Tracker !== 'undefined' && Tracker.currentComputation) {
-    console.warn("EventEmitter.emit called from a Tracker computation. This could cause unexpected behavior. Current computation: ", Tracker.currentComputation);
-  }
-
   var self = this;
   // make argument list to pass on to listeners
   var args = _.rest(arguments);
