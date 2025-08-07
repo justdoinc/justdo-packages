@@ -395,6 +395,17 @@ Package.onUse(function (api) {
     "lib/both/support-articles/how-to-create-tasks-by-email/how-to-create-tasks-by-email.coffee"
   ], both);
 
+  // how-to-use-the-project-portfolio-management
+  api.addFiles([
+    "lib/both/support-articles/how-to-use-the-project-portfolio-management/how-to-use-the-project-portfolio-management.sass"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-use-the-project-portfolio-management/how-to-use-the-project-portfolio-management.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/how-to-use-the-project-portfolio-management/how-to-use-the-project-portfolio-management.coffee"
+  ], both);
+
   // Always after templates
   this.addI18nFiles(api, "i18n/{}.i18n.json");
 
