@@ -56,6 +56,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     return new_state
 
+  getKnownProjectsOptionsSchema: JustdoDeliveryPlanner.schemas.getKnownProjectsOptionsSchema
   getKnownProjects: (project_id, options, user_id) ->
     # Get all the active projects known to
 
@@ -64,20 +65,13 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     check user_id, String
 
-    default_options =
-      active_only: false
-      fields:
-        _id: 1
-        seqId: 1
-        title: 1
-        "#{JustdoDeliveryPlanner.task_is_archived_project_field_name}": 1
-      sort_by: {seqId: -1}
-
-      exclude_tasks: null
-
-      customize_query: {}
-
-    options = _.extend default_options, options
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @getKnownProjectsOptionsSchema,
+        options,
+        {self: @, throw_on_error: true}
+      )
+    options = cleaned_val
 
     query = _.extend {
       "#{JustdoDeliveryPlanner.task_is_project_field_name}": true
