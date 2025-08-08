@@ -40,6 +40,20 @@ JustdoDeliveryPlanner.schemas.MemberAvailabilitySchema = new SimpleSchema
 
     optional: true
 
+JustdoDeliveryPlanner.schemas.getAllProjectsCollectionsUnderJustdoCursorOptionsSchema = new SimpleSchema
+    include_closed:
+      type: Boolean
+      optional: true
+      defaultValue: false
+    projects_collection_type:
+      type: String
+      optional: true
+    fields:
+      type: Object
+      optional: true
+      blackbox: true
+      defaultValue: JustdoDeliveryPlanner.projects_collection_default_fields_to_fetch
+
 _.extend JustdoDeliveryPlanner.prototype,
   _attachCollectionsSchemas: ->
     Schema =

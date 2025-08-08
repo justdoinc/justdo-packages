@@ -195,19 +195,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     return
 
-  getAllProjectsCollectionsUnderJustdoCursorOptionsSchema: new SimpleSchema
-    include_closed:
-      type: Boolean
-      optional: true
-      defaultValue: false
-    projects_collection_type:
-      type: String
-      optional: true
-    fields:
-      type: Object
-      optional: true
-      blackbox: true
-      defaultValue: JustdoDeliveryPlanner.projects_collection_default_fields_to_fetch
+  getAllProjectsCollectionsUnderJustdoCursorOptionsSchema: JustdoDeliveryPlanner.schemas.getAllProjectsCollectionsUnderJustdoCursorOptionsSchema
   getAllProjectsCollectionsUnderJustdoCursor: (justdo_id, options, user_id) ->
     check justdo_id, String
     if not user_id?
