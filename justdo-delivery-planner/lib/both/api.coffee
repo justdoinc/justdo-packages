@@ -223,6 +223,68 @@ _.extend JustdoDeliveryPlanner.prototype,
       
     return @tasks_collection.find(query, query_options)
 
+  getAllProjectsGroupedByProjectsCollectionsUnderJustdoOptionsSchema: new SimpleSchema
+    projects_collection_options: 
+      type: JustdoDeliveryPlanner.schemas.getAllProjectsCollectionsUnderJustdoCursorOptionsSchema
+    projects_options: 
+      type: JustdoDeliveryPlanner.schemas.getKnownProjectsOptionsSchema
+  getAllProjectsGroupedByProjectsCollectionsUnderJustdo: (justdo_id, options, user_id) ->
+    check justdo_id, String
+    if not user_id?
+      user_id = Meteor.userId()
+    check user_id, String
+
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @getAllProjectsGroupedByProjectsCollectionsUnderJustdoOptionsSchema,
+        options,
+        {self: @, throw_on_error: true}
+      )
+    options = cleaned_val
+
+    # `projects_grouped_by_projects_collections` is the returned obj with the following structure:
+    # {
+    #   <project_collection_task_id>: {
+    #     ...project_collection_fields
+    #     project_ids: [<project_id>, ...]
+    #   },
+    #   "projects_without_pc": {
+    #     project_ids: [<project_id>, ...]
+    projects_grouped_by_projects_collections = {}
+
+    # We set the projects_collection_type to null to get all projects collections
+    # 
+    options.projects_collection_options.projects_collection_type = null
+    @getAllProjectsCollectionsUnderJustdoCursor(justdo_id, options.projects_collection_options, user_id).forEach (project_collection) ->
+      project_collection.project_ids = []
+      projects_grouped_by_projects_collections[project_collection._id] = project_collection
+      return
+    
+    projects_without_pc_doc = 
+      _id: "projects_without_pc"
+      title: TAPi18n.__ "ppm_projects_without_department_label"
+      project_ids: []
+    projects_grouped_by_projects_collections[projects_without_pc_doc._id] = projects_without_pc_doc
+    
+    # We force these fields because they're what's needed
+    options.projects_options.fields = 
+      _id: 1
+      parents: 1
+    
+    projects = @getKnownProjects(justdo_id, options.projects_options, user_id)
+    for project in projects
+      project_parent_ids = _.keys project.parents
+      is_project_under_any_pc = _.find(project_parent_ids, (parent_id) -> projects_grouped_by_projects_collections[parent_id]?)?
+
+      if is_project_under_any_pc
+        for parent_id in project_parent_ids
+          if projects_grouped_by_projects_collections[parent_id]?
+            projects_grouped_by_projects_collections[parent_id].project_ids.push project._id
+      else
+        projects_grouped_by_projects_collections["projects_without_pc"].project_ids.push project._id
+    
+    return projects_grouped_by_projects_collections
+
   getProjectsUnderCollectionCursorOptionsSchema: new SimpleSchema
     include_closed:
       type: Boolean
