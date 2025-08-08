@@ -54,6 +54,35 @@ JustdoDeliveryPlanner.schemas.getAllProjectsCollectionsUnderJustdoCursorOptionsS
       blackbox: true
       defaultValue: JustdoDeliveryPlanner.projects_collection_default_fields_to_fetch
 
+JustdoDeliveryPlanner.schemas.getKnownProjectsOptionsSchema = new SimpleSchema
+    active_only:
+      type: Boolean
+      optional: true
+      defaultValue: false
+    fields:
+      type: Object
+      optional: true
+      blackbox: true
+      defaultValue: 
+        _id: 1
+        seqId: 1
+        title: 1
+        "#{JustdoDeliveryPlanner.task_is_archived_project_field_name}": 1
+    sort_by:
+      type: Object
+      optional: true
+      blackbox: true
+      defaultValue:
+        seqId: -1
+    exclude_tasks:
+      type: [String]
+      optional: true
+    customize_query:
+      type: Object
+      optional: true
+      blackbox: true
+      defaultValue: {}
+
 _.extend JustdoDeliveryPlanner.prototype,
   _attachCollectionsSchemas: ->
     Schema =
