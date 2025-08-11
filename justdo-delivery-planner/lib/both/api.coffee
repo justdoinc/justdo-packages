@@ -229,9 +229,10 @@ _.extend JustdoDeliveryPlanner.prototype,
     projects_options: 
       type: JustdoDeliveryPlanner.schemas.getKnownProjectsOptionsSchema
     prune_tree:
-      # If true: Exclude in the output object all projects collections that does not
-      # 1. have child projects,
-      # 2. have any child projects collections that have child projects.
+      # If true: Exclude in the output object all projects collections that 
+      # 1. isn't a root task
+      # 2. does not have child projects,
+      # 3. does not have any child projects collections that have child projects.
       # 
       # E.g. A department without projects, but with a sub-sub department that has a project - will be included following the pruning.
       type: Boolean
@@ -336,10 +337,10 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     if options.prune_tree
       for pc_id, pc of projects_grouped_by_projects_collections
-        if pcShouldBePruned(pc_id)
+        if (not pc.is_root_pc) and pcShouldBePruned(pc_id)
           if pc.parent_pcs?
+            # Delete the current pc from the parent's sub_pcs array
             for parent_pc_id in pc.parent_pcs
-              # Delete the current pc from the parent's sub_pcs array
               projects_grouped_by_projects_collections[parent_pc_id].sub_pcs = _.without(projects_grouped_by_projects_collections[parent_pc_id].sub_pcs, pc_id)
 
           # Delete the current pc from the projects_grouped_by_projects_collections object
