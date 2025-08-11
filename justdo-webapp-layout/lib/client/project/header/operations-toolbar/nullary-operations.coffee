@@ -165,12 +165,17 @@ APP.executeAfterAppLibCode ->
     prereq: (gc) ->
       return gc.sortActivePathByPriorityDesc.prereq()
 
+  # Note: During the phase we add multi-grid support to nullary operations, this "zooomIn" op still uses the main grid control
+  # because we didn't have multi gcm support yet.
+  # In the future when multi gcm support is added, the `op` and `prereq` will be updated to use the grid control provided as param.
   project_page_module.setNullaryOperation "zoomIn",
     human_description: "Zoom in"
     human_description_i18n: "zoom_in_label"
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#zoom-in"/></svg>"""
-    op: ->
+    op: (gc) ->
+      # gc from param is not used because we don't have multi gcm support yet.
+      # check comment above for more details
       gcm = project_page_module.getCurrentGcm()
       active_item_id = project_page_module.activeItemId()
 
@@ -179,8 +184,10 @@ APP.executeAfterAppLibCode ->
       gcm.activateTabWithSectionsState(tab_id, {global: {"root-item": active_item_id}})
 
       gcm.setPath([tab_id, "/#{active_item_id}/"])
-    prereq: ->
-      gc = gridControl()
+    prereq: (gc) ->
+      # gc from param is not used because we don't have multi gcm support yet.
+      # check comment above for more details
+      gc = project_page_module.mainGridControl()
 
       return gc._opreqActivePathIsCollectionItem(gc._opreqGridReady())
 
