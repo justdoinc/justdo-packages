@@ -228,6 +228,15 @@ _.extend JustdoDeliveryPlanner.prototype,
       type: JustdoDeliveryPlanner.schemas.getAllProjectsCollectionsUnderJustdoCursorOptionsSchema
     projects_options: 
       type: JustdoDeliveryPlanner.schemas.getKnownProjectsOptionsSchema
+    prune_tree:
+      # If true: Exclude in the output object all projects collections that does not
+      # 1. have child projects,
+      # 2. have any child projects collections that have child projects.
+      # 
+      # E.g. A department without projects, but with a sub-sub department that has a project - will be included following the pruning.
+      type: Boolean
+      optional: true
+      defaultValue: true
   getAllProjectsGroupedByProjectsCollectionsUnderJustdo: (justdo_id, options, user_id) ->
     check justdo_id, String
     if not user_id?
@@ -306,10 +315,36 @@ _.extend JustdoDeliveryPlanner.prototype,
       else
         projects_grouped_by_projects_collections["projects_without_pc"].project_ids.push project._id
     
-    # Remove the projects_without_pc doc if it has no projects
-    if _.isEmpty projects_grouped_by_projects_collections[projects_without_pc_doc._id].project_ids
-      delete projects_grouped_by_projects_collections[projects_without_pc_doc._id]
-    
+    pcShouldBePruned = (pc_id) ->
+      pc = projects_grouped_by_projects_collections[pc_id]
+
+      pc_has_child_projects = not _.isEmpty pc.project_ids
+      if pc_has_child_projects
+        return false
+        
+      pc_has_child_pcs = not _.isEmpty pc.sub_pcs
+      if not pc_has_child_pcs
+        return true
+
+      # Recursively check each sub-pc on whether it should be pruned
+      # If any sub-pc should not be pruned, the current pc should not be pruned
+      for sub_pc_id in pc.sub_pcs
+        if not pcShouldBePruned(sub_pc_id)
+          return false
+      
+      return true
+
+    if options.prune_tree
+      for pc_id, pc of projects_grouped_by_projects_collections
+        if pcShouldBePruned(pc_id)
+          if pc.parent_pcs?
+            for parent_pc_id in pc.parent_pcs
+              # Delete the current pc from the parent's sub_pcs array
+              projects_grouped_by_projects_collections[parent_pc_id].sub_pcs = _.without(projects_grouped_by_projects_collections[parent_pc_id].sub_pcs, pc_id)
+
+          # Delete the current pc from the projects_grouped_by_projects_collections object
+          delete projects_grouped_by_projects_collections[pc_id]
+
     return projects_grouped_by_projects_collections
 
   getProjectsUnderCollectionCursorOptionsSchema: new SimpleSchema
