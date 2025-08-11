@@ -292,6 +292,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     options.projects_options.fields = 
       _id: 1
       parents: 1
+      "projects_collection.projects_collection_type": 1
     
     projects = @getKnownProjects(justdo_id, options.projects_options, user_id)
     for project in projects
