@@ -240,6 +240,8 @@ _.extend JustdoDeliveryPlanner.prototype,
         options,
         {self: @, throw_on_error: true}
       )
+    # options is now cleaned_val, which is a clone of the original options,
+    # hence we'll modify the options in-place below.
     options = cleaned_val
 
     # `projects_grouped_by_projects_collections` is the returned obj with the following structure:
