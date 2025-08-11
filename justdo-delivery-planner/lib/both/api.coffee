@@ -257,15 +257,35 @@ _.extend JustdoDeliveryPlanner.prototype,
     # We set the projects_collection_type to null to get all projects collections
     # 
     options.projects_collection_options.projects_collection_type = null
+    # We force these fields because they're what's needed
+    options.projects_collection_options.fields.parents = 1
     @getAllProjectsCollectionsUnderJustdoCursor(justdo_id, options.projects_collection_options, user_id).forEach (project_collection) ->
       project_collection.project_ids = []
       projects_grouped_by_projects_collections[project_collection._id] = project_collection
       return
     
+    # Add info about sub_pcs, parent_pcs and is_root_pc
+    for pc_id, pc of projects_grouped_by_projects_collections
+      pc_parents = _.keys pc.parents
+      for parent_id in pc_parents
+        is_root_pc = parent_id is "0"
+        if is_root_pc
+          pc.is_root_pc = true
+
+        if (parent_pc = projects_grouped_by_projects_collections[parent_id])?
+          if not parent_pc.sub_pcs?
+            parent_pc.sub_pcs = []
+          parent_pc.sub_pcs.push pc_id
+
+          if not pc.parent_pcs?
+            pc.parent_pcs = []
+          pc.parent_pcs.push parent_id
+    
     projects_without_pc_doc = 
       _id: "projects_without_pc"
       title: TAPi18n.__ "ppm_projects_without_department_label"
       project_ids: []
+      is_root_pc: true
     projects_grouped_by_projects_collections[projects_without_pc_doc._id] = projects_without_pc_doc
     
     # We force these fields because they're what's needed
