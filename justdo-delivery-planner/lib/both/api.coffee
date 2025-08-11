@@ -283,6 +283,10 @@ _.extend JustdoDeliveryPlanner.prototype,
       else
         projects_grouped_by_projects_collections["projects_without_pc"].project_ids.push project._id
     
+    # Remove the projects_without_pc doc if it has no projects
+    if _.isEmpty projects_grouped_by_projects_collections[projects_without_pc_doc._id].project_ids
+      delete projects_grouped_by_projects_collections[projects_without_pc_doc._id]
+    
     return projects_grouped_by_projects_collections
 
   getProjectsUnderCollectionCursorOptionsSchema: new SimpleSchema
