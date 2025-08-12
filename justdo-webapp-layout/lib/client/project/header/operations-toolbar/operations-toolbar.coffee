@@ -46,6 +46,9 @@ Template.project_operations_toolbar.helpers
   
   getGridControl: ->
     return @getGridControl
+  
+  gridUid: ->
+    return @getGridControl()?.getGridUid()
 
 Template.project_operations_toolbar.events
   "click .tab-switcher-exit-btn": (e, tpl) ->
