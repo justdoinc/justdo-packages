@@ -265,7 +265,7 @@ _.extend GridControl,
     
     # Set up event handlers for the grid control
     grid_control.once "init", ->
-      grid_data = grid_control._grid_data
+      grid_data = @_grid_data
       
       # If root_item_id is provided, use it to set sections state
       if options.root_item_id
@@ -283,7 +283,7 @@ _.extend GridControl,
     grid_control.once "ready", ->
       # If root_item_id is provided, activate it
       if options.root_item_id
-        grid_control.activateCollectionItemId options.root_item_id, 0, {smart_guess: true}
+        @activateCollectionItemId options.root_item_id, 0, {smart_guess: true}
         path = grid_data.getCollectionItemIdPath options.root_item_id
         if path
           grid_data.expandPath path
