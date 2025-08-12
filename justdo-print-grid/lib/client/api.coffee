@@ -16,6 +16,14 @@ _.extend JustdoPrintGrid.prototype,
     #
     # Functions
     #
+    getTabTitle = (gc, fallback_title) ->
+      # If provided gc is under the same domain as the main gcm, use the active tab title
+      # Otherwise use the fallback title since the print is for a different domain
+      if gcm? and (gcm.getDomain() is gc?.getDomain())
+        return gcm.getActiveTab().getTabTitle()
+      
+      return fallback_title
+
     getCurrentTaskPath = (gc) ->
       path = gc.getCurrentPath()
       return path
@@ -80,7 +88,7 @@ _.extend JustdoPrintGrid.prototype,
       name = JustdoHelpers.xssGuard(JustdoHelpers.displayName(Meteor.user()))
       project_name = JustdoHelpers.xssGuard JD.activeJustdo({title: 1})?.title
       thead_colspan = cols.length + max_level + 1
-      tab_title = JustdoHelpers.xssGuard gcm.getActiveTab().getTabTitle()
+      tab_title = JustdoHelpers.xssGuard getTabTitle(gc, rows[0][0].title)
 
       thead = """
         <thead>
@@ -540,7 +548,7 @@ _.extend JustdoPrintGrid.prototype,
 
       # Create file name
       project_name = JD.activeJustdo({title: 1})?.title
-      tab_title = gcm.getActiveTab().getTabTitle()
+      tab_title = getTabTitle(gc, rows[0][0].title)
       file_name = project_name + " - " + tab_title
 
       # If child task print - add parent task seqId, or the item title if non-collection item
