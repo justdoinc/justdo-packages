@@ -2,8 +2,23 @@
   <div class="print-dropdown dropdown project-header-button">
     <svg class="jd-icon jd-c-pointer text-dark" data-display="static" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><use xlink:href="/layout/icons-feather-sprite.svg#printer"/></svg>
     <ul class="dropdown-menu dropdown-menu-right jd-p-075 animate slideIn shadow-lg border-0">
-      <li class="dropdown-header px-1 py-0"><small class="text-uppercase font-weight-bold">{{_ "print_dropdown_print_justdo"}}</small></li>
-      <li class="dropdown-item d-flex align-items-center px-1 all-tasks"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#align-justify"/></svg>{{_ "print_dropdown_entire_justdo"}}</li>
+      <li class="dropdown-header px-1 py-0">
+        <small class="text-uppercase font-weight-bold">
+          {{#if isMainGc}}
+            {{_ "print_dropdown_print_justdo"}}
+          {{else}}
+            {{_ "print_dropdown_print_current_grid"}}
+          {{/if}}
+        </small>
+      </li>
+      <li class="dropdown-item d-flex align-items-center px-1 all-tasks">
+        <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#align-justify"/></svg>
+        {{#if isMainGc}}
+          {{_ "print_dropdown_entire_justdo"}}
+        {{else}}
+          {{_ "print_dropdown_entire_grid"}}
+        {{/if}}
+      </li>
       <li class="dropdown-item d-flex align-items-center px-1 visible-tasks"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#jd-tasks-all"/></svg>{{_ "print_dropdown_visible_tasks"}}</li>
       
       {{#if taskIsSelectedNotInMultiSelectMode}}
