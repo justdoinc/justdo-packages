@@ -5,7 +5,6 @@ _.extend JustdoPrintGrid.prototype,
     #
     project_page_module = APP.modules.project_page
 
-    gc = null   # Will be set to the current Grid Control object
     gcm = null  # upon entering to print mode.
 
     rows = []
@@ -17,11 +16,11 @@ _.extend JustdoPrintGrid.prototype,
     #
     # Functions
     #
-    getCurrentTaskPath = ->
-      path = project_page_module.gridControl().getCurrentPath()
+    getCurrentTaskPath = (gc) ->
+      path = gc.getCurrentPath()
       return path
 
-    getColumnsConfiguration = ->
+    getColumnsConfiguration = (gc) ->
       cols = []
       if $(".print-settings").length
         $(".print-settings li input:checked").each ->
@@ -41,7 +40,7 @@ _.extend JustdoPrintGrid.prototype,
         $content.width $table.width()
       return
 
-    createPrintHtml = (cols, rows) ->
+    createPrintHtml = (cols, rows, gc) ->
 
       # Getting Max and Min levels of tasks
       max_level = 0
@@ -113,7 +112,7 @@ _.extend JustdoPrintGrid.prototype,
 
               field = cols[j].field
               val = item_obj[cols[j].field]
-              format_value = formatWithPrintFormatter(item_obj._id, field, val, item_obj, path) or ""
+              format_value = formatWithPrintFormatter(gc, item_obj._id, field, val, item_obj, path) or ""
 
               if field == "state"
                 format_value = """<div class="d-flex">#{format_value}</div>"""
@@ -219,7 +218,7 @@ _.extend JustdoPrintGrid.prototype,
       return
 
     enterPrintMode = (options) ->
-      {item_path, expand_only, filtered_tree} = options
+      {item_path, expand_only, filtered_tree, gc} = options
 
       # Append div.print-content to body
       $("body").append """<div class="print-grid-mode-overlay"><div class="print-content"></div></div>"""
@@ -229,13 +228,13 @@ _.extend JustdoPrintGrid.prototype,
       $("html").css "overflow", "auto"
 
       # Getting grid control project_page_module
-      if not (gc = project_page_module.gridControl())?
+      if not gc?
         project_page_module.logger.error "Can't find grid control"
         return
 
       # Getting current displayed GridControl
       if not (gcm = project_page_module.getCurrentGcm())?
-        project_page_module.logger.error "Can't find current grid control"
+        project_page_module.logger.error "Can't find current grid control mux"
         return
 
       # Getting cols from getView
@@ -296,7 +295,7 @@ _.extend JustdoPrintGrid.prototype,
             state_filter.push getStateTxt(state)
 
       # Create and append print content HTML
-      createPrintHtml(cols, rows)
+      createPrintHtml(cols, rows, gc)
       resizePrintContent()
 
       # Add min-height for print-content equal to window height
@@ -427,15 +426,15 @@ _.extend JustdoPrintGrid.prototype,
         return
 
       APP.justdo_print_grid.on "refresh-print-html", ->
-        createPrintHtml(cols, rows)
+        createPrintHtml(cols, rows, gc)
         resizePrintContent()
         return
 
       # Apply print settings
       $(".print-settings-apply").on "click", ->
-        getColumnsConfiguration()
+        getColumnsConfiguration(gc)
         APP.justdo_print_grid.emit "print-settings-applied", cols
-        createPrintHtml(cols, rows)
+        createPrintHtml(cols, rows, gc)
         resizePrintContent()
         closePrintSettngs()
         return
@@ -466,12 +465,12 @@ _.extend JustdoPrintGrid.prototype,
 
       # Export tasks CSV
       $(".export-tasks").on "click", ->
-        exportCSV()
+        exportCSV(gc)
         return
 
       return
 
-    exportCSV = ->
+    exportCSV = (gc) ->
       # Create header row
       headers_rows_ids = ["seqId", "title", "owner_id"]
 
@@ -520,7 +519,7 @@ _.extend JustdoPrintGrid.prototype,
               item_doc = row[0]
               path = row[2]
 
-              rowCSV.push formatWithPrintFormatter(item_id, field_name, val, item_doc, path, true) or ""
+              rowCSV.push formatWithPrintFormatter(gc, item_id, field_name, val, item_doc, path, true) or ""
 
             rowCSV.push row[1]+1, row[2]
 
@@ -593,7 +592,7 @@ _.extend JustdoPrintGrid.prototype,
       $(".print-modal-buttons").show()
       return
 
-    formatWithPrintFormatter = (item_id, field, val, item_doc, path, format_for_csv=false) ->
+    formatWithPrintFormatter = (gc, item_id, field, val, item_doc, path, format_for_csv=false) ->
       if not (field_schema_def = gc.getSchemaExtendedWithCustomFields()[field])?
         project_page_module.logger.error "Failed to find print formatter to field #{field}"
 
@@ -654,46 +653,51 @@ _.extend JustdoPrintGrid.prototype,
 
     Template.print_menu_button.events
       "click .print-dropdown": ->
-        path = getCurrentTaskPath()
+        gc = @getGridControl()
+        path = getCurrentTaskPath(gc)
 
         return
 
       # Print visible tasks
       "click .print-dropdown .visible-tasks": ->
-        item_path = "/"
+        gc = @getGridControl()
         enterPrintMode
-          item_path: item_path
+          item_path: "/"
           expand_only: true
           filtered_tree: true
+          gc: gc
         return
 
       # Print all tasks
       "click .print-dropdown .all-tasks": ->
-        item_path = "/"
+        gc = @getGridControl()
         enterPrintMode
-          item_path: item_path
+          item_path: "/"
           expand_only: false
           filtered_tree: true
+          gc: gc
         return
 
       # Print visible sub-tasks
       "click .print-dropdown .visible-sub-tasks": ->
-        if getCurrentTaskPath()?
-          item_path = getCurrentTaskPath()
+        gc = @getGridControl()
+        if (item_path = getCurrentTaskPath(gc))?
           enterPrintMode
             item_path: item_path
             expand_only: true
             filtered_tree: true
+            gc: gc
         return
 
       # Print all sub-tasks
       "click .print-dropdown .all-sub-tasks": ->
-        if getCurrentTaskPath()?
-          item_path = getCurrentTaskPath()
+        gc = @getGridControl()
+        if (item_path = getCurrentTaskPath(gc))?
           enterPrintMode
             item_path: item_path
             expand_only: false
             filtered_tree: true
+            gc: gc
         return
 
       # Print visible sub-tasks
