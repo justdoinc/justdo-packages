@@ -225,6 +225,7 @@ _.extend GridControl,
     override_options: Additional options to override the ones from the GridControlMux tab
     onInit: Callback function triggered on "init" event
     onReady: Callback function triggered on "ready" event
+    onDestroy: Callback function triggered upon destruction of grid_control instance
 
   Returns a newly created GridControl instance
   ###
@@ -292,6 +293,12 @@ _.extend GridControl,
       
       return
     
+    grid_control.onDestroy ->
+      if _.isFunction options.onDestroy
+        options.onDestroy.call @
+      
+      return
+
     return grid_control 
 
   # The bootstrapping of a new grid control involves a lot of reactive resources,
