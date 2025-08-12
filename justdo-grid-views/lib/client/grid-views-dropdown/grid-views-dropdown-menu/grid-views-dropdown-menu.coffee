@@ -43,7 +43,7 @@ APP.executeAfterAppLibCode ->
 
     tpl.updateView = ->
       active_view = tpl.active_grid_view_rv.get()
-      current_view = APP.modules.project_page.gridControl().getView()
+      current_view = tpl.data.getGridControl().getView()
       roll_back_view = view = EJSON.parse active_view.view
 
       APP.justdo_grid_views.upsert active_view._id, {view: current_view}, (error) =>
@@ -128,7 +128,7 @@ APP.executeAfterAppLibCode ->
         title: "View, " + moment(new Date()).format("MMM D") + ", " + moment(new Date()).format("HH:mm")
         shared: false
         hierarchy: {type: "justdo", justdo_id: JD.activeJustdoId()}
-        view: APP.modules.project_page.gridControl().getView()
+        view: tpl.data.getGridControl().getView()
       }, (error) =>
         if error
           console.log error.reason
@@ -159,7 +159,7 @@ APP.executeAfterAppLibCode ->
 
     "click .grid-view-item .dropdown-item-label": (e, tpl) ->
       view = EJSON.parse @view
-      APP.modules.project_page.gridControl().setView view
+      tpl.data.getGridControl().setView view
       $(".grid-views-dropdown-menu").removeClass "open"
 
       return
@@ -167,7 +167,7 @@ APP.executeAfterAppLibCode ->
     "keydown .grid-view-item": (e, tpl) ->
       if e.key == "Enter" and $(e.target).hasClass "grid-view-item"
         view = EJSON.parse @view
-        APP.modules.project_page.gridControl().setView view
+        tpl.data.getGridControl().setView view
         $(".grid-views-dropdown-menu").removeClass "open"
 
       return
