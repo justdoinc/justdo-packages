@@ -31,8 +31,9 @@
         {{> item_duplicate_control getGridControl=getGridControl}} {{!-- Defined in the justdo-item-duplicate-control package --}}
       {{/if}}
       {{> rows_styling_control getGridControl=getGridControl}} {{!-- Defined in the justdo-rows-styling package --}}
-      <div class="project-header-toolbar-divider"></div>
+      
       {{> search_comp getGridControl=getGridControl}}
+
       <div class="project-header-toolbar-divider" style="{{#unless displayPrioritySlider}}display: none{{/unless}}"></div>
       <div style="{{#unless displayPrioritySlider}}display: none{{/unless}}">
         {{> justdo_priority_slider id="operations_toolbar_priority_slider" getGridControl=getGridControl}}
