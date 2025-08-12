@@ -5,10 +5,10 @@
       {{> project_operations_toolbar getGridControl=getGridControl}}
 
       <!-- Toolbar on the right -->
-      {{> left_project_header}}
+      {{> left_project_header getGridControl=getGridControl}}
       {{> panes_controls}}
       <div class="project-header-toolbar-divider"></div>
-      {{> right_project_header}}
+      {{> right_project_header getGridControl=getGridControl}}
     </div>
   </div>
 </template>
@@ -17,7 +17,7 @@
   <div class="project-page-global-layout-header-right d-flex align-items-center">
     {{#each rightNavbarItems}}
       {{#if template}}
-        {{> Template.dynamic template=template data=template_data}}
+        {{> Template.dynamic template=template data=templateData}}
       {{else if html}}
         {{{html}}}
       {{/if}}
@@ -147,7 +147,7 @@
   {{#if loginStateIs "logged-in"}}
     <div class="d-flex align-items-center">
       {{#with rightHeaderTemplate}}
-        {{> UI.dynamic template=rightHeaderTemplate}}
+        {{> UI.dynamic template=this data=templateData}}
       {{/with}}
     </div>
   {{/if}}
@@ -156,7 +156,7 @@
 <template name="left_project_header">
   <div class="d-flex align-items-center">
     {{#with leftHeaderTemplate}}
-      {{> UI.dynamic template=leftHeaderTemplate}}
+      {{> UI.dynamic template=leftHeaderTemplate data=templateData}}
     {{/with}}
   </div>
 </template>
@@ -165,7 +165,7 @@
   <div class="project-page-global-layout-header-left d-flex align-items-center">
     {{#each leftNavbarItems}}
       {{#if template}}
-        {{> Template.dynamic template=template data=template_data}}
+        {{> Template.dynamic template=template data=templateData}}
       {{else if html}}
         {{{html}}}
       {{/if}}
