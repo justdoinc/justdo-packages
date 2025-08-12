@@ -119,6 +119,10 @@ APP.executeAfterAppLibCode ->
 
     "click .grid-views-add": (e, tpl) ->
       tpl.rename_grid_view_id_rv.set null
+      
+      # Clear the search value if the user has entered a value
+      tpl.search_val_rv.set null
+      $(".grid-views-search-input").val ""
 
       APP.justdo_grid_views.upsert null, {
         title: "View, " + moment(new Date()).format("MMM D") + ", " + moment(new Date()).format("HH:mm")
