@@ -1,6 +1,8 @@
 {
   "print_dropdown_print_justdo": "Print JustDo",
   "print_dropdown_entire_justdo": "Entire JustDo",
+  "print_dropdown_print_current_grid": "Print Current Grid",
+  "print_dropdown_entire_grid": "Entire Grid",
   "print_dropdown_visible_tasks": "Visible Tasks",
   "print_dropdown_print_current_task": "Print Current Task",
   "print_dropdown_all_child_tasks": "All Child Tasks",
