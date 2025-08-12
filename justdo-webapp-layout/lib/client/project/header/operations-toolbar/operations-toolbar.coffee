@@ -1,18 +1,28 @@
 Template.project_operations_toolbar.onRendered ->
-  priority_slider = Template.justdo_priority_slider.getInstance "operations_toolbar_priority_slider"
-
-  priority_slider.onChange (value, tpl) ->
-    task_id = APP.modules.project_page.activeItemId()
-    if task_id?
-      APP.collections.Tasks.update task_id, {$set: {priority: value}}
-
-    return
-
-  @autorun =>
+  priority_slider = null
+  
+  @autorun (computation) =>
     if not (gc = @data.getGridControl())?
       return
 
-    if not gc.isMultiSelectMode() and (task = APP.modules.project_page.activeItemObj())?
+    grid_uid = gc.getGridUid()
+    priority_slider = Template.justdo_priority_slider.getInstance "operations_toolbar_priority_slider_#{grid_uid}"
+
+    priority_slider.onChange (value, tpl) ->
+      task_id = gc.activeItemId()
+      if task_id?
+        APP.collections.Tasks.update task_id, {$set: {priority: value}}
+
+      return
+    
+    computation.stop()
+    return
+
+  @autorun =>
+    if not (gc = @data.getGridControl())? or not priority_slider?
+      return
+
+    if not gc.isMultiSelectMode() and (task = gc?.activeItemObj())?
       priority_slider.enable()
       priority_slider.setValue task.priority, false
     else
@@ -27,7 +37,8 @@ Template.project_operations_toolbar.helpers
   itemDuplicateControlExist: -> Template.item_duplicate_control?
 
   displayPrioritySlider: ->
-    if not (item_id = JD.activeItemId())?
+    gc = @getGridControl()
+    if not (item_id = gc?.activeItemId())?
       # If no item is selected - display
       return true
 
