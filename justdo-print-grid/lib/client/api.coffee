@@ -702,6 +702,7 @@ _.extend JustdoPrintGrid.prototype,
 
       # Print visible sub-tasks
       "click .download-as-png": ->
+        gc = @getGridControl()
         setup = ->
           $("body").append """<div class="download-grid-overlay">
             <div class="download-grid-title">
@@ -709,7 +710,7 @@ _.extend JustdoPrintGrid.prototype,
             </div>
           </div>"""
 
-          $active_tab = $(".grid-control-tab.active")
+          $active_tab = gc.container
           $cloned_tab = $active_tab.clone()
 
           # Critical to find the width before we hide the global-wrapper, otherwise
