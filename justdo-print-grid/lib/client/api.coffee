@@ -646,6 +646,11 @@ _.extend JustdoPrintGrid.prototype,
     Template.print_menu_button.helpers
       printDropdownBottomItems: ->
         return JD.getPlaceholderItems("print-dropdown-bottom")
+      
+      templateData: ->
+        template_data = _.extend {}, @template_data
+        template_data.getGridControl = @getGridControl
+        return template_data
 
     Template.print_menu_button.events
       "click .print-dropdown": ->
