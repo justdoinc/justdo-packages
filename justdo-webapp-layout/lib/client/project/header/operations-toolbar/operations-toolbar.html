@@ -1,5 +1,5 @@
 <template name="project_operations_toolbar">
-  <div id="project-grid-operations">
+  <div id="project-grid-operations-{{gridUid}}">
     <div class="btn-toolbar d-flex align-items-center" role="toolbar">
       <div class="tab-switcher-wrapper {{#if showTabExit}}show-tab-exit btn btn-primary btn-sm{{/if}}">
         {{> project_operations_tab_switcher getGridControl=getGridControl}}{{!-- XXX when removing this one, don't forget to remove the tab-switcher folder--}}

@@ -7091,7 +7091,7 @@ a.text-dark:hover, a.text-dark:focus {
   box-shadow: none !important;
 }
 
-#project-grid-operations .jd-icon {
+[id|="project-grid-operations"] .jd-icon {
   stroke-width: 1.5;
 }
 
