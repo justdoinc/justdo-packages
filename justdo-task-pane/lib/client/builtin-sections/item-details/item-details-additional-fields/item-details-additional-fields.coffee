@@ -5,9 +5,6 @@ APP.executeAfterAppLibCode ->
     # Shine the row
     $row_header = $(jquery_selector, gc.container)
     $row_header.addClass "shine-slick-grid-column-header"
-    setTimeout ->
-      $row_header.removeClass "shine-slick-grid-column-header"
-    , 2000
 
     # Scroll the row into view if it's not visible
     row_padding = 8 # px
@@ -28,6 +25,9 @@ APP.executeAfterAppLibCode ->
     scroll_left = row_left_position - frozen_row_width
 
     $slick_viewport.animate { scrollLeft: scroll_left }, 500
+    setTimeout ->
+      $row_header.removeClass "shine-slick-grid-column-header"
+    , 2500
 
     return
 
