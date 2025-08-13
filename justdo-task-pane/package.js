@@ -123,6 +123,9 @@ Package.onUse(function (api) {
   // Item details description
   this.addI18nFiles(api, "i18n/item-details/item-details-description/{}.i18n.json");
 
+  // Item details additional fields
+  this.addI18nFiles(api, "i18n/item-details/item-details-additional-fields/{}.i18n.json");
+
   api.use("meteorspark:app@0.3.0", client);
   api.use("justdoinc:justdo-webapp-boot@1.0.0", client);
 
