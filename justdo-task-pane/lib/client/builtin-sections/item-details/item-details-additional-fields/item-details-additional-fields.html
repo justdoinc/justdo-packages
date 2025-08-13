@@ -27,7 +27,7 @@
       <div class="field-actions tooltip-container">
         <i class="fa field-action fa-table {{#if isFieldOnGrid}}locate-on-grid{{else}}add-to-grid{{/if}}" aria-hidden="true" field-id="{{field_id}}"></i>
 
-        <div class="tooltip-content tooltip-left">
+        <div class="tooltip-content tooltip-{{getRtlAwareDirection "left"}}">
           {{#if isFieldOnGrid}}
             {{_ "item_details_additional_fields_locate_on_grid"}}
           {{else}}
