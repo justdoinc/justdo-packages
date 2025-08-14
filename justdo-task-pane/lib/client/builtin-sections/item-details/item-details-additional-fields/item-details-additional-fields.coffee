@@ -17,6 +17,10 @@ APP.executeAfterAppLibCode ->
     slick_viewport_width_without_frozen_col = slick_viewport_width - frozen_col_width
     
     col_left_position = $col_header.position().left
+
+    # If the col is the frozen col, we don't need to perform scroll since it's always visible.
+    is_col_frozen_col = $frozen_col.is($col_header)
+
     if APP.justdo_i18n.isRtl()
       col_width = $col_header.get(0).offsetWidth
 
@@ -42,7 +46,7 @@ APP.executeAfterAppLibCode ->
 
       scroll_left = col_position
 
-    if is_col_hidden_to_the_left or is_col_hidden_to_the_right
+    if not is_col_frozen_col and  (is_col_hidden_to_the_left or is_col_hidden_to_the_right)
       # Scroll the col into view if it's not visible
 
       $slick_viewport.animate { scrollLeft: scroll_left }, 500
