@@ -21,8 +21,9 @@ Barriers = (options={}) ->
 
 _.extend Barriers.prototype,
   _ensureHookDepnendenciesDefined: (barrier_ids) ->
-    # Receives hooks_ids (can be a string for single). Returns array of promises, same order
-    # Note: array is returned also for the string input.
+    # Receives barrier_ids (can be a string for single). 
+    # Returns an array of promises in the same order as barrier_ids.
+
     if _.isString barrier_ids
       barrier_ids = [barrier_ids]
     
@@ -36,7 +37,7 @@ _.extend Barriers.prototype,
           resolve: null
           reject: null
         
-        # Create a promise that exposes the resolve and reject functions
+        # Create a promise that exposes the resolve and reject functions under @barriers_registry[barrier_id]
         @barriers_registry[barrier_id].promise = new Promise (resolve, reject) =>
           @barriers_registry[barrier_id].resolve = resolve
           @barriers_registry[barrier_id].reject = reject
@@ -47,8 +48,7 @@ _.extend Barriers.prototype,
     return return_promises
 
   runCbAfterBarriers: (barrier_ids, cb) ->
-    # This callback is guarnteed to be called after all the dependecies are marked as completed
-    # or if MISSING_HOOK_TIMEOUT elapsed.
+    # The `cb` is guarnteed to be called after all the dependecies are marked as resolved or if @missing_hook_timeout elapsed.
 
     cb_executed = false
     runCb = =>
