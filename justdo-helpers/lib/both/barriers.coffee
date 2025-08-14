@@ -119,8 +119,12 @@ _.extend JustdoHelpers,
         barriers.markBarrierAsResolved barrier_id
 
       Meteor.setTimeout =>
+        if not cb_before_barrier_executed
+          console.log "❌ cb before barrier `#{barrier_ids}` is not executed"
+
         if not cb_after_barrier_executed
           console.log "❌ cb after barrier `#{barrier_ids}` is not executed"
+          
         return
       , barriers.missing_barrier_timeout + 1
       
