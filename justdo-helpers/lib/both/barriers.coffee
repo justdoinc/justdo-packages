@@ -97,13 +97,13 @@ _.extend JustdoHelpers,
   hooks_barriers: new Barriers()
 
   testBarriers: ->
-    barrier_timeout = 1000
+    barrier_timeout = 500
 
-    sleepUntilTimeoutPlusOneSecond = ->
+    sleepUntilTimeoutTimesTwo = ->
       promise = new Promise (resolve) =>
         Meteor.setTimeout =>
           resolve()
-        , barrier_timeout + 1000
+        , barrier_timeout * 2
       return promise
 
     runBarriersCb = (barrier_ids, options) ->
@@ -162,7 +162,7 @@ _.extend JustdoHelpers,
             console.log "✅ cb#{j} registered after barrier is executed"
           return
       
-      await sleepUntilTimeoutPlusOneSecond()
+      await sleepUntilTimeoutTimesTwo()
       return
 
     # Single barrier with single cb. Should pass
