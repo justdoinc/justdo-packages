@@ -120,10 +120,10 @@ _.extend JustdoHelpers,
       
       for i in [1..cb_count]
         do (i) =>
-          console.log "ℹ️ Registering cb#{i} before barrier `#{barrier_ids}` is resolved"
+          console.log "ℹ️ Registering cb#{i} before barrier is resolved"
           barriers.runCbAfterBarriers barrier_ids, ->
             cb_before_barrier_executed = true
-            console.log "✅ cb#{i} registered before barrier `#{barrier_ids}` is executed"
+            console.log "✅ cb#{i} registered before barrier is executed"
             return
 
       console.log "ℹ️ Marking barrier as resolved"
@@ -146,20 +146,20 @@ _.extend JustdoHelpers,
       # Set a timeout to check if the cbs are executed after the barrier is resolved or timed out
       Meteor.setTimeout =>
         if not cb_before_barrier_executed
-          console.log "❌ cb before barrier `#{barrier_ids}` is not executed"
+          console.log "❌ cb before barrier is not executed"
 
         if not cb_after_barrier_executed
-          console.log "❌ cb after barrier `#{barrier_ids}` is not executed"
+          console.log "❌ cb after barrier is not executed"
 
         return
       , barriers.missing_barrier_timeout + 1000
       
       for j in [1..cb_count]
         do (j) =>
-          console.log "ℹ️ Registering cb#{j} after barrier `#{barrier_ids}` is resolved"
+          console.log "ℹ️ Registering cb#{j} after barrier is resolved"
           barriers.runCbAfterBarriers barrier_ids, ->
             cb_after_barrier_executed = true
-            console.log "✅ cb#{j} registered after barrier `#{barrier_ids}` is executed"
+            console.log "✅ cb#{j} registered after barrier is executed"
           return
       
       await sleepUntilTimeoutPlusOneSecond()
@@ -167,46 +167,46 @@ _.extend JustdoHelpers,
 
     # Single barrier with single cb. Should pass
     barrier_id = "single_barrier_single_cb"
-    console.log "\n💡 Testing single barrier with single cb `#{barrier_id}` - Should pass"
+    console.log "\n💡 Testing single barrier with single cb - Should pass"
     await runBarriersCb barrier_id
 
     # Multiple barriers with single cb. Should pass
     barrier_id_prefix = "multiple_barriers_single_cb"
     barrier_ids = ["#{barrier_id_prefix}_1", "#{barrier_id_prefix}_2", "#{barrier_id_prefix}_3"]
-    console.log "\n💡 Testing multiple barriers with single cb `#{barrier_id_prefix}` - Should pass"
+    console.log "\n💡 Testing multiple barriers with single cb - Should pass"
     await runBarriersCb barrier_ids
 
     # Single barrier that never resolve with single cb. Should pass with timeout
     barrier_id = "single_barrier_never_resolved_single_cb"
-    console.log "\n💡 Testing single barriers that never resolve with single cb `#{barrier_id}` - Should pass with timeout"
+    console.log "\n💡 Testing single barriers that never resolve with single cb - Should pass with timeout"
     await runBarriersCb barrier_id, {barrier_ids_to_exclude: barrier_id}
 
     # Multiple barriers that partially resolve with single cb. Should pass with timeout
     barrier_id_prefix = "multiple_barriers_partially_resolved_single_cb"
     barrier_ids = ["#{barrier_id_prefix}_1", "#{barrier_id_prefix}_2", "#{barrier_id_prefix}_3"]
-    console.log "\n💡 Testing multiple barriers that partially resolve with single cb `#{barrier_id_prefix}` - Should pass with timeout"
+    console.log "\n💡 Testing multiple barriers that partially resolve with single cb - Should pass with timeout"
     await runBarriersCb barrier_ids, {barrier_ids_to_exclude: barrier_ids[0]}
 
     # Single barrier with two cbs. Should pass
     barrier_id = "single_barrier_2_cb"
-    console.log "\n💡 Testing single barrier with two cbs `#{barrier_id}` - Should pass"
+    console.log "\n💡 Testing single barrier with two cbs - Should pass"
     await runBarriersCb barrier_id, {cb_count: 2}
 
     # Multiple barriers with two cbs. Should pass
     barrier_id_prefix = "multiple_barriers_2_cb"
     barrier_ids = ["#{barrier_id_prefix}_1", "#{barrier_id_prefix}_2", "#{barrier_id_prefix}_3"]
-    console.log "\n💡 Testing multiple barriers with two cbs `#{barrier_id_prefix}` - Should pass"
+    console.log "\n💡 Testing multiple barriers with two cbs - Should pass"
     await runBarriersCb barrier_ids, {cb_count: 2}
 
     # Single barrier that never resolve with two cbs. Should pass with timeout
     barrier_id = "single_barrier_never_resolved_2_cb"
-    console.log "\n💡 Testing single barriers that never resolve with two cbs `#{barrier_id}` - Should pass with timeout"
+    console.log "\n💡 Testing single barriers that never resolve with two cbs - Should pass with timeout"
     await runBarriersCb barrier_id, {barrier_ids_to_exclude: barrier_id, cb_count: 2}
 
     # Multiple barriers that partially resolve with two cbs. Should pass with timeout
     barrier_id_prefix = "multiple_barriers_partially_resolved_2_cb"
     barrier_ids = ["#{barrier_id_prefix}_1", "#{barrier_id_prefix}_2", "#{barrier_id_prefix}_3"]
-    console.log "\n💡 Testing multiple barriers that partially resolve with two cbs `#{barrier_id_prefix}` - Should pass with timeout"
+    console.log "\n💡 Testing multiple barriers that partially resolve with two cbs - Should pass with timeout"
     await runBarriersCb barrier_ids, {barrier_ids_to_exclude: barrier_ids[0], cb_count: 2}
 
     return
