@@ -2,10 +2,12 @@ APP.executeAfterAppLibCode ->
   project_page_module = APP.modules.project_page
 
   scrollToTargetColumn = (jquery_selector, gc) ->
+  
     # Shine the col
     $col_header = $(jquery_selector, gc.container)
     $col_header.addClass "shine-slick-grid-column-header"
 
+    # Values for calculating whether col is in view or not
     # Note that for width calculations, we use offsetWidth instead of width to get the true width (including padding and border, but not margin)
     # As of writing $frozen_col is always the "title" field.
     $frozen_col = $(".slick-header-column:not(.slick-header-reorderable)", gc.container)
@@ -21,6 +23,22 @@ APP.executeAfterAppLibCode ->
     # If the col is the frozen col, we don't need to perform scroll since it's always visible.
     is_col_frozen_col = $frozen_col.is($col_header)
 
+    # The math is different in LTR vs RTL. To help understanding it, below are some examples that build up the math.
+    # - When scrolled to the end of viewport (away from $frozen_col):
+    #   - LTR:
+    #         slick_viewport_scroll_left = sum_of_all_non_frozen_cols_offset_width - slick_viewport_width_without_frozen_col
+    #   - RTL:
+    #         slick_viewport_scroll_left = - (sum_of_all_non_frozen_cols_offset_width - slick_viewport_width_without_frozen_col)
+    # - The `col_left_position` of the first column (next to the frozen col):
+    #   - LTR:
+    #         col_left_position = frozen_col_width
+    #   - RTL:
+    #         col_left_position = slick_header_columns_width - frozen_col_width - col_width
+    # - The `col_left_position` of the last column (next to the frozen col):
+    #   - LTR:
+    #         col_left_position = slick_header_columns_width - col_width - 1000 (where 1000 is a constant coming from `getHeadersWidth` under `slick.grid.js`)
+    #   - RTL:
+    #         col_left_position = 1000 (where 1000 is a constant coming from `getHeadersWidth` under `slick.grid.js`)
     if APP.justdo_i18n.isRtl()
       col_width = $col_header.get(0).offsetWidth
 
