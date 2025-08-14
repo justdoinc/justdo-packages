@@ -86,6 +86,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/reactive-items-list.coffee", both);
   api.addFiles("lib/both/middlewares.coffee", both);
   api.addFiles("lib/both/state-machine.coffee", both);
+  api.addFiles("lib/both/barriers.coffee", both);
 
   api.addFiles("lib/client/users.coffee", client);
   api.addFiles("lib/client/minimongo.coffee", client);
