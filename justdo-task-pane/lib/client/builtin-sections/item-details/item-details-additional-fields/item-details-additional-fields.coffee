@@ -2,53 +2,53 @@ APP.executeAfterAppLibCode ->
   project_page_module = APP.modules.project_page
 
   scrollToTargetColumn = (jquery_selector, gc) ->
-    # Shine the row
-    $row_header = $(jquery_selector, gc.container)
-    $row_header.addClass "shine-slick-grid-column-header"
+    # Shine the col
+    $col_header = $(jquery_selector, gc.container)
+    $col_header.addClass "shine-slick-grid-column-header"
 
-    # Values for calculating whether row is in view or not
-    $frozen_row = $(".slick-header-column:not(.slick-header-reorderable)", gc.container)
-    frozen_row_width = $frozen_row.get(0).offsetWidth
+    # Note that for width calculations, we use offsetWidth instead of width to get the true width (including padding and border, but not margin)
+    # As of writing $frozen_col is always the "title" field.
+    $frozen_col = $(".slick-header-column:not(.slick-header-reorderable)", gc.container)
+    frozen_col_width = $frozen_col.get(0).offsetWidth
   
     $slick_viewport = $(".slick-viewport", gc.container)
     slick_viewport_scroll_left = $slick_viewport.scrollLeft()
     slick_viewport_width = $slick_viewport.get(0).offsetWidth
-    slick_viewport_width_without_frozen_row = slick_viewport_width - frozen_row_width
+    slick_viewport_width_without_frozen_col = slick_viewport_width - frozen_col_width
     
-    row_left_position = $row_header.position().left
-
+    col_left_position = $col_header.position().left
     if APP.justdo_i18n.isRtl()
-      row_width = $row_header.get(0).offsetWidth
+      col_width = $col_header.get(0).offsetWidth
 
       $slick_header_columns = $(".slick-header-columns")
       slick_header_columns_width = $slick_header_columns.get(0).offsetWidth
 
-      row_position = row_left_position + row_width + frozen_row_width
+      col_position = col_left_position + col_width + frozen_col_width
       viewport_begin_position = slick_viewport_scroll_left + slick_header_columns_width
-      viewport_end_position = viewport_begin_position - slick_viewport_width_without_frozen_row
+      viewport_end_position = viewport_begin_position - slick_viewport_width_without_frozen_col
 
-      is_row_hidden_to_the_right = viewport_begin_position <= row_position
-      is_row_hidden_to_the_left = viewport_end_position >= row_position
+      is_col_hidden_to_the_right = viewport_begin_position <= col_position
+      is_col_hidden_to_the_left = viewport_end_position >= col_position
 
-      scroll_left = row_position - slick_header_columns_width
+      scroll_left = col_position - slick_header_columns_width
     else # ltr
-      row_position = row_left_position - frozen_row_width
+      col_position = col_left_position - frozen_col_width
     
       viewport_begin_position = slick_viewport_scroll_left
-      viewport_end_position = viewport_begin_position + slick_viewport_width_without_frozen_row
+      viewport_end_position = viewport_begin_position + slick_viewport_width_without_frozen_col
 
-      is_row_hidden_to_the_left = viewport_begin_position >= row_position
-      is_row_hidden_to_the_right = viewport_end_position <= row_position
+      is_col_hidden_to_the_left = viewport_begin_position >= col_position
+      is_col_hidden_to_the_right = viewport_end_position <= col_position
 
-      scroll_left = row_position
+      scroll_left = col_position
 
-    if is_row_hidden_to_the_left or is_row_hidden_to_the_right
-      # Scroll the row into view if it's not visible
+    if is_col_hidden_to_the_left or is_col_hidden_to_the_right
+      # Scroll the col into view if it's not visible
 
       $slick_viewport.animate { scrollLeft: scroll_left }, 500
 
     setTimeout ->
-      $row_header.removeClass "shine-slick-grid-column-header"
+      $col_header.removeClass "shine-slick-grid-column-header"
     , 2500
 
     return
