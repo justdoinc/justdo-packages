@@ -68,7 +68,7 @@ _.extend Barriers.prototype,
         console.error err
         return
 
-    Meteor.setTimeout ->
+    Meteor.setTimeout =>
       if not cb_executed
         console.error "Barriers timeout after #{@missing_barrier_timeout}ms. Running cb."
         runCb()
