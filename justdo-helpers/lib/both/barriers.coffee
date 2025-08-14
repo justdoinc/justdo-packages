@@ -1,5 +1,5 @@
 BarriersOptionsSchema = new SimpleSchema
-  missing_hook_timeout:
+  missing_barrier_timeout:
     type: Number
     optional: true
     defaultValue: 2000
@@ -13,7 +13,7 @@ Barriers = (options={}) ->
     )
   options = cleaned_val
 
-  @missing_hook_timeout = options.missing_hook_timeout
+  @missing_barrier_timeout = options.missing_barrier_timeout
   
   @barriers_registry = {}
   
@@ -48,7 +48,7 @@ _.extend Barriers.prototype,
     return return_promises
 
   runCbAfterBarriers: (barrier_ids, cb) ->
-    # The `cb` is guarnteed to be called after all the dependecies are marked as resolved or if @missing_hook_timeout elapsed.
+    # The `cb` is guarnteed to be called after all the dependecies are marked as resolved or if @missing_barrier_timeout elapsed.
 
     cb_executed = false
     runCb = =>
@@ -70,10 +70,10 @@ _.extend Barriers.prototype,
 
     Meteor.setTimeout ->
       if not cb_executed
-        console.error "Barriers timeout after #{@missing_hook_timeout}ms. Running cb."
+        console.error "Barriers timeout after #{@missing_barrier_timeout}ms. Running cb."
         runCb()
       return
-    , @missing_hook_timeout
+    , @missing_barrier_timeout
 
     return
 
