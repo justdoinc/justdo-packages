@@ -46,6 +46,31 @@ _.extend Barriers.prototype,
       return_promises.push @barriers_registry[barrier_id].promise
     
     return return_promises
+  
+  _getNotResolvedPromises: (barrier_ids, promises) ->
+    # IMPORTANT: In order for this method to work, the promises array must be in the same order as the barrier_ids array
+
+    if _.isString barrier_ids
+      barrier_ids = [barrier_ids]
+
+    not_resolved_promises = []
+
+    # Create an obj to be used in Promise.race()
+    # If the promise is not resolved after the timeout, the obj will be returned
+    # That way, we know which promises are not resolved
+    not_resolved_obj = 
+      state: "not-resolved"
+
+    for promise, i in promises
+      await do (promise, i, barrier_ids) =>
+        await Promise
+          .race([promise, not_resolved_obj])
+          .then (result) =>
+            if result is not_resolved_obj
+              not_resolved_promises.push barrier_ids[i]
+            return
+
+    return not_resolved_promises
 
   runCbAfterBarriers: (barrier_ids, cb) ->
     # The `cb` is guarnteed to be called after all the dependecies are marked as resolved or if @missing_barrier_timeout elapsed.
@@ -70,8 +95,9 @@ _.extend Barriers.prototype,
 
     Meteor.setTimeout =>
       if not cb_executed
-        console.error "Barriers timeout after #{@missing_barrier_timeout}ms. Running cb."
         runCb()
+        not_resolved_promises = await @_getNotResolvedPromises barrier_ids, barriers_promises
+        console.error "Barriers [#{not_resolved_promises.join(", ")}] timeout after #{@missing_barrier_timeout}ms. cb has been executed."
       return
     , @missing_barrier_timeout
 
