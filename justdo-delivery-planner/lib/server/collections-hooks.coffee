@@ -95,5 +95,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       setTaskAsProjectIfNewParentIsProjectsCollection doc, modifier
         
       return
+    
+    JustdoHelpers.hooks_barriers.markBarrierAsResolved "post-jdp-collections-hooks-setup"
 
     return
