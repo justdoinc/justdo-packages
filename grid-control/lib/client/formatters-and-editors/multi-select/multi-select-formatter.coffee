@@ -2,11 +2,7 @@ default_bg_color = JustdoHelpers.normalizeBgColor("#FFFFFF")
   
 
 GridControl.installFormatter "MultiSelectFormatter",
-  slick_grid: ->
-    {schema, doc, path, value} = @getFriendlyArgs()
-
-    {grid_values, grid_removed_values} = schema
-
+  valuesToStyledHtmls: (values, grid_values, grid_removed_values) ->
     if not grid_values?
       grid_values = {}
 
@@ -14,8 +10,6 @@ GridControl.installFormatter "MultiSelectFormatter",
       grid_removed_values = {}
 
     output = []
-
-    values = value
 
     if _.isArray(values) and values.length > 0
       for value in values
@@ -40,6 +34,16 @@ GridControl.installFormatter "MultiSelectFormatter",
         output.push """
           <div class="multi-select-wrapper" #{custom_style}>#{JustdoHelpers.xssGuard(text)}</div>
         """
+
+    return output
+  slick_grid: ->
+    {schema, doc, path, value} = @getFriendlyArgs()
+
+    {grid_values, grid_removed_values} = schema
+
+    # When called, the "@" object is GridControl instead of the formatter instance.
+    # That's why `valuesToStyledHtmls` is called this way instead of using `@valuesToStyledHtmls`
+    output = GridControl.Formatters[@formatter_name].valuesToStyledHtmls(value, grid_values, grid_removed_values)
 
     return """<div class="grid-formatter multi-select-formatter">#{output.join(" ")}</div>"""
 
