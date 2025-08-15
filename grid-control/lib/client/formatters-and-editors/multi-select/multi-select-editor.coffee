@@ -16,6 +16,19 @@ getKeyBgColor = (grid_values, value) ->
 
   return value_def.bg_color
 
+styleSelectedValue = (val) ->
+  if _.isEmpty(val)
+    return 
+
+  # Replace plain text value with styled htmls
+  styled_html_values = GridControl.Formatters.MultiSelectFormatter.valuesToStyledHtmls(val, @context.column.values, @context.column.removed_values)
+  $(@$select_picker)
+    .find(".filter-option-inner-inner")
+    # `valuesToStyledHtmls` sanitizes the html, so we can just join the array
+    .html(styled_html_values.join(" "))
+  
+  return
+
 GridControl.installEditor "MultiSelectEditor",
   init: ->
     current_values = new Set(@context.item[@context.column.field])
@@ -101,10 +114,13 @@ GridControl.installEditor "MultiSelectEditor",
       size: 8
       liveSearch: show_live_search
 
+    @$select_picker = @$select.next()
+
+    # Instead of waiting for `rendered.bs.select`, `styleSelectedValue` is called once here with the field value from `doc` to prevent flickering.
+    styleSelectedValue.call(@, field_value)
+
     @$select.selectpicker("refresh")
     @$select.selectpicker("render")
-
-    @$select_picker = @$select.next()
 
     @showSelect()
 
@@ -119,6 +135,10 @@ GridControl.installEditor "MultiSelectEditor",
     @$select.on "hidden.bs.select", =>
       @context.grid_control.saveAndExitActiveEditor()
 
+      return
+
+    @$select.on "rendered.bs.select", =>
+      styleSelectedValue.call(@, @$select.selectpicker("val"))
       return
 
     return
