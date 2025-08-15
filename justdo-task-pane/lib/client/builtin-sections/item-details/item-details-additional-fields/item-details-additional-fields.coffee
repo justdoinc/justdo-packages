@@ -7,12 +7,18 @@ APP.executeAfterAppLibCode ->
     $col_header = $(jquery_selector, gc.container)
     $col_header.addClass "shine-slick-grid-column-header"
 
+    # As of writing $frozen_col is always the "title" field.
+    # `$frozen_col` is only relevant if there's a frozen col.
+    # If it doesn't exists, `frozen_col_width` will be 0 to faciliate the math later.
+    $frozen_col = null
+    frozen_col_width = 0
+    if gc.getView()[0].frozen is true
+      $frozen_col = $(".slick-header-column:first", gc.container)
+      frozen_col_width = $frozen_col.get(0).offsetWidth
+  
+
     # Values for calculating whether col is in view or not
     # Note that for width calculations, we use offsetWidth instead of width to get the true width (including padding and border, but not margin)
-    # As of writing $frozen_col is always the "title" field.
-    $frozen_col = $(".slick-header-column:not(.slick-header-reorderable)", gc.container)
-    frozen_col_width = $frozen_col.get(0).offsetWidth
-  
     $slick_viewport = $(".slick-viewport", gc.container)
     slick_viewport_scroll_left = $slick_viewport.scrollLeft()
     slick_viewport_width = $slick_viewport.get(0).offsetWidth
@@ -21,7 +27,7 @@ APP.executeAfterAppLibCode ->
     col_left_position = $col_header.position().left
 
     # If the col is the frozen col, we don't need to perform scroll since it's always visible.
-    is_col_frozen_col = $frozen_col.is($col_header)
+    is_col_frozen_col = $col_header.is($frozen_col)
 
     # The math is different in LTR vs RTL. To help understanding it, below are some examples that build up the math.
     # - When scrolled to the end of viewport (away from $frozen_col):
