@@ -16,6 +16,22 @@ getKeyBgColor = (grid_values, value) ->
 
   return value_def.bg_color
 
+styleSelectedValue = (val) ->
+  if not val?
+    return
+
+  bg_color = JustdoHelpers.normalizeBgColor(getKeyBgColor(@context.column.values, val))
+  fg_color = JustdoHelpers.getFgColor(bg_color)
+
+  if bg_color?
+    $(@$select_picker)
+      .css("background-color", bg_color)
+      .css("color", fg_color)
+      .find(".text-body")
+      .removeClass("text-body")
+
+  return
+
 GridControl.installEditor "SelectorEditor",
   init: ->
     style_right = APP.justdo_i18n.getRtlAwareDirection "right"
@@ -85,10 +101,13 @@ GridControl.installEditor "SelectorEditor",
       size: 8
       liveSearch: show_live_search
 
+    @$select_picker = @$select.next()
+
+    # Instead of waiting for `rendered.bs.select`, `styleSelectedValue` is called once here with the field value from `doc` to prevent flickering.
+    styleSelectedValue.call(@, field_value)
+
     @$select.selectpicker("refresh")
     @$select.selectpicker("render")
-
-    @$select_picker = @$select.next()
 
     @showSelect()
 
@@ -167,6 +186,10 @@ GridControl.installEditor "SelectorEditor",
 
       return
 
+    @$select.on "rendered.bs.select", =>
+      styleSelectedValue.call(@, @$select.selectpicker("val"))
+      return
+
     return
 
   setInputValue: (val) ->
@@ -179,14 +202,6 @@ GridControl.installEditor "SelectorEditor",
     @$select.selectpicker("val", val)
     @$select.selectpicker("refresh")
     @$select.selectpicker("render")
-
-    bg_color = JustdoHelpers.normalizeBgColor(getKeyBgColor(@context.column.values, val))
-    fg_color = JustdoHelpers.getFgColor(bg_color)
-
-    if bg_color?    
-      $(".dropdown-toggle", @$select_picker)
-        .css("background-color", bg_color)
-        .css("color", fg_color)
 
     return
 
