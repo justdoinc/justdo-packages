@@ -81,8 +81,12 @@ APP.executeAfterAppLibCode ->
 
     return
 
-  # Prevent the tree controls from being shown in the more info section
   removeTreeControlsFromFormatterOrEditor = (formatter_or_editor) ->
+    # This function simply replaces "TextareaWithTreeControlsEditor" with "TextareaEditor"
+    # and "textWithTreeControls" with "defaultFormatter" and do nothing otherwise.
+    #
+    # The reason is: TextareaWithTreeControlsEditor includes the seqId, avatar and many other components that we don't want to show
+    # in the More Info section.
     if formatter_or_editor is "TextareaWithTreeControlsEditor"
       return "TextareaEditor"
     
