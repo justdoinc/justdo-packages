@@ -268,7 +268,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     # We set the projects_collection_type to null to get all projects collections
     # 
     options.projects_collection_options.projects_collection_type = null
-    # We force these fields because they're what's needed
+    # We force these fields because they're what's needed to determine the parent/child relationship between pcs and projects
     options.projects_collection_options.fields.parents = 1
     @getProjectsCollectionsUnderJustdoCursor(justdo_id, options.projects_collection_options, user_id).forEach (project_collection) ->
       project_collection.project_ids = []
@@ -299,7 +299,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       is_root_pc: true
     projects_grouped_by_projects_collections[projects_without_pc_doc._id] = projects_without_pc_doc
     
-    # We force these fields because they're what's needed
+    # We force these fields because they're what's needed to determine the parent/child relationship between pcs and projects
     options.projects_options.fields = 
       _id: 1
       parents: 1
