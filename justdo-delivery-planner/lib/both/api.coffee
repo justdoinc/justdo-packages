@@ -265,9 +265,6 @@ _.extend JustdoDeliveryPlanner.prototype,
     #     project_ids: [<project_id>, ...]
     projects_grouped_by_projects_collections = {}
 
-    # We set the projects_collection_type to null to get all projects collections
-    # 
-    options.projects_collection_options.projects_collection_type = null
     # We force these fields because they're what's needed to determine the parent/child relationship between pcs and projects
     options.projects_collection_options.fields.parents = 1
     @getProjectsCollectionsUnderJustdoCursor(justdo_id, options.projects_collection_options, user_id).forEach (project_collection) ->
