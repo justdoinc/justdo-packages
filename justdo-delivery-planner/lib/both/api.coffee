@@ -233,10 +233,19 @@ _.extend JustdoDeliveryPlanner.prototype,
       type: Boolean
       optional: true
       defaultValue: true
+
   getAllProjectsGroupedByProjectsCollectionsUnderJustdo: (justdo_id, options, user_id) ->
-    # This method is to get the queried projects collections under a justdo, and all the project_ids under them.
+    # The purpose of this method is to return an object that represents the tree of projects-collections and their projects.
+    #
+    # Its design and main motivation is to fetch the projects collections and projects in manner that avoids unnecessary
+    # reactivity events in the client side. The function is expensive. It requires in the client side 2 full Tasks collection
+    # scans, in addition to various tree traversing. As such, we want to re-compute its result only when actually necessary.
+    # Note, that in the server side, since there are likely (not tested), some indexes that can be useful, it is less likely
+    # that 2x scans are necessary.
+    #
+    # RETURNED OBJECT:
     # 
-    # Structure of returned obj `projects_grouped_by_projects_collections`:
+    # Structure of returned obj:
     # {
     #   <project_collection_task_id>: {
     #     ...project_collection_fields
@@ -250,9 +259,35 @@ _.extend JustdoDeliveryPlanner.prototype,
     #   }
     # }
     # 
-    # Notes and examples regarding `prune_tree` option:
-    #   If true, the response includes ONLY the project collections that satisfy at least
-    #   one of the following rules:
+    # If there are not projects, and no root-projects-collections, returnes an empty object.
+    #
+    # ARGS:
+    #
+    # justdo_id: the justdo for in which we are looking for.
+    #
+    # user_id: the user that is consider to execute the request, tasks not shared with this user_id
+    # are considered as not existing.
+    #
+    # options: an object that can have the following optional options:
+    #
+    # projects_collection_options
+    #
+    #   The options that will be provided when calling @getProjectsCollectionsUnderJustdoCursor
+    #   follows the structure of: JustdoDeliveryPlanner.schemas.getProjectsCollectionsUnderJustdoCursorOptionsSchema
+    #
+    #   The include_closed and projects_collection_types settings can be set by the user of this method
+    #   but the fields setting is forced by us to _id to ensure no unnecessary invalidation except for things
+    #   that might cause tree-rebuild.
+    #
+    # projects_options:
+    #
+    #   XXX
+    #
+    # prune_tree:
+    #
+    #   Default to true. If false the returned object will include an entry for *every* project collection.
+    #   If true, the response includes ONLY the project collections that satisfy at least one of the following
+    #   rules:
     #
     #   1) Root project collections
     #      - A root collection is always returned, even if it contains no projects.
@@ -304,23 +339,15 @@ _.extend JustdoDeliveryPlanner.prototype,
     #      The task breaks the chain. Do NOT treat P as a descendant of PC1 or PC2.
     #      Only PC3 can qualify under rule (2).
 
-
     check justdo_id, String
     if not user_id?
       user_id = Meteor.userId()
     check user_id, String
 
-    # Note: Even though `simpleSchemaCleanAndValidate` first call `_.extend({})` on the options object,
-    # the sub-objects are still mutated in-place because of the way `_.extend` works.
-    # This is why we need to clone the sub-objects before passing them to `simpleSchemaCleanAndValidate`.
-    cloned_options = _.extend {}, options
-    cloned_options.projects_collection_options = _.extend {}, options.projects_collection_options
-    cloned_options.projects_options = _.extend {}, options.projects_options
-    
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
         @getAllProjectsGroupedByProjectsCollectionsUnderJustdoOptionsSchema,
-        cloned_options,
+        options,
         {self: @, throw_on_error: true}
       )
     # options is now cleaned_val, which is a clone of the original options,
@@ -329,8 +356,12 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     projects_grouped_by_projects_collections = {}
 
-    # We force these fields because they're what's needed to determine the parent/child relationship between pcs and projects
-    options.projects_collection_options.fields.parents = 1
+    # These fields are the bare minimum necessary to derive the tree structure, read more in the main comment
+    # for this method.
+    options.projects_collection_options.fields = 
+      _id: 1
+      parents: 1
+
     @getProjectsCollectionsUnderJustdoCursor(justdo_id, options.projects_collection_options, user_id).forEach (project_collection) ->
       project_collection.project_ids = []
       projects_grouped_by_projects_collections[project_collection._id] = project_collection
@@ -360,7 +391,8 @@ _.extend JustdoDeliveryPlanner.prototype,
       is_root_pc: true
     projects_grouped_by_projects_collections[projects_without_pc_doc._id] = projects_without_pc_doc
     
-    # We force these fields because they're what's needed to determine the parent/child relationship between pcs and projects
+    # These fields are the bare minimum necessary to derive the tree structure, read more in the main comment
+    # for this method.
     options.projects_options.fields = 
       _id: 1
       parents: 1
@@ -400,6 +432,14 @@ _.extend JustdoDeliveryPlanner.prototype,
       for pc_id, pc of projects_grouped_by_projects_collections
         # IMPORTANT: The condition check of `pc.is_root_pc` is DESIGNED to exist outside of `pcShouldBePruned` 
         # to prevent multi-parented root project collections from causing their other parents to NOT be pruned when they should.
+        #
+        # Example, if we took pc.is_root_pc into pcShouldBePruned the following:
+        # ROOT -> PC1 -> NO PROJECTS
+        # ROOT -> PC2 -> PC3 -> PC1 -> NO PROJECTS
+        #
+        # will cause PC1 to return true to pcShouldBePruned() and the recursive call on PC2, will end up
+        # getting to it causing PC2 and PC2 to be returned despite the fact they shouldn't
+
         if (not pc.is_root_pc) and pcShouldBePruned(pc_id)
           if pc.parent_pcs?
             # Delete the current pc from the parent's sub_pcs array
