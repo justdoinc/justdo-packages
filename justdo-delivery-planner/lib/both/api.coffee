@@ -230,62 +230,81 @@ _.extend JustdoDeliveryPlanner.prototype,
     projects_options: 
       type: JustdoDeliveryPlanner.schemas.getKnownProjectsOptionsSchema
     prune_tree:
-      # If true, the response includes ONLY the project collections that satisfy at least
-      # one of the following rules:
-      #
-      # 1) Root project collections
-      #    - A collection with no parent is always returned, even if it contains no projects.
-      #    - If a collection has multiple parents and ANY parent is root, treat it as root
-      #      for this rule (include it even without qualifying projects).
-      #
-      # 2) Collections with a qualifying descendant project
-      #    - The collection has ≥1 descendant project that passes
-      #      projects_collection_options.filter.
-      #    - “Descendant project” means there exists an UNBROKEN chain composed ONLY of
-      #      INCLUDED project-collection types from the starting collection down to a DIRECT
-      #      parent-child edge: (collection → project).
-      #    - Any non–project-collection node (e.g., task/sub-task) OR any project-collection
-      #      of a type NOT included by the filter breaks the chain.
-      #
-      # Additional notes
-      # ----------------
-      # • Direct-child requirement (for “under”):
-      #   A project is considered “under” a project collection only if it is a DIRECT child
-      #   of that collection (i.e., the final edge is collection → project).
-      #
-      # • Pruning effect under rule (1):
-      #   If a root collection has no qualifying descendant projects, it is still returned,
-      #   but NONE of its descendant collections are included.
-      #
-      # • Filters that enumerate specific collections or types:
-      #   If projects_collection_options.filter explicitly includes certain collections or
-      #   collection TYPES, only projects that are DIRECT children of those included
-      #   collections count toward rule (2). Encountering a non-included TYPE in the path
-      #   breaks the chain; deeper projects do NOT count unless all intermediate collections
-      #   are of included types.
-      #
-      # Examples
-      # --------
-      # 1) A → B → C → Project P (P passes the filter)
-      #    Include A, B, and C (unbroken chain of included collection types ending in C → P).
-      #
-      # 2) Root R with no qualifying projects anywhere
-      #    Include R only; exclude all its descendant collections.
-      #
-      # 3) X has parents {R, Y}, where R is root; X has no qualifying projects
-      #    Include X (multiple parents, one is root).
-      #
-      # 4) PC1 → PC2 → PC3 → PC4 → Project P (P passes the filter)
-      #    PC3 is NOT one of the included project-collection TYPES → the chain is broken at PC3.
-      #    Do NOT treat P as a descendant of PC1 or PC2. Only PC4 can qualify under rule (2).
-      #
-      # 5) PC1 → PC2 → Task T → PC3 → Project P (P passes the filter)
-      #    The task breaks the chain. Do NOT treat P as a descendant of PC1 or PC2.
-      #    Only PC3 can qualify under rule (2).
       type: Boolean
       optional: true
       defaultValue: true
   getAllProjectsGroupedByProjectsCollectionsUnderJustdo: (justdo_id, options, user_id) ->
+    # This method is to get the queried projects collections under a justdo, and all the project_ids under them.
+    # 
+    # Structure of returned obj `projects_grouped_by_projects_collections`:
+    # {
+    #   <project_collection_task_id>: {
+    #     ...project_collection_fields
+    #     project_ids: [<project_id>, ...]
+    #     is_root_pc: (true if the pc is a root pc, not set otherwise)
+    #     sub_pcs: (array of project_collection_task_ids that are sub-pcs of the current pc, not set otherwise)
+    #     parent_pcs: (array of project_collection_task_ids that are parent_pcs of the current pc, not set otherwise)
+    #   },
+    #   "projects_without_pc": {
+    #     project_ids: [<project_id>, ...]
+    #   }
+    # }
+    # 
+    # Notes and examples regarding `prune_tree` option:
+    #   If true, the response includes ONLY the project collections that satisfy at least
+    #   one of the following rules:
+    #
+    #   1) Root project collections
+    #      - A root collection is always returned, even if it contains no projects.
+    #      - If a collection has multiple parents and ANY parent is root, treat it as root
+    #        for this rule (include it even without qualifying projects).
+    #
+    #   2) Collections with a qualifying descendant project
+    #      - The collection has ≥1 descendant project that passes
+    #        projects_options.customize_query filter.
+    #      - “Descendant project” means there exists an UNBROKEN chain composed ONLY of
+    #        INCLUDED project-collection types from the starting collection down to a DIRECT
+    #        parent-child edge: (collection → project).
+    #      - Any non–project-collection node (e.g., task/sub-task) OR any project-collection
+    #        of a type NOT included by the filter breaks the chain.
+    #
+    #   Additional notes
+    #   ----------------
+    #   • Direct-child requirement (for “under”):
+    #     A project is considered “under” a project collection only if it is a DIRECT child
+    #     of that collection (i.e., the final edge is collection → project).
+    #
+    #   • Pruning effect under rule (1):
+    #     If a root collection has no qualifying descendant projects, it is still returned,
+    #     but NONE of its descendant collections are included.
+    #
+    #   • Filters that enumerate specific collections or types:
+    #     If projects_collection_options explicitly includes certain collections or
+    #     collection TYPES, only projects that are DIRECT children of those included
+    #     collections count toward rule (2). Encountering a non-included TYPE in the path
+    #     breaks the chain; deeper projects do NOT count unless all intermediate collections
+    #     are of included types.
+    #
+    #   Examples
+    #   --------
+    #   1) A → B → C → Project P (P passes the filter)
+    #      Include A, B, and C (unbroken chain of included collection types ending in C → P).
+    #
+    #   2) Root R with no qualifying projects anywhere
+    #      Include R only; exclude all its descendant collections.
+    #
+    #   3) X has parents {R, Y}, where R is root; X has no qualifying projects
+    #      Include X (multiple parents, one is root).
+    #
+    #   4) PC1 → PC2 → PC3 → PC4 → Project P (P passes the filter)
+    #      PC3 is NOT one of the included project-collection TYPES → the chain is broken at PC3.
+    #      Do NOT treat P as a descendant of PC1 or PC2. Only PC4 can qualify under rule (2).
+    #
+    #   5) PC1 → PC2 → Task T → PC3 → Project P (P passes the filter)
+    #      The task breaks the chain. Do NOT treat P as a descendant of PC1 or PC2.
+    #      Only PC3 can qualify under rule (2).
+
+
     check justdo_id, String
     if not user_id?
       user_id = Meteor.userId()
@@ -308,14 +327,6 @@ _.extend JustdoDeliveryPlanner.prototype,
     # hence we'll modify the options in-place below.
     options = cleaned_val
 
-    # `projects_grouped_by_projects_collections` is the returned obj with the following structure:
-    # {
-    #   <project_collection_task_id>: {
-    #     ...project_collection_fields
-    #     project_ids: [<project_id>, ...]
-    #   },
-    #   "projects_without_pc": {
-    #     project_ids: [<project_id>, ...]
     projects_grouped_by_projects_collections = {}
 
     # We force these fields because they're what's needed to determine the parent/child relationship between pcs and projects
