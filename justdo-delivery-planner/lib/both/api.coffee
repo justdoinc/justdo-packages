@@ -245,10 +245,17 @@ _.extend JustdoDeliveryPlanner.prototype,
       user_id = Meteor.userId()
     check user_id, String
 
+    # Note: Even though `simpleSchemaCleanAndValidate` first call `_.extend({})` on the options object,
+    # the sub-objects are still mutated in-place because of the way `_.extend` works.
+    # This is why we need to clone the sub-objects before passing them to `simpleSchemaCleanAndValidate`.
+    cloned_options = _.extend {}, options
+    cloned_options.projects_collection_options = _.extend {}, options.projects_collection_options
+    cloned_options.projects_options = _.extend {}, options.projects_options
+    
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
         @getAllProjectsGroupedByProjectsCollectionsUnderJustdoOptionsSchema,
-        options,
+        cloned_options,
         {self: @, throw_on_error: true}
       )
     # options is now cleaned_val, which is a clone of the original options,
