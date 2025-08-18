@@ -169,8 +169,11 @@ _.extend JustdoAiKit.prototype,
           icon_type: "feather"
           icon_val: "jd-ai"
           icon_class: "ai-icon"
-          op: ->
-            template = APP.helpers.renderTemplateInNewNode(Template.tasks_summary)
+          op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
+            if not gc?
+              return
+
+            template = APP.helpers.renderTemplateInNewNode(Template.tasks_summary, {gc})
 
             dialog = bootbox.dialog
               message: template.node

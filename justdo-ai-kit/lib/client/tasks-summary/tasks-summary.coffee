@@ -14,11 +14,11 @@ Template.tasks_summary.onCreated ->
   @messages_rv = new ReactiveVar [default_first_message]
   @is_loading_rv = new ReactiveVar false
 
-  if not (gc = APP.modules.project_page.gridControl())?
+  if not @data.gc?
     return
 
-  if _.isEmpty(@task_paths = gc.getFilterPassingMultiSelectedPathsArray())
-    @task_paths = [JD.activePath()]
+  if _.isEmpty(@task_paths = @data.gc.getFilterPassingMultiSelectedPathsArray())
+    @task_paths = [@data.gc.activePath()]
   
   if _.isEmpty @task_paths
     return
@@ -44,7 +44,7 @@ Template.tasks_summary.onCreated ->
     task_ids = [task_id]
     parent_task_id_idx = 0
 
-    grid_data = APP.modules.project_page.gridData()
+    grid_data = tpl.data.gc._grid_data
     tree_structure = grid_data.tree_structure
 
     while task_ids.length < limit
