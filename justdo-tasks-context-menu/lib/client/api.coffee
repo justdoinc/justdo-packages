@@ -28,7 +28,6 @@ _.extend JustdoTasksContextMenu.prototype,
 
     @onDestroy =>
       @field_val_and_dependencies_vals_tracker.stop()
-      @_register_main_grid_control_tracker.stop()
       return
 
     @_sectionsAndItemsReactiveItemsListListingConditionCustomArgsGenerator = (item) =>
