@@ -45,8 +45,8 @@ JustdoDeliveryPlanner.schemas.getProjectsCollectionsUnderJustdoCursorOptionsSche
       type: Boolean
       optional: true
       defaultValue: false
-    projects_collection_type:
-      type: String
+    projects_collection_types:
+      type: [String]
       optional: true
     fields:
       type: Object

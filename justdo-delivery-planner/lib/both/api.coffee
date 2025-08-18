@@ -215,8 +215,9 @@ _.extend JustdoDeliveryPlanner.prototype,
       delete query.users
     if options.include_closed
       delete query["projects_collection.is_closed"]
-    if _.isString options.projects_collection_type
-      query["projects_collection.projects_collection_type"] = options.projects_collection_type
+    if not _.isEmpty options.projects_collection_types
+      query["projects_collection.projects_collection_type"] = 
+        $in: options.projects_collection_types
     
     query_options = 
       fields: options.fields
