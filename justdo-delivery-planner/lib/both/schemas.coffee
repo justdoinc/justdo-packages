@@ -40,7 +40,7 @@ JustdoDeliveryPlanner.schemas.MemberAvailabilitySchema = new SimpleSchema
 
     optional: true
 
-JustdoDeliveryPlanner.schemas.getAllProjectsCollectionsUnderJustdoCursorOptionsSchema = new SimpleSchema
+JustdoDeliveryPlanner.schemas.getProjectsCollectionsUnderJustdoCursorOptionsSchema = new SimpleSchema
     include_closed:
       type: Boolean
       optional: true

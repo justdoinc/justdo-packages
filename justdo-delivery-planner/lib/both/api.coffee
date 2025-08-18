@@ -189,8 +189,8 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     return
 
-  getAllProjectsCollectionsUnderJustdoCursorOptionsSchema: JustdoDeliveryPlanner.schemas.getAllProjectsCollectionsUnderJustdoCursorOptionsSchema
-  getAllProjectsCollectionsUnderJustdoCursor: (justdo_id, options, user_id) ->
+  getProjectsCollectionsUnderJustdoCursorOptionsSchema: JustdoDeliveryPlanner.schemas.getProjectsCollectionsUnderJustdoCursorOptionsSchema
+  getProjectsCollectionsUnderJustdoCursor: (justdo_id, options, user_id) ->
     check justdo_id, String
     if not user_id?
       user_id = Meteor.userId()
@@ -198,7 +198,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
-        @getAllProjectsCollectionsUnderJustdoCursorOptionsSchema,
+        @getProjectsCollectionsUnderJustdoCursorOptionsSchema,
         options,
         {self: @, throw_on_error: true}
       )
@@ -225,7 +225,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
   getAllProjectsGroupedByProjectsCollectionsUnderJustdoOptionsSchema: new SimpleSchema
     projects_collection_options: 
-      type: JustdoDeliveryPlanner.schemas.getAllProjectsCollectionsUnderJustdoCursorOptionsSchema
+      type: JustdoDeliveryPlanner.schemas.getProjectsCollectionsUnderJustdoCursorOptionsSchema
     projects_options: 
       type: JustdoDeliveryPlanner.schemas.getKnownProjectsOptionsSchema
     prune_tree:
@@ -269,7 +269,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     options.projects_collection_options.projects_collection_type = null
     # We force these fields because they're what's needed
     options.projects_collection_options.fields.parents = 1
-    @getAllProjectsCollectionsUnderJustdoCursor(justdo_id, options.projects_collection_options, user_id).forEach (project_collection) ->
+    @getProjectsCollectionsUnderJustdoCursor(justdo_id, options.projects_collection_options, user_id).forEach (project_collection) ->
       project_collection.project_ids = []
       projects_grouped_by_projects_collections[project_collection._id] = project_collection
       return
