@@ -337,6 +337,8 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     if options.prune_tree
       for pc_id, pc of projects_grouped_by_projects_collections
+        # IMPORTANT: The condition check of `pc.is_root_pc` is DESIGNED to exist outside of `pcShouldBePruned` 
+        # to prevent multi-parented root project collections from causing their other parents to NOT be pruned when they should.
         if (not pc.is_root_pc) and pcShouldBePruned(pc_id)
           if pc.parent_pcs?
             # Delete the current pc from the parent's sub_pcs array
