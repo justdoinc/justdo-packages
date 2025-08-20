@@ -737,4 +737,577 @@ _.extend JustdoDeliveryPlanner.prototype,
       throw @_error "not-supported", TAPi18n.__ "projects_collection_depth_gt_max_depth_default_err", {projects_collection_label: parent_projects_collection_label, count: max_depth}
 
     return true
+
+  # testGetAllProjectsGroupedByProjectsCollectionsUnderJustdo: ->
+  #   console.log "🚀 Starting comprehensive tests for getAllProjectsGroupedByProjectsCollectionsUnderJustdo"
+    
+  #   # Mock data factory to create test project collections and projects
+  #   createTestData = (config) ->
+  #     # config: {
+  #     #   pcs: [{id, type, parents, hasProjects}],
+  #     #   projects: [{id, parents, passesFilter}],
+  #     #   includedTypes: [String],
+  #     #   prune_tree: Boolean
+  #     # }
+      
+  #     default_config = 
+  #       pcs: []
+  #       projects: []
+  #       includedTypes: ["department"]
+  #       prune_tree: true
+  #     config = _.extend default_config, config
+      
+  #     # Create mock project collections
+  #     mock_pcs = {}
+  #     for pc in config.pcs
+  #       pc_parents = {}
+  #       for parent_id in (pc.parents or [])
+  #         pc_parents[parent_id] = {}
+        
+  #       mock_pcs[pc.id] = 
+  #         _id: pc.id
+  #         parents: pc_parents
+  #         project_ids: []
+  #         "projects_collection":
+  #           "projects_collection_type": pc.type or "department"
+      
+  #     # Create mock projects
+  #     mock_projects = []
+  #     for project in config.projects
+  #       project_parents = {}
+  #       for parent_id in (project.parents or [])
+  #         project_parents[parent_id] = {}
+        
+  #       mock_projects.push
+  #         _id: project.id
+  #         parents: project_parents
+  #         passesFilter: project.passesFilter ? true
+      
+  #     return {mock_pcs, mock_projects, config}
+    
+  #   # Mock the underlying methods
+  #   original_getProjectsCollectionsUnderJustdoCursor = @getProjectsCollectionsUnderJustdoCursor
+  #   original_getKnownProjects = @getKnownProjects
+    
+  #   mockGetProjectsCollectionsUnderJustdoCursor = (justdo_id, options, user_id, mock_pcs) ->
+  #     # Filter by included types if specified
+  #     filtered_pcs = _.values mock_pcs
+  #     if options.projects_collection_types?
+  #       filtered_pcs = _.filter filtered_pcs, (pc) ->
+  #         pc.projects_collection?.projects_collection_type in options.projects_collection_types
+      
+  #     return {
+  #       forEach: (callback) ->
+  #         for pc in filtered_pcs
+  #           callback(pc)
+  #         return
+  #     }
+    
+  #   mockGetKnownProjects = (justdo_id, options, user_id, mock_projects) ->
+  #     # Filter projects based on customize_query (represents filter logic)
+  #     filtered_projects = _.filter mock_projects, (project) ->
+  #       # If customize_query exists, only return projects that pass the filter
+  #       if not _.isEmpty(options.customize_query)
+  #         return project.passesFilter
+  #       return true
+      
+  #     return filtered_projects
+    
+  #   runTest = (test_name, config, expected_pc_ids) =>
+  #     console.log "\n💡 Testing: #{test_name}"
+      
+  #     {mock_pcs, mock_projects, config} = createTestData(config)
+      
+  #     # Override methods with mocks
+  #     @getProjectsCollectionsUnderJustdoCursor = (justdo_id, options, user_id) ->
+  #       return mockGetProjectsCollectionsUnderJustdoCursor(justdo_id, options, user_id, mock_pcs)
+      
+  #     @getKnownProjects = (justdo_id, options, user_id) ->
+  #       return mockGetKnownProjects(justdo_id, options, user_id, mock_projects)
+      
+  #     # Prepare test options
+  #     test_options = 
+  #       projects_collection_options: {}
+  #       projects_options: 
+  #         customize_query: if config.projects_filter_active then {some_filter: true} else {}
+  #       prune_tree: config.prune_tree
+      
+  #     if config.includedTypes?
+  #       test_options.projects_collection_options.projects_collection_types = config.includedTypes
+      
+  #     try
+  #       result = @getAllProjectsGroupedByProjectsCollectionsUnderJustdo("test_justdo", test_options, "test_user")
+  #       result_pc_ids = _.keys(result).sort()
+  #       expected_pc_ids_sorted = (expected_pc_ids or []).sort()
+        
+  #       if _.isEqual(result_pc_ids, expected_pc_ids_sorted)
+  #         console.log "✅ #{test_name} - PASSED"
+  #         console.log "   Expected: [#{expected_pc_ids_sorted.join(', ')}]"
+  #         console.log "   Got:      [#{result_pc_ids.join(', ')}]"
+  #       else
+  #         console.log "❌ #{test_name} - FAILED"
+  #         console.log "   Expected: [#{expected_pc_ids_sorted.join(', ')}]"
+  #         console.log "   Got:      [#{result_pc_ids.join(', ')}]"
+  #         console.log "   Full result:", result
+  #     catch error
+  #       console.log "💥 #{test_name} - ERROR: #{error.message}"
+      
+  #     return
+    
+  #   # A. prune_tree behavior & basics
+  #   runTest(
+  #     "1. prune_tree=false returns everything unchanged",
+  #     {
+  #       pcs: [
+  #         {id: "A", parents: ["0"]}
+  #         {id: "B", parents: ["A"]}
+  #       ]
+  #       projects: []
+  #       prune_tree: false
+  #     },
+  #     ["A", "B"]
+  #   )
+    
+  #   runTest(
+  #     "2. Empty graph",
+  #     {
+  #       pcs: []
+  #       projects: []
+  #       prune_tree: true
+  #     },
+  #     []
+  #   )
+    
+  #   runTest(
+  #     "3. Single root, no projects",
+  #     {
+  #       pcs: [{id: "R", parents: ["0"]}]
+  #       projects: []
+  #       prune_tree: true
+  #     },
+  #     ["R"]
+  #   )
+    
+  #   # B. Root inclusion & pruning
+  #   runTest(
+  #     "4. Root with no qualifying descendants → include root only",
+  #     {
+  #       pcs: [
+  #         {id: "R", parents: ["0"]}
+  #         {id: "A", parents: ["R"]}
+  #       ]
+  #       projects: [{id: "P1", parents: ["A"], passesFilter: false}]
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["R"]
+  #   )
+    
+  #   runTest(
+  #     "5. Root with qualifying path → include full included-type chain",
+  #     {
+  #       pcs: [
+  #         {id: "R", parents: ["0"], type: "department"}
+  #         {id: "A", parents: ["R"], type: "department"}
+  #         {id: "B", parents: ["A"], type: "department"}
+  #       ]
+  #       projects: [{id: "P1", parents: ["B"], passesFilter: true}]
+  #       includedTypes: ["department"]
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["R", "A", "B"]
+  #   )
+    
+  #   runTest(
+  #     "6. Root with some branches qualifying and others not",
+  #     {
+  #       pcs: [
+  #         {id: "R", parents: ["0"]}
+  #         {id: "A", parents: ["R"]}
+  #         {id: "X", parents: ["R"]}
+  #       ]
+  #       projects: [
+  #         {id: "P1", parents: ["A"], passesFilter: true}
+  #         {id: "P2", parents: ["X"], passesFilter: false}
+  #       ]
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["R", "A"]
+  #   )
+    
+  #   # C. Unbroken PC-only chains & chain breakers
+  #   runTest(
+  #     "7. Task breaks the chain (simulated via missing PC)",
+  #     {
+  #       pcs: [
+  #         {id: "A", parents: ["0"], type: "department"}
+  #         {id: "B", parents: ["A"], type: "department"}
+  #         {id: "C", parents: ["task_id"], type: "department"}  # task_id not in PCs breaks chain
+  #       ]
+  #       projects: [{id: "P1", parents: ["C"], passesFilter: true}]
+  #       includedTypes: ["department"]
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["A", "C"]  # Only C and A (root) 
+  #   )
+    
+  #   runTest(
+  #     "8. Non-included PC type breaks the chain",
+  #     {
+  #       pcs: [
+  #         {id: "PC1", parents: ["0"], type: "department"}
+  #         {id: "PC2", parents: ["PC1"], type: "department"}
+  #         {id: "PC3", parents: ["PC2"], type: "other_type"}  # Not in includedTypes
+  #         {id: "PC4", parents: ["PC3"], type: "department"}
+  #       ]
+  #       projects: [{id: "P1", parents: ["PC4"], passesFilter: true}]
+  #       includedTypes: ["department"]
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["PC1", "PC4"]  # Only PC4 and PC1; PC2, PC3 are not included
+  #   )
+    
+  #   runTest(
+  #     "9. Direct-child requirement satisfied at the last hop",
+  #     {
+  #       pcs: [
+  #         {id: "A", parents: ["0"], type: "department"}
+  #         {id: "B", parents: ["A"], type: "department"}
+  #       ]
+  #       projects: [{id: "P1", parents: ["B"], passesFilter: true}]
+  #       includedTypes: ["department"]
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["A", "B"]
+  #   )
+    
+  #   runTest(
+  #     "10. No passing projects anywhere (non-root subgraph)",
+  #     {
+  #       pcs: [
+  #         {id: "R", parents: ["0"]}
+  #         {id: "A", parents: ["R"], type: "department"}
+  #         {id: "B", parents: ["A"], type: "department"}
+  #       ]
+  #       projects: [{id: "P1", parents: ["B"], passesFilter: false}]
+  #       includedTypes: ["department"]
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["R"]  # Only root included
+  #   )
+    
+  #   # F. Multiple projects & deduping
+  #   runTest(
+  #     "11. Two passing projects on different branches include shared ancestors once",
+  #     {
+  #       pcs: [
+  #         {id: "A", parents: ["0"]}
+  #         {id: "B", parents: ["A"]}
+  #         {id: "C", parents: ["A"]}
+  #       ]
+  #       projects: [
+  #         {id: "P1", parents: ["B"], passesFilter: true}
+  #         {id: "P2", parents: ["C"], passesFilter: true}
+  #       ]
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["A", "B", "C"]  # A included once
+  #   )
+    
+  #   runTest(
+  #     "12. Mixed pass/fail under same parent",
+  #     {
+  #       pcs: [
+  #         {id: "A", parents: ["0"]}
+  #         {id: "B", parents: ["A"]}
+  #       ]
+  #       projects: [
+  #         {id: "P1", parents: ["B"], passesFilter: true}
+  #         {id: "P2", parents: ["B"], passesFilter: false}
+  #       ]
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["A", "B"]
+  #   )
+    
+  #   # E. Multi-parent structures
+  #   runTest(
+  #     "13. PC with a root among its parents (no qualifying projects)",
+  #     {
+  #       pcs: [
+  #         {id: "R", parents: ["0"]}
+  #         {id: "Y", parents: ["0"]}
+  #         {id: "X", parents: ["R", "Y"]}  # Multi-parent with root
+  #       ]
+  #       projects: []
+  #       prune_tree: true
+  #     },
+  #     ["R", "Y"] 
+  #   )
+    
+  #   runTest(
+  #     "14. Project with multiple direct parents counts for each parent",
+  #     {
+  #       pcs: [
+  #         {id: "A", parents: ["0"], type: "department"}
+  #         {id: "B", parents: ["0"], type: "department"}
+  #         {id: "C", parents: ["A", "B"], type: "department"}
+  #       ]
+  #       projects: [{id: "P1", parents: ["C"], passesFilter: true}]
+  #       includedTypes: ["department"]
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["A", "B", "C"]
+  #   )
+    
+  #   # Test projects_without_pc functionality
+  #   runTest(
+  #     "15. Projects without PC are included",
+  #     {
+  #       pcs: [{id: "A", parents: ["0"]}]
+  #       projects: [
+  #         {id: "P1", parents: ["A"], passesFilter: true}
+  #         {id: "P2", parents: ["some_task_id"], passesFilter: true}  # Not under any PC
+  #       ]
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["A", JustdoDeliveryPlanner.projects_without_pc_type_id]
+  #   )
+    
+  #   # D. Explicit Type/Collection Filtering (Whitelist)
+  #   runTest(
+  #     "16. Type filter restricts which PCs are considered",
+  #     {
+  #       pcs: [
+  #         {id: "A", parents: ["0"], type: "department"}
+  #         {id: "B", parents: ["A"], type: "other_type"}  # Different type
+  #         {id: "C", parents: ["B"], type: "department"}
+  #       ]
+  #       projects: [{id: "P1", parents: ["C"], passesFilter: true}]
+  #       includedTypes: ["department"]  # Only department type allowed
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["A", "C"]  # Only A (root department), B is filtered out, C is included because of the child project. C will not have the `parent_pcs`, `sub_pcs` and `is_root_pc` fields.
+  #   )
+    
+  #   runTest(
+  #     "17. Multiple type filter allows different PC types",
+  #     {
+  #       pcs: [
+  #         {id: "A", parents: ["0"], type: "department"}
+  #         {id: "B", parents: ["A"], type: "team"}
+  #         {id: "C", parents: ["B"], type: "department"}
+  #       ]
+  #       projects: [{id: "P1", parents: ["C"], passesFilter: true}]
+  #       includedTypes: ["department", "team"]  # Both types allowed
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["A", "B", "C"]  # All included since both types are allowed
+  #   )
+    
+  #   # G. Cycle Handling & Robustness
+  #   runTest(
+  #     "18. Circular dependency doesn't cause infinite loop",
+  #     {
+  #       pcs: [
+  #         {id: "A", parents: ["0", "B"], type: "department"}  # A→B cycle
+  #         {id: "B", parents: ["A"], type: "department"}
+  #         {id: "C", parents: ["B"], type: "department"}
+  #       ]
+  #       projects: [{id: "P1", parents: ["C"], passesFilter: true}]
+  #       includedTypes: ["department"]
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["A", "B", "C"]  # Should handle cycle gracefully
+  #   )
+    
+  #   runTest(
+  #     "19. Deep nesting doesn't cause performance issues",
+  #     {
+  #       pcs: [
+  #         {id: "L1", parents: ["0"], type: "department"}
+  #         {id: "L2", parents: ["L1"], type: "department"}
+  #         {id: "L3", parents: ["L2"], type: "department"}
+  #         {id: "L4", parents: ["L3"], type: "department"}
+  #         {id: "L5", parents: ["L4"], type: "department"}
+  #       ]
+  #       projects: [{id: "P1", parents: ["L5"], passesFilter: true}]
+  #       includedTypes: ["department"]
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["L1", "L2", "L3", "L4", "L5"]
+  #   )
+    
+  #   # H. Complex Chain-Breaking Scenarios
+  #   runTest(
+  #     "20. Mixed pass/fail projects under different types",
+  #     {
+  #       pcs: [
+  #         {id: "A", parents: ["0"], type: "department"}
+  #         {id: "X", parents: ["A"], type: "other_type"}  # Not included
+  #         {id: "B", parents: ["A"], type: "department"}
+  #       ]
+  #       projects: [
+  #         {id: "P1", parents: ["X"], passesFilter: true}   # Under non-included type
+  #         {id: "P2", parents: ["B"], passesFilter: false}  # Under included type but fails filter
+  #       ]
+  #       includedTypes: ["department"]
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["A", JustdoDeliveryPlanner.projects_without_pc_type_id]  # Only root A since P1 path is broken, P2 fails filter
+  #   )
+    
+  #   runTest(
+  #     "21. Complex multi-parent with partial chain breaks",
+  #     {
+  #       pcs: [
+  #         {id: "ROOT", parents: ["0"], type: "department"}
+  #         {id: "A", parents: ["ROOT"], type: "department"}
+  #         {id: "B", parents: ["ROOT"], type: "other_type"}  # Different type
+  #         {id: "C", parents: ["A", "B"], type: "department"}  # Multi-parent
+  #       ]
+  #       projects: [{id: "P1", parents: ["C"], passesFilter: true}]
+  #       includedTypes: ["department"]
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["ROOT", "A", "C"]  # C reachable via A path, B path is broken
+  #   )
+    
+  #   # I. Edge Cases & Realistic Scenarios
+  #   runTest(
+  #     "22. Empty project collections are pruned correctly",
+  #     {
+  #       pcs: [
+  #         {id: "A", parents: ["0"], type: "department"}
+  #         {id: "B", parents: ["A"], type: "department"}
+  #         {id: "C", parents: ["B"], type: "department"}
+  #         {id: "D", parents: ["C"], type: "department"}  # Empty branch
+  #       ]
+  #       projects: [{id: "P1", parents: ["C"], passesFilter: true}]
+  #       includedTypes: ["department"]
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["A", "B", "C"]  # D is pruned since it has no projects
+  #   )
+    
+  #   runTest(
+  #     "23. Large complex tree with multiple branches and filters",
+  #     {
+  #       pcs: [
+  #         {id: "ROOT", parents: ["0"], type: "department"}
+  #         {id: "DEPT_A", parents: ["ROOT"], type: "department"}
+  #         {id: "DEPT_B", parents: ["ROOT"], type: "department"}
+  #         {id: "TEAM_1", parents: ["DEPT_A"], type: "team"}
+  #         {id: "TEAM_2", parents: ["DEPT_B"], type: "team"}
+  #         {id: "SUB_A", parents: ["TEAM_1"], type: "department"}
+  #         {id: "SUB_B", parents: ["TEAM_2"], type: "department"}
+  #       ]
+  #       projects: [
+  #         {id: "P1", parents: ["SUB_A"], passesFilter: true}
+  #         {id: "P2", parents: ["SUB_B"], passesFilter: false}
+  #         {id: "P3", parents: ["DEPT_A"], passesFilter: true}
+  #       ]
+  #       includedTypes: ["department"]  # Only department type
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["ROOT", "DEPT_A", "SUB_A"]  # DEPT_A and SUB_A are included because of the child project; ROOT is included because it is a root department.
+  #   )
+    
+  #   # J. Output Stability & Edge Cases
+  #   runTest(
+  #     "24. Output ordering is deterministic",
+  #     {
+  #       pcs: [
+  #         {id: "Z", parents: ["0"]}
+  #         {id: "A", parents: ["0"]}
+  #         {id: "M", parents: ["0"]}
+  #       ]
+  #       projects: [
+  #         {id: "P1", parents: ["Z"], passesFilter: true}
+  #         {id: "P2", parents: ["A"], passesFilter: true}
+  #         {id: "P3", parents: ["M"], passesFilter: true}
+  #       ]
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["A", "M", "Z"]  # Should always return in same order
+  #   )
+    
+  #   runTest(
+  #     "25. Null/undefined parent handling",
+  #     {
+  #       pcs: [
+  #         {id: "A", parents: ["0"]}
+  #         {id: "B", parents: ["nonexistent_parent"]}  # Parent doesn't exist
+  #       ]
+  #       projects: [{id: "P1", parents: ["B"], passesFilter: true}]
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["A", "B"]  # Should handle gracefully
+  #   )
+    
+  #   runTest(
+  #     "26. Multiple projects collection types with complex filtering",
+  #     {
+  #       pcs: [
+  #         {id: "ROOT", parents: ["0"], type: "department"}
+  #         {id: "TEAM_A", parents: ["ROOT"], type: "team"}
+  #         {id: "PHASE_1", parents: ["TEAM_A"], type: "phase"}
+  #         {id: "TEAM_B", parents: ["ROOT"], type: "team"}
+  #         {id: "DEPT_C", parents: ["ROOT"], type: "department"}
+  #       ]
+  #       projects: [
+  #         {id: "P1", parents: ["TEAM_A"], passesFilter: true}
+  #         {id: "P2", parents: ["PHASE_1"], passesFilter: true}
+  #         {id: "P3", parents: ["DEPT_C"], passesFilter: true}
+  #       ]
+  #       includedTypes: ["department", "team"]  # Include department and team, exclude phase
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["ROOT", "TEAM_A", "DEPT_C", JustdoDeliveryPlanner.projects_without_pc_type_id]  # PHASE_1 excluded, breaks chain to P2
+  #   )
+    
+  #   runTest(
+  #     "27. All types included shows full tree structure",
+  #     {
+  #       pcs: [
+  #         {id: "DEPT", parents: ["0"], type: "department"}
+  #         {id: "TEAM", parents: ["DEPT"], type: "team"}
+  #         {id: "PHASE", parents: ["TEAM"], type: "phase"}
+  #         {id: "SPRINT", parents: ["PHASE"], type: "sprint"}
+  #       ]
+  #       projects: [{id: "P1", parents: ["SPRINT"], passesFilter: true}]
+  #       includedTypes: ["department", "team", "phase", "sprint"]  # All types included
+  #       prune_tree: true
+  #       projects_filter_active: true
+  #     },
+  #     ["DEPT", "TEAM", "PHASE", "SPRINT"]  # Complete chain preserved
+  #   )
+    
+  #   # Restore original methods
+  #   @getProjectsCollectionsUnderJustdoCursor = original_getProjectsCollectionsUnderJustdoCursor
+  #   @getKnownProjects = original_getKnownProjects
+    
+  #   console.log "\n🎉 All tests completed for getAllProjectsGroupedByProjectsCollectionsUnderJustdo"
+  #   return
   
