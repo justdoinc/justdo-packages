@@ -248,7 +248,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     # Structure of returned obj:
     # {
     #   <project_collection_task_id>: {
-    #     ...project_collection_fields
+    #     _id: project_collection_task_id
     #     project_ids: [<project_id>, ...]
     #     is_root_pc: (true if the pc is a root pc, not set otherwise)
     #     sub_pcs: (array of project_collection_task_ids that are sub-pcs of the current pc, not set otherwise)
@@ -401,7 +401,6 @@ _.extend JustdoDeliveryPlanner.prototype,
     
     projects_without_pc_doc = 
       _id: JustdoDeliveryPlanner.projects_without_pc_type_id
-      title: TAPi18n.__ "ppm_projects_without_department_label"
       project_ids: []
       is_root_pc: true
     projects_grouped_by_projects_collections[projects_without_pc_doc._id] = projects_without_pc_doc
