@@ -425,21 +425,21 @@ _.extend JustdoDeliveryPlanner.prototype,
     if not _.isEmpty projects_without_pc_doc.project_ids
       projects_grouped_by_projects_collections[projects_without_pc_doc._id] = projects_without_pc_doc
 
-    pcShouldBePruned = (pc_id) ->
-      pc = projects_grouped_by_projects_collections[pc_id]
+    pcShouldBePruned = (projects_collection_id) ->
+      projects_collection = projects_grouped_by_projects_collections[projects_collection_id]
 
-      pc_has_child_projects = not _.isEmpty pc.project_ids
+      pc_has_child_projects = not _.isEmpty projects_collection.project_ids
       if pc_has_child_projects
         return false
         
-      pc_has_child_pcs = not _.isEmpty pc.sub_pcs
+      pc_has_child_pcs = not _.isEmpty projects_collection.sub_pcs
       if not pc_has_child_pcs
         return true
 
       # Recursively check each sub-pc on whether it should be pruned
       # If any sub-pc should not be pruned, the current pc should not be pruned
-      for sub_pc_id in pc.sub_pcs
-        if not pcShouldBePruned(sub_pc_id)
+      for sub_projects_collection_id in projects_collection.sub_pcs
+        if not pcShouldBePruned(sub_projects_collection_id)
           return false
       
       return true
