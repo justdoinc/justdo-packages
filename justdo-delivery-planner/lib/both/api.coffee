@@ -280,6 +280,11 @@ _.extend JustdoDeliveryPlanner.prototype,
     #   The include_closed and projects_collection_types settings can be set by the user of this method
     #   but the fields setting is forced by us to _id to ensure no unnecessary invalidation except for things
     #   that might cause tree-rebuild.
+    # 
+    #   SPECIAL NOTE FOR the `include_closed` and `projects_collection_types` options: 
+    #   If a Projects Collection (B) with valid child Projects is under another Projects Collection that is excluded from the result by the `include_closed` or `projects_collection_types` options,
+    #   B will still be included in the results without the `parent_pcs`, `sub_pcs` and `is_root_pc` fields.
+    #   The consumer of this method is responsible for handling this case.
     #
     # projects_options:
     #
