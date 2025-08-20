@@ -281,7 +281,19 @@ _.extend JustdoDeliveryPlanner.prototype,
     #
     # projects_options:
     #
-    #   XXX
+    #   The options that will be provided when calling @getKnownProjects to retrieve the projects
+    #   follows the structure of: JustdoDeliveryPlanner.schemas.getKnownProjectsOptionsSchema
+    #
+    #   The active_only, exclude_tasks, and customize_query settings can be set by the user of this method
+    #   but the fields setting is forced by us to _id and parents to ensure no unnecessary invalidation except for things
+    #   that might cause tree-rebuild.
+    #
+    #   Available options:
+    #   - active_only: Boolean (default: false) - if true, excludes archived projects
+    #   - fields: Ignored (forced to {_id: 1, parents: 1} to avoid unnecessary reactivity on the client side)
+    #   - sort_by: Object (default: {seqId: -1}) - specifies sorting order for projects
+    #   - exclude_tasks: [String] - array of task IDs to exclude from results
+    #   - customize_query: Object (default: {}) - additional MongoDB query conditions to apply
     #
     # prune_tree:
     #
