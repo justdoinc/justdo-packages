@@ -427,6 +427,7 @@ _.extend JustdoDeliveryPlanner.prototype,
         projects_without_pc_doc.project_ids.push project._id
     
     # Include "Projects without pc" only if it has projects
+    # Note that if a project is under a non-passing Projects Collection, it will be considered as a project without a PC.
     if not _.isEmpty projects_without_pc_doc.project_ids
       projects_grouped_by_projects_collections[projects_without_pc_doc._id] = projects_without_pc_doc
 
