@@ -397,7 +397,7 @@ _.extend JustdoDeliveryPlanner.prototype,
           pc.parent_pcs.push parent_id
     
     projects_without_pc_doc = 
-      _id: "projects_without_pc"
+      _id: JustdoDeliveryPlanner.projects_without_pc_type_id
       title: TAPi18n.__ "ppm_projects_without_department_label"
       project_ids: []
       is_root_pc: true
@@ -419,7 +419,7 @@ _.extend JustdoDeliveryPlanner.prototype,
           if projects_grouped_by_projects_collections[parent_id]?
             projects_grouped_by_projects_collections[parent_id].project_ids.push project._id
       else
-        projects_grouped_by_projects_collections["projects_without_pc"].project_ids.push project._id
+        projects_grouped_by_projects_collections[projects_without_pc_doc._id].project_ids.push project._id
     
     pcShouldBePruned = (pc_id) ->
       pc = projects_grouped_by_projects_collections[pc_id]

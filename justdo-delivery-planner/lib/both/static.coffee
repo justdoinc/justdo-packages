@@ -110,5 +110,6 @@ _.extend JustdoDeliveryPlanner,
       }
     }
   ]
+  projects_without_pc_type_id: "projects_without_pc"
   projects_collection_default_fields_to_fetch:
     _id: 1
