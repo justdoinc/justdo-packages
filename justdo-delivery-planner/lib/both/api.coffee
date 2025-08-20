@@ -233,7 +233,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       type: Boolean
       optional: true
       defaultValue: true
-  getAllProjectsGroupedByProjectsCollectionsUnderJustdo: (justdo_id, options, user_id) ->
+  getAllProjectsGroupedByProjectsCollectionsUnderJustdo: (justdo_id, options={}, user_id) ->
     # The purpose of this method is to return an object that represents the tree of projects-collections and their projects.
     #
     # Its design and main motivation is to fetch the projects collections and projects in manner that avoids unnecessary
@@ -258,7 +258,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     #     _id: JustdoDeliveryPlanner.projects_without_pc_type_id
     #     project_ids: [<project_id>, ...],
     #     is_root_pc: true
-    #   } (only included if project_ids is not empty)
+    #   } (only included if project_ids is not empty *regardels of whether or not prune_tree is true*)
     # }
     # 
     # If there are not projects, and no root-projects-collections, returns an empty object.
@@ -294,13 +294,6 @@ _.extend JustdoDeliveryPlanner.prototype,
     #   The active_only, exclude_tasks, and customize_query settings can be set by the user of this method
     #   but the fields setting is forced by us to _id and parents to ensure no unnecessary invalidation except for things
     #   that might cause tree-rebuild.
-    #
-    #   Available options:
-    #   - active_only: Boolean (default: false) - if true, excludes archived projects
-    #   - fields: Ignored (forced to {_id: 1, parents: 1} to avoid unnecessary reactivity on the client side)
-    #   - sort_by: Object (default: {seqId: -1}) - specifies sorting order for projects
-    #   - exclude_tasks: [String] - array of task IDs to exclude from results
-    #   - customize_query: Object (default: {}) - additional MongoDB query conditions to apply
     #
     # prune_tree:
     #
@@ -339,6 +332,8 @@ _.extend JustdoDeliveryPlanner.prototype,
     #     breaks the chain; deeper projects do NOT count unless all intermediate collections
     #     are of included types.
     #
+    #   • JustdoDeliveryPlanner.projects_without_pc_type_id is pruned regardless of this option.
+    #
     #   Examples
     #   --------
     #   1) A → B → C → Project P (P passes the filter)
@@ -358,7 +353,12 @@ _.extend JustdoDeliveryPlanner.prototype,
     #      The task breaks the chain. Do NOT treat P as a descendant of PC1 or PC2.
     #      Only PC3 can qualify under rule (2).
 
+    if Meteor.isClient
+      if not justdo_id?
+        justdo_id = JD.activeJustdoId()
+
     check justdo_id, String
+    
     if not user_id?
       user_id = Meteor.userId()
     check user_id, String
@@ -466,7 +466,12 @@ _.extend JustdoDeliveryPlanner.prototype,
           if pc.parent_pcs?
             # Delete the current pc from the parent's sub_pcs array
             for parent_pc_id in pc.parent_pcs
-              projects_grouped_by_projects_collections[parent_pc_id]?.sub_pcs = _.without(projects_grouped_by_projects_collections[parent_pc_id].sub_pcs, pc_id)
+              if projects_grouped_by_projects_collections[parent_pc_id].sub_pcs?
+                projects_grouped_by_projects_collections[parent_pc_id].sub_pcs = _.without(projects_grouped_by_projects_collections[parent_pc_id].sub_pcs, pc_id)
+
+                # If the parent pc has no sub_pcs, delete the sub_pcs array (as specified in the comment above)
+                if _.isEmpty projects_grouped_by_projects_collections[parent_pc_id].sub_pcs
+                  delete projects_grouped_by_projects_collections[parent_pc_id].sub_pcs
 
           # Delete the current pc from the projects_grouped_by_projects_collections object
           delete projects_grouped_by_projects_collections[pc_id]
