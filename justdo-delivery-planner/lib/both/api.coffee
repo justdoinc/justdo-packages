@@ -254,9 +254,12 @@ _.extend JustdoDeliveryPlanner.prototype,
     #     sub_pcs: (array of project_collection_task_ids that are sub-pcs of the current pc, not set otherwise)
     #     parent_pcs: (array of project_collection_task_ids that are parent_pcs of the current pc, not set otherwise)
     #   },
-    #   "projects_without_pc": {
-    #     project_ids: [<project_id>, ...]
-    #   }
+    #   [JustdoDeliveryPlanner.projects_without_pc_type_id]: {
+    #     _id: JustdoDeliveryPlanner.projects_without_pc_type_id
+    #     title: TAPi18n.__ "ppm_projects_without_department_label"
+    #     project_ids: [<project_id>, ...],
+    #     is_root_pc: true
+    #   } (only included if project_ids is not empty)
     # }
     # 
     # If there are not projects, and no root-projects-collections, returnes an empty object.
@@ -419,8 +422,12 @@ _.extend JustdoDeliveryPlanner.prototype,
           if projects_grouped_by_projects_collections[parent_id]?
             projects_grouped_by_projects_collections[parent_id].project_ids.push project._id
       else
-        projects_grouped_by_projects_collections[projects_without_pc_doc._id].project_ids.push project._id
+        projects_without_pc_doc.project_ids.push project._id
     
+    # Include "Projects without pc" only if it has projects
+    if not _.isEmpty projects_without_pc_doc.project_ids
+      projects_grouped_by_projects_collections[projects_without_pc_doc._id] = projects_without_pc_doc
+
     pcShouldBePruned = (pc_id) ->
       pc = projects_grouped_by_projects_collections[pc_id]
 
