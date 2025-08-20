@@ -403,7 +403,6 @@ _.extend JustdoDeliveryPlanner.prototype,
       _id: JustdoDeliveryPlanner.projects_without_pc_type_id
       project_ids: []
       is_root_pc: true
-    projects_grouped_by_projects_collections[projects_without_pc_doc._id] = projects_without_pc_doc
     
     # These fields are the bare minimum necessary to derive the tree structure, read more in the main comment
     # for this method.
