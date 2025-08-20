@@ -256,13 +256,12 @@ _.extend JustdoDeliveryPlanner.prototype,
     #   },
     #   [JustdoDeliveryPlanner.projects_without_pc_type_id]: {
     #     _id: JustdoDeliveryPlanner.projects_without_pc_type_id
-    #     title: TAPi18n.__ "ppm_projects_without_department_label"
     #     project_ids: [<project_id>, ...],
     #     is_root_pc: true
     #   } (only included if project_ids is not empty)
     # }
     # 
-    # If there are not projects, and no root-projects-collections, returnes an empty object.
+    # If there are not projects, and no root-projects-collections, returns an empty object.
     #
     # ARGS:
     #
@@ -455,7 +454,7 @@ _.extend JustdoDeliveryPlanner.prototype,
         # ROOT -> PC2 -> PC3 -> PC1 -> NO PROJECTS
         #
         # will cause PC1 to return true to pcShouldBePruned() and the recursive call on PC2, will end up
-        # getting to it causing PC2 and PC2 to be returned despite the fact they shouldn't
+        # getting to it causing PC2 and PC3 to be returned despite the fact they shouldn't
 
         if (not pc.is_root_pc) and pcShouldBePruned(pc_id)
           if pc.parent_pcs?
