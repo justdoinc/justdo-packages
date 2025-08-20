@@ -233,7 +233,6 @@ _.extend JustdoDeliveryPlanner.prototype,
       type: Boolean
       optional: true
       defaultValue: true
-
   getAllProjectsGroupedByProjectsCollectionsUnderJustdo: (justdo_id, options, user_id) ->
     # The purpose of this method is to return an object that represents the tree of projects-collections and their projects.
     #
@@ -460,7 +459,7 @@ _.extend JustdoDeliveryPlanner.prototype,
           if pc.parent_pcs?
             # Delete the current pc from the parent's sub_pcs array
             for parent_pc_id in pc.parent_pcs
-              projects_grouped_by_projects_collections[parent_pc_id].sub_pcs = _.without(projects_grouped_by_projects_collections[parent_pc_id].sub_pcs, pc_id)
+              projects_grouped_by_projects_collections[parent_pc_id]?.sub_pcs = _.without(projects_grouped_by_projects_collections[parent_pc_id].sub_pcs, pc_id)
 
           # Delete the current pc from the projects_grouped_by_projects_collections object
           delete projects_grouped_by_projects_collections[pc_id]
