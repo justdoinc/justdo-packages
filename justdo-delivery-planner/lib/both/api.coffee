@@ -248,6 +248,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     # {
     #   <project_collection_task_id>: {
     #     _id: project_collection_task_id
+    #     parents: {...}
     #     project_ids: [<project_id>, ...]
     #     is_root_pc: (true if the pc is a root pc, not set otherwise)
     #     sub_pcs: (array of project_collection_task_ids that are sub-pcs of the current pc, not set otherwise)
