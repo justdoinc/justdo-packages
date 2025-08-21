@@ -383,7 +383,7 @@ _.extend GridControlMux.prototype,
     tab.state = "loading"
     tab.grid_control = grid_control
 
-    @emit "grid-control-created", tab
+    Tracker.nonreactive => @emit "grid-control-created", tab
 
     @_grid_controls_tabs_dependency.changed()
 
