@@ -434,6 +434,8 @@ APP.executeAfterAppLibCode ->
       active_grid_control_change_tracker.stop()
       active_grid_control_change_tracker = null
 
-    project_page_module.search_comp.destroy()
+    if project_page_module.search_comp?
+      project_page_module.search_comp.destroy()
+      project_page_module.search_comp = null
 
     project_page_module.logger.debug "grid control destroyed"
