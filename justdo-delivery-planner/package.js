@@ -70,6 +70,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/errors-types.coffee", both);
   api.addFiles("lib/both/api.coffee", both);
   api.addFiles("lib/both/schemas.coffee", both);
+  api.addFiles("lib/both/tests.coffee", both);
 
   api.addFiles("lib/server/api.coffee", server);
   api.addFiles("lib/server/collections-hooks.coffee", server);
