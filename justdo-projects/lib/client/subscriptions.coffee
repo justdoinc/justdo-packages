@@ -100,7 +100,7 @@ _.extend Projects.prototype,
       return self._grid_data_com.subscribeDefaultGridSubscription({project_id: project_id})
 
     try
-      @emit "pre-subscribe-project-tasks", project_id
+      Tracker.nonreactive => @emit "pre-subscribe-project-tasks", project_id
     catch err
       console.error err
       JustdoSnackbar.show
