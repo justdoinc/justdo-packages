@@ -101,7 +101,7 @@ _.extend GridControlCustomFieldsManager.prototype,
     _.extend(@custom_fields_definitions, custom_fields_definitions)
     @custom_fields_definitions_dep.changed()
 
-    @emit "custom-fields-updated"
+    Tracker.nonreactive => @emit "custom-fields-updated"
 
     return
 
@@ -123,7 +123,7 @@ _.extend GridControlCustomFieldsManager.prototype,
       @custom_fields_definitions_dep.changed()
       @custom_fields_schema_dep.changed()
 
-      @emit "custom-fields-updated"
+      Tracker.nonreactive => @emit "custom-fields-updated"
 
     return
 
