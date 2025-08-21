@@ -141,7 +141,7 @@ APP.executeAfterAppLibCode ->
 
           return
 
-      APP.modules.project_page.emit "grid-control-mux-created", grid_control_mux
+      Tracker.nonreactive -> APP.modules.project_page.emit "grid-control-mux-created", grid_control_mux
 
       grid_control_mux.on "grid-control-created", (tab) ->
         if not (project_id = APP.modules.project_page?.project?.get()?.id)
