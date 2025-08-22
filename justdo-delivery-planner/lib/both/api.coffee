@@ -305,7 +305,6 @@ _.extend JustdoDeliveryPlanner.prototype,
     #      - A root collection is always returned, even if it contains no projects.
     #      - If a collection has multiple parents and ANY parent is root, treat it as root
     #        for this rule (include it even without qualifying projects).
-    #      - If a collection is not under the root, and not under any filter-passing collections, it is also considered as a root collection.
     #
     #   2) Collections with a qualifying descendant project
     #      - The collection has ≥1 descendant project that passes
@@ -453,7 +452,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     if options.prune_tree
       for pc_id, pc of projects_grouped_by_projects_collections
-        # IMPORTANT: The condition check of `is_sub_pc` is DESIGNED to exist outside of `pcShouldBePruned` 
+        # IMPORTANT: The condition check of `pc.is_root_pc` is DESIGNED to exist outside of `pcShouldBePruned` 
         # to prevent multi-parented root project collections from causing their other parents to NOT be pruned when they should.
         #
         # Example, if we took pc.is_root_pc into pcShouldBePruned the following:
@@ -462,20 +461,8 @@ _.extend JustdoDeliveryPlanner.prototype,
         #
         # will cause PC1 to return true to pcShouldBePruned() and the recursive call on PC2, will end up
         # getting to it causing PC2 and PC3 to be returned despite the fact they shouldn't
-        # 
-        # Alternatively, if we have the following:
-        # ROOT -> PC1 -> PC2 -> NO PROJECTS
-        # WHERE PC1 is filtered out by the `projects_collection_options` and PC2 is not
-        # OR
-        # ROOT -> TASK1 -> PC2 -> NO PROJECTS
-        #
-        # the function will prune PC2, but in this case we actually want to keep it.
 
-        is_root_pc = pc.is_root_pc
-        pc_has_parent_pcs = not _.isEmpty pc.parent_pcs
-        is_sub_pc = not is_root_pc and pc_has_parent_pcs
-
-        if is_sub_pc and pcShouldBePruned(pc_id)
+        if (not pc.is_root_pc) and pcShouldBePruned(pc_id)
           if pc.parent_pcs?
             # Delete the current pc from the parent's sub_pcs array
             for parent_pc_id in pc.parent_pcs
