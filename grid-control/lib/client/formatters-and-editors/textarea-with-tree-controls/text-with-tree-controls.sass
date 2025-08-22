@@ -170,16 +170,6 @@
   align-items: center
   font-size: 14px
 
-  .task-is-project
-    cursor: pointer
-    &.task-is-archived-project
-      cursor: default
-  
-  .task-is-projects-collection
-    cursor: pointer
-    &.closed-projects-collection
-      cursor: default
-
   .fa
     cursor: pointer
     height: 20px
@@ -203,6 +193,16 @@
 
   &.jd-icon-context-menu
     opacity: 0.4
+  
+  &.task-is-project
+    cursor: default
+    &.clickable
+      cursor: pointer
+      
+  &.task-is-projects-collection
+    cursor: default
+    &.clickable
+      cursor: pointer
 
 .slick-cell.active,
 .text-tree-control:hover
