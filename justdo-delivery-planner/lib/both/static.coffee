@@ -24,11 +24,9 @@ _.extend JustdoDeliveryPlanner,
 
   is_projects_collection_enabled_globally: false
 
-  defaultOnGridProjectsCollectionClick: (e, event_item) ->
-    return
+  defaultOnGridProjectsCollectionClick: null
 
-  defaultOnGridProjectClick: (e, event_item, event_parent_item) ->
-    return
+  defaultOnGridProjectClick: null
 
   projects_collections_types: [
     # {
