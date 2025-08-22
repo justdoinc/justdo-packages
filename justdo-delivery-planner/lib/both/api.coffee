@@ -478,7 +478,7 @@ _.extend JustdoDeliveryPlanner.prototype,
           if pc.parent_pcs?
             # Delete the current pc from the parent's sub_pcs array
             for parent_pc_id in pc.parent_pcs
-              if projects_grouped_by_projects_collections[parent_pc_id].sub_pcs?
+              if projects_grouped_by_projects_collections[parent_pc_id]?.sub_pcs?
                 projects_grouped_by_projects_collections[parent_pc_id].sub_pcs = _.without(projects_grouped_by_projects_collections[parent_pc_id].sub_pcs, pc_id)
 
                 # If the parent pc has no sub_pcs, delete the sub_pcs array (as specified in the comment above)
