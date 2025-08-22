@@ -216,14 +216,14 @@ _.extend JustdoTasksContextMenu.prototype,
       position: 500
       data:
         label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
-          task_archived = gc.activeItem({archived: 1}).archived
+          task_archived = gc.activeItem({archived: 1})?.archived
 
           if _.isDate task_archived
             return "Unarchive Task"
 
           return "Archive Task"
         label_i18n: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
-          task_archived = gc.activeItem({archived: 1}).archived
+          task_archived = gc.activeItem({archived: 1})?.archived
 
           if _.isDate task_archived
             return "unarchive_task_label"
