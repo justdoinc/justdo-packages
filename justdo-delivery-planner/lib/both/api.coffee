@@ -403,6 +403,10 @@ _.extend JustdoDeliveryPlanner.prototype,
             pc.parent_pcs = []
           pc.parent_pcs.push parent_id
     
+    # If a project collection has no parent_pcs, consider it is a root project collection
+    for pc_id, pc of projects_grouped_by_projects_collections
+      pc.is_root_pc = pc.is_root_pc or _.isEmpty pc.parent_pcs
+
     projects_without_pc_doc = 
       _id: JustdoDeliveryPlanner.projects_without_pc_type_id
       project_ids: []
