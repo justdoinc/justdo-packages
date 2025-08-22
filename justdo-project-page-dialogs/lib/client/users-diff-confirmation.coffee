@@ -6,8 +6,10 @@ getProjectPageModule = -> APP.modules.project_page
 ProjectPageDialogs.JustdoTaskMembersDiffDialog =
   usersDiffConfirmationCb: (item_id, target_id, diff, confirm, cancel, options) ->
     required_users_info = _.union(diff.absent, diff.alien)
+    grid_control = options.grid_control or getProjectPageModule().gridControl()
+
     APP.projects.ensureUsersPublicBasicUsersInfoLoaded required_users_info, ->
-      options = _.extend {action_name: "move"}, (options or {})
+      options = _.extend {action_name: "move", grid_control: grid_control}, (options or {})
 
       data =
         item_id: item_id
@@ -47,8 +49,7 @@ ProjectPageDialogs.JustdoTaskMembersDiffDialog =
               project_page_module = getProjectPageModule()
               project = project_page_module.curProj()
 
-              grid_control = project_page_module.gridControl()
-              grid_data = project_page_module.gridData()
+              grid_data = grid_control._grid_data
 
               # Note we set {each_options: {expand_only: true}} since
               # grid_control.getPathObjNonReactive works on visible items only
@@ -144,7 +145,7 @@ Template.users_diff_confirmation.onCreated ->
   @members_filter = new ReactiveVar null
 
   @autorun =>
-    grid_control = project_page_module.gridControl()
+    grid_control = @data.grid_control or project_page_module.gridControl()
     grid_data = grid_control._grid_data
     grid_data.invalidateOnRebuild()
 
