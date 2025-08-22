@@ -851,12 +851,17 @@ _.extend JustdoTasksContextMenu.prototype,
         gc.saveAndExitActiveEditor() # Exit edit mode, if any, to make sure result will appear on tree (otherwise, will show only when exit edit mode)
 
         gc._performLockingOperation (releaseOpsLock, timedout) =>
+          # Wrap the usersDiffConfirmationCb with the grid_control, to make it available in the dialog
+          usersDiffConfirmationCbWrappedWithGc = (item_id, target_id, diff, confirm, cancel, options) ->
+            return ProjectPageDialogs.JustdoTaskMembersDiffDialog.usersDiffConfirmationCb(item_id, target_id, diff, confirm, cancel, _.extend {grid_control: gc}, options)
+
           gc.addParent task_id, {parent: new_parent_id, order: 0}, (err) ->
             releaseOpsLock()
 
             cb?(err)
 
             return
+          , usersDiffConfirmationCbWrappedWithGc
 
           return
 
