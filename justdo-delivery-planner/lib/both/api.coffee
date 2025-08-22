@@ -248,6 +248,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     # {
     #   <project_collection_task_id>: {
     #     _id: project_collection_task_id
+    #     parents: {...} (a copy of to the project's parents field) XXX do we actually need this?
     #     project_ids: [<project_id>, ...]
     #     is_root_pc: (true if the pc is a root pc, not set otherwise)
     #     sub_pcs: (array of project_collection_task_ids that are sub-pcs of the current pc, not set otherwise)
@@ -487,9 +488,6 @@ _.extend JustdoDeliveryPlanner.prototype,
 
           # Delete the current pc from the projects_grouped_by_projects_collections object
           delete projects_grouped_by_projects_collections[pc_id]
-        
-        # Delete parents from the returned object
-        delete projects_grouped_by_projects_collections[pc_id]?.parents
 
     return projects_grouped_by_projects_collections
 
