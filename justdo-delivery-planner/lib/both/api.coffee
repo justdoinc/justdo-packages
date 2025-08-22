@@ -248,9 +248,9 @@ _.extend JustdoDeliveryPlanner.prototype,
     # {
     #   <project_collection_task_id>: {
     #     _id: project_collection_task_id
-    #     parents: {...} (a copy of to the project's parents field) XXX do we actually need this?
+    #     parents: {...} A copy of to the project's parents field (isn't included for a purpose. Is not meant to be used directly, kept to avoid a redundant js delete of the field that we bring from the query fetch)
     #     project_ids: [<project_id>, ...]
-    #     is_root_pc: (true if the pc is a root pc, not set otherwise)
+    #     is_root_pc: Root nodes in the PC + projects tree: When traversing the graph represented by the returned object, the items with is_root_pc - should be regarded as root nodes.
     #     sub_pcs: (array of project_collection_task_ids that are sub-pcs of the current pc, not set otherwise)
     #     parent_pcs: (array of project_collection_task_ids that are parent_pcs of the current pc, not set otherwise)
     #   },
