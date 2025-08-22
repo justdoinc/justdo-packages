@@ -173,11 +173,10 @@ _.extend PACK.Formatters.textWithTreeControls,
         if APP.justdo_delivery_planner.isProjectsCollectionEnabled()
           event_item = @getEventItem(e)
           
-          if (projects_collection_type_id = APP.justdo_delivery_planner.getTaskObjProjectsCollectionTypeId(event_item))?
-            projects_collection_type_def = APP.justdo_delivery_planner.getProjectsCollectionTypeById(projects_collection_type_id)
-            handler = projects_collection_type_def?.onGridClick or JustdoDeliveryPlanner.defaultOnGridProjectsCollectionClick
+          if _.isFunction(handler = APP.justdo_delivery_planner.getProjectsCollectionOnGridClickHandler(event_item))
             handler.call @, e, event_item
-
+          
+          return
     }
     {
       args: ['click', '.task-is-project']
@@ -185,14 +184,9 @@ _.extend PACK.Formatters.textWithTreeControls,
         if APP.justdo_delivery_planner.isProjectsCollectionEnabled()
           event_item = @getEventItem(e)
           event_path = @getEventPath(e)
-          event_parent_item_id = GridData.helpers.getPathParentId(event_path)
-          event_parent_item = APP.collections.Tasks.findOne(event_parent_item_id, {fields: {projects_collection: 1}})
-          
-          if (parent_projects_collection_type_id = APP.justdo_delivery_planner.getTaskObjProjectsCollectionTypeId(event_parent_item))?
-            parent_projects_collection_type_def = APP.justdo_delivery_planner.getProjectsCollectionTypeById(parent_projects_collection_type_id)
 
-            handler = parent_projects_collection_type_def?.onGridProjectClick or JustdoDeliveryPlanner.defaultOnGridProjectClick
-            handler.call @, e, event_item, event_parent_item
+          if _.isFunction(handler = APP.justdo_delivery_planner.getProjectOnGridClickHandler(event_item, event_path))
+            handler.call @, e, event_item
           
         return
     }
