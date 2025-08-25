@@ -172,9 +172,10 @@ _.extend PACK.Formatters.textWithTreeControls,
       handler: (e) ->
         if APP.justdo_delivery_planner.isProjectsCollectionEnabled()
           event_item = @getEventItem(e)
+          event_path = @getEventPath(e)
           
           if _.isFunction(handler = APP.justdo_delivery_planner.getProjectsCollectionOnGridClickHandler(event_item))
-            handler.call @, e, event_item
+            handler.call @, e, event_item, event_path
           
           return
     }
@@ -186,7 +187,7 @@ _.extend PACK.Formatters.textWithTreeControls,
           event_path = @getEventPath(e)
 
           if _.isFunction(handler = APP.justdo_delivery_planner.getProjectOnGridClickHandler(event_item, event_path))
-            handler.call @, e, event_item
+            handler.call @, e, event_item, event_path
           
         return
     }
