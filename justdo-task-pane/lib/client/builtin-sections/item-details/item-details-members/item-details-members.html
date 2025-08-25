@@ -9,7 +9,7 @@
     }}
 
     {{#with hiddenUsersCount}}
-      <div class="hidden-users-count text-primary">+{{this}}</div>
+      <div class="hidden-users-count text-primary {{#if hasPermissionToEditMemebers}}jd-c-pointer{{/if}}">+{{this}}</div>
     {{/with}}
   </div>
 </template>

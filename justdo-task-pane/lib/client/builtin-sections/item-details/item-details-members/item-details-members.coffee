@@ -25,6 +25,12 @@ Template.task_pane_item_details_members.onCreated ->
 
     return _.uniq users
   
+  @hasPermissionToEditMemebers = ->
+    if not (active_item_id = @data?._id)?
+      return false
+    
+    return APP.justdo_permissions?.checkTaskPermissions("task-field-edit.users", active_item_id)
+  
   return
 
 Template.task_pane_item_details_members.helpers
@@ -68,9 +74,14 @@ Template.task_pane_item_details_members.helpers
 
     return null
 
+  hasPermissionToEditMemebers: ->
+    tpl = Template.instance()
+    return tpl.hasPermissionToEditMemebers()
+
 Template.task_pane_item_details_members.events
   "click .hidden-users-count": (e, tpl) ->
-    ProjectPageDialogs.members_management_dialog.open(tpl.data._id)
+    if tpl.hasPermissionToEditMemebers()
+      ProjectPageDialogs.members_management_dialog.open(tpl.data?._id)
 
     return
 
