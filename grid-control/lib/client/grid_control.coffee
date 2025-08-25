@@ -225,6 +225,7 @@ _.extend GridControl,
     root_item_id: Item ID to set as root and activate (shorthand for sections_state: {global: {"root-item": root_item_id}})
     delete_grid_data_options: Whether to delete grid_data_options from copied grid_control_options, defaults to true
     override_options: Additional options to override the ones from the GridControlMux tab
+    subscribe_active_item_augmented_fields: An array of fields to subscribe to for the active item. Won't subscribe to any if empty or not provided.
     onInit: Callback function triggered on "init" event
     onReady: Callback function triggered on "ready" event
 
@@ -274,6 +275,19 @@ _.extend GridControl,
       else if options.sections_state
         grid_data.setSectionsState options.sections_state, true, true
       
+      subscribe_active_item_augmented_fields = options.subscribe_active_item_augmented_fields or []
+      if _.isArray(subscribe_active_item_augmented_fields) and not _.isEmpty(subscribe_active_item_augmented_fields)
+        subscribe_to_active_item_augmented_fields_tracker = Tracker.autorun =>
+          if (active_item_id = grid_control.activeItemId())?
+            # Subscription inside reactive context. Stops automatically upon invalidation.
+            JD.subscribeItemsAugmentedFields active_item_id, subscribe_active_item_augmented_fields
+          
+          return
+                
+        grid_control.onDestroy =>
+          subscribe_to_active_item_augmented_fields_tracker?.stop?()
+          return
+        
       # Call onInit callback if provided
       if _.isFunction options.onInit
         options.onInit.call @, grid_data
