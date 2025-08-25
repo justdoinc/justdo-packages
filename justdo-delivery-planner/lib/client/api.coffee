@@ -556,7 +556,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     projects_collection_type_id = @getTaskObjProjectsCollectionTypeId(event_item)
     projects_collection_type_def = @getProjectsCollectionTypeById(projects_collection_type_id)
 
-    return projects_collection_type_def?.onGridProjectsCollectionClick or JustdoDeliveryPlanner.defaultOnGridProjectsCollectionClick
+    return projects_collection_type_def?.onGridClick or JustdoDeliveryPlanner.defaultOnGridProjectsCollectionClick
   
   getProjectOnGridClickHandler: (event_item, event_path) ->
     event_parent_item_id = GridData.helpers.getPathParentId(event_path)
