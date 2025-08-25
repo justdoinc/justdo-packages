@@ -2,8 +2,6 @@ close_to_bottom_range = 50
 
 Template.tasks_context_menu.onCreated ->
   @tasks_context_menu_controller = @data.controller
-  @grid_control_crv = JustdoHelpers.newComputedReactiveVar null, -> APP.justdo_tasks_context_menu.getGridControlWithOpenedContextMenu()
-
   return
 
 Template.tasks_context_menu.helpers
@@ -12,7 +10,7 @@ Template.tasks_context_menu.helpers
 
   isMultiSelect: ->
     tpl = Template.instance()
-    if not (gc = tpl.grid_control_crv.get())?
+    if not (gc = tpl.tasks_context_menu_controller.getGridControlWithOpenedContextMenu())?
       return false
 
     return gc.isMultiSelectMode()
