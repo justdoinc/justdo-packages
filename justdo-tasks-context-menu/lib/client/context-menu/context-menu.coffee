@@ -2,6 +2,12 @@ close_to_bottom_range = 50
 
 Template.tasks_context_menu.onCreated ->
   @tasks_context_menu_controller = @data.controller
+  @hasPermissionToEditMembers = ->
+    if not (active_item_id = @tasks_context_menu_controller.getContextItemId())?
+      return false
+    
+    return APP.justdo_permissions?.checkTaskPermissions("task-field-edit.users", active_item_id)
+
   return
 
 Template.tasks_context_menu.helpers
@@ -23,6 +29,23 @@ Template.tasks_context_menu.helpers
 
   isSectionHasItems: (section) ->
     return section.itemsSource().length > 0
+  
+  activeItemId: ->
+    tpl = Template.instance()
+    return tpl.tasks_context_menu_controller.getContextItemId()
+  
+  hasPermissionToEditMembers: ->
+    tpl = Template.instance()
+    return tpl.hasPermissionToEditMembers()
+  
+Template.tasks_context_menu.events
+  "click .item-members": (e, tpl) ->
+    if not tpl.hasPermissionToEditMembers()
+      return
+
+    ProjectPageDialogs.members_management_dialog.open(tpl.tasks_context_menu_controller.getContextItemId())
+    tpl.tasks_context_menu_controller.hide()
+    return
 
 Template.tasks_context_section.onCreated ->
   # moveTimer used in mouseleave and mousemove events (.dropdown-item) to detect when the mouse stop

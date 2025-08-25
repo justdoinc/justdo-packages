@@ -10,9 +10,12 @@
         <hr class="my-2">
       </li>
       <li class="more-info-items">
-        <div>
+        <div class="d-flex flex-column">
           {{#if isMultiSelect}}
           {{else}}
+            <div class="item-members-wrapper {{#if hasPermissionToEditMembers}}jd-c-pointer{{/if}}">
+              {{> task_pane_item_details_members _id=activeItemId}}
+            </div>
             <div>{{_ "updated_with_time" time=(moFromNow updatedAt)}}</div>
           {{/if}}
         </div>
