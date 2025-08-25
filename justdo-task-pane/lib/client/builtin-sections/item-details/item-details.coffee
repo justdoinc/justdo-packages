@@ -21,6 +21,8 @@ APP.executeAfterAppLibCode ->
         fields: 
           _id: 1
       )?
+    
+    activeItemId: -> JD.activeItemId()
   
   Template.task_pane_item_details_section.events
     "click .edit-members": (e, tpl) ->
