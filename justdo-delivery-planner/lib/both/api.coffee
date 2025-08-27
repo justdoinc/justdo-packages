@@ -405,7 +405,29 @@ _.extend JustdoDeliveryPlanner.prototype,
     
     # If a project collection has no parent_pcs, consider it is a root project collection
     for pc_id, pc of projects_grouped_by_projects_collections
+      # If a project collection has no parent_pcs, consider it is a root project collection
       pc.is_root_pc = pc.is_root_pc or _.isEmpty pc.parent_pcs
+
+      if not pc.is_root_pc 
+        # If a project collection has a parent that is not a filter-passing project collection, consider it is a root project collection
+        # Note that the `parents` of the current pc may contain tasks that are not accessible to the user,
+        # so we need to run the query to get the amount of the accessible parents.
+
+        pc_parents_without_pcs = _.without _.keys(pc.parents), "0", ...pc.parent_pcs
+        if not _.isEmpty pc_parents_without_pcs
+          query = 
+            _id:
+              $in: pc_parents_without_pcs
+            users: user_id
+          if Meteor.isClient
+            delete query.users
+
+          query_options = 
+            fields:
+              _id: 1
+
+          if @tasks_collection.find(query, query_options).count() > 0
+            pc.is_root_pc = true
 
     projects_without_pc_doc = 
       _id: JustdoDeliveryPlanner.projects_without_pc_type_id
