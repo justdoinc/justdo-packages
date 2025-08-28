@@ -500,7 +500,10 @@ _.extend JustdoDeliveryPlanner.prototype,
                 if _.isEmpty projects_grouped_by_projects_collections[parent_pc_id].sub_pcs
                   delete projects_grouped_by_projects_collections[parent_pc_id].sub_pcs
 
-          if not pc.is_root_pc
+          if pc.is_root_pc
+            # If the pc is a root pc that deemed to be pruned, delete its parent_pcs array
+            delete pc.parent_pcs
+          else
             # Delete the current pc from the projects_grouped_by_projects_collections object
             delete projects_grouped_by_projects_collections[pc_id]
 
