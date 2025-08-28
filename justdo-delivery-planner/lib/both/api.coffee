@@ -322,9 +322,10 @@ _.extend JustdoDeliveryPlanner.prototype,
     #     of that collection (i.e., the final edge is collection → project).
     #
     #   • Pruning effect under rule (1):
-    #     If a root collection has no qualifying descendant projects, it is still returned,
-    #     but NONE of its descendant collections are included.
-    #
+    #     If a collection (C1) has no qualifying descendant projects, and is under root AND a filter-passing projects collection (C2)
+    #     , C1 is considered as a root project collection and will be included in the result.
+    #     However, it will not be part of the `sub_pcs` of C2.
+    #     
     #   • Filters that enumerate specific collections or types:
     #     If projects_collection_options explicitly includes certain collections or
     #     collection TYPES, only projects that are DIRECT children of those included
@@ -343,7 +344,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     #      Include R only; exclude all its descendant collections.
     #
     #   3) X has parents {R, Y}, where R is root; X has no qualifying projects
-    #      Include X (multiple parents, one is root).
+    #      Include X (multiple parents, one is root), but X will not appear in the `sub_pcs` of Y.
     #
     #   4) PC1 → PC2 → PC3 → PC4 → Project P (P passes the filter)
     #      PC3 is NOT one of the included project-collection TYPES → the chain is broken at PC3.
@@ -488,7 +489,7 @@ _.extend JustdoDeliveryPlanner.prototype,
         # will cause PC1 to return true to pcShouldBePruned() and the recursive call on PC2, will end up
         # getting to it causing PC2 and PC3 to be returned despite the fact they shouldn't
 
-        if (not pc.is_root_pc) and pcShouldBePruned(pc_id)
+        if pcShouldBePruned(pc_id)
           if pc.parent_pcs?
             # Delete the current pc from the parent's sub_pcs array
             for parent_pc_id in pc.parent_pcs
@@ -499,8 +500,9 @@ _.extend JustdoDeliveryPlanner.prototype,
                 if _.isEmpty projects_grouped_by_projects_collections[parent_pc_id].sub_pcs
                   delete projects_grouped_by_projects_collections[parent_pc_id].sub_pcs
 
-          # Delete the current pc from the projects_grouped_by_projects_collections object
-          delete projects_grouped_by_projects_collections[pc_id]
+          if not pc.is_root_pc
+            # Delete the current pc from the projects_grouped_by_projects_collections object
+            delete projects_grouped_by_projects_collections[pc_id]
 
     return projects_grouped_by_projects_collections
 
