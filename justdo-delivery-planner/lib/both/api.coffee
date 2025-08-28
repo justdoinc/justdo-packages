@@ -1259,7 +1259,10 @@ _.extend JustdoDeliveryPlanner.prototype,
   #       prune_tree: true
   #       projects_filter_active: true
   #     },
-  #     ["ROOT", "DEPT_A", "SUB_A"]  # DEPT_A and SUB_A are included because of the child project; ROOT is included because it is a root department.
+  #     # DEPT_A is included because of the child project; 
+  #     # ROOT is included because it is a root department;
+  #     # SUB_A and SUB_B are included because they are also considered as root departments since TEAM_1 and TEAM_2 are not filter-passing collections
+  #     ["ROOT", "DEPT_A", "SUB_A", "SUB_B"]  
   #   )
     
   #   # J. Output Stability & Edge Cases
