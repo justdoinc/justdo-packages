@@ -106,3 +106,9 @@ _.extend JustdoFilesInterface.prototype,
     fs = @_getFs fs_id
 
     return fs.getFileLink options, cb
+
+  isFileExists: (fs_id, options) ->
+    fs = @_getFs fs_id
+
+    return fs.isFileExists options
+  
