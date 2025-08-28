@@ -18,6 +18,25 @@ _.extend TasksFileManagerPlugin.prototype,
           cb null, link
 
           return
+        isFileExists: (options) ->
+          task_id = options.task_id
+          file_id = options.file_id
+
+          query = 
+            _id: task_id
+            files:
+              $elemMatch:
+                id: file_id
+          query_options = 
+            fields:
+              _id: 1
+
+          collection_name = "TasksAugmentedFields"
+          if Meteor.isServer
+            collection_name = "Tasks"
+
+          return APP.collections[collection_name].findOne(query, query_options)?
+
         instance: self.tasks_file_manager
 
       if self._getEnvSpecificFsOptions?
