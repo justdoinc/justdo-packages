@@ -418,9 +418,8 @@ _.extend JustdoDeliveryPlanner.prototype,
           query = 
             _id:
               $in: pc_parents_without_pcs
-            users: user_id
-          if Meteor.isClient
-            delete query.users
+          if Meteor.isServer
+            query.users = user_id
 
           query_options = 
             fields:
