@@ -26,6 +26,9 @@ _.extend JustdoFiles.prototype,
 
     tasks_files_driver_options = 
       getFileSizeLimit: -> self.options.max_file_size
+      isFileExists: (options) ->
+        file_id = options.file_id
+        return self.isFileExist(file_id)
       instance: self
     
     if @_getEnvSpecificFsOptions?
