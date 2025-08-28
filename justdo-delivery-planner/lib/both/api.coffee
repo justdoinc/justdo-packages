@@ -424,6 +424,7 @@ _.extend JustdoDeliveryPlanner.prototype,
           query_options = 
             fields:
               _id: 1
+            limit: 1
 
           if @tasks_collection.find(query, query_options).count() > 0
             pc.is_root_pc = true
