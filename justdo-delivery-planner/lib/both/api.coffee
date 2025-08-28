@@ -322,9 +322,9 @@ _.extend JustdoDeliveryPlanner.prototype,
     #     of that collection (i.e., the final edge is collection → project).
     #
     #   • Pruning effect under rule (1):
-    #     If a collection (C1) has no qualifying descendant projects, and is under root AND a filter-passing projects collection (C2)
-    #     , C1 is considered as a root project collection and will be included in the result.
-    #     However, it will not be part of the `sub_pcs` of C2.
+    #     A root_pc (C1) that has no qualifying child projects, while being under a filter-passing projects collection (C2), 
+    #     will be pruned from all its parent pcs (i.e. C2's sub_pcs array will not contain C1, C1's parent_pcs array will not contain C2).
+    #     However, C1 will still be included in the result since it's a root project collection.
     #     
     #   • Filters that enumerate specific collections or types:
     #     If projects_collection_options explicitly includes certain collections or
