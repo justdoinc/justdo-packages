@@ -71,4 +71,12 @@ _.extend JustdoFilesInterface.prototype,
 
     return @_getDefaultFsId()
   
+  cloneWithForcedFs: (fs_id) ->
+    # Create a new obj that inherits from the current obj that sets the
+    # _default_filesystem to be the file_system arg provided.
+
+    cloned_obj = Object.create @
+    cloned_obj.setDefaultFsId fs_id
+
+    return cloned_obj
 
