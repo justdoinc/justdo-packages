@@ -303,7 +303,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     #
     #   1) Root project collections
     #      - A root collection is always returned, even if it contains no projects.
-    #      - If a collection has multiple parents and ANY parent is root or non filter-passing collection, treat it as root
+    #      - If a collection has multiple parents and ANY parent is root or any tasks other than filter-passing collections, treat it as root
     #        for this rule (include it even without qualifying projects).
     #
     #   2) Collections with a qualifying descendant project
