@@ -35,6 +35,14 @@ Template.common_chat_message_editor.onCreated ->
     @getInputElement().val(value)
     @getInputElement().trigger("autosize.resize")
     return
+  
+  @getFileInputElement = -> @$(".message-editor-file-input")
+  @getFileInputValue = -> @getFileInputElement().get(0)?.files
+  @setFileInputValue = (value) -> 
+    $files_input = @getFileInputElement()
+    $files_input.val(value)
+    $files_input.trigger("change")
+    return
 
   @sendMessage = (e) ->
     if @isSendingState()
@@ -43,8 +51,9 @@ Template.common_chat_message_editor.onCreated ->
 
     $input = @getInputElement()
     input_val = @getTrimmedInputValue()
+    files = @getFileInputValue()
 
-    if _.isEmpty(input_val)
+    if _.isEmpty(input_val) and _.isEmpty(files)
       return
 
     @clearError()
@@ -78,7 +87,7 @@ Template.common_chat_message_editor.onCreated ->
         return
 
     # File handling
-    if not _.isEmpty(files = $(".message-editor-file-input").get(0)?.files)
+    if not _.isEmpty(files = @getFileInputValue())
       fs_id = APP.justdo_file_interface.getDefaultFsId()
       uploaded_files = []
 
@@ -96,7 +105,7 @@ Template.common_chat_message_editor.onCreated ->
         all_files_uploaded = uploaded_files.length is files.length
         if all_files_uploaded
           # Clear the file input
-          $(".message-editor-file-input").val("").trigger("change")
+          @setFileInputValue("")
           callSendMessageMethod input_val, uploaded_files
         
         return
@@ -116,11 +125,14 @@ Template.common_chat_message_editor.onRendered ->
     channel = @data.getChannelObject()
 
     $message_editor = $(this.firstNode).parent().find(".message-editor")
+
+    @setFileInputValue("")
+
     if _.isEmpty(stored_temp_message = channel.getTempMessage())
       @setInputValue("")
     else
       @setInputValue(stored_temp_message)
-
+    
       Tracker.nonreactive ->
         # We don't want potential reactive resources called by handlers of the keyup to trigger invalidation of
         # this autorun (it actually happened, Daniel C.)
@@ -238,7 +250,7 @@ Template.common_chat_message_editor.events
   
   "click .attach-files": (e, tpl) ->
     e.preventDefault()
-    tpl.$(".message-editor-file-input").click()
+    tpl.getFileInputElement().click()
     return
 
   "change .message-editor-file-input": (e, tpl) ->
