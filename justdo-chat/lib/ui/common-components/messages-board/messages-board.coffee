@@ -159,6 +159,9 @@ Template.common_chat_messages_board_message_card.helpers
     else
       body = @body
 
+    if _.isEmpty(body)
+      return ""
+
     body = linkifyStr(body, {nl2br: true}) # linkify already escapes html entities, so don't worry about xss here.
 
     body = APP.justdo_chat.linkTaskId(body)
