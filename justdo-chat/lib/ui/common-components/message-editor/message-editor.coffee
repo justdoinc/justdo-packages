@@ -23,6 +23,12 @@ Template.common_chat_message_editor.onCreated ->
   @hideSendButton = ->
     @show_send_button_rv.set false
     return
+  @showOrHideSendButtonBasedOnUserInput = ->
+    if @getTrimmedInputValue() or @getFilesCount() > 0
+      @showSendButton()
+    else
+      @hideSendButton()
+    return
   
   @files_count_rv = new ReactiveVar 0
   @setFilesCount = (count) -> @files_count_rv.set count
@@ -218,10 +224,7 @@ Template.common_chat_message_editor.events
   "keyup .message-editor": (e, tpl) ->
     @getChannelObject().saveTempMessage tpl.getInputValue()
 
-    if tpl.getTrimmedInputValue()
-      tpl.showSendButton()
-    else
-      tpl.hideSendButton()
+    tpl.showOrHideSendButtonBasedOnUserInput()
 
     return
 
@@ -256,10 +259,7 @@ Template.common_chat_message_editor.events
   "change .message-editor-file-input": (e, tpl) ->
     files_count = _.size(e.target.files)
     tpl.setFilesCount(files_count)
-    if files_count > 0
-      tpl.showSendButton()
-    else
-      tpl.hideSendButton()
+    tpl.showOrHideSendButtonBasedOnUserInput()
     return
 
 Template.common_chat_message_editor.onRendered ->
