@@ -3,12 +3,19 @@
     <textarea class="message-editor" dir="{{#if isRtl}}rtl{{else}}ltr{{/if}}" disabled="{{#if isSendingState}}disabled{{/if}}" placeholder="{{_ "message_editor_input_placeholder"}}"></textarea>
     {{!-- {{#if isSendingState}}Sending...{{/if}} --}}
 
+    {{#if isFilesEnabled}}
+      <div class="files-wrapper" title="{{getSelectedFileNames}}">
+        <svg class="jd-icon attach-files"><use xlink:href="/layout/icons-feather-sprite.svg#paperclip"/></svg>
+        {{#if filesCount}}
+          <div class="files-count">{{filesCount}}</div>
+        {{/if}}
+        <input type="file" class="message-editor-file-input" multiple/>
+      </div>
+    {{/if}}
+
     <button class="btn p-0 message-editor-send text-primary {{#if showSendButton}}show{{/if}} m{{getRtlAwareDirection "r"}}-3" {{isSendButtonDisabled}}>{{_ "send"}}</button>
 
   </div>
-  {{#if isFilesEnabled}}
-    <input type="file" class="message-editor-file-input" multiple/>
-  {{/if}}
 
   {{#with error}}
     <div class="chat-error text-danger">{{{xssGuard this}}}</div>

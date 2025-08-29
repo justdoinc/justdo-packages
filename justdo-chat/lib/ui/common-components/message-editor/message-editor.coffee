@@ -23,6 +23,10 @@ Template.common_chat_message_editor.onCreated ->
   @hideSendButton = ->
     @show_send_button_rv.set false
     return
+  
+  @files_count_rv = new ReactiveVar 0
+  @setFilesCount = (count) -> @files_count_rv.set count
+  @getFilesCount = -> @files_count_rv.get()
 
   @getInputElement = -> @$("textarea")
   @getInputValue = -> @getInputElement().val()
@@ -92,7 +96,7 @@ Template.common_chat_message_editor.onCreated ->
         all_files_uploaded = uploaded_files.length is files.length
         if all_files_uploaded
           # Clear the file input
-          $(".message-editor-file-input").val("")
+          $(".message-editor-file-input").val("").trigger("change")
           callSendMessageMethod input_val, uploaded_files
         
         return
@@ -184,6 +188,19 @@ Template.common_chat_message_editor.helpers
   isFilesEnabled: ->
     tpl = Template.instance()
     return APP.justdo_chat.isFilesEnabled tpl.data.getChannelObject()?.channel_type
+  
+  filesCount: ->
+    tpl = Template.instance()
+    return tpl.getFilesCount()
+  
+  getSelectedFileNames: ->
+    tpl = Template.instance()
+    if not tpl.getFilesCount() # reactive resource
+      return ""
+
+    files = tpl.getFileInputValue()
+    file_names = _.map files, (file) -> file.name
+    return file_names.join("\n")
 
 Template.common_chat_message_editor.events
   "keyup .message-editor": (e, tpl) ->
@@ -218,7 +235,20 @@ Template.common_chat_message_editor.events
   "click .message-editor-send": (e, tpl) ->
     tpl.sendMessage(e)
     return
+  
+  "click .attach-files": (e, tpl) ->
+    e.preventDefault()
+    tpl.$(".message-editor-file-input").click()
+    return
 
+  "change .message-editor-file-input": (e, tpl) ->
+    files_count = _.size(e.target.files)
+    tpl.setFilesCount(files_count)
+    if files_count > 0
+      tpl.showSendButton()
+    else
+      tpl.hideSendButton()
+    return
 
 Template.common_chat_message_editor.onRendered ->
   $textarea = @getInputElement()
