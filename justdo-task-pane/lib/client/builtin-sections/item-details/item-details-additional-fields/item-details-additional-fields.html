@@ -1,7 +1,18 @@
 <template name="task_pane_item_details_additional_fields">
   {{#with fields}}
     <section class="additional-fields-section">
-      <h2>{{_ "item_details_more_info_label"}}</h2>
+      <div class="section-header">
+        <h2>{{_ "item_details_more_info_label"}}</h2>
+        <div class="dropdown">
+          <div type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"/></svg>
+          </div>
+          <div class="dropdown-menu animate slideIn shadow-lg border-0" aria-labelledby="dropdownMenuButton">
+            <div class="dropdown-item show-all">Show All</div>
+            <div class="dropdown-item hide-all">Hide All</div>
+          </div>
+        </div>
+      </div>
       <div class="additional-field-items-list">
         <table class="table">
           {{#each this}}
