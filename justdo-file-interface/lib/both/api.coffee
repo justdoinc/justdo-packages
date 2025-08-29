@@ -141,3 +141,7 @@ _.extend JustdoFilesInterface.prototype,
 
     return fs.isFileExists options
   
+  isFileTypePreviewable: (fs_id, file_type) ->
+    fs = @_getFs fs_id
+
+    return fs.isFileTypePreviewable file_type
