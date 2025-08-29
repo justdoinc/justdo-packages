@@ -31,7 +31,7 @@ APP.executeAfterAppLibCode ->
     task_pane_section_id: -> project_page_module.getCurrentTaskPaneSectionId()
 
   Template.task_pane.events
-    "click .task-pane-resize-token": (e, tmpl) ->
+    "click .task-pane-resizable": (e, tmpl) ->
       e.preventDefault()
       toolbar_open = APP.modules.project_page.preferences.get()?.toolbar_open
 

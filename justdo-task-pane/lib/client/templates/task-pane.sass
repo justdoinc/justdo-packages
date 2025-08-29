@@ -17,8 +17,32 @@
   width: 100%
   height: 100%
 
+  .task-pane-resize-token
+    display: none
+
   .task-pane-resizable
     position: absolute
+    transition: all 0.32s
+    opacity: 0
+    z-index: 1
+    display: flex
+    justify-content: center
+    &::before
+      content: ""
+      height: 100%
+      width: 3px
+      background-color: #d6e1f3
+      transition: all 0.32s
+    &:hover
+      opacity: 1
+
+  .task-pane-resizable:active
+    &::before
+      content: ""
+      height: 100%
+      width: 4px
+      background-color: #b4c4dd
+
 
   .task-pane-header-container, .task-pane-content-container
     display: table-row
@@ -132,3 +156,16 @@
         font-weight: 500
         margin: 0
         margin-bottom: 4px
+
+.closed-toolbar
+  #task-pane
+    .task-pane-resizable
+      opacity: 1
+      cursor: w-resize
+      &::before
+        content: ""
+        height: 100%
+        width: 4px
+        background-color: #b4c4dd
+      &:hover
+        left: -14px
