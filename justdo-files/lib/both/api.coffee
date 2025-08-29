@@ -32,6 +32,32 @@ _.extend JustdoFiles.prototype,
       getFileLink: (options) ->
         file_id = options.file_id
         return self.getShareableLink(file_id)
+      getFilesByIds: (file_ids) ->
+        query =
+          _id: 
+            $in: file_ids
+        query_options = 
+          fields:
+            _id: 1
+            type: 1
+            name: 1
+            size: 1
+            userId: 1
+            "meta.upload_date": 1
+
+        normalized_files = self.tasks_files.find(query, query_options).map (file) ->
+          ret = 
+            _id: file._id
+            type: file.type
+            name: file.name
+            size: file.size
+            uploaded_by: file.userId
+            uploaded_at: file.meta?.upload_date
+          
+          return ret
+
+        return normalized_files
+
       instance: self
     
     if @_getEnvSpecificFsOptions?
