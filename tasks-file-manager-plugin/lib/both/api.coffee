@@ -13,6 +13,36 @@ _.extend TasksFileManagerPlugin.prototype,
           file_id = options.file_id
 
           return self.tasks_file_manager.getFileDownloadPath task_id, file_id
+        getFilesByIds: (file_ids) ->
+          normalized_files = []
+
+          query = 
+            files:
+              $elemMatch:
+                id: 
+                  $in: file_ids
+          query_options = 
+            fields:
+              "files.id": 1
+              "files.type": 1
+              "files.title": 1
+              "files.size": 1
+              "files.date_uploaded": 1
+              "files.user_uploaded": 1
+          APP.collections[self._getCollectionName()].find(query, query_options).forEach (doc) ->
+            files = _.filter doc.files, (file) -> file.id in file_ids
+            files = _.map files, (file) ->
+              ret = 
+                _id: file.id
+                type: file.type
+                name: file.title
+                size: file.size
+                uploaded_at: file.date_uploaded
+                uploaded_by: file.user_uploaded
+              return ret
+            normalized_files = normalized_files.concat files
+
+          return normalized_files
         isFileExists: (options) ->
           task_id = options.task_id
           file_id = options.file_id
@@ -26,11 +56,7 @@ _.extend TasksFileManagerPlugin.prototype,
             fields:
               _id: 1
 
-          collection_name = "TasksAugmentedFields"
-          if Meteor.isServer
-            collection_name = "Tasks"
-
-          return APP.collections[collection_name].findOne(query, query_options)?
+          return APP.collections[self._getCollectionName()].findOne(query, query_options)?
 
         instance: self.tasks_file_manager
 
@@ -43,3 +69,9 @@ _.extend TasksFileManagerPlugin.prototype,
 
     return
 
+  _getCollectionName: ->
+    if Meteor.isClient
+      return "TasksAugmentedFields"
+
+    if Meteor.isServer
+      return "Tasks"
