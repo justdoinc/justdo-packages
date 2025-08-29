@@ -32,10 +32,7 @@ _.extend TasksFileManagerPlugin.prototype,
     return ret
 
   showPreviewOrStartDownload: (task_id, file) ->
-    conv_matrix = @tasks_file_manager.getConversionMartix()
-    preview_supported_formats = _.union conv_matrix["pdf"], conv_matrix["jpg"]
-
-    if (file.type in preview_supported_formats) or (file.type.indexOf("video/") is 0)
+    if @isFileTypePreviewable file.type
       # Show preview in bootbox
 
       message_template =
