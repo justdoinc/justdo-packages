@@ -106,6 +106,35 @@ _.extend JustdoFilesInterface.prototype,
     fs = @_getFs fs_id
 
     return fs.getFileLink options
+  
+  _ensureFileObjsAreNormalized: (fs_id, files) ->
+    required_properties = ["_id", "type", "name", "size", "uploaded_by", "uploaded_at"]
+    missing_properties = []
+
+    # Ensure that the returned file objects are normalized to the same properties
+    file_with_missing_properties = _.find files, (file) ->
+      missing_properties = _.difference required_properties, _.keys(file)
+      return not _.isEmpty missing_properties
+
+    if file_with_missing_properties?
+      throw @_error "not-supported", "getFilesByIds: When called with fs_id \"#{fs_id}\", the returned file objects are missing the following properties: #{missing_properties.join(", ")}.\nThis would likely cause integration errors with other packages. Please normalize the files objects before returning them."
+    
+    return
+  
+  getFilesByIds: (fs_id, file_ids) ->
+    # Important: This method return file objects with mostly metadata fields. The field names are normalized to be consistent across file systems.
+    # This is meant to facilitate usecases like showing a list of files.
+    # Since the field names are normalized, it is discouraged to use this method in other file system methods (e.g. isFileExists)
+    fs = @_getFs fs_id
+
+    if _.isString(file_ids)
+      file_ids = [file_ids]
+    
+    files = fs.getFilesByIds file_ids
+
+    @_ensureFileObjsAreNormalized fs_id, files
+
+    return files
 
   isFileExists: (fs_id, options) ->
     fs = @_getFs fs_id
