@@ -9,6 +9,7 @@ _.extend JustdoFilesInterface,
     getFilesByIds: Function
     getFileSizeLimit: Function
     isFileExists: Function
+    isFileTypePreviewable: Function
     # Note: Most (if not all) of JustDo plugins are EventEmitter instances, instead of a simple Object.
     instance: EventEmitter
   
