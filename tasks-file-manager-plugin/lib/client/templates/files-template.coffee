@@ -132,6 +132,10 @@ Template.tasks_file_manager_files.helpers
     APP.tasks_file_manager_plugin.tasks_file_manager.getPreviewDownloadLink task.task_id, file.id, 1, {width: 512, cropHeightForNonImgSrc: 256, output: "jpg"}, (err, link) =>
       # Load the image
       load_element = $("<img/>").attr("src", link).on "load", =>
+        # User may navigate away from the tab before the image is loaded
+        if tpl.view.isDestroyed
+          return
+
         # On load, set as the element's background
         tpl.$(".#{placeholder}")
           .css("background-image", "url(#{link})")
