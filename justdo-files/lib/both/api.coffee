@@ -57,6 +57,8 @@ _.extend JustdoFiles.prototype,
           return ret
 
         return normalized_files
+      isFileTypePreviewable: (file_type) ->
+        return self.isFileTypePreviewable file_type
 
       instance: self
     
