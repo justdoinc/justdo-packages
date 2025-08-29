@@ -594,6 +594,7 @@ _.extend ChannelBaseServer.prototype,
       # Note, simple schema takes care of .trim() the value for us
 
       type: String
+      optional: true
 
       min: JustdoChat.schemas.MessagesSchema._schema.body.min
       max: JustdoChat.schemas.MessagesSchema._schema.body.max
@@ -627,7 +628,9 @@ _.extend ChannelBaseServer.prototype,
       )
     options = cleaned_val
 
-    if not _.isEmpty(files = message_obj.files)
+    files = message_obj.files
+    is_files_empty = _.isEmpty files
+    if not is_files_empty
       {cleaned_val} =
         JustdoHelpers.simpleSchemaCleanAndValidate(
           @_sendMessageFilesArraySchema,
@@ -637,8 +640,14 @@ _.extend ChannelBaseServer.prototype,
       {files} = cleaned_val
 
     if message_type == "txt"
+      msg_body = message_obj?.body
+      is_msg_body_empty = _.isEmpty msg_body
+
+      if is_msg_body_empty and is_files_empty
+        throw @_error "invalid-message", "Cannot send message without body and files"
+
       messages_schema = @justdo_chat.getMessagesSchema()
-      if message_obj?.body?.length > (max_task_length = messages_schema.body.max)
+      if msg_body?.trim().length > (max_task_length = messages_schema.body.max)
         # Just to provide a more friendly error message for that case (v.s the one simple schema will throw)
         throw @_error "invalid-message", "Message can't be longer than #{max_task_length} charecters"
 
