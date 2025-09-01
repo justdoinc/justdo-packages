@@ -56,6 +56,33 @@
         display: flex
         flex-direction: column
         align-items: flex-start
+        .file-info
+          display: flex
+          align-items: center
+          gap: 4px
+          .type-logo
+            width: 24px
+            min-width: 24px
+            height: 32px
+            background-image: url(/packages/justdoinc_tasks-file-manager-plugin/media/icons.png)
+            background-position: -58px 0px
+            &.jpeg
+              background-position: -82px 0px
+            &.vnd_ms-excel
+              background-position: -130px 0px
+            &.png
+              background-position: -226px 0px
+            &.pdf
+              background-position: -250px 0px
+            &.javascript
+              background-position: -346px 0px
+            &.html
+              background-position: -370px 0px
+            &.msword
+              background-position: -442px 0px
+            &.mp4, &.mpeg, &.webm, &.quicktime, &.x-msvideo, &.x-ms-wmv
+              background-position: -274px 0px
+
   .message-card + .message-card
     margin-top: 8px
 

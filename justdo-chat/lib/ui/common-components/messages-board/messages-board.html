@@ -54,9 +54,14 @@
           {{#each this}}
             <div class="file-container">
               {{#if isFileExist}}
-                <a href="#" class="download-file text-info">{{name}}</a>
+                <a href="#" class="show-preview-or-start-download text-info" title="{{name}}">
+                  <div class="file-info">
+                    <span class="type-logo {{typeClass}}"></span>
+                    <span class="file-name">{{name}}</span>
+                  </div>
+                </a>
               {{else}}
-                <span class="text-danger">{{name}}</span>
+                <span class="text-danger file-name">{{name}}</span>
               {{/if}}
               <span class="file-size {{#if isFileExist}}text-muted{{else}}text-danger{{/if}}">{{size}}</span>
               {{#if $not isFileExist}}
