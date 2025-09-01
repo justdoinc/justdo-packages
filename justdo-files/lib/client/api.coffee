@@ -57,7 +57,8 @@ _.extend JustdoFiles.prototype,
         return
     return ret
 
-  showPreviewOrStartDownload: (task_id, file) ->
+  showPreviewOrStartDownload: (task_id, file, file_ids_to_show) ->
+    # file_ids_to_show is an optional array of file ids to limit the files shown in the preview dialog
     if _.isString file
       file = @tasks_files.find(file).fetch()[0]
     
@@ -71,7 +72,7 @@ _.extend JustdoFiles.prototype,
       # Show preview in bootbox
 
       message_template =
-        JustdoHelpers.renderTemplateInNewNode(Template.justdo_files_files_preview, {task_id: task_id, file: file})
+        JustdoHelpers.renderTemplateInNewNode(Template.justdo_files_files_preview, {task_id: task_id, file: file, file_ids_to_show: file_ids_to_show})
 
       bootbox.dialog
         title: file.name
