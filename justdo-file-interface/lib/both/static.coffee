@@ -16,5 +16,6 @@ _.extend JustdoFilesInterface,
   client_register_fs_options_required_properties:
     subscribeToFilesCollection: Function
     downloadFile: Function
+    showPreviewOrStartDownload: Function
   
   server_register_fs_options_required_properties: {}
