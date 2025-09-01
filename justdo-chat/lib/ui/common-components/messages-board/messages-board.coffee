@@ -170,7 +170,18 @@ Template.common_chat_messages_board_message_card.helpers
 
   files: ->
     file_ids = _.pluck @files, "_id"
-    return APP.justdo_file_interface.getFilesByIds null, file_ids
+    existing_files = []
+    for file in @files
+      if (found_file = APP.justdo_file_interface.getFilesByIds(file.fs_id, file._id)[0])?
+        found_file.fs_id = file.fs_id
+        existing_files.push found_file
+
+    existing_file_ids = _.pluck(existing_files, "_id")
+
+    missing_files = _.filter @files, (file) -> file._id not in existing_file_ids
+
+    ret = {existing_files, missing_files}
+    return ret
 
   size: ->
     return JustdoHelpers.bytesToHumanReadable @size
