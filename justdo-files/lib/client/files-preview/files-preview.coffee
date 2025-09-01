@@ -6,6 +6,8 @@ Template.justdo_files_files_preview.onCreated ->
 
   @autorun =>
     previewable_files_under_task = APP.justdo_files.getPreviewableFilesUnderTask(@data.task_id)
+    if not _.isEmpty @data.file_ids_to_show
+      previewable_files_under_task = _.filter previewable_files_under_task, (file) => file._id in @data.file_ids_to_show
     @sorted_previewable_files_under_task_rv.set previewable_files_under_task
     return
 

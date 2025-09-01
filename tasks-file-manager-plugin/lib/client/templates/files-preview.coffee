@@ -16,7 +16,12 @@ Template.tasks_file_manager_files_preview.onCreated ->
   @autorun =>
     files = APP.collections.TasksAugmentedFields.findOne(@data.task_id, {fields: {files: 1}})?.files
     previewable_files_under_task = _.chain files
-      .filter (file) -> APP.tasks_file_manager_plugin.tasks_file_manager.isConversionSupported(file.type, "jpg") or APP.tasks_file_manager_plugin.tasks_file_manager.isConversionSupported(file.type, "pdf") or (file.type.indexOf("video/") is 0)
+      .filter (file) => 
+        is_file_previewable = APP.tasks_file_manager_plugin.tasks_file_manager.isConversionSupported(file.type, "jpg") or APP.tasks_file_manager_plugin.tasks_file_manager.isConversionSupported(file.type, "pdf") or (file.type.indexOf("video/") is 0)
+        is_file_in_file_ids_to_show = true
+        if not _.isEmpty @data.file_ids_to_show
+          is_file_in_file_ids_to_show = file.id in @data.file_ids_to_show
+        return is_file_previewable and is_file_in_file_ids_to_show
       .sortBy "date_uploaded"
       .value()
       .reverse()

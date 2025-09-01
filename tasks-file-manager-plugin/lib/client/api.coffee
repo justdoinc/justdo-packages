@@ -31,7 +31,8 @@ _.extend TasksFileManagerPlugin.prototype,
         return
     return ret
 
-  showPreviewOrStartDownload: (task_id, file) ->
+  showPreviewOrStartDownload: (task_id, file, file_ids_to_show) ->
+    # file_ids_to_show is an optional array of file ids to limit the files shown in the preview dialog
     if _.isString file
       task = APP.collections.TasksAugmentedFields.findOne(task_id, {fields: {files: 1}})
       file = _.find task.files, (task_file) -> task_file.id is file
@@ -46,7 +47,7 @@ _.extend TasksFileManagerPlugin.prototype,
       # Show preview in bootbox
 
       message_template =
-        JustdoHelpers.renderTemplateInNewNode(Template.tasks_file_manager_files_preview, {task_id: task_id, file: file})
+        JustdoHelpers.renderTemplateInNewNode(Template.tasks_file_manager_files_preview, {task_id: task_id, file: file, file_ids_to_show: file_ids_to_show})
 
       bootbox.dialog
         title: file.title
