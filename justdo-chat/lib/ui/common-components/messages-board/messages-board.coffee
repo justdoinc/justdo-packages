@@ -292,9 +292,13 @@ Template.common_chat_messages_board_message_card.events
     e.preventDefault()
 
     file = @
+    # This handler assumes all the files in the same message have the same fs_id
+    # If such behaviour is not guaranteed, we need to change this handler to iterate over the files and get the fs_id for each file.
+    file_fs_id = file.fs_id
     channel_obj = tmpl.getChannelObject()
     task_id = channel_obj.getChannelIdentifier().task_id
+    message_file_ids = _.pluck tmpl.data.files, "_id"
 
-    APP.justdo_file_interface.downloadFile null, {file_id: file._id, task_id: task_id}
+    APP.justdo_file_interface.showTaskFilePreviewOrStartDownload file_fs_id, task_id, file._id, message_file_ids
 
     return
