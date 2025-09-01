@@ -29,6 +29,8 @@ _.extend TasksFileManagerPlugin.prototype,
           return
         
         return
+      showPreviewOrStartDownload: (task_id, file, file_ids_to_show) ->
+        self.showPreviewOrStartDownload task_id, file, file_ids_to_show
     return ret
 
   showPreviewOrStartDownload: (task_id, file, file_ids_to_show) ->
