@@ -48,27 +48,34 @@
       </div>
       {{#with files}}
         <div class="files-container small">
-          <div class="files-header text-muted">
-            <div>{{_ "inbound_emails_files_saved_to_files_tab"}}</div>
-          </div>
-          {{#each this}}
+          {{#if existing_files}}
+            <div class="files-header text-muted">
+              <div>{{_ "inbound_emails_files_saved_to_files_tab"}}</div>
+            </div>
+          {{/if}}
+
+          {{#each existing_files}}
             <div class="file-container">
-              {{#if isFileExist}}
-                <a href="#" class="show-preview-or-start-download text-info" title="{{name}}">
-                  <div class="file-info">
-                    <span class="type-logo {{typeClass}}"></span>
-                    <span class="file-name">{{name}}</span>
-                  </div>
-                </a>
-              {{else}}
-                <span class="text-danger file-name">{{name}}</span>
-              {{/if}}
-              <span class="file-size {{#if isFileExist}}text-muted{{else}}text-danger{{/if}}">{{size}}</span>
-              {{#if $not isFileExist}}
-                <div class="file-not-found text-danger">{{_ "inbound_emails_file_removed"}}</div>
-              {{/if}}
+              <a href="#" class="show-preview-or-start-download text-info" title="{{name}}">
+                <div class="file-info">
+                  <span class="type-logo {{typeClass}}"></span>
+                  <span class="file-name">{{name}}</span>
+                </div>
+              </a>
+              <span class="file-size text-muted">{{size}}</span>
             </div>
           {{/each}}
+          
+          {{#each missing_files}}
+            <div class="file-container">
+              <div class="file-info">
+                <span class="type-logo {{typeClass}}"></span>
+                <span class="file-name">{{name}}</span>
+              </div>
+              <span class="file-size text-muted">{{size}}({{_ "inbound_emails_file_removed"}})</span>
+            </div>
+          {{/each}}
+
         </div>
       {{/with}}
       <div dir="auto" class="message-body mt-2">
