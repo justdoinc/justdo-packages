@@ -32,6 +32,16 @@ _.extend TasksFileManagerPlugin.prototype,
     return ret
 
   showPreviewOrStartDownload: (task_id, file) ->
+    if _.isString file
+      task = APP.collections.TasksAugmentedFields.findOne(task_id, {fields: {files: 1}})
+      file = _.find task.files, (task_file) -> task_file.id is file
+    
+    if not _.isEmpty(file_ids_to_show) and (not _.find file_ids_to_show, (file_id) -> file_id is file.id)
+      # Ensure the file to preview is in the file_ids_to_show
+      # A deep copy is needed to avoid modifying the original array
+      file_ids_to_show = Array.from file_ids_to_show
+      file_ids_to_show.push file.id
+
     if @isFileTypePreviewable file.type
       # Show preview in bootbox
 
