@@ -145,3 +145,20 @@ _.extend JustdoFilesInterface.prototype,
     fs = @_getFs fs_id
 
     return fs.isFileTypePreviewable file_type
+  
+  getFileCategory: (file_type) ->
+    if not _.isString(file_type)
+      throw @_error "invalid-argument", "File type must be a string"
+    
+    file_type = file_type.toLowerCase()
+
+    if file_type.indexOf "image/" is 0
+      return "image"
+
+    if file_type.indexOf "video/" is 0
+      return "video"
+      
+    if file_type.indexOf "application/pdf" is 0
+      return "pdf"
+
+    return "other"
