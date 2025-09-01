@@ -46,11 +46,8 @@
         {{/if}}
         <span class="date" title="{{userDateFormat createdAt}}">{{friendlyTimeFormat createdAt false}}</span>
       </div>
-      <div dir="auto" class="message-body">
-        {{{body}}}
-      </div>
       {{#with files}}
-        <div class="files-container">
+        <div class="files-container small">
           <div class="files-header text-muted">
             <div>{{_ "inbound_emails_files_saved_to_files_tab"}}</div>
           </div>
@@ -69,6 +66,9 @@
           {{/each}}
         </div>
       {{/with}}
+      <div dir="auto" class="message-body mt-2">
+        {{{body}}}
+      </div>
     </div>
   </div>
 </template>
