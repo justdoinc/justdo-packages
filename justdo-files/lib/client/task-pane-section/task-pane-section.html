@@ -80,8 +80,8 @@
             </div>
             {{#if isPreviewable}}
               {{#if isVideo}}
-                <video class="video-preview w-100" alt="{{name}}" type="{{type}}" muted="true" controls>
-                  <source src="{{previewLink}}" type="{{type}}">
+                <video class="video-preview w-100" alt="{{name}}" muted="true" controls>
+                  <source src="{{previewLink}}">
                 </video>
               {{else if isImage}}
                 <div class="image-preview w-100 bg-light mt-2 file-download-link d-flex justify-content-center align-items-center loading {{tempPlaceHolder}}">
