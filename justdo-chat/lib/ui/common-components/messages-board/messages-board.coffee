@@ -193,9 +193,20 @@ Template.common_chat_messages_board_message_card.helpers
     is_msg_from_performing_user = @author is Meteor.userId()
     is_msg_from_dm_channel = channel_obj?.channel_type is "user"
     return (not is_msg_from_performing_user) and (not is_msg_from_dm_channel)
+    
+  typeClass: -> Template.instance().getTypeCssClass(@type)
 
 Template.common_chat_messages_board_message_card.onCreated ->
   @getChannelObject = @closestInstance("common_chat_messages_board")?.data?.getChannelObject
+
+  @getTypeCssClass = (file_type) ->
+    [p1, p2] = file_type.split('/')
+    if not p2?
+      return p1
+    else
+      return p2.replace(/\./, "_")
+
+    return
 
   return
 
@@ -266,7 +277,7 @@ Template.common_chat_messages_board_message_card.events
 
     return
 
-  "click .download-file": (e, tmpl) ->
+  "click .show-preview-or-start-download": (e, tmpl) ->
     e.preventDefault()
 
     file = @
