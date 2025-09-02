@@ -73,6 +73,7 @@ Package.onUse(function (api) {
   api.use("tracker", both);
 
   api.use('justdoinc:justdo-emails@1.0.0', both); // client is needed for media files
+  api.use("justdoinc:justdo-file-interface@1.0.0", both);
 
   //
   // JustDo Chat Bottom windows

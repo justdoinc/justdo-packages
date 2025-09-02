@@ -168,6 +168,13 @@ Template.common_chat_messages_board_message_card.helpers
 
     return JustdoHelpers.xssGuard body, {allow_html_parsing: true, enclosing_char: ""}
 
+  isFilesEnabled: ->
+    tpl = Template.instance()
+    if not (channel_obj = tpl.getChannelObject?())?
+      return false
+    channel_type = channel_obj.channel_type
+    return channel_obj.justdo_chat.isFilesEnabled(channel_type)
+
   files: ->
     file_ids = _.pluck @files, "_id"
     existing_files = []
