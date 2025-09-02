@@ -80,8 +80,12 @@ _.extend JustdoFiles.prototype,
 
     if _.isEmpty(user_id) or _.isEmpty(task_id)
       return false
+    
+    collection_name = "Tasks"
+    if Meteor.isClient
+      collection_name = "TasksAugmentedFields"
 
-    if not @tasks_collection.findOne({_id: task_id, users: user_id})?
+    if not APP.collections[collection_name].findOne({_id: task_id, users: user_id})?
       return false
 
     return true
