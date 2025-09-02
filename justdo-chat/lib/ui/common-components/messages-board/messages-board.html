@@ -46,7 +46,7 @@
         {{/if}}
         <span class="date" title="{{userDateFormat createdAt}}">{{friendlyTimeFormat createdAt false}}</span>
       </div>
-      {{#if isFilesEnabled}}
+      {{#if $and isFilesEnabled fileExists}}
         {{#with files}}
           <div class="files-container small">
             {{#if existing_files}}
@@ -80,7 +80,7 @@
           </div>
         {{/with}}
       {{/if}}
-      <div dir="auto" class="message-body mt-2">
+      <div dir="auto" class="message-body {{#if $and isFilesEnabled fileExists}}mt-2{{/if}}">
         {{{body}}}
       </div>
     </div>
