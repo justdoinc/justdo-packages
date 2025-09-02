@@ -7,6 +7,8 @@ _.extend JustdoFilesInterface.prototype,
 
     @_registered_fs = {}
     @_default_fs_id = null
+    if Meteor.isClient
+      @_default_fs_id_dep = new Tracker.Dependency()
 
     @setupRouter()
 
@@ -54,14 +56,18 @@ _.extend JustdoFilesInterface.prototype,
       throw @_error "not-supported",  "File system '#{fs_id}' not found. Please register it first."
 
     @_default_fs_id = fs_id
+
+    if Meteor.isClient
+      @_default_fs_id_dep.changed()
+
     return
   
   _getDefaultFsId: ->
     return @_default_fs_id
   
   getDefaultFsId: ->
-    if not @_getDefaultFsId()?
-      throw @_error "not-supported", "No default file system has been set. Please set one first."
+    if Meteor.isClient
+      @_default_fs_id_dep.depend()
 
     return @_getDefaultFsId()
   
