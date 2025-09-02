@@ -141,17 +141,6 @@ _.extend TasksFileManagerPlugin.prototype,
     # Add here code that should run, in the Server and Client, during the JS
     # tick in which we create the object instance.
 
-    return
-
-  _bothDeferredInit: ->
-    # @_bothDeferredInit runs before the specific env's @_deferredInit()
-
-    # Add here code that should run, in the Server and Client, after the JS
-    # tick in which we created the object instance.
-
-    # We init on @_bothDeferredInit and not in @_bothImmediateInit
-    # since APP.collections.Tasks is assigned after the load of this file.
-
     options =
       tasks_collection: APP.collections.Tasks
 
@@ -179,5 +168,13 @@ _.extend TasksFileManagerPlugin.prototype,
           @filestackReadyDfd.resolve()
     
     @_registerFilesDriver()
+
+    return
+
+  _bothDeferredInit: ->
+    # @_bothDeferredInit runs before the specific env's @_deferredInit()
+
+    # Add here code that should run, in the Server and Client, after the JS
+    # tick in which we created the object instance.
 
     return
