@@ -59,7 +59,8 @@ _.extend JustdoFiles.prototype,
         return normalized_files
       isFileTypePreviewable: (file_type) ->
         return self.isFileTypePreviewable file_type
-
+      isUserAllowedToUploadTaskFile: (task_id, user_id) ->
+        return self.isUserAllowedToAccessTasksFiles(task_id, user_id)
       instance: self
     
     if @_getEnvSpecificFsOptions?
