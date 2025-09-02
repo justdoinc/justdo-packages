@@ -205,8 +205,17 @@ Template.common_chat_message_editor.helpers
   
   isFilesEnabled: ->
     tpl = Template.instance()
-    return APP.justdo_chat.isFilesEnabled tpl.data.getChannelObject()?.channel_type
-  
+    if not (channel_obj = tpl.data.getChannelObject())?
+      return false
+
+    is_files_enabled = APP.justdo_chat.isFilesEnabled channel_obj.channel_type
+    if not is_files_enabled
+      return false
+    
+    is_user_allowed_to_upload = APP.justdo_file_interface.isUserAllowedToUploadTaskFile null, channel_obj.getChannelIdentifier().task_id, Meteor.userId()
+
+    return is_files_enabled and is_user_allowed_to_upload
+    
   filesCount: ->
     tpl = Template.instance()
     return tpl.getFilesCount()
