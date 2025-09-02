@@ -59,6 +59,12 @@ _.extend TasksFileManagerPlugin.prototype,
           return APP.collections[self._getCollectionName()].findOne(query, query_options)?
         isFileTypePreviewable: (file_type) ->
           return self.isFileTypePreviewable file_type
+        isUserAllowedToUploadTaskFile: (task_id, user_id) ->
+          permissions = [
+            "task-field-edit.#{TasksFileManager.files_count_field_id}",
+            "task-field-edit.files"
+          ]
+          return APP.justdo_permissions.checkTaskPermissions permissions, task_id, user_id
 
         instance: self.tasks_file_manager
 

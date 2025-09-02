@@ -162,3 +162,8 @@ _.extend JustdoFilesInterface.prototype,
       return "pdf"
 
     return "other"
+  
+  isUserAllowedToUploadTaskFile: (fs_id, task_id, user_id) ->
+    fs = @_getFs fs_id
+
+    return fs.isUserAllowedToUploadTaskFile task_id, user_id
