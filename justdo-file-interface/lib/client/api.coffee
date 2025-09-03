@@ -20,10 +20,10 @@ _.extend JustdoFileInterface.prototype,
 
     return fs.subscribeToTaskFilesCollection options, cb
   
-  downloadFile: (fs_id, options) ->
+  downloadTaskFile: (fs_id, options) ->
     fs = @_getFs fs_id
 
-    return fs.downloadFile options
+    return fs.downloadTaskFile options
 
   showPreviewOrStartDownload: (fs_id, task_id, file, file_ids_to_show) ->
     fs = @_getFs fs_id
