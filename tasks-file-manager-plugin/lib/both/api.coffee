@@ -9,7 +9,7 @@ _.extend TasksFileManagerPlugin.prototype,
           _env = process.env
 
         return _env.FILESTACK_MAX_FILE_SIZE_BYTES
-      getFileLink: (options, cb) ->
+      getTaskFileLink: (options) ->
         task_id = options.task_id
         file_id = options.file_id
 

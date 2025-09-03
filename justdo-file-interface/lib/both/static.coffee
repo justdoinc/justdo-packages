@@ -5,7 +5,7 @@ _.extend JustdoFileInterface,
 
   both_register_fs_options_required_properties:
     uploadFile: Function
-    getFileLink: Function
+    getTaskFileLink: Function
     getFilesByIds: Function
     getFileSizeLimit: Function
     isFileExists: Function

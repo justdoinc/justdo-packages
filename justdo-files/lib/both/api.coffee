@@ -29,7 +29,7 @@ _.extend JustdoFiles.prototype,
       isFileExists: (options) ->
         file_id = options.file_id
         return self.isFileExist(file_id)
-      getFileLink: (options) ->
+      getTaskFileLink: (options) ->
         file_id = options.file_id
         return self.getShareableLink(file_id)
       getFilesByIds: (file_ids) ->

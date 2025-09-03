@@ -102,10 +102,10 @@ _.extend JustdoFileInterface.prototype,
 
     return fs.getFileSizeLimit()
 
-  getFileLink: (fs_id, options) ->
+  getTaskFileLink: (fs_id, options) ->
     fs = @_getFs fs_id
 
-    return fs.getFileLink options
+    return fs.getTaskFileLink options
   
   _ensureFileObjsAreNormalized: (fs_id, files) ->
     required_properties = ["_id", "type", "name", "size", "uploaded_by", "uploaded_at"]
