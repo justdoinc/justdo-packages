@@ -13,7 +13,7 @@
 
 # **Method A:** If you aren't depending on any env variable just comment the following
 
-# APP.justdo_file_interface = new JustdoFilesInterface()
+# APP.justdo_file_interface = new JustdoFileInterface()
 
 # **Method B:** If you are depending on env variables to decide whether or not to load
 # this package, or even if you use them inside the constructor, you need to wait for
@@ -27,6 +27,6 @@ APP.getEnv (env) ->
     projects_collection: APP.collections.Projects
     tasks_collection: APP.collections.Tasks
 
-  APP.justdo_file_interface = new JustdoFilesInterface(options)
+  APP.justdo_file_interface = new JustdoFileInterface(options)
 
   return

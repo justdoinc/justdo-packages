@@ -1,2 +1,2 @@
-_.extend JustdoFilesInterface.prototype,
+_.extend JustdoFileInterface.prototype,
   _setupPublications: -> return

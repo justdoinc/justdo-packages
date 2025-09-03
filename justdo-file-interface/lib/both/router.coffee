@@ -1,3 +1,3 @@
-_.extend JustdoFilesInterface.prototype,
+_.extend JustdoFileInterface.prototype,
   setupRouter: ->
     return

@@ -1,4 +1,4 @@
-_.extend JustdoFilesInterface.prototype,
+_.extend JustdoFileInterface.prototype,
   _immediateInit: ->
     return
 
