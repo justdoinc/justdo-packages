@@ -3,21 +3,5 @@ _.extend JustdoFileInterface,
 
   plugin_human_readable_name: "justdo-file-interface"
 
-  both_register_fs_options_required_properties:
-    getTaskFileLink: Function
-    getFilesByIds: Function
-    getFileSizeLimit: Function
-    isTaskFileExists: Function
-    isFileTypePreviewable: Function
-    isUserAllowedToUploadTaskFile: Function
-    # Note: Most (if not all) of JustDo plugins are EventEmitter instances, instead of a simple Object.
-    instance: EventEmitter
-  
-  client_register_fs_options_required_properties:
-    subscribeToTaskFilesCollection: Function
-    downloadTaskFile: Function
-    showTaskFilePreviewOrStartDownload: Function
-    uploadTaskFile: Function
-  
-  server_register_fs_options_required_properties: 
-    uploadTaskFileAsync: Function
+  # Defined in file-system-prototype.coffee under /both, /client and /server
+  FileSystemPrototype: {}

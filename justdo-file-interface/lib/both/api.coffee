@@ -24,25 +24,14 @@ _.extend JustdoFileInterface.prototype,
       return
 
     return
-  
-  _validateOptionsWithRequiredProperties: (fs_id, fs_obj, required_properties) ->
-    for key, type of required_properties
-      if not (value = fs_obj[key])?
-        throw @_error "missing-argument", "File system '#{fs_id}' is missing required property '#{key}'"
-
-      if not value instanceof type
-        throw @_error "invalid-argument", "File system '#{fs_id}' property '#{key}' must be a #{type.name}  instance"
 
   # Register a file system
-  registerFs: (fs_id, fs_obj) ->
+  registerFs: (fs_id, options) ->
     if not fs_id?
       throw @_error "missing-argument", "File system ID is required"
-
-    @_validateOptionsWithRequiredProperties fs_id, fs_obj, JustdoFileInterface.both_register_fs_options_required_properties
-    if Meteor.isClient
-      @_validateOptionsWithRequiredProperties fs_id, fs_obj, JustdoFileInterface.client_register_fs_options_required_properties
-    if Meteor.isServer
-      @_validateOptionsWithRequiredProperties fs_id, fs_obj, JustdoFileInterface.server_register_fs_options_required_properties
+    
+    fs_obj = Object.create(JustdoFileInterface.FileSystemPrototype)
+    _.extend fs_obj, options
 
     @_registered_fs[fs_id] = fs_obj
     @_setDefaultFsIdIfEmpty fs_id
