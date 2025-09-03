@@ -39,8 +39,10 @@ _.extend JustdoFiles.prototype,
     self = @
     
     ret = 
-      uploadTaskFileAsync: (task_id, file_blob, filename, mimetype, metadata, user_id) ->
-        return await self.uploadAndRegisterFile task_id, file_blob, filename, mimetype, metadata, user_id
+      uploadTaskFile: (task_id, file_blob, filename, mimetype, metadata, user_id) ->
+        ret = self.uploadAndRegisterFile task_id, file_blob, filename, mimetype, metadata, user_id
+        ret.name = ret.title
+        return ret
     return ret
 
   tasksFilesPublicationHandler: (publish_this, task_id, user_id) ->
