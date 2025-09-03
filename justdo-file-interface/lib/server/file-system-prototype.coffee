@@ -2,7 +2,7 @@ _.extend JustdoFileInterface.FileSystemPrototype,
   # 
   # Server-only methods required to register a file system
   # 
-  uploadTaskFileAsync: (task_id, file_blob, filename, mimetype, metadata, user_id) ->
+  uploadTaskFile: (task_id, file_blob, filename, mimetype, metadata, user_id) ->
     # Uploads a file to a task
     # 
     # Params:
@@ -13,10 +13,14 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     #   metadata: Object, optional
     #   user_id: String, required
     # 
-    # Returns: File metadata object, guarenteed to have the following properties:
+    # Returns: Object, metadata of uploaded file
     #   - _id: String
     #   - name: String
     #   - type: String
     #   - size: Number
+    #   - metadata: Object
+    #   - user_uploaded: String
+    #   - date_uploaded: Date
+    #   - storage_type: String
     #   - (extra properties returned by the file system)
     throw @_error "not-implemented"

@@ -15,6 +15,9 @@ _.extend TasksFileManagerPlugin.prototype,
     self = @
     
     ret = 
-      uploadTaskFileAsync: (task_id, file_blob, filename, mimetype, metadata, user_id) ->
-        return await self.tasks_file_manager.uploadAndRegisterFile task_id, file_blob, filename, mimetype, metadata, user_id
+      uploadTaskFile: (task_id, file_blob, filename, mimetype, metadata, user_id) ->
+        ret = self.tasks_file_manager.uploadAndRegisterFile task_id, file_blob, filename, mimetype, metadata, user_id
+        ret.name = ret.title
+        ret._id = ret.id
+        return ret
     return ret
