@@ -72,7 +72,7 @@ options_schema =
 #         optional: true
 #         defaultValue: 30
 
-JustdoFilesInterface = (options) ->
+JustdoFileInterface = (options) ->
   # skeleton-version: v3.0.1
 
   # Developer, avoid changing this constuctor, to do stuff on init
@@ -151,9 +151,9 @@ JustdoFilesInterface = (options) ->
 
   return @
 
-Util.inherits JustdoFilesInterface, EventEmitter
+Util.inherits JustdoFileInterface, EventEmitter
 
-_.extend JustdoFilesInterface.prototype,
+_.extend JustdoFileInterface.prototype,
   _error: JustdoHelpers.constructor_error
 
   onDestroy: (proc) ->

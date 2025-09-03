@@ -1,4 +1,4 @@
-_.extend JustdoFilesInterface.prototype,
+_.extend JustdoFileInterface.prototype,
   _bothImmediateInit: ->
     # @_bothImmediateInit runs before the specific env's @_immediateInit()
 
@@ -38,11 +38,11 @@ _.extend JustdoFilesInterface.prototype,
     if not fs_id?
       throw @_error "missing-argument", "File system ID is required"
 
-    @_validateOptionsWithRequiredProperties fs_id, fs_obj, JustdoFilesInterface.both_register_fs_options_required_properties
+    @_validateOptionsWithRequiredProperties fs_id, fs_obj, JustdoFileInterface.both_register_fs_options_required_properties
     if Meteor.isClient
-      @_validateOptionsWithRequiredProperties fs_id, fs_obj, JustdoFilesInterface.client_register_fs_options_required_properties
+      @_validateOptionsWithRequiredProperties fs_id, fs_obj, JustdoFileInterface.client_register_fs_options_required_properties
     if Meteor.isServer
-      @_validateOptionsWithRequiredProperties fs_id, fs_obj, JustdoFilesInterface.server_register_fs_options_required_properties
+      @_validateOptionsWithRequiredProperties fs_id, fs_obj, JustdoFileInterface.server_register_fs_options_required_properties
 
     @_registered_fs[fs_id] = fs_obj
     @_setDefaultFsIdIfEmpty fs_id
