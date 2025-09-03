@@ -8,7 +8,7 @@ _.extend JustdoFileInterface,
     getTaskFileLink: Function
     getFilesByIds: Function
     getFileSizeLimit: Function
-    isFileExists: Function
+    isTaskFileExists: Function
     isFileTypePreviewable: Function
     isUserAllowedToUploadTaskFile: Function
     # Note: Most (if not all) of JustDo plugins are EventEmitter instances, instead of a simple Object.
