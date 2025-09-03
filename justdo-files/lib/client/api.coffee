@@ -32,10 +32,10 @@ _.extend JustdoFiles.prototype,
         upload.start()
 
         return
-      subscribeToFilesCollection: (options, cb) ->
+      subscribeToTaskFilesCollection: (options, cb) ->
         task_id = options.task_id
 
-        # Note: If cb is passed directly to the subscribeToFilesCollection directly,
+        # Note: If cb is passed directly to the subscribeToTaskFilesCollection directly,
         # it's treated as the onReady callback, and the onStop callback is ignored.
         # As such, the cb will not be called with the error if the subscription fails.
         # So we need to use a sub_options object instead.
