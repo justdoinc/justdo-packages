@@ -1,6 +1,8 @@
 _.extend JustdoFileInterface.FileSystemPrototype,
   # 
-  # Methods required to register a file system
+  # The following methods are required to register a file system:
+  #
+  # IMPORTANT THERE ARE MORE REQUIRED METHODS TO BE IMPLEMENTED IN the /client/ /server/ folders.
   # 
   getFileSizeLimit: ->
     # Returns the single file size limit of a file system
@@ -19,16 +21,27 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # 
     # Returns: String, url to download file. 
     throw @_error "not-implemented"
-  
+
   getFilesByIds: (file_ids) ->
-    # Given a single or a list of file_ids, returns an array of normalized file metadata objects 
-    # to facilitate usecases like showing a list of files.
-    # Note: The returned array will pass through `_ensureFileObjsAreNormalized` to ensure the file metadata objects are normalized
-    # 
-    # Params:
-    #   file_ids: A single file id as string or an array of strings
-    # 
-    # Returns: Array of Objects with the properties as specified in `_ensureFileObjsAreNormalized`
+    # Gets an array of file_ids, returns an array of the corresponding file metadata objects.
+    #
+    # The returned array order won't necessarily be the same as the order of the file_ids.
+    # Further, if some of the file_ids don't exist, or permission are denied, the returned array
+    # won't contain the corresponding file metadata objects.
+    #
+    # E.g if file_ids is [file_id_1, file_id_2, file_id_3], and non of them exist, the returned
+    # array will be empty.
+    #
+    # Expexted file metadata object structure - it is up to the developer to strictly follow this structure.
+    # IMPORTANT: There should be no extra fields in the file metadata object.
+    # {
+    #   "_id" # file id
+    #   "type" # mime type
+    #   "name" # filename
+    #   "size" # file size in bytes
+    #   "uploaded_by" # user id if undefined assume system generated (must be set even if undefined)
+    #   "uploaded_at" # js Date object
+    # }
     throw @_error "not-implemented"
   
   isTaskFileExists: (options) ->
