@@ -4,7 +4,7 @@ _.extend JustdoFileInterface,
   plugin_human_readable_name: "justdo-file-interface"
 
   both_register_fs_options_required_properties:
-    uploadFile: Function
+    uploadTaskFile: Function
     getTaskFileLink: Function
     getFilesByIds: Function
     getFileSizeLimit: Function
