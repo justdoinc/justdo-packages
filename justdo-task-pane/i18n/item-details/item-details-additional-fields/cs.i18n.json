@@ -1,4 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "Najít v tabulce",
-  "item_details_additional_fields_add_to_grid": "Přidat do tabulky"
+  "item_details_additional_fields_add_to_grid": "Přidat do tabulky",
+  "item_details_additional_fields_show_all": "Zobrazit vše",
+  "item_details_additional_fields_hide_all": "Skrýt vše"
 }

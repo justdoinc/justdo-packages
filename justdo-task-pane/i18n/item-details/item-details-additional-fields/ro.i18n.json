@@ -1,4 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "Localizează în Tabel",
-  "item_details_additional_fields_add_to_grid": "Adaugă în Tabel"
+  "item_details_additional_fields_add_to_grid": "Adaugă în Tabel",
+  "item_details_additional_fields_show_all": "Afișează Toate",
+  "item_details_additional_fields_hide_all": "Ascunde Toate"
 }

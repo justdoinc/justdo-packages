@@ -1,4 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "Намери в таблицата",
-  "item_details_additional_fields_add_to_grid": "Добави в таблицата"
+  "item_details_additional_fields_add_to_grid": "Добави в таблицата",
+  "item_details_additional_fields_show_all": "Покажи всички",
+  "item_details_additional_fields_hide_all": "Скрий всички"
 }

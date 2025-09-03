@@ -1,4 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "Taulan kokatu",
-  "item_details_additional_fields_add_to_grid": "Taulara gehitu"
+  "item_details_additional_fields_add_to_grid": "Taulara gehitu",
+  "item_details_additional_fields_show_all": "Dena erakutsi",
+  "item_details_additional_fields_hide_all": "Dena ezkutatu"
 }

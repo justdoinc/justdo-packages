@@ -1,4 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "Дар ҷадвал ҷойгир кардан",
-  "item_details_additional_fields_add_to_grid": "Ба ҷадвал илова кардан"
+  "item_details_additional_fields_add_to_grid": "Ба ҷадвал илова кардан",
+  "item_details_additional_fields_show_all": "Ҳамаро нишон додан",
+  "item_details_additional_fields_hide_all": "Ҳамаро пинҳон кардан"
 }

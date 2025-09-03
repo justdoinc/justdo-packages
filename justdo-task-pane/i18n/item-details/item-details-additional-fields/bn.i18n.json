@@ -1,4 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "টেবিলে খুঁজুন",
-  "item_details_additional_fields_add_to_grid": "টেবিলে যোগ করুন"
+  "item_details_additional_fields_add_to_grid": "টেবিলে যোগ করুন",
+  "item_details_additional_fields_show_all": "সব দেখান",
+  "item_details_additional_fields_hide_all": "সব লুকান"
 }

@@ -1,4 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "Εντοπισμός στον Πίνακα",
-  "item_details_additional_fields_add_to_grid": "Προσθήκη στον Πίνακα"
+  "item_details_additional_fields_add_to_grid": "Προσθήκη στον Πίνακα",
+  "item_details_additional_fields_show_all": "Εμφάνιση Όλων",
+  "item_details_additional_fields_hide_all": "Απόκρυψη Όλων"
 }

@@ -1,4 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "Find i tabel",
-  "item_details_additional_fields_add_to_grid": "Tilføj til tabel"
+  "item_details_additional_fields_add_to_grid": "Tilføj til tabel",
+  "item_details_additional_fields_show_all": "Vis alle",
+  "item_details_additional_fields_hide_all": "Skjul alle"
 }

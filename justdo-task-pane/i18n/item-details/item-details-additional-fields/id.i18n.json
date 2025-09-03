@@ -1,4 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "Temukan di Tabel",
-  "item_details_additional_fields_add_to_grid": "Tambahkan ke Tabel"
+  "item_details_additional_fields_add_to_grid": "Tambahkan ke Tabel",
+  "item_details_additional_fields_show_all": "Tampilkan Semua",
+  "item_details_additional_fields_hide_all": "Sembunyikan Semua"
 }

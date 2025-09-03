@@ -1,4 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "तालिकामा पत्ता लगाउनुहोस्",
-  "item_details_additional_fields_add_to_grid": "तालिकामा थप्नुहोस्"
+  "item_details_additional_fields_add_to_grid": "तालिकामा थप्नुहोस्",
+  "item_details_additional_fields_show_all": "सबै देखाउनुहोस्",
+  "item_details_additional_fields_hide_all": "सबै लुकाउनुहोस्"
 }

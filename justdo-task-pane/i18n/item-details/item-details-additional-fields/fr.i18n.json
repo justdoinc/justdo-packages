@@ -1,4 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "Localiser dans le tableau",
-  "item_details_additional_fields_add_to_grid": "Ajouter au tableau"
+  "item_details_additional_fields_add_to_grid": "Ajouter au tableau",
+  "item_details_additional_fields_show_all": "Tout Afficher",
+  "item_details_additional_fields_hide_all": "Tout Masquer"
 }

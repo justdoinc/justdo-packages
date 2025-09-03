@@ -1,4 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "Leia tabelist",
-  "item_details_additional_fields_add_to_grid": "Lisa tabelisse"
+  "item_details_additional_fields_add_to_grid": "Lisa tabelisse",
+  "item_details_additional_fields_show_all": "Näita kõiki",
+  "item_details_additional_fields_hide_all": "Peida kõik"
 }

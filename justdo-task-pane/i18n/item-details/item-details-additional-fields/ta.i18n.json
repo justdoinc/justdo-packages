@@ -1,4 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "அட்டவணையில் கண்டறி",
-  "item_details_additional_fields_add_to_grid": "அட்டவணையில் சேர்"
+  "item_details_additional_fields_add_to_grid": "அட்டவணையில் சேர்",
+  "item_details_additional_fields_show_all": "அனைத்தையும் காட்டவும்",
+  "item_details_additional_fields_hide_all": "அனைத்தையும் மறைக்கவும்"
 }

@@ -1,4 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "테이블에서 찾기",
-  "item_details_additional_fields_add_to_grid": "테이블에 추가"
+  "item_details_additional_fields_add_to_grid": "테이블에 추가",
+  "item_details_additional_fields_show_all": "모두 표시",
+  "item_details_additional_fields_hide_all": "모두 숨기기"
 }

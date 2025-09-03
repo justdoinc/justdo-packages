@@ -1,4 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "Định vị trên Bảng",
-  "item_details_additional_fields_add_to_grid": "Thêm vào Bảng"
+  "item_details_additional_fields_add_to_grid": "Thêm vào Bảng",
+  "item_details_additional_fields_show_all": "Hiển thị Tất cả",
+  "item_details_additional_fields_hide_all": "Ẩn Tất cả"
 }

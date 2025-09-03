@@ -1,4 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "Vind op Tabel",
-  "item_details_additional_fields_add_to_grid": "Voeg by Tabel"
+  "item_details_additional_fields_add_to_grid": "Voeg by Tabel",
+  "item_details_additional_fields_show_all": "Wys Alles",
+  "item_details_additional_fields_hide_all": "Versteek Alles"
 }

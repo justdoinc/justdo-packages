@@ -1,4 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "Lokalisera i tabell",
-  "item_details_additional_fields_add_to_grid": "Lägg till i tabell"
+  "item_details_additional_fields_add_to_grid": "Lägg till i tabell",
+  "item_details_additional_fields_show_all": "Visa alla",
+  "item_details_additional_fields_hide_all": "Dölj alla"
 }

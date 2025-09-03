@@ -1,4 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "Tabloda Bul",
-  "item_details_additional_fields_add_to_grid": "Tabloya Ekle"
+  "item_details_additional_fields_add_to_grid": "Tabloya Ekle",
+  "item_details_additional_fields_show_all": "Tümünü Göster",
+  "item_details_additional_fields_hide_all": "Tümünü Gizle"
 }

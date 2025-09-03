@@ -1,4 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "Trova nella Tabella",
-  "item_details_additional_fields_add_to_grid": "Aggiungi alla Tabella"
+  "item_details_additional_fields_add_to_grid": "Aggiungi alla Tabella",
+  "item_details_additional_fields_show_all": "Mostra Tutto",
+  "item_details_additional_fields_hide_all": "Nascondi Tutto"
 }

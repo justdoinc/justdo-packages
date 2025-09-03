@@ -1,4 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "テーブルで検索",
-  "item_details_additional_fields_add_to_grid": "テーブルに追加"
+  "item_details_additional_fields_add_to_grid": "テーブルに追加",
+  "item_details_additional_fields_show_all": "すべて表示",
+  "item_details_additional_fields_hide_all": "すべて非表示"
 }

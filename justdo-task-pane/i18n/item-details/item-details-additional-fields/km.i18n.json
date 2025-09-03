@@ -1,4 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "ស្វែងរកនៅក្នុងតារាង",
-  "item_details_additional_fields_add_to_grid": "បន្ថែមទៅតារាង"
+  "item_details_additional_fields_add_to_grid": "បន្ថែមទៅតារាង",
+  "item_details_additional_fields_show_all": "បង្ហាញទាំងអស់",
+  "item_details_additional_fields_hide_all": "លាក់ទាំងអស់"
 }
