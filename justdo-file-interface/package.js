@@ -81,5 +81,5 @@ Package.onUse(function (api) {
   // the server will have the access to the apis loaded after the init.coffee
   // file. 
 
-  api.export("JustdoFilesInterface", both);
+  api.export("JustdoFileInterface", both);
 });
