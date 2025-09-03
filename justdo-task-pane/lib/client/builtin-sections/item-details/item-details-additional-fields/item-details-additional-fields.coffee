@@ -166,6 +166,31 @@ APP.executeAfterAppLibCode ->
 
       return fields
 
+  Template.task_pane_item_details_additional_fields.events
+    "click .show-all": (e) ->
+      gc = APP.modules.project_page.gridControl()
+
+      view = gc.getView()
+      fields_missing_from_view = gc.fieldsMissingFromView()
+      for field_id in fields_missing_from_view
+        view.push({field: field_id})
+
+      gc.setView(view)
+      
+      return
+
+    "click .hide-all": (e) ->
+      # Hide all fields except the fixed fields (e.g. title)
+      gc = APP.modules.project_page.gridControl()
+
+      fixed_fields = gc.fixed_fields
+      current_view = gc.getView()
+      view_with_fixed_fields_only = _.filter current_view, (field) -> field.field in fixed_fields
+
+      gc.setView(view_with_fixed_fields_only)
+
+      return
+
   Template.task_pane_item_details_additional_field.helpers
     isEditableField: ->
       gc = APP.modules.project_page.gridControl()
