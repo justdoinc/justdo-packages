@@ -20,7 +20,7 @@ _.extend JustdoFileInterface.prototype,
 
     return
 
-  uploadFile: (fs_id, task_id, file_blob, filename, mimetype, metadata, user_id) ->
+  uploadTaskFile: (fs_id, task_id, file_blob, filename, mimetype, metadata, user_id) ->
     fs = @_getFs fs_id
 
-    return await fs.uploadFile task_id, file_blob, filename, mimetype, metadata, user_id
+    return await fs.uploadTaskFile task_id, file_blob, filename, mimetype, metadata, user_id

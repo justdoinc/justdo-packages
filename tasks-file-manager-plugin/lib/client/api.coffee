@@ -3,7 +3,7 @@ _.extend TasksFileManagerPlugin.prototype,
     self = @
     
     ret = 
-      uploadFile: (file, options, cb) ->
+      uploadTaskFile: (file, options, cb) ->
         self.tasks_file_manager.uploadFiles options.task_id, [file], (err, uploaded_files) ->
           if err?
             cb err
