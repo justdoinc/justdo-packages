@@ -58,17 +58,20 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/both/init.coffee", both);
   api.addFiles("lib/both/static.coffee", both);
+  api.addFiles("lib/both/file-system-prototype.coffee", both);
   api.addFiles("lib/both/router.coffee", both);
   api.addFiles("lib/both/errors-types.coffee", both);
   api.addFiles("lib/both/api.coffee", both);
   api.addFiles("lib/both/schemas.coffee", both);
 
+  api.addFiles("lib/server/file-system-prototype.coffee", server);
   api.addFiles("lib/server/api.coffee", server);
   api.addFiles("lib/server/collections-hooks.coffee", server);
   api.addFiles("lib/server/collections-indexes.coffee", server);
   api.addFiles("lib/server/methods.coffee", server);
   api.addFiles("lib/server/publications.coffee", server);
 
+  api.addFiles("lib/client/file-system-prototype.coffee", client);
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
