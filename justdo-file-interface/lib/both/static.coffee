@@ -15,7 +15,7 @@ _.extend JustdoFileInterface,
     instance: EventEmitter
   
   client_register_fs_options_required_properties:
-    subscribeToFilesCollection: Function
+    subscribeToTaskFilesCollection: Function
     downloadFile: Function
     showPreviewOrStartDownload: Function
   
