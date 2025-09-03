@@ -29,7 +29,16 @@ _.extend TasksFileManagerPlugin.prototype,
           return
         
         return
-      showPreviewOrStartDownload: (task_id, file, file_ids_to_show) ->
+      showTaskFilePreviewOrStartDownload: (task_id, file, file_ids_to_show) ->
+        if not _.isString file
+          file = _.extend {}, file
+        
+        if (not file.id?) and (file._id?)
+          file.id = file._id
+        
+        if (not file.title?) and (file.name?)
+          file.title = file.name
+
         self.showPreviewOrStartDownload task_id, file, file_ids_to_show
     return ret
 
