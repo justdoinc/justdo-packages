@@ -14,7 +14,7 @@ _.extend JustdoFiles.prototype,
     self = @
     
     ret = 
-      uploadFile: (file, options, cb) ->
+      uploadTaskFile: (file, options, cb) ->
         try
           upload = self.uploadFile(file, options)
         catch err
