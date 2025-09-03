@@ -17,7 +17,7 @@ _.extend TasksFileManagerPlugin.prototype,
           cb null, uploaded_file
 
         return
-      subscribeToFilesCollection: (options, cb) ->
+      subscribeToTaskFilesCollection: (options, cb) ->
         task_id = options.task_id
         return JD.subscribeItemsAugmentedFields [task_id], ["files"], {}, cb
       downloadFile: (options) ->
