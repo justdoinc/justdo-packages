@@ -38,17 +38,6 @@ _.extend TasksFileManagerPlugin.prototype,
           normalized_files = normalized_files.concat files
 
         return normalized_files
-      isTaskFileExists: (file_id, task_id) ->
-        query = 
-          _id: task_id
-          files:
-            $elemMatch:
-              id: file_id
-        query_options = 
-          fields:
-            _id: 1
-
-        return APP.collections[self._getCollectionName()].findOne(query, query_options)?
       isFileTypePreviewable: (file_type) ->
         return self.isFileTypePreviewable file_type
       isUserAllowedToUploadTaskFile: (task_id, user_id) ->

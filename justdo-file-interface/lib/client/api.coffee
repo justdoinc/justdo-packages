@@ -26,7 +26,7 @@ _.extend JustdoFileInterface.prototype,
   getTaskFilesByIds: (fs_id, file_ids, task_id) ->
     # Important: This method return file objects with mostly metadata fields. The field names are normalized to be consistent across file systems.
     # This is meant to facilitate usecases like showing a list of files.
-    # Since the field names are normalized, it is discouraged to use this method in other file system methods (e.g. isTaskFileExists)
+    # Since the field names are normalized, it is discouraged to use this method in other file system methods
     fs = @_getFs fs_id
 
     if _.isString(file_ids)
@@ -36,11 +36,6 @@ _.extend JustdoFileInterface.prototype,
 
     return files
 
-  isTaskFileExists: (fs_id, file_id, task_id) ->
-    fs = @_getFs fs_id
-
-    return fs.isTaskFileExists file_id, task_id
-  
   isFileTypePreviewable: (fs_id, file_type) ->
     fs = @_getFs fs_id
 
