@@ -49,5 +49,3 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # and whether the user is allowed to upload a file to a task according to `justdo-permissions`
     throw @_error "not-implemented"
   
-  # The instance of the file system (e.g. APP.justdo_files, APP.tasks_file_manager_plugin.tasks_file_manager, etc.)
-  instance: EventEmitter
