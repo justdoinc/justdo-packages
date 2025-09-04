@@ -4,3 +4,6 @@ Template.print_menu_button.helpers
       return false
 
     return not gc.isMultiSelectMode() and gc.getCurrentPath()
+
+  printDropdownBottomItems: ->
+    return JD.getPlaceholderItems("print-dropdown-bottom")
