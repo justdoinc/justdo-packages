@@ -106,11 +106,11 @@ _.extend JustdoFileInterface.prototype,
       return not _.isEmpty missing_properties
 
     if file_with_missing_properties?
-      throw @_error "not-supported", "getFilesByIds: When called with fs_id \"#{fs_id}\", the returned file objects are missing the following properties: #{missing_properties.join(", ")}.\nThis would likely cause integration errors with other packages. Please normalize the files objects before returning them."
+      throw @_error "not-supported", "getTaskFilesByIds: When called with fs_id \"#{fs_id}\", the returned file objects are missing the following properties: #{missing_properties.join(", ")}.\nThis would likely cause integration errors with other packages. Please normalize the files objects before returning them."
     
     return
   
-  getFilesByIds: (fs_id, file_ids) ->
+  getTaskFilesByIds: (fs_id, file_ids, task_id) ->
     # Important: This method return file objects with mostly metadata fields. The field names are normalized to be consistent across file systems.
     # This is meant to facilitate usecases like showing a list of files.
     # Since the field names are normalized, it is discouraged to use this method in other file system methods (e.g. isTaskFileExists)
@@ -119,7 +119,7 @@ _.extend JustdoFileInterface.prototype,
     if _.isString(file_ids)
       file_ids = [file_ids]
     
-    files = fs.getFilesByIds file_ids
+    files = fs.getTaskFilesByIds file_ids, task_id
 
     @_ensureFileObjsAreNormalized fs_id, files
 

@@ -11,10 +11,11 @@ _.extend TasksFileManagerPlugin.prototype,
         return _env.FILESTACK_MAX_FILE_SIZE_BYTES
       getTaskFileLink: (file_id, task_id) ->
         return self.tasks_file_manager.getFileDownloadPath task_id, file_id
-      getFilesByIds: (file_ids) ->
+      getTaskFilesByIds: (file_ids, task_id) ->
         normalized_files = []
 
         query = 
+          _id: task_id
           files:
             $elemMatch:
               id: 
