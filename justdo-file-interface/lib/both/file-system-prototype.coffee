@@ -14,7 +14,7 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     throw @_error "not-implemented"
 
   getTaskFilesByIds: (file_ids, task_id) ->
-    # Gets an array of file_ids, returns an array of the corresponding file metadata objects that belong to a task.
+    # Gets an array of file_ids and a task_id, returns an array of the corresponding file metadata objects that belong to the `task_id`.
     #
     # The returned array order won't necessarily be the same as the order of the file_ids.
     # Further, if some of the file_ids don't exist, or permission are denied, the returned array
