@@ -14,6 +14,41 @@ _.extend JustdoFiles.prototype,
     self = @
     
     ret = 
+      getFileSizeLimit: -> self.options.max_file_size
+      isTaskFileExists: (file_id) ->
+        return self.isFileExist(file_id)
+      getTaskFileLink: (file_id, task_id) ->
+        return self.getShareableLink(file_id)
+      getTaskFilesByIds: (file_ids, task_id) ->
+        query =
+          _id: 
+            $in: file_ids
+          "meta.task_id": task_id
+        query_options = 
+          fields:
+            _id: 1
+            type: 1
+            name: 1
+            size: 1
+            userId: 1
+            "meta.upload_date": 1
+
+        normalized_files = self.tasks_files.find(query, query_options).map (file) ->
+          ret = 
+            _id: file._id
+            type: file.type
+            name: file.name
+            size: file.size
+            uploaded_by: file.userId
+            uploaded_at: file.meta?.upload_date
+          
+          return ret
+
+        return normalized_files
+      isFileTypePreviewable: (file_type) ->
+        return self.isFileTypePreviewable file_type
+      isUserAllowedToUploadTaskFile: (task_id, user_id) ->
+        return self.isUserAllowedToAccessTasksFiles(task_id, user_id)
       uploadTaskFile: (file, task_id, cb) ->
         options = 
           task_id: task_id
