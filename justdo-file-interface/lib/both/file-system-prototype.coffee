@@ -1,4 +1,4 @@
-_.extend JustdoFileInterface.FileSystemPrototype,
+JustdoFileInterface.FileSystemPrototype =
   # 
   # The following methods are required to register a file system:
   #
