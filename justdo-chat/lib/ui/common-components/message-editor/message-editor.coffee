@@ -95,6 +95,7 @@ Template.common_chat_message_editor.onCreated ->
     # File handling
     if not _.isEmpty(files = @getFileInputValue())
       fs_id = APP.justdo_file_interface.getDefaultFsId()
+      task_id = task_chat_object.getChannelIdentifier().task_id
       uploaded_files = []
 
       # Note: This callback is used to handle the upload of a single file
@@ -117,7 +118,7 @@ Template.common_chat_message_editor.onCreated ->
         return
       
       for file in files
-        APP.justdo_file_interface.uploadTaskFile null, file, {task_id: task_chat_object.getChannelIdentifier().task_id}, uploadFileCb
+        APP.justdo_file_interface.uploadTaskFile null, file, task_id, uploadFileCb
 
     else
       callSendMessageMethod input_val
