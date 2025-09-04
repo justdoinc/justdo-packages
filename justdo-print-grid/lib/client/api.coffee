@@ -648,11 +648,6 @@ _.extend JustdoPrintGrid.prototype,
         return JD.getPlaceholderItems("print-dropdown-bottom")
 
     Template.print_menu_button.events
-      "click .print-dropdown": ->
-        path = getCurrentTaskPath()
-
-        return
-
       # Print visible tasks
       "click .print-dropdown .visible-tasks": ->
         item_path = "/"
