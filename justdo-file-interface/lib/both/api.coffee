@@ -47,12 +47,12 @@ _.extend JustdoFileInterface.prototype,
     return
   
   _getFs: (fs_id) ->
-    fs_id = fs_id or @_getDefaultFsId()
+    fs_id = fs_id or @getDefaultFsId()
     @requireFsRegistered fs_id
     return @_registered_fs[fs_id]
 
   _setDefaultFsIdIfEmpty: (fs_id) ->
-    if _.isEmpty @_getDefaultFsId()
+    if _.isEmpty @getDefaultFsId()
       @setDefaultFsId fs_id
       
     return
@@ -64,11 +64,8 @@ _.extend JustdoFileInterface.prototype,
 
     return
   
-  _getDefaultFsId: ->
-    return @_default_fs_id
-  
   getDefaultFsId: ->
-    return @_getDefaultFsId()
+    return @_default_fs_id
   
   cloneWithForcedFs: (fs_id) ->
     # Create a new obj that inherits from the current obj that sets the
