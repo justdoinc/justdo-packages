@@ -29,7 +29,7 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     #   "_id" # file id
     #   "type" # mime type
     #   "name" # filename
-    #   "size" # file size in bytes
+    #   "size" # file size in bytes (!)
     #   "uploaded_by" # user id if undefined assume system generated (must be set even if undefined)
     #   "uploaded_at" # js Date object
     # }
@@ -50,21 +50,23 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     throw @_error "not-implemented"
 
   uploadTaskFile: (file, task_id, cb) ->
-    # Gets a file, task_id and optionally a cb, uploads a file to a task
+    # Gets a File (the native browser file object), task_id and optionally a cb, uploads the file to the task.
+    #
     # cb will be called with the following params: (err, uploaded_file)
-    #   err: Error object if error occurs (e,g, file size exceeds, task not found or user does not have access, etc). Falsy-value otherwise
-    #   uploaded_file:    
+    #   err: Error object if error occurs (e,g, file size exceeds, task not found or user does not have access, etc). Falsy-value (null/undefined) otherwise.
+    #   uploaded_file:
     #     {
     #       _id: String
-    #       name: String
-    #       type: String
-    #       size: Number
+    #       name: String # the readable filename of the uploaded file
+    #       type: String # the mime type of the uploaded file
+    #       size: Number # the size of the uploaded file in bytes (!)
     #     }
     #   It is up to the developer to strictly follow this structure.
     #   IMPORTANT: There should be no extra fields in the uploaded_file object.
     # 
-    # Before calling this method inside `APP.justdo_file_interface.uploadTaskFile`, 
-    # the file size is checked against the file system's `getFileSizeLimit` method to ensure it does not exceed the limit.
+    # We'll ensure that the file size doesn't exceed the file system's `getFileSizeLimit` before trying to upload the file.
+    # To be precise: before calling this method inside `APP.justdo_file_interface.uploadTaskFile`, the file size is checked against the
+    # file system's `getFileSizeLimit` method to ensure it does not exceed the limit.
     throw @_error "not-implemented"
   
   subscribeToTaskFilesCollection: (task_id, cb) ->
