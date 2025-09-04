@@ -15,10 +15,10 @@ _.extend JustdoFileInterface.prototype,
 
     return
 
-  subscribeToTaskFilesCollection: (fs_id, options, cb) ->
+  subscribeToTaskFilesCollection: (fs_id, task_id, cb) ->
     fs = @_getFs fs_id
 
-    return fs.subscribeToTaskFilesCollection options, cb
+    return fs.subscribeToTaskFilesCollection task_id, cb
   
   downloadTaskFile: (fs_id, options) ->
     fs = @_getFs fs_id
