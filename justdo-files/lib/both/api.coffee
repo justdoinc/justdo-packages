@@ -26,8 +26,7 @@ _.extend JustdoFiles.prototype,
 
     tasks_files_driver_options = 
       getFileSizeLimit: -> self.options.max_file_size
-      isTaskFileExists: (options) ->
-        file_id = options.file_id
+      isTaskFileExists: (file_id) ->
         return self.isFileExist(file_id)
       getTaskFileLink: (options) ->
         file_id = options.file_id
