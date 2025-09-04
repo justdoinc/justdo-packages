@@ -53,14 +53,16 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # Gets a file, task_id and optionally a cb, uploads a file to a task
     # cb will be called with the following params: (err, uploaded_file)
     #   err: Error object if error occurs (e,g, file size exceeds, task not found or user does not have access, etc). Falsy-value otherwise
-    #   uploaded_file: File metadata object, guarenteed to have the following properties:
+    #   uploaded_file:    
     #     {
     #       _id: String
     #       name: String
     #       type: String
     #       size: Number
-    #       ...(any extra properties returned by the file system)
     #     }
+    #   It is up to the developer to strictly follow this structure.
+    #   IMPORTANT: There should be no extra fields in the uploaded_file object.
+    # 
     # Before calling this method inside `APP.justdo_file_interface.uploadTaskFile`, 
     # the file size is checked against the file system's `getFileSizeLimit` method to ensure it does not exceed the limit.
     throw @_error "not-implemented"
