@@ -638,7 +638,9 @@ _.extend JustdoPrintGrid.prototype,
     JD.registerPlaceholderItem "print-button",
       data:
         template: "print_menu_button"
-        template_data: {}
+        template_data: 
+          enterPrintMode: enterPrintMode
+          getCurrentTaskPath: getCurrentTaskPath
 
       domain: "project-right-navbar"
       position: 350
