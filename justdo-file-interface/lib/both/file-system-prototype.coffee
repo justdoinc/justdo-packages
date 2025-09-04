@@ -10,14 +10,13 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # Returns: Number, maximum file size for single file upload in bytes
     throw @_error "not-implemented"
   
-  getTaskFileLink: (options) ->
-    # Returns a URL to download a file
+  getTaskFileLink: (file_id, task_id) ->
+    # Returns a URL to download a file belonging to a task
     # Note: The URL returned by this method is for downloading. It should not be used for previewing
     # 
     # Params:
-    #   options: Object, required
-    #     - task_id: string, required
-    #     - file_id: string, required
+    #   file_id: string, required
+    #   task_id: string, required
     # 
     # Returns: String, url to download file. 
     throw @_error "not-implemented"

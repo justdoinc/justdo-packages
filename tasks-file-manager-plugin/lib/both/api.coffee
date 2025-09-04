@@ -9,10 +9,7 @@ _.extend TasksFileManagerPlugin.prototype,
           _env = process.env
 
         return _env.FILESTACK_MAX_FILE_SIZE_BYTES
-      getTaskFileLink: (options) ->
-        task_id = options.task_id
-        file_id = options.file_id
-
+      getTaskFileLink: (file_id, task_id) ->
         return self.tasks_file_manager.getFileDownloadPath task_id, file_id
       getFilesByIds: (file_ids) ->
         normalized_files = []
