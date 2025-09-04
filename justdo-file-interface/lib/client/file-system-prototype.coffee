@@ -4,6 +4,8 @@ _.extend JustdoFileInterface.FileSystemPrototype,
   # 
   getFileSizeLimit: ->
     # Returns a number indicating the maximum file size for single file upload in bytes
+    # Note: This method is called inside `APP.justdo_file_interface.uploadTaskFile`
+    # before calling the file system's `uploadTaskFile` method to ensure the file size does not exceed the limit.
     throw @_error "not-implemented"
   
   getTaskFileLink: (file_id, task_id) ->
@@ -63,6 +65,8 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     #       size: Number
     #       ...(any extra properties returned by the file system)
     #     }
+    # Before calling this method inside `APP.justdo_file_interface.uploadTaskFile`, 
+    # the file size is checked against the file system's `getFileSizeLimit` method to ensure it does not exceed the limit.
     throw @_error "not-implemented"
   
   subscribeToTaskFilesCollection: (task_id, cb) ->

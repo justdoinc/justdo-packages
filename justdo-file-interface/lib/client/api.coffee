@@ -54,6 +54,11 @@ _.extend JustdoFileInterface.prototype,
   uploadTaskFile: (fs_id, file, task_id, cb) ->
     fs = @_getFs fs_id
 
+    file_size_limit = @getFileSizeLimit fs.fs_id
+    if file_size_limit? and file.size > file_size_limit
+      cb @_error "file-size-exceeded", "File size exceeds the #{JustdoHelpers.bytesToHumanReadable file_size_limit} limit of file system #{fs.fs_id}"
+      return
+
     fs.uploadTaskFile file, task_id, cb
 
     return

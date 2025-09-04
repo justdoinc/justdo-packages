@@ -12,4 +12,5 @@ _.extend JustdoFileInterface.prototype,
   # as the base for all the packages based on
   # justdo-package-skeleton >= 0.0.4
   _errors_types:
-    _.extend {}, JustdoHelpers.common_errors_types, {}
+    _.extend {}, JustdoHelpers.common_errors_types, 
+      "file-size-exceeded", "File size exceeds the limit"
