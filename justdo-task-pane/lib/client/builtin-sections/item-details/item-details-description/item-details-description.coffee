@@ -279,15 +279,12 @@ APP.executeAfterAppLibCode ->
 
   Template.task_pane_item_details_description.onCreated ->
     @autorun =>
-      APP.getEnv (env) =>
-        # If Filestack is disabled and justdo_files is enabled, subscribe to tasks files
-        if env.TASKS_FILES_UPLOAD_ENABLED isnt "true" and env.JUSTDO_FILES_ENABLED is "true"
-          Meteor.subscribe "jdfTaskFiles", @data._id
-
-        return
-
       # On every path change, destroy the editor (destroyEditor, saves current state)
       project_page_module.activeItemPath()
+      
+      fs = APP.justdo_file_interface
+      fs_id = fs.getDefaultFsId()
+      @files_sub_handle = fs.subscribeToTaskFiles fs_id, JD.activeItemId()
 
       @task_descrioption_sub_handle = APP.projects.subscribeActiveTaskAugmentedFields(["description"])
 
@@ -335,3 +332,6 @@ APP.executeAfterAppLibCode ->
   Template.task_pane_item_details_description.onDestroyed ->
     destroyEditor() # destroyEditor takes care of saving
     @task_descrioption_sub_handle.stop()
+    @files_sub_handle.stop()
+
+    return
