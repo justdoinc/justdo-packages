@@ -33,12 +33,12 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # Returns: Meteor subscription handle
     throw @_error "not-implemented"
   
-  downloadTaskFile: (options) ->
+  downloadTaskFile: (file_id, task_id) ->
     # Downloads a file from a task
     # 
     # Params:
-    #   options: Object, required
-    #     - task_id: String, required
+    #   file_id: String, required
+    #   task_id: String, required
     #     - file_id: String, required
     # 
     # Returns: (undefined)
