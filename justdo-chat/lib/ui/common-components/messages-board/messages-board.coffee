@@ -179,10 +179,15 @@ Template.common_chat_messages_board_message_card.helpers
     return @files
 
   files: ->
+    tpl = Template.instance()
+    channel_obj = tpl.getChannelObject?()
+    task_id = channel_obj.getChannelIdentifier().task_id
+
     file_ids = _.pluck @files, "_id"
     existing_files = []
+
     for file in @files
-      if (found_file = APP.justdo_file_interface.getFilesByIds(file.fs_id, file._id)[0])?
+      if (found_file = APP.justdo_file_interface.getTaskFilesByIds(file.fs_id, file._id, task_id)[0])?
         found_file.fs_id = file.fs_id
         existing_files.push found_file
 
@@ -309,6 +314,6 @@ Template.common_chat_messages_board_message_card.events
     task_id = channel_obj.getChannelIdentifier().task_id
     message_file_ids = _.pluck tmpl.data.files, "_id"
 
-    APP.justdo_file_interface.showTaskFilePreviewOrStartDownload file_fs_id, task_id, file._id, message_file_ids
+    APP.justdo_file_interface.showTaskFilePreviewOrStartDownload file_fs_id, file._id, task_id, message_file_ids
 
     return
