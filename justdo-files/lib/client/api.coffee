@@ -60,7 +60,8 @@ _.extend JustdoFiles.prototype,
           if err? and not upload.err_msg?
             upload.err_msg = err.reason or err
           
-          cb err, file_obj
+          normalized_file_obj = _.pick file_obj, ["_id", "name", "type", "size"]
+          cb err, normalized_file_obj
 
           return
         

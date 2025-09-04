@@ -55,11 +55,14 @@ _.extend TasksFileManagerPlugin.prototype,
             return
 
           uploaded_file = uploaded_files[0]
+          
           # Normalize the file object to match the JustdoFiles file object
-          uploaded_file._id = uploaded_file.url.substr(uploaded_file.url.lastIndexOf("/")+1)
-          uploaded_file.name = uploaded_file.filename
-          uploaded_file.type = uploaded_file.mimetype
-          cb null, uploaded_file
+          normalized_uploaded_file = 
+            _id: uploaded_file.url.substr(uploaded_file.url.lastIndexOf("/")+1)
+            name: uploaded_file.filename
+            type: uploaded_file.mimetype
+            size: uploaded_file.size
+          cb null, normalized_uploaded_file
 
         return
       subscribeToTaskFilesCollection: (task_id, cb) ->
