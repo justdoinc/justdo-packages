@@ -32,6 +32,7 @@ _.extend JustdoFileInterface.prototype,
     
     fs_obj = Object.create(JustdoFileInterface.FileSystemPrototype)
     _.extend fs_obj, options
+    fs_obj.fs_id = fs_id
 
     @_registered_fs[fs_id] = fs_obj
     @_setDefaultFsIdIfEmpty fs_id
