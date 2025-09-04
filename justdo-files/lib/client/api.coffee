@@ -34,9 +34,7 @@ _.extend JustdoFiles.prototype,
         upload.start()
 
         return
-      subscribeToTaskFilesCollection: (options, cb) ->
-        task_id = options.task_id
-
+      subscribeToTaskFilesCollection: (task_id, cb) ->
         # Note: If cb is passed directly to the subscribeToTaskFilesCollection directly,
         # it's treated as the onReady callback, and the onStop callback is ignored.
         # As such, the cb will not be called with the error if the subscription fails.

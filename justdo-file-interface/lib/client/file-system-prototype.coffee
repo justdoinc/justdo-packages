@@ -18,12 +18,11 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     #         - (extra properties returned by the file system)
     throw @_error "not-implemented"
   
-  subscribeToTaskFilesCollection: (options, cb) ->
+  subscribeToTaskFilesCollection: (task_id, cb) ->
     # Subscribes to file system's task files collection. 
     # 
     # Params:
-    #   options: Object, required
-    #     - task_id: String, required
+    #   task_id: String, required
     # 
     #   cb: Function, optional
     #     cb is guarenteed to be called only once in the following way:
