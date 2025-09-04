@@ -38,11 +38,8 @@ _.extend JustdoFiles.prototype,
   _getEnvSpecificFsOptions: ->
     self = @
     
-    ret = 
-      uploadTaskFile: (task_id, file_blob, filename, mimetype, metadata, user_id) ->
-        ret = self.uploadAndRegisterFile task_id, file_blob, filename, mimetype, metadata, user_id
-        ret.name = ret.title
-        return ret
+    ret = {}
+
     return ret
 
   tasksFilesPublicationHandler: (publish_this, task_id, user_id) ->
