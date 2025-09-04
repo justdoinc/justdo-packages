@@ -25,7 +25,7 @@ _.extend JustdoFileInterface.prototype,
 
     return fs.downloadTaskFile task_id
 
-  showTaskFilePreviewOrStartDownload: (fs_id, task_id, file, file_ids_to_show) ->
+  showTaskFilePreviewOrStartDownload: (fs_id, file, task_id, file_ids_to_show) ->
     fs = @_getFs fs_id
 
-    return fs.showTaskFilePreviewOrStartDownload task_id, file, file_ids_to_show
+    return fs.showTaskFilePreviewOrStartDownload file, task_id, file_ids_to_show

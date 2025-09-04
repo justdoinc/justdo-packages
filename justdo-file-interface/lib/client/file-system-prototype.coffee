@@ -44,20 +44,20 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # Returns: (undefined)
     throw @_error "not-implemented"
   
-  showTaskFilePreviewOrStartDownload: (task_id, file, file_ids_to_show) ->
+  showTaskFilePreviewOrStartDownload: (file, task_id, file_ids_to_show) ->
     # If provided `file` deemed previewable by the file system, show the preview modal with the `file`; Otherwise, download the file directly.
     # The preview modal allows user to show all other previewable files under the same `task_id`;
     # If `file_ids_to_show` is provided, only the files under the same `tsak_id` AND in the `file_ids_to_show` array will be accessible in the preview modal.
     # A sample usecase of the `file_ids_to_show` param is to show only files attached to a single chat message, instead of all the files under a task.
     # 
     # Params:
-    #   task_id: String, required
     #   file: String or Object, required
     #     If string, it is assumed to be the `file_id` of the file.
     #     If object, it is assumed to be the metadata of the file with the following properties:
     #       - _id: String, required
     #       - type: String, required
     #       - name: String, required
+    #   task_id: String, required
     #   file_ids_to_show: Array of file_ids, optional
     # 
     # Returns: (undefined)
