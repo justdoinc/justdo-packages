@@ -5,20 +5,12 @@ _.extend JustdoFileInterface.FileSystemPrototype,
   # IMPORTANT THERE ARE MORE REQUIRED METHODS TO BE IMPLEMENTED IN the /client/ /server/ folders.
   # 
   getFileSizeLimit: ->
-    # Returns the single file size limit of a file system
-    # 
-    # Returns: Number, maximum file size for single file upload in bytes
+    # Returns a number indicating the maximum file size for single file upload in bytes
     throw @_error "not-implemented"
   
   getTaskFileLink: (file_id, task_id) ->
-    # Returns a URL to download a file belonging to a task
+    # Gets file_id and task_id, returns a URL to download a file belonging to a task
     # Note: The URL returned by this method is for downloading. It should not be used for previewing
-    # 
-    # Params:
-    #   file_id: string, required
-    #   task_id: string, required
-    # 
-    # Returns: String, url to download file. 
     throw @_error "not-implemented"
 
   getTaskFilesByIds: (file_ids, task_id) ->
@@ -44,32 +36,17 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     throw @_error "not-implemented"
   
   isTaskFileExists: (file_id, task_id) ->
-    # Checks if a file exists in a task
-    # 
-    # Params:
-    #   file_id: string, required
-    #   task_id: string, required
-    # 
-    # Returns: Boolean
+    # Gets file_id and task_id, returns boolean indicating whether a file exists in a task
     throw @_error "not-implemented"
   
   isFileTypePreviewable: (file_type) ->
-    # Checks if a file type is previewable
-    # 
-    # Params:
-    #   file_type: string, mime type of file, required
-    # 
-    # Returns: Boolean
+    # Gets file_type, returns boolean indicating whether a file type is deemed previewable by the file system
     throw @_error "not-implemented"
 
   isUserAllowedToUploadTaskFile: (task_id, user_id) ->
-    # Checks if a user is allowed to upload a file to a task according to `justdo-permissions`
-    # 
-    # Params:
-    #   task_id: string, required
-    #   user_id: string, required
-    # 
-    # Returns: Boolean
+    # Gets task_id and user_id, returns boolean indicating whether a user is allowed to upload a file to a task
+    # This is the place to check whether user has access to a certain task, 
+    # and whether the user is allowed to upload a file to a task according to `justdo-permissions`
     throw @_error "not-implemented"
   
   # The instance of the file system (e.g. APP.justdo_files, APP.tasks_file_manager_plugin.tasks_file_manager, etc.)
