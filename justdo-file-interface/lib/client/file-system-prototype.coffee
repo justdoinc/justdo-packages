@@ -34,11 +34,7 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     #   "uploaded_at" # js Date object
     # }
     throw @_error "not-implemented"
-  
-  isTaskFileExists: (file_id, task_id) ->
-    # Gets file_id and task_id, returns true if the file exists in the task, false otherwise
-    throw @_error "not-implemented"
-  
+
   isFileTypePreviewable: (file_type) ->
     # Gets file_type, returns true if a file type is deemed previewable by the file system, false otherwise
     throw @_error "not-implemented"

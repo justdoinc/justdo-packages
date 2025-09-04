@@ -15,8 +15,6 @@ _.extend JustdoFiles.prototype,
     
     ret = 
       getFileSizeLimit: -> self.options.max_file_size
-      isTaskFileExists: (file_id) ->
-        return self.isFileExist(file_id)
       getTaskFileLink: (file_id, task_id) ->
         return self.getShareableLink(file_id)
       getTaskFilesByIds: (file_ids, task_id) ->
