@@ -11,7 +11,12 @@ _.extend JustdoFileInterface.prototype,
   getFileSizeLimit: (fs_id) ->
     fs = @_getFs fs_id
 
-    return fs.getFileSizeLimit()
+    limit = fs.getFileSizeLimit()
+
+    if _.isString limit
+      limit = parseInt limit, 10
+
+    return limit
 
   getTaskFileLink: (fs_id, file_id, task_id) ->
     fs = @_getFs fs_id
