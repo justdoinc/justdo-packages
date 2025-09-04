@@ -7,8 +7,6 @@ _.extend JustdoFileInterface.prototype,
 
     @_registered_fs = {}
     @_default_fs_id = null
-    if Meteor.isClient
-      @_default_fs_id_dep = new Tracker.Dependency()
 
     @setupRouter()
 
@@ -64,18 +62,12 @@ _.extend JustdoFileInterface.prototype,
 
     @_default_fs_id = fs_id
 
-    if Meteor.isClient
-      @_default_fs_id_dep.changed()
-
     return
   
   _getDefaultFsId: ->
     return @_default_fs_id
   
   getDefaultFsId: ->
-    if Meteor.isClient
-      @_default_fs_id_dep.depend()
-
     return @_getDefaultFsId()
   
   cloneWithForcedFs: (fs_id) ->
