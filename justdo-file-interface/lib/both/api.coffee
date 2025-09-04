@@ -125,10 +125,10 @@ _.extend JustdoFileInterface.prototype,
 
     return files
 
-  isTaskFileExists: (fs_id, options) ->
+  isTaskFileExists: (fs_id, file_id, task_id) ->
     fs = @_getFs fs_id
 
-    return fs.isTaskFileExists options
+    return fs.isTaskFileExists file_id, task_id
   
   isFileTypePreviewable: (fs_id, file_type) ->
     fs = @_getFs fs_id

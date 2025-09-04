@@ -44,13 +44,12 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # }
     throw @_error "not-implemented"
   
-  isTaskFileExists: (options) ->
+  isTaskFileExists: (file_id, task_id) ->
     # Checks if a file exists in a task
     # 
     # Params:
-    #   options: Object, required
-    #     - task_id: string, required
-    #     - file_id: string, required
+    #   file_id: string, required
+    #   task_id: string, required
     # 
     # Returns: Boolean
     throw @_error "not-implemented"

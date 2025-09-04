@@ -44,10 +44,7 @@ _.extend TasksFileManagerPlugin.prototype,
           normalized_files = normalized_files.concat files
 
         return normalized_files
-      isTaskFileExists: (options) ->
-        task_id = options.task_id
-        file_id = options.file_id
-
+      isTaskFileExists: (file_id, task_id) ->
         query = 
           _id: task_id
           files:
