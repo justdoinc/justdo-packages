@@ -60,7 +60,6 @@ _.extend JustdoFiles.prototype,
         return self.isFileTypePreviewable file_type
       isUserAllowedToUploadTaskFile: (task_id, user_id) ->
         return self.isUserAllowedToAccessTasksFiles(task_id, user_id)
-      instance: self
     
     if @_getEnvSpecificFsOptions?
       tasks_files_driver_options = _.extend tasks_files_driver_options, @_getEnvSpecificFsOptions()

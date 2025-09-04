@@ -62,8 +62,6 @@ _.extend TasksFileManagerPlugin.prototype,
         ]
         return APP.justdo_permissions.checkTaskPermissions permissions, task_id, user_id
 
-      instance: self.tasks_file_manager
-
     if self._getEnvSpecificFsOptions?
       tasks_files_driver_options = _.extend tasks_files_driver_options, self._getEnvSpecificFsOptions()
 
