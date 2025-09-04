@@ -30,10 +30,11 @@ _.extend JustdoFiles.prototype,
         return self.isFileExist(file_id)
       getTaskFileLink: (file_id, task_id) ->
         return self.getShareableLink(file_id)
-      getFilesByIds: (file_ids) ->
+      getTaskFilesByIds: (file_ids, task_id) ->
         query =
           _id: 
             $in: file_ids
+          "meta.task_id": task_id
         query_options = 
           fields:
             _id: 1
