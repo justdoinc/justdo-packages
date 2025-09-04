@@ -2,13 +2,12 @@ _.extend JustdoFileInterface.FileSystemPrototype,
   # 
   # Client-only methods required to register a file system
   # 
-  uploadTaskFile: (file, options, cb) ->
+  uploadTaskFile: (file, task_id, cb) ->
     # Uploads a file to a task
     # 
     # Params:
     #   file: File object, required
-    #   options: Object, required
-    #     - task_id: String, required
+    #   task_id: String, required
     #   cb: Function (err, uploaded_file), optional
     #     - err: Error object if error occurs, falsy-value otherwise
     #     - uploaded_file: File metadata object, guarenteed to have the following properties:

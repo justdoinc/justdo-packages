@@ -8,10 +8,10 @@ _.extend JustdoFileInterface.prototype,
 
     return
 
-  uploadTaskFile: (fs_id, file, options, cb) ->
+  uploadTaskFile: (fs_id, file, task_id, cb) ->
     fs = @_getFs fs_id
 
-    await fs.uploadTaskFile file, options, cb
+    await fs.uploadTaskFile file, task_id, cb
 
     return
 
