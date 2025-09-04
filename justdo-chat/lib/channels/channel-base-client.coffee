@@ -341,7 +341,7 @@ _.extend ChannelBaseClient.prototype,
     @_unsubscribeFilesCollectionIfExists()
 
     # Subscribe to files for this channel
-    @_files_subscription = APP.justdo_file_interface.subscribeToTaskFilesCollection null, {task_id: @getChannelIdentifier().task_id} 
+    @_files_subscription = APP.justdo_file_interface.subscribeToTaskFilesCollection null, @getChannelIdentifier().task_id
 
     return
   
