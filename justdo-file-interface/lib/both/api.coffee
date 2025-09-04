@@ -96,20 +96,6 @@ _.extend JustdoFileInterface.prototype,
 
     return fs.getTaskFileLink file_id, task_id
   
-  _ensureFileObjsAreNormalized: (fs_id, files) ->
-    required_properties = ["_id", "type", "name", "size", "uploaded_by", "uploaded_at"]
-    missing_properties = []
-
-    # Ensure that the returned file objects are normalized to the same properties
-    file_with_missing_properties = _.find files, (file) ->
-      missing_properties = _.difference required_properties, _.keys(file)
-      return not _.isEmpty missing_properties
-
-    if file_with_missing_properties?
-      throw @_error "not-supported", "getTaskFilesByIds: When called with fs_id \"#{fs_id}\", the returned file objects are missing the following properties: #{missing_properties.join(", ")}.\nThis would likely cause integration errors with other packages. Please normalize the files objects before returning them."
-    
-    return
-  
   getTaskFilesByIds: (fs_id, file_ids, task_id) ->
     # Important: This method return file objects with mostly metadata fields. The field names are normalized to be consistent across file systems.
     # This is meant to facilitate usecases like showing a list of files.
@@ -120,8 +106,6 @@ _.extend JustdoFileInterface.prototype,
       file_ids = [file_ids]
     
     files = fs.getTaskFilesByIds file_ids, task_id
-
-    @_ensureFileObjsAreNormalized fs_id, files
 
     return files
 
