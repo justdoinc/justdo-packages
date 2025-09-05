@@ -1,31 +1,45 @@
 _.extend JustdoFileInterface.FileSystemPrototype,
-  # 
-  # Client-only methods required to register a file system
-  # 
-  subscribeToTaskFiles: (task_id, cb) ->
-    # Gets a task_id and optionally a cb, subscribes to file system's task files collection and returns the subscription handle
-    # cb is guarenteed to be called only once in the following way:
-    #   - `onStop` callback of the subscription with `err` as the first param IF the subscription is stopped before becoming ready
-    #   - `onReady` callback of the subscription without param IF the subscription is ready
-    #   This is to provide a mechanism for the caller to know when the subscription is ready or if it failed.
-    #   Note: There's no guarentee that the subscription will be stopped with an error if the task does not exist or the user does not have access to the task.
-    # 
+  subscribeToBucketFolder: (bucket_id, folder_name, callbacks) ->
+    # We require the consumers to call this method before calling other bucket folder methods.
+    # When bucket folder and folder's files methods are called - you can assume that the relevant
+    # subscription with the same bucket_id and folder_name was called.
+    #
+    # Receives a bucket_id and a folder_name and a callbacks object/function, the callbacks object/function is of the exact
+    # same format as the callbacks object/function passed to Meteor.subscribe, refer to that API for more details.
+    #
     # This is a reactive resource that calls Meteor.subscribe internally.
     # As such, if this method is called inside an autorun, the subscription will be stopped automatically upon invalidation of the autorun.
     # 
-    # The purpose of this method is to pre-load the relevant data before interacting with task files.
-    # We expect the consumers to call this subscibe method before calling other query-involved methods,
-    # like `getTaskFileLink`, `getTaskFilesByIds`, `downloadTaskFile`, `showTaskFilePreviewOrStartDownload` and alike.
-    # 
-    # An example usecase is to 
-    # - call `sub_handle = APP.justdo_file_interface.subscribeToTaskFiles()` in a Template's onCreated hook;
-    # - call `getTaskFilesByIds` in template helper to list the files under a task;
-    # - call `sub_handle.stop()` to stop the subscription.
-    # 
-    # The consumers are expected to interact with file systems using the file system's apis, 
-    # without the need of understanding or interacting with the underlying collection.
-    # 
+    # The consumers are expected to interact with your file systems using the justdo file interface apis, without the need
+    # of understanding or interacting with the underlying collection/s. You can assume that the consumer will not interact
+    # with the underlying collection/s that receives the subscription data. As such, this method is meant to allow you to
+    # prepare the necessary data before the consumer interacts with the bucket folder and folder's files.
+    #
+    # XXX the following should be copy-pastable to the browser console - and work.
+    # Interaction example:
+    # ```
+    # sub_handle = APP.justdo_file_interface.subscribeToBucketFolder("tasks", "task_id", {
+    #   onReady: ->
+    #     console.log(APP.justdo_file_interface.getBucketFolderFiles())
+    #     sub_handle.stop()
+    #   onStop: (err) ->
+    #     console.log("Subscription stopped", err)
+    # })
+    # ```
+
     throw @_error "not-implemented"
+
+  getBucketFolderFiles: (bucket_id, folder_name) ->
+
+
+  # 
+  # Client-only methods required to register a file system
+  # 
+  subscribeToTaskFiles: (task_id, callbacks) ->
+    @subscribeToBucketFolder "tasks", task_id, callbacks
+
+  getTaskFiles: (task_id) ->
+    @getBucketFolderFiles "tasks", task_id
 
   getFileSizeLimit: ->
     # Returns a number indicating the maximum file size for single file upload in bytes
@@ -40,7 +54,7 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # Note: The URL returned by this method is for downloading. It should not be used for previewing
     throw @_error "not-implemented"
 
-  getTaskFilesByIds: (file_ids, task_id) ->
+  getTaskFilesByIds: (task_id, file_ids) ->
     # Consumers are expected to call `subscribeToTaskFiles` before calling this method
     # 
     # Gets an array of file_ids and a task_id, returns an array of the corresponding file metadata objects that belong to the `task_id`.
