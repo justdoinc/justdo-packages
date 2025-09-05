@@ -49,40 +49,44 @@
       {{#if $and isFilesEnabled fileExists}}
         {{#with files}}
           <div class="files-container small">
-            {{#if existing_files}}
-              <div class="files-header text-muted">
-                <div>{{_ "inbound_emails_files_saved_to_files_tab"}}</div>
-              </div>
-            {{/if}}
-
             {{#each existing_files}}
               <div class="file-container">
                 <a href="#" class="show-preview-or-start-download text-info" title="{{name}}">
                   <div class="file-info">
                     <span class="type-logo {{typeClass}}"></span>
-                    <span class="file-name">{{name}}</span>
+                    <div class="file-name-wrapper">
+                      <span class="file-name">{{name}}</span>
+                      <span class="file-size">{{size}}</span>
+                    </div>
                   </div>
                 </a>
-                <span class="file-size text-muted">{{size}}</span>
               </div>
             {{/each}}
-            
+
             {{#each missing_files}}
               <div class="file-container">
                 <div class="file-info">
                   <span class="type-logo {{typeClass}}"></span>
-                  <span class="file-name">{{name}}</span>
+                  <div class="file-name-wrapper">
+                    <span class="file-name">{{name}}</span>
+                    <span class="file-size">{{size}}({{_ "inbound_emails_file_removed"}})</span>
+                  </div>
                 </div>
-                <span class="file-size text-muted">{{size}}({{_ "inbound_emails_file_removed"}})</span>
               </div>
             {{/each}}
-
+            {{#if existing_files}}
+              <div class="files-footer">
+                <div>{{_ "inbound_emails_files_saved_to_files_tab"}}</div>
+              </div>
+            {{/if}}
           </div>
         {{/with}}
       {{/if}}
-      <div dir="auto" class="message-body {{#if $and isFilesEnabled fileExists}}mt-2{{/if}}">
-        {{{body}}}
-      </div>
+      {{#if body}}
+        <div dir="auto" class="message-body {{#if $and isFilesEnabled fileExists}}mt-2{{/if}}">
+          {{{body}}}
+        </div>
+      {{/if}}
     </div>
   </div>
 </template>

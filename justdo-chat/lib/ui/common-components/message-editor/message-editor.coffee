@@ -260,8 +260,8 @@ Template.common_chat_message_editor.events
   "click .message-editor-send": (e, tpl) ->
     tpl.sendMessage(e)
     return
-  
-  "click .attach-files": (e, tpl) ->
+
+  "click .attach-files, click .files-count": (e, tpl) ->
     e.preventDefault()
     tpl.getFileInputElement().click()
     return
