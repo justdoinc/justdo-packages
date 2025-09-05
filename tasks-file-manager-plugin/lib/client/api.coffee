@@ -69,7 +69,7 @@ _.extend TasksFileManagerPlugin.prototype,
 
         return
       subscribeToTaskFiles: (task_id, cb) ->
-        return JD.subscribeItemsAugmentedFields [task_id], ["files"], {}, cb
+        return Meteor.subscribe self.tasks_files_collection_name, task_id, cb
       downloadTaskFile: (file_id, task_id) ->
         self.tasks_file_manager.downloadFile task_id, file_id, (err, url) ->
           if err
