@@ -2,7 +2,7 @@ _.extend TasksFileManagerPlugin.prototype,
   _setupPublications: -> 
     self = @
 
-    Meteor.publish "tfm_tasks_files", (task_id) ->
+    Meteor.publish TasksFileManagerPlugin.tasks_files_collection_name, (task_id) ->
       check task_id, String
       check @userId, String
       
