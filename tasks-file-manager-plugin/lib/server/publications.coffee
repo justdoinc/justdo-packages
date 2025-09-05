@@ -2,7 +2,7 @@ _.extend TasksFileManagerPlugin.prototype,
   _setupPublications: -> 
     self = @
 
-    Meteor.publish TasksFileManagerPlugin.tasks_files_collection_name, (task_id) ->
+    Meteor.publish TasksFileManagerPlugin.tasks_files_publication_name, (task_id) ->
       check task_id, String
       check @userId, String
       
@@ -29,14 +29,14 @@ _.extend TasksFileManagerPlugin.prototype,
         file.task_id = task_id
         file_id = file.id
         published_file_ids_set.add(file_id)
-        @added("tfmTaskFiles", file_id, file)
+        @added(TasksFileManagerPlugin.tasks_files_collection_name, file_id, file)
       changeFile = (file) =>
         file.task_id = task_id
         file_id = file.id
-        @changed("tfmTaskFiles", file_id, file)
+        @changed(TasksFileManagerPlugin.tasks_files_collection_name, file_id, file)
       removeFile = (file_id) =>
         published_file_ids_set.delete(file_id)
-        @removed("tfmTaskFiles", file_id)
+        @removed(TasksFileManagerPlugin.tasks_files_collection_name, file_id)
 
       tracker = cursor.observeChanges
         added: (id, fields) =>
