@@ -2,6 +2,15 @@ _.extend JustdoFileInterface.FileSystemPrototype,
   # 
   # Client-only methods required to register a file system
   # 
+  subscribeToTaskFilesCollection: (task_id, cb) ->
+    # Gets a task_id and optionally a cb, subscribes to file system's task files collection and returns the subscription handle
+    # Note: There's no guarentee that the subscription will be stopped with an error if the task does not exist or the user does not have access to the task.
+    # cb is guarenteed to be called only once in the following way:
+    #   - `onStop` callback of the subscription with `err` as the first param IF the subscription is stopped before becoming ready
+    #   - `onReady` callback of the subscription without param IF the subscription is ready
+    # This is to provide a mechanism for the caller to know when the subscription is ready or if it failed.
+    throw @_error "not-implemented"
+
   getFileSizeLimit: ->
     # Returns a number indicating the maximum file size for single file upload in bytes
     # Note: This method is called inside `APP.justdo_file_interface.uploadTaskFile`
@@ -67,15 +76,6 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # We'll ensure that the file size doesn't exceed the file system's `getFileSizeLimit` before trying to upload the file.
     # To be precise: before calling this method inside `APP.justdo_file_interface.uploadTaskFile`, the file size is checked against the
     # file system's `getFileSizeLimit` method to ensure it does not exceed the limit.
-    throw @_error "not-implemented"
-  
-  subscribeToTaskFilesCollection: (task_id, cb) ->
-    # Gets a task_id and optionally a cb, subscribes to file system's task files collection and returns the subscription handle
-    # Note: There's no guarentee that the subscription will be stopped with an error if the task does not exist or the user does not have access to the task.
-    # cb is guarenteed to be called only once in the following way:
-    #   - `onStop` callback of the subscription with `err` as the first param IF the subscription is stopped before becoming ready
-    #   - `onReady` callback of the subscription without param IF the subscription is ready
-    # This is to provide a mechanism for the caller to know when the subscription is ready or if it failed.
     throw @_error "not-implemented"
   
   downloadTaskFile: (file_id, task_id) ->
