@@ -12,8 +12,12 @@ Template.tasks_file_manager_files_preview.onCreated ->
   @sorted_previewable_files_under_task_rv = new ReactiveVar []
   @preview_link_rv = new ReactiveVar ""
   @active_file_index_rv = new ReactiveVar 0
+  @tasks_augmented_fields_sub = JD.subscribeItemsAugmentedFields [@data.task_id], ["files"]
 
   @autorun =>
+    if not @tasks_augmented_fields_sub.ready()
+      return
+
     files = APP.collections.TasksAugmentedFields.findOne(@data.task_id, {fields: {files: 1}})?.files
     previewable_files_under_task = _.chain files
       .filter (file) => 
@@ -141,3 +145,7 @@ Template.tasks_file_manager_files_preview.events
   "click .next-file": (e, tpl) ->
     tpl.showNextFile()
     return
+
+Template.tasks_file_manager_files_preview.onDestroyed ->
+  @tasks_augmented_fields_sub?.stop?()
+  return
