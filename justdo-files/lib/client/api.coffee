@@ -69,22 +69,7 @@ _.extend JustdoFiles.prototype,
 
         return
       subscribeToTaskFiles: (task_id, cb) ->
-        # Note: If cb is passed directly to the subscribeToTaskFiles directly,
-        # it's treated as the onReady callback, and the onStop callback is ignored.
-        # As such, the cb will not be called with the error if the subscription fails.
-        # So we need to use a sub_options object instead.
-        is_on_ready_cb_called = false
-        sub_options = 
-          onReady: ->
-            is_on_ready_cb_called = true
-            cb?()
-            return
-          onStop: (err) ->
-            if not is_on_ready_cb_called
-              cb? err
-            return
-        
-        return Meteor.subscribe "jdfTaskFiles", task_id, sub_options
+        return Meteor.subscribe "jdfTaskFiles", task_id, cb
       downloadTaskFile: (file_id, task_id) ->
         self.downloadFile file_id
         return
