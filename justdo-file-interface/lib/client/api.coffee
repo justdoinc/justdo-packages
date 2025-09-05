@@ -59,6 +59,8 @@ _.extend JustdoFileInterface.prototype,
     return
 
   subscribeToTaskFiles: (fs_id, task_id, cb) ->
+    # You are expected to call this method to load the relevant data
+    # before calling query-involved methods like `getTaskFileLink`, `getTaskFilesByIds`, `downloadTaskFile`, `showTaskFilePreviewOrStartDownload` and alike.
     fs = @_getFs fs_id
 
     return fs.subscribeToTaskFiles task_id, cb
