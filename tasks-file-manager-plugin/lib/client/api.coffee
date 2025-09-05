@@ -11,34 +11,26 @@ _.extend TasksFileManagerPlugin.prototype,
       getTaskFileLink: (file_id, task_id) ->
         return self.tasks_file_manager.getFileDownloadPath task_id, file_id
       getTaskFilesByIds: (file_ids, task_id) ->
-        normalized_files = []
-
         query = 
-          _id: task_id
-          files:
-            $elemMatch:
-              id: 
-                $in: file_ids
+          _id: 
+            $in: file_ids
         query_options = 
           fields:
-            "files.id": 1
-            "files.type": 1
-            "files.title": 1
-            "files.size": 1
-            "files.date_uploaded": 1
-            "files.user_uploaded": 1
-        APP.collections[self._getCollectionName()].find(query, query_options).forEach (doc) ->
-          files = _.filter doc.files, (file) -> file.id in file_ids
-          files = _.map files, (file) ->
-            ret = 
-              _id: file.id
-              type: file.type
-              name: file.title
-              size: file.size
-              uploaded_at: file.date_uploaded
-              uploaded_by: file.user_uploaded
-            return ret
-          normalized_files = normalized_files.concat files
+            "id": 1
+            "type": 1
+            "title": 1
+            "size": 1
+            "date_uploaded": 1
+            "user_uploaded": 1
+        normalized_files = tasks_file_collection.find(query, query_options).map (file) ->
+          ret = 
+            _id: file.id
+            type: file.type
+            name: file.title
+            size: file.size
+            uploaded_at: file.date_uploaded
+            uploaded_by: file.user_uploaded
+          return ret
 
         return normalized_files
       isFileTypePreviewable: (file_type) ->
@@ -49,8 +41,6 @@ _.extend TasksFileManagerPlugin.prototype,
           "task-field-edit.files"
         ]
         return APP.justdo_permissions.checkTaskPermissions permissions, task_id, user_id
-
-
       uploadTaskFile: (file, task_id, cb) ->
         self.tasks_file_manager.uploadFiles task_id, [file], (err, uploaded_files) ->
           if err?
