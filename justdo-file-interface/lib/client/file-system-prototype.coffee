@@ -28,11 +28,15 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     throw @_error "not-implemented"
   
   getTaskFileLink: (file_id, task_id) ->
+    # Consumers are expected to call `subscribeToTaskFiles` before calling this method
+    # 
     # Gets file_id and task_id, returns a URL to download a file belonging to a task
     # Note: The URL returned by this method is for downloading. It should not be used for previewing
     throw @_error "not-implemented"
 
   getTaskFilesByIds: (file_ids, task_id) ->
+    # Consumers are expected to call `subscribeToTaskFiles` before calling this method
+    # 
     # Gets an array of file_ids and a task_id, returns an array of the corresponding file metadata objects that belong to the `task_id`.
     #
     # The returned array order won't necessarily be the same as the order of the file_ids.
@@ -89,11 +93,15 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     throw @_error "not-implemented"
   
   downloadTaskFile: (file_id, task_id) ->
+    # Consumers are expected to call `subscribeToTaskFiles` before calling this method
+    # 
     # Gets a file_id and task_id, downloads a file from a task if it is accessible.
     # Note: This method may or may not throw an error if the file does not exist.
     throw @_error "not-implemented"
   
   showTaskFilePreviewOrStartDownload: (file, task_id, file_ids_to_show) ->
+    # Consumers are expected to call `subscribeToTaskFiles` before calling this method
+    # 
     # Gets a file, task_id and optionally an array of file_ids_to_show.
     # `file` can be a string or an object with the following properties:
     # {
