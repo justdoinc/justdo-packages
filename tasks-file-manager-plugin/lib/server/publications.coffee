@@ -79,7 +79,7 @@ _.extend TasksFileManagerPlugin.prototype,
           published_file_ids_set.clear()
           
       @onStop =>
-        tracker.stop()
+        tracker?.stop()
         return
       
       @ready()
