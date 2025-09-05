@@ -3,14 +3,22 @@ _.extend JustdoFileInterface.FileSystemPrototype,
   # Client-only methods required to register a file system
   # 
   subscribeToTaskFiles: (task_id, cb) ->
-    # Reactive resource
-    # 
     # Gets a task_id and optionally a cb, subscribes to file system's task files collection and returns the subscription handle
-    # Note: There's no guarentee that the subscription will be stopped with an error if the task does not exist or the user does not have access to the task.
     # cb is guarenteed to be called only once in the following way:
     #   - `onStop` callback of the subscription with `err` as the first param IF the subscription is stopped before becoming ready
     #   - `onReady` callback of the subscription without param IF the subscription is ready
-    # This is to provide a mechanism for the caller to know when the subscription is ready or if it failed.
+    #   This is to provide a mechanism for the caller to know when the subscription is ready or if it failed.
+    #   Note: There's no guarentee that the subscription will be stopped with an error if the task does not exist or the user does not have access to the task.
+    # 
+    # This is a reactive resource that calls Meteor.subscribe internally.
+    # As such, if this method is called inside an autorun, the subscription will be stopped automatically upon invalidation of the autorun.
+    # 
+    # The purpose of this method is to pre-load the relevant data before interacting with task files.
+    # We expect the consumers to call this subscibe method before calling other query-involved methods,
+    # like `getTaskFileLink`, `getTaskFilesByIds`, `downloadTaskFile`, `showTaskFilePreviewOrStartDownload` and alike.
+    # The consumers are expected to interact with file systems using their apis, 
+    # without the need of understanding or interacting with the underlying collection directly.
+    # 
     throw @_error "not-implemented"
 
   getFileSizeLimit: ->
