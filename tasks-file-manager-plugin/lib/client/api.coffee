@@ -3,7 +3,7 @@ _.extend TasksFileManagerPlugin.prototype,
     self = @
 
     # Currently used only with justdo-file-interface
-    tasks_file_collection = new Mongo.Collection self.tasks_files_collection_name
+    tasks_file_collection = new Mongo.Collection TasksFileManagerPlugin.tasks_files_collection_name
     
     ret = 
       getFileSizeLimit: -> 
@@ -59,7 +59,7 @@ _.extend TasksFileManagerPlugin.prototype,
 
         return
       subscribeToTaskFiles: (task_id, cb) ->
-        return Meteor.subscribe self.tasks_files_collection_name, task_id, cb
+        return Meteor.subscribe TasksFileManagerPlugin.tasks_files_collection_name, task_id, cb
       downloadTaskFile: (file_id, task_id) ->
         self.tasks_file_manager.downloadFile task_id, file_id, (err, url) ->
           if err
