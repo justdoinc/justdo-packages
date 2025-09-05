@@ -16,6 +16,12 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # The purpose of this method is to pre-load the relevant data before interacting with task files.
     # We expect the consumers to call this subscibe method before calling other query-involved methods,
     # like `getTaskFileLink`, `getTaskFilesByIds`, `downloadTaskFile`, `showTaskFilePreviewOrStartDownload` and alike.
+    # 
+    # An example usecase is to 
+    # - call `sub_handle = APP.justdo_file_interface.subscribeToTaskFiles` in a Template's onCreated hook;
+    # - call `getTaskFilesByIds` in template helper to list the files under a task;
+    # - call `sub_handle.stop()` to stop the subscription.
+    # 
     # The consumers are expected to interact with file systems using their apis, 
     # without the need of understanding or interacting with the underlying collection directly.
     # 
