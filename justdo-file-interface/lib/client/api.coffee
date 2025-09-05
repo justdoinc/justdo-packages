@@ -19,11 +19,14 @@ _.extend JustdoFileInterface.prototype,
     return limit
 
   getTaskFileLink: (fs_id, file_id, task_id) ->
+    # Important: You are expected to call `subscribeToTaskFiles` before calling this method
     fs = @_getFs fs_id
 
     return fs.getTaskFileLink file_id, task_id
   
   getTaskFilesByIds: (fs_id, file_ids, task_id) ->
+    # Important: You are expected to call `subscribeToTaskFiles` before calling this method
+    # 
     # Important: This method return file objects with mostly metadata fields. The field names are normalized to be consistent across file systems.
     # This is meant to facilitate usecases like showing a list of files.
     # Since the field names are normalized, it is discouraged to use this method in other file system methods
@@ -66,11 +69,13 @@ _.extend JustdoFileInterface.prototype,
     return fs.subscribeToTaskFiles task_id, cb
   
   downloadTaskFile: (fs_id, task_id) ->
+    # Important: You are expected to call `subscribeToTaskFiles` before calling this method
     fs = @_getFs fs_id
 
     return fs.downloadTaskFile task_id
 
   showTaskFilePreviewOrStartDownload: (fs_id, file, task_id, file_ids_to_show) ->
+    # Important: You are expected to call `subscribeToTaskFiles` before calling this method
     fs = @_getFs fs_id
 
     return fs.showTaskFilePreviewOrStartDownload file, task_id, file_ids_to_show
