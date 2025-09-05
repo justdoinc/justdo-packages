@@ -2,7 +2,9 @@ _.extend JustdoFileInterface.FileSystemPrototype,
   # 
   # Client-only methods required to register a file system
   # 
-  subscribeToTaskFilesCollection: (task_id, cb) ->
+  subscribeToTaskFiles: (task_id, cb) ->
+    # Reactive resource
+    # 
     # Gets a task_id and optionally a cb, subscribes to file system's task files collection and returns the subscription handle
     # Note: There's no guarentee that the subscription will be stopped with an error if the task does not exist or the user does not have access to the task.
     # cb is guarenteed to be called only once in the following way:
