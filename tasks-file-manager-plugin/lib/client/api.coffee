@@ -1,6 +1,9 @@
 _.extend TasksFileManagerPlugin.prototype,
   _getEnvSpecificFsOptions: ->
     self = @
+
+    # Currently used only with justdo-file-interface
+    tasks_file_collection = new Mongo.Collection self.tasks_files_collection_name
     
     ret = 
       getFileSizeLimit: -> 
