@@ -35,6 +35,13 @@ _.extend JustdoFiles.prototype,
 
     return
 
+  _getEnvSpecificFsOptions: ->
+    self = @
+    
+    ret = {}
+
+    return ret
+
   tasksFilesPublicationHandler: (publish_this, task_id, user_id) ->
     check task_id, String
     check user_id, String

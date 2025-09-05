@@ -6,6 +6,7 @@ _.extend JustdoFiles.prototype,
     # tick in which we create the object instance.
 
     @_setupFilesCollection()
+    @_registerFilesDriver()
 
     return
 
@@ -18,6 +19,17 @@ _.extend JustdoFiles.prototype,
     if @destroyed
       return
 
+    return
+  
+  _registerFilesDriver: ->
+    self = @
+
+    tasks_files_driver_options = {}
+    
+    if @_getEnvSpecificFsOptions?
+      tasks_files_driver_options = _.extend tasks_files_driver_options, @_getEnvSpecificFsOptions()
+      
+    APP.justdo_file_interface.registerFs "#{JustdoFiles.fs_id}-tasks-files", tasks_files_driver_options
     return
 
   isPluginInstalledOnProjectDoc: (project_doc) ->
@@ -32,8 +44,12 @@ _.extend JustdoFiles.prototype,
 
     if _.isEmpty(user_id) or _.isEmpty(task_id)
       return false
+    
+    collection_name = "Tasks"
+    if Meteor.isClient
+      collection_name = "TasksAugmentedFields"
 
-    if not @tasks_collection.findOne({_id: task_id, users: user_id})?
+    if not APP.collections[collection_name].findOne({_id: task_id, users: user_id})?
       return false
 
     return true

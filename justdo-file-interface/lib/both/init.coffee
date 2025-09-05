@@ -1,6 +1,16 @@
 default_options = {}
 
-options_schema = null
+options_schema =
+  both:
+    projects_collection:
+      type: "skip-type-check"
+      optional: false
+      bind_to_instance: true
+
+    tasks_collection:
+      type: "skip-type-check"
+      optional: false
+      bind_to_instance: true
 
 # options_schema
 # ==============
@@ -47,7 +57,7 @@ options_schema = null
 #       tasks_collection:
 #         type: "skip-type-check"
 #         optional: false
-#         bind_to_instance: true # will be available under @tasks_collection
+#         bind_to_instance: true
 #       op_b:
 #         type: Number
 #         optional: true
@@ -56,26 +66,28 @@ options_schema = null
 #       op_c:
 #         type: Number
 #         optional: false
-#     server
+#     server:
 #       op_d:
 #         type: Number
 #         optional: true
 #         defaultValue: 30
 
-
-TasksFileManagerPlugin = (options) ->
-  # skeleton-version: v0.0.8
+JustdoFileInterface = (options) ->
+  # skeleton-version: v3.0.1
 
   # Developer, avoid changing this constuctor, to do stuff on init
   # for both server & client, use below the: @_bothImmediateInit()
 
-  EventEmitter.call this
+  EventEmitter.call @
 
   @destroyed = false
 
-  @logger = Logger.get("tasks-file-manager-plugin")
+  @logger = Logger.get("justdo-file-interface")
+  @JA = JustdoAnalytics.setupConstructorJA(@, "justdo-file-interface")
 
   @logger.debug "Init begin"
+
+  @_on_destroy_procedures = []
 
   @options = _.extend {}, default_options, options
   if not _.isEmpty(options_schema)
@@ -101,6 +113,8 @@ TasksFileManagerPlugin = (options) ->
   JustdoHelpers.loadEventEmitterHelperMethods(@)
   @loadEventsFromOptions() # loads @options.events, if exists
 
+  @_on_destroy_procedures = []
+
   @_attachCollectionsSchemas()
 
   if Meteor.isClient
@@ -110,6 +124,8 @@ TasksFileManagerPlugin = (options) ->
         @logger.debug "Enclosing computation invalidated, destroying"
         @destroy() # defined in client/api.coffee
 
+        return
+
     # on the client, call @_immediateInit() in an isolated
     # computation to avoid our init procedures from affecting
     # the encapsulating computation (if any)
@@ -117,6 +133,9 @@ TasksFileManagerPlugin = (options) ->
       @_bothImmediateInit()
 
       @_immediateInit()
+
+      return
+
   else
     @_bothImmediateInit()
 
@@ -126,55 +145,33 @@ TasksFileManagerPlugin = (options) ->
     @_bothDeferredInit()
     @_deferredInit()
 
+    return
+
   @logger.debug "Init done"
 
   return @
 
-Util.inherits TasksFileManagerPlugin, EventEmitter
+Util.inherits JustdoFileInterface, EventEmitter
 
-_.extend TasksFileManagerPlugin.prototype,
+_.extend JustdoFileInterface.prototype,
   _error: JustdoHelpers.constructor_error
 
-  _bothImmediateInit: ->
-    # @_bothImmediateInit runs before the specific env's @_immediateInit()
-
-    # Add here code that should run, in the Server and Client, during the JS
-    # tick in which we create the object instance.
-
-    options =
-      tasks_collection: APP.collections.Tasks
-
-    if Meteor.isServer
-      # We assign to _env and not to env to avoid env becoming closure var
-
-      _env = process.env
-
-      options.secret = _env.FILESTACK_SECRET
-      options.removed_projects_tasks_archive_collection = APP.collections.RemovedProjectsTasksArchiveCollection
-    else
-      _env = env
-
-    options.api_key = _env.FILESTACK_KEY
-
-    @tasks_file_manager = new TasksFileManager options
-
-    if Meteor.isClient
-      @filestackReadyDfd = new $.Deferred()
-
-      if APP.filestack_base.isInitiated()
-        @filestackReadyDfd.resolve()
-      else
-        APP.filestack_base.once "filestack-ready", =>
-          @filestackReadyDfd.resolve()
-    
-    @_registerFilesDriver()
+  onDestroy: (proc) ->
+    # not to be confused with @destroy, onDestroy registers procedures to be called by @destroy()
+    @_on_destroy_procedures.push proc
 
     return
 
-  _bothDeferredInit: ->
-    # @_bothDeferredInit runs before the specific env's @_deferredInit()
+  destroy: ->
+    if @destroyed
+      @logger.debug "Destroyed already"
 
-    # Add here code that should run, in the Server and Client, after the JS
-    # tick in which we created the object instance.
+      return
+
+    _.each @_on_destroy_procedures, (proc) -> proc()
+
+    @destroyed = true
+
+    @logger.debug "Destroyed"
 
     return

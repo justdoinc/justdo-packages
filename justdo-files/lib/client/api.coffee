@@ -10,12 +10,89 @@ _.extend JustdoFiles.prototype,
 
     return
 
-  showPreviewOrStartDownload: (task_id, file) ->
+  _getEnvSpecificFsOptions: ->
+    self = @
+    
+    ret = 
+      getFileSizeLimit: -> self.options.max_file_size
+      getTaskFileLink: (file_id, task_id) ->
+        return self.getShareableLink(file_id)
+      getTaskFilesByIds: (file_ids, task_id) ->
+        query =
+          _id: 
+            $in: file_ids
+          "meta.task_id": task_id
+        query_options = 
+          fields:
+            _id: 1
+            type: 1
+            name: 1
+            size: 1
+            userId: 1
+            "meta.upload_date": 1
+
+        normalized_files = self.tasks_files.find(query, query_options).map (file) ->
+          ret = 
+            _id: file._id
+            type: file.type
+            name: file.name
+            size: file.size
+            uploaded_by: file.userId
+            uploaded_at: file.meta?.upload_date
+          
+          return ret
+
+        return normalized_files
+      isFileTypePreviewable: (file_type) ->
+        return self.isFileTypePreviewable file_type
+      isUserAllowedToUploadTaskFile: (task_id, user_id) ->
+        return self.isUserAllowedToAccessTasksFiles(task_id, user_id)
+      uploadTaskFile: (file, task_id, cb) ->
+        options = 
+          task_id: task_id
+        try
+          upload = self.uploadFile(file, options)
+        catch err
+          cb err
+          return
+
+        upload.on "end", (err, file_obj) ->
+          if err? and not upload.err_msg?
+            upload.err_msg = err.reason or err
+          
+          normalized_file_obj = _.pick file_obj, ["_id", "name", "type", "size"]
+          cb err, normalized_file_obj
+
+          return
+        
+        upload.start()
+
+        return
+      subscribeToTaskFiles: (task_id, cb) ->
+        return Meteor.subscribe "jdfTaskFiles", task_id, cb
+      downloadTaskFile: (file_id, task_id) ->
+        self.downloadFile file_id
+        return
+      showTaskFilePreviewOrStartDownload: (file, task_id, file_ids_to_show) ->
+        self.showPreviewOrStartDownload task_id, file, file_ids_to_show
+    return ret
+
+  showPreviewOrStartDownload: (task_id, file, file_ids_to_show) ->
+    # file_ids_to_show is an optional array of file ids to limit the files shown in the preview dialog
+    if _.isString file
+      file = @tasks_files.find(file).fetch()[0]
+    
+    if not _.isEmpty(file_ids_to_show) and (not _.find file_ids_to_show, (file_id) -> file_id is file._id)
+      # Ensure the file to preview is in the file_ids_to_show
+      # A deep copy is needed to avoid modifying the original array
+      file_ids_to_show = Array.from file_ids_to_show
+      file_ids_to_show.push file._id
+
     if APP.justdo_files.isFileTypePreviewable(file.type)
       # Show preview in bootbox
 
       message_template =
-        JustdoHelpers.renderTemplateInNewNode(Template.justdo_files_files_preview, {task_id: task_id, file: file})
+        JustdoHelpers.renderTemplateInNewNode(Template.justdo_files_files_preview, {task_id: task_id, file: file, file_ids_to_show: file_ids_to_show})
 
       bootbox.dialog
         title: file.name
@@ -110,11 +187,32 @@ _.extend JustdoFiles.prototype,
   # file: The file to upload
   # task_id: The task id to upload the file to
   # project_id: The project id to upload the file to
-  #
   # project_id is optional, if not provided, the task's project_id will be used
-  uploadFile: (file, task_id, project_id) ->
-    check task_id, String
-    check project_id, Match.Maybe String
+  # meta: Metadata object for the file.
+  # meta is optional. It's `task_id` and `project_id` will always be the same as the one in options.
+  uploadFileOptionsSchema: new SimpleSchema
+    task_id:
+      type: String
+    project_id:
+      type: String
+      optional: true
+    meta:
+      type: Object
+      blackbox: true
+      defaultValue: {}
+  uploadFile: (file, options) ->
+    check file, File
+    
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @uploadFileOptionsSchema,
+        options,
+        {throw_on_error: true}
+      )
+    options = cleaned_val
+    project_id = options.project_id
+    task_id = options.task_id
+    meta = options.meta
 
     if not project_id?
       query_options = 
@@ -128,7 +226,7 @@ _.extend JustdoFiles.prototype,
 
     file_upload_options =
       file: file
-      meta:
+      meta: _.extend meta,
         task_id: task_id
         project_id: project_id
       collection_name: "tasks_files"

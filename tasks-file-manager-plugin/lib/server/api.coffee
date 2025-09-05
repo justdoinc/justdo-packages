@@ -10,3 +10,10 @@ _.extend TasksFileManagerPlugin.prototype,
     @logger.debug "Destroyed"
 
     return
+  
+  _getEnvSpecificFsOptions: ->
+    self = @
+    
+    ret = {}
+
+    return ret

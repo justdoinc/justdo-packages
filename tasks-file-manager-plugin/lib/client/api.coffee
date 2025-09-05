@@ -1,13 +1,104 @@
 _.extend TasksFileManagerPlugin.prototype,
-  showPreviewOrStartDownload: (task_id, file) ->
-    conv_matrix = @tasks_file_manager.getConversionMartix()
-    preview_supported_formats = _.union conv_matrix["pdf"], conv_matrix["jpg"]
+  _getEnvSpecificFsOptions: ->
+    self = @
 
-    if (file.type in preview_supported_formats) or (file.type.indexOf("video/") is 0)
+    # Currently used only with justdo-file-interface
+    tasks_file_collection = new Mongo.Collection TasksFileManagerPlugin.tasks_files_collection_name
+    
+    ret = 
+      getFileSizeLimit: -> 
+        return env.FILESTACK_MAX_FILE_SIZE_BYTES
+      getTaskFileLink: (file_id, task_id) ->
+        return self.tasks_file_manager.getFileDownloadPath task_id, file_id
+      getTaskFilesByIds: (file_ids, task_id) ->
+        query = 
+          _id: 
+            $in: file_ids
+        query_options = 
+          fields:
+            "id": 1
+            "type": 1
+            "title": 1
+            "size": 1
+            "date_uploaded": 1
+            "user_uploaded": 1
+        normalized_files = tasks_file_collection.find(query, query_options).map (file) ->
+          ret = 
+            _id: file.id
+            type: file.type
+            name: file.title
+            size: file.size
+            uploaded_at: file.date_uploaded
+            uploaded_by: file.user_uploaded
+          return ret
+
+        return normalized_files
+      isFileTypePreviewable: (file_type) ->
+        return self.isFileTypePreviewable file_type
+      isUserAllowedToUploadTaskFile: (task_id, user_id) ->
+        permissions = [
+          "task-field-edit.#{TasksFileManager.files_count_field_id}",
+          "task-field-edit.files"
+        ]
+        return APP.justdo_permissions.checkTaskPermissions permissions, task_id, user_id
+      uploadTaskFile: (file, task_id, cb) ->
+        self.tasks_file_manager.uploadFiles task_id, [file], (err, uploaded_files) ->
+          if err?
+            cb err
+            return
+
+          uploaded_file = uploaded_files[0]
+          
+          # Normalize the file object to match the JustdoFiles file object
+          normalized_uploaded_file = 
+            _id: uploaded_file.url.substr(uploaded_file.url.lastIndexOf("/")+1)
+            name: uploaded_file.filename
+            type: uploaded_file.mimetype
+            size: uploaded_file.size
+          cb null, normalized_uploaded_file
+
+        return
+      subscribeToTaskFiles: (task_id, cb) ->
+        return Meteor.subscribe TasksFileManagerPlugin.tasks_files_publication_name, task_id, cb
+      downloadTaskFile: (file_id, task_id) ->
+        self.tasks_file_manager.downloadFile task_id, file_id, (err, url) ->
+          if err
+            console.log(err)
+          return
+        
+        return
+      showTaskFilePreviewOrStartDownload: (file, task_id, file_ids_to_show) ->
+        if _.isString file
+          file = tasks_file_collection.findOne(file)
+        else
+          file = _.extend {}, file
+        
+        if (not file.id?) and (file._id?)
+          file.id = file._id
+        
+        if (not file.title?) and (file.name?)
+          file.title = file.name
+
+        self.showPreviewOrStartDownload task_id, file, file_ids_to_show
+    return ret
+
+  showPreviewOrStartDownload: (task_id, file, file_ids_to_show) ->
+    # file_ids_to_show is an optional array of file ids to limit the files shown in the preview dialog
+    if _.isString file
+      task = APP.collections.TasksAugmentedFields.findOne(task_id, {fields: {files: 1}})
+      file = _.find task.files, (task_file) -> task_file.id is file
+    
+    if not _.isEmpty(file_ids_to_show) and (not _.find file_ids_to_show, (file_id) -> file_id is file.id)
+      # Ensure the file to preview is in the file_ids_to_show
+      # A deep copy is needed to avoid modifying the original array
+      file_ids_to_show = Array.from file_ids_to_show
+      file_ids_to_show.push file.id
+
+    if @isFileTypePreviewable file.type
       # Show preview in bootbox
 
       message_template =
-        JustdoHelpers.renderTemplateInNewNode(Template.tasks_file_manager_files_preview, {task_id: task_id, file: file})
+        JustdoHelpers.renderTemplateInNewNode(Template.tasks_file_manager_files_preview, {task_id: task_id, file: file, file_ids_to_show: file_ids_to_show})
 
       bootbox.dialog
         title: file.title
