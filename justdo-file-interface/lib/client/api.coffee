@@ -61,7 +61,21 @@ _.extend JustdoFileInterface.prototype,
 
     return
 
-  subscribeToTaskFiles: (fs_id, task_id, cb) ->
+  subscribeToTaskFiles: (task_id, callbacks, fs_id) ->
+    # IMPORTANT! Before calling any tasks methods, you are expected to call this method to load the relevant data.
+    #
+    # Subscribes to the task files collection of the file system. The precise collection and subscription
+    # is determined by the file system, and you shouldn't interact directly with the collection (as it is
+    # internal to the file system).
+    #
+    # This is a reactive resource that calls Meteor.subscribe internally.
+    # As such, if this method is called inside an autorun, the subscription will be stopped automatically upon invalidation of the autorun.
+    #
+    # Receives a task_id and a callbacks object/function, the callbacks object/function is of the exact
+    # same format as the callbacks object/function passed to Meteor.subscribe, refer to that API for more details.
+    #
+    # fs_id is optional, if not provided, the current default file system will be used.
+    #
     # You are expected to call this method to load the relevant data
     # before calling query-involved methods like `getTaskFileLink`, `getTaskFilesByIds`, `downloadTaskFile`, `showTaskFilePreviewOrStartDownload` and alike.
     fs = @_getFs fs_id
