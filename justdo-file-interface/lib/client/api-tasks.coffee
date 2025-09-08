@@ -1,5 +1,5 @@
 _.extend JustdoFileInterface.prototype,
-  subscribeToTaskFiles: (task_id, callbacks, fs_id) ->
+  subscribeToTaskFiles: (task_id, callbacks) ->
     # IMPORTANT! Before calling any tasks methods, you are expected to call this method to load the relevant data.
     #
     # Subscribes to the task files collection of the file system. The precise collection and subscription
@@ -12,19 +12,10 @@ _.extend JustdoFileInterface.prototype,
     # Receives a task_id and a callbacks object/function, the callbacks object/function is of the exact
     # same format as the callbacks object/function passed to Meteor.subscribe, refer to that API for more details.
     #
-    # fs_id is optional, if not provided, the current default file system will be used.
-    #
     # You are expected to call this method to load the relevant data
     # before calling query-involved methods like `getTaskFileLink`, `getTaskFilesByIds`, `downloadTaskFile`, `showTaskFilePreviewOrStartDownload` and alike.
-    fs = @_getFs()
 
-    # Note: If cb is passed to the subscribeToTaskFiles directly,
-    # it's treated as the onReady callback, and the onStop callback is ignored.
-    # As such, the cb will not be called with the error if the subscription fails.
-    # So we need to use a sub_options object instead.
-
-    return fs.subscribeToTaskFiles task_id, sub_options
-
+    return @subscribeToBucketFolder "tasks", task_id, callbacks
 
   getTaskFileLink: (task_id, file_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
