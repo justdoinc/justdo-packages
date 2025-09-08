@@ -32,11 +32,16 @@ _.extend JustdoFileInterface.FileSystemPrototype,
 
     throw @_error "not-implemented"
 
-  getBucketFolderFiles: (bucket_id, folder_name) ->
-    # Gets a bucket_id and a folder_name, returns an array of file objects under it.
+  getBucketFolderFiles: (bucket_id, folder_names, query, query_options) ->
+    # Gets a bucket_id and an array of folder_names, and optionally query and query_options, returns an array of file objects under it.
+    # `query` and `query_options` are in the same format of the ones used in Mongo.
+    # It is the file system provider's responsibility to ensure that the `bucket_id` and `folder_names` are taking precedence over the `query` and `query_options`.
+    # To facilitate this, the `query` and `query_options` are shallow-cloned before passing them to the file system provider.
+    # 
     # "bucket" is a category of files, for example "tasks";
-    # "folder_name" is the identifier that allows the file system to find the associated files,
+    # "folder_names" are the identifier that allows the file system to find the associated files,
     # for example `task_id` for "tasks" bucket.
+    # 
     # Simply put, to get all the files under a task, the consumer would call `getBucketFolderFiles("tasks", task_id)`.
     throw @_error "not-implemented"
 
