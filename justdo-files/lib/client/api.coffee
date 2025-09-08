@@ -64,7 +64,18 @@ _.extend JustdoFiles.prototype,
         collection_name = @_requireBucketCollectionName(bucket_id)
         query = _.extend query,
           [collection_meta.folder_identifing_field]: folder_name
-        return self[collection_name].find(query, query_options).fetch()
+        normalized_files = self[collection_name].find(query, query_options).map (file) ->
+          ret = 
+            _id: file._id
+            type: file.type
+            name: file.name
+            size: file.size
+            uploaded_by: file.userId
+            uploaded_at: file.meta?.upload_date
+          
+          return ret
+
+        return normalized_files
       downloadTaskFile: (task_id, file_id) ->
         self.downloadFile file_id
         return
