@@ -101,7 +101,7 @@ _.extend JustdoFileInterface.FileSystemApis,
     # A usecase for this method is to check whether a user is allowed to upload a file before showing the upload button.
     throw @_error "not-implemented"
 
-  uploadTaskFile: (file, task_id, cb) ->
+  uploadTaskFile: (task_id, file, cb) ->
     # Gets a File (the native browser file object), task_id and optionally a cb, uploads the file to the task.
     #
     # cb will be called with the following params: (err, uploaded_file)
