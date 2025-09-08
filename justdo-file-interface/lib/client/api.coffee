@@ -40,7 +40,7 @@ _.extend JustdoFileInterface.prototype,
 
     return fs.subscribeToBucketFolder bucket_id, folder_name, callbacks
 
-  getBucketFolderFiles: (bucket_id, folder_names, query, query_options) ->
+  getBucketFolderFiles: (bucket_id, folder_name, query, query_options) ->
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method
     # 
     # Important: This method return file objects with mostly metadata fields. The field names are normalized to be consistent across file systems.
@@ -48,11 +48,8 @@ _.extend JustdoFileInterface.prototype,
     # Since the field names are normalized, it is discouraged to use this method in other file system methods
     fs = @_getFs()
 
-    if _.isString folder_names
-      folder_names = [folder_names]
-
     query = _.extend {}, query
     query_options = _.extend {}, query_options
 
-    return fs.getBucketFolderFiles bucket_id, folder_names, query, query_options
+    return fs.getBucketFolderFiles bucket_id, folder_name, query, query_options
   
