@@ -30,6 +30,16 @@ _.extend JustdoFileInterface.prototype,
     
     fs_obj = Object.create(JustdoFileInterface.FileSystemPrototype)
     _.extend fs_obj, options
+
+    # Ensure fs_obj doesn't contain any properties that are meant to be implemented by justd-file-interface
+    fs_obj_keys = _.keys fs_obj
+    forced_fs_obj_keys = _.keys JustdoFileInterface.FileSystemApis
+    forced_key_in_fs = _.intersection fs_obj_keys, forced_fs_obj_keys
+    if not _.isEmpty forced_key_in_fs
+      throw @_error "invalid-argument", "File system '#{fs_id}' contains properties that are not allowed: #{forced_key_in_fs.join(", ")}"
+
+    # Extend fs_obj with the file system methods implemented by justd-file-interface
+    _.extend fs_obj, JustdoFileInterface.FileSystemApis
     fs_obj.fs_id = fs_id
 
     @_registered_fs[fs_id] = fs_obj

@@ -1,4 +1,7 @@
 _.extend JustdoFileInterface.FileSystemPrototype,
+  # 
+  # Client-only methods required to register a file system
+  # 
   subscribeToBucketFolder: (bucket_id, folder_name, callbacks) ->
     # We require the consumers to call this method before calling other bucket folder methods.
     # When bucket folder and folder's files methods are called - you can assume that the relevant
@@ -30,10 +33,11 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     throw @_error "not-implemented"
 
   getBucketFolderFiles: (bucket_id, folder_name) ->
+    throw @_error "not-implemented"
 
-
+_.extend JustdoFileInterface.FileSystemApis,
   # 
-  # Client-only methods required to register a file system
+  # Client-only file system methods implemented by justd-file-interface
   # 
   subscribeToTaskFiles: (task_id, callbacks) ->
     @subscribeToBucketFolder "tasks", task_id, callbacks
