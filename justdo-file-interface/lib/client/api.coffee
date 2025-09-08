@@ -9,7 +9,7 @@ _.extend JustdoFileInterface.prototype,
     return
 
   getFileSizeLimit: (fs_id) ->
-    fs = @_getFs fs_id
+    fs = @_getFs()
 
     limit = fs.getFileSizeLimit()
 
@@ -18,19 +18,19 @@ _.extend JustdoFileInterface.prototype,
 
     return limit
 
-  getTaskFileLink: (fs_id, file_id, task_id) ->
+  getTaskFileLink: (file_id, task_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
-    fs = @_getFs fs_id
+    fs = @_getFs()
 
     return fs.getTaskFileLink file_id, task_id
   
-  getTaskFilesByIds: (fs_id, file_ids, task_id) ->
+  getTaskFilesByIds: (file_ids, task_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
     # 
     # Important: This method return file objects with mostly metadata fields. The field names are normalized to be consistent across file systems.
     # This is meant to facilitate usecases like showing a list of files.
     # Since the field names are normalized, it is discouraged to use this method in other file system methods
-    fs = @_getFs fs_id
+    fs = @_getFs()
 
     if _.isString(file_ids)
       file_ids = [file_ids]
@@ -39,18 +39,18 @@ _.extend JustdoFileInterface.prototype,
 
     return files
 
-  isFileTypePreviewable: (fs_id, file_type) ->
-    fs = @_getFs fs_id
+  isFileTypePreviewable: (file_type) ->
+    fs = @_getFs()
 
     return fs.isFileTypePreviewable file_type
 
-  isUserAllowedToUploadTaskFile: (fs_id, task_id, user_id) ->
-    fs = @_getFs fs_id
+  isUserAllowedToUploadTaskFile: (task_id, user_id) ->
+    fs = @_getFs()
 
     return fs.isUserAllowedToUploadTaskFile task_id, user_id
 
-  uploadTaskFile: (fs_id, file, task_id, cb) ->
-    fs = @_getFs fs_id
+  uploadTaskFile: (file, task_id, cb) ->
+    fs = @_getFs()
 
     file_size_limit = @getFileSizeLimit fs.fs_id
     if file_size_limit? and file.size > file_size_limit
@@ -78,7 +78,7 @@ _.extend JustdoFileInterface.prototype,
     #
     # You are expected to call this method to load the relevant data
     # before calling query-involved methods like `getTaskFileLink`, `getTaskFilesByIds`, `downloadTaskFile`, `showTaskFilePreviewOrStartDownload` and alike.
-    fs = @_getFs fs_id
+    fs = @_getFs()
 
     # Note: If cb is passed to the subscribeToTaskFiles directly,
     # it's treated as the onReady callback, and the onStop callback is ignored.
@@ -97,14 +97,14 @@ _.extend JustdoFileInterface.prototype,
 
     return fs.subscribeToTaskFiles task_id, sub_options
   
-  downloadTaskFile: (fs_id, task_id) ->
+  downloadTaskFile: (task_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
-    fs = @_getFs fs_id
+    fs = @_getFs()
 
     return fs.downloadTaskFile task_id
 
-  showTaskFilePreviewOrStartDownload: (fs_id, file, task_id, file_ids_to_show) ->
+  showTaskFilePreviewOrStartDownload: (file, task_id, file_ids_to_show) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
-    fs = @_getFs fs_id
+    fs = @_getFs()
 
     return fs.showTaskFilePreviewOrStartDownload file, task_id, file_ids_to_show
