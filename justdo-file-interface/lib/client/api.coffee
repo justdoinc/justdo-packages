@@ -8,6 +8,18 @@ _.extend JustdoFileInterface.prototype,
 
     return
 
+  getFileCategory: (file_type) ->
+    if file_type.toLowerCase().indexOf "image/" is 0
+      return "image"
+
+    if file_type.toLowerCase().indexOf "video/" is 0
+      return "video"
+      
+    if file_type.toLowerCase().indexOf "application/pdf" is 0
+      return "pdf"
+
+    return "other"
+
   getFileSizeLimit: (fs_id) ->
     fs = @_getFs()
 
