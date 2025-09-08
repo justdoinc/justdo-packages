@@ -49,8 +49,6 @@ _.extend JustdoFileInterface.FileSystemApis,
   # 
   # Client-only file system methods implemented by justd-file-interface
   # 
-  subscribeToTaskFiles: (task_id, callbacks) ->
-    @subscribeToBucketFolder "tasks", task_id, callbacks
 
   getTaskFiles: (task_id) ->
     @getBucketFolderFiles "tasks", task_id
