@@ -29,7 +29,7 @@ _.extend JustdoFileInterface.prototype,
       throw @_error "missing-argument", "File system ID is required"
     
     fs_obj = Object.create(JustdoFileInterface.FileSystemPrototype)
-    _.extend fs_obj, JustdoFileInterface.FileSystemApis, options
+    _.extend fs_obj, options
 
     fs_obj.fs_id = fs_id
 
