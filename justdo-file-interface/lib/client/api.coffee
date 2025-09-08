@@ -18,11 +18,11 @@ _.extend JustdoFileInterface.prototype,
 
     return limit
 
-  getTaskFileLink: (file_id, task_id) ->
+  getTaskFileLink: (task_id, file_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
     fs = @_getFs()
 
-    return fs.getTaskFileLink file_id, task_id
+    return fs.getTaskFileLink task_id, file_id
   
   getTaskFilesByIds: (file_ids, task_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method

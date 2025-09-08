@@ -29,7 +29,7 @@ _.extend JustdoFiles.prototype,
           throw self._error "not-supported", "No publication exists for bucket #{bucket_id}"
         return publication_name
       getFileSizeLimit: -> self.options.max_file_size
-      getTaskFileLink: (file_id, task_id) ->
+      getTaskFileLink: (task_id, file_id) ->
         return self.getShareableLink(file_id)
       getTaskFilesByIds: (file_ids, task_id) ->
         query =

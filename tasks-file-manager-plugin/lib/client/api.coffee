@@ -8,7 +8,7 @@ _.extend TasksFileManagerPlugin.prototype,
     ret = 
       getFileSizeLimit: -> 
         return env.FILESTACK_MAX_FILE_SIZE_BYTES
-      getTaskFileLink: (file_id, task_id) ->
+      getTaskFileLink: (task_id, file_id) ->
         return self.tasks_file_manager.getFileDownloadPath task_id, file_id
       getTaskFilesByIds: (file_ids, task_id) ->
         query = 
