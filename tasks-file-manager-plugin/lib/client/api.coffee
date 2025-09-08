@@ -13,8 +13,9 @@ _.extend TasksFileManagerPlugin.prototype,
         return
       getFileSizeLimit: -> 
         return env.FILESTACK_MAX_FILE_SIZE_BYTES
-      getTaskFileLink: (task_id, file_id) ->
-        return self.tasks_file_manager.getFileDownloadPath task_id, file_id
+      getBucketFolderFileLink: (bucket_id, folder_name, file_id) ->
+        @_requireSupportedBucketId bucket_id
+        return self.tasks_file_manager.getFileDownloadPath folder_name, file_id
       isFileTypePreviewable: (file_type) ->
         return self.isFileTypePreviewable file_type
       isUserAllowedToUploadTaskFile: (task_id, user_id) ->
