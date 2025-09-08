@@ -75,7 +75,7 @@ _.extend TasksFileManagerPlugin.prototype,
           return
         
         return
-      showTaskFilePreviewOrStartDownload: (file, task_id, file_ids_to_show) ->
+      showTaskFilePreviewOrStartDownload: (task_id, file, file_ids_to_show) ->
         if _.isString file
           file = tasks_file_collection.findOne(file)
         else

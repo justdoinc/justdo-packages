@@ -128,7 +128,7 @@ _.extend JustdoFileInterface.FileSystemApis,
     # Note: This method may or may not throw an error if the file does not exist.
     throw @_error "not-implemented"
   
-  showTaskFilePreviewOrStartDownload: (file, task_id, file_ids_to_show) ->
+  showTaskFilePreviewOrStartDownload: (task_id, file, file_ids_to_show) ->
     # Consumers are expected to call `subscribeToTaskFiles` before calling this method
     # 
     # Gets a file, task_id and optionally an array of file_ids_to_show.
