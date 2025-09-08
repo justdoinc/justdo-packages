@@ -138,11 +138,22 @@ _.extend JustdoFiles.prototype,
       # Start download
       @downloadFile file._id
 
+  _downloadFile: (download_link) ->
+    download_link = new URL download_link
+    download_link.searchParams.append "download", true
+    window.open download_link, "_blank"
+    return
+
   downloadFile: (file_id) ->
     check file_id, String
     download_link = new URL @getShareableLink(file_id)
-    download_link.searchParams.append "download", true
-    window.open download_link, "_blank"
+    @_downloadFile download_link
+    return
+
+  downloadAvatar: (avatar_id) ->
+    check avatar_id, String
+    download_link = new URL @getAvatarShareableLink(avatar_id)
+    @_downloadFile download_link
     return
 
   _uploadFileOptionsSchema: new SimpleSchema
