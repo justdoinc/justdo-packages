@@ -79,3 +79,8 @@ _.extend JustdoFileInterface.prototype,
     fs = @_getFs()
 
     return fs.downloadBucketFolderFile bucket_id, folder_name, file_id
+  
+  isUserAllowedToUploadBucketFolderFile: (bucket_id, folder_name, user_id) ->
+    fs = @_getFs()
+
+    return fs.isUserAllowedToUploadBucketFolderFile bucket_id, folder_name, user_id

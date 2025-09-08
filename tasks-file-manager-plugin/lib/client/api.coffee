@@ -18,12 +18,13 @@ _.extend TasksFileManagerPlugin.prototype,
         return self.tasks_file_manager.getFileDownloadPath folder_name, file_id
       isFileTypePreviewable: (file_type) ->
         return self.isFileTypePreviewable file_type
-      isUserAllowedToUploadTaskFile: (task_id, user_id) ->
+      isUserAllowedToUploadBucketFolderFile: (bucket_id, folder_name, user_id) ->
+        @_requireSupportedBucketId bucket_id
         permissions = [
           "task-field-edit.#{TasksFileManager.files_count_field_id}",
           "task-field-edit.files"
         ]
-        return APP.justdo_permissions.checkTaskPermissions permissions, task_id, user_id
+        return APP.justdo_permissions.checkTaskPermissions permissions, folder_name, user_id
       uploadBucketFolderFile: (bucket_id, folder_name, file, cb) ->
         @_requireSupportedBucketId bucket_id
         self.tasks_file_manager.uploadFiles folder_name, [file], (err, uploaded_files) ->

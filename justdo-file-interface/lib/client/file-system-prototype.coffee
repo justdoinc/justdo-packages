@@ -105,20 +105,20 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # Gets file_type, returns true if a file type is deemed previewable by the file system, false otherwise
     throw @_error "not-implemented"
 
+  isUserAllowedToUploadBucketFolderFile: (bucket_id, folder_name, user_id) ->
+    # Gets bucket_id, folder_name and user_id, returns true if a user is allowed to upload a file to a bucket folder, false otherwise
+    # 
+    # This is the place to add logic for checking whether user has access to a certain bucket folder before uploading a file to it, 
+    # and whether the user is allowed to upload a file to a bucket folder according to `justdo-permissions`
+    # 
+    # This method is not called automatically inside other methods of file system (e.g. `uploadBucketFolderFile`)
+    # A usecase for this method is to check whether a user is allowed to upload a file before showing the upload button.
+    throw @_error "not-implemented"
+
 _.extend JustdoFileInterface.FileSystemApis,
   # 
   # Client-only file system methods implemented by justd-file-interface
   # 
-  isUserAllowedToUploadTaskFile: (task_id, user_id) ->
-    # Gets task_id and user_id, returns true if a user is allowed to upload a file to a task, false otherwise
-    # 
-    # This is the place to add logic for checking whether user has access to a certain task before uploading a file to it, 
-    # and whether the user is allowed to upload a file to a task according to `justdo-permissions`
-    # 
-    # This method is not called automatically inside other methods of file system (e.g. `uploadTaskFile`)
-    # A usecase for this method is to check whether a user is allowed to upload a file before showing the upload button.
-    throw @_error "not-implemented"
-  
   showTaskFilePreviewOrStartDownload: (task_id, file, file_ids_to_show) ->
     # Consumers are expected to call `subscribeToTaskFiles` before calling this method
     # 

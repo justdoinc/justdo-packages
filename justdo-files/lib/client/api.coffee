@@ -34,8 +34,13 @@ _.extend JustdoFiles.prototype,
         return self._getFileShareableLink(file_id, collection_name)
       isFileTypePreviewable: (file_type) ->
         return self.isFileTypePreviewable file_type
-      isUserAllowedToUploadTaskFile: (task_id, user_id) ->
-        return self.isUserAllowedToAccessTasksFiles(task_id, user_id)
+      isUserAllowedToUploadBucketFolderFile: (bucket_id, folder_name, user_id) ->
+        @_requireCollectionMeta(bucket_id)
+        if bucket_id is "tasks"
+          return self.isUserAllowedToAccessTasksFiles(folder_name, user_id)
+        if bucket_id is "avatars" and user_id?
+          # Avatar collection allows any user to upload
+          return true
       uploadBucketFolderFile: (bucket_id, folder_name, file, cb) ->
         collection_name = @_requireBucketCollectionName(bucket_id)
         
