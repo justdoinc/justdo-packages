@@ -23,6 +23,10 @@ _.extend JustdoFileInterface.prototype,
 
     return fs.getTaskFileLink task_id, file_id
   
+  getTaskFiles: (task_id) ->
+    # Important: You are expected to call `subscribeToTaskFiles` before calling this method
+    @getBucketFolderFiles "tasks", task_id
+
   getTaskFilesByIds: (file_ids, task_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
     # 
@@ -48,7 +52,6 @@ _.extend JustdoFileInterface.prototype,
     fs.uploadTaskFile task_id, file, cb
 
     return
-
   
   downloadTaskFile: (task_id, file_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
