@@ -103,6 +103,14 @@ _.extend JustdoFiles.prototype,
           if not _.isString file
             file = file._id
           return self.downloadAvatar file
+      getBucketFolderFilePreviewLinkAsync: (bucket_id, folder_name, file_id, cb) ->
+        collection_name = @_requireBucketCollectionName(bucket_id)
+        try
+          preview_link = self._getFilePreviewLink(file_id, collection_name)
+          cb? null, preview_link
+        catch err
+          cb? err
+        return
     return ret
 
   showPreviewOrStartDownload: (task_id, file, file_ids_to_show) ->

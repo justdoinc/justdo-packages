@@ -85,6 +85,16 @@ _.extend TasksFileManagerPlugin.prototype,
           file.title = file.name
 
         self.showPreviewOrStartDownload folder_name, file, file_ids_to_show
+      getBucketFolderFilePreviewLinkAsync: (bucket_id, folder_name, file_id, cb) ->
+        @_requireSupportedBucketId bucket_id
+        self.tasks_file_manager.getPreviewDownloadLink folder_name, file_id, 1, {}, (err, file_link) ->
+          if err?
+            cb? err
+          else
+            cb? null, file_link
+          return
+        return
+
     return ret
 
   showPreviewOrStartDownload: (task_id, file, file_ids_to_show) ->
