@@ -33,6 +33,11 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     throw @_error "not-implemented"
 
   getBucketFolderFiles: (bucket_id, folder_name) ->
+    # Gets a bucket_id and a folder_name, returns an array of file objects under it.
+    # "bucket" is a category of files, for example "tasks";
+    # "folder_name" is the identifier that allows the file system to find the associated files,
+    # for example `task_id` for "tasks" bucket.
+    # Simply put, to get all the files under a task, the consumer would call `getBucketFolderFiles("tasks", task_id)`.
     throw @_error "not-implemented"
 
 _.extend JustdoFileInterface.FileSystemApis,
