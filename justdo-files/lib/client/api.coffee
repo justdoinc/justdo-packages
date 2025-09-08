@@ -89,7 +89,7 @@ _.extend JustdoFiles.prototype,
         collection_meta = @_requireCollectionMeta()
         collection_name = @_requireBucketCollectionName(bucket_id)
         return self[collection_name].find({[collection_meta.folder_identifing_field]: folder_name}).fetch()
-      downloadTaskFile: (file_id, task_id) ->
+      downloadTaskFile: (task_id, file_id) ->
         self.downloadFile file_id
         return
       showTaskFilePreviewOrStartDownload: (file, task_id, file_ids_to_show) ->

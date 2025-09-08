@@ -68,7 +68,7 @@ _.extend TasksFileManagerPlugin.prototype,
           throw self._error "not-supported", "No collection exists for bucket #{bucket_id}"
         collection_name = TasksFileManagerPlugin.tasks_files_collection_name
         return self[collection_name].find({_id: folder_name}).fetch()
-      downloadTaskFile: (file_id, task_id) ->
+      downloadTaskFile: (task_id, file_id) ->
         self.tasks_file_manager.downloadFile task_id, file_id, (err, url) ->
           if err
             console.log(err)
