@@ -66,9 +66,6 @@ _.extend JustdoFileInterface.FileSystemApis,
   # Client-only file system methods implemented by justd-file-interface
   # 
 
-  getTaskFiles: (task_id) ->
-    @getBucketFolderFiles "tasks", task_id
-
   getFileSizeLimit: ->
     # Returns a number indicating the maximum file size for single file upload in bytes
     # Note: This method is called inside `APP.justdo_file_interface.uploadTaskFile`
