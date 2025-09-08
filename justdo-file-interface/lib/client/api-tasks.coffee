@@ -21,9 +21,8 @@ _.extend JustdoFileInterface.prototype,
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
     # 
     # Important: The URL returned by this method is for downloading. It should not be used for previewing
-    fs = @_getFs()
 
-    return fs.getBucketFolderFileLink "tasks", task_id, file_id
+    return @getBucketFolderFileLink "tasks", task_id, file_id
   
   getTaskFiles: (task_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
@@ -50,7 +49,6 @@ _.extend JustdoFileInterface.prototype,
   
   downloadTaskFile: (task_id, file_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
-    fs = @_getFs()
 
     return @downloadBucketFolderFile "tasks", task_id, file_id
 
