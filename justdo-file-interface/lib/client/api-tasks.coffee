@@ -55,7 +55,4 @@ _.extend JustdoFileInterface.prototype,
     return @downloadBucketFolderFile "tasks", task_id, file_id
 
   showTaskFilePreviewOrStartDownload: (task_id, file, file_ids_to_show) ->
-    # Important: You are expected to call `subscribeToTaskFiles` before calling this method
-    fs = @_getFs()
-
-    return fs.showTaskFilePreviewOrStartDownload task_id, file, file_ids_to_show
+    return @showBucketFolderFilePreviewOrStartDownload "tasks", task_id, file, file_ids_to_show
