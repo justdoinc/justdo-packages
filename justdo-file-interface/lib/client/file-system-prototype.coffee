@@ -121,7 +121,7 @@ _.extend JustdoFileInterface.FileSystemApis,
     # file system's `getFileSizeLimit` method to ensure it does not exceed the limit.
     throw @_error "not-implemented"
   
-  downloadTaskFile: (file_id, task_id) ->
+  downloadTaskFile: (task_id, file_id) ->
     # Consumers are expected to call `subscribeToTaskFiles` before calling this method
     # 
     # Gets a file_id and task_id, downloads a file from a task if it is accessible.

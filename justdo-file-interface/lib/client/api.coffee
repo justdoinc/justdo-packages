@@ -97,11 +97,11 @@ _.extend JustdoFileInterface.prototype,
 
     return fs.subscribeToTaskFiles task_id, sub_options
   
-  downloadTaskFile: (task_id) ->
+  downloadTaskFile: (task_id, file_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
     fs = @_getFs()
 
-    return fs.downloadTaskFile task_id
+    return fs.downloadTaskFile task_id, file_id
 
   showTaskFilePreviewOrStartDownload: (file, task_id, file_ids_to_show) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
