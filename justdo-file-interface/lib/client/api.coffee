@@ -97,6 +97,23 @@ _.extend JustdoFileInterface.prototype,
 
     return fs.subscribeToTaskFiles task_id, sub_options
   
+  subscribeToBucketFolder: (bucket_id, folder_name, callbacks) ->
+    # IMPORTANT! Before calling any file system methods, you are expected to call this method to load the relevant data.
+    #
+    # Subscribes to the files collection of the file system. The precise collection and subscription
+    # is determined by the file system, and you shouldn't interact directly with the collection (as it is
+    # internal to the file system).
+    #
+    # This is a reactive resource that calls Meteor.subscribe internally.
+    # As such, if this method is called inside an autorun, the subscription will be stopped automatically upon invalidation of the autorun.
+    #
+    # Receives a bucket_id, folder_name and a callbacks object/function, the callbacks object/function is of the exact
+    # same format as the callbacks object/function passed to Meteor.subscribe, refer to that API for more details.
+    # E.g. to subscribe to the files under a task, call this method with `bucket_id` as "tasks" and `folder_name` as the task_id.
+    fs = @_getFs()
+
+    return fs.subscribeToBucketFolder bucket_id, folder_name, callbacks
+
   getBucketFolderFiles: (bucket_id, folder_names, query, query_options) ->
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method
     # 
@@ -104,7 +121,7 @@ _.extend JustdoFileInterface.prototype,
     # This is meant to facilitate usecases like showing a list of files.
     # Since the field names are normalized, it is discouraged to use this method in other file system methods
     fs = @_getFs()
-    
+
     if _.isString folder_names
       folder_names = [folder_names]
 
