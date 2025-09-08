@@ -85,6 +85,10 @@ _.extend JustdoFiles.prototype,
       subscribeToBucketFolder: (bucket_id, folder_name, callbacks) ->
         publication_name = @_requireBucketPublicationName(bucket_id)
         return Meteor.subscribe publication_name, folder_name, callbacks
+      getBucketFolderFiles: (bucket_id, folder_name) ->
+        collection_meta = @_requireCollectionMeta()
+        collection_name = @_requireBucketCollectionName(bucket_id)
+        return self[collection_name].find({[collection_meta.folder_identifing_field]: folder_name}).fetch()
       downloadTaskFile: (file_id, task_id) ->
         self.downloadFile file_id
         return
