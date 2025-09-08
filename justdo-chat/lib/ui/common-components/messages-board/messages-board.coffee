@@ -175,7 +175,7 @@ Template.common_chat_messages_board_message_card.helpers
     channel_type = channel_obj.channel_type
     return channel_obj.justdo_chat.isFilesEnabled(channel_type)
   
-  fileExists: ->
+  fileExistsInMessage: ->
     return @files
 
   files: ->
