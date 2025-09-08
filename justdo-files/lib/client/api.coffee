@@ -36,11 +36,17 @@ _.extend JustdoFiles.prototype,
         return self.isFileTypePreviewable file_type
       isUserAllowedToUploadTaskFile: (task_id, user_id) ->
         return self.isUserAllowedToAccessTasksFiles(task_id, user_id)
-      uploadTaskFile: (task_id, file, cb) ->
-        options = 
-          task_id: task_id
+      uploadBucketFolderFile: (bucket_id, folder_name, file, cb) ->
+        collection_name = @_requireBucketCollectionName(bucket_id)
+        
         try
-          upload = self.uploadFile(file, options)
+          if bucket_id is "tasks"
+            upload_file_options = 
+              task_id: folder_name
+            upload = self.uploadFile(file, upload_file_options)
+
+          if bucket_id is "avatars"
+            upload = self.uploadAvatar(file)
         catch err
           cb err
           return
@@ -53,7 +59,7 @@ _.extend JustdoFiles.prototype,
           cb err, normalized_file_obj
 
           return
-        
+
         upload.start()
 
         return
