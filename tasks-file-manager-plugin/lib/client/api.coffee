@@ -6,6 +6,11 @@ _.extend TasksFileManagerPlugin.prototype,
     tasks_file_collection = new Mongo.Collection TasksFileManagerPlugin.tasks_files_collection_name
     
     ret = 
+      _requireSupportedBucketId: (bucket_id) ->
+        if bucket_id isnt "tasks"
+          throw self._error "not-supported", "No collection exists for bucket #{bucket_id}"
+
+        return
       getFileSizeLimit: -> 
         return env.FILESTACK_MAX_FILE_SIZE_BYTES
       getTaskFileLink: (task_id, file_id) ->
@@ -36,13 +41,12 @@ _.extend TasksFileManagerPlugin.prototype,
 
         return
       subscribeToBucketFolder: (bucket_id, folder_name, callbacks) ->
-        if bucket_id isnt "tasks"
-          throw self._error "not-supported", "No publication exists for bucket #{bucket_id}"
+        @_requireSupportedBucketId bucket_id
+        
         publication_name = TasksFileManagerPlugin.tasks_files_publication_name
         return Meteor.subscribe publication_name, folder_name, callbacks
       getBucketFolderFiles: (bucket_id, folder_name, query, query_options) ->
-        if bucket_id isnt "tasks"
-          throw self._error "not-supported", "No collection exists for bucket #{bucket_id}"
+        @_requireSupportedBucketId bucket_id
         query = _.extend query,
           task_id: folder_name
         normalized_files = tasks_file_collection.find(query, query_options).map (file) ->
