@@ -58,8 +58,11 @@ _.extend TasksFileManagerPlugin.prototype,
           cb null, normalized_uploaded_file
 
         return
-      subscribeToTaskFiles: (task_id, cb) ->
-        return Meteor.subscribe TasksFileManagerPlugin.tasks_files_publication_name, task_id, cb
+      subscribeToBucketFolder: (bucket_id, folder_name, callbacks) ->
+        if bucket_id isnt "tasks"
+          throw self._error "not-supported", "No publication exists for bucket #{bucket_id}"
+        publication_name = TasksFileManagerPlugin.tasks_files_publication_name
+        return Meteor.subscribe publication_name, folder_name, callbacks
       downloadTaskFile: (file_id, task_id) ->
         self.tasks_file_manager.downloadFile task_id, file_id, (err, url) ->
           if err
