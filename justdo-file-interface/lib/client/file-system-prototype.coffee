@@ -67,6 +67,26 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # Gets a bucket_id, folder_name and file_id, returns a URL to download a file belonging to a bucket folder
     # Note: The URL returned by this method is for downloading. It should not be used for previewing
     throw @_error "not-implemented"
+  
+  uploadBucketFolderFile: (bucket_id, folder_name, file, cb) ->
+    # Gets a File (the native browser file object), bucket_id, folder_name and optionally a cb, uploads the file to the bucket folder.
+    #
+    # cb will be called with the following params: (err, uploaded_file)
+    #   err: Error object if error occurs (e,g, file size exceeds, bucket folder not found or user does not have access, etc). Falsy-value (null/undefined) otherwise.
+    #   uploaded_file:
+    #     {
+    #       _id: String
+    #       name: String # the readable filename of the uploaded file
+    #       type: String # the mime type of the uploaded file
+    #       size: Number # the size of the uploaded file in bytes (!)
+    #     }
+    #   It is up to the developer to strictly follow this structure.
+    #   IMPORTANT: There should be no extra fields in the uploaded_file object.
+    # 
+    # We'll ensure that the file size doesn't exceed the file system's `getFileSizeLimit` before trying to upload the file.
+    # To be precise: before calling this method inside `APP.justdo_file_interface.uploadBucketFolderFile`, the file size is checked against the
+    # file system's `getFileSizeLimit` method to ensure it does not exceed the limit.
+    throw @_error "not-implemented"
 
   getFileSizeLimit: ->
     # Returns a number indicating the maximum file size for single file upload in bytes
@@ -90,26 +110,6 @@ _.extend JustdoFileInterface.FileSystemApis,
     # 
     # This method is not called automatically inside other methods of file system (e.g. `uploadTaskFile`)
     # A usecase for this method is to check whether a user is allowed to upload a file before showing the upload button.
-    throw @_error "not-implemented"
-
-  uploadTaskFile: (task_id, file, cb) ->
-    # Gets a File (the native browser file object), task_id and optionally a cb, uploads the file to the task.
-    #
-    # cb will be called with the following params: (err, uploaded_file)
-    #   err: Error object if error occurs (e,g, file size exceeds, task not found or user does not have access, etc). Falsy-value (null/undefined) otherwise.
-    #   uploaded_file:
-    #     {
-    #       _id: String
-    #       name: String # the readable filename of the uploaded file
-    #       type: String # the mime type of the uploaded file
-    #       size: Number # the size of the uploaded file in bytes (!)
-    #     }
-    #   It is up to the developer to strictly follow this structure.
-    #   IMPORTANT: There should be no extra fields in the uploaded_file object.
-    # 
-    # We'll ensure that the file size doesn't exceed the file system's `getFileSizeLimit` before trying to upload the file.
-    # To be precise: before calling this method inside `APP.justdo_file_interface.uploadTaskFile`, the file size is checked against the
-    # file system's `getFileSizeLimit` method to ensure it does not exceed the limit.
     throw @_error "not-implemented"
   
   downloadTaskFile: (task_id, file_id) ->

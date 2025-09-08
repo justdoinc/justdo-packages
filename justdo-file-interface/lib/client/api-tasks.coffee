@@ -47,15 +47,7 @@ _.extend JustdoFileInterface.prototype,
     return fs.isUserAllowedToUploadTaskFile task_id, user_id
 
   uploadTaskFile: (task_id, file, cb) ->
-    fs = @_getFs()
-
-    file_size_limit = @getFileSizeLimit fs.fs_id
-    if file_size_limit? and file.size > file_size_limit
-      cb @_error "file-size-exceeded", "File size exceeds the #{JustdoHelpers.bytesToHumanReadable file_size_limit} limit of file system #{fs.fs_id}"
-      return
-
-    fs.uploadTaskFile task_id, file, cb
-
+    @uploadBucketFolderFile "tasks", task_id, file, cb
     return
   
   downloadTaskFile: (task_id, file_id) ->
