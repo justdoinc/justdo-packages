@@ -187,11 +187,15 @@ Template.common_chat_messages_board_message_card.helpers
     existing_files = []
 
     for file in @files
-      if (found_file = APP.justdo_file_interface.getTaskFilesByIds(file.fs_id, file._id, task_id)[0])?
-        found_file.fs_id = file.fs_id
+      fs = APP.justdo_file_interface
       fs_id = file.fs_id
       # Wrap the subscription in `Tracker.nonreactive` to avoid unsub caused by invalidation
       Tracker.nonreactive -> channel_obj.ensureFilesSubscriptionExists fs_id
+      if fs_id isnt fs.getDefaultFsId()
+        fs = fs.cloneWithForcedFs fs_id
+
+      if (found_file = fs.getTaskFilesByIds(task_id, file._id)[0])?
+        found_file.fs_id = fs_id
         existing_files.push found_file
 
     existing_file_ids = _.pluck(existing_files, "_id")
@@ -317,7 +321,11 @@ Template.common_chat_messages_board_message_card.events
     task_id = channel_obj.getChannelIdentifier().task_id
     message_file_ids = _.pluck tmpl.data.files, "_id"
 
-    APP.justdo_file_interface.showTaskFilePreviewOrStartDownload file_fs_id, file._id, task_id, message_file_ids
+    fs = APP.justdo_file_interface
     channel_obj.ensureFilesSubscriptionExists file_fs_id
+    if file_fs_id isnt fs.getDefaultFsId()
+      fs = fs.cloneWithForcedFs file_fs_id
+
+    fs.showTaskFilePreviewOrStartDownload task_id, file, message_file_ids
 
     return
