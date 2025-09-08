@@ -33,3 +33,11 @@ _.extend JustdoFiles,
     JustdoFiles.tasks_files_collection_name
     JustdoFiles.avatars_collection_name
   ]
+
+  fs_bucket_id_to_collection_meta: 
+    tasks: 
+      collection_name: JustdoFiles.tasks_files_collection_name
+      publication_name: JustdoFiles.tasks_files_publication_name
+    avatars: 
+      collection_name: JustdoFiles.avatars_collection_name
+      # Avatar collection doesn't have a publication
