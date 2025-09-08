@@ -92,7 +92,7 @@ _.extend JustdoFiles.prototype,
       downloadTaskFile: (task_id, file_id) ->
         self.downloadFile file_id
         return
-      showTaskFilePreviewOrStartDownload: (file, task_id, file_ids_to_show) ->
+      showTaskFilePreviewOrStartDownload: (task_id, file, file_ids_to_show) ->
         self.showPreviewOrStartDownload task_id, file, file_ids_to_show
     return ret
 
