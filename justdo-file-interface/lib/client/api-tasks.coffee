@@ -29,14 +29,8 @@ _.extend JustdoFileInterface.prototype,
     # Important: This method return file objects with mostly metadata fields. The field names are normalized to be consistent across file systems.
     # This is meant to facilitate usecases like showing a list of files.
     # Since the field names are normalized, it is discouraged to use this method in other file system methods
-    fs = @_getFs()
 
-    if _.isString(file_ids)
-      file_ids = [file_ids]
-    
-    files = fs.getTaskFilesByIds file_ids, task_id
-
-    return files
+    return @getBucketFolderFiles "tasks", task_id, {_id: {$in: file_ids}}
 
   isUserAllowedToUploadTaskFile: (task_id, user_id) ->
     fs = @_getFs()

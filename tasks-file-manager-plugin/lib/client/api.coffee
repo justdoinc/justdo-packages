@@ -10,29 +10,6 @@ _.extend TasksFileManagerPlugin.prototype,
         return env.FILESTACK_MAX_FILE_SIZE_BYTES
       getTaskFileLink: (task_id, file_id) ->
         return self.tasks_file_manager.getFileDownloadPath task_id, file_id
-      getTaskFilesByIds: (file_ids, task_id) ->
-        query = 
-          _id: 
-            $in: file_ids
-        query_options = 
-          fields:
-            "id": 1
-            "type": 1
-            "title": 1
-            "size": 1
-            "date_uploaded": 1
-            "user_uploaded": 1
-        normalized_files = tasks_file_collection.find(query, query_options).map (file) ->
-          ret = 
-            _id: file.id
-            type: file.type
-            name: file.title
-            size: file.size
-            uploaded_at: file.date_uploaded
-            uploaded_by: file.user_uploaded
-          return ret
-
-        return normalized_files
       isFileTypePreviewable: (file_type) ->
         return self.isFileTypePreviewable file_type
       isUserAllowedToUploadTaskFile: (task_id, user_id) ->
