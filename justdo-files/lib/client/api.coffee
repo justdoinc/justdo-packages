@@ -14,6 +14,20 @@ _.extend JustdoFiles.prototype,
     self = @
     
     ret = 
+      _requireCollectionMeta: (bucket_id) ->
+        if not (collection_meta = JustdoFiles.fs_bucket_id_to_collection_meta[bucket_id])?
+          throw self._error "not-supported", "No collection meta exists for bucket #{bucket_id}"
+        return collection_meta
+      _requireBucketCollectionName: (bucket_id) ->
+        collection_meta = @_requireCollectionMeta(bucket_id)
+        if not (collection_name = collection_meta.collection_name)?
+          throw self._error "not-supported", "No collection exists for bucket #{bucket_id}"
+        return collection_name
+      _requireBucketPublicationName: (bucket_id) ->
+        collection_meta = @_requireCollectionMeta(bucket_id)
+        if not (publication_name = collection_meta.publication_name)?
+          throw self._error "not-supported", "No publication exists for bucket #{bucket_id}"
+        return publication_name
       getFileSizeLimit: -> self.options.max_file_size
       getTaskFileLink: (file_id, task_id) ->
         return self.getShareableLink(file_id)
