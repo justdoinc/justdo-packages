@@ -43,10 +43,19 @@ _.extend TasksFileManagerPlugin.prototype,
       getBucketFolderFiles: (bucket_id, folder_name, query, query_options) ->
         if bucket_id isnt "tasks"
           throw self._error "not-supported", "No collection exists for bucket #{bucket_id}"
-        collection_name = TasksFileManagerPlugin.tasks_files_collection_name
         query = _.extend query,
           task_id: folder_name
-        return self[collection_name].find(query, query_options).fetch()
+        normalized_files = tasks_file_collection.find(query, query_options).map (file) ->
+          ret = 
+            _id: file.id
+            type: file.type
+            name: file.title
+            size: file.size
+            uploaded_at: file.date_uploaded
+            uploaded_by: file.user_uploaded
+          return ret
+
+        return normalized_files
       downloadTaskFile: (task_id, file_id) ->
         self.tasks_file_manager.downloadFile task_id, file_id, (err, url) ->
           if err
