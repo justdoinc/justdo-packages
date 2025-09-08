@@ -263,7 +263,7 @@ _.extend TasksFileManager.prototype,
 
     output:
       type: String
-      
+      optional: true
       allowedValues: ["pdf", "jpg", "mp4"]
 
   _getProcessedFileLink: (task, file, process_str, processed_file_id, processed_file_ext) ->
@@ -373,6 +373,13 @@ _.extend TasksFileManager.prototype,
 
     task = @requireTaskDoc(task_id, user_id)
     file = @requireFile task, file_id
+  
+    if file.type.indexOf("application/pdf") is 0
+      options.output = "pdf"
+    else if file.type.indexOf("image/") is 0
+      options.output = "jpg"
+    else if file.type.indexOf("video/") is 0
+      options.output = "mp4"
 
     if options.output == "pdf"
       if file.type == "application/pdf"   
