@@ -27,12 +27,15 @@ _.extend JustdoFileInterface.prototype,
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
     @getBucketFolderFiles "tasks", task_id
 
-  getTaskFilesByIds: (file_ids, task_id) ->
+  getTaskFilesByIds: (task_id, file_ids) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
     # 
     # Important: This method return file objects with mostly metadata fields. The field names are normalized to be consistent across file systems.
     # This is meant to facilitate usecases like showing a list of files.
     # Since the field names are normalized, it is discouraged to use this method in other file system methods
+
+    if _.isString file_ids
+      file_ids = [file_ids]
 
     return @getBucketFolderFiles "tasks", task_id, {_id: {$in: file_ids}}
 
