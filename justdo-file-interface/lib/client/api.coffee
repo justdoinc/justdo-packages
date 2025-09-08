@@ -103,3 +103,17 @@ _.extend JustdoFileInterface.prototype,
     fs = @_getFs()
 
     return fs.showBucketFolderFilePreviewOrStartDownload bucket_id, folder_name, file, file_ids_to_show
+
+  getBucketFolderFilePreviewLinkAsync: (bucket_id, folder_name, file_id) ->
+    # Important: You are expected to call `subscribeToBucketFolder` before calling this method
+    fs = @_getFs()
+
+    promise = new Promise (resolve, reject) ->
+      fs.getBucketFolderFilePreviewLinkAsync bucket_id, folder_name, file_id, (err, preview_link) ->
+        if err?
+          reject err
+        else
+          resolve(preview_link)
+        return
+    
+    return promise
