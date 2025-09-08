@@ -82,8 +82,9 @@ _.extend JustdoFiles.prototype,
         upload.start()
 
         return
-      subscribeToTaskFiles: (task_id, cb) ->
-        return Meteor.subscribe "jdfTaskFiles", task_id, cb
+      subscribeToBucketFolder: (bucket_id, folder_name, callbacks) ->
+        publication_name = @_requireBucketPublicationName(bucket_id)
+        return Meteor.subscribe publication_name, folder_name, callbacks
       downloadTaskFile: (file_id, task_id) ->
         self.downloadFile file_id
         return
