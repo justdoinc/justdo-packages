@@ -118,7 +118,7 @@ Template.common_chat_message_editor.onCreated ->
         return
       
       for file in files
-        APP.justdo_file_interface.uploadTaskFile null, file, task_id, uploadFileCb
+        APP.justdo_file_interface.uploadTaskFile task_id, file, uploadFileCb
 
     else
       callSendMessageMethod input_val
@@ -213,7 +213,7 @@ Template.common_chat_message_editor.helpers
     if not is_files_enabled
       return false
     
-    is_user_allowed_to_upload = APP.justdo_file_interface.isUserAllowedToUploadTaskFile null, channel_obj.getChannelIdentifier().task_id, Meteor.userId()
+    is_user_allowed_to_upload = APP.justdo_file_interface.isUserAllowedToUploadTaskFile channel_obj.getChannelIdentifier().task_id, Meteor.userId()
 
     return is_files_enabled and is_user_allowed_to_upload
     
