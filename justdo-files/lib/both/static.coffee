@@ -24,7 +24,12 @@ _.extend JustdoFiles,
     "video/x-ms-wmv"
     ]
   
+  tasks_files_collection_name: "tasks_files"
+  tasks_files_publication_name: "jdfTaskFiles"
+  avatars_collection_name: "avatars_collection"
+
+_.extend JustdoFiles,
   supported_collection_names: [
-    "tasks_files"
-    "avatars_collection"
+    JustdoFiles.tasks_files_collection_name
+    JustdoFiles.avatars_collection_name
   ]
