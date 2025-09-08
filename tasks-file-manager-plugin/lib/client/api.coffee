@@ -62,8 +62,9 @@ _.extend TasksFileManagerPlugin.prototype,
           return ret
 
         return normalized_files
-      downloadTaskFile: (task_id, file_id) ->
-        self.tasks_file_manager.downloadFile task_id, file_id, (err, url) ->
+      downloadBucketFolderFile: (bucket_id, folder_name, file_id) ->
+        @_requireSupportedBucketId bucket_id
+        self.tasks_file_manager.downloadFile folder_name, file_id, (err, url) ->
           if err
             console.log(err)
           return

@@ -87,6 +87,13 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # To be precise: before calling this method inside `APP.justdo_file_interface.uploadBucketFolderFile`, the file size is checked against the
     # file system's `getFileSizeLimit` method to ensure it does not exceed the limit.
     throw @_error "not-implemented"
+  
+  downloadBucketFolderFile: (bucket_id, folder_name, file_id) ->
+    # Consumers are expected to call `subscribeToBucketFolder` before calling this method
+    # 
+    # Gets a file_id and bucket_id, folder_name, downloads a file from a bucket folder if it is accessible.
+    # Note: This method may or may not throw an error if the file does not exist.
+    throw @_error "not-implemented"
 
   getFileSizeLimit: ->
     # Returns a number indicating the maximum file size for single file upload in bytes
@@ -110,13 +117,6 @@ _.extend JustdoFileInterface.FileSystemApis,
     # 
     # This method is not called automatically inside other methods of file system (e.g. `uploadTaskFile`)
     # A usecase for this method is to check whether a user is allowed to upload a file before showing the upload button.
-    throw @_error "not-implemented"
-  
-  downloadTaskFile: (task_id, file_id) ->
-    # Consumers are expected to call `subscribeToTaskFiles` before calling this method
-    # 
-    # Gets a file_id and task_id, downloads a file from a task if it is accessible.
-    # Note: This method may or may not throw an error if the file does not exist.
     throw @_error "not-implemented"
   
   showTaskFilePreviewOrStartDownload: (task_id, file, file_ids_to_show) ->

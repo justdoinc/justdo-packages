@@ -72,3 +72,10 @@ _.extend JustdoFileInterface.prototype,
     fs.uploadBucketFolderFile bucket_id, folder_name, file, cb
 
     return
+  
+  downloadBucketFolderFile: (bucket_id, folder_name, file_id) ->
+    # Important: You are expected to call `subscribeToBucketFolder` before calling this method
+
+    fs = @_getFs()
+
+    return fs.downloadBucketFolderFile bucket_id, folder_name, file_id
