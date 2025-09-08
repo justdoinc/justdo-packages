@@ -38,6 +38,8 @@ _.extend JustdoFiles,
     tasks: 
       collection_name: JustdoFiles.tasks_files_collection_name
       publication_name: JustdoFiles.tasks_files_publication_name
+      folder_identifing_field: "meta.task_id"
     avatars: 
       collection_name: JustdoFiles.avatars_collection_name
       # Avatar collection doesn't have a publication
+      folder_identifing_field: "userId"
