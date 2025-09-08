@@ -61,6 +61,13 @@ _.extend JustdoFileInterface.FileSystemPrototype,
 
     throw @_error "not-implemented"
 
+  getBucketFolderFileLink: (bucket_id, folder_name, file_id) ->
+    # Consumers are expected to call `subscribeToBucketFolder` before calling this method
+    # 
+    # Gets a bucket_id, folder_name and file_id, returns a URL to download a file belonging to a bucket folder
+    # Note: The URL returned by this method is for downloading. It should not be used for previewing
+    throw @_error "not-implemented"
+
   getFileSizeLimit: ->
     # Returns a number indicating the maximum file size for single file upload in bytes
     # Note: This method is called inside `APP.justdo_file_interface.uploadTaskFile`
@@ -75,14 +82,6 @@ _.extend JustdoFileInterface.FileSystemApis,
   # 
   # Client-only file system methods implemented by justd-file-interface
   # 
-
-  getTaskFileLink: (task_id, file_id) ->
-    # Consumers are expected to call `subscribeToTaskFiles` before calling this method
-    # 
-    # Gets file_id and task_id, returns a URL to download a file belonging to a task
-    # Note: The URL returned by this method is for downloading. It should not be used for previewing
-    throw @_error "not-implemented"
-
   isUserAllowedToUploadTaskFile: (task_id, user_id) ->
     # Gets task_id and user_id, returns true if a user is allowed to upload a file to a task, false otherwise
     # 

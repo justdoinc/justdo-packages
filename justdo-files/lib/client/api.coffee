@@ -29,8 +29,9 @@ _.extend JustdoFiles.prototype,
           throw self._error "not-supported", "No publication exists for bucket #{bucket_id}"
         return publication_name
       getFileSizeLimit: -> self.options.max_file_size
-      getTaskFileLink: (task_id, file_id) ->
-        return self.getShareableLink(file_id)
+      getBucketFolderFileLink: (bucket_id, folder_name, file_id) ->
+        collection_name = @_requireBucketCollectionName(bucket_id)
+        return self._getFileShareableLink(file_id, collection_name)
       isFileTypePreviewable: (file_type) ->
         return self.isFileTypePreviewable file_type
       isUserAllowedToUploadTaskFile: (task_id, user_id) ->

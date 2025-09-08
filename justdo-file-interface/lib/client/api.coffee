@@ -53,3 +53,10 @@ _.extend JustdoFileInterface.prototype,
 
     return fs.getBucketFolderFiles bucket_id, folder_name, query, query_options
   
+  getBucketFolderFileLink: (bucket_id, folder_name, file_id) ->
+    # Important: You are expected to call `subscribeToBucketFolder` before calling this method
+    # 
+    # Important: The URL returned by this method is for downloading. It should not be used for previewing
+    fs = @_getFs()
+
+    return fs.getBucketFolderFileLink bucket_id, folder_name, file_id
