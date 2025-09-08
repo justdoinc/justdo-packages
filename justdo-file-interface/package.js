@@ -73,6 +73,7 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/client/file-system-prototype.coffee", client);
   api.addFiles("lib/client/api.coffee", client);
+  api.addFiles("lib/client/api-tasks.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
   // Uncomment only in packages that integrate with the main applications
