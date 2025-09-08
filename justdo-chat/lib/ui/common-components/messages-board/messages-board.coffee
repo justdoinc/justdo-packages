@@ -189,6 +189,9 @@ Template.common_chat_messages_board_message_card.helpers
     for file in @files
       if (found_file = APP.justdo_file_interface.getTaskFilesByIds(file.fs_id, file._id, task_id)[0])?
         found_file.fs_id = file.fs_id
+      fs_id = file.fs_id
+      # Wrap the subscription in `Tracker.nonreactive` to avoid unsub caused by invalidation
+      Tracker.nonreactive -> channel_obj.ensureFilesSubscriptionExists fs_id
         existing_files.push found_file
 
     existing_file_ids = _.pluck(existing_files, "_id")
@@ -315,5 +318,6 @@ Template.common_chat_messages_board_message_card.events
     message_file_ids = _.pluck tmpl.data.files, "_id"
 
     APP.justdo_file_interface.showTaskFilePreviewOrStartDownload file_fs_id, file._id, task_id, message_file_ids
+    channel_obj.ensureFilesSubscriptionExists file_fs_id
 
     return

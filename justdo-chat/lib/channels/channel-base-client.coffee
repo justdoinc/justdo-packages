@@ -115,7 +115,7 @@ _.extend ChannelBaseClient.prototype,
     @_initial_subscription_ready = new ReactiveVar false
     @_channel_messages_subscription_dep = new Tracker.Dependency()
 
-    @_files_subscription = null
+    @_files_subscription = {}
 
     @_verifyChannelConfObjectAgainstSchema()
 
@@ -327,26 +327,27 @@ _.extend ChannelBaseClient.prototype,
     return
   
   _unsubscribeFilesCollectionIfExists: ->
-    if @_files_subscription?
-      @_files_subscription.stop?()
-      @_files_subscription = null
+    if not _.isEmpty(@_files_subscription)
+      for fs_id, subscription of @_files_subscription
+        subscription.stop?()
+
+      @_files_subscription = {}
 
     return
 
-  _setupFilesSubscription: ->
-    # Only set up files subscription if files are enabled and justdo_chat supports it
+  ensureFilesSubscriptionExists: (fs_id) ->
     if not @justdo_chat.isFilesEnabled(@channel_type)
       return
 
-    @_unsubscribeFilesCollectionIfExists()
+    if @_files_subscription?[fs_id]?
+      return
 
-    # Subscribe to files for this channel
-    @_files_subscription = APP.justdo_file_interface.subscribeToTaskFiles null, @getChannelIdentifier().task_id
+    if not (fs = APP.justdo_file_interface?.cloneWithForcedFs fs_id)
+      return
+
+    @_files_subscription[fs_id] = fs.subscribeToTaskFiles @getChannelIdentifier().task_id
 
     return
-  
-  _isFilesSubscriptionExists: ->
-    return @_files_subscription?
 
   getMessagesSubscriptionChannelDoc: (query_options) ->
     return @_getChannelsCollection().findOne(@getChannelIdentifier(), query_options)
@@ -445,7 +446,6 @@ _.extend ChannelBaseClient.prototype,
       initial_messages_to_request: 10
       additional_messages_to_request: 30
       request_authors_details: false
-      request_files_subscription: false
       onReady: null
     }, options
 
@@ -453,10 +453,6 @@ _.extend ChannelBaseClient.prototype,
       @logger.debug "Waiting for previous @requestChannelMessages() to complete"
 
       return
-
-    # Set up files subscription if requested and this is the first time requesting messages
-    if options.request_files_subscription and not @_isFilesSubscriptionExists()
-      @_setupFilesSubscription()
 
     channel_messages_subscription_state = Tracker.nonreactive =>
       return @getChannelMessagesSubscriptionState()
