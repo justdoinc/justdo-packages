@@ -26,7 +26,7 @@ _.extend JustdoFileInterface.prototype,
   
   getTaskFiles: (task_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
-    @getBucketFolderFiles "tasks", task_id
+    return @getBucketFolderFiles "tasks", task_id
 
   getTaskFilesByIds: (task_id, file_ids) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
