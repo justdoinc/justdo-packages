@@ -33,7 +33,11 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     throw @_error "not-implemented"
 
   getBucketFolderFiles: (bucket_id, folder_names, query, query_options) ->
-    # Gets a bucket_id and an array of folder_names, and optionally query and query_options, returns an array of file objects under it.
+    # Consumers are expected to call `subscribeToBucketFolder` before calling this method
+    # 
+    # Gets a bucket_id and an array of folder_names, and optionally query and query_options, 
+    # returns an array of the corresponding file metadata objects that belong to the `bucket_id` and `folder_names`.
+    # 
     # `query` and `query_options` are in the same format of the ones used in Mongo.
     # It is the file system provider's responsibility to ensure that the `bucket_id` and `folder_names` are taking precedence over the `query` and `query_options`.
     # To facilitate this, the `query` and `query_options` are shallow-cloned before passing them to the file system provider.
@@ -42,7 +46,19 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # "folder_names" are the identifier that allows the file system to find the associated files,
     # for example `task_id` for "tasks" bucket.
     # 
-    # Simply put, to get all the files under a task, the consumer would call `getBucketFolderFiles("tasks", task_id)`.
+    # Simply put, to get all the files under a task, the consumer would call `getBucketFolderFiles("tasks", [task_id])`.
+    # 
+    # Expexted file metadata object structure - it is up to the developer to strictly follow this structure.
+    # IMPORTANT: There should be no extra fields in the file metadata object.
+    # {
+    #   "_id" # file id
+    #   "type" # mime type
+    #   "name" # filename
+    #   "size" # file size in bytes (!)
+    #   "uploaded_by" # user id if undefined assume system generated (must be set even if undefined)
+    #   "uploaded_at" # js Date object
+    # }
+
     throw @_error "not-implemented"
 
 _.extend JustdoFileInterface.FileSystemApis,
@@ -64,30 +80,6 @@ _.extend JustdoFileInterface.FileSystemApis,
     # 
     # Gets file_id and task_id, returns a URL to download a file belonging to a task
     # Note: The URL returned by this method is for downloading. It should not be used for previewing
-    throw @_error "not-implemented"
-
-  getTaskFilesByIds: (task_id, file_ids) ->
-    # Consumers are expected to call `subscribeToTaskFiles` before calling this method
-    # 
-    # Gets an array of file_ids and a task_id, returns an array of the corresponding file metadata objects that belong to the `task_id`.
-    #
-    # The returned array order won't necessarily be the same as the order of the file_ids.
-    # Further, if some of the file_ids don't exist, or permission are denied, the returned array
-    # won't contain the corresponding file metadata objects.
-    #
-    # E.g if file_ids is [file_id_1, file_id_2, file_id_3], and non of them exist, the returned
-    # array will be empty.
-    #
-    # Expexted file metadata object structure - it is up to the developer to strictly follow this structure.
-    # IMPORTANT: There should be no extra fields in the file metadata object.
-    # {
-    #   "_id" # file id
-    #   "type" # mime type
-    #   "name" # filename
-    #   "size" # file size in bytes (!)
-    #   "uploaded_by" # user id if undefined assume system generated (must be set even if undefined)
-    #   "uploaded_at" # js Date object
-    # }
     throw @_error "not-implemented"
 
   isFileTypePreviewable: (file_type) ->
