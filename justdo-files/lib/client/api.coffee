@@ -61,7 +61,7 @@ _.extend JustdoFiles.prototype,
         return self.isFileTypePreviewable file_type
       isUserAllowedToUploadTaskFile: (task_id, user_id) ->
         return self.isUserAllowedToAccessTasksFiles(task_id, user_id)
-      uploadTaskFile: (file, task_id, cb) ->
+      uploadTaskFile: (task_id, file, cb) ->
         options = 
           task_id: task_id
         try

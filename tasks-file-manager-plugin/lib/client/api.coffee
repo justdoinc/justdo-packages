@@ -41,7 +41,7 @@ _.extend TasksFileManagerPlugin.prototype,
           "task-field-edit.files"
         ]
         return APP.justdo_permissions.checkTaskPermissions permissions, task_id, user_id
-      uploadTaskFile: (file, task_id, cb) ->
+      uploadTaskFile: (task_id, file, cb) ->
         self.tasks_file_manager.uploadFiles task_id, [file], (err, uploaded_files) ->
           if err?
             cb err
