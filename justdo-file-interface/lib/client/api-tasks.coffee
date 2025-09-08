@@ -42,9 +42,7 @@ _.extend JustdoFileInterface.prototype,
     return @getBucketFolderFiles "tasks", task_id, {_id: {$in: file_ids}}
 
   isUserAllowedToUploadTaskFile: (task_id, user_id) ->
-    fs = @_getFs()
-
-    return fs.isUserAllowedToUploadTaskFile task_id, user_id
+    return @isUserAllowedToUploadBucketFolderFile "tasks", task_id, user_id
 
   uploadTaskFile: (task_id, file, cb) ->
     @uploadBucketFolderFile "tasks", task_id, file, cb
