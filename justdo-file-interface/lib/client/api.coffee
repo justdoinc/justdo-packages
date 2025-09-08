@@ -97,6 +97,22 @@ _.extend JustdoFileInterface.prototype,
 
     return fs.subscribeToTaskFiles task_id, sub_options
   
+  getBucketFolderFiles: (bucket_id, folder_names, query, query_options) ->
+    # Important: You are expected to call `subscribeToBucketFolder` before calling this method
+    # 
+    # Important: This method return file objects with mostly metadata fields. The field names are normalized to be consistent across file systems.
+    # This is meant to facilitate usecases like showing a list of files.
+    # Since the field names are normalized, it is discouraged to use this method in other file system methods
+    fs = @_getFs()
+    
+    if _.isString folder_names
+      folder_names = [folder_names]
+
+    query = _.extend {}, query
+    query_options = _.extend {}, query_options
+
+    return fs.getBucketFolderFiles bucket_id, folder_names, query, query_options
+  
   downloadTaskFile: (task_id, file_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
     fs = @_getFs()
