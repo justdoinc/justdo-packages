@@ -61,26 +61,26 @@ _.extend JustdoFileInterface.FileSystemPrototype,
 
     throw @_error "not-implemented"
 
-_.extend JustdoFileInterface.FileSystemApis,
-  # 
-  # Client-only file system methods implemented by justd-file-interface
-  # 
-
   getFileSizeLimit: ->
     # Returns a number indicating the maximum file size for single file upload in bytes
     # Note: This method is called inside `APP.justdo_file_interface.uploadTaskFile`
     # before calling the file system's `uploadTaskFile` method to ensure the file size does not exceed the limit.
     throw @_error "not-implemented"
   
+  isFileTypePreviewable: (file_type) ->
+    # Gets file_type, returns true if a file type is deemed previewable by the file system, false otherwise
+    throw @_error "not-implemented"
+
+_.extend JustdoFileInterface.FileSystemApis,
+  # 
+  # Client-only file system methods implemented by justd-file-interface
+  # 
+
   getTaskFileLink: (task_id, file_id) ->
     # Consumers are expected to call `subscribeToTaskFiles` before calling this method
     # 
     # Gets file_id and task_id, returns a URL to download a file belonging to a task
     # Note: The URL returned by this method is for downloading. It should not be used for previewing
-    throw @_error "not-implemented"
-
-  isFileTypePreviewable: (file_type) ->
-    # Gets file_type, returns true if a file type is deemed previewable by the file system, false otherwise
     throw @_error "not-implemented"
 
   isUserAllowedToUploadTaskFile: (task_id, user_id) ->
