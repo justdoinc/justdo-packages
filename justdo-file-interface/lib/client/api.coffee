@@ -86,12 +86,12 @@ _.extend JustdoFileInterface.prototype,
 
     return fs.isUserAllowedToUploadBucketFolderFile bucket_id, folder_name, user_id
   
-  showBucketFolderFilePreviewOrStartDownload: (bucket_id, folder_name, file, file_ids_to_show) ->
+  showFilePreviewOrStartDownload: (bucket_id, folder_name, file, file_ids_to_show) ->
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method
 
     fs = @_getFs()
 
-    return fs.showBucketFolderFilePreviewOrStartDownload bucket_id, folder_name, file, file_ids_to_show
+    return fs.showFilePreviewOrStartDownload bucket_id, folder_name, file, file_ids_to_show
 
   getBucketFolderFilePreviewLinkAsync: (bucket_id, folder_name, file_id) ->
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method
