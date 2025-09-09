@@ -49,9 +49,7 @@ _.extend JustdoFiles.prototype,
         
         try
           if bucket_id is "tasks"
-            upload_file_options = 
-              task_id: folder_name
-            upload = self.uploadFile(file, upload_file_options)
+            upload = self.uploadFile(file, folder_name)
 
           if bucket_id is "avatars"
             upload = self.uploadAvatar(file)
