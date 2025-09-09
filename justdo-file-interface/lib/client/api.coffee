@@ -125,7 +125,7 @@ _.extend JustdoFileInterface.prototype,
 
     return fs.showFilePreviewOrStartDownload jd_file_id_obj, additional_files_ids_in_folder_to_include_in_preview
 
-  getBucketFolderFilePreviewLinkAsync: (jd_file_id_obj) ->
+  getFilePreviewLinkAsync: (jd_file_id_obj) ->
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method
     #
     # Gets a jd_file_id_obj, returns a promise that resolves to a URL to preview a file belonging to a bucket folder
@@ -135,7 +135,7 @@ _.extend JustdoFileInterface.prototype,
     fs = @_getFs(jd_file_id_obj.fs_id)
 
     promise = new Promise (resolve, reject) ->
-      fs.getBucketFolderFilePreviewLinkAsync jd_file_id_obj, (err, preview_link) ->
+      fs.getFilePreviewLinkAsync jd_file_id_obj, (err, preview_link) ->
         if err?
           reject err
         else

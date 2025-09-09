@@ -83,4 +83,4 @@ _.extend JustdoFileInterface.prototype,
       folder_name: task_id
       file_id: file_id
 
-    return @getBucketFolderFilePreviewLinkAsync jd_file_id_obj
+    return @getFilePreviewLinkAsync jd_file_id_obj

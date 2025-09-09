@@ -78,8 +78,11 @@ _.extend TasksFileManagerPlugin.prototype,
         
         @_requireSupportedBucketId bucket_id
         self.showPreviewOrStartDownload folder_name, file_id, additional_files_ids_in_folder_to_include_in_preview
+      getFilePreviewLinkAsync: (jd_file_id_obj, cb) ->
+        bucket_id = jd_file_id_obj.bucket_id
+        folder_name = jd_file_id_obj.folder_name
+        file_id = jd_file_id_obj.file_id
         
-      getBucketFolderFilePreviewLinkAsync: (bucket_id, folder_name, file_id, cb) ->
         @_requireSupportedBucketId bucket_id
         self.tasks_file_manager.getPreviewDownloadLink folder_name, file_id, 1, {}, (err, file_link) ->
           if err?

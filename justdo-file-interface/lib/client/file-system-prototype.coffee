@@ -132,7 +132,7 @@ _.extend JustdoFileInterface.FileSystemPrototype,
 
     throw @_error "not-implemented"
 
-  getBucketFolderFilePreviewLinkAsync: (jd_file_id_obj) ->
+  getFilePreviewLinkAsync: (jd_file_id_obj) ->
     # Consumers are expected to call `subscribeToBucketFolder` before calling this method
     #
     # Gets a jd_file_id_obj, returns a promise that resolves to a URL to preview a file belonging to a bucket folder
