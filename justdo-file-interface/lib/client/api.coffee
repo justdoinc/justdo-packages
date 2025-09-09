@@ -75,7 +75,7 @@ _.extend JustdoFileInterface.prototype,
     #
     # cb will be called with the following params: (err, file_details)
     #   err: Error object if error occurs (e,g, file size exceeds, bucket folder not found or user does not have access, etc). Falsy-value (null/undefined) otherwise.
-    #   file_details:
+    #   file_details: An array of objects in the following order, with the following fields:
     #     jd_file_id_obj: The "primary key" of the file. It is recommended to store this object for identifying the file in the future. 
     #                     Refer to the jd_file_id_obj_schema for the exact structure.
     #     additional_details: Additional details of the uploaded file. 
@@ -107,7 +107,7 @@ _.extend JustdoFileInterface.prototype,
         folder_name: folder_name
         file_id: uploaded_file._id
       
-      file_details = {jd_file_id_obj, additional_details: uploaded_file}
+      file_details = [jd_file_id_obj, uploaded_file]
 
       cb? null, file_details
 
