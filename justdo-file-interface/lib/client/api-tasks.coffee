@@ -49,6 +49,7 @@ _.extend JustdoFileInterface.prototype,
     return @isUserAllowedToUploadBucketFolderFile "tasks", task_id, user_id
 
   uploadTaskFile: (task_id, file, cb) ->
+    # Refer to the documentation of `uploadBucketFolderFile` for the parameters of the `cb`
     @uploadBucketFolderFile "tasks", task_id, file, cb
     return
   
