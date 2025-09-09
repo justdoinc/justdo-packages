@@ -88,7 +88,7 @@ _.extend JustdoFiles.prototype,
           return ret
 
         return normalized_files
-      downloadBucketFolderFile: (bucket_id, folder_name, file_id) ->
+      downloadFile: (bucket_id, folder_name, file_id) ->
         @_requireCollectionMeta(bucket_id)
         if bucket_id is "tasks"
           return self.downloadFile file_id
