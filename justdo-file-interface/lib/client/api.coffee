@@ -54,14 +54,14 @@ _.extend JustdoFileInterface.prototype,
 
     return fs.getBucketFolderFiles bucket_id, folder_name, query, query_options
   
-  getBucketFolderFileLink: (jd_file_id_obj) ->
+  getFileLink: (jd_file_id_obj) ->
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method
     # 
     # Important: The URL returned by this method is for downloading. It should not be used for previewing
     jd_file_id_obj = @sanitizeJdFileIdObj jd_file_id_obj
     fs = @_getFs(jd_file_id_obj.fs_id)
 
-    return fs.getBucketFolderFileLink jd_file_id_obj
+    return fs.getFileLink jd_file_id_obj
   
   uploadBucketFolderFile: (bucket_id, folder_name, file, cb) ->
     fs = @_getFs()
