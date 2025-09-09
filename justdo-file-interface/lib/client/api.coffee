@@ -9,6 +9,10 @@ _.extend JustdoFileInterface.prototype,
     return
 
   getFileSizeLimit: ->
+    # Returns a number indicating the maximum file size for single file upload in bytes
+    # Note: This same limit is will be used for checking file size when calling `APP.justdo_file_interface.uploadBucketFolderFile`
+    # before calling the file system's `uploadBucketFolderFile` method to ensure the file size does not exceed the limit.
+
     fs = @_getFs()
 
     limit = fs.getFileSizeLimit()
@@ -19,6 +23,9 @@ _.extend JustdoFileInterface.prototype,
     return limit
 
   isPreviewableCategory: (mime_type) ->
+    # Takes mime_type, passes the mime_type to JustdoCoreHelpers.mimeTypeToPreviewCategory to get the previewable category (e.g. image, video, pdf, etc)
+    # and passes the category to the file system to determine whether the category is deemed previewable. 
+    # Returns true if previewable, false otherwise.
     fs = @_getFs()
     category = JustdoHelpers.mimeTypeToPreviewCategory mime_type
     
@@ -118,12 +125,26 @@ _.extend JustdoFileInterface.prototype,
     return fs.downloadFile jd_file_id_obj
   
   isUserAllowedToUploadBucketFolderFile: (bucket_id, folder_name, user_id) ->
+    # Gets bucket_id, folder_name and user_id, returns true if a user is allowed to upload a file to a bucket folder, false otherwise
+    # 
+    # This is NOT called internally by `APP.justdo_file_interface.uploadBucketFolderFile` since it's the file system's responsibility to perform permission checking.
+    # A typical usecase for this method is to check whether a user is allowed to upload a file before showing the upload button.
     fs = @_getFs()
 
     return fs.isUserAllowedToUploadBucketFolderFile bucket_id, folder_name, user_id
   
   showFilePreviewOrStartDownload: (jd_file_id_obj, additional_files_ids_in_folder_to_include_in_preview) ->
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method
+    # 
+    # Starts a preview modal of the file if it is previewable by the file system, otherwise downloads the file directly.
+    # The preview includes all the previewable files under the same `bucket_id` and `folder_name`, unless
+    # limited by the `additional_files_ids_in_folder_to_include_in_preview` param.
+    #
+    # If `additional_files_ids_in_folder_to_include_in_preview` is provided, it is expected to be an array of file ids.
+    # if empty array - show only the file requested in the preview.
+    # if undefined - show all the previewable files under the same `bucket_id` and `folder_name`.
+    # otherwise - show the files in the `additional_files_ids_in_folder_to_include_in_preview` array.
+
     jd_file_id_obj = @sanitizeJdFileIdObj jd_file_id_obj
     fs = @_getFs(jd_file_id_obj.fs_id)
 
