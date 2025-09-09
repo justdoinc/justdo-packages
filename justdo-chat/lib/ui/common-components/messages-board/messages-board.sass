@@ -3,7 +3,10 @@
 .messages-board-viewport
   padding: 0px 12px
   .messages-board
-    padding-bottom: 8px
+    display: flex
+    flex-direction: column
+    gap: 12px
+    padding-bottom: 12px
 
 .jdc-basic-design
   .message-date-seperator
@@ -12,25 +15,23 @@
     padding: 8px 0
   .message-card
     display: flex
+    flex-direction: column
+    align-items: end
+    gap: 4px
     &.bot-log-message
       justify-content: center
-
       .message-body
         text-align: center
-
     .author
       font-weight: 550
       margin-right: 20px
-
     .date
       color: #8DA4C2
       font-size: 10px
-
     .avatar
       img
         width: 28px
         height: 28px
-
     .message-container
       background-color: #F1F5FA
       color: black
@@ -38,23 +39,29 @@
       border-radius: 8px
       margin-left: 6px
       max-width: 280px
-
     .message-header
       display: flex
       align-items: center
       justify-content: space-between
-
     .message-body
       word-wrap: break-word
       text-align: left
-
     .files-container
       display: flex
       flex-direction: column
-      background-color: rgba(255, 255, 255, 0.16)
-      padding: 4px 2px
-      border-radius: 6px
-      margin: 4px 0px
+      gap: 4px
+      position: relative
+      .date
+        position: absolute
+        right: 4px
+        top: 4px
+        color: black !important
+        background-color: white
+        padding: 1px 3px
+        border-radius: 3px
+        font-weight: 650
+        box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2)
+        z-index: 1
       .files-footer
         padding: 8px 8px 4px 8px
       .file-container
@@ -63,16 +70,27 @@
         align-items: flex-start
         transform: scale(1)
         transition: all 0.32s
-        padding: 4px 8px
+        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16)
+        border-radius: 6px
+        overflow: hidden
         &:hover
           transform: scale(1.01)
-          background-color: rgba(0, 0, 0, 0.12)
         .show-preview-or-start-download
-          width: 100%
+          display: flex
           &:hover
             text-decoration: none
-        video
-          width: 100%
+        .file-wrapper
+          border-radius: 6px
+          overflow: hidden
+          display: flex
+          &.pdf
+            background-color: #EFF3F8
+            padding: 4px
+        img, video
+          width: 200px
+        embed
+          width: 192px
+          height: 272px
         .file-info
           display: flex
           align-items: center
@@ -117,24 +135,15 @@
               opacity: 0.5
               font-size: 10px
 
-  .message-card + .message-card
-    margin-top: 8px
-
   .message-card.my-message
-    flex-direction: row-reverse
-
     .message-container
       color: white
-
       .message-header
         justify-content: flex-end
-
       .linkified
         color: white
-
     .date
       color: rgba(255, 255, 255, 0.5)
-
     .task-link
       color: white
 
