@@ -115,19 +115,18 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # A usecase for this method is to check whether a user is allowed to upload a file before showing the upload button.
     throw @_error "not-implemented"
 
-  showBucketFolderFilePreviewOrStartDownload: (bucket_id, folder_name, file, file_ids_to_show) ->
+  showFilePreviewOrStartDownload(jd_file_id_obj, additional_files_ids_in_folder_to_include_in_preview) ->
     # Consumers are expected to call `subscribeToBucketFolder` before calling this method
-    # 
-    # Gets a file, bucket_id, folder_name and optionally an array of file_ids_to_show.
-    # `file` can be a string or an object with the following properties:
-    # {
-    #   _id: String
-    #   type: String
-    #   name: String
-    # }
-    # If provided `file` deemed previewable by the file system, show the preview modal with the `file`; Otherwise, download the file directly.
-    # The preview modal allows user to show all other previewable files under the same `bucket_id` and `folder_name`;
-    # If `file_ids_to_show` is provided, only the files under `bucket_id` and `folder_name` specified in the `file_ids_to_show` array will be shown in the preview modal.
-    # A sample usecase of the `file_ids_to_show` param is to show only files attached to a single chat message, instead of all the files under a task.
+    #
+    # Starts a preview modal of the file if it is previewable by the file system, otherwise downloads the file directly.
+    # The preview modal is up to you to implement.
+    #
+    # The preview should include all the previewable files under the same `bucket_id` and `folder_name`, unless
+    # limited by the `additional_files_ids_in_folder_to_include_in_preview` param.
+    #
+    # If `additional_files_ids_in_folder_to_include_in_preview` is provided, it is expected to be an array of file ids.
+    # if empty array - show only the file requested in the preview.
+    # if undefined - show all the previewable files under the same `bucket_id` and `folder_name`.
+    # otherwise - show the files in the `additional_files_ids_in_folder_to_include_in_preview` array.
 
     throw @_error "not-implemented"
