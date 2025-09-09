@@ -54,13 +54,14 @@ _.extend JustdoFileInterface.prototype,
 
     return fs.getBucketFolderFiles bucket_id, folder_name, query, query_options
   
-  getBucketFolderFileLink: (bucket_id, folder_name, file_id) ->
+  getBucketFolderFileLink: (jd_file_id_obj) ->
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method
     # 
     # Important: The URL returned by this method is for downloading. It should not be used for previewing
-    fs = @_getFs()
+    jd_file_id_obj = @sanitizeJdFileIdObj jd_file_id_obj
+    fs = @_getFs(jd_file_id_obj.fs_id)
 
-    return fs.getBucketFolderFileLink bucket_id, folder_name, file_id
+    return fs.getBucketFolderFileLink jd_file_id_obj
   
   uploadBucketFolderFile: (bucket_id, folder_name, file, cb) ->
     fs = @_getFs()
@@ -74,31 +75,36 @@ _.extend JustdoFileInterface.prototype,
 
     return
   
-  downloadBucketFolderFile: (bucket_id, folder_name, file_id) ->
+  downloadBucketFolderFile: (jd_file_id_obj) ->
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method
+    jd_file_id_obj = @sanitizeJdFileIdObj jd_file_id_obj
+    fs = @_getFs(jd_file_id_obj.fs_id)
 
-    fs = @_getFs()
-
-    return fs.downloadBucketFolderFile bucket_id, folder_name, file_id
+    return fs.downloadBucketFolderFile jd_file_id_obj
   
   isUserAllowedToUploadBucketFolderFile: (bucket_id, folder_name, user_id) ->
     fs = @_getFs()
 
     return fs.isUserAllowedToUploadBucketFolderFile bucket_id, folder_name, user_id
   
-  showFilePreviewOrStartDownload: (bucket_id, folder_name, file, file_ids_to_show) ->
+  showFilePreviewOrStartDownload: (jd_file_id_obj, additional_files_ids_in_folder_to_include_in_preview) ->
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method
+    jd_file_id_obj = @sanitizeJdFileIdObj jd_file_id_obj
+    fs = @_getFs(jd_file_id_obj.fs_id)
 
-    fs = @_getFs()
+    return fs.showFilePreviewOrStartDownload jd_file_id_obj, additional_files_ids_in_folder_to_include_in_preview
 
-    return fs.showFilePreviewOrStartDownload bucket_id, folder_name, file, file_ids_to_show
-
-  getBucketFolderFilePreviewLinkAsync: (bucket_id, folder_name, file_id) ->
+  getBucketFolderFilePreviewLinkAsync: (jd_file_id_obj) ->
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method
-    fs = @_getFs()
+    #
+    # Gets a jd_file_id_obj, returns a promise that resolves to a URL to preview a file belonging to a bucket folder
+    # Note: The URL returned by this method is for previewing. It should not be used for downloading.
+
+    jd_file_id_obj = @sanitizeJdFileIdObj jd_file_id_obj
+    fs = @_getFs(jd_file_id_obj.fs_id)
 
     promise = new Promise (resolve, reject) ->
-      fs.getBucketFolderFilePreviewLinkAsync bucket_id, folder_name, file_id, (err, preview_link) ->
+      fs.getBucketFolderFilePreviewLinkAsync jd_file_id_obj, (err, preview_link) ->
         if err?
           reject err
         else
