@@ -63,7 +63,11 @@ _.extend TasksFileManagerPlugin.prototype,
           return ret
 
         return normalized_files
-      downloadFile: (bucket_id, folder_name, file_id) ->
+      downloadFile: (jd_file_id_obj) ->
+        bucket_id = jd_file_id_obj.bucket_id
+        folder_name = jd_file_id_obj.folder_name
+        file_id = jd_file_id_obj.file_id
+        
         @_requireSupportedBucketId bucket_id
         self.tasks_file_manager.downloadFile folder_name, file_id, (err, url) ->
           if err

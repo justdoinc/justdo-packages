@@ -108,6 +108,10 @@ _.extend JustdoFileInterface.prototype,
   
   downloadFile: (jd_file_id_obj) ->
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method
+    # 
+    # Gets a jd_file_id_obj, downloads a file from a bucket folder if it is accessible.
+    # Note: This method may or may not throw an error if the file does not exist.
+
     jd_file_id_obj = @sanitizeJdFileIdObj jd_file_id_obj
     fs = @_getFs(jd_file_id_obj.fs_id)
 
