@@ -94,16 +94,18 @@ _.extend JustdoFiles.prototype,
           return self.downloadFile file_id
         if bucket_id is "avatars"
           return self.downloadAvatar file_id
-      showFilePreviewOrStartDownload: (bucket_id, folder_name, file, additional_files_ids_in_folder_to_include_in_preview) ->
+      showFilePreviewOrStartDownload: (jd_file_id_obj, additional_files_ids_in_folder_to_include_in_preview) ->
+        bucket_id = jd_file_id_obj.bucket_id
+        folder_name = jd_file_id_obj.folder_name
+        file_id = jd_file_id_obj.file_id
+        
         @_requireCollectionMeta(bucket_id)
         if bucket_id is "tasks"
-          return self.showPreviewOrStartDownload folder_name, file, additional_files_ids_in_folder_to_include_in_preview
+          return self.showPreviewOrStartDownload folder_name, file_id, additional_files_ids_in_folder_to_include_in_preview
         if bucket_id is "avatars"
           # There's no preview for avatars. Simply start download.
-          if not _.isString file
-            file = file._id
-          return self.downloadAvatar file
       getBucketFolderFilePreviewLinkAsync: (bucket_id, folder_name, file_id, cb) ->
+          return self.downloadAvatar file_id
         collection_name = @_requireBucketCollectionName(bucket_id)
         try
           preview_link = self._getFilePreviewLink(file_id, collection_name)

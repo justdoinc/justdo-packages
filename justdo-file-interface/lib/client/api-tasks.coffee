@@ -63,9 +63,14 @@ _.extend JustdoFileInterface.prototype,
 
     return @downloadFile jd_file_id_obj
 
-  showTaskFilePreviewOrStartDownload: (task_id, file, file_ids_to_show) ->
+  showTaskFilePreviewOrStartDownload: (task_id, file_id, file_ids_to_show) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
-    return @showFilePreviewOrStartDownload "tasks", task_id, file, file_ids_to_show
+    jd_file_id_obj = 
+      bucket_id: "tasks"
+      folder_name: task_id
+      file_id: file_id
+
+    return @showFilePreviewOrStartDownload jd_file_id_obj, file_ids_to_show
   
   getTaskFilePreviewLinkAsync: (task_id, file_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
