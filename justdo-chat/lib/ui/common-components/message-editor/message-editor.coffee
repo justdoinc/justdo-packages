@@ -94,20 +94,30 @@ Template.common_chat_message_editor.onCreated ->
 
     # File handling
     if not _.isEmpty(files = @getFileInputValue())
-      fs_id = APP.justdo_file_interface.getDefaultFsId()
       task_id = task_chat_object.getChannelIdentifier().task_id
       uploaded_files = []
 
       # Note: This callback is used to handle the upload of a single file
-      uploadFileCb = (err, uploaded_file) =>
+      uploadFileCb = (err, file_details) =>
         if err?
           @setError(err.reason or err)
           @showSendButton()
           return
         else 
-          file_meta = _.pick uploaded_file, "_id", "name", "size", "type"
-          file_meta.fs_id = fs_id
-          uploaded_files.push file_meta
+          # Typically, after uploaded a file, `jd_file_id_obj` should be stored for identifying the file in the future
+          # since it's considered the primary key of the file.
+          # However, in the context of justdo-chat, we can derive the `bucket_id` and `folder_name`
+          # from the channel type and channel identifier, so we don't need to store it.
+          # In addition, since we want to keep a record of what file got attached to a message
+          # even after the deletion of such file, we store `additional_details` which includes the file name and size
+          # and extend it with the `fs_id` to identify the file system.
+          # With file_id, fs_id, channel type and channel identifier, we can identify the file uniquely.
+          jd_file_id_obj = file_details[0]
+          additional_details = file_details[1]
+
+          additional_details.fs_id = jd_file_id_obj.fs_id
+
+          uploaded_files.push additional_details
 
         all_files_uploaded = uploaded_files.length is files.length
         if all_files_uploaded
