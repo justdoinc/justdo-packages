@@ -60,7 +60,7 @@ _.extend JustdoFileInterface.prototype,
       folder_name: task_id
       file_id: file_id
 
-    return @downloadBucketFolderFile jd_file_id_obj
+    return @downloadFile jd_file_id_obj
 
   showTaskFilePreviewOrStartDownload: (task_id, file, file_ids_to_show) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method

@@ -75,12 +75,12 @@ _.extend JustdoFileInterface.prototype,
 
     return
   
-  downloadBucketFolderFile: (jd_file_id_obj) ->
+  downloadFile: (jd_file_id_obj) ->
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method
     jd_file_id_obj = @sanitizeJdFileIdObj jd_file_id_obj
     fs = @_getFs(jd_file_id_obj.fs_id)
 
-    return fs.downloadBucketFolderFile jd_file_id_obj
+    return fs.downloadFile jd_file_id_obj
   
   isUserAllowedToUploadBucketFolderFile: (bucket_id, folder_name, user_id) ->
     fs = @_getFs()

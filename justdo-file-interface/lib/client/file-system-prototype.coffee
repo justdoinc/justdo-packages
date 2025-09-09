@@ -88,7 +88,7 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # file system's `getFileSizeLimit` method to ensure it does not exceed the limit.
     throw @_error "not-implemented"
   
-  downloadBucketFolderFile: (jd_file_id_obj) ->
+  downloadFile: (jd_file_id_obj) ->
     # Consumers are expected to call `subscribeToBucketFolder` before calling this method
     # 
     # Gets a jd_file_id_obj, downloads a file from a bucket folder if it is accessible.
