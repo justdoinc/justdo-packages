@@ -18,10 +18,11 @@ _.extend JustdoFileInterface.prototype,
 
     return limit
 
-  isFileTypePreviewable: (file_type) ->
+  isPreviewableCategory: (mime_type) ->
     fs = @_getFs()
-
-    return fs.isFileTypePreviewable file_type
+    category = JustdoHelpers.mimeTypeToPreviewCategory mime_type
+    
+    return fs.isPreviewableCategory category
 
   subscribeToBucketFolder: (bucket_id, folder_name, callbacks) ->
     # IMPORTANT! Before calling any file system methods, you are expected to call this method to load the relevant data.

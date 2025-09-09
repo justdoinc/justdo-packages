@@ -32,8 +32,8 @@ _.extend JustdoFiles.prototype,
       getBucketFolderFileLink: (bucket_id, folder_name, file_id) ->
         collection_name = @_requireBucketCollectionName(bucket_id)
         return self._getFileShareableLink(file_id, collection_name)
-      isFileTypePreviewable: (file_type) ->
-        return self.isFileTypePreviewable file_type
+      isPreviewableCategory: (category) ->
+        return category in JustdoFiles.previewable_categories_whitelist
       isUserAllowedToUploadBucketFolderFile: (bucket_id, folder_name, user_id) ->
         @_requireCollectionMeta(bucket_id)
         if bucket_id is "tasks"
