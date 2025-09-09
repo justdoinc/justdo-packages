@@ -22,6 +22,6 @@ _.extend JustdoFileInterface.prototype,
       jd_file_id_obj,
       throw_on_error: true
     )
-    return
+    return cleaned_val
 
   _attachCollectionsSchemas: -> return
