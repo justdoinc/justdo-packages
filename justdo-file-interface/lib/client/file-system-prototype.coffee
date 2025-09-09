@@ -18,16 +18,17 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # with the underlying collection/s that receives the subscription data. As such, this method is meant to allow you to
     # prepare the necessary data before the consumer interacts with the bucket folder and folder's files.
     #
-    # XXX the following should be copy-pastable to the browser console - and work.
     # Interaction example:
     # ```
-    # sub_handle = APP.justdo_file_interface.subscribeToBucketFolder("tasks", "task_id", {
-    #   onReady: ->
-    #     console.log(APP.justdo_file_interface.getBucketFolderFiles())
-    #     sub_handle.stop()
-    #   onStop: (err) ->
-    #     console.log("Subscription stopped", err)
-    # })
+    # sub_handle = APP.justdo_file_interface.subscribeToBucketFolder("tasks", task_id, {
+    #   onReady: () => {
+    #     console.log(APP.justdo_file_interface.getBucketFolderFiles("tasks", task_id));
+    #     sub_handle.stop();
+    #   },
+    #   onStop: (err) => {
+    #     console.log("Subscription stopped", err);
+    #   }
+    # });
     # ```
 
     throw @_error "not-implemented"
@@ -43,12 +44,12 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # To facilitate this, the `query` and `query_options` are shallow-cloned before passing them to the file system provider.
     # 
     # "bucket" is a category of files, for example "tasks";
-    # "folder_name" are the identifier that allows the file system to find the associated files,
+    # "folder_name" is the identifier that allows the file system to find the associated files,
     # for example `task_id` for "tasks" bucket.
     # 
-    # Simply put, to get all the files under a task, the consumer would call `getBucketFolderFiles("tasks", [task_id])`.
+    # Simply put, to get all the files under a task, the consumer would call `getBucketFolderFiles("tasks", task_id)`.
     # 
-    # Expexted file metadata object structure - it is up to the developer to strictly follow this structure.
+    # Expected file metadata object structure - it is up to the developer to strictly follow this structure.
     # IMPORTANT: There should be no extra fields in the file metadata object.
     # {
     #   "_id" # file id
@@ -71,17 +72,22 @@ _.extend JustdoFileInterface.FileSystemPrototype,
   uploadBucketFolderFile: (bucket_id, folder_name, file, cb) ->
     # Gets a File (the native browser file object), bucket_id, folder_name and optionally a cb, uploads the file to the bucket folder.
     #
-    # cb will be called with the following params: (err, uploaded_file)
+    # cb will be called with the following params: (err, file_details)
     #   err: Error object if error occurs (e,g, file size exceeds, bucket folder not found or user does not have access, etc). Falsy-value (null/undefined) otherwise.
-    #   uploaded_file:
-    #     {
-    #       _id: String
-    #       name: String # the readable filename of the uploaded file
-    #       type: String # the mime type of the uploaded file
-    #       size: Number # the size of the uploaded file in bytes (!)
-    #     }
-    #   It is up to the developer to strictly follow this structure.
-    #   IMPORTANT: There should be no extra fields in the uploaded_file object.
+    #   file_details: An array of objects in the following order, with the following fields:
+    #     jd_file_id_obj: The "primary key" of the file. It is recommended to store this object for identifying the file in the future. 
+    #                     Refer to the jd_file_id_obj_schema for the exact structure.
+    #     additional_details: Additional details of the uploaded file. 
+    #                         We return this object despite most of the information can be obtained from browser's File object
+    #                         because the file system may normalize/change the name or the size may not be exactly the same as the browser's File object.
+    #                         As such, the `additional_details` represents how the file looks like from the file system's perspective.
+    #                         Guarenteed to include the following fields:
+    #                         {
+    #                           _id: String
+    #                           name: String # the readable filename of the uploaded file
+    #                           type: String # the mime type of the uploaded file
+    #                           size: Number # the size of the uploaded file in bytes (!)
+    #                         }
     # 
     # We'll ensure that the file size doesn't exceed the file system's `getFileSizeLimit` before trying to upload the file.
     # To be precise: before calling this method inside `APP.justdo_file_interface.uploadBucketFolderFile`, the file size is checked against the
@@ -97,13 +103,13 @@ _.extend JustdoFileInterface.FileSystemPrototype,
 
   getFileSizeLimit: ->
     # Returns a number indicating the maximum file size for single file upload in bytes
-    # Note: This method is called inside `APP.justdo_file_interface.uploadTaskFile`
-    # before calling the file system's `uploadTaskFile` method to ensure the file size does not exceed the limit.
+    # Note: This method is called inside `APP.justdo_file_interface.uploadBucketFolderFile`
+    # before calling the file system's `uploadBucketFolderFile` method to ensure the file size does not exceed the limit.
     throw @_error "not-implemented"
 
   isPreviewableCategory: (category) ->
+    # Takes category, returns true if a category is deemed previewable by the file system, false otherwise
     # category is one of the returned value from JustdoCoreHelpers.mimeTypeToPreviewCategory
-    # returns true if a category is deemed previewable by the file system, false otherwise
     throw @_error "not-implemented"
 
   isUserAllowedToUploadBucketFolderFile: (bucket_id, folder_name, user_id) ->
@@ -116,7 +122,7 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # A usecase for this method is to check whether a user is allowed to upload a file before showing the upload button.
     throw @_error "not-implemented"
 
-  showFilePreviewOrStartDownload(jd_file_id_obj, additional_files_ids_in_folder_to_include_in_preview) ->
+  showFilePreviewOrStartDownload: (jd_file_id_obj, additional_files_ids_in_folder_to_include_in_preview) ->
     # Consumers are expected to call `subscribeToBucketFolder` before calling this method
     #
     # Starts a preview modal of the file if it is previewable by the file system, otherwise downloads the file directly.
