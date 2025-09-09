@@ -8,7 +8,7 @@ _.extend JustdoFileInterface.prototype,
 
     return
 
-  getFileSizeLimit: (fs_id) ->
+  getFileSizeLimit: ->
     fs = @_getFs()
 
     limit = fs.getFileSizeLimit()
