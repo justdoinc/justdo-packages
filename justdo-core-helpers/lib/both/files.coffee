@@ -1,14 +1,14 @@
 _.extend JustdoCoreHelpers,
   mimeTypeToPreviewCategory: (mime_type) ->
-    # Receives a mime_type and return's JustDo's standard category id for its previewability.
+    # Receives a mime_type and returns JustDo's standard Preview Category id that defines its previewability.
     #
-    # What we try capture here are categories that are typically bounded together in their previewability
+    # What we try to capture here are categories that are typically bounded together in their previewability
     # for example, in all modern browsers, anything image/* would be previwable, as such we bound all of them
-    # into a single preview category "images". As for pdf preview, for example the case that if a pdf is previewable
-    # other types are previwable as well (for example doc), hence, pdf gets its own category.
+    # into a single Preview Category "images". As for pdf preview, for example, if a pdf is previewable
+    # other types are not necessarily previwable as well (for example doc), hence, pdf gets its own category.
     #
-    # The general rule of thumb for adding more categories, is that we add them, as we encounter them, and not
-    # preemptively.
+    # The general rule of thumb for adding more categories, is that we add them, as we encounter/need them,
+    # and not preemptively.
 
     mime_type = mime_type.toLowerCase()
 
