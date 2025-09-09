@@ -27,7 +27,7 @@ _.extend JustdoFileInterface.prototype,
       folder_name: task_id
       file_id: file_id
 
-    return @getBucketFolderFileLink jd_file_id_obj
+    return @getFileLink jd_file_id_obj
   
   getTaskFiles: (task_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method

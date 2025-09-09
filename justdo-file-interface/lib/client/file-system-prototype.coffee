@@ -61,7 +61,7 @@ _.extend JustdoFileInterface.FileSystemPrototype,
 
     throw @_error "not-implemented"
 
-  getBucketFolderFileLink: (jd_file_id_obj) ->
+  getFileLink: (jd_file_id_obj) ->
     # Consumers are expected to call `subscribeToBucketFolder` before calling this method
     # 
     # Gets a jd_file_id_obj, returns a URL to download a file belonging to a bucket folder
