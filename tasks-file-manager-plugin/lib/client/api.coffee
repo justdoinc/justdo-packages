@@ -71,7 +71,7 @@ _.extend TasksFileManagerPlugin.prototype,
           return
         
         return
-      showBucketFolderFilePreviewOrStartDownload: (bucket_id, folder_name, file, file_ids_to_show) ->
+      showFilePreviewOrStartDownload: (bucket_id, folder_name, file, file_ids_to_show) ->
         @_requireSupportedBucketId bucket_id
         if _.isString file
           file = tasks_file_collection.findOne(file)
