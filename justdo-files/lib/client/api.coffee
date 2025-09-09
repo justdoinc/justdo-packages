@@ -104,8 +104,11 @@ _.extend JustdoFiles.prototype,
           return self.showPreviewOrStartDownload folder_name, file_id, additional_files_ids_in_folder_to_include_in_preview
         if bucket_id is "avatars"
           # There's no preview for avatars. Simply start download.
-      getBucketFolderFilePreviewLinkAsync: (bucket_id, folder_name, file_id, cb) ->
           return self.downloadAvatar file_id
+      getFilePreviewLinkAsync: (jd_file_id_obj, cb) ->
+        bucket_id = jd_file_id_obj.bucket_id
+        file_id = jd_file_id_obj.file_id
+
         collection_name = @_requireBucketCollectionName(bucket_id)
         try
           preview_link = self._getFilePreviewLink(file_id, collection_name)
