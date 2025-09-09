@@ -31,6 +31,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/constructors_tools.coffee", both);
   api.addFiles("lib/both/env-helpers.coffee", both);
   api.addFiles("lib/both/event-emitter-helpers.coffee", both);
+  api.addFiles("lib/both/files.coffee", both);
   api.addFiles("lib/both/flush-manager.coffee", both);
   api.addFiles("lib/both/profiling.coffee", both);
   api.addFiles("lib/both/client-only-fields.coffee", both);
