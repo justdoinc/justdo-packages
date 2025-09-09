@@ -55,6 +55,9 @@ _.extend JustdoFileInterface.prototype,
   
   downloadTaskFile: (task_id, file_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
+    # 
+    # Gets a jd_file_id_obj, downloads a file from the `task_id` if the file and task are both accessible.
+    # Note: This method may or may not throw an error if the file does not exist.
 
     jd_file_id_obj = 
       bucket_id: "tasks"
