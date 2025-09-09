@@ -58,6 +58,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/platform-details.coffee", both);
   api.addFiles("lib/both/event-emitter-helpers.coffee", both);
   api.addFiles("lib/both/fiber-var.coffee", both);
+  api.addFiles("lib/both/files.coffee", both);
   api.addFiles("lib/both/constructors_tools.coffee", both);
   api.addFiles("lib/both/prereq.coffee", both);
   api.addFiles("lib/both/profiling.coffee", both);
