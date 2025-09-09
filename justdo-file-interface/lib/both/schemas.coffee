@@ -1,12 +1,19 @@
 _.extend JustdoFileInterface.prototype,
+  # jd_folder_id_obj is used by many methods in justdo-file-interface and it's file systems.
+  # It consists of the minimal details we need to identify a folder under a file system. Consider it the primary key of a folder.
+  jd_folder_id_obj_schema: new SimpleSchema
+    fs_id:
+      type: String
+    bucket_id:
+      type: String
+    folder_name:
+      type: String
+
   # jd_file_id_obj is used by many methods in justdo-file-interface and it's file systems.
-  # It consists of the minimal details we need to identify a file. Consider it the primary key of a file.
+  # It consists of the minimal details we need to identify a file under a file system. Consider it the primary key of a file.
   jd_file_id_obj_schema: new SimpleSchema
     fs_id:
       type: String
-      # The purpose of fs_id is to allow justdo-file-interface to determine which file system to use.
-      # If not provided, the `_getFs` will use the default fs_id.
-      optional: true
     bucket_id:
       type: String
     folder_name:
