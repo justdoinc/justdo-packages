@@ -1,3 +1,6 @@
+# Many of the methods take jd_file_id_obj as param. 
+# Check the `jd_file_id_obj_schema` under /both/schemas.coffee for details.
+
 _.extend JustdoFileInterface.prototype,
   _bothImmediateInit: ->
     # @_bothImmediateInit runs before the specific env's @_immediateInit()
