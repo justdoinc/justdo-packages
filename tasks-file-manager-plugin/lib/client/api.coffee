@@ -71,7 +71,7 @@ _.extend TasksFileManagerPlugin.prototype,
           return
         
         return
-      showFilePreviewOrStartDownload: (bucket_id, folder_name, file, file_ids_to_show) ->
+      showFilePreviewOrStartDownload: (bucket_id, folder_name, file, additional_files_ids_in_folder_to_include_in_preview) ->
         @_requireSupportedBucketId bucket_id
         if _.isString file
           file = tasks_file_collection.findOne(file)
@@ -84,7 +84,7 @@ _.extend TasksFileManagerPlugin.prototype,
         if (not file.title?) and (file.name?)
           file.title = file.name
 
-        self.showPreviewOrStartDownload folder_name, file, file_ids_to_show
+        self.showPreviewOrStartDownload folder_name, file, additional_files_ids_in_folder_to_include_in_preview
       getBucketFolderFilePreviewLinkAsync: (bucket_id, folder_name, file_id, cb) ->
         @_requireSupportedBucketId bucket_id
         self.tasks_file_manager.getPreviewDownloadLink folder_name, file_id, 1, {}, (err, file_link) ->
