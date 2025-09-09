@@ -24,6 +24,12 @@ _.extend JustdoFiles,
     "video/x-ms-wmv"
     ]
   
+  previewable_categories_whitelist: [
+    "image"
+    "video"
+    "pdf"
+  ]
+  
   tasks_files_collection_name: "tasks_files"
   tasks_files_publication_name: "jdfTaskFiles"
   avatars_collection_name: "avatars_collection"

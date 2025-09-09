@@ -100,9 +100,10 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # Note: This method is called inside `APP.justdo_file_interface.uploadTaskFile`
     # before calling the file system's `uploadTaskFile` method to ensure the file size does not exceed the limit.
     throw @_error "not-implemented"
-  
-  isFileTypePreviewable: (file_type) ->
-    # Gets file_type, returns true if a file type is deemed previewable by the file system, false otherwise
+
+  isPreviewableCategory: (category) ->
+    # category is one of the returned value from JustdoCoreHelpers.mimeTypeToPreviewCategory
+    # returns true if a category is deemed previewable by the file system, false otherwise
     throw @_error "not-implemented"
 
   isUserAllowedToUploadBucketFolderFile: (bucket_id, folder_name, user_id) ->

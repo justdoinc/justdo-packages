@@ -5,3 +5,9 @@ _.extend TasksFileManagerPlugin,
   tasks_files_collection_name: "tfm_tasks_files"
 
   tasks_files_publication_name: "tfmTaskFiles"
+
+  previewable_categories_whitelist: [
+    "image"
+    "video"
+    "pdf"
+  ]

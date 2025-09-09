@@ -16,8 +16,8 @@ _.extend TasksFileManagerPlugin.prototype,
       getBucketFolderFileLink: (bucket_id, folder_name, file_id) ->
         @_requireSupportedBucketId bucket_id
         return self.tasks_file_manager.getFileDownloadPath folder_name, file_id
-      isFileTypePreviewable: (file_type) ->
-        return self.isFileTypePreviewable file_type
+      isPreviewableCategory: (category) ->
+        return category in TasksFileManagerPlugin.previewable_categories_whitelist
       isUserAllowedToUploadBucketFolderFile: (bucket_id, folder_name, user_id) ->
         @_requireSupportedBucketId bucket_id
         permissions = [
