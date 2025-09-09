@@ -21,8 +21,13 @@ _.extend JustdoFileInterface.prototype,
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
     # 
     # Important: The URL returned by this method is for downloading. It should not be used for previewing
+    
+    jd_file_id_obj = 
+      bucket_id: "tasks"
+      folder_name: task_id
+      file_id: file_id
 
-    return @getBucketFolderFileLink "tasks", task_id, file_id
+    return @getBucketFolderFileLink jd_file_id_obj
   
   getTaskFiles: (task_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
@@ -50,7 +55,12 @@ _.extend JustdoFileInterface.prototype,
   downloadTaskFile: (task_id, file_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
 
-    return @downloadBucketFolderFile "tasks", task_id, file_id
+    jd_file_id_obj = 
+      bucket_id: "tasks"
+      folder_name: task_id
+      file_id: file_id
+
+    return @downloadBucketFolderFile jd_file_id_obj
 
   showTaskFilePreviewOrStartDownload: (task_id, file, file_ids_to_show) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
@@ -58,4 +68,13 @@ _.extend JustdoFileInterface.prototype,
   
   getTaskFilePreviewLinkAsync: (task_id, file_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
-    return @getBucketFolderFilePreviewLinkAsync "tasks", task_id, file_id
+    #
+    # Gets a task_id and file_id, returns a promise that resolves to a URL to preview a file belonging to a bucket folder
+    # Note: The URL returned by this method is for previewing. It should not be used for downloading.
+
+    jd_file_id_obj = 
+      bucket_id: "tasks"
+      folder_name: task_id
+      file_id: file_id
+
+    return @getBucketFolderFilePreviewLinkAsync jd_file_id_obj

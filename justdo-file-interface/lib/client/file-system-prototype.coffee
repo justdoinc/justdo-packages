@@ -61,10 +61,10 @@ _.extend JustdoFileInterface.FileSystemPrototype,
 
     throw @_error "not-implemented"
 
-  getBucketFolderFileLink: (bucket_id, folder_name, file_id) ->
+  getBucketFolderFileLink: (jd_file_id_obj) ->
     # Consumers are expected to call `subscribeToBucketFolder` before calling this method
     # 
-    # Gets a bucket_id, folder_name and file_id, returns a URL to download a file belonging to a bucket folder
+    # Gets a jd_file_id_obj, returns a URL to download a file belonging to a bucket folder
     # Note: The URL returned by this method is for downloading. It should not be used for previewing
     throw @_error "not-implemented"
   
@@ -88,10 +88,10 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # file system's `getFileSizeLimit` method to ensure it does not exceed the limit.
     throw @_error "not-implemented"
   
-  downloadBucketFolderFile: (bucket_id, folder_name, file_id) ->
+  downloadBucketFolderFile: (jd_file_id_obj) ->
     # Consumers are expected to call `subscribeToBucketFolder` before calling this method
     # 
-    # Gets a file_id and bucket_id, folder_name, downloads a file from a bucket folder if it is accessible.
+    # Gets a jd_file_id_obj, downloads a file from a bucket folder if it is accessible.
     # Note: This method may or may not throw an error if the file does not exist.
     throw @_error "not-implemented"
 
@@ -129,5 +129,13 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # if empty array - show only the file requested in the preview.
     # if undefined - show all the previewable files under the same `bucket_id` and `folder_name`.
     # otherwise - show the files in the `additional_files_ids_in_folder_to_include_in_preview` array.
+
+    throw @_error "not-implemented"
+
+  getBucketFolderFilePreviewLinkAsync: (jd_file_id_obj) ->
+    # Consumers are expected to call `subscribeToBucketFolder` before calling this method
+    #
+    # Gets a jd_file_id_obj, returns a promise that resolves to a URL to preview a file belonging to a bucket folder
+    # Note: The URL returned by this method is for previewing. It should not be used for downloading.
 
     throw @_error "not-implemented"
