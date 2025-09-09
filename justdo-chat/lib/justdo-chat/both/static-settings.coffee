@@ -31,4 +31,10 @@ _.extend JustdoChat,
   positional_operator_regex: /\.\$(\..*)?/
 
   files_supported_channel_types: ["task"]
+  
+  previewable_file_categories: [
+    "image"
+    "video"
+    # "pdf"
+  ]
 

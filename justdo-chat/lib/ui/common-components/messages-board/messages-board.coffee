@@ -209,16 +209,18 @@ Template.common_chat_messages_board_message_card.helpers
     return JustdoHelpers.bytesToHumanReadable @size
   
   isPreviewable: ->
-    return APP.justdo_file_interface.getFileCategory(@type)?
+    tpl = Template.instance()
+    channel_obj = tpl.getChannelObject?()
+    return channel_obj.justdo_chat.isPreviewableFileType(@type)
   
   isPdf: (type) ->
-    return APP.justdo_file_interface.getFileCategory(type) is "pdf"
+    return JustdoHelpers.mimeTypeToPreviewCategory(type) is "pdf"
   
   isImage: (type) ->
-    return APP.justdo_file_interface.getFileCategory(type) is "image"
+    return JustdoHelpers.mimeTypeToPreviewCategory(type) is "image"
   
   isVideo: (type) ->
-    return APP.justdo_file_interface.getFileCategory(type) is "video"
+    return JustdoHelpers.mimeTypeToPreviewCategory(type) is "video"
   
   getFilePreviewLink: ->
     tpl = Template.instance()
