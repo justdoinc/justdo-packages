@@ -22,7 +22,7 @@ _.extend JustdoFileInterface.prototype,
 
     return limit
 
-  isPreviewableCategory: (mime_type) ->
+  isPreviewableFileType: (mime_type) ->
     # Takes mime_type, passes the mime_type to JustdoCoreHelpers.mimeTypeToPreviewCategory to get the previewable category (e.g. image, video, pdf, etc)
     # and passes the category to the file system to determine whether the category is deemed previewable. 
     # Returns true if previewable, false otherwise.
