@@ -37,6 +37,10 @@ _.extend JustdoPrintGrid.prototype,
       $table = $(".print-content table")
       $print_grid = $(".print-grid-mode-overlay")
 
+      # Unset the width of $content to prevent the table from taking more width than it requires.
+      # This could happen from removing columns from the print settings.
+      $content.width ""
+
       if $table.width() > $content.width()
         $content.width $table.width()
       return
