@@ -66,6 +66,8 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     #   "uploaded_by" # user id if undefined assume system generated (must be set even if undefined)
     #   "uploaded_at" # js Date object
     # }
+    # `is_previewable` will be added to each of the file metadata object by justdo-file-interface,
+    # determined by the file system's `isPreviewableCategory` method.
 
     throw @_error "not-implemented"
 
