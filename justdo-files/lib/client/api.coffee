@@ -37,7 +37,10 @@ _.extend JustdoFiles.prototype,
         return self._getFileShareableLink(file_id, collection_name)
       isPreviewableCategory: (category) ->
         return category in JustdoFiles.previewable_categories_whitelist
-      isUserAllowedToUploadBucketFolderFile: (bucket_id, folder_name, user_id) ->
+      isUserAllowedToUploadBucketFolderFile: (jd_folder_id_obj, user_id) ->
+        bucket_id = jd_folder_id_obj.bucket_id
+        folder_name = jd_folder_id_obj.folder_name
+
         @_requireCollectionMeta(bucket_id)
         if bucket_id is "tasks"
           return self.isUserAllowedToAccessTasksFiles(folder_name, user_id)
