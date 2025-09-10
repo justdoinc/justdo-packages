@@ -55,7 +55,7 @@ _.extend JustdoFileInterface.prototype,
 
     files = _.map fs.getBucketFolderFiles(jd_folder_id_obj, query, query_options), (file) ->
       category = JustdoHelpers.mimeTypeToPreviewCategory file.type
-      file.is_previeable = fs.isPreviewableCategory category
+      file.is_previewable = fs.isPreviewableCategory category
       return file
     
     return files
