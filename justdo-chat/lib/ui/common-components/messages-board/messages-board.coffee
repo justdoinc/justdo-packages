@@ -199,7 +199,7 @@ Template.common_chat_messages_board_message_card.helpers
     return ret
 
   size: ->
-    return JustdoHelpers.bytesToHumanReadable @size
+    return JustdoHelpers.bytesToHumanReadable @additional_details.size
   
   isPreviewable: ->
     tpl = Template.instance()
@@ -237,7 +237,7 @@ Template.common_chat_messages_board_message_card.helpers
     is_msg_from_dm_channel = channel_obj?.channel_type is "user"
     return (not is_msg_from_performing_user) and (not is_msg_from_dm_channel)
     
-  typeClass: -> Template.instance().getTypeCssClass(@type)
+  typeClass: -> Template.instance().getTypeCssClass(@additional_details.type)
 
 Template.common_chat_messages_board_message_card.onCreated ->
   @getChannelObject = @closestInstance("common_chat_messages_board")?.data?.getChannelObject

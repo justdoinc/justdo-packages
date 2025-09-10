@@ -64,12 +64,12 @@
                         XXX Add error handling
                       {{/if}} --}}
                       {{#if @resolved "previewLink"}}
-                        {{#if isImage file.type}}
-                          <img src="{{previewLink}}" alt="{{file.name}}" title="{{file.name}}" style="max-width: 100%;" />
-                        {{!-- {{else if isPdf file.type}}
-                          <embed src="{{previewLink}}" type="{{file.type}}" width="970" height="550" alt="{{file.name}}" style="border: 0 none;"> --}}
-                        {{else if isVideo file.type}}
-                          <video alt="{{file.name}}" preload="metadata">
+                        {{#if isImage file.additional_details.type}}
+                          <img src="{{previewLink}}" alt="{{file.additional_details.name}}" title="{{file.additional_details.name}}" style="max-width: 100%;" />
+                        {{!-- {{else if isPdf file.additional_details.type}}
+                          <embed src="{{previewLink}}" type="{{file.additional_details.type}}" width="970" height="550" alt="{{file.additional_details.name}}" style="border: 0 none;"> --}}
+                        {{else if isVideo file.additional_details.type}}
+                          <video alt="{{file.additional_details.name}}" preload="metadata">
                             <source src="{{previewLink}}">
                           </video>
                         {{/if}}
@@ -79,7 +79,7 @@
                     <div class="file-info">
                       <span class="type-logo {{typeClass}}"></span>
                       <div class="file-name-wrapper">
-                        <span class="file-name">{{name}}</span>
+                        <span class="file-name">{{additional_details.name}}</span>
                         <span class="file-size">{{size}}</span>
                       </div>
                     </div>
@@ -93,12 +93,13 @@
                 <div class="file-info">
                   <span class="type-logo {{typeClass}}"></span>
                   <div class="file-name-wrapper">
-                    <span class="file-name">{{name}}</span>
+                    <span class="file-name">{{additional_details.name}}</span>
                     <span class="file-size">{{size}}({{_ "inbound_emails_file_removed"}})</span>
                   </div>
                 </div>
               </div>
             {{/each}}
+            
             {{#if existing_files}}
               <div class="files-footer">
                 <div>{{_ "chat_files_saved_to_files_tab"}}</div>
