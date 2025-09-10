@@ -7,7 +7,7 @@ _.extend TasksFileManagerPlugin.prototype,
     if self._getEnvSpecificFsOptions?
       tasks_files_driver_options = _.extend tasks_files_driver_options, self._getEnvSpecificFsOptions()
 
-    APP.justdo_file_interface.registerFs "#{TasksFileManagerPlugin.fs_id}-tasks-files", tasks_files_driver_options
+    APP.justdo_file_interface.registerFs TasksFileManagerPlugin.fs_id, tasks_files_driver_options
 
     return
 

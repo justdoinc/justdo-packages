@@ -29,7 +29,7 @@ _.extend JustdoFiles.prototype,
     if @_getEnvSpecificFsOptions?
       tasks_files_driver_options = _.extend tasks_files_driver_options, @_getEnvSpecificFsOptions()
       
-    APP.justdo_file_interface.registerFs "#{JustdoFiles.fs_id}-tasks-files", tasks_files_driver_options
+    APP.justdo_file_interface.registerFs JustdoFiles.fs_id, tasks_files_driver_options
     return
 
   isPluginInstalledOnProjectDoc: (project_doc) ->
