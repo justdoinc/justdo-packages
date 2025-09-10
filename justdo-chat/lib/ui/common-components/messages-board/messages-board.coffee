@@ -326,16 +326,8 @@ Template.common_chat_messages_board_message_card.events
     file = @
     # This handler assumes all the files in the same message have the same fs_id
     # If such behaviour is not guaranteed, we need to change this handler to iterate over the files and get the fs_id for each file.
-    file_fs_id = file.fs_id
-    channel_obj = tmpl.getChannelObject()
-    task_id = channel_obj.getChannelIdentifier().task_id
-    message_file_ids = _.pluck tmpl.data.files, "_id"
+    message_file_ids = _.map tmpl.data.files, (file) -> file.jd_file_id_obj.file_id
 
-    fs = APP.justdo_file_interface
-    channel_obj.ensureFilesSubscriptionExists file_fs_id
-    if file_fs_id isnt fs.getDefaultFsId()
-      fs = fs.cloneWithForcedFs file_fs_id
-
-    fs.showTaskFilePreviewOrStartDownload task_id, file, message_file_ids
+    APP.justdo_file_interface.showFilePreviewOrStartDownload file.jd_file_id_obj, message_file_ids
 
     return
