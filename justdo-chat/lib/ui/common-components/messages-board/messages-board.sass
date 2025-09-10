@@ -15,13 +15,22 @@
     padding: 8px 0
   .message-card
     display: flex
-    flex-direction: column
+    flex-direction: row
+    gap: 6px
     align-items: end
-    gap: 4px
+    justify-content: start
+    &.my-message
+      justify-content: end
+      .message-card-content
+        align-items: end
     &.bot-log-message
       justify-content: center
       .message-body
         text-align: center
+    .message-card-content
+      display: flex
+      gap: 4px
+      flex-direction: column
     .author
       font-weight: 550
       margin-right: 20px
@@ -37,7 +46,6 @@
       color: black
       padding: 4px 8px
       border-radius: 8px
-      margin-left: 6px
       max-width: 280px
     .message-header
       display: flex
@@ -51,6 +59,7 @@
       flex-direction: column
       gap: 4px
       position: relative
+      width: 200px
       .date
         position: absolute
         right: 4px
@@ -70,7 +79,7 @@
         align-items: flex-start
         transform: scale(1)
         transition: all 0.32s
-        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16)
+        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1)
         border-radius: 6px
         overflow: hidden
         &:hover
@@ -154,10 +163,5 @@
       .author
         margin-right: unset
         margin-left: 20px
-
-      .message-container
-        margin-left: unset
-        margin-right: 6px
-
       .message-body
         text-align: right

@@ -38,90 +38,92 @@
       <div class="avatar">{{#with authorDoc}}{{> justdo_avatar}}{{/with}}</div>
     {{/if}}
 
-    {{#if $and isFilesEnabled fileExistsInMessage}}
-      {{#with files}}
-        <div class="files-container">
-          <span class="date" title="{{userDateFormat createdAt}}">{{friendlyTimeFormat createdAt false}}</span>
-          {{#each existing_files}}
-            <div class="file-container">
-              <a href="#" class="show-preview-or-start-download text-info" title="{{name}}">
-                {{#if isPreviewable}}
-                  {{#let previewLink=getFilePreviewLink file=this}}
-                    {{#if @pending "previewLink"}}
-                      <div class="loader">
-                        <div class="double-bounce1 bg-primary"></div>
-                        <div class="double-bounce2 bg-primary"></div>
-                      </div>
-                    {{/if}}
-                    {{!-- {{#if @rejected "previewLink"}}
-                      XXX Add error handling
-                    {{/if}} --}}
-                    {{#if @resolved "previewLink"}}
-                      {{#if isImage file.additional_details.type}}
-                        <div class="file-wrapper image">
-                          <img src="{{previewLink}}" alt="{{file.additional_details.name}}" title="{{file.additional_details.name}}" />
-                        </div>
-                      {{else if isPdf file.additional_details.type}}
-                        <div class="file-wrapper pdf">
-                          <embed src="{{previewLink}}" type="{{file.additional_details.type}}" width="970" height="550" alt="{{file.additional_details.name}}" style="border: 0 none;">
-                        </div>
-                      {{else if isVideo file.additional_details.type}}
-                        <div class="file-wrapper video">
-                          <video alt="{{file.additional_details.name}}" preload="metadata">
-                            <source src="{{previewLink}}">
-                          </video>
+    <div class="message-card-content">
+      {{#if $and isFilesEnabled fileExistsInMessage}}
+        {{#with files}}
+          <div class="files-container">
+            <span class="date" title="{{userDateFormat createdAt}}">{{friendlyTimeFormat createdAt false}}</span>
+            {{#each existing_files}}
+              <div class="file-container">
+                <a href="#" class="show-preview-or-start-download text-info" title="{{name}}">
+                  {{#if isPreviewable}}
+                    {{#let previewLink=getFilePreviewLink file=this}}
+                      {{#if @pending "previewLink"}}
+                        <div class="loader">
+                          <div class="double-bounce1 bg-primary"></div>
+                          <div class="double-bounce2 bg-primary"></div>
                         </div>
                       {{/if}}
-                    {{/if}}
-                  {{/let}}
-                {{else}}
-                  <div class="file-info">
-                    <span class="type-logo {{typeClass}}"></span>
-                    <div class="file-name-wrapper">
-                      <span class="file-name">{{additional_details.name}}</span>
-                      <span class="file-size">{{size}}</span>
+                      {{!-- {{#if @rejected "previewLink"}}
+                        XXX Add error handling
+                      {{/if}} --}}
+                      {{#if @resolved "previewLink"}}
+                        {{#if isImage file.additional_details.type}}
+                          <div class="file-wrapper image">
+                            <img src="{{previewLink}}" alt="{{file.additional_details.name}}" title="{{file.additional_details.name}}" />
+                          </div>
+                        {{else if isPdf file.additional_details.type}}
+                          <div class="file-wrapper pdf">
+                            <embed src="{{previewLink}}" type="{{file.additional_details.type}}" width="970" height="550" alt="{{file.additional_details.name}}" style="border: 0 none;">
+                          </div>
+                        {{else if isVideo file.additional_details.type}}
+                          <div class="file-wrapper video">
+                            <video alt="{{file.additional_details.name}}" preload="metadata">
+                              <source src="{{previewLink}}">
+                            </video>
+                          </div>
+                        {{/if}}
+                      {{/if}}
+                    {{/let}}
+                  {{else}}
+                    <div class="file-info">
+                      <span class="type-logo {{typeClass}}"></span>
+                      <div class="file-name-wrapper">
+                        <span class="file-name">{{additional_details.name}}</span>
+                        <span class="file-size">{{size}}</span>
+                      </div>
                     </div>
-                  </div>
-                {{/if}}
-              </a>
-            </div>
-          {{/each}}
+                  {{/if}}
+                </a>
+              </div>
+            {{/each}}
 
-          {{#each missing_files}}
-            <div class="file-container">
-              <div class="file-info">
-                <span class="type-logo {{typeClass}}"></span>
-                <div class="file-name-wrapper">
-                  <span class="file-name">{{additional_details.name}}</span>
-                  <span class="file-size">{{size}}({{_ "inbound_emails_file_removed"}})</span>
+            {{#each missing_files}}
+              <div class="file-container">
+                <div class="file-info">
+                  <span class="type-logo {{typeClass}}"></span>
+                  <div class="file-name-wrapper">
+                    <span class="file-name">{{additional_details.name}}</span>
+                    <span class="file-size">{{size}}({{_ "inbound_emails_file_removed"}})</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          {{/each}}
-            
+            {{/each}}
+              
           <!-- {{#if existing_files}}
-            <div class="files-footer">
-              <div>{{_ "chat_files_saved_to_files_tab"}}</div>
-            </div>
-          {{/if}} -->
-        </div>
-      {{/with}}
-    {{/if}}
+              <div class="files-footer">
+                <div>{{_ "chat_files_saved_to_files_tab"}}</div>
+              </div>
+            {{/if}} -->
+          </div>
+        {{/with}}
+      {{/if}}
 
-    {{#if body}}
-      <div class="message-container {{#if myMessage}}bg-primary{{/if}}">
-        <div class="message-header">
-          {{#if shouldShowAuthorName}}
-            <span class="author">
-                {{> display_name_with_graphic_unverified_warning authorDoc}}
-            </span>
-          {{/if}}
-          <span class="date" title="{{userDateFormat createdAt}}">{{friendlyTimeFormat createdAt false}}</span>
+      {{#if body}}
+        <div class="message-container {{#if myMessage}}bg-primary{{/if}}">
+          <div class="message-header">
+            {{#if shouldShowAuthorName}}
+              <span class="author">
+                  {{> display_name_with_graphic_unverified_warning authorDoc}}
+              </span>
+            {{/if}}
+            <span class="date" title="{{userDateFormat createdAt}}">{{friendlyTimeFormat createdAt false}}</span>
+          </div>
+          <div dir="auto" class="message-body">
+            {{{body}}}
+          </div>
         </div>
-        <div dir="auto" class="message-body {{#if $and isFilesEnabled fileExistsInMessage}}mt-2{{/if}}">
-          {{{body}}}
-        </div>
-      </div>
-    {{/if}}
+      {{/if}}
+    </div>
   </div>
 </template>
