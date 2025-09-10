@@ -22,12 +22,13 @@ _.extend JustdoFileInterface.prototype,
 
     return @subscribeToBucketFolder jd_folder_id_obj, callbacks
 
-  getTaskFileLink: (task_id, file_id) ->
+  getTaskFileLink: (fs_id, task_id, file_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
     # 
     # Important: The URL returned by this method is for downloading. It should not be used for previewing
     
     jd_file_id_obj = 
+      fs_id: fs_id
       bucket_id: "tasks"
       folder_name: task_id
       file_id: file_id
@@ -73,35 +74,38 @@ _.extend JustdoFileInterface.prototype,
     @uploadBucketFolderFile "tasks", task_id, file, cb
     return
   
-  downloadTaskFile: (task_id, file_id) ->
+  downloadTaskFile: (fs_id, task_id, file_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
     # 
     # Gets a jd_file_id_obj, downloads a file from the `task_id` if the file and task are both accessible.
     # Note: This method may or may not throw an error if the file does not exist.
 
     jd_file_id_obj = 
+      fs_id: fs_id
       bucket_id: "tasks"
       folder_name: task_id
       file_id: file_id
 
     return @downloadFile jd_file_id_obj
 
-  showTaskFilePreviewOrStartDownload: (task_id, file_id, file_ids_to_show) ->
+  showTaskFilePreviewOrStartDownload: (fs_id, task_id, file_id, file_ids_to_show) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
     jd_file_id_obj = 
+      fs_id: fs_id
       bucket_id: "tasks"
       folder_name: task_id
       file_id: file_id
 
     return @showFilePreviewOrStartDownload jd_file_id_obj, file_ids_to_show
   
-  getTaskFilePreviewLinkAsync: (task_id, file_id) ->
+  getTaskFilePreviewLinkAsync: (fs_id, task_id, file_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
     #
     # Gets a task_id and file_id, returns a promise that resolves to a URL to preview a file belonging to a bucket folder
     # Note: The URL returned by this method is for previewing. It should not be used for downloading.
 
     jd_file_id_obj = 
+      fs_id: fs_id
       bucket_id: "tasks"
       folder_name: task_id
       file_id: file_id
