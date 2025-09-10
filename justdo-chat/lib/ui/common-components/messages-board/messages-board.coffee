@@ -216,10 +216,7 @@ Template.common_chat_messages_board_message_card.helpers
     return JustdoHelpers.mimeTypeToPreviewCategory(type) is "video"
   
   getFilePreviewLink: ->
-    tpl = Template.instance()
-    channel_obj = tpl.getChannelObject?()
-    task_id = channel_obj.getChannelIdentifier().task_id
-    return APP.justdo_file_interface.getTaskFilePreviewLinkAsync(task_id, @_id)
+    return APP.justdo_file_interface.getFilePreviewLinkAsync(@jd_file_id_obj)
 
   myMessage: ->
     return @author is Meteor.userId()
