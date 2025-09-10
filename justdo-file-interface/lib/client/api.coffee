@@ -123,14 +123,15 @@ _.extend JustdoFileInterface.prototype,
 
     return fs.downloadFile jd_file_id_obj
   
-  isUserAllowedToUploadBucketFolderFile: (bucket_id, folder_name, user_id) ->
+  isUserAllowedToUploadBucketFolderFile: (jd_folder_id_obj, user_id) ->
     # Gets bucket_id, folder_name and user_id, returns true if a user is allowed to upload a file to a bucket folder, false otherwise
     # 
     # This is NOT called internally by `APP.justdo_file_interface.uploadBucketFolderFile` since it's the file system's responsibility to perform permission checking.
     # A typical usecase for this method is to check whether a user is allowed to upload a file before showing the upload button.
-    fs = @_getFs()
+    jd_folder_id_obj = @sanitizeJdFolderIdObj jd_folder_id_obj
+    fs = @_getFs(jd_folder_id_obj.fs_id)
 
-    return fs.isUserAllowedToUploadBucketFolderFile bucket_id, folder_name, user_id
+    return fs.isUserAllowedToUploadBucketFolderFile jd_folder_id_obj, user_id
   
   showFilePreviewOrStartDownload: (jd_file_id_obj, additional_files_ids_in_folder_to_include_in_preview) ->
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method
