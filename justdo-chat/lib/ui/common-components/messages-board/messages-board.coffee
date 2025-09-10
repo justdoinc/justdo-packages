@@ -181,26 +181,19 @@ Template.common_chat_messages_board_message_card.helpers
   files: ->
     tpl = Template.instance()
     channel_obj = tpl.getChannelObject?()
-    task_id = channel_obj.getChannelIdentifier().task_id
-
-    file_ids = _.pluck @files, "_id"
     existing_files = []
 
     for file in @files
-      fs = APP.justdo_file_interface
-      fs_id = file.fs_id
+      file_fs_id = file.jd_file_id_obj.fs_id
       # Wrap the subscription in `Tracker.nonreactive` to avoid unsub caused by invalidation
-      Tracker.nonreactive -> channel_obj.ensureFilesSubscriptionExists fs_id
-      if fs_id isnt fs.getDefaultFsId()
-        fs = fs.cloneWithForcedFs fs_id
+      Tracker.nonreactive -> channel_obj.ensureFilesSubscriptionExists file_fs_id
 
-      if (found_file = fs.getTaskFilesByIds(task_id, file._id)[0])?
-        found_file.fs_id = fs_id
-        existing_files.push found_file
+      if (found_file = APP.justdo_file_interface.getBucketFolderFiles(file.jd_file_id_obj, {_id: file.jd_file_id_obj.file_id})[0])?
+        existing_file = {jd_file_id_obj: file.jd_file_id_obj, additional_details: found_file}
+        existing_files.push existing_file
 
-    existing_file_ids = _.pluck(existing_files, "_id")
-
-    missing_files = _.filter @files, (file) -> file._id not in existing_file_ids
+    existing_file_ids = _.map existing_files, (file) -> file.jd_file_id_obj.file_id
+    missing_files = _.filter @files, (file) -> file.jd_file_id_obj.file_id not in existing_file_ids
 
     ret = {existing_files, missing_files}
     return ret
