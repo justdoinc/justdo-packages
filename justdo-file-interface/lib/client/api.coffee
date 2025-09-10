@@ -39,7 +39,7 @@ _.extend JustdoFileInterface.prototype,
     return limit
 
   isUserAllowedToUploadBucketFolderFile: (bucket_id, folder_name, user_id) ->
-    # Gets bucket_id, folder_name and user_id, returns true if a user is allowed to upload a file to a bucket folder, false otherwise
+    # Gets bucket_id, folder_name and user_id, returns true if a user_id is allowed to upload.
     # 
     # This is NOT called internally by `APP.justdo_file_interface.uploadBucketFolderFile` since it's the file system's responsibility to perform permission checking.
     # A typical usecase for this method is to check whether a user is allowed to upload a file before showing the upload button.
@@ -102,7 +102,7 @@ _.extend JustdoFileInterface.prototype,
   # Consumption related methods
   #
   subscribeToBucketFolder: (jd_folder_id_obj, callbacks) ->
-    # IMPORTANT! Before calling any file system methods, you are expected to call this method to load the relevant data.
+    # IMPORTANT! Before calling any of the consumption methods below, you are expected to call this method to load the relevant data.
     #
     # Subscribes to the files collection of the file system. The precise collection and subscription
     # is determined by the file system, and you shouldn't interact directly with the collection (as it is
@@ -110,6 +110,7 @@ _.extend JustdoFileInterface.prototype,
     #
     # This is a reactive resource that calls Meteor.subscribe internally.
     # As such, if this method is called inside an autorun, the subscription will be stopped automatically upon invalidation of the autorun.
+    # If instead of jd_folder_id_obj a jd_file_id_obj is provided, the method will derive the jd_folder_id_obj from it.
     #
     # Receives a jd_folder_id_obj and a callbacks object/function, the callbacks object/function is of the exact
     # same format as the callbacks object/function passed to Meteor.subscribe, refer to that API for more details.
@@ -119,20 +120,43 @@ _.extend JustdoFileInterface.prototype,
 
     return fs.subscribeToBucketFolder jd_folder_id_obj, callbacks
 
-  getBucketFolderFiles: (jd_folder_id_obj, query, query_options) ->
+  getBucketFolderFiles: (jd_folder_id_obj, file_ids) ->
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method
     # 
-    # This method return file objects with mostly metadata fields. The field names are normalized to be consistent across file systems.
-    # For the returned file objects' structure, check the comment in the `getBucketFolderFiles` method in /client/file-system-prototype.coffee.
-    # This is meant to facilitate usecases like showing a list of files.
-    # Since the field names are normalized, it is discouraged to use this method in other file system methods
+    # Gets a jd_folder_id_obj returns an array of the corresponding file metadata objects
+    # that belong to the `bucket_id` and `folder_name` of `jd_folder_id_obj`.
+    #
+    # file_ids is optional, if provided, it is expected to be an array of file ids or a file_id string.
+    # If provided, the method will limit the returned object only for the files in the folder with the corresponding file ids.
+    #
+    # Background:
+    # You can think of "bucket" as the category of files, for example "tasks". Many times special rules,
+    # like permissions and "folder existence" will be applied to a bucket.
+    # 
+    # "folder_name" is the identifier that allows the file system to find the associated files,
+    # for example `task_id` for "tasks" bucket.
+    # 
+    # Simply put, to get all the files under a task, the consumer would call `getBucketFolderFiles("tasks", task_id)`.
+    #
+    # Returns an array of:
+    # 
+    # {
+    #   "_id" # file id
+    #   "type" # mime type
+    #   "name" # filename
+    #   "size" # file size in bytes (!)
+    #   "uploaded_by" # user id if undefined assume system generated (must be set even if undefined)
+    #   "uploaded_at" # js Date object
+    #   "is_previewable" # boolean indicating if the file is previewable
+    # }
+    #
     jd_folder_id_obj = @sanitizeJdFolderIdObj jd_folder_id_obj
     fs = @_getFs(jd_folder_id_obj.fs_id)
 
-    query = _.extend {}, query
-    query_options = _.extend {}, query_options
+    if _.isString file_ids
+      file_ids = [file_ids]
 
-    files = _.map fs.getBucketFolderFiles(jd_folder_id_obj, query, query_options), (file) ->
+    files = _.map fs.getBucketFolderFiles(jd_folder_id_obj, file_ids), (file) ->
       category = JustdoHelpers.mimeTypeToPreviewCategory file.type
       file.is_previewable = fs.isPreviewableCategory category
       return file
@@ -142,22 +166,12 @@ _.extend JustdoFileInterface.prototype,
   getFileLink: (jd_file_id_obj) ->
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method
     # 
-    # Important: The URL returned by this method is for downloading. It should not be used for previewing
+    # Important: The URL returned by this method is for downloading. It should not be used for previewing.
+    # for previewing, use `getFilePreviewLinkAsync` instead.
     jd_file_id_obj = @sanitizeJdFileIdObj jd_file_id_obj
     fs = @_getFs(jd_file_id_obj.fs_id)
 
     return fs.getFileLink jd_file_id_obj
-  
-  downloadFile: (jd_file_id_obj) ->
-    # Important: You are expected to call `subscribeToBucketFolder` before calling this method
-    # 
-    # Gets a jd_file_id_obj, downloads a file from a bucket folder if it is accessible.
-    # Note: This method may or may not throw an error if the file does not exist.
-
-    jd_file_id_obj = @sanitizeJdFileIdObj jd_file_id_obj
-    fs = @_getFs(jd_file_id_obj.fs_id)
-
-    return fs.downloadFile jd_file_id_obj
   
   showFilePreviewOrStartDownload: (jd_file_id_obj, additional_files_ids_in_folder_to_include_in_preview) ->
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method
@@ -176,11 +190,40 @@ _.extend JustdoFileInterface.prototype,
 
     return fs.showFilePreviewOrStartDownload jd_file_id_obj, additional_files_ids_in_folder_to_include_in_preview
 
+  getFilePreviewLink: (jd_file_id_obj, cb) ->
+    # Important: You are expected to call `subscribeToBucketFolder` before calling this method
+    #
+    # Gets a jd_file_id_obj, calls cb with the following params: (err, preview_link)
+    #   err: Error object if error occurs undefined otherwise.
+    #   preview_link: The URL to preview the file.
+
+    jd_file_id_obj = @sanitizeJdFileIdObj jd_file_id_obj
+    fs = @_getFs(jd_file_id_obj.fs_id)
+
+    return fs.getFilePreviewLink jd_file_id_obj, cb
+
+  #
+  # Derived consumption methods (methods that are based on the lower-level implemented fs prototype methods)
+  #
+  downloadFile: (jd_file_id_obj) ->
+    # Important: You are expected to call `subscribeToBucketFolder` before calling this method
+    # 
+    # Gets a jd_file_id_obj, downloads a file from a bucket folder if it is accessible.
+    #
+    # cb is optional, will be called with the following params: (err)
+    #   err: Error object if error occurs undefined otherwise.
+    jd_file_id_obj = @sanitizeJdFileIdObj jd_file_id_obj
+    fs = @_getFs(jd_file_id_obj.fs_id)
+
+    return fs.downloadFile jd_file_id_obj
+  
   getFilePreviewLinkAsync: (jd_file_id_obj) ->
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method
     #
-    # Gets a jd_file_id_obj, returns a promise that resolves to a URL to preview a file belonging to a bucket folder
-    # Note: The URL returned by this method is for previewing. It should not be used for downloading.
+    # Gets a jd_file_id_obj, returns a promise that resolves to its URL
+    #
+    # Note: The URL returned by this method is for previewing. It should not be used for downloading,
+    # for downloading, `getFileLink` should be used, alternaively you can use `downloadFile` instead.
 
     jd_file_id_obj = @sanitizeJdFileIdObj jd_file_id_obj
     fs = @_getFs(jd_file_id_obj.fs_id)
