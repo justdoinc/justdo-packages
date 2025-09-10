@@ -38,6 +38,15 @@ _.extend JustdoFileInterface.prototype,
 
     return limit
 
+  isUserAllowedToUploadBucketFolderFile: (bucket_id, folder_name, user_id) ->
+    # Gets bucket_id, folder_name and user_id, returns true if a user is allowed to upload a file to a bucket folder, false otherwise
+    # 
+    # This is NOT called internally by `APP.justdo_file_interface.uploadBucketFolderFile` since it's the file system's responsibility to perform permission checking.
+    # A typical usecase for this method is to check whether a user is allowed to upload a file before showing the upload button.
+    fs = @_getFs()
+
+    return fs.isUserAllowedToUploadBucketFolderFile bucket_id, folder_name, user_id
+
   uploadBucketFolderFile: (bucket_id, folder_name, file, cb) ->
     # Gets bucket_id, folder_name and file (the native browser file object) and optionally a cb, uploads the file to the bucket folder.
     #
@@ -88,16 +97,6 @@ _.extend JustdoFileInterface.prototype,
       cb? undefined, file_details
 
     return
-  
-  isUserAllowedToUploadBucketFolderFile: (jd_folder_id_obj, user_id) ->
-    # Gets bucket_id, folder_name and user_id, returns true if a user is allowed to upload a file to a bucket folder, false otherwise
-    # 
-    # This is NOT called internally by `APP.justdo_file_interface.uploadBucketFolderFile` since it's the file system's responsibility to perform permission checking.
-    # A typical usecase for this method is to check whether a user is allowed to upload a file before showing the upload button.
-    jd_folder_id_obj = @sanitizeJdFolderIdObj jd_folder_id_obj
-    fs = @_getFs(jd_folder_id_obj.fs_id)
-
-    return fs.isUserAllowedToUploadBucketFolderFile jd_folder_id_obj, user_id
   
   #
   # Consumption related methods

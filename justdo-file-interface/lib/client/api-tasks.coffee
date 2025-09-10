@@ -61,13 +61,8 @@ _.extend JustdoFileInterface.prototype,
 
     return @getBucketFolderFiles jd_folder_id_obj, {_id: {$in: file_ids}}
 
-  isUserAllowedToUploadTaskFile: (fs_id, task_id, user_id) ->
-    jd_folder_id_obj = 
-      fs_id: fs_id
-      bucket_id: "tasks"
-      folder_name: task_id
-
-    return @isUserAllowedToUploadBucketFolderFile jd_folder_id_obj, user_id
+  isUserAllowedToUploadTaskFile: (task_id, user_id) ->
+    return @isUserAllowedToUploadBucketFolderFile "tasks", task_id, user_id
 
   uploadTaskFile: (task_id, file, cb) ->
     # Refer to the documentation of `uploadBucketFolderFile` for the parameters of the `cb`

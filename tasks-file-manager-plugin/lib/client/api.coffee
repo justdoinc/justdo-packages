@@ -22,10 +22,7 @@ _.extend TasksFileManagerPlugin.prototype,
         return self.tasks_file_manager.getFileDownloadPath folder_name, file_id
       isPreviewableCategory: (category) ->
         return category in TasksFileManagerPlugin.previewable_categories_whitelist
-      isUserAllowedToUploadBucketFolderFile: (jd_folder_id_obj, user_id) ->
-        bucket_id = jd_folder_id_obj.bucket_id
-        folder_name = jd_folder_id_obj.folder_name
-
+      isUserAllowedToUploadBucketFolderFile: (bucket_id, folder_name, user_id) ->
         @_requireSupportedBucketId bucket_id
         permissions = [
           "task-field-edit.#{TasksFileManager.files_count_field_id}",

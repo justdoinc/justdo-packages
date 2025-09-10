@@ -121,8 +121,8 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # category is one of the returned value from JustdoCoreHelpers.mimeTypeToPreviewCategory
     throw @_error "not-implemented"
 
-  isUserAllowedToUploadBucketFolderFile: (jd_folder_id_obj, user_id) ->
-    # Gets jd_folder_id_obj and user_id, returns true if a user is allowed to upload a file to a bucket folder, false otherwise
+  isUserAllowedToUploadBucketFolderFile: (bucket_id, folder_name, user_id) ->
+    # Gets bucket_id, folder_name and user_id, returns true if a user is allowed to upload a file to a bucket folder, false otherwise
     # 
     # This is the place to add logic for checking whether user has access to a certain bucket folder before uploading a file to it, 
     # and whether the user is allowed to upload a file to a bucket folder according to `justdo-permissions`
