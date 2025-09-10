@@ -550,13 +550,11 @@ _.extend JustdoChat.prototype,
 
       return """#{spaces}<a class="task-link" href="#">##{task_id}</a>"""
 
-  isPreviewableFileType: (mime_type) ->
+  isFileTypeInlinePreviewable: (mime_type) ->
     category = JustdoHelpers.mimeTypeToPreviewCategory mime_type
-    is_previewable_by_justdo_chat = category in JustdoChat.previewable_file_categories
+    is_previewable_by_justdo_chat = category in JustdoChat.inline_previewable_file_categories
 
-    is_previewable_by_file_system = APP.justdo_file_interface.isPreviewableFileType(mime_type)
-
-    return is_previewable_by_justdo_chat and is_previewable_by_file_system
+    return is_previewable_by_justdo_chat
 
   destroy: ->
     if @destroyed

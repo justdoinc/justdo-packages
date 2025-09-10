@@ -32,7 +32,7 @@ _.extend JustdoChat,
 
   files_supported_channel_types: ["task"]
   
-  previewable_file_categories: [
+  inline_previewable_file_categories: [
     "image"
     "video"
     # "pdf"

@@ -210,8 +210,8 @@ Template.common_chat_messages_board_message_card.helpers
   
   isPreviewable: ->
     tpl = Template.instance()
-    channel_obj = tpl.getChannelObject?()
-    return channel_obj.justdo_chat.isPreviewableFileType(@type)
+    channel_obj = tpl.getChannelObject()
+    return @additional_details.is_previewable and channel_obj.justdo_chat.isFileTypeInlinePreviewable(@additional_details.type)
   
   isPdf: (type) ->
     return JustdoHelpers.mimeTypeToPreviewCategory(type) is "pdf"
