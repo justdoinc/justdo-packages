@@ -31,7 +31,7 @@ _.extend JustdoFileInterface.prototype,
     
     return fs.isPreviewableCategory category
 
-  subscribeToBucketFolder: (bucket_id, folder_name, callbacks) ->
+  subscribeToBucketFolder: (jd_folder_id_obj, callbacks) ->
     # IMPORTANT! Before calling any file system methods, you are expected to call this method to load the relevant data.
     #
     # Subscribes to the files collection of the file system. The precise collection and subscription
@@ -41,12 +41,13 @@ _.extend JustdoFileInterface.prototype,
     # This is a reactive resource that calls Meteor.subscribe internally.
     # As such, if this method is called inside an autorun, the subscription will be stopped automatically upon invalidation of the autorun.
     #
-    # Receives a bucket_id, folder_name and a callbacks object/function, the callbacks object/function is of the exact
+    # Receives a jd_folder_id_obj and a callbacks object/function, the callbacks object/function is of the exact
     # same format as the callbacks object/function passed to Meteor.subscribe, refer to that API for more details.
-    # E.g. to subscribe to the files under a task, call this method with `bucket_id` as "tasks" and `folder_name` as the task_id.
-    fs = @_getFs()
+    # E.g. to subscribe to the files under a task, call this method with `jd_folder_id_obj` as `{fs_id: "justdo-files", bucket_id: "tasks", folder_name: task_id}`.
+    jd_folder_id_obj = @sanitizeJdFolderIdObj jd_folder_id_obj
+    fs = @_getFs(jd_folder_id_obj.fs_id)
 
-    return fs.subscribeToBucketFolder bucket_id, folder_name, callbacks
+    return fs.subscribeToBucketFolder jd_folder_id_obj, callbacks
 
   getBucketFolderFiles: (bucket_id, folder_name, query, query_options) ->
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method

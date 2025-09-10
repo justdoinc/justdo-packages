@@ -69,7 +69,10 @@ _.extend JustdoFiles.prototype,
         upload.start()
 
         return
-      subscribeToBucketFolder: (bucket_id, folder_name, callbacks) ->
+      subscribeToBucketFolder: (jd_folder_id_obj, callbacks) ->
+        bucket_id = jd_folder_id_obj.bucket_id
+        folder_name = jd_folder_id_obj.folder_name
+
         publication_name = @_requireBucketPublicationName(bucket_id)
         return Meteor.subscribe publication_name, folder_name, callbacks
       getBucketFolderFiles: (bucket_id, folder_name, query, query_options) ->

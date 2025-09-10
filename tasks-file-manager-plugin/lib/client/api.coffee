@@ -47,7 +47,10 @@ _.extend TasksFileManagerPlugin.prototype,
           cb null, normalized_uploaded_file
 
         return
-      subscribeToBucketFolder: (bucket_id, folder_name, callbacks) ->
+      subscribeToBucketFolder: (jd_folder_id_obj, callbacks) ->
+        bucket_id = jd_folder_id_obj.bucket_id
+        folder_name = jd_folder_id_obj.folder_name
+
         @_requireSupportedBucketId bucket_id
         
         publication_name = TasksFileManagerPlugin.tasks_files_publication_name

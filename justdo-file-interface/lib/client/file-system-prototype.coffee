@@ -2,12 +2,12 @@ _.extend JustdoFileInterface.FileSystemPrototype,
   # 
   # Client-only methods required to register a file system
   # 
-  subscribeToBucketFolder: (bucket_id, folder_name, callbacks) ->
+  subscribeToBucketFolder: (jd_folder_id_obj, callbacks) ->
     # We require the consumers to call this method before calling other bucket folder methods.
     # When bucket folder and folder's files methods are called - you can assume that the relevant
-    # subscription with the same bucket_id and folder_name was called.
+    # subscription with the same jd_folder_id_obj was called.
     #
-    # Receives a bucket_id and a folder_name and a callbacks object/function, the callbacks object/function is of the exact
+    # Receives a jd_folder_id_obj and a callbacks object/function, the callbacks object/function is of the exact
     # same format as the callbacks object/function passed to Meteor.subscribe, refer to that API for more details.
     #
     # This is a reactive resource that calls Meteor.subscribe internally.
@@ -20,9 +20,14 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     #
     # Interaction example:
     # ```
-    # sub_handle = APP.justdo_file_interface.subscribeToBucketFolder("tasks", task_id, {
+    # jd_folder_id_obj = {
+    #   fs_id: "justdo-files",
+    #   bucket_id: "tasks",
+    #   folder_name: task_id,
+    # }
+    # sub_handle = APP.justdo_file_interface.subscribeToBucketFolder(jd_folder_id_obj, {
     #   onReady: () => {
-    #     console.log(APP.justdo_file_interface.getBucketFolderFiles("tasks", task_id));
+    #     console.log(APP.justdo_file_interface.getBucketFolderFiles(jd_folder_id_obj));
     #     sub_handle.stop();
     #   },
     #   onStop: (err) => {
