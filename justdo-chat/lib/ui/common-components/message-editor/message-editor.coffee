@@ -114,10 +114,12 @@ Template.common_chat_message_editor.onCreated ->
           # With file_id, fs_id, channel type and channel identifier, we can identify the file uniquely.
           jd_file_id_obj = file_details[0]
           additional_details = file_details[1]
+          # _id exists in `jd_file_id_obj` as `file_id` already, no need to store it again
+          additional_details = _.omit additional_details, "_id"
 
-          additional_details.fs_id = jd_file_id_obj.fs_id
+          file_meta_to_store = {jd_file_id_obj, additional_details}
 
-          uploaded_files.push additional_details
+          uploaded_files.push file_meta_to_store
 
         all_files_uploaded = uploaded_files.length is files.length
         if all_files_uploaded
