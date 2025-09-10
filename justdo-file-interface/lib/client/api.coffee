@@ -22,15 +22,6 @@ _.extend JustdoFileInterface.prototype,
 
     return limit
 
-  isPreviewableFileType: (mime_type) ->
-    # Takes mime_type, passes the mime_type to JustdoCoreHelpers.mimeTypeToPreviewCategory to get the previewable category (e.g. image, video, pdf, etc)
-    # and passes the category to the file system to determine whether the category is deemed previewable. 
-    # Returns true if previewable, false otherwise.
-    fs = @_getFs()
-    category = JustdoHelpers.mimeTypeToPreviewCategory mime_type
-    
-    return fs.isPreviewableCategory category
-
   subscribeToBucketFolder: (jd_folder_id_obj, callbacks) ->
     # IMPORTANT! Before calling any file system methods, you are expected to call this method to load the relevant data.
     #
@@ -62,7 +53,12 @@ _.extend JustdoFileInterface.prototype,
     query = _.extend {}, query
     query_options = _.extend {}, query_options
 
-    return fs.getBucketFolderFiles bucket_id, folder_name, query, query_options
+    files = _.map fs.getBucketFolderFiles(jd_folder_id_obj, query, query_options), (file) ->
+      category = JustdoHelpers.mimeTypeToPreviewCategory file.type
+      file.is_previeable = fs.isPreviewableCategory category
+      return file
+    
+    return files
   
   getFileLink: (jd_file_id_obj) ->
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method
