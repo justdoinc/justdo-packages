@@ -49,13 +49,15 @@ _.extend JustdoFileInterface.prototype,
 
     return fs.subscribeToBucketFolder jd_folder_id_obj, callbacks
 
-  getBucketFolderFiles: (bucket_id, folder_name, query, query_options) ->
+  getBucketFolderFiles: (jd_folder_id_obj, query, query_options) ->
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method
     # 
     # This method return file objects with mostly metadata fields. The field names are normalized to be consistent across file systems.
+    # For the returned file objects' structure, check the comment in the `getBucketFolderFiles` method in /client/file-system-prototype.coffee.
     # This is meant to facilitate usecases like showing a list of files.
     # Since the field names are normalized, it is discouraged to use this method in other file system methods
-    fs = @_getFs()
+    jd_folder_id_obj = @sanitizeJdFolderIdObj jd_folder_id_obj
+    fs = @_getFs(jd_folder_id_obj.fs_id)
 
     query = _.extend {}, query
     query_options = _.extend {}, query_options

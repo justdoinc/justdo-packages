@@ -34,21 +34,31 @@ _.extend JustdoFileInterface.prototype,
 
     return @getFileLink jd_file_id_obj
   
-  getTaskFiles: (task_id) ->
+  getTaskFiles: (fs_id, task_id) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
-    return @getBucketFolderFiles "tasks", task_id
+    jd_folder_id_obj = 
+      fs_id: fs_id
+      bucket_id: "tasks"
+      folder_name: task_id
 
-  getTaskFilesByIds: (task_id, file_ids) ->
+    return @getBucketFolderFiles jd_folder_id_obj
+
+  getTaskFilesByIds: (fs_id, task_id, file_ids) ->
     # Important: You are expected to call `subscribeToTaskFiles` before calling this method
     # 
     # Important: This method return file objects with mostly metadata fields. The field names are normalized to be consistent across file systems.
     # This is meant to facilitate usecases like showing a list of files.
     # Since the field names are normalized, it is discouraged to use this method in other file system methods
 
+    jd_folder_id_obj = 
+      fs_id: fs_id
+      bucket_id: "tasks"
+      folder_name: task_id
+
     if _.isString file_ids
       file_ids = [file_ids]
 
-    return @getBucketFolderFiles "tasks", task_id, {_id: {$in: file_ids}}
+    return @getBucketFolderFiles jd_folder_id_obj, {_id: {$in: file_ids}}
 
   isUserAllowedToUploadTaskFile: (task_id, user_id) ->
     return @isUserAllowedToUploadBucketFolderFile "tasks", task_id, user_id

@@ -38,14 +38,16 @@ _.extend JustdoFileInterface.FileSystemPrototype,
 
     throw @_error "not-implemented"
 
-  getBucketFolderFiles: (bucket_id, folder_name, query, query_options) ->
+  getBucketFolderFiles: (jd_folder_id_obj, query, query_options) ->
     # Consumers are expected to call `subscribeToBucketFolder` before calling this method
     # 
-    # Gets a bucket_id and a folder_name, and optionally query and query_options, 
+    # Gets a jd_folder_id_obj, and optionally query and query_options, 
     # returns an array of the corresponding file metadata objects that belong to the `bucket_id` and `folder_name`.
     # 
     # `query` and `query_options` are in the same format of the ones used in Mongo.
-    # It is the file system provider's responsibility to ensure that the `bucket_id` and `folder_name` are taking precedence over the `query` and `query_options`.
+    # It is the file system provider's responsibility to ensure that the `bucket_id` and `folder_name` under `jd_folder_id_obj` 
+    # are taking precedence over the `query` and `query_options`.
+    # E.g. For "tasks" bucket, the `folder_name` should be used to identify the task, regardless of whether the `query` specifies a different task_id.
     # To facilitate this, the `query` and `query_options` are shallow-cloned before passing them to the file system provider.
     # 
     # "bucket" is a category of files, for example "tasks";
