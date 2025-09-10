@@ -342,10 +342,7 @@ _.extend ChannelBaseClient.prototype,
     if @_files_subscription?[fs_id]?
       return
 
-    if not (fs = APP.justdo_file_interface?.cloneWithForcedFs fs_id)
-      return
-
-    @_files_subscription[fs_id] = fs.subscribeToTaskFiles @getChannelIdentifier().task_id
+    @_files_subscription[fs_id] = APP.justdo_file_interface.subscribeToTaskFiles fs_id, @getChannelIdentifier().task_id
 
     return
 
