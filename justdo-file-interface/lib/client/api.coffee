@@ -74,9 +74,14 @@ _.extend JustdoFileInterface.prototype,
     #
     # See comment above for why this method doesn't take fs_id as param.
 
-    fs = @_getFs()
+    try
+      fs = @_getFs()
+    catch err
+      cb? err
+      return
 
     file_size_limit = @getFileSizeLimit fs.fs_id
+
     if file_size_limit? and file.size > file_size_limit
       cb? @_error "file-size-exceeded", "File size exceeds the #{JustdoHelpers.bytesToHumanReadable file_size_limit} limit of file system #{fs.fs_id}"
       return
@@ -197,8 +202,12 @@ _.extend JustdoFileInterface.prototype,
     #   err: Error object if error occurs undefined otherwise.
     #   preview_link: The URL to preview the file.
 
-    jd_file_id_obj = @sanitizeJdFileIdObj jd_file_id_obj
-    fs = @_getFs(jd_file_id_obj.fs_id)
+    try
+      jd_file_id_obj = @sanitizeJdFileIdObj jd_file_id_obj
+      fs = @_getFs(jd_file_id_obj.fs_id)
+    catch err
+      cb? err
+      return
 
     return fs.getFilePreviewLink jd_file_id_obj, cb
 
