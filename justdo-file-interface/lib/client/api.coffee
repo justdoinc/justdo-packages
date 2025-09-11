@@ -221,9 +221,7 @@ _.extend JustdoFileInterface.prototype,
     #
     # cb is optional, will be called with the following params: (err)
     #   err: Error object if error occurs undefined otherwise.
-    jd_file_id_obj = @sanitizeJdFileIdObj jd_file_id_obj
-    fs = @_getFs(jd_file_id_obj.fs_id)
-    url = fs.getFileLink jd_file_id_obj
+    url = @getFileLink jd_file_id_obj
     window.open url
     return
   
