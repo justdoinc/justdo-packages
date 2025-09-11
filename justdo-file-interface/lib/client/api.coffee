@@ -158,9 +158,6 @@ _.extend JustdoFileInterface.prototype,
     jd_folder_id_obj = @sanitizeJdFolderIdObj jd_folder_id_obj
     fs = @_getFs(jd_folder_id_obj.fs_id)
 
-    if not file_ids?
-      file_ids = []
-
     if _.isString file_ids
       file_ids = [file_ids]
 
