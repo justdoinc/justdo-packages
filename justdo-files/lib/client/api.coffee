@@ -97,15 +97,6 @@ _.extend JustdoFiles.prototype,
           return ret
 
         return normalized_files
-      downloadFile: (jd_file_id_obj) ->
-        bucket_id = jd_file_id_obj.bucket_id
-        file_id = jd_file_id_obj.file_id
-        
-        @_requireCollectionMeta(bucket_id)
-        if bucket_id is "tasks"
-          return self.downloadFile file_id
-        if bucket_id is "avatars"
-          return self.downloadAvatar file_id
       showFilePreviewOrStartDownload: (jd_file_id_obj, additional_files_ids_in_folder_to_include_in_preview) ->
         bucket_id = jd_file_id_obj.bucket_id
         folder_name = jd_file_id_obj.folder_name

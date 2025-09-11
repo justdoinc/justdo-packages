@@ -114,15 +114,6 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     # Gets a jd_file_id_obj, returns a URL to download a file belonging to a bucket folder
     # Note: The URL returned by this method is for downloading. It should not be used for previewing
     throw @_error "not-implemented"
-  
-  downloadFile: (jd_file_id_obj, cb) ->
-    # Consumers are expected to call `subscribeToBucketFolder` before calling this method
-    # 
-    # Gets a jd_file_id_obj, downloads a file from a bucket folder if it is accessible.
-    #
-    # cb is optional, will be called with the following params: (err)
-    #   err: Error object if error occurs undefined otherwise.
-    throw @_error "not-implemented"
 
   isPreviewableCategory: (category) ->
     # Takes category, returns true if a category is deemed previewable by the file system, false otherwise
