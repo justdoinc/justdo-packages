@@ -108,7 +108,7 @@ _.extend JustdoFiles.prototype,
         if bucket_id is "avatars"
           # There's no preview for avatars. Simply start download.
           return self.downloadAvatar file_id
-      getFilePreviewLinkAsync: (jd_file_id_obj, cb) ->
+      getFilePreviewLink: (jd_file_id_obj, cb) ->
         bucket_id = jd_file_id_obj.bucket_id
         file_id = jd_file_id_obj.file_id
 

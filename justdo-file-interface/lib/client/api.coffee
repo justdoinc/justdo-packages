@@ -235,11 +235,8 @@ _.extend JustdoFileInterface.prototype,
     # Note: The URL returned by this method is for previewing. It should not be used for downloading,
     # for downloading, `getFileLink` should be used, alternaively you can use `downloadFile` instead.
 
-    jd_file_id_obj = @sanitizeJdFileIdObj jd_file_id_obj
-    fs = @_getFs(jd_file_id_obj.fs_id)
-
-    promise = new Promise (resolve, reject) ->
-      fs.getFilePreviewLinkAsync jd_file_id_obj, (err, preview_link) ->
+    promise = new Promise (resolve, reject) =>
+      @getFilePreviewLink jd_file_id_obj, (err, preview_link) ->
         if err?
           reject err
         else
