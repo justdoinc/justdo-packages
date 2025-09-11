@@ -75,15 +75,17 @@ _.extend JustdoFiles.prototype,
 
         publication_name = @_requireBucketPublicationName(bucket_id)
         return Meteor.subscribe publication_name, folder_name, callbacks
-      getBucketFolderFiles: (jd_folder_id_obj, query, query_options) ->
+      getBucketFolderFiles: (jd_folder_id_obj, file_ids) ->
         bucket_id = jd_folder_id_obj.bucket_id
         folder_name = jd_folder_id_obj.folder_name
 
         collection_meta = @_requireCollectionMeta(bucket_id)
         collection_name = @_requireBucketCollectionName(bucket_id)
-        query = _.extend query,
+        query =
+          _id:
+            $in: file_ids
           [collection_meta.folder_identifing_field]: folder_name
-        normalized_files = self[collection_name].find(query, query_options).map (file) ->
+        normalized_files = self[collection_name].find(query).map (file) ->
           ret = 
             _id: file._id
             type: file.type
