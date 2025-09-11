@@ -188,7 +188,7 @@ Template.common_chat_messages_board_message_card.helpers
       # Wrap the subscription in `Tracker.nonreactive` to avoid unsub caused by invalidation
       Tracker.nonreactive -> channel_obj.ensureFilesSubscriptionExists file_fs_id
 
-      if (found_file = APP.justdo_file_interface.getBucketFolderFiles(file.jd_file_id_obj, {_id: file.jd_file_id_obj.file_id})[0])?
+      if (found_file = APP.justdo_file_interface.getBucketFolderFiles(file.jd_file_id_obj, file.jd_file_id_obj.file_id)[0])?
         existing_file = {jd_file_id_obj: file.jd_file_id_obj, additional_details: found_file}
         existing_files.push existing_file
 
