@@ -218,9 +218,6 @@ _.extend JustdoFileInterface.prototype,
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method
     # 
     # Gets a jd_file_id_obj, downloads a file from a bucket folder if it is accessible.
-    #
-    # cb is optional, will be called with the following params: (err)
-    #   err: Error object if error occurs undefined otherwise.
     url = @getFileLink jd_file_id_obj
     window.open url
     return
