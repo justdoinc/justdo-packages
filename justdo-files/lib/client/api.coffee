@@ -82,9 +82,11 @@ _.extend JustdoFiles.prototype,
         collection_meta = @_requireCollectionMeta(bucket_id)
         collection_name = @_requireBucketCollectionName(bucket_id)
         query =
-          _id:
-            $in: file_ids
           [collection_meta.folder_identifing_field]: folder_name
+        if _.isArray file_ids
+          query._id = 
+            $in: file_ids
+
         normalized_files = self[collection_name].find(query).map (file) ->
           ret = 
             _id: file._id

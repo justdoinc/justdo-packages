@@ -61,9 +61,11 @@ _.extend TasksFileManagerPlugin.prototype,
 
         @_requireSupportedBucketId bucket_id
         query = 
-          _id:
-            $in: file_ids
           task_id: folder_name
+        if _.isArray file_ids
+          query._id = 
+            $in: file_ids
+            
         normalized_files = tasks_file_collection.find(query).map (file) ->
           ret = 
             _id: file.id
