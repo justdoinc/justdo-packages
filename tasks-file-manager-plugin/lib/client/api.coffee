@@ -55,14 +55,16 @@ _.extend TasksFileManagerPlugin.prototype,
         
         publication_name = TasksFileManagerPlugin.tasks_files_publication_name
         return Meteor.subscribe publication_name, folder_name, callbacks
-      getBucketFolderFiles: (jd_folder_id_obj, query, query_options) ->
+      getBucketFolderFiles: (jd_folder_id_obj, file_ids) ->
         bucket_id = jd_folder_id_obj.bucket_id
         folder_name = jd_folder_id_obj.folder_name
 
         @_requireSupportedBucketId bucket_id
-        query = _.extend query,
+        query = 
+          _id:
+            $in: file_ids
           task_id: folder_name
-        normalized_files = tasks_file_collection.find(query, query_options).map (file) ->
+        normalized_files = tasks_file_collection.find(query).map (file) ->
           ret = 
             _id: file.id
             type: file.type
