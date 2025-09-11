@@ -214,8 +214,9 @@ _.extend JustdoFileInterface.prototype,
     #   err: Error object if error occurs undefined otherwise.
     jd_file_id_obj = @sanitizeJdFileIdObj jd_file_id_obj
     fs = @_getFs(jd_file_id_obj.fs_id)
-
-    return fs.downloadFile jd_file_id_obj
+    url = fs.getFileLink jd_file_id_obj
+    window.open url
+    return
   
   getFilePreviewLinkAsync: (jd_file_id_obj) ->
     # Important: You are expected to call `subscribeToBucketFolder` before calling this method
