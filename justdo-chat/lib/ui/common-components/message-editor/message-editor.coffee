@@ -30,10 +30,6 @@ Template.common_chat_message_editor.onCreated ->
       @hideSendButton()
     return
   
-  @files_count_rv = new ReactiveVar 0
-  @setFilesCount = (count) -> @files_count_rv.set count
-  @getFilesCount = -> @files_count_rv.get()
-
   @getInputElement = -> @$("textarea")
   @getInputValue = -> @getInputElement().val()
   @getTrimmedInputValue = -> @getInputValue()?.trim()
@@ -43,12 +39,42 @@ Template.common_chat_message_editor.onCreated ->
     return
   
   @getFileInputElement = -> @$(".message-editor-file-input")
-  @getFileInputValue = -> @getFileInputElement().get(0)?.files
-  @setFileInputValue = (value) -> 
-    $files_input = @getFileInputElement()
-    $files_input.val(value)
-    $files_input.trigger("change")
+  @attached_files_set = new Set()
+  @attached_files_dep = new Tracker.Dependency()
+  @attachFiles = (files) ->
+    # Note: this method accept `files` as `FileList` object from the input element, not an Array.
+    file_size_limit = APP.justdo_file_interface.getFileSizeLimit()
+    files_not_exceeding_size_limit = _.filter files, (file) -> file.size <= file_size_limit
+
+    for file in files_not_exceeding_size_limit
+      @attached_files_set.add file
+    
+    @attached_files_dep.changed()
+
     return
+  @getFilesSet = ->
+    @attached_files_dep.depend()
+    return @attached_files_set
+  @getFilesArray = ->
+    return Array.from @getFilesSet()
+  @removeFiles = (files) ->
+    # Note: this method accept `files` as `FileList` object from the input element, not an Array.
+    for file in files
+      @attached_files_set.delete file
+        
+    @attached_files_dep.changed()
+    
+    return
+  @clearFiles = ->
+    @attached_files_set.clear()
+    # Clear the file input element
+    @getFileInputElement().val("")
+    @attached_files_dep.changed()
+    
+    return
+  @getFilesCount = -> 
+    @attached_files_dep.depend()
+    return @attached_files_set.size
 
   @sendMessage = (e) ->
     if @isSendingState()
@@ -57,7 +83,7 @@ Template.common_chat_message_editor.onCreated ->
 
     $input = @getInputElement()
     input_val = @getTrimmedInputValue()
-    files = @getFileInputValue()
+    files = @getFilesArray()
 
     if _.isEmpty(input_val) and _.isEmpty(files)
       return
@@ -93,7 +119,7 @@ Template.common_chat_message_editor.onCreated ->
         return
 
     # File handling
-    if not _.isEmpty(files = @getFileInputValue())
+    if not _.isEmpty(files = @getFilesArray())
       task_id = task_chat_object.getChannelIdentifier().task_id
       uploaded_files = []
 
@@ -124,7 +150,7 @@ Template.common_chat_message_editor.onCreated ->
         all_files_uploaded = uploaded_files.length is files.length
         if all_files_uploaded
           # Clear the file input
-          @setFileInputValue("")
+          @clearFiles()
           callSendMessageMethod input_val, uploaded_files
         
         return
@@ -145,7 +171,7 @@ Template.common_chat_message_editor.onRendered ->
 
     $message_editor = $(this.firstNode).parent().find(".message-editor")
 
-    @setFileInputValue("")
+    @clearFiles()
 
     if _.isEmpty(stored_temp_message = channel.getTempMessage())
       @setInputValue("")
@@ -201,7 +227,7 @@ Template.common_chat_message_editor.helpers
   error: ->
     tpl = Template.instance()
 
-    return tpl.getError()
+    return JustdoHelpers.nl2br tpl.getError()
   
   showSendButton: ->
     tpl = Template.instance()
@@ -238,7 +264,7 @@ Template.common_chat_message_editor.helpers
     if not tpl.getFilesCount() # reactive resource
       return ""
 
-    files = tpl.getFileInputValue()
+    files = tpl.getFilesArray()
     file_names = _.map files, (file) -> file.name
     return file_names.join("\n")
 
@@ -279,8 +305,8 @@ Template.common_chat_message_editor.events
     return
 
   "change .message-editor-file-input": (e, tpl) ->
-    files_count = _.size(e.target.files)
-    tpl.setFilesCount(files_count)
+    tpl.attachFiles(e.target.files)
+
     tpl.showOrHideSendButtonBasedOnUserInput()
     return
 
