@@ -91,6 +91,37 @@ Template.common_chat_message_editor.onCreated ->
     @attached_files_dep.depend()
     return _.size @attached_files_map
 
+  FilesDropdown = JustdoHelpers.generateNewTemplateDropdown "chat-editor-files-dropdown", "common_chat_message_editor_files_dropdown",
+    custom_bound_element_options:
+      close_button_html: null
+      close_on_bound_elements_show: false
+
+    updateDropdownPosition: ($connected_element) ->
+      @$dropdown
+        .position
+          of: $connected_element
+          my: "left top"
+          at: "left top"
+          collision: "fit fit"
+          using: (new_position, details) =>
+            target = details.target
+            element = details.element
+            element.element.addClass "animate slideIn shadow-lg"
+            element.element.css
+              top: new_position.top - 10
+              left: new_position.left + 6
+            return
+
+  @files_dropdown = new FilesDropdown()
+  @showFilesDropdown = (e) ->
+    @files_dropdown.$connected_element = $(e.currentTarget)
+    @files_dropdown.template_data = {parent_tpl: @}
+    @files_dropdown.openDropdown()
+    return
+  @hideFilesDropdown = ->
+    @files_dropdown.closeDropdown()
+    return
+
   @sendMessage = (e) ->
     if @isSendingState()
       @data.getChannelObject().logger.log("Sending in progress...")
@@ -274,15 +305,6 @@ Template.common_chat_message_editor.helpers
   filesCount: ->
     tpl = Template.instance()
     return tpl.getFilesCount()
-  
-  getSelectedFileNames: ->
-    tpl = Template.instance()
-    if not tpl.getFilesCount() # reactive resource
-      return ""
-
-    files = tpl.getFilesArray()
-    file_names = _.map files, (file) -> file.name
-    return file_names.join("\n")
 
 Template.common_chat_message_editor.events
   "keyup .message-editor": (e, tpl) ->
@@ -326,6 +348,12 @@ Template.common_chat_message_editor.events
     tpl.showOrHideSendButtonBasedOnUserInput()
     return
 
+  "mouseenter .files-wrapper": (e, tpl) ->
+    # Only show dropdown if there are files attached
+    if tpl.getFilesCount() > 0
+      tpl.showFilesDropdown(e)
+    return
+
 Template.common_chat_message_editor.onRendered ->
   $textarea = @getInputElement()
 
@@ -360,3 +388,27 @@ Template.common_chat_message_editor.onRendered ->
       return
 
   return
+
+Template.common_chat_message_editor.onDestroyed ->
+  @files_dropdown.destroy()
+
+  return
+
+Template.common_chat_message_editor_files_dropdown.helpers
+  attachedFiles: ->
+    tpl = Template.instance()
+    return tpl.data.parent_tpl.getFilesArray()
+
+  bytesToHumanReadable: (bytes) ->
+    tpl = Template.instance()
+    return JustdoHelpers.bytesToHumanReadable bytes
+  
+Template.common_chat_message_editor_files_dropdown.events
+  "click .remove-file": (e, tpl) ->
+    e.preventDefault()
+    e.stopPropagation()
+    
+    file_key = $(e.target).closest(".dropdown-item").data("file-key")
+    tpl.data.parent_tpl.removeFilesByKey file_key
+    
+    return
