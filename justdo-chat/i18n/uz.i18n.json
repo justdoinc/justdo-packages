@@ -1,11 +1,13 @@
 {
   "chat_label": "Chat",
   "message_editor_input_placeholder": "Xabar yozing...",
+  "message_editor_sending": "Yuborilmoqda...",
   "chat_config_title": "Chat",
   "chat_receive_chat_email_notifications": "Chat elektron pochta xabarnomalarini qabul qiling",
   "chat_click_to_unsubscribe": "Siz ushbu chatdan bildirishnomalar olasiz, bekor qilish uchun bosing",
   "chat_click_to_subscribe": "Ushbu chatdan bildirishnomalarni olishga obuna bo'ling",
   "chat_open_in_a_window": "Chatni oynada ochish",
   "chat_subscriber_management": "Obunachi boshqaruvi",
-  "chat_send_message": "Xabar yuborish"
+  "chat_send_message": "Xabar yuborish",
+  "chat_files_saved_to_files_tab": "Fayllar Fayllar bo'limiga saqlandi"
 }

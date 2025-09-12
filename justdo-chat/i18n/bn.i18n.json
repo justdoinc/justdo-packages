@@ -1,11 +1,13 @@
 {
   "chat_label": "চ্যাট",
   "message_editor_input_placeholder": "একটি বার্তা টাইপ করুন...",
+  "message_editor_sending": "পাঠানো হচ্ছে...",
   "chat_config_title": "চ্যাট",
   "chat_receive_chat_email_notifications": "চ্যাট ইমেল বিজ্ঞপ্তি গ্রহণ করুন",
   "chat_click_to_unsubscribe": "আপনি এই চ্যাট থেকে বিজ্ঞপ্তি পাবেন, আনসাবস্ক্রাইব করতে ক্লিক করুন",
   "chat_click_to_subscribe": "এই চ্যাটের বিজ্ঞপ্তি পেতে সাবস্ক্রাইব করুন",
   "chat_open_in_a_window": "চ্যাট নতুন উইন্ডোতে খুলুন",
   "chat_subscriber_management": "সাবস্ক্রাইবার ব্যবস্থাপনা",
-  "chat_send_message": "বার্তা পাঠান"
+  "chat_send_message": "বার্তা পাঠান",
+  "chat_files_saved_to_files_tab": "ফাইলগুলো ফাইল ট্যাবে সংরক্ষিত হয়েছে"
 }

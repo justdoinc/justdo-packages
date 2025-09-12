@@ -1,11 +1,13 @@
 {
   "chat_label": "Чат",
   "message_editor_input_placeholder": "Хабарламаны теріңіз...",
+  "message_editor_sending": "Жіберілуде...",
   "chat_config_title": "Чат",
   "chat_receive_chat_email_notifications": "Чат электрондық пошта хабарландыруларын алу",
   "chat_click_to_unsubscribe": "Сіз бұл чаттан хабарландыру аласыз, жазылудан бас тарту үшін басыңыз",
   "chat_click_to_subscribe": "Бұл чаттың хабарландыруларына жазылу",
   "chat_open_in_a_window": "Чатты терезеде ашу",
   "chat_subscriber_management": "Жазылушыларды басқару",
-  "chat_send_message": "Хабарлама жіберу"
+  "chat_send_message": "Хабарлама жіберу",
+  "chat_files_saved_to_files_tab": "Файлдар Файлдар бөліміне сақталды"
 }

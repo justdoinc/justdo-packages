@@ -1,11 +1,13 @@
 {
   "chat_label": "Txata",
   "message_editor_input_placeholder": "Idatzi mezu bat...",
+  "message_editor_sending": "Bidaltzen...",
   "chat_config_title": "Txata",
   "chat_receive_chat_email_notifications": "Jaso txateko mezu-jakinarazpenak posta elektronikoz",
   "chat_click_to_unsubscribe": "Txat honetatik jakinarazpenak jasoko dituzu, egin klik harpidetza eteteko",
   "chat_click_to_subscribe": "Harpidetu txat honetako jakinarazpenetara",
   "chat_open_in_a_window": "Ireki txata leiho batean",
   "chat_subscriber_management": "Harpidedunen Kudeaketa",
-  "chat_send_message": "Bidali Mezua"
+  "chat_send_message": "Bidali Mezua",
+  "chat_files_saved_to_files_tab": "Fitxategiak Fitxategiak fitxan gorde dira"
 }

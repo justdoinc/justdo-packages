@@ -1,11 +1,13 @@
 {
   "chat_label": "Chat",
   "message_editor_input_placeholder": "Napíšte správu...",
+  "message_editor_sending": "Odosielam...",
   "chat_config_title": "Konverzácia",
   "chat_receive_chat_email_notifications": "Dostávať e-mailové upozornenia na konverzácie",
   "chat_click_to_unsubscribe": "Dostávate upozornenia z tohto chatu, kliknutím ich zrušíte",
   "chat_click_to_subscribe": "Prihlásiť sa na upozornenia z tohto chatu",
   "chat_open_in_a_window": "Otvoriť chat v okne",
   "chat_subscriber_management": "Správa odberateľov",
-  "chat_send_message": "Odoslať správu"
+  "chat_send_message": "Odoslať správu",
+  "chat_files_saved_to_files_tab": "Súbory uložené na záložku Súbory"
 }

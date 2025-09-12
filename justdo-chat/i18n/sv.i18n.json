@@ -1,11 +1,13 @@
 {
   "chat_label": "Chatt",
   "message_editor_input_placeholder": "Skriv ett meddelande...",
+  "message_editor_sending": "Skickar...",
   "chat_config_title": "Chatt",
   "chat_receive_chat_email_notifications": "Ta emot e-postmeddelanden för chatt",
   "chat_click_to_unsubscribe": "Du kommer att få meddelanden från denna chatt, klicka för att avsluta prenumerationen",
   "chat_click_to_subscribe": "Prenumerera på meddelanden från denna chatt",
   "chat_open_in_a_window": "Öppna chatten i ett fönster",
   "chat_subscriber_management": "Hantera prenumeranter",
-  "chat_send_message": "Skicka meddelande"
+  "chat_send_message": "Skicka meddelande",
+  "chat_files_saved_to_files_tab": "Filer sparade i fliken Filer"
 }

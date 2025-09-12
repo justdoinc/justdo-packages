@@ -1,11 +1,13 @@
 {
   "chat_label": "Sohbet",
   "message_editor_input_placeholder": "Bir mesaj yazın...",
+  "message_editor_sending": "Gönderiliyor...",
   "chat_config_title": "Sohbet",
   "chat_receive_chat_email_notifications": "Sohbet e-posta bildirimleri al",
   "chat_click_to_unsubscribe": "Bu sohbetten bildirim alacaksınız, aboneliği iptal etmek için tıklayın",
   "chat_click_to_subscribe": "Bu sohbetin bildirimlerine abone olun",
   "chat_open_in_a_window": "Sohbeti yeni pencerede aç",
   "chat_subscriber_management": "Abone Yönetimi",
-  "chat_send_message": "Mesaj Gönder"
+  "chat_send_message": "Mesaj Gönder",
+  "chat_files_saved_to_files_tab": "Dosyalar, Dosyalar sekmesine kaydedildi"
 }

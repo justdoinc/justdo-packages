@@ -1,11 +1,13 @@
 {
   "chat_label": "Vestlus",
   "message_editor_input_placeholder": "Kirjuta sõnum...",
+  "message_editor_sending": "Saatmine...",
   "chat_config_title": "Vestlus",
   "chat_receive_chat_email_notifications": "Saa vestluse e-posti teavitusi",
   "chat_click_to_unsubscribe": "Sa saad sellest vestlusest teavitusi, klõpsa tühistamiseks",
   "chat_click_to_subscribe": "Telli selle vestluse teavitused",
   "chat_open_in_a_window": "Ava vestlus aknas",
   "chat_subscriber_management": "Tellijate haldamine",
-  "chat_send_message": "Saada sõnum"
+  "chat_send_message": "Saada sõnum",
+  "chat_files_saved_to_files_tab": "Failid salvestatud failide sakki"
 }

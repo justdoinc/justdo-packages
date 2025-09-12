@@ -1,11 +1,13 @@
 {
   "chat_label": "Tērzēšana",
   "message_editor_input_placeholder": "Ierakstiet ziņojumu...",
+  "message_editor_sending": "Sūta...",
   "chat_config_title": "Tērzēšana",
   "chat_receive_chat_email_notifications": "Saņemt tērzēšanas e-pasta paziņojumus",
   "chat_click_to_unsubscribe": "Jūs saņemsiet paziņojumus no šīs tērzēšanas, noklikšķiniet, lai atteiktos",
   "chat_click_to_subscribe": "Abonēt paziņojumus no šīs tērzēšanas",
   "chat_open_in_a_window": "Atvērt tērzēšanu jaunā logā",
   "chat_subscriber_management": "Abonentu pārvaldība",
-  "chat_send_message": "Sūtīt ziņojumu"
+  "chat_send_message": "Sūtīt ziņojumu",
+  "chat_files_saved_to_files_tab": "Faili saglabāti failu cilnē"
 }

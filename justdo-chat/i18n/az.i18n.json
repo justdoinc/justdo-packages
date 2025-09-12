@@ -1,11 +1,13 @@
 {
   "chat_label": "Söhbət",
   "message_editor_input_placeholder": "Mesaj yazın...",
+  "message_editor_sending": "Göndərilir...",
   "chat_config_title": "Söhbət",
   "chat_receive_chat_email_notifications": "Söhbət e-poçt bildirişlərini almaq",
   "chat_click_to_unsubscribe": "Bu söhbətdən bildirişlər alacaqsınız, abunəliyi ləğv etmək üçün klikləyin",
   "chat_click_to_subscribe": "Bu söhbətdən bildirişlərə abunə olun",
   "chat_open_in_a_window": "Söhbəti pəncərədə açın",
   "chat_subscriber_management": "Abunəçilərin İdarə Edilməsi",
-  "chat_send_message": "Mesaj Göndər"
+  "chat_send_message": "Mesaj Göndər",
+  "chat_files_saved_to_files_tab": "Fayllar Fayllar tabına saxlanıldı"
 }

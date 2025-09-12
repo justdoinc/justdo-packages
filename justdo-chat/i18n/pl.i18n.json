@@ -1,11 +1,13 @@
 {
   "chat_label": "Czat",
   "message_editor_input_placeholder": "Wpisz wiadomość...",
+  "message_editor_sending": "Wysyłanie...",
   "chat_config_title": "Czat",
   "chat_receive_chat_email_notifications": "Otrzymuj powiadomienia e-mail o czacie",
   "chat_click_to_unsubscribe": "Będziesz otrzymywać powiadomienia z tego czatu, kliknij aby zrezygnować z subskrypcji",
   "chat_click_to_subscribe": "Zasubskrybuj powiadomienia z tego czatu",
   "chat_open_in_a_window": "Otwórz czat w oknie",
   "chat_subscriber_management": "Zarządzanie subskrybentami",
-  "chat_send_message": "Wyślij wiadomość"
+  "chat_send_message": "Wyślij wiadomość",
+  "chat_files_saved_to_files_tab": "Pliki zapisane w zakładce Pliki"
 }

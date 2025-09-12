@@ -1,11 +1,13 @@
 {
   "chat_label": "कुराकानी",
   "message_editor_input_placeholder": "सन्देश टाइप गर्नुहोस्...",
+  "message_editor_sending": "पठाउँदै...",
   "chat_config_title": "कुराकानी",
   "chat_receive_chat_email_notifications": "कुराकानी इमेल सूचनाहरू प्राप्त गर्नुहोस्",
   "chat_click_to_unsubscribe": "तपाईंले यो कुराकानीबाट सूचनाहरू प्राप्त गर्नुहुनेछ, सदस्यता रद्द गर्न क्लिक गर्नुहोस्",
   "chat_click_to_subscribe": "यो कुराकानीको सूचनाहरूको लागि सदस्यता लिनुहोस्",
   "chat_open_in_a_window": "कुराकानी नयाँ विन्डोमा खोल्नुहोस्",
   "chat_subscriber_management": "सदस्यहरूको व्यवस्थापन",
-  "chat_send_message": "सन्देश पठाउनुहोस्"
+  "chat_send_message": "सन्देश पठाउनुहोस्",
+  "chat_files_saved_to_files_tab": "फाइलहरू Files ट्याबमा सुरक्षित गरियो"
 }

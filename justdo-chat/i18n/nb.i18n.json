@@ -1,11 +1,13 @@
 {
   "chat_label": "Chat",
   "message_editor_input_placeholder": "Skriv en melding...",
+  "message_editor_sending": "Sender...",
   "chat_config_title": "Chat",
   "chat_receive_chat_email_notifications": "Motta e-postvarsler for chat",
   "chat_click_to_unsubscribe": "Du vil motta varsler fra denne chatten, klikk for å avslutte abonnementet",
   "chat_click_to_subscribe": "Abonner på varsler fra denne chatten",
   "chat_open_in_a_window": "Åpne chat i et vindu",
   "chat_subscriber_management": "Abonnementshåndtering",
-  "chat_send_message": "Send melding"
+  "chat_send_message": "Send melding",
+  "chat_files_saved_to_files_tab": "Filer lagret i Filer-fanen"
 }
