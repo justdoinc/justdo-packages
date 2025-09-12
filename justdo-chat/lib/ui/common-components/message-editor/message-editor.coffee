@@ -39,10 +39,13 @@ Template.common_chat_message_editor.onCreated ->
     return
   
   @getFileInputElement = -> @$(".message-editor-file-input")
-  @attached_files_set = new Set()
+  @attached_files_map = {}
   @attached_files_dep = new Tracker.Dependency()
+  @getFileKey = (file) -> "#{file.name}:#{file.size}:#{file.lastModified}"
   @attachFiles = (files) ->
     # Note: this method accept `files` as `FileList` object from the input element, not an Array.
+    @clearError()
+
     file_size_limit = APP.justdo_file_interface.getFileSizeLimit()
     files_not_exceeding_size_limit = _.filter files, (file) -> file.size <= file_size_limit
     files_exceeding_size_limit = _.filter files, (file) -> file.size > file_size_limit
@@ -56,26 +59,29 @@ Template.common_chat_message_editor.onCreated ->
       @setError TAPi18n.__("chat_files_exceeds_size_limit_error", {limit: human_readable_size_limit, files: name_of_files_exceeding_size_limit, count: files_exceeding_size_limit.length})
 
     for file in files_not_exceeding_size_limit
-      @attached_files_set.add file
+      # The key to identify the file uniquely to avoid duplicates.
+      file_key = @getFileKey file
+      file._id = file_key
+      @attached_files_map[file_key] = file
     
     @attached_files_dep.changed()
 
     return
-  @getFilesSet = ->
-    @attached_files_dep.depend()
-    return @attached_files_set
   @getFilesArray = ->
-    return Array.from @getFilesSet()
-  @removeFiles = (files) ->
-    # Note: this method accept `files` as `FileList` object from the input element, not an Array.
-    for file in files
-      @attached_files_set.delete file
+    @attached_files_dep.depend()
+    return _.values @attached_files_map
+  @removeFilesByKey = (file_keys) ->
+    if _.isString file_keys
+      file_keys = [file_keys]
+
+    for file_key in file_keys
+      delete @attached_files_map[file_key]
         
     @attached_files_dep.changed()
     
     return
   @clearFiles = ->
-    @attached_files_set.clear()
+    @attached_files_map = {}
     # Clear the file input element
     @getFileInputElement().val("")
     @attached_files_dep.changed()
@@ -83,7 +89,7 @@ Template.common_chat_message_editor.onCreated ->
     return
   @getFilesCount = -> 
     @attached_files_dep.depend()
-    return @attached_files_set.size
+    return _.size @attached_files_map
 
   @sendMessage = (e) ->
     if @isSendingState()
@@ -180,6 +186,7 @@ Template.common_chat_message_editor.onRendered ->
 
     $message_editor = $(this.firstNode).parent().find(".message-editor")
 
+    @clearError()
     @clearFiles()
 
     if _.isEmpty(stored_temp_message = channel.getTempMessage())
