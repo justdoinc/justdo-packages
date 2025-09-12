@@ -9,5 +9,7 @@
   "chat_open_in_a_window": "Open chat in a window",
   "chat_subscriber_management": "Subscribers Management",
   "chat_send_message": "Send Message",
-  "chat_files_saved_to_files_tab": "Files saved to Files tab"
+  "chat_files_saved_to_files_tab": "Files saved to Files tab",
+  "chat_files_exceeds_size_limit_error": "The following file is not attached since it exceeds the size limit of __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "The following files are not attached since they exceed the size limit of __limit__: __files__"
 }

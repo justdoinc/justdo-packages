@@ -45,6 +45,15 @@ Template.common_chat_message_editor.onCreated ->
     # Note: this method accept `files` as `FileList` object from the input element, not an Array.
     file_size_limit = APP.justdo_file_interface.getFileSizeLimit()
     files_not_exceeding_size_limit = _.filter files, (file) -> file.size <= file_size_limit
+    files_exceeding_size_limit = _.filter files, (file) -> file.size > file_size_limit
+
+    # Filter out files that exceeds size limit and set error to notify user
+    if not _.isEmpty files_exceeding_size_limit
+      human_readable_size_limit = JustdoHelpers.bytesToHumanReadable file_size_limit
+      name_of_files_exceeding_size_limit = _.map(files_exceeding_size_limit, (file) -> "#{file.name}(#{JustdoHelpers.bytesToHumanReadable file.size})").join("\n")
+      # Add a new line to the beginning of the string to make it more readable
+      name_of_files_exceeding_size_limit = "\n" + name_of_files_exceeding_size_limit
+      @setError TAPi18n.__("chat_files_exceeds_size_limit_error", {limit: human_readable_size_limit, files: name_of_files_exceeding_size_limit, count: files_exceeding_size_limit.length})
 
     for file in files_not_exceeding_size_limit
       @attached_files_set.add file
