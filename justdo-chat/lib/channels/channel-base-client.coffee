@@ -115,6 +115,8 @@ _.extend ChannelBaseClient.prototype,
     @_initial_subscription_ready = new ReactiveVar false
     @_channel_messages_subscription_dep = new Tracker.Dependency()
 
+    @_files_subscription = {}
+
     @_verifyChannelConfObjectAgainstSchema()
 
     # Inits related to the messages subscriptions (note, we don't subscribe automatically)
@@ -185,10 +187,13 @@ _.extend ChannelBaseClient.prototype,
       # Note, proposed-subscribers-emulation has no effect on existing channels, we aren't
       # worry about turning it off.
 
-    @justdo_chat.sendMessage @channel_type, @getChannelIdentifier(), {body: body}, =>
-      @emit "message-sent", {body: body}
+    if _.isString body
+      body = {body}
 
-      JustdoHelpers.callCb cb
+    @justdo_chat.sendMessage @channel_type, @getChannelIdentifier(), body, (err) =>
+      @emit "message-sent", body
+
+      JustdoHelpers.callCb cb, err
 
     return
 
@@ -314,7 +319,30 @@ _.extend ChannelBaseClient.prototype,
 
       @_channel_messages_subscription?.stop()
 
+      # Clean up files subscription on destroy
+      @_unsubscribeFilesCollectionIfExists()
+
       return
+
+    return
+  
+  _unsubscribeFilesCollectionIfExists: ->
+    if not _.isEmpty(@_files_subscription)
+      for fs_id, subscription of @_files_subscription
+        subscription.stop?()
+
+      @_files_subscription = {}
+
+    return
+
+  ensureFilesSubscriptionExists: (fs_id) ->
+    if not @justdo_chat.isFilesEnabled(@channel_type)
+      return
+
+    if @_files_subscription?[fs_id]?
+      return
+
+    @_files_subscription[fs_id] = APP.justdo_file_interface.subscribeToTaskFiles fs_id, @getChannelIdentifier().task_id
 
     return
 

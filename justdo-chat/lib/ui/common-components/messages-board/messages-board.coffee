@@ -51,7 +51,7 @@ Template.common_chat_messages_board.onCreated ->
     # We run the following within a nonreactive context, so if a subscription is created
     # by it, it won't get destroyed as a result of the computation invalidation/destructino.
     Tracker.nonreactive =>
-      channel.requestChannelMessages({request_authors_details: @request_authors_details}) # Request first messages payload
+      channel.requestChannelMessages({request_authors_details: @request_authors_details, request_files_subscription: true}) # Request first messages payload
 
     # When a new message is sent by the user for this channel - scroll to bottom
     channel.on "message-sent", (@message_sent_handler = @scrollToBottom.bind(@))
@@ -159,11 +159,64 @@ Template.common_chat_messages_board_message_card.helpers
     else
       body = @body
 
+    if _.isEmpty(body)
+      return ""
+
     body = linkifyStr(body, {nl2br: true}) # linkify already escapes html entities, so don't worry about xss here.
 
     body = APP.justdo_chat.linkTaskId(body)
 
     return JustdoHelpers.xssGuard body, {allow_html_parsing: true, enclosing_char: ""}
+
+  isFilesEnabled: ->
+    tpl = Template.instance()
+    if not (channel_obj = tpl.getChannelObject?())?
+      return false
+    channel_type = channel_obj.channel_type
+    return channel_obj.justdo_chat.isFilesEnabled(channel_type)
+  
+  fileExistsInMessage: ->
+    return @files
+
+  files: ->
+    tpl = Template.instance()
+    channel_obj = tpl.getChannelObject?()
+    existing_files = []
+
+    for file in @files
+      file_fs_id = file.jd_file_id_obj.fs_id
+      # Wrap the subscription in `Tracker.nonreactive` to avoid unsub caused by invalidation
+      Tracker.nonreactive -> channel_obj.ensureFilesSubscriptionExists file_fs_id
+
+      if (found_file = APP.justdo_file_interface.getBucketFolderFiles(file.jd_file_id_obj, file.jd_file_id_obj.file_id)[0])?
+        existing_file = {jd_file_id_obj: file.jd_file_id_obj, additional_details: found_file}
+        existing_files.push existing_file
+
+    existing_file_ids = _.map existing_files, (file) -> file.jd_file_id_obj.file_id
+    missing_files = _.filter @files, (file) -> file.jd_file_id_obj.file_id not in existing_file_ids
+
+    ret = {existing_files, missing_files}
+    return ret
+
+  size: ->
+    return JustdoHelpers.bytesToHumanReadable @additional_details.size
+  
+  isPreviewable: ->
+    tpl = Template.instance()
+    channel_obj = tpl.getChannelObject()
+    return @additional_details.is_previewable and channel_obj.justdo_chat.isFileTypeInlinePreviewable(@additional_details.type)
+  
+  isPdf: (type) ->
+    return JustdoHelpers.mimeTypeToPreviewCategory(type) is "pdf"
+  
+  isImage: (type) ->
+    return JustdoHelpers.mimeTypeToPreviewCategory(type) is "image"
+  
+  isVideo: (type) ->
+    return JustdoHelpers.mimeTypeToPreviewCategory(type) is "video"
+  
+  getFilePreviewLink: ->
+    return APP.justdo_file_interface.getFilePreviewLinkAsync(@jd_file_id_obj)
 
   myMessage: ->
     return @author is Meteor.userId()
@@ -183,9 +236,20 @@ Template.common_chat_messages_board_message_card.helpers
     is_msg_from_performing_user = @author is Meteor.userId()
     is_msg_from_dm_channel = channel_obj?.channel_type is "user"
     return (not is_msg_from_performing_user) and (not is_msg_from_dm_channel)
+    
+  typeClass: -> Template.instance().getTypeCssClass(@additional_details.type)
 
 Template.common_chat_messages_board_message_card.onCreated ->
   @getChannelObject = @closestInstance("common_chat_messages_board")?.data?.getChannelObject
+
+  @getTypeCssClass = (file_type) ->
+    [p1, p2] = file_type.split('/')
+    if not p2?
+      return p1
+    else
+      return p2.replace(/\./, "_")
+
+    return
 
   return
 
@@ -253,5 +317,17 @@ Template.common_chat_messages_board_message_card.events
       APP.modules.project_page.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(task_id)
     else
       APP.modules.project_page.activateTaskInProject(project_id, task_id)
+
+    return
+
+  "click .show-preview-or-start-download": (e, tmpl) ->
+    e.preventDefault()
+
+    file = @
+    # This handler assumes all the files in the same message have the same fs_id
+    # If such behaviour is not guaranteed, we need to change this handler to iterate over the files and get the fs_id for each file.
+    message_file_ids = _.map tmpl.data.files, (file) -> file.jd_file_id_obj.file_id
+
+    APP.justdo_file_interface.showFilePreviewOrStartDownload file.jd_file_id_obj, message_file_ids
 
     return

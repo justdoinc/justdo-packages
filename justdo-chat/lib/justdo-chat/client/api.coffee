@@ -550,6 +550,12 @@ _.extend JustdoChat.prototype,
 
       return """#{spaces}<a class="task-link" href="#">##{task_id}</a>"""
 
+  isFileTypeInlinePreviewable: (mime_type) ->
+    category = JustdoHelpers.mimeTypeToPreviewCategory mime_type
+    is_previewable_by_justdo_chat = category in JustdoChat.inline_previewable_file_categories
+
+    return is_previewable_by_justdo_chat
+
   destroy: ->
     if @destroyed
       @logger.debug "Destroyed already"

@@ -30,3 +30,11 @@ _.extend JustdoChat,
   # This regex used to detect and replace these cases.
   positional_operator_regex: /\.\$(\..*)?/
 
+  files_supported_channel_types: ["task"]
+  
+  inline_previewable_file_categories: [
+    "image"
+    "video"
+    # "pdf"
+  ]
+

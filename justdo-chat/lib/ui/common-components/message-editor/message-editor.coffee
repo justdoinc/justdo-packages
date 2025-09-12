@@ -23,6 +23,16 @@ Template.common_chat_message_editor.onCreated ->
   @hideSendButton = ->
     @show_send_button_rv.set false
     return
+  @showOrHideSendButtonBasedOnUserInput = ->
+    if @getTrimmedInputValue() or @getFilesCount() > 0
+      @showSendButton()
+    else
+      @hideSendButton()
+    return
+  
+  @files_count_rv = new ReactiveVar 0
+  @setFilesCount = (count) -> @files_count_rv.set count
+  @getFilesCount = -> @files_count_rv.get()
 
   @getInputElement = -> @$("textarea")
   @getInputValue = -> @getInputElement().val()
@@ -30,6 +40,14 @@ Template.common_chat_message_editor.onCreated ->
   @setInputValue = (value) -> 
     @getInputElement().val(value)
     @getInputElement().trigger("autosize.resize")
+    return
+  
+  @getFileInputElement = -> @$(".message-editor-file-input")
+  @getFileInputValue = -> @getFileInputElement().get(0)?.files
+  @setFileInputValue = (value) -> 
+    $files_input = @getFileInputElement()
+    $files_input.val(value)
+    $files_input.trigger("change")
     return
 
   @sendMessage = (e) ->
@@ -39,8 +57,9 @@ Template.common_chat_message_editor.onCreated ->
 
     $input = @getInputElement()
     input_val = @getTrimmedInputValue()
+    files = @getFileInputValue()
 
-    if _.isEmpty(input_val)
+    if _.isEmpty(input_val) and _.isEmpty(files)
       return
 
     @clearError()
@@ -50,21 +69,71 @@ Template.common_chat_message_editor.onCreated ->
     @setSendingState()
     @hideSendButton()
 
-    task_chat_object.sendMessage input_val, (err) =>
-      @unsetSendingState()
+    callSendMessageMethod = (input_val, files) =>
+      data = 
+        body: input_val
 
-      if err?
-        @setError(err.reason)
-        @showSendButton()
+      if not _.isEmpty(files)
+        data.files = files
+
+      task_chat_object.sendMessage data, (err) =>
+        @unsetSendingState()
+
+        if err?
+          @setError(err.reason)
+          @showSendButton()
+          return
+
+        @setInputValue("")
+        task_chat_object.clearTempMessage()
+
+        Meteor.defer ->
+          $input.focus()
+
         return
 
-      @setInputValue("")
-      task_chat_object.clearTempMessage()
+    # File handling
+    if not _.isEmpty(files = @getFileInputValue())
+      task_id = task_chat_object.getChannelIdentifier().task_id
+      uploaded_files = []
 
-      Meteor.defer ->
-        $input.focus()
+      # Note: This callback is used to handle the upload of a single file
+      uploadFileCb = (err, file_details) =>
+        if err?
+          @setError(err.reason or err)
+          @showSendButton()
+          return
+        else 
+          # Typically, after uploaded a file, `jd_file_id_obj` should be stored for identifying the file in the future
+          # since it's considered the primary key of the file.
+          # However, in the context of justdo-chat, we can derive the `bucket_id` and `folder_name`
+          # from the channel type and channel identifier, so we don't need to store it.
+          # In addition, since we want to keep a record of what file got attached to a message
+          # even after the deletion of such file, we store `additional_details` which includes the file name and size
+          # and extend it with the `fs_id` to identify the file system.
+          # With file_id, fs_id, channel type and channel identifier, we can identify the file uniquely.
+          jd_file_id_obj = file_details[0]
+          additional_details = file_details[1]
+          # _id exists in `jd_file_id_obj` as `file_id` already, no need to store it again
+          additional_details = _.omit additional_details, "_id"
 
-      return
+          file_meta_to_store = {jd_file_id_obj, additional_details}
+
+          uploaded_files.push file_meta_to_store
+
+        all_files_uploaded = uploaded_files.length is files.length
+        if all_files_uploaded
+          # Clear the file input
+          @setFileInputValue("")
+          callSendMessageMethod input_val, uploaded_files
+        
+        return
+      
+      for file in files
+        APP.justdo_file_interface.uploadTaskFile task_id, file, uploadFileCb
+
+    else
+      callSendMessageMethod input_val
 
     return
 
@@ -75,11 +144,14 @@ Template.common_chat_message_editor.onRendered ->
     channel = @data.getChannelObject()
 
     $message_editor = $(this.firstNode).parent().find(".message-editor")
+
+    @setFileInputValue("")
+
     if _.isEmpty(stored_temp_message = channel.getTempMessage())
       @setInputValue("")
     else
       @setInputValue(stored_temp_message)
-
+    
       Tracker.nonreactive ->
         # We don't want potential reactive resources called by handlers of the keyup to trigger invalidation of
         # this autorun (it actually happened, Daniel C.)
@@ -143,15 +215,38 @@ Template.common_chat_message_editor.helpers
       return "disabled"
 
     return ""
+  
+  isFilesEnabled: ->
+    tpl = Template.instance()
+    if not (channel_obj = tpl.data.getChannelObject())?
+      return false
+
+    is_files_enabled = APP.justdo_chat.isFilesEnabled channel_obj.channel_type
+    if not is_files_enabled
+      return false
+    
+    is_user_allowed_to_upload = APP.justdo_file_interface.isUserAllowedToUploadTaskFile channel_obj.getChannelIdentifier().task_id, Meteor.userId()
+
+    return is_files_enabled and is_user_allowed_to_upload
+    
+  filesCount: ->
+    tpl = Template.instance()
+    return tpl.getFilesCount()
+  
+  getSelectedFileNames: ->
+    tpl = Template.instance()
+    if not tpl.getFilesCount() # reactive resource
+      return ""
+
+    files = tpl.getFileInputValue()
+    file_names = _.map files, (file) -> file.name
+    return file_names.join("\n")
 
 Template.common_chat_message_editor.events
   "keyup .message-editor": (e, tpl) ->
     @getChannelObject().saveTempMessage tpl.getInputValue()
 
-    if tpl.getTrimmedInputValue()
-      tpl.showSendButton()
-    else
-      tpl.hideSendButton()
+    tpl.showOrHideSendButtonBasedOnUserInput()
 
     return
 
@@ -178,6 +273,16 @@ Template.common_chat_message_editor.events
     tpl.sendMessage(e)
     return
 
+  "click .attach-files, click .files-count": (e, tpl) ->
+    e.preventDefault()
+    tpl.getFileInputElement().click()
+    return
+
+  "change .message-editor-file-input": (e, tpl) ->
+    files_count = _.size(e.target.files)
+    tpl.setFilesCount(files_count)
+    tpl.showOrHideSendButtonBasedOnUserInput()
+    return
 
 Template.common_chat_message_editor.onRendered ->
   $textarea = @getInputElement()

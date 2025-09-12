@@ -586,12 +586,15 @@ _.extend ChannelBaseServer.prototype,
     @emit "channel-unread-state-changed", unread
 
     return
-
+  _sendMessageFilesArraySchema: new SimpleSchema
+    files: JustdoChat.schemas.MessagesSchema._schema.files
+    "files.$": JustdoChat.schemas.MessagesSchema._schema["files.$"]
   _sendMessageMessageObjectSchemaForTxtType: new SimpleSchema
     body:
       # Note, simple schema takes care of .trim() the value for us
 
       type: String
+      optional: true
 
       min: JustdoChat.schemas.MessagesSchema._schema.body.min
       max: JustdoChat.schemas.MessagesSchema._schema.body.max
@@ -625,9 +628,26 @@ _.extend ChannelBaseServer.prototype,
       )
     options = cleaned_val
 
+    files = message_obj.files
+    is_files_empty = _.isEmpty files
+    if not is_files_empty
+      {cleaned_val} =
+        JustdoHelpers.simpleSchemaCleanAndValidate(
+          @_sendMessageFilesArraySchema,
+          {files}, # note, we wrap files in an object, since simple schema expects an object
+          {self: @, throw_on_error: true}
+        )
+      {files} = cleaned_val
+
     if message_type == "txt"
+      msg_body = message_obj?.body
+      is_msg_body_empty = _.isEmpty msg_body
+
+      if is_msg_body_empty and is_files_empty
+        throw @_error "invalid-message", "Cannot send message without body and files"
+
       messages_schema = @justdo_chat.getMessagesSchema()
-      if message_obj?.body?.length > (max_task_length = messages_schema.body.max)
+      if msg_body?.trim().length > (max_task_length = messages_schema.body.max)
         # Just to provide a more friendly error message for that case (v.s the one simple schema will throw)
         throw @_error "invalid-message", "Message can't be longer than #{max_task_length} charecters"
 
@@ -687,6 +707,9 @@ _.extend ChannelBaseServer.prototype,
       message_doc.body = message_obj.body
     else if message_type == "data"
       message_doc.data = message_obj
+    
+    if not _.isEmpty files
+      message_doc.files = files
 
     # write the message
     @justdo_chat.messages_collection.insert message_doc
@@ -926,6 +949,7 @@ _.extend ChannelBaseServer.prototype,
           data: 1
           author: 1
           createdAt: 1
+          files: 1
 
       messages_collection_name =
         JustdoHelpers.getCollectionNameFromCursor(messages_cursor)
