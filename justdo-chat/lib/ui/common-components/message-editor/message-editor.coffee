@@ -91,10 +91,20 @@ Template.common_chat_message_editor.onCreated ->
     @attached_files_dep.depend()
     return _.size @attached_files_map
 
+  # Since the bound element of the dropdown has animation that rotates the element upon hovering,
+  # `is_files_dropdown_open` is introduced to prevent flickering caused by rapidly opening/closing of the dropdown
+  #  when the cursor is at the edge of the bound element
+  @is_files_dropdown_open = false
   FilesDropdown = JustdoHelpers.generateNewTemplateDropdown "chat-editor-files-dropdown", "common_chat_message_editor_files_dropdown",
     custom_bound_element_options:
       close_button_html: null
       close_on_bound_elements_show: false
+      openedHandler: (e) ->
+        @is_files_dropdown_open = true
+        return
+      closedHandler: (e) ->
+        @is_files_dropdown_open = false
+        return
 
     updateDropdownPosition: ($connected_element) ->
       @$dropdown
@@ -102,7 +112,7 @@ Template.common_chat_message_editor.onCreated ->
           of: $connected_element
           my: "left top"
           at: "left top"
-          collision: "fit fit"
+          collision: "flipfit"
           using: (new_position, details) =>
             target = details.target
             element = details.element
