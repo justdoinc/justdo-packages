@@ -48,62 +48,62 @@ _.extend GridControl.prototype,
     # Store reference to this instance for use in event handlers
     grid_control = @
 
-    # Create search and filtering functions
-    filterFieldsBySearch = (search_term) ->
-      search_term = search_term.toLowerCase().trim()
-      if _.isEmpty search_term
-        return missing_fields
-      search_term_regex = new RegExp(JustdoHelpers.escapeRegExp(search_term), "i")
-      
-      extended_schema = grid_control.getSchemaExtendedWithCustomFields()
-      
-      return _.filter missing_fields, (field) ->
-        label = APP.justdo_i18n.getI18nTextOrFallback {
-          fallback_text: extended_schema[field].label, 
-          i18n_key: extended_schema[field].label_i18n
-        }
-        default_label = extended_schema[field].label
-        # Consider a match if the search term is found in the label in the current language or the default language
-        return search_term_regex.test(label) or search_term_regex.test(default_label)
+    append_fields_menu = []
 
-    createFilteredSubmenuData = (filtered_fields) ->
-      submenu = []
-      extended_schema = grid_control.getSchemaExtendedWithCustomFields()
-      
-      for field in filtered_fields
-        do (field) =>
+    if not _.isEmpty missing_fields
+      # Create search and filtering functions
+      filterFieldsBySearch = (search_term) ->
+        search_term = search_term.toLowerCase().trim()
+        if _.isEmpty search_term
+          return missing_fields
+        search_term_regex = new RegExp(JustdoHelpers.escapeRegExp(search_term), "i")
+        
+        extended_schema = grid_control.getSchemaExtendedWithCustomFields()
+        
+        return _.filter missing_fields, (field) ->
           label = APP.justdo_i18n.getI18nTextOrFallback {
             fallback_text: extended_schema[field].label, 
             i18n_key: extended_schema[field].label_i18n
           }
-          submenu.push
-            text: JustdoHelpers.xssGuard(label, {allow_html_parsing: true, enclosing_char: ''})
-            action: (e) =>
-              grid_control.addFieldToView(field, column_index_of_last_opened_cmenu + 1)
-      
-      return JustdoHelpers.localeAwareSortCaseInsensitive submenu, (item) -> item.text.toLowerCase()
+          default_label = extended_schema[field].label
+          # Consider a match if the search term is found in the label in the current language or the default language
+          return search_term_regex.test(label) or search_term_regex.test(default_label)
 
-    # Initial filtered submenu with all fields
-    initial_filtered_fields = filterFieldsBySearch("")
-    append_fields_submenu = createFilteredSubmenuData(initial_filtered_fields)
+      createFilteredSubmenuData = (filtered_fields) ->
+        submenu = []
+        extended_schema = grid_control.getSchemaExtendedWithCustomFields()
+        
+        for field in filtered_fields
+          do (field) =>
+            label = APP.justdo_i18n.getI18nTextOrFallback {
+              fallback_text: extended_schema[field].label, 
+              i18n_key: extended_schema[field].label_i18n
+            }
+            submenu.push
+              text: JustdoHelpers.xssGuard(label, {allow_html_parsing: true, enclosing_char: ''})
+              action: (e) =>
+                grid_control.addFieldToView(field, column_index_of_last_opened_cmenu + 1)
+        
+        return JustdoHelpers.localeAwareSortCaseInsensitive submenu, (item) -> item.text.toLowerCase()
 
-    # Create the search header item for the submenu
-    # IMPORTANT: Although it seems this block can be moved to the `createFilteredSubmenuData`,
-    # it can't be done because `createFilteredSubmenuData` is also used in `refreshMenuItems`
-    # to update the submenu items dynamically without re-creating the search header.
-    if not _.isEmpty append_fields_submenu
-      # Show search header if there are any fields to show
-      search_header_item = {
-        header: """<div class="grid-columns-search-container" style="position: relative; padding: 4px 8px;"><input type="text" class="grid-columns-search-input form-control form-control-sm border border-primary" placeholder="#{TAPi18n.__("search")}" style="padding-left: 28px; height: 28px;"><svg class="jd-icon text-secondary" style="position: absolute; top: 8px; left: 12px; height: 20px; width: 20px; pointer-events: none;"><use xlink:href="/layout/icons-feather-sprite.svg#search"></use></svg></div>"""
-      }
-      append_fields_submenu = [search_header_item].concat(append_fields_submenu)
+      # Initial filtered submenu with all fields
+      initial_filtered_fields = filterFieldsBySearch("")
+      append_fields_submenu = createFilteredSubmenuData(initial_filtered_fields)
 
-    append_fields_menu = [
-      {
+      # Create the search header item for the submenu
+      # IMPORTANT: Although it seems this block can be moved to the `createFilteredSubmenuData`,
+      # it can't be done because `createFilteredSubmenuData` is also used in `refreshMenuItems`
+      # to update the submenu items dynamically without re-creating the search header.
+      if not _.isEmpty append_fields_submenu
+        # Show search header if there are any fields to show
+        search_header_item = {
+          header: """<div class="grid-columns-search-container" style="position: relative; padding: 4px 8px;"><input type="text" class="grid-columns-search-input form-control form-control-sm border border-primary" placeholder="#{TAPi18n.__("search")}" style="padding-left: 28px; height: 28px;"><svg class="jd-icon text-secondary" style="position: absolute; top: 8px; left: 12px; height: 20px; width: 20px; pointer-events: none;"><use xlink:href="/layout/icons-feather-sprite.svg#search"></use></svg></div>"""
+        }
+        append_fields_submenu = [search_header_item].concat(append_fields_submenu)
+
+      append_fields_menu.push
         text: TAPi18n.__ "add_column_label"
         subMenu: append_fields_submenu
-      }
-    ]
 
     # Add search functionality after the context menu is created
     # In other items we use `action` to handle click events, but here we need to handle the search input `keyup` events,
