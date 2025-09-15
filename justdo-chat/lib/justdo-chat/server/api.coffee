@@ -390,6 +390,14 @@ _.extend JustdoChat.prototype,
         authors_details_sent[author_id] += 1
 
       return
+    
+    addFilesCountToLastMessage = (last_message) ->
+      if last_message.files?
+        # Add files_count to the last message and remove the files field
+        last_message.files_count = _.size last_message.files
+        last_message = _.omit last_message, "files"
+
+      return last_message
 
     recent_activity_channels_tracker = subscribed_channels_recent_activity_cursor.observeChanges
       added: (channel_id, data) ->
@@ -461,6 +469,8 @@ _.extend JustdoChat.prototype,
         }
 
         if (last_message = self._getChannelLastMessageFromChannelObject(channel_obj, channel_id))?
+          last_message = addFilesCountToLastMessage(last_message)
+
           publish_this.added recent_activity_messages_collection_name, last_message._id, last_message
 
           supplement_data.last_message_id = last_message._id
@@ -507,6 +517,8 @@ _.extend JustdoChat.prototype,
 
           # Add last_message, and update supplement_data
           if (last_message = self._getChannelLastMessageFromChannelObject(channel_obj, channel_id))?
+            last_message = addFilesCountToLastMessage(last_message)
+
             publish_this.added recent_activity_messages_collection_name, last_message._id, last_message
 
             supplement_data_sent_by_channel_id[channel_id].last_message_id = last_message._id
@@ -949,6 +961,7 @@ _.extend JustdoChat.prototype,
       fields:
         channel_id: 1
         body: 1
+        files: 1
         data: 1
         author: 1
         createdAt: 1

@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "Mark All as Read",
   "chat_dropdown_you_have_no_messages": "You have no messages, yet",
   "chat_dropdown_mark_as_read": "Mark as Read",
-  "chat_dropdown_mark_as_unread": "Mark as Unread"
+  "chat_dropdown_mark_as_unread": "Mark as Unread",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> sent <span class=\"last-message\">__count__ file</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> sent <span class=\"last-message\">__count__ files</span>"
 }
