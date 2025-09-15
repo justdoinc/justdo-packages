@@ -358,9 +358,9 @@ Template.common_chat_message_editor.events
     tpl.showOrHideSendButtonBasedOnUserInput()
     return
 
-  "mouseenter .files-wrapper": (e, tpl) ->
+  "mouseenter .attach-files": (e, tpl) ->
     # Only show dropdown if there are files attached
-    if tpl.getFilesCount() > 0
+    if not tpl.is_files_dropdown_open and tpl.getFilesCount() > 0
       tpl.showFilesDropdown(e)
     return
 
@@ -414,6 +414,12 @@ Template.common_chat_message_editor_files_dropdown.helpers
     return JustdoHelpers.bytesToHumanReadable bytes
   
 Template.common_chat_message_editor_files_dropdown.events
+  "mousedown .remove-file": (e, tpl) ->
+    # To prevent multiple clicks to trigger text selection
+    e.preventDefault()
+    e.stopPropagation()
+    return false
+  
   "click .remove-file": (e, tpl) ->
     e.preventDefault()
     e.stopPropagation()
@@ -421,4 +427,4 @@ Template.common_chat_message_editor_files_dropdown.events
     file_key = $(e.target).closest(".dropdown-item").data("file-key")
     tpl.data.parent_tpl.removeFilesByKey file_key
     
-    return
+    return false
