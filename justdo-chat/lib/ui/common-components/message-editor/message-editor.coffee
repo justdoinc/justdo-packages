@@ -260,7 +260,7 @@ Template.common_chat_message_editor.onRendered ->
 
     return
 
-  @$(".message-editor-wrapper").parent().on "dragenter", (e) =>
+  @dragEnterHandler = (e) =>
     # Setup a event handler on the parent element to handle the dragenter event
     # so that when a file is dragged into the chat window (instead of only the editor element),
     # the .drop-pane element will be activated to handle file drop event.
@@ -268,6 +268,7 @@ Template.common_chat_message_editor.onRendered ->
     e.preventDefault()
     @is_dragging_files_into_drop_pane.set true
     return false
+  @$(".message-editor-wrapper").parent().on "dragenter", @dragEnterHandler
 
   if ($window_container = $(this.firstNode).closest(".window-container")).length == 0
     # Isn't rendered inside a window, take care of exiting focus mode
@@ -435,6 +436,7 @@ Template.common_chat_message_editor.onRendered ->
   return
 
 Template.common_chat_message_editor.onDestroyed ->
+  @$(".message-editor-wrapper").parent().off "dragenter", @dragEnterHandler
   @files_dropdown.destroy()
 
   return
