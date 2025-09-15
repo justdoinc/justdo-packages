@@ -273,6 +273,18 @@ GridControl.installEditor "UnicodeDateEditor",
       firstDay: Meteor?.user()?.profile?.first_day_of_week or 0
       onSelect: => @saveAndExit()
       onClose: => @focus()
+      beforeShowDay: (date) =>
+        # console.log "beforeShowDay", date
+        is_selectable = true
+        extra_classes = []
+
+        formatted_date_string = moment(date).format("YYYY-MM-DD")
+        is_holiday = APP.justdo_resources_availability?.workdaysAndHolidaysFor(JD.activeJustdoId(), [formatted_date_string])?.holidays?.has(formatted_date_string)
+        if is_holiday
+          extra_classes.push "udf-holiday"
+
+        extra_classes_string = extra_classes.join(" ")
+        return [is_selectable, extra_classes_string]
 
     @$input.width(@$input.width() - formatter_buttons_width - 3 - 1) # - 1 compensates the extra margin we add to .udf-id-date-setter only for editors (to have exact alignment with formatter)
 
@@ -387,3 +399,17 @@ GridControl.installEditor "UnicodeDateEditor",
         return
 
     return
+
+  getDisplayedMonthYear: (datepicker_instance) ->
+    # Received a datepicker instance and returns the displayed month and year  by accessing the `drawMonth` and `drawYear` properties from the instance
+    # returns a object in the following format:
+    # {
+    #   year: Number,
+    #   month: Number,
+    # }
+    # 
+    # Note: this is different from the `selectedMonth` and `selectedYear` properties 
+    # which are the selected month and year
+    return {year: datepicker_instance.drawYear, month: datepicker_instance.drawMonth}
+  
+  
