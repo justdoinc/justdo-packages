@@ -174,7 +174,7 @@ Template.common_chat_messages_board_message_card.helpers
       return false
     channel_type = channel_obj.channel_type
     return channel_obj.justdo_chat.isFilesEnabled(channel_type)
-  
+
   fileExistsInMessage: ->
     return @files
 
@@ -195,28 +195,55 @@ Template.common_chat_messages_board_message_card.helpers
     existing_file_ids = _.map existing_files, (file) -> file.jd_file_id_obj.file_id
     missing_files = _.filter @files, (file) -> file.jd_file_id_obj.file_id not in existing_file_ids
 
-    ret = {existing_files, missing_files}
+    existing_image_files = _.filter existing_files, (file) ->
+      APP.justdo_files.isFileTypeImage(file.type)
+
+    existing_not_image_files = _.filter existing_files, (file) ->
+      not APP.justdo_files.isFileTypeImage(file.type)
+
+    ret = {
+      existing_image_files,
+      existing_not_image_files,
+      missing_files
+    }
+
     return ret
 
+  existingMaxVisibleImageFiles: (existing_image_files) ->
+    return existing_image_files.slice(0, (Template.instance().max_visible_images_count - 1))
+
+  lastVisibleImageFile: ->
+    return @existing_image_files[Template.instance().max_visible_images_count - 1]
+
+  hiddenImageCount: ->
+    if @existing_image_files.length <= Template.instance().max_visible_images_count
+      return false
+
+    return @existing_image_files.length - Template.instance().max_visible_images_count + 1
+
+  shouldUseGridLayout: ->
+    return @existing_image_files.length >= Template.instance().max_visible_images_count
+
   size: ->
-    return JustdoHelpers.bytesToHumanReadable @additional_details.size
+    return JustdoHelpers.bytesToHumanReadable @size
   
   isPreviewable: ->
-    tpl = Template.instance()
-    channel_obj = tpl.getChannelObject()
-    return @additional_details.is_previewable and channel_obj.justdo_chat.isFileTypeInlinePreviewable(@additional_details.type)
+    return APP.justdo_file_interface.getFileCategory(@type)?
   
   isPdf: (type) ->
-    return JustdoHelpers.mimeTypeToPreviewCategory(type) is "pdf"
+    return APP.justdo_file_interface.getFileCategory(type) is "pdf"
   
   isImage: (type) ->
-    return JustdoHelpers.mimeTypeToPreviewCategory(type) is "image"
+    return APP.justdo_file_interface.getFileCategory(type) is "image"
   
   isVideo: (type) ->
-    return JustdoHelpers.mimeTypeToPreviewCategory(type) is "video"
+    return APP.justdo_file_interface.getFileCategory(type) is "video"
   
   getFilePreviewLink: ->
-    return APP.justdo_file_interface.getFilePreviewLinkAsync(@jd_file_id_obj)
+    tpl = Template.instance()
+    channel_obj = tpl.getChannelObject?()
+    task_id = channel_obj.getChannelIdentifier().task_id
+    return APP.justdo_file_interface.getTaskFilePreviewLinkAsync(task_id, @_id)
 
   myMessage: ->
     return @author is Meteor.userId()
@@ -228,7 +255,7 @@ Template.common_chat_messages_board_message_card.helpers
     is_msg_from_current_user = @author is Meteor.userId()
     is_msg_from_dm_channel = channel_obj?.channel_type is "user"
     return (not is_msg_from_current_user) and (not is_msg_from_dm_channel)
-  
+
   shouldShowAuthorName: ->
     tpl = Template.instance()
     channel_obj = tpl.getChannelObject?()
@@ -239,8 +266,33 @@ Template.common_chat_messages_board_message_card.helpers
     
   typeClass: -> Template.instance().getTypeCssClass(@additional_details.type)
 
+Template.common_chat_messages_board_file_container.helpers
+  isPreviewable: ->
+    return APP.justdo_file_interface.getFileCategory(@type)?
+
+  size: ->
+    return JustdoHelpers.bytesToHumanReadable @size
+
+  isPdf: (type) ->
+    return APP.justdo_file_interface.getFileCategory(type) is "pdf"
+
+  isImage: (type) ->
+    return APP.justdo_file_interface.getFileCategory(type) is "image"
+
+  isVideo: (type) ->
+    return APP.justdo_file_interface.getFileCategory(type) is "video"
+
+  getFilePreviewLink: ->
+    tpl = Template.instance()
+    channel_obj = tpl.getChannelObject?()
+    task_id = channel_obj?.getChannelIdentifier().task_id
+    return APP.justdo_file_interface.getTaskFilePreviewLinkAsync(task_id, @_id)
+
+  typeClass: -> Template.instance().getTypeCssClass(@type)
+
 Template.common_chat_messages_board_message_card.onCreated ->
   @getChannelObject = @closestInstance("common_chat_messages_board")?.data?.getChannelObject
+  @max_visible_images_count = 4
 
   @getTypeCssClass = (file_type) ->
     [p1, p2] = file_type.split('/')
