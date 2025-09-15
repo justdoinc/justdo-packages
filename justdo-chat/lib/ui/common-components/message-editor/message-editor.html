@@ -1,6 +1,11 @@
 <template name="common_chat_message_editor">
   <div class="message-editor-wrapper">
     {{#if isFilesEnabled}}
+      <div class="drop-pane text-muted {{#if isDraggingFilesIntoDropPane}}dragging{{/if}}">
+        <div class="drop-pane-overlay">
+          Drop to attach files
+        </div>
+      </div>
       <div class="files-wrapper m{{getRtlAwareDirection "r"}}-1">
         <svg class="jd-icon attach-files"><use xlink:href="/layout/icons-feather-sprite.svg#paperclip"/></svg>
         {{#if filesCount}}

@@ -4,6 +4,31 @@
   display: flex
   align-items: center
   border-top: $parts-separator-border
+  .drop-pane
+    position: absolute
+    left: 0
+    top: 0
+    width: 100%
+    height: 100%
+    // By default, don't block interactions
+    pointer-events: none
+    // Only activate when actually dragging
+    &.dragging
+      pointer-events: auto
+    .drop-pane-overlay
+      pointer-events: none
+      position: absolute
+      left: 0
+      top: 0
+      width: 100%
+      height: 100%
+      background-color: rgba(255, 255, 255, 0.95)
+      display: none
+      align-items: center
+      justify-content: center
+    &.dragging
+      .drop-pane-overlay
+        display: flex
   .files-wrapper
     position: relative
     cursor: pointer

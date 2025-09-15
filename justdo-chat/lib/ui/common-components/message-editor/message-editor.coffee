@@ -132,6 +132,8 @@ Template.common_chat_message_editor.onCreated ->
     @files_dropdown.closeDropdown()
     return
 
+  @is_dragging_files_into_drop_pane = new ReactiveVar false
+
   @sendMessage = (e) ->
     if @isSendingState()
       @data.getChannelObject().logger.log("Sending in progress...")
@@ -258,6 +260,15 @@ Template.common_chat_message_editor.onRendered ->
 
     return
 
+  @$(".message-editor-wrapper").parent().on "dragenter", (e) =>
+    # Setup a event handler on the parent element to handle the dragenter event
+    # so that when a file is dragged into the chat window (instead of only the editor element),
+    # the .drop-pane element will be activated to handle file drop event.
+    e.stopPropagation()
+    e.preventDefault()
+    @is_dragging_files_into_drop_pane.set true
+    return false
+
   if ($window_container = $(this.firstNode).closest(".window-container")).length == 0
     # Isn't rendered inside a window, take care of exiting focus mode
     # when focus out.
@@ -315,6 +326,10 @@ Template.common_chat_message_editor.helpers
   filesCount: ->
     tpl = Template.instance()
     return tpl.getFilesCount()
+  
+  isDraggingFilesIntoDropPane: ->
+    tpl = Template.instance()
+    return tpl.is_dragging_files_into_drop_pane.get()
 
 Template.common_chat_message_editor.events
   "keyup .message-editor": (e, tpl) ->
@@ -357,6 +372,26 @@ Template.common_chat_message_editor.events
 
     tpl.showOrHideSendButtonBasedOnUserInput()
     return
+  
+  "dragleave .drop-pane": (e, tpl) ->
+    e.stopPropagation()
+    e.preventDefault()
+    tpl.is_dragging_files_into_drop_pane.set false
+    return false
+
+  "dragover .drop-pane": (e, tpl) ->
+    e.stopPropagation()
+    e.preventDefault()
+    e.originalEvent.dataTransfer.dropEffect = "copy"
+    return false
+  
+  "drop .drop-pane": (e, tpl) ->
+    e.stopPropagation()
+    e.preventDefault()
+    tpl.is_dragging_files_into_drop_pane.set false
+    tpl.attachFiles(e.originalEvent.dataTransfer.files)
+    tpl.$(".message-editor-file-input").trigger("change")
+    return false
 
   "mouseenter .attach-files": (e, tpl) ->
     # Only show dropdown if there are files attached
