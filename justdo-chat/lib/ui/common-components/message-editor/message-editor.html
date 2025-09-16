@@ -6,7 +6,7 @@
           Drop to attach files
         </div>
       </div>
-      <div class="files-wrapper m{{getRtlAwareDirection "r"}}-1">
+      <div class="files-wrapper m{{getRtlAwareDirection "r"}}-1 {{#if isDraggingFilesIntoDropPane}}d-none{{/if}}">
         <svg class="jd-icon attach-files"><use xlink:href="/layout/icons-feather-sprite.svg#paperclip"/></svg>
         {{#if filesCount}}
           <div class="files-count">{{filesCount}}</div>
@@ -17,7 +17,7 @@
     {{/if}}
     <textarea class="message-editor" dir="{{#if isRtl}}rtl{{else}}ltr{{/if}}" disabled="{{#if isSendingState}}disabled{{/if}}" placeholder="{{_ "message_editor_input_placeholder"}}"></textarea>
     {{!-- {{#if isSendingState}}{{_ "message_editor_sending"}}{{/if}} --}}
-    <button class="btn p-0 message-editor-send text-primary {{#if showSendButton}}show{{/if}} m{{getRtlAwareDirection "r"}}-3" {{isSendButtonDisabled}}>{{_ "send"}}</button>
+    <button class="btn p-0 message-editor-send text-primary {{#if showSendButton}}show{{/if}} m{{getRtlAwareDirection "r"}}-3 {{#if isDraggingFilesIntoDropPane}}d-none{{/if}}" {{isSendButtonDisabled}}>{{_ "send"}}</button>
 
   </div>
 
