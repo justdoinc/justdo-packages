@@ -120,6 +120,8 @@ $grid_layout_max_width: calc(#{$inline_file_preview_container_size} * 2 + 50px)
         padding: 8px 8px 4px 8px
       .file-container
         width: 200px
+        &.non-previewable
+          width: 100%
         display: flex
         flex-direction: column
         align-items: flex-start
@@ -160,6 +162,7 @@ $grid_layout_max_width: calc(#{$inline_file_preview_container_size} * 2 + 50px)
           gap: 6px
           width: 100%
           .type-logo
+            margin: 0 4px
             flex: 0 0 auto
             width: 24px
             min-width: 24px
@@ -184,9 +187,10 @@ $grid_layout_max_width: calc(#{$inline_file_preview_container_size} * 2 + 50px)
               background-position: -274px 0px
 
           .file-name-wrapper
+            margin: 0 4px
             display: flex
             flex-direction: column
-            color: white
+            color: black
             flex: 1
             overflow: hidden
             white-space: nowrap

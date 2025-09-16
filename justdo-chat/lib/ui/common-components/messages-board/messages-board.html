@@ -101,7 +101,7 @@
 </template>
 
 <template name="common_chat_messages_board_file_container">
-  <div class="file-container">
+  <div class="file-container {{#unless isPreviewable}}non-previewable{{/unless}}">
     <a href="#" class="show-preview-or-start-download text-info" title="{{additional_details.name}}">
       {{#if isPreviewable}}
         {{#let previewLink=getFilePreviewLink file=this}}
