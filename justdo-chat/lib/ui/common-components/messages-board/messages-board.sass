@@ -1,5 +1,8 @@
 @import "{justdoinc:justdo-chat}/lib/ui/common-components/vars.scss"
 
+$inline_file_preview_container_size: 150px
+$grid_layout_max_width: calc(#{$inline_file_preview_container_size} * 2 + 50px)
+
 .messages-board-viewport
   padding: 0px 12px
   .messages-board
@@ -69,9 +72,10 @@
         flex-wrap: wrap
         flex-direction: unset
         justify-content: start
+        max-width: $grid_layout_max_width
         .file-container
-          width: 150px
-          height: 150px
+          width: $inline_file_preview_container_size
+          height: $inline_file_preview_container_size
         .hidden-image-wrapper
           position: relative
           overflow: hidden
