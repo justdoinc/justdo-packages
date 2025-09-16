@@ -195,34 +195,34 @@ Template.common_chat_messages_board_message_card.helpers
     existing_file_ids = _.map existing_files, (file) -> file.jd_file_id_obj.file_id
     missing_files = _.filter @files, (file) -> file.jd_file_id_obj.file_id not in existing_file_ids
 
-    existing_image_files = _.filter existing_files, (file) ->
-      APP.justdo_files.isFileTypeImage(file.additional_details.type)
+    existing_media_files = _.filter existing_files, (file) ->
+      JustdoHelpers.mimeTypeToPreviewCategory(file.additional_details.type) in ["image", "video"]
 
-    existing_not_image_files = _.filter existing_files, (file) ->
-      not APP.justdo_files.isFileTypeImage(file.additional_details.type)
+    existing_not_media_files = _.filter existing_files, (file) ->
+      JustdoHelpers.mimeTypeToPreviewCategory(file.additional_details.type) not in ["image", "video"]
 
     ret = {
-      existing_image_files,
-      existing_not_image_files,
+      existing_media_files,
+      existing_not_media_files,
       missing_files
     }
 
     return ret
 
-  existingMaxVisibleImageFiles: (existing_image_files) ->
-    return existing_image_files.slice(0, (Template.instance().max_visible_images_count - 1))
+  existingMaxVisibleImageFiles: (existing_media_files) ->
+    return existing_media_files.slice(0, (Template.instance().max_visible_images_count - 1))
 
   lastVisibleImageFile: ->
-    return @existing_image_files[Template.instance().max_visible_images_count - 1]
+    return @existing_media_files[Template.instance().max_visible_images_count - 1]
 
   hiddenImageCount: ->
-    if @existing_image_files.length <= Template.instance().max_visible_images_count
+    if @existing_media_files.length <= Template.instance().max_visible_images_count
       return false
 
-    return @existing_image_files.length - Template.instance().max_visible_images_count + 1
+    return @existing_media_files.length - Template.instance().max_visible_images_count + 1
 
   shouldUseGridLayout: ->
-    return @existing_image_files.length >= Template.instance().max_visible_images_count
+    return @existing_media_files.length >= Template.instance().max_visible_images_count
 
   size: ->
     return JustdoHelpers.bytesToHumanReadable @additional_details.size

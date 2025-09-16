@@ -45,7 +45,7 @@
             <span class="date" title="{{userDateFormat createdAt}}">{{friendlyTimeFormat createdAt false}}</span>
 
             <div class="files-images-container {{#if shouldUseGridLayout}}grid-layout{{/if}}">
-              {{#each existingMaxVisibleImageFiles existing_image_files}}
+              {{#each existingMaxVisibleImageFiles existing_media_files}}
                 {{> common_chat_messages_board_file_container}}
               {{/each}}
 
@@ -61,7 +61,7 @@
               </div>
             </div>
 
-            {{#each existing_not_image_files}}
+            {{#each existing_not_media_files}}
               {{> common_chat_messages_board_file_container}}
             {{/each}}
 
