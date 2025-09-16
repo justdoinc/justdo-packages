@@ -342,10 +342,16 @@ Template.common_chat_messages_board_message_card.events
 
     return
 
+Template.common_chat_messages_board_file_container.onCreated ->
+  @getParentTpl = => Template.closestInstance("common_chat_messages_board_message_card")
+  return
 
 Template.common_chat_messages_board_file_container.helpers
   isPreviewable: ->
-    return APP.justdo_file_interface.getFileCategory(@type)?
+    tpl = Template.instance()
+    parent_tpl = tpl.getParentTpl()
+    channel_obj = parent_tpl.getChannelObject?()
+    return @additional_details.is_previewable and channel_obj.justdo_chat.isFileTypeInlinePreviewable(@additional_details.type)
 
   size: ->
     return JustdoHelpers.bytesToHumanReadable @additional_details.size
@@ -361,8 +367,12 @@ Template.common_chat_messages_board_file_container.helpers
 
   getFilePreviewLink: ->
     tpl = Template.instance()
-    channel_obj = tpl.getChannelObject?()
+    parent_tpl = tpl.getParentTpl()
+    channel_obj = parent_tpl.getChannelObject?()
     task_id = channel_obj?.getChannelIdentifier().task_id
     return APP.justdo_file_interface.getFilePreviewLinkAsync(@jd_file_id_obj)
 
-  typeClass: -> Template.instance().getTypeCssClass(@type)
+  typeClass: -> 
+    tpl = Template.instance()
+    parent_tpl = tpl.getParentTpl()
+    return parent_tpl.getTypeCssClass(@additional_details.type)
