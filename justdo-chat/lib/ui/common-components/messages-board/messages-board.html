@@ -42,8 +42,7 @@
       {{#if $and isFilesEnabled fileExistsInMessage}}
         {{#with files}}
           <div class="files-container">
-            <span class="date" title="{{userDateFormat createdAt}}">{{friendlyTimeFormat createdAt false}}</span>
-
+            <span class="date" title="{{userDateFormat messageCreatedAt}}">{{friendlyTimeFormat messageCreatedAt false}}</span>
             <div class="files-images-container {{#if shouldUseGridLayout}}grid-layout{{/if}}">
               {{#each existingMaxVisibleImageFiles existing_media_files}}
                 {{> common_chat_messages_board_file_container}}
@@ -89,7 +88,7 @@
                   {{> display_name_with_graphic_unverified_warning authorDoc}}
               </span>
             {{/if}}
-            <span class="date" title="{{userDateFormat createdAt}}">{{friendlyTimeFormat createdAt false}}</span>
+            <span class="date" title="{{userDateFormat messageCreatedAt}}">{{friendlyTimeFormat messageCreatedAt false}}</span>
           </div>
           <div dir="auto" class="message-body">
             {{{body}}}

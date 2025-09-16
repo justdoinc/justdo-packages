@@ -168,6 +168,10 @@ Template.common_chat_messages_board_message_card.helpers
 
     return JustdoHelpers.xssGuard body, {allow_html_parsing: true, enclosing_char: ""}
 
+  messageCreatedAt: ->
+    tpl = Template.instance()
+    return tpl.messageCreatedAt()
+
   isFilesEnabled: ->
     tpl = Template.instance()
     if not (channel_obj = tpl.getChannelObject?())?
@@ -260,6 +264,9 @@ Template.common_chat_messages_board_message_card.onCreated ->
       return p2.replace(/\./, "_")
 
     return
+  
+  @messageCreatedAt = -> 
+    return @data.createdAt
 
   return
 
