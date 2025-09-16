@@ -227,24 +227,6 @@ Template.common_chat_messages_board_message_card.helpers
   size: ->
     return JustdoHelpers.bytesToHumanReadable @size
   
-  isPreviewable: ->
-    return APP.justdo_file_interface.getFileCategory(@type)?
-  
-  isPdf: (type) ->
-    return APP.justdo_file_interface.getFileCategory(type) is "pdf"
-  
-  isImage: (type) ->
-    return APP.justdo_file_interface.getFileCategory(type) is "image"
-  
-  isVideo: (type) ->
-    return APP.justdo_file_interface.getFileCategory(type) is "video"
-  
-  getFilePreviewLink: ->
-    tpl = Template.instance()
-    channel_obj = tpl.getChannelObject?()
-    task_id = channel_obj.getChannelIdentifier().task_id
-    return APP.justdo_file_interface.getTaskFilePreviewLinkAsync(task_id, @_id)
-
   myMessage: ->
     return @author is Meteor.userId()
 
