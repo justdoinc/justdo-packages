@@ -116,11 +116,16 @@ $grid_layout_max_width: calc(#{$inline_file_preview_container_size} * 2 + 50px)
         font-weight: 650
         box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2)
         z-index: 1
+        &:not(:has(~ .grid-layout))
+          &:has(~ .non-previewable),
+          &:has(~ .file-removed),
+            top: -8px
       .files-footer
         padding: 8px 8px 4px 8px
       .file-container
         width: 200px
-        &.non-previewable
+        &.non-previewable,
+        &.file-removed
           width: 100%
         display: flex
         flex-direction: column
