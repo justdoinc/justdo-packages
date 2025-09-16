@@ -102,7 +102,7 @@
 
 <template name="common_chat_messages_board_file_container">
   <div class="file-container">
-    <a href="#" class="show-preview-or-start-download text-info" title="{{name}}">
+    <a href="#" class="show-preview-or-start-download text-info" title="{{additional_details.name}}">
       {{#if isPreviewable}}
         {{#let previewLink=getFilePreviewLink file=this}}
           {{#if @pending "previewLink"}}
@@ -115,17 +115,17 @@
             XXX Add error handling
           {{/if}} --}}
           {{#if @resolved "previewLink"}}
-            {{#if isImage file.type}}
+            {{#if isImage file.additional_details.type}}
               <div class="file-wrapper image">
-                <div class="file-image" style="background: url('{{previewLink}}')" title="{{file.name}}"></div>
+                <div class="file-image" style="background: url('{{previewLink}}')" title="{{file.additional_details.name}}"></div>
               </div>
-            {{else if isPdf file.type}}
+            {{else if isPdf file.additional_details.type}}
               <div class="file-wrapper pdf">
-                <embed src="{{previewLink}}" type="{{file.type}}" width="970" height="550" alt="{{file.name}}" style="border: 0 none;">
+                <embed src="{{previewLink}}" type="{{file.additional_details.type}}" width="970" height="550" alt="{{file.additional_details.name}}" style="border: 0 none;">
               </div>
-            {{else if isVideo file.type}}
+            {{else if isVideo file.additional_details.type}}
               <div class="file-wrapper video">
-                <video alt="{{file.name}}" preload="metadata">
+                <video alt="{{file.additional_details.name}}" preload="metadata">
                   <source src="{{previewLink}}">
                 </video>
               </div>
@@ -136,7 +136,7 @@
         <div class="file-info">
           <span class="type-logo {{typeClass}}"></span>
           <div class="file-name-wrapper">
-            <span class="file-name">{{name}}</span>
+            <span class="file-name">{{additional_details.name}}</span>
             <span class="file-size">{{size}}</span>
           </div>
         </div>

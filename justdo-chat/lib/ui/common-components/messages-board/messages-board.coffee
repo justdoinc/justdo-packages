@@ -196,10 +196,10 @@ Template.common_chat_messages_board_message_card.helpers
     missing_files = _.filter @files, (file) -> file.jd_file_id_obj.file_id not in existing_file_ids
 
     existing_image_files = _.filter existing_files, (file) ->
-      APP.justdo_files.isFileTypeImage(file.type)
+      APP.justdo_files.isFileTypeImage(file.additional_details.type)
 
     existing_not_image_files = _.filter existing_files, (file) ->
-      not APP.justdo_files.isFileTypeImage(file.type)
+      not APP.justdo_files.isFileTypeImage(file.additional_details.type)
 
     ret = {
       existing_image_files,
@@ -225,7 +225,7 @@ Template.common_chat_messages_board_message_card.helpers
     return @existing_image_files.length >= Template.instance().max_visible_images_count
 
   size: ->
-    return JustdoHelpers.bytesToHumanReadable @size
+    return JustdoHelpers.bytesToHumanReadable @additional_details.size
   
   myMessage: ->
     return @author is Meteor.userId()
@@ -253,22 +253,22 @@ Template.common_chat_messages_board_file_container.helpers
     return APP.justdo_file_interface.getFileCategory(@type)?
 
   size: ->
-    return JustdoHelpers.bytesToHumanReadable @size
+    return JustdoHelpers.bytesToHumanReadable @additional_details.size
 
   isPdf: (type) ->
-    return APP.justdo_file_interface.getFileCategory(type) is "pdf"
+    return JustdoHelpers.mimeTypeToPreviewCategory(type) is "pdf"
 
   isImage: (type) ->
-    return APP.justdo_file_interface.getFileCategory(type) is "image"
+    return JustdoHelpers.mimeTypeToPreviewCategory(type) is "image"
 
   isVideo: (type) ->
-    return APP.justdo_file_interface.getFileCategory(type) is "video"
+    return JustdoHelpers.mimeTypeToPreviewCategory(type) is "video"
 
   getFilePreviewLink: ->
     tpl = Template.instance()
     channel_obj = tpl.getChannelObject?()
     task_id = channel_obj?.getChannelIdentifier().task_id
-    return APP.justdo_file_interface.getTaskFilePreviewLinkAsync(task_id, @_id)
+    return APP.justdo_file_interface.getFilePreviewLinkAsync(@jd_file_id_obj)
 
   typeClass: -> Template.instance().getTypeCssClass(@type)
 
