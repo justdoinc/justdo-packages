@@ -248,30 +248,6 @@ Template.common_chat_messages_board_message_card.helpers
     
   typeClass: -> Template.instance().getTypeCssClass(@additional_details.type)
 
-Template.common_chat_messages_board_file_container.helpers
-  isPreviewable: ->
-    return APP.justdo_file_interface.getFileCategory(@type)?
-
-  size: ->
-    return JustdoHelpers.bytesToHumanReadable @additional_details.size
-
-  isPdf: (type) ->
-    return JustdoHelpers.mimeTypeToPreviewCategory(type) is "pdf"
-
-  isImage: (type) ->
-    return JustdoHelpers.mimeTypeToPreviewCategory(type) is "image"
-
-  isVideo: (type) ->
-    return JustdoHelpers.mimeTypeToPreviewCategory(type) is "video"
-
-  getFilePreviewLink: ->
-    tpl = Template.instance()
-    channel_obj = tpl.getChannelObject?()
-    task_id = channel_obj?.getChannelIdentifier().task_id
-    return APP.justdo_file_interface.getFilePreviewLinkAsync(@jd_file_id_obj)
-
-  typeClass: -> Template.instance().getTypeCssClass(@type)
-
 Template.common_chat_messages_board_message_card.onCreated ->
   @getChannelObject = @closestInstance("common_chat_messages_board")?.data?.getChannelObject
   @max_visible_images_count = 4
@@ -365,3 +341,28 @@ Template.common_chat_messages_board_message_card.events
     APP.justdo_file_interface.showFilePreviewOrStartDownload file.jd_file_id_obj, message_file_ids
 
     return
+
+
+Template.common_chat_messages_board_file_container.helpers
+  isPreviewable: ->
+    return APP.justdo_file_interface.getFileCategory(@type)?
+
+  size: ->
+    return JustdoHelpers.bytesToHumanReadable @additional_details.size
+
+  isPdf: (type) ->
+    return JustdoHelpers.mimeTypeToPreviewCategory(type) is "pdf"
+
+  isImage: (type) ->
+    return JustdoHelpers.mimeTypeToPreviewCategory(type) is "image"
+
+  isVideo: (type) ->
+    return JustdoHelpers.mimeTypeToPreviewCategory(type) is "video"
+
+  getFilePreviewLink: ->
+    tpl = Template.instance()
+    channel_obj = tpl.getChannelObject?()
+    task_id = channel_obj?.getChannelIdentifier().task_id
+    return APP.justdo_file_interface.getFilePreviewLinkAsync(@jd_file_id_obj)
+
+  typeClass: -> Template.instance().getTypeCssClass(@type)
