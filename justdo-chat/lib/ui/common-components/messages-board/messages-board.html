@@ -125,6 +125,7 @@
               </div>
             {{else if isVideo file.additional_details.type}}
               <div class="file-wrapper video">
+                <svg class="jd-icon play-button"><use xlink:href="/layout/icons-feather-sprite.svg#play-circle"/></svg>
                 <video alt="{{file.additional_details.name}}" preload="metadata">
                   <source src="{{previewLink}}">
                 </video>
