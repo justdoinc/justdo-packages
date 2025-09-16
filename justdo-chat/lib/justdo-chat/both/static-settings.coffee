@@ -35,6 +35,6 @@ _.extend JustdoChat,
   inline_previewable_file_categories: [
     "image"
     "video"
-    # "pdf"
+    "pdf"
   ]
 
