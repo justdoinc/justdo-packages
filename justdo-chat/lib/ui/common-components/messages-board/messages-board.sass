@@ -23,6 +23,13 @@
       justify-content: end
       .message-card-content
         align-items: end
+      .files-container
+        align-items: end
+        .date
+          right: 4px
+          left: unset
+      .files-images-container.grid-layout
+        justify-content: end
     &.bot-log-message
       justify-content: center
       .message-body
@@ -61,7 +68,7 @@
       &.grid-layout
         flex-wrap: wrap
         flex-direction: unset
-        justify-content: end
+        justify-content: start
         .file-container
           width: 150px
           height: 150px
@@ -93,10 +100,10 @@
       flex-direction: column
       gap: 4px
       position: relative
-      align-items: end
+      align-items: start
       .date
         position: absolute
-        right: 4px
+        left: 4px
         top: 4px
         color: black !important
         background-color: white
@@ -206,3 +213,11 @@
         margin-left: 20px
       .message-body
         text-align: right
+      .date
+        right: 4px
+        left: unset
+    .message-card.my-message
+      .files-container
+        .date
+          left: 4px
+          right: unset
