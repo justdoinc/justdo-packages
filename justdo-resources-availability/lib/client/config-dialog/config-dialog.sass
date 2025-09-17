@@ -1,19 +1,47 @@
 .holidays_format_error
   color: red
 
-.resources-availability-header
-  font-size: 12px
-  border-bottom: 1px dashed rgba(0, 0, 0, 0.12)
+.resources-availability
+  padding: 0px 8px
+  display: flex
+  flex-direction: column
+  gap: 16px
+
+.resources-availability-section
+  color: #3D495B
+  font-weight: 600
+  display: flex
+  flex-direction: column
+  &.workdays
+    gap: 8px
+  &.holidays
+    gap: 8px
 
 .resources-availability-item
   user-select: none
-  font-size: 16px
-  border-bottom: 1px dashed rgba(0, 0, 0, 0.12)
-  height: 44px
+  display: flex
+  align-items: center
+  justify-content: space-between
+  padding: 4px 0
+  border-top: 1px solid #EDF1F8
+  .resources-title
+    font-weight: normal
+  .resources-time-control
+    pointer-events: none
+    opacity: 0.25
+    display: flex
+    position: relative
+    align-items: center
+    gap: 4px
+    .from_time,
+    .to_time
+      width: 116px
+  .resources-time-control.enabled
+    pointer-events: auto
+    opacity: 1
 
-  .from_time,
-  .to_time
-    width: 116px
+.resources-availability-item:last-child
+  border-bottom: 1px solid #EDF1F8
 
 .resources-availability-time-note
   position: absolute
@@ -23,9 +51,6 @@
   left: 0px
   font-size: 11px
   white-space: nowrap
-
-.availability_config_dialog_holidays
-  font-size: 16px
 
 .holidays_format_error
   color: red !important
