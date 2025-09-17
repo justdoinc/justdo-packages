@@ -79,5 +79,8 @@
   "copy": "Kopyala",
   "loading": "Yüklənir...",
   "no_results": "Nəticə yoxdur",
-  "date": "Tarix"
+  "date": "Tarix",
+  "high": "Yüksək",
+  "medium": "Orta",
+  "low": "Aşağı"
 }

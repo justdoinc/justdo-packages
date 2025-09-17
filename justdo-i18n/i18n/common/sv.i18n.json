@@ -79,5 +79,8 @@
   "copy": "Kopiera",
   "loading": "Laddar...",
   "no_results": "Inga resultat",
-  "date": "Datum"
+  "date": "Datum",
+  "high": "Hög",
+  "medium": "Medel",
+  "low": "Låg"
 }

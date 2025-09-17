@@ -79,5 +79,8 @@
   "copy": "Nusxalash",
   "loading": "Yuklanmoqda...",
   "no_results": "Natijalar yo'q",
-  "date": "Sana"
+  "date": "Sana",
+  "high": "Yuqori",
+  "medium": "O'rta",
+  "low": "Past"
 }

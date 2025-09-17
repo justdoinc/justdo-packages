@@ -79,5 +79,8 @@
   "copy": "Kopiraj",
   "loading": "Nalaganje...",
   "no_results": "Ni rezultatov",
-  "date": "Datum"
+  "date": "Datum",
+  "high": "Visoka",
+  "medium": "Srednja",
+  "low": "Nizka"
 }

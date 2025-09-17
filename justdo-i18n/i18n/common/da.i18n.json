@@ -79,5 +79,8 @@
   "copy": "Kopier",
   "loading": "Indlæser...",
   "no_results": "Ingen resultater",
-  "date": "Dato"
+  "date": "Dato",
+  "high": "Høj",
+  "medium": "Mellem",
+  "low": "Lav"
 }

@@ -79,5 +79,8 @@
   "copy": "Kopijuoti",
   "loading": "Įkeliama...",
   "no_results": "Rezultatų nėra",
-  "date": "Data"
+  "date": "Data",
+  "high": "Aukštas",
+  "medium": "Vidutinis",
+  "low": "Žemas"
 }

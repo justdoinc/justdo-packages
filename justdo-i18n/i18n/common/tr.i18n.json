@@ -79,5 +79,8 @@
   "copy": "Kopyala",
   "loading": "Yükleniyor...",
   "no_results": "Sonuç bulunamadı",
-  "date": "Tarih"
+  "date": "Tarih",
+  "high": "Yüksek",
+  "medium": "Orta",
+  "low": "Düşük"
 }

@@ -79,5 +79,8 @@
   "copy": "複製",
   "loading": "載入中...",
   "no_results": "無結果",
-  "date": "日期"
+  "date": "日期",
+  "high": "高",
+  "medium": "中",
+  "low": "低"
 }

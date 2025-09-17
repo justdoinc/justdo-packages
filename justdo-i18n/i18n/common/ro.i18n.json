@@ -79,5 +79,8 @@
   "copy": "Copiază",
   "loading": "Se încarcă...",
   "no_results": "Niciun rezultat",
-  "date": "Dată"
+  "date": "Dată",
+  "high": "Ridicată",
+  "medium": "Medie",
+  "low": "Scăzută"
 }

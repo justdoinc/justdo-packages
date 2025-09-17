@@ -79,5 +79,8 @@
   "copy": "Kopiatu",
   "loading": "Kargatzen...",
   "no_results": "Ez dago emaitzarik",
-  "date": "Data"
+  "date": "Data",
+  "high": "Altua",
+  "medium": "Ertaina",
+  "low": "Baxua"
 }

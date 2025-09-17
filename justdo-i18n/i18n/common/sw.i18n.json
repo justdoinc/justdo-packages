@@ -79,5 +79,8 @@
   "copy": "Nakili",
   "loading": "Inapakia...",
   "no_results": "Hakuna matokeo",
-  "date": "Tarehe"
+  "date": "Tarehe",
+  "high": "Juu",
+  "medium": "Kati",
+  "low": "Chini"
 }

@@ -79,5 +79,8 @@
   "copy": "Kopioi",
   "loading": "Ladataan...",
   "no_results": "Ei tuloksia",
-  "date": "Päivämäärä"
+  "date": "Päivämäärä",
+  "high": "Korkea",
+  "medium": "Keskitaso",
+  "low": "Matala"
 }

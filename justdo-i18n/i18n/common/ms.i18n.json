@@ -79,5 +79,8 @@
   "copy": "Salin",
   "loading": "Sedang dimuat...",
   "no_results": "Tiada keputusan",
-  "date": "Tarikh"
+  "date": "Tarikh",
+  "high": "Tinggi",
+  "medium": "Sederhana",
+  "low": "Rendah"
 }

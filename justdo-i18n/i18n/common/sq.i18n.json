@@ -79,5 +79,8 @@
   "copy": "Kopjo",
   "loading": "Po ngarkohet...",
   "no_results": "Nuk ka rezultate",
-  "date": "Data"
+  "date": "Data",
+  "high": "I lartë",
+  "medium": "I mesëm",
+  "low": "I ulët"
 }

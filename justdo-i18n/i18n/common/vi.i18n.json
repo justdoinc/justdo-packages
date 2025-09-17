@@ -79,5 +79,8 @@
   "copy": "Sao chép",
   "loading": "Đang tải...",
   "no_results": "Không có kết quả",
-  "date": "Ngày"
+  "date": "Ngày",
+  "high": "Cao",
+  "medium": "Trung bình",
+  "low": "Thấp"
 }

@@ -79,5 +79,8 @@
   "copy": "Kopéieren",
   "loading": "Lueden...",
   "no_results": "Keng Resultater",
-  "date": "Datum"
+  "date": "Datum",
+  "high": "Héich",
+  "medium": "Mëttel",
+  "low": "Niddreg"
 }

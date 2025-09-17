@@ -79,5 +79,8 @@
   "copy": "Kopírovat",
   "loading": "Načítání...",
   "no_results": "Žádné výsledky",
-  "date": "Datum"
+  "date": "Datum",
+  "high": "Vysoká",
+  "medium": "Střední",
+  "low": "Nízká"
 }

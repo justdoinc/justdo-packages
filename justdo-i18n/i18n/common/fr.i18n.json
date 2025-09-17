@@ -79,5 +79,8 @@
   "copy": "Copier",
   "loading": "Chargement...",
   "no_results": "Aucun résultat",
-  "date": "Date"
+  "date": "Date",
+  "high": "Élevé",
+  "medium": "Moyen",
+  "low": "Faible"
 }

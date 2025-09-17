@@ -79,5 +79,8 @@
   "copy": "Kopiëren",
   "loading": "Laden...",
   "no_results": "Geen resultaten",
-  "date": "Datum"
+  "date": "Datum",
+  "high": "Hoog",
+  "medium": "Gemiddeld",
+  "low": "Laag"
 }

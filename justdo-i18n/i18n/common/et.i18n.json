@@ -79,5 +79,8 @@
   "copy": "Kopeeri",
   "loading": "Laadimine...",
   "no_results": "Tulemusi pole",
-  "date": "Kuupäev"
+  "date": "Kuupäev",
+  "high": "Kõrge",
+  "medium": "Keskmine",
+  "low": "Madal"
 }

@@ -79,5 +79,8 @@
   "copy": "Másolás",
   "loading": "Betöltés...",
   "no_results": "Nincs találat",
-  "date": "Dátum"
+  "date": "Dátum",
+  "high": "Magas",
+  "medium": "Közepes",
+  "low": "Alacsony"
 }

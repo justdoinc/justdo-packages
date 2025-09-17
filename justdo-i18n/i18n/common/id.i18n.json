@@ -79,5 +79,8 @@
   "copy": "Salin",
   "loading": "Memuat...",
   "no_results": "Tidak ada hasil",
-  "date": "Tanggal"
+  "date": "Tanggal",
+  "high": "Tinggi",
+  "medium": "Sedang",
+  "low": "Rendah"
 }

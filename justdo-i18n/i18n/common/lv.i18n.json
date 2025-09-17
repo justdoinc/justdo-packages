@@ -79,5 +79,8 @@
   "copy": "Kopēt",
   "loading": "Ielāde...",
   "no_results": "Nav rezultātu",
-  "date": "Datums"
+  "date": "Datums",
+  "high": "Augsts",
+  "medium": "Vidējs",
+  "low": "Zems"
 }

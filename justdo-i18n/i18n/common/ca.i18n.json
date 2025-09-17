@@ -79,5 +79,8 @@
   "copy": "Copiar",
   "loading": "Carregant...",
   "no_results": "Sense resultats",
-  "date": "Data"
+  "date": "Data",
+  "high": "Alt",
+  "medium": "Mitjà",
+  "low": "Baix"
 }
