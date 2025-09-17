@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Apri la chat in una finestra",
   "chat_subscriber_management": "Gestione degli iscritti",
   "chat_send_message": "Invia messaggio",
-  "chat_files_saved_to_files_tab": "File salvati nella scheda File"
+  "chat_files_saved_to_files_tab": "File salvati nella scheda File",
+  "chat_files_exceeds_size_limit_error": "Il seguente file non è stato allegato perché supera il limite di dimensione di __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "I seguenti file non sono stati allegati perché superano il limite di dimensione di __limit__: __files__",
+  "chat_drop_pane_overlay": "Trascina per allegare file"
 }

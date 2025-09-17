@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Відкрити чат у вікні",
   "chat_subscriber_management": "Керування підписниками",
   "chat_send_message": "Надіслати повідомлення",
-  "chat_files_saved_to_files_tab": "Файли збережено у вкладку Файли"
+  "chat_files_saved_to_files_tab": "Файли збережено у вкладку Файли",
+  "chat_files_exceeds_size_limit_error": "Наступний файл не прикріплено, оскільки він перевищує ліміт розміру __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Наступні файли не прикріплено, оскільки вони перевищують ліміт розміру __limit__: __files__",
+  "chat_drop_pane_overlay": "Перетягніть для прикріплення файлів"
 }

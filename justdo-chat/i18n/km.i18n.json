@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "បើកការជជែកក្នុងវីនដូ",
   "chat_subscriber_management": "ការគ្រប់គ្រងអ្នកជាវ",
   "chat_send_message": "ផ្ញើសារ",
-  "chat_files_saved_to_files_tab": "ឯកសារត្រូវបានរក្សាទុកក្នុងផ្ទាំងឯកសារ"
+  "chat_files_saved_to_files_tab": "ឯកសារត្រូវបានរក្សាទុកក្នុងផ្ទាំងឯកសារ",
+  "chat_files_exceeds_size_limit_error": "ឯកសារខាងក្រោមមិនត្រូវបានភ្ជាប់ទេ ព្រោះវាលើសពីកម្រិតទំហំ __limit__៖ __files__",
+  "chat_files_exceeds_size_limit_error_plural": "ឯកសារខាងក្រោមមិនត្រូវបានភ្ជាប់ទេ ព្រោះវាលើសពីកម្រិតទំហំ __limit__៖ __files__",
+  "chat_drop_pane_overlay": "ទម្លាក់ដើម្បីភ្ជាប់ឯកសារ"
 }

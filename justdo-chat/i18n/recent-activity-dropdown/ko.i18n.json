@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "모두 읽음으로 표시",
   "chat_dropdown_you_have_no_messages": "아직 메시지가 없습니다",
   "chat_dropdown_mark_as_read": "읽음으로 표시",
-  "chat_dropdown_mark_as_unread": "읽지 않음으로 표시"
+  "chat_dropdown_mark_as_unread": "읽지 않음으로 표시",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span>님이 <span class=\"last-message\">파일 __count__개</span>를 보냈습니다",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span>님이 <span class=\"last-message\">파일 __count__개</span>를 보냈습니다"
 }

@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "সবগুলো পঠিত হিসেবে চিহ্নিত করুন",
   "chat_dropdown_you_have_no_messages": "আপনার এখনও কোনো বার্তা নেই",
   "chat_dropdown_mark_as_read": "পঠিত হিসেবে চিহ্নিত করুন",
-  "chat_dropdown_mark_as_unread": "অপঠিত হিসেবে চিহ্নিত করুন"
+  "chat_dropdown_mark_as_unread": "অপঠিত হিসেবে চিহ্নিত করুন",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> <span class=\"last-message\">__count__টি ফাইল</span> পাঠিয়েছেন",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> <span class=\"last-message\">__count__টি ফাইল</span> পাঠিয়েছেন"
 }

@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Отвори го разговорот во прозорец",
   "chat_subscriber_management": "Управување со претплатници",
   "chat_send_message": "Испрати порака",
-  "chat_files_saved_to_files_tab": "Датотеките се зачувани во таб Датотеки"
+  "chat_files_saved_to_files_tab": "Датотеките се зачувани во таб Датотеки",
+  "chat_files_exceeds_size_limit_error": "Следната датотека не е прикачена бидејќи ја надминува ограничувањето за големина од __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Следните датотеки не се прикачени бидејќи го надминуваат ограничувањето за големина од __limit__: __files__",
+  "chat_drop_pane_overlay": "Повлечете за да прикачите датотеки"
 }

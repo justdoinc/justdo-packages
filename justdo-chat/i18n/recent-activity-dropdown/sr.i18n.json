@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "Означи све као прочитано",
   "chat_dropdown_you_have_no_messages": "Још увек немате порука",
   "chat_dropdown_mark_as_read": "Означи као прочитано",
-  "chat_dropdown_mark_as_unread": "Означи као непрочитано"
+  "chat_dropdown_mark_as_unread": "Означи као непрочитано",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> је послао <span class=\"last-message\">__count__ фајл</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> је послао <span class=\"last-message\">__count__ фајлова</span>"
 }

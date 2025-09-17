@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Բացել զրույցը պատուհանում",
   "chat_subscriber_management": "Բաժանորդների կառավարում",
   "chat_send_message": "Ուղարկել հաղորդագրություն",
-  "chat_files_saved_to_files_tab": "Ֆայլերը պահպանվել են Ֆայլեր բաժնում"
+  "chat_files_saved_to_files_tab": "Ֆայլերը պահպանվել են Ֆայլեր բաժնում",
+  "chat_files_exceeds_size_limit_error": "Հետևյալ ֆայլը չի կցվել, քանի որ գերազանցում է չափի սահմանը __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Հետևյալ ֆայլերը չեն կցվել, քանի որ գերազանցում են չափի սահմանը __limit__: __files__",
+  "chat_drop_pane_overlay": "Ցած բաց թողեք ֆայլերը կցելու համար"
 }

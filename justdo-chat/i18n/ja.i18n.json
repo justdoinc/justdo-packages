@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "ウィンドウでチャットを開く",
   "chat_subscriber_management": "購読者管理",
   "chat_send_message": "メッセージを送信",
-  "chat_files_saved_to_files_tab": "ファイルはファイルタブに保存されました"
+  "chat_files_saved_to_files_tab": "ファイルはファイルタブに保存されました",
+  "chat_files_exceeds_size_limit_error": "以下のファイルは __limit__ のサイズ制限を超えているため添付されませんでした: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "以下のファイルは __limit__ のサイズ制限を超えているため添付されませんでした: __files__",
+  "chat_drop_pane_overlay": "ドロップしてファイルを添付"
 }

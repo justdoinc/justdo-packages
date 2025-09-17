@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "សម្គាល់ទាំងអស់ថាបានអាន",
   "chat_dropdown_you_have_no_messages": "អ្នកមិនទាន់មានសារនៅឡើយទេ",
   "chat_dropdown_mark_as_read": "សម្គាល់ថាបានអាន",
-  "chat_dropdown_mark_as_unread": "សម្គាល់ថាមិនទាន់បានអាន"
+  "chat_dropdown_mark_as_unread": "សម្គាល់ថាមិនទាន់បានអាន",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> បានផ្ញើ <span class=\"last-message\">ឯកសារ __count__</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> បានផ្ញើ <span class=\"last-message\">ឯកសារ __count__</span>"
 }

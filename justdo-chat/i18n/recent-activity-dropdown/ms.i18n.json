@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "Tandakan Semua sebagai Dibaca",
   "chat_dropdown_you_have_no_messages": "Anda belum mempunyai sebarang mesej",
   "chat_dropdown_mark_as_read": "Tandakan sebagai Dibaca",
-  "chat_dropdown_mark_as_unread": "Tandakan sebagai Belum Dibaca"
+  "chat_dropdown_mark_as_unread": "Tandakan sebagai Belum Dibaca",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> menghantar <span class=\"last-message\">__count__ fail</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> menghantar <span class=\"last-message\">__count__ fail</span>"
 }

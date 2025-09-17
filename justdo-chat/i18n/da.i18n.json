@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Åbn chat i et vindue",
   "chat_subscriber_management": "Administrer abonnenter",
   "chat_send_message": "Send besked",
-  "chat_files_saved_to_files_tab": "Filer gemt i Filer-fanen"
+  "chat_files_saved_to_files_tab": "Filer gemt i Filer-fanen",
+  "chat_files_exceeds_size_limit_error": "Følgende fil er ikke vedhæftet da den overstiger størrelsesgrænsen på __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Følgende filer er ikke vedhæftet da de overstiger størrelsesgrænsen på __limit__: __files__",
+  "chat_drop_pane_overlay": "Slip for at vedhæfte filer"
 }

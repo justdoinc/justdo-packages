@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "Atzīmēt visus kā izlasītus",
   "chat_dropdown_you_have_no_messages": "Jums vēl nav ziņojumu",
   "chat_dropdown_mark_as_read": "Atzīmēt kā izlasītu",
-  "chat_dropdown_mark_as_unread": "Atzīmēt kā nelasītu"
+  "chat_dropdown_mark_as_unread": "Atzīmēt kā nelasītu",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> nosūtīja <span class=\"last-message\">__count__ failu</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> nosūtīja <span class=\"last-message\">__count__ failus</span>"
 }

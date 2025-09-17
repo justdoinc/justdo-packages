@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Ouvrir le chat dans une fenêtre",
   "chat_subscriber_management": "Gestion des abonnés",
   "chat_send_message": "Envoyer le message",
-  "chat_files_saved_to_files_tab": "Fichiers enregistrés dans l'onglet Fichiers"
+  "chat_files_saved_to_files_tab": "Fichiers enregistrés dans l'onglet Fichiers",
+  "chat_files_exceeds_size_limit_error": "Le fichier suivant n'est pas joint car il dépasse la limite de taille de __limit__ : __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Les fichiers suivants ne sont pas joints car ils dépassent la limite de taille de __limit__ : __files__",
+  "chat_drop_pane_overlay": "Déposez pour joindre les fichiers"
 }

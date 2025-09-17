@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Chat in einem Fenster öffnen",
   "chat_subscriber_management": "Abonnentenverwaltung",
   "chat_send_message": "Nachricht senden",
-  "chat_files_saved_to_files_tab": "Dateien im Dateien-Tab gespeichert"
+  "chat_files_saved_to_files_tab": "Dateien im Dateien-Tab gespeichert",
+  "chat_files_exceeds_size_limit_error": "Die folgende Datei wurde nicht angehängt, da sie die Größenbeschränkung von __limit__ überschreitet: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Die folgenden Dateien wurden nicht angehängt, da sie die Größenbeschränkung von __limit__ überschreiten: __files__",
+  "chat_drop_pane_overlay": "Zum Anhängen von Dateien hier ablegen"
 }

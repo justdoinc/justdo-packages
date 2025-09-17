@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "Označi vse kot prebrano",
   "chat_dropdown_you_have_no_messages": "Zaenkrat nimate sporočil",
   "chat_dropdown_mark_as_read": "Označi kot prebrano",
-  "chat_dropdown_mark_as_unread": "Označi kot neprebrano"
+  "chat_dropdown_mark_as_unread": "Označi kot neprebrano",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> je poslal <span class=\"last-message\">__count__ datoteko</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> je poslal <span class=\"last-message\">__count__ datotek</span>"
 }

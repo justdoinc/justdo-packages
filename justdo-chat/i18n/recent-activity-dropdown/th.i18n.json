@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "ทำเครื่องหมายทั้งหมดว่าอ่านแล้ว",
   "chat_dropdown_you_have_no_messages": "คุณยังไม่มีข้อความ",
   "chat_dropdown_mark_as_read": "ทำเครื่องหมายว่าอ่านแล้ว",
-  "chat_dropdown_mark_as_unread": "ทำเครื่องหมายว่ายังไม่ได้อ่าน"
+  "chat_dropdown_mark_as_unread": "ทำเครื่องหมายว่ายังไม่ได้อ่าน",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> ส่ง <span class=\"last-message\">ไฟล์ __count__ ไฟล์</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> ส่ง <span class=\"last-message\">ไฟล์ __count__ ไฟล์</span>"
 }

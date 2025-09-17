@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Ava vestlus aknas",
   "chat_subscriber_management": "Tellijate haldamine",
   "chat_send_message": "Saada sõnum",
-  "chat_files_saved_to_files_tab": "Failid salvestatud failide sakki"
+  "chat_files_saved_to_files_tab": "Failid salvestatud failide sakki",
+  "chat_files_exceeds_size_limit_error": "Järgmist faili ei lisatud, kuna see ületab suuruse piirangu __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Järgmisi faile ei lisatud, kuna need ületavad suuruse piirangu __limit__: __files__",
+  "chat_drop_pane_overlay": "Lohista failide lisamiseks"
 }

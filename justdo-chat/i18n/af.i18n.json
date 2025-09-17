@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Maak klets in 'n venster oop",
   "chat_subscriber_management": "Intekenaar Bestuur",
   "chat_send_message": "Stuur Boodskap",
-  "chat_files_saved_to_files_tab": "Lêers gestoor na Lêers oortjie"
+  "chat_files_saved_to_files_tab": "Lêers gestoor na Lêers oortjie",
+  "chat_files_exceeds_size_limit_error": "Die volgende lêer is nie geheg nie omdat dit die grootte limiet van __limit__ oorskry: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Die volgende lêers is nie geheg nie omdat hulle die grootte limiet van __limit__ oorskry: __files__",
+  "chat_drop_pane_overlay": "Sleep om lêers te heg"
 }

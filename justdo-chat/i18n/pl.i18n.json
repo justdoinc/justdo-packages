@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Otwórz czat w oknie",
   "chat_subscriber_management": "Zarządzanie subskrybentami",
   "chat_send_message": "Wyślij wiadomość",
-  "chat_files_saved_to_files_tab": "Pliki zapisane w zakładce Pliki"
+  "chat_files_saved_to_files_tab": "Pliki zapisane w zakładce Pliki",
+  "chat_files_exceeds_size_limit_error": "Następujący plik nie został dołączony, ponieważ przekracza limit rozmiaru __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Następujące pliki nie zostały dołączone, ponieważ przekraczają limit rozmiaru __limit__: __files__",
+  "chat_drop_pane_overlay": "Upuść aby dołączyć pliki"
 }

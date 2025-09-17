@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "அனைத்தையும் படித்ததாக குறி",
   "chat_dropdown_you_have_no_messages": "உங்களுக்கு இன்னும் செய்திகள் எதுவும் இல்லை",
   "chat_dropdown_mark_as_read": "படித்ததாக குறி",
-  "chat_dropdown_mark_as_unread": "படிக்காததாக குறி"
+  "chat_dropdown_mark_as_unread": "படிக்காததாக குறி",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> அனுப்பினார் <span class=\"last-message\">__count__ கோப்பு</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> அனுப்பினார் <span class=\"last-message\">__count__ கோப்புகள்</span>"
 }

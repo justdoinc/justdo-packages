@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Чатты терезеде ачуу",
   "chat_subscriber_management": "Жазылуучуларды башкаруу",
   "chat_send_message": "Билдирүү жөнөтүү",
-  "chat_files_saved_to_files_tab": "Файлдар Файлдар бөлүмүнө сакталды"
+  "chat_files_saved_to_files_tab": "Файлдар Файлдар бөлүмүнө сакталды",
+  "chat_files_exceeds_size_limit_error": "Төмөнкү файл __limit__ көлөм чегинен ашкандыктан тиркелбей калды: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Төмөнкү файлдар __limit__ көлөм чегинен ашкандыктан тиркелбей калды: __files__",
+  "chat_drop_pane_overlay": "Файлдарды тиркөө үчүн таштаңыз"
 }

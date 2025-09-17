@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Mở trò chuyện trong cửa sổ mới",
   "chat_subscriber_management": "Quản lý người đăng ký",
   "chat_send_message": "Gửi tin nhắn",
-  "chat_files_saved_to_files_tab": "Tệp đã được lưu vào tab Tệp"
+  "chat_files_saved_to_files_tab": "Tệp đã được lưu vào tab Tệp",
+  "chat_files_exceeds_size_limit_error": "Tệp sau không được đính kèm vì vượt quá giới hạn kích thước __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Các tệp sau không được đính kèm vì vượt quá giới hạn kích thước __limit__: __files__",
+  "chat_drop_pane_overlay": "Thả để đính kèm tệp"
 }

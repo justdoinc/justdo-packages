@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "Marcar tots com a llegits",
   "chat_dropdown_you_have_no_messages": "Encara no tens cap missatge",
   "chat_dropdown_mark_as_read": "Marca com a llegit",
-  "chat_dropdown_mark_as_unread": "Marca com a no llegit"
+  "chat_dropdown_mark_as_unread": "Marca com a no llegit",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> ha enviat <span class=\"last-message\">__count__ fitxer</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> ha enviat <span class=\"last-message\">__count__ fitxers</span>"
 }

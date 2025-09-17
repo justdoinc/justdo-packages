@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "새 창에서 채팅 열기",
   "chat_subscriber_management": "구독자 관리",
   "chat_send_message": "메시지 보내기",
-  "chat_files_saved_to_files_tab": "파일이 파일 탭에 저장되었습니다"
+  "chat_files_saved_to_files_tab": "파일이 파일 탭에 저장되었습니다",
+  "chat_files_exceeds_size_limit_error": "다음 파일은 크기 제한 __limit__을(를) 초과하여 첨부되지 않았습니다: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "다음 파일들은 크기 제한 __limit__을(를) 초과하여 첨부되지 않았습니다: __files__",
+  "chat_drop_pane_overlay": "파일을 첨부하려면 드롭하세요"
 }

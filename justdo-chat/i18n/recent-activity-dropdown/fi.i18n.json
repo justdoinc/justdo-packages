@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "Merkitse kaikki luetuiksi",
   "chat_dropdown_you_have_no_messages": "Sinulla ei ole vielä viestejä",
   "chat_dropdown_mark_as_read": "Merkitse luetuksi",
-  "chat_dropdown_mark_as_unread": "Merkitse lukemattomaksi"
+  "chat_dropdown_mark_as_unread": "Merkitse lukemattomaksi",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> lähetti <span class=\"last-message\">__count__ tiedoston</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> lähetti <span class=\"last-message\">__count__ tiedostoa</span>"
 }

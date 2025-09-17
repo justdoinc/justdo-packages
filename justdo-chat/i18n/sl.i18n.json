@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Odpri klepet v oknu",
   "chat_subscriber_management": "Upravljanje naročnikov",
   "chat_send_message": "Pošlji sporočilo",
-  "chat_files_saved_to_files_tab": "Datoteke shranjene v zavihek Datoteke"
+  "chat_files_saved_to_files_tab": "Datoteke shranjene v zavihek Datoteke",
+  "chat_files_exceeds_size_limit_error": "Naslednja datoteka ni priložena, ker presega omejitev velikosti __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Naslednje datoteke niso priložene, ker presegajo omejitev velikosti __limit__: __files__",
+  "chat_drop_pane_overlay": "Spustite za priložitev datotek"
 }

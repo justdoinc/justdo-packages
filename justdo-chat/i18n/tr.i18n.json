@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Sohbeti yeni pencerede aç",
   "chat_subscriber_management": "Abone Yönetimi",
   "chat_send_message": "Mesaj Gönder",
-  "chat_files_saved_to_files_tab": "Dosyalar, Dosyalar sekmesine kaydedildi"
+  "chat_files_saved_to_files_tab": "Dosyalar, Dosyalar sekmesine kaydedildi",
+  "chat_files_exceeds_size_limit_error": "Aşağıdaki dosya __limit__ boyut sınırını aştığı için eklenmedi: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Aşağıdaki dosyalar __limit__ boyut sınırını aştığı için eklenmedi: __files__",
+  "chat_drop_pane_overlay": "Dosyaları eklemek için bırakın"
 }

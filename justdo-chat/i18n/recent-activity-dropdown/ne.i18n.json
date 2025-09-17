@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "सबै पढिएको रूपमा चिन्ह लगाउनुहोस्",
   "chat_dropdown_you_have_no_messages": "तपाईंसँग अहिलेसम्म कुनै सन्देशहरू छैनन्",
   "chat_dropdown_mark_as_read": "पढिएको रूपमा चिन्ह लगाउनुहोस्",
-  "chat_dropdown_mark_as_unread": "नपढिएको रूपमा चिन्ह लगाउनुहोस्"
+  "chat_dropdown_mark_as_unread": "नपढिएको रूपमा चिन्ह लगाउनुहोस्",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> ले <span class=\"last-message\">__count__ फाइल</span> पठाउनुभयो",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> ले <span class=\"last-message\">__count__ फाइलहरू</span> पठाउनुभयो"
 }

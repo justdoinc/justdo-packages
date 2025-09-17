@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Open chat in een venster",
   "chat_subscriber_management": "Abonneebeheer",
   "chat_send_message": "Verstuur Bericht",
-  "chat_files_saved_to_files_tab": "Bestanden opgeslagen in Bestanden tab"
+  "chat_files_saved_to_files_tab": "Bestanden opgeslagen in Bestanden tab",
+  "chat_files_exceeds_size_limit_error": "Het volgende bestand is niet bijgevoegd omdat het de groottenlimiet van __limit__ overschrijdt: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "De volgende bestanden zijn niet bijgevoegd omdat ze de groottenlimiet van __limit__ overschrijden: __files__",
+  "chat_drop_pane_overlay": "Sleep hier om bestanden bij te voegen"
 }

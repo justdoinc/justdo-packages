@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Chatni oynada ochish",
   "chat_subscriber_management": "Obunachi boshqaruvi",
   "chat_send_message": "Xabar yuborish",
-  "chat_files_saved_to_files_tab": "Fayllar Fayllar bo'limiga saqlandi"
+  "chat_files_saved_to_files_tab": "Fayllar Fayllar bo'limiga saqlandi",
+  "chat_files_exceeds_size_limit_error": "Quyidagi fayl __limit__ hajm chegarasidan oshgani uchun biriktirilmadi: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Quyidagi fayllar __limit__ hajm chegarasidan oshgani uchun biriktirilmadi: __files__",
+  "chat_drop_pane_overlay": "Fayllarni biriktirish uchun tashlang"
 }

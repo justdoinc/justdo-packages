@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Otvori razgovor u prozoru",
   "chat_subscriber_management": "Upravljanje pretplatnicima",
   "chat_send_message": "Pošalji poruku",
-  "chat_files_saved_to_files_tab": "Datoteke spremljene u karticu Datoteke"
+  "chat_files_saved_to_files_tab": "Datoteke spremljene u karticu Datoteke",
+  "chat_files_exceeds_size_limit_error": "Sljedeća datoteka nije priložena jer prelazi ograničenje veličine od __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Sljedeće datoteke nisu priložene jer prelaze ograničenje veličine od __limit__: __files__",
+  "chat_drop_pane_overlay": "Ispustite za prilaganje datoteka"
 }

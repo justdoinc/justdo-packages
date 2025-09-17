@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "Alles als gelezen markeren",
   "chat_dropdown_you_have_no_messages": "Je hebt nog geen berichten",
   "chat_dropdown_mark_as_read": "Als gelezen markeren",
-  "chat_dropdown_mark_as_unread": "Als ongelezen markeren"
+  "chat_dropdown_mark_as_unread": "Als ongelezen markeren",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> heeft <span class=\"last-message\">__count__ bestand</span> verzonden",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> heeft <span class=\"last-message\">__count__ bestanden</span> verzonden"
 }

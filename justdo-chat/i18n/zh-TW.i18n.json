@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "在視窗中開啟聊天",
   "chat_subscriber_management": "訂閱者管理",
   "chat_send_message": "發送訊息",
-  "chat_files_saved_to_files_tab": "檔案已儲存至檔案分頁"
+  "chat_files_saved_to_files_tab": "檔案已儲存至檔案分頁",
+  "chat_files_exceeds_size_limit_error": "以下檔案因超過 __limit__ 的大小限制而未附加：__files__",
+  "chat_files_exceeds_size_limit_error_plural": "以下檔案因超過 __limit__ 的大小限制而未附加：__files__",
+  "chat_drop_pane_overlay": "拖放以附加檔案"
 }

@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "All als gelies markéieren",
   "chat_dropdown_you_have_no_messages": "Dir hutt nach keng Noriichten",
   "chat_dropdown_mark_as_read": "Als gelies markéieren",
-  "chat_dropdown_mark_as_unread": "Als net gelies markéieren"
+  "chat_dropdown_mark_as_unread": "Als net gelies markéieren",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> huet <span class=\"last-message\">__count__ Fichier</span> geschéckt",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> huet <span class=\"last-message\">__count__ Fichieren</span> geschéckt"
 }

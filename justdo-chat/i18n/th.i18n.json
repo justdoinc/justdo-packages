@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "เปิดแชทในหน้าต่างใหม่",
   "chat_subscriber_management": "จัดการผู้ติดตาม",
   "chat_send_message": "ส่งข้อความ",
-  "chat_files_saved_to_files_tab": "ไฟล์ถูกบันทึกไปยังแท็บไฟล์"
+  "chat_files_saved_to_files_tab": "ไฟล์ถูกบันทึกไปยังแท็บไฟล์",
+  "chat_files_exceeds_size_limit_error": "ไฟล์ต่อไปนี้ไม่ได้แนบมากับข้อความเนื่องจากเกินขีดจำกัดขนาด __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "ไฟล์ต่อไปนี้ไม่ได้แนบมากับข้อความเนื่องจากเกินขีดจำกัดขนาด __limit__: __files__",
+  "chat_drop_pane_overlay": "วางเพื่อแนบไฟล์"
 }

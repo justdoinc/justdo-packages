@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "Merk alles as gelees",
   "chat_dropdown_you_have_no_messages": "Jy het nog geen boodskappe nie",
   "chat_dropdown_mark_as_read": "Merk as gelees",
-  "chat_dropdown_mark_as_unread": "Merk as ongelees"
+  "chat_dropdown_mark_as_unread": "Merk as ongelees",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> het <span class=\"last-message\">__count__ lêer</span> gestuur",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> het <span class=\"last-message\">__count__ lêers</span> gestuur"
 }

@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Отворите ћаскање у прозору",
   "chat_subscriber_management": "Управљање претплатницима",
   "chat_send_message": "Пошаљи поруку",
-  "chat_files_saved_to_files_tab": "Датотеке сачуване у таб Датотеке"
+  "chat_files_saved_to_files_tab": "Датотеке сачуване у таб Датотеке",
+  "chat_files_exceeds_size_limit_error": "Sledeći fajl nije priložen jer prelazi ograničenje veličine od __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Sledeći fajlovi nisu priloženi jer prelaze ograničenje veličine od __limit__: __files__",
+  "chat_drop_pane_overlay": "Prevuci da priložiš fajlove"
 }

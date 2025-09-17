@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Hap bisedën në një dritare",
   "chat_subscriber_management": "Menaxhimi i Abonentëve",
   "chat_send_message": "Dërgo Mesazhin",
-  "chat_files_saved_to_files_tab": "Skedarët u ruajtën në skedën e Skedarëve"
+  "chat_files_saved_to_files_tab": "Skedarët u ruajtën në skedën e Skedarëve",
+  "chat_files_exceeds_size_limit_error": "Skedari i mëposhtëm nuk është bashkangjitur sepse e kalon kufirin e madhësisë prej __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Skedarët e mëposhtëm nuk janë bashkangjitur sepse e kalojnë kufirin e madhësisë prej __limit__: __files__",
+  "chat_drop_pane_overlay": "Lëshoni për të bashkangjitur skedarët"
 }

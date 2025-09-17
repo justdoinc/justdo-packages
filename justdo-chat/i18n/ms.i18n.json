@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Buka sembang dalam tetingkap",
   "chat_subscriber_management": "Pengurusan Pelanggan",
   "chat_send_message": "Hantar Mesej",
-  "chat_files_saved_to_files_tab": "Fail disimpan ke tab Fail"
+  "chat_files_saved_to_files_tab": "Fail disimpan ke tab Fail",
+  "chat_files_exceeds_size_limit_error": "Fail berikut tidak dilampirkan kerana melebihi had saiz __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Fail berikut tidak dilampirkan kerana melebihi had saiz __limit__: __files__",
+  "chat_drop_pane_overlay": "Lepaskan untuk melampirkan fail"
 }

@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "चैट को नई विंडो में खोलें",
   "chat_subscriber_management": "सदस्य प्रबंधन",
   "chat_send_message": "संदेश भेजें",
-  "chat_files_saved_to_files_tab": "फाइलें Files टैब में सेव हो गईं"
+  "chat_files_saved_to_files_tab": "फाइलें Files टैब में सेव हो गईं",
+  "chat_files_exceeds_size_limit_error": "निम्नलिखित फाइल संलग्न नहीं की गई है क्योंकि यह __limit__ की साइज़ सीमा से अधिक है: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "निम्नलिखित फाइलें संलग्न नहीं की गई हैं क्योंकि वे __limit__ की साइज़ सीमा से अधिक हैं: __files__",
+  "chat_drop_pane_overlay": "फाइलें संलग्न करने के लिए यहां ड्रॉप करें"
 }

@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "அரட்டையை சாளரத்தில் திறக்கவும்",
   "chat_subscriber_management": "குழு உறுப்பினர் மேலாண்மை",
   "chat_send_message": "செய்தி அனுப்பு",
-  "chat_files_saved_to_files_tab": "கோப்புகள் Files டேபில் சேமிக்கப்பட்டுள்ளன"
+  "chat_files_saved_to_files_tab": "கோப்புகள் Files டேபில் சேமிக்கப்பட்டுள்ளன",
+  "chat_files_exceeds_size_limit_error": "பின்வரும் கோப்பு __limit__ அளவு வரம்பை மீறுவதால் இணைக்கப்படவில்லை: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "பின்வரும் கோப்புகள் __limit__ அளவு வரம்பை மீறுவதால் இணைக்கப்படவில்லை: __files__",
+  "chat_drop_pane_overlay": "கோப்புகளை இணைக்க இங்கே விடுங்கள்"
 }

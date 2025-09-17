@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Abrir chat numa janela",
   "chat_subscriber_management": "Gestão de Subscritores",
   "chat_send_message": "Enviar Mensagem",
-  "chat_files_saved_to_files_tab": "Ficheiros guardados no separador Ficheiros"
+  "chat_files_saved_to_files_tab": "Ficheiros guardados no separador Ficheiros",
+  "chat_files_exceeds_size_limit_error": "O seguinte ficheiro não foi anexado porque excede o limite de tamanho de __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Os seguintes ficheiros não foram anexados porque excedem o limite de tamanho de __limit__: __files__",
+  "chat_drop_pane_overlay": "Largar para anexar ficheiros"
 }

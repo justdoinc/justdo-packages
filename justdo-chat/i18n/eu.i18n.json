@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Ireki txata leiho batean",
   "chat_subscriber_management": "Harpidedunen Kudeaketa",
   "chat_send_message": "Bidali Mezua",
-  "chat_files_saved_to_files_tab": "Fitxategiak Fitxategiak fitxan gorde dira"
+  "chat_files_saved_to_files_tab": "Fitxategiak Fitxategiak fitxan gorde dira",
+  "chat_files_exceeds_size_limit_error": "Hurrengo fitxategia ez da erantsi __limit__ tamaina muga gainditzen duelako: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Hurrengo fitxategiak ez dira erantsi __limit__ tamaina muga gainditzen dutelako: __files__",
+  "chat_drop_pane_overlay": "Askatu fitxategiak eransteko"
 }

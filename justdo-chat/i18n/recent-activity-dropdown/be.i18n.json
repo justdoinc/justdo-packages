@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "Пазначыць усе як прачытаныя",
   "chat_dropdown_you_have_no_messages": "У вас пакуль няма паведамленняў",
   "chat_dropdown_mark_as_read": "Пазначыць як прачытанае",
-  "chat_dropdown_mark_as_unread": "Пазначыць як непрачытанае"
+  "chat_dropdown_mark_as_unread": "Пазначыць як непрачытанае",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> адправіў <span class=\"last-message\">__count__ файл</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> адправіў <span class=\"last-message\">__count__ файлаў</span>"
 }

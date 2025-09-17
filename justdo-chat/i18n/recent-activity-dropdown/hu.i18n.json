@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "Összes megjelölése olvasottként",
   "chat_dropdown_you_have_no_messages": "Még nincsenek üzeneteid",
   "chat_dropdown_mark_as_read": "Megjelölés olvasottként",
-  "chat_dropdown_mark_as_unread": "Megjelölés olvasatlanként"
+  "chat_dropdown_mark_as_unread": "Megjelölés olvasatlanként",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> küldött <span class=\"last-message\">__count__ fájlt</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> küldött <span class=\"last-message\">__count__ fájlt</span>"
 }

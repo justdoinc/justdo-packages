@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Чатро дар равзанаи алоҳида кушоед",
   "chat_subscriber_management": "Идоракунии обуначиён",
   "chat_send_message": "Фиристодани паём",
-  "chat_files_saved_to_files_tab": "Файлҳо дар варақаи Файлҳо нигоҳ дошта шуданд"
+  "chat_files_saved_to_files_tab": "Файлҳо дар варақаи Файлҳо нигоҳ дошта шуданд",
+  "chat_files_exceeds_size_limit_error": "Файли зерин замима нашуд, зеро аз ҳадди андозаи __limit__ зиёд аст: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Файлҳои зерин замима нашуданд, зеро аз ҳадди андозаи __limit__ зиёд мебошанд: __files__",
+  "chat_drop_pane_overlay": "Барои замимакунии файлҳо ҳол диҳед"
 }

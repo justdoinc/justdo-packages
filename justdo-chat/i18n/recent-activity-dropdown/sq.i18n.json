@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "Shënoji të gjitha si të lexuara",
   "chat_dropdown_you_have_no_messages": "Nuk keni asnjë mesazh, ende",
   "chat_dropdown_mark_as_read": "Shënoje si të lexuar",
-  "chat_dropdown_mark_as_unread": "Shënoje si të palexuar"
+  "chat_dropdown_mark_as_unread": "Shënoje si të palexuar",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> dërgoi <span class=\"last-message\">__count__ skedar</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> dërgoi <span class=\"last-message\">__count__ skedarë</span>"
 }

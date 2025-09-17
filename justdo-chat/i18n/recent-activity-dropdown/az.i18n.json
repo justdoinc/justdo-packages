@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "Hamısını oxunmuş kimi işarələ",
   "chat_dropdown_you_have_no_messages": "Hələ heç bir mesajınız yoxdur",
   "chat_dropdown_mark_as_read": "Oxunmuş kimi qeyd et",
-  "chat_dropdown_mark_as_unread": "Oxunmamış kimi qeyd et"
+  "chat_dropdown_mark_as_unread": "Oxunmamış kimi qeyd et",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> <span class=\"last-message\">__count__ fayl</span> göndərdi",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> <span class=\"last-message\">__count__ fayl</span> göndərdi"
 }

@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Atvērt tērzēšanu jaunā logā",
   "chat_subscriber_management": "Abonentu pārvaldība",
   "chat_send_message": "Sūtīt ziņojumu",
-  "chat_files_saved_to_files_tab": "Faili saglabāti failu cilnē"
+  "chat_files_saved_to_files_tab": "Faili saglabāti failu cilnē",
+  "chat_files_exceeds_size_limit_error": "Šis fails netiek pievienots, jo pārsniedz izmēra ierobežojumu __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Šie faili netiek pievienoti, jo pārsniedz izmēra ierobežojumu __limit__: __files__",
+  "chat_drop_pane_overlay": "Velciet šeit, lai pievienotu failus"
 }

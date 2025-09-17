@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "فتح المحادثة في نافذة",
   "chat_subscriber_management": "إدارة المشتركين",
   "chat_send_message": "إرسال رسالة",
-  "chat_files_saved_to_files_tab": "تم حفظ الملفات في تبويب الملفات"
+  "chat_files_saved_to_files_tab": "تم حفظ الملفات في تبويب الملفات",
+  "chat_files_exceeds_size_limit_error": "لم يتم إرفاق الملف التالي لأنه يتجاوز الحد الأقصى للحجم __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "لم يتم إرفاق الملفات التالية لأنها تتجاوز الحد الأقصى للحجم __limit__: __files__",
+  "chat_drop_pane_overlay": "اسحب لإرفاق الملفات"
 }

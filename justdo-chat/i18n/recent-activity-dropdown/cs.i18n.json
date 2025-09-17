@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "Označit vše jako přečtené",
   "chat_dropdown_you_have_no_messages": "Zatím nemáte žádné zprávy",
   "chat_dropdown_mark_as_read": "Označit jako přečtené",
-  "chat_dropdown_mark_as_unread": "Označit jako nepřečtené"
+  "chat_dropdown_mark_as_unread": "Označit jako nepřečtené",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> poslal <span class=\"last-message\">__count__ soubor</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> poslal <span class=\"last-message\">__count__ souborů</span>"
 }

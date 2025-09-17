@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "Marchează toate ca citite",
   "chat_dropdown_you_have_no_messages": "Nu aveți încă niciun mesaj",
   "chat_dropdown_mark_as_read": "Marchează ca citit",
-  "chat_dropdown_mark_as_unread": "Marchează ca necitit"
+  "chat_dropdown_mark_as_unread": "Marchează ca necitit",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> a trimis <span class=\"last-message\">__count__ fișier</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> a trimis <span class=\"last-message\">__count__ fișiere</span>"
 }

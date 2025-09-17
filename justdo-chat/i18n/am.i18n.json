@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "ውይይቱን በአዲስ መስኮት ይክፈቱ",
   "chat_subscriber_management": "የተመዝጋቢዎች አስተዳደር",
   "chat_send_message": "መልዕክት ላክ",
-  "chat_files_saved_to_files_tab": "ፋይሎች በፋይሎች ትር ውስጥ ተቀምጠዋል"
+  "chat_files_saved_to_files_tab": "ፋይሎች በፋይሎች ትር ውስጥ ተቀምጠዋል",
+  "chat_files_exceeds_size_limit_error": "የሚከተለው ፋይል ከ __limit__ መጠን ገደብ በላይ በመሆኑ አልተያያዘም፦ __files__",
+  "chat_files_exceeds_size_limit_error_plural": "የሚከተሉት ፋይሎች ከ __limit__ መጠን ገደብ በላይ በመሆናቸው አልተያያዙም፦ __files__",
+  "chat_drop_pane_overlay": "ፋይሎችን ለማያያዝ ይጣሉ"
 }

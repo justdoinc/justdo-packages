@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "标记所有为已读",
   "chat_dropdown_you_have_no_messages": "您目前没有任何消息",
   "chat_dropdown_mark_as_read": "标记为已读",
-  "chat_dropdown_mark_as_unread": "标记为未读"
+  "chat_dropdown_mark_as_unread": "标记为未读",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> 发送了 <span class=\"last-message\">__count__ 个文件</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> 发送了 <span class=\"last-message\">__count__ 个文件</span>"
 }

@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Csevegés megnyitása új ablakban",
   "chat_subscriber_management": "Feliratkozók kezelése",
   "chat_send_message": "Üzenet küldése",
-  "chat_files_saved_to_files_tab": "Fájlok elmentve a Fájlok fülre"
+  "chat_files_saved_to_files_tab": "Fájlok elmentve a Fájlok fülre",
+  "chat_files_exceeds_size_limit_error": "A következő fájl nem lett csatolva, mivel meghaladja a __limit__ méretkorlátot: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "A következő fájlok nem lettek csatolva, mivel meghaladják a __limit__ méretkorlátot: __files__",
+  "chat_drop_pane_overlay": "Húzd ide a fájlok csatolásához"
 }

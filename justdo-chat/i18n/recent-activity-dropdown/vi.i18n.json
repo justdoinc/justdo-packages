@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "Đánh dấu tất cả là đã đọc",
   "chat_dropdown_you_have_no_messages": "Bạn chưa có tin nhắn nào",
   "chat_dropdown_mark_as_read": "Đánh dấu đã đọc",
-  "chat_dropdown_mark_as_unread": "Đánh dấu chưa đọc"
+  "chat_dropdown_mark_as_unread": "Đánh dấu chưa đọc",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> đã gửi <span class=\"last-message\">__count__ tệp</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> đã gửi <span class=\"last-message\">__count__ tệp</span>"
 }

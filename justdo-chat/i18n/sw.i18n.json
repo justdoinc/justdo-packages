@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Fungua mazungumzo katika dirisha jipya",
   "chat_subscriber_management": "Usimamizi wa Waliojisajili",
   "chat_send_message": "Tuma Ujumbe",
-  "chat_files_saved_to_files_tab": "Faili zimehifadhiwa katika kichupo cha Faili"
+  "chat_files_saved_to_files_tab": "Faili zimehifadhiwa katika kichupo cha Faili",
+  "chat_files_exceeds_size_limit_error": "Faili ifuatayo haijaunganishwa kwa sababu imezidi kikomo cha ukubwa wa __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Faili zifuatazo hazijaunganishwa kwa sababu zimezidi kikomo cha ukubwa wa __limit__: __files__",
+  "chat_drop_pane_overlay": "Dondosha ili kuunganisha faili"
 }

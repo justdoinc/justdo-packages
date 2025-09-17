@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "Markera alla som lästa",
   "chat_dropdown_you_have_no_messages": "Du har inga meddelanden ännu",
   "chat_dropdown_mark_as_read": "Markera som läst",
-  "chat_dropdown_mark_as_unread": "Markera som oläst"
+  "chat_dropdown_mark_as_unread": "Markera som oläst",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> skickade <span class=\"last-message\">__count__ fil</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> skickade <span class=\"last-message\">__count__ filer</span>"
 }

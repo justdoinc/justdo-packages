@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Avaa keskustelu ikkunassa",
   "chat_subscriber_management": "Tilaajien hallinta",
   "chat_send_message": "Lähetä viesti",
-  "chat_files_saved_to_files_tab": "Tiedostot tallennettu Tiedostot-välilehteen"
+  "chat_files_saved_to_files_tab": "Tiedostot tallennettu Tiedostot-välilehteen",
+  "chat_files_exceeds_size_limit_error": "Seuraavaa tiedostoa ei liitetty, koska se ylittää kokorarajan __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Seuraavia tiedostoja ei liitetty, koska ne ylittävät kokorarajan __limit__: __files__",
+  "chat_drop_pane_overlay": "Pudota tiedostot liittääksesi"
 }

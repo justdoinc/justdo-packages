@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Chat an engem Fënster opmaachen",
   "chat_subscriber_management": "Abonnente Verwaltung",
   "chat_send_message": "Message schécken",
-  "chat_files_saved_to_files_tab": "Fichieren an de Fichieren Tab gespäichert"
+  "chat_files_saved_to_files_tab": "Fichieren an de Fichieren Tab gespäichert",
+  "chat_files_exceeds_size_limit_error": "Dësen Fichier gëtt net ugefüügt well hien d'Gréisst-Limit vu __limit__ iwwerschreift: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Dës Fichieren ginn net ugefüügt well si d'Gréisst-Limit vu __limit__ iwwerschreiden: __files__",
+  "chat_drop_pane_overlay": "Fallt fir Fichieren unzehänken"
 }

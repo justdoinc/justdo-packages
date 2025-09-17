@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Söhbəti pəncərədə açın",
   "chat_subscriber_management": "Abunəçilərin İdarə Edilməsi",
   "chat_send_message": "Mesaj Göndər",
-  "chat_files_saved_to_files_tab": "Fayllar Fayllar tabına saxlanıldı"
+  "chat_files_saved_to_files_tab": "Fayllar Fayllar tabına saxlanıldı",
+  "chat_files_exceeds_size_limit_error": "Aşağıdaki fayl __limit__ ölçü limitini aşdığı üçün əlavə edilmədi: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Aşağıdaki fayllar __limit__ ölçü limitini aşdığı üçün əlavə edilmədi: __files__",
+  "chat_drop_pane_overlay": "Faylları əlavə etmək üçün buraya atın"
 }

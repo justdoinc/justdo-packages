@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Atidaryti pokalbį lange",
   "chat_subscriber_management": "Prenumeratorių valdymas",
   "chat_send_message": "Siųsti žinutę",
-  "chat_files_saved_to_files_tab": "Failai išsaugoti failų skirtuke"
+  "chat_files_saved_to_files_tab": "Failai išsaugoti failų skirtuke",
+  "chat_files_exceeds_size_limit_error": "Šis failas nepridėtas, nes viršija dydžio limitą __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Šie failai nepridėti, nes viršija dydžio limitą __limit__: __files__",
+  "chat_drop_pane_overlay": "Nuvilkite norėdami pridėti failus"
 }

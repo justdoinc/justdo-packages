@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "Weka yote kama yamesomwa",
   "chat_dropdown_you_have_no_messages": "Bado huna ujumbe wowote",
   "chat_dropdown_mark_as_read": "Weka kama Imesomwa",
-  "chat_dropdown_mark_as_unread": "Weka kama Haijasomwa"
+  "chat_dropdown_mark_as_unread": "Weka kama Haijasomwa",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> alituma <span class=\"last-message\">faili __count__</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> alituma <span class=\"last-message\">mafaili __count__</span>"
 }

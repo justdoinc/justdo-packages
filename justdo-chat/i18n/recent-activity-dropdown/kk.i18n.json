@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "Барлығын оқылды деп белгілеу",
   "chat_dropdown_you_have_no_messages": "Сізде әлі хабарлама жоқ",
   "chat_dropdown_mark_as_read": "Оқылған деп белгілеу",
-  "chat_dropdown_mark_as_unread": "Оқылмаған деп белгілеу"
+  "chat_dropdown_mark_as_unread": "Оқылмаған деп белгілеу",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> <span class=\"last-message\">__count__ файл</span> жіберді",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> <span class=\"last-message\">__count__ файл</span> жіберді"
 }

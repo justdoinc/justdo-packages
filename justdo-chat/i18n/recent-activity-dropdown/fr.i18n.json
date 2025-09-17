@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "Tout marquer comme lu",
   "chat_dropdown_you_have_no_messages": "Vous n'avez pas encore de messages",
   "chat_dropdown_mark_as_read": "Marquer comme lu",
-  "chat_dropdown_mark_as_unread": "Marquer comme non lu"
+  "chat_dropdown_mark_as_unread": "Marquer comme non lu",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> a envoyé <span class=\"last-message\">__count__ fichier</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> a envoyé <span class=\"last-message\">__count__ fichiers</span>"
 }

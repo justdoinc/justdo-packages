@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "באַצייכן אַלע ווי געלייענט",
   "chat_dropdown_you_have_no_messages": "איר האָט נאָך קיין מעלדונגען",
   "chat_dropdown_mark_as_read": "באַצייכן ווי געלייענט",
-  "chat_dropdown_mark_as_unread": "באַצייכן ווי נישט געלייענט"
+  "chat_dropdown_mark_as_unread": "באַצייכן ווי נישט געלייענט",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> האָט געשיקט <span class=\"last-message\">__count__ טעקע</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> האָט געשיקט <span class=\"last-message\">__count__ טעקעס</span>"
 }

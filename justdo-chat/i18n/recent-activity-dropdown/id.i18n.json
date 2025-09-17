@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "Tandai Semua Sudah Dibaca",
   "chat_dropdown_you_have_no_messages": "Anda belum memiliki pesan",
   "chat_dropdown_mark_as_read": "Tandai Telah Dibaca",
-  "chat_dropdown_mark_as_unread": "Tandai Belum Dibaca"
+  "chat_dropdown_mark_as_unread": "Tandai Belum Dibaca",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> mengirim <span class=\"last-message\">__count__ file</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> mengirim <span class=\"last-message\">__count__ file</span>"
 }

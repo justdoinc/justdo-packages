@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Abrir chat en una ventana",
   "chat_subscriber_management": "Gestión de Suscriptores",
   "chat_send_message": "Enviar Mensaje",
-  "chat_files_saved_to_files_tab": "Archivos guardados en la pestaña Archivos"
+  "chat_files_saved_to_files_tab": "Archivos guardados en la pestaña Archivos",
+  "chat_files_exceeds_size_limit_error": "El siguiente archivo no se adjuntó porque excede el límite de tamaño de __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Los siguientes archivos no se adjuntaron porque exceden el límite de tamaño de __limit__: __files__",
+  "chat_drop_pane_overlay": "Suelta para adjuntar archivos"
 }

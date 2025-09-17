@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Otvoriť chat v okne",
   "chat_subscriber_management": "Správa odberateľov",
   "chat_send_message": "Odoslať správu",
-  "chat_files_saved_to_files_tab": "Súbory uložené na záložku Súbory"
+  "chat_files_saved_to_files_tab": "Súbory uložené na záložku Súbory",
+  "chat_files_exceeds_size_limit_error": "Nasledujúci súbor nie je pripojený, pretože prekračuje limit veľkosti __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Nasledujúce súbory nie sú pripojené, pretože prekračujú limit veľkosti __limit__: __files__",
+  "chat_drop_pane_overlay": "Pustite pre pripojenie súborov"
 }

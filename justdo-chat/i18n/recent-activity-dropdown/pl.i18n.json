@@ -4,5 +4,7 @@
   "chat_dropdown_mark_all_as_read": "Oznacz wszystkie jako przeczytane",
   "chat_dropdown_you_have_no_messages": "Nie masz jeszcze żadnych wiadomości",
   "chat_dropdown_mark_as_read": "Oznacz jako przeczytane",
-  "chat_dropdown_mark_as_unread": "Oznacz jako nieprzeczytane"
+  "chat_dropdown_mark_as_unread": "Oznacz jako nieprzeczytane",
+  "chat_dropdown_message_with_files_only_html": "<span class=\"last-author\">__author__</span> wysłał(a) <span class=\"last-message\">__count__ plik</span>",
+  "chat_dropdown_message_with_files_only_html_plural": "<span class=\"last-author\">__author__</span> wysłał(a) <span class=\"last-message\">__count__ plików</span>"
 }

@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "Obre el xat en una finestra",
   "chat_subscriber_management": "Gestió de subscriptors",
   "chat_send_message": "Envia el missatge",
-  "chat_files_saved_to_files_tab": "Fitxers desats a la pestanya Fitxers"
+  "chat_files_saved_to_files_tab": "Fitxers desats a la pestanya Fitxers",
+  "chat_files_exceeds_size_limit_error": "El següent arxiu no s'ha adjuntat perquè supera el límit de mida de __limit__: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "Els següents arxius no s'han adjuntat perquè superen el límit de mida de __limit__: __files__",
+  "chat_drop_pane_overlay": "Deixa anar per adjuntar arxius"
 }

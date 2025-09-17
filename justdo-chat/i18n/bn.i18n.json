@@ -9,5 +9,8 @@
   "chat_open_in_a_window": "চ্যাট নতুন উইন্ডোতে খুলুন",
   "chat_subscriber_management": "সাবস্ক্রাইবার ব্যবস্থাপনা",
   "chat_send_message": "বার্তা পাঠান",
-  "chat_files_saved_to_files_tab": "ফাইলগুলো ফাইল ট্যাবে সংরক্ষিত হয়েছে"
+  "chat_files_saved_to_files_tab": "ফাইলগুলো ফাইল ট্যাবে সংরক্ষিত হয়েছে",
+  "chat_files_exceeds_size_limit_error": "নিম্নলিখিত ফাইলটি সংযুক্ত করা হয়নি কারণ এটি __limit__ এর আকার সীমা অতিক্রম করেছে: __files__",
+  "chat_files_exceeds_size_limit_error_plural": "নিম্নলিখিত ফাইলগুলি সংযুক্ত করা হয়নি কারণ এগুলি __limit__ এর আকার সীমা অতিক্রম করেছে: __files__",
+  "chat_drop_pane_overlay": "ফাইল সংযুক্ত করতে ড্রপ করুন"
 }
