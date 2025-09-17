@@ -3,7 +3,7 @@
     {{#if isFilesEnabled}}
       <div class="drop-pane text-muted {{#if isDraggingFilesIntoDropPane}}dragging{{/if}}">
         <div class="drop-pane-overlay">
-          Drop to attach files
+          {{_ "chat_drop_pane_overlay"}}
         </div>
       </div>
       <div class="files-wrapper m{{getRtlAwareDirection "r"}}-1 {{#if isDraggingFilesIntoDropPane}}d-none{{/if}}">
