@@ -79,5 +79,8 @@
   "copy": "Copy",
   "loading": "Loading...",
   "no_results": "No results",
-  "date": "Date"
+  "date": "Date",
+  "high": "High",
+  "medium": "Medium",
+  "low": "Low"
 }
