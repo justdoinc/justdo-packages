@@ -676,7 +676,7 @@ _.extend GridControlCustomFields,
       custom_field_type_id: "basic-date"
       type_id: "date"
       label: "Date"
-      label_i18n: "grid_control_custom_fields_date_label"
+      label_i18n: "date"
     }
     {
       custom_field_type_id: "basic-select"

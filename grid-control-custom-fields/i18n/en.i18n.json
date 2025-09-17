@@ -6,7 +6,6 @@
   "grid_control_custom_fields_label_placeholder": "label",
   "grid_control_custom_fields_text_label": "Text",
   "grid_control_custom_fields_number_label": "Number",
-  "grid_control_custom_fields_date_label": "Date",
   "grid_control_custom_fields_select_label": "Options",
   "grid_control_custom_fields_multi_select_label": "Multi Options",
   "grid_control_custom_fields_smart_numbers_label": "Smart Numbers",
