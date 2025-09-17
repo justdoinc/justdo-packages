@@ -111,7 +111,7 @@ Template.common_chat_message_editor.onCreated ->
         .position
           of: $connected_element
           my: "left top"
-          at: "left top"
+          at: "right bottom"
           collision: "flipfit"
           using: (new_position, details) =>
             target = details.target
