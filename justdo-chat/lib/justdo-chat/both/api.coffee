@@ -102,6 +102,8 @@ _.extend JustdoChat.prototype,
     return false
 
   isFilesEnabled: (channel_type) ->
+    # Returns true if any file system is enabled (we check by seeing whether there's a default),
+    # and the channel type supports files upload.
     is_fs_available = APP.justdo_file_interface?.getDefaultFsId()?
     is_channel_type_supported = channel_type in JustdoChat.files_supported_channel_types
 
