@@ -6,7 +6,6 @@
   "grid_control_custom_fields_label_placeholder": "레이블",
   "grid_control_custom_fields_text_label": "텍스트",
   "grid_control_custom_fields_number_label": "숫자",
-  "grid_control_custom_fields_date_label": "날짜",
   "grid_control_custom_fields_select_label": "옵션",
   "grid_control_custom_fields_multi_select_label": "다중 옵션",
   "grid_control_custom_fields_smart_numbers_label": "스마트 숫자 (Smart Numbers)",

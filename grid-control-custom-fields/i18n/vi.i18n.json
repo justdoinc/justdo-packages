@@ -6,7 +6,6 @@
   "grid_control_custom_fields_label_placeholder": "Nhãn",
   "grid_control_custom_fields_text_label": "Văn bản",
   "grid_control_custom_fields_number_label": "Số",
-  "grid_control_custom_fields_date_label": "Ngày",
   "grid_control_custom_fields_select_label": "Các lựa chọn",
   "grid_control_custom_fields_multi_select_label": "Đa lựa chọn",
   "grid_control_custom_fields_smart_numbers_label": "Số thông minh",

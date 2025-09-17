@@ -6,7 +6,6 @@
   "grid_control_custom_fields_label_placeholder": "label",
   "grid_control_custom_fields_text_label": "Tekst",
   "grid_control_custom_fields_number_label": "Nummer",
-  "grid_control_custom_fields_date_label": "Datum",
   "grid_control_custom_fields_select_label": "Opties",
   "grid_control_custom_fields_multi_select_label": "Meerdere opties",
   "grid_control_custom_fields_smart_numbers_label": "Slimme nummers",

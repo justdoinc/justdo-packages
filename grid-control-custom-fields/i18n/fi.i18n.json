@@ -6,7 +6,6 @@
   "grid_control_custom_fields_label_placeholder": "nimike",
   "grid_control_custom_fields_text_label": "Teksti",
   "grid_control_custom_fields_number_label": "Numero",
-  "grid_control_custom_fields_date_label": "Päivämäärä",
   "grid_control_custom_fields_select_label": "Vaihtoehdot",
   "grid_control_custom_fields_multi_select_label": "Monivalinta",
   "grid_control_custom_fields_smart_numbers_label": "Älykkäät numerot (Smart Numbers)",

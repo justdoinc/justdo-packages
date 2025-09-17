@@ -6,7 +6,6 @@
   "grid_control_custom_fields_label_placeholder": "ป้ายกำกับ",
   "grid_control_custom_fields_text_label": "ข้อความ",
   "grid_control_custom_fields_number_label": "ตัวเลข",
-  "grid_control_custom_fields_date_label": "วันที่",
   "grid_control_custom_fields_select_label": "ตัวเลือก",
   "grid_control_custom_fields_multi_select_label": "ตัวเลือกหลายรายการ",
   "grid_control_custom_fields_smart_numbers_label": "ตัวเลขอัจฉริยะ (Smart Numbers)",

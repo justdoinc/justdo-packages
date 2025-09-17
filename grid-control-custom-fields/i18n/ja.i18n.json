@@ -6,7 +6,6 @@
   "grid_control_custom_fields_label_placeholder": "ラベル",
   "grid_control_custom_fields_text_label": "テキスト",
   "grid_control_custom_fields_number_label": "数値",
-  "grid_control_custom_fields_date_label": "日付",
   "grid_control_custom_fields_select_label": "選択肢",
   "grid_control_custom_fields_multi_select_label": "複数選択",
   "grid_control_custom_fields_smart_numbers_label": "スマート数値 (Smart Numbers)",

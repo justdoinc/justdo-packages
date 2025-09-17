@@ -6,7 +6,6 @@
   "grid_control_custom_fields_label_placeholder": "etiqueta",
   "grid_control_custom_fields_text_label": "Text",
   "grid_control_custom_fields_number_label": "Número",
-  "grid_control_custom_fields_date_label": "Data",
   "grid_control_custom_fields_select_label": "Opcions",
   "grid_control_custom_fields_multi_select_label": "Múltiples opcions",
   "grid_control_custom_fields_smart_numbers_label": "Números intel·ligents (Smart Numbers)",

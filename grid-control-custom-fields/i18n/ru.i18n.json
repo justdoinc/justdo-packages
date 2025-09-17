@@ -6,7 +6,6 @@
   "grid_control_custom_fields_label_placeholder": "метка",
   "grid_control_custom_fields_text_label": "Текст",
   "grid_control_custom_fields_number_label": "Число",
-  "grid_control_custom_fields_date_label": "Дата",
   "grid_control_custom_fields_select_label": "Варианты",
   "grid_control_custom_fields_multi_select_label": "Множественный выбор",
   "grid_control_custom_fields_smart_numbers_label": "Умные числа",

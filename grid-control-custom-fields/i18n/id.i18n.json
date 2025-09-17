@@ -6,7 +6,6 @@
   "grid_control_custom_fields_label_placeholder": "label",
   "grid_control_custom_fields_text_label": "Teks",
   "grid_control_custom_fields_number_label": "Angka",
-  "grid_control_custom_fields_date_label": "Tanggal",
   "grid_control_custom_fields_select_label": "Pilihan",
   "grid_control_custom_fields_multi_select_label": "Pilihan Ganda",
   "grid_control_custom_fields_smart_numbers_label": "Angka Pintar (Smart Numbers)",

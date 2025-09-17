@@ -6,7 +6,6 @@
   "grid_control_custom_fields_label_placeholder": "označenie",
   "grid_control_custom_fields_text_label": "Text",
   "grid_control_custom_fields_number_label": "Číslo",
-  "grid_control_custom_fields_date_label": "Dátum",
   "grid_control_custom_fields_select_label": "Možnosti",
   "grid_control_custom_fields_multi_select_label": "Viacnásobné možnosti",
   "grid_control_custom_fields_smart_numbers_label": "Inteligentné čísla (Smart Numbers)",

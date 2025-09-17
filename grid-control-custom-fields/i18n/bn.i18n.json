@@ -6,7 +6,6 @@
   "grid_control_custom_fields_label_placeholder": "লেবেল",
   "grid_control_custom_fields_text_label": "টেক্সট",
   "grid_control_custom_fields_number_label": "সংখ্যা",
-  "grid_control_custom_fields_date_label": "তারিখ",
   "grid_control_custom_fields_select_label": "অপশন",
   "grid_control_custom_fields_multi_select_label": "একাধিক অপশন",
   "grid_control_custom_fields_smart_numbers_label": "স্মার্ট সংখ্যা (Smart Numbers)",

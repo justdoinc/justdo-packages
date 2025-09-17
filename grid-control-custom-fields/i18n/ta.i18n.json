@@ -6,7 +6,6 @@
   "grid_control_custom_fields_label_placeholder": "பெயர்ச்சீட்டு",
   "grid_control_custom_fields_text_label": "உரை",
   "grid_control_custom_fields_number_label": "எண்",
-  "grid_control_custom_fields_date_label": "தேதி",
   "grid_control_custom_fields_select_label": "விருப்பங்கள்",
   "grid_control_custom_fields_multi_select_label": "பல விருப்பங்கள்",
   "grid_control_custom_fields_smart_numbers_label": "ஸ்மார்ட் எண்கள் (Smart Numbers)",

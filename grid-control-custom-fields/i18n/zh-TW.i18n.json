@@ -6,7 +6,6 @@
   "grid_control_custom_fields_label_placeholder": "欄目名稱",
   "grid_control_custom_fields_text_label": "文字",
   "grid_control_custom_fields_number_label": "數字",
-  "grid_control_custom_fields_date_label": "日期",
   "grid_control_custom_fields_select_label": "單選清單",
   "grid_control_custom_fields_multi_select_label": "多選清單",
   "grid_control_custom_fields_smart_numbers_label": "子任務算式",

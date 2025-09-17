@@ -6,7 +6,6 @@
   "grid_control_custom_fields_label_placeholder": "ознака",
   "grid_control_custom_fields_text_label": "Текст",
   "grid_control_custom_fields_number_label": "Број",
-  "grid_control_custom_fields_date_label": "Датум",
   "grid_control_custom_fields_select_label": "Опције",
   "grid_control_custom_fields_multi_select_label": "Вишеструке опције",
   "grid_control_custom_fields_smart_numbers_label": "Паметни бројеви (Smart Numbers)",

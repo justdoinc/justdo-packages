@@ -6,7 +6,6 @@
   "grid_control_custom_fields_label_placeholder": "etiket",
   "grid_control_custom_fields_text_label": "Teks",
   "grid_control_custom_fields_number_label": "Nommer",
-  "grid_control_custom_fields_date_label": "Datum",
   "grid_control_custom_fields_select_label": "Opsies",
   "grid_control_custom_fields_multi_select_label": "Veelvuldige Opsies",
   "grid_control_custom_fields_smart_numbers_label": "Slim Nommers",

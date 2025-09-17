@@ -6,7 +6,6 @@
   "grid_control_custom_fields_label_placeholder": "etiket",
   "grid_control_custom_fields_text_label": "Tekst",
   "grid_control_custom_fields_number_label": "Tal",
-  "grid_control_custom_fields_date_label": "Dato",
   "grid_control_custom_fields_select_label": "Valgmuligheder",
   "grid_control_custom_fields_multi_select_label": "Flere valgmuligheder",
   "grid_control_custom_fields_smart_numbers_label": "Smarte tal",
