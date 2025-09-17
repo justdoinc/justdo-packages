@@ -181,6 +181,14 @@ _.extend ChannelBaseClient.prototype,
     return
 
   sendMessage: (body, cb) ->
+    # Receives the messages body, either as a string, in which case we assume there are no files, and
+    # treat it as if {body: body} provided. Or as an object, in which case it can have the items:
+    #
+    # {
+    #   body: string - OPTIONAL string
+    #   files: array of files
+    # }
+
     if @isProposedSubscribersEmulationMode()
       @manageSubscribers {add: @proposedSubscribersForNewChannel()}
 
@@ -189,6 +197,10 @@ _.extend ChannelBaseClient.prototype,
 
     if _.isString body
       body = {body}
+    else if _.isObject body
+      body = _.extend {}, body
+    else
+      throw @_error "invalid-argument"
 
     @justdo_chat.sendMessage @channel_type, @getChannelIdentifier(), body, (err) =>
       @emit "message-sent", body
