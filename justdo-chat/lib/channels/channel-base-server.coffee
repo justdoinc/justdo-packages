@@ -697,7 +697,7 @@ _.extend ChannelBaseServer.prototype,
     if message_type == "txt"
       message_doc.body = message_obj.body
     else if message_type == "data"
-      message_doc.data = message_obj
+      message_doc.data = _.omit message_obj, "files"
 
     if not _.isEmpty(files = message_obj.files)
       message_doc.files = files

@@ -1153,6 +1153,11 @@ _.extend JustdoChat.prototype,
           optional: false
           allowedValues: [msg_type]
 
+      files_related_schema_obj = _.pick JustdoChat.schemas.MessagesSchema._schema, (schema_def, schema_key) ->
+        return schema_key.indexOf("files") is 0
+
+      forced_schema_fields = _.extend forced_schema_fields, files_related_schema_obj
+
       for field_name, field_def of forced_schema_fields
         if msg_obj.data_schema[field_name]?
           throw @_error "Bot #{bot_id} registration, '#{field_name}' is not allowed property in bot's data schema"
