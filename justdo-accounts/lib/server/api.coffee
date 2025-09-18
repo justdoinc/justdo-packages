@@ -971,6 +971,26 @@ _.extend JustdoAccounts.prototype,
     Meteor.users.update user_id, {$set: {"justdo_projects.jd_creation_request": jd_creation_request}}
 
     return
+  
+  getUserOAuthTypeByEmail: (email) ->
+    # Receives an email, checks whether the corresponding account exists and has OAuth enabled.
+    # if user exists and has linked OAuth service, returns the first found enabled OAuth type;
+    # if user exists and doesn't have linked OAuth servicem returns undefined;
+    # if user cannot be found with the provided email, throws "unknown-user" error.
+    # 
+    # This method returns the first found OAuth type, 
+    # regardless of whether multiple OAuth services are linked to the user.
+    check email, String
+
+    if not (user_doc = @getUserByEmail email)?
+      throw @_error "unknown-user"
+
+    oauth_providers = @getSupportedOAuthProviders()
+    for oauth_provider_id, oauth_provider of oauth_providers
+      if user_doc.services[oauth_provider.user_doc_services_field_name]?
+        return oauth_provider.id
+    
+    return
 
   destroy: ->
     if @destroyed
