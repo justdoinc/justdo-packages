@@ -586,18 +586,18 @@ _.extend ChannelBaseServer.prototype,
     @emit "channel-unread-state-changed", unread
 
     return
-  _sendMessageFilesArraySchema: new SimpleSchema
-    files: JustdoChat.schemas.MessagesSchema._schema.files
-    "files.$": JustdoChat.schemas.MessagesSchema._schema["files.$"]
-  _sendMessageMessageObjectSchemaForTxtType: new SimpleSchema
-    body:
-      # Note, simple schema takes care of .trim() the value for us
-
-      type: String
-      optional: true
-
-      min: JustdoChat.schemas.MessagesSchema._schema.body.min
-      max: JustdoChat.schemas.MessagesSchema._schema.body.max
+  _sendMessageMessageObjectSchemaForTxtType: new SimpleSchema _.pick(JustdoChat.schemas.MessagesSchema._schema, (schema_def, schema_key) -> 
+    # The reason we construct `_sendMessageMessageObjectSchemaForTxtType` this way 
+    # instead of using the JustdoChat.schemas.MessagesSchema.pick "body", "files", "files.$"
+    # is because the pick would reuqire you to specify ALL the array item fields 
+    # (e.g. "files.$.jd_file_id_obj_schema.fs_id"),
+    # 
+    # By doing it this way, there is no need to update this schema if new keys are added to the array item.
+    # Therefore, `_sendMessageMessageObjectSchemaForTxtType` is future-proof.
+    is_body = schema_key is "body"
+    is_files_related = schema_key.indexOf("files") is 0
+    return is_body or is_files_related  
+  )
   _sendMessageOptionsSchema: new SimpleSchema
     skip_unread_state_update_for_subscribers:
       # If set, the users ids listed in the provided array, won't have their
@@ -627,17 +627,6 @@ _.extend ChannelBaseServer.prototype,
         {self: @, throw_on_error: true}
       )
     options = cleaned_val
-
-    files = message_obj.files
-    is_files_empty = _.isEmpty files
-    if not is_files_empty
-      {cleaned_val} =
-        JustdoHelpers.simpleSchemaCleanAndValidate(
-          @_sendMessageFilesArraySchema,
-          {files}, # note, we wrap files in an object, since simple schema expects an object
-          {self: @, throw_on_error: true}
-        )
-      {files} = cleaned_val
 
     if message_type == "txt"
       msg_body = message_obj?.body
@@ -709,8 +698,8 @@ _.extend ChannelBaseServer.prototype,
       message_doc.body = message_obj.body
     else if message_type == "data"
       message_doc.data = message_obj
-    
-    if not _.isEmpty files
+
+    if not _.isEmpty(files = message_obj.files)
       message_doc.files = files
 
     # write the message
