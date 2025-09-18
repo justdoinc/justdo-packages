@@ -1146,10 +1146,18 @@ _.extend JustdoChat.prototype,
       msg_obj = _.extend {}, msg_obj
       bot_definition.msgs_types[msg_type] = msg_obj
 
-      if msg_obj.data_schema.type?
-        throw @_error "Bot #{bot_id} registration, 'type' is not allowed property in bot's data schema"
+      forced_schema_fields = 
+        type:
+          type: String
+          label: "Message type"
+          optional: false
+          allowedValues: [msg_type]
 
-      msg_obj.data_schema = new SimpleSchema _.extend {}, msg_obj.data_schema, {type: {type: String, label: "Message type", optional: false, allowedValues: [msg_type]}}
+      for field_name, field_def of forced_schema_fields
+        if msg_obj.data_schema[field_name]?
+          throw @_error "Bot #{bot_id} registration, '#{field_name}' is not allowed property in bot's data schema"
+      
+      msg_obj.data_schema = new SimpleSchema _.extend {}, msg_obj.data_schema, forced_schema_fields
 
     #
     # Build bot info
