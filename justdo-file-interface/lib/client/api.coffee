@@ -64,13 +64,7 @@ _.extend JustdoFileInterface.prototype,
     #                         We return this object despite most of the information can be obtained from the browser's File object (even prior to the upload)
     #                         because the file system may: normalize/change the name, or the size may not be exactly the same as the browser's File object (due to file system specific reasons).
     #                         As such, the `additional_details` represents how the file looks like from the file system's perspective.
-    #                         Guarenteed to include the following fields only (regardless of the current file system):
-    #                         {
-    #                           _id: String
-    #                           name: String # the readable filename of the uploaded file
-    #                           type: String # the mime type of the uploaded file
-    #                           size: Number # the size of the uploaded file in bytes (!)
-    #                         }
+    #                         Guarenteed to include the fields defined in the file_additional_details_schema (in schemas.coffee) only (regardless of the current file system):
     #
     # See comment above for why this method doesn't take fs_id as param.
 
