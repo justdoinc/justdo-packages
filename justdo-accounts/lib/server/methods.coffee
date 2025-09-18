@@ -113,3 +113,8 @@ _.extend JustdoAccounts.prototype,
         check @userId, String
 
         return accounts_object.editUserAvatarColor avatar_bg, avatar_fg, user_id, @userId
+      
+      getUserOAuthTypeByEmail: (email) ->
+        check email, String
+        
+        return accounts_object.getUserOAuthTypeByEmail email
