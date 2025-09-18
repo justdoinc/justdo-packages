@@ -227,8 +227,11 @@ JustdoChat.schemas.MessagesSchema = new SimpleSchema
 
     type: [Object]
   "files.$":
-    type: Object
-    blackbox: true
+    type: new SimpleSchema
+      jd_file_id_obj: 
+        type: JustdoFileInterface.schemas.jd_file_id_obj_schema
+      additional_details: 
+        type: JustdoFileInterface.schemas.file_additional_details_schema.pick "name", "size", "type"
 
   "data_msg_type":
     label: "Data Message type"
