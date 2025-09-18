@@ -131,6 +131,16 @@ Template.common_chat_message_editor.onCreated ->
   @hideFilesDropdown = ->
     @files_dropdown.closeDropdown()
     return
+  @autorun =>
+    @attached_files_dep.depend()
+    if not @is_files_dropdown_open
+      return
+
+    Meteor.defer =>
+      @files_dropdown.updateDropdownPosition @files_dropdown.$connected_element, false
+      return
+
+    return
 
   @is_dragging_files_into_drop_pane = new ReactiveVar false
 
