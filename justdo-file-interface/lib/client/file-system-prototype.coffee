@@ -31,16 +31,10 @@ _.extend JustdoFileInterface.FileSystemPrototype,
     #     jd_file_id_obj: The "primary key" of the file. It is recommended to store this object for identifying the file in the future. 
     #                     Refer to the jd_file_id_obj_schema for the exact structure.
     #     additional_details: Additional details of the uploaded file. 
-    #                         We return this object despite most of the information can be obtained from browser's File object
-    #                         because the file system may normalize/change the name or the size may not be exactly the same as the browser's File object.
+    #                         We return this object despite most of the information can be obtained from the browser's File object (even prior to the upload)
+    #                         because the file system may: normalize/change the name, or the size may not be exactly the same as the browser's File object (due to file system specific reasons).
     #                         As such, the `additional_details` represents how the file looks like from the file system's perspective.
-    #                         Guarenteed to include the following fields:
-    #                         {
-    #                           _id: String
-    #                           name: String # the readable filename of the uploaded file
-    #                           type: String # the mime type of the uploaded file
-    #                           size: Number # the size of the uploaded file in bytes (!)
-    #                         }
+    #                         Guarenteed to include the fields defined in the file_additional_details_schema (in schemas.coffee) only (regardless of the current file system):
     # 
     # We'll ensure that the file size doesn't exceed the file system's `getFileSizeLimit` before trying to upload the file.
     # To be precise: before calling this method inside `APP.justdo_file_interface.uploadBucketFolderFile`, the file size is checked against the
