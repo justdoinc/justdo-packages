@@ -1117,38 +1117,31 @@ _.extend JustdoChat.prototype,
     #
     # Build bot definition
     #
-    bot_definition = _.extend {}, bot_def
-    bot_definition.msgs_types = _.extend {}, bot_def.msgs_types
-
-    for msg_type, msg_obj of bot_definition.msgs_types
-      msg_obj = _.extend {}, msg_obj
-      bot_definition.msgs_types[msg_type] = msg_obj
-
-      if msg_obj.data_schema.type?
-        throw @_error "Bot #{bot_id} registration, 'type' is not allowed property in bot's data schema"
-
-      msg_obj.data_schema = new SimpleSchema _.extend {}, msg_obj.data_schema, {type: {type: String, label: "Message type", optional: false, allowedValues: [msg_type]}}
-
-    @_bots_definitions[bot_id] = bot_definition
+    bot_definition_without_msg_types = _.omit bot_def, "msgs_types"
+    bot_definition_without_msg_types.msgs_types = {}
+    @_bots_definitions[bot_id] = bot_definition_without_msg_types
 
     #
     # Build bot info
     #
-    bot_public_info = _.extend {}, bot_def
-    bot_public_info.msgs_types = _.extend {}, bot_def.msgs_types
+    bot_public_info_without_msg_types = _.omit bot_def, "msgs_types"
+    bot_public_info_without_msg_types.msgs_types = {}
+    @_bots_public_info[bot_id] = bot_public_info_without_msg_types
 
-    for msg_type, msg_obj of bot_public_info.msgs_types
-      msg_obj = _.extend {}, msg_obj
-      bot_public_info.msgs_types[msg_type] = msg_obj
-
-      delete msg_obj.data_schema
-
-    @_bots_public_info[bot_id] = bot_public_info
+    # 
+    # Register message types
+    # 
+    bot_message_types = _.extend {}, bot_def.msgs_types
+    @registerBotMessagesTypes(bot_id, bot_message_types)
 
     return
 
   registerBotMessagesTypes: (bot_id, messages) ->
     bot_definition = @_bots_definitions[bot_id]
+
+    if not bot_definition?
+      throw @_error "fatal", "Bot #{bot_id} not found"
+
     for msg_type, msg_obj of messages
       msg_obj = _.extend {}, msg_obj
       bot_definition.msgs_types[msg_type] = msg_obj
