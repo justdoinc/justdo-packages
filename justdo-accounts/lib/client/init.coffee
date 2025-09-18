@@ -13,6 +13,8 @@ _.extend JustdoAccounts.prototype,
     @pending_jd_creation_request = null
     @_setupEventHooks()
 
+    @_setupOAuthRegistry()
+
     return
 
   _deferredInit: ->

@@ -124,3 +124,42 @@ _.extend JustdoAccounts.prototype,
           is_proxy: 1
     
     return user?.is_proxy is true
+  
+  _setupOAuthRegistry: ->
+    @oauth_providers_registry = {}
+    return
+
+  _registerOAuthProviderOptionsSchema: new SimpleSchema
+    id:
+      type: String
+    user_doc_services_field_name:
+      type: String
+    loginFunction:
+      type: Function
+      # This is required only on the client side.
+      # Check performed inside `registerOAuthProvider`
+      optional: true
+  registerOAuthProvider: (options) ->
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_registerOAuthProviderOptionsSchema,
+        options,
+        {throw_on_error: true}
+      )
+    options = cleaned_val
+
+    if Meteor.isClient
+      check options.loginFunction, Function
+
+    @oauth_providers_registry[options.id] = options
+
+    return
+  
+  getSupportedOAuthProviders: ->
+    return _.extend {}, @oauth_providers_registry
+  
+  getSupportedOAuthProviderById: (id) ->
+    if not (provider =  @oauth_providers_registry[id])?
+      throw @_error "not-supported"
+
+    return _.extend {}, provider
