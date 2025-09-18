@@ -641,10 +641,6 @@ _.extend ChannelBaseServer.prototype,
 
     if message_type == "txt"
       msg_body = message_obj?.body
-      is_msg_body_empty = _.isEmpty msg_body
-
-      if is_msg_body_empty and is_files_empty
-        throw @_error "invalid-message", "Cannot send message without body and files"
 
       messages_schema = @justdo_chat.getMessagesSchema()
       if msg_body?.trim().length > (max_task_length = messages_schema.body.max)
@@ -658,6 +654,12 @@ _.extend ChannelBaseServer.prototype,
           {self: @, throw_on_error: true}
         )
       message_obj = cleaned_val
+
+      is_msg_body_empty = _.isEmpty msg_body
+      is_files_empty = _.isEmpty message_obj?.files
+
+      if is_msg_body_empty and is_files_empty
+        throw @_error "invalid-message", "Cannot send message without body and files"
 
     else if message_type == "data"
       if not @justdo_chat.isBotUserId(@performing_user)
