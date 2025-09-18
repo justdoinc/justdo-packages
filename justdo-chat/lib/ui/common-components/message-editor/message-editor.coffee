@@ -99,10 +99,10 @@ Template.common_chat_message_editor.onCreated ->
     custom_bound_element_options:
       close_button_html: null
       close_on_bound_elements_show: false
-      openedHandler: (e) ->
+      openedHandler: (e) =>
         @is_files_dropdown_open = true
         return
-      closedHandler: (e) ->
+      closedHandler: (e) =>
         @is_files_dropdown_open = false
         return
 
@@ -394,7 +394,7 @@ Template.common_chat_message_editor.events
     tpl.$(".message-editor-file-input").trigger("change")
     return false
 
-  "mouseenter .attach-files": (e, tpl) ->
+  "mouseenter .files-wrapper": (e, tpl) ->
     # Only show dropdown if there are files attached
     if not tpl.is_files_dropdown_open and tpl.getFilesCount() > 0
       tpl.showFilesDropdown(e)
