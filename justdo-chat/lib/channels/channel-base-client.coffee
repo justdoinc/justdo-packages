@@ -115,7 +115,7 @@ _.extend ChannelBaseClient.prototype,
     @_initial_subscription_ready = new ReactiveVar false
     @_channel_messages_subscription_dep = new Tracker.Dependency()
 
-    @_files_subscription = {}
+    @_files_subscriptions = {}
 
     @_verifyChannelConfObjectAgainstSchema()
 
@@ -339,11 +339,11 @@ _.extend ChannelBaseClient.prototype,
     return
   
   _unsubscribeFilesCollectionIfExists: ->
-    if not _.isEmpty(@_files_subscription)
-      for fs_id, subscription of @_files_subscription
+    if not _.isEmpty(@_files_subscriptions)
+      for fs_id, subscription of @_files_subscriptions
         subscription.stop?()
 
-      @_files_subscription = {}
+      @_files_subscriptions = {}
 
     return
 
@@ -351,10 +351,10 @@ _.extend ChannelBaseClient.prototype,
     if not @justdo_chat.isFilesEnabled(@channel_type)
       return
 
-    if @_files_subscription?[fs_id]?
+    if @_files_subscriptions?[fs_id]?
       return
 
-    @_files_subscription[fs_id] = APP.justdo_file_interface.subscribeToTaskFiles fs_id, @getChannelIdentifier().task_id
+    @_files_subscriptions[fs_id] = APP.justdo_file_interface.subscribeToTaskFiles fs_id, @getChannelIdentifier().task_id
 
     return
 
