@@ -106,7 +106,7 @@ Template.common_chat_message_editor.onCreated ->
         @is_files_dropdown_open = false
         return
 
-    updateDropdownPosition: ($connected_element) ->
+    updateDropdownPosition: ($connected_element, is_called_upon_open=true) ->
       @$dropdown
         .position
           of: $connected_element
@@ -117,9 +117,19 @@ Template.common_chat_message_editor.onCreated ->
             target = details.target
             element = details.element
             element.element.addClass "animate slideIn shadow-lg"
+
+            new_top = new_position.top
+            new_left = new_position.left
+
+            if is_called_upon_open
+              # The `slideIn` animation increases the top by 1rem,
+              # so we need to subtract it to keep the dropdown in the same position.
+              # This only happens when the dropdown is opened upon mouse enter, and not subsquent calls.
+              new_top -= parseInt(getComputedStyle(document.documentElement).fontSize)
+
             element.element.css
-              top: new_position.top - 10
-              left: new_position.left + 6
+              top: new_top
+              left: new_left
             return
 
   @files_dropdown = new FilesDropdown()
