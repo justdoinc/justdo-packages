@@ -51,7 +51,7 @@ Template.common_chat_messages_board.onCreated ->
     # We run the following within a nonreactive context, so if a subscription is created
     # by it, it won't get destroyed as a result of the computation invalidation/destructino.
     Tracker.nonreactive =>
-      channel.requestChannelMessages({request_authors_details: @request_authors_details, request_files_subscription: true}) # Request first messages payload
+      channel.requestChannelMessages({request_authors_details: @request_authors_details}) # Request first messages payload
 
     # When a new message is sent by the user for this channel - scroll to bottom
     channel.on "message-sent", (@message_sent_handler = @scrollToBottom.bind(@))
