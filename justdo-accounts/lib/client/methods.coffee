@@ -92,3 +92,6 @@ _.extend JustdoAccounts.prototype,
 
   setJdCreationRequest: (jd_creation_request, cb) ->
     Meteor.call "setJdCreationRequest", jd_creation_request, cb
+  
+  getUserOAuthTypeByEmail: (email, cb) ->
+    Meteor.call "getUserOAuthTypeByEmail", email, cb
