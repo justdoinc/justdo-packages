@@ -338,6 +338,55 @@ _.extend JustdoAccounts.prototype,
         return
 
     return
+  
+  loginWithUserLinkedOAuth: (email, cb) ->
+    # Receives a user email, and optionally a cb, to open the oauth login page of the user associated with the email provided.
+    # 
+    # cb will be called upon successful completion of `loginFunction` with no params,
+    # or with `err` as first argument if 
+    # 1. user can't be found with the provided email
+    # 2. user doesn't have OAuth service linked
+    # 3. user's OAuth service is not enabled in the current environment, or not registered with `registerOAuthProvider`
+    # 4. any other error is thrown
+    # 
+    # This method also handles justdo-analytics logging.
+    # The `cat` field of the log is hard-coded to be `user-box` 
+    # with the assumption that this method is only called by the login-box.
+    APP.accounts.getUserOAuthTypeByEmail email, (err, oauth_type) ->
+      if err?
+        cb? err
+        return
+      
+      if not oauth_type?
+        cb? @_error "not-supported", "User does not have linked OAuth service"
+        return
+      
+      try
+        oauth_provider = APP.accounts.getSupportedOAuthProviderById(oauth_type)
+      catch err
+        err = @_error "not-supported", "User linked OAuth type \"#{oauth_type}\" is not supported in this environment. Please ensure it is registered with `registerOAuthProvider`."
+        APP.justdo_analytics.JA({cat: "user-box", act: "process-email-failed", val: getTechnicalErrorsJSON(err)})
+        cb? err
+        return
+      
+      dash_oauth_type = oauth_type.replace("_", "-")
+
+      oauth_provider.loginFunction undefined, (err) ->
+        # undefined arg is the oauth's options, which we don't set here.
+        # DRY Warning: If you change this cb, possible that you'd want to update the oauth's login function as well.
+        if err?
+          APP.justdo_analytics.JA({cat: "user-box", act: "#{dash_oauth_type}-oauth-login-failed", val: JSON.stringify(err)})
+          cb? err
+        else
+          APP.justdo_analytics.JA({cat: "user-box", act: "#{dash_oauth_type}-oauth-login-succeeded"})
+          cb()
+        return
+      
+      APP.justdo_analytics.JA({cat: "user-box", act: "process-email-successful", val: "#{dash_oauth_type}-login"})
+
+      return
+    
+    return
 
   destroy: ->
     if @destroyed
