@@ -166,6 +166,30 @@ APP.executeAfterAppLibCode ->
 
       return fields
 
+    hasFieldsToAdd: ->
+      current_item_id = project_page_module.activeItemId()
+      current_item_path = project_page_module.activeItemPath()
+
+      if not current_item_id?
+        return
+
+      gc = project_page_module.gridControl()
+    
+      return not _.isEmpty gc.fieldsMissingFromView()
+    
+    hasFieldsToHide: ->
+      current_item_id = project_page_module.activeItemId()
+      current_item_path = project_page_module.activeItemPath()
+
+      if not current_item_id?
+        return
+
+      gc = project_page_module.gridControl()
+      
+      # title field is is always present, therefore we check for more than 1 fields instead of 0.
+      return _.size(gc.getView()) > 1
+
+
   Template.task_pane_item_details_additional_fields.events
     "click .show-all": (e) ->
       gc = APP.modules.project_page.gridControl()

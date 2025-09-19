@@ -8,8 +8,12 @@
             <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"/></svg>
           </div>
           <div class="dropdown-menu animate slideIn shadow-lg border-0" aria-labelledby="dropdownMenuButton">
-            <div class="dropdown-item show-all">{{_ "item_details_additional_fields_show_all"}}</div>
-            <div class="dropdown-item hide-all">{{_ "item_details_additional_fields_hide_all"}}</div>
+            {{#if hasFieldsToAdd}}
+              <div class="dropdown-item show-all">{{_ "item_details_additional_fields_show_all"}}</div>
+            {{/if}}
+            {{#if hasFieldsToHide}}
+              <div class="dropdown-item hide-all">{{_ "item_details_additional_fields_hide_all"}}</div>
+            {{/if}}
           </div>
         </div>
       </div>
