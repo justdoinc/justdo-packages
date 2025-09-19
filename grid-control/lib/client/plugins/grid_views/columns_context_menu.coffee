@@ -211,8 +211,10 @@ _.extend GridControl.prototype,
       grid_control_cmenu_target_selector = ".slick-header-column"
       if type is "first"
         grid_control_cmenu_target_selector = grid_control_cmenu_target_selector += ":first"
+      else if type is "last"
+        grid_control_cmenu_target_selector = grid_control_cmenu_target_selector += ":last"
       else if type is "common"
-        grid_control_cmenu_target_selector = grid_control_cmenu_target_selector += ":not(:first)"
+        grid_control_cmenu_target_selector = grid_control_cmenu_target_selector += ":not(:first):not(:last)"
 
       $grid_control_cmenu_target = $(grid_control_cmenu_target_selector, @container)
       
@@ -230,6 +232,13 @@ _.extend GridControl.prototype,
         return setColumnIndexOfLastOpenedCmenu(e)
       
       return
+
+    hide_columns_to_the_right_menu_item =
+      text: TAPi18n.__ "hide_columns_to_the_right_label"
+      action: (e) =>
+        @setView @getView().slice(0, column_index_of_last_opened_cmenu + 1)
+        
+        return
 
     # At the moment we only support the first column freeze/unfreeze
     if @getView()[0].frozen is true
@@ -260,6 +269,8 @@ _.extend GridControl.prototype,
             return
         }
       ]
+    # Add the "Hide Columns to the Right" menu item to the freeze/unfreeze column menu
+    freeze_unfreeze_column.push(hide_columns_to_the_right_menu_item) 
     setupColumnContextMenu("first", freeze_unfreeze_column)
 
     hide_menu_item = [
@@ -269,6 +280,9 @@ _.extend GridControl.prototype,
           @_hideFieldColumn(@getView()[column_index_of_last_opened_cmenu].field)
       }
     ]
+    setupColumnContextMenu("last", hide_menu_item)
+    # Add the "Hide Columns to the Right" menu item to the freeze/unfreeze column menu
+    hide_menu_item.push(hide_columns_to_the_right_menu_item)
     # common columns context menu
     setupColumnContextMenu("common", hide_menu_item)
 
