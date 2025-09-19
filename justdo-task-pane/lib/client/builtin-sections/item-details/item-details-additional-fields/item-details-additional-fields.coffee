@@ -201,6 +201,10 @@ APP.executeAfterAppLibCode ->
 
       gc.setView(view)
       
+      Meteor.defer ->
+        grid_uid = gc.getGridUid()
+        scrollToTargetColumn(".slick-header-column[id=\"#{grid_uid}#{fields_missing_from_view[0]}\"]", gc)
+
       return
 
     "click .hide-all": (e) ->
