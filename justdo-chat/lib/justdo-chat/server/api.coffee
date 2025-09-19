@@ -1142,6 +1142,9 @@ _.extend JustdoChat.prototype,
     if not bot_definition?
       throw @_error "fatal", "Bot #{bot_id} not found"
 
+    # Build the bot data schema, force certain fields schema into the message's type data schema
+    # A reminder, for bots, there's no "body" like typical messages, they have data object instead,
+    # which is used by a template to construct the message body.
     for msg_type, msg_obj of messages
       msg_obj = _.extend {}, msg_obj
       bot_definition.msgs_types[msg_type] = msg_obj
@@ -1151,9 +1154,14 @@ _.extend JustdoChat.prototype,
           type: String
           label: "Message type"
           optional: false
-          allowedValues: [msg_type]
+          allowedValues: [msg_type] # Each bot has multiple types of messages, the type of each message is kept in the data object
+                                    # here, we ensure that when this message type is added - the data object will force the type to 
+                                    # be the intended one.
 
+      # Allow, every type to include files, by picking the same data structure for files
+      # used by JustdoChat.schemas.MessagesSchema
       files_related_schema_obj = _.pick JustdoChat.schemas.MessagesSchema._schema, (schema_def, schema_key) ->
+        # Pick all the "files" and "files.*" fields from the MessagesSchema
         return schema_key.indexOf("files") is 0
 
       forced_schema_fields = _.extend forced_schema_fields, files_related_schema_obj
