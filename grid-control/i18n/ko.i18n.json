@@ -3,6 +3,7 @@
   "hide_column_label": "열 숨기기",
   "freeze_column_label": "열 고정",
   "unfreeze_column_label": "열 고정 해제",
+  "hide_columns_to_the_right_label": "오른쪽 열들 숨기기",
   "tree_control_tooltip_gantt_milestone": "간트 차트 마일스톤",
   "tree_control_tooltip_buffer_task": "버퍼 태스크",
   "tree_control_tooltip_Meetings": "회의",

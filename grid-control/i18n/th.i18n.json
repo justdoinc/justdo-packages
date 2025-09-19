@@ -3,6 +3,7 @@
   "hide_column_label": "ซ่อนคอลัมน์",
   "freeze_column_label": "ตรึงคอลัมน์",
   "unfreeze_column_label": "ยกเลิกการตรึงคอลัมน์",
+  "hide_columns_to_the_right_label": "ซ่อนคอลัมน์ทางขวา",
   "tree_control_tooltip_gantt_milestone": "เหตุการณ์สำคัญในแผนภูมิแกนต์ (Gantt Milestone)",
   "tree_control_tooltip_buffer_task": "งานสำรอง (Buffer Task)",
   "tree_control_tooltip_Meetings": "การประชุม",

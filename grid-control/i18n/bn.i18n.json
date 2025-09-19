@@ -3,6 +3,7 @@
   "hide_column_label": "কলাম লুকান",
   "freeze_column_label": "কলাম স্থির করুন",
   "unfreeze_column_label": "কলাম অস্থির করুন",
+  "hide_columns_to_the_right_label": "ডানের কলামগুলি লুকান",
   "tree_control_tooltip_gantt_milestone": "গ্যান্ট মাইলস্টোন",
   "tree_control_tooltip_buffer_task": "বাফার কাজ",
   "tree_control_tooltip_Meetings": "সভা",

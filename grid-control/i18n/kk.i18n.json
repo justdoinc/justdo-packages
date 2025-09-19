@@ -3,6 +3,7 @@
   "hide_column_label": "Бағанды жасыру",
   "freeze_column_label": "Бағанды бекіту",
   "unfreeze_column_label": "Бағанды босату",
+  "hide_columns_to_the_right_label": "Оң жақтағы бағандарды жасыру",
   "tree_control_tooltip_gantt_milestone": "Гант кезеңі",
   "tree_control_tooltip_buffer_task": "Буфер тапсырмасы",
   "tree_control_tooltip_Meetings": "Кездесулер",

@@ -3,6 +3,7 @@
   "hide_column_label": "Amagar columna",
   "freeze_column_label": "Fixar columna",
   "unfreeze_column_label": "Desfixar columna",
+  "hide_columns_to_the_right_label": "Amagar columnes de la dreta",
   "tree_control_tooltip_gantt_milestone": "Fita del Gantt",
   "tree_control_tooltip_buffer_task": "Tasca de marge (Buffer Task)",
   "tree_control_tooltip_Meetings": "Reunions",

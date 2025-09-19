@@ -3,6 +3,7 @@
   "hide_column_label": "Sakrij stupac",
   "freeze_column_label": "Zamrzni stupac",
   "unfreeze_column_label": "Odmrzni stupac",
+  "hide_columns_to_the_right_label": "Sakrij stupce desno",
   "tree_control_tooltip_gantt_milestone": "Ganttova prekretnica",
   "tree_control_tooltip_buffer_task": "Rezervni zadatak",
   "tree_control_tooltip_Meetings": "Sastanci",

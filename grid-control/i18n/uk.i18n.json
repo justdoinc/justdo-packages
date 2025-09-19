@@ -3,6 +3,7 @@
   "hide_column_label": "Приховати стовпець",
   "freeze_column_label": "Закріпити стовпець",
   "unfreeze_column_label": "Відкріпити стовпець",
+  "hide_columns_to_the_right_label": "Приховати стовпці праворуч",
   "tree_control_tooltip_gantt_milestone": "Віха діаграми Ганта",
   "tree_control_tooltip_buffer_task": "Буферне завдання",
   "tree_control_tooltip_Meetings": "Зустрічі",

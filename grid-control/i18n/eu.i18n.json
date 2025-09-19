@@ -3,6 +3,7 @@
   "hide_column_label": "Ezkutatu Zutabea",
   "freeze_column_label": "Izoztu Zutabea",
   "unfreeze_column_label": "Desizoztu Zutabea",
+  "hide_columns_to_the_right_label": "Eskuineko Zutabeak Ezkutatu",
   "tree_control_tooltip_gantt_milestone": "Gantt Mugarria",
   "tree_control_tooltip_buffer_task": "Buffer Ataza",
   "tree_control_tooltip_Meetings": "Bilerak",

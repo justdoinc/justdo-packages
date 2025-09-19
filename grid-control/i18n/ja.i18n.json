@@ -3,6 +3,7 @@
   "hide_column_label": "列を非表示",
   "freeze_column_label": "列を固定",
   "unfreeze_column_label": "列の固定を解除",
+  "hide_columns_to_the_right_label": "右側の列を非表示",
   "tree_control_tooltip_gantt_milestone": "ガントチャートのマイルストーン",
   "tree_control_tooltip_buffer_task": "バッファタスク",
   "tree_control_tooltip_Meetings": "ミーティング",

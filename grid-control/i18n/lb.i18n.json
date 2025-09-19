@@ -3,6 +3,7 @@
   "hide_column_label": "Kolonn verstoppen",
   "freeze_column_label": "Kolonn fräieren",
   "unfreeze_column_label": "Kolonn entfräieren",
+  "hide_columns_to_the_right_label": "Kolonnen op der rechter Säit verstoppen",
   "tree_control_tooltip_gantt_milestone": "Gantt Meilesteen",
   "tree_control_tooltip_buffer_task": "Pufferaufgab",
   "tree_control_tooltip_Meetings": "Versammlungen",

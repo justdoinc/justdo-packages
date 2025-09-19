@@ -3,6 +3,7 @@
   "hide_column_label": "Թաքցնել սյունակը",
   "freeze_column_label": "Սառեցնել սյունակը",
   "unfreeze_column_label": "Ապասառեցնել սյունակը",
+  "hide_columns_to_the_right_label": "Թաքցնել աջ կողմի սյունակները",
   "tree_control_tooltip_gantt_milestone": "Գանտի ցուցանիշ (Gantt Milestone)",
   "tree_control_tooltip_buffer_task": "Բուֆերային առաջադրանք",
   "tree_control_tooltip_Meetings": "Հանդիպումներ",

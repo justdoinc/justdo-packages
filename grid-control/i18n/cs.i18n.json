@@ -3,6 +3,7 @@
   "hide_column_label": "Skrýt sloupec",
   "freeze_column_label": "Zmrazit sloupec",
   "unfreeze_column_label": "Odmrazit sloupec",
+  "hide_columns_to_the_right_label": "Skrýt sloupce vpravo",
   "tree_control_tooltip_gantt_milestone": "Milník Ganttova diagramu",
   "tree_control_tooltip_buffer_task": "Vyrovnávací úkol",
   "tree_control_tooltip_Meetings": "Schůzky",

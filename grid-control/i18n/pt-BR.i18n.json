@@ -3,6 +3,7 @@
   "hide_column_label": "Ocultar Coluna",
   "freeze_column_label": "Congelar Coluna",
   "unfreeze_column_label": "Descongelar Coluna",
+  "hide_columns_to_the_right_label": "Ocultar Colunas à Direita",
   "tree_control_tooltip_gantt_milestone": "Marco do Gantt",
   "tree_control_tooltip_buffer_task": "Tarefa de Buffer",
   "tree_control_tooltip_Meetings": "Reuniões",

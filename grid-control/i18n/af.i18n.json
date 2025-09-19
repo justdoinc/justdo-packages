@@ -3,6 +3,7 @@
   "hide_column_label": "Versteek Kolom",
   "freeze_column_label": "Vries Kolom",
   "unfreeze_column_label": "Ontvries Kolom",
+  "hide_columns_to_the_right_label": "Versteek Kolomme na Regs",
   "tree_control_tooltip_gantt_milestone": "Gantt-mylpaal",
   "tree_control_tooltip_buffer_task": "Buffertaak",
   "tree_control_tooltip_Meetings": "Vergaderings",

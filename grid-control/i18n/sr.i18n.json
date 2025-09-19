@@ -3,6 +3,7 @@
   "hide_column_label": "Sakrij kolonu",
   "freeze_column_label": "Zamrzni kolonu",
   "unfreeze_column_label": "Odmrzni kolonu",
+  "hide_columns_to_the_right_label": "Sakrij kolone desno",
   "tree_control_tooltip_gantt_milestone": "Gantov miljokaz",
   "tree_control_tooltip_buffer_task": "Bafer zadatak",
   "tree_control_tooltip_Meetings": "Sastanci",

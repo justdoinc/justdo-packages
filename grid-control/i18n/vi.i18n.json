@@ -3,6 +3,7 @@
   "hide_column_label": "Ẩn cột",
   "freeze_column_label": "Cố định cột",
   "unfreeze_column_label": "Bỏ cố định cột",
+  "hide_columns_to_the_right_label": "Ẩn Cột bên Phải",
   "tree_control_tooltip_gantt_milestone": "Cột Mốc Gantt",
   "tree_control_tooltip_buffer_task": "Công Việc Đệm",
   "tree_control_tooltip_Meetings": "Cuộc Họp",

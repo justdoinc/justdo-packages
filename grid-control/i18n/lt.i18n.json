@@ -3,6 +3,7 @@
   "hide_column_label": "Slėpti stulpelį",
   "freeze_column_label": "Užfiksuoti stulpelį",
   "unfreeze_column_label": "Atfiksuoti stulpelį",
+  "hide_columns_to_the_right_label": "Paslėpti stulpelius dešinėje",
   "tree_control_tooltip_gantt_milestone": "Ganto diagramos gairė",
   "tree_control_tooltip_buffer_task": "Buferinė užduotis",
   "tree_control_tooltip_Meetings": "Susitikimai",

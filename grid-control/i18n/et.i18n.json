@@ -3,6 +3,7 @@
   "hide_column_label": "Peida veerg",
   "freeze_column_label": "Kinnita veerg",
   "unfreeze_column_label": "Vabasta veerg",
+  "hide_columns_to_the_right_label": "Peida paremal asuvad veerud",
   "tree_control_tooltip_gantt_milestone": "Gantti tähis",
   "tree_control_tooltip_buffer_task": "Puhverülesanne",
   "tree_control_tooltip_Meetings": "Koosolekud",

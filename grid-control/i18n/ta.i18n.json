@@ -3,6 +3,7 @@
   "hide_column_label": "நெடுவரிசையை மறை",
   "freeze_column_label": "நெடுவரிசையை உறைய வை",
   "unfreeze_column_label": "நெடுவரிசையை உறைநீக்கு",
+  "hide_columns_to_the_right_label": "வலதுபுறத்தில் உள்ள நெடுவரிசைகளை மறை",
   "tree_control_tooltip_gantt_milestone": "கான்ட் மைல்கல் (Gantt Milestone)",
   "tree_control_tooltip_buffer_task": "இடைநிலை பணி (Buffer Task)",
   "tree_control_tooltip_Meetings": "கூட்டங்கள்",

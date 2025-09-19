@@ -3,6 +3,7 @@
   "hide_column_label": "Skrij stolpec",
   "freeze_column_label": "Zamrzni stolpec",
   "unfreeze_column_label": "Odmrzni stolpec",
+  "hide_columns_to_the_right_label": "Skrij stolpce na desni",
   "tree_control_tooltip_gantt_milestone": "Mejnik Ganttovega diagrama",
   "tree_control_tooltip_buffer_task": "Vmesna naloga",
   "tree_control_tooltip_Meetings": "Sestanki",

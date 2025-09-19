@@ -3,6 +3,7 @@
   "hide_column_label": "Piilota sarake",
   "freeze_column_label": "Lukitse sarake",
   "unfreeze_column_label": "Vapauta sarake",
+  "hide_columns_to_the_right_label": "Piilota oikealla olevat sarakkeet",
   "tree_control_tooltip_gantt_milestone": "Gantt-virstanpylväs",
   "tree_control_tooltip_buffer_task": "Puskuritehtävä",
   "tree_control_tooltip_Meetings": "Kokoukset",

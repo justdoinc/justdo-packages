@@ -3,6 +3,7 @@
   "hide_column_label": "Paslēpt kolonnu",
   "freeze_column_label": "Fiksēt kolonnu",
   "unfreeze_column_label": "Atfiksēt kolonnu",
+  "hide_columns_to_the_right_label": "Slēpt kolonnas pa labi",
   "tree_control_tooltip_gantt_milestone": "Ganta diagrammas atskaites punkts",
   "tree_control_tooltip_buffer_task": "Bufera uzdevums",
   "tree_control_tooltip_Meetings": "Sanāksmes",
