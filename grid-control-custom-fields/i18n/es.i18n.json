@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Campos personalizados",
+  "grid_control_custom_fields_configure_field": "Configurar campo",
+  "grid_control_custom_fields_add_option": "Agregar opción",
+  "grid_control_custom_fields_edit_options": "Editar opciones",
+  "grid_control_custom_fields_column_filter": "Filtro de Columna",
   "grid_control_custom_fields_sort_by_name_label": "Ordenar por nombre",
   "grid_control_custom_fields_new_custom_field_label": "Nuevo campo personalizado",
   "grid_control_custom_fields_no_custom_fields_label": "No hay campos personalizados",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Opciones múltiples",
   "grid_control_custom_fields_smart_numbers_label": "Números inteligentes",
   "grid_control_custom_fields_unknown_type_label": "Tipo desconocido",
-  "grid_control_custom_fields_disabled_field_label": "Campo deshabilitado"
+  "grid_control_custom_fields_disabled_field_label": "Campo deshabilitado",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Vacío</i>"
 }

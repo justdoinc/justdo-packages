@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Kohandatud väljad",
+  "grid_control_custom_fields_configure_field": "Seadista väli",
+  "grid_control_custom_fields_add_option": "Lisa valik",
+  "grid_control_custom_fields_edit_options": "Muuda valikuid",
+  "grid_control_custom_fields_column_filter": "Veeru Filter",
   "grid_control_custom_fields_sort_by_name_label": "Sorteeri nime järgi",
   "grid_control_custom_fields_new_custom_field_label": "Uus kohandatud väli",
   "grid_control_custom_fields_no_custom_fields_label": "Kohandatud välju pole",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Mitu valikut",
   "grid_control_custom_fields_smart_numbers_label": "Nutikad numbrid",
   "grid_control_custom_fields_unknown_type_label": "Tundmatu tüüp",
-  "grid_control_custom_fields_disabled_field_label": "Keelatud väli"
+  "grid_control_custom_fields_disabled_field_label": "Keelatud väli",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Tühi</i>"
 }

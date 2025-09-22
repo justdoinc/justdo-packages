@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Egyéni mezők",
+  "grid_control_custom_fields_configure_field": "Mező konfigurálása",
+  "grid_control_custom_fields_add_option": "Opció hozzáadása",
+  "grid_control_custom_fields_edit_options": "Opciók szerkesztése",
+  "grid_control_custom_fields_column_filter": "Oszlop szűrő",
   "grid_control_custom_fields_sort_by_name_label": "Rendezés név szerint",
   "grid_control_custom_fields_new_custom_field_label": "Új egyéni mező",
   "grid_control_custom_fields_no_custom_fields_label": "Nincsenek egyéni mezők",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Több opció",
   "grid_control_custom_fields_smart_numbers_label": "Okos számok",
   "grid_control_custom_fields_unknown_type_label": "Ismeretlen típus",
-  "grid_control_custom_fields_disabled_field_label": "Letiltott mező"
+  "grid_control_custom_fields_disabled_field_label": "Letiltott mező",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Üres</i>"
 }

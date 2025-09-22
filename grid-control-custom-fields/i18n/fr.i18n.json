@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Champs personnalisés",
+  "grid_control_custom_fields_configure_field": "Configurer le champ",
+  "grid_control_custom_fields_add_option": "Ajouter une option",
+  "grid_control_custom_fields_edit_options": "Modifier les options",
+  "grid_control_custom_fields_column_filter": "Filtre de Colonne",
   "grid_control_custom_fields_sort_by_name_label": "Trier par nom",
   "grid_control_custom_fields_new_custom_field_label": "Nouveau champ personnalisé",
   "grid_control_custom_fields_no_custom_fields_label": "Aucun champ personnalisé",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Options multiples",
   "grid_control_custom_fields_smart_numbers_label": "Nombres intelligents",
   "grid_control_custom_fields_unknown_type_label": "Type inconnu",
-  "grid_control_custom_fields_disabled_field_label": "Champ désactivé"
+  "grid_control_custom_fields_disabled_field_label": "Champ désactivé",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Vide</i>"
 }

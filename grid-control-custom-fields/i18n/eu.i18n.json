@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Eremu pertsonalizatuak",
+  "grid_control_custom_fields_configure_field": "Eremua konfiguratu",
+  "grid_control_custom_fields_add_option": "Aukera gehitu",
+  "grid_control_custom_fields_edit_options": "Aukerak editatu",
+  "grid_control_custom_fields_column_filter": "Zutabe Iragazkia",
   "grid_control_custom_fields_sort_by_name_label": "Ordenatu izenaren arabera",
   "grid_control_custom_fields_new_custom_field_label": "Eremu pertsonalizatu berria",
   "grid_control_custom_fields_no_custom_fields_label": "Ez dago eremu pertsonalizaturik",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Aukera anitzak",
   "grid_control_custom_fields_smart_numbers_label": "Zenbaki adimentsuak",
   "grid_control_custom_fields_unknown_type_label": "Mota ezezaguna",
-  "grid_control_custom_fields_disabled_field_label": "Desgaitutako eremua"
+  "grid_control_custom_fields_disabled_field_label": "Desgaitutako eremua",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Hutsik</i>"
 }

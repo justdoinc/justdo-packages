@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Benutzerdefinierte Felder",
+  "grid_control_custom_fields_configure_field": "Feld konfigurieren",
+  "grid_control_custom_fields_add_option": "Option hinzufügen",
+  "grid_control_custom_fields_edit_options": "Optionen bearbeiten",
+  "grid_control_custom_fields_column_filter": "Spaltenfilter",
   "grid_control_custom_fields_sort_by_name_label": "Nach Name sortieren",
   "grid_control_custom_fields_new_custom_field_label": "Neues benutzerdefiniertes Feld",
   "grid_control_custom_fields_no_custom_fields_label": "Keine benutzerdefinierten Felder",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Mehrfachauswahl",
   "grid_control_custom_fields_smart_numbers_label": "Intelligente Zahlen (Smart Numbers)",
   "grid_control_custom_fields_unknown_type_label": "Unbekannter Typ",
-  "grid_control_custom_fields_disabled_field_label": "Deaktiviertes Feld"
+  "grid_control_custom_fields_disabled_field_label": "Deaktiviertes Feld",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Leer</i>"
 }

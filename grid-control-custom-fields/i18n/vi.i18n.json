@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Trường tùy chỉnh",
+  "grid_control_custom_fields_configure_field": "Cấu hình trường",
+  "grid_control_custom_fields_add_option": "Thêm tùy chọn",
+  "grid_control_custom_fields_edit_options": "Chỉnh sửa tùy chọn",
+  "grid_control_custom_fields_column_filter": "Bộ Lọc Cột",
   "grid_control_custom_fields_sort_by_name_label": "Sắp xếp theo tên",
   "grid_control_custom_fields_new_custom_field_label": "Trường tùy chỉnh mới",
   "grid_control_custom_fields_no_custom_fields_label": "Không có trường tùy chỉnh",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Đa lựa chọn",
   "grid_control_custom_fields_smart_numbers_label": "Số thông minh",
   "grid_control_custom_fields_unknown_type_label": "Trường tuỳ chỉnh chưa xác định",
-  "grid_control_custom_fields_disabled_field_label": "Trường tuỳ chỉnh bị vô hiệu hóa"
+  "grid_control_custom_fields_disabled_field_label": "Trường tuỳ chỉnh bị vô hiệu hóa",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Trống</i>"
 }

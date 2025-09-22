@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Προσαρμοσμένα Πεδία",
+  "grid_control_custom_fields_configure_field": "Διαμόρφωση πεδίου",
+  "grid_control_custom_fields_add_option": "Προσθήκη επιλογής",
+  "grid_control_custom_fields_edit_options": "Επεξεργασία επιλογών",
+  "grid_control_custom_fields_column_filter": "Φίλτρο Στήλης",
   "grid_control_custom_fields_sort_by_name_label": "Ταξινόμηση κατά Όνομα",
   "grid_control_custom_fields_new_custom_field_label": "Νέο προσαρμοσμένο πεδίο",
   "grid_control_custom_fields_no_custom_fields_label": "Δεν υπάρχουν προσαρμοσμένα πεδία",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Πολλαπλές Επιλογές",
   "grid_control_custom_fields_smart_numbers_label": "Έξυπνοι Αριθμοί",
   "grid_control_custom_fields_unknown_type_label": "Άγνωστος τύπος",
-  "grid_control_custom_fields_disabled_field_label": "Απενεργοποιημένο πεδίο"
+  "grid_control_custom_fields_disabled_field_label": "Απενεργοποιημένο πεδίο",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Κενό</i>"
 }

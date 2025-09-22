@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "الحقول المخصصة",
+  "grid_control_custom_fields_configure_field": "تكوين الحقل",
+  "grid_control_custom_fields_add_option": "إضافة خيار",
+  "grid_control_custom_fields_edit_options": "تحرير الخيارات",
+  "grid_control_custom_fields_column_filter": "فلتر العمود",
   "grid_control_custom_fields_sort_by_name_label": "ترتيب حسب الاسم",
   "grid_control_custom_fields_new_custom_field_label": "حقل مخصص جديد",
   "grid_control_custom_fields_no_custom_fields_label": "لا توجد حقول مخصصة",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "خيارات متعددة",
   "grid_control_custom_fields_smart_numbers_label": "أرقام ذكية",
   "grid_control_custom_fields_unknown_type_label": "نوع غير معروف",
-  "grid_control_custom_fields_disabled_field_label": "حقل معطل"
+  "grid_control_custom_fields_disabled_field_label": "حقل معطل",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">فارغ</i>"
 }

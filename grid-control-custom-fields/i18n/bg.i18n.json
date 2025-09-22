@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Персонализирани полета",
+  "grid_control_custom_fields_configure_field": "Конфигуриране на поле",
+  "grid_control_custom_fields_add_option": "Добавяне на опция",
+  "grid_control_custom_fields_edit_options": "Редактиране на опции",
+  "grid_control_custom_fields_column_filter": "Филтър за колона",
   "grid_control_custom_fields_sort_by_name_label": "Сортиране по име",
   "grid_control_custom_fields_new_custom_field_label": "Ново персонализирано поле",
   "grid_control_custom_fields_no_custom_fields_label": "Няма персонализирани полета",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Множество опции",
   "grid_control_custom_fields_smart_numbers_label": "Умни числа (Smart Numbers)",
   "grid_control_custom_fields_unknown_type_label": "Неизвестен тип",
-  "grid_control_custom_fields_disabled_field_label": "Деактивирано поле"
+  "grid_control_custom_fields_disabled_field_label": "Деактивирано поле",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Празно</i>"
 }

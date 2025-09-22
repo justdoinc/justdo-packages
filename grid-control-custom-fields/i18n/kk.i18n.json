@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Арнайы өрістер",
+  "grid_control_custom_fields_configure_field": "Өрісті теңшеу",
+  "grid_control_custom_fields_add_option": "Опция қосу",
+  "grid_control_custom_fields_edit_options": "Опцияларды өңдеу",
+  "grid_control_custom_fields_column_filter": "Баған Сүзгісі",
   "grid_control_custom_fields_sort_by_name_label": "Аты бойынша сұрыптау",
   "grid_control_custom_fields_new_custom_field_label": "Жаңа арнайы өріс",
   "grid_control_custom_fields_no_custom_fields_label": "Арнайы өрістер жоқ",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Көп опциялар",
   "grid_control_custom_fields_smart_numbers_label": "Ақылды сандар",
   "grid_control_custom_fields_unknown_type_label": "Белгісіз түр",
-  "grid_control_custom_fields_disabled_field_label": "Өшірілген өріс"
+  "grid_control_custom_fields_disabled_field_label": "Өшірілген өріс",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Бос</i>"
 }

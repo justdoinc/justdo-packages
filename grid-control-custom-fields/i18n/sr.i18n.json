@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Прилагођена поља",
+  "grid_control_custom_fields_configure_field": "Konfiguriši polje",
+  "grid_control_custom_fields_add_option": "Dodaj opciju",
+  "grid_control_custom_fields_edit_options": "Uredi opcije",
+  "grid_control_custom_fields_column_filter": "Filter Kolone",
   "grid_control_custom_fields_sort_by_name_label": "Сортирај по имену",
   "grid_control_custom_fields_new_custom_field_label": "Ново прилагођено поље",
   "grid_control_custom_fields_no_custom_fields_label": "Нема прилагођених поља",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Вишеструке опције",
   "grid_control_custom_fields_smart_numbers_label": "Паметни бројеви (Smart Numbers)",
   "grid_control_custom_fields_unknown_type_label": "Непознати тип",
-  "grid_control_custom_fields_disabled_field_label": "Онемогућено поље"
+  "grid_control_custom_fields_disabled_field_label": "Онемогућено поље",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Prazno</i>"
 }

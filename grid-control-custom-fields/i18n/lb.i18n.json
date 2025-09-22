@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Benotzerdefinéiert Felder",
+  "grid_control_custom_fields_configure_field": "Feld konfiguréieren",
+  "grid_control_custom_fields_add_option": "Optioun dobäisetzen",
+  "grid_control_custom_fields_edit_options": "Optiounen änneren",
+  "grid_control_custom_fields_column_filter": "Kolonnenfilter",
   "grid_control_custom_fields_sort_by_name_label": "Nom Numm sortéieren",
   "grid_control_custom_fields_new_custom_field_label": "Neit benotzerdefinéiert Feld",
   "grid_control_custom_fields_no_custom_fields_label": "Keng benotzerdefinéiert Felder",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Multi-Optiounen",
   "grid_control_custom_fields_smart_numbers_label": "Intelligent Zuelen (Smart Numbers)",
   "grid_control_custom_fields_unknown_type_label": "Onbekannten Typ",
-  "grid_control_custom_fields_disabled_field_label": "Deaktivéiert Feld"
+  "grid_control_custom_fields_disabled_field_label": "Deaktivéiert Feld",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Eidel</i>"
 }

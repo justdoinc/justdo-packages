@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Maxsus maydonlar",
+  "grid_control_custom_fields_configure_field": "Maydonni sozlash",
+  "grid_control_custom_fields_add_option": "Variant qo'shish",
+  "grid_control_custom_fields_edit_options": "Variantlarni tahrirlash",
+  "grid_control_custom_fields_column_filter": "Ustun Filtri",
   "grid_control_custom_fields_sort_by_name_label": "Nom bo'yicha saralash",
   "grid_control_custom_fields_new_custom_field_label": "Yangi maxsus maydon",
   "grid_control_custom_fields_no_custom_fields_label": "Maxsus maydonlar yo'q",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Ko'p variantlar",
   "grid_control_custom_fields_smart_numbers_label": "Aqlli raqamlar",
   "grid_control_custom_fields_unknown_type_label": "Noma'lum tur",
-  "grid_control_custom_fields_disabled_field_label": "O'chirilgan maydon"
+  "grid_control_custom_fields_disabled_field_label": "O'chirilgan maydon",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Bo'sh</i>"
 }
