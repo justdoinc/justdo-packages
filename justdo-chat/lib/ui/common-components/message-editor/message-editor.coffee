@@ -39,7 +39,7 @@ Template.common_chat_message_editor.onCreated ->
     return
   
   @getFileInputElement = -> @$(".message-editor-file-input")
-  @attached_files_map = {}
+  @attached_files = []
   @attached_files_dep = new Tracker.Dependency()
   @getFileKey = (file) -> "#{file.name}:#{file.size}:#{file.lastModified}"
   @attachFiles = (files) ->
@@ -58,30 +58,34 @@ Template.common_chat_message_editor.onCreated ->
       name_of_files_exceeding_size_limit = "\n" + "<ul>#{name_of_files_exceeding_size_limit}</ul>"
       @setError TAPi18n.__("chat_files_exceeds_size_limit_error", {limit: human_readable_size_limit, files: name_of_files_exceeding_size_limit, count: files_exceeding_size_limit.length})
 
-    for file in files_not_exceeding_size_limit
+    files_not_exceeding_size_limit = _.map files_not_exceeding_size_limit, (file) =>
       # The key to identify the file uniquely to avoid duplicates.
       file_key = @getFileKey file
       file._id = file_key
-      @attached_files_map[file_key] = file
+      return file
     
-    @attached_files_dep.changed()
+    @addFiles files_not_exceeding_size_limit
 
+    return
+  @addFiles = (files) ->
+    @attached_files = @attached_files.concat files
+    @attached_files = _.uniq @attached_files, false, "_id"
+    @attached_files_dep.changed()
     return
   @getFilesArray = ->
     @attached_files_dep.depend()
-    return _.values @attached_files_map
+    return @attached_files
   @removeFilesByKey = (file_keys) ->
     if _.isString file_keys
       file_keys = [file_keys]
 
-    for file_key in file_keys
-      delete @attached_files_map[file_key]
+    @attached_files = _.filter @attached_files, (file) => file._id not in file_keys
         
     @attached_files_dep.changed()
     
     return
   @clearFiles = ->
-    @attached_files_map = {}
+    @attached_files = []
     # Clear the file input element
     @getFileInputElement().val("")
     @attached_files_dep.changed()
@@ -89,7 +93,7 @@ Template.common_chat_message_editor.onCreated ->
     return
   @getFilesCount = -> 
     @attached_files_dep.depend()
-    return _.size @attached_files_map
+    return _.size @attached_files
 
   # Since the bound element of the dropdown has animation that rotates the element upon hovering,
   # `is_files_dropdown_open` is introduced to prevent flickering caused by rapidly opening/closing of the dropdown
