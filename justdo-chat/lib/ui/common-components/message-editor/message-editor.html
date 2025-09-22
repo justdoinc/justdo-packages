@@ -29,9 +29,14 @@
 <template name="common_chat_message_editor_files_dropdown">
   {{#each attachedFiles}}
     <div class="dropdown-item" data-file-key="{{_id}}">
-      <div class="file-name-and-size">
-        <div class="file-name">{{name}}</div>
-        <div class="file-size text-muted small">{{bytesToHumanReadable size}}</div>
+      <div class="dropdown-item-content">
+        <div class="sort-handle">
+          <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical-double"/></svg>
+        </div>
+        <div class="file-name-and-size">
+          <div class="file-name">{{name}}</div>
+          <div class="file-size text-muted small">{{bytesToHumanReadable size}}</div>
+        </div>
       </div>
       <div class="remove-file"><svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#trash-2"/></svg></div>
     </div>

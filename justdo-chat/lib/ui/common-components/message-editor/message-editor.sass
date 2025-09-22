@@ -94,12 +94,17 @@
     flex-direction: column
     gap: 4px
     .dropdown-item
-      padding: 0px 8px
+      padding: 0px 8px 0px 0px
       display: flex
       align-items: center
       justify-content: space-between
       gap: 4px
       user-select: none
+      .dropdown-item-content
+        display: flex
+        align-items: center
+        .sort-handle
+          cursor: grab
       .remove-file
         cursor: pointer
         .jd-icon

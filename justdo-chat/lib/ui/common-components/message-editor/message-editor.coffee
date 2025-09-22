@@ -6,6 +6,8 @@
 # * getChannelObject().sendMessage(message_body) -> will be called with the message body as its first param
 
 Template.common_chat_message_editor.onCreated ->
+  tpl = @
+
   @_sendingState = new ReactiveVar false
   @setSendingState = -> @_sendingState.set true
   @unsetSendingState = -> @_sendingState.set false
@@ -71,6 +73,10 @@ Template.common_chat_message_editor.onCreated ->
     @attached_files = @attached_files.concat files
     @attached_files = _.uniq @attached_files, false, "_id"
     @attached_files_dep.changed()
+  @sortFilesByArrayOrder = (file_ids) ->
+    @attached_files = _.sortBy @attached_files, (file) =>
+      file_ids.indexOf file._id
+    @attached_files_dep.changed()
     return
   @getFilesArray = ->
     @attached_files_dep.depend()
@@ -103,10 +109,18 @@ Template.common_chat_message_editor.onCreated ->
     custom_bound_element_options:
       close_button_html: null
       close_on_bound_elements_show: false
-      openedHandler: (e) =>
-        @is_files_dropdown_open = true
+      openedHandler: ->
+        tpl.is_files_dropdown_open = true
+        $(tpl.files_dropdown.current_dropdown_node.node).sortable
+          handle: ".sort-handle"
+          items: ".dropdown-item"
+          update: (e, ui) ->
+            updated_file_order = $(@).sortable("toArray", {attribute: "data-file-key"})
+            tpl.sortFilesByArrayOrder updated_file_order
+            return
+
         return
-      closedHandler: (e) =>
+      closedHandler: =>
         @is_files_dropdown_open = false
         return
 
@@ -152,6 +166,7 @@ Template.common_chat_message_editor.onCreated ->
 
     Meteor.defer =>
       @files_dropdown.updateDropdownPosition @files_dropdown.$connected_element, false
+      $(@files_dropdown.current_dropdown_node.node).sortable "refresh"
       return
 
     return
