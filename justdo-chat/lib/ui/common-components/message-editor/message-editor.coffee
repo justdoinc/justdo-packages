@@ -53,9 +53,9 @@ Template.common_chat_message_editor.onCreated ->
     # Filter out files that exceeds size limit and set error to notify user
     if not _.isEmpty files_exceeding_size_limit
       human_readable_size_limit = JustdoHelpers.bytesToHumanReadable file_size_limit
-      name_of_files_exceeding_size_limit = _.map(files_exceeding_size_limit, (file) -> "#{file.name}(#{JustdoHelpers.bytesToHumanReadable file.size})").join("\n")
+      name_of_files_exceeding_size_limit = _.map(files_exceeding_size_limit, (file) -> "<li>#{file.name} (#{JustdoHelpers.bytesToHumanReadable file.size})</li>").join("")
       # Add a new line to the beginning of the string to make it more readable
-      name_of_files_exceeding_size_limit = "\n" + name_of_files_exceeding_size_limit
+      name_of_files_exceeding_size_limit = "\n" + "<ul>#{name_of_files_exceeding_size_limit}</ul>"
       @setError TAPi18n.__("chat_files_exceeds_size_limit_error", {limit: human_readable_size_limit, files: name_of_files_exceeding_size_limit, count: files_exceeding_size_limit.length})
 
     for file in files_not_exceeding_size_limit
