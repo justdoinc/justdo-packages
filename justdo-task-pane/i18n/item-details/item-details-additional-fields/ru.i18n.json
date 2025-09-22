@@ -1,6 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "Найти в таблице",
   "item_details_additional_fields_add_to_grid": "Добавить в таблицу",
-  "item_details_additional_fields_show_all": "Показать все",
-  "item_details_additional_fields_hide_all": "Скрыть все"
+  "item_details_additional_fields_show_all": "Показать все столбцы",
+  "item_details_additional_fields_hide_all": "Скрыть все столбцы"
 }

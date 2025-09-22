@@ -1,6 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "In Tabelle lokalisieren",
   "item_details_additional_fields_add_to_grid": "Zur Tabelle hinzufügen",
-  "item_details_additional_fields_show_all": "Alle anzeigen",
-  "item_details_additional_fields_hide_all": "Alle ausblenden"
+  "item_details_additional_fields_show_all": "Alle Spalten anzeigen",
+  "item_details_additional_fields_hide_all": "Alle Spalten ausblenden"
 }

@@ -1,6 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "定位至表格",
   "item_details_additional_fields_add_to_grid": "新增至表格",
-  "item_details_additional_fields_show_all": "全部顯示",
-  "item_details_additional_fields_hide_all": "全部隱藏"
+  "item_details_additional_fields_show_all": "顯示所有欄位",
+  "item_details_additional_fields_hide_all": "隱藏所有欄位"
 }

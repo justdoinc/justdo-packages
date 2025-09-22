@@ -1,6 +1,6 @@
 {
   "item_details_additional_fields_locate_on_grid": "Localizar en la Tabla",
   "item_details_additional_fields_add_to_grid": "Agregar a la Tabla",
-  "item_details_additional_fields_show_all": "Mostrar Todo",
-  "item_details_additional_fields_hide_all": "Ocultar Todo"
+  "item_details_additional_fields_show_all": "Mostrar Todas las Columnas",
+  "item_details_additional_fields_hide_all": "Ocultar Todas las Columnas"
 }
