@@ -220,6 +220,19 @@ Template.common_chat_message_editor.onCreated ->
       task_id = task_chat_object.getChannelIdentifier().task_id
       uploaded_files = []
 
+      # Since file preview modal shows the most recent file first, we need to upload the files in reverse order
+      # to match the order of the files in the dropdown by using `file_to_upload_index`.
+      # If this order is updated, please also update the order below searching by the key "FILE_ORDER_IN_MESSAGE"
+      file_to_upload_index = _.size(files) - 1
+      uploadNextFile = ->
+        if _.isEmpty(files)
+          return
+        
+        file = files[file_to_upload_index]
+        file_to_upload_index -= 1
+        APP.justdo_file_interface.uploadTaskFile task_id, file, uploadFileCb
+        return
+
       # Note: This callback is used to handle the upload of a single file
       uploadFileCb = (err, file_details) =>
         if err?
@@ -248,13 +261,15 @@ Template.common_chat_message_editor.onCreated ->
         if all_files_uploaded
           # Clear the file input
           @clearFiles()
+          # FILE_ORDER_IN_MESSAGE
+          uploaded_files = uploaded_files.reverse()
           callSendMessageMethod input_val, uploaded_files
+        else
+          uploadNextFile()
         
         return
       
-      for file in files
-        APP.justdo_file_interface.uploadTaskFile task_id, file, uploadFileCb
-
+      uploadNextFile()
     else
       callSendMessageMethod input_val
 
