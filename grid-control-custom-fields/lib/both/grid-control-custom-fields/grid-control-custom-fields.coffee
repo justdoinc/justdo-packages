@@ -663,6 +663,7 @@ _.extend GridControlCustomFields,
       type_id: "string"
       label: "Text"
       label_i18n: "grid_control_custom_fields_text_label"
+      settings_button_template: "custom_field_conf_text_options_editor_opener"
     }
     {
       custom_field_type_id: "basic-number-decimal"

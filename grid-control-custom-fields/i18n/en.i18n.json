@@ -1,5 +1,7 @@
 {
   "grid_control_custom_fields_section_title": "Custom Fields",
+  "grid_control_custom_fields_configure_field": "Configure field",
+  "grid_control_custom_fields_column_filter": "Column Filter",
   "grid_control_custom_fields_sort_by_name_label": "Sort by Name",
   "grid_control_custom_fields_new_custom_field_label": "New custom field",
   "grid_control_custom_fields_no_custom_fields_label": "No custom fields",
@@ -10,5 +12,6 @@
   "grid_control_custom_fields_multi_select_label": "Multi Options",
   "grid_control_custom_fields_smart_numbers_label": "Smart Numbers",
   "grid_control_custom_fields_unknown_type_label": "Unknown type",
-  "grid_control_custom_fields_disabled_field_label": "Disabled field"
+  "grid_control_custom_fields_disabled_field_label": "Disabled field",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Empty</i>"
 }

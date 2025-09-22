@@ -1,0 +1,18 @@
+<template name="custom_field_conf_text_options_editor_opener">
+  <div class="custom-field-text-options-editor-opener" aria-hidden="true" field-id="{{field_id}}">
+    <svg class="jd-icon" aria-hidden="true"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"/></svg>
+  </div>
+</template>
+
+<template name="custom_field_conf_text_options_editor">
+  <div class="editor-caption font-weight-bold text-body text-uppercase">{{_ "grid_control_custom_fields_configure_field"}}</div>
+
+  <div class="custom-field-options form-control-sm">
+    <div class="field-configuration column-filter">
+      {{_ "grid_control_custom_fields_column_filter"}}
+      {{> jdToggle checked=isColumnFilterEnabled}}
+    </div>
+
+  </div>
+
+</template>
