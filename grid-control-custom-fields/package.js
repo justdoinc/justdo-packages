@@ -80,6 +80,10 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/project-config/select-options-editor/select-options-editor.sass", client);
   api.addFiles("lib/client/project-config/select-options-editor/select-options-editor.html", client);
 
+  api.addFiles("lib/client/project-config/text-options-editor/text-options-editor.coffee", client);
+  api.addFiles("lib/client/project-config/text-options-editor/text-options-editor.sass", client);
+  api.addFiles("lib/client/project-config/text-options-editor/text-options-editor.html", client);
+
   api.addFiles("lib/client/project-config/project-config.coffee", client);
   api.addFiles("lib/client/project-config/project-config.sass", client);
   api.addFiles("lib/client/project-config/project-config.html", client);
