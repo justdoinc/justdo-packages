@@ -581,6 +581,61 @@ _.extend GridControlCustomFields,
           if (filter_type = custom_field_definition.filter_type)?
             custom_field_schema.grid_column_filter_settings =
               type: filter_type
+          
+          if (custom_field_definition.field_type is "string") and (filter_type is "whitelist") and not (filter_options = custom_field_definition.filter_options)?
+            # If the field is a string, and the filter type is whitelist, and no filter_options is set, setup default filter options
+            # Default filter options are unique trimmed value of the field + "Blank" option
+            do (custom_field_id, custom_field_definition) =>
+              custom_field_definition.filter_options =
+                filter_values: =>
+                  values = []
+
+                  query = 
+                    project_id: JD.activeJustdoId()
+                  query_options = 
+                    fields: 
+                      [custom_field_id]: 1
+
+                  APP.collections.Tasks.find(query, query_options).forEach (task) =>
+                    trimmed_value = task[custom_field_id]?.trim() or ""
+                    values.push trimmed_value
+                    return
+                  
+                  order = 0
+                  values = _.chain values
+                    .uniq()
+                    .sortBy (value) -> 
+                      return value.toLowerCase()
+                    .map (value) ->
+                      label_i18n = value
+                      if _.isEmpty value
+                        label_i18n = "grid_control_custom_fields_empty_field_placeholder_html"
+                      value_obj = 
+                        txt: TAPi18n.__(label_i18n, {}, JustdoI18n.default_lang)
+                        txt_i18n: label_i18n
+                        order: if _.isEmpty value then 999 else order
+                        customFilterQuery: (filter_state_id, column_state_definitions, context) -> 
+                          if _.isEmpty value
+                            query = 
+                              $or: [
+                                [custom_field_id]: null
+                              ,
+                                [custom_field_id]: 
+                                  $regex: /^\s*$/
+                              ]
+                          else
+                            query = 
+                              [custom_field_id]: value
+                          
+                          return query
+                      order += 1
+                      return value_obj
+                    .value()
+
+                  return values
+                
+              return
+
 
           if (filter_options = custom_field_definition.filter_options)?
             custom_field_schema.grid_column_filter_settings.options = custom_field_definition.filter_options
