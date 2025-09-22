@@ -1,6 +1,8 @@
 {
   "grid_control_custom_fields_section_title": "Custom Fields",
   "grid_control_custom_fields_configure_field": "Configure field",
+  "grid_control_custom_fields_add_option": "Add option",
+  "grid_control_custom_fields_edit_options": "Edit options",
   "grid_control_custom_fields_column_filter": "Column Filter",
   "grid_control_custom_fields_sort_by_name_label": "Sort by Name",
   "grid_control_custom_fields_new_custom_field_label": "New custom field",

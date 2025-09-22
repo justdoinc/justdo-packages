@@ -5,21 +5,21 @@
 </template>
 
 <template name="custom_field_conf_select_options_editor">
-  <div class="editor-caption font-weight-bold text-body text-uppercase">Edit options</div>
+  <div class="editor-caption font-weight-bold text-body text-uppercase">{{_ "grid_control_custom_fields_edit_options"}}</div>
   <div class="custom-field-options"></div>
   <div class="add-custom-field-option d-flex align-items-center py-2 mb-2">
-    <input type="text" class="new-option-label option-label form-control form-control-sm text-body" placeholder="Add option">
+    <input type="text" class="new-option-label option-label form-control form-control-sm text-body" placeholder="{{_ "grid_control_custom_fields_add_option_placeholder"}}">
     <svg class="jd-icon-custom-field text-primary add-option" aria-hidden="true"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
   </div>
   <div class="custom-field-select-options-footer">
     <div>
       {{#if showSortButton}}
-        <div class="sort-alphabetically text-primary">Sort by Name</div>
+        <div class="sort-alphabetically text-primary">{{_ "grid_control_custom_fields_sort_by_name_label"}}</div>
       {{/if}}
     </div>
     <div>
-      <button type="button" class="btn btn-primary btn-sm cancel">Cancel</button>
-      <button type="button" class="btn btn-primary btn-sm save">Save</button>
+      <button type="button" class="btn btn-primary btn-sm cancel">{{_ "cancel"}}</button>
+      <button type="button" class="btn btn-primary btn-sm save">{{_ "save"}}</button>
     </div>
   </div>
 </template>
