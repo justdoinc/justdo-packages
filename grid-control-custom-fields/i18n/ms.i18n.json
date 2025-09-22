@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Medan Tersuai",
+  "grid_control_custom_fields_configure_field": "Konfigurasi medan",
+  "grid_control_custom_fields_add_option": "Tambah pilihan",
+  "grid_control_custom_fields_edit_options": "Edit pilihan",
+  "grid_control_custom_fields_column_filter": "Penapis Lajur",
   "grid_control_custom_fields_sort_by_name_label": "Susun mengikut Nama",
   "grid_control_custom_fields_new_custom_field_label": "Medan tersuai baharu",
   "grid_control_custom_fields_no_custom_fields_label": "Tiada medan tersuai",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Pilihan Berganda",
   "grid_control_custom_fields_smart_numbers_label": "Nombor Pintar (Smart Numbers)",
   "grid_control_custom_fields_unknown_type_label": "Jenis tidak diketahui",
-  "grid_control_custom_fields_disabled_field_label": "Medan yang dinyahaktifkan"
+  "grid_control_custom_fields_disabled_field_label": "Medan yang dinyahaktifkan",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Kosong</i>"
 }

@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Уласныя палі",
+  "grid_control_custom_fields_configure_field": "Наладзіць поле",
+  "grid_control_custom_fields_add_option": "Дадаць варыянт",
+  "grid_control_custom_fields_edit_options": "Рэдагаваць варыянты",
+  "grid_control_custom_fields_column_filter": "Фільтр слупка",
   "grid_control_custom_fields_sort_by_name_label": "Сартаваць па назве",
   "grid_control_custom_fields_new_custom_field_label": "Новае ўласнае поле",
   "grid_control_custom_fields_no_custom_fields_label": "Няма ўласных палёў",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Множныя параметры",
   "grid_control_custom_fields_smart_numbers_label": "Разумныя лічбы (Smart Numbers)",
   "grid_control_custom_fields_unknown_type_label": "Невядомы тып",
-  "grid_control_custom_fields_disabled_field_label": "Адключанае поле"
+  "grid_control_custom_fields_disabled_field_label": "Адключанае поле",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Пуста</i>"
 }

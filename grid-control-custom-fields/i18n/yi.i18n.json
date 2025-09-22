@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "קאַסטאָם פעלדער",
+  "grid_control_custom_fields_configure_field": "קאָנפֿיגורירן פֿעלד",
+  "grid_control_custom_fields_add_option": "צולייגן אָפּציע",
+  "grid_control_custom_fields_edit_options": "רעדאַקטירן אָפּציעס",
+  "grid_control_custom_fields_column_filter": "שפּאַלט פֿילטער",
   "grid_control_custom_fields_sort_by_name_label": "סאָרטירן לויט נאָמען",
   "grid_control_custom_fields_new_custom_field_label": "נײַע קאַסטאָם פעלד",
   "grid_control_custom_fields_no_custom_fields_label": "קיין קאַסטאָם פעלדער",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "מערערע אָפּציעס",
   "grid_control_custom_fields_smart_numbers_label": "קלוגע נומערן (Smart Numbers)",
   "grid_control_custom_fields_unknown_type_label": "אומבאַקאַנט טיפּ",
-  "grid_control_custom_fields_disabled_field_label": "דיסייבלד פעלד"
+  "grid_control_custom_fields_disabled_field_label": "דיסייבלד פעלד",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">ליידיק</i>"
 }

@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Sehemu za Kubinafsisha",
+  "grid_control_custom_fields_configure_field": "Sanidi sehemu",
+  "grid_control_custom_fields_add_option": "Ongeza chaguo",
+  "grid_control_custom_fields_edit_options": "Hariri chaguo",
+  "grid_control_custom_fields_column_filter": "Kichujio cha Safu Wima",
   "grid_control_custom_fields_sort_by_name_label": "Panga kwa Jina",
   "grid_control_custom_fields_new_custom_field_label": "Sehemu mpya ya kubinafsisha",
   "grid_control_custom_fields_no_custom_fields_label": "Hakuna sehemu za kubinafsisha",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Chaguo Anuwai",
   "grid_control_custom_fields_smart_numbers_label": "Nambari Mahiri (Smart Numbers)",
   "grid_control_custom_fields_unknown_type_label": "Aina isiyojulikana",
-  "grid_control_custom_fields_disabled_field_label": "Sehemu iliyozimwa"
+  "grid_control_custom_fields_disabled_field_label": "Sehemu iliyozimwa",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Tupu</i>"
 }

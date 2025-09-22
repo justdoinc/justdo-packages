@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Հատուկ դաշտեր",
+  "grid_control_custom_fields_configure_field": "Կարգավորել դաշտը",
+  "grid_control_custom_fields_add_option": "Ավելացնել տարբերակ",
+  "grid_control_custom_fields_edit_options": "Խմբագրել տարբերակները",
+  "grid_control_custom_fields_column_filter": "Սյունի զտիչ",
   "grid_control_custom_fields_sort_by_name_label": "Դասավորել ըստ անվան",
   "grid_control_custom_fields_new_custom_field_label": "Նոր հատուկ դաշտ",
   "grid_control_custom_fields_no_custom_fields_label": "Հատուկ դաշտեր չկան",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Բազմակի տարբերակներ",
   "grid_control_custom_fields_smart_numbers_label": "Խելացի թվեր (Smart Numbers)",
   "grid_control_custom_fields_unknown_type_label": "Անհայտ տեսակ",
-  "grid_control_custom_fields_disabled_field_label": "Անջատված դաշտ"
+  "grid_control_custom_fields_disabled_field_label": "Անջատված դաշտ",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Դատարկ</i>"
 }

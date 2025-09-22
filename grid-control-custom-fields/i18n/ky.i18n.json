@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Атайын талаалар",
+  "grid_control_custom_fields_configure_field": "Талааны конфигурациясы",
+  "grid_control_custom_fields_add_option": "Вариант кошуу",
+  "grid_control_custom_fields_edit_options": "Варианттарды түзөтүү",
+  "grid_control_custom_fields_column_filter": "Багандын чыпкасы (Column Filter)",
   "grid_control_custom_fields_sort_by_name_label": "Аты боюнча иреттөө",
   "grid_control_custom_fields_new_custom_field_label": "Жаңы атайын талаа",
   "grid_control_custom_fields_no_custom_fields_label": "Атайын талаалар жок",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Көп варианттар",
   "grid_control_custom_fields_smart_numbers_label": "Акылдуу сандар (Smart Numbers)",
   "grid_control_custom_fields_unknown_type_label": "Белгисиз түр",
-  "grid_control_custom_fields_disabled_field_label": "Өчүрүлгөн талаа"
+  "grid_control_custom_fields_disabled_field_label": "Өчүрүлгөн талаа",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Бош</i>"
 }

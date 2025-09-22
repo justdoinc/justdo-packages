@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Fushat e personalizuara",
+  "grid_control_custom_fields_configure_field": "Konfiguro fushën",
+  "grid_control_custom_fields_add_option": "Shto opsion",
+  "grid_control_custom_fields_edit_options": "Edito opsionet",
+  "grid_control_custom_fields_column_filter": "Filtri i Kolonës",
   "grid_control_custom_fields_sort_by_name_label": "Rendit sipas emrit",
   "grid_control_custom_fields_new_custom_field_label": "Fushë e re e personalizuar",
   "grid_control_custom_fields_no_custom_fields_label": "Nuk ka fusha të personalizuara",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Opsione të shumta",
   "grid_control_custom_fields_smart_numbers_label": "Numra të mençur (Smart Numbers)",
   "grid_control_custom_fields_unknown_type_label": "Lloj i panjohur",
-  "grid_control_custom_fields_disabled_field_label": "Fushë e çaktivizuar"
+  "grid_control_custom_fields_disabled_field_label": "Fushë e çaktivizuar",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Bosh</i>"
 }

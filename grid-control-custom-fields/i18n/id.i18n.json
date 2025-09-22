@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Bidang Khusus",
+  "grid_control_custom_fields_configure_field": "Konfigurasi field",
+  "grid_control_custom_fields_add_option": "Tambah opsi",
+  "grid_control_custom_fields_edit_options": "Edit opsi",
+  "grid_control_custom_fields_column_filter": "Filter Kolom",
   "grid_control_custom_fields_sort_by_name_label": "Urutkan berdasarkan Nama",
   "grid_control_custom_fields_new_custom_field_label": "Bidang khusus baru",
   "grid_control_custom_fields_no_custom_fields_label": "Tidak ada bidang khusus",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Pilihan Ganda",
   "grid_control_custom_fields_smart_numbers_label": "Angka Pintar (Smart Numbers)",
   "grid_control_custom_fields_unknown_type_label": "Tipe tidak dikenal",
-  "grid_control_custom_fields_disabled_field_label": "Bidang yang dinonaktifkan"
+  "grid_control_custom_fields_disabled_field_label": "Bidang yang dinonaktifkan",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Kosong</i>"
 }

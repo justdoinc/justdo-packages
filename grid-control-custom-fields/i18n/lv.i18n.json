@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Pielāgotie lauki",
+  "grid_control_custom_fields_configure_field": "Konfigurēt lauku",
+  "grid_control_custom_fields_add_option": "Pievienot opciju",
+  "grid_control_custom_fields_edit_options": "Rediģēt opcijas",
+  "grid_control_custom_fields_column_filter": "Kolonnas filtrs",
   "grid_control_custom_fields_sort_by_name_label": "Kārtot pēc nosaukuma",
   "grid_control_custom_fields_new_custom_field_label": "Jauns pielāgotais lauks",
   "grid_control_custom_fields_no_custom_fields_label": "Nav pielāgoto lauku",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Vairākas opcijas",
   "grid_control_custom_fields_smart_numbers_label": "Viedie skaitļi (Smart Numbers)",
   "grid_control_custom_fields_unknown_type_label": "Nezināms tips",
-  "grid_control_custom_fields_disabled_field_label": "Atspējots lauks"
+  "grid_control_custom_fields_disabled_field_label": "Atspējots lauks",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Tukšs</i>"
 }

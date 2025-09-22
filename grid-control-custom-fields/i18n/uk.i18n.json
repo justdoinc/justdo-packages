@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Користувацькі поля",
+  "grid_control_custom_fields_configure_field": "Налаштувати поле",
+  "grid_control_custom_fields_add_option": "Додати варіант",
+  "grid_control_custom_fields_edit_options": "Редагувати варіанти",
+  "grid_control_custom_fields_column_filter": "Фільтр стовпця",
   "grid_control_custom_fields_sort_by_name_label": "Сортувати за назвою",
   "grid_control_custom_fields_new_custom_field_label": "Нове користувацьке поле",
   "grid_control_custom_fields_no_custom_fields_label": "Немає користувацьких полів",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Множинний вибір",
   "grid_control_custom_fields_smart_numbers_label": "Розумні числа",
   "grid_control_custom_fields_unknown_type_label": "Невідомий тип",
-  "grid_control_custom_fields_disabled_field_label": "Вимкнене поле"
+  "grid_control_custom_fields_disabled_field_label": "Вимкнене поле",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Порожнє</i>"
 }

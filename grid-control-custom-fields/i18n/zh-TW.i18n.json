@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "自訂欄目",
+  "grid_control_custom_fields_configure_field": "設定欄位",
+  "grid_control_custom_fields_add_option": "新增選項",
+  "grid_control_custom_fields_edit_options": "編輯選項",
+  "grid_control_custom_fields_column_filter": "欄位篩選",
   "grid_control_custom_fields_sort_by_name_label": "依欄目名稱排序",
   "grid_control_custom_fields_new_custom_field_label": "增加自訂欄目",
   "grid_control_custom_fields_no_custom_fields_label": "沒有自訂欄目",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "多選清單",
   "grid_control_custom_fields_smart_numbers_label": "子任務算式",
   "grid_control_custom_fields_unknown_type_label": "未知類型",
-  "grid_control_custom_fields_disabled_field_label": "已停用"
+  "grid_control_custom_fields_disabled_field_label": "已停用",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">空白</i>"
 }

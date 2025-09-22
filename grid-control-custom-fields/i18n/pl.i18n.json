@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Pola niestandardowe",
+  "grid_control_custom_fields_configure_field": "Skonfiguruj pole",
+  "grid_control_custom_fields_add_option": "Dodaj opcję",
+  "grid_control_custom_fields_edit_options": "Edytuj opcje",
+  "grid_control_custom_fields_column_filter": "Filtr kolumny",
   "grid_control_custom_fields_sort_by_name_label": "Sortuj według nazwy",
   "grid_control_custom_fields_new_custom_field_label": "Nowe pole niestandardowe",
   "grid_control_custom_fields_no_custom_fields_label": "Brak pól niestandardowych",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Wiele opcji",
   "grid_control_custom_fields_smart_numbers_label": "Inteligentne liczby",
   "grid_control_custom_fields_unknown_type_label": "Nieznany typ",
-  "grid_control_custom_fields_disabled_field_label": "Pole wyłączone"
+  "grid_control_custom_fields_disabled_field_label": "Pole wyłączone",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Puste</i>"
 }

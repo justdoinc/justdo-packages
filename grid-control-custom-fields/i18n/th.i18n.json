@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "ฟิลด์ที่กำหนดเอง",
+  "grid_control_custom_fields_configure_field": "กำหนดค่าฟิลด์",
+  "grid_control_custom_fields_add_option": "เพิ่มตัวเลือก",
+  "grid_control_custom_fields_edit_options": "แก้ไขตัวเลือก",
+  "grid_control_custom_fields_column_filter": "กรองคอลัมน์",
   "grid_control_custom_fields_sort_by_name_label": "เรียงตามชื่อ",
   "grid_control_custom_fields_new_custom_field_label": "ฟิลด์ที่กำหนดเองใหม่",
   "grid_control_custom_fields_no_custom_fields_label": "ไม่มีฟิลด์ที่กำหนดเอง",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "ตัวเลือกหลายรายการ",
   "grid_control_custom_fields_smart_numbers_label": "ตัวเลขอัจฉริยะ (Smart Numbers)",
   "grid_control_custom_fields_unknown_type_label": "ประเภทที่ไม่รู้จัก",
-  "grid_control_custom_fields_disabled_field_label": "ฟิลด์ที่ถูกปิดใช้งาน"
+  "grid_control_custom_fields_disabled_field_label": "ฟิลด์ที่ถูกปิดใช้งาน",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">ว่าง</i>"
 }

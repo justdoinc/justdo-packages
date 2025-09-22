@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "사용자 정의 필드",
+  "grid_control_custom_fields_configure_field": "필드 구성",
+  "grid_control_custom_fields_add_option": "옵션 추가",
+  "grid_control_custom_fields_edit_options": "옵션 편집",
+  "grid_control_custom_fields_column_filter": "열 필터",
   "grid_control_custom_fields_sort_by_name_label": "이름순 정렬",
   "grid_control_custom_fields_new_custom_field_label": "새 사용자 정의 필드",
   "grid_control_custom_fields_no_custom_fields_label": "사용자 정의 필드 없음",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "다중 옵션",
   "grid_control_custom_fields_smart_numbers_label": "스마트 숫자 (Smart Numbers)",
   "grid_control_custom_fields_unknown_type_label": "알 수 없는 유형",
-  "grid_control_custom_fields_disabled_field_label": "비활성화된 필드"
+  "grid_control_custom_fields_disabled_field_label": "비활성화된 필드",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">비어 있음</i>"
 }

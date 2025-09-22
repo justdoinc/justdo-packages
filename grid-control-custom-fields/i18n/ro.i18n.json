@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Câmpuri personalizate",
+  "grid_control_custom_fields_configure_field": "Configurează câmp",
+  "grid_control_custom_fields_add_option": "Adaugă opțiune",
+  "grid_control_custom_fields_edit_options": "Editează opțiuni",
+  "grid_control_custom_fields_column_filter": "Filtru Coloană",
   "grid_control_custom_fields_sort_by_name_label": "Sortează după nume",
   "grid_control_custom_fields_new_custom_field_label": "Câmp personalizat nou",
   "grid_control_custom_fields_no_custom_fields_label": "Niciun câmp personalizat",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Opțiuni multiple",
   "grid_control_custom_fields_smart_numbers_label": "Numere inteligente",
   "grid_control_custom_fields_unknown_type_label": "Tip necunoscut",
-  "grid_control_custom_fields_disabled_field_label": "Câmp dezactivat"
+  "grid_control_custom_fields_disabled_field_label": "Câmp dezactivat",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Gol</i>"
 }

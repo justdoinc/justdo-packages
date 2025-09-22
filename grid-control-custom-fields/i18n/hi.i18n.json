@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "कस्टम फ़ील्ड्स",
+  "grid_control_custom_fields_configure_field": "फील्ड कॉन्फ़िगर करें",
+  "grid_control_custom_fields_add_option": "विकल्प जोड़ें",
+  "grid_control_custom_fields_edit_options": "विकल्प संपादित करें",
+  "grid_control_custom_fields_column_filter": "कॉलम फ़िल्टर",
   "grid_control_custom_fields_sort_by_name_label": "नाम के अनुसार क्रमबद्ध करें",
   "grid_control_custom_fields_new_custom_field_label": "नया कस्टम फ़ील्ड",
   "grid_control_custom_fields_no_custom_fields_label": "कोई कस्टम फ़ील्ड नहीं",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "बहु विकल्प",
   "grid_control_custom_fields_smart_numbers_label": "स्मार्ट संख्याएँ",
   "grid_control_custom_fields_unknown_type_label": "अज्ञात प्रकार",
-  "grid_control_custom_fields_disabled_field_label": "अक्षम फ़ील्ड"
+  "grid_control_custom_fields_disabled_field_label": "अक्षम फ़ील्ड",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">खाली</i>"
 }

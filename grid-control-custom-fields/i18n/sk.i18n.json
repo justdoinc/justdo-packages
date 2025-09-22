@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Vlastné polia",
+  "grid_control_custom_fields_configure_field": "Konfigurovať pole",
+  "grid_control_custom_fields_add_option": "Pridať možnosť",
+  "grid_control_custom_fields_edit_options": "Upraviť možnosti",
+  "grid_control_custom_fields_column_filter": "Filter stľpca",
   "grid_control_custom_fields_sort_by_name_label": "Zoradiť podľa názvu",
   "grid_control_custom_fields_new_custom_field_label": "Nové vlastné pole",
   "grid_control_custom_fields_no_custom_fields_label": "Žiadne vlastné polia",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Viacnásobné možnosti",
   "grid_control_custom_fields_smart_numbers_label": "Inteligentné čísla (Smart Numbers)",
   "grid_control_custom_fields_unknown_type_label": "Neznámy typ",
-  "grid_control_custom_fields_disabled_field_label": "Deaktivované pole"
+  "grid_control_custom_fields_disabled_field_label": "Deaktivované pole",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Prázdne</i>"
 }

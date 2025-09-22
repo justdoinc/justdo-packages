@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "Pasgemaakte Velde",
+  "grid_control_custom_fields_configure_field": "Konfigureer veld",
+  "grid_control_custom_fields_add_option": "Voeg opsie by",
+  "grid_control_custom_fields_edit_options": "Redigeer opsies",
+  "grid_control_custom_fields_column_filter": "Kolom Filter",
   "grid_control_custom_fields_sort_by_name_label": "Sorteer volgens Naam",
   "grid_control_custom_fields_new_custom_field_label": "Nuwe pasgemaakte veld",
   "grid_control_custom_fields_no_custom_fields_label": "Geen pasgemaakte velde",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "Veelvuldige Opsies",
   "grid_control_custom_fields_smart_numbers_label": "Slim Nommers",
   "grid_control_custom_fields_unknown_type_label": "Onbekende tipe",
-  "grid_control_custom_fields_disabled_field_label": "Gedeaktiveerde veld"
+  "grid_control_custom_fields_disabled_field_label": "Gedeaktiveerde veld",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Leeg</i>"
 }

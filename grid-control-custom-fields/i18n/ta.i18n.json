@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "தனிப்பயன் புலங்கள்",
+  "grid_control_custom_fields_configure_field": "புலத்தை கட்டமைக்கவும்",
+  "grid_control_custom_fields_add_option": "விருப்பத்தை சேர்க்கவும்",
+  "grid_control_custom_fields_edit_options": "விருப்பங்களைத் திருத்தவும்",
+  "grid_control_custom_fields_column_filter": "நெடுவரிசை வடிகட்டி",
   "grid_control_custom_fields_sort_by_name_label": "பெயரால் வரிசைப்படுத்து",
   "grid_control_custom_fields_new_custom_field_label": "புதிய தனிப்பயன் புலம்",
   "grid_control_custom_fields_no_custom_fields_label": "தனிப்பயன் புலங்கள் இல்லை",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "பல விருப்பங்கள்",
   "grid_control_custom_fields_smart_numbers_label": "ஸ்மார்ட் எண்கள் (Smart Numbers)",
   "grid_control_custom_fields_unknown_type_label": "அறியப்படாத வகை",
-  "grid_control_custom_fields_disabled_field_label": "செயலற்ற புலம்"
+  "grid_control_custom_fields_disabled_field_label": "செயலற்ற புலம்",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">காலியானது</i>"
 }

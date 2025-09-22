@@ -1,5 +1,9 @@
 {
   "grid_control_custom_fields_section_title": "カスタムフィールド",
+  "grid_control_custom_fields_configure_field": "フィールドを設定",
+  "grid_control_custom_fields_add_option": "オプションを追加",
+  "grid_control_custom_fields_edit_options": "オプションを編集",
+  "grid_control_custom_fields_column_filter": "列フィルター",
   "grid_control_custom_fields_sort_by_name_label": "名前で並べ替え",
   "grid_control_custom_fields_new_custom_field_label": "新規カスタムフィールド",
   "grid_control_custom_fields_no_custom_fields_label": "カスタムフィールドなし",
@@ -10,5 +14,6 @@
   "grid_control_custom_fields_multi_select_label": "複数選択",
   "grid_control_custom_fields_smart_numbers_label": "スマート数値 (Smart Numbers)",
   "grid_control_custom_fields_unknown_type_label": "不明なタイプ",
-  "grid_control_custom_fields_disabled_field_label": "無効なフィールド"
+  "grid_control_custom_fields_disabled_field_label": "無効なフィールド",
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">空</i>"
 }
