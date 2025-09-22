@@ -410,8 +410,10 @@ Template.common_chat_message_editor.events
     e.stopPropagation()
     e.preventDefault()
     tpl.is_dragging_files_into_drop_pane.set false
+
     tpl.attachFiles(e.originalEvent.dataTransfer.files)
-    tpl.$(".message-editor-file-input").trigger("change")
+    tpl.showOrHideSendButtonBasedOnUserInput()
+
     return false
 
   "mouseenter .files-wrapper": (e, tpl) ->
