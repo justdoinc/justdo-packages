@@ -584,7 +584,10 @@ _.extend GridControlCustomFields,
           
           if (custom_field_definition.field_type is "string") and (filter_type is "whitelist") and not (filter_options = custom_field_definition.filter_options)?
             # If the field is a string, and the filter type is whitelist, and no filter_options is set, setup default filter options
-            # Default filter options are unique trimmed value of the field + "Blank" option
+            # Default filter options are unique trimmed value of the field + "Empty" option
+            # 
+            # The reason we implement `filter_options` here instead of in the `custom_field_definition` is because `filter_options` here is a function instead of an object/array of all possible values.
+            # Since `custom_field_definition` is stored in the db under project docs, functions can't be serialized and therefore can't be stored in the db.
             do (custom_field_id, custom_field_definition) =>
               custom_field_definition.filter_options =
                 filter_values: =>
