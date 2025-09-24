@@ -174,5 +174,16 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/news/v5-10/v5-10.coffee", both);
   this.addI18nFiles(api, "lib/both/news/v5-10/i18n/{}.i18n.json")
 
+  // v7.0
+  api.addAssets([
+    "lib/both/news/v7-0/assets/1.png",
+    "lib/both/news/v7-0/assets/2.png",
+    "lib/both/news/v7-0/assets/3.png",
+    "lib/both/news/v7-0/assets/4.png",
+    "lib/both/news/v7-0/assets/5.png",
+    "lib/both/news/v7-0/assets/6.png"
+  ], client);
+  api.addFiles("lib/both/news/v7-0/v7-0.coffee", both);
+
   api.export("JustdoNewsData", both);
 });
