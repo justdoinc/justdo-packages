@@ -114,6 +114,10 @@ Template.common_chat_message_editor.onCreated ->
         $(tpl.files_dropdown.current_dropdown_node.node).sortable
           handle: ".sort-handle"
           items: ".dropdown-item"
+          axis: "y"
+          appendTo: document.body
+          dropOnEmpty: false
+          tolerance: "pointer"
           update: (e, ui) ->
             updated_file_order = $(@).sortable("toArray", {attribute: "data-file-key"})
             tpl.sortFilesByArrayOrder updated_file_order
