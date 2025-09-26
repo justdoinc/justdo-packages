@@ -201,8 +201,8 @@ _.extend JustdoNews.prototype,
             disable_title_in_url_for_default_lang = news_category_options.disable_title_in_url_for_default_lang
             should_add_hrp = not (is_default_lang and disable_title_in_url_for_default_lang)
 
-            if should_add_hrp and (news_title = self.getNewsPageTitle category, news_id)?
-              path += @getHRPForI18nKey news_title, lang
+            if should_add_hrp and (news_hrp = self.getNewsPageHrp category, news_id)?
+              path += @getHRPForI18nKey news_hrp, lang
 
             return path
             
@@ -247,8 +247,8 @@ _.extend JustdoNews.prototype,
             disable_title_in_url_for_default_lang = news_category_options.disable_title_in_url_for_default_lang
             should_add_hrp = not (is_default_lang and disable_title_in_url_for_default_lang)
 
-            if should_add_hrp and (news_title = self.getNewsPageTitle category, news_id)?
-              path += @getHRPForI18nKey news_title, lang
+            if should_add_hrp and (news_hrp = self.getNewsPageHrp category, news_id)?
+              path += @getHRPForI18nKey news_hrp, lang
 
             if news_template? and not self.isDefaultNewsTemplate news_template
               path += "/#{news_template}"
