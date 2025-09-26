@@ -397,26 +397,13 @@ _.extend JustdoNews.prototype,
 
   isDefaultNewsTemplate: (template_id) -> template_id is JustdoNews.default_news_template
 
-  getNewsPageTitle: (category, news, template) ->
+  getNewsPageTitle: (category, news_id_or_alias, template) ->
     # Returns the page_title for the combination of category, news and template
     #
     # We return an empty string if the news item doesn't exist or if the template doesn't exist.
-    if _.isString news
-      news_doc = @getNewsByIdOrAlias(category, news)?.news_doc
-    else
-      news_doc = news
-    
-    if not news_doc?
-      return
-
-    if not news_doc?
-      return ""
-
-    if _.isEmpty template
-      template = JustdoNews.default_news_template
-
-    # Typically, there are very few templates (1-2) for a news item, so don't worry about performance
-    return _.find(news_doc?.templates, (template_obj) -> template_obj._id is template)?.page_title or ""
+    template_doc = @getNewsTemplateIfExists(category, news_id_or_alias, template)
+    return template_doc?.page_title or ""
+  
 
 # Originally, the JustdoNews package was created to be a news package, but we
 # ended up using it as a CRM package. So, we're going to create some aliases
