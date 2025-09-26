@@ -111,7 +111,7 @@ _.extend JustdoNews.prototype,
       title_i18n: (path_without_lang, lang) ->
         if APP.justdo_seo?
           path_without_lang = APP.justdo_seo.getPathWithoutHumanReadableParts path_without_lang
-        {news_id, new_template} = self.getNewsParamFromPath path_without_lang
+        {news_id, news_template} = self.getNewsParamFromPath path_without_lang
 
         if (page_title = self.getNewsPageTitle category, news_id, news_template)?
           return TAPi18n.__ page_title, {}, lang
@@ -120,7 +120,7 @@ _.extend JustdoNews.prototype,
       description_i18n: (path_without_lang, lang) ->
         if APP.justdo_seo?
           path_without_lang = APP.justdo_seo.getPathWithoutHumanReadableParts path_without_lang
-        {news_id, new_template} = self.getNewsParamFromPath path_without_lang
+        {news_id, news_template} = self.getNewsParamFromPath path_without_lang
 
         news_template_doc = self.getNewsTemplateIfExists category, news_id, news_template
         if (page_description = news_template_doc?.page_description)?
