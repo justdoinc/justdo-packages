@@ -23,14 +23,14 @@ APP.justdo_crm.registerNews "news",
           {
             "title": "v7_0_news_main_array_item_1_title",
             "subtitle": "v7_0_news_main_array_item_1_subtitle"
-            "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v7-0/assets/1.png"
+            "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v7-0/assets/2.png"
             "listingCondition": zimExcludedListingCondition
             
           },
 
           {
-            "title": "v7_0_news_main_array_item_2_title",
-            "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v7-0/assets/2.png"
+            "subtitle": "v7_0_news_main_array_item_2_subtitle",
+            "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v7-0/assets/1.png"
             "listingCondition": zimExcludedListingCondition
           },
 
@@ -38,6 +38,12 @@ APP.justdo_crm.registerNews "news",
             "title": "v7_0_news_main_array_item_3_title",
             "subtitle": "v7_0_news_main_array_item_3_subtitle"
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v7-0/assets/3.png"
+          },
+
+          {
+            "title": "v7_0_news_main_array_item_6_title",
+            "subtitle": "v7_0_news_main_array_item_6_subtitle"
+            "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v7-0/assets/6.png"
           },
 
           {
@@ -50,12 +56,6 @@ APP.justdo_crm.registerNews "news",
             "title": "v7_0_news_main_array_item_5_title",
             "subtitle": "v7_0_news_main_array_item_5_subtitle"
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v7-0/assets/5.png"
-          },
-
-          {
-            "title": "v7_0_news_main_array_item_6_title",
-            "subtitle": "v7_0_news_main_array_item_6_subtitle"
-            "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v7-0/assets/6.png"
           }
         ]
       }
