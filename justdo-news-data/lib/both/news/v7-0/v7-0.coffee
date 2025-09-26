@@ -51,6 +51,12 @@ APP.justdo_crm.registerNews "news",
             "title": "Days-off",
             "subtitle": "You can now set your workdays and days off. Once saved, they’ll be visible to everyone, keeping your whole team aligned on schedules and availability."
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v7-0/assets/6.png"
+          },
+
+          {
+            "title": "Hide Columns to the right",
+            "subtitle": "Description"
+            "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v7-0/assets/7.png"
           }
         ]
       }
