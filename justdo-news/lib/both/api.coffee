@@ -113,9 +113,6 @@ _.extend JustdoNews.prototype,
           path_without_lang = APP.justdo_seo.getPathWithoutHumanReadableParts path_without_lang
         {news_id, new_template} = self.getNewsParamFromPath path_without_lang
 
-        if not news_template?
-          news_template = JustdoNews.default_news_template
-
         news_template_doc = self.getNewsTemplateIfExists category, news_id, news_template
         if (page_title = news_template_doc?.page_title)?
           return TAPi18n.__ page_title, {}, lang
@@ -125,9 +122,6 @@ _.extend JustdoNews.prototype,
         if APP.justdo_seo?
           path_without_lang = APP.justdo_seo.getPathWithoutHumanReadableParts path_without_lang
         {news_id, new_template} = self.getNewsParamFromPath path_without_lang
-
-        if not news_template?
-          news_template = JustdoNews.default_news_template
 
         news_template_doc = self.getNewsTemplateIfExists category, news_id, news_template
         if (page_description = news_template_doc?.page_description)?
@@ -150,9 +144,6 @@ _.extend JustdoNews.prototype,
 
       if not news_id?
         return
-
-      if not news_template?
-        news_template = JustdoNews.default_news_template
 
       news_template_doc = self.getNewsTemplateIfExists category, news_id, news_template
       return news_template_doc?[JustdoNews.default_news_template_key_to_determine_supported_langs]
@@ -387,8 +378,12 @@ _.extend JustdoNews.prototype,
       return tag in news.tags
     
   getNewsTemplateIfExists: (category, news_id_or_alias, template_name) ->
+    if not template_name?
+      template_name = JustdoNews.default_news_template
+
     if not (news = @getNewsByIdOrAlias(category, news_id_or_alias)?.news_doc)?
       return
+
     return _.find news.templates, (template_obj) -> template_obj._id is template_name
 
   getAllRegisteredCategories: -> _.keys @news
