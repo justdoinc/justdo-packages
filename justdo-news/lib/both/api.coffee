@@ -276,6 +276,10 @@ _.extend JustdoNews.prototype,
       label: "Template Page Title"
       type: String
       optional: true
+    page_hrp:
+      label: "Template Page Hrp"
+      type: String
+      optional: true
     page_description:
       label: "Template Page Description"
       type: String
@@ -403,6 +407,12 @@ _.extend JustdoNews.prototype,
     template_doc = @getNewsTemplateIfExists(category, news_id_or_alias, template)
     return template_doc?.page_title or ""
   
+  getNewsPageHrp: (category, news_id_or_alias, template) ->
+    # Returns the page_hrp, or page_title as fallback, for the combination of category, news and template
+    # 
+    # If the news item doesn't exist or if the template doesn't exist, it will return an empty string.
+    template_doc = @getNewsTemplateIfExists(category, news_id_or_alias, template)
+    return template_doc?.page_hrp or @getNewsPageTitle(category, news_id_or_alias, template)
 
 # Originally, the JustdoNews package was created to be a news package, but we
 # ended up using it as a CRM package. So, we're going to create some aliases
