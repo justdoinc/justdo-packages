@@ -3,6 +3,11 @@ Template.version_release_news.helpers
     date = moment(@date, "YYYY-MM-DD")
     format_string = JustdoHelpers.getUserPreferredDateFormat("L")
     return date.format format_string
+  
+  newsItemListingCondition: ->
+    if @listingCondition?
+      return @listingCondition()
+    return true
 
 Template.updates_card.helpers
   updateItems: ->

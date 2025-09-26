@@ -1,3 +1,5 @@
+zimExcludedListingCondition = -> not JustdoHelpers.isBespokePackageEnabled env, Zim?.bespoke_pack_id 
+
 APP.justdo_crm.registerNews "news",
   _id: "v7-0"
   aliases: ["v7-0-x"]
@@ -22,11 +24,14 @@ APP.justdo_crm.registerNews "news",
             "title": "v7_0_news_main_array_item_1_title",
             "subtitle": "v7_0_news_main_array_item_1_subtitle"
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v7-0/assets/1.png"
+            "listingCondition": zimExcludedListingCondition
+            
           },
 
           {
             "title": "v7_0_news_main_array_item_2_title",
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v7-0/assets/2.png"
+            "listingCondition": zimExcludedListingCondition
           },
 
           {

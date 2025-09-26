@@ -9,7 +9,9 @@
     {{/if}}
     <div class="news-content">
       {{#each news_array}}
-        {{> news_card}}
+        {{#if newsItemListingCondition}}
+          {{> news_card}}
+        {{/if}}
       {{/each}}
     </div>
   </div>
