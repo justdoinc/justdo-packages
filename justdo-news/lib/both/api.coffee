@@ -113,8 +113,7 @@ _.extend JustdoNews.prototype,
           path_without_lang = APP.justdo_seo.getPathWithoutHumanReadableParts path_without_lang
         {news_id, new_template} = self.getNewsParamFromPath path_without_lang
 
-        news_template_doc = self.getNewsTemplateIfExists category, news_id, news_template
-        if (page_title = news_template_doc?.page_title)?
+        if (page_title = self.getNewsPageTitle category, news_id, news_template)?
           return TAPi18n.__ page_title, {}, lang
 
         return APP.justdo_seo.getDefaultPageTitle lang
