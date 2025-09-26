@@ -185,6 +185,7 @@ Package.onUse(function (api) {
     "lib/both/news/v7-0/assets/7.png"
   ], client);
   api.addFiles("lib/both/news/v7-0/v7-0.coffee", both);
+  this.addI18nFiles(api, "lib/both/news/v7-0/i18n/{}.i18n.json", "default_lang_only")
 
   api.export("JustdoNewsData", both);
 });
