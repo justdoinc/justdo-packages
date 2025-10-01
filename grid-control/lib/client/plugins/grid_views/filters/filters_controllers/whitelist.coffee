@@ -65,6 +65,10 @@ WhiteListFilterControllerConstructor = (context) ->
     @controller_ul.empty()
     for item in column_settings_values
       {filter_key, filter_value} = item
+      label = ""
+      # label_val is to hold the value of html label, so that the html tags won't cause a search hit.
+      # In labels other than html, label_val is the same as label.
+      label_val = ""
 
       if (html = filter_value.html)?
         if filter_value.skip_xss_guard
@@ -76,12 +80,15 @@ WhiteListFilterControllerConstructor = (context) ->
         else
           # Prefer the html label
           label = JustdoHelpers.xssGuard(html, {allow_html_parsing: true, enclosing_char: ''})
+        label_val = $(html).text()
       else if (i18n_key = filter_value.txt_i18n)?
         label = APP.justdo_i18n.getDefaultI18nTextOrCustomInput {text: filter_value.txt, i18n_key}
+        label_val = label
       else
         label = filter_value.txt
+        label_val = label
 
-      if label.toLowerCase().indexOf(search_text) >= 0
+      if label_val.toLowerCase().indexOf(search_text) >= 0
         @controller_ul.append("<li value='#{JustdoHelpers.xssGuard(getHtmlValue(filter_key), {allow_html_parsing: true, enclosing_char: "'"})}'><i class='fa-li fa fa-square-o'></i><i class='fa-li fa fa-check-square-o'></i> #{JustdoHelpers.xssGuard(label, {allow_html_parsing: true, enclosing_char: ''})}</li>")
 
     return
