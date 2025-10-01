@@ -591,7 +591,7 @@ _.extend GridControlCustomFields,
             do (custom_field_id, custom_field_definition) =>
               custom_field_definition.filter_options =
                 filter_values: =>
-                  values = []
+                  values_set = new Set()
 
                   query = 
                     project_id: JD.activeJustdoId()
@@ -601,12 +601,11 @@ _.extend GridControlCustomFields,
 
                   APP.collections.Tasks.find(query, query_options).forEach (task) =>
                     trimmed_value = task[custom_field_id]?.trim() or ""
-                    values.push trimmed_value
+                    values_set.add trimmed_value
                     return
                   
                   order = 0
-                  values = _.chain values
-                    .uniq()
+                  values = _.chain Array.from(values_set)
                     .sortBy (value) -> 
                       return value.toLowerCase()
                     .map (value) ->
