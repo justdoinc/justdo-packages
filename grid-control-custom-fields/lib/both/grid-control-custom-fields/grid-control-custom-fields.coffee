@@ -610,12 +610,7 @@ _.extend GridControlCustomFields,
                     .sortBy (value) -> 
                       return value.toLowerCase()
                     .map (value) ->
-                      label_i18n = value
-                      if _.isEmpty value
-                        label_i18n = "grid_control_custom_fields_empty_field_placeholder_html"
                       value_obj = 
-                        txt: TAPi18n.__(label_i18n, {}, JustdoI18n.default_lang)
-                        txt_i18n: label_i18n
                         order: if _.isEmpty value then 999 else order
                         customFilterQuery: (filter_state_id, column_state_definitions, context) -> 
                           if _.isEmpty value
@@ -631,6 +626,14 @@ _.extend GridControlCustomFields,
                               [custom_field_id]: value
                           
                           return query
+                      
+                      if _.isEmpty value
+                        value_obj.html = TAPi18n.__ "grid_control_custom_fields_empty_field_placeholder_html"
+                      else
+                        label_i18n = value
+                        value_obj.txt = TAPi18n.__(label_i18n, {}, JustdoI18n.default_lang)
+                        value_obj.txt_i18n = label_i18n
+
                       order += 1
                       return value_obj
                     .value()
