@@ -280,11 +280,12 @@ APP.executeAfterAppLibCode ->
   Template.task_pane_item_details_description.onCreated ->
     @autorun =>
       # On every path change, destroy the editor (destroyEditor, saves current state)
-      project_page_module.activeItemPath()
+      if not project_page_module.activeItemPath()?
+        return
       
       fs = APP.justdo_file_interface
       fs_id = fs.getDefaultFsId()
-      @files_sub_handle = fs.subscribeToTaskFiles fs_id, JD.activeItemId()
+      @files_sub_handle = fs.subscribeToTaskFiles fs_id, @data._id
 
       @task_descrioption_sub_handle = APP.projects.subscribeActiveTaskAugmentedFields(["description"])
 
