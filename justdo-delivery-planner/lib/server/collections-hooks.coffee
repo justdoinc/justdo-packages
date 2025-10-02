@@ -124,12 +124,12 @@ _.extend JustdoDeliveryPlanner.prototype,
         old_type = previous_doc.projects_collection?.projects_collection_type
         
         if self._hasProjectStatusChanged(old_type, new_type)
-          self._logProjectsCollectionTypeSetChange(task_id, performed_by, new_type)
+          self._logProjectsCollectionTypeToggleChange(task_id, performed_by, true, new_type)
       
       # Track projects collection type unset
       if self._isProjectsCollectionBeingUnsetInModifier(modifier, previous_doc)
         old_type = previous_doc.projects_collection.projects_collection_type
-        self._logProjectsCollectionTypeUnsetChange(task_id, performed_by, old_type)
+        self._logProjectsCollectionTypeToggleChange(task_id, performed_by, false, old_type)
       
       # Track projects collection closed/reopened
       if self._isProjectsCollectionBeingClosedOrReopenedInModifier(modifier)
@@ -199,8 +199,8 @@ _.extend JustdoDeliveryPlanner.prototype,
     type_label = TAPi18n.__ type_label, {}, JustdoI18n.default_lang
     return type_label
   
-  _logProjectsCollectionTypeSetChange: (task_id, performed_by, new_type) ->
-    type_label = @_getProjectsCollectionTypeLabelInDefaultLang(new_type)
+  _logProjectsCollectionTypeToggleChange: (task_id, performed_by, is_now_set, type_id) ->
+    type_label = @_getProjectsCollectionTypeLabelInDefaultLang(type_id)
     
     APP.tasks_changelog_manager.logChange
       field: "projects_collection.projects_collection_type"
@@ -208,20 +208,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       change_type: "custom"
       task_id: task_id
       by: performed_by
-      new_value: "set this Task as #{type_label}"
-    
-    return
-  
-  _logProjectsCollectionTypeUnsetChange: (task_id, performed_by, old_type) ->
-    type_label = @_getProjectsCollectionTypeLabelInDefaultLang(old_type)
-
-    APP.tasks_changelog_manager.logChange
-      field: "projects_collection.projects_collection_type"
-      label: "Projects Collection"
-      change_type: "custom"
-      task_id: task_id
-      by: performed_by
-      new_value: "unset this Task as #{type_label}"
+      new_value: "#{if is_now_set then "set" else "unset"} this Task as #{type_label}"
     
     return
   
