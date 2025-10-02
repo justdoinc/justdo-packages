@@ -1,35 +1,47 @@
-.snackbar-container .action
-  // Fix action style on IE11
-  background: transparent
-
-  font-weight: bold
-
-.snackbar-container .snackbar-button-wrapper
-  white-space: nowrap
-
-.snackbar-container .action svg.jd-icon
-  margin-top: -2px
-  width: 24px
-  height: 24px
-  padding: 2px
-
-// RTL modifications
-.right-to-left
+.justdo-snackbar-container
+  display: flex
+  flex-direction: column-reverse
+  position: fixed
+  bottom: 0
+  left: 0
+  z-index: 9999
+  margin-bottom: 24px
   .snackbar-container
+    position: static
+    margin-top: 8px
+    margin-bottom: unset
     .action
-      margin: 0 24px 0 0
+      // Fix action style on IE11
+      background: transparent
 
-  .snackbar-pos
-    &.bottom-left
-      left: unset
-      right: 0
-    &.bottom-right
-      right: unset
-      left: 0
-    &.top-left
-      left: unset
-      right: 0
-    &.top-right
-      right: unset
-      left: 0
+      font-weight: bold
+
+    .snackbar-button-wrapper
+      white-space: nowrap
+
+    .action svg.jd-icon
+      margin-top: -2px
+      width: 24px
+      height: 24px
+      padding: 2px
+
+    // RTL modifications
+    .right-to-left
+      .snackbar-container
+        .action
+          margin: 0 24px 0 0
+
+      .snackbar-pos
+        &.bottom-left
+          left: unset
+          right: 0
+        &.bottom-right
+          right: unset
+          left: 0
+        &.top-left
+          left: unset
+          right: 0
+        &.top-right
+          right: unset
+          left: 0
 

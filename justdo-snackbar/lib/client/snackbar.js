@@ -32,6 +32,10 @@
         root.Snackbar = factory();
     }
 })(this, function() {
+    const $snackbarContainer = document.createElement('div');
+    $snackbarContainer.className = 'justdo-snackbar-container';
+    document.body.appendChild($snackbarContainer);
+
     var Snackbar = {};
 
     Snackbar.current = [];
@@ -163,7 +167,7 @@
 
         Snackbar.current.push(snackbar);
 
-        document.body.appendChild(Snackbar.snackbar);
+        $snackbarContainer.appendChild(snackbar);
         var $bottom = getComputedStyle(snackbar).bottom;
         var $top = getComputedStyle(snackbar).top;
         snackbar.style.opacity = 1;
