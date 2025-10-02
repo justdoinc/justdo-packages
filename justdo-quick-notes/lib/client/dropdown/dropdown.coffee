@@ -273,13 +273,13 @@ Template.justdo_quick_notes_item.onRendered ->
               duration: 5000
               actionText: "Undo"
               showDismissButton: true
-              onActionClick: =>
+              onActionClick: (snackbar) =>
                 APP.justdo_quick_notes.undoCreateTaskFromQuickNote quick_note._id, JD.activeJustdoId(), "/#{task_id}/", (error) =>
                   if error?
                     JustdoSnackbar.show
                       text: error.reason
 
-                JustdoSnackbar.close()
+                snackbar.close()
 
                 return
 

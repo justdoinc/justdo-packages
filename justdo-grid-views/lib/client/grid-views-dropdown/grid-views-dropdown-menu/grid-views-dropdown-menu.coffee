@@ -55,10 +55,10 @@ APP.executeAfterAppLibCode ->
             duration: 15000
             actionText: "Undo"
             showDismissButton: true
-            onActionClick: =>
+            onActionClick: (snackbar) =>
               APP.justdo_grid_views.upsert active_view._id, {view: roll_back_view}
 
-              JustdoSnackbar.close()
+              snackbar.close()
 
               return
 
@@ -218,10 +218,10 @@ APP.executeAfterAppLibCode ->
             duration: 5000
             actionText: "Undo"
             showDismissButton: true
-            onActionClick: =>
+            onActionClick: (snackbar) =>
               APP.justdo_grid_views.upsert active_view._id, {deleted: false}
 
-              JustdoSnackbar.close()
+              snackbar.close()
 
               return
 

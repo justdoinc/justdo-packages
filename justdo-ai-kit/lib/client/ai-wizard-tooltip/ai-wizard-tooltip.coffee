@@ -269,8 +269,8 @@ Template.ai_wizard_tooltip.events
         duration: 1000 * 30
         showDismissButton: true
         actionText: TAPi18n.__ "undo"
-        onActionClick: ->
-          JustdoSnackbar.close()
+        onActionClick: (snackbar) ->
+          snackbar.close()
           grid_data.bulkRemoveParents created_task_paths.reverse(), (err) ->
             if err?
               JustdoSnackbar.show

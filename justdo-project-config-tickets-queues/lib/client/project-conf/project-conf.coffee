@@ -94,7 +94,7 @@ Template.ticket_queue_conf.events
         showDismissButton: true
         actionText: "Undo"
         duration: 7000
-        onActionClick: =>
+        onActionClick: (snackbar) =>
           APP.collections.Tasks.update @_id, {$set: {is_tickets_queue: true}}
 
           $(".snackbar-container").remove()

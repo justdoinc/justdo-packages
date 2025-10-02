@@ -819,14 +819,14 @@ Template.meetings_meeting_dialog.events
       actionText: "No"
       showSecondButton: true
       secondButtonText: "Yes"
-      onSecondButtonClick: =>
+      onSecondButtonClick: (snackbar) =>
         # Clear out any existing errors related to the locked status
         doc = tmpl.form.doc()
         tmpl.form.validate("status")
 
         APP.meetings_manager_plugin.meetings_manager.updateMeetingStatus doc._id, "cancelled", (err) =>
           $(".meetings_meeting-dialog").remove()
-          JustdoSnackbar.close()
+          snackbar.close()
           if err
             # Invalidate the form and show the user an error.
             tmpl.form.invalidate [{ error: err, name: "status", message: "Update status failed: " + err }]
@@ -834,8 +834,8 @@ Template.meetings_meeting_dialog.events
             # Log an error using the logger
             APP.meetings_manager_plugin.logger.error err
             showSnackbar(err.message)
-      onActionClick: =>
-        JustdoSnackbar.close()
+      onActionClick: (snackbar) =>
+        snackbar.close()
         return
 
   "click .meeting-dialog-close": (e, tmpl) ->

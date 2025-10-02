@@ -55,9 +55,9 @@ Template.required_action_card_transfer_request.events
       duration: 8000
       showDismissButton: true
       actionText: TAPi18n.__ "view"
-      onActionClick: =>
+      onActionClick: (snackbar) =>
         jumpToTask(@project_id, @task_id)
-        JustdoSnackbar.close()
+        snackbar.close()
 
         return
 
@@ -76,9 +76,9 @@ Template.required_action_card_transfer_request.events
       duration: 8000
       showDismissButton: true
       actionText: TAPi18n.__ "view" 
-      onActionClick: =>
+      onActionClick: (snackbar) =>
         jumpToTask(@project_id, @task_id)
-        JustdoSnackbar.close()
+        snackbar.close()
 
         return
 

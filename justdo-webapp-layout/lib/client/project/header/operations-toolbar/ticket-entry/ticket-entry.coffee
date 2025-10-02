@@ -133,8 +133,8 @@ APP.executeAfterAppLibCode ->
                   duration: 7000
                   actionText: "View"
                   showDismissButton: true
-                  onActionClick: =>
-                    JustdoSnackbar.close()
+                  onActionClick: (snackbar) =>
+                    snackbar.close()
 
                     gridControlMux()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(item_id)
 

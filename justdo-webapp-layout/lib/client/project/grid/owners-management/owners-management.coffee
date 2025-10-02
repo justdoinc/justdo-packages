@@ -267,7 +267,7 @@ APP.executeAfterAppLibCode ->
             actionText: TAPi18n.__ "owners_mgmt_transfer"
             duration: 10000
             showDismissButton: true
-            onActionClick: =>
+            onActionClick: (snackbar) =>
               for task_id in child_tasks
                 modifier =
                   $set: {}
@@ -284,7 +284,7 @@ APP.executeAfterAppLibCode ->
                 actionText: TAPi18n.__ "undo"
                 duration: 10000
                 showDismissButton: true
-                onActionClick: =>
+                onActionClick: (snackbar) =>
                   for task_id in child_tasks
                     modifier =
                       $set: {}
@@ -295,7 +295,7 @@ APP.executeAfterAppLibCode ->
                       modifier.$set =
                         pending_owner_id: null
                     APP.collections.Tasks.update task_id, modifier
-                  JustdoSnackbar.close()
+                  snackbar.close()
                   return
               return
 

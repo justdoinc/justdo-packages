@@ -690,9 +690,9 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       duration: 1000 * 60 * 2 # 2 mins
       actionText: TAPi18n.__("undo")
       showDismissButton: true
-      onActionClick: =>
+      onActionClick: (snackbar) =>
         undoImport(0, true)
-        JustdoSnackbar.close()
+        snackbar.close()
         return # end of onActionClick
 
     return # end of mapSeries call back

@@ -308,12 +308,12 @@ _.extend JustdoTasksContextMenu.prototype,
             showDismissButton: true
             actionText: "Undo"
             duration: 10000
-            onActionClick: =>
+            onActionClick: (snackbar) =>
               for task_id, task_val of subtasks_with_different_val
                 APP.collections.Tasks.update task_id,
                   $set:
                     "#{field_info.field_name}": task_val
-              JustdoSnackbar.close()
+              snackbar.close()
               return
 
 
@@ -683,12 +683,12 @@ _.extend JustdoTasksContextMenu.prototype,
     #         secondButtonText: "Undo"
     #         duration: 7000
     #         showDismissButton: true
-    #         onSecondButtonClick: =>
+    #         onSecondButtonClick: (snackbar) =>
     #           APP.collections.Tasks.update task_id,
     #             $set:
     #               "#{field_info.field_name}": field_val
 
-    #           JustdoSnackbar.close()
+    #           snackbar.close()
 
     #           return
 
@@ -943,9 +943,9 @@ _.extend JustdoTasksContextMenu.prototype,
                             showDismissButton: true
                             actionText: "Remove"
                             duration: 10000
-                            onActionClick: =>
+                            onActionClick: (snackbar) =>
                               performRemoveParent()
-                              JustdoSnackbar.close()
+                              snackbar.close()
                               return
                       else
                         addNewParentToTaskId task_id, project_task_doc._id, gc, (err) ->

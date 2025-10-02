@@ -4,13 +4,13 @@ suggestUndoClear = (collection, doc_id, field_id, field_label, cleared_value) ->
     text: "#{field_label} cleared"
     showDismissButton: true
     actionText: "Undo"
-    onActionClick: =>
+    onActionClick: (snackbar) =>
       undo_query = {$set: {}}
       undo_query["$set"][field_id] = cleared_value
 
       collection.update(doc_id, undo_query)
 
-      JustdoSnackbar.close()
+      snackbar.close()
 
       return
 
