@@ -118,6 +118,14 @@ _.extend JustdoDeliveryPlanner.prototype,
         if self._hasProjectStatusChanged(old_value, is_now_project)
           self._logProjectToggleChange(task_id, performed_by, is_now_project)
       
+      # Track project closed/reopened
+      if self._isProjectBeingClosedOrReopenedInModifier(modifier)
+        is_now_closed = modifier.$set[JustdoDeliveryPlanner.task_is_archived_project_field_name]
+        was_closed = previous_doc[JustdoDeliveryPlanner.task_is_archived_project_field_name]
+        
+        if self._hasProjectStatusChanged(was_closed, is_now_closed)
+          self._logProjectClosedOrReopenedChange(task_id, performed_by, is_now_closed)
+      
       # Track projects collection type set
       if self._isProjectsCollectionTypeBeingSetInModifier(modifier)
         new_type = modifier.$set["projects_collection.projects_collection_type"]
@@ -139,14 +147,6 @@ _.extend JustdoDeliveryPlanner.prototype,
         if self._hasProjectStatusChanged(was_closed, is_now_closed)
           collection_type = doc.projects_collection?.projects_collection_type or previous_doc.projects_collection?.projects_collection_type
           self._logProjectsCollectionClosedOrReopenedChange(task_id, performed_by, is_now_closed, collection_type)
-      
-      # Track project closed/reopened
-      if self._isProjectBeingClosedOrReopenedInModifier(modifier)
-        is_now_closed = modifier.$set[JustdoDeliveryPlanner.task_is_archived_project_field_name]
-        was_closed = previous_doc[JustdoDeliveryPlanner.task_is_archived_project_field_name]
-        
-        if self._hasProjectStatusChanged(was_closed, is_now_closed)
-          self._logProjectClosedOrReopenedChange(task_id, performed_by, is_now_closed)
       
       return
     
