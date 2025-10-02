@@ -207,7 +207,19 @@ _.extend JustdoDeliveryPlanner.prototype,
   
   _isProjectBeingClosedOrReopenedInModifier: (modifier) ->
     # Returns true if the modifier is changing the archived project status
-    return modifier.$set?[JustdoDeliveryPlanner.task_is_archived_project_field_name]?
+    
+    task_is_project_field_name = JustdoDeliveryPlanner.task_is_project_field_name
+    task_is_project_modifier_val = modifier.$set?[task_is_project_field_name]
+    task_is_archived_project_field_name = JustdoDeliveryPlanner.task_is_archived_project_field_name
+    task_is_archived_project_modifier_val = modifier.$set?[task_is_archived_project_field_name]
+    # When unsetting a task as project, `task_is_archived_project_field_name` will also be set to false regardless of the previous value
+    # As such, if both `task_is_project_field_name` and `task_is_archived_project_field_name` is set to false,
+    # we don't consider it as being closed or reopened.
+    is_unsetting_as_project = (task_is_project_modifier_val is false) and (task_is_archived_project_modifier_val is false)
+    if is_unsetting_as_project
+      return false
+
+    return task_is_archived_project_modifier_val?
   
   _logProjectToggleChange: (task_id, performed_by, is_now_project) ->
     APP.tasks_changelog_manager.logChange
