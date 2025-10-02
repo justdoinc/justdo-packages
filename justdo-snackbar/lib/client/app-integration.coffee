@@ -21,5 +21,3 @@ JustdoSnackbar =
     options = _.extend {}, justdo_snackbar_default_options, options
 
     return Snackbar.show(options)
-  close: ->
-    return Snackbar.close()

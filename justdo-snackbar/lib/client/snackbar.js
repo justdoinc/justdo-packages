@@ -34,7 +34,7 @@
 })(this, function() {
     var Snackbar = {};
 
-    Snackbar.current = null;
+    Snackbar.current = [];
     var $defaults = {
         text: 'Default Text',
         textColor: '#FFFFFF',
@@ -83,22 +83,9 @@
           }
         }
 
-        if (Snackbar.current) {
-            Snackbar.current.style.opacity = 0;
-            setTimeout(
-                function() {
-                    var $parent = this.parentElement;
-                    if ($parent)
-                    // possible null if too many/fast Snackbars
-                        $parent.removeChild(this);
-                }.bind(Snackbar.current),
-                500
-            );
-        }
-
-        Snackbar.snackbar = document.createElement('div');
-        Snackbar.snackbar.className = 'snackbar-container ' + options.customClass;
-        Snackbar.snackbar.style.width = options.width;
+        var snackbar = document.createElement('div');
+        snackbar.className = 'snackbar-container ' + options.customClass;
+        snackbar.style.width = options.width;
         var $p = document.createElement('p');
         $p.style.margin = 0;
         $p.style.padding = 0;
@@ -107,11 +94,17 @@
         $p.style.fontWeight = 400;
         $p.style.lineHeight = '1em';
         $p.innerHTML = options.text;
-        Snackbar.snackbar.appendChild($p);
-        Snackbar.snackbar.style.background = options.backgroundColor;
+        snackbar.appendChild($p);
+        snackbar.style.background = options.backgroundColor;
         var $buttonWrapper = document.createElement('div');
         $buttonWrapper.className = "snackbar-button-wrapper";
-        Snackbar.snackbar.appendChild($buttonWrapper); // Wrapper for buttons
+        snackbar.appendChild($buttonWrapper); // Wrapper for buttons
+
+        snackbar.close = function() {
+            this.style.opacity = 0;
+            this.style.top = '-100px';
+            this.style.bottom = '-100px';
+        }.bind(snackbar);
 
         if (options.showSecondButton) {
             var secondButton = document.createElement('button');
@@ -119,7 +112,7 @@
             secondButton.innerHTML = options.secondButtonText;
             secondButton.style.color = options.secondButtonTextColor;
             secondButton.addEventListener('click', function() {
-                options.onSecondButtonClick(Snackbar.snackbar);
+                options.onSecondButtonClick(snackbar);
             });
             $buttonWrapper.appendChild(secondButton);
         }
@@ -130,7 +123,7 @@
             actionButton.innerHTML = options.actionText;
             actionButton.style.color = options.actionTextColor;
             actionButton.addEventListener('click', function() {
-                options.onActionClick(Snackbar.snackbar);
+                options.onActionClick(snackbar);
             });
             $buttonWrapper.appendChild(actionButton);
         }
@@ -141,7 +134,7 @@
             dismissButton.innerHTML = '<svg class="jd-icon" style="stroke-width: 2;"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>';
             dismissButton.style.color = options.secondButtonTextColor;
             dismissButton.addEventListener('click', function() {
-                Snackbar.close()
+                snackbar.close();
             });
             $buttonWrapper.appendChild(dismissButton);
         }
@@ -149,18 +142,13 @@
         if (options.duration) {
             setTimeout(
                 function() {
-                    if (Snackbar.current === this) {
-                        Snackbar.current.style.opacity = 0;
-                        // When natural remove event occurs let's move the snackbar to its origins
-                        Snackbar.current.style.top = '-100px';
-                        Snackbar.current.style.bottom = '-100px';
-                    }
-                }.bind(Snackbar.snackbar),
+                    snackbar.close();
+                }.bind(snackbar),
                 options.duration
             );
         }
 
-        Snackbar.snackbar.addEventListener(
+        snackbar.addEventListener(
             'transitionend',
             function(event, elapsed) {
                 if (event.propertyName === 'opacity' && this.style.opacity === '0') {
@@ -168,27 +156,21 @@
                         options.onClose(this);
 
                     this.parentElement.removeChild(this);
-                    if (Snackbar.current === this) {
-                        Snackbar.current = null;
-                    }
+                    Snackbar.current = _.without(Snackbar.current, this);
                 }
-            }.bind(Snackbar.snackbar)
+            }.bind(snackbar)
         );
 
-        Snackbar.current = Snackbar.snackbar;
+        Snackbar.current.push(snackbar);
 
         document.body.appendChild(Snackbar.snackbar);
-        var $bottom = getComputedStyle(Snackbar.snackbar).bottom;
-        var $top = getComputedStyle(Snackbar.snackbar).top;
-        Snackbar.snackbar.style.opacity = 1;
-        Snackbar.snackbar.className =
+        var $bottom = getComputedStyle(snackbar).bottom;
+        var $top = getComputedStyle(snackbar).top;
+        snackbar.style.opacity = 1;
+        snackbar.className =
             'snackbar-container ' + options.customClass + ' snackbar-pos ' + options.pos;
-    };
-
-    Snackbar.close = function() {
-        if (Snackbar.current) {
-            Snackbar.current.style.opacity = 0;
-        }
+        
+        return snackbar;
     };
 
     // Pure JS Extend
