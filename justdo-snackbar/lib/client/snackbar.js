@@ -42,7 +42,7 @@
     var $defaults = {
         text: 'Default Text',
         textColor: '#FFFFFF',
-        width: 'auto',
+        width: 'fit-content',
         showAction: true,
         showDismissButton: false,
         actionText: '<svg class="jd-icon" style="stroke-width: 2;"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>',
