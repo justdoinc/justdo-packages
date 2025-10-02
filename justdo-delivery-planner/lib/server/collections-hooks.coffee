@@ -111,12 +111,12 @@ _.extend JustdoDeliveryPlanner.prototype,
       previous_doc = @previous
       
       # Track task marked/unmarked as project
-      if self._isProjectBeingToggledInModifier(modifier)
+      if self._isProjectStatusUpdatedInModifier(modifier)
         is_now_project = modifier.$set[JustdoDeliveryPlanner.task_is_project_field_name]
         old_value = previous_doc[JustdoDeliveryPlanner.task_is_project_field_name]
         
         if self._hasProjectStatusChanged(old_value, is_now_project)
-          self._logProjectToggleChange(task_id, performed_by, is_now_project)
+          self._logProjectStatusChange(task_id, performed_by, is_now_project)
       
       # Track project closed/reopened
       if self._isProjectBeingClosedOrReopenedInModifier(modifier)
@@ -186,7 +186,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     # Returns true if the project status actually changed
     return old_value isnt new_value
   
-  _isProjectBeingToggledInModifier: (modifier) ->
+  _isProjectStatusUpdatedInModifier: (modifier) ->
     # Returns true if the modifier is changing the is_project field
     return modifier.$set?[JustdoDeliveryPlanner.task_is_project_field_name]?
   
@@ -221,7 +221,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     return task_is_archived_project_modifier_val?
   
-  _logProjectToggleChange: (task_id, performed_by, is_now_project) ->
+  _logProjectStatusChange: (task_id, performed_by, is_now_project) ->
     APP.tasks_changelog_manager.logChange
       field: JustdoDeliveryPlanner.task_is_project_field_name
       label: "Project"
