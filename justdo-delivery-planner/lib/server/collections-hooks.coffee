@@ -226,6 +226,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       field: JustdoDeliveryPlanner.task_is_project_field_name
       label: "Project"
       change_type: "custom"
+      bypass_time_filter: true
       task_id: task_id
       by: performed_by
       new_value: "#{if is_now_project then "set" else "unset"} this Task as Project"
@@ -245,6 +246,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       field: "projects_collection.projects_collection_type"
       label: "Projects Collection"
       change_type: "custom"
+      bypass_time_filter: true
       task_id: task_id
       by: performed_by
       new_value: "#{if is_now_set then "set" else "unset"} this Task as #{type_label}"
@@ -258,6 +260,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       field: "projects_collection.is_closed"
       label: "Projects Collection"
       change_type: "custom"
+      bypass_time_filter: true
       task_id: task_id
       by: performed_by
       new_value: "#{if is_now_closed then "closed" else "reopened"} this #{type_label}"
@@ -269,6 +272,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       field: JustdoDeliveryPlanner.task_is_archived_project_field_name
       label: "Project"
       change_type: "custom"
+      bypass_time_filter: true
       task_id: task_id
       by: performed_by
       new_value: "#{if is_now_closed then "closed" else "reopened"} this Project"
