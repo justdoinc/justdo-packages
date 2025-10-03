@@ -211,7 +211,10 @@ _.extend GridControl.prototype,
       grid_control_cmenu_target_selector = ".slick-header-column"
       if type is "first"
         grid_control_cmenu_target_selector = grid_control_cmenu_target_selector += ":first"
-      else if type is "last"
+      else if (type is "last")
+        # Otherwise the ":last" selector will select the first column
+        if @getView().length <= 1
+          return
         grid_control_cmenu_target_selector = grid_control_cmenu_target_selector += ":last"
       else if type is "common"
         grid_control_cmenu_target_selector = grid_control_cmenu_target_selector += ":not(:first):not(:last)"
