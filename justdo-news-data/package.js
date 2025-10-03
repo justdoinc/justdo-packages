@@ -182,7 +182,8 @@ Package.onUse(function (api) {
     "lib/both/news/v7-0/assets/4.png",
     "lib/both/news/v7-0/assets/5.png",
     "lib/both/news/v7-0/assets/6.png",
-    "lib/both/news/v7-0/assets/7.png"
+    "lib/both/news/v7-0/assets/7.png",
+    "lib/both/news/v7-0/assets/8.png"
   ], client);
   api.addFiles("lib/both/news/v7-0/v7-0.coffee", both);
   this.addI18nFiles(api, "lib/both/news/v7-0/i18n/{}.i18n.json")

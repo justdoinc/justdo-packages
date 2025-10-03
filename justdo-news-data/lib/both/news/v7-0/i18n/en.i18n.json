@@ -24,5 +24,8 @@
     "v7_0_news_main_array_item_5_subtitle": "Now you can easily show or hide all fields at once, giving you more control over your workspace. You can also view options with multi-select parameters, making it simpler to manage and navigate complex data.",
 
     "v7_0_news_main_array_item_6_title": "Days-off",
-    "v7_0_news_main_array_item_6_subtitle": "You can now set your workdays and days off. Once saved, they’ll be visible to everyone, keeping your whole team aligned on schedules and availability."
+    "v7_0_news_main_array_item_6_subtitle": "You can now set your workdays and days off. Once saved, they’ll be visible to everyone, keeping your whole team aligned on schedules and availability.",
+
+    "v7_0_news_main_array_item_7_title": "Introducing Column Text Filters",
+    "v7_0_news_main_array_item_7_subtitle": "Our new text filters let you refine tasks directly in the grid: add a filter to any custom text column, find matching items instantly, and keep large backlogs navigable without complex queries."
   }
