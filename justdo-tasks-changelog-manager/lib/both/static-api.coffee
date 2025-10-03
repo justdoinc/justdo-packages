@@ -7,7 +7,7 @@ _.extend TasksChangelogManager,
     activity_logs_cursor.forEach (log) ->
       log_type_id = "#{log.task_id}-#{log.field}-#{log.by}"
 
-      if log.change_type not in TasksChangelogManager.ops_involve_another_task
+      if (log.bypass_time_filter isnt true) and (log.change_type not in TasksChangelogManager.ops_involve_another_task)
         # If a field is changed by the same user within 2 mins, don't display that log.
         if (newer_logs_time = logs_time[log_type_id])?
           for newer_time in newer_logs_time
