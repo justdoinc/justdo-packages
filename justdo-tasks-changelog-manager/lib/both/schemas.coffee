@@ -89,5 +89,9 @@ _.extend TasksChangelogManager.prototype,
         type: Object
         optional: true
         blackbox: true
+      
+      bypass_time_filter: 
+        type: Boolean
+        optional: true
 
     @changelog_collection.attachSchema changelog_schema
