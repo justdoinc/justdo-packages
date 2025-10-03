@@ -16,5 +16,7 @@
   "v7_0_news_main_array_item_5_title": "详情区域升级",
   "v7_0_news_main_array_item_5_subtitle": "现在你可以轻松地一次性显示或隐藏所有字段，让你更好地控制工作区。你还可以查看多选参数的选项，让管理和浏览复杂数据变得更简单。",
   "v7_0_news_main_array_item_6_title": "休息日",
-  "v7_0_news_main_array_item_6_subtitle": "你现在可以设置工作日和休息日。保存后，所有人都能看到，让整个团队在日程安排和可用时间上保持一致。"
+  "v7_0_news_main_array_item_6_subtitle": "你现在可以设置工作日和休息日。保存后，所有人都能看到，让整个团队在日程安排和可用时间上保持一致。",
+  "v7_0_news_main_array_item_7_title": "推出列文本筛选器",
+  "v7_0_news_main_array_item_7_subtitle": "我们的新文本筛选器让你直接在表格中筛选任务：为任何自定义文本列添加筛选器，即时找到匹配项目，让大型待办事项保持可导航性而无需复杂查询。"
 }

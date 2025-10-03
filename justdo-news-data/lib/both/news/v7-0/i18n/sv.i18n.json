@@ -16,5 +16,7 @@
   "v7_0_news_main_array_item_5_title": "Uppgradering av Mer Info-sektion",
   "v7_0_news_main_array_item_5_subtitle": "Nu kan du enkelt visa eller dölja alla fält på en gång, vilket ger dig mer kontroll över din arbetsyta. Du kan också visa alternativ med flervals-parametrar, vilket gör det enklare att hantera och navigera komplex data.",
   "v7_0_news_main_array_item_6_title": "Lediga dagar",
-  "v7_0_news_main_array_item_6_subtitle": "Du kan nu ställa in dina arbetsdagar och lediga dagar. När de sparats blir de synliga för alla, vilket håller hela ditt team synkroniserat kring scheman och tillgänglighet."
+  "v7_0_news_main_array_item_6_subtitle": "Du kan nu ställa in dina arbetsdagar och lediga dagar. När de sparats blir de synliga för alla, vilket håller hela ditt team synkroniserat kring scheman och tillgänglighet.",
+  "v7_0_news_main_array_item_7_title": "Introducerar kolumntextfilter",
+  "v7_0_news_main_array_item_7_subtitle": "Våra nya textfilter låter dig förfina uppgifter direkt i tabellen: lägg till ett filter till vilken anpassad textkolumn som helst, hitta matchande objekt omedelbart och håll stora eftersläpningar navigerbara utan komplexa frågor."
 }

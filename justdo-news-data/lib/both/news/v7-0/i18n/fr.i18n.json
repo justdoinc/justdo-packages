@@ -16,5 +16,7 @@
   "v7_0_news_main_array_item_5_title": "Amélioration de la Section Plus d'Infos",
   "v7_0_news_main_array_item_5_subtitle": "Vous pouvez maintenant facilement afficher ou masquer tous les champs d'un coup, vous donnant plus de contrôle sur votre espace de travail. Vous pouvez également voir les options avec des paramètres multi-sélection, rendant plus simple la gestion et la navigation dans des données complexes.",
   "v7_0_news_main_array_item_6_title": "Jours de Congé",
-  "v7_0_news_main_array_item_6_subtitle": "Vous pouvez maintenant définir vos jours de travail et jours de congé. Une fois sauvegardés, ils seront visibles par tous, gardant toute votre équipe alignée sur les horaires et la disponibilité."
+  "v7_0_news_main_array_item_6_subtitle": "Vous pouvez maintenant définir vos jours de travail et jours de congé. Une fois sauvegardés, ils seront visibles par tous, gardant toute votre équipe alignée sur les horaires et la disponibilité.",
+  "v7_0_news_main_array_item_7_title": "Présentation des Filtres de Texte par Colonne",
+  "v7_0_news_main_array_item_7_subtitle": "Nos nouveaux filtres de texte vous permettent d'affiner les tâches directement dans le tableau : ajoutez un filtre à n'importe quelle colonne de texte personnalisée, trouvez les éléments correspondants instantanément, et gardez les grands backlogs navigables sans requêtes complexes."
 }

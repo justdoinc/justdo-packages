@@ -16,5 +16,7 @@
   "v7_0_news_main_array_item_5_title": "Mejora de la Sección Más Información",
   "v7_0_news_main_array_item_5_subtitle": "Ahora puedes mostrar u ocultar fácilmente todos los campos a la vez, dándote más control sobre tu espacio de trabajo. También puedes ver opciones con parámetros de selección múltiple, haciendo más simple gestionar y navegar datos complejos.",
   "v7_0_news_main_array_item_6_title": "Días libres",
-  "v7_0_news_main_array_item_6_subtitle": "Ahora puedes configurar tus días laborables y días libres. Una vez guardados, serán visibles para todos, manteniendo a todo tu equipo alineado en horarios y disponibilidad."
+  "v7_0_news_main_array_item_6_subtitle": "Ahora puedes configurar tus días laborables y días libres. Una vez guardados, serán visibles para todos, manteniendo a todo tu equipo alineado en horarios y disponibilidad.",
+  "v7_0_news_main_array_item_7_title": "Presentamos los Filtros de Texto por Columna",
+  "v7_0_news_main_array_item_7_subtitle": "Nuestros nuevos filtros de texto te permiten refinar tareas directamente en la tabla: añade un filtro a cualquier columna de texto personalizada, encuentra elementos coincidentes al instante, y mantén grandes listas de pendientes navegables sin consultas complejas."
 }

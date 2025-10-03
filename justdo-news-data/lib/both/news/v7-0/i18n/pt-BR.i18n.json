@@ -16,5 +16,7 @@
   "v7_0_news_main_array_item_5_title": "Melhoria da Seção Mais Informações",
   "v7_0_news_main_array_item_5_subtitle": "Agora você pode facilmente mostrar ou ocultar todos os campos de uma vez, dando mais controle sobre seu espaço de trabalho. Você também pode visualizar opções com parâmetros de múltipla seleção, tornando mais simples gerenciar e navegar dados complexos.",
   "v7_0_news_main_array_item_6_title": "Dias de Folga",
-  "v7_0_news_main_array_item_6_subtitle": "Agora você pode definir seus dias de trabalho e dias de folga. Uma vez salvos, eles ficarão visíveis para todos, mantendo toda sua equipe alinhada sobre horários e disponibilidade."
+  "v7_0_news_main_array_item_6_subtitle": "Agora você pode definir seus dias de trabalho e dias de folga. Uma vez salvos, eles ficarão visíveis para todos, mantendo toda sua equipe alinhada sobre horários e disponibilidade.",
+  "v7_0_news_main_array_item_7_title": "Apresentando Filtros de Texto por Coluna",
+  "v7_0_news_main_array_item_7_subtitle": "Nossos novos filtros de texto permitem refinar tarefas diretamente na tabela: adicione um filtro a qualquer coluna de texto personalizada, encontre itens correspondentes instantaneamente e mantenha grandes backlogs navegáveis sem consultas complexas."
 }
