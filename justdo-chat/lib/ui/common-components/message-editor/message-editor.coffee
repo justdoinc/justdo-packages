@@ -510,7 +510,10 @@ Template.common_chat_message_editor_files_dropdown.helpers
   bytesToHumanReadable: (bytes) ->
     tpl = Template.instance()
     return JustdoHelpers.bytesToHumanReadable bytes
-  
+
+  typeClass: ->
+    return String(@type ? '').split('/', 2)[1] ? ''
+
 Template.common_chat_message_editor_files_dropdown.events
   "mousedown .remove-file": (e, tpl) ->
     # To prevent multiple clicks to trigger text selection

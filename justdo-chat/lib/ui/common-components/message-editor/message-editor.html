@@ -34,12 +34,13 @@
         <div class="sort-handle">
           <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical-double"/></svg>
         </div>
-        <div class="file-name-and-size">
-          <div class="file-name">{{name}}</div>
-          <div class="file-size text-muted small">{{bytesToHumanReadable size}}</div>
-        </div>
+        <div class="type-logo shadow-sm {{typeClass}}"></div>
+        <div class="file-name">{{name}}</div>
       </div>
-      <div class="remove-file"><svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#trash-2"/></svg></div>
+      <div class="file-size-and-remove">
+        <div class="file-size text-muted">{{bytesToHumanReadable size}}</div>
+        <div class="remove-file"><svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg></div>
+      </div>
     </div>
   {{/each}}
 </template>

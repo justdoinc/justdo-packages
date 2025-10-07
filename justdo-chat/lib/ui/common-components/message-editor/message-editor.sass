@@ -92,30 +92,77 @@
   background-color: white
   z-index: 150
   max-height: 250px
-  width: 500px
+  width: 360px
   overflow: auto
+  padding: 4px
   &> div
     display: flex
     flex-direction: column
     gap: 4px
     .dropdown-item
-      padding: 0px 8px 0px 0px
+      padding: 2px 8px 2px 2px
       display: flex
       align-items: center
       justify-content: space-between
-      gap: 4px
       user-select: none
       .dropdown-item-content
         display: flex
         align-items: center
+        flex-grow: 1
         .sort-handle
           cursor: grab
+          .jd-icon
+            padding: 3px
+            color: #B0B8C2
+            width: 20px
+
+        .type-logo
+          min-width: 24px
+          height: 32px
+          background-image: url(/packages/justdoinc_tasks-file-manager-plugin/media/icons.png)
+          background-position: -58px 0px
+          transform: scale(0.7)
+          margin-left: -4px
+          margin-right: 2px
+          &.jpeg
+            background-position: -82px 0px
+          &.vnd_ms-excel
+            background-position: -130px 0px
+          &.png
+            background-position: -226px 0px
+          &.pdf
+            background-position: -250px 0px
+          &.javascript
+            background-position: -346px 0px
+          &.html
+            background-position: -370px 0px
+          &.msword
+            background-position: -442px 0px
+          &.mp4, &.mpeg, &.webm, &.quicktime, &.x-msvideo, &.x-ms-wmv
+            background-position: -274px 0px
+
         .file-name
-          white-space: normal
-      .remove-file
-        cursor: pointer
-        .jd-icon
-          width: 20px
+          white-space: nowrap
+          text-overflow: ellipsis
+          overflow: hidden
+          width: 220px
+          font-size: 13px
+      .file-size-and-remove
+        display: flex
+        align-items: center
+        gap: 4px
+        .file-size
+          font-size: 10px
+        .remove-file
+          cursor: pointer
+          .jd-icon
+            width: 20px
+            height: 20px
+            color: #B0B8C2
+            stroke-width: 2px
+            &:hover
+              color: #76869a
+              background-color: #e8edf3
 
 // RTL modification
 .right-to-left
@@ -127,3 +174,11 @@
     .files-count
       right: unset
       left: 7px
+  .chat-editor-files-dropdown
+    .dropdown-item
+      padding: 2px 2px 2px 8px
+      .file-name
+        text-align: right
+      .type-logo
+        margin-left: 2px !important
+        margin-right: -4px !important
