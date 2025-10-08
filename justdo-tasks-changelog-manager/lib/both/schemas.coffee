@@ -91,6 +91,8 @@ _.extend TasksChangelogManager.prototype,
         blackbox: true
       
       bypass_time_filter: 
+        # If set to true, multiple updates of the same field within a short period of time 
+        # will not be filered out by `getFilteredActivityLogByTime`.
         type: Boolean
         optional: true
 
