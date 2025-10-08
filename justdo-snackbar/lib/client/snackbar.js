@@ -62,7 +62,13 @@
     };
 
     Snackbar.show = function($options) {
+        var minimum_duration = 10 * 1000; // 10 seconds
+        if ($options.onSecondButtonClick || $options.onActionClick) {
+            minimum_duration = 30 * 1000; // 30 seconds
+        }
+
         var options = Extend(true, $defaults, $options);
+        options.duration = Math.max(options.duration, minimum_duration);
 
         // for option_name, option_val of options
         //   if _.isString(option_val)
