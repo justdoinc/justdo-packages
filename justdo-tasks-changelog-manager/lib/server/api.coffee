@@ -4,6 +4,8 @@ _.extend TasksChangelogManager.prototype,
 
     @_trackers = {}
 
+    @_setupCustomChangeTypeRegistrar()
+
     return
 
   _deferredInit: ->

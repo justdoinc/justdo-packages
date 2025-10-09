@@ -21,11 +21,13 @@ Package.onUse(function (api) {
   api.use("meteorhacks:subs-manager",both);
   api.use("momentjs:moment",both);
   api.use("fourseven:scss@3.2.0", client);
+  
 
   api.use('raix:eventemitter@0.1.1', both);
   api.use('meteorspark:util@0.2.0', both);
   api.use('meteorspark:logger@0.3.0', both);
   api.use('justdoinc:justdo-helpers@1.0.0', both);
+  api.use("aldeed:simple-schema@1.5.3", both);
 
   api.use('justdoinc:grid-control-custom-fields@1.0.0', both);
 
