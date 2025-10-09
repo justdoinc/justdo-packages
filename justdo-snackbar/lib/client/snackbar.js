@@ -62,6 +62,8 @@
     };
 
     Snackbar.show = function($options) {
+        // For cases where the user didn't explicitly set an action or second action - set the framework minimum duration to 10 seconds.
+        // Otherwise, set the minimum framework duration is set to 30 seconds.
         var minimum_duration = 10 * 1000; // 10 seconds
         if ($options.onSecondButtonClick || $options.onActionClick) {
             minimum_duration = 30 * 1000; // 30 seconds
