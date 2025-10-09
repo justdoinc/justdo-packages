@@ -1,4 +1,34 @@
 _.extend TasksChangelogManager.prototype,
+  _setupCustomChangeTypeRegistrar: ->
+    @_custom_change_types = {}
+    return
+  
+  _registerCustomChangeTypeSchema: new SimpleSchema
+    getLogMessage:
+      type: Function
+  registerCustomChangeType: (change_type, change_type_def) ->
+    {cleaned_val} = 
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_registerCustomChangeTypeSchema,
+        change_type_def,
+        {self: @, throw_on_error: true}
+      )
+    change_type_def = cleaned_val
+    change_type_def._id = change_type
+
+    @_custom_change_types[change_type] = change_type_def
+
+    return
+  
+  _getCustomChangeType: (change_type) ->
+    return @_custom_change_types[change_type]
+
+  getCustomChangeTypeMessage: (change_type, activity_obj) ->
+    if not (custom_change_type = @_getCustomChangeType(change_type))?
+      return
+    
+    return custom_change_type.getLogMessage(activity_obj)
+
   getActivityMessage: (activity_obj) ->
     performer_name = if activity_obj.by == Meteor.userId() then "You" else "#{JustdoHelpers.displayName(APP.helpers.getUsersDocsByIds activity_obj.by)}"
 
