@@ -24,10 +24,21 @@ _.extend TasksChangelogManager.prototype,
     return @_custom_change_types[change_type]
 
   getCustomChangeTypeMessage: (change_type, activity_obj) ->
+    # If received `change_type` is registered, calls the change_type's `getLogMessage` 
+    # with `activity_obj` as parameter and returned value of `_getCustomChangeTypeMessageThis` as `this`.
     if not (custom_change_type = @_getCustomChangeType(change_type))?
       return
     
-    return custom_change_type.getLogMessage(activity_obj)
+    return custom_change_type.getLogMessage.call(@_getCustomChangeTypeMessageThis(), activity_obj)
+  
+  _getCustomChangeTypeMessageThis: ->
+    # Returns an object used as `this` when `getLogMessage` of a custom change type is called.
+    # The object is to provide commonly used utility methods.
+    get_custom_change_type_message_this = 
+      getPerformerNameI18n: @_getPerformerNameI18n
+    
+    return get_custom_change_type_message_this
+
   _getPerformerNameI18n: (activity_obj, lang) ->
     if activity_obj.by is Meteor.userId() 
       return JustdoHelpers.ucFirst(TAPi18n.__ "you", {}, lang)
