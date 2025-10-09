@@ -30,6 +30,9 @@ _.extend TasksChangelogManager.prototype,
     return custom_change_type.getLogMessage(activity_obj)
 
   getActivityMessage: (activity_obj) ->
+    if (custom_change_type_message = @getCustomChangeTypeMessage(activity_obj.change_type, activity_obj))?
+      return custom_change_type_message
+
     performer_name = if activity_obj.by == Meteor.userId() then "You" else "#{JustdoHelpers.displayName(APP.helpers.getUsersDocsByIds activity_obj.by)}"
 
     if activity_obj.change_type == "created"
