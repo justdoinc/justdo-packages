@@ -103,5 +103,10 @@ _.extend TasksChangelogManager.prototype,
         # will not be filered out by `getFilteredActivityLogByTime`.
         type: Boolean
         optional: true
+      
+      undo_disabled:
+        # If set to true, the undo button AND the old value will not be shown for this log
+        type: Boolean
+        optional: true
 
     @changelog_collection.attachSchema changelog_schema
