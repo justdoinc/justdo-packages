@@ -110,6 +110,7 @@ _.extend JustdoHelpers,
       imageUpload: false
       imagePaste: false
       toolbarSticky: false
+      colorsHEXInput: false
       charCounterCount: false
       key: env.FROALA_ACTIVATION_KEY
       events: {}
