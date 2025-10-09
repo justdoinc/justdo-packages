@@ -49,6 +49,15 @@ _.extend TasksChangelogManager.prototype,
         type: "skip-type-check"
         optional: true
 
+      data:
+        # Optional data object to store additional information to facilitate log display
+        # E.g. When a projects collection is closed/reopened, the collection type is stored in the data object
+        # so that we can show "... closed this Department".
+        label: "Change Data"
+        type: Object
+        optional: true
+        blackbox: true
+
       undone:
         label: "Undone"
         type: Boolean
