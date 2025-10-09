@@ -28,12 +28,17 @@ _.extend TasksChangelogManager.prototype,
       return
     
     return custom_change_type.getLogMessage(activity_obj)
+  _getPerformerNameI18n: (activity_obj, lang) ->
+    if activity_obj.by is Meteor.userId() 
+      return JustdoHelpers.ucFirst(TAPi18n.__ "you", {}, lang)
+
+    return "#{JustdoHelpers.displayName(APP.helpers.getUsersDocsByIds activity_obj.by)}"
 
   getActivityMessage: (activity_obj) ->
     if (custom_change_type_message = @getCustomChangeTypeMessage(activity_obj.change_type, activity_obj))?
       return custom_change_type_message
 
-    performer_name = if activity_obj.by == Meteor.userId() then "You" else "#{JustdoHelpers.displayName(APP.helpers.getUsersDocsByIds activity_obj.by)}"
+    performer_name = @_getPerformerNameI18n(activity_obj, JustdoI18n.default_lang)
 
     if activity_obj.change_type == "created"
       ret_val = "#{performer_name}"
