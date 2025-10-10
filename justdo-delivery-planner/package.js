@@ -91,7 +91,7 @@ Package.onUse(function (api) {
 
   this.addI18nFiles(api, "i18n/{}.i18n.json", "default_lang_only");
   this.addI18nFiles(api, "i18n/projects-collection/{}.i18n.json");
-  this.addI18nFiles(api, "i18n/log-message/{}.i18n.json", "default_lang_only");
+  this.addI18nFiles(api, "i18n/log-message/{}.i18n.json");
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
