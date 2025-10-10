@@ -116,7 +116,7 @@ _.extend JustdoDeliveryPlanner.prototype,
         old_value = previous_doc[JustdoDeliveryPlanner.task_is_project_field_name]
         
         if self._hasProjectStatusChanged(old_value, is_now_project)
-          self._logProjectStatusChange(task_id, performed_by, is_now_project)
+          self._logProjectStatusChange(task_id, performed_by, is_now_project, old_value)
       
       # Track project closed/reopened
       if self._isProjectBeingClosedOrReopenedInModifier(modifier)
@@ -124,7 +124,7 @@ _.extend JustdoDeliveryPlanner.prototype,
         was_closed = previous_doc[JustdoDeliveryPlanner.task_is_archived_project_field_name]
         
         if self._hasProjectStatusChanged(was_closed, is_now_closed)
-          self._logProjectClosedOrReopenedChange(task_id, performed_by, is_now_closed)
+          self._logProjectClosedOrReopenedChange(task_id, performed_by, is_now_closed, was_closed)
       
       # Track projects collection type set
       if self._isProjectsCollectionTypeBeingSetInModifier(modifier)
@@ -132,12 +132,12 @@ _.extend JustdoDeliveryPlanner.prototype,
         old_type = previous_doc.projects_collection?.projects_collection_type
         
         if self._hasProjectStatusChanged(old_type, new_type)
-          self._logProjectsCollectionTypeToggleChange(task_id, performed_by, true, new_type)
+          self._logProjectsCollectionTypeToggleChange(task_id, performed_by, new_type, old_type)
       
       # Track projects collection type unset
       if self._isProjectsCollectionBeingUnsetInModifier(modifier, previous_doc)
         old_type = previous_doc.projects_collection.projects_collection_type
-        self._logProjectsCollectionTypeToggleChange(task_id, performed_by, false, old_type)
+        self._logProjectsCollectionTypeToggleChange(task_id, performed_by, null, old_type)
       
       # Track projects collection closed/reopened
       if self._isProjectsCollectionBeingClosedOrReopenedInModifier(modifier)
@@ -146,7 +146,7 @@ _.extend JustdoDeliveryPlanner.prototype,
         
         if self._hasProjectStatusChanged(was_closed, is_now_closed)
           collection_type = doc.projects_collection?.projects_collection_type or previous_doc.projects_collection?.projects_collection_type
-          self._logProjectsCollectionClosedOrReopenedChange(task_id, performed_by, is_now_closed, collection_type)
+          self._logProjectsCollectionClosedOrReopenedChange(task_id, performed_by, is_now_closed, was_closed, collection_type)
       
       return
     
@@ -221,61 +221,61 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     return task_is_archived_project_modifier_val?
   
-  _logProjectStatusChange: (task_id, performed_by, is_now_project) ->
+  _logProjectStatusChange: (task_id, performed_by, new_value, old_value) ->
     APP.tasks_changelog_manager.logChange
       field: JustdoDeliveryPlanner.task_is_project_field_name
       label: "Project"
-      change_type: "custom"
+      change_type: JustdoDeliveryPlanner.set_unset_project_change_type
       bypass_time_filter: true
+      undo_disabled: true
       task_id: task_id
       by: performed_by
-      new_value: "#{if is_now_project then "set" else "unset"} this Task as Project"
+      old_value: old_value
+      new_value: new_value
     
     return
-  
-  _getProjectsCollectionTypeLabelInDefaultLang: (type_id) ->
-    type_def = @getProjectsCollectionTypeById(type_id)
-    type_label = type_def?.type_label_i18n or type_id
-    type_label = TAPi18n.__ type_label, {}, JustdoI18n.default_lang
-    return type_label
-  
-  _logProjectsCollectionTypeToggleChange: (task_id, performed_by, is_now_set, type_id) ->
-    type_label = @_getProjectsCollectionTypeLabelInDefaultLang(type_id)
-    
+
+  _logProjectsCollectionTypeToggleChange: (task_id, performed_by, new_value, old_value) ->    
     APP.tasks_changelog_manager.logChange
       field: "projects_collection.projects_collection_type"
       label: "Projects Collection"
-      change_type: "custom"
+      change_type: JustdoDeliveryPlanner.set_unset_projects_collection_change_type
       bypass_time_filter: true
+      undo_disabled: true
       task_id: task_id
       by: performed_by
-      new_value: "#{if is_now_set then "set" else "unset"} this Task as #{type_label}"
+      old_value: old_value
+      new_value: new_value
     
     return
   
-  _logProjectsCollectionClosedOrReopenedChange: (task_id, performed_by, is_now_closed, collection_type) ->
-    type_label = @_getProjectsCollectionTypeLabelInDefaultLang(collection_type)
-    
+  _logProjectsCollectionClosedOrReopenedChange: (task_id, performed_by, new_value, old_value, collection_type) ->
     APP.tasks_changelog_manager.logChange
       field: "projects_collection.is_closed"
       label: "Projects Collection"
-      change_type: "custom"
+      change_type: JustdoDeliveryPlanner.close_reopen_projects_collection_change_type
       bypass_time_filter: true
+      undo_disabled: true
       task_id: task_id
       by: performed_by
-      new_value: "#{if is_now_closed then "closed" else "reopened"} this #{type_label}"
+      old_value: old_value
+      new_value: new_value
+      data:
+        projects_collection_label_i18n: collection_type
     
     return
   
-  _logProjectClosedOrReopenedChange: (task_id, performed_by, is_now_closed) ->
+  _logProjectClosedOrReopenedChange: (task_id, performed_by, new_value, old_value) ->
     APP.tasks_changelog_manager.logChange
       field: JustdoDeliveryPlanner.task_is_archived_project_field_name
       label: "Project"
-      change_type: "custom"
+      change_type: JustdoDeliveryPlanner.close_reopen_project_change_type
       bypass_time_filter: true
+      undo_disabled: true
       task_id: task_id
       by: performed_by
-      new_value: "#{if is_now_closed then "closed" else "reopened"} this Project"
+      old_value: old_value
+      new_value: new_value
     
     return
 

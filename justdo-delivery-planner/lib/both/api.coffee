@@ -18,7 +18,61 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     if @destroyed
       return
+    
+    @_registerCustomChangeTypes()
 
+    return
+  
+  _registerCustomChangeTypes: ->
+    self = @
+    
+    # Helper to get type label in default language
+    getTypeLabelI18n = (type_id) ->
+      type_def = self.getProjectsCollectionTypeById(type_id)
+      type_label = type_def?.type_label_i18n or type_id
+      return type_label
+
+    # Handler for project status changes
+    APP.tasks_changelog_manager.registerCustomChangeType JustdoDeliveryPlanner.set_unset_project_change_type,
+      getLogMessage: (activity_obj) ->
+        performer_name = @getPerformerNameI18n(activity_obj)
+        message_i18n = if activity_obj.new_value then "delivery_planner_set_as_project_log_message" else "delivery_planner_unset_as_project_log_message"
+        return TAPi18n.__ message_i18n, {performer: performer_name}
+
+    # Handler for projects collection type changes
+    APP.tasks_changelog_manager.registerCustomChangeType JustdoDeliveryPlanner.set_unset_projects_collection_change_type,
+      getLogMessage: (activity_obj) ->
+        performer_name = @getPerformerNameI18n(activity_obj)
+        
+        if activity_obj.new_value?
+          projects_collection_label_i18n = getTypeLabelI18n activity_obj.new_value
+          message_i18n = "delivery_planner_set_as_projects_collection_log_message"
+          return TAPi18n.__ message_i18n, {performer: performer_name, projects_collection_label_i18n: projects_collection_label_i18n}
+        else if activity_obj.old_value?
+          # When new_value is null, it means the type was unset
+          # old_value should contain the type that was unset
+          
+          projects_collection_label_i18n = getTypeLabelI18n activity_obj.old_value
+          message_i18n = "delivery_planner_unset_as_projects_collection_log_message"
+          return TAPi18n.__ message_i18n, {performer: performer_name, projects_collection_label_i18n: projects_collection_label_i18n}
+
+    # Handler for projects collection closed/reopened
+    APP.tasks_changelog_manager.registerCustomChangeType JustdoDeliveryPlanner.close_reopen_projects_collection_change_type,
+      getLogMessage: (activity_obj) ->
+        performer_name = @getPerformerNameI18n(activity_obj)
+        message_i18n = if activity_obj.new_value then "delivery_planner_close_projects_collection_log_message" else "delivery_planner_reopen_projects_collection_log_message"
+        projects_collection_label_i18n = getTypeLabelI18n activity_obj.data?.projects_collection_label_i18n
+
+        return TAPi18n.__ message_i18n, {performer: performer_name, projects_collection_label_i18n: projects_collection_label_i18n}
+    
+    # Handler for project closed/reopened (is_archived_project field)
+    APP.tasks_changelog_manager.registerCustomChangeType JustdoDeliveryPlanner.close_reopen_project_change_type,
+      getLogMessage: (activity_obj) ->
+        performer_name = @getPerformerNameI18n(activity_obj)
+
+        message_i18n = if activity_obj.new_value then "delivery_planner_close_project_log_message" else "delivery_planner_reopen_project_log_message"
+        return TAPi18n.__ message_i18n, {performer: performer_name}
+    
     return
 
   _getProjectRelevantFieldsProjection: ->
@@ -150,7 +204,7 @@ _.extend JustdoDeliveryPlanner.prototype,
           return {[JustdoDeliveryPlanner.task_is_project_field_name]: true, [JustdoDeliveryPlanner.task_is_archived_project_field_name]: {$ne: true}}
       "closed_project":
         text: "Closed Project"
-        text_i18n: "closed_project_type_label"
+        text_i18n: "closed_project_projects_collection_label"
         is_conditional: true
 
         filter_list_order: 1
@@ -769,7 +823,7 @@ _.extend JustdoDeliveryPlanner.prototype,
         # If no type is found, use the first supported type
         parent_projects_collection_type = JustdoDeliveryPlanner.projects_collections_types[0].type_id
 
-      parent_projects_collection_label = TAPi18n.__ @getProjectsCollectionTypeById(parent_projects_collection_type)?.type_label_plural_i18n
+      parent_projects_collection_label = TAPi18n.__ @getProjectsCollectionTypeById(parent_projects_collection_type)?.projects_collection_label_plural_i18n
       throw @_error "not-supported", TAPi18n.__ "projects_collection_depth_gt_max_depth_default_err", {projects_collection_label: parent_projects_collection_label, count: max_depth}
 
     return true
