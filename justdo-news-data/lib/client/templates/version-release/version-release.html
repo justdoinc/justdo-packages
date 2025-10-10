@@ -34,13 +34,15 @@
     {{#if subtitle}}
       <div class="news-subtitle">{{{xssGuard(_ subtitle)}}}</div>
     {{/if}}
-    {{#if isVideo media_url}}
-      <video autoplay loop muted playsinline class="news-media">
-        <source src="{{media_url}}" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-    {{else}}
-      <img class="news-media" src="{{getCDNUrl media_url}}" alt="News Image">
+    {{#if media_url}}
+      {{#if isVideo media_url}}
+        <video autoplay loop muted playsinline class="news-media">
+          <source src="{{media_url}}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      {{else}}
+        <img class="news-media" src="{{getCDNUrl media_url}}" alt="News Image">
+      {{/if}}
     {{/if}}
   </div>
 </template>
