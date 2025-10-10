@@ -46,3 +46,8 @@ _.extend JustdoHelpers,
   getCoreStateOneOfCoreStatesQuery: (core_states) -> {$regex: JustdoHelpers.isStateOneOfCoreStatesRegex(core_states)}
 
   getCoreStateNotOneOfCoreStatesQuery: (core_states) -> {$not: {$regex: JustdoHelpers.isStateOneOfCoreStatesRegex(core_states)}}
+
+  terminal_core_states: ["will-not-do", "duplicate", "done"]
+
+  isTerminalState: (state) ->
+    return @getCoreState(state) in JustdoHelpers.terminal_core_states
