@@ -95,7 +95,34 @@ _.extend JustdoDeliveryPlanner.prototype,
       setTaskAsProjectIfNewParentIsProjectsCollection doc, modifier
         
       return
-    
+
+    self.tasks_collection.after.update (user_id, doc, field_names, modifier, options) ->
+      # Auto close projects that are set from non-terminal to terminal states,
+      # and reopen projects that are set from terminal to non-terminal states
+      if not self.isTaskObjProject doc
+        # Task is not a project
+        return
+      
+      previous_state = @previous.state
+      if not (current_state = modifier.$set?.state)?
+        # State field not involved in the update
+        return
+
+      is_previous_state_terminal = JustdoHelpers.isTerminalState(previous_state)
+      is_current_state_terminal = JustdoHelpers.isTerminalState(current_state)
+      if is_previous_state_terminal is is_current_state_terminal
+        # State not changed, no need to update
+        return
+
+      if (is_previous_state_terminal and (not is_current_state_terminal)) and self.isTaskObjArchivedProject(doc)
+        # Task is being set to a non-terminal state, so we need to unarchive the project
+        self.tasks_collection.update doc._id, {$set: [JustdoDeliveryPlanner.task_is_archived_project_field_name]: false}
+      else if ((not is_previous_state_terminal) and is_current_state_terminal) and not self.isTaskObjArchivedProject(doc)
+        # Task is being set to a terminal state, so we need to archive the project
+        self.tasks_collection.update doc._id, {$set: [JustdoDeliveryPlanner.task_is_archived_project_field_name]: true}
+
+      return
+
     JustdoHelpers.hooks_barriers.markBarrierAsResolved "post-jdp-collections-hooks-setup"
 
     return
