@@ -1,0 +1,4 @@
+{
+  "set_ancestor_project_to_done_snackbar_text": "Übergeordnetes Projekt <b>__title__</b> als erledigt markieren?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "__count__ übergeordnete Projekte als erledigt markieren?"
+}

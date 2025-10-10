@@ -1,0 +1,4 @@
+{
+  "set_ancestor_project_to_done_snackbar_text": "Marchezi proiectul părinte <b>__title__</b> ca finalizat?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "Marchezi __count__ proiecte părinte ca finalizate?"
+}

@@ -1,0 +1,4 @@
+{
+  "set_ancestor_project_to_done_snackbar_text": "将父级项目 <b>__title__</b> 设置为已完成？",
+  "set_ancestor_project_to_done_snackbar_text_plural": "将 __count__ 个父级项目设置为已完成？"
+}

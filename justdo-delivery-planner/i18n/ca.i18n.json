@@ -1,0 +1,4 @@
+{
+  "set_ancestor_project_to_done_snackbar_text": "Establir el projecte antecessor <b>__title__</b> com a finalitzat?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "Establir __count__ projectes antecessors com a finalitzats?"
+}

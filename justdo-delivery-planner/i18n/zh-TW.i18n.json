@@ -1,0 +1,4 @@
+{
+  "set_ancestor_project_to_done_snackbar_text": "將上層專案 <b>__title__</b> 設為完成？",
+  "set_ancestor_project_to_done_snackbar_text_plural": "將 __count__ 個上層專案設為完成？"
+}

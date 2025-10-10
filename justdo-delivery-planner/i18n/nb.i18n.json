@@ -1,0 +1,4 @@
+{
+  "set_ancestor_project_to_done_snackbar_text": "Sett overordnet prosjekt <b>__title__</b> til ferdig?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "Sett __count__ overordnede prosjekter til ferdig?"
+}

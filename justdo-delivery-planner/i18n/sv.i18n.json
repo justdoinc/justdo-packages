@@ -1,0 +1,4 @@
+{
+  "set_ancestor_project_to_done_snackbar_text": "Markera överordnat projekt <b>__title__</b> som klart?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "Markera __count__ överordnade projekt som klara?"
+}

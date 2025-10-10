@@ -1,0 +1,4 @@
+{
+  "set_ancestor_project_to_done_snackbar_text": "Të vendoset projekti prind <b>__title__</b> si i përfunduar?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "Të vendosen __count__ projekte prind si të përfunduara?"
+}

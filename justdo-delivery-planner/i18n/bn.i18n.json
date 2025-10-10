@@ -1,0 +1,4 @@
+{
+  "set_ancestor_project_to_done_snackbar_text": "পূর্বপুরুষ প্রকল্প <b>__title__</b> সম্পন্ন হিসেবে সেট করবেন?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "__count__টি পূর্বপুরুষ প্রকল্প সম্পন্ন হিসেবে সেট করবেন?"
+}

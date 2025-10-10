@@ -1,0 +1,4 @@
+{
+  "set_ancestor_project_to_done_snackbar_text": "Установить родительский проект <b>__title__</b> как завершенный?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "Установить __count__ родительских проектов как завершенные?"
+}

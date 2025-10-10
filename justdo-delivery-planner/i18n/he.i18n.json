@@ -1,0 +1,4 @@
+{
+  "set_ancestor_project_to_done_snackbar_text": "להגדיר את הפרויקט הקודם <b>__title__</b> כהושלם?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "להגדיר __count__ פרויקטים קודמים כהושלמו?"
+}

@@ -1,0 +1,4 @@
+{
+  "set_ancestor_project_to_done_snackbar_text": "Tandai proyek induk <b>__title__</b> sebagai selesai?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "Tandai __count__ proyek induk sebagai selesai?"
+}

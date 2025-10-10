@@ -1,0 +1,4 @@
+{
+  "set_ancestor_project_to_done_snackbar_text": "Pažymėti aukštesnio lygio projektą <b>__title__</b> kaip baigtą?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "Pažymėti __count__ aukštesnio lygio projektus kaip baigtus?"
+}

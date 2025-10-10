@@ -1,0 +1,4 @@
+{
+  "set_ancestor_project_to_done_snackbar_text": "A <b>__title__</b> szülőprojekt befejezettként való megjelölése?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "__count__ szülőprojekt befejezettként való megjelölése?"
+}
