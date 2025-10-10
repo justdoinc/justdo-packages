@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Bovenliggend project <b>__title__</b> op voltooid zetten?",
-  "set_ancestor_project_to_done_snackbar_text_plural": "__count__ bovenliggende projecten op voltooid zetten?"
+  "set_ancestor_project_to_done_snackbar_text": "Project <b>__title__</b> op Afgerond zetten?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "__count__ bovenliggende Projecten op Afgerond zetten?"
 }

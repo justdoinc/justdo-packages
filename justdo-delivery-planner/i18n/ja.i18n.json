@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "親プロジェクト<b>__title__</b>を完了にしますか？",
-  "set_ancestor_project_to_done_snackbar_text_plural": "__count__個の親プロジェクトを完了にしますか？"
+  "set_ancestor_project_to_done_snackbar_text": "プロジェクト <b>__title__</b> を完了にしますか？",
+  "set_ancestor_project_to_done_snackbar_text_plural": "__count__ の親プロジェクトを完了にしますか？"
 }

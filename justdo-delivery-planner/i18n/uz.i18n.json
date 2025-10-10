@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Ota loyiha <b>__title__</b>ni bajarilgan deb belgilaysizmi?",
-  "set_ancestor_project_to_done_snackbar_text_plural": "__count__ ta ota loyihani bajarilgan deb belgilaysizmi?"
+  "set_ancestor_project_to_done_snackbar_text": "<b>__title__</b> loyihasini Bajarildi holатiga o'tkazasizmi?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "__count__ ta o'z ichiga olgan loyihalarni Bajarildi holатiga o'tkazasizmi?"
 }

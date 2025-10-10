@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "ตั้งค่าโปรเจ็กต์หลัก <b>__title__</b> เป็นเสร็จสิ้น?",
-  "set_ancestor_project_to_done_snackbar_text_plural": "ตั้งค่าโปรเจ็กต์หลัก __count__ โปรเจ็กต์เป็นเสร็จสิ้น?"
+  "set_ancestor_project_to_done_snackbar_text": "ตั้งค่าโปรเจกต์ <b>__title__</b> เป็นเสร็จแล้ว?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "ตั้งค่าโปรเจกต์ที่มี __count__ โปรเจกต์เป็นเสร็จแล้ว?"
 }

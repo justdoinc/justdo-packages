@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Atzīmēt vecākprojektu <b>__title__</b> kā pabeigtu?",
-  "set_ancestor_project_to_done_snackbar_text_plural": "Atzīmēt __count__ vecākprojektus kā pabeigtos?"
+  "set_ancestor_project_to_done_snackbar_text": "Iestatīt projektu <b>__title__</b> kā pabeigtu?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "Iestatīt __count__ saturošos projektus kā pabeigtos?"
 }

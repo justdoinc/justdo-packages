@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Aseta ylätason projekti <b>__title__</b> valmiiksi?",
-  "set_ancestor_project_to_done_snackbar_text_plural": "Aseta __count__ ylätason projektia valmiiksi?"
+  "set_ancestor_project_to_done_snackbar_text": "Aseta projekti <b>__title__</b> valmiiksi?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "Aseta __count__ sisältävää projektia valmiiksi?"
 }

@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Ата проект <b>__title__</b> аткарылды деп белгилесизби?",
-  "set_ancestor_project_to_done_snackbar_text_plural": "__count__ ата проектти аткарылды деп белгилесизби?"
+  "set_ancestor_project_to_done_snackbar_text": "<b>__title__</b> долбоорун Аткарылды деп белгилейсизби?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "__count__ камтуучу долбоорду Аткарылды деп белгилейсизби?"
 }

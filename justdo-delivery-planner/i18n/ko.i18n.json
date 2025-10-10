@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "상위 프로젝트 <b>__title__</b>을(를) 완료로 설정하시겠습니까?",
-  "set_ancestor_project_to_done_snackbar_text_plural": "__count__개의 상위 프로젝트를 완료로 설정하시겠습니까?"
+  "set_ancestor_project_to_done_snackbar_text": "프로젝트 <b>__title__</b>을(를) 완료로 설정하시겠습니까?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "포함된 __count__개의 프로젝트를 완료로 설정하시겠습니까?"
 }

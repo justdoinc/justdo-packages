@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "هل تريد تعيين المشروع الأصل <b>__title__</b> كمكتمل؟",
-  "set_ancestor_project_to_done_snackbar_text_plural": "هل تريد تعيين __count__ مشاريع أصل كمكتملة؟"
+  "set_ancestor_project_to_done_snackbar_text": "تعيين المشروع <b>__title__</b> كمكتمل؟",
+  "set_ancestor_project_to_done_snackbar_text_plural": "تعيين __count__ من المشاريع المحتوية كمكتملة؟"
 }

@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Позначити батьківський проект <b>__title__</b> як виконаний?",
-  "set_ancestor_project_to_done_snackbar_text_plural": "Позначити __count__ батьківські проекти як виконані?"
+  "set_ancestor_project_to_done_snackbar_text": "Встановити статус \"Завершено\" для проєкту <b>__title__</b>?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "Встановити статус \"Завершено\" для __count__ проєктів, що містять завдання?"
 }

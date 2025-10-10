@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Đặt dự án gốc <b>__title__</b> thành hoàn thành?",
-  "set_ancestor_project_to_done_snackbar_text_plural": "Đặt __count__ dự án gốc thành hoàn thành?"
+  "set_ancestor_project_to_done_snackbar_text": "Đặt Dự án <b>__title__</b> thành Hoàn thành?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "Đặt __count__ Dự án chứa thành Hoàn thành?"
 }

@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Ορισμός προγονικού έργου <b>__title__</b> ως ολοκληρωμένο;",
-  "set_ancestor_project_to_done_snackbar_text_plural": "Ορισμός __count__ προγονικών έργων ως ολοκληρωμένα;"
+  "set_ancestor_project_to_done_snackbar_text": "Να οριστεί το Έργο <b>__title__</b> ως Ολοκληρωμένο;",
+  "set_ancestor_project_to_done_snackbar_text_plural": "Να οριστούν __count__ Έργα που περιέχουν ως Ολοκληρωμένα;"
 }

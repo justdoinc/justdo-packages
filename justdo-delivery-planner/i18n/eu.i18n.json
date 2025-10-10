@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "<b>__title__</b> proiektu gurasoa eginda ezarri?",
-  "set_ancestor_project_to_done_snackbar_text_plural": "__count__ proiektu guraso eginda ezarri?"
+  "set_ancestor_project_to_done_snackbar_text": "<b>__title__</b> proiektua Eginda ezarri?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "__count__ barne hartutako proiektuak Eginda ezarri?"
 }

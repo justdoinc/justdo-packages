@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Weka mradi wa mzazi <b>__title__</b> kuwa umekamilika?",
-  "set_ancestor_project_to_done_snackbar_text_plural": "Weka miradi __count__ ya wazazi kuwa imekamilika?"
+  "set_ancestor_project_to_done_snackbar_text": "Weka Mradi <b>__title__</b> kama Umekamilika?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "Weka Miradi __count__ inayohusisha kama Imekamilika?"
 }

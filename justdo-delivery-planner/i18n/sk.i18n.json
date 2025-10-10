@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Označiť nadradený projekt <b>__title__</b> ako dokončený?",
-  "set_ancestor_project_to_done_snackbar_text_plural": "Označiť __count__ nadradených projektov ako dokončené?"
+  "set_ancestor_project_to_done_snackbar_text": "Nastaviť projekt <b>__title__</b> ako hotový?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "Nastaviť __count__ obsahujúcich projektov ako hotové?"
 }

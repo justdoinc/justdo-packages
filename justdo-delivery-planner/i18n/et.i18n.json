@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Märgi ülemprojekt <b>__title__</b> tehtuks?",
-  "set_ancestor_project_to_done_snackbar_text_plural": "Märgi __count__ ülemprojekti tehtuks?"
+  "set_ancestor_project_to_done_snackbar_text": "Määrata projekt <b>__title__</b> valmiks?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "Määrata __count__ sisaldavat projekti valmiks?"
 }

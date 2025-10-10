@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Oznaczyć projekt nadrzędny <b>__title__</b> jako ukończony?",
-  "set_ancestor_project_to_done_snackbar_text_plural": "Oznaczyć __count__ projektów nadrzędnych jako ukończone?"
+  "set_ancestor_project_to_done_snackbar_text": "Ustawić Projekt <b>__title__</b> jako Zakończony?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "Ustawić __count__ zawierających Projektów jako Zakończone?"
 }

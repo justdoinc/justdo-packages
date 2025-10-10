@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Establir el projecte antecessor <b>__title__</b> com a finalitzat?",
-  "set_ancestor_project_to_done_snackbar_text_plural": "Establir __count__ projectes antecessors com a finalitzats?"
+  "set_ancestor_project_to_done_snackbar_text": "Marcar el Projecte <b>__title__</b> com a Completat?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "Marcar __count__ Projectes contenidors com a Completats?"
 }

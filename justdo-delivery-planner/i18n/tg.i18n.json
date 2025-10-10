@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Лоиҳаи волидини <b>__title__</b>-ро ба ҳолати анҷомёфта гузаронем?",
-  "set_ancestor_project_to_done_snackbar_text_plural": "__count__ лоиҳаи волидинро ба ҳолати анҷомёфта гузаронем?"
+  "set_ancestor_project_to_done_snackbar_text": "Лоиҳаи <b>__title__</b>-ро ба ҳолати \"Анҷом додашуда\" гузоранем?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "__count__ лоиҳаи дарбаргирандаро ба ҳолати \"Анҷом додашуда\" гузоранем?"
 }

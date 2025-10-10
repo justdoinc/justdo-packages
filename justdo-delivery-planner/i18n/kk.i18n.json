@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Жоғарғы деңгейдегі жоба <b>__title__</b> орындалды деп белгілеу керек пе?",
-  "set_ancestor_project_to_done_snackbar_text_plural": "__count__ жоғарғы деңгейдегі жобаны орындалды деп белгілеу керек пе?"
+  "set_ancestor_project_to_done_snackbar_text": "<b>__title__</b> жобасын Аяқталды деп белгілеу керек пе?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "__count__ жобаны Аяқталды деп белгілеу керек пе?"
 }

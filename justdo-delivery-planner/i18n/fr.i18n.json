@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Marquer le projet parent <b>__title__</b> comme terminé ?",
-  "set_ancestor_project_to_done_snackbar_text_plural": "Marquer __count__ projets parents comme terminés ?"
+  "set_ancestor_project_to_done_snackbar_text": "Définir le projet <b>__title__</b> comme terminé ?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "Définir __count__ projets contenants comme terminés ?"
 }
