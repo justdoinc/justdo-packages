@@ -1,0 +1,10 @@
+{
+  "delivery_planner_set_as_project_log_message": "__performer__ menetapkan Tugasan ini sebagai Projek",
+  "delivery_planner_unset_as_project_log_message": "__performer__ membatalkan penetapan Tugasan ini sebagai Projek",
+  "delivery_planner_set_as_projects_collection_log_message": "__performer__ menetapkan Tugasan ini sebagai $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_unset_as_projects_collection_log_message": "__performer__ membatalkan penetapan Tugasan ini sebagai $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_close_projects_collection_log_message": "__performer__ menutup $t(project:__projects_collection_label_i18n__) ini",
+  "delivery_planner_reopen_projects_collection_log_message": "__performer__ membuka semula $t(project:__projects_collection_label_i18n__) ini",
+  "delivery_planner_close_project_log_message": "__performer__ menutup Projek ini",
+  "delivery_planner_reopen_project_log_message": "__performer__ membuka semula Projek ini"
+}

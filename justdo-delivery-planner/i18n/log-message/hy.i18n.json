@@ -1,0 +1,10 @@
+{
+  "delivery_planner_set_as_project_log_message": "__performer__-ը սահմանել է այս Առաջադրանքը որպես Նախագիծ",
+  "delivery_planner_unset_as_project_log_message": "__performer__-ը հանել է այս Առաջադրանքը որպես Նախագիծ",
+  "delivery_planner_set_as_projects_collection_log_message": "__performer__-ը սահմանել է այս Առաջադրանքը որպես $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_unset_as_projects_collection_log_message": "__performer__-ը հանել է այս Առաջադրանքը որպես $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_close_projects_collection_log_message": "__performer__-ը փակել է այս $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_reopen_projects_collection_log_message": "__performer__-ը վերաբացել է այս $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_close_project_log_message": "__performer__-ը փակել է այս Նախագիծը",
+  "delivery_planner_reopen_project_log_message": "__performer__-ը վերաբացել է այս Նախագիծը"
+}

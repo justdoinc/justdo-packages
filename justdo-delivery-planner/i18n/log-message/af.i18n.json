@@ -1,0 +1,10 @@
+{
+  "delivery_planner_set_as_project_log_message": "__performer__ het hierdie Taak as Projek gestel",
+  "delivery_planner_unset_as_project_log_message": "__performer__ het hierdie Taak as Projek ontstel",
+  "delivery_planner_set_as_projects_collection_log_message": "__performer__ het hierdie Taak as $t(project:__projects_collection_label_i18n__) gestel",
+  "delivery_planner_unset_as_projects_collection_log_message": "__performer__ het hierdie Taak as $t(project:__projects_collection_label_i18n__) ontstel",
+  "delivery_planner_close_projects_collection_log_message": "__performer__ het hierdie $t(project:__projects_collection_label_i18n__) gesluit",
+  "delivery_planner_reopen_projects_collection_log_message": "__performer__ het hierdie $t(project:__projects_collection_label_i18n__) heropen",
+  "delivery_planner_close_project_log_message": "__performer__ het hierdie Projek gesluit",
+  "delivery_planner_reopen_project_log_message": "__performer__ het hierdie Projek heropen"
+}

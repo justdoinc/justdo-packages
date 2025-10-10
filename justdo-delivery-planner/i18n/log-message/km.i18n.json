@@ -1,0 +1,10 @@
+{
+  "delivery_planner_set_as_project_log_message": "__performer__ បានកំណត់កិច្ចការនេះជាគម្រោង",
+  "delivery_planner_unset_as_project_log_message": "__performer__ បានលុបចោលការកំណត់កិច្ចការនេះជាគម្រោង",
+  "delivery_planner_set_as_projects_collection_log_message": "__performer__ បានកំណត់កិច្ចការនេះជា $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_unset_as_projects_collection_log_message": "__performer__ បានលុបចោលការកំណត់កិច្ចការនេះជា $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_close_projects_collection_log_message": "__performer__ បានបិទ $t(project:__projects_collection_label_i18n__) នេះ",
+  "delivery_planner_reopen_projects_collection_log_message": "__performer__ បានបើកឡើងវិញនូវ $t(project:__projects_collection_label_i18n__) នេះ",
+  "delivery_planner_close_project_log_message": "__performer__ បានបិទគម្រោងនេះ",
+  "delivery_planner_reopen_project_log_message": "__performer__ បានបើកឡើងវិញនូវគម្រោងនេះ"
+}

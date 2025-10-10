@@ -1,0 +1,10 @@
+{
+  "delivery_planner_set_as_project_log_message": "__performer__ がこのタスクをプロジェクトに設定しました",
+  "delivery_planner_unset_as_project_log_message": "__performer__ がこのタスクのプロジェクト設定を解除しました",
+  "delivery_planner_set_as_projects_collection_log_message": "__performer__ がこのタスクを$t(project:__projects_collection_label_i18n__)に設定しました",
+  "delivery_planner_unset_as_projects_collection_log_message": "__performer__ がこのタスクの$t(project:__projects_collection_label_i18n__)設定を解除しました",
+  "delivery_planner_close_projects_collection_log_message": "__performer__ がこの$t(project:__projects_collection_label_i18n__)を完了しました",
+  "delivery_planner_reopen_projects_collection_log_message": "__performer__ がこの$t(project:__projects_collection_label_i18n__)を再開しました",
+  "delivery_planner_close_project_log_message": "__performer__ がこのプロジェクトを完了しました",
+  "delivery_planner_reopen_project_log_message": "__performer__ がこのプロジェクトを再開しました"
+}

@@ -1,0 +1,10 @@
+{
+  "delivery_planner_set_as_project_log_message": "__performer__ ha establert aquesta tasca com a projecte",
+  "delivery_planner_unset_as_project_log_message": "__performer__ ha desestablert aquesta tasca com a projecte",
+  "delivery_planner_set_as_projects_collection_log_message": "__performer__ ha establert aquesta tasca com a $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_unset_as_projects_collection_log_message": "__performer__ ha desestablert aquesta tasca com a $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_close_projects_collection_log_message": "__performer__ ha tancat aquest $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_reopen_projects_collection_log_message": "__performer__ ha reobert aquest $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_close_project_log_message": "__performer__ ha tancat aquest projecte",
+  "delivery_planner_reopen_project_log_message": "__performer__ ha reobert aquest projecte"
+}

@@ -1,0 +1,10 @@
+{
+  "delivery_planner_set_as_project_log_message": "__performer__님이 이 작업을 프로젝트로 설정했습니다",
+  "delivery_planner_unset_as_project_log_message": "__performer__님이 이 작업의 프로젝트 설정을 해제했습니다",
+  "delivery_planner_set_as_projects_collection_log_message": "__performer__님이 이 작업을 $t(project:__projects_collection_label_i18n__)로 설정했습니다",
+  "delivery_planner_unset_as_projects_collection_log_message": "__performer__님이 이 작업의 $t(project:__projects_collection_label_i18n__) 설정을 해제했습니다",
+  "delivery_planner_close_projects_collection_log_message": "__performer__님이 이 $t(project:__projects_collection_label_i18n__)를 종료했습니다",
+  "delivery_planner_reopen_projects_collection_log_message": "__performer__님이 이 $t(project:__projects_collection_label_i18n__)를 다시 열었습니다",
+  "delivery_planner_close_project_log_message": "__performer__님이 이 프로젝트를 종료했습니다",
+  "delivery_planner_reopen_project_log_message": "__performer__님이 이 프로젝트를 다시 열었습니다"
+}
