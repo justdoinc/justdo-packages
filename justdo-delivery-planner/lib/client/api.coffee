@@ -16,6 +16,9 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     @setupCustomFeatureMaintainer()
 
+    # Defined in collections-hooks.coffee
+    @_setupCollectionsHooks()
+
     return
 
   setupCustomFeatureMaintainer: ->

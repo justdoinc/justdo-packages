@@ -1,0 +1,4 @@
+{
+  "set_ancestor_project_to_done_snackbar_text": "Set ancestor project __title__ to done?",
+  "set_ancestor_project_to_done_snackbar_text_plural": "Set __count__ ancestor projects to done?"
+}

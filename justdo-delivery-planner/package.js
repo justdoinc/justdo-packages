@@ -79,6 +79,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/publications.coffee", server);
 
   api.addFiles("lib/client/api.coffee", client);
+  api.addFiles("lib/client/collections-hooks.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
   api.addFiles("lib/client/tabs-definitions/tab-styling.sass", client);
@@ -88,6 +89,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/project-conf/projects-collection/projects-collection-project-conf.html", client);
   api.addFiles("lib/client/project-conf/projects-collection/projects-collection-project-conf.coffee", client);
 
+  this.addI18nFiles(api, "i18n/{}.i18n.json", "default_lang_only");
   this.addI18nFiles(api, "i18n/projects-collection/{}.i18n.json");
 
   // Uncomment only in packages that integrate with the main applications
