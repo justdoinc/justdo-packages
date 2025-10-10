@@ -1,0 +1,10 @@
+{
+  "delivery_planner_set_as_project_log_message": "__performer__ indstillede denne opgave som projekt",
+  "delivery_planner_unset_as_project_log_message": "__performer__ fjernede denne opgave som projekt",
+  "delivery_planner_set_as_projects_collection_log_message": "__performer__ indstillede denne opgave som $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_unset_as_projects_collection_log_message": "__performer__ fjernede denne opgave som $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_close_projects_collection_log_message": "__performer__ lukkede denne $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_reopen_projects_collection_log_message": "__performer__ genåbnede denne $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_close_project_log_message": "__performer__ lukkede dette projekt",
+  "delivery_planner_reopen_project_log_message": "__performer__ genåbnede dette projekt"
+}

@@ -1,0 +1,10 @@
+{
+  "delivery_planner_set_as_project_log_message": "__performer__ এই টাস্কটিকে প্রকল্প হিসেবে সেট করেছেন",
+  "delivery_planner_unset_as_project_log_message": "__performer__ এই টাস্কটিকে প্রকল্প থেকে আনসেট করেছেন",
+  "delivery_planner_set_as_projects_collection_log_message": "__performer__ এই টাস্কটিকে $t(project:__projects_collection_label_i18n__) হিসেবে সেট করেছেন",
+  "delivery_planner_unset_as_projects_collection_log_message": "__performer__ এই টাস্কটিকে $t(project:__projects_collection_label_i18n__) থেকে আনসেট করেছেন",
+  "delivery_planner_close_projects_collection_log_message": "__performer__ এই $t(project:__projects_collection_label_i18n__) বন্ধ করেছেন",
+  "delivery_planner_reopen_projects_collection_log_message": "__performer__ এই $t(project:__projects_collection_label_i18n__) পুনরায় খুলেছেন",
+  "delivery_planner_close_project_log_message": "__performer__ এই প্রকল্পটি বন্ধ করেছেন",
+  "delivery_planner_reopen_project_log_message": "__performer__ এই প্রকল্পটি পুনরায় খুলেছেন"
+}

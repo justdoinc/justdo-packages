@@ -1,0 +1,10 @@
+{
+  "delivery_planner_set_as_project_log_message": "__performer__ đã đặt Tác vụ này thành Dự án",
+  "delivery_planner_unset_as_project_log_message": "__performer__ đã bỏ đặt Tác vụ này thành Dự án",
+  "delivery_planner_set_as_projects_collection_log_message": "__performer__ đã đặt Tác vụ này thành $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_unset_as_projects_collection_log_message": "__performer__ đã bỏ đặt Tác vụ này thành $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_close_projects_collection_log_message": "__performer__ đã đóng $t(project:__projects_collection_label_i18n__) này",
+  "delivery_planner_reopen_projects_collection_log_message": "__performer__ đã mở lại $t(project:__projects_collection_label_i18n__) này",
+  "delivery_planner_close_project_log_message": "__performer__ đã đóng Dự án này",
+  "delivery_planner_reopen_project_log_message": "__performer__ đã mở lại Dự án này"
+}

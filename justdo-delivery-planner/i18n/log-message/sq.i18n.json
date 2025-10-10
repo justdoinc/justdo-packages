@@ -1,0 +1,10 @@
+{
+  "delivery_planner_set_as_project_log_message": "__performer__ e caktoi këtë Detyrë si Projekt",
+  "delivery_planner_unset_as_project_log_message": "__performer__ e hequi këtë Detyrë nga Projekti",
+  "delivery_planner_set_as_projects_collection_log_message": "__performer__ e caktoi këtë Detyrë si $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_unset_as_projects_collection_log_message": "__performer__ e hequi këtë Detyrë nga $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_close_projects_collection_log_message": "__performer__ e mbylli këtë $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_reopen_projects_collection_log_message": "__performer__ e rihapi këtë $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_close_project_log_message": "__performer__ e mbylli këtë Projekt",
+  "delivery_planner_reopen_project_log_message": "__performer__ e rihapi këtë Projekt"
+}

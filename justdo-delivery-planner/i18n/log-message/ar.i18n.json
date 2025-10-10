@@ -1,0 +1,10 @@
+{
+  "delivery_planner_set_as_project_log_message": "__performer__ حدد هذه المهمة كمشروع",
+  "delivery_planner_unset_as_project_log_message": "__performer__ ألغى تحديد هذه المهمة كمشروع",
+  "delivery_planner_set_as_projects_collection_log_message": "__performer__ حدد هذه المهمة كـ $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_unset_as_projects_collection_log_message": "__performer__ ألغى تحديد هذه المهمة كـ $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_close_projects_collection_log_message": "__performer__ أغلق هذا $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_reopen_projects_collection_log_message": "__performer__ أعاد فتح هذا $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_close_project_log_message": "__performer__ أغلق هذا المشروع",
+  "delivery_planner_reopen_project_log_message": "__performer__ أعاد فتح هذا المشروع"
+}

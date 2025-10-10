@@ -1,0 +1,10 @@
+{
+  "delivery_planner_set_as_project_log_message": "__performer__-(e)k Ataza hau Proiektu gisa ezarri du",
+  "delivery_planner_unset_as_project_log_message": "__performer__-(e)k Ataza hau Proiektu gisa kendu du",
+  "delivery_planner_set_as_projects_collection_log_message": "__performer__-(e)k Ataza hau $t(project:__projects_collection_label_i18n__) gisa ezarri du",
+  "delivery_planner_unset_as_projects_collection_log_message": "__performer__-(e)k Ataza hau $t(project:__projects_collection_label_i18n__) gisa kendu du",
+  "delivery_planner_close_projects_collection_log_message": "__performer__-(e)k $t(project:__projects_collection_label_i18n__) hau itxi du",
+  "delivery_planner_reopen_projects_collection_log_message": "__performer__-(e)k $t(project:__projects_collection_label_i18n__) hau berrireki du",
+  "delivery_planner_close_project_log_message": "__performer__-(e)k Proiektu hau itxi du",
+  "delivery_planner_reopen_project_log_message": "__performer__-(e)k Proiektu hau berrireki du"
+}

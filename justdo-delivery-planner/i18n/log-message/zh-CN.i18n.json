@@ -1,0 +1,10 @@
+{
+  "delivery_planner_set_as_project_log_message": "__performer__ 将此任务设为项目",
+  "delivery_planner_unset_as_project_log_message": "__performer__ 取消将此任务设为项目",
+  "delivery_planner_set_as_projects_collection_log_message": "__performer__ 将此任务设为 $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_unset_as_projects_collection_log_message": "__performer__ 取消将此任务设为 $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_close_projects_collection_log_message": "__performer__ 关闭了此 $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_reopen_projects_collection_log_message": "__performer__ 重新打开了此 $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_close_project_log_message": "__performer__ 关闭了此项目",
+  "delivery_planner_reopen_project_log_message": "__performer__ 重新打开了此项目"
+}

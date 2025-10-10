@@ -1,0 +1,10 @@
+{
+  "delivery_planner_set_as_project_log_message": "__performer__ กำหนดงานนี้เป็นโครงการ",
+  "delivery_planner_unset_as_project_log_message": "__performer__ ยกเลิกการกำหนดงานนี้เป็นโครงการ",
+  "delivery_planner_set_as_projects_collection_log_message": "__performer__ กำหนดงานนี้เป็น $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_unset_as_projects_collection_log_message": "__performer__ ยกเลิกการกำหนดงานนี้เป็น $t(project:__projects_collection_label_i18n__)",
+  "delivery_planner_close_projects_collection_log_message": "__performer__ ปิด $t(project:__projects_collection_label_i18n__) นี้",
+  "delivery_planner_reopen_projects_collection_log_message": "__performer__ เปิด $t(project:__projects_collection_label_i18n__) นี้อีกครั้ง",
+  "delivery_planner_close_project_log_message": "__performer__ ปิดโครงการนี้",
+  "delivery_planner_reopen_project_log_message": "__performer__ เปิดโครงการนี้อีกครั้ง"
+}

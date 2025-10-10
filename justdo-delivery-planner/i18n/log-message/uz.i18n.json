@@ -1,0 +1,10 @@
+{
+  "delivery_planner_set_as_project_log_message": "__performer__ bu Vazifani Loyiha sifatida belgiladi",
+  "delivery_planner_unset_as_project_log_message": "__performer__ bu Vazifani Loyiha sifatidagi belgilanishini bekor qildi",
+  "delivery_planner_set_as_projects_collection_log_message": "__performer__ bu Vazifani $t(project:__projects_collection_label_i18n__) sifatida belgiladi",
+  "delivery_planner_unset_as_projects_collection_log_message": "__performer__ bu Vazifani $t(project:__projects_collection_label_i18n__) sifatidagi belgilanishini bekor qildi",
+  "delivery_planner_close_projects_collection_log_message": "__performer__ bu $t(project:__projects_collection_label_i18n__)ni yopdi",
+  "delivery_planner_reopen_projects_collection_log_message": "__performer__ bu $t(project:__projects_collection_label_i18n__)ni qayta ochdi",
+  "delivery_planner_close_project_log_message": "__performer__ bu Loyihani yopdi",
+  "delivery_planner_reopen_project_log_message": "__performer__ bu Loyihani qayta ochdi"
+}

@@ -1,0 +1,10 @@
+{
+  "delivery_planner_set_as_project_log_message": "__performer__ ले यो कार्यलाई परियोजना बनायो",
+  "delivery_planner_unset_as_project_log_message": "__performer__ ले यो कार्यलाई परियोजनाबाट हटायो",
+  "delivery_planner_set_as_projects_collection_log_message": "__performer__ ले यो कार्यलाई $t(project:__projects_collection_label_i18n__) बनायो",
+  "delivery_planner_unset_as_projects_collection_log_message": "__performer__ ले यो कार्यलाई $t(project:__projects_collection_label_i18n__) बाट हटायो",
+  "delivery_planner_close_projects_collection_log_message": "__performer__ ले यो $t(project:__projects_collection_label_i18n__) बन्द गर्यो",
+  "delivery_planner_reopen_projects_collection_log_message": "__performer__ ले यो $t(project:__projects_collection_label_i18n__) पुनः खोल्यो",
+  "delivery_planner_close_project_log_message": "__performer__ ले यो परियोजना बन्द गर्यो",
+  "delivery_planner_reopen_project_log_message": "__performer__ ले यो परियोजना पुनः खोल्यो"
+}
