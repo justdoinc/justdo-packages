@@ -27,5 +27,9 @@
     "v7_0_news_main_array_item_6_subtitle": "You can now set your workdays and days off. Once saved, they’ll be visible to everyone, keeping your whole team aligned on schedules and availability.",
 
     "v7_0_news_main_array_item_7_title": "Introducing Column Text Filters",
-    "v7_0_news_main_array_item_7_subtitle": "Our new text filters let you refine tasks directly in the grid: add a filter to any custom text column, find matching items instantly, and keep large backlogs navigable without complex queries."
+    "v7_0_news_main_array_item_7_subtitle": "Our new text filters let you refine tasks directly in the grid: add a filter to any custom text column, find matching items instantly, and keep large backlogs navigable without complex queries.",
+
+    "v7_0_news_main_array_item_8_title": "More Updates",
+    "v7_0_news_main_array_item_8_subtitle": "<b>Projects close automatically:</b> When a project is marked as Done, Cancelled, or Duplicate, it will now automatically be marked as Closed — and vice versa.<br><br><b>Smart project suggestions:</b> When all the tasks in a project are completed or closed, you’ll get a helpful suggestion to mark the whole project as Done.<br><br><b>Improved activity tracking:</b> The Activity Log now shows the full history of updates and changes for both Projects and Departments, so it’s easier to see what’s happened and when."
+
   }

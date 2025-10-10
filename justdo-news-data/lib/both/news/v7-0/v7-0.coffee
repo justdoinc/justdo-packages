@@ -62,6 +62,11 @@ APP.justdo_crm.registerNews "news",
             "title": "v7_0_news_main_array_item_7_title",
             "subtitle": "v7_0_news_main_array_item_7_subtitle"
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v7-0/assets/8.png"
+          },
+
+          {
+            "title": "v7_0_news_main_array_item_8_title",
+            "subtitle": "v7_0_news_main_array_item_8_subtitle"
           }
         ]
       }
