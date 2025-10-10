@@ -18,5 +18,7 @@
   "v7_0_news_main_array_item_6_title": "Días libres",
   "v7_0_news_main_array_item_6_subtitle": "Ahora puedes configurar tus días laborables y días libres. Una vez guardados, serán visibles para todos, manteniendo a todo tu equipo alineado en horarios y disponibilidad.",
   "v7_0_news_main_array_item_7_title": "Presentamos los Filtros de Texto por Columna",
-  "v7_0_news_main_array_item_7_subtitle": "Nuestros nuevos filtros de texto te permiten refinar tareas directamente en la tabla: añade un filtro a cualquier columna de texto personalizada, encuentra elementos coincidentes al instante, y mantén grandes listas de pendientes navegables sin consultas complejas."
+  "v7_0_news_main_array_item_7_subtitle": "Nuestros nuevos filtros de texto te permiten refinar tareas directamente en la tabla: añade un filtro a cualquier columna de texto personalizada, encuentra elementos coincidentes al instante, y mantén grandes listas de pendientes navegables sin consultas complejas.",
+  "v7_0_news_main_array_item_8_title": "Más Actualizaciones",
+  "v7_0_news_main_array_item_8_subtitle": "<b>Los proyectos se cierran automáticamente:</b> Cuando un proyecto se marca como Terminado, Cancelado o Duplicado, ahora se marcará automáticamente como Cerrado - y viceversa.<br><br><b>Sugerencias inteligentes de proyecto:</b> Cuando todas las tareas en un proyecto están completadas o cerradas, recibirás una sugerencia útil para marcar todo el proyecto como Terminado.<br><br><b>Seguimiento de actividad mejorado:</b> El Registro de Actividad ahora muestra el historial completo de actualizaciones y cambios tanto para Proyectos como Departamentos, facilitando ver qué ha pasado y cuándo."
 }

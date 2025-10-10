@@ -18,5 +18,7 @@
   "v7_0_news_main_array_item_6_title": "Szabadnapok",
   "v7_0_news_main_array_item_6_subtitle": "Most beállíthatod a munkanapjaidat és szabadnapjaidat. Miután elmented, mindenki számára láthatóak lesznek, így az egész csapatod összehangolt marad az ütemezések és elérhetőség tekintetében.",
   "v7_0_news_main_array_item_7_title": "Oszlop Szövegszűrők Bemutatása",
-  "v7_0_news_main_array_item_7_subtitle": "Az új szövegszűrőink lehetővé teszik a feladatok finomhangolását közvetlenül a táblázatban: adj hozzá szűrőt bármely egyéni szöveg oszlophoz, találd meg azonnal az egyező elemeket, és tartsd navigálhatóan a nagy feladatlistákat bonyolult lekérdezések nélkül."
+  "v7_0_news_main_array_item_7_subtitle": "Az új szövegszűrőink lehetővé teszik a feladatok finomhangolását közvetlenül a táblázatban: adj hozzá szűrőt bármely egyéni szöveg oszlophoz, találd meg azonnal az egyező elemeket, és tartsd navigálhatóan a nagy feladatlistákat bonyolult lekérdezések nélkül.",
+  "v7_0_news_main_array_item_8_title": "További Frissítések",
+  "v7_0_news_main_array_item_8_subtitle": "<b>Projektek automatikus lezárása:</b> Amikor egy projekt Kész, Megszakított vagy Duplikát státuszra kerül, mostantól automatikusan Lezárt státuszra is kerül — és fordítva.<br><br><b>Intelligens projekt javaslatok:</b> Amikor egy projekt összes feladata befejezett vagy lezárt, hasznos javaslatot kapsz az egész projekt Kész státuszra állítására.<br><br><b>Fejlett aktivitás követés:</b> Az Aktivitás Napló mostantól a frissítések és változások teljes történetét mutatja mind a Projektek, mind a Részlegek esetében, így könnyebb látni, mi történt és mikor."
 }

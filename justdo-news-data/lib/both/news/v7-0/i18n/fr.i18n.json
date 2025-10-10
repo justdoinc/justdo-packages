@@ -18,5 +18,7 @@
   "v7_0_news_main_array_item_6_title": "Jours de Congé",
   "v7_0_news_main_array_item_6_subtitle": "Vous pouvez maintenant définir vos jours de travail et jours de congé. Une fois sauvegardés, ils seront visibles par tous, gardant toute votre équipe alignée sur les horaires et la disponibilité.",
   "v7_0_news_main_array_item_7_title": "Présentation des Filtres de Texte par Colonne",
-  "v7_0_news_main_array_item_7_subtitle": "Nos nouveaux filtres de texte vous permettent d'affiner les tâches directement dans le tableau : ajoutez un filtre à n'importe quelle colonne de texte personnalisée, trouvez les éléments correspondants instantanément, et gardez les grands backlogs navigables sans requêtes complexes."
+  "v7_0_news_main_array_item_7_subtitle": "Nos nouveaux filtres de texte vous permettent d'affiner les tâches directement dans le tableau : ajoutez un filtre à n'importe quelle colonne de texte personnalisée, trouvez les éléments correspondants instantanément, et gardez les grands backlogs navigables sans requêtes complexes.",
+  "v7_0_news_main_array_item_8_title": "Plus de Mises à Jour",
+  "v7_0_news_main_array_item_8_subtitle": "<b>Fermeture automatique des projets :</b> Lorsqu'un projet est marqué comme Terminé, Annulé ou Dupliqué, il sera désormais automatiquement marqué comme Fermé — et vice versa.<br><br><b>Suggestions de projets intelligentes :</b> Lorsque toutes les tâches d'un projet sont terminées ou fermées, vous recevrez une suggestion utile pour marquer l'ensemble du projet comme Terminé.<br><br><b>Suivi d'activité amélioré :</b> Le Journal d'Activité montre maintenant l'historique complet des mises à jour et modifications pour les Projets et Départements, il est donc plus facile de voir ce qui s'est passé et quand."
 }
