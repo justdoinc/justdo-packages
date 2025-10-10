@@ -13,6 +13,14 @@ _.extend JustdoDeliveryPlanner,
 
   task_is_committed_field_name: "p:dp:commited"
 
+  set_unset_project_change_type: "set_unset_project"
+
+  close_reopen_project_change_type: "close_reopen_project"
+
+  set_unset_projects_collection_change_type: "set_unset_projects_collection"
+  
+  close_reopen_projects_collection_change_type: "close_reopen_projects_collection"
+
   default_time_zone: "America/New_York" # The timezone we will use for users we can't determine their timezone
 
   default_simple_member_daily_availability_seconds: 60 * 60 * 3
