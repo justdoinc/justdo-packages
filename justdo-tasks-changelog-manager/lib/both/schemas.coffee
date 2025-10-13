@@ -100,7 +100,8 @@ _.extend TasksChangelogManager.prototype,
       
       bypass_time_filter: 
         # If set to true, multiple updates of the same field within a short period of time 
-        # will not be filered out by `getFilteredActivityLogByTime`.
+        # will not be filered out by `getFilteredActivityLogByTime` (defined under `both/static-api.coffee`, currently only used on the client-side).
+        # Regardless of this value, all the logs will be saved to the db and published to the client.
         type: Boolean
         optional: true
       
