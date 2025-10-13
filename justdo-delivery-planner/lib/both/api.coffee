@@ -39,6 +39,15 @@ _.extend JustdoDeliveryPlanner.prototype,
         message_i18n = if activity_obj.new_value then "delivery_planner_set_as_project_log_message" else "delivery_planner_unset_as_project_log_message"
         return TAPi18n.__ message_i18n, {performer: performer_name}
 
+    # Handler for project closed/reopened (is_archived_project field)
+    APP.tasks_changelog_manager.registerCustomChangeType JustdoDeliveryPlanner.close_reopen_project_change_type,
+      getLogMessage: (activity_obj) ->
+        performer_name = @getPerformerNameI18n(activity_obj)
+
+        message_i18n = if activity_obj.new_value then "delivery_planner_close_project_log_message" else "delivery_planner_reopen_project_log_message"
+        return TAPi18n.__ message_i18n, {performer: performer_name}
+    
+
     # Handler for projects collection type changes
     APP.tasks_changelog_manager.registerCustomChangeType JustdoDeliveryPlanner.set_unset_projects_collection_change_type,
       getLogMessage: (activity_obj) ->
@@ -64,15 +73,7 @@ _.extend JustdoDeliveryPlanner.prototype,
         projects_collection_label_i18n = getTypeLabelI18n activity_obj.data?.projects_collection_label_i18n
 
         return TAPi18n.__ message_i18n, {performer: performer_name, projects_collection_label_i18n: projects_collection_label_i18n}
-    
-    # Handler for project closed/reopened (is_archived_project field)
-    APP.tasks_changelog_manager.registerCustomChangeType JustdoDeliveryPlanner.close_reopen_project_change_type,
-      getLogMessage: (activity_obj) ->
-        performer_name = @getPerformerNameI18n(activity_obj)
 
-        message_i18n = if activity_obj.new_value then "delivery_planner_close_project_log_message" else "delivery_planner_reopen_project_log_message"
-        return TAPi18n.__ message_i18n, {performer: performer_name}
-    
     return
 
   _getProjectRelevantFieldsProjection: ->
