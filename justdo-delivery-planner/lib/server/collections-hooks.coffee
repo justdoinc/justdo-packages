@@ -208,6 +208,20 @@ _.extend JustdoDeliveryPlanner.prototype,
     
     return
 
+  _logProjectClosedOrReopenedChange: (task_id, performed_by, new_value, old_value) ->
+    APP.tasks_changelog_manager.logChange
+      field: JustdoDeliveryPlanner.task_is_archived_project_field_name
+      label: "Project"
+      change_type: JustdoDeliveryPlanner.close_reopen_project_change_type
+      bypass_time_filter: true
+      undo_disabled: true
+      task_id: task_id
+      by: performed_by
+      old_value: old_value
+      new_value: new_value
+    
+    return
+
   _logProjectsCollectionTypeToggleChange: (task_id, performed_by, new_value, old_value) ->    
     APP.tasks_changelog_manager.logChange
       field: "projects_collection.projects_collection_type"
@@ -237,18 +251,3 @@ _.extend JustdoDeliveryPlanner.prototype,
         projects_collection_label_i18n: collection_type
     
     return
-  
-  _logProjectClosedOrReopenedChange: (task_id, performed_by, new_value, old_value) ->
-    APP.tasks_changelog_manager.logChange
-      field: JustdoDeliveryPlanner.task_is_archived_project_field_name
-      label: "Project"
-      change_type: JustdoDeliveryPlanner.close_reopen_project_change_type
-      bypass_time_filter: true
-      undo_disabled: true
-      task_id: task_id
-      by: performed_by
-      old_value: old_value
-      new_value: new_value
-    
-    return
-
