@@ -1,3 +1,9 @@
+tasks_schema = null
+getTaskSchemaFieldLabel = (field_name) ->
+  if not tasks_schema?
+    tasks_schema = APP.collections.Tasks.simpleSchema()._schema
+  return tasks_schema?[field_name]?.label
+
 _.extend JustdoDeliveryPlanner.prototype,
   _setupCollectionsHooks: ->
     self = @
@@ -197,7 +203,7 @@ _.extend JustdoDeliveryPlanner.prototype,
   _logProjectStatusChange: (task_id, performed_by, new_value, old_value) ->
     APP.tasks_changelog_manager.logChange
       field: JustdoDeliveryPlanner.task_is_project_field_name
-      label: "Project"
+      label: getTaskSchemaFieldLabel(JustdoDeliveryPlanner.task_is_project_field_name)
       change_type: JustdoDeliveryPlanner.set_unset_project_change_type
       bypass_time_filter: true
       undo_disabled: true
@@ -211,7 +217,7 @@ _.extend JustdoDeliveryPlanner.prototype,
   _logProjectClosedOrReopenedChange: (task_id, performed_by, new_value, old_value) ->
     APP.tasks_changelog_manager.logChange
       field: JustdoDeliveryPlanner.task_is_archived_project_field_name
-      label: "Project"
+      label: getTaskSchemaFieldLabel(JustdoDeliveryPlanner.task_is_archived_project_field_name)
       change_type: JustdoDeliveryPlanner.close_reopen_project_change_type
       bypass_time_filter: true
       undo_disabled: true
@@ -225,7 +231,7 @@ _.extend JustdoDeliveryPlanner.prototype,
   _logProjectsCollectionTypeToggleChange: (task_id, performed_by, new_value, old_value) ->    
     APP.tasks_changelog_manager.logChange
       field: "projects_collection.projects_collection_type"
-      label: "Projects Collection"
+      label: getTaskSchemaFieldLabel("projects_collection.projects_collection_type")
       change_type: JustdoDeliveryPlanner.set_unset_projects_collection_change_type
       bypass_time_filter: true
       undo_disabled: true
@@ -239,7 +245,7 @@ _.extend JustdoDeliveryPlanner.prototype,
   _logProjectsCollectionClosedOrReopenedChange: (task_id, performed_by, new_value, old_value, collection_type) ->
     APP.tasks_changelog_manager.logChange
       field: "projects_collection.is_closed"
-      label: "Projects Collection"
+      label: getTaskSchemaFieldLabel("projects_collection.is_closed")
       change_type: JustdoDeliveryPlanner.close_reopen_projects_collection_change_type
       bypass_time_filter: true
       undo_disabled: true
