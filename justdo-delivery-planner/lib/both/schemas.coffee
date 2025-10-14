@@ -147,10 +147,12 @@ _.extend JustdoDeliveryPlanner.prototype,
         optional: true
 
       "projects_collection.projects_collection_type":
+        label: "Projects Collection type"
         type: String
         optional: true
         
       "projects_collection.is_closed":
+        label: "Is projects Collection closed"
         type: Boolean
         optional: true
 
