@@ -35,14 +35,14 @@ _.extend JustdoDeliveryPlanner.prototype,
     # Handler for project status changes
     APP.tasks_changelog_manager.registerCustomChangeType JustdoDeliveryPlanner.set_unset_project_change_type,
       getLogMessage: (activity_obj) ->
-        performer_name = @getPerformerNameI18n(activity_obj)
+        performer_name = APP.tasks_changelog_manager.getPerformerNameI18n(activity_obj)
         message_i18n = if activity_obj.new_value then "delivery_planner_set_as_project_log_message" else "delivery_planner_unset_as_project_log_message"
         return TAPi18n.__ message_i18n, {performer: performer_name}
 
     # Handler for project closed/reopened (is_archived_project field)
     APP.tasks_changelog_manager.registerCustomChangeType JustdoDeliveryPlanner.close_reopen_project_change_type,
       getLogMessage: (activity_obj) ->
-        performer_name = @getPerformerNameI18n(activity_obj)
+        performer_name = APP.tasks_changelog_manager.getPerformerNameI18n(activity_obj)
 
         message_i18n = if activity_obj.new_value then "delivery_planner_close_project_log_message" else "delivery_planner_reopen_project_log_message"
         return TAPi18n.__ message_i18n, {performer: performer_name}
@@ -51,7 +51,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     # Handler for projects collection type changes
     APP.tasks_changelog_manager.registerCustomChangeType JustdoDeliveryPlanner.set_unset_projects_collection_change_type,
       getLogMessage: (activity_obj) ->
-        performer_name = @getPerformerNameI18n(activity_obj)
+        performer_name = APP.tasks_changelog_manager.getPerformerNameI18n(activity_obj)
         
         if activity_obj.new_value?
           projects_collection_label_i18n = getTypeLabelI18n activity_obj.new_value
@@ -68,7 +68,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     # Handler for projects collection closed/reopened
     APP.tasks_changelog_manager.registerCustomChangeType JustdoDeliveryPlanner.close_reopen_projects_collection_change_type,
       getLogMessage: (activity_obj) ->
-        performer_name = @getPerformerNameI18n(activity_obj)
+        performer_name = APP.tasks_changelog_manager.getPerformerNameI18n(activity_obj)
         message_i18n = if activity_obj.new_value then "delivery_planner_close_projects_collection_log_message" else "delivery_planner_reopen_projects_collection_log_message"
         projects_collection_label_i18n = getTypeLabelI18n activity_obj.data?.projects_collection_label_i18n
 
