@@ -281,6 +281,6 @@ _.extend JustdoDeliveryPlanner.prototype,
       old_value: old_value
       new_value: new_value
       data:
-        projects_collection_label_i18n: collection_type
+        projects_collection_type: collection_type
     
     return

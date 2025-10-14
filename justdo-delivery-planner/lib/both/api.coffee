@@ -70,7 +70,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       getLogMessage: (activity_obj) ->
         performer_name = APP.tasks_changelog_manager.getPerformerNameI18n(activity_obj)
         message_i18n = if activity_obj.new_value then "delivery_planner_close_projects_collection_log_message" else "delivery_planner_reopen_projects_collection_log_message"
-        projects_collection_label_i18n = getTypeLabelI18n activity_obj.data?.projects_collection_label_i18n
+        projects_collection_label_i18n = getTypeLabelI18n activity_obj.data?.projects_collection_type
 
         return TAPi18n.__ message_i18n, {performer: performer_name, projects_collection_label_i18n: projects_collection_label_i18n}
 
