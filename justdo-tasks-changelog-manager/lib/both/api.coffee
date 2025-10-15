@@ -7,6 +7,9 @@ _.extend TasksChangelogManager.prototype,
     getLogMessage:
       type: Function
   registerCustomChangeType: (change_type, change_type_def) ->
+    if @_getCustomChangeType(change_type)?
+      throw @_error "invalid-argument", "Change type #{change_type} already registered"
+
     {cleaned_val} = 
       JustdoHelpers.simpleSchemaCleanAndValidate(
         @_registerCustomChangeTypeSchema,
