@@ -1,0 +1,5 @@
+{
+  "file_uploaded_log_message": "__performer__님이 새 파일 \"<i>__file_title__</i>\"을(를) 업로드했습니다",
+  "file_renamed_log_message": "__performer__님이 파일명을 \"<i>__old_title__</i>\"에서 \"<i>__new_title__</i>\"로 변경했습니다",
+  "file_removed_log_message": "__performer__님이 파일 \"<i>__file_title__</i>\"을(를) 삭제했습니다"
+}

@@ -1,0 +1,5 @@
+{
+  "file_uploaded_log_message": "__performer__ жаңа \"<i>__file_title__</i>\" файлын жүктеді",
+  "file_renamed_log_message": "__performer__ файлдың атауын \"<i>__old_title__</i>\" деп \"<i>__new_title__</i>\" деп өзгертті",
+  "file_removed_log_message": "__performer__ \"<i>__file_title__</i>\" файлын жойды"
+}

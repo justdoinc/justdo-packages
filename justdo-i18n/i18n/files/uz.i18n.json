@@ -1,0 +1,5 @@
+{
+  "file_uploaded_log_message": "__performer__ yangi fayl \"<i>__file_title__</i>\"ni yukladi",
+  "file_renamed_log_message": "__performer__ faylni \"<i>__old_title__</i>\"dan \"<i>__new_title__</i>\"ga o'zgartirdi",
+  "file_removed_log_message": "__performer__ \"<i>__file_title__</i>\" faylini olib tashladi"
+}

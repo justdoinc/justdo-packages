@@ -1,0 +1,5 @@
+{
+  "file_uploaded_log_message": "__performer__ ஒரு புதிய கோப்பை \"<i>__file_title__</i>\" பதிவேற்றினார்",
+  "file_renamed_log_message": "__performer__ ஒரு கோப்பை \"<i>__old_title__</i>\" என்பதிலிருந்து \"<i>__new_title__</i>\" என்று மறுபெயரிட்டார்",
+  "file_removed_log_message": "__performer__ கோப்பு \"<i>__file_title__</i>\" ஐ அகற்றினார்"
+}

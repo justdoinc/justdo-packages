@@ -1,0 +1,5 @@
+{
+  "file_uploaded_log_message": "__performer__ បានអាប់ឡូតឯកសារថ្មី \"<i>__file_title__</i>\"",
+  "file_renamed_log_message": "__performer__ បានប្តូរឈ្មោះឯកសារពី \"<i>__old_title__</i>\" ទៅជា \"<i>__new_title__</i>\"",
+  "file_removed_log_message": "__performer__ បានលុបឯកសារ \"<i>__file_title__</i>\""
+}

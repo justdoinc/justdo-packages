@@ -1,0 +1,5 @@
+{
+  "file_uploaded_log_message": "__performer__ huet eng nei Datei \"<i>__file_title__</i>\" eropgelueden",
+  "file_renamed_log_message": "__performer__ huet eng Datei vu \"<i>__old_title__</i>\" op \"<i>__new_title__</i>\" ëmbenannt",
+  "file_removed_log_message": "__performer__ huet d'Datei \"<i>__file_title__</i>\" geläscht"
+}

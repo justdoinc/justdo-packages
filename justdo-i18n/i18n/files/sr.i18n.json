@@ -1,0 +1,5 @@
+{
+  "file_uploaded_log_message": "__performer__ је отпремио/ла нову датотеку \"<i>__file_title__</i>\"",
+  "file_renamed_log_message": "__performer__ је преименовао/ла датотеку са \"<i>__old_title__</i>\" у \"<i>__new_title__</i>\"",
+  "file_removed_log_message": "__performer__ је уклонио/ла датотеку \"<i>__file_title__</i>\""
+}

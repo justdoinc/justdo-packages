@@ -1,0 +1,5 @@
+{
+  "file_uploaded_log_message": "__performer__ ha pujat un nou fitxer \"<i>__file_title__</i>\"",
+  "file_renamed_log_message": "__performer__ ha reanomenat un fitxer de \"<i>__old_title__</i>\" a \"<i>__new_title__</i>\"",
+  "file_removed_log_message": "__performer__ ha eliminat el fitxer \"<i>__file_title__</i>\""
+}

@@ -1,0 +1,5 @@
+{
+  "file_uploaded_log_message": "__performer__ 上傳了新檔案「<i>__file_title__</i>」",
+  "file_renamed_log_message": "__performer__ 將檔案從「<i>__old_title__</i>」重新命名為「<i>__new_title__</i>」",
+  "file_removed_log_message": "__performer__ 移除了檔案「<i>__file_title__</i>」"
+}

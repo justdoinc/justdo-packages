@@ -1,0 +1,5 @@
+{
+  "file_uploaded_log_message": "__performer__ augšupielādēja jaunu failu \"<i>__file_title__</i>\"",
+  "file_renamed_log_message": "__performer__ pārsauca failu no \"<i>__old_title__</i>\" uz \"<i>__new_title__</i>\"",
+  "file_removed_log_message": "__performer__ noņēma failu \"<i>__file_title__</i>\""
+}

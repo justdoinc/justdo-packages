@@ -1,0 +1,5 @@
+{
+  "file_uploaded_log_message": "__performer__-k fitxategi berri bat igo du \"<i>__file_title__</i>\"",
+  "file_renamed_log_message": "__performer__-k fitxategi baten izena aldatu du \"<i>__old_title__</i>\"-tik \"<i>__new_title__</i>\"-ra",
+  "file_removed_log_message": "__performer__-k \"<i>__file_title__</i>\" fitxategia kendu du"
+}
