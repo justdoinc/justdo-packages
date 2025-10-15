@@ -107,6 +107,9 @@ Package.onUse(function (api) {
   // title
   this.addI18nFiles(api, "i18n/title/title.{}.i18n.json");
 
+  // files
+  this.addI18nFiles(api, "i18n/files/{}.i18n.json", "default_lang_only");
+
   // justdo-i18n
   this.addI18nFiles(api, "i18n/justdo-i18n/justdo-i18n.{}.i18n.json");
 
