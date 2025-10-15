@@ -1,0 +1,5 @@
+{
+  "file_uploaded_log_message": "__performer__ a încărcat un fișier nou \"<i>__file_title__</i>\"",
+  "file_renamed_log_message": "__performer__ a redenumit un fișier de la \"<i>__old_title__</i>\" la \"<i>__new_title__</i>\"",
+  "file_removed_log_message": "__performer__ a eliminat fișierul \"<i>__file_title__</i>\""
+}

@@ -1,0 +1,5 @@
+{
+  "file_uploaded_log_message": "__performer__ laadis üles uue faili \"<i>__file_title__</i>\"",
+  "file_renamed_log_message": "__performer__ nimetas faili \"<i>__old_title__</i>\" ümber nimeks \"<i>__new_title__</i>\"",
+  "file_removed_log_message": "__performer__ eemaldas faili \"<i>__file_title__</i>\""
+}

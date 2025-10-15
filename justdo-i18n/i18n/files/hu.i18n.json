@@ -1,0 +1,5 @@
+{
+  "file_uploaded_log_message": "__performer__ feltöltött egy új fájlt: \"<i>__file_title__</i>\"",
+  "file_renamed_log_message": "__performer__ átnevezte a fájlt \"<i>__old_title__</i>\"-ról \"<i>__new_title__</i>\"-ra",
+  "file_removed_log_message": "__performer__ eltávolította a \"<i>__file_title__</i>\" fájlt"
+}

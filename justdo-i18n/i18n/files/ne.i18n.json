@@ -1,0 +1,5 @@
+{
+  "file_uploaded_log_message": "__performer__ ले नयाँ फाइल \"<i>__file_title__</i>\" अपलोड गर्नुभयो",
+  "file_renamed_log_message": "__performer__ ले फाइलको नाम \"<i>__old_title__</i>\" बाट \"<i>__new_title__</i>\" मा परिवर्तन गर्नुभयो",
+  "file_removed_log_message": "__performer__ ले फाइल \"<i>__file_title__</i>\" हटाउनुभयो"
+}

@@ -1,0 +1,5 @@
+{
+  "file_uploaded_log_message": "__performer__ yeni fayl \"<i>__file_title__</i>\" yüklədi",
+  "file_renamed_log_message": "__performer__ faylın adını \"<i>__old_title__</i>\"dən \"<i>__new_title__</i>\"ə dəyişdi",
+  "file_removed_log_message": "__performer__ \"<i>__file_title__</i>\" faylını sildi"
+}

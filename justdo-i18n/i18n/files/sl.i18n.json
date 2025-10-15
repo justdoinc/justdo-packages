@@ -1,0 +1,5 @@
+{
+  "file_uploaded_log_message": "__performer__ je naložil novo datoteko \"<i>__file_title__</i>\"",
+  "file_renamed_log_message": "__performer__ je preimenoval datoteko iz \"<i>__old_title__</i>\" v \"<i>__new_title__</i>\"",
+  "file_removed_log_message": "__performer__ je odstranil datoteko \"<i>__file_title__</i>\""
+}

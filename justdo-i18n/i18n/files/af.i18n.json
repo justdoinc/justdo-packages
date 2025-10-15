@@ -1,0 +1,5 @@
+{
+  "file_uploaded_log_message": "__performer__ het 'n nuwe lêer \"<i>__file_title__</i>\" opgelaai",
+  "file_renamed_log_message": "__performer__ het 'n lêer hernoem van \"<i>__old_title__</i>\" na \"<i>__new_title__</i>\"",
+  "file_removed_log_message": "__performer__ het lêer \"<i>__file_title__</i>\" verwyder"
+}

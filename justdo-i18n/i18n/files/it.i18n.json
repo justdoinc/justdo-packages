@@ -1,0 +1,5 @@
+{
+  "file_uploaded_log_message": "__performer__ ha caricato un nuovo file \"<i>__file_title__</i>\"",
+  "file_renamed_log_message": "__performer__ ha rinominato un file da \"<i>__old_title__</i>\" a \"<i>__new_title__</i>\"",
+  "file_removed_log_message": "__performer__ ha rimosso il file \"<i>__file_title__</i>\""
+}

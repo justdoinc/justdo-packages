@@ -1,0 +1,5 @@
+{
+  "file_uploaded_log_message": "__performer__ įkėlė naują failą \"<i>__file_title__</i>\"",
+  "file_renamed_log_message": "__performer__ pervardijo failą iš \"<i>__old_title__</i>\" į \"<i>__new_title__</i>\"",
+  "file_removed_log_message": "__performer__ pašalino failą \"<i>__file_title__</i>\""
+}
