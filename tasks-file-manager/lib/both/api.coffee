@@ -1,4 +1,29 @@
 _.extend TasksFileManager.prototype,
+  _registerCustomChangeTypes: ->
+    # Handler for file upload
+    APP.tasks_changelog_manager.registerCustomChangeType TasksFileManager.file_upload_change_type,
+      getLogMessage: (activity_obj) ->
+        performer_name = APP.tasks_changelog_manager.getPerformerNameI18n(activity_obj)
+        file_title = activity_obj.data?.file_metadata?.title or ""
+        return TAPi18n.__ "file_uploaded_log_message", {performer: performer_name, file_title: file_title}
+
+    # Handler for file rename
+    APP.tasks_changelog_manager.registerCustomChangeType TasksFileManager.file_rename_change_type,
+      getLogMessage: (activity_obj) ->
+        performer_name = APP.tasks_changelog_manager.getPerformerNameI18n(activity_obj)
+        old_title = activity_obj.old_value
+        new_title = activity_obj.new_value
+        return TAPi18n.__ "file_renamed_log_message", {performer: performer_name, old_title: old_title, new_title: new_title}
+
+    # Handler for file remove
+    APP.tasks_changelog_manager.registerCustomChangeType TasksFileManager.file_remove_change_type,
+      getLogMessage: (activity_obj) ->
+        performer_name = APP.tasks_changelog_manager.getPerformerNameI18n(activity_obj)
+        file_title = activity_obj.data?.file_metadata?.title
+        return TAPi18n.__ "file_removed_log_message", {performer: performer_name, file_title: file_title}
+    
+    return
+
   filesForTask: (task_id) -> @tasks_collection.findOne({ _id: task_id }).files
 
   getShareableLink: (task_id, file_id, root) ->
