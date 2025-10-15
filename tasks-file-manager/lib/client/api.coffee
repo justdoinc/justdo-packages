@@ -1,4 +1,10 @@
 _.extend TasksFileManager.prototype,
+  _immediateInit: ->
+    # Register custom change types for changelog
+    @_registerCustomChangeTypes()
+    
+    return
+
   makeDropPane: (task_id) ->
     return new TasksFileManager.DropPane task_id, @
 

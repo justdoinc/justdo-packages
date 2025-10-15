@@ -1,4 +1,10 @@
 _.extend TasksFileManager.prototype,
+  _immediateInit: ->
+    # Register custom change types for changelog
+    @_registerCustomChangeTypes()
+    
+    return
+
   requireLogin: (user_id) ->
     if not user_id?
       throw @_error "login-required"
@@ -100,11 +106,14 @@ _.extend TasksFileManager.prototype,
     _.each files_to_upload, (file) =>
       APP.tasks_changelog_manager.logChange
         field: "files.#{file.id} upload"
-        label: "Files"
-        change_type: "custom"
+        label: JustdoHelpers.getCollectionSchemaForField(APP.collections.Tasks, "files")?.label
+        change_type: TasksFileManager.file_upload_change_type
         task_id: task_id
         by: user_id
-        new_value: "uploaded a new file - #{file.title}"
+        undo_disabled: true
+        bypass_time_filter: true
+        data:
+          file_metadata: file
 
     return files_to_upload
 
@@ -457,11 +466,18 @@ _.extend TasksFileManager.prototype,
 
     APP.tasks_changelog_manager.logChange
       field: "files.#{file_id} rename"
-      label: "Files"
-      change_type: "custom"
+      label: JustdoHelpers.getCollectionSchemaForField(APP.collections.Tasks, "files")?.label
+      change_type: TasksFileManager.file_rename_change_type
       task_id: task_id
       by: user_id
-      new_value: "renamed a file to #{new_title}"
+      undo_disabled: true
+      bypass_time_filter: true
+      old_value: file.title
+      new_value: new_title
+      data:
+        # We store the file metadata obj PRE title update to avoid fetching it again,
+        # since the only difference is the title, which we already have.
+        file_metadata: file
 
   # INTERNAL ONLY
   # Sets metadata on a file
@@ -492,11 +508,14 @@ _.extend TasksFileManager.prototype,
 
     APP.tasks_changelog_manager.logChange
       field: "files.#{file_id} remove"
-      label: "Files"
-      change_type: "custom"
+      label: JustdoHelpers.getCollectionSchemaForField(APP.collections.Tasks, "files")?.label
+      change_type: TasksFileManager.file_remove_change_type
       task_id: task_id
       by: user_id
-      new_value: "removed file #{file.title}"
+      undo_disabled: true
+      bypass_time_filter: true
+      data:
+        file_metadata: file
 
   destroy: ->
     if @destroyed
