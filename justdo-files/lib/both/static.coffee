@@ -7,6 +7,11 @@ _.extend JustdoFiles,
 
   files_count_task_doc_field_id: "p:justdo-files:files_count"
 
+  # Change type constants for changelog
+  file_upload_change_type: "justdo_files_upload"
+  file_rename_change_type: "justdo_files_rename"
+  file_remove_change_type: "justdo_files_remove"
+
   # Note that the whitelist for preview types must be selected carefully, 
   # some file types such as text/html can cause XSS vulnerabilities
   preview_types_whitelist: [
