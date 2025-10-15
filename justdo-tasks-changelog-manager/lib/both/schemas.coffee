@@ -1,5 +1,12 @@
 _.extend TasksChangelogManager.prototype,
   _attachCollectionsSchemas: ->
+    self = @
+
+    # Setup custom SimpleSchema error message to be used in custom validation
+    custom_schema_err_obj = 
+      "change-type-not-supported": "Provided change type is not supported. Please use one of the `core_change_types` or register a custom change type."
+    SimpleSchema.messages custom_schema_err_obj
+
     changelog_schema =
       when:
         label: "Change Time"
@@ -30,6 +37,10 @@ _.extend TasksChangelogManager.prototype,
           if @field('change_type').value?
             return @field('change_type').value
           return "update"
+        custom: ->
+          if not self._isChangeTypeSupported(@value)
+            return "change-type-not-supported"
+          return true
 
       new_value:
         label: "New Value"
