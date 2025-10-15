@@ -19,6 +19,33 @@ _.extend JustdoFiles.prototype,
     if @destroyed
       return
 
+    @_registerCustomChangeTypes()
+
+    return
+
+  _registerCustomChangeTypes: ->
+    # Handler for file upload
+    APP.tasks_changelog_manager.registerCustomChangeType JustdoFiles.file_upload_change_type,
+      getLogMessage: (activity_obj) ->
+        performer_name = APP.tasks_changelog_manager.getPerformerNameI18n(activity_obj)
+        file_name = activity_obj.data?.file_metadata?.name
+        return TAPi18n.__ "file_uploaded_log_message", {performer: performer_name, file_title: file_name}
+
+    # Handler for file rename
+    APP.tasks_changelog_manager.registerCustomChangeType JustdoFiles.file_rename_change_type,
+      getLogMessage: (activity_obj) ->
+        performer_name = APP.tasks_changelog_manager.getPerformerNameI18n(activity_obj)
+        old_filename = activity_obj.old_value
+        new_filename = activity_obj.new_value
+        return TAPi18n.__ "file_renamed_log_message", {performer: performer_name, old_title: old_filename, new_title: new_filename}
+
+    # Handler for file remove
+    APP.tasks_changelog_manager.registerCustomChangeType JustdoFiles.file_remove_change_type,
+      getLogMessage: (activity_obj) ->
+        performer_name = APP.tasks_changelog_manager.getPerformerNameI18n(activity_obj)
+        file_name = activity_obj.data?.file_metadata?.name
+        return TAPi18n.__ "file_removed_log_message", {performer: performer_name, file_title: file_name}
+    
     return
   
   _registerFilesDriver: ->
