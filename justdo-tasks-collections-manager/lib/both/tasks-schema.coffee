@@ -90,7 +90,18 @@ _.extend JustdoTasksCollectionsManager.prototype,
         type: Object
         optional: true
         blackbox: true
+      
+      description_is_auto_save: 
+        # When set to true along with `description`, the collection hook that logs the description change will omit this update.
+        # This field should always be unset by the collection hook and not stored in the database.
+        # Check the comments in `collections-hooks.coffee` for more details.
+        user_editable_column: true
+        grid_editable_column: false
+        grid_visible_column: false
 
+        type: Boolean
+        optional: true
+      
       status:
         label: "Notes"
         label_i18n: "status_schema_label"

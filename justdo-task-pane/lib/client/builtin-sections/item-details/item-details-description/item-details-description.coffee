@@ -23,7 +23,7 @@ APP.executeAfterAppLibCode ->
     save_state.set 1
 
     idle_save_timeout = setTimeout ->
-      save()
+      save(true)
     , idle_save_timeout_ms
 
   save_interval = null
@@ -36,7 +36,7 @@ APP.executeAfterAppLibCode ->
     save_interval = setInterval ->
       if save_state.get() == 1
         # save only if saved required
-        save()
+        save(true)
     , save_interval_ms
 
   stopSaveInterval = ->
@@ -45,7 +45,7 @@ APP.executeAfterAppLibCode ->
       save_interval = null
 
   save_count = 0
-  save = ->
+  save = (is_auto_save = false) ->
     if idle_save_timeout?
       clearTimeout idle_save_timeout
 
@@ -62,6 +62,9 @@ APP.executeAfterAppLibCode ->
         op =
           $set:
             description: description
+      
+      if is_auto_save
+        op.$set.description_is_auto_save = true
 
       save_count += 1
       this_save_count = save_count
@@ -249,6 +252,7 @@ APP.executeAfterAppLibCode ->
     if current_description_editor?
       stopSaveInterval()
 
+      # Here we don't mark the `save` call as auto save, as the user may perform the save by switching to another task.
       save()
 
       unlockTask(task_id)
