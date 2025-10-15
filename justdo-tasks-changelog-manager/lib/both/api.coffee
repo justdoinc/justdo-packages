@@ -23,6 +23,15 @@ _.extend TasksChangelogManager.prototype,
 
     return
   
+  _isChangeTypeSupported: (change_type) ->
+    if change_type in TasksChangelogManager.core_change_types
+      return true
+    
+    if @_getCustomChangeType(change_type)?
+      return true
+
+    return false
+  
   _getCustomChangeType: (change_type) ->
     return @_custom_change_types[change_type]
 
