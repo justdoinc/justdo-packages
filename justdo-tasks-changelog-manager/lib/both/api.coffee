@@ -37,7 +37,9 @@ _.extend TasksChangelogManager.prototype,
 
   getCustomChangeTypeMessage: (change_type, activity_obj) ->
     if not (custom_change_type = @_getCustomChangeType(change_type))?
-      return
+      # Return undefined to allow `getActivityMessage` to display a fallback message.
+      # See the comment in `getActivityMessage` for more details.
+      return undefined
     
     return custom_change_type.getLogMessage(activity_obj)
   getPerformerNameI18n: (activity_obj, lang) ->
@@ -47,6 +49,9 @@ _.extend TasksChangelogManager.prototype,
     return "#{JustdoHelpers.displayName(APP.helpers.getUsersDocsByIds activity_obj.by)}"
 
   getActivityMessage: (activity_obj) ->
+    # We first try to get the message from the custom change type.
+    # If it returns undefined, we then try to get the message from the logic below as fallback.
+    # In this case, aside from `change_type`, we also determine which message to display from the `field` or `grid_column_formatter`.
     if (custom_change_type_message = @getCustomChangeTypeMessage(activity_obj.change_type, activity_obj))?
       return custom_change_type_message
 
