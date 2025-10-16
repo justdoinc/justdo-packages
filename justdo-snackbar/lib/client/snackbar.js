@@ -39,6 +39,8 @@
     var Snackbar = {};
 
     Snackbar.current = [];
+    Snackbar.isPaused = false;
+    
     var $defaults = {
         text: 'Default Text',
         textColor: '#FFFFFF',
@@ -112,7 +114,21 @@
         $buttonWrapper.className = "snackbar-button-wrapper";
         snackbar.appendChild($buttonWrapper); // Wrapper for buttons
 
+        // Add progress bar
+        var $progressBar = document.createElement('div');
+        $progressBar.className = 'snackbar-progress-bar';
+        snackbar.appendChild($progressBar);
+
+        // Add timer state tracking
+        snackbar._duration = options.duration;
+        snackbar._remainingTime = options.duration;
+        snackbar._timeoutId = null;
+        snackbar._progressStartTime = Date.now();
+
         snackbar.close = function() {
+            if (this._timeoutId) {
+                clearTimeout(this._timeoutId);
+            }
             this.style.opacity = 0;
             this.style.top = '-100px';
             this.style.bottom = '-100px';
@@ -151,13 +167,92 @@
             $buttonWrapper.appendChild(dismissButton);
         }
 
+        // Helper to animate progress bar from initial width to 0%
+        var animateProgressBar = function(progressBar, initialWidth, duration, delay) {
+            progressBar.style.transition = 'none';
+            progressBar.style.width = initialWidth;
+            progressBar.style.backgroundColor = options.secondButtonTextColor;
+            progressBar.offsetHeight; // Force reflow
+            
+            var animate = function() {
+                progressBar.style.transition = 'width ' + duration + 'ms linear';
+                progressBar.style.width = '0%';
+            };
+            
+            delay ? setTimeout(animate, delay) : animate();
+        };
+
+        // Function to start/restart the timer
+        snackbar.startTimer = function(isInitialStart) {
+            if (this._timeoutId) {
+                clearTimeout(this._timeoutId);
+            }
+            
+            // If time expired while paused, close immediately
+            if (this._remainingTime === 0) {
+                this.close();
+                return;
+            }
+            
+            this._progressStartTime = Date.now();
+            
+            var progressBar = this.querySelector('.snackbar-progress-bar');
+            if (progressBar) {
+                var initialWidth = isInitialStart 
+                    ? '100%' 
+                    : ((this._remainingTime / this._duration) * 100) + '%';
+                var delay = isInitialStart ? 10 : 0;
+                animateProgressBar(progressBar, initialWidth, this._remainingTime, delay);
+            }
+            
+            this._timeoutId = setTimeout(this.close.bind(this), this._remainingTime);
+        }.bind(snackbar);
+
+        // Function to pause the timer
+        snackbar.pauseTimer = function() {
+            if (this._timeoutId) {
+                clearTimeout(this._timeoutId);
+                this._timeoutId = null;
+            }
+            
+            var elapsed = Date.now() - this._progressStartTime;
+            this._remainingTime = Math.max(0, this._remainingTime - elapsed);
+            
+            var progressBar = this.querySelector('.snackbar-progress-bar');
+            if (progressBar) {
+                var currentWidth = progressBar.offsetWidth;
+                var parentWidth = progressBar.parentElement.offsetWidth;
+                var percentageWidth = (currentWidth / parentWidth) * 100;
+                progressBar.style.transition = 'none';
+                progressBar.style.width = percentageWidth + '%';
+            }
+        }.bind(snackbar);
+
+        // Helper to toggle pause state for all snackbars
+        var togglePauseState = function(shouldPause) {
+            if (Snackbar.isPaused === shouldPause) return;
+            
+            Snackbar.isPaused = shouldPause;
+            Snackbar.current.forEach(function(sb) {
+                if (shouldPause) {
+                    sb.pauseTimer();
+                } else {
+                    sb.startTimer(false);
+                }
+            });
+        };
+
+        // Hover event handlers
+        snackbar.addEventListener('mouseenter', function() {
+            togglePauseState(true);
+        });
+
+        snackbar.addEventListener('mouseleave', function() {
+            togglePauseState(false);
+        });
+
         if (options.duration) {
-            setTimeout(
-                function() {
-                    snackbar.close();
-                }.bind(snackbar),
-                options.duration
-            );
+            snackbar.startTimer(true); // Initial start from 100%
         }
 
         snackbar.addEventListener(
