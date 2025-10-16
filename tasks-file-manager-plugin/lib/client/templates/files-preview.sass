@@ -1,18 +1,27 @@
-.tasks-file-manager-preview-dialog
-  .preview-container
-    flex-grow: 1
-    display: flex
-    justify-content: center
-    min-height: 250px
-    align-items: center
+$preview-container-max-height: 100vh
 
+.tasks-file-manager-preview-dialog
   .modal-dialog
     max-width: 1000px
+    max-height: $preview-container-max-height
+    display: flex
+    flex-direction: column
+    .modal-content
+      max-height: $preview-container-max-height
+      display: flex
+      flex-direction: column
     .bootbox-body
       text-align: center
+      overflow: hidden
+      display: flex
+      flex-direction: column
+      flex: 1
+      min-height: 0
       .tasks-files-preview-wrapper
         display: flex
         justify-content: space-between
+        flex: 1
+        min-height: 0
         .prev-file,
         .next-file
           display: flex
@@ -42,3 +51,19 @@
             left: 0
             animation: sk-bounce 2.0s infinite ease-in-out
             animation-delay: -1.0s
+
+  .preview-container
+    flex-grow: 1
+    display: flex
+    justify-content: center
+    align-items: center
+    min-height: 250px
+    overflow: auto
+    img,
+    video,
+    iframe
+      max-height: calc(#{$preview-container-max-height} - 200px)
+      max-width: 100%
+      height: auto
+      width: auto
+      object-fit: contain

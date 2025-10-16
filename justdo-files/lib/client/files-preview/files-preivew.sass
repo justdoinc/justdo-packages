@@ -1,11 +1,27 @@
+$preview-container-max-height: 100vh
+  
 .justdo-files-preview-dialog
   .modal-dialog
     max-width: 1200px
+    max-height: $preview-container-max-height
+    display: flex
+    flex-direction: column
+    .modal-content
+      max-height: $preview-container-max-height
+      display: flex
+      flex-direction: column
     .bootbox-body
       text-align: center
+      overflow: hidden
+      display: flex
+      flex-direction: column
+      flex: 1
+      min-height: 0
       .justdo-files-preview-wrapper
         display: flex
         justify-content: space-between
+        flex: 1
+        min-height: 0
         .prev-file,
         .next-file
           display: flex
@@ -40,5 +56,14 @@
     flex-grow: 1
     display: flex
     justify-content: center
-    min-height: 250px
     align-items: center
+    min-height: 250px
+    overflow: auto
+    img,
+    video,
+    embed
+      max-height: calc(#{$preview-container-max-height} - 200px)
+      max-width: 100%
+      height: auto
+      width: auto
+      object-fit: contain
