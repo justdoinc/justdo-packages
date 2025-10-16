@@ -116,7 +116,7 @@
 
         // Add progress bar
         var $progressBar = document.createElement('div');
-        $progressBar.className = 'snackbar-progress-bar';
+        $progressBar.className = 'snackbar-progress-bar bg-warning';
         snackbar.appendChild($progressBar);
 
         // Add timer state tracking
@@ -171,7 +171,6 @@
         var animateProgressBar = function(progressBar, initialWidth, duration, delay) {
             progressBar.style.transition = 'none';
             progressBar.style.width = initialWidth;
-            progressBar.style.backgroundColor = options.secondButtonTextColor;
             progressBar.offsetHeight; // Force reflow
             
             var animate = function() {
