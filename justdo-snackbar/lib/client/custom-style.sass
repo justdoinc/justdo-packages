@@ -7,9 +7,10 @@
   z-index: 9999
   margin-bottom: 24px
   .snackbar-container
-    position: static
+    position: relative
     margin-top: 8px
     margin-bottom: unset
+    overflow: hidden
     .action
       // Fix action style on IE11
       background: transparent
@@ -24,6 +25,15 @@
       width: 24px
       height: 24px
       padding: 2px
+
+    .snackbar-progress-bar
+      position: absolute
+      bottom: 0
+      right: 0
+      height: 3px
+      width: 100%
+      background-color: rgba(255, 255, 255, 0.3)
+      transition: none
 
     // RTL modifications
     .right-to-left
