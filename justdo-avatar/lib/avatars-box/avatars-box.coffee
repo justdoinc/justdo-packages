@@ -122,7 +122,7 @@ Template.justdo_avatars_box.helpers
     tpl = Template.instance()
 
     tmpl_data = tpl.data
-    users_limit = tmpl_data.users_limit
+    users_limit = tpl.max_users_to_display_rv.get() or +Infinity # null value of `max_users_to_display_rv` means unlimited
     users_count = tmpl_data.primary_users.length + tmpl_data.secondary_users.length
     users_diff = users_count - users_limit
 
