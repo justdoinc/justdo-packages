@@ -8,13 +8,13 @@
     <div class="preview-container">
       {{#with activeFile}}
         {{#if isPdf}}
-          <embed src="{{previewLink}}" type="{{type}}" width="970" height="550" alt="{{name}}" style="border: 0 none;">
+          <embed src="{{previewLink}}" type="{{type}}" alt="{{name}}" style="border: 0 none;">
         {{/if}}
         {{#if isImage}}
-          <img src="{{previewLink}}" alt="{{name}}" title="{{name}}" style="max-width: 100%;" />
+          <img src="{{previewLink}}" alt="{{name}}" title="{{name}}" />
         {{/if}}
         {{#if isVideo}}
-          <video alt="{{name}}" width="970" height="550" controls>
+          <video alt="{{name}}" controls>
             <source src="{{previewLink}}">
           </video>
         {{/if}}
