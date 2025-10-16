@@ -321,7 +321,7 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_type: "feather"
         icon_val: "arrow-down-right"
 
-      listingCondition: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+      listingCondition: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
         if not field_info?
           # Happens when initiating the context menu
           return false
