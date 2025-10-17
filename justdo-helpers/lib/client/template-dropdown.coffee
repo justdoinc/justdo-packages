@@ -149,11 +149,6 @@ _.extend TemplateDropdownProto.prototype,
 
     @destroyed = true
 
-    if not @initiated
-      @logger.debug "TemplateDropdown not initiated, muted destroy"
-
-      return
-
     @logger.debug "Destroyed"
 
     @$connected_element.off "mousedown"
