@@ -8,6 +8,7 @@ TemplateDropdownProto = (connected_element) ->
 
   @$connected_element = $(connected_element)
 
+  @destroyed = false
   @initiated = false
 
   if @setup_basic_click_event
@@ -49,6 +50,11 @@ _.extend TemplateDropdownProto.prototype,
   dropdown_template_containing_node_class: undefined # Can have multiple classes - space separated
 
   _init: ->
+    if @destroyed
+      @logger.debug "TemplateDropdown already destroyed, skipping init"
+
+      return
+
     dropdown_html = """
       <div class="dropdown #{@id} #{@custom_dropdown_class}">
         <div class="dropdown-content #{@id}-content #{@custom_dropdown_content_class}"></div>
@@ -136,12 +142,31 @@ _.extend TemplateDropdownProto.prototype,
             left: new_position.left
 
   destroy: ->
+    if @destroyed
+      @logger.debug "Destroyed already"
+
+      return
+
+    @destroyed = true
+
+    if not @initiated
+      @logger.debug "TemplateDropdown not initiated, muted destroy"
+
+      return
+
+    @logger.debug "Destroyed"
+
     @$connected_element.off "mousedown"
     @$connected_element.off "click"
 
-    @$dropdown.data("destroy")?()
+    # Since `@$dropdown` is assigned in `@_init()`, and `@_init()` is called in `Meteor.defer`,
+    # it is possible that `@$dropdown` is not assigned yet when `@destroy()` is called.
+    # Therefore, we use `?.` to safely call the `data("destroy")` method.
+    @$dropdown?.data("destroy")?()
 
     @destroyDropdownContentNode()
+
+    return
 
 generateNewTemplateDropdown = (id, template_name, prototype_customizations) ->
   template_dropdown_constructor = (connected_element, template_data) ->
