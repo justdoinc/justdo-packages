@@ -884,6 +884,8 @@ _.extend JustdoAccounts.prototype,
     return
 
   deactivateUsers: (users_ids) ->
+    # Note: This is a lower-level api that takes care of marking the user as deactivated and logs out all clients.
+    # Please also check the `deactivateUsers` in justdo-site-admins to see if you should use it instead.
     if _.isString users_ids
       users_ids = [users_ids]
 
