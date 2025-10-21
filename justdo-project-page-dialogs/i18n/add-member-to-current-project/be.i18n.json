@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Пошук карнявых задач / праектаў",
   "add_project_member_new_users": "Новыя карыстальнікі",
   "add_project_member_registered_users": "Зарэгістраваныя карыстальнікі",
-  "add_project_member_existing_members": "Існуючыя ўдзельнікі гэтага JustDo (дошкі)"
+  "add_project_member_existing_members": "Існуючыя ўдзельнікі гэтага JustDo (дошкі)",
+  "add_project_member_deactivated_users_snackbar": "Наступны карыстальнік не можа быць дададзены, таму што ён дэактываваны: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Наступныя карыстальнікі не могуць быць дададзены, таму што яны дэактываваны: \n__emails__"
 }

@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Αναζήτηση βασικών εργασιών / έργων",
   "add_project_member_new_users": "Νέοι Χρήστες",
   "add_project_member_registered_users": "Εγγεγραμμένοι Χρήστες",
-  "add_project_member_existing_members": "Υπάρχοντα Μέλη αυτού του Πίνακα JustDo"
+  "add_project_member_existing_members": "Υπάρχοντα Μέλη αυτού του Πίνακα JustDo",
+  "add_project_member_deactivated_users_snackbar": "Ο παρακάτω χρήστης δεν μπορεί να προστεθεί επειδή είναι απενεργοποιημένος: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Οι παρακάτω χρήστες δεν μπορούν να προστεθούν επειδή είναι απενεργοποιημένοι: \n__emails__"
 }

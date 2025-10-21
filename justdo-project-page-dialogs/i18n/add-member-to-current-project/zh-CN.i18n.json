@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "搜索根任务/项目",
   "add_project_member_new_users": "新用户",
   "add_project_member_registered_users": "已注册用户",
-  "add_project_member_existing_members": "此JustDo面板的现有成员"
+  "add_project_member_existing_members": "此JustDo面板的现有成员",
+  "add_project_member_deactivated_users_snackbar": "以下用户无法添加，因为其账户已停用：\n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "以下用户无法添加，因为其账户已停用：\n__emails__"
 }

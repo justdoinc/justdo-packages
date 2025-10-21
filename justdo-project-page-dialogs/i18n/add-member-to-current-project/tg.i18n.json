@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Ҷустуҷӯи вазифаҳои асосӣ / лоиҳаҳо",
   "add_project_member_new_users": "Корбарони нав",
   "add_project_member_registered_users": "Корбарони бақайдгирифташуда",
-  "add_project_member_existing_members": "Аъзоёни мавҷудаи ин тахтаи JustDo"
+  "add_project_member_existing_members": "Аъзоёни мавҷудаи ин тахтаи JustDo",
+  "add_project_member_deactivated_users_snackbar": "Корбари зерин илова карда намешавад, чунки он ғайрифаъол аст: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Корбарони зерин илова карда намешаванд, чунки онҳо ғайрифаъол ҳастанд: \n__emails__"
 }

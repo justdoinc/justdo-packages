@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Негізгі тапсырмаларды / жобаларды іздеу",
   "add_project_member_new_users": "Жаңа пайдаланушылар",
   "add_project_member_registered_users": "Тіркелген пайдаланушылар",
-  "add_project_member_existing_members": "Осы JustDo тақтасының қолданыстағы мүшелері"
+  "add_project_member_existing_members": "Осы JustDo тақтасының қолданыстағы мүшелері",
+  "add_project_member_deactivated_users_snackbar": "Келесі пайдаланушыны қосу мүмкін емес, өйткені олар өшірілген: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Келесі пайдаланушыларды қосу мүмкін емес, өйткені олар өшірілген: \n__emails__"
 }

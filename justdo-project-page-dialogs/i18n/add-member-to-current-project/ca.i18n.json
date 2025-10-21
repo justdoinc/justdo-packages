@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Cercar tasques arrel / projectes",
   "add_project_member_new_users": "Nous usuaris",
   "add_project_member_registered_users": "Usuaris registrats",
-  "add_project_member_existing_members": "Membres existents d'aquest JustDo (tauler)"
+  "add_project_member_existing_members": "Membres existents d'aquest JustDo (tauler)",
+  "add_project_member_deactivated_users_snackbar": "L'usuari següent no es pot afegir perquè està desactivat: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Els usuaris següents no es poden afegir perquè estan desactivats: \n__emails__"
 }

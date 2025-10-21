@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Căutați sarcini principale / proiecte",
   "add_project_member_new_users": "Utilizatori noi",
   "add_project_member_registered_users": "Utilizatori înregistrați",
-  "add_project_member_existing_members": "Membri existenți ai acestui JustDo"
+  "add_project_member_existing_members": "Membri existenți ai acestui JustDo",
+  "add_project_member_deactivated_users_snackbar": "Următorul utilizator nu poate fi adăugat deoarece este dezactivat: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Următorii utilizatori nu pot fi adăugați deoarece sunt dezactivați: \n__emails__"
 }

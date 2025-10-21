@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Pesquisar tarefas principais / projetos",
   "add_project_member_new_users": "Novos Utilizadores",
   "add_project_member_registered_users": "Utilizadores Registados",
-  "add_project_member_existing_members": "Membros Existentes deste JustDo (quadro)"
+  "add_project_member_existing_members": "Membros Existentes deste JustDo (quadro)",
+  "add_project_member_deactivated_users_snackbar": "O seguinte utilizador não pode ser adicionado porque está desativado: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Os seguintes utilizadores não podem ser adicionados porque estão desativados: \n__emails__"
 }

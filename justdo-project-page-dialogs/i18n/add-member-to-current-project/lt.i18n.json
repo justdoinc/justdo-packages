@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Ieškoti pagrindinių užduočių / projektų",
   "add_project_member_new_users": "Nauji vartotojai",
   "add_project_member_registered_users": "Registruoti vartotojai",
-  "add_project_member_existing_members": "Esami šio JustDo nariai"
+  "add_project_member_existing_members": "Esami šio JustDo nariai",
+  "add_project_member_deactivated_users_snackbar": "Šis naudotojas negali būti pridėtas, nes yra deaktyvuotas: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Šie naudotojai negali būti pridėti, nes yra deaktyvuoti: \n__emails__"
 }

@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Otsi põhiülesandeid / projekte",
   "add_project_member_new_users": "Uued kasutajad",
   "add_project_member_registered_users": "Registreeritud kasutajad",
-  "add_project_member_existing_members": "Selle JustDo olemasolevad liikmed"
+  "add_project_member_existing_members": "Selle JustDo olemasolevad liikmed",
+  "add_project_member_deactivated_users_snackbar": "Järgmist kasutajat ei saa lisada, kuna ta on deaktiveeritud: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Järgmisi kasutajaid ei saa lisada, kuna nad on deaktiveeritud: \n__emails__"
 }
