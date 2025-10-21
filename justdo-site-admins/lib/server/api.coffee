@@ -168,7 +168,13 @@ _.extend JustdoSiteAdmins.prototype,
 
     query = @addExcludedUsersClauseToQuery(query, performing_user_id) or query
 
-    fields = _.extend {}, JustdoHelpers.avatar_required_fields, {"site_admin.is_site_admin": 1, "deactivated": 1, "createdAt": 1}
+    fields = _.extend {}, JustdoHelpers.avatar_required_fields, 
+      "site_admin.is_site_admin": 1
+      "deactivated": 1
+      "deactivated_at": 1
+      "deactivated_by": 1
+      "createdAt": 1
+
     if @isUserSuperSiteAdmin performing_user_id
       _.extend fields, 
         "promoters": 1

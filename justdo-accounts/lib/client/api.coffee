@@ -310,6 +310,14 @@ _.extend JustdoAccounts.prototype,
   clearPendingJdCreationRequest: ->
     @pending_jd_creation_request = null
     return
+  
+  getUserDeactivatedInfo: (deactivated_user) ->
+    if _.isString deactivated_user
+      deactivated_user = Meteor.users.findOne({_id: deactivated_user}, {fields: {deactivated: 1, deactivated_at: 1, deactivated_by: 1}})
+      
+    performing_user_name = JustdoHelpers.displayName(deactivated_user.deactivated_by)
+    user_preferred_deactivated_at = JustdoHelpers.getDateTimeStringInUserPreferenceFormat(deactivated_user.deactivated_at)
+    return "Deactivated by #{performing_user_name} on #{user_preferred_deactivated_at}"
 
   _setupEventHooks: ->
     app_type = JustdoHelpers.getClientType env
