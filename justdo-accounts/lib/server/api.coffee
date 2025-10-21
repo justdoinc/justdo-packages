@@ -883,8 +883,9 @@ _.extend JustdoAccounts.prototype,
 
     return
 
-  deactivateUsers: (users_ids) ->
+  deactivateUsers: (users_ids, performing_user_id) ->
     # Note: This is a lower-level api that takes care of marking the user as deactivated and logs out all clients.
+    # The `performing_user_id` is solely for logging purpose, not to perform any permission check.
     # Please also check the `deactivateUsers` in justdo-site-admins to see if you should use it instead.
     if _.isString users_ids
       users_ids = [users_ids]
@@ -898,6 +899,7 @@ _.extend JustdoAccounts.prototype,
     update =
       $set:
         deactivated: true
+        deactivated_by: performing_user_id
 
     Meteor.users.update(query, update, {multi: true})
 

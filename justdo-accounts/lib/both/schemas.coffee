@@ -42,6 +42,40 @@ _.extend JustdoAccounts.prototype,
         optional: true
 
         type: Boolean
+      
+      deactivated_at:
+        optional: true
+
+        type: Date
+        autoValue: ->
+          deactivated_field = @field("deactivated")
+          if not deactivated_field.isSet
+            # Prevent direct update
+            return @unset()
+
+          if deactivated_field.value is true
+            # Setting user as deacticated
+            return new Date()
+          else
+            # Unsetting user as deactivated, clear this related meta field.
+            return {$unset: 1}
+
+      deactivated_by:
+        optional: true
+
+        type: String
+        autoValue: ->
+          deactivated_field = @field("deactivated")
+          if not deactivated_field.isSet
+            # Prevent direct update
+            return @unset()
+
+          if deactivated_field.value is true
+            # Setting user as deacticated
+            return @value
+          else
+            # Unsetting user as deactivated, clear this related meta field.
+            return {$unset: 1}
 
       is_proxy:
         optional: true

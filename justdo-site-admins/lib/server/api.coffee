@@ -122,7 +122,7 @@ _.extend JustdoSiteAdmins.prototype,
 
         return
 
-    APP.accounts.deactivateUsers users_ids
+    APP.accounts.deactivateUsers users_ids, performing_user_id
 
     return
 
