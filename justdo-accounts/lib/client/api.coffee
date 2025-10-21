@@ -314,6 +314,10 @@ _.extend JustdoAccounts.prototype,
   getUserDeactivatedInfo: (deactivated_user) ->
     if _.isString deactivated_user
       deactivated_user = Meteor.users.findOne({_id: deactivated_user}, {fields: {deactivated: 1, deactivated_at: 1, deactivated_by: 1}})
+    
+    if (not deactivated_user.deactivated_by?) or (not deactivated_user.deactivated_at?)
+      # For backward compatibility. For users created before the deactivated_by field was added, we return an empty string.
+      return ""
       
     performing_user_name = JustdoHelpers.displayName(deactivated_user.deactivated_by)
     user_preferred_deactivated_at = JustdoHelpers.getDateTimeStringInUserPreferenceFormat(deactivated_user.deactivated_at)
