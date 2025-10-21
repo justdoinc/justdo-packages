@@ -109,11 +109,11 @@ Template.invite_new_user_dialog.onCreated ->
 
       for email, name of new_users
         user =
-        first_name: name.first_name
-        last_name: name.last_name
-        email: email
-        role: "member"
-        registered: false
+          first_name: name.first_name
+          last_name: name.last_name
+          email: email
+          role: "member"
+          registered: false
 
         # Registered user
         if (user_info = registered_users_details[email])?
