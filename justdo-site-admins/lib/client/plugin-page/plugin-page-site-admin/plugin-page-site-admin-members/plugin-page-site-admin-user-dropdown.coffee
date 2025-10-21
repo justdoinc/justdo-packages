@@ -37,7 +37,8 @@ Template.site_admin_user_dropdown_toggle_deactivted_user.events
     else
       method = "deactivateUsers"
       warnings = [
-        "The user will be removed from all the JustDos and will not be able to login."
+        "The user will be removed from all #{if APP.justdo_orgs? then "Organizations and" else ""} JustDos"
+        "The user will not be able to login."
         "If reactivated, will need to be manually added as a member again as needed."
         # Too techincal but accurate, original proposal
         # "The user will not be able to login."

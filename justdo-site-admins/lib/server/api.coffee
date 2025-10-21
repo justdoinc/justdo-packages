@@ -108,6 +108,7 @@ _.extend JustdoSiteAdmins.prototype,
         throw @_error "cannot-deactivate-site-admin", "Cannot deactivate a site admin"
 
     for user_id in users_ids
+      @emit "deactivate-user-pre-operations", user_id, performing_user_id
       APP.collections.Projects.find({"members.user_id": user_id}, {fields: _id: 1}).forEach (doc) ->
         try
           APP.projects.removeMember doc._id, user_id, user_id # The 3rd argument is the performing user id ; A user can always remove himself from project even if not admin - the site admin, might not be an admin of all the projects the user is member of , therefore, by passing the user himself as the performing user, we ensure removability
