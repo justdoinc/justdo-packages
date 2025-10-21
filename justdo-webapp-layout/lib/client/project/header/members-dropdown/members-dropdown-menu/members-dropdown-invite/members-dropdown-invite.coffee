@@ -155,6 +155,7 @@ APP.executeAfterAppLibCode ->
             role = "guest"
           existing_members_set.set justdo_member.user_id, {role: role}
 
+        deactivated_user_emails = []
         for email, name of new_users
           user =
             first_name: JustdoHelpers.ucFirst name.first_name
@@ -165,6 +166,11 @@ APP.executeAfterAppLibCode ->
 
           # Registered user
           if (user_info = registered_users_details[email])?
+            if user_info.deactivated
+              # User is deactivated. Store the email to show a snackbar later and don't add the user to the users array.
+              deactivated_user_emails.push email
+              continue
+
             _.extend user,
               _id: user_info._id
               first_name: user_info.first_name
@@ -178,6 +184,10 @@ APP.executeAfterAppLibCode ->
                 role: justdo_member.role
 
           users.push user
+
+        if not _.isEmpty(deactivated_user_emails)
+          JustdoSnackbar.show
+            text: TAPi18n.__ "add_project_member_deactivated_users_snackbar", {count: deactivated_user_emails.length, emails: deactivated_user_emails.join(", ")}
 
         if show_advanced_dialog
           ProjectPageDialogs.showMemberDialog({initial_users: users})
