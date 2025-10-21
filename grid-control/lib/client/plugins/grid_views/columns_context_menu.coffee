@@ -212,7 +212,7 @@ _.extend GridControl.prototype,
       if type is "first"
         grid_control_cmenu_target_selector = grid_control_cmenu_target_selector += ":first"
       else if type is "last"
-        grid_control_cmenu_target_selector = grid_control_cmenu_target_selector += ":last"
+        grid_control_cmenu_target_selector = grid_control_cmenu_target_selector += ":not(:first):last"
       else if type is "common"
         grid_control_cmenu_target_selector = grid_control_cmenu_target_selector += ":not(:first):not(:last)"
 
