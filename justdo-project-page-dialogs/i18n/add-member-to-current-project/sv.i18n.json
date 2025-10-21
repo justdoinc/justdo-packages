@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Sök rotuppgifter / projekt",
   "add_project_member_new_users": "Nya användare",
   "add_project_member_registered_users": "Registrerade användare",
-  "add_project_member_existing_members": "Befintliga medlemmar i detta JustDo"
+  "add_project_member_existing_members": "Befintliga medlemmar i detta JustDo",
+  "add_project_member_deactivated_users_snackbar": "Följande användare kan inte läggas till eftersom de är inaktiverade: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Följande användare kan inte läggas till eftersom de är inaktiverade: \n__emails__"
 }

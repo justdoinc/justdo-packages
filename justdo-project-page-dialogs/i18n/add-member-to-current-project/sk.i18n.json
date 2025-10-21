@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Vyhľadať koreňové úlohy / projekty",
   "add_project_member_new_users": "Noví používatelia",
   "add_project_member_registered_users": "Registrovaní používatelia",
-  "add_project_member_existing_members": "Existujúci členovia tohto JustDo"
+  "add_project_member_existing_members": "Existujúci členovia tohto JustDo",
+  "add_project_member_deactivated_users_snackbar": "Nasledujúci používateľ nemôže byť pridaný, pretože je deaktivovaný: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Nasledujúci používatelia nemôžu byť pridaní, pretože sú deaktivovaní: \n__emails__"
 }

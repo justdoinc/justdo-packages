@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Hauptaufgaben / Projekte suchen",
   "add_project_member_new_users": "Neue Benutzer",
   "add_project_member_registered_users": "Registrierte Benutzer",
-  "add_project_member_existing_members": "Bestehende Mitglieder dieses JustDo"
+  "add_project_member_existing_members": "Bestehende Mitglieder dieses JustDo",
+  "add_project_member_deactivated_users_snackbar": "Der folgende Benutzer kann nicht hinzugefügt werden, da er deaktiviert ist: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Die folgenden Benutzer können nicht hinzugefügt werden, da sie deaktiviert sind: \n__emails__"
 }

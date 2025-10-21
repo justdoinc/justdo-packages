@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Пошук кореневих завдань / проектів",
   "add_project_member_new_users": "Нові користувачі",
   "add_project_member_registered_users": "Зареєстровані користувачі",
-  "add_project_member_existing_members": "Існуючі учасники цієї дошки JustDo"
+  "add_project_member_existing_members": "Існуючі учасники цієї дошки JustDo",
+  "add_project_member_deactivated_users_snackbar": "Наступного користувача неможливо додати, оскільки його деактивовано: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Наступних користувачів неможливо додати, оскільки їх деактивовано: \n__emails__"
 }

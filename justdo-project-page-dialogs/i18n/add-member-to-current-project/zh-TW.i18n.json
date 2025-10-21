@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "搜尋根任務／專案",
   "add_project_member_new_users": "新用戶",
   "add_project_member_registered_users": "已註冊用戶",
-  "add_project_member_existing_members": "此JustDo的現有成員"
+  "add_project_member_existing_members": "此JustDo的現有成員",
+  "add_project_member_deactivated_users_snackbar": "以下使用者因為已停用而無法新增：\n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "以下使用者因為已停用而無法新增：\n__emails__"
 }

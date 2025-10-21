@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "मूल कार्य / परियोजनाएँ खोजें",
   "add_project_member_new_users": "नए उपयोगकर्ता",
   "add_project_member_registered_users": "पंजीकृत उपयोगकर्ता",
-  "add_project_member_existing_members": "इस जस्टडू बोर्ड के मौजूदा सदस्य"
+  "add_project_member_existing_members": "इस जस्टडू बोर्ड के मौजूदा सदस्य",
+  "add_project_member_deactivated_users_snackbar": "निम्नलिखित उपयोगकर्ता को जोड़ा नहीं जा सकता क्योंकि वे निष्क्रिय हैं: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "निम्नलिखित उपयोगकर्ताओं को जोड़ा नहीं जा सकता क्योंकि वे निष्क्रिय हैं: \n__emails__"
 }

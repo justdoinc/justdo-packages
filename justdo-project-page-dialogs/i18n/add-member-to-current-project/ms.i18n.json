@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Cari tugas akar / projek",
   "add_project_member_new_users": "Pengguna Baru",
   "add_project_member_registered_users": "Pengguna Berdaftar",
-  "add_project_member_existing_members": "Ahli Sedia Ada JustDo ini"
+  "add_project_member_existing_members": "Ahli Sedia Ada JustDo ini",
+  "add_project_member_deactivated_users_snackbar": "Pengguna berikut tidak dapat ditambah kerana mereka telah dinyahaktifkan: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Pengguna-pengguna berikut tidak dapat ditambah kerana mereka telah dinyahaktifkan: \n__emails__"
 }

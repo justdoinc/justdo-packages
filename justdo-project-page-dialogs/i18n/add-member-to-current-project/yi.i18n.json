@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "זוכן הויפּט אויפֿגאַבן / פּראָיעקטן",
   "add_project_member_new_users": "נײַע באַניצער",
   "add_project_member_registered_users": "רעגיסטרירטע באַניצער",
-  "add_project_member_existing_members": "עקזיסטירנדע מיטגלידער פֿון דעם JustDo טאָוול"
+  "add_project_member_existing_members": "עקזיסטירנדע מיטגלידער פֿון דעם JustDo טאָוול",
+  "add_project_member_deactivated_users_snackbar": "דער פֿאָלגנדער באַניצער קען ניט צוגעגעבן ווערן ווײַל ער איז דעאַקטיווירט: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "די פֿאָלגנדע באַניצער קענען ניט צוגעגעבן ווערן ווײַל זיי זײַנען דעאַקטיווירט: \n__emails__"
 }

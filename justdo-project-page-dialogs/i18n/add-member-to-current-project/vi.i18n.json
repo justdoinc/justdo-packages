@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Tìm kiếm công việc gốc / dự án",
   "add_project_member_new_users": "Người Dùng Mới",
   "add_project_member_registered_users": "Người Dùng Đã Đăng Ký",
-  "add_project_member_existing_members": "Thành Viên Hiện Có của JustDo này"
+  "add_project_member_existing_members": "Thành Viên Hiện Có của JustDo này",
+  "add_project_member_deactivated_users_snackbar": "Người dùng sau không thể được thêm vào vì đã bị vô hiệu hóa: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Các người dùng sau không thể được thêm vào vì đã bị vô hiệu hóa: \n__emails__"
 }

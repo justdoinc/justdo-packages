@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Ana görevleri / projeleri ara",
   "add_project_member_new_users": "Yeni Kullanıcılar",
   "add_project_member_registered_users": "Kayıtlı Kullanıcılar",
-  "add_project_member_existing_members": "Bu JustDo'nun Mevcut Üyeleri"
+  "add_project_member_existing_members": "Bu JustDo'nun Mevcut Üyeleri",
+  "add_project_member_deactivated_users_snackbar": "Aşağıdaki kullanıcı devre dışı bırakıldığı için eklenemez: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Aşağıdaki kullanıcılar devre dışı bırakıldığı için eklenemez: \n__emails__"
 }

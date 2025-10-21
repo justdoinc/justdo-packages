@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "루트 태스크 / 프로젝트 검색",
   "add_project_member_new_users": "신규 사용자",
   "add_project_member_registered_users": "등록된 사용자",
-  "add_project_member_existing_members": "이 JustDo의 기존 구성원"
+  "add_project_member_existing_members": "이 JustDo의 기존 구성원",
+  "add_project_member_deactivated_users_snackbar": "다음 사용자는 비활성화되어 추가할 수 없습니다: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "다음 사용자들은 비활성화되어 추가할 수 없습니다: \n__emails__"
 }

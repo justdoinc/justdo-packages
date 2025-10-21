@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Asosiy vazifalar / loyihalarni qidirish",
   "add_project_member_new_users": "Yangi foydalanuvchilar",
   "add_project_member_registered_users": "Ro'yxatdan o'tgan foydalanuvchilar",
-  "add_project_member_existing_members": "Ushbu JustDo taxtasining mavjud a'zolari"
+  "add_project_member_existing_members": "Ushbu JustDo taxtasining mavjud a'zolari",
+  "add_project_member_deactivated_users_snackbar": "Quyidagi foydalanuvchi faolsizlashtirilganligi sababli qo'shilmaydi: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Quyidagi foydalanuvchilar faolsizlashtirilganligi sababli qo'shilmaydi: \n__emails__"
 }

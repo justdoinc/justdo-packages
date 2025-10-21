@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Išči korenske naloge / projekte",
   "add_project_member_new_users": "Novi uporabniki",
   "add_project_member_registered_users": "Registrirani uporabniki",
-  "add_project_member_existing_members": "Obstoječi člani tega JustDo-ja"
+  "add_project_member_existing_members": "Obstoječi člani tega JustDo-ja",
+  "add_project_member_deactivated_users_snackbar": "Naslednji uporabnik ne more biti dodan, ker je deaktiviran: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Naslednji uporabniki ne morejo biti dodani, ker so deaktivirani: \n__emails__"
 }

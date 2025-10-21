@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Meklēt galvenos uzdevumus / projektus",
   "add_project_member_new_users": "Jauni lietotāji",
   "add_project_member_registered_users": "Reģistrētie lietotāji",
-  "add_project_member_existing_members": "Esošie šī JustDo dēļa dalībnieki"
+  "add_project_member_existing_members": "Esošie šī JustDo dēļa dalībnieki",
+  "add_project_member_deactivated_users_snackbar": "Sekojošo lietotāju nevar pievienot, jo tas ir deaktivizēts: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Sekojošos lietotājus nevar pievienot, jo tie ir deaktivizēti: \n__emails__"
 }

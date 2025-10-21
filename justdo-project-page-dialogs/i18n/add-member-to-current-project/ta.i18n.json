@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "மூல பணிகள் / திட்டங்களைத் தேடுங்கள்",
   "add_project_member_new_users": "புதிய பயனர்கள்",
   "add_project_member_registered_users": "பதிவு செய்யப்பட்ட பயனர்கள்",
-  "add_project_member_existing_members": "இந்த JustDo-வின் தற்போதைய உறுப்பினர்கள்"
+  "add_project_member_existing_members": "இந்த JustDo-வின் தற்போதைய உறுப்பினர்கள்",
+  "add_project_member_deactivated_users_snackbar": "பின்வரும் பயனர் செயலிழக்கப்பட்டுள்ளதால் சேர்க்க முடியவில்லை: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "பின்வரும் பயனர்கள் செயலிழக்கப்பட்டுள்ளதால் சேர்க்க முடியவில்லை: \n__emails__"
 }

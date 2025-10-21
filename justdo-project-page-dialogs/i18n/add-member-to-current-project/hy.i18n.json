@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Որոնել հիմնական առաջադրանքներ / նախագծեր",
   "add_project_member_new_users": "Նոր օգտատերեր",
   "add_project_member_registered_users": "Գրանցված օգտատերեր",
-  "add_project_member_existing_members": "Այս JustDo-ի առկա անդամներ"
+  "add_project_member_existing_members": "Այս JustDo-ի առկա անդամներ",
+  "add_project_member_deactivated_users_snackbar": "Հետևյալ օգտատերը չի կարող ավելացվել, քանի որ ապաակտիվացված է՝ \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Հետևյալ օգտատերերը չեն կարող ավելացվել, քանի որ ապաակտիվացված են՝ \n__emails__"
 }

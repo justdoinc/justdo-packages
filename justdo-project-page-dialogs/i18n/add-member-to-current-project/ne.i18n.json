@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "मुख्य कार्यहरू / परियोजनाहरू खोज्नुहोस्",
   "add_project_member_new_users": "नयाँ प्रयोगकर्ताहरू",
   "add_project_member_registered_users": "दर्ता गरिएका प्रयोगकर्ताहरू",
-  "add_project_member_existing_members": "यस JustDo (जस्टडु) बोर्डका वर्तमान सदस्यहरू"
+  "add_project_member_existing_members": "यस JustDo (जस्टडु) बोर्डका वर्तमान सदस्यहरू",
+  "add_project_member_deactivated_users_snackbar": "निम्न प्रयोगकर्तालाई थप्न सकिँदैन किनभने तिनीहरू निष्क्रिय छन्: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "निम्न प्रयोगकर्ताहरूलाई थप्न सकिँदैन किनभने तिनीहरू निष्क्रिय छन्: \n__emails__"
 }

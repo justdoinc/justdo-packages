@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "የመነሻ ተግባራትን / ፕሮጀክቶችን ይፈልጉ",
   "add_project_member_new_users": "አዲስ ተጠቃሚዎች",
   "add_project_member_registered_users": "የተመዘገቡ ተጠቃሚዎች",
-  "add_project_member_existing_members": "የዚህ JustDo ነባር አባላት"
+  "add_project_member_existing_members": "የዚህ JustDo ነባር አባላት",
+  "add_project_member_deactivated_users_snackbar": "የሚከተለው ተጠቃሚ ቦርድ ላይ ስላልገባ ሊጨመር አይችልም: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "የሚከተሉት ተጠቃሚዎች ቦርድ ላይ ስላልገቡ ሊጨመሩ አይችሉም: \n__emails__"
 }

@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "ស្វែងរកភារកិច្ចដើម / គម្រោង",
   "add_project_member_new_users": "អ្នកប្រើប្រាស់ថ្មី",
   "add_project_member_registered_users": "អ្នកប្រើប្រាស់ដែលបានចុះឈ្មោះ",
-  "add_project_member_existing_members": "សមាជិកដែលមានស្រាប់នៃ JustDo នេះ"
+  "add_project_member_existing_members": "សមាជិកដែលមានស្រាប់នៃ JustDo នេះ",
+  "add_project_member_deactivated_users_snackbar": "អ្នកប្រើប្រាស់ខាងក្រោមមិនអាចបញ្ចូលបានទេ ដោយសារតែត្រូវបានបិទដំណើរការ៖ \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "អ្នកប្រើប្រាស់ខាងក្រោមមិនអាចបញ្ចូលបានទេ ដោយសារតែត្រូវបានបិទដំណើរការ៖ \n__emails__"
 }

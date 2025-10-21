@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "חפש משימות ראשיות / פרויקטים",
   "add_project_member_new_users": "משתמשים חדשים",
   "add_project_member_registered_users": "משתמשים רשומים",
-  "add_project_member_existing_members": "חברים קיימים של JustDo זה"
+  "add_project_member_existing_members": "חברים קיימים של JustDo זה",
+  "add_project_member_deactivated_users_snackbar": "המשתמש הבא לא יכול להתווסף כיוון שהוא מושבת: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "המשתמשים הבאים לא יכולים להתווסף כיוון שהם מושבתים: \n__emails__"
 }

@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Hae juuritehtäviä / projekteja",
   "add_project_member_new_users": "Uudet käyttäjät",
   "add_project_member_registered_users": "Rekisteröityneet käyttäjät",
-  "add_project_member_existing_members": "Tämän JustDo-taulun nykyiset jäsenet"
+  "add_project_member_existing_members": "Tämän JustDo-taulun nykyiset jäsenet",
+  "add_project_member_deactivated_users_snackbar": "Seuraavaa käyttäjää ei voida lisätä, koska se on deaktivoitu: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Seuraavia käyttäjiä ei voida lisätä, koska ne on deaktivoitu: \n__emails__"
 }

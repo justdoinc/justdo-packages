@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Bilatu erro-atazak / proiektuak",
   "add_project_member_new_users": "Erabiltzaile berriak",
   "add_project_member_registered_users": "Erregistratutako erabiltzaileak",
-  "add_project_member_existing_members": "JustDo honen kideak"
+  "add_project_member_existing_members": "JustDo honen kideak",
+  "add_project_member_deactivated_users_snackbar": "Hurrengo erabiltzailea ezin da gehitu desaktibatuta dagoelako: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Hurrengo erabiltzaileak ezin dira gehitu desaktibatuta daudelako: \n__emails__"
 }

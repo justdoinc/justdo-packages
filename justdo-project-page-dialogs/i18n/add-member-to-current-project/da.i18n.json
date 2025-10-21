@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Søg rodniveau opgaver / projekter",
   "add_project_member_new_users": "Nye brugere",
   "add_project_member_registered_users": "Registrerede brugere",
-  "add_project_member_existing_members": "Eksisterende medlemmer af denne JustDo-tavle"
+  "add_project_member_existing_members": "Eksisterende medlemmer af denne JustDo-tavle",
+  "add_project_member_deactivated_users_snackbar": "Følgende bruger kan ikke tilføjes fordi de er deaktiveret: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Følgende brugere kan ikke tilføjes fordi de er deaktiveret: \n__emails__"
 }

@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Főfeladatok / projektek keresése",
   "add_project_member_new_users": "Új felhasználók",
   "add_project_member_registered_users": "Regisztrált felhasználók",
-  "add_project_member_existing_members": "A JustDo tábla meglévő tagjai"
+  "add_project_member_existing_members": "A JustDo tábla meglévő tagjai",
+  "add_project_member_deactivated_users_snackbar": "A következő felhasználó nem adható hozzá, mert inaktív: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "A következő felhasználók nem adhatóak hozzá, mert inaktívak: \n__emails__"
 }

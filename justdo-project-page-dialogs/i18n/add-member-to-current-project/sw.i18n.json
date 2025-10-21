@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Tafuta kazi kuu / miradi",
   "add_project_member_new_users": "Watumiaji Wapya",
   "add_project_member_registered_users": "Watumiaji Waliosajiliwa",
-  "add_project_member_existing_members": "Wanachama Waliopo wa JustDo hii"
+  "add_project_member_existing_members": "Wanachama Waliopo wa JustDo hii",
+  "add_project_member_deactivated_users_snackbar": "Mtumiaji ufuatao hawezi kuongezwa kwa sababu amezimwa: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Watumiaji wafuatao hawawezi kuongezwa kwa sababu wamezimwa: \n__emails__"
 }
