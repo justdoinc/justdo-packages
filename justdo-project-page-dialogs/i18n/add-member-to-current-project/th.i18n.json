@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "ค้นหางานหลัก / โครงการ",
   "add_project_member_new_users": "ผู้ใช้ใหม่",
   "add_project_member_registered_users": "ผู้ใช้ที่ลงทะเบียนแล้ว",
-  "add_project_member_existing_members": "สมาชิกปัจจุบันของ JustDo บอร์ดนี้"
+  "add_project_member_existing_members": "สมาชิกปัจจุบันของ JustDo บอร์ดนี้",
+  "add_project_member_deactivated_users_snackbar": "ไม่สามารถเพิ่มผู้ใช้ต่อไปนี้ได้เนื่องจากถูกปิดใช้งาน: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "ไม่สามารถเพิ่มผู้ใช้ต่อไปนี้ได้เนื่องจากถูกปิดใช้งาน: \n__emails__"
 }

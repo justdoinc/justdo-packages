@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Cari tugas utama / proyek",
   "add_project_member_new_users": "Pengguna Baru",
   "add_project_member_registered_users": "Pengguna Terdaftar",
-  "add_project_member_existing_members": "Anggota yang Sudah Ada di JustDo ini"
+  "add_project_member_existing_members": "Anggota yang Sudah Ada di JustDo ini",
+  "add_project_member_deactivated_users_snackbar": "Pengguna berikut tidak dapat ditambahkan karena sudah dinonaktifkan: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "Pengguna berikut tidak dapat ditambahkan karena sudah dinonaktifkan: \n__emails__"
 }

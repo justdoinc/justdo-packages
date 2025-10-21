@@ -8,5 +8,7 @@
   "add_project_member_search_root_tasks_or_projects": "Zoek hoofdtaken / projecten",
   "add_project_member_new_users": "Nieuwe gebruikers",
   "add_project_member_registered_users": "Geregistreerde gebruikers",
-  "add_project_member_existing_members": "Bestaande leden van dit JustDo"
+  "add_project_member_existing_members": "Bestaande leden van dit JustDo",
+  "add_project_member_deactivated_users_snackbar": "De volgende gebruiker kan niet worden toegevoegd omdat deze gedeactiveerd is: \n__emails__",
+  "add_project_member_deactivated_users_snackbar_plural": "De volgende gebruikers kunnen niet worden toegevoegd omdat deze gedeactiveerd zijn: \n__emails__"
 }
