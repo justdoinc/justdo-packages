@@ -89,7 +89,7 @@ _.extend JustdoAccounts.prototype,
     check emails, [String]
     check options, Object
 
-    users_docs = JustdoHelpers.getUsersByEmail(emails, {query_options: {fields: {"emails.address": 1, "profile.first_name": 1, "profile.last_name": 1, is_proxy: 1}}})
+    users_docs = JustdoHelpers.getUsersByEmail(emails, {query_options: {fields: {"emails.address": 1, "profile.first_name": 1, "profile.last_name": 1, is_proxy: 1, deactivated: 1}}})
 
     result = {}
 
@@ -101,6 +101,7 @@ _.extend JustdoAccounts.prototype,
             first_name: user_doc.profile.first_name
             last_name: user_doc.profile.last_name
             is_proxy: user_doc.is_proxy
+            deactivated: user_doc.deactivated
 
     return result
 
