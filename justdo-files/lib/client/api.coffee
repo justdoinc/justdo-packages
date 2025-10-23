@@ -151,22 +151,16 @@ _.extend JustdoFiles.prototype,
 
         buttons:
           download:
-            label: """<i class="fa fa-download" aria-hidden="true"></i> Download"""
-
-            className: "btn-primary"
+            label: """<svg class="jd-icon text-dark">
+                        <use xlink:href="/layout/icons-feather-sprite.svg#download"></use>
+                      </svg>
+                   """
+            className: "download"
 
             callback: =>
               # Start download
               @downloadFile message_template.template_instance.active_file_rv.get()._id
-
-          close:
-            label: "Close"
-
-            className: "btn-primary"
-
-            callback: ->
-              return true
-
+              return false
     else
       # Start download
       @downloadFile file._id

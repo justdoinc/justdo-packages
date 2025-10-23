@@ -5,8 +5,8 @@
         <use xlink:href="/layout/icons-feather-sprite.svg#chevron-left"></use>
       </svg>
     </div>
-    <div class="preview-container">
-      {{#with activeFile}}
+    {{#with activeFile}}
+      <div class="preview-container {{#if isPdf}}is-pdf{{/if}}">
         {{#if isPdf}}
           <embed src="{{previewLink}}" type="{{type}}" alt="{{name}}" style="border: 0 none;">
         {{/if}}
@@ -18,13 +18,15 @@
             <source src="{{previewLink}}">
           </video>
         {{/if}}
-      {{else}}
+      </div>
+    {{else}}
+      <div class="preview-container">
         <div class="loader">
           <div class="double-bounce1 bg-primary"></div>
           <div class="double-bounce2 bg-primary"></div>
         </div>
-      {{/with}}
-    </div>
+      </div>
+    {{/with}}
     <div class="next-file jd-c-pointer {{isNextButtonVisible}}">
       <svg class="jd-icon text-dark" style="">
         <use xlink:href="/layout/icons-feather-sprite.svg#chevron-right"></use>
