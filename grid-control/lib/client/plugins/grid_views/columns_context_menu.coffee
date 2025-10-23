@@ -269,8 +269,9 @@ _.extend GridControl.prototype,
             return
         }
       ]
-    # Add the "Hide Columns to the Right" menu item to the freeze/unfreeze column menu
-    freeze_unfreeze_column.push(hide_columns_to_the_right_menu_item) 
+    if @getView().length > 1
+      # Add the "Hide Columns to the Right" menu item to the freeze/unfreeze column menu only if there are more than one column
+      freeze_unfreeze_column.push(hide_columns_to_the_right_menu_item) 
     setupColumnContextMenu("first", freeze_unfreeze_column)
 
     hide_menu_item = [
