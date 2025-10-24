@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Дастгирӣ"
+  "support_center_title": "Дастгирӣ",
+  "support_center_h1_html": "<b>Дастгирии JustDo</b>&nbsp;Чӣ тавр метавонем ба шумо кӯмак кунем?",
+  "support_center_category_web_version": "Версияи Веб",
+  "support_center_category_app_version": "Версияи Барнома",
+  "support_center_category_plugins": "Плагинҳо",
+  "support_center_category_advanced": "Пешрафта",
+  "support_center_category_ai_integration": "Интегратсияи AI",
+  "support_center_search_placeholder": "Калидвожаеро ворид кунед",
+  "support_center_contact_us": "Агар ҷавобро наёбед, лутфан бо маркази хидматрасонии мо тамос гиред.",
+  "support_center_ask_question": "Савол пурсед"
 }

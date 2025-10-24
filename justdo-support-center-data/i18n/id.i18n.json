@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Dukungan"
+  "support_center_title": "Dukungan",
+  "support_center_h1_html": "<b>Dukungan JustDo</b>&nbsp;Bagaimana kami dapat membantu Anda?",
+  "support_center_category_web_version": "Versi Web",
+  "support_center_category_app_version": "Versi Aplikasi",
+  "support_center_category_plugins": "Plugin",
+  "support_center_category_advanced": "Lanjutan",
+  "support_center_category_ai_integration": "Integrasi AI",
+  "support_center_search_placeholder": "Masukkan kata kunci",
+  "support_center_contact_us": "Jika Anda tidak dapat menemukan jawaban, silakan hubungi pusat layanan kami.",
+  "support_center_ask_question": "Ajukan pertanyaan"
 }

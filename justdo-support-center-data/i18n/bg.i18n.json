@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Поддръжка"
+  "support_center_title": "Поддръжка",
+  "support_center_h1_html": "<b>Поддръжка на JustDo</b>&nbsp;Как можем да ви помогнем?",
+  "support_center_category_web_version": "Уеб версия",
+  "support_center_category_app_version": "Мобилно приложение",
+  "support_center_category_plugins": "Плъгини",
+  "support_center_category_advanced": "Разширени",
+  "support_center_category_ai_integration": "AI интеграция",
+  "support_center_search_placeholder": "Въведете ключова дума",
+  "support_center_contact_us": "Ако не намерите отговор, моля, свържете се с нашия център за обслужване.",
+  "support_center_ask_question": "Задайте въпрос"
 }

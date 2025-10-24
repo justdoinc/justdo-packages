@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Usaidizi"
+  "support_center_title": "Usaidizi",
+  "support_center_h1_html": "<b>Msaada wa JustDo</b>&nbsp;Tunawezaje kukusaidia?",
+  "support_center_category_web_version": "Toleo la Wavuti (Web)",
+  "support_center_category_app_version": "Toleo la Programu (App)",
+  "support_center_category_plugins": "Programu Jalizi (Plugins)",
+  "support_center_category_advanced": "Za Juu (Advanced)",
+  "support_center_category_ai_integration": "Uunganisho wa AI",
+  "support_center_search_placeholder": "Ingiza neno kuu",
+  "support_center_contact_us": "Ikiwa huwezi kupata jibu, tafadhali wasiliana na kituo chetu cha huduma.",
+  "support_center_ask_question": "Uliza swali"
 }

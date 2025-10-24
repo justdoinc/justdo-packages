@@ -1,3 +1,12 @@
 {
-  "support_center_title": "ஆதரவு மையம்"
+  "support_center_title": "ஆதரவு மையம்",
+  "support_center_h1_html": "<b>JustDo ஆதரவு</b>&nbsp;நாங்கள் உங்களுக்கு எவ்வாறு உதவ முடியும்?",
+  "support_center_category_web_version": "இணைய பதிப்பு (Web Version)",
+  "support_center_category_app_version": "செயலி பதிப்பு (App Version)",
+  "support_center_category_plugins": "செருகுநிரல்கள் (Plugins)",
+  "support_center_category_advanced": "மேம்பட்டது",
+  "support_center_category_ai_integration": "AI ஒருங்கிணைப்பு",
+  "support_center_search_placeholder": "முக்கிய வார்த்தையை உள்ளிடவும்",
+  "support_center_contact_us": "பதிலைக் கண்டுபிடிக்க முடியவில்லை எனில், எங்கள் சேவை மையத்தைத் தொடர்பு கொள்ளவும்.",
+  "support_center_ask_question": "கேள்வி கேளுங்கள்"
 }

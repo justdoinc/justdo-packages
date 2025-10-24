@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Wsparcie"
+  "support_center_title": "Wsparcie",
+  "support_center_h1_html": "<b>Wsparcie JustDo</b>&nbsp;Jak możemy Ci pomóc?",
+  "support_center_category_web_version": "Wersja webowa",
+  "support_center_category_app_version": "Wersja aplikacji",
+  "support_center_category_plugins": "Wtyczki",
+  "support_center_category_advanced": "Zaawansowane",
+  "support_center_category_ai_integration": "Integracja AI",
+  "support_center_search_placeholder": "Wpisz słowo kluczowe",
+  "support_center_contact_us": "Jeśli nie możesz znaleźć odpowiedzi, skontaktuj się z naszym centrum obsługi.",
+  "support_center_ask_question": "Zadaj pytanie"
 }

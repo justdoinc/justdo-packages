@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Támogatás"
+  "support_center_title": "Támogatás",
+  "support_center_h1_html": "<b>JustDo Támogatás</b>&nbsp;Hogyan segíthetünk?",
+  "support_center_category_web_version": "Webes verzió",
+  "support_center_category_app_version": "Alkalmazás verzió",
+  "support_center_category_plugins": "Bővítmények",
+  "support_center_category_advanced": "Haladó",
+  "support_center_category_ai_integration": "AI integráció",
+  "support_center_search_placeholder": "Írjon be egy kulcsszót",
+  "support_center_contact_us": "Ha nem találja a választ, kérjük, lépjen kapcsolatba ügyfélszolgálatunkkal.",
+  "support_center_ask_question": "Kérdés feltevése"
 }

@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Dəstək"
+  "support_center_title": "Dəstək",
+  "support_center_h1_html": "<b>JustDo Dəstək</b>&nbsp;Sizə necə kömək edə bilərik?",
+  "support_center_category_web_version": "Veb Versiya",
+  "support_center_category_app_version": "Tətbiq Versiyası",
+  "support_center_category_plugins": "Plaginlər",
+  "support_center_category_advanced": "Qabaqcıl",
+  "support_center_category_ai_integration": "AI İnteqrasiyası",
+  "support_center_search_placeholder": "Açar söz daxil edin",
+  "support_center_contact_us": "Cavab tapa bilmirsinizsə, xahiş edirik xidmət mərkəzimizlə əlaqə saxlayın.",
+  "support_center_ask_question": "Sual verin"
 }

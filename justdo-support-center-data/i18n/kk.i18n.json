@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Қолдау көрсету"
+  "support_center_title": "Қолдау көрсету",
+  "support_center_h1_html": "<b>JustDo Қолдау қызметі</b>&nbsp;Сізге қалай көмектесе аламыз?",
+  "support_center_category_web_version": "Веб нұсқасы",
+  "support_center_category_app_version": "Қосымша нұсқасы",
+  "support_center_category_plugins": "Плагиндер",
+  "support_center_category_advanced": "Кеңейтілген",
+  "support_center_category_ai_integration": "AI интеграциясы",
+  "support_center_search_placeholder": "Кілт сөзді енгізіңіз",
+  "support_center_contact_us": "Егер жауапты таба алмасаңыз, біздің қызмет орталығына хабарласыңыз.",
+  "support_center_ask_question": "Сұрақ қою"
 }

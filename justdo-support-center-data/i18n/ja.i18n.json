@@ -1,3 +1,12 @@
 {
-  "support_center_title": "サポート"
+  "support_center_title": "サポート",
+  "support_center_h1_html": "<b>JustDo サポート</b>&nbsp;どのようなご用件でしょうか?",
+  "support_center_category_web_version": "Web版",
+  "support_center_category_app_version": "アプリ版",
+  "support_center_category_plugins": "プラグイン",
+  "support_center_category_advanced": "上級者向け",
+  "support_center_category_ai_integration": "AI連携",
+  "support_center_search_placeholder": "キーワードを入力",
+  "support_center_contact_us": "お探しの回答が見つからない場合は、サポートセンターまでお問い合わせください。",
+  "support_center_ask_question": "質問する"
 }

@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Падтрымка"
+  "support_center_title": "Падтрымка",
+  "support_center_h1_html": "<b>Падтрымка JustDo</b>&nbsp;Як мы можам вам дапамагчы?",
+  "support_center_category_web_version": "Вэб-версія",
+  "support_center_category_app_version": "Версія прыкладання",
+  "support_center_category_plugins": "Плагіны",
+  "support_center_category_advanced": "Пашыраныя",
+  "support_center_category_ai_integration": "Інтэграція AI",
+  "support_center_search_placeholder": "Увядзіце ключавое слова",
+  "support_center_contact_us": "Калі вы не можаце знайсці адказ, калі ласка, звярніцеся ў наш сэрвісны цэнтр.",
+  "support_center_ask_question": "Задаць пытанне"
 }

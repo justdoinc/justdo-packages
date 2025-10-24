@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Pagalba"
+  "support_center_title": "Pagalba",
+  "support_center_h1_html": "<b>JustDo pagalba</b>&nbsp;Kaip galime jums padėti?",
+  "support_center_category_web_version": "Internetinė versija",
+  "support_center_category_app_version": "Programėlės versija",
+  "support_center_category_plugins": "Įskiepiai",
+  "support_center_category_advanced": "Išplėstiniai",
+  "support_center_category_ai_integration": "AI integracija",
+  "support_center_search_placeholder": "Įveskite raktažodį",
+  "support_center_contact_us": "Jei nerandate atsakymo, susisiekite su mūsų aptarnavimo centru.",
+  "support_center_ask_question": "Užduoti klausimą"
 }

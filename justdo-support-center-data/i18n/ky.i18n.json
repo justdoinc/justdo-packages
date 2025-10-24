@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Колдоо"
+  "support_center_title": "Колдоо",
+  "support_center_h1_html": "<b>JustDo Колдоо</b>&nbsp;Сизге кантип жардам бере алабыз?",
+  "support_center_category_web_version": "Веб версия",
+  "support_center_category_app_version": "Тиркеме версиясы",
+  "support_center_category_plugins": "Плагиндер",
+  "support_center_category_advanced": "Өркүндөтүлгөн",
+  "support_center_category_ai_integration": "AI интеграциясы",
+  "support_center_search_placeholder": "Ачкыч сөздү киргизиңiz",
+  "support_center_contact_us": "Эгер жоопту таба албасаңыз, биздин тейлөө борборубузга кайрылыңыз.",
+  "support_center_ask_question": "Суроо берүү"
 }

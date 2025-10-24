@@ -1,3 +1,12 @@
 {
-  "support_center_title": "支持中心"
+  "support_center_title": "支持中心",
+  "support_center_h1_html": "<b>JustDo 支持</b>&nbsp;我们能帮您什么?",
+  "support_center_category_web_version": "网页版",
+  "support_center_category_app_version": "应用版",
+  "support_center_category_plugins": "插件",
+  "support_center_category_advanced": "高级功能",
+  "support_center_category_ai_integration": "AI 集成",
+  "support_center_search_placeholder": "输入关键词",
+  "support_center_contact_us": "如果您找不到答案,请联系我们的客服中心。",
+  "support_center_ask_question": "提问"
 }

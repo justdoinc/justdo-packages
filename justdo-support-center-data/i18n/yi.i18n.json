@@ -1,3 +1,12 @@
 {
-  "support_center_title": "שטיצן צענטער"
+  "support_center_title": "שטיצן צענטער",
+  "support_center_h1_html": "<b>JustDo שטיצע</b>&nbsp;ווי קענען מיר אייך העלפֿן?",
+  "support_center_category_web_version": "וועב ווערסיע",
+  "support_center_category_app_version": "אַפּ ווערסיע",
+  "support_center_category_plugins": "פּלוגינס",
+  "support_center_category_advanced": "פֿאָרגעשריטן",
+  "support_center_category_ai_integration": "AI אינטעגראַציע",
+  "support_center_search_placeholder": "אַרײַנגעבן אַ שטיכוואָרט",
+  "support_center_contact_us": "אויב איר קענט נישט געפֿינען דעם ענטפֿער, ביטע קאָנטאַקטירט אונדזער סערוויס צענטער.",
+  "support_center_ask_question": "פֿרעגן אַ קשיא"
 }

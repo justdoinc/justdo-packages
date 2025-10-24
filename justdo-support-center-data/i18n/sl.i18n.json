@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Podpora"
+  "support_center_title": "Podpora",
+  "support_center_h1_html": "<b>Podpora JustDo</b>&nbsp;Kako vam lahko pomagamo?",
+  "support_center_category_web_version": "Spletna različica",
+  "support_center_category_app_version": "Aplikacija",
+  "support_center_category_plugins": "Vtičniki",
+  "support_center_category_advanced": "Napredno",
+  "support_center_category_ai_integration": "Integracija AI",
+  "support_center_search_placeholder": "Vnesite ključno besedo",
+  "support_center_contact_us": "Če ne najdete odgovora, prosimo kontaktirajte naš center za podporo.",
+  "support_center_ask_question": "Postavite vprašanje"
 }

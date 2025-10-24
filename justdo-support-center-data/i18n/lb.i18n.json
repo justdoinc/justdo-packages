@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Ënnerstëtzung"
+  "support_center_title": "Ënnerstëtzung",
+  "support_center_h1_html": "<b>JustDo Ënnerstëtzung</b>&nbsp;Wéi kënne mir Iech hëllefen?",
+  "support_center_category_web_version": "Web Versioun",
+  "support_center_category_app_version": "App Versioun",
+  "support_center_category_plugins": "Plugins",
+  "support_center_category_advanced": "Fortgeschratt",
+  "support_center_category_ai_integration": "AI Integratioun",
+  "support_center_search_placeholder": "Gitt e Stichwuert an",
+  "support_center_contact_us": "Wann Dir d'Äntwert net fannt, kontaktéiert w.e.g. eise Service Center.",
+  "support_center_ask_question": "Stellt eng Fro"
 }

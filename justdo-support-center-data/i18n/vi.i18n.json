@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Hỗ trợ"
+  "support_center_title": "Hỗ trợ",
+  "support_center_h1_html": "<b>Hỗ trợ JustDo</b>&nbsp;Chúng tôi có thể giúp gì cho bạn?",
+  "support_center_category_web_version": "Phiên bản Web",
+  "support_center_category_app_version": "Phiên bản App",
+  "support_center_category_plugins": "Plugins",
+  "support_center_category_advanced": "Nâng cao",
+  "support_center_category_ai_integration": "Tích hợp AI",
+  "support_center_search_placeholder": "Nhập từ khóa",
+  "support_center_contact_us": "Nếu bạn không tìm thấy câu trả lời, vui lòng liên hệ trung tâm dịch vụ của chúng tôi.",
+  "support_center_ask_question": "Đặt câu hỏi"
 }

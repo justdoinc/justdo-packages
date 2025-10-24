@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Atbalsts"
+  "support_center_title": "Atbalsts",
+  "support_center_h1_html": "<b>JustDo atbalsts</b>&nbsp;Kā mēs varam jums palīdzēt?",
+  "support_center_category_web_version": "Tīmekļa versija",
+  "support_center_category_app_version": "Lietotnes versija",
+  "support_center_category_plugins": "Spraudņi",
+  "support_center_category_advanced": "Papildu",
+  "support_center_category_ai_integration": "MI integrācija",
+  "support_center_search_placeholder": "Ievadiet atslēgvārdu",
+  "support_center_contact_us": "Ja nevarat atrast atbildi, lūdzu, sazinieties ar mūsu pakalpojumu centru.",
+  "support_center_ask_question": "Uzdot jautājumu"
 }

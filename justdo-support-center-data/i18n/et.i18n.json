@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Tugi"
+  "support_center_title": "Tugi",
+  "support_center_h1_html": "<b>JustDo tugi</b>&nbsp;Kuidas saame teid aidata?",
+  "support_center_category_web_version": "Veebiversioon",
+  "support_center_category_app_version": "Rakenduse versioon",
+  "support_center_category_plugins": "Pistikprogrammid (Plugins)",
+  "support_center_category_advanced": "Täpsemalt",
+  "support_center_category_ai_integration": "AI integratsioon",
+  "support_center_search_placeholder": "Sisestage märksõna",
+  "support_center_contact_us": "Kui te ei leia vastust, võtke palun ühendust meie teeninduskeskusega.",
+  "support_center_ask_question": "Esitage küsimus"
 }

@@ -1,3 +1,12 @@
 {
-  "support_center_title": "सहायता (सपोर्ट)"
+  "support_center_title": "सहायता (सपोर्ट)",
+  "support_center_h1_html": "<b>JustDo सहायता</b>&nbsp;हम आपकी कैसे मदद कर सकते हैं?",
+  "support_center_category_web_version": "वेब संस्करण (Web Version)",
+  "support_center_category_app_version": "ऐप संस्करण (App Version)",
+  "support_center_category_plugins": "प्लगइन्स (Plugins)",
+  "support_center_category_advanced": "उन्नत (Advanced)",
+  "support_center_category_ai_integration": "AI एकीकरण (AI Integration)",
+  "support_center_search_placeholder": "कीवर्ड दर्ज करें",
+  "support_center_contact_us": "यदि आपको उत्तर नहीं मिलता है, तो कृपया हमारे सेवा केंद्र से संपर्क करें।",
+  "support_center_ask_question": "प्रश्न पूछें"
 }

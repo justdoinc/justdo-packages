@@ -1,3 +1,12 @@
 {
-  "support_center_title": "תמיכה"
+  "support_center_title": "תמיכה",
+  "support_center_h1_html": "<b>תמיכת JustDo</b>&nbsp;כיצד נוכל לעזור לך?",
+  "support_center_category_web_version": "גרסת אינטרנט",
+  "support_center_category_app_version": "גרסת אפליקציה",
+  "support_center_category_plugins": "תוספים",
+  "support_center_category_advanced": "מתקדם",
+  "support_center_category_ai_integration": "אינטגרציות בינה מלאכותית",
+  "support_center_search_placeholder": "הזן מילת חיפוש",
+  "support_center_contact_us": "אם אינך מוצא את התשובה, אנא פנה למרכז השירות שלנו.",
+  "support_center_ask_question": "שאל שאלה"
 }

@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Υποστήριξη"
+  "support_center_title": "Υποστήριξη",
+  "support_center_h1_html": "<b>Υποστήριξη JustDo</b>&nbsp;Πώς μπορούμε να σας βοηθήσουμε;",
+  "support_center_category_web_version": "Έκδοση Web",
+  "support_center_category_app_version": "Έκδοση Εφαρμογής",
+  "support_center_category_plugins": "Πρόσθετα (Plugins)",
+  "support_center_category_advanced": "Προχωρημένα",
+  "support_center_category_ai_integration": "Ενσωμάτωση AI",
+  "support_center_search_placeholder": "Εισάγετε μια λέξη-κλειδί",
+  "support_center_contact_us": "Εάν δεν μπορείτε να βρείτε την απάντηση, παρακαλούμε επικοινωνήστε με το κέντρο εξυπηρέτησής μας.",
+  "support_center_ask_question": "Κάντε μια ερώτηση"
 }

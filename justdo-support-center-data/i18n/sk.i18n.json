@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Podpora"
+  "support_center_title": "Podpora",
+  "support_center_h1_html": "<b>Podpora JustDo</b>&nbsp;Ako vám môžeme pomôcť?",
+  "support_center_category_web_version": "Webová verzia",
+  "support_center_category_app_version": "Aplikačná verzia",
+  "support_center_category_plugins": "Pluginy",
+  "support_center_category_advanced": "Pokročilé",
+  "support_center_category_ai_integration": "Integrácia AI",
+  "support_center_search_placeholder": "Zadajte kľúčové slovo",
+  "support_center_contact_us": "Ak nemôžete nájsť odpoveď, kontaktujte prosím naše centrum podpory.",
+  "support_center_ask_question": "Položiť otázku"
 }

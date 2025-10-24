@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Asistență"
+  "support_center_title": "Asistență",
+  "support_center_h1_html": "<b>Asistență JustDo</b>&nbsp;Cum vă putem ajuta?",
+  "support_center_category_web_version": "Versiune Web",
+  "support_center_category_app_version": "Versiune Aplicație",
+  "support_center_category_plugins": "Plugin-uri",
+  "support_center_category_advanced": "Avansat",
+  "support_center_category_ai_integration": "Integrare AI",
+  "support_center_search_placeholder": "Introduceți un cuvânt cheie",
+  "support_center_contact_us": "Dacă nu găsiți răspunsul, vă rugăm să contactați centrul nostru de servicii.",
+  "support_center_ask_question": "Adresați o întrebare"
 }

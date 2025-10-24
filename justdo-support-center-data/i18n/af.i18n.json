@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Ondersteuning"
+  "support_center_title": "Ondersteuning",
+  "support_center_h1_html": "<b>JustDo Ondersteuning</b>&nbsp;Hoe kan ons jou help?",
+  "support_center_category_web_version": "Webweergawe",
+  "support_center_category_app_version": "Toepweergawe",
+  "support_center_category_plugins": "Inproppe",
+  "support_center_category_advanced": "Gevorderd",
+  "support_center_category_ai_integration": "KI-integrasie",
+  "support_center_search_placeholder": "Voer 'n sleutelwoord in",
+  "support_center_contact_us": "As jy nie die antwoord kan vind nie, kontak asseblief ons dienssentrum.",
+  "support_center_ask_question": "Vra 'n vraag"
 }

@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Mbështetje"
+  "support_center_title": "Mbështetje",
+  "support_center_h1_html": "<b>Mbështetja e JustDo</b>&nbsp;Si mund t'ju ndihmojmë?",
+  "support_center_category_web_version": "Versioni Web",
+  "support_center_category_app_version": "Versioni i Aplikacionit",
+  "support_center_category_plugins": "Shtojca (Plugins)",
+  "support_center_category_advanced": "Të Avancuara",
+  "support_center_category_ai_integration": "Integrimi i AI",
+  "support_center_search_placeholder": "Vendosni një fjalë kyçe",
+  "support_center_contact_us": "Nëse nuk mund ta gjeni përgjigjen, ju lutemi kontaktoni qendrën tonë të shërbimit.",
+  "support_center_ask_question": "Bëni një pyetje"
 }

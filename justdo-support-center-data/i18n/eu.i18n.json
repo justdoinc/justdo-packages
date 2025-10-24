@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Laguntza"
+  "support_center_title": "Laguntza",
+  "support_center_h1_html": "<b>JustDo Laguntza</b>&nbsp;Nola lagun dezakegu?",
+  "support_center_category_web_version": "Web Bertsioa",
+  "support_center_category_app_version": "Aplikazio Bertsioa",
+  "support_center_category_plugins": "Pluginak",
+  "support_center_category_advanced": "Aurreratua",
+  "support_center_category_ai_integration": "AI Integrazioa",
+  "support_center_search_placeholder": "Sartu gako-hitz bat",
+  "support_center_contact_us": "Erantzuna aurkitzen ez baduzu, jarri gure zerbitzu zentroarekin harremanetan.",
+  "support_center_ask_question": "Egin galdera bat"
 }

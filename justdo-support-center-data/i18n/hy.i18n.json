@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Աջակցություն"
+  "support_center_title": "Աջակցություն",
+  "support_center_h1_html": "<b>JustDo Աջակցություն</b>&nbsp;Ինչպե՞ս կարող ենք օգնել ձեզ:",
+  "support_center_category_web_version": "Վեբ տարբերակ",
+  "support_center_category_app_version": "Հավելվածի տարբերակ",
+  "support_center_category_plugins": "Պլագիններ (Plugins)",
+  "support_center_category_advanced": "Առաջադեմ",
+  "support_center_category_ai_integration": "AI ինտեգրում",
+  "support_center_search_placeholder": "Մուտքագրեք հիմնաբառ",
+  "support_center_contact_us": "Եթե չեք կարող գտնել պատասխանը, խնդրում ենք կապվել մեր սպասարկման կենտրոնի հետ:",
+  "support_center_ask_question": "Տալ հարց"
 }

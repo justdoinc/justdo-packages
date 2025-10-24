@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Support"
+  "support_center_title": "Support",
+  "support_center_h1_html": "<b>JustDo Support</b>&nbsp;Hur kan vi hjälpa dig?",
+  "support_center_category_web_version": "Webbversion",
+  "support_center_category_app_version": "Appversion",
+  "support_center_category_plugins": "Plugins",
+  "support_center_category_advanced": "Avancerat",
+  "support_center_category_ai_integration": "AI-integration",
+  "support_center_search_placeholder": "Ange ett sökord",
+  "support_center_contact_us": "Om du inte kan hitta svaret, vänligen kontakta vår kundservice.",
+  "support_center_ask_question": "Ställ en fråga"
 }

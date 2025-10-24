@@ -1,3 +1,12 @@
 {
-  "support_center_title": "ศูนย์ช่วยเหลือ"
+  "support_center_title": "ศูนย์ช่วยเหลือ",
+  "support_center_h1_html": "<b>ฝ่ายสนับสนุน JustDo</b>&nbsp;เราจะช่วยคุณได้อย่างไร?",
+  "support_center_category_web_version": "เว็บเวอร์ชัน",
+  "support_center_category_app_version": "แอปเวอร์ชัน",
+  "support_center_category_plugins": "ปลั๊กอิน (Plugins)",
+  "support_center_category_advanced": "ขั้นสูง",
+  "support_center_category_ai_integration": "การรวม AI",
+  "support_center_search_placeholder": "ป้อนคำค้นหา",
+  "support_center_contact_us": "หากคุณไม่พบคำตอบ โปรดติดต่อศูนย์บริการของเรา",
+  "support_center_ask_question": "ถามคำถาม"
 }

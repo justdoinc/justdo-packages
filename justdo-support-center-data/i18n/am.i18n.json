@@ -1,3 +1,12 @@
 {
-  "support_center_title": "ድጋፍ"
+  "support_center_title": "ድጋፍ",
+  "support_center_h1_html": "<b>የJustDo ድጋፍ</b>&nbsp;እንዴት ልንረዳዎ እንችላለን?",
+  "support_center_category_web_version": "የድር ስሪት (Web Version)",
+  "support_center_category_app_version": "የመተግበሪያ ስሪት (App Version)",
+  "support_center_category_plugins": "ተጨማሪ ፕሮግራሞች (Plugins)",
+  "support_center_category_advanced": "ከፍተኛ ደረጃ",
+  "support_center_category_ai_integration": "የ AI ውህደት (AI Integration)",
+  "support_center_search_placeholder": "ቁልፍ ቃል ያስገቡ",
+  "support_center_contact_us": "መልሱን ካላገኙ እባክዎን የአገልግሎት ማዕከላችንን ያነጋግሩ።",
+  "support_center_ask_question": "ጥያቄ ይጠይቁ"
 }

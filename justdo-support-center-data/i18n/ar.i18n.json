@@ -1,3 +1,12 @@
 {
-  "support_center_title": "الدعم"
+  "support_center_title": "الدعم",
+  "support_center_h1_html": "<b>دعم JustDo</b>&nbsp;كيف يمكننا مساعدتك؟",
+  "support_center_category_web_version": "النسخة الإلكترونية",
+  "support_center_category_app_version": "نسخة التطبيق",
+  "support_center_category_plugins": "الإضافات",
+  "support_center_category_advanced": "متقدم",
+  "support_center_category_ai_integration": "تكامل الذكاء الاصطناعي",
+  "support_center_search_placeholder": "أدخل كلمة مفتاحية",
+  "support_center_contact_us": "إذا لم تتمكن من إيجاد الإجابة، يرجى التواصل مع مركز خدماتنا.",
+  "support_center_ask_question": "اطرح سؤالاً"
 }

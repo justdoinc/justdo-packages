@@ -1,3 +1,12 @@
 {
-  "support_center_title": "সহায়তা কেন্দ্র"
+  "support_center_title": "সহায়তা কেন্দ্র",
+  "support_center_h1_html": "<b>JustDo সহায়তা</b>&nbsp;আমরা আপনাকে কীভাবে সাহায্য করতে পারি?",
+  "support_center_category_web_version": "ওয়েব সংস্করণ",
+  "support_center_category_app_version": "অ্যাপ সংস্করণ",
+  "support_center_category_plugins": "প্লাগইন",
+  "support_center_category_advanced": "উন্নত",
+  "support_center_category_ai_integration": "AI ইন্টিগ্রেশন",
+  "support_center_search_placeholder": "একটি কীওয়ার্ড লিখুন",
+  "support_center_contact_us": "আপনি যদি উত্তর খুঁজে না পান, অনুগ্রহ করে আমাদের সেবা কেন্দ্রে যোগাযোগ করুন।",
+  "support_center_ask_question": "একটি প্রশ্ন করুন"
 }

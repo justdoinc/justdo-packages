@@ -1,3 +1,12 @@
 {
-  "support_center_title": "Tuki"
+  "support_center_title": "Tuki",
+  "support_center_h1_html": "<b>JustDo-tuki</b>&nbsp;Kuinka voimme auttaa sinua?",
+  "support_center_category_web_version": "Verkkoversio",
+  "support_center_category_app_version": "Sovellusversio",
+  "support_center_category_plugins": "Lisäosat",
+  "support_center_category_advanced": "Edistynyt",
+  "support_center_category_ai_integration": "Tekoälyintegraatio",
+  "support_center_search_placeholder": "Syötä hakusana",
+  "support_center_contact_us": "Jos et löydä vastausta, ota yhteyttä asiakaspalveluumme.",
+  "support_center_ask_question": "Esitä kysymys"
 }
