@@ -1,0 +1,4 @@
+{
+  "migrate_monday_to_justdo_page_title": "Migrer de Monday.com vers JustDo",
+  "migrate_monday_to_justdo_page_description": "Importer des données de Monday.com vers JustDo est simple. Mappez espaces de travail, tableaux et permissions vers la hiérarchie multi-niveaux de JustDo. Inclut mapping de champs, contrôle d'accès et déploiement air-gapped."
+}
