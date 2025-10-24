@@ -38,7 +38,7 @@
       </div>
 
       {{#with getActiveNewsTemplate}}
-        <h1>{{h1}}</h1>
+        <h1>{{_ h1}}</h1>
         <div class="date">{{template_data.date}}</div>
         <br>
         {{> Template.dynamic template=template_name data=template_data}}
