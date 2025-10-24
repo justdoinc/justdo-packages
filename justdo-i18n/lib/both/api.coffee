@@ -127,6 +127,19 @@ _.extend JustdoI18n.prototype,
     @force_ltr_routes_dep.changed()
     
     return
+  
+  removeForceLtrForRoute: (route_name) ->
+    if Meteor.isServer
+      return
+      
+    if (not _.isString route_name) or _.isEmpty route_name
+      @logger.error "removeForceLtrForRoute: route_name must be a non-empty string. Received #{route_name}"
+      return
+    
+    @force_ltr_routes.delete route_name
+    @force_ltr_routes_dep.changed()
+    
+    return
 
   isLangRtl: (lang) ->
     if @disable_rtl_support_rv.get()
