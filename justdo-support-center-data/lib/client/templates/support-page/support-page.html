@@ -9,8 +9,8 @@
 
         <div class="support-input-container">
           <div class="support-input-wrapper">
-            <input class="support-input form-control form-control-md" type="text" placeholder="Enter a keyword">
-            <div class="support-input-search-btn text-primary">Search</div>
+            <input class="support-input form-control form-control-md" type="text" placeholder="{{_ "support_center_search_placeholder"}}">
+            <div class="support-input-search-btn text-primary">{{_ "search"}}</div>
           </div>
         </div>
 
@@ -27,8 +27,8 @@
       {{/if}}
 
       <div class="support-contact-container">
-        If you can not find the answer, please contact our service center.
-        <a href="/contact" class="btn btn-primary btn-md" >Ask a question</a>
+        {{_ "support_center_contact_us"}}
+        <a href="/contact" class="btn btn-primary btn-md" >{{_ "support_center_ask_question"}}</a>
       </div>
 
     </div>

@@ -5,5 +5,8 @@
   "support_center_category_app_version": "App Version",
   "support_center_category_plugins": "Plugins",
   "support_center_category_advanced": "Advanced",
-  "support_center_category_ai_integration": "AI Integration"
+  "support_center_category_ai_integration": "AI Integration",
+  "support_center_search_placeholder": "Enter a keyword",
+  "support_center_contact_us": "If you can not find the answer, please contact our service center.",
+  "support_center_ask_question": "Ask a question"
 }
