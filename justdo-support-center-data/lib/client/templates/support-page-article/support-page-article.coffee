@@ -137,6 +137,9 @@ Template.support_page_article.helpers
 
     return active_tag
 
+  currentRouteName: ->
+    return APP.justdo_i18n_routes.getCurrentRouteName()
+
 Template.support_page_article.events
   "click .dropdown-item": (e, tpl) ->
     news_id = $(e.target).closest(".dropdown-item").data("news_id")
