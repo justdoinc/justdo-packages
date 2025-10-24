@@ -1,64 +1,64 @@
 <template name="support_article_migrate_from_monday_to_justdo">
   <div class="migration-guide">
     <p class="intro">
-      Ready to transition from Monday.com to JustDo? This guide shows how your Monday.com data and access controls map cleanly to JustDo's enterprise platform, and how the shift unlocks a clearer, organization-wide view.
+      {{_ "migrate_monday_intro"}}
     </p>
     
     <p>
-      With JustDo's multi-level structure, related work lives in one place, so leadership gets a true portfolio picture, teams see cross-functional dependencies, and improvements surface faster.
+      {{_ "migrate_monday_multi_level"}}
     </p>
     
     <p>
-      Once you're migrated, that unified view turns into momentum: smarter prioritization, cleaner handoffs, and easier scaling across projects and departments.
+      {{_ "migrate_monday_unified_view"}}
     </p>
     
     <p>
-      JustDo also supports <strong>fully air-gapped deployment</strong>. If you need to isolate critical data and workflows from the public internet, you can run JustDo in an environment you control - on-premises or in a private cloud - with strict network boundaries. This gives you audited access, fine-grained permissions, and the ability to enforce your own security, compliance, and data-retention policies. Further, for full transparency, the source code is available for your audit, and full assurance of business continuity.
+      {{{_ "migrate_monday_air_gapped"}}}
     </p>
     <br>
-    <h2>Understanding the Migration</h2>
+    <h2>{{_ "migrate_monday_understanding_title"}}</h2>
     <p>
-      JustDo provides a secure, straightforward transition path for enterprise teams. Your organizational structure, project data, and fine-grained access controls translate naturally into JustDo's flexible and powerful system.
+      {{_ "migrate_monday_understanding_desc"}}
     </p>
     <br>
-    <h3>How Monday.com Maps to JustDo</h3>
+    <h3>{{_ "migrate_monday_mapping_title"}}</h3>
     <br>
 
-    <h5>Hierarchy Structure</h5>
-    <p>Your Monday.com structure maps to JustDo as follows:</p>
+    <h5>{{_ "migrate_monday_hierarchy_title"}}</h5>
+    <p>{{_ "migrate_monday_hierarchy_desc"}}</p>
 
     <table class="mapping-table">
       <thead>
         <tr>
-          <th>Monday.com</th>
-          <th>JustDo Equivalent</th>
-          <th>Description</th>
+          <th>{{_ "migrate_monday_table_header_monday"}}</th>
+          <th>{{_ "migrate_monday_table_header_justdo"}}</th>
+          <th>{{_ "migrate_monday_table_header_description"}}</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><strong>Workspace</strong></td>
-          <td><strong>JustDo Board</strong></td>
-          <td>Top-level container</td>
+          <td><strong>{{_ "migrate_monday_workspace"}}</strong></td>
+          <td><strong>{{_ "migrate_monday_workspace_equiv"}}</strong></td>
+          <td>{{_ "migrate_monday_workspace_desc"}}</td>
         </tr>
         <tr>
-          <td><strong>Folder</strong></td>
-          <td><strong>Department/Folder (Projects Collection)</strong></td>
-          <td>On Monday these groups related boards together. JustDo's multi-level hierarchy allows it to hold all in a single JustDo board for an easy bird-eye org view.</td>
+          <td><strong>{{_ "migrate_monday_folder"}}</strong></td>
+          <td><strong>{{_ "migrate_monday_folder_equiv"}}</strong></td>
+          <td>{{_ "migrate_monday_folder_desc"}}</td>
         </tr>
         <tr>
-          <td><strong>Board</strong></td>
-          <td><strong>Project</strong></td>
-          <td>On Monday typically represents a project, a workflow, a client list, etc. On JustDo you see all the projects in one bird-eye view.</td>
+          <td><strong>{{_ "migrate_monday_board"}}</strong></td>
+          <td><strong>{{_ "migrate_monday_board_equiv"}}</strong></td>
+          <td>{{_ "migrate_monday_board_desc"}}</td>
         </tr>
         <tr>
-          <td><strong>Group</strong></td>
-          <td><strong>State field</strong></td>
-          <td>JustDo supports assigning multiple Groups per task - to help accommodate multiple workflows that are affecting the same task in a project<sup>1</sup></td>
+          <td><strong>{{_ "migrate_monday_group"}}</strong></td>
+          <td><strong>{{_ "migrate_monday_group_equiv"}}</strong></td>
+          <td>{{{_ "migrate_monday_group_desc"}}}</td>
         </tr>
         <tr>
-          <td><strong>Items</strong></td>
-          <td><strong>Tasks</strong></td>
+          <td><strong>{{_ "migrate_monday_items"}}</strong></td>
+          <td><strong>{{_ "migrate_monday_items_equiv"}}</strong></td>
           <td></td>
         </tr>
       </tbody>
@@ -67,220 +67,220 @@
     <img src="/packages/justdoinc_justdo-support-center-data/lib/both/support-articles/migrate-from-monday-to-justdo/assets/monday-justdo-hierarchy.png" alt="Monday.com to JustDo Hierarchy" class="img-fluid">
 
     <p class="note">
-      <sup>1</sup> <strong>Example:</strong> In Monday, a board might use one <strong>Group</strong> for the development lifecycle (e.g., <em>Pending → In Progress → QA → Done</em>). In JustDo, you can keep that <strong>and</strong> add an extra Group track - for example, <em>Invoicing</em>, <em>Announcement Prep</em>, or <em>Documentation</em> - so the same task can move through development <strong>and</strong> business processes in parallel.
+      {{{_ "migrate_monday_group_note"}}}
     </p>
 
     <p>
-      <strong>Example:</strong> Your Monday.com structure of <code>Workspace → Folder → Board → Group → Items</code> becomes <code>JustDo Board → Folder → Board → Project → Tasks</code> in JustDo.
+      {{{_ "migrate_monday_example_structure"}}}
     </p>
 
     <br>
-    <h5>Field Type Mapping</h5>
+    <h5>{{_ "migrate_monday_field_mapping_title"}}</h5>
     <p>
-      JustDo maintains compatibility with Monday's fields.
+      {{_ "migrate_monday_field_mapping_desc"}}
     </p>
 
     <img src="/packages/justdoinc_justdo-support-center-data/lib/both/support-articles/migrate-from-monday-to-justdo/assets/monday-justdo-field-mapping.png" alt="Monday.com to JustDo Field Mapping" class="img-fluid">
     <br>
     <br>
     <p>
-      Below, each item maps a Monday field to its JustDo equivalent, followed by notes and added capabilities in parentheses.
+      {{_ "migrate_monday_field_mapping_details"}}
     </p>
 
     <details>
-      <summary><strong>View detailed field mappings</strong></summary>
-      <h6>Data fields</h6>
+      <summary><strong>{{_ "migrate_monday_view_details"}}</strong></summary>
+      <h6>{{_ "migrate_monday_data_fields"}}</h6>
       <ul>
-        <li><strong>Timeline</strong> → Start Date, End Date, Due Date (with full Gantt view support)</li>
-        <li><strong>Dependency</strong> → Dependencies (supports FS, SS, FF, SF relationships with lag/lead)</li>
-        <li><strong>Time tracking</strong> → Time Tracker Plugin (logs time spent per task member with detailed reporting)</li>
-        <li><strong>Files</strong> → Files (enterprise-grade storage, locally, air-gapped, encrypted-in-rest, stored, or in the cloud)</li>
+        <li>{{{_ "migrate_monday_timeline"}}}</li>
+        <li>{{{_ "migrate_monday_dependency"}}}</li>
+        <li>{{{_ "migrate_monday_time_tracking"}}}</li>
+        <li>{{{_ "migrate_monday_files"}}}</li>
       </ul>
 
-      <h6>Core fields</h6>
+      <h6>{{_ "migrate_monday_core_fields"}}</h6>
       <ul>
-        <li><strong>Name</strong> → Title</li>
-        <li><strong>People</strong> → Users/Owner (each task gets an assigned owner, and always have an owner)</li>
-        <li><strong>Status</strong> → State (with customizable labels and colors)</li>
-        <li><strong>Monday Doc</strong> → Description (rich text WYSIWYG editor with file support)</li>
-        <li><strong>Long Text</strong> → Text/Description field</li>
+        <li>{{{_ "migrate_monday_name"}}}</li>
+        <li>{{{_ "migrate_monday_people"}}}</li>
+        <li>{{{_ "migrate_monday_status"}}}</li>
+        <li>{{{_ "migrate_monday_doc"}}}</li>
+        <li>{{{_ "migrate_monday_long_text"}}}</li>
       </ul>
 
-      <h6>Other fields</h6>
+      <h6>{{_ "migrate_monday_other_fields"}}</h6>
       <ul>
-        <li><strong>Date</strong> → Date field</li>
-        <li><strong>Dropdown</strong> → Options field</li>
-        <li><strong>Tags</strong> → Immutable Tags field/Mutable Multi Options field</li>
-        <li><strong>Formula</strong> → Formula field (supports mathematical expressions)</li>
-        <li><strong>Text</strong> → Text field</li>
-        <li><strong>Link</strong> → Text field</li>
-        <li><strong>Email</strong> → Text field</li>
-        <li><strong>Location</strong> → Text field (with optional Maps integration)</li>
-        <li><strong>Numbers</strong> → Number field (with decimal/min/max support)</li>
-        <li><strong>Phone</strong> → Number field</li>
+        <li>{{{_ "migrate_monday_date"}}}</li>
+        <li>{{{_ "migrate_monday_dropdown"}}}</li>
+        <li>{{{_ "migrate_monday_tags"}}}</li>
+        <li>{{{_ "migrate_monday_formula"}}}</li>
+        <li>{{{_ "migrate_monday_text"}}}</li>
+        <li>{{{_ "migrate_monday_link"}}}</li>
+        <li>{{{_ "migrate_monday_email"}}}</li>
+        <li>{{{_ "migrate_monday_location"}}}</li>
+        <li>{{{_ "migrate_monday_numbers"}}}</li>
+        <li>{{{_ "migrate_monday_phone"}}}</li>
       </ul>
 
-      <h6>Alternative Solutions</h6>
-      <p>Right now, JustDo does not have a direct mapping for these fields:</p>
+      <h6>{{_ "migrate_monday_alt_solutions"}}</h6>
+      <p>{{_ "migrate_monday_no_mapping"}}</p>
       <ul>
-        <li><strong>Button</strong></li>
-        <li><strong>Vote</strong></li>
-        <li><strong>Mirror</strong></li>
-        <li><strong>World clock</strong></li>
+        <li><strong>{{_ "migrate_monday_button"}}</strong></li>
+        <li><strong>{{_ "migrate_monday_vote"}}</strong></li>
+        <li><strong>{{_ "migrate_monday_mirror"}}</strong></li>
+        <li><strong>{{_ "migrate_monday_world_clock"}}</strong></li>
       </ul>
-      <p>Tailored solutions can be arranged.</p>
+      <p>{{_ "migrate_monday_tailored"}}</p>
     </details>
     <br>
-    <h2>Migrating Users and Access Control</h2>
+    <h2>{{_ "migrate_monday_access_title"}}</h2>
     <p>
-      One of the most critical aspects of enterprise migration is preserving your access control and permission structures. JustDo offers enterprise-grade, fine-grained access control that maps effectively to Monday.com's permission system.
+      {{_ "migrate_monday_access_desc"}}
     </p>
 
-    <h5>Monday.com User Roles</h5>
-    <p>Monday.com provides the following user roles:</p>
+    <h5>{{_ "migrate_monday_roles_title"}}</h5>
+    <p>{{_ "migrate_monday_roles_desc"}}</p>
     <ul>
-      <li><strong>Admin:</strong> Full account access including user management, billing, and board creation</li>
-      <li><strong>Member:</strong> Standard access to boards and workspaces</li>
-      <li><strong>Viewer:</strong> Read-only access to boards</li>
-      <li><strong>Guest:</strong> Limited access, typically for external collaborators</li>
+      <li>{{{_ "migrate_monday_admin_role"}}}</li>
+      <li>{{{_ "migrate_monday_member_role"}}}</li>
+      <li>{{{_ "migrate_monday_viewer_role"}}}</li>
+      <li>{{{_ "migrate_monday_guest_role"}}}</li>
     </ul>
 
-    <h5>JustDo's Multi-Layered Access Control</h5>
-    <p>JustDo provides a more granular and flexible access control system with three levels:</p>
+    <h5>{{_ "migrate_monday_justdo_access_title"}}</h5>
+    <p>{{_ "migrate_monday_justdo_access_desc"}}</p>
 
-    <h6>1. Organization-Level Access</h6>
+    <h6>{{_ "migrate_monday_org_level"}}</h6>
     <ul>
-      <li><strong>Organization Admins:</strong> Manage organization settings, invite members, and create JustDos</li>
-      <li><strong>Organization Members:</strong> Able to be added as JustDo members.</li>
+      <li>{{{_ "migrate_monday_org_admins"}}}</li>
+      <li>{{{_ "migrate_monday_org_members"}}}</li>
     </ul>
 
-    <h6>2. Workspace-Level Access (JustDo Members)</h6>
+    <h6>{{_ "migrate_monday_workspace_level"}}</h6>
     <ul>
-      <li><strong>JustDo Admins:</strong> Enable/disable plugins, control access to JustDo, update the name of JustDo</li>
-      <li><strong>JustDo Members:</strong> Standard access to view and edit the tasks within the JustDo</li>
-      <li><strong>JustDo Guests:</strong> Limited access to the JustDo</li>
+      <li>{{{_ "migrate_monday_jd_admins"}}}</li>
+      <li>{{{_ "migrate_monday_jd_members"}}}</li>
+      <li>{{{_ "migrate_monday_jd_guests"}}}</li>
     </ul>
 
-    <h6>3. Task-Level Access (Task members, applicable also to Projects Collection and Projects)</h6>
+    <h6>{{_ "migrate_monday_task_level"}}</h6>
     <ul>
-      <li><strong>Task Owner:</strong> The primary person responsible for the task</li>
-      <li><strong>Task Members:</strong> Users assigned to specific tasks</li>
-      <li>Individual permissions can be configured per task or field</li>
+      <li>{{{_ "migrate_monday_task_owner"}}}</li>
+      <li>{{{_ "migrate_monday_task_members"}}}</li>
+      <li>{{_ "migrate_monday_task_permissions"}}</li>
     </ul>
 
-    <h5>Access Control Migration Strategy</h5>
-    <p>Here's how to map Monday.com roles to JustDo:</p>
+    <h5>{{_ "migrate_monday_strategy_title"}}</h5>
+    <p>{{_ "migrate_monday_strategy_desc"}}</p>
 
     <table class="mapping-table">
       <thead>
         <tr>
-          <th>Monday.com Role</th>
-          <th>JustDo Equivalent</th>
+          <th>{{_ "migrate_monday_table_header_monday"}} Role</th>
+          <th>{{_ "migrate_monday_table_header_justdo"}}</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Account Admin</td>
-          <td>Organization Admin</td>
+          <td>{{_ "migrate_monday_account_admin"}}</td>
+          <td>{{_ "migrate_monday_account_admin_equiv"}}</td>
         </tr>
         <tr>
-          <td>Workspace Admin</td>
-          <td>JustDo Admin</td>
+          <td>{{_ "migrate_monday_workspace_admin"}}</td>
+          <td>{{_ "migrate_monday_workspace_admin_equiv"}}</td>
         </tr>
         <tr>
-          <td>Board Admin</td>
-          <td>Projects Collection Owner</td>
+          <td>{{_ "migrate_monday_board_admin"}}</td>
+          <td>{{_ "migrate_monday_board_admin_equiv"}}</td>
         </tr>
         <tr>
-          <td>Member</td>
-          <td>JustDo/Task member</td>
+          <td>{{_ "migrate_monday_member"}}</td>
+          <td>{{_ "migrate_monday_member_equiv"}}</td>
         </tr>
         <tr>
-          <td>Viewer/Guest</td>
-          <td>JustDo Guest</td>
+          <td>{{_ "migrate_monday_viewer_guest"}}</td>
+          <td>{{_ "migrate_monday_viewer_guest_equiv"}}</td>
         </tr>
       </tbody>
     </table>
 
-    <h5>Permission Configuration</h5>
-    <p>JustDo's permission system allows you to configure access based on conditions:</p>
+    <h5>{{_ "migrate_monday_permission_title"}}</h5>
+    <p>{{_ "migrate_monday_permission_desc"}}</p>
     <ul>
-      <li><strong>All:</strong> Open access to all board members</li>
-      <li><strong>JustDo Admin:</strong> Only board administrators</li>
-      <li><strong>JustDo Member:</strong> All board members and administrators</li>
-      <li><strong>JustDo Guest:</strong> Guests, members, and administrators</li>
-      <li><strong>Task Owner:</strong> Only the task owner</li>
-      <li><strong>Task Member:</strong> All task members (including owner)</li>
-      <li><strong>Custom Users:</strong> Specific user list</li>
+      <li>{{{_ "migrate_monday_perm_all"}}}</li>
+      <li>{{{_ "migrate_monday_perm_jd_admin"}}}</li>
+      <li>{{{_ "migrate_monday_perm_jd_member"}}}</li>
+      <li>{{{_ "migrate_monday_perm_jd_guest"}}}</li>
+      <li>{{{_ "migrate_monday_perm_task_owner"}}}</li>
+      <li>{{{_ "migrate_monday_perm_task_member"}}}</li>
+      <li>{{{_ "migrate_monday_perm_custom"}}}</li>
     </ul>
-    <p>This granular control ensures that sensitive data remains secure while enabling collaboration.</p>
+    <p>{{_ "migrate_monday_perm_granular"}}</p>
     <br>
-    <h2>What Gets Imported Automatically</h2>
-    <p>When you migrate from Monday.com to JustDo, we automatically bring over:</p>
+    <h2>{{_ "migrate_monday_import_title"}}</h2>
+    <p>{{_ "migrate_monday_import_desc"}}</p>
 
-    <h5>Core Data:</h5>
+    <h5>{{_ "migrate_monday_core_data_title"}}</h5>
     <ul>
-      <li>All items (tasks) with their hierarchical structure</li>
-      <li>Task assignees, owners, and members</li>
-      <li>Creation dates and last updated timestamps</li>
-      <li>Activity history</li>
-      <li>Task names, descriptions, and notes</li>
+      <li>{{_ "migrate_monday_core_data_items"}}</li>
+      <li>{{_ "migrate_monday_core_data_assignees"}}</li>
+      <li>{{_ "migrate_monday_core_data_dates"}}</li>
+      <li>{{_ "migrate_monday_core_data_history"}}</li>
+      <li>{{_ "migrate_monday_core_data_content"}}</li>
     </ul>
 
-    <h5>Fields and Custom Data:</h5>
+    <h5>{{_ "migrate_monday_fields_title"}}</h5>
     <ul>
-      <li>All supported custom fields</li>
-      <li>Status columns with labels and colors</li>
-      <li>Date and timeline fields</li>
-      <li>Dependency relationships</li>
-      <li>Formulas and calculated fields</li>
-      <li>Tags and dropdown selections</li>
-      <li>File attachments</li>
+      <li>{{_ "migrate_monday_fields_custom"}}</li>
+      <li>{{_ "migrate_monday_fields_status"}}</li>
+      <li>{{_ "migrate_monday_fields_date"}}</li>
+      <li>{{_ "migrate_monday_fields_deps"}}</li>
+      <li>{{_ "migrate_monday_fields_formulas"}}</li>
+      <li>{{_ "migrate_monday_fields_tags"}}</li>
+      <li>{{_ "migrate_monday_fields_files"}}</li>
     </ul>
 
-    <h5>User Assignments:</h5>
+    <h5>{{_ "migrate_monday_user_assignments_title"}}</h5>
     <ul>
-      <li>Task ownership assignments</li>
-      <li>Task member assignments</li>
-      <li>Board member lists (to be configured as JustDo members)</li>
+      <li>{{_ "migrate_monday_user_ownership"}}</li>
+      <li>{{_ "migrate_monday_user_members"}}</li>
+      <li>{{_ "migrate_monday_user_board"}}</li>
     </ul>
     <br>
-    <h2>Migration Process</h2>
-    <p>The migration is fully automated and requires minimal effort from your team:</p>
+    <h2>{{_ "migrate_monday_process_title"}}</h2>
+    <p>{{_ "migrate_monday_process_desc"}}</p>
     <ol>
-      <li><strong>Provide Access:</strong> Simply provide your Monday.com API key to our migration team</li>
-      <li><strong>We Handle the Rest:</strong> Our automated migration tool securely transfers all your data</li>
-      <li><strong>Validation:</strong> We verify all data transferred correctly</li>
-      <li><strong>Go Live:</strong> Your team can start using JustDo immediately</li>
+      <li>{{{_ "migrate_monday_process_step1"}}}</li>
+      <li>{{{_ "migrate_monday_process_step2"}}}</li>
+      <li>{{{_ "migrate_monday_process_step3"}}}</li>
+      <li>{{{_ "migrate_monday_process_step4"}}}</li>
     </ol>
-    <p>No data mapping, no manual exports, no complex configurations required.</p>
+    <p>{{_ "migrate_monday_process_note"}}</p>
     <br>
-    <h2>Migration Timeline</h2>
+    <h2>{{_ "migrate_monday_timeline_title"}}</h2>
     <p>
-      All we need from you is a Monday.com API key. It usually takes 2–10 minutes to generate with a few clicks. Once we have it, the migration run time depends on your data volume—anywhere from about a minute to a few hours.
+      {{_ "migrate_monday_timeline_desc"}}
     </p>
-    <p>Factors affecting migration time:</p>
+    <p>{{_ "migrate_monday_timeline_factors"}}</p>
     <ul>
-      <li>The amount of data in your Monday.com workspace</li>
-      <li>Number of boards and items</li>
-      <li>Volume of files and attachments</li>
-      <li>Number of users to migrate</li>
-      <li>API rate limits from Monday.com</li>
+      <li>{{_ "migrate_monday_timeline_data"}}</li>
+      <li>{{_ "migrate_monday_timeline_boards"}}</li>
+      <li>{{_ "migrate_monday_timeline_files"}}</li>
+      <li>{{_ "migrate_monday_timeline_users"}}</li>
+      <li>{{_ "migrate_monday_timeline_api"}}</li>
     </ul>
     <br>
-    <h2>Enterprise Support</h2>
-    <p>Our dedicated enterprise migration team provides:</p>
+    <h2>{{_ "migrate_monday_support_title"}}</h2>
+    <p>{{_ "migrate_monday_support_desc"}}</p>
     <ul>
-      <li><strong>Pre-Migration Consultation:</strong> Review your current structure and plan the optimal migration strategy</li>
-      <li><strong>Custom Field Mapping:</strong> Assistance with complex field types and custom requirements</li>
-      <li><strong>Access Control Configuration:</strong> Help setting up your permission structure</li>
-      <li><strong>Data Validation:</strong> Comprehensive verification that all data transferred correctly</li>
-      <li><strong>Training Sessions:</strong> Custom training for administrators and end-users</li>
-      <li><strong>Ongoing Support:</strong> Post-migration support to ensure smooth operations</li>
+      <li>{{{_ "migrate_monday_support_consult"}}}</li>
+      <li>{{{_ "migrate_monday_support_mapping"}}}</li>
+      <li>{{{_ "migrate_monday_support_access"}}}</li>
+      <li>{{{_ "migrate_monday_support_validation"}}}</li>
+      <li>{{{_ "migrate_monday_support_training"}}}</li>
+      <li>{{{_ "migrate_monday_support_ongoing"}}}</li>
     </ul>
 
     <p class="cta">
-      <strong>Ready to get started?</strong> Contact our enterprise migration team at <a href="mailto:info@justdo.com" rel="noopener noreferrer">info@justdo.com</a> to schedule your consultation and begin your seamless transition to JustDo.
+      {{{_ "migrate_monday_cta"}}}
     </p>
   </div>
 </template>

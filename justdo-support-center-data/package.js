@@ -418,6 +418,10 @@ Package.onUse(function (api) {
   api.addFiles([
     "lib/both/support-articles/migrate-from-monday-to-justdo/migrate-from-monday-to-justdo.coffee"
   ], both);
+  this.addI18nFiles(api, "lib/both/support-articles/migrate-from-monday-to-justdo/i18n/part1.{}.i18n.json", "default_lang_only");
+  this.addI18nFiles(api, "lib/both/support-articles/migrate-from-monday-to-justdo/i18n/part2.{}.i18n.json", "default_lang_only");
+  this.addI18nFiles(api, "lib/both/support-articles/migrate-from-monday-to-justdo/i18n/part3.{}.i18n.json", "default_lang_only");
+  this.addI18nFiles(api, "lib/both/support-articles/migrate-from-monday-to-justdo/i18n/part4.{}.i18n.json", "default_lang_only");
 
   // Always after templates
   this.addI18nFiles(api, "i18n/{}.i18n.json");

@@ -1,0 +1,4 @@
+{
+  "migrate_monday_to_justdo_page_title": "Migrate from Monday.com to JustDo",
+  "migrate_monday_to_justdo_page_description": "Import data from Monday.com to JustDo is simple. Map workspaces, boards, and permissions to JustDo's multi-level hierarchy. Includes field mapping, access control, and air-gapped deployment options."
+}
