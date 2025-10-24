@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Pemetaan Jenis Medan",
   "migrate_monday_field_mapping_desc": "JustDo mengekalkan keserasian dengan medan Monday.",
-  "migrate_monday_field_mapping_details": "Di bawah, setiap item memetakan medan Monday kepada setara JustDo, diikuti dengan nota dan keupayaan tambahan dalam kurungan.",
+  "migrate_monday_field_mapping_details": "Di bawah, setiap item memetakan medan Monday kepada setara JustDo, diikuti dengan nota dan keupayaan tambahan dalam kurungan:",
   "migrate_monday_view_details": "Lihat pemetaan medan terperinci",
   "migrate_monday_data_fields": "Medan data",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Tarikh Mula, Tarikh Tamat, Tarikh Akhir (dengan sokongan paparan Gantt penuh)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Medan Teks",
   "migrate_monday_location": "<strong>Location</strong> → Medan Teks (dengan pilihan integrasi Maps)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Medan Nombor (dengan sokongan perpuluhan/min/maks)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Medan Nombor",
+  "migrate_monday_phone": "<strong>Phone</strong> → Medan Teks",
   "migrate_monday_alt_solutions": "Penyelesaian Alternatif",
   "migrate_monday_no_mapping": "Pada masa ini, JustDo tidak mempunyai pemetaan langsung untuk medan-medan ini:",
   "migrate_monday_button": "Butang",

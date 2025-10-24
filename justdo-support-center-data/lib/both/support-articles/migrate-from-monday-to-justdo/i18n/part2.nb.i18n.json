@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Felttype-mapping",
   "migrate_monday_field_mapping_desc": "JustDo opprettholder kompatibilitet med Mondays felter.",
-  "migrate_monday_field_mapping_details": "Nedenfor mapper hvert element et Monday-felt til dets JustDo-ekvivalent, etterfulgt av notater og tillagte funksjoner i parentes.",
+  "migrate_monday_field_mapping_details": "Nedenfor viser hvert element hvordan et Monday-felt tilordnes sin JustDo-ekvivalent, etterfulgt av merknader og tilleggsfunksjoner i parentes:",
   "migrate_monday_view_details": "Se detaljerte feltmappinger",
   "migrate_monday_data_fields": "Datafelt",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Startdato, Sluttdato, Forfallsdato (med full Gantt-visningsstøtte)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Tekst-felt",
   "migrate_monday_location": "<strong>Location</strong> → Tekst-felt (med valgfri Kart-integrasjon)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Tall-felt (med desimal/min/maks-støtte)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Tall-felt",
+  "migrate_monday_phone": "<strong>Phone</strong> → Tekstfelt",
   "migrate_monday_alt_solutions": "Alternative løsninger",
   "migrate_monday_no_mapping": "Akkurat nå har ikke JustDo en direkte mapping for disse feltene:",
   "migrate_monday_button": "Knapp",

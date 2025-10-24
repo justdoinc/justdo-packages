@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>Uruchomienie:</strong> Twój zespół może natychmiast zacząć korzystać z JustDo",
   "migrate_monday_process_note": "Bez mapowania danych, bez ręcznego eksportu, bez skomplikowanych konfiguracji.",
   "migrate_monday_timeline_title": "Harmonogram Migracji",
-  "migrate_monday_timeline_desc": "Potrzebujemy od Ciebie tylko klucza API Monday.com. Jego wygenerowanie zajmuje zazwyczaj 2–10 minut za pomocą kilku kliknięć. Po jego otrzymaniu czas trwania migracji zależy od ilości danych — od około minuty do kilku godzin.",
+  "migrate_monday_timeline_desc": "Czas trwania migracji zależy od ilości danych - od około minuty do kilku godzin.",
   "migrate_monday_timeline_factors": "Czynniki wpływające na czas migracji:",
   "migrate_monday_timeline_data": "Ilość danych w Twoim obszarze roboczym Monday.com",
   "migrate_monday_timeline_boards": "Liczba tablic i elementów",

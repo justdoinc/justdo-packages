@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "מיפוי סוגי שדות",
   "migrate_monday_field_mapping_desc": "JustDo שומר על תאימות עם השדות של Monday.",
-  "migrate_monday_field_mapping_details": "להלן, כל פריט ממפה שדה של Monday למקבילו ב-JustDo, ואחריו הערות ויכולות נוספות בסוגריים.",
+  "migrate_monday_field_mapping_details": "להלן, כל פריט ממפה שדה של Monday לשדה המקביל ב-JustDo, ואחריו הערות ויכולות נוספות בסוגריים:",
   "migrate_monday_view_details": "צפה במיפוי מפורט של השדות",
   "migrate_monday_data_fields": "שדות נתונים",
   "migrate_monday_timeline": "<strong>Timeline</strong> ← תאריך התחלה, תאריך סיום, תאריך יעד (עם תמיכה מלאה בתצוגת גאנט)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> ← שדה טקסט",
   "migrate_monday_location": "<strong>Location</strong> ← שדה טקסט (עם אינטגרציה אופציונלית למפות)",
   "migrate_monday_numbers": "<strong>Numbers</strong> ← שדה מספר (עם תמיכה בעשרוני/מינימום/מקסימום)",
-  "migrate_monday_phone": "<strong>Phone</strong> ← שדה מספר",
+  "migrate_monday_phone": "<strong>Phone</strong> ← שדה טקסט",
   "migrate_monday_alt_solutions": "פתרונות חלופיים",
   "migrate_monday_no_mapping": "כרגע, ל-JustDo אין מיפוי ישיר עבור השדות הבאים:",
   "migrate_monday_button": "כפתור",

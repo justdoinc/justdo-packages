@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Fälttypsmappning",
   "migrate_monday_field_mapping_desc": "JustDo bibehåller kompatibilitet med Mondays fält.",
-  "migrate_monday_field_mapping_details": "Nedan mappar varje post ett Monday-fält till dess JustDo-motsvarighet, följt av anteckningar och tillagda funktioner inom parentes.",
+  "migrate_monday_field_mapping_details": "Nedan mappar varje post ett Monday-fält till dess JustDo-motsvarighet, följt av anteckningar och tillagda funktioner inom parentes:",
   "migrate_monday_view_details": "Visa detaljerade fältmappningar",
   "migrate_monday_data_fields": "Datafält",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Startdatum, Slutdatum, Förfallodatum (med fullt stöd för Gantt-vy)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Textfält",
   "migrate_monday_location": "<strong>Location</strong> → Textfält (med valfri kartintegration)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Nummerfält (med stöd för decimaler/min/max)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Nummerfält",
+  "migrate_monday_phone": "<strong>Phone</strong> → Textfält",
   "migrate_monday_alt_solutions": "Alternativa lösningar",
   "migrate_monday_no_mapping": "Just nu har JustDo ingen direkt mappning för dessa fält:",
   "migrate_monday_button": "Knapp (Button)",

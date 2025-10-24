@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Veldtype Mapping",
   "migrate_monday_field_mapping_desc": "JustDo behoudt compatibiliteit met Monday's velden.",
-  "migrate_monday_field_mapping_details": "Hieronder koppelt elk item een Monday veld aan het JustDo equivalent, gevolgd door notities en toegevoegde mogelijkheden tussen haakjes.",
+  "migrate_monday_field_mapping_details": "Hieronder wijst elk item een Monday-veld toe aan zijn JustDo-equivalent, gevolgd door notities en toegevoegde mogelijkheden tussen haakjes:",
   "migrate_monday_view_details": "Bekijk gedetailleerde veld mappings",
   "migrate_monday_data_fields": "Gegevensvelden",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Startdatum, Einddatum, Deadline (met volledige Gantt weergave ondersteuning)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Tekst veld",
   "migrate_monday_location": "<strong>Location</strong> → Tekst veld (met optionele Maps integratie)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Nummer veld (met decimaal/min/max ondersteuning)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Nummer veld",
+  "migrate_monday_phone": "<strong>Phone</strong> → Tekst veld",
   "migrate_monday_alt_solutions": "Alternatieve Oplossingen",
   "migrate_monday_no_mapping": "Op dit moment heeft JustDo geen directe mapping voor deze velden:",
   "migrate_monday_button": "Knop (Button)",

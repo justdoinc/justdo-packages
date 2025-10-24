@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Տեքստի դաշտ",
   "migrate_monday_location": "<strong>Location</strong> → Տեքստի դաշտ (Maps ինտեգրացիայի ընտրովի հնարավորությամբ)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Թվի դաշտ (տասնորդական/նվազագույն/առավելագույն արժեքների աջակցությամբ)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Թվի դաշտ",
+  "migrate_monday_phone": "<strong>Phone (Հեռախոս)</strong> → Տեքստային դաշտ",
   "migrate_monday_alt_solutions": "Այլընտրանքային լուծումներ",
   "migrate_monday_no_mapping": "Այս պահին JustDo-ն չունի ուղղակի համապատասխանեցում այս դաշտերի համար:",
   "migrate_monday_button": "Կոճակ",

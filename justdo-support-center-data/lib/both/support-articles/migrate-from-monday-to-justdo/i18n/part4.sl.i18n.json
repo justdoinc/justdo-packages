@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>Začetek uporabe:</strong> Vaša ekipa lahko takoj začne uporabljati JustDo",
   "migrate_monday_process_note": "Brez preslikovanja podatkov, brez ročnih izvozov, brez zapletenih konfiguracij.",
   "migrate_monday_timeline_title": "Časovnica selitve",
-  "migrate_monday_timeline_desc": "Vse kar potrebujemo od vas je Monday.com API ključ. Običajno traja 2–10 minut, da ga ustvarite z nekaj kliki. Ko ga prejmemo, trajanje selitve je odvisno od obsega vaših podatkov—od približno ene minute do nekaj ur.",
+  "migrate_monday_timeline_desc": "Čas izvajanja selitve je odvisen od obsega vaših podatkov - od približno ene minute do nekaj ur.",
   "migrate_monday_timeline_factors": "Dejavniki, ki vplivajo na čas selitve:",
   "migrate_monday_timeline_data": "Količina podatkov v vašem Monday.com delovnem prostoru",
   "migrate_monday_timeline_boards": "Število desk in elementov",

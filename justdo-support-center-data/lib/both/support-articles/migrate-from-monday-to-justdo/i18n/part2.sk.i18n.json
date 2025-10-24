@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Mapovanie typov polí",
   "migrate_monday_field_mapping_desc": "JustDo zachováva kompatibilitu s poľami Monday.",
-  "migrate_monday_field_mapping_details": "Nižšie každá položka mapuje pole Monday na jeho ekvivalent v JustDo, nasledovaný poznámkami a pridanými funkciami v zátvorkách.",
+  "migrate_monday_field_mapping_details": "Nižšie každá položka mapuje pole Monday na jeho ekvivalent v JustDo, nasledovaný poznámkami a pridanými funkciami v zátvorkách:",
   "migrate_monday_view_details": "Zobraziť podrobné mapovanie polí",
   "migrate_monday_data_fields": "Dátové polia",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Dátum začiatku, Dátum ukončenia, Termín dokončenia (s plnou podporou Ganttovho zobrazenia)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Textové pole",
   "migrate_monday_location": "<strong>Location</strong> → Textové pole (s voliteľnou integráciou máp)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Číselné pole (s podporou desatinných miest/min/max)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Číselné pole",
+  "migrate_monday_phone": "<strong>Phone (Telefón)</strong> → Textové pole",
   "migrate_monday_alt_solutions": "Alternatívne riešenia",
   "migrate_monday_no_mapping": "Momentálne JustDo nemá priame mapovanie pre tieto polia:",
   "migrate_monday_button": "Tlačidlo",

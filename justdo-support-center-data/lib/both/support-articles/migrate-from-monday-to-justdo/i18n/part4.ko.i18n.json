@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>운영 시작:</strong> 팀이 즉시 JustDo 사용을 시작할 수 있습니다",
   "migrate_monday_process_note": "데이터 매핑, 수동 내보내기, 복잡한 구성이 필요 없습니다.",
   "migrate_monday_timeline_title": "마이그레이션 소요 시간",
-  "migrate_monday_timeline_desc": "필요한 것은 Monday.com API 키뿐입니다. 일반적으로 몇 번의 클릭으로 2~10분 내에 생성할 수 있습니다. API 키를 받은 후 마이그레이션 실행 시간은 데이터 양에 따라 약 1분에서 몇 시간까지 소요될 수 있습니다.",
+  "migrate_monday_timeline_desc": "마이그레이션 실행 시간은 데이터 양에 따라 약 1분에서 몇 시간까지 소요됩니다.",
   "migrate_monday_timeline_factors": "마이그레이션 시간에 영향을 미치는 요인:",
   "migrate_monday_timeline_data": "Monday.com 워크스페이스의 데이터 양",
   "migrate_monday_timeline_boards": "보드 및 항목 수",

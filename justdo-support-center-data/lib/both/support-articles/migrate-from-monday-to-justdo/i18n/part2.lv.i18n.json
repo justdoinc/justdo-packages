@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Lauku tipu kartēšana",
   "migrate_monday_field_mapping_desc": "JustDo saglabā saderību ar Monday laukiem.",
-  "migrate_monday_field_mapping_details": "Zemāk katrs elements kartē Monday lauku uz tā JustDo ekvivalentu, kam seko piezīmes un pievienotās iespējas iekavās.",
+  "migrate_monday_field_mapping_details": "Turpmāk katrs elements kartē Monday lauku uz tā JustDo ekvivalentu, kam seko piezīmes un pievienotās iespējas iekavās:",
   "migrate_monday_view_details": "Skatīt detalizētu lauku kartēšanu",
   "migrate_monday_data_fields": "Datu lauki",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Sākuma datums, beigu datums, termiņš (ar pilnu Ganta diagrammas atbalstu)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Teksta lauks",
   "migrate_monday_location": "<strong>Location</strong> → Teksta lauks (ar izvēles karšu integrāciju)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Skaitļu lauks (ar decimāldaļu/min/max atbalstu)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Skaitļu lauks",
+  "migrate_monday_phone": "<strong>Phone</strong> → Teksta lauks",
   "migrate_monday_alt_solutions": "Alternatīvi risinājumi",
   "migrate_monday_no_mapping": "Pašlaik JustDo nav tiešas kartēšanas šiem laukiem:",
   "migrate_monday_button": "Poga",

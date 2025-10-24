@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Сопоставление типов полей",
   "migrate_monday_field_mapping_desc": "JustDo поддерживает совместимость с полями Monday.",
-  "migrate_monday_field_mapping_details": "Ниже каждый элемент сопоставляет поле Monday с его эквивалентом в JustDo, с примечаниями и дополнительными возможностями в скобках.",
+  "migrate_monday_field_mapping_details": "Ниже каждый элемент сопоставляет поле Monday с его эквивалентом в JustDo, за которым следуют примечания и дополнительные возможности в скобках:",
   "migrate_monday_view_details": "Просмотреть подробное сопоставление полей",
   "migrate_monday_data_fields": "Поля данных",
   "migrate_monday_timeline": "<strong>Timeline (Временная шкала)</strong> → Дата начала, Дата окончания, Срок выполнения (с полной поддержкой диаграммы Ганта)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email (Электронная почта)</strong> → Текстовое поле",
   "migrate_monday_location": "<strong>Location (Местоположение)</strong> → Текстовое поле (с опциональной интеграцией карт)",
   "migrate_monday_numbers": "<strong>Numbers (Числа)</strong> → Числовое поле (с поддержкой десятичных дробей/мин./макс. значений)",
-  "migrate_monday_phone": "<strong>Phone (Телефон)</strong> → Числовое поле",
+  "migrate_monday_phone": "<strong>Phone (Телефон)</strong> → Текстовое поле",
   "migrate_monday_alt_solutions": "Альтернативные решения",
   "migrate_monday_no_mapping": "В настоящее время JustDo не имеет прямого сопоставления для этих полей:",
   "migrate_monday_button": "Кнопка (Button)",

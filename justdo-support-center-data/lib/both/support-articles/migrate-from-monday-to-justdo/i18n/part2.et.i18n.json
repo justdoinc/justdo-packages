@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Väljatüüpide Vastendamine",
   "migrate_monday_field_mapping_desc": "JustDo säilitab ühilduvuse Monday väljade ja funktsioonidega.",
-  "migrate_monday_field_mapping_details": "Allpool vastendab iga kirje Monday välja selle JustDo ekvivalendiga, millele järgnevad märkused ja lisavõimalused sulgudes.",
+  "migrate_monday_field_mapping_details": "Allpool vastendab iga punkt Monday välja selle JustDo ekvivalendiga, millele järgnevad märkused ja lisavõimalused sulgudes:",
   "migrate_monday_view_details": "Vaata üksikasjalikke väljastendusi",
   "migrate_monday_data_fields": "Andmeväljad",
   "migrate_monday_timeline": "<strong>Timeline (Ajajoon)</strong> → Alguskuupäev, Lõppkuupäev, Tähtaeg (täieliku Gantti diagrammi vaate toega)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email (E-post)</strong> → Teksti väli",
   "migrate_monday_location": "<strong>Location (Asukoht)</strong> → Teksti väli (valikulise Kaartide integratsiooniga)",
   "migrate_monday_numbers": "<strong>Numbers (Numbrid)</strong> → Numbriväli (kümnendkoha/miinimum/maksimum toega)",
-  "migrate_monday_phone": "<strong>Phone (Telefon)</strong> → Numbriväli",
+  "migrate_monday_phone": "<strong>Telefon (Phone)</strong> → Teksti väli",
   "migrate_monday_alt_solutions": "Alternatiivsed Lahendused",
   "migrate_monday_no_mapping": "Hetkel ei ole JustDo-l nende väljade jaoks otsest vastendust:",
   "migrate_monday_button": "Nupp",

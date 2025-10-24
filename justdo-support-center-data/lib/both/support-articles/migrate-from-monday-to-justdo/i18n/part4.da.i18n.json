@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>Gå live:</strong> Dit team kan begynde at bruge JustDo med det samme",
   "migrate_monday_process_note": "Ingen datakortlægning, ingen manuelle eksporter, ingen komplekse konfigurationer påkrævet.",
   "migrate_monday_timeline_title": "Migreringstidslinje",
-  "migrate_monday_timeline_desc": "Alt, hvad vi har brug for fra dig, er en Monday.com API-nøgle. Det tager normalt 2–10 minutter at generere med et par klik. Når vi har den, afhænger migreringstiden af dit datavolumen—alt fra cirka et minut til et par timer.",
+  "migrate_monday_timeline_desc": "Migreringstidenafhænger af dit datavolumen - alt fra omkring et minut til et par timer.",
   "migrate_monday_timeline_factors": "Faktorer, der påvirker migreringstiden:",
   "migrate_monday_timeline_data": "Mængden af data i dit Monday.com-arbejdsområde",
   "migrate_monday_timeline_boards": "Antal boards og elementer",

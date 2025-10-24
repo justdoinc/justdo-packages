@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>Käyttöönotto:</strong> Tiimisi voi aloittaa JustDon käytön välittömästi",
   "migrate_monday_process_note": "Ei tietojen yhdistämistä, ei manuaalisia vientejä, ei monimutkaisia konfiguraatioita.",
   "migrate_monday_timeline_title": "Siirron aikataulu",
-  "migrate_monday_timeline_desc": "Tarvitsemme sinulta vain Monday.com API-avaimen. Sen luominen kestää yleensä 2–10 minuuttia muutamalla klikkauksella. Kun saamme sen, siirron kesto riippuu tietomäärästäsi – noin minuutista muutamaan tuntiin.",
+  "migrate_monday_timeline_desc": "Siirron kesto riippuu datamäärästäsi - muutamasta minuutista muutamaan tuntiin.",
   "migrate_monday_timeline_factors": "Siirtoaikaan vaikuttavat tekijät:",
   "migrate_monday_timeline_data": "Monday.com-työtilasi tietomäärä",
   "migrate_monday_timeline_boards": "Taulujen ja kohteiden määrä",

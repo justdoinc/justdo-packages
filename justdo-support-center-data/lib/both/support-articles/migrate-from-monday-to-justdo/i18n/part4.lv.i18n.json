@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>Uzsāciet darbu:</strong> Jūsu komanda var sākt izmantot JustDo nekavējoties",
   "migrate_monday_process_note": "Nav nepieciešama datu kartēšana, manuāli eksporti vai sarežģītas konfigurācijas.",
   "migrate_monday_timeline_title": "Migrācijas laika grafiks",
-  "migrate_monday_timeline_desc": "Viss, kas mums nepieciešams no jums, ir Monday.com API atslēga. Parasti tās ģenerēšana aizņem 2–10 minūtes ar dažiem klikšķiem. Kad mums tā ir, migrācijas izpildes laiks ir atkarīgs no jūsu datu apjoma — no aptuveni vienas minūtes līdz dažām stundām.",
+  "migrate_monday_timeline_desc": "Migrācijas izpildes laiks ir atkarīgs no jūsu datu apjoma - no aptuveni vienas minūtes līdz dažām stundām.",
   "migrate_monday_timeline_factors": "Faktori, kas ietekmē migrācijas laiku:",
   "migrate_monday_timeline_data": "Datu apjoms jūsu Monday.com darba telpā",
   "migrate_monday_timeline_boards": "Dēļu un elementu skaits",

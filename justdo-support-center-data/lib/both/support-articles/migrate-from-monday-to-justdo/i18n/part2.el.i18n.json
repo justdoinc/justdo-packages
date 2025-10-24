@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Αντιστοίχιση Τύπων Πεδίων",
   "migrate_monday_field_mapping_desc": "Το JustDo διατηρεί συμβατότητα με τα πεδία του Monday.",
-  "migrate_monday_field_mapping_details": "Παρακάτω, κάθε στοιχείο αντιστοιχίζει ένα πεδίο του Monday στο ισοδύναμό του στο JustDo, ακολουθούμενο από σημειώσεις και πρόσθετες δυνατότητες σε παρενθέσεις.",
+  "migrate_monday_field_mapping_details": "Παρακάτω, κάθε στοιχείο αντιστοιχίζει ένα πεδίο του Monday στο αντίστοιχο του JustDo, ακολουθούμενο από σημειώσεις και πρόσθετες δυνατότητες σε παρενθέσεις:",
   "migrate_monday_view_details": "Προβολή λεπτομερούς αντιστοίχισης πεδίων",
   "migrate_monday_data_fields": "Πεδία δεδομένων",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Ημερομηνία Έναρξης, Ημερομηνία Λήξης, Καταληκτική Ημερομηνία (με πλήρη υποστήριξη προβολής Gantt)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Πεδίο Κειμένου",
   "migrate_monday_location": "<strong>Location</strong> → Πεδίο Κειμένου (με προαιρετική ενσωμάτωση Χαρτών)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Πεδίο Αριθμού (με υποστήριξη δεκαδικών/ελάχιστου/μέγιστου)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Πεδίο Αριθμού",
+  "migrate_monday_phone": "<strong>Phone</strong> → Πεδίο Κειμένου",
   "migrate_monday_alt_solutions": "Εναλλακτικές Λύσεις",
   "migrate_monday_no_mapping": "Αυτή τη στιγμή, το JustDo δεν έχει άμεση αντιστοίχιση για αυτά τα πεδία:",
   "migrate_monday_button": "Κουμπί (Button)",

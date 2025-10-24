@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Өріс түрлерін сәйкестендіру",
   "migrate_monday_field_mapping_desc": "JustDo Monday өрістерімен үйлесімділікті сақтайды.",
-  "migrate_monday_field_mapping_details": "Төменде әрбір элемент Monday өрісін оның JustDo баламасына сәйкестендіреді, содан кейін жақшада ескертпелер мен қосымша мүмкіндіктер көрсетіледі.",
+  "migrate_monday_field_mapping_details": "Төменде әрбір элемент Monday өрісін JustDo баламасына сәйкестендіреді, одан кейін жақшада ескертпелер мен қосымша мүмкіндіктер көрсетілген:",
   "migrate_monday_view_details": "Өрістерді сәйкестендірудің толық тізімін қарау",
   "migrate_monday_data_fields": "Деректер өрістері",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Басталу күні, Аяқталу күні, Мерзімі (толық Gantt көрінісін қолдаумен)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Мәтін өрісі",
   "migrate_monday_location": "<strong>Location</strong> → Мәтін өрісі (қосымша карталар интеграциясымен)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Сан өрісі (ондық/мин/макс қолдаумен)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Сан өрісі",
+  "migrate_monday_phone": "<strong>Phone</strong> → Мәтін өрісі",
   "migrate_monday_alt_solutions": "Балама шешімдер",
   "migrate_monday_no_mapping": "Қазіргі уақытта JustDo осы өрістер үшін тікелей сәйкестендіруі жоқ:",
   "migrate_monday_button": "Батырма (Button)",

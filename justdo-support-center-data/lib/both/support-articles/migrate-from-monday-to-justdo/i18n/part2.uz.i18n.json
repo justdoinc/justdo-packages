@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Maydon turlarini moslashtirish",
   "migrate_monday_field_mapping_desc": "JustDo Monday maydonlari bilan muvofiqlikni ta'minlaydi.",
-  "migrate_monday_field_mapping_details": "Quyida har bir element Monday maydonini JustDo ekvivalentiga moslashtiradi, keyin esa izohlar va qo'shimcha imkoniyatlar qavsda ko'rsatilgan.",
+  "migrate_monday_field_mapping_details": "Quyida har bir element Monday maydonini JustDo ekvivalentiga moslashtiradi, keyin esa izohlar va qo'shimcha imkoniyatlar qavsda ko'rsatilgan:",
   "migrate_monday_view_details": "Batafsil maydon moslamalarini ko'rish",
   "migrate_monday_data_fields": "Ma'lumot maydonlari",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Boshlanish sanasi, Tugash sanasi, Muddat (to'liq Gantt ko'rinishi qo'llab-quvvatlash bilan)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Matn maydoni",
   "migrate_monday_location": "<strong>Location</strong> → Matn maydoni (ixtiyoriy xaritalar integratsiyasi bilan)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Raqam maydoni (o'nli/min/max qo'llab-quvvatlash bilan)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Raqam maydoni",
+  "migrate_monday_phone": "<strong>Phone</strong> → Matn maydoni",
   "migrate_monday_alt_solutions": "Muqobil yechimlar",
   "migrate_monday_no_mapping": "Hozirda JustDo ushbu maydonlar uchun to'g'ridan-to'g'ri moslamaga ega emas:",
   "migrate_monday_button": "Tugma",

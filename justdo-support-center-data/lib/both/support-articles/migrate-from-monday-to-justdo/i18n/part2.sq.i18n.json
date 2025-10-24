@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Mapimi i Llojeve të Fushave",
   "migrate_monday_field_mapping_desc": "JustDo mban kompatibilitet me fushat e Monday.",
-  "migrate_monday_field_mapping_details": "Më poshtë, çdo artikull mapon një fushë Monday në ekuivalentin e saj në JustDo, e ndjekur nga shënime dhe aftësi shtesë në kllapa.",
+  "migrate_monday_field_mapping_details": "Më poshtë, çdo artikull mapon një fushë Monday në ekuivalentin e saj JustDo, e ndjekur nga shënime dhe aftësi të shtuara në kllapa:",
   "migrate_monday_view_details": "Shiko mapimin e detajuar të fushave",
   "migrate_monday_data_fields": "Fushat e të dhënave",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Data e Fillimit, Data e Përfundimit, Data e Afatit (me mbështetje të plotë për pamjen Gantt)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Fusha e Tekstit",
   "migrate_monday_location": "<strong>Location</strong> → Fusha e Tekstit (me integrimin opsional të Hartave)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Fusha e Numrit (me mbështetje për decimale/min/max)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Fusha e Numrit",
+  "migrate_monday_phone": "<strong>Phone</strong> → Fusha e Tekstit",
   "migrate_monday_alt_solutions": "Zgjidhje Alternative",
   "migrate_monday_no_mapping": "Aktualisht, JustDo nuk ka mapim të drejtpërdrejtë për këto fusha:",
   "migrate_monday_button": "Butoni",

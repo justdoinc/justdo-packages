@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>Bắt Đầu Sử Dụng:</strong> Nhóm của bạn có thể bắt đầu sử dụng JustDo ngay lập tức",
   "migrate_monday_process_note": "Không cần ánh xạ dữ liệu, không cần xuất thủ công, không cần cấu hình phức tạp.",
   "migrate_monday_timeline_title": "Thời Gian Chuyển Đổi",
-  "migrate_monday_timeline_desc": "Tất cả những gì chúng tôi cần từ bạn là một API key của Monday.com. Thông thường mất 2–10 phút để tạo chỉ với vài cú nhấp chuột. Sau khi có API key, thời gian chạy chuyển đổi phụ thuộc vào khối lượng dữ liệu của bạn—từ khoảng một phút đến vài giờ.",
+  "migrate_monday_timeline_desc": "Thời gian chạy chuyển đổi phụ thuộc vào khối lượng dữ liệu của bạn - từ khoảng một phút đến vài giờ.",
   "migrate_monday_timeline_factors": "Các yếu tố ảnh hưởng đến thời gian chuyển đổi:",
   "migrate_monday_timeline_data": "Khối lượng dữ liệu trong workspace Monday.com của bạn",
   "migrate_monday_timeline_boards": "Số lượng boards và items",

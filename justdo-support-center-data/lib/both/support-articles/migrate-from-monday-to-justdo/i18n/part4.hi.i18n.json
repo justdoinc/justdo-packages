@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>लाइव हो जाएं:</strong> आपकी टीम तुरंत JustDo का उपयोग शुरू कर सकती है",
   "migrate_monday_process_note": "कोई डेटा मैपिंग नहीं, कोई मैनुअल एक्सपोर्ट नहीं, कोई जटिल कॉन्फ़िगरेशन की आवश्यकता नहीं।",
   "migrate_monday_timeline_title": "माइग्रेशन समयरेखा",
-  "migrate_monday_timeline_desc": "हमें आपसे केवल एक Monday.com API key की आवश्यकता है। इसे जनरेट करने में आमतौर पर कुछ क्लिक के साथ 2-10 मिनट लगते हैं। एक बार जब हमारे पास यह होता है, तो माइग्रेशन का समय आपके डेटा की मात्रा पर निर्भर करता है—लगभग एक मिनट से लेकर कुछ घंटों तक कहीं भी।",
+  "migrate_monday_timeline_desc": "माइग्रेशन रन टाइम आपके डेटा वॉल्यूम पर निर्भर करता है - लगभग एक मिनट से लेकर कुछ घंटों तक।",
   "migrate_monday_timeline_factors": "माइग्रेशन समय को प्रभावित करने वाले कारक:",
   "migrate_monday_timeline_data": "आपके Monday.com वर्कस्पेस में डेटा की मात्रा",
   "migrate_monday_timeline_boards": "बोर्ड और आइटम की संख्या",

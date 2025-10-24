@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Відповідність типів полів",
   "migrate_monday_field_mapping_desc": "JustDo підтримує сумісність з полями Monday.",
-  "migrate_monday_field_mapping_details": "Нижче кожен пункт відображає відповідність поля Monday його еквіваленту в JustDo, з примітками та додатковими можливостями в дужках.",
+  "migrate_monday_field_mapping_details": "Нижче кожен пункт показує відповідність між полем Monday та його еквівалентом у JustDo, з примітками та додатковими можливостями в дужках:",
   "migrate_monday_view_details": "Переглянути детальну відповідність полів",
   "migrate_monday_data_fields": "Поля даних",
   "migrate_monday_timeline": "<strong>Timeline (Часова шкала)</strong> → Дата початку, Дата завершення, Термін виконання (з повною підтримкою діаграми Ганта)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email (Електронна пошта)</strong> → Текстове поле",
   "migrate_monday_location": "<strong>Location (Місцезнаходження)</strong> → Текстове поле (з опціональною інтеграцією Maps)",
   "migrate_monday_numbers": "<strong>Numbers (Числа)</strong> → Числове поле (з підтримкою десяткових/мін/макс значень)",
-  "migrate_monday_phone": "<strong>Phone (Телефон)</strong> → Числове поле",
+  "migrate_monday_phone": "<strong>Phone</strong> → Текстове поле",
   "migrate_monday_alt_solutions": "Альтернативні рішення",
   "migrate_monday_no_mapping": "На даний момент JustDo не має прямої відповідності для цих полів:",
   "migrate_monday_button": "Кнопка (Button)",

@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Alan Tipi Eşleştirmesi",
   "migrate_monday_field_mapping_desc": "JustDo, Monday'in alanlarıyla uyumluluğu korur.",
-  "migrate_monday_field_mapping_details": "Aşağıda, her öğe bir Monday alanını JustDo karşılığına eşleştirir ve ardından notlar ve eklenen yetenekler parantez içinde belirtilir.",
+  "migrate_monday_field_mapping_details": "Aşağıda, her öğe bir Monday alanını JustDo'daki karşılığına eşleştirir ve ardından parantez içinde notlar ve eklenen yetenekler belirtilir:",
   "migrate_monday_view_details": "Detaylı alan eşleştirmelerini görüntüle",
   "migrate_monday_data_fields": "Veri alanları",
   "migrate_monday_timeline": "<strong>Timeline (Zaman Çizelgesi)</strong> → Başlangıç Tarihi, Bitiş Tarihi, Son Tarih (tam Gantt görünümü desteğiyle)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email (E-posta)</strong> → Metin alanı",
   "migrate_monday_location": "<strong>Location (Konum)</strong> → Metin alanı (isteğe bağlı Haritalar entegrasyonuyla)",
   "migrate_monday_numbers": "<strong>Numbers (Sayılar)</strong> → Sayı alanı (ondalık/minimum/maksimum desteğiyle)",
-  "migrate_monday_phone": "<strong>Phone (Telefon)</strong> → Sayı alanı",
+  "migrate_monday_phone": "<strong>Phone (Telefon)</strong> → Metin alanı",
   "migrate_monday_alt_solutions": "Alternatif Çözümler",
   "migrate_monday_no_mapping": "Şu anda JustDo, bu alanlar için doğrudan bir eşleştirmeye sahip değil:",
   "migrate_monday_button": "Düğme (Button)",

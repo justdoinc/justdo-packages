@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>Élesítés:</strong> Csapata azonnal elkezdheti használni a JustDo-t",
   "migrate_monday_process_note": "Nincs szükség adatleképezésre, manuális exportálásra vagy összetett konfigurációkra.",
   "migrate_monday_timeline_title": "Migrációs időkeret",
-  "migrate_monday_timeline_desc": "Csak egy Monday.com API kulcsra van szükségünk Öntől. Általában 2-10 percet vesz igénybe néhány kattintással létrehozni. Amint megkaptuk, a migráció futási ideje az adatmennyiségtől függ—nagyjából egy perctől néhány óráig tarthat.",
+  "migrate_monday_timeline_desc": "A migráció futási ideje az adatmennyiségtől függ - körülbelül egy perctől néhány óráig terjedhet.",
   "migrate_monday_timeline_factors": "A migrációs időt befolyásoló tényezők:",
   "migrate_monday_timeline_data": "Az adatok mennyisége Monday.com munkaterületén",
   "migrate_monday_timeline_boards": "Táblák és elemek száma",

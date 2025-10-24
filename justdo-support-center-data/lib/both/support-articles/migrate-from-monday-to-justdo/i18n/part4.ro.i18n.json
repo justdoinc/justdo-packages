@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>Lansare:</strong> Echipa ta poate începe să folosească JustDo imediat",
   "migrate_monday_process_note": "Fără mapare de date, fără exporturi manuale, fără configurări complexe necesare.",
   "migrate_monday_timeline_title": "Cronologia migrării",
-  "migrate_monday_timeline_desc": "Tot ce avem nevoie de la tine este o cheie API Monday.com. De obicei durează 2–10 minute pentru a o genera cu câteva clicuri. Odată ce o avem, timpul de rulare a migrării depinde de volumul de date—de la aproximativ un minut până la câteva ore.",
+  "migrate_monday_timeline_desc": "Durata migrării depinde de volumul datelor tale - de la aproximativ un minut până la câteva ore.",
   "migrate_monday_timeline_factors": "Factori care afectează durata migrării:",
   "migrate_monday_timeline_data": "Cantitatea de date din spațiul de lucru (workspace) Monday.com",
   "migrate_monday_timeline_boards": "Numărul de board-uri și elemente",

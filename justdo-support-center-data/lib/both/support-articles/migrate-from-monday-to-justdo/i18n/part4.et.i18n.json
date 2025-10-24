@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>Käivitamine:</strong> Teie meeskond saab hakata JustDo'd kohe kasutama",
   "migrate_monday_process_note": "Ei vaja andmete vastendamist, käsitsi eksportimist ega keerulisi konfiguratsioone.",
   "migrate_monday_timeline_title": "Migratsiooni ajaplaan",
-  "migrate_monday_timeline_desc": "Vajame teilt ainult Monday.com API võtit. Selle genereerimine võtab tavaliselt 2–10 minutit mõne klikiga. Kui meil see on, sõltub migratsiooni kestus teie andmete mahust—umbes minutist kuni mõne tunnini.",
+  "migrate_monday_timeline_desc": "Migratsiooni kestus sõltub teie andmemahust - umbes ühest minutist kuni mõne tunnini.",
   "migrate_monday_timeline_factors": "Migratsiooni aega mõjutavad tegurid:",
   "migrate_monday_timeline_data": "Teie Monday.com tööruumi andmete maht",
   "migrate_monday_timeline_boards": "Tahvlite ja üksuste arv",

@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>Engega:</strong> El teu equip pot començar a utilitzar JustDo immediatament",
   "migrate_monday_process_note": "No cal mapatge de dades, ni exportacions manual, ni configuracions complexes.",
   "migrate_monday_timeline_title": "Cronologia de migració",
-  "migrate_monday_timeline_desc": "Tot el que necessitem de tu és una clau API de Monday.com. Normalment es triga entre 2 i 10 minuts a generar-la amb uns quants clics. Un cop la tenim, el temps d'execució de la migració depèn del volum de dades: des d'aproximadament un minut fins a unes quantes hores.",
+  "migrate_monday_timeline_desc": "El temps d'execució de la migració depèn del volum de dades: des d'aproximadament un minut fins a unes poques hores.",
   "migrate_monday_timeline_factors": "Factors que afecten el temps de migració:",
   "migrate_monday_timeline_data": "La quantitat de dades al teu espai de treball de Monday.com",
   "migrate_monday_timeline_boards": "Nombre de taulers i elements",

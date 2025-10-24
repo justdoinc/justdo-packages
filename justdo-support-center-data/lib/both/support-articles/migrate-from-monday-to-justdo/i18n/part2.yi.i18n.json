@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "פֿעלד טיפּ מאַפּינג",
   "migrate_monday_field_mapping_desc": "JustDo האַלט קאָמפּאַטיביליטעט מיט Monday's פֿעלדער.",
-  "migrate_monday_field_mapping_details": "אונטן, יעדער פּונקט מאַפּט אַ Monday פֿעלד צו זיין JustDo עקוויוואַלענט, נאָכגעפֿאָלגט דורך באַמערקונגען און צוגעלייגטע פֿעיִקייטן אין קלאַמערן.",
+  "migrate_monday_field_mapping_details": "אונטן, יעדער נומער מאַפּט אַ Monday פֿעלד צו זיין JustDo עקוויוואַלענט, נאָכגעגאַנגען דורך באַמערקונגען און צוגעלייגטע מעגלעכקייטן אין קלאַמערן:",
   "migrate_monday_view_details": "זען דיטיילירטע פֿעלד מאַפּינגס",
   "migrate_monday_data_fields": "דאַטן פֿעלדער",
   "migrate_monday_timeline": "<strong>Timeline</strong> → אָנהייב דאַטע, סוף דאַטע, צייַט־ליניע דאַטע (Due Date) (מיט פֿולשטענדיקער Gantt וויו שטיצע)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → טעקסט פֿעלד",
   "migrate_monday_location": "<strong>Location</strong> → טעקסט פֿעלד (מיט אָפּציאָנעלער מאַפּס אינטעגראַציע)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → נומער פֿעלד (מיט דעצימאַל/מינימום/מאַקסימום שטיצע)",
-  "migrate_monday_phone": "<strong>Phone</strong> → נומער פֿעלד",
+  "migrate_monday_phone": "<strong>Phone</strong> → טעקסט פֿעלד",
   "migrate_monday_alt_solutions": "אַלטערנאַטיווע לייזונגען",
   "migrate_monday_no_mapping": "איצט האָט JustDo נישט קיין דירעקטן מאַפּינג פֿאַר די פֿעלדער:",
   "migrate_monday_button": "קנעפּל (Button)",

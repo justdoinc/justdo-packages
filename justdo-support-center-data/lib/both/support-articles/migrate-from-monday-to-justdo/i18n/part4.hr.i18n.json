@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>Pokretanje:</strong> Vaš tim može odmah početi koristiti JustDo",
   "migrate_monday_process_note": "Nije potrebno mapiranje podataka, ručni izvozi ili složene konfiguracije.",
   "migrate_monday_timeline_title": "Vremenski okvir migracije",
-  "migrate_monday_timeline_desc": "Sve što trebamo od vas je Monday.com API ključ. Obično je potrebno 2–10 minuta da ga generirate s nekoliko klikova. Kada ga dobijemo, vrijeme trajanja migracije ovisi o količini vaših podataka—od otprilike jedne minute do nekoliko sati.",
+  "migrate_monday_timeline_desc": "Vrijeme trajanja migracije ovisi o količini vaših podataka - od otprilike jedne minute do nekoliko sati.",
   "migrate_monday_timeline_factors": "Faktori koji utječu na vrijeme migracije:",
   "migrate_monday_timeline_data": "Količina podataka u vašem Monday.com radnom prostoru",
   "migrate_monday_timeline_boards": "Broj ploča i stavki",

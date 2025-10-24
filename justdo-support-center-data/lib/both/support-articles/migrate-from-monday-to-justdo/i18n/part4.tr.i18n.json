@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>Yayına Geçin:</strong> Ekibiniz JustDo'yu hemen kullanmaya başlayabilir",
   "migrate_monday_process_note": "Veri eşleme, manuel dışa aktarma veya karmaşık yapılandırma gerekmez.",
   "migrate_monday_timeline_title": "Geçiş Zaman Çizelgesi",
-  "migrate_monday_timeline_desc": "Sizden ihtiyacımız olan tek şey bir Monday.com API anahtarıdır. Birkaç tıklamayla oluşturulması genellikle 2-10 dakika sürer. Anahtarı aldığımızda, geçiş süresi veri hacminize bağlıdır—yaklaşık bir dakikadan birkaç saate kadar değişebilir.",
+  "migrate_monday_timeline_desc": "Geçiş süresi veri hacminize bağlıdır - yaklaşık bir dakikadan birkaç saate kadar değişebilir.",
   "migrate_monday_timeline_factors": "Geçiş süresini etkileyen faktörler:",
   "migrate_monday_timeline_data": "Monday.com çalışma alanınızdaki veri miktarı",
   "migrate_monday_timeline_boards": "Pano ve öğe sayısı",

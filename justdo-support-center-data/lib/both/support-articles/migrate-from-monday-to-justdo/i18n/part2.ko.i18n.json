@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "필드 유형 매핑",
   "migrate_monday_field_mapping_desc": "JustDo는 Monday의 필드와 호환성을 유지합니다.",
-  "migrate_monday_field_mapping_details": "아래 각 항목은 Monday 필드를 JustDo의 동등한 필드로 매핑하며, 괄호 안에 참고 사항 및 추가 기능이 표시됩니다.",
+  "migrate_monday_field_mapping_details": "아래 각 항목은 Monday 필드를 JustDo의 동등한 필드에 매핑하며, 괄호 안에 참고 사항과 추가 기능이 표시됩니다:",
   "migrate_monday_view_details": "상세 필드 매핑 보기",
   "migrate_monday_data_fields": "데이터 필드",
   "migrate_monday_timeline": "<strong>타임라인</strong> → 시작일, 종료일, 마감일 (전체 간트 차트 보기 지원)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>이메일</strong> → 텍스트 필드",
   "migrate_monday_location": "<strong>위치</strong> → 텍스트 필드 (지도 통합 옵션 제공)",
   "migrate_monday_numbers": "<strong>숫자</strong> → 숫자 필드 (소수점/최소값/최대값 지원)",
-  "migrate_monday_phone": "<strong>전화번호</strong> → 숫자 필드",
+  "migrate_monday_phone": "<strong>Phone</strong> → 텍스트 필드",
   "migrate_monday_alt_solutions": "대체 솔루션",
   "migrate_monday_no_mapping": "현재 JustDo는 다음 필드에 대한 직접 매핑을 제공하지 않습니다:",
   "migrate_monday_button": "버튼",

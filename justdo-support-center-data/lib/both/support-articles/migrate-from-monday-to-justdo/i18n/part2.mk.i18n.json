@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Мапирање на типови полиња",
   "migrate_monday_field_mapping_desc": "JustDo одржува компатибилност со полињата на Monday.",
-  "migrate_monday_field_mapping_details": "Подолу, секоја ставка мапира полиња од Monday на нивниот еквивалент во JustDo, проследено со забелешки и додадени можности во загради.",
+  "migrate_monday_field_mapping_details": "Подолу, секоја ставка мапира поле од Monday на неговиот еквивалент во JustDo, проследено со белешки и додадени можности во загради:",
   "migrate_monday_view_details": "Погледнете детални мапирања на полињата",
   "migrate_monday_data_fields": "Полиња за податоци",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Датум на почеток, Датум на завршување, Краен рок (со целосна поддршка за Gantt преглед)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Текстуално поле",
   "migrate_monday_location": "<strong>Location</strong> → Текстуално поле (со опционална интеграција со карти)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Нумеричко поле (со поддршка за децимали/мин/макс)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Нумеричко поле",
+  "migrate_monday_phone": "<strong>Phone</strong> → Текстуално поле",
   "migrate_monday_alt_solutions": "Алтернативни решенија",
   "migrate_monday_no_mapping": "Во моментов, JustDo нема директно мапирање за овие полиња:",
   "migrate_monday_button": "Копче",

@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Feldertyp-Zuordnung",
   "migrate_monday_field_mapping_desc": "JustDo behält die Kompatibilität mit Monday-Feldern bei.",
-  "migrate_monday_field_mapping_details": "Unten ordnet jeder Eintrag ein Monday-Feld seinem JustDo-Äquivalent zu, gefolgt von Hinweisen und erweiterten Funktionen in Klammern.",
+  "migrate_monday_field_mapping_details": "Nachfolgend wird jedes Element einem Monday-Feld seinem JustDo-Äquivalent zugeordnet, gefolgt von Hinweisen und zusätzlichen Funktionen in Klammern:",
   "migrate_monday_view_details": "Detaillierte Feldzuordnungen anzeigen",
   "migrate_monday_data_fields": "Datenfelder",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Startdatum, Enddatum, Fälligkeitsdatum (mit vollständiger Gantt-Ansicht-Unterstützung)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Textfeld",
   "migrate_monday_location": "<strong>Location</strong> → Textfeld (mit optionaler Karten-Integration)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Zahlenfeld (mit Dezimal-/Min-/Max-Unterstützung)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Zahlenfeld",
+  "migrate_monday_phone": "<strong>Telefon (Phone)</strong> → Textfeld",
   "migrate_monday_alt_solutions": "Alternative Lösungen",
   "migrate_monday_no_mapping": "Derzeit hat JustDo keine direkte Zuordnung für diese Felder:",
   "migrate_monday_button": "Button",

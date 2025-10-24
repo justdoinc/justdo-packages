@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Maparea Tipurilor de Câmpuri",
   "migrate_monday_field_mapping_desc": "JustDo menține compatibilitatea cu câmpurile Monday.",
-  "migrate_monday_field_mapping_details": "Mai jos, fiecare element mapează un câmp Monday la echivalentul său JustDo, urmat de note și capacități adăugate în paranteză.",
+  "migrate_monday_field_mapping_details": "Mai jos, fiecare element mapează un câmp Monday la echivalentul său JustDo, urmat de note și capabilități suplimentare în paranteze:",
   "migrate_monday_view_details": "Vizualizați mapările detaliate ale câmpurilor",
   "migrate_monday_data_fields": "Câmpuri de date",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Data de Început, Data de Încheiere, Data Scadentă (cu suport complet pentru vizualizare Gantt)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Câmp Text",
   "migrate_monday_location": "<strong>Location</strong> → Câmp Text (cu integrare opțională Maps)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Câmp Număr (cu suport pentru zecimale/min/max)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Câmp Număr",
+  "migrate_monday_phone": "<strong>Phone</strong> → Câmp Text",
   "migrate_monday_alt_solutions": "Soluții Alternative",
   "migrate_monday_no_mapping": "În prezent, JustDo nu are o mapare directă pentru aceste câmpuri:",
   "migrate_monday_button": "Buton",

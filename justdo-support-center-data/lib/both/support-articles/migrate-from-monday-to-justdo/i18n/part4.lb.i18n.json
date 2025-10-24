@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>Live goen:</strong> Äert Team kann direkt ufänken JustDo ze benotzen",
   "migrate_monday_process_note": "Keng Datenmapping, keng manuell Exporter, keng komplex Konfiguratiounen erfuerderlech.",
   "migrate_monday_timeline_title": "Migratiounszäitplang",
-  "migrate_monday_timeline_desc": "Alles wat mir vun Iech brauchen ass e Monday.com API-Schlëssel. Et dauert normalerweis 2–10 Minutten fir dësen mat e puer Klicks ze generéieren. Sobald mir en hunn, hänkt d'Migratiounslafzäit vun Ärem Datevolumen of—tëscht ongeféier enger Minutt bis e puer Stonnen.",
+  "migrate_monday_timeline_desc": "D'Migratiounslafzäit hänkt vun Ärem Donnéesvolumen of - vun ongeféier enger Minutt bis e puer Stonnen.",
   "migrate_monday_timeline_factors": "Faktoren déi d'Migratiounszäit beaflossen:",
   "migrate_monday_timeline_data": "D'Quantitéit vun Daten an Ärem Monday.com Workspace",
   "migrate_monday_timeline_boards": "Unzuel vu Boards an Elementer",

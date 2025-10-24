@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Uramisi wa Aina za Sehemu",
   "migrate_monday_field_mapping_desc": "JustDo inawiana na sehemu za Monday.",
-  "migrate_monday_field_mapping_details": "Hapa chini, kila kipengee kinaoanisha sehemu ya Monday na sawa yake ya JustDo, ikifuatiwa na maelezo na uwezo ulioongezwa katika mabano.",
+  "migrate_monday_field_mapping_details": "Hapa chini, kila kipengee kinaoanisha sehemu ya Monday na sawa yake ya JustDo, ikifuatiwa na maelezo na uwezo ulioongezwa katika mabano:",
   "migrate_monday_view_details": "Angalia uramisi wa kina wa sehemu",
   "migrate_monday_data_fields": "Sehemu za data",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Tarehe ya Kuanza, Tarehe ya Mwisho, Tarehe ya Mwisho wa Muda (ikiwa na msaada kamili wa mwonekano wa Gantt)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Sehemu ya Maandishi",
   "migrate_monday_location": "<strong>Location</strong> → Sehemu ya Maandishi (yenye uunganishaji wa hiari wa Ramani)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Sehemu ya Nambari (yenye msaada wa desimali/chini/juu)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Sehemu ya Nambari",
+  "migrate_monday_phone": "<strong>Phone</strong> → Sehemu ya Maandishi",
   "migrate_monday_alt_solutions": "Suluhisho Mbadala",
   "migrate_monday_no_mapping": "Kwa sasa, JustDo haina uramisi wa moja kwa moja kwa sehemu hizi:",
   "migrate_monday_button": "Kifungo (Button)",

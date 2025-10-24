@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "புலவகை வரைபடம் (Field Type Mapping)",
   "migrate_monday_field_mapping_desc": "JustDo ஆனது Monday இன் புலங்களுடன் இணக்கத்தன்மையை பராமரிக்கிறது.",
-  "migrate_monday_field_mapping_details": "கீழே, ஒவ்வொரு உருப்படியும் Monday புலத்தை அதன் JustDo சமமானதுடன் வரைபடமாக்குகிறது, அதைத் தொடர்ந்து குறிப்புகள் மற்றும் சேர்க்கப்பட்ட திறன்கள் அடைப்புக்குறிக்குள் உள்ளன.",
+  "migrate_monday_field_mapping_details": "கீழே, ஒவ்வொரு உருப்படியும் Monday புலத்தை அதன் JustDo சமமானதுடன் இணைக்கிறது, அதைத் தொடர்ந்து குறிப்புகள் மற்றும் சேர்க்கப்பட்ட திறன்கள் அடைப்புக்குறிக்குள் உள்ளன:",
   "migrate_monday_view_details": "விரிவான புல வரைபடங்களைக் காண்க",
   "migrate_monday_data_fields": "தரவு புலங்கள்",
   "migrate_monday_timeline": "<strong>Timeline</strong> → தொடக்க தேதி, முடிவு தேதி, காலக்கெடு தேதி (முழு Gantt காட்சி ஆதரவுடன்)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → உரை புலம்",
   "migrate_monday_location": "<strong>Location</strong> → உரை புலம் (விருப்பமான வரைபடங்கள் ஒருங்கிணைப்புடன்)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → எண் புலம் (தசம/குறைந்தபட்சம்/அதிகபட்சம் ஆதரவுடன்)",
-  "migrate_monday_phone": "<strong>Phone</strong> → எண் புலம்",
+  "migrate_monday_phone": "<strong>Phone</strong> → உரை புலம்",
   "migrate_monday_alt_solutions": "மாற்று தீர்வுகள்",
   "migrate_monday_no_mapping": "தற்போது, JustDo இல் இந்த புலங்களுக்கு நேரடி வரைபடம் இல்லை:",
   "migrate_monday_button": "பொத்தான் (Button)",

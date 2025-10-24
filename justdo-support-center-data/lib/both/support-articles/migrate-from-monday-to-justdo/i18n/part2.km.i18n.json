@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "ការផ្គូផ្គងប្រភេទទិន្នន័យ (Field Type Mapping)",
   "migrate_monday_field_mapping_desc": "JustDo រក្សាភាពឆបគ្នាជាមួយទិន្នន័យរបស់ Monday។",
-  "migrate_monday_field_mapping_details": "ខាងក្រោម វត្ថុនីមួយៗផ្គូផ្គងទិន្នន័យ Monday ទៅទិន្នន័យស្មើនៅក្នុង JustDo ត្រូវបានតាមដោយកំណត់សម្គាល់ និងសមត្ថភាពបន្ថែមនៅក្នុងវង់ក្រចក។",
+  "migrate_monday_field_mapping_details": "ខាងក្រោមនេះ ធាតុនីមួយៗផ្គូផ្គងប្រអប់ទិន្នន័យរបស់ Monday ទៅនឹងប្រអប់ទិន្នន័យស្មើគ្នារបស់ JustDo ដែលត្រូវបានបន្តដោយកំណត់សម្គាល់ និងសមត្ថភាពបន្ថែមក្នុងវង់ក្រចក៖",
   "migrate_monday_view_details": "មើលការផ្គូផ្គងទិន្នន័យលម្អិត",
   "migrate_monday_data_fields": "ទិន្នន័យទិន្នន័យ (Data fields)",
   "migrate_monday_timeline": "<strong>Timeline</strong> → កាលបរិច្ឆេទចាប់ផ្តើម, កាលបរិច្ឆេទបញ្ចប់, កាលបរិច្ឆេទកំណត់ (ជាមួយការគាំទ្រទិដ្ឋភាព Gantt ពេញលេញ)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → ទិន្នន័យអត្ថបទ (Text field)",
   "migrate_monday_location": "<strong>Location</strong> → ទិន្នន័យអត្ថបទ (Text field) (ជាមួយការរួមបញ្ចូល Maps ជាជម្រើស)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → ទិន្នន័យលេខ (Number field) (ជាមួយការគាំទ្រទសភាគ/អប្បបរមា/អតិបរមា)",
-  "migrate_monday_phone": "<strong>Phone</strong> → ទិន្នន័យលេខ (Number field)",
+  "migrate_monday_phone": "<strong>Phone</strong> → ប្រអប់អត្ថបទ",
   "migrate_monday_alt_solutions": "ដំណោះស្រាយជំនួស (Alternative Solutions)",
   "migrate_monday_no_mapping": "បច្ចុប្បន្ន JustDo មិនមានការផ្គូផ្គងដោយផ្ទាល់សម្រាប់ទិន្នន័យទាំងនេះទេ៖",
   "migrate_monday_button": "ប៊ូតុង (Button)",

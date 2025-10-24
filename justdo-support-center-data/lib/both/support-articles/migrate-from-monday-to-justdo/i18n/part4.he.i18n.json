@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>כניסה לשידור חי:</strong> הצוות שלכם יכול להתחיל להשתמש ב-JustDo מיד",
   "migrate_monday_process_note": "אין צורך במיפוי נתונים, ייצוא ידני או תצורות מורכבות.",
   "migrate_monday_timeline_title": "לוח זמנים להעברה",
-  "migrate_monday_timeline_desc": "כל מה שאנחנו צריכים מכם זה מפתח API של Monday.com. בדרך כלל לוקח 2-10 דקות ליצור אותו בכמה לחיצות. ברגע שיש לנו אותו, זמן ריצת ההעברה תלוי בנפח הנתונים שלכם - בכל מקום בין כדקה לכמה שעות.",
+  "migrate_monday_timeline_desc": "זמן ההרצה של ההעברה תלוי בנפח הנתונים שלכם - בין כדקה לכמה שעות.",
   "migrate_monday_timeline_factors": "גורמים המשפיעים על זמן ההעברה:",
   "migrate_monday_timeline_data": "כמות הנתונים במרחב העבודה של Monday.com שלכם",
   "migrate_monday_timeline_boards": "מספר הלוחות והפריטים",

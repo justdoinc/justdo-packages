@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>İşə Salın:</strong> Komandanız dərhal JustDo-dan istifadə edə bilər",
   "migrate_monday_process_note": "Heç bir məlumat xəritələşdirməsi, əl ilə ixrac, mürəkkəb konfiqurasiyalar tələb olunmur.",
   "migrate_monday_timeline_title": "Köçürmə Vaxt Cədvəli",
-  "migrate_monday_timeline_desc": "Bizdən tələb olunan yeganə şey Monday.com API açarıdır. Adətən bir neçə kliklə yaratmaq 2-10 dəqiqə çəkir. Onu əldə etdikdən sonra köçürmə müddəti məlumat həcminizdən asılıdır—təxminən bir dəqiqədən bir neçə saata qədər.",
+  "migrate_monday_timeline_desc": "Miqrasiyanın iş müddəti məlumat həcminizdən asılıdır - təxminən bir dəqiqədən bir neçə saata qədər.",
   "migrate_monday_timeline_factors": "Köçürmə müddətinə təsir edən amillər:",
   "migrate_monday_timeline_data": "Monday.com iş məkanınızdakı məlumat həcmi",
   "migrate_monday_timeline_boards": "Board-ların və elementlərin sayı",

@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>Aktivizimi:</strong> Ekipi juaj mund të fillojë të përdorë JustDo menjëherë",
   "migrate_monday_process_note": "Nuk ka nevojë për hartëzim të dhënash, eksporte manuale apo konfigurrime komplekse.",
   "migrate_monday_timeline_title": "Kohëzgjatja e Migrimit",
-  "migrate_monday_timeline_desc": "Gjithçka që na duhet nga ju është një çelës API i Monday.com. Zakonisht kërkon 2–10 minuta për ta gjeneruar me disa klikime. Pasi ta marrim, koha e ekzekutimit të migrimit varet nga vëllimi i të dhënave tuaja—nga rreth një minutë deri në disa orë.",
+  "migrate_monday_timeline_desc": "Koha e ekzekutimit të migrimit varet nga vëllimi i të dhënave tuaja - nga rreth një minutë deri në disa orë.",
   "migrate_monday_timeline_factors": "Faktorët që ndikojnë kohën e migrimit:",
   "migrate_monday_timeline_data": "Sasia e të dhënave në hapësirën tuaj të Monday.com",
   "migrate_monday_timeline_boards": "Numri i bordeve dhe artikujve",

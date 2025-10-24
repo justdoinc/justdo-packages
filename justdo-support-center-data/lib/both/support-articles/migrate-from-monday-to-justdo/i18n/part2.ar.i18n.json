@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "تعيين أنواع الحقول",
   "migrate_monday_field_mapping_desc": "يحافظ JustDo على التوافق مع حقول Monday.",
-  "migrate_monday_field_mapping_details": "فيما يلي، يربط كل عنصر حقل Monday بما يعادله في JustDo، متبوعًا بملاحظات والقدرات المضافة بين قوسين.",
+  "migrate_monday_field_mapping_details": "أدناه، يعين كل عنصر حقل Monday إلى ما يعادله في JustDo، متبوعًا بملاحظات والقدرات المضافة بين قوسين:",
   "migrate_monday_view_details": "عرض تعيينات الحقول التفصيلية",
   "migrate_monday_data_fields": "حقول البيانات",
   "migrate_monday_timeline": "<strong>الجدول الزمني (Timeline)</strong> ← تاريخ البداية، تاريخ الانتهاء، تاريخ الاستحقاق (مع دعم كامل لعرض جانت)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>البريد الإلكتروني (Email)</strong> ← حقل النص",
   "migrate_monday_location": "<strong>الموقع (Location)</strong> ← حقل النص (مع تكامل اختياري مع الخرائط)",
   "migrate_monday_numbers": "<strong>الأرقام (Numbers)</strong> ← حقل الأرقام (مع دعم الكسور العشرية/الحد الأدنى/الحد الأقصى)",
-  "migrate_monday_phone": "<strong>الهاتف (Phone)</strong> ← حقل الأرقام",
+  "migrate_monday_phone": "<strong>الهاتف (Phone)</strong> ← حقل النص",
   "migrate_monday_alt_solutions": "حلول بديلة",
   "migrate_monday_no_mapping": "في الوقت الحالي، لا يمتلك JustDo تعيينًا مباشرًا لهذه الحقول:",
   "migrate_monday_button": "زر (Button)",

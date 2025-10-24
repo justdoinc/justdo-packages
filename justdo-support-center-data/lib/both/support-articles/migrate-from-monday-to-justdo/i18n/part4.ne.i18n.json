@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>सुरु गर्नुहोस्:</strong> तपाईंको टोलीले तुरुन्तै JustDo प्रयोग गर्न सक्छ",
   "migrate_monday_process_note": "कुनै डेटा म्यापिङ, कुनै म्यानुअल निर्यात, कुनै जटिल कन्फिगरेसन आवश्यक छैन।",
   "migrate_monday_timeline_title": "माइग्रेसन समयरेखा",
-  "migrate_monday_timeline_desc": "हामीलाई तपाईंबाट चाहिने एक मात्र Monday.com API key हो। यसलाई केही क्लिकमा उत्पन्न गर्न सामान्यतया २–१० मिनेट लाग्छ। एकपटक हामीले यो पाएपछि, माइग्रेसन समय तपाईंको डेटा मात्रामा निर्भर गर्छ—लगभग एक मिनेटदेखि केही घण्टासम्म।",
+  "migrate_monday_timeline_desc": "माइग्रेसन समय तपाईंको डेटा मात्रामा निर्भर गर्दछ - लगभग एक मिनेटदेखि केही घण्टासम्म।",
   "migrate_monday_timeline_factors": "माइग्रेसन समयलाई असर गर्ने कारकहरू:",
   "migrate_monday_timeline_data": "तपाईंको Monday.com workspace मा डेटाको मात्रा",
   "migrate_monday_timeline_boards": "बोर्ड र items को संख्या",

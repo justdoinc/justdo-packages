@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "ফিল্ড টাইপ ম্যাপিং",
   "migrate_monday_field_mapping_desc": "JustDo Monday-এর ফিল্ডগুলির সাথে সামঞ্জস্য বজায় রাখে।",
-  "migrate_monday_field_mapping_details": "নিচে, প্রতিটি আইটেম Monday ফিল্ডকে তার JustDo সমতুল্যের সাথে ম্যাপ করে, এবং বন্ধনীতে নোট ও অতিরিক্ত সুবিধা উল্লেখ করা হয়েছে।",
+  "migrate_monday_field_mapping_details": "নিচে, প্রতিটি আইটেম Monday ফিল্ডকে তার JustDo সমতুল্যের সাথে ম্যাপ করে, এরপর বন্ধনীতে নোট এবং অতিরিক্ত ক্ষমতা দেখানো হয়েছে:",
   "migrate_monday_view_details": "বিস্তারিত ফিল্ড ম্যাপিং দেখুন",
   "migrate_monday_data_fields": "ডেটা ফিল্ড",
   "migrate_monday_timeline": "<strong>Timeline</strong> → শুরুর তারিখ, শেষের তারিখ, নির্ধারিত তারিখ (সম্পূর্ণ Gantt ভিউ সাপোর্ট সহ)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → টেক্সট ফিল্ড",
   "migrate_monday_location": "<strong>Location</strong> → টেক্সট ফিল্ড (ঐচ্ছিক Maps ইন্টিগ্রেশন সহ)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → নম্বর ফিল্ড (দশমিক/সর্বনিম্ন/সর্বোচ্চ সাপোর্ট সহ)",
-  "migrate_monday_phone": "<strong>Phone</strong> → নম্বর ফিল্ড",
+  "migrate_monday_phone": "<strong>Phone</strong> → টেক্সট ফিল্ড",
   "migrate_monday_alt_solutions": "বিকল্প সমাধান",
   "migrate_monday_no_mapping": "বর্তমানে, JustDo-এর এই ফিল্ডগুলির জন্য সরাসরি ম্যাপিং নেই:",
   "migrate_monday_button": "বাটন",

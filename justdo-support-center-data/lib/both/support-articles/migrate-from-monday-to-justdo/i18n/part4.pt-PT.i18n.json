@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>Ativação:</strong> A sua equipa pode começar a usar o JustDo imediatamente",
   "migrate_monday_process_note": "Sem mapeamento de dados, sem exportações manuais, sem configurações complexas necessárias.",
   "migrate_monday_timeline_title": "Cronograma da Migração",
-  "migrate_monday_timeline_desc": "Tudo o que precisamos é de uma chave de API do Monday.com. Normalmente demora 2 a 10 minutos a gerar com alguns cliques. Assim que a tivermos, o tempo de execução da migração depende do volume dos seus dados—desde cerca de um minuto até algumas horas.",
+  "migrate_monday_timeline_desc": "O tempo de execução da migração depende do volume de dados - desde cerca de um minuto até algumas horas.",
   "migrate_monday_timeline_factors": "Fatores que afetam o tempo de migração:",
   "migrate_monday_timeline_data": "A quantidade de dados no seu espaço de trabalho do Monday.com",
   "migrate_monday_timeline_boards": "Número de quadros e itens",

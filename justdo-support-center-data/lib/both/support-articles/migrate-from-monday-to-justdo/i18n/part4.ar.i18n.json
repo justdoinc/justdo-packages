@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>البدء:</strong> يمكن لفريقك البدء في استخدام JustDo فوراً",
   "migrate_monday_process_note": "لا حاجة لتخطيط البيانات، ولا تصدير يدوي، ولا تكوينات معقدة.",
   "migrate_monday_timeline_title": "الجدول الزمني للترحيل",
-  "migrate_monday_timeline_desc": "كل ما نحتاجه منك هو مفتاح API من Monday.com. عادة ما يستغرق الأمر من 2 إلى 10 دقائق لإنشائه ببضع نقرات. بمجرد حصولنا عليه، يعتمد وقت تشغيل الترحيل على حجم بياناتك - من دقيقة واحدة تقريباً إلى بضع ساعات.",
+  "migrate_monday_timeline_desc": "يعتمد وقت تشغيل النقل على حجم بياناتك - من دقيقة واحدة تقريباً إلى بضع ساعات.",
   "migrate_monday_timeline_factors": "العوامل المؤثرة على وقت الترحيل:",
   "migrate_monday_timeline_data": "كمية البيانات في مساحة عمل Monday.com الخاصة بك",
   "migrate_monday_timeline_boards": "عدد اللوحات والعناصر",

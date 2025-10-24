@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Sahə Növü Uyğunlaşdırması",
   "migrate_monday_field_mapping_desc": "JustDo Monday sahələri ilə uyğunluğu saxlayır.",
-  "migrate_monday_field_mapping_details": "Aşağıda hər bir element Monday sahəsini JustDo ekvivalenti ilə əlaqələndirir, ardınca qeydlər və əlavə imkanlar mötərizədə göstərilir.",
+  "migrate_monday_field_mapping_details": "Aşağıda hər element Monday sahəsini JustDo ekvivalentinə uyğunlaşdırır, ardınca qeydlər və əlavə imkanlar mötərizədə verilir:",
   "migrate_monday_view_details": "Ətraflı sahə uyğunlaşdırmalarına baxın",
   "migrate_monday_data_fields": "Məlumat sahələri",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Başlanğıc Tarixi, Bitmə Tarixi, Son Tarix (tam Gantt görünüşü dəstəyi ilə)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Mətn sahəsi",
   "migrate_monday_location": "<strong>Location</strong> → Mətn sahəsi (istəyə bağlı Xəritələr inteqrasiyası ilə)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Rəqəm sahəsi (onluq/min/maks dəstəyi ilə)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Rəqəm sahəsi",
+  "migrate_monday_phone": "<strong>Phone</strong> → Mətn sahəsi",
   "migrate_monday_alt_solutions": "Alternativ Həllər",
   "migrate_monday_no_mapping": "Hal-hazırda JustDo bu sahələr üçün birbaşa uyğunlaşdırmaya malik deyil:",
   "migrate_monday_button": "Düymə",

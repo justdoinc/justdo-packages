@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>Spustenie:</strong> Váš tým môže okamžite začať používať JustDo",
   "migrate_monday_process_note": "Nie je potrebné mapovanie údajov, manuálne exporty ani zložité konfigurácie.",
   "migrate_monday_timeline_title": "Časový harmonogram migrácie",
-  "migrate_monday_timeline_desc": "Všetko, čo od vás potrebujeme, je API kľúč Monday.com. Zvyčajne trvá 2–10 minút ho vygenerovať niekoľkými kliknutiami. Keď ho dostaneme, čas migrácie závisí od objemu vašich údajov – od približne minúty až po niekoľko hodín.",
+  "migrate_monday_timeline_desc": "Čas migrácie závisí od objemu vašich údajov - od približne jednej minúty až po niekoľko hodín.",
   "migrate_monday_timeline_factors": "Faktory ovplyvňujúce čas migrácie:",
   "migrate_monday_timeline_data": "Množstvo údajov vo vašom pracovnom priestore Monday.com",
   "migrate_monday_timeline_boards": "Počet boardov a položiek",

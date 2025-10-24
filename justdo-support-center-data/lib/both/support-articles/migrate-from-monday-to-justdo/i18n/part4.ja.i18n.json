@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>運用開始:</strong> チームはすぐにJustDoの使用を開始できます",
   "migrate_monday_process_note": "データマッピング、手動エクスポート、複雑な設定は一切不要です。",
   "migrate_monday_timeline_title": "移行のタイムライン",
-  "migrate_monday_timeline_desc": "必要なのはMonday.com APIキーのみです。通常、数回のクリックで2〜10分程度で生成できます。APIキーを取得後、移行の実行時間はデータ量によって異なり、約1分から数時間かかります。",
+  "migrate_monday_timeline_desc": "移行の実行時間はデータ量によって異なり、約1分から数時間かかります。",
   "migrate_monday_timeline_factors": "移行時間に影響する要因:",
   "migrate_monday_timeline_data": "Monday.comワークスペース内のデータ量",
   "migrate_monday_timeline_boards": "ボードとアイテムの数",

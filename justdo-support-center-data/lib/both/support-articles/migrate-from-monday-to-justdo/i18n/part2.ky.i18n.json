@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Талаа Түрүн Шайкештирүү",
   "migrate_monday_field_mapping_desc": "JustDo Monday талааларынын шайкештигин сактайт.",
-  "migrate_monday_field_mapping_details": "Төмөндө ар бир пункт Monday талаасын анын JustDo эквивалентине шайкештирет, андан кийин эскертүүлөр жана кошумча мүмкүнчүлүктөр (кашаанын ичинде) көрсөтүлөт.",
+  "migrate_monday_field_mapping_details": "Төмөндө ар бир пункт Monday талаасын JustDo эквивалентине туура келтирет, андан кийин кошумча мүмкүнчүлүктөр жана эскертүүлөр кашаанын ичинде көрсөтүлгөн:",
   "migrate_monday_view_details": "Талаалардын толук шайкештирүүсүн көрүү",
   "migrate_monday_data_fields": "Маалымат талаалары",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Башталуу Датасы, Аяктоо Датасы, Аткаруу Датасы (толук Gantt көрүнүшү колдоосу менен)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Текст талаасы",
   "migrate_monday_location": "<strong>Location</strong> → Текст талаасы (карталар интеграциясы менен кошумча)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Сан талаасы (ондук/мин/макс колдоосу менен)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Сан талаасы",
+  "migrate_monday_phone": "<strong>Phone</strong> → Текст талаасы",
   "migrate_monday_alt_solutions": "Альтернативдүү Чечимдер",
   "migrate_monday_no_mapping": "Учурда JustDo бул талаалар үчүн түздөн-түз шайкештирүүсү жок:",
   "migrate_monday_button": "Баскыч (Button)",

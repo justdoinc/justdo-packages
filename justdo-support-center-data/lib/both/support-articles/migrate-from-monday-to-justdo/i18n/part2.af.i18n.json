@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Veldtipe-kartering",
   "migrate_monday_field_mapping_desc": "JustDo handhaaf verenigbaarheid met Monday se velde.",
-  "migrate_monday_field_mapping_details": "Hieronder karteer elke item 'n Monday-veld na sy JustDo-ekwivalent, gevolg deur notas en bygevoegde vermoëns in hakies.",
+  "migrate_monday_field_mapping_details": "Hieronder karteer elke item 'n Monday veld na sy JustDo ekwivalent, gevolg deur notas en bygevoegde vermoëns in hakies:",
   "migrate_monday_view_details": "Bekyk gedetailleerde veldkartering",
   "migrate_monday_data_fields": "Datavelde",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Begindatum, Einddatum, Sperdatum (met volledige Gantt-aansig ondersteuning)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Teksveld",
   "migrate_monday_location": "<strong>Location</strong> → Teksveld (met opsionele Kaarte-integrasie)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Nommerveld (met desimaal/min/maks ondersteuning)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Nommerveld",
+  "migrate_monday_phone": "<strong>Phone</strong> → Teks veld",
   "migrate_monday_alt_solutions": "Alternatiewe Oplossings",
   "migrate_monday_no_mapping": "Tans het JustDo nie 'n direkte kartering vir hierdie velde nie:",
   "migrate_monday_button": "Knoppie",

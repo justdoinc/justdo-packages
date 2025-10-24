@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Laukų tipų susiejimas",
   "migrate_monday_field_mapping_desc": "JustDo palaiko suderinamumą su Monday laukais.",
-  "migrate_monday_field_mapping_details": "Žemiau kiekvienas elementas susieja Monday lauką su jo JustDo ekvivalentu, po kuriuo nurodytos pastabos ir papildomos galimybės skliausteliuose.",
+  "migrate_monday_field_mapping_details": "Žemiau kiekvienas elementas susieja Monday lauką su jo JustDo ekvivalentu, po kurio pateikiamos pastabos ir papildomos galimybės skliausteliuose:",
   "migrate_monday_view_details": "Peržiūrėti išsamų laukų susiejimą",
   "migrate_monday_data_fields": "Duomenų laukai",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Pradžios data, Pabaigos data, Terminas (su pilnu Gantt rodinio palaikymu)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Teksto laukas",
   "migrate_monday_location": "<strong>Location</strong> → Teksto laukas (su pasirenkamu žemėlapių integravimu)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Skaičiaus laukas (su dešimtainių/min/maks palaikymu)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Skaičiaus laukas",
+  "migrate_monday_phone": "<strong>Phone</strong> → Teksto laukas",
   "migrate_monday_alt_solutions": "Alternatyvūs sprendimai",
   "migrate_monday_no_mapping": "Šiuo metu JustDo neturi tiesioginio susiejimo šiems laukams:",
   "migrate_monday_button": "Mygtukas",

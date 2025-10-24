@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Eremu Moten Mapaketa",
   "migrate_monday_field_mapping_desc": "JustDo-k Monday-ren eremuekin bateragarritasuna mantentzen du.",
-  "migrate_monday_field_mapping_details": "Behean, elementu bakoitzak Monday eremu bat bere JustDo baliokidearekin mapatzen du, oharrak eta gaitasun gehigarriak parentesi artean jarraitzen dituelarik.",
+  "migrate_monday_field_mapping_details": "Behean, elementu bakoitzak Monday eremu bat bere JustDo baliokidearekin mapatzen du, oharrak eta gaitasun gehituak parentesi artean jarraitzen dituena:",
   "migrate_monday_view_details": "Ikusi eremu mapaketen xehetasunak",
   "migrate_monday_data_fields": "Datu eremuak",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Hasiera Data, Amaiera Data, Epemuga (Gantt ikuspegi osoko euskarriarekin)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Testu eremua",
   "migrate_monday_location": "<strong>Location</strong> → Testu eremua (Mapen integrazioaren aukerarekin)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Zenbaki eremua (dezimal/gutxieneko/gehieneko euskarriarekin)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Zenbaki eremua",
+  "migrate_monday_phone": "<strong>Phone</strong> → Testu eremua",
   "migrate_monday_alt_solutions": "Irtenbide Alternatiboak",
   "migrate_monday_no_mapping": "Une honetan, JustDo-k ez du zuzeneko mapaketarik eremu hauetarako:",
   "migrate_monday_button": "Botoia",

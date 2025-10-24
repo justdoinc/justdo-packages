@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Ánh Xạ Loại Trường",
   "migrate_monday_field_mapping_desc": "JustDo duy trì khả năng tương thích với các trường của Monday.",
-  "migrate_monday_field_mapping_details": "Dưới đây, mỗi mục ánh xạ một trường Monday sang trường tương đương trong JustDo, kèm theo ghi chú và các khả năng bổ sung trong ngoặc đơn.",
+  "migrate_monday_field_mapping_details": "Dưới đây, mỗi mục ánh xạ một trường Monday sang trường tương đương trong JustDo, kèm theo ghi chú và các khả năng bổ sung trong ngoặc đơn:",
   "migrate_monday_view_details": "Xem chi tiết ánh xạ trường",
   "migrate_monday_data_fields": "Trường dữ liệu",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Ngày Bắt Đầu, Ngày Kết Thúc, Ngày Đến Hạn (với hỗ trợ đầy đủ chế độ xem Gantt)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Trường Văn Bản",
   "migrate_monday_location": "<strong>Location</strong> → Trường Văn Bản (với tích hợp Maps tùy chọn)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Trường Số (với hỗ trợ số thập phân/min/max)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Trường Số",
+  "migrate_monday_phone": "<strong>Phone</strong> → Trường Văn Bản",
   "migrate_monday_alt_solutions": "Giải Pháp Thay Thế",
   "migrate_monday_no_mapping": "Hiện tại, JustDo chưa có ánh xạ trực tiếp cho các trường sau:",
   "migrate_monday_button": "Nút Bấm",

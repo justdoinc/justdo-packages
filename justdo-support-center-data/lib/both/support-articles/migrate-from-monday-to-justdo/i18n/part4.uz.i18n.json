@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>Ishga Tushirish:</strong> Jamoangiz JustDo dan darhol foydalanishni boshlashi mumkin",
   "migrate_monday_process_note": "Ma'lumotlarni moslashtirish, qo'lda eksport qilish yoki murakkab konfiguratsiyalar talab qilinmaydi.",
   "migrate_monday_timeline_title": "Ko'chirish Vaqti",
-  "migrate_monday_timeline_desc": "Bizga faqat Monday.com API kaliti kerak. Uni yaratish odatda bir necha bosish bilan 2-10 daqiqa vaqt oladi. Uni olganimizdan so'ng, ko'chirish vaqti ma'lumotlaringiz hajmiga bog'liq - taxminan bir daqiqadan bir necha soatgacha.",
+  "migrate_monday_timeline_desc": "Ko'chirish vaqti sizning ma'lumotlar hajmingizga bog'liq - taxminan bir daqiqadan bir necha soatgacha.",
   "migrate_monday_timeline_factors": "Ko'chirish vaqtiga ta'sir qiluvchi omillar:",
   "migrate_monday_timeline_data": "Monday.com ish maydoningizdagi ma'lumotlar miqdori",
   "migrate_monday_timeline_boards": "Doskalar va elementlar soni",

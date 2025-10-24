@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>ይጀምሩ፡</strong> ቡድንዎ JustDoን ወዲያውኑ መጠቀም ይችላል",
   "migrate_monday_process_note": "የመረጃ ካርታ ስራ፣ የእጅ ወደ ውጭ መላክ፣ ወይም ውስብስብ ማዋቀሪያዎች አያስፈልጉም።",
   "migrate_monday_timeline_title": "የዝውውር ጊዜ መስመር",
-  "migrate_monday_timeline_desc": "ከእርስዎ የምንፈልገው የMonday.com API ቁልፍ ብቻ ነው። በጥቂት ጠቅታዎች ለመፍጠር ብዙውን ጊዜ 2-10 ደቂቃዎች ይወስዳል። አንዴ ካገኘነው በኋላ፣ የዝውውሩ ሩጫ ጊዜ በመረጃ መጠንዎ ላይ የተመሰረተ ነው - ከአንድ ደቂቃ አካባቢ እስከ ጥቂት ሰዓታት።",
+  "migrate_monday_timeline_desc": "የዝውውር ሂደት ጊዜ በመረጃ መጠንዎ ላይ የተመሰረተ ነው - ከአንድ ደቂቃ ያህል እስከ ጥቂት ሰዓታት።",
   "migrate_monday_timeline_factors": "የዝውውር ጊዜን የሚነኩ ምክንያቶች፡",
   "migrate_monday_timeline_data": "በMonday.com የስራ ቦታዎ ውስጥ ያለው የመረጃ መጠን",
   "migrate_monday_timeline_boards": "የቦርዶች እና ንጥሎች ብዛት",

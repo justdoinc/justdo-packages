@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Mapiranje Tipova Polja",
   "migrate_monday_field_mapping_desc": "JustDo održava kompatibilnost s poljima Monday platforme.",
-  "migrate_monday_field_mapping_details": "U nastavku, svaka stavka mapira Monday polje na njegov JustDo ekvivalent, praćeno napomenama i dodatnim mogućnostima u zagradama.",
+  "migrate_monday_field_mapping_details": "U nastavku, svaka stavka mapira Monday polje na njegov JustDo ekvivalent, praćeno napomenama i dodatnim mogućnostima u zagradama:",
   "migrate_monday_view_details": "Pogledajte detaljno mapiranje polja",
   "migrate_monday_data_fields": "Podatkovna polja",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Datum Početka, Datum Završetka, Rok (s punom podrškom za Gantt prikaz)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Tekstualno polje",
   "migrate_monday_location": "<strong>Location</strong> → Tekstualno polje (s neobaveznom Maps integracijom)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Numeričko polje (s podrškom za decimale/min/max)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Numeričko polje",
+  "migrate_monday_phone": "<strong>Phone</strong> → Tekstualno polje",
   "migrate_monday_alt_solutions": "Alternativna Rješenja",
   "migrate_monday_no_mapping": "Trenutno JustDo nema direktno mapiranje za ova polja:",
   "migrate_monday_button": "Gumb (Button)",

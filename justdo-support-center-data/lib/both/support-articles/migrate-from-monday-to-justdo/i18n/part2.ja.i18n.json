@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "フィールドタイプマッピング",
   "migrate_monday_field_mapping_desc": "JustDoはMondayのフィールドとの互換性を維持しています。",
-  "migrate_monday_field_mapping_details": "以下では、各項目がMondayのフィールドをJustDoの対応するフィールドにマッピングし、その後に注釈と追加機能が括弧内に記載されています。",
+  "migrate_monday_field_mapping_details": "以下の各項目は、Mondayのフィールドを対応するJustDoのフィールドにマッピングしたもので、括弧内に注釈と追加機能を記載しています:",
   "migrate_monday_view_details": "詳細なフィールドマッピングを表示",
   "migrate_monday_data_fields": "データフィールド",
   "migrate_monday_timeline": "<strong>タイムライン</strong> → 開始日、終了日、期限(完全なガントビューサポート付き)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>メール</strong> → テキストフィールド",
   "migrate_monday_location": "<strong>位置情報</strong> → テキストフィールド(オプションのマップ統合付き)",
   "migrate_monday_numbers": "<strong>数値</strong> → 数値フィールド(小数点/最小値/最大値サポート付き)",
-  "migrate_monday_phone": "<strong>電話番号</strong> → 数値フィールド",
+  "migrate_monday_phone": "<strong>Phone</strong> → テキストフィールド",
   "migrate_monday_alt_solutions": "代替ソリューション",
   "migrate_monday_no_mapping": "現在、JustDoはこれらのフィールドに対する直接的なマッピングを持っていません:",
   "migrate_monday_button": "ボタン",

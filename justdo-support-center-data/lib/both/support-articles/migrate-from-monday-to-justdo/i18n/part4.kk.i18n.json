@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>Іске қосу:</strong> Командаңыз JustDo-ны бірден пайдалана бастай алады",
   "migrate_monday_process_note": "Деректерді салыстыру, қолмен экспорттау, күрделі конфигурациялар қажет емес.",
   "migrate_monday_timeline_title": "Көшіру мерзімі",
-  "migrate_monday_timeline_desc": "Бізге тек Monday.com API кілті қажет. Оны жасау әдетте бірнеше басумен 2-10 минут алады. Оны алғаннан кейін, көшіру уақыты деректер көлеміне байланысты — шамамен бір минуттан бірнеше сағатқа дейін.",
+  "migrate_monday_timeline_desc": "Көшірудің орындалу уақыты деректер көлеміне байланысты - бір минуттан бірнеше сағатқа дейін.",
   "migrate_monday_timeline_factors": "Көшіру уақытына әсер ететін факторлар:",
   "migrate_monday_timeline_data": "Monday.com жұмыс кеңістігіндегі деректер көлемі",
   "migrate_monday_timeline_boards": "Тақталар мен элементтер саны",

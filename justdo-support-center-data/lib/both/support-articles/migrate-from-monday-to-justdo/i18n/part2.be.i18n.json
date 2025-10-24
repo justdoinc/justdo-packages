@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Адпаведнасць тыпаў палёў",
   "migrate_monday_field_mapping_desc": "JustDo падтрымлівае сумяшчальнасць з палямі Monday.",
-  "migrate_monday_field_mapping_details": "Ніжэй кожны элемент адлюстроўвае адпаведнасць паля Monday яго эквіваленту ў JustDo, з наступнымі заўвагамі і дадатковымі магчымасцямі ў дужках.",
+  "migrate_monday_field_mapping_details": "Ніжэй кожны элемент адлюстроўвае адпаведнасць паля Monday яго эквіваленту ў JustDo, з нататкамі і дадатковымі магчымасцямі ў дужках:",
   "migrate_monday_view_details": "Паглядзець падрабязную адпаведнасць палёў",
   "migrate_monday_data_fields": "Палі даных",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Дата пачатку, Дата заканчэння, Тэрмін выканання (з поўнай падтрымкай дыяграмы Ганта)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Тэкставае поле",
   "migrate_monday_location": "<strong>Location</strong> → Тэкставае поле (з дадатковай інтэграцыяй карт)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Лікавае поле (з падтрымкай дзесятковых/мін/макс значэнняў)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Лікавае поле",
+  "migrate_monday_phone": "<strong>Phone (Тэлефон)</strong> → Тэкставае поле",
   "migrate_monday_alt_solutions": "Альтэрнатыўныя рашэнні",
   "migrate_monday_no_mapping": "На дадзены момент JustDo не мае прямой адпаведнасці для гэтых палёў:",
   "migrate_monday_button": "Кнопка",

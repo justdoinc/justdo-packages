@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>Anza Kutumia:</strong> Timu yako inaweza kuanza kutumia JustDo mara moja",
   "migrate_monday_process_note": "Hakuna urambishaji wa data, hakuna usafirishaji wa mkono, hakuna usanidi tata unaohitajika.",
   "migrate_monday_timeline_title": "Ratiba ya Uhamiaji",
-  "migrate_monday_timeline_desc": "Tunachohitaji kutoka kwako ni ufunguo wa API wa Monday.com tu. Kwa kawaida inachukua dakika 2-10 kuuzalisha kwa mibofyo michache. Tunapouwa, muda wa uendeshaji wa uhamiaji unategemea kiasi cha data yako—kutoka dakika moja hadi masaa machache.",
+  "migrate_monday_timeline_desc": "Muda wa kuendesha uhamishaji unategemea wingi wa data yako - kutoka dakika moja hadi masaa machache.",
   "migrate_monday_timeline_factors": "Mambo yanayoathiri muda wa uhamiaji:",
   "migrate_monday_timeline_data": "Kiasi cha data katika nafasi yako ya kazi ya Monday.com",
   "migrate_monday_timeline_boards": "Idadi ya ubao na vipengee",

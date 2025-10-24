@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "欄位類型對應",
   "migrate_monday_field_mapping_desc": "JustDo 保持與 Monday 欄位的兼容性。",
-  "migrate_monday_field_mapping_details": "以下每個項目將 Monday 欄位對應到其 JustDo 等效欄位,並在括號中註明和附加功能。",
+  "migrate_monday_field_mapping_details": "以下每個項目將 Monday 欄位對應到其 JustDo 等效欄位,並在括號中附註說明和新增功能:",
   "migrate_monday_view_details": "查看詳細的欄位對應",
   "migrate_monday_data_fields": "資料欄位",
   "migrate_monday_timeline": "<strong>時間軸 (Timeline)</strong> → 開始日期、結束日期、到期日(支援完整的甘特圖檢視)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>電子郵件 (Email)</strong> → 文字欄位",
   "migrate_monday_location": "<strong>位置 (Location)</strong> → 文字欄位(可選地圖整合)",
   "migrate_monday_numbers": "<strong>數字 (Numbers)</strong> → 數字欄位(支援小數/最小值/最大值)",
-  "migrate_monday_phone": "<strong>電話 (Phone)</strong> → 數字欄位",
+  "migrate_monday_phone": "<strong>電話 (Phone)</strong> → 文字欄位",
   "migrate_monday_alt_solutions": "替代解決方案",
   "migrate_monday_no_mapping": "目前 JustDo 沒有這些欄位的直接對應:",
   "migrate_monday_button": "按鈕 (Button)",

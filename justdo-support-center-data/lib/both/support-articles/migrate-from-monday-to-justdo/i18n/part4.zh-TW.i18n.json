@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>上線:</strong>您的團隊可以立即開始使用 JustDo",
   "migrate_monday_process_note": "無需資料對應、無需手動匯出、無需複雜的設定。",
   "migrate_monday_timeline_title": "遷移時程",
-  "migrate_monday_timeline_desc": "我們只需要您提供 Monday.com API 金鑰。通常只需點擊幾下,2 到 10 分鐘即可產生。一旦我們取得金鑰,遷移執行時間取決於您的資料量,從大約一分鐘到幾個小時不等。",
+  "migrate_monday_timeline_desc": "遷移執行時間取決於您的資料量,從大約一分鐘到幾個小時不等。",
   "migrate_monday_timeline_factors": "影響遷移時間的因素:",
   "migrate_monday_timeline_data": "您的 Monday.com 工作區中的資料量",
   "migrate_monday_timeline_boards": "看板和項目的數量",

@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Mapatge de tipus de camps",
   "migrate_monday_field_mapping_desc": "JustDo manté la compatibilitat amb els camps de Monday.",
-  "migrate_monday_field_mapping_details": "A continuació, cada element mapeja un camp de Monday al seu equivalent a JustDo, seguit de notes i capacitats afegides entre parèntesis.",
+  "migrate_monday_field_mapping_details": "A continuació, cada element mapeja un camp de Monday al seu equivalent a JustDo, seguit de notes i capacitats afegides entre parèntesis:",
   "migrate_monday_view_details": "Veure mapatges de camps detallats",
   "migrate_monday_data_fields": "Camps de dades",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Data d'inici, Data de finalització, Data de venciment (amb suport complet de vista Gantt)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Camp de text",
   "migrate_monday_location": "<strong>Location</strong> → Camp de text (amb integració opcional de Maps)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Camp de número (amb suport de decimals/mínim/màxim)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Camp de número",
+  "migrate_monday_phone": "<strong>Phone</strong> → Camp de Text",
   "migrate_monday_alt_solutions": "Solucions alternatives",
   "migrate_monday_no_mapping": "Ara mateix, JustDo no té un mapatge directe per a aquests camps:",
   "migrate_monday_button": "Botó",

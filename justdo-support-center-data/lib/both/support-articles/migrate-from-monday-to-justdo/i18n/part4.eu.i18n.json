@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>Abian Jarri:</strong> Zure taldeak JustDo berehala erabiltzen hasi daiteke",
   "migrate_monday_process_note": "Ez dago datu mapeatzerik, esportazio manualik edo konfigurazio konplexurik behar.",
   "migrate_monday_timeline_title": "Migrazio Denbora-lerroa",
-  "migrate_monday_timeline_desc": "Zuregandik behar dugun guztia Monday.com API gako bat da. Normalean 2-10 minutu behar dira klik batzuekin sortzeko. Behin dugula, migrazio exekuzio denbora zure datu bolumenaren araberakoa da—minutu bat inguru edo ordu batzuk arte.",
+  "migrate_monday_timeline_desc": "Migrazio denbora zure datu bolumenaren araberakoa da - minutu batetik ordu batzuetara.",
   "migrate_monday_timeline_factors": "Migrazio denborari eragiten dioten faktoreak:",
   "migrate_monday_timeline_data": "Zure Monday.com lan-areako datu kopurua",
   "migrate_monday_timeline_boards": "Taula eta elementu kopurua",

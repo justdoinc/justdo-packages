@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>上线:</strong>您的团队可以立即开始使用 JustDo",
   "migrate_monday_process_note": "无需数据映射、无需手动导出、无需复杂配置。",
   "migrate_monday_timeline_title": "迁移时间表",
-  "migrate_monday_timeline_desc": "我们只需要您提供一个 Monday.com API 密钥。通常只需点击几下,2-10 分钟即可生成。一旦我们获得密钥,迁移运行时间取决于您的数据量——从大约一分钟到几个小时不等。",
+  "migrate_monday_timeline_desc": "迁移运行时间取决于您的数据量——从大约一分钟到几个小时不等。",
   "migrate_monday_timeline_factors": "影响迁移时间的因素:",
   "migrate_monday_timeline_data": "您 Monday.com 工作区中的数据量",
   "migrate_monday_timeline_boards": "看板和事项的数量",

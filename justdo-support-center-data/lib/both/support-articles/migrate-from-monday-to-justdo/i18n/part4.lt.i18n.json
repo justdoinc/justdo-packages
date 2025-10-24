@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>Paleiskite:</strong> Jūsų komanda gali pradėti naudoti JustDo iš karto",
   "migrate_monday_process_note": "Nereikia duomenų susiejimo, rankinių eksportavimų ar sudėtingų konfigūracijų.",
   "migrate_monday_timeline_title": "Perkėlimo trukmė",
-  "migrate_monday_timeline_desc": "Viskas, ko mums reikia iš jūsų, yra Monday.com API raktas. Paprastai užtrunka 2–10 minučių jį sugeneruoti keliais paspaudimais. Kai jį gausime, perkėlimo vykdymo laikas priklauso nuo jūsų duomenų apimties – nuo maždaug vienos minutės iki kelių valandų.",
+  "migrate_monday_timeline_desc": "Perkėlimo trukmė priklauso nuo jūsų duomenų kiekio - nuo maždaug vienos minutės iki kelių valandų.",
   "migrate_monday_timeline_factors": "Veiksniai, turintys įtakos perkėlimo laikui:",
   "migrate_monday_timeline_data": "Duomenų kiekis jūsų Monday.com darbo erdvėje",
   "migrate_monday_timeline_boards": "Lentų ir elementų skaičius",

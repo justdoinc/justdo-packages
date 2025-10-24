@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "የመስክ አይነት ካርታ",
   "migrate_monday_field_mapping_desc": "JustDo ከMonday መስኮች ጋር ተኳኋኝነትን ይጠብቃል።",
-  "migrate_monday_field_mapping_details": "ከዚህ በታች፣ እያንዳንዱ ንጥል የMonday መስክን ወደ JustDo ተመጣጣኝ ያሳያል፣ በቅንፍ ውስጥ ማስታወሻዎች እና የተጨመሩ ችሎታዎች ይከተላሉ።",
+  "migrate_monday_field_mapping_details": "ከዚህ በታች፣ እያንዳንዱ ንጥል የMonday መስክን ወደ JustDo ተመጣጣኝ የሚያሳይ ሲሆን፣ በቅንፍ ውስጥ ማስታወሻዎች እና የተጨመሩ ችሎታዎች ይከተላሉ፡",
   "migrate_monday_view_details": "ዝርዝር የመስክ ካርታዎችን ይመልከቱ",
   "migrate_monday_data_fields": "የመረጃ መስኮች",
   "migrate_monday_timeline": "<strong>ታይምላይን (Timeline)</strong> → የመጀመሪያ ቀን፣ የመጨረሻ ቀን፣ የማብቂያ ቀን (ሙሉ Gantt እይታ ድጋፍ ጋር)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>ኢሜይል (Email)</strong> → የጽሑፍ መስክ",
   "migrate_monday_location": "<strong>አካባቢ (Location)</strong> → የጽሑፍ መስክ (አማራጭ Maps ውህደት ጋር)",
   "migrate_monday_numbers": "<strong>ቁጥሮች (Numbers)</strong> → የቁጥር መስክ (ከአስርዮሽ/ዝቅተኛ/ከፍተኛ ድጋፍ ጋር)",
-  "migrate_monday_phone": "<strong>ስልክ (Phone)</strong> → የቁጥር መስክ",
+  "migrate_monday_phone": "<strong>Phone</strong> → የጽሑፍ መስክ",
   "migrate_monday_alt_solutions": "አማራጭ መፍትሄዎች",
   "migrate_monday_no_mapping": "በአሁኑ ጊዜ፣ JustDo ለእነዚህ መስኮች ቀጥተኛ ካርታ የለውም፡",
   "migrate_monday_button": "ቁልፍ (Button)",

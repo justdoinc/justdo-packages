@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Нигоштҳои намуди майдон",
   "migrate_monday_field_mapping_desc": "JustDo бо майдонҳои Monday мувофиқат дорад.",
-  "migrate_monday_field_mapping_details": "Дар поён, ҳар як ҷузъ майдони Monday-ро ба баробари JustDo нигошт мекунад, ки пас аз он эзоҳҳо ва имкониятҳои иловагӣ дар қавсҳо меоянд.",
+  "migrate_monday_field_mapping_details": "Дар поён, ҳар як элемент майдони Monday-ро ба баробари он дар JustDo мувофиқ мекунад, ки пас аз он қайдҳо ва қобилиятҳои иловашуда дар қавсҳо оварда шудаанд:",
   "migrate_monday_view_details": "Дидани нигоштҳои муфассали майдонҳо",
   "migrate_monday_data_fields": "Майдонҳои маълумот",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Санаи оғоз, Санаи хотима, Санаи мӯҳлат (бо дастгирии пурраи намоиши Gantt)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Майдони матн",
   "migrate_monday_location": "<strong>Location</strong> → Майдони матн (бо идғомшавии Maps-и ихтиёрӣ)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Майдони рақам (бо дастгирии даҳӣ/мин/макс)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Майдони рақам",
+  "migrate_monday_phone": "<strong>Phone</strong> → Майдони матн",
   "migrate_monday_alt_solutions": "Ҳалҳои алтернативӣ",
   "migrate_monday_no_mapping": "Дар айни ҳол, JustDo барои ин майдонҳо нигошти мустақим надорад:",
   "migrate_monday_button": "Тугма",

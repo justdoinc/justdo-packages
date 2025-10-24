@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Preslikava tipov polj",
   "migrate_monday_field_mapping_desc": "JustDo ohranja združljivost s polji Monday.",
-  "migrate_monday_field_mapping_details": "Spodaj vsak element preslika polje Monday v njegov ekvivalent v JustDo, sledijo opombe in dodane zmožnosti v oklepajih.",
+  "migrate_monday_field_mapping_details": "Spodaj vsak element preslika polje Monday v njegov ekvivalent v JustDo, ki mu sledijo opombe in dodatne zmogljivosti v oklepajih:",
   "migrate_monday_view_details": "Ogled podrobne preslikave polj",
   "migrate_monday_data_fields": "Podatkovna polja",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Začetni datum, Končni datum, Rok (s polno podporo Ganttovega prikaza)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Besedilno polje",
   "migrate_monday_location": "<strong>Location</strong> → Besedilno polje (z izbirno integracijo zemljevidov)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Številsko polje (s podporo za decimalna števila/min/max)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Številsko polje",
+  "migrate_monday_phone": "<strong>Phone</strong> → polje Besedilo",
   "migrate_monday_alt_solutions": "Alternativne rešitve",
   "migrate_monday_no_mapping": "Trenutno JustDo nima neposredne preslikave za ta polja:",
   "migrate_monday_button": "Gumb",

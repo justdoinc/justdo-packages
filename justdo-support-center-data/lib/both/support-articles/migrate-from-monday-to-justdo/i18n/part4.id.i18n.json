@@ -27,7 +27,7 @@
   "migrate_monday_process_step4": "<strong>Mulai Beroperasi:</strong> Tim Anda dapat langsung mulai menggunakan JustDo",
   "migrate_monday_process_note": "Tidak perlu pemetaan data, tidak perlu ekspor manual, tidak perlu konfigurasi yang rumit.",
   "migrate_monday_timeline_title": "Timeline Migrasi",
-  "migrate_monday_timeline_desc": "Yang kami butuhkan dari Anda hanyalah API key Monday.com. Biasanya membutuhkan waktu 2–10 menit untuk membuatnya dengan beberapa klik. Setelah kami mendapatkannya, waktu eksekusi migrasi tergantung pada volume data Anda—mulai dari sekitar satu menit hingga beberapa jam.",
+  "migrate_monday_timeline_desc": "Waktu yang dibutuhkan untuk migrasi tergantung pada volume data Anda - mulai dari sekitar satu menit hingga beberapa jam.",
   "migrate_monday_timeline_factors": "Faktor yang memengaruhi waktu migrasi:",
   "migrate_monday_timeline_data": "Jumlah data di workspace Monday.com Anda",
   "migrate_monday_timeline_boards": "Jumlah board dan item",
