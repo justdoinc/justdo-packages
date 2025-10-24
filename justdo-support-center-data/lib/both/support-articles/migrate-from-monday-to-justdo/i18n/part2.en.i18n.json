@@ -1,7 +1,7 @@
 {
   "migrate_monday_field_mapping_title": "Field Type Mapping",
   "migrate_monday_field_mapping_desc": "JustDo maintains compatibility with Monday's fields.",
-  "migrate_monday_field_mapping_details": "Below, each item maps a Monday field to its JustDo equivalent, followed by notes and added capabilities in parentheses.",
+  "migrate_monday_field_mapping_details": "Below, each item maps a Monday field to its JustDo equivalent, followed by notes and added capabilities in parentheses:",
   "migrate_monday_view_details": "View detailed field mappings",
   "migrate_monday_data_fields": "Data fields",
   "migrate_monday_timeline": "<strong>Timeline</strong> → Start Date, End Date, Due Date (with full Gantt view support)",
@@ -24,7 +24,7 @@
   "migrate_monday_email": "<strong>Email</strong> → Text field",
   "migrate_monday_location": "<strong>Location</strong> → Text field (with optional Maps integration)",
   "migrate_monday_numbers": "<strong>Numbers</strong> → Number field (with decimal/min/max support)",
-  "migrate_monday_phone": "<strong>Phone</strong> → Number field",
+  "migrate_monday_phone": "<strong>Phone</strong> → Text field",
   "migrate_monday_alt_solutions": "Alternative Solutions",
   "migrate_monday_no_mapping": "Right now, JustDo does not have a direct mapping for these fields:",
   "migrate_monday_button": "Button",
