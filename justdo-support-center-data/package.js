@@ -406,6 +406,19 @@ Package.onUse(function (api) {
     "lib/both/support-articles/how-to-use-the-project-portfolio-management/how-to-use-the-project-portfolio-management.coffee"
   ], both);
 
+  // migrate-from-monday-to-justdo
+  api.addAssets([
+    "lib/both/support-articles/migrate-from-monday-to-justdo/assets/monday-justdo-hierarchy.png",
+    "lib/both/support-articles/migrate-from-monday-to-justdo/assets/monday-justdo-field-mapping.png"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/migrate-from-monday-to-justdo/migrate-from-monday-to-justdo.sass",
+    "lib/both/support-articles/migrate-from-monday-to-justdo/migrate-from-monday-to-justdo.html"
+  ], client);
+  api.addFiles([
+    "lib/both/support-articles/migrate-from-monday-to-justdo/migrate-from-monday-to-justdo.coffee"
+  ], both);
+
   // Always after templates
   this.addI18nFiles(api, "i18n/{}.i18n.json");
 
