@@ -51,3 +51,7 @@ _.extend JustdoHelpers,
 
   isTerminalState: (state) ->
     return @getCoreState(state) in JustdoHelpers.terminal_core_states
+
+  getTerminalCoreStatesQuery: -> @getCoreStateOneOfCoreStatesQuery(@terminal_core_states)
+  
+  getNonTerminalCoreStatesQuery: -> @getCoreStateNotOneOfCoreStatesQuery(@terminal_core_states)
