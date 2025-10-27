@@ -98,7 +98,7 @@ _.extend JustdoHelpers,
 
     # Default configuration
     default_options = 
-      toolbarButtons: ["undo", "redo", "fontFamily", "fontSize", "bold", "italic", "underline", "strikeThrough", "textColor", "backgroundColor", "align", "formatUL", "formatOL", "quote", "clearFormatting", "insertLink", "insertTable"]
+      toolbarButtons: ["undo", "redo", "fontFamily", "fontSize", "bold", "italic", "underline", "backgroundColor", "textColor", "align", "formatOL", "formatUL", "outdent", "indent", "quote", "clearFormatting", "insertLink", "insertTable",  "strikeThrough", "clearFormatting"]
       tableStyles:
         "fr-no-borders": "No borders"
         "fr-dashed-borders": "Dashed Borders" 
