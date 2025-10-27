@@ -75,6 +75,36 @@ $max-desc-width: 750px
   .description-caption
     margin-top: 8px
 
+  .fr-popup
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175)
+    .fr-color-set
+      padding: 8px
+      display: grid
+      grid-auto-flow: column
+      grid-template-rows: repeat(6, auto)
+      grid-auto-columns: auto
+      gap: 4px
+      br
+        display: none
+      .fr-select-color
+        box-shadow: 0 0px 3px rgba(171, 178, 191, 0.5)
+        width: 22px
+        height: 22px
+        border: 2px solid #FFFFFF
+        border-radius: 5px
+        cursor: pointer
+        transition: all 0.35s
+        &:hover
+          box-shadow: 0 0 0 2px rgba(171, 178, 191, 0.5)
+      .fr-active-item
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25)
+      .fr-selected-color
+        font-size: 11px
+        line-height: 18px
+      .fr-select-color[data-param1="#FFFFFF"]
+        .fr-selected-color
+          color: black
+
 .minimize-description-icon
   display: none
 
