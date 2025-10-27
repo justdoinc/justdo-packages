@@ -103,6 +103,8 @@ _.extend JustdoHelpers,
         "fr-no-borders": "No borders"
         "fr-dashed-borders": "Dashed Borders" 
         "fr-alternate-rows": "Alternate Rows"
+      fontFamily: _.extend FroalaEditor.DEFAULTS.fontFamily,
+        "Space Mono,monospace": "Space Mono"
       direction: if APP.justdo_i18n?.isRtl() then "rtl" else "ltr"
       quickInsertTags: []
       quickInsertButtons: ["embedly", "table", "ul", "ol", "hr"]
