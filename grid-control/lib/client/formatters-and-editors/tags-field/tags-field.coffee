@@ -45,11 +45,12 @@ GridControl.installFormatter "tagsFormatter",
 
         custom_style = """ style="background-color: #{JustdoHelpers.xssGuard(bg_color)}; color: #{JustdoHelpers.xssGuard(fg_color)};" """
 
+        jd_tt_html = ""
         if jd_tt?
-          jd_tt = """ jd-tt="#{jd_tt}" """
+          jd_tt_html = """ jd-tt="#{jd_tt}" """
 
         output.push """
-          <div class="tag-wrapper" #{custom_style} #{jd_tt}>#{JustdoHelpers.xssGuard(text)}</div>
+          <div class="tag-wrapper" #{custom_style} #{jd_tt_html}>#{JustdoHelpers.xssGuard(text)}</div>
         """
 
     return """<div class="grid-formatter tag-formatter">#{output.join(" ")}</div>"""
