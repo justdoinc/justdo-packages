@@ -25,7 +25,7 @@
       <div class="project-log text-monospace px-3 py-1 d-flex" title="{{userDateFormat when}}">
         <div class="">
           <span class="task-details text-primary">{{getTaskDetails}}</span>
-          <span class="activity-message {{#if undone}}undone{{/if}}">{{getActivityMessage}}</span>
+          <span class="activity-message {{#if undone}}undone{{/if}}"> - {{getActivityMessage}}</span>
         </div>
         <span class="date text-muted">{{moFromNow negativeDateOrNow}}</span>
       </div>

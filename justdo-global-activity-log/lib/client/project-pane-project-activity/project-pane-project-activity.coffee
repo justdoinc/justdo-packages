@@ -143,8 +143,6 @@ Template.global_activity_log_project_pane_project_activity.helpers
       if (title = task_doc.title)?
         task_details += ": #{JustdoHelpers.ellipsis(title, 70)}"
 
-      task_details += " - "
-
     return task_details
 
   negativeDateOrNow: -> JustdoHelpers.negativeDateOrNow(@when)
