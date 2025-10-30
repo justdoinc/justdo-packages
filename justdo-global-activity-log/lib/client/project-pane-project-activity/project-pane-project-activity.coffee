@@ -131,6 +131,9 @@ Template.global_activity_log_project_pane_project_activity.helpers
     logs_cursor = APP.collections.JDGlobalChangelog.find(query, {sort: {when: -1}})
 
     return TasksChangelogManager.getFilteredActivityLogByTime logs_cursor
+  
+  performingUserDoc: ->
+    return Meteor.users.findOne(@by, {fields: JustdoHelpers.avatar_required_fields})
 
   getActivityMessage: ->
     return JustdoHelpers.ellipsis(APP.tasks_changelog_manager.getActivityMessage(@), 150)
