@@ -62,6 +62,7 @@ _.extend JustdoProjectPane.prototype,
 
     @onDestroy =>
       @project_pane_auto_collapse_handler.stop()
+      @project_pane_auto_collapse_handler = null
       return
 
     return
