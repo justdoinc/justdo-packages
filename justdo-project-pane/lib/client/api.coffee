@@ -18,10 +18,27 @@ _.extend JustdoProjectPane.prototype,
     @_project_pane_auto_collapse_handler = undefined
     @_setupProjectPaneAutoCollapseHandler()
 
+    @_setupEventHandlers()
+
     return
 
   _deferredInit: ->
     if @destroyed
+      return
+
+    return
+  
+  _setupEventHandlers: ->
+    APP.on "grid-control-created", (gc) =>
+      # Setup event handler to exit full screen mode when a row is activated in the main grid
+      if gc.getDomain() isnt "project-page-main-grid"
+        return
+
+      gc.on "row-activated", =>
+        if @isFullScreen()
+          @exitFullScreen()
+        return
+        
       return
 
     return
