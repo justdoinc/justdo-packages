@@ -22,7 +22,7 @@ GridControl.installFormatter "tagsFormatter",
         if (propertiesGenerator = formatter_options?.propertiesGenerator)?
           properties = propertiesGenerator(tag)
 
-          {text, text_i18n, bg_color, fg_color, jd_tt} = properties
+          {text, text_i18n, bg_color, fg_color, jd_tt_template} = properties
 
         if (not text?) and (not text_i18n?)
           text = value
@@ -46,8 +46,8 @@ GridControl.installFormatter "tagsFormatter",
         custom_style = """ style="background-color: #{JustdoHelpers.xssGuard(bg_color)}; color: #{JustdoHelpers.xssGuard(fg_color)};" """
 
         jd_tt_html = ""
-        if jd_tt?
-          jd_tt_html = """ jd-tt="#{jd_tt}" """
+        if jd_tt_template?
+          jd_tt_html = """ jd-tt="#{JustdoHelpers.xssGuard(jd_tt_template, {allow_html_parsing: false, enclosing_char: '"'})}" """
 
         output.push """
           <div class="tag-wrapper" #{custom_style} #{jd_tt_html}>#{JustdoHelpers.xssGuard(text)}</div>
