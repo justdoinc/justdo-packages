@@ -1854,8 +1854,6 @@ _.extend GridControl.prototype,
   # activate row/path
   #
   activateRow: (row, cell = 0, scroll_into_view = true, resulted_from_smart_guess=false) ->
-    @emit "pre-activate-row", row, cell, scroll_into_view, resulted_from_smart_guess
-    
     @_grid.setActiveCell(row, cell, scroll_into_view)
 
     @emit "row-activated", row, cell, scroll_into_view, resulted_from_smart_guess
