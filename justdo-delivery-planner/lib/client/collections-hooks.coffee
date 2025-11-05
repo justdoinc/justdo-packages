@@ -61,7 +61,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
         # Traverse the project subtree to see of all other tasks under the project are set to terminal states.
         is_all_tasks_in_terminal_states = true
-        grid_data.each path_to_traverse, {expand_only: true}, (section, item_type, item_obj, path, expand_state) ->
+        grid_data.each path_to_traverse, (section, item_type, item_obj, path, expand_state) ->
           if not JustdoHelpers.isTerminalState(item_obj.state)
             is_all_tasks_in_terminal_states = false
             return -2 # stop traversing immediately
