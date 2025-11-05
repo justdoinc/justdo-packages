@@ -317,7 +317,7 @@ _.extend JustdoAccounts.prototype,
     
     if (not deactivated_user.deactivated_by?) or (not deactivated_user.deactivated_at?)
       # For backward compatibility. For users created before the deactivated_by field was added, we return an empty string.
-      return ""
+      return "Deactivation details available only for users deactivated after October 24th, 2025"
       
     performing_user_name = JustdoHelpers.displayName(deactivated_user.deactivated_by)
     user_preferred_deactivated_at = JustdoHelpers.getDateTimeStringInUserPreferenceFormat(deactivated_user.deactivated_at)
