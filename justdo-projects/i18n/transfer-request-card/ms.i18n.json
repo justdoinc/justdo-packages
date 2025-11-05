@@ -1,5 +1,5 @@
 {
-  "transfer_request_card_transfer_request": "__user__ mahu memindahkan pemilikan tugas <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> kepada anda",
+  "transfer_request_card_transfer_request": "__user__ ingin memindahkan pemilikan tugasan <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> kepada anda",
   "transfer_request_card_submit_shortcut": "Ctrl+Enter untuk hantar",
   "transfer_request_card_leave_a_reject_message": "Tinggalkan mesej penolakan",
   "transfer_request_card_task_accepted": "Tugas __task_common_name__ telah <strong>Diterima</strong>",

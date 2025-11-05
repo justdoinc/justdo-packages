@@ -1,5 +1,5 @@
 {
-  "transfer_request_card_transfer_request": "__user__ иска да прехвърли собствеността на задачата <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> на вас",
+  "transfer_request_card_transfer_request": "__user__ иска да прехвърли собствеността на задача <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> на вас",
   "transfer_request_card_submit_shortcut": "Ctrl+Enter за изпращане",
   "transfer_request_card_leave_a_reject_message": "Оставете съобщение за отказ",
   "transfer_request_card_task_accepted": "Задача __task_common_name__ <strong>Приета</strong>",

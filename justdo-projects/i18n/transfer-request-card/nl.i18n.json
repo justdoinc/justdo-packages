@@ -1,5 +1,5 @@
 {
-  "transfer_request_card_transfer_request": "__user__ wil het eigendom van taak <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> aan u overdragen",
+  "transfer_request_card_transfer_request": "__user__ wil de eigendom van taak <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> aan jou overdragen",
   "transfer_request_card_submit_shortcut": "Ctrl+Enter om te verzenden",
   "transfer_request_card_leave_a_reject_message": "Laat een afwijzingsbericht achter",
   "transfer_request_card_task_accepted": "Taak __task_common_name__ <strong>Geaccepteerd</strong>",

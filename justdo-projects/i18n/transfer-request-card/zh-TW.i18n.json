@@ -1,5 +1,5 @@
 {
-  "transfer_request_card_transfer_request": "__user__ 想要將任務 <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__：</strong>#__seqId__ - __task_title__</a> 的所有權轉移給你",
+  "transfer_request_card_transfer_request": "__user__ 想要將任務 <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> 的所有權轉移給您",
   "transfer_request_card_submit_shortcut": "按 Ctrl+Enter 提交",
   "transfer_request_card_leave_a_reject_message": "留下拒絕理由",
   "transfer_request_card_task_accepted": "任務 __task_common_name__ <strong>已接受</strong>",

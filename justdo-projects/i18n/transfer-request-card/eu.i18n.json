@@ -1,5 +1,5 @@
 {
-  "transfer_request_card_transfer_request": "__user__ zereginaren jabetza transferitu nahi dizu: <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a>",
+  "transfer_request_card_transfer_request": "__user__ erabiltzaileak zeregin honen jabetza transferitu nahi dizu: <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a>",
   "transfer_request_card_submit_shortcut": "Ctrl+Enter bidali",
   "transfer_request_card_leave_a_reject_message": "Utzi ukatzeko mezu bat",
   "transfer_request_card_task_accepted": "__task_common_name__ zeregina <strong>Onartua</strong>",

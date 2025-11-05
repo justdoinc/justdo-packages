@@ -1,5 +1,5 @@
 {
-  "transfer_request_card_transfer_request": "__user__ ले तपाईंलाई कार्य <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> को स्वामित्व हस्तान्तरण गर्न चाहनुहुन्छ",
+  "transfer_request_card_transfer_request": "__user__ ले कार्य <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> को स्वामित्व तपाईंलाई हस्तान्तरण गर्न चाहनुहुन्छ",
   "transfer_request_card_submit_shortcut": "पेश गर्न Ctrl+Enter थिच्नुहोस्",
   "transfer_request_card_leave_a_reject_message": "अस्वीकार सन्देश छोड्नुहोस्",
   "transfer_request_card_task_accepted": "कार्य __task_common_name__ <strong>स्वीकार गरियो</strong>",

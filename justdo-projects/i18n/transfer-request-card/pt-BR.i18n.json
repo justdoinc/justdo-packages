@@ -1,5 +1,5 @@
 {
-  "transfer_request_card_transfer_request": "__user__ deseja transferir a propriedade da tarefa <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> para você",
+  "transfer_request_card_transfer_request": "__user__ quer transferir a propriedade da tarefa <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> para você",
   "transfer_request_card_submit_shortcut": "Ctrl+Enter para enviar",
   "transfer_request_card_leave_a_reject_message": "Deixe uma mensagem de rejeição",
   "transfer_request_card_task_accepted": "Tarefa __task_common_name__ <strong>Aceita</strong>",

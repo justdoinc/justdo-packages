@@ -1,5 +1,5 @@
 {
-  "transfer_request_card_transfer_request": "__user__ sizga <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> vazifasining egaligini o'tkazmoqchi",
+  "transfer_request_card_transfer_request": "__user__ <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> vazifasining egaliginni sizga o'tkazishni xohlaydi",
   "transfer_request_card_submit_shortcut": "Yuborish uchun Ctrl+Enter tugmalarini bosing",
   "transfer_request_card_leave_a_reject_message": "Rad etish xabarini qoldiring",
   "transfer_request_card_task_accepted": "__task_common_name__ vazifasi <strong>Qabul qilindi</strong>",

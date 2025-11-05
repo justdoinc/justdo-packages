@@ -1,5 +1,5 @@
 {
-  "transfer_request_card_transfer_request": "__user__ szeretné átadni a <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> feladat tulajdonjogát Önnek",
+  "transfer_request_card_transfer_request": "__user__ át szeretné ruházni a <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> feladat tulajdonjogát Önre",
   "transfer_request_card_submit_shortcut": "Ctrl+Enter a beküldéshez",
   "transfer_request_card_leave_a_reject_message": "Hagyjon elutasító üzenetet",
   "transfer_request_card_task_accepted": "A __task_common_name__ feladat <strong>Elfogadva</strong>",

@@ -1,5 +1,5 @@
 {
-  "transfer_request_card_transfer_request": "__user__ сизге <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> тапшырмасынын ээлигин өткөрүп берүүнү каалайт",
+  "transfer_request_card_transfer_request": "__user__ <a href=\"__task_url__\" class=\"task-link text-primary\"><strong>__project_name__:</strong>#__seqId__ - __task_title__</a> тапшырмасынын ээлигин сизге өткөрүп берүүнү каалайт",
   "transfer_request_card_submit_shortcut": "Жөнөтүү үчүн Ctrl+Enter",
   "transfer_request_card_leave_a_reject_message": "Баш тартуу себебин жазыңыз",
   "transfer_request_card_task_accepted": "__task_common_name__ тапшырмасы <strong>Кабыл алынды</strong>",
