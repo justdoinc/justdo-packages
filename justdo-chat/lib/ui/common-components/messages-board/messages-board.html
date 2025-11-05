@@ -106,32 +106,23 @@
     <a href="#" class="show-preview-or-start-download text-info" title="{{additional_details.name}}">
       {{#if isPreviewable}}
         {{#let previewLink=getFilePreviewLink file=this}}
-          {{#if @pending "previewLink"}}
-            <div class="loader">
-              <div class="double-bounce1 bg-primary"></div>
-              <div class="double-bounce2 bg-primary"></div>
+          {{#if isImage file.additional_details.type}}
+            <div class="file-wrapper image">
+              <div class="file-image" style="background: url('{{previewLink}}')" title="{{file.additional_details.name}}"></div>
             </div>
-          {{/if}}
-          {{!-- {{#if @rejected "previewLink"}}
-            XXX Add error handling
-          {{/if}} --}}
-          {{#if @resolved "previewLink"}}
-            {{#if isImage file.additional_details.type}}
-              <div class="file-wrapper image">
-                <div class="file-image" style="background: url('{{previewLink}}')" title="{{file.additional_details.name}}"></div>
-              </div>
-            {{else if isPdf file.additional_details.type}}
-              <div class="file-wrapper pdf">
-                <embed src="{{previewLink}}" type="{{file.additional_details.type}}" width="970" height="550" alt="{{file.additional_details.name}}" style="border: 0 none;">
-              </div>
-            {{else if isVideo file.additional_details.type}}
-              <div class="file-wrapper video">
-                <svg class="jd-icon play-button"><use xlink:href="/layout/icons-feather-sprite.svg#play-circle"/></svg>
-                <video alt="{{file.additional_details.name}}" preload="metadata">
+          {{else if isPdf file.additional_details.type}}
+            <div class="file-wrapper pdf">
+              <embed src="{{previewLink}}" type="{{file.additional_details.type}}" alt="{{file.additional_details.name}}" style="border: 0 none;">
+            </div>
+          {{else if isVideo file.additional_details.type}}
+            <div class="file-wrapper video">
+              <svg class="jd-icon play-button"><use xlink:href="/layout/icons-feather-sprite.svg#play-circle"/></svg>
+              <video alt="{{file.additional_details.name}}" preload="metadata">
+                {{#if @resolved "previewLink"}}
                   <source src="{{previewLink}}">
-                </video>
-              </div>
-            {{/if}}
+                {{/if}}
+              </video>
+            </div>
           {{/if}}
         {{/let}}
       {{else}}
