@@ -1,5 +1,5 @@
 <template name="common_chat_message_editor">
-  <div class="message-editor-wrapper">
+  <div class="message-editor-wrapper {{#if isSendingState}}bg-light disabled{{/if}}">
     {{#if isFilesEnabled}}
       <div class="drop-pane text-muted {{#if isDraggingFilesIntoDropPane}}dragging{{/if}}">
         <div class="drop-pane-overlay">
@@ -16,8 +16,9 @@
       </div>
     {{/if}}
     <textarea class="message-editor" dir="{{#if isRtl}}rtl{{else}}ltr{{/if}}" disabled="{{#if isSendingState}}disabled{{/if}}" placeholder="{{_ "message_editor_input_placeholder"}}"></textarea>
-    {{!-- {{#if isSendingState}}{{_ "message_editor_sending"}}{{/if}} --}}
-    <button class="btn p-0 message-editor-send text-primary {{#if showSendButton}}show{{/if}} m{{getRtlAwareDirection "r"}}-3 {{#if isDraggingFilesIntoDropPane}}d-none{{/if}}" {{isSendButtonDisabled}}>{{_ "send"}}</button>
+    <button class="btn p-0 message-editor-send text-primary {{#if showSendButton}}show{{/if}} m{{getRtlAwareDirection "r"}}-3 {{#if isDraggingFilesIntoDropPane}}d-none{{/if}}" {{isSendButtonDisabled}}>
+      {{#if isSendingState}}{{_ "message_editor_sending"}}{{else}}{{_ "send"}}{{/if}}
+    </button>
 
   </div>
 

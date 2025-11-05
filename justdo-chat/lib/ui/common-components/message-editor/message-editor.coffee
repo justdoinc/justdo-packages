@@ -195,6 +195,7 @@ Template.common_chat_message_editor.onCreated ->
 
     @setSendingState()
     @hideSendButton()
+    @hideFilesDropdown()
 
     callSendMessageMethod = (input_val, files) =>
       data = 
