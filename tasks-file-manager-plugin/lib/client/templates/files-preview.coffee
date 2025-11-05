@@ -1,5 +1,5 @@
 isPdfPreview = (file_type) ->
-  APP.tasks_file_manager_plugin.tasks_file_manager.isConversionSupported file_type, "pdf"
+  file_type.indexOf("application/pdf") == 0
 
 isImagePreview = (file_type) ->
   file_type.indexOf("image/") == 0

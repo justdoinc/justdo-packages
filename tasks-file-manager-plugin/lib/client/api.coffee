@@ -129,8 +129,11 @@ _.extend TasksFileManagerPlugin.prototype,
 
         buttons:
           download:
-            label: "Download"
-            className: "btn-primary"
+            label: """<svg class="jd-icon text-dark">
+                        <use xlink:href="/layout/icons-feather-sprite.svg#download"></use>
+                      </svg>
+                   """
+            className: "download"
 
             callback: =>
               # Start download
@@ -139,13 +142,6 @@ _.extend TasksFileManagerPlugin.prototype,
                 if err then console.log(err)
 
               return false # so the bootbox won't close
-
-          close:
-            label: "Close"
-            className: "btn-secondary"
-
-            callback: ->
-              return true
 
     else
       # Start download
