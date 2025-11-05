@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Tetapkan Projek <b>__title__</b> kepada Selesai?",
+  "set_ancestor_project_to_done_snackbar_text": "Tetapkan Projek <b><a href=\"__task_url__\" class=\"task-link\">__title__</a></b> kepada Selesai?",
   "set_ancestor_project_to_done_snackbar_text_plural": "Tetapkan __count__ Projek yang mengandungi kepada Selesai?"
 }

@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Лоиҳаи <b>__title__</b>-ро ба ҳолати \"Анҷом додашуда\" гузоранем?",
+  "set_ancestor_project_to_done_snackbar_text": "Лоиҳаи <b><a href=\"__task_url__\" class=\"task-link\">__title__</a></b>-ро ба Анҷомёфта гузаронед?",
   "set_ancestor_project_to_done_snackbar_text_plural": "__count__ лоиҳаи дарбаргирандаро ба ҳолати \"Анҷом додашуда\" гузоранем?"
 }

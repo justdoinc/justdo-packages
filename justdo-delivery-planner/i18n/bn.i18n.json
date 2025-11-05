@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "প্রকল্প <b>__title__</b> সম্পন্ন হিসেবে সেট করবেন?",
+  "set_ancestor_project_to_done_snackbar_text": "প্রজেক্ট <b><a href=\"__task_url__\" class=\"task-link\">__title__</a></b> সম্পন্ন করা হবে?",
   "set_ancestor_project_to_done_snackbar_text_plural": "__count__টি অন্তর্ভুক্ত প্রকল্প সম্পন্ন হিসেবে সেট করবেন?"
 }

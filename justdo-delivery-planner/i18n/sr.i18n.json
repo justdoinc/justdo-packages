@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Postaviti projekat <b>__title__</b> kao završen?",
+  "set_ancestor_project_to_done_snackbar_text": "Postaviti projekat <b><a href=\"__task_url__\" class=\"task-link\">__title__</a></b> na Završeno?",
   "set_ancestor_project_to_done_snackbar_text_plural": "Postaviti __count__ sadržanih projekata kao završene?"
 }

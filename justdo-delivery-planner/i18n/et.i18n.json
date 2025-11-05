@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Määrata projekt <b>__title__</b> valmiks?",
+  "set_ancestor_project_to_done_snackbar_text": "Määra projekt <b><a href=\"__task_url__\" class=\"task-link\">__title__</a></b> tehtud olekusse?",
   "set_ancestor_project_to_done_snackbar_text_plural": "Määrata __count__ sisaldavat projekti valmiks?"
 }

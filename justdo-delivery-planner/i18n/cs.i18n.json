@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Nastavit projekt <b>__title__</b> jako dokončený?",
+  "set_ancestor_project_to_done_snackbar_text": "Nastavit projekt <b><a href=\"__task_url__\" class=\"task-link\">__title__</a></b> jako Hotovo?",
   "set_ancestor_project_to_done_snackbar_text_plural": "Nastavit __count__ nadřazených projektů jako dokončené?"
 }

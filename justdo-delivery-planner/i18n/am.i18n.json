@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "ፕሮጀክት <b>__title__</b> ወደ ተጠናቀቀ ይቀየር?",
+  "set_ancestor_project_to_done_snackbar_text": "ፕሮጀክት <b><a href=\"__task_url__\" class=\"task-link\">__title__</a></b> ወደ ተጠናቀቀ ይቀየር?",
   "set_ancestor_project_to_done_snackbar_text_plural": "__count__ የያዙ ፕሮጀክቶችን ወደ ተጠናቀቀ ይቀይሩ?"
 }

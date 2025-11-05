@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Sæt projekt <b>__title__</b> til færdig?",
+  "set_ancestor_project_to_done_snackbar_text": "Sæt projekt <b><a href=\"__task_url__\" class=\"task-link\">__title__</a></b> til udført?",
   "set_ancestor_project_to_done_snackbar_text_plural": "Sæt __count__ indeholdende projekter til færdig?"
 }
