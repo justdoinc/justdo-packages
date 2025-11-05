@@ -87,24 +87,36 @@ _.extend JustdoDeliveryPlanner.prototype,
 
       if count is 1
         # If there is only one project to set to done, use the project title
-        project_seq_id = ancestor_projects_to_set_to_done[0].seqId
-        project_title = ancestor_projects_to_set_to_done[0].title
+        project_doc = ancestor_projects_to_set_to_done[0]
+        project_seq_id = project_doc.seqId
+        project_title = project_doc.title
         title_for_display = "##{project_seq_id}"
         if not _.isEmpty project_title
           title_for_display += ": #{project_title}"
         i18n_options.title = title_for_display
+        i18n_options.task_url = JustdoHelpers.getTaskUrl(project_doc.project_id, project_doc._id)
       
-      JustdoSnackbar.show
+      snackbar = JustdoSnackbar.show
         text: TAPi18n.__ "set_ancestor_project_to_done_snackbar_text", i18n_options
         actionText: TAPi18n.__ "yes"
         showDismissButton: true
-        onActionClick: (snackbar) =>
+        onActionClick: =>
           for project in ancestor_projects_to_set_to_done
             self.tasks_collection.update project._id, {$set: {state: "done"}}
 
           snackbar.close()
           return
           
+      if count is 1
+        snackbar.querySelector(".task-link").addEventListener "click", (e) =>
+          e.preventDefault()
+          e.stopPropagation()
+
+          if (gcm = APP.modules.project_page.getCurrentGcm())?
+            gcm.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(project_doc._id)
+
+          return
+
       return
 
     return
