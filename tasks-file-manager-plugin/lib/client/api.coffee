@@ -3,7 +3,7 @@ _.extend TasksFileManagerPlugin.prototype,
     self = @
 
     # Currently used only with justdo-file-interface
-    tasks_file_collection = new Mongo.Collection TasksFileManagerPlugin.tasks_files_collection_name
+    self.tasks_file_collection = new Mongo.Collection TasksFileManagerPlugin.tasks_files_collection_name
     
     ret = 
       _requireSupportedBucketId: (bucket_id) ->
@@ -66,7 +66,7 @@ _.extend TasksFileManagerPlugin.prototype,
           query._id = 
             $in: file_ids
             
-        normalized_files = tasks_file_collection.find(query).map (file) ->
+        normalized_files = self.tasks_file_collection.find(query).map (file) ->
           ret = 
             _id: file.id
             type: file.type
@@ -103,9 +103,14 @@ _.extend TasksFileManagerPlugin.prototype,
   showPreviewOrStartDownload: (task_id, file, file_ids_to_show) ->
     # file_ids_to_show is an optional array of file ids to limit the files shown in the preview dialog
     if _.isString file
-      task = APP.collections.TasksAugmentedFields.findOne(task_id, {fields: {files: 1}})
-      file = _.find task.files, (task_file) -> task_file.id is file
-    
+      if (task = APP.collections.TasksAugmentedFields.findOne(task_id, {fields: {files: 1}}))?
+        file = _.find task.files, (task_file) -> task_file.id is file
+      else
+        file = @tasks_file_collection.findOne({task_id: task_id, _id: file})
+
+      if not file?
+        throw @_error "not-found", "File not found"
+
     if _.isArray(file_ids_to_show) and (not _.find file_ids_to_show, (file_id) -> file_id is file.id)
       # Ensure the file to preview is in the file_ids_to_show
       # A deep copy is needed to avoid modifying the original array
