@@ -63,7 +63,9 @@ _.extend JustdoDeliveryPlanner.prototype,
         is_all_tasks_in_terminal_states = true
         grid_data.each path_to_traverse, (section, item_type, item_obj, path, expand_state) ->
           if item_obj._id is doc._id
-            # Skip the current task. The grid may not have the most up-to-date task object.
+            # We know for sure that the current task is in Terminal state since we check it in a statement
+            # earlier. Yet, since the hook might (always?) happens before the processing of the grid-data flushing mechansim
+            # hence it might be not synced with the current data.
             return
           
           if not JustdoHelpers.isTerminalState(item_obj.state)
