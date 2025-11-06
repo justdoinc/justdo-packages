@@ -89,10 +89,13 @@
             if (option_name === "text" || option_name === "actionText" || option_name === "secondButtonText") {
               options[option_name] = JustdoHelpers.xssGuard(option_val, {
                 allow_html_parsing: true,
-                enclosing_char: ""
+                enclosing_char: "",
+                noFormatting: true
               });
             } else {
-              options[option_name] = JustdoHelpers.xssGuard(option_val);
+              options[option_name] = JustdoHelpers.xssGuard(option_val, {
+                noFormatting: true
+              });
             }
           }
         }
