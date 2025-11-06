@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "<b><a href=\"__task_url__\" class=\"task-link\">__title__</a></b> жобасын Орындалды деп белгілеу керек пе?",
+  "set_ancestor_project_to_done_snackbar_text": "<a href=\"__task_url__\" class=\"text-warning task-link\"><b>__title__</b></a> жобасын Орындалды деп белгілеу керек пе?",
   "set_ancestor_project_to_done_snackbar_text_plural": "__count__ жобаны Аяқталды деп белгілеу керек пе?"
 }

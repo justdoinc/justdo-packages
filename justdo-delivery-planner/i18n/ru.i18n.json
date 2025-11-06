@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Установить статус проекта <b><a href=\"__task_url__\" class=\"task-link\">__title__</a></b> как \"Выполнено\"?",
+  "set_ancestor_project_to_done_snackbar_text": "Установить проект <a href=\"__task_url__\" class=\"text-warning task-link\"><b>__title__</b></a> как выполненный?",
   "set_ancestor_project_to_done_snackbar_text_plural": "Отметить __count__ содержащих проектов как выполненные?"
 }

@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "<b><a href=\"__task_url__\" class=\"task-link\">__title__</a></b> proiektua Eginda gisa ezarri?",
+  "set_ancestor_project_to_done_snackbar_text": "<a href=\"__task_url__\" class=\"text-warning task-link\"><b>__title__</b></a> Proiektua Eginda gisa ezarri?",
   "set_ancestor_project_to_done_snackbar_text_plural": "__count__ barne hartutako proiektuak Eginda ezarri?"
 }

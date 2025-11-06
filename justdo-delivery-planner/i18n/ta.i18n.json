@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "<b><a href=\"__task_url__\" class=\"task-link\">__title__</a></b> திட்டத்தை முடிந்தது என அமைக்கவா?",
+  "set_ancestor_project_to_done_snackbar_text": "திட்டம் <a href=\"__task_url__\" class=\"text-warning task-link\"><b>__title__</b></a> ஐ முடிந்ததாக அமைக்கவா?",
   "set_ancestor_project_to_done_snackbar_text_plural": "__count__ உள்ளடங்கிய திட்டங்களை முடிக்கப்பட்டது என அமைக்கவா?"
 }

@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "ตั้งค่าโครงการ <b><a href=\"__task_url__\" class=\"task-link\">__title__</a></b> เป็นเสร็จสิ้นหรือไม่?",
+  "set_ancestor_project_to_done_snackbar_text": "ตั้งค่าโปรเจกต์ <a href=\"__task_url__\" class=\"text-warning task-link\"><b>__title__</b></a> เป็นเสร็จสิ้นหรือไม่?",
   "set_ancestor_project_to_done_snackbar_text_plural": "ตั้งค่าโปรเจกต์ที่มี __count__ โปรเจกต์เป็นเสร็จแล้ว?"
 }

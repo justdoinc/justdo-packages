@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "프로젝트 <b><a href=\"__task_url__\" class=\"task-link\">__title__</a></b>를 완료로 설정하시겠습니까?",
+  "set_ancestor_project_to_done_snackbar_text": "프로젝트 <a href=\"__task_url__\" class=\"text-warning task-link\"><b>__title__</b></a>를 완료로 설정하시겠습니까?",
   "set_ancestor_project_to_done_snackbar_text_plural": "포함된 __count__개의 프로젝트를 완료로 설정하시겠습니까?"
 }

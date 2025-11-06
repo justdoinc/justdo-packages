@@ -1,4 +1,4 @@
 {
-  "set_ancestor_project_to_done_snackbar_text": "Marquer le Projet <b><a href=\"__task_url__\" class=\"task-link\">__title__</a></b> comme Terminé ?",
+  "set_ancestor_project_to_done_snackbar_text": "Définir le Projet <a href=\"__task_url__\" class=\"text-warning task-link\"><b>__title__</b></a> comme Terminé ?",
   "set_ancestor_project_to_done_snackbar_text_plural": "Définir __count__ projets contenants comme terminés ?"
 }
