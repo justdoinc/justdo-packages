@@ -200,5 +200,6 @@ _.extend JustdoTaskType.prototype,
           txt: tag_properties.text
           order: tag_properties.filter_list_order or 0
           customFilterQuery: tag_properties.customFilterQuery
+          jd_tt: tag_properties.jd_tt_template
 
     return filter_options
