@@ -89,7 +89,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/project-conf/projects-collection/projects-collection-project-conf.html", client);
   api.addFiles("lib/client/project-conf/projects-collection/projects-collection-project-conf.coffee", client);
 
-  this.addI18nFiles(api, "i18n/{}.i18n.json", "default_lang_only");
+  this.addI18nFiles(api, "i18n/{}.i18n.json");
   this.addI18nFiles(api, "i18n/projects-collection/{}.i18n.json");
   this.addI18nFiles(api, "i18n/log-message/{}.i18n.json");
 
