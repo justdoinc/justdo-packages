@@ -52,12 +52,12 @@ _.extend JustdoTooltips.prototype,
 
           return
 
-        "in-target": ($target_container, tooltip_id, raw_options) ->
+        "in-target": (tooltip_originating_event, $target_container, tooltip_id, raw_options) ->
           current_state = @getState()
           state_attr = @getStateAttr()
 
           setTargetPreShowToCurrent = =>
-            @setState("in-target-pre-show", {$target_container, tooltip_id, raw_options})
+            @setState("in-target-pre-show", {tooltip_originating_event, $target_container, tooltip_id, raw_options})
 
             return
 
@@ -76,7 +76,7 @@ _.extend JustdoTooltips.prototype,
             @setState("showing-tooltip-in-target")
           else
             if current_state is "showing-tooltip-insignificant-area"
-              @extendStateAttr({queued_in_target_pre_show: {mouseenter_on: new Date(), $target_container, tooltip_id, raw_options}})
+              @extendStateAttr({queued_in_target_pre_show: {mouseenter_on: new Date(), tooltip_originating_event, $target_container, tooltip_id, raw_options}})
 
           return
 
@@ -313,7 +313,7 @@ _.extend JustdoTooltips.prototype,
 
       [, tooltip_id, raw_options] = self.jd_tt_regexp.exec(jd_tt_attr)
 
-      self.state_machine.trigger("in-target", $target_container, tooltip_id, raw_options)
+      self.state_machine.trigger("in-target", e, $target_container, tooltip_id, raw_options)
 
       return
 
@@ -373,9 +373,10 @@ _.extend JustdoTooltips.prototype,
     return
 
   renderTooltip: ->
-    {tooltip_id, configured_tooltip_def, tooltip_template_options, $target_container} = @state_machine.getStateAttr()
+    {tooltip_originating_event, tooltip_id, configured_tooltip_def, tooltip_template_options, $target_container} = @state_machine.getStateAttr()
 
     tooltip_controller =
+      tooltip_originating_event: tooltip_originating_event
       $target_container: $target_container
       closeTooltip: =>
         @closeTooltip()
