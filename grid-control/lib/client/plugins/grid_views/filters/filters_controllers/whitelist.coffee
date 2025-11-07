@@ -89,8 +89,12 @@ WhiteListFilterControllerConstructor = (context) ->
         label_val = label
       
       jd_tt_html = ""
-      if not _.isEmpty(jd_tt_template = filter_value.jd_tt_template)
-        jd_tt_html = """ jd-tt="#{JustdoHelpers.xssGuard(jd_tt_template, {allow_html_parsing: false, enclosing_char: '"'})}" """
+      if (description = filter_value.description)?
+        if _.isFunction(description)
+          description = description()
+        description = TAPi18n.__ description
+        description = encodeURIComponent(description)
+        jd_tt_html = """ jd-tt="html?html=#{description}" """
 
       if label_val.toLowerCase().indexOf(search_text) >= 0
         @controller_ul.append("<li value='#{JustdoHelpers.xssGuard(getHtmlValue(filter_key), {allow_html_parsing: true, enclosing_char: "'"})}'><i class='fa-li fa fa-square-o'></i><i class='fa-li fa fa-check-square-o'></i><span #{jd_tt_html}>#{JustdoHelpers.xssGuard(label, {allow_html_parsing: true, enclosing_char: ''})}</span></li>")
