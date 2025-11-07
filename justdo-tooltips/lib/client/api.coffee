@@ -33,7 +33,7 @@ _.extend JustdoTooltips.prototype,
 
     @state_machine = new JustdoHelpers.StateMachine
       events:
-        "insignificant-area": (event) -> # An area that isn't interesting to us
+        "insignificant-area": -> # An area that isn't interesting to us
           current_state = @getState()
 
           if current_state is "nil"
@@ -41,23 +41,23 @@ _.extend JustdoTooltips.prototype,
             return
 
           if current_state is "showing-tooltip-insignificant-area"
-            @extendStateAttr({event: event, queued_in_target_pre_show: undefined})
+            @extendStateAttr({queued_in_target_pre_show: undefined})
 
             return
 
           if "showing-tooltip-insignificant-area" of @map[current_state].allowed_next_states
-            @setState("showing-tooltip-insignificant-area", {event})
+            @setState("showing-tooltip-insignificant-area")
           else
-            @setState("nil", {event})
+            @setState("nil")
 
           return
 
-        "in-target": (event, $target_container, tooltip_id, raw_options) ->
+        "in-target": ($target_container, tooltip_id, raw_options) ->
           current_state = @getState()
           state_attr = @getStateAttr()
 
           setTargetPreShowToCurrent = =>
-            @setState("in-target-pre-show", {event, $target_container, tooltip_id, raw_options})
+            @setState("in-target-pre-show", {$target_container, tooltip_id, raw_options})
 
             return
 
@@ -73,27 +73,27 @@ _.extend JustdoTooltips.prototype,
               # Nothing to do.
               return
 
-            @setState("showing-tooltip-in-target", {event})
+            @setState("showing-tooltip-in-target")
           else
             if current_state is "showing-tooltip-insignificant-area"
-              @extendStateAttr({queued_in_target_pre_show: {mouseenter_on: new Date(), event, $target_container, tooltip_id, raw_options}})
+              @extendStateAttr({queued_in_target_pre_show: {mouseenter_on: new Date(), $target_container, tooltip_id, raw_options}})
 
           return
 
-        "in-tooltip": (event) ->
+        "in-tooltip": ->
           current_state = @getState()
 
           if "showing-tooltip-in-tooltip" of @map[current_state].allowed_next_states
-            @setState("showing-tooltip-in-tooltip", {event})
+            @setState("showing-tooltip-in-tooltip")
 
           return
 
-        "mousedown-outside-tooltip": (event) ->
-          @trigger("terminate-tooltip-request", {event})
+        "mousedown-outside-tooltip": ->
+          @trigger("terminate-tooltip-request")
 
           return
 
-        "terminate-tooltip-request": (event) ->
+        "terminate-tooltip-request": ->
           current_state = @getState()
 
           if current_state is "nil"
@@ -101,9 +101,9 @@ _.extend JustdoTooltips.prototype,
             return
 
           if "close-tooltip" of @map[current_state].allowed_next_states
-            @setState("close-tooltip", {event})
+            @setState("close-tooltip")
           else
-            @setState("nil", {event})
+            @setState("nil")
 
           return
 
@@ -114,8 +114,7 @@ _.extend JustdoTooltips.prototype,
           allowed_next_states:
             "in-target-pre-show": {}
 
-          stateSetter: (state_options) ->
-            # Note: state_options may contain event info but we clear everything in nil state
+          stateSetter: ->
             @clearStateAttr()
 
             return
@@ -177,13 +176,8 @@ _.extend JustdoTooltips.prototype,
             "showing-tooltip-in-target": {} # Show tooltip
             "nil": {}
 
-          stateSetter: (state_options) ->
-            # state_options is typically undefined here as we read from existing state attrs
-            # set by the previous "in-target-pre-show" state
-            if state_options?
-              @extendStateAttr(state_options)
-
-            {event, tooltip_id, raw_options} = @getStateAttr()
+          stateSetter: ->
+            {tooltip_id, raw_options} = @getStateAttr()
 
             {tooltip_conf, raw_tooltip_template_options} = self.parseRawOptions(raw_options)
 
@@ -212,11 +206,7 @@ _.extend JustdoTooltips.prototype,
             "showing-tooltip-in-tooltip": {}
             "close-tooltip": {}
 
-          stateSetter: (state_options) ->
-            if state_options?
-              @extendStateAttr(state_options)
-
-            return
+          stateSetter: -> return
 
         "showing-tooltip-in-tooltip":
           allowed_next_states:
@@ -224,10 +214,7 @@ _.extend JustdoTooltips.prototype,
             "showing-tooltip-in-target": {}
             "close-tooltip": {}
 
-          stateSetter: (state_options) ->
-            if state_options?
-              @extendStateAttr(state_options)
-
+          stateSetter: ->
             return
 
         "showing-tooltip-insignificant-area":
@@ -236,10 +223,7 @@ _.extend JustdoTooltips.prototype,
             "showing-tooltip-in-tooltip": {}
             "close-tooltip": {}
 
-          stateSetter: (state_options) ->
-            if state_options?
-              @extendStateAttr(state_options)
-
+          stateSetter: ->
             {configured_tooltip_def} = @getStateAttr()
 
             tooltip_close_timeout = setTimeout =>
@@ -278,10 +262,7 @@ _.extend JustdoTooltips.prototype,
           allowed_next_states:
             "nil": {}
 
-          stateSetter: (state_options) ->
-            if state_options?
-              @extendStateAttr(state_options)
-
+          stateSetter: ->
             {tooltip_template_obj, $target_container} = @getStateAttr()
 
             tooltip_template_obj.$node.fadeOut JustdoTooltips.tooltip_fadeout_duration, -> tooltip_template_obj.destroy()
@@ -318,7 +299,7 @@ _.extend JustdoTooltips.prototype,
       # If state is nil, skip any work, since mousedown can't change the state
 
       if $target.closest(".jd-tt-container").length is 0
-        self.state_machine.trigger("mousedown-outside-tooltip", e)
+        self.state_machine.trigger("mousedown-outside-tooltip")
 
       return
 
@@ -332,7 +313,7 @@ _.extend JustdoTooltips.prototype,
 
       [, tooltip_id, raw_options] = self.jd_tt_regexp.exec(jd_tt_attr)
 
-      self.state_machine.trigger("in-target", e, $target_container, tooltip_id, raw_options)
+      self.state_machine.trigger("in-target", $target_container, tooltip_id, raw_options)
 
       return
 
@@ -340,7 +321,7 @@ _.extend JustdoTooltips.prototype,
       if not self.isEnabled()
         return
 
-      self.state_machine.trigger("insignificant-area", e)
+      self.state_machine.trigger("insignificant-area")
 
       return
 
@@ -348,7 +329,7 @@ _.extend JustdoTooltips.prototype,
       if not self.isEnabled()
         return
 
-      self.state_machine.trigger("in-tooltip", e)
+      self.state_machine.trigger("in-tooltip")
 
       return
 
@@ -356,7 +337,7 @@ _.extend JustdoTooltips.prototype,
       if not self.isEnabled()
         return
 
-      self.state_machine.trigger("insignificant-area", e)
+      self.state_machine.trigger("insignificant-area")
 
       return
 
@@ -392,7 +373,7 @@ _.extend JustdoTooltips.prototype,
     return
 
   renderTooltip: ->
-    {event, tooltip_id, configured_tooltip_def, tooltip_template_options, $target_container} = @state_machine.getStateAttr()
+    {tooltip_id, configured_tooltip_def, tooltip_template_options, $target_container} = @state_machine.getStateAttr()
 
     tooltip_controller =
       $target_container: $target_container
@@ -401,7 +382,7 @@ _.extend JustdoTooltips.prototype,
 
         return
 
-    template_data = {event, tooltip_controller, options: tooltip_template_options}
+    template_data = {tooltip_controller, options: tooltip_template_options}
 
     template_obj = JustdoHelpers.renderTemplateInNewNode(configured_tooltip_def.template, template_data)
 
