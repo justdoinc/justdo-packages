@@ -351,6 +351,23 @@ Template.common_chat_messages_board_message_card.events
 
 Template.common_chat_messages_board_file_container.onCreated ->
   @getParentTpl = => Template.closestInstance("common_chat_messages_board_message_card")
+  @video_duration = new ReactiveVar(null)
+  return
+
+Template.common_chat_messages_board_file_container.onRendered ->
+  # Attach event listener to video element when it's rendered
+  $video = @$("video")
+  if $video.length > 0
+    video = $video[0]
+    # Check if duration is already available (metadata might have loaded before this hook)
+    if video.duration? and isFinite(video.duration) and video.duration > 0
+      @video_duration.set(video.duration)
+    
+    # Listen for metadata load event
+    video.addEventListener "loadedmetadata", =>
+      if video.duration? and isFinite(video.duration) and video.duration > 0
+        @video_duration.set(video.duration)
+      return
   return
 
 Template.common_chat_messages_board_file_container.helpers
@@ -383,3 +400,24 @@ Template.common_chat_messages_board_file_container.helpers
     tpl = Template.instance()
     parent_tpl = tpl.getParentTpl()
     return parent_tpl.getTypeCssClass(@additional_details.type)
+
+  videoDuration: ->
+    tpl = Template.instance()
+    duration = tpl.video_duration.get()
+    if not duration?
+      return ""
+    
+    # Format duration as MM:SS or HH:MM:SS if over an hour
+    formatVideoDuration = (seconds) ->
+      hours = Math.floor(seconds / 3600)
+      minutes = Math.floor((seconds % 3600) / 60)
+      secs = Math.floor(seconds % 60)
+      
+      pad = (num) -> num.toString().padStart(2, "0")
+      
+      if hours > 0
+        return "#{hours}:#{pad(minutes)}:#{pad(secs)}"
+      else
+        return "#{minutes}:#{pad(secs)}"
+    
+    return formatVideoDuration(duration)

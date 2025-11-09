@@ -118,12 +118,14 @@
             <div class="file-wrapper video">
               <div class="video-info-wrapper">
                 <svg class="jd-icon play-button"><use xlink:href="/layout/icons-feather-sprite.svg#play"/></svg>
-                <div class="video-duration-wrapper">
-                  <div class="video-duration">
-                    <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#video"/></svg>
-                    0:32
+                {{#if videoDuration}}
+                  <div class="video-duration-wrapper">
+                    <div class="video-duration">
+                      <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#video"/></svg>
+                      {{videoDuration}}
+                    </div>
                   </div>
-                </div>
+                {{/if}}
               </div>
               <video alt="{{file.additional_details.name}}" preload="metadata">
                 {{#if @resolved "previewLink"}}
