@@ -71,12 +71,25 @@ Template.site_admin_user_dropdown_toggle_deactivted_user.events
 
       user_index = _.findIndex all_site_users, (user) ->
         return user._id == user_id
+      
 
+      # Below we "fake" the updated_user_data to reduce the need for reactivity or re-fetching all user data,
+      # while allowing the UI to reflect the updated state immediately.
       if method == "deactivateUsers"
-        all_site_users[user_index].deactivated = true
+        updated_user_data =
+          deactivated: true
+          # The `deactivated_at` here may have slight difference (up to a few seconds) with the db record,
+          # but it's not important as it's displayed in YYYY-MM-DD format.
+          deactivated_at: new Date()
+          deactivated_by: Meteor.userId()
       else
-        all_site_users[user_index].deactivated = false
+        updated_user_data = 
+          deactivated: false
+          deactivated_at: null
+          deactivated_by: null
 
+      _.extend all_site_users[user_index], updated_user_data
+      
       tpl.data.all_site_users_rv.set(all_site_users)
 
       return
