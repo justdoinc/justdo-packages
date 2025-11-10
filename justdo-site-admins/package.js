@@ -47,6 +47,7 @@ Package.onUse(function (api) {
   api.use("justdoinc:justdo-helpers@1.0.0", both);
   api.use("justdoinc:justdo-tasks-collections-manager@1.0.0", both, {weak: true});
   api.use("justdoinc:justdo-accounts@1.0.0", both);
+  api.use("justdoinc:jd-api", both);
 
   api.use("iron:router@1.1.2", both);
   api.use("random", both);
