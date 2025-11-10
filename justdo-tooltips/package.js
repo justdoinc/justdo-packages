@@ -101,5 +101,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/core-tooltips/add-new-member-dialog-info/add-new-member-dialog-info.sass", client);
   api.addFiles("lib/client/core-tooltips/add-new-member-dialog-info/add-new-member-dialog-info.coffee", client);
 
+  api.addFiles("lib/client/core-tooltips/field-description/field-description.html", client);
+  api.addFiles("lib/client/core-tooltips/field-description/field-description.sass", client);
+  api.addFiles("lib/client/core-tooltips/field-description/field-description.coffee", client);
+
   api.export("JustdoTooltips", client);
 });
