@@ -2823,3 +2823,18 @@ _.extend GridControl.prototype,
 
   getDomain: ->
     return @options.domain
+  
+  getFieldDescription: (field_id, option_id) ->
+    schema = @getSchemaExtendedWithCustomFields()
+
+    if not (field_def = schema[field_id])?
+      return
+
+    field_description = field_def.description
+    if option_id? and (value_def = field_def.grid_values?[option_id])?
+      field_description = value_def.description
+    
+    return field_description
+  
+  fieldHasDescription: (field_id, option_id) ->
+    return @getFieldDescription(field_id, option_id)?
