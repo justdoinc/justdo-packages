@@ -269,7 +269,7 @@ _.extend JustdoSiteAdmins.prototype,
       remarks.push """<span class="badge badge-info rounded-0 mr-1" title="#{title}">Proxy User</span>"""
 
     if (is_user_deactivated = APP.accounts.isUserDeactivated(user))
-      remarks.push """<span class="badge badge-secondary rounded-0 mr-1" title="This user is deactivated and cannot login to JustDo.&#10;Deactivated users do not count against the available license total.&#10;#{APP.accounts.getUserDeactivatedInfo(user)}">Deactivated</span>"""
+      remarks.push """<span class="badge badge-secondary rounded-0 mr-1" title="This user is deactivated and cannot login to JustDo.&#10;&#10Deactivated users do not count against the available license total.&#10&#10;#{APP.accounts.getUserDeactivatedInfo(user)}">Deactivated</span>"""
 
     if @isLicenseEnabledEnvironment() and not is_user_deactivated
       user_license = @isUserLicensed user, pre_computed_hard_licensed_users
