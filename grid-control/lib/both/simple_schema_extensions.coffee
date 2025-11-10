@@ -429,3 +429,8 @@ SimpleSchema.extendOptions
   # label (useful when we want to proivde hints/instructions).
   custom_clipboard_import_label: Match.Optional(String)
 
+  # description
+  # 
+  # A description for the field. Will be displayed in tooltip on-grid using the "field-description" tooltip. 
+  # Supports i18n and html.
+  description: Match.Optional(String)
