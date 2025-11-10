@@ -429,3 +429,17 @@ SimpleSchema.extendOptions
   # label (useful when we want to proivde hints/instructions).
   custom_clipboard_import_label: Match.Optional(String)
 
+  # description
+  # 
+  # A description for the field, can be used to present on-grid hints, come up with auto-documentation, etc.
+  #
+  # We allow description to be a function, in which case we'll call it with the current task doc.
+  # If the description is a function its output can either be an i18n key or a html/string to be presented to the user.
+  # We first attempt to resolve the i18n key, if it is not found we'll return the html/string as is.
+  #
+  # If it isn't a function, we'll attempt to resolve it as an i18n key, if it is not found we'll return the string as is.
+  #
+  # The main API for evaluating the description value is GridControl's evaluateDescriptionValue()
+  # The api takes care of XSS guarding the html. If you don't use it, you must ensure to XSS guard the html.
+
+  description: Match.Optional(Match.OneOf(String, Function))

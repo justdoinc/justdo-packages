@@ -224,6 +224,11 @@ _.extend GridControlCustomFields,
       type: Boolean
 
       optional: true
+    
+    description:
+      type: Match.OneOf(String, Function)
+
+      optional: true
 
   getJsTypeForFieldType: (field_type) ->
     if field_type == "string"
@@ -374,6 +379,9 @@ _.extend GridControlCustomFields,
 
       if (grid_ranges = custom_field_definition.grid_ranges)?
         custom_field_schema.grid_ranges = grid_ranges
+      
+      if (description = custom_field_definition.description)?
+        custom_field_schema.description = description
 
       if Meteor.isClient
         # The following is relevant only when running on the client, on the server we won't
@@ -447,6 +455,7 @@ _.extend GridControlCustomFields,
                 txt_i18n: option.label_i18n
                 order: order += 1
                 bg_color: option.bg_color
+                description: option.description
 
           grid_values[""] =
             txt: ""
@@ -478,6 +487,7 @@ _.extend GridControlCustomFields,
                 txt_i18n: option.label_i18n
                 order: order += 1
                 bg_color: option.bg_color
+                description: option.description
 
           custom_field_schema.grid_values = grid_values
 

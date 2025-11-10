@@ -2823,3 +2823,55 @@ _.extend GridControl.prototype,
 
   getDomain: ->
     return @options.domain
+  
+  getFieldRawDescription: (field_id, option_id=undefined) ->
+    # Receives a field_id and an optional option_id, returns the raw-description for the field in its unevaluated-raw form.
+    #
+    # If option_id is provided, returns the raw-description for the specific option, and if the option doesn't have a description,
+    # returns undefined (we don't fallback to the field description in such case).
+    #
+    # We expect field_id to be a valid field id. We'll show a console error if we received an invalid field_id.
+    #
+    # option_id is optional, if provided, we'll return the description for the specific option, it is legitimate
+    # that only part of the options of a field have a description, hence even if we don't find the option description
+    # value we won't show a console error.
+
+    if not (field_def = @getFieldDef(field_id, false))?
+      @logger.error "getFieldRawDescription: Field #{field_id} not found in schema"
+      
+      return undefined
+
+    if field_def.grid_values? and not _.isEmpty(option_id)
+      if not (value_def = field_def.grid_values[option_id])?        
+        return undefined
+      
+      return value_def.description
+
+    return field_def.description
+
+  fieldHasRawDescription: (field_id, option_id) ->
+    # Returns true if the field has a raw-description, false otherwise.
+    #
+    # If option_id is provided, returns true if the specific option has a description, false otherwise.
+
+    return @getFieldRawDescription(field_id, option_id)?
+
+  evaluateDescriptionValue: (field_id, doc, xss_options=undefined) ->
+    # Provided with field_id, doc (optional) and xss_options (optional), 
+    # returns the XSS-Guarded description value for the field.
+    # 
+    # If the field has `grid_values` in its schema and doc[field_id] isn't empty, the description of that specific option is returned; 
+    # If the option doesn't have a description, returns undefined (we don't fallback to the field description in such case).
+    if not (field_def = @getFieldDef(field_id, false))?
+      @logger.error "evaluateDescriptionValue: Field #{field_id} not found in schema"
+
+      return
+    
+    doc_value = doc?[field_id]
+
+    description = @getFieldRawDescription(field_id, doc_value)
+
+    if _.isFunction description
+      description = description(doc)
+    
+    return JustdoHelpers.xssGuard description, xss_options

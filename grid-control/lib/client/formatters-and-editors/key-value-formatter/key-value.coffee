@@ -57,7 +57,7 @@ getKeyBgColor = (schema, value) ->
 
 GridControl.installFormatter "keyValueFormatter",
   slick_grid: ->
-    {schema, value} = @getFriendlyArgs()
+    {schema, field, value} = @getFriendlyArgs()
 
     bg_color = JustdoHelpers.normalizeBgColor(getKeyBgColor(schema, value))
 
@@ -65,9 +65,11 @@ GridControl.installFormatter "keyValueFormatter",
       custom_style = """ style="background-color: #{JustdoHelpers.xssGuard(bg_color)}; color: #{JustdoHelpers.xssGuard(JustdoHelpers.getFgColor(bg_color))};" """
     else
       custom_style = ''
+    
+    jd_tt_html = @getFieldDescriptionJdTtString field, value
 
     formatter = """
-      <div class="grid-formatter key-val-formatter">
+      <div class="grid-formatter key-val-formatter" #{jd_tt_html}>
         <div class="key-val-wrapper" #{custom_style}>
         #{JustdoHelpers.xssGuard(getKeyValue(schema, value), {allow_html_parsing: true, enclosing_char: ''})}
         </div>
