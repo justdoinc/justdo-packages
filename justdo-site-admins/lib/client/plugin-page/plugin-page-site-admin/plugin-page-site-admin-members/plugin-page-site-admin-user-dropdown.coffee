@@ -1,3 +1,18 @@
+APP.executeAfterAppLibCode ->
+  JD.registerPlaceholderItem "org-members-dropdown-toggle-deactivated-user",
+    position: 500
+    domain: "org-members-dropdown"
+    listingCondition: -> 
+      is_performing_user_site_admin = APP.justdo_site_admins.isUserSiteAdmin Meteor.user()
+      return is_performing_user_site_admin
+    data:
+      template: "site_admin_user_dropdown_toggle_deactivted_user"
+      listingCondition: (user_data) ->  
+        # Note: This listingCondition is used by the org-members-dropdown to decide whether to show this item based on the user data.
+        # The listingCondition above is the framework listing condition.
+        return not user_data.is_proxy
+  return
+
 Template.site_admin_user_dropdown.onCreated ->
   # Template data is passed inside plugin-page-site-admin-user-dropdown.html
   # as items registered from modules doesn't have access to template data.
@@ -48,7 +63,11 @@ Template.site_admin_user_dropdown_toggle_deactivted_user.events
       ]
 
     onSuccessProc = ->
-      all_site_users = tpl.data.all_site_users_rv.get()
+      if not (all_site_users = tpl.data.all_site_users_rv?.get())?
+        # This onSuccessProc is meant to be called inside the context of site-admins-members-page,
+        # to reflect the state of the user in the remarks.
+        # When called outside this context (e.g. in org members dropdown), all_site_users_rv is not available.
+        return
 
       user_index = _.findIndex all_site_users, (user) ->
         return user._id == user_id
