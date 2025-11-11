@@ -171,7 +171,6 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
         type: String
         optional: true
-        description: "Task State"
 
         autoValue: ->
           getDefaultInsertValue = =>
@@ -221,7 +220,6 @@ _.extend JustdoTasksCollectionsManager.prototype,
             due_list_state: true
             bg_color: "00000000"
             core_state: true
-            description: "Pending"
 
           "in-progress":
             txt: "In progress"
@@ -230,7 +228,6 @@ _.extend JustdoTasksCollectionsManager.prototype,
             due_list_state: true
             bg_color: "0288d1"
             core_state: true
-            description: "In progress"
 
           "done":
             txt: "Done"
@@ -239,7 +236,6 @@ _.extend JustdoTasksCollectionsManager.prototype,
             due_list_state: false
             bg_color: "38B000"
             core_state: true
-            description: "Done"
 
           "will-not-do":
             txt: "Cancelled"
@@ -479,8 +475,6 @@ _.extend JustdoTasksCollectionsManager.prototype,
         grid_visible_column: true
         grid_default_grid_view: false
         grid_default_width: 122
-
-        description: "Due Date"
 
         grid_column_formatter: "unicodeDateFormatter"
         grid_column_editor: "UnicodeDateEditor"
