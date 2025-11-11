@@ -17,11 +17,8 @@ Template.field_description_tooltip.helpers
       return
 
     {row, cell} = gc._grid.getCellFromEvent tooltip_originating_event
-    {doc, field, value} = gc.getFriendlyCellArgs row, cell
+    {doc, field} = gc.getFriendlyCellArgs row, cell
 
-    description = gc.getFieldRawDescription(field, value)
-    
-    if _.isFunction description
-      description = description(doc, value)
+    description = gc.evaluateDescriptionValue(field, doc) or ""
 
-    return description or ""
+    return description
