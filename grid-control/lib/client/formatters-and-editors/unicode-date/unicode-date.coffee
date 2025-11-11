@@ -121,7 +121,7 @@ GridControl.installFormatter "unicodeDateFormatter",
   #
   slick_grid: ->
     friendly_args = @getFriendlyArgs()
-    {formatter_obj, field, value, formatter_options} = friendly_args
+    {formatter_obj, value, formatter_options} = friendly_args
 
     # We can't tell for sure whether slickGridColumnStateMaintainer is the
     # only one to affect the column cache, therefore, we don't rely on it
@@ -175,12 +175,8 @@ GridControl.installFormatter "unicodeDateFormatter",
     if html_comment?
        comment_jd_tt = """ jd-tt="html?tt-pos_my=left%20top&tt-pos_at=right%2B2px%20top&html=#{encodeURIComponent(html_comment)}" """
 
-    description_jd_tt = ""
-    if @fieldHasDescription(field, value)
-      description_jd_tt = """ jd-tt="field-description" """
-
     formatter = """
-      <div class="grid-formatter uni-date-formatter #{custom_classes}" #{description_jd_tt}>
+      <div class="grid-formatter uni-date-formatter #{custom_classes}">
         #{formatter_content}#{formatter_buttons}#{if html_comment? then """<div class="comment-indicator" #{comment_jd_tt}>◥</div>""" else ""}
       </div>
     """
