@@ -2824,17 +2824,39 @@ _.extend GridControl.prototype,
   getDomain: ->
     return @options.domain
   
-  getFieldDescription: (field_id, option_id) ->
+  getFieldRawDescription: (field_id, option_id=undefined) ->
+    # Receives a field_id and an optional option_id, returns the raw-description for the field in its unevaluated-raw form.
+    #
+    # If option_id is provided, returns the raw-description for the specific option, and if the option doesn't have a description,
+    # returns undefined (we don't fallback to the field description in such case).
+    #
+    # We expect field_id to be a valid field id. We'll show a console error if we received an invalid field_id.
+    #
+    # option_id is optional, if provided, we'll return the description for the specific option, it is legitimate
+    # that only part of the options of a field have a description, hence even if we don't find the option description
+    # value we won't show a console error.
+
     schema = @getSchemaExtendedWithCustomFields()
 
     if not (field_def = schema[field_id])?
-      return
+      @logger.error "getFieldRawDescription: Field #{field_id} not found in schema"
+      
+      return undefined
 
-    field_description = field_def.description
-    if option_id? and (value_def = field_def.grid_values?[option_id])?
-      field_description = value_def.description
-    
-    return field_description
-  
-  fieldHasDescription: (field_id, option_id) ->
-    return @getFieldDescription(field_id, option_id)?
+    if not _.isEmpty(option_id)
+      if not (value_def = field_def.grid_values?[option_id])?        
+        return undefined
+      
+      return value_def.description
+
+    return field_def.description
+
+  fieldHasRawDescription: (field_id, option_id) ->
+    # Returns true if the field has a raw-description, false otherwise.
+    #
+    # If option_id is provided, returns true if the specific option has a description, false otherwise.
+
+    return @getFieldRawDescription(field_id, option_id)?
+
+  evaluateDescriptionValue: (field_id, doc, xss_options=undefined) ->
+    # TBD: Implement this function.
