@@ -78,7 +78,7 @@ GridControl.installFormatter "defaultFormatter",
        comment_jd_tt = """ jd-tt="html?tt-pos_my=left%20top&tt-pos_at=right%2B2px%20top&html=#{encodeURIComponent(html_comment)}" """
 
     description_jd_tt = ""
-    if @fieldHasDescription(field, value)
+    if @fieldHasRawDescription(field, value)
       description_jd_tt = """ jd-tt="field-description" """
 
     formatter = """

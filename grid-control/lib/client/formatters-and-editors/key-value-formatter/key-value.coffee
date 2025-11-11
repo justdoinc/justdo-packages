@@ -67,7 +67,7 @@ GridControl.installFormatter "keyValueFormatter",
       custom_style = ''
     
     jd_tt_html = ""
-    if @fieldHasDescription(field, value)
+    if @fieldHasRawDescription(field, value)
       jd_tt_html = """ jd-tt="field-description" """
     
     formatter = """
