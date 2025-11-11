@@ -2836,9 +2836,7 @@ _.extend GridControl.prototype,
     # that only part of the options of a field have a description, hence even if we don't find the option description
     # value we won't show a console error.
 
-    schema = @getSchemaExtendedWithCustomFields()
-
-    if not (field_def = schema[field_id])?
+    if not (field_def = @getFieldDef(field_id, false))?
       @logger.error "getFieldRawDescription: Field #{field_id} not found in schema"
       
       return undefined
