@@ -1,0 +1,30 @@
+{
+    "v7_2_news_title": "v7.2",
+    "v7_2_news_main_name": "What's new",
+
+    "v7_2_news_page_hrp": "v7.2 Hrp",
+    "v7_2_news_page_title": "v7.2 Title",
+    "v7_2_news_page_description": "v7.2 Description",
+
+		"v7_2_news_page_main_h1": "JustDo v7.2 - Title",
+    "v7_2_news_main_array_item_0_subtitle": "JustDo v7.2 - Subtitle",
+
+    "v7_2_news_main_array_item_1_title": "File Preview, Refined",
+    "v7_2_news_main_array_item_1_subtitle": "Enjoy smoother navigation and a cleaner look when viewing your files.",
+
+    "v7_2_news_main_array_item_2_title": "Pick Colors, Beautifully",
+    "v7_2_news_main_array_item_2_subtitle": "A fresh, modern color picker that makes design feel effortless.",
+
+    "v7_2_news_main_array_item_3_title": "Clearer Status Indicators",
+    "v7_2_news_main_array_item_3_subtitle": "Status colors and tooltips are now standardized and easier to understand across the app.",
+
+    "v7_2_news_main_array_item_4_title": "Better Snackbars",
+    "v7_2_news_main_array_item_4_subtitle": "Snackbars now show how much time they’ll stay on screen — and hovering pauses all dismiss timers.",
+
+    "v7_2_news_main_array_item_5_title": "A More Personal Activity Dashboard",
+    "v7_2_news_main_array_item_5_subtitle": "User avatars now appear before display names — making it easier to recognize who did what at a glance.",
+
+    "v7_2_news_main_array_item_6_title": "More Updates",
+    "v7_2_news_main_array_item_6_subtitle": "From now on we show in the admin panel, when, and by whom a user got deactivated (for users deactivated after October 24th, 2025, or after v7.0.13 got installed, the latter of the two)<br><br>In the invite dialog both from Share dropdown, and Advanced Invite, inputted users that are deactivated won't be shown, and a snackbar explaining the fact the users are deactivated will be shown<br><br>We now prevent adding deactivated users to organizations<br><br>Don't allow adding de-activated users to a JustDo.<br><br>Upon de-activation - remove de-activated users from all Orgs (the same way we remove them from all JustDos/Tasks) update the de-activation warning accordingly.<br><br>Keep a log of when, and by whom, a user got deactivated."
+
+  }
