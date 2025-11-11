@@ -278,6 +278,8 @@ APP.executeAfterAppLibCode ->
                   modifier.$set =
                     pending_owner_id: new_owner_doc._id
                 APP.collections.Tasks.update task_id, modifier
+              
+              snackbar.close()
 
               JustdoSnackbar.show
                 text: TAPi18n.__ "owners_mgmt_transfer_child_tasks_done", {count: child_tasks.length}
