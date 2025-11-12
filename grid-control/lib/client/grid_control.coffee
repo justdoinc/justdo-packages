@@ -2841,8 +2841,8 @@ _.extend GridControl.prototype,
       
       return undefined
 
-    if not _.isEmpty(option_id)
-      if not (value_def = field_def.grid_values?[option_id])?        
+    if field_def.grid_values? and not _.isEmpty(option_id)
+      if not (value_def = field_def.grid_values[option_id])?        
         return undefined
       
       return value_def.description
