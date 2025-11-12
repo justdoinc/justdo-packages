@@ -2860,24 +2860,17 @@ _.extend GridControl.prototype,
     # Provided with field_id, doc (optional) and xss_options (optional), 
     # returns the XSS-Guarded description value for the field.
     # 
-    # If the field has `grid_values` in its schema and provided with a doc, the description of doc[field_id] is returned; 
+    # If the field has `grid_values` in its schema and doc[field_id] isn't empty, the description of that specific option is returned; 
     # If the option doesn't have a description, returns undefined (we don't fallback to the field description in such case).
-    # 
-    # To get the field description when the field has `grid_values`, pass null/undefined as doc.
     if not (field_def = @getFieldDef(field_id, false))?
       @logger.error "evaluateDescriptionValue: Field #{field_id} not found in schema"
 
       return
-
-    if not (grid_values = field_def.grid_values)?
-      description = field_def.description
-    else if doc?
-      field_val = doc[field_id]
-      if not (value_def = grid_values[field_val])?
-        return
-      
-      description = value_def.description
     
+    doc_value = doc?[field_id]
+
+    description = @getFieldRawDescription(field_id, doc_value)
+
     if _.isFunction description
       description = description(doc)
     
