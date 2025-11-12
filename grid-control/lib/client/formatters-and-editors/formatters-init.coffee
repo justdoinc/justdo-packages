@@ -367,6 +367,14 @@ slick_grid_formatters_extended_context_properties =
 
   getRealSchema: ->
     return @collection.simpleSchema()._schema[@original_args[3].id]
+  
+  getFieldDescriptionJdTtString: (field,value) ->
+    field_description_jd_tt = ""
+    
+    if @fieldHasRawDescription(field, value)
+      field_description_jd_tt = """ jd-tt="field-description" """
+
+    return field_description_jd_tt
 
 slick_grid_columns_state_maintainers_extended_context_properties =
   # Note the @ for each method is the GridControl-instance-inherited formatter
