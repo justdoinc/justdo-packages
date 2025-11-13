@@ -569,18 +569,18 @@ _.extend JustdoTasksCollectionsManager.prototype,
           }
           {
             id: "low",
-            label: "Low (1-49)",
-            range: [1, 49]
+            label: "Low (1-33)",
+            range: [1, 33]
           }
           {
             id: "medium",
-            label: "Medium (50-74)",
-            range: [50, 74]
+            label: "Medium (34-66)",
+            range: [34, 66]
           }
           {
             id: "high",
-            label: "High (75-95)",
-            range: [75, 95]
+            label: "High (67-95)",
+            range: [67, 95]
           }
           {
             id: "top",
