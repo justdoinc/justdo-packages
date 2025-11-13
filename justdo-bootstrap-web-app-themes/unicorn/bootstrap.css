@@ -1,5 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&display=swap");
 
+/* THEME MAIN COLOR START */
+:root {
+  --color-primary: 220, 53, 69;
+}
+/* THEME MAIN COLOR END */
+
 :root {
   --blue: #ea4881;
   --indigo: #6610f2;
@@ -28,7 +34,8 @@
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
   --font-family-sans-serif: 'Dosis', sans-serif;
-  --font-family-monospace: 'Dosis', sans-serif; }
+  --font-family-monospace: 'Dosis', sans-serif; 
+}
 
 *,
 *::before,

@@ -1,4 +1,8 @@
 :root {
+  --color-primary: 9, 77, 144;
+}
+
+:root {
   --blue: #007bff;
   --indigo: #6610f2;
   --purple: #6f42c1;
