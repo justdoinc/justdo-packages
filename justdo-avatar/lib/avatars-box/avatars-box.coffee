@@ -127,7 +127,10 @@ Template.justdo_avatars_box.helpers
     users_diff = users_count - users_limit
 
     if users_diff > 0
-      return """<div class="default-avatar-box-button avatar-box-plus-users text-primary">+#{users_diff}</div>"""
+      content = "+#{users_diff}"
+      if users_diff > 99
+        content = "99+"
+      return """<div class="default-avatar-box-button avatar-box-plus-users text-primary" title="+#{users_diff}">#{content}</div>"""
     else
       return tpl.options_rv.get()?.button_content
 
