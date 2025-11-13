@@ -120,8 +120,6 @@ _.extend JustdoTasksCollectionsManager.prototype,
         grid_column_formatter: "statusFieldFormatter"
         grid_column_editor: "TextareaEditor"
 
-        description: "xyz"
-
       status_by:
         label: "Notes By"
         label_i18n: "status_by_schema_label"
