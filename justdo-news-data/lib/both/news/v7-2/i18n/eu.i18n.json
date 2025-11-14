@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Nobedadeak",
+  "v7_2_news_page_hrp": "justdo-v7-2-ui-hobekuntzak-fitxategi-aurrebista-kolore-hautatzailea-eguneratzeak",
+  "v7_2_news_page_title": "JustDo v7.2: Fitxategi Kudeaketa Aurreratua, Kolore Hautaketa Modernoa eta Egoera Jarraipena Adimentsua",
+  "v7_2_news_page_description": "Ezagutu JustDo v7.2 bertsioa: fitxategi aurrebista hobetua, kolore hautatzaile modernoa, egoera adierazle argiagoak, denbora-kontadorekin hobetutako snackbar-ak eta erabiltzaile avatarrak dituen jarduera panela hobetua. Gainera, erabiltzaile kudeaketaren kontrol hobeak.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Hobetu Zure Lan-Fluxua Fitxategi Aurrebista Aurreratuarekin, Kolore Hautatzaile Modernoarekin eta Jakinarazpen Adimentsuekin",
+  "v7_2_news_main_array_item_0_subtitle": "Esperientzia interfaze doituagoa fitxategi aurrebista hobeekin, kolore hautaketa modernoarekin, egoera adierazle argiagoekin eta jakinarazpen adimentsuekin.",
+  "v7_2_news_main_array_item_1_title": "Fitxategi Aurrebista, Doitua",
+  "v7_2_news_main_array_item_1_subtitle": "Gozatu nabigazio leunagoa eta itxura garbiagoa zure fitxategiak ikusterakoan.",
+  "v7_2_news_main_array_item_2_title": "Hautatu Koloreak, Ederto",
+  "v7_2_news_main_array_item_2_subtitle": "Kolore hautatzaile fresco eta modernoa, diseinua errazagoa egiten duena.",
+  "v7_2_news_main_array_item_3_title": "Egoera Adierazle Argiagoak",
+  "v7_2_news_main_array_item_3_subtitle": "Egoera koloreak eta tooltip-ak estandarizatuta daude orain eta ulertzeko errazagoak dira aplikazio osoan.",
+  "v7_2_news_main_array_item_4_title": "Snackbar Hobeak",
+  "v7_2_news_main_array_item_4_subtitle": "Snackbar-ek orain erakusten dute zenbat denbora egongo diren pantailan — eta gainean jartzean denbora-kontadore guztiak pausatzen dira.",
+  "v7_2_news_main_array_item_5_title": "Jarduera Panel Pertsonalagoa",
+  "v7_2_news_main_array_item_5_subtitle": "Erabiltzaile avatarrak orain erakusten dira bistaratze-izenen aurretik — errazago da begirada batean nork zer egin duen ezagutzea.",
+  "v7_2_news_features_name": "Beste Eguneraketa Batzuk",
+  "v7_2_news_features_title": "Hobekuntzak",
+  "v7_2_news_features_update_items": [
+    "1. Hemendik aurrera, administrazio panelean erakusten dugu noiz eta nork desaktibatu duen erabiltzailea (2025eko urriaren 24tik aurrera desaktibatutako erabiltzaileentzat, edo v7.0.13 instalatu ondoren, beranduago datorrena).",
+    "2. Gonbidapen elkarrizketa-koadroan (Partekatu goitibeheratik zein Gonbidapen Aurreratutik), sartutako erabiltzaile desaktibatutakoak ez dira erakutsiko, eta erabiltzaileak desaktibatuta daudela azaltzen duen snackbar bat bistaratuko da.",
+    "3. Orain eragozten dugu erabiltzaile desaktibatutakoak erakundeetan gehitzea.",
+    "4. Erabiltzaile desaktibatutakoak ezin dira gehitu JustDo taula batera.",
+    "5. Desaktibatzean, erabiltzaile desaktibatutakoak erakunde guztietatik kentzen dira (JustDo taula/Zereginetatik kentzen ditugun modu berean). Desaktibatze ohartarazpena eguneratu da horren arabera.",
+    "6. Orain erregistro bat mantentzen da noiz eta nork desaktibatu duen erabiltzailea."
+  ]
+}

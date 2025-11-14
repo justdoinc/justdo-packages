@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Šta je novo",
+  "v7_2_news_page_hrp": "justdo-v7-2-ui-poboljsanja-pregled-fajlova-biraci-boja-azuriranja",
+  "v7_2_news_page_title": "JustDo v7.2: Napredno upravljanje fajlovima, moderan izbor boja i inteligentno praćenje statusa",
+  "v7_2_news_page_description": "Otkrijte JustDo v7.2 sa poboljšanim pregledom fajlova, modernim biračem boja, jasnijim indikatorima statusa, poboljšanim obavještenjima s tajmerima i unaprijeđenom kontrolnom pločom aktivnosti s avatarima korisnika.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Unaprijedite svoj radni tok s naprednim pregledom fajlova, modernim biračem boja i pametnim obavještenjima",
+  "v7_2_news_main_array_item_0_subtitle": "Iskusite profinjeniji interfejs s poboljšanim pregledima fajlova, modernim izborom boja, jasnijim indikatorima statusa i pametnijim obavještenjima.",
+  "v7_2_news_main_array_item_1_title": "Pregled fajlova, profinjen",
+  "v7_2_news_main_array_item_1_subtitle": "Uživajte u glatkijoj navigaciji i čistijem izgledu prilikom pregledanja vaših fajlova.",
+  "v7_2_news_main_array_item_2_title": "Birajte boje, prelijepo",
+  "v7_2_news_main_array_item_2_subtitle": "Svjež, moderan birač boja koji čini dizajn jednostavnim.",
+  "v7_2_news_main_array_item_3_title": "Jasniji indikatori statusa",
+  "v7_2_news_main_array_item_3_subtitle": "Boje statusa i opisi su sada standardizirani i lakši za razumijevanje širom aplikacije.",
+  "v7_2_news_main_array_item_4_title": "Bolja obavještenja",
+  "v7_2_news_main_array_item_4_subtitle": "Obavještenja sada pokazuju koliko će vremena ostati na ekranu — a prelaskom miša pauziraju se svi tajmeri za zatvaranje.",
+  "v7_2_news_main_array_item_5_title": "Personalizovanija kontrolna ploča aktivnosti",
+  "v7_2_news_main_array_item_5_subtitle": "Avatari korisnika se sada pojavljuju prije prikaznih imena — olakšavajući prepoznavanje ko je šta uradio na prvi pogled.",
+  "v7_2_news_features_name": "Ostala ažuriranja",
+  "v7_2_news_features_title": "Poboljšanja",
+  "v7_2_news_features_update_items": [
+    "1. Od sada prikazujemo u administratorskoj ploči kada je i od koga korisnik deaktiviran (za korisnike deaktivirane nakon 24. oktobra 2025. ili nakon instaliranja verzije v7.0.13, zavisno šta dođe kasnije).",
+    "2. U dijalogu za pozivanje (i iz padajućeg menija Dijeljenje i Naprednog pozivanja), uneseni korisnici koji su deaktivirani neće biti prikazani, a pojaviće se obavještenje koje objašnjava da su korisnici deaktivirani.",
+    "3. Sada sprječavamo dodavanje deaktiviranih korisnika u organizacije.",
+    "4. Deaktivirani korisnici više ne mogu biti dodati u JustDo.",
+    "5. Prilikom deaktivacije, deaktivirani korisnici se uklanjaju iz svih organizacija (na isti način kao što ih uklanjamo iz svih JustDo ploča/zadataka). Upozorenje o deaktivaciji je ažurirano u skladu s tim.",
+    "6. Sada se čuva evidencija o tome kada je i od koga korisnik deaktiviran."
+  ]
+}

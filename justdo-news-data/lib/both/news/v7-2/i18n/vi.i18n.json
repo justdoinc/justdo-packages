@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Có gì mới",
+  "v7_2_news_page_hrp": "justdo-v7-2-cai-tien-giao-dien-xem-truoc-tep-bo-chon-mau-cap-nhat",
+  "v7_2_news_page_title": "JustDo v7.2: Quản lý tệp nâng cao, Chọn màu hiện đại & Theo dõi trạng thái thông minh",
+  "v7_2_news_page_description": "Khám phá JustDo v7.2 với trải nghiệm xem trước tệp được cải tiến, bộ chọn màu hiện đại, chỉ báo trạng thái rõ ràng hơn, thông báo với bộ đếm thời gian, bảng hoạt động nâng cao với avatar người dùng và kiểm soát quản lý người dùng tốt hơn.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Nâng cao quy trình làm việc với Xem trước tệp nâng cao, Bộ chọn màu hiện đại & Thông báo thông minh",
+  "v7_2_news_main_array_item_0_subtitle": "Trải nghiệm giao diện tinh tế hơn với xem trước tệp được cải thiện, lựa chọn màu hiện đại, chỉ báo trạng thái rõ ràng hơn và thông báo thông minh hơn.",
+  "v7_2_news_main_array_item_1_title": "Xem trước tệp, Tinh tế hơn",
+  "v7_2_news_main_array_item_1_subtitle": "Tận hưởng điều hướng mượt mà hơn và giao diện gọn gàng hơn khi xem các tệp của bạn.",
+  "v7_2_news_main_array_item_2_title": "Chọn màu, Đẹp mắt hơn",
+  "v7_2_news_main_array_item_2_subtitle": "Bộ chọn màu hiện đại, mới mẻ giúp thiết kế trở nên dễ dàng.",
+  "v7_2_news_main_array_item_3_title": "Chỉ báo trạng thái rõ ràng hơn",
+  "v7_2_news_main_array_item_3_subtitle": "Màu trạng thái và chú giải công cụ giờ đây được chuẩn hóa và dễ hiểu hơn trong toàn bộ ứng dụng.",
+  "v7_2_news_main_array_item_4_title": "Thông báo (Snackbar) tốt hơn",
+  "v7_2_news_main_array_item_4_subtitle": "Thông báo giờ đây hiển thị thời gian chúng sẽ ở trên màn hình — và di chuột vào sẽ tạm dừng tất cả bộ đếm thời gian tắt.",
+  "v7_2_news_main_array_item_5_title": "Bảng hoạt động cá nhân hóa hơn",
+  "v7_2_news_main_array_item_5_subtitle": "Avatar người dùng giờ đây xuất hiện trước tên hiển thị — giúp dễ dàng nhận biết ai đã làm gì chỉ trong một cái nhìn.",
+  "v7_2_news_features_name": "Các cập nhật khác",
+  "v7_2_news_features_title": "Cải tiến",
+  "v7_2_news_features_update_items": [
+    "1. Từ bây giờ, chúng tôi hiển thị trong bảng quản trị khi nào và bởi ai một người dùng bị vô hiệu hóa (đối với người dùng bị vô hiệu hóa sau ngày 24 tháng 10 năm 2025, hoặc sau khi v7.0.13 được cài đặt, tùy theo điều kiện nào đến sau).",
+    "2. Trong hộp thoại mời (cả từ menu thả xuống Chia sẻ và Mời nâng cao), người dùng đã nhập bị vô hiệu hóa sẽ không được hiển thị và một thông báo giải thích rằng người dùng đã bị vô hiệu hóa sẽ được hiển thị.",
+    "3. Giờ đây chúng tôi ngăn chặn việc thêm người dùng bị vô hiệu hóa vào tổ chức.",
+    "4. Người dùng bị vô hiệu hóa không còn có thể được thêm vào một JustDo.",
+    "5. Khi bị vô hiệu hóa, người dùng bị vô hiệu hóa sẽ được xóa khỏi tất cả các Tổ chức (giống như cách chúng tôi xóa họ khỏi tất cả các JustDo/Nhiệm vụ). Cảnh báo vô hiệu hóa đã được cập nhật tương ứng.",
+    "6. Bây giờ nhật ký được lưu giữ về thời điểm và người đã vô hiệu hóa một người dùng."
+  ]
+}

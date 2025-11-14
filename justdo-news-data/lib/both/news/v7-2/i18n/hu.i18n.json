@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Újdonságok",
+  "v7_2_news_page_hrp": "justdo-v7-2-felhasznaloi-felulet-fejlesztesek-fajl-elonezet-szinvalaszto-frissitesek",
+  "v7_2_news_page_title": "JustDo v7.2: Fejlett Fájlkezelés, Modern Színválasztó és Intelligens Állapotkövetés",
+  "v7_2_news_page_description": "Fedezze fel a JustDo v7.2-t finomított fájl előnézettel, modern színválasztóval, tisztább állapotjelzőkkel, továbbfejlesztett időzítős értesítésekkel és avatárral bővített tevékenységi irányítópulttal. Plusz jobb felhasználókezelési funkciók.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Fejlessze Munkamenetét Fejlett Fájl Előnézettel, Modern Színválasztóval és Okos Értesítésekkel",
+  "v7_2_news_main_array_item_0_subtitle": "Tapasztaljon meg egy finomított felhasználói felületet továbbfejlesztett fájl előnézetekkel, modern színválasztással, tisztább állapotjelzőkkel és okosabb értesítésekkel.",
+  "v7_2_news_main_array_item_1_title": "Finomított Fájl Előnézet",
+  "v7_2_news_main_array_item_1_subtitle": "Élvezze a simább navigációt és a tisztább megjelenést fájljai megtekintésekor.",
+  "v7_2_news_main_array_item_2_title": "Színválasztás Gyönyörűen",
+  "v7_2_news_main_array_item_2_subtitle": "Egy friss, modern színválasztó, amely könnyedé teszi a tervezést.",
+  "v7_2_news_main_array_item_3_title": "Tisztább Állapotjelzők",
+  "v7_2_news_main_array_item_3_subtitle": "Az állapotszínek és tooltipek most egységesítettek és könnyebben érthetők az alkalmazásban.",
+  "v7_2_news_main_array_item_4_title": "Jobb Értesítések",
+  "v7_2_news_main_array_item_4_subtitle": "Az értesítések most mutatják, mennyi ideig maradnak a képernyőn — és az egér fölé vitele szünetelteti az időzítőket.",
+  "v7_2_news_main_array_item_5_title": "Személyesebb Tevékenységi Irányítópult",
+  "v7_2_news_main_array_item_5_subtitle": "A felhasználói avatárok most a megjelenített nevek előtt láthatók — így könnyebb egy pillantással felismerni, ki mit csinált.",
+  "v7_2_news_features_name": "További Frissítések",
+  "v7_2_news_features_title": "Fejlesztések",
+  "v7_2_news_features_update_items": [
+    "1. Mostantól az admin panelen megjelenítjük, hogy mikor és ki által lett egy felhasználó inaktiválva (a 2025. október 24. után, vagy a v7.0.13 telepítése után inaktiváltak esetében, amelyik későbbi).",
+    "2. A meghívó ablakban (mind a Megosztás legördülőből, mind a Speciális Meghívásból) a beírt inaktivált felhasználók nem jelennek meg, és egy értesítés jelenik meg, amely magyarázza, hogy a felhasználók inaktiválva vannak.",
+    "3. Most megakadályozzuk az inaktivált felhasználók szervezetekhez adását.",
+    "4. Inaktivált felhasználók többé nem adhatók hozzá egy JustDo táblához.",
+    "5. Inaktiváláskor az inaktivált felhasználók eltávolításra kerülnek minden Szervezetből (ugyanúgy, ahogy eltávolítjuk őket minden JustDo táblából/Feladatból). Az inaktiválási figyelmeztetés ennek megfelelően frissült.",
+    "6. Mostantól napló készül arról, hogy mikor és ki által lett egy felhasználó inaktiválva."
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Novidades",
+  "v7_2_news_page_hrp": "justdo-v7-2-melhorias-interface-previa-ficheiros-seletor-cores-atualizacoes",
+  "v7_2_news_page_title": "JustDo v7.2: Gestão Avançada de Ficheiros, Seleção Moderna de Cores e Rastreio Inteligente de Estados",
+  "v7_2_news_page_description": "Descubra o JustDo v7.2 com pré-visualização refinada de ficheiros, seletor de cores moderno, indicadores de estado mais claros, snackbars melhoradas com temporizadores e painel de atividades aprimorado com avatares de utilizadores. Além de melhores controlos de gestão de utilizadores.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Melhore o Seu Fluxo de Trabalho com Pré-visualização Avançada de Ficheiros, Seletor de Cores Moderno e Notificações Inteligentes",
+  "v7_2_news_main_array_item_0_subtitle": "Experimente uma interface mais refinada com pré-visualizações de ficheiros melhoradas, seleção de cores moderna, indicadores de estado mais claros e notificações mais inteligentes.",
+  "v7_2_news_main_array_item_1_title": "Pré-visualização de Ficheiros Refinada",
+  "v7_2_news_main_array_item_1_subtitle": "Desfrute de navegação mais suave e um aspeto mais limpo ao visualizar os seus ficheiros.",
+  "v7_2_news_main_array_item_2_title": "Escolha Cores com Elegância",
+  "v7_2_news_main_array_item_2_subtitle": "Um seletor de cores moderno e renovado que torna o design sem esforço.",
+  "v7_2_news_main_array_item_3_title": "Indicadores de Estado Mais Claros",
+  "v7_2_news_main_array_item_3_subtitle": "As cores e dicas de estado estão agora padronizadas e mais fáceis de compreender em toda a aplicação.",
+  "v7_2_news_main_array_item_4_title": "Snackbars Melhoradas",
+  "v7_2_news_main_array_item_4_subtitle": "As snackbars agora mostram quanto tempo permanecerão no ecrã — e ao passar o rato, todos os temporizadores são pausados.",
+  "v7_2_news_main_array_item_5_title": "Um Painel de Atividades Mais Pessoal",
+  "v7_2_news_main_array_item_5_subtitle": "Os avatares dos utilizadores aparecem agora antes dos nomes — facilitando o reconhecimento de quem fez o quê num instante.",
+  "v7_2_news_features_name": "Outras Atualizações",
+  "v7_2_news_features_title": "Melhorias",
+  "v7_2_news_features_update_items": [
+    "1. A partir de agora, mostramos no painel de administração quando e por quem um utilizador foi desativado (para utilizadores desativados após 24 de outubro de 2025, ou após a instalação da v7.0.13, o que ocorrer mais tarde).",
+    "2. No diálogo de convite (tanto no menu pendente Partilhar como no Convite Avançado), os utilizadores introduzidos que estejam desativados não serão mostrados, e será exibida uma snackbar explicando que os utilizadores estão desativados.",
+    "3. Agora impedimos a adição de utilizadores desativados a organizações.",
+    "4. Utilizadores desativados já não podem ser adicionados a um JustDo.",
+    "5. Após a desativação, os utilizadores desativados são removidos de todas as Organizações (da mesma forma que os removemos de todos os JustDos/Tarefas). O aviso de desativação foi atualizado em conformidade.",
+    "6. É agora mantido um registo de quando e por quem um utilizador foi desativado."
+  ]
+}

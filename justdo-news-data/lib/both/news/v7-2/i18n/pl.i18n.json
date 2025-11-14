@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Co nowego",
+  "v7_2_news_page_hrp": "justdo-v7-2-ulepszenia-interfejsu-podglad-plikow-wybor-kolorow-aktualizacje",
+  "v7_2_news_page_title": "JustDo v7.2: Zaawansowane zarządzanie plikami, nowoczesny wybór kolorów i inteligentne śledzenie statusów",
+  "v7_2_news_page_description": "Odkryj JustDo v7.2 z ulepszonym podglądem plików, nowoczesnym wyborem kolorów, wyraźniejszymi wskaźnikami statusu, ulepszonymi powiadomieniami z czasomierzami oraz rozszerzonym pulpitem aktywności z awatarami użytkowników. Plus lepsze zarządzanie użytkownikami.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Usprawnij swój przepływ pracy dzięki zaawansowanemu podglądowi plików, nowoczesnemu wyborowi kolorów i inteligentnym powiadomieniom",
+  "v7_2_news_main_array_item_0_subtitle": "Doświadcz bardziej dopracowanego interfejsu z ulepszonym podglądem plików, nowoczesnym wyborem kolorów, wyraźniejszymi wskaźnikami statusu i inteligentniejszymi powiadomieniami.",
+  "v7_2_news_main_array_item_1_title": "Dopracowany podgląd plików",
+  "v7_2_news_main_array_item_1_subtitle": "Ciesz się płynniejszą nawigacją i czystszym wyglądem podczas przeglądania plików.",
+  "v7_2_news_main_array_item_2_title": "Piękny wybór kolorów",
+  "v7_2_news_main_array_item_2_subtitle": "Świeży, nowoczesny wybór kolorów, który sprawia, że projektowanie staje się bezwysiłkowe.",
+  "v7_2_news_main_array_item_3_title": "Wyraźniejsze wskaźniki statusu",
+  "v7_2_news_main_array_item_3_subtitle": "Kolory statusów i podpowiedzi są teraz ustandaryzowane i łatwiejsze do zrozumienia w całej aplikacji.",
+  "v7_2_news_main_array_item_4_title": "Lepsze powiadomienia",
+  "v7_2_news_main_array_item_4_subtitle": "Powiadomienia (snackbars) pokazują teraz, jak długo pozostaną na ekranie — a najechanie myszą wstrzymuje wszystkie liczniki czasu.",
+  "v7_2_news_main_array_item_5_title": "Bardziej osobisty pulpit aktywności",
+  "v7_2_news_main_array_item_5_subtitle": "Awatary użytkowników pojawiają się teraz przed nazwami wyświetlanymi — ułatwiając rozpoznanie, kto co zrobił na pierwszy rzut oka.",
+  "v7_2_news_features_name": "Inne aktualizacje",
+  "v7_2_news_features_title": "Ulepszenia",
+  "v7_2_news_features_update_items": [
+    "1. Od teraz pokazujemy w panelu administracyjnym kiedy i przez kogo użytkownik został dezaktywowany (dla użytkowników dezaktywowanych po 24 października 2025 r. lub po zainstalowaniu wersji v7.0.13, w zależności od tego, co nastąpiło później).",
+    "2. W oknie dialogowym zaproszenia (zarówno z menu rozwijanego Udostępnij, jak i z Zaawansowanego zaproszenia) wprowadzeni użytkownicy, którzy są dezaktywowani, nie będą wyświetlani, a powiadomienie wyjaśniające, że użytkownicy są dezaktywowani, zostanie wyświetlone.",
+    "3. Obecnie uniemożliwiamy dodawanie dezaktywowanych użytkowników do organizacji.",
+    "4. Dezaktywowani użytkownicy nie mogą już być dodawani do tablicy JustDo.",
+    "5. Po dezaktywacji dezaktywowani użytkownicy są usuwani ze wszystkich organizacji (w ten sam sposób, w jaki usuwamy ich ze wszystkich tablic JustDo/zadań). Ostrzeżenie o dezaktywacji zostało odpowiednio zaktualizowane.",
+    "6. Teraz prowadzony jest dziennik informujący, kiedy i przez kogo użytkownik został dezaktywowany."
+  ]
+}

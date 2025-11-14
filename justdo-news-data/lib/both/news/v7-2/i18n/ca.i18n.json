@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Novetats",
+  "v7_2_news_page_hrp": "justdo-v7-2-millores-interficie-previsualitzacio-arxius-selector-colors-actualitzacions",
+  "v7_2_news_page_title": "JustDo v7.2: Gestió Avançada d'Arxius, Selecció Moderna de Colors i Seguiment Intel·ligent d'Estats",
+  "v7_2_news_page_description": "Descobreix JustDo v7.2 amb una experiència de previsualització d'arxius refinada, selector de colors modern, indicadors d'estat més clars, snackbars millorats amb temporitzadors i tauler d'activitat millorat amb avatars d'usuari. A més de millors controls de gestió d'usuaris.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Millora el Teu Flux de Treball amb Previsualització Avançada d'Arxius, Selector de Colors Modern i Notificacions Intel·ligents",
+  "v7_2_news_main_array_item_0_subtitle": "Experimenta una interfície més refinada amb previsualitzacions d'arxius millorades, selecció moderna de colors, indicadors d'estat més clars i notificacions més intel·ligents.",
+  "v7_2_news_main_array_item_1_title": "Previsualització d'Arxius, Refinada",
+  "v7_2_news_main_array_item_1_subtitle": "Gaudeix d'una navegació més fluida i un aspecte més net quan visualitzis els teus arxius.",
+  "v7_2_news_main_array_item_2_title": "Tria Colors, Amb Elegància",
+  "v7_2_news_main_array_item_2_subtitle": "Un selector de colors modern i fresc que fa que el disseny sigui fàcil i fluid.",
+  "v7_2_news_main_array_item_3_title": "Indicadors d'Estat Més Clars",
+  "v7_2_news_main_array_item_3_subtitle": "Els colors d'estat i les descripcions emergents ara estan estandarditzats i són més fàcils de comprendre a tota l'aplicació.",
+  "v7_2_news_main_array_item_4_title": "Snackbars Millorats",
+  "v7_2_news_main_array_item_4_subtitle": "Els snackbars ara mostren quant de temps romandran a la pantalla — i en passar-hi el cursor es pausen tots els temporitzadors de tancament.",
+  "v7_2_news_main_array_item_5_title": "Un Tauler d'Activitat Més Personal",
+  "v7_2_news_main_array_item_5_subtitle": "Els avatars d'usuari ara apareixen abans dels noms — facilitant reconèixer qui ha fet què d'una ullada.",
+  "v7_2_news_features_name": "Altres Actualitzacions",
+  "v7_2_news_features_title": "Millores",
+  "v7_2_news_features_update_items": [
+    "1. A partir d'ara, mostrem al panell d'administració quan i per qui va ser desactivat un usuari (per a usuaris desactivats després del 24 d'octubre de 2025, o després de la instal·lació de la v7.0.13, el que sigui posterior).",
+    "2. Al diàleg d'invitació (tant des del menú desplegable Compartir com des de la Invitació Avançada), els usuaris introduïts que estiguin desactivats no es mostraran, i es mostrarà un snackbar explicant que els usuaris estan desactivats.",
+    "3. Ara evitem afegir usuaris desactivats a les organitzacions.",
+    "4. Els usuaris desactivats ja no es poden afegir a un JustDo.",
+    "5. En desactivar-se, els usuaris desactivats s'eliminen de totes les organitzacions (de la mateixa manera que els eliminem de tots els JustDos/Tasques). L'avís de desactivació s'ha actualitzat en conseqüència.",
+    "6. Ara es manté un registre de quan i per qui va ser desactivat un usuari."
+  ]
+}

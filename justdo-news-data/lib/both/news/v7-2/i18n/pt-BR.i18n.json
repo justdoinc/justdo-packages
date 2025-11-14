@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Novidades",
+  "v7_2_news_page_hrp": "justdo-v7-2-melhorias-interface-preview-arquivos-seletor-cores-atualizacoes",
+  "v7_2_news_page_title": "JustDo v7.2: Gerenciamento Avançado de Arquivos, Seleção Moderna de Cores e Rastreamento Inteligente de Status",
+  "v7_2_news_page_description": "Descubra o JustDo v7.2 com preview refinado de arquivos, seletor de cores moderno, indicadores de status mais claros, snackbars aprimorados com temporizadores e painel de atividades melhorado com avatares de usuários. Além de controles aprimorados de gerenciamento de usuários.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Aprimore Seu Fluxo de Trabalho com Preview Avançado de Arquivos, Seletor de Cores Moderno e Notificações Inteligentes",
+  "v7_2_news_main_array_item_0_subtitle": "Experimente uma interface mais refinada com previews de arquivos aprimorados, seleção moderna de cores, indicadores de status mais claros e notificações mais inteligentes.",
+  "v7_2_news_main_array_item_1_title": "Preview de Arquivos Refinado",
+  "v7_2_news_main_array_item_1_subtitle": "Navegue de forma mais suave e aprecie um visual mais limpo ao visualizar seus arquivos.",
+  "v7_2_news_main_array_item_2_title": "Escolha Cores com Estilo",
+  "v7_2_news_main_array_item_2_subtitle": "Um seletor de cores novo e moderno que torna o design algo natural.",
+  "v7_2_news_main_array_item_3_title": "Indicadores de Status Mais Claros",
+  "v7_2_news_main_array_item_3_subtitle": "Cores e dicas de status agora são padronizadas e mais fáceis de entender em todo o aplicativo.",
+  "v7_2_news_main_array_item_4_title": "Snackbars Melhores",
+  "v7_2_news_main_array_item_4_subtitle": "Os snackbars agora mostram por quanto tempo permanecerão na tela — e passar o mouse pausa todos os temporizadores de fechamento.",
+  "v7_2_news_main_array_item_5_title": "Painel de Atividades Mais Pessoal",
+  "v7_2_news_main_array_item_5_subtitle": "Avatares de usuários agora aparecem antes dos nomes — facilitando identificar quem fez o quê rapidamente.",
+  "v7_2_news_features_name": "Outras Atualizações",
+  "v7_2_news_features_title": "Melhorias",
+  "v7_2_news_features_update_items": [
+    "1. A partir de agora, mostramos no painel administrativo quando e por quem um usuário foi desativado (para usuários desativados após 24 de outubro de 2025, ou após a instalação da v7.0.13, o que ocorrer depois).",
+    "2. No diálogo de convite (tanto no menu Compartilhar quanto no Convite Avançado), usuários desativados não serão mostrados, e um snackbar explicando que os usuários estão desativados será exibido.",
+    "3. Agora impedimos a adição de usuários desativados às organizações.",
+    "4. Usuários desativados não podem mais ser adicionados a um Board.",
+    "5. Ao serem desativados, os usuários são removidos de todas as Organizações (da mesma forma que os removemos de todos os Boards/Tarefas). O aviso de desativação foi atualizado de acordo.",
+    "6. Agora é mantido um registro de quando e por quem um usuário foi desativado."
+  ]
+}

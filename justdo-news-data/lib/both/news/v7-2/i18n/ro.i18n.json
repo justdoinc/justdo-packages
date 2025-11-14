@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Noutăți",
+  "v7_2_news_page_hrp": "justdo-v7-2-imbunatatiri-ui-previzualizare-fisiere-selector-culori-actualizari",
+  "v7_2_news_page_title": "JustDo v7.2: Gestionare Avansată a Fișierelor, Selecție Modernă a Culorilor & Urmărire Inteligentă a Statusurilor",
+  "v7_2_news_page_description": "Descoperă JustDo v7.2 cu o experiență rafinată de previzualizare a fișierelor, selector modern de culori, indicatori de status mai clari, snackbar-uri îmbunătățite cu cronometre și panou de activitate îmbunătățit cu avataruri de utilizatori. Plus controale îmbunătățite pentru gestionarea utilizatorilor.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Îmbunătățește-ți Fluxul de Lucru cu Previzualizare Avansată a Fișierelor, Selector Modern de Culori & Notificări Inteligente",
+  "v7_2_news_main_array_item_0_subtitle": "Beneficiază de o interfață mai rafinată cu previzualizări îmbunătățite ale fișierelor, selecție modernă a culorilor, indicatori de status mai clari și notificări mai inteligente.",
+  "v7_2_news_main_array_item_1_title": "Previzualizare Fișiere, Rafinată",
+  "v7_2_news_main_array_item_1_subtitle": "Bucură-te de o navigare mai fluidă și un aspect mai curat când vizualizezi fișierele tale.",
+  "v7_2_news_main_array_item_2_title": "Alege Culorile, Frumos",
+  "v7_2_news_main_array_item_2_subtitle": "Un selector de culori proaspăt și modern care face designul să pară fără efort.",
+  "v7_2_news_main_array_item_3_title": "Indicatori de Status Mai Clari",
+  "v7_2_news_main_array_item_3_subtitle": "Culorile și tooltip-urile de status sunt acum standardizate și mai ușor de înțeles în întreaga aplicație.",
+  "v7_2_news_main_array_item_4_title": "Snackbar-uri Mai Bune",
+  "v7_2_news_main_array_item_4_subtitle": "Snackbar-urile arată acum cât timp vor rămâne pe ecran — iar trecerea cu mouse-ul oprește toate cronometrele de închidere.",
+  "v7_2_news_main_array_item_5_title": "Un Panou de Activitate Mai Personal",
+  "v7_2_news_main_array_item_5_subtitle": "Avatarurile utilizatorilor apar acum înaintea numelor afișate — facilitând recunoașterea rapidă a cine a făcut ce.",
+  "v7_2_news_features_name": "Alte Actualizări",
+  "v7_2_news_features_title": "Îmbunătățiri",
+  "v7_2_news_features_update_items": [
+    "1. De acum înainte, afișăm în panoul de administrare când și de către cine a fost dezactivat un utilizator (pentru utilizatorii dezactivați după 24 octombrie 2025 sau după instalarea v7.0.13, oricare dintre acestea este mai târziu).",
+    "2. În dialogul de invitație (atât din meniul derulant Distribuie, cât și din Invitație Avansată), utilizatorii introduși care sunt dezactivați nu vor fi afișați și va fi afișat un snackbar care explică faptul că utilizatorii sunt dezactivați.",
+    "3. Acum prevenim adăugarea utilizatorilor dezactivați la organizații.",
+    "4. Utilizatorii dezactivați nu mai pot fi adăugați la un board JustDo.",
+    "5. La dezactivare, utilizatorii dezactivați sunt eliminați din toate organizațiile (în același mod în care îi eliminăm din toate board-urile JustDo/Sarcinile). Avertismentul de dezactivare a fost actualizat în consecință.",
+    "6. Acum se păstrează un jurnal cu data și persoana care a dezactivat un utilizator."
+  ]
+}

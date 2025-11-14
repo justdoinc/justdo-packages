@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Yenilikler",
+  "v7_2_news_page_hrp": "justdo-v7-2-arayuz-iyilestirmeleri-dosya-onizleme-renk-secici-guncellemeleri",
+  "v7_2_news_page_title": "JustDo v7.2: Gelişmiş Dosya Yönetimi, Modern Renk Seçimi ve Akıllı Durum Takibi",
+  "v7_2_news_page_description": "Yenilenmiş dosya önizleme deneyimi, modern renk seçici, daha net durum göstergeleri, zamanlayıcılı geliştirilmiş bildirimler ve kullanıcı avatarlarıyla zenginleştirilmiş aktivite panosu sunan JustDo v7.2'yi keşfedin. Ayrıca geliştirilmiş kullanıcı yönetimi kontrolleri.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Gelişmiş Dosya Önizleme, Modern Renk Seçici ve Akıllı Bildirimlerle İş Akışınızı Geliştirin",
+  "v7_2_news_main_array_item_0_subtitle": "İyileştirilmiş dosya önizlemeleri, modern renk seçimi, daha net durum göstergeleri ve daha akıllı bildirimlerle daha rafine bir arayüz deneyimi yaşayın.",
+  "v7_2_news_main_array_item_1_title": "Yenilenmiş Dosya Önizleme",
+  "v7_2_news_main_array_item_1_subtitle": "Dosyalarınızı görüntülerken daha akıcı gezinme ve daha temiz bir görünümün keyfini çıkarın.",
+  "v7_2_news_main_array_item_2_title": "Güzel Renk Seçimi",
+  "v7_2_news_main_array_item_2_subtitle": "Tasarımı zahmetsiz hissettiren taze, modern bir renk seçici.",
+  "v7_2_news_main_array_item_3_title": "Daha Net Durum Göstergeleri",
+  "v7_2_news_main_array_item_3_subtitle": "Durum renkleri ve araç ipuçları artık uygulama genelinde standartlaştırılmış ve anlaşılması daha kolay.",
+  "v7_2_news_main_array_item_4_title": "Geliştirilmiş Bildirimler",
+  "v7_2_news_main_array_item_4_subtitle": "Bildirimler artık ekranda ne kadar kalacaklarını gösteriyor — üzerine geldiğinizde tüm kapanma zamanlayıcıları duruyor.",
+  "v7_2_news_main_array_item_5_title": "Daha Kişisel Aktivite Panosu",
+  "v7_2_news_main_array_item_5_subtitle": "Kullanıcı avatarları artık görünen adlardan önce görünüyor — kimin ne yaptığını bir bakışta tanımayı kolaylaştırıyor.",
+  "v7_2_news_features_name": "Diğer Güncellemeler",
+  "v7_2_news_features_title": "İyileştirmeler",
+  "v7_2_news_features_update_items": [
+    "1. Artık admin panelinde bir kullanıcının ne zaman ve kim tarafından devre dışı bırakıldığını gösteriyoruz (24 Ekim 2025'ten sonra veya v7.0.13 kurulumundan sonra devre dışı bırakılan kullanıcılar için, hangisi daha geç ise).",
+    "2. Davet diyaloğunda (hem Paylaş açılır menüsünden hem de Gelişmiş Davet'ten), girilen devre dışı bırakılmış kullanıcılar gösterilmeyecek ve kullanıcıların devre dışı bırakıldığını açıklayan bir bildirim görüntülenecek.",
+    "3. Artık devre dışı bırakılmış kullanıcıların organizasyonlara eklenmesini engelliyoruz.",
+    "4. Devre dışı bırakılmış kullanıcılar artık bir JustDo panosuna eklenemez.",
+    "5. Devre dışı bırakma işlemi sonrasında, devre dışı bırakılan kullanıcılar tüm Organizasyonlardan kaldırılır (tüm JustDo panolarından/Görevlerden kaldırdığımız gibi). Devre dışı bırakma uyarısı buna göre güncellenmiştir.",
+    "6. Artık bir kullanıcının ne zaman ve kim tarafından devre dışı bırakıldığına dair kayıt tutulmaktadır."
+  ]
+}

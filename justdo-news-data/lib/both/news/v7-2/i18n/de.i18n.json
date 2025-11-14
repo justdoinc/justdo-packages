@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Was ist neu",
+  "v7_2_news_page_hrp": "justdo-v7-2-ui-verbesserungen-dateivorschau-farbwähler-updates",
+  "v7_2_news_page_title": "JustDo v7.2: Erweiterte Dateiverwaltung, moderner Farbwähler & intelligente Statusverfolgung",
+  "v7_2_news_page_description": "Entdecken Sie JustDo v7.2 mit verbesserter Dateivorschau, modernem Farbwähler, klareren Statusindikatoren, optimierten Snackbars mit Timern und erweitertem Aktivitäts-Dashboard mit Benutzer-Avataren. Plus verbesserte Benutzerverwaltung.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Optimieren Sie Ihren Workflow mit erweiterter Dateivorschau, modernem Farbwähler & intelligenten Benachrichtigungen",
+  "v7_2_news_main_array_item_0_subtitle": "Erleben Sie eine verfeinerte Benutzeroberfläche mit verbesserter Dateivorschau, moderner Farbauswahl, klareren Statusindikatoren und intelligenteren Benachrichtigungen.",
+  "v7_2_news_main_array_item_1_title": "Verfeinerte Dateivorschau",
+  "v7_2_news_main_array_item_1_subtitle": "Genießen Sie eine flüssigere Navigation und ein klareres Design beim Betrachten Ihrer Dateien.",
+  "v7_2_news_main_array_item_2_title": "Farben schön auswählen",
+  "v7_2_news_main_array_item_2_subtitle": "Ein frischer, moderner Farbwähler, der Design mühelos macht.",
+  "v7_2_news_main_array_item_3_title": "Klarere Statusindikatoren",
+  "v7_2_news_main_array_item_3_subtitle": "Statusfarben und Tooltips sind jetzt standardisiert und in der gesamten App leichter verständlich.",
+  "v7_2_news_main_array_item_4_title": "Bessere Snackbars",
+  "v7_2_news_main_array_item_4_subtitle": "Snackbars zeigen jetzt an, wie lange sie auf dem Bildschirm bleiben – und beim Hovern werden alle Schließ-Timer pausiert.",
+  "v7_2_news_main_array_item_5_title": "Ein persönlicheres Aktivitäts-Dashboard",
+  "v7_2_news_main_array_item_5_subtitle": "Benutzer-Avatare erscheinen jetzt vor den Anzeigenamen – so erkennen Sie auf einen Blick, wer was getan hat.",
+  "v7_2_news_features_name": "Weitere Updates",
+  "v7_2_news_features_title": "Verbesserungen",
+  "v7_2_news_features_update_items": [
+    "1. Ab sofort zeigen wir im Admin-Panel an, wann und von wem ein Benutzer deaktiviert wurde (für Benutzer, die nach dem 24. Oktober 2025 oder nach der Installation von v7.0.13 deaktiviert wurden, je nachdem, was später eintritt).",
+    "2. Im Einladungsdialog (sowohl über das Teilen-Dropdown als auch über die erweiterte Einladung) werden eingegebene Benutzer, die deaktiviert sind, nicht mehr angezeigt, und es wird eine Snackbar eingeblendet, die erklärt, dass die Benutzer deaktiviert sind.",
+    "3. Wir verhindern jetzt das Hinzufügen deaktivierter Benutzer zu Organisationen.",
+    "4. Deaktivierte Benutzer können nicht mehr zu einem JustDo Board hinzugefügt werden.",
+    "5. Bei der Deaktivierung werden deaktivierte Benutzer aus allen Organisationen entfernt (auf die gleiche Weise, wie wir sie aus allen JustDo Boards/Aufgaben entfernen). Die Deaktivierungswarnung wurde entsprechend aktualisiert.",
+    "6. Es wird jetzt ein Protokoll geführt, wann und von wem ein Benutzer deaktiviert wurde."
+  ]
+}

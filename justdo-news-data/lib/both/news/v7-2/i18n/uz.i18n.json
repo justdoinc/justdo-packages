@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Yangiliklar",
+  "v7_2_news_page_hrp": "justdo-v7-2-ui-yaxshilanishlari-fayl-oldindan-koʻrish-rang-tanlash-yangilanishlari",
+  "v7_2_news_page_title": "JustDo v7.2: Kengaytirilgan fayllarni boshqarish, zamonaviy rang tanlash va aqlli holat kuzatuvi",
+  "v7_2_news_page_description": "JustDo v7.2 ni kashf eting: yangilangan fayllarni oldindan ko'rish, zamonaviy rang tanlash vositasi, aniqroq holat ko'rsatkichlari, taymerli yaxshilangan xabarlar va foydalanuvchi avatarlari bilan kengaytirilgan faoliyat paneli.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Kengaytirilgan fayllarni oldindan ko'rish, zamonaviy rang tanlash va aqlli bildirishnomalar bilan ish jarayonini yaxshilang",
+  "v7_2_news_main_array_item_0_subtitle": "Yaxshilangan fayllarni oldindan ko'rish, zamonaviy rang tanlash, aniqroq holat ko'rsatkichlari va aqlli bildirishnomalar bilan yanada takomillashgan interfeysni his eting.",
+  "v7_2_news_main_array_item_1_title": "Fayllarni oldindan ko'rish, takomillashtirilgan",
+  "v7_2_news_main_array_item_1_subtitle": "Fayllaringizni ko'rishda yanada silliq navigatsiya va toza ko'rinishdan bahramand bo'ling.",
+  "v7_2_news_main_array_item_2_title": "Ranglarni chiroyli tanlang",
+  "v7_2_news_main_array_item_2_subtitle": "Dizaynni oson his qildiradigan yangi, zamonaviy rang tanlash vositasi.",
+  "v7_2_news_main_array_item_3_title": "Aniqroq holat ko'rsatkichlari",
+  "v7_2_news_main_array_item_3_subtitle": "Holat ranglari va maslahatlar endi standartlashtirilgan va butun ilova bo'ylab tushunish osonroq.",
+  "v7_2_news_main_array_item_4_title": "Yaxshilangan xabarlar (Snackbar)",
+  "v7_2_news_main_array_item_4_subtitle": "Xabarlar endi ekranda qancha vaqt qolishini ko'rsatadi — va ustiga kursor olib borish barcha yopilish taymerlarini to'xtatadi.",
+  "v7_2_news_main_array_item_5_title": "Yanada shaxsiy faoliyat paneli",
+  "v7_2_news_main_array_item_5_subtitle": "Foydalanuvchi avatarlari endi ko'rsatiladigan nomlardan oldin paydo bo'ladi — kim nima qilganini bir qarashda tanib olish osonroq.",
+  "v7_2_news_features_name": "Boshqa yangilanishlar",
+  "v7_2_news_features_title": "Yaxshilanishlar",
+  "v7_2_news_features_update_items": [
+    "1. Bundan buyon biz administrator panelida foydalanuvchi qachon va kim tomonidan faolsizlantirilganini ko'rsatamiz (2025-yil 24-oktabrdan keyin yoki v7.0.13 o'rnatilganidan keyin faolsizlantirilgan foydalanuvchilar uchun, qaysi biri kechroq bo'lsa).",
+    "2. Taklif oynasida (\"Ulashish\" (Share) menyusi va Kengaytirilgan taklif (Advanced Invite) dan), kiritilgan faolsizlantirilgan foydalanuvchilar ko'rsatilmaydi va foydalanuvchilar faolsizlantirilganligini tushuntiradigan xabar ko'rsatiladi.",
+    "3. Endi biz faolsizlantirilgan foydalanuvchilarni tashkilotlarga qo'shishni oldini olamiz.",
+    "4. Faolsizlantirilgan foydalanuvchilar endi JustDo doskasiga qo'shilishi mumkin emas.",
+    "5. Faolsizlantirishda, faolsizlantirilgan foydalanuvchilar barcha tashkilotlardan olib tashlanadi (xuddi ularni barcha JustDo doskalari/vazifalardan olib tashlashimiz kabi). Faolsizlantirish ogohlantirishi shunga mos ravishda yangilandi.",
+    "6. Endi foydalanuvchi qachon va kim tomonidan faolsizlantirilganligi haqida jurnal yuritiladi."
+  ]
+}

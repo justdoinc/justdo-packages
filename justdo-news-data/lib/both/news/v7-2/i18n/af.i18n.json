@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Wat is nuut",
+  "v7_2_news_page_hrp": "justdo-v7-2-ui-verbeterings-leer-voorskou-kleurkieser-opdaterings",
+  "v7_2_news_page_title": "JustDo v7.2: Gevorderde Lêerbestuur, Moderne Kleurkeuse & Intelligente Statusopsporing",
+  "v7_2_news_page_description": "Ontdek JustDo v7.2 met 'n verfynde lêervoorskou-ervaring, moderne kleurkieser, duideliker statusaanwysers, verbeterde snackbars met tydhouers, en verbeterde aktiwiteitsbord met gebruikeravatars. Plus beter gebruikersbestuurkontroles.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Verbeter Jou Werkvloei met Gevorderde Lêervoorskou, Moderne Kleurkieser & Slim Kennisgewings",
+  "v7_2_news_main_array_item_0_subtitle": "Ervaar 'n meer verfynde koppelvlak met verbeterde lêervoorskou, moderne kleurkeuse, duideliker statusaanwysers, en slimmer kennisgewings.",
+  "v7_2_news_main_array_item_1_title": "Lêervoorskou, Verfyn",
+  "v7_2_news_main_array_item_1_subtitle": "Geniet gladder navigasie en 'n skoner voorkoms wanneer jy jou lêers bekyk.",
+  "v7_2_news_main_array_item_2_title": "Kies Kleure, Pragtig",
+  "v7_2_news_main_array_item_2_subtitle": "'n Vars, moderne kleurkieser wat ontwerp moeiteloos laat voel.",
+  "v7_2_news_main_array_item_3_title": "Duideliker Statusaanwysers",
+  "v7_2_news_main_array_item_3_subtitle": "Statuskleure en nutswenke is nou gestandaardiseer en makliker om regdeur die app te verstaan.",
+  "v7_2_news_main_array_item_4_title": "Beter Snackbars",
+  "v7_2_news_main_array_item_4_subtitle": "Snackbars wys nou hoeveel tyd hulle op die skerm sal bly — en sweef laat alle wegdoentydhouers pouseer.",
+  "v7_2_news_main_array_item_5_title": "'n Meer Persoonlike Aktiwiteitsbord",
+  "v7_2_news_main_array_item_5_subtitle": "Gebruikeravatars verskyn nou voor vertoontame — wat dit makliker maak om met 'n oogopslag te sien wie wat gedoen het.",
+  "v7_2_news_features_name": "Ander Opdaterings",
+  "v7_2_news_features_title": "Verbeterings",
+  "v7_2_news_features_update_items": [
+    "1. Van nou af wys ons in die admin-paneel wanneer, en deur wie, 'n gebruiker gedeaktiveer is (vir gebruikers wat gedeaktiveer is ná 24 Oktober 2025, of ná v7.0.13 geïnstalleer is, watter ook al later kom).",
+    "2. In die uitnodigingsdialoog (beide van die Deel-aftreklys en Gevorderde Uitnodiging), sal ingevoerde gebruikers wat gedeaktiveer is nie gewys word nie, en 'n snackbar wat verduidelik dat die gebruikers gedeaktiveer is, sal vertoon word.",
+    "3. Ons voorkom nou dat gedeaktiveerde gebruikers by organisasies gevoeg word.",
+    "4. Gedeaktiveerde gebruikers kan nie meer by 'n JustDo gevoeg word nie.",
+    "5. By deaktivering word gedeaktiveerde gebruikers van alle Orgs verwyder (dieselfde manier waarop ons hulle van alle JustDos/Take verwyder). Die deaktiveringstekenwaarskuwing is dienooreenkomstig opgedateer.",
+    "6. 'n Logboek word nou gehou van wanneer en deur wie 'n gebruiker gedeaktiveer is."
+  ]
+}

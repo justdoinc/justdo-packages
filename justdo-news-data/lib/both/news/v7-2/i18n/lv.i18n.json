@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Jaunumi",
+  "v7_2_news_page_hrp": "justdo-v7-2-ui-uzlabojumi-failu-prieksskatijums-krasu-izvelne-atjauninajumi",
+  "v7_2_news_page_title": "JustDo v7.2: Uzlabota failu pārvaldība, moderna krāsu izvēle un inteliģenta statusa izsekošana",
+  "v7_2_news_page_description": "Iepazīstieties ar JustDo v7.2 — uzlabotu failu priekšskatījumu, modernu krāsu izvēlētāju, skaidrākus statusa indikatorus, uzlabotus paziņojumus ar taimeriem un aktivitāšu paneļa uzlabojumus ar lietotāju avatāriem. Plus labāka lietotāju pārvaldība.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Uzlabojiet savu darba plūsmu ar uzlabotu failu priekšskatījumu, modernu krāsu izvēlētāju un viediem paziņojumiem",
+  "v7_2_news_main_array_item_0_subtitle": "Izbaudiet rafinētāku saskarni ar uzlabotiem failu priekšskatījumiem, modernu krāsu izvēli, skaidrākiem statusa indikatoriem un viedākiem paziņojumiem.",
+  "v7_2_news_main_array_item_1_title": "Uzlabots failu priekšskatījums",
+  "v7_2_news_main_array_item_1_subtitle": "Izbaudiet vienmērīgāku navigāciju un tīrāku izskatu, skatot savus failus.",
+  "v7_2_news_main_array_item_2_title": "Skaista krāsu izvēle",
+  "v7_2_news_main_array_item_2_subtitle": "Jauns, moderns krāsu izvēlētājs, kas padara dizainu vieglu un patīkamu.",
+  "v7_2_news_main_array_item_3_title": "Skaidrāki statusa indikatori",
+  "v7_2_news_main_array_item_3_subtitle": "Statusa krāsas un paskaidrojumi tagad ir standartizēti un vieglāk saprotami visā lietotnē.",
+  "v7_2_news_main_array_item_4_title": "Labāki paziņojumi",
+  "v7_2_news_main_array_item_4_subtitle": "Paziņojumi tagad rāda, cik ilgi tie paliks uz ekrāna — un, uzbraucot ar peli, visi aizvēršanas taimeri tiek apturēti.",
+  "v7_2_news_main_array_item_5_title": "Personalizētāks aktivitāšu panelis",
+  "v7_2_news_main_array_item_5_subtitle": "Lietotāju avatāri tagad parādās pirms vārdiem — atvieglojot atpazīt, kas un ko izdarīja.",
+  "v7_2_news_features_name": "Citi atjauninājumi",
+  "v7_2_news_features_title": "Uzlabojumi",
+  "v7_2_news_features_update_items": [
+    "1. No šī brīža administratora panelī rādām, kad un kurš lietotājs tika deaktivizēts (lietotājiem, kas deaktivizēti pēc 2025. gada 24. oktobra vai pēc v7.0.13 instalēšanas, atkarībā no tā, kas notiek vēlāk).",
+    "2. Uzaicinājuma dialogā (gan no Kopīgošanas izvēlnes, gan Paplašinātā uzaicinājuma) ievadītie lietotāji, kas ir deaktivizēti, netiks rādīti, un tiks parādīts paziņojums, kas paskaidro, ka lietotāji ir deaktivizēti.",
+    "3. Tagad neļaujam pievienot deaktivizētus lietotājus organizācijām.",
+    "4. Deaktivizētus lietotājus vairs nevar pievienot JustDo dēlim.",
+    "5. Pēc deaktivizēšanas, deaktivizētie lietotāji tiek noņemti no visām organizācijām (tāpat kā tos noņemam no visiem JustDo dēļiem/uzdevumiem). Deaktivizēšanas brīdinājums ir atjaunināts atbilstoši.",
+    "6. Tagad tiek saglabāts žurnāls par to, kad un kurš lietotājs tika deaktivizēts."
+  ]
+}

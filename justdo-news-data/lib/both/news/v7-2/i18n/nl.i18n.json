@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Wat is er nieuw",
+  "v7_2_news_page_hrp": "justdo-v7-2-ui-verbeteringen-bestandsvoorbeeld-kleurenkiezer-updates",
+  "v7_2_news_page_title": "JustDo v7.2: Geavanceerd bestandsbeheer, moderne kleurselectie en intelligente statustracking",
+  "v7_2_news_page_description": "Ontdek JustDo v7.2 met een verfijnde bestandsvoorbeeld-ervaring, moderne kleurenkiezer, duidelijkere statusindicatoren, verbeterde snackbars met timers en een verbeterd activiteitendashboard met gebruikersavatars. Plus betere gebruikersbeheerfuncties.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Verbeter uw workflow met geavanceerd bestandsvoorbeeld, moderne kleurenkiezer en slimme meldingen",
+  "v7_2_news_main_array_item_0_subtitle": "Ervaar een verfijnde interface met verbeterde bestandsvoorbeelden, moderne kleurselectie, duidelijkere statusindicatoren en slimmere meldingen.",
+  "v7_2_news_main_array_item_1_title": "Bestandsvoorbeeld, verfijnd",
+  "v7_2_news_main_array_item_1_subtitle": "Geniet van soepelere navigatie en een strakker uiterlijk bij het bekijken van uw bestanden.",
+  "v7_2_news_main_array_item_2_title": "Kleuren kiezen, prachtig gemaakt",
+  "v7_2_news_main_array_item_2_subtitle": "Een frisse, moderne kleurenkiezer die ontwerpen moeiteloos maakt.",
+  "v7_2_news_main_array_item_3_title": "Duidelijkere statusindicatoren",
+  "v7_2_news_main_array_item_3_subtitle": "Statuskleuren en tooltips zijn nu gestandaardiseerd en gemakkelijker te begrijpen in de hele app.",
+  "v7_2_news_main_array_item_4_title": "Betere snackbars",
+  "v7_2_news_main_array_item_4_subtitle": "Snackbars tonen nu hoe lang ze op het scherm blijven — en hoveren pauzeert alle timers.",
+  "v7_2_news_main_array_item_5_title": "Een persoonlijker activiteitendashboard",
+  "v7_2_news_main_array_item_5_subtitle": "Gebruikersavatars verschijnen nu vóór weergavenamen — waardoor het gemakkelijker is om in één oogopslag te zien wie wat heeft gedaan.",
+  "v7_2_news_features_name": "Overige updates",
+  "v7_2_news_features_title": "Verbeteringen",
+  "v7_2_news_features_update_items": [
+    "1. Vanaf nu tonen we in het beheerpaneel wanneer en door wie een gebruiker is gedeactiveerd (voor gebruikers die zijn gedeactiveerd na 24 oktober 2025, of na installatie van v7.0.13, afhankelijk van wat later is).",
+    "2. In het uitnodigingsdialoogvenster (zowel vanuit het Delen-dropdown als Geavanceerde uitnodiging) worden ingevoerde gebruikers die gedeactiveerd zijn niet meer getoond, en er wordt een snackbar weergegeven die uitlegt dat de gebruikers gedeactiveerd zijn.",
+    "3. We voorkomen nu dat gedeactiveerde gebruikers aan organisaties worden toegevoegd.",
+    "4. Gedeactiveerde gebruikers kunnen niet langer aan een JustDo board worden toegevoegd.",
+    "5. Bij deactivering worden gedeactiveerde gebruikers uit alle organisaties verwijderd (op dezelfde manier als we ze uit alle JustDo boards/taken verwijderen). De deactivatiewaarschuwing is hierop aangepast.",
+    "6. Er wordt nu een logboek bijgehouden van wanneer en door wie een gebruiker is gedeactiveerd."
+  ]
+}

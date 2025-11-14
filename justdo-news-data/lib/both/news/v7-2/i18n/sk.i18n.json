@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Čo je nové",
+  "v7_2_news_page_hrp": "justdo-v7-2-vylepsenia-ui-nahhlad-suborov-vyber-farieb-aktualizacie",
+  "v7_2_news_page_title": "JustDo v7.2: Pokročilá správa súborov, moderný výber farieb a inteligentné sledovanie stavov",
+  "v7_2_news_page_description": "Objavte JustDo v7.2 s vylepšeným náhľadom súborov, moderným výberom farieb, jasnejšími indikátormi stavov, vylepšenými notifikáciami s časovačmi a rozšíreným dashboardom aktivít s avatarmi používateľov. Plus lepšie možnosti správy používateľov.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Vylepšite svoj pracovný tok s pokročilým náhľadom súborov, moderným výberom farieb a inteligentnými notifikáciami",
+  "v7_2_news_main_array_item_0_subtitle": "Zažite vylepšené rozhranie s lepším náhľadom súborov, moderným výberom farieb, jasnejšími indikátormi stavov a inteligentnejšími notifikáciami.",
+  "v7_2_news_main_array_item_1_title": "Vylepšený náhľad súborov",
+  "v7_2_news_main_array_item_1_subtitle": "Užite si plynulejšiu navigáciu a čistejší vzhľad pri prezeraní vašich súborov.",
+  "v7_2_news_main_array_item_2_title": "Krásny výber farieb",
+  "v7_2_news_main_array_item_2_subtitle": "Svieži, moderný výber farieb, ktorý robí dizajn jednoduchým a príjemným.",
+  "v7_2_news_main_array_item_3_title": "Jasnejšie indikátory stavov",
+  "v7_2_news_main_array_item_3_subtitle": "Farby stavov a tooltips sú teraz štandardizované a jednoduchšie na pochopenie v celej aplikácii.",
+  "v7_2_news_main_array_item_4_title": "Lepšie notifikácie",
+  "v7_2_news_main_array_item_4_subtitle": "Notifikácie teraz zobrazujú, ako dlho zostanú na obrazovke — a priblíženie kurzora pozastaví všetky časovače zatvorenia.",
+  "v7_2_news_main_array_item_5_title": "Osobnejší dashboard aktivít",
+  "v7_2_news_main_array_item_5_subtitle": "Avatary používateľov sa teraz zobrazujú pred zobrazovanými menami — čo uľahčuje rozpoznanie, kto čo urobil na prvý pohľad.",
+  "v7_2_news_features_name": "Ďalšie aktualizácie",
+  "v7_2_news_features_title": "Vylepšenia",
+  "v7_2_news_features_update_items": [
+    "1. Od teraz v administrátorskom paneli zobrazujeme, kedy a kým bol používateľ deaktivovaný (pre používateľov deaktivovaných po 24. októbri 2025, alebo po nainštalovaní verzie v7.0.13, podľa toho, čo nastane neskôr).",
+    "2. V dialógu na pozvanie (tak z rozbaľovacieho menu Zdieľať, ako aj z Pokročilého pozvania) sa už nezobrazujú zadaní používatelia, ktorí sú deaktivovaní, a zobrazí sa notifikácia vysvetľujúca, že títo používatelia sú deaktivovaní.",
+    "3. Teraz zamedzujeme pridávaniu deaktivovaných používateľov do organizácií.",
+    "4. Deaktivovaní používatelia už nemôžu byť pridaní do JustDo boardu.",
+    "5. Po deaktivácii sú deaktivovaní používatelia odstránení zo všetkých organizácií (rovnakým spôsobom, ako ich odstraňujeme zo všetkých JustDo boardov/úloh). Upozornenie na deaktiváciu bolo zodpovedajúcim způsobom aktualizované.",
+    "6. Teraz sa vedie záznam o tom, kedy a kým bol používateľ deaktivovaný."
+  ]
+}

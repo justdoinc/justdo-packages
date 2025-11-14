@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Novità",
+  "v7_2_news_page_hrp": "justdo-v7-2-miglioramenti-ui-anteprima-file-selettore-colori-aggiornamenti",
+  "v7_2_news_page_title": "JustDo v7.2: Gestione File Avanzata, Selezione Colori Moderna e Tracciamento Stato Intelligente",
+  "v7_2_news_page_description": "Scopri JustDo v7.2 con anteprima file migliorata, selettore colori moderno, indicatori di stato più chiari, snackbar con timer e dashboard attività con avatar utente.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Migliora il Tuo Flusso di Lavoro con Anteprima File Avanzata, Selettore Colori Moderno e Notifiche Intelligenti",
+  "v7_2_news_main_array_item_0_subtitle": "Sperimenta un'interfaccia più raffinata con anteprime file migliorate, selezione colori moderna, indicatori di stato più chiari e notifiche più intelligenti.",
+  "v7_2_news_main_array_item_1_title": "Anteprima File Perfezionata",
+  "v7_2_news_main_array_item_1_subtitle": "Goditi una navigazione più fluida e un aspetto più pulito quando visualizzi i tuoi file.",
+  "v7_2_news_main_array_item_2_title": "Scegli i Colori con Eleganza",
+  "v7_2_news_main_array_item_2_subtitle": "Un selettore colori fresco e moderno che rende il design semplice e naturale.",
+  "v7_2_news_main_array_item_3_title": "Indicatori di Stato Più Chiari",
+  "v7_2_news_main_array_item_3_subtitle": "I colori e i tooltip degli stati sono ora standardizzati e più facili da comprendere in tutta l'app.",
+  "v7_2_news_main_array_item_4_title": "Snackbar Migliorate",
+  "v7_2_news_main_array_item_4_subtitle": "Le snackbar ora mostrano quanto tempo rimarranno sullo schermo e passandoci sopra si mettono in pausa tutti i timer di chiusura.",
+  "v7_2_news_main_array_item_5_title": "Una Dashboard Attività Più Personale",
+  "v7_2_news_main_array_item_5_subtitle": "Gli avatar degli utenti ora appaiono prima dei nomi visualizzati, rendendo più facile riconoscere chi ha fatto cosa a colpo d'occhio.",
+  "v7_2_news_features_name": "Altri Aggiornamenti",
+  "v7_2_news_features_title": "Miglioramenti",
+  "v7_2_news_features_update_items": [
+    "1. D'ora in poi, mostriamo nel pannello admin quando e da chi un utente è stato disattivato (per gli utenti disattivati dopo il 24 ottobre 2025, o dopo l'installazione della v7.0.13, a seconda di quale evento si verifichi per ultimo).",
+    "2. Nella finestra di invito (sia dal menu a tendina Condividi che da Invito Avanzato), gli utenti inseriti che sono disattivati non verranno mostrati e verrà visualizzata una snackbar che spiega che gli utenti sono disattivati.",
+    "3. Ora impediamo l'aggiunta di utenti disattivati alle organizzazioni.",
+    "4. Gli utenti disattivati non possono più essere aggiunti a un JustDo.",
+    "5. Al momento della disattivazione, gli utenti disattivati vengono rimossi da tutte le organizzazioni (allo stesso modo in cui li rimuoviamo da tutti i JustDo/Task). L'avviso di disattivazione è stato aggiornato di conseguenza.",
+    "6. Ora viene conservato un registro di quando e da chi un utente è stato disattivato."
+  ]
+}

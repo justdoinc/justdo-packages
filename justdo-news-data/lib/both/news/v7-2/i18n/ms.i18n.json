@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Apa yang Baharu",
+  "v7_2_news_page_hrp": "justdo-v7-2-ui-improvements-file-preview-color-picker-updates",
+  "v7_2_news_page_title": "JustDo v7.2: Pengurusan Fail Lanjutan, Pemilihan Warna Moden & Penjejakan Status Pintar",
+  "v7_2_news_page_description": "Temui JustDo v7.2 yang menampilkan pengalaman pratonton fail yang diperhalusi, pemilih warna moden, penunjuk status yang lebih jelas, snackbar yang dipertingkatkan dengan pemasa, dan papan pemuka aktiviti yang lebih baik dengan avatar pengguna. Ditambah kawalan pengurusan pengguna yang lebih baik.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Tingkatkan Aliran Kerja Anda dengan Pratonton Fail Lanjutan, Pemilih Warna Moden & Pemberitahuan Pintar",
+  "v7_2_news_main_array_item_0_subtitle": "Alami antara muka yang lebih halus dengan pratonton fail yang dipertingkatkan, pemilihan warna moden, penunjuk status yang lebih jelas, dan pemberitahuan yang lebih pintar.",
+  "v7_2_news_main_array_item_1_title": "Pratonton Fail, Diperhalusi",
+  "v7_2_news_main_array_item_1_subtitle": "Nikmati navigasi yang lebih lancar dan tampilan yang lebih bersih semasa melihat fail anda.",
+  "v7_2_news_main_array_item_2_title": "Pilih Warna, dengan Cantik",
+  "v7_2_news_main_array_item_2_subtitle": "Pemilih warna yang segar dan moden yang menjadikan reka bentuk terasa mudah.",
+  "v7_2_news_main_array_item_3_title": "Penunjuk Status yang Lebih Jelas",
+  "v7_2_news_main_array_item_3_subtitle": "Warna status dan petua alat kini diseragamkan dan lebih mudah difahami di seluruh aplikasi.",
+  "v7_2_news_main_array_item_4_title": "Snackbar yang Lebih Baik",
+  "v7_2_news_main_array_item_4_subtitle": "Snackbar kini menunjukkan berapa lama ia akan kekal di skrin — dan meleret padanya akan menjeda semua pemasa tutup.",
+  "v7_2_news_main_array_item_5_title": "Papan Pemuka Aktiviti yang Lebih Peribadi",
+  "v7_2_news_main_array_item_5_subtitle": "Avatar pengguna kini muncul sebelum nama paparan — memudahkan anda mengenali siapa yang melakukan apa secara sepintas lalu.",
+  "v7_2_news_features_name": "Kemas Kini Lain",
+  "v7_2_news_features_title": "Penambahbaikan",
+  "v7_2_news_features_update_items": [
+    "1. Mulai sekarang, kami memaparkan dalam panel pentadbir bila, dan oleh siapa, seorang pengguna dinyahaktifkan (untuk pengguna yang dinyahaktifkan selepas 24 Oktober 2025, atau selepas v7.0.13 dipasang, yang mana kemudian).",
+    "2. Dalam dialog jemputan (kedua-duanya dari menu dropdown Kongsi dan Jemputan Lanjutan), pengguna yang dimasukkan yang dinyahaktifkan tidak akan ditunjukkan, dan snackbar yang menerangkan bahawa pengguna tersebut dinyahaktifkan akan dipaparkan.",
+    "3. Kami kini menghalang penambahan pengguna yang dinyahaktifkan kepada organisasi.",
+    "4. Pengguna yang dinyahaktifkan tidak boleh lagi ditambah kepada JustDo.",
+    "5. Semasa penyahaktifan, pengguna yang dinyahaktifkan dikeluarkan daripada semua Organisasi (cara yang sama seperti kami mengeluarkan mereka daripada semua JustDo/Tugasan). Amaran penyahaktifan telah dikemas kini dengan sewajarnya.",
+    "6. Log kini disimpan mengenai bila dan oleh siapa seorang pengguna dinyahaktifkan."
+  ]
+}

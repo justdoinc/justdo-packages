@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Kas naujo",
+  "v7_2_news_page_hrp": "justdo-v7-2-ui-patobulinimai-failu-perziura-spalvu-parinkimas-atnaujinimai",
+  "v7_2_news_page_title": "JustDo v7.2: Išplėstinė Failų Valdymas, Moderni Spalvų Parinktis ir Intelektuali Būsenos Stebėsena",
+  "v7_2_news_page_description": "Susipažinkite su JustDo v7.2, kuriame rasite patobulintą failų peržiūros patirtį, modernų spalvų parinkiklį, aiškesnius būsenos indikatorius, patobulintus pranešimus su laikmačiais ir pagerintą veiklos skydelį su vartotojų avatarais. Be to, geresni vartotojų valdymo įrankiai.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Patobulinkite Savo Darbo Eigą su Išplėstine Failų Peržiūra, Moderniu Spalvų Parinkikliu ir Protingais Pranešimais",
+  "v7_2_news_main_array_item_0_subtitle": "Naudokitės rafinuotesne sąsaja su patobulinta failų peržiūra, modernia spalvų parinktimi, aiškesniais būsenos indikatoriais ir protingesniais pranešimais.",
+  "v7_2_news_main_array_item_1_title": "Patobulinta Failų Peržiūra",
+  "v7_2_news_main_array_item_1_subtitle": "Mėgaukitės sklandesne navigacija ir švaresniu vaizdu peržiūrėdami failus.",
+  "v7_2_news_main_array_item_2_title": "Rinkitės Spalvas Gražiai",
+  "v7_2_news_main_array_item_2_subtitle": "Šviežias, modernus spalvų parinkiklis, kuris dizainą daro lengvą ir paprastą.",
+  "v7_2_news_main_array_item_3_title": "Aiškesni Būsenos Indikatoriai",
+  "v7_2_news_main_array_item_3_subtitle": "Būsenos spalvos ir patarimai dabar standartizuoti ir lengviau suprantami visoje programoje.",
+  "v7_2_news_main_array_item_4_title": "Geresni Pranešimai",
+  "v7_2_news_main_array_item_4_subtitle": "Pranešimai dabar rodo, kiek laiko jie bus rodomi ekrane – o užvedus pelę, visi laikmačiai sustabdomi.",
+  "v7_2_news_main_array_item_5_title": "Asmeningesnis Veiklos Skydelis",
+  "v7_2_news_main_array_item_5_subtitle": "Vartotojų avatarai dabar rodomi prieš vardus – taip lengviau iš karto atpažinti, kas ką atliko.",
+  "v7_2_news_features_name": "Kiti Atnaujinimai",
+  "v7_2_news_features_title": "Patobulinimai",
+  "v7_2_news_features_update_items": [
+    "1. Nuo šiol administratoriaus skydelyje rodome, kada ir kieno buvo deaktyvuotas vartotojas (vartotojams, deaktyvuotiems po 2025 m. spalio 24 d. arba po v7.0.13 įdiegimo, priklausomai nuo to, kas įvyko vėliau).",
+    "2. Pakvietimo dialogo lange (tiek iš Dalintis išskleidžiamojo meniu, tiek iš Išplėstinio Pakvietimo) įvesti deaktyvuoti vartotojai nebus rodomi, o bus rodomas pranešimas, paaiškinantis, kad vartotojai yra deaktyvuoti.",
+    "3. Dabar užkertame kelią deaktyvuotų vartotojų pridėjimui į organizacijas.",
+    "4. Deaktyvuoti vartotojai nebegali būti pridedami prie lentos (Board).",
+    "5. Deaktyvavus, deaktyvuoti vartotojai pašalinami iš visų organizacijų (taip pat, kaip juos šaliname iš visų lentų/užduočių). Deaktyvavimo įspėjimas buvo atitinkamai atnaujintas.",
+    "6. Dabar saugomas įrašas, kada ir kieno buvo deaktyvuotas vartotojas."
+  ]
+}

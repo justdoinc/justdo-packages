@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Hvad er nyt",
+  "v7_2_news_page_hrp": "justdo-v7-2-ui-forbedringer-filvisning-farvevælger-opdateringer",
+  "v7_2_news_page_title": "JustDo v7.2: Avanceret filhåndtering, moderne farvevælger og intelligent statussporing",
+  "v7_2_news_page_description": "Oplev JustDo v7.2 med forbedret filvisning, moderne farvevælger, tydeligere statusindikatorer, forbedrede snackbars med timere og forbedret aktivitetsdashboard med brugeravatarer. Plus bedre brugerstyring.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Forbedr dit workflow med avanceret filvisning, moderne farvevælger og smarte notifikationer",
+  "v7_2_news_main_array_item_0_subtitle": "Oplev en mere raffineret grænseflade med forbedret filvisning, moderne farvevalg, tydeligere statusindikatorer og smartere notifikationer.",
+  "v7_2_news_main_array_item_1_title": "Raffineret filvisning",
+  "v7_2_news_main_array_item_1_subtitle": "Nyd mere jævn navigation og et renere look, når du viser dine filer.",
+  "v7_2_news_main_array_item_2_title": "Vælg farver smukt",
+  "v7_2_news_main_array_item_2_subtitle": "En frisk, moderne farvevælger, der får design til at føles ubesværet.",
+  "v7_2_news_main_array_item_3_title": "Tydeligere statusindikatorer",
+  "v7_2_news_main_array_item_3_subtitle": "Statusfarver og værktøjstips er nu standardiserede og lettere at forstå gennem hele appen.",
+  "v7_2_news_main_array_item_4_title": "Bedre snackbars",
+  "v7_2_news_main_array_item_4_subtitle": "Snackbars viser nu, hvor lang tid de bliver på skærmen — og ved at holde musen over sættes alle lukke-timere på pause.",
+  "v7_2_news_main_array_item_5_title": "Et mere personligt aktivitetsdashboard",
+  "v7_2_news_main_array_item_5_subtitle": "Brugeravatarer vises nu før visningsnavne — hvilket gør det lettere at genkende, hvem der har gjort hvad med et hurtigt blik.",
+  "v7_2_news_features_name": "Andre opdateringer",
+  "v7_2_news_features_title": "Forbedringer",
+  "v7_2_news_features_update_items": [
+    "1. Fra nu af viser vi i admin-panelet, hvornår og af hvem en bruger blev deaktiveret (for brugere deaktiveret efter den 24. oktober 2025, eller efter v7.0.13 blev installeret, alt efter hvad der kommer senest).",
+    "2. I invitationsdialogen (både fra Del-dropdownen og Avanceret invitation) vises indtastede brugere, der er deaktiverede, ikke, og en snackbar, der forklarer, at brugerne er deaktiverede, vil blive vist.",
+    "3. Vi forhindrer nu tilføjelse af deaktiverede brugere til organisationer.",
+    "4. Deaktiverede brugere kan ikke længere tilføjes til et board.",
+    "5. Ved deaktivering fjernes deaktiverede brugere fra alle organisationer (på samme måde som vi fjerner dem fra alle boards/opgaver). Deaktiveringsadvarslen er blevet opdateret tilsvarende.",
+    "6. Der føres nu en log over, hvornår og af hvem en bruger blev deaktiveret."
+  ]
+}

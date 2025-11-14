@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Yang Baru",
+  "v7_2_news_page_hrp": "justdo-v7-2-peningkatan-ui-pratinjau-file-pemilih-warna-pembaruan",
+  "v7_2_news_page_title": "JustDo v7.2: Manajemen File Canggih, Pemilihan Warna Modern & Pelacakan Status Cerdas",
+  "v7_2_news_page_description": "Temukan JustDo v7.2 dengan pengalaman pratinjau file yang lebih baik, pemilih warna modern, indikator status yang lebih jelas, snackbar dengan timer, dan dasbor aktivitas dengan avatar pengguna. Plus kontrol manajemen pengguna yang lebih baik.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Tingkatkan Alur Kerja Anda dengan Pratinjau File Canggih, Pemilih Warna Modern & Notifikasi Cerdas",
+  "v7_2_news_main_array_item_0_subtitle": "Rasakan antarmuka yang lebih halus dengan pratinjau file yang lebih baik, pemilihan warna modern, indikator status yang lebih jelas, dan notifikasi yang lebih cerdas.",
+  "v7_2_news_main_array_item_1_title": "Pratinjau File, Lebih Halus",
+  "v7_2_news_main_array_item_1_subtitle": "Nikmati navigasi yang lebih lancar dan tampilan yang lebih bersih saat melihat file Anda.",
+  "v7_2_news_main_array_item_2_title": "Pilih Warna, dengan Indah",
+  "v7_2_news_main_array_item_2_subtitle": "Pemilih warna modern yang segar membuat desain terasa mudah.",
+  "v7_2_news_main_array_item_3_title": "Indikator Status Lebih Jelas",
+  "v7_2_news_main_array_item_3_subtitle": "Warna status dan tooltip kini terstandarisasi dan lebih mudah dipahami di seluruh aplikasi.",
+  "v7_2_news_main_array_item_4_title": "Snackbar Lebih Baik",
+  "v7_2_news_main_array_item_4_subtitle": "Snackbar kini menampilkan berapa lama mereka akan tetap di layar — dan mengarahkan kursor akan menjeda semua timer penutupan.",
+  "v7_2_news_main_array_item_5_title": "Dasbor Aktivitas Lebih Personal",
+  "v7_2_news_main_array_item_5_subtitle": "Avatar pengguna kini muncul sebelum nama tampilan — memudahkan untuk mengenali siapa yang melakukan apa secara sekilas.",
+  "v7_2_news_features_name": "Pembaruan Lainnya",
+  "v7_2_news_features_title": "Peningkatan",
+  "v7_2_news_features_update_items": [
+    "1. Mulai sekarang, kami menampilkan di panel admin kapan, dan oleh siapa, pengguna dinonaktifkan (untuk pengguna yang dinonaktifkan setelah 24 Oktober 2025, atau setelah v7.0.13 diinstal, mana yang lebih akhir).",
+    "2. Di dialog undangan (baik dari dropdown Bagikan maupun Undangan Lanjutan), pengguna yang dimasukkan dan sudah dinonaktifkan tidak akan ditampilkan, dan snackbar yang menjelaskan bahwa pengguna tersebut dinonaktifkan akan ditampilkan.",
+    "3. Kami sekarang mencegah penambahan pengguna yang dinonaktifkan ke organisasi.",
+    "4. Pengguna yang dinonaktifkan tidak dapat lagi ditambahkan ke JustDo Board.",
+    "5. Saat dinonaktifkan, pengguna yang dinonaktifkan dihapus dari semua Organisasi (dengan cara yang sama seperti kami menghapus mereka dari semua JustDo Board/Tugas). Peringatan penonaktifan telah diperbarui sesuai dengan ini.",
+    "6. Log sekarang disimpan tentang kapan dan oleh siapa pengguna dinonaktifkan."
+  ]
+}

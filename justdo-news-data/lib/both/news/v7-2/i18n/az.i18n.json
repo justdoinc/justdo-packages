@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Yeniliklər",
+  "v7_2_news_page_hrp": "justdo-v7-2-ui-improvements-file-preview-color-picker-updates",
+  "v7_2_news_page_title": "JustDo v7.2: Təkmil Fayl İdarəetməsi, Müasir Rəng Seçimi və Ağıllı Status İzləməsi",
+  "v7_2_news_page_description": "Təkmilləşdirilmiş fayl önizləməsi, müasir rəng seçici, aydın status göstəriciləri, vaxt sayğacı olan təkmilləşdirilmiş bildirişlər və istifadəçi avatarları ilə gücləndirilmiş fəaliyyət paneli olan JustDo v7.2-ni kəşf edin.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Təkmil Fayl Önizləməsi, Müasir Rəng Seçici və Ağıllı Bildirişlərlə İş Axınınızı Gücləndirin",
+  "v7_2_news_main_array_item_0_subtitle": "Təkmilləşdirilmiş fayl önizləməsi, müasir rəng seçimi, daha aydın status göstəriciləri və daha ağıllı bildirişlərlə daha təkmil interfeys təcrübəsi əldə edin.",
+  "v7_2_news_main_array_item_1_title": "Təkmilləşdirilmiş Fayl Önizləməsi",
+  "v7_2_news_main_array_item_1_subtitle": "Fayllarınızı baxarkən daha rahat naviqasiya və daha təmiz görünüşdən həzz alın.",
+  "v7_2_news_main_array_item_2_title": "Gözəl Rəng Seçimi",
+  "v7_2_news_main_array_item_2_subtitle": "Dizaynı asan hiss etdirən təzə, müasir rəng seçici.",
+  "v7_2_news_main_array_item_3_title": "Daha Aydın Status Göstəriciləri",
+  "v7_2_news_main_array_item_3_subtitle": "Status rəngləri və məlumat ipucları indi standartlaşdırılıb və tətbiq daxilində daha asan başa düşülür.",
+  "v7_2_news_main_array_item_4_title": "Təkmilləşdirilmiş Bildirişlər",
+  "v7_2_news_main_array_item_4_subtitle": "Bildirişlər indi ekranda nə qədər qalacaqlarını göstərir — və üzərinə gəldikdə bütün bağlanma vaxt sayğacları dayanır.",
+  "v7_2_news_main_array_item_5_title": "Daha Şəxsi Fəaliyyət Paneli",
+  "v7_2_news_main_array_item_5_subtitle": "İstifadəçi avatarları indi göstərilən adlardan əvvəl görünür — kimin nə etdiyini bir baxışda tanımağı asanlaşdırır.",
+  "v7_2_news_features_name": "Digər Yenilənmələr",
+  "v7_2_news_features_title": "Təkmilləşdirmələr",
+  "v7_2_news_features_update_items": [
+    "1. Bundan sonra admin panelində istifadəçinin nə vaxt və kim tərəfindən deaktiv edildiyini göstəririk (24 oktyabr 2025-dən sonra və ya v7.0.13 quraşdırıldıqdan sonra deaktiv edilmiş istifadəçilər üçün, hansı sonra baş verirsə).",
+    "2. Dəvət dialoqunda (həm Paylaş açılan menyusundan, həm də Təkmil Dəvətdən) daxil edilmiş deaktiv edilmiş istifadəçilər göstərilməyəcək və istifadəçilərin deaktiv edildiyini izah edən bildiriş göstəriləcək.",
+    "3. İndi deaktiv edilmiş istifadəçilərin təşkilatlara əlavə edilməsinin qarşısını alırıq.",
+    "4. Deaktiv edilmiş istifadəçilər artıq JustDo lövhəsinə əlavə edilə bilməz.",
+    "5. Deaktiv edildikdən sonra, deaktiv edilmiş istifadəçilər bütün Təşkilatlardan çıxarılır (eyni şəkildə onları bütün JustDo lövhələrindən/Tapşırıqlardan çıxardığımız kimi). Deaktiv etmə xəbərdarlığı müvafiq olaraq yenilənib.",
+    "6. İndi istifadəçinin nə vaxt və kim tərəfindən deaktiv edildiyinin qeydi saxlanılır."
+  ]
+}

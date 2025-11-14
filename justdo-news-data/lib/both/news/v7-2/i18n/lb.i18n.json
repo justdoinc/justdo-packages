@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Wat ass nei",
+  "v7_2_news_page_hrp": "justdo-v7-2-ui-verbesserungen-datei-virschau-faarfwieler-updates",
+  "v7_2_news_page_title": "JustDo v7.2: Erweidert Dateie-Management, Modern Faarfauswiel & Intelligent Status-Tracking",
+  "v7_2_news_page_description": "Entdeckt JustDo v7.2 mat enger verfeinert Datei-Virschau, modernem Faarfwieler, méi kloeren Status-Indikatoren, verbesserte Snackbars mat Timer an engem erweiderten Aktivitéits-Dashboard mat Benotzer-Avataren. Plus besser Benotzerverwaltung.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Verbessert Äre Workflow mat erweidert Datei-Virschau, modernem Faarfwieler & intelligente Notifikatiounen",
+  "v7_2_news_main_array_item_0_subtitle": "Erlieft eng méi raffinéiert Interface mat verbesserten Datei-Virschauen, moderner Faarfauswiel, méi kloren Status-Indikatoren a méi intelligente Notifikatiounen.",
+  "v7_2_news_main_array_item_1_title": "Datei-Virschau, verfeinert",
+  "v7_2_news_main_array_item_1_subtitle": "Genéisst méi flësseg Navigatioun an e méi proppe Look wann Dir Är Dateien ukuckt.",
+  "v7_2_news_main_array_item_2_title": "Wielt Faarwen, schéin",
+  "v7_2_news_main_array_item_2_subtitle": "En frësche, moderne Faarfwieler deen Design mühelos mécht.",
+  "v7_2_news_main_array_item_3_title": "Méi kloer Status-Indikatoren",
+  "v7_2_news_main_array_item_3_subtitle": "Status-Faarwen a Tooltips sinn elo standardiséiert a méi einfach ze verstoen an der ganzer App.",
+  "v7_2_news_main_array_item_4_title": "Besser Snackbars",
+  "v7_2_news_main_array_item_4_subtitle": "Snackbars weisen elo wéi laang se um Écran bleiwen — a beim Hoveren pauséieren all Oflaf-Timer.",
+  "v7_2_news_main_array_item_5_title": "E méi perséinlecht Aktivitéits-Dashboard",
+  "v7_2_news_main_array_item_5_subtitle": "Benotzer-Avatare ginn elo virum Display-Numm gewisen — sou datt et méi einfach ass ze erkennen wéi wat gemaach huet.",
+  "v7_2_news_features_name": "Aner Updates",
+  "v7_2_news_features_title": "Verbesserungen",
+  "v7_2_news_features_update_items": [
+    "1. Vun elo u weisen mir am Admin-Panel wéini an vu wéim e Benotzer deaktivéiert gouf (fir Benotzer déi nom 24. Oktober 2025 deaktivéiert goufen, oder nom v7.0.13 installéiert gouf, wat och ëmmer méi spéit ass).",
+    "2. Am Invitatiounen-Dialog (souwuel vum Share-Dropdown wéi och vun der Erweidert Invitatioun) ginn aginn Benotzer déi deaktivéiert sinn net méi gewisen, an e Snackbar deen erkläert datt d'Benotzer deaktivéiert sinn gëtt ugewisen.",
+    "3. Mir verhënneren elo datt deaktivéiert Benotzer zu Organisatiounen bäigefüügt ginn.",
+    "4. Deaktivéiert Benotzer kënnen net méi zu engem JustDo bäigefüügt ginn.",
+    "5. Bei der Deaktivéierung ginn deaktivéiert Benotzer aus all Organisatiounen ewechgeholl (op déiselwecht Aart wéi mir se aus all JustDos/Aufgaben ewechhuelen). D'Deaktivéierungs-Warnung gouf entspriechend aktualiséiert.",
+    "6. Et gëtt elo e Log gefouert vu wéini an vu wéim e Benotzer deaktivéiert gouf."
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Çfarë ka të re",
+  "v7_2_news_page_hrp": "justdo-v7-2-permiresime-ui-parapamje-skedaresh-perditesime-zgjedhesi-ngjyrash",
+  "v7_2_news_page_title": "JustDo v7.2: Menaxhim i Avancuar i Skedarëve, Zgjedhje Moderne Ngjyrash & Gjurmim Inteligjent i Statusit",
+  "v7_2_news_page_description": "Zbuloni JustDo v7.2 me një përvojë të përmirësuar parapamjeje skedarësh, zgjedhës modern ngjyrash, tregues më të qartë statusi, snackbar të përmirësuar me kohëmatës, dhe panel aktiviteti të avancuar me avatarë përdoruesish. Plus kontrolle më të mira menaxhimi përdoruesish.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Përmirësoni Rrjedhën Tuaj të Punës me Parapamje të Avancuar Skedarësh, Zgjedhës Modern Ngjyrash & Njoftime Inteligjente",
+  "v7_2_news_main_array_item_0_subtitle": "Përjetoni një ndërfaqe më të rafinuar me parapamje të përmirësuara skedarësh, zgjedhje moderne ngjyrash, tregues më të qartë statusi dhe njoftime më inteligjente.",
+  "v7_2_news_main_array_item_1_title": "Parapamje Skedarësh, e Rafinuar",
+  "v7_2_news_main_array_item_1_subtitle": "Shijoni navigim më të qetë dhe pamje më të pastër kur shikoni skedarët tuaj.",
+  "v7_2_news_main_array_item_2_title": "Zgjidhni Ngjyra, Bukur",
+  "v7_2_news_main_array_item_2_subtitle": "Një zgjedhës ngjyrash i freskët dhe modern që e bën dizajnin të duket pa përpjekje.",
+  "v7_2_news_main_array_item_3_title": "Tregues Më të Qartë Statusi",
+  "v7_2_news_main_array_item_3_subtitle": "Ngjyrat e statusit dhe këshillat janë tani të standardizuara dhe më të lehta për t'u kuptuar në të gjithë aplikacionin.",
+  "v7_2_news_main_array_item_4_title": "Snackbar Më të Mirë",
+  "v7_2_news_main_array_item_4_subtitle": "Snackbar-ët tani tregojnë sa kohë do të qëndrojnë në ekran — dhe kalimi me maus ndal të gjithë kohëmatësit e mbylljes.",
+  "v7_2_news_main_array_item_5_title": "Një Panel Aktiviteti Më Personal",
+  "v7_2_news_main_array_item_5_subtitle": "Avatarët e përdoruesve tani shfaqen para emrave të shfaqur — duke e bërë më të lehtë të njihni kush bëri çfarë me një vështrim të shpejtë.",
+  "v7_2_news_features_name": "Përditësime të Tjera",
+  "v7_2_news_features_title": "Përmirësime",
+  "v7_2_news_features_update_items": [
+    "1. Nga tani e tutje, ne tregojmë në panelin e administratorit kur dhe nga kush një përdorues u çaktivizua (për përdoruesit e çaktivizuar pas 24 tetorit 2025, ose pas instalimit të v7.0.13, cilado që vjen më vonë).",
+    "2. Në dialogun e ftesës (si nga menuja Share ashtu edhe nga Ftesë e Avancuar), përdoruesit e futur që janë të çaktivizuar nuk do të shfaqen, dhe do të shfaqet një snackbar që shpjegon se përdoruesit janë të çaktivizuar.",
+    "3. Ne tani parandalojmë shtimin e përdoruesve të çaktivizuar në organizata.",
+    "4. Përdoruesit e çaktivizuar nuk mund të shtohen më në një JustDo.",
+    "5. Pas çaktivizimit, përdoruesit e çaktivizuar hiqen nga të gjitha Organizatat (në të njëjtën mënyrë që i heqim nga të gjithë JustDo-t/Detyrat). Paralajmërimi i çaktivizimit është përditësuar në përputhje me rrethanat.",
+    "6. Tani mbahet një regjistër se kur dhe nga kush një përdorues u çaktivizua."
+  ]
+}

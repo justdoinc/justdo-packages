@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Mitä uutta",
+  "v7_2_news_page_hrp": "justdo-v7-2-ui-parannukset-tiedostojen-esikatselu-varinvalitsin-paivitykset",
+  "v7_2_news_page_title": "JustDo v7.2: Kehittynyt tiedostonhallinta, moderni värinvalinta ja älykäs tilojen seuranta",
+  "v7_2_news_page_description": "Tutustu JustDo v7.2:een, joka sisältää parannellun tiedostojen esikatselun, modernin värinvalitsimen, selkeämmät tilailmaisimet, parannetut ilmoitukset ajastimilla ja kehitetyn toimintakoontinäytön käyttäjäavataareilla. Lisäksi paremmat käyttäjänhallinnan kontrollit.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Tehosta työnkulkuasi kehittyneellä tiedostojen esikatselulla, modernilla värinvalitsimella ja älykkäillä ilmoituksilla",
+  "v7_2_news_main_array_item_0_subtitle": "Koe hienostuneempi käyttöliittymä parannettujen tiedostojen esikatselujen, modernin värinvalinnan, selkeämpien tilailmaisimien ja älykkäämpien ilmoitusten myötä.",
+  "v7_2_news_main_array_item_1_title": "Tiedostojen esikatselu, hienostuneempana",
+  "v7_2_news_main_array_item_1_subtitle": "Nauti sujuvammasta navigoinnista ja siistimmästä ulkoasusta tiedostojasi katsellessasi.",
+  "v7_2_news_main_array_item_2_title": "Valitse värejä kauniisti",
+  "v7_2_news_main_array_item_2_subtitle": "Tuore, moderni värinvalitsin, joka tekee suunnittelusta vaivatonta.",
+  "v7_2_news_main_array_item_3_title": "Selkeämmät tilailmaisimet",
+  "v7_2_news_main_array_item_3_subtitle": "Tilojen värit ja työkaluvihjeet ovat nyt yhtenäistetty ja helpompia ymmärtää koko sovelluksessa.",
+  "v7_2_news_main_array_item_4_title": "Paremmat ilmoituspalkit",
+  "v7_2_news_main_array_item_4_subtitle": "Ilmoituspalkit näyttävät nyt, kuinka kauan ne pysyvät näytöllä — ja niiden päällä leijuminen pysäyttää kaikki sulkemisajastimet.",
+  "v7_2_news_main_array_item_5_title": "Henkilökohtaisempi toimintakoontinäyttö",
+  "v7_2_news_main_array_item_5_subtitle": "Käyttäjäavataarit näkyvät nyt näyttönimien edessä — mikä helpottaa tunnistamaan yhdellä silmäyksellä, kuka teki mitä.",
+  "v7_2_news_features_name": "Muut päivitykset",
+  "v7_2_news_features_title": "Parannukset",
+  "v7_2_news_features_update_items": [
+    "1. Tästä eteenpäin näytämme ylläpitopaneelissa, milloin ja kenen toimesta käyttäjä deaktivoitiin (käyttäjille, jotka deaktivoitiin 24. lokakuuta 2025 jälkeen tai sen jälkeen, kun v7.0.13 asennettiin, kumpi tahansa on myöhemmin).",
+    "2. Kutsudialogissa (sekä Jaa-valikosta että Laajennetusta kutsusta) syötettyjä deaktivoituja käyttäjiä ei enää näytetä, ja näkyviin tulee ilmoituspalkki, joka selittää, että käyttäjät on deaktivoitu.",
+    "3. Estämme nyt deaktivoitujen käyttäjien lisäämisen organisaatioihin.",
+    "4. Deaktivoituja käyttäjiä ei voi enää lisätä JustDo-tauluihin.",
+    "5. Deaktivoinnin yhteydessä deaktivoidut käyttäjät poistetaan kaikista organisaatioista (samalla tavalla kuin poistamme heidät kaikista JustDo-tauluista/tehtävistä). Deaktivointivaroitus on päivitetty vastaavasti.",
+    "6. Nyt pidetään lokia siitä, milloin ja kenen toimesta käyttäjä deaktivoitiin."
+  ]
+}

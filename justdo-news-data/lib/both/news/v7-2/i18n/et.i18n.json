@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Mis on uut",
+  "v7_2_news_page_hrp": "justdo-v7-2-kasutajaliidese-parandused-failide-eelvaade-varvivalija-uuendused",
+  "v7_2_news_page_title": "JustDo v7.2: Täiustatud failihaldus, kaasaegne värvivalik ja intelligentne oleku jälgimine",
+  "v7_2_news_page_description": "Tutvuge JustDo v7.2-ga: täiustatud failide eelvaade, kaasaegne värvivalija, selgemad oleku indikaatorid, täiustatud teated taimeritega ning parandatud tegevuste töölaud kasutaja avataaridega.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Täiustage oma töövoogu täiustatud failide eelvaate, kaasaegse värvivalija ja nutikate teadetega",
+  "v7_2_news_main_array_item_0_subtitle": "Kogege täiustatud kasutajaliidest parandatud failide eelvaate, kaasaegse värvivaliku, selgemate oleku indikaatorite ja nutikamate teadetega.",
+  "v7_2_news_main_array_item_1_title": "Täiustatud failide eelvaade",
+  "v7_2_news_main_array_item_1_subtitle": "Nautige sujuvamat navigeerimist ja puhtamat välimust failide vaatamisel.",
+  "v7_2_news_main_array_item_2_title": "Valige värve ilusasti",
+  "v7_2_news_main_array_item_2_subtitle": "Värske, kaasaegne värvivalija, mis muudab disaini loomise lihtsaks.",
+  "v7_2_news_main_array_item_3_title": "Selgemad oleku indikaatorid",
+  "v7_2_news_main_array_item_3_subtitle": "Oleku värvid ja kohtspikrid on nüüd kogu rakenduses ühtlustatud ja kergemini mõistetavad.",
+  "v7_2_news_main_array_item_4_title": "Paremad teated",
+  "v7_2_news_main_array_item_4_subtitle": "Teated näitavad nüüd, kui kaua need ekraanil püsivad — ja hiire kohale liigutamine peatab kõik sulgemise taimerid.",
+  "v7_2_news_main_array_item_5_title": "Isikupärasem tegevuste töölaud",
+  "v7_2_news_main_array_item_5_subtitle": "Kasutaja avataarid kuvatakse nüüd enne nimesid — see muudab lihtsamaks aru saada, kes mida tegi.",
+  "v7_2_news_features_name": "Muud uuendused",
+  "v7_2_news_features_title": "Parandused",
+  "v7_2_news_features_update_items": [
+    "1. Edaspidi näitame administraatori paneelil, millal ja kelle poolt kasutaja deaktiveeriti (kasutajate puhul, kes deaktiveeriti pärast 24. oktoobrit 2025 või pärast v7.0.13 installimist, olenevalt sellest, kumb oli hilisem).",
+    "2. Kutse dialoogis (nii Jaga rippmenüüst kui ka Täpsemast kutsest) ei kuvata enam sisestatud deaktiveeritud kasutajaid ning kuvatakse teade, mis selgitab, et kasutajad on deaktiveeritud.",
+    "3. Nüüd takistame deaktiveeritud kasutajate lisamist organisatsioonidesse.",
+    "4. Deaktiveeritud kasutajaid ei saa enam lisada JustDo tahvlile.",
+    "5. Deaktiveerimisel eemaldatakse deaktiveeritud kasutajad kõigist organisatsioonidest (samamoodi nagu eemaldame nad kõigist JustDo tahvlitest/ülesannetest). Deaktiveerimise hoiatust on vastavalt uuendatud.",
+    "6. Nüüd peetakse logi sellest, millal ja kelle poolt kasutaja deaktiveeriti."
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Co je nového",
+  "v7_2_news_page_hrp": "justdo-v7-2-vylepseni-ui-nahled-souboru-vyber-barev-aktualizace",
+  "v7_2_news_page_title": "JustDo v7.2: Pokročilá správa souborů, moderní výběr barev a inteligentní sledování stavů",
+  "v7_2_news_page_description": "Objevte JustDo v7.2 s vylepšeným náhledem souborů, moderním výběrem barev, jasnějšími indikátory stavu, vylepšenými oznámeními s časovači a rozšířeným přehledem aktivit s avatary uživatelů. Navíc lepší správa uživatelů.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Vylepšete svůj pracovní postup s pokročilým náhledem souborů, moderním výběrem barev a chytrými oznámeními",
+  "v7_2_news_main_array_item_0_subtitle": "Zažijte vylepšené rozhraní s lepšími náhledy souborů, moderním výběrem barev, jasnějšími indikátory stavu a chytřejšími oznámeními.",
+  "v7_2_news_main_array_item_1_title": "Vylepšený náhled souborů",
+  "v7_2_news_main_array_item_1_subtitle": "Užijte si plynulejší navigaci a čistší vzhled při prohlížení souborů.",
+  "v7_2_news_main_array_item_2_title": "Výběr barev s elegantnějším designem",
+  "v7_2_news_main_array_item_2_subtitle": "Nový moderní výběr barev, díky kterému je navrhování hračkou.",
+  "v7_2_news_main_array_item_3_title": "Jasnější indikátory stavu",
+  "v7_2_news_main_array_item_3_subtitle": "Barvy stavů a nápovědy jsou nyní sjednocené a srozumitelnější v celé aplikaci.",
+  "v7_2_news_main_array_item_4_title": "Lepší oznámení (Snackbars)",
+  "v7_2_news_main_array_item_4_subtitle": "Oznámení nyní zobrazují, jak dlouho zůstanou na obrazovce — a najetím myší pozastavíte všechny časovače zavření.",
+  "v7_2_news_main_array_item_5_title": "Osobnější přehled aktivit",
+  "v7_2_news_main_array_item_5_subtitle": "Avatary uživatelů se nyní zobrazují před zobrazovanými jmény — což usnadňuje okamžité rozpoznání, kdo co udělal.",
+  "v7_2_news_features_name": "Další aktualizace",
+  "v7_2_news_features_title": "Vylepšení",
+  "v7_2_news_features_update_items": [
+    "1. Od nynějška zobrazujeme v administračním panelu informace o tom, kdy a kým byl uživatel deaktivován (pro uživatele deaktivované po 24. říjnu 2025 nebo po instalaci verze v7.0.13, podle toho, co nastane později).",
+    "2. V dialogu pro pozvání (jak z rozbalovací nabídky Sdílet, tak z Pokročilého pozvání) se již nezobrazují zadaní deaktivovaní uživatelé a zobrazí se oznámení s vysvětlením, že uživatelé jsou deaktivovaní.",
+    "3. Nyní bráníme přidávání deaktivovaných uživatelů do organizací.",
+    "4. Deaktivovaní uživatelé již nemohou být přidáni do boardu.",
+    "5. Po deaktivaci jsou deaktivovaní uživatelé odstraněni ze všech organizací (stejně jako je odstraňujeme ze všech boardů/úkolů). Upozornění na deaktivaci bylo odpovídajícím způsobem aktualizováno.",
+    "6. Nyní se zaznamenává, kdy a kým byl uživatel deaktivován."
+  ]
+}

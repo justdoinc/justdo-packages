@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Nini Kipya",
+  "v7_2_news_page_hrp": "justdo-v7-2-ui-improvements-file-preview-color-picker-updates",
+  "v7_2_news_page_title": "JustDo v7.2: Usimamizi wa Hali ya Juu wa Faili, Kichaguzi cha Rangi cha Kisasa na Ufuatiliaji Mahiri wa Hali",
+  "v7_2_news_page_description": "Gundua JustDo v7.2 yenye uzoefu ulioboreshwa wa uhakiki wa faili, kichaguzi cha rangi cha kisasa, viashiria vya hali vilivyo wazi zaidi, snackbars zilizoimarishwa zenye taima, na dashibodi ya shughuli iliyoimarishwa yenye picha za watumiaji. Pamoja na udhibiti ulioboreshwa wa usimamizi wa watumiaji.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Boresha Mtiririko wa Kazi Yako na Uhakiki wa Hali ya Juu wa Faili, Kichaguzi cha Rangi cha Kisasa na Arifa Mahiri",
+  "v7_2_news_main_array_item_0_subtitle": "Furahia kiolesura kilichoboreshwa zaidi chenye uhakiki ulioboreshwa wa faili, uchaguzi wa rangi wa kisasa, viashiria vya hali vilivyo wazi zaidi, na arifa zenye busara zaidi.",
+  "v7_2_news_main_array_item_1_title": "Uhakiki wa Faili, Ulioboreshwa",
+  "v7_2_news_main_array_item_1_subtitle": "Furahia urambazaji laini zaidi na muonekano safi zaidi unapoangalia faili zako.",
+  "v7_2_news_main_array_item_2_title": "Chagua Rangi, Kwa Uzuri",
+  "v7_2_news_main_array_item_2_subtitle": "Kichaguzi cha rangi kipya cha kisasa kinachofanya muundo kuonekana rahisi.",
+  "v7_2_news_main_array_item_3_title": "Viashiria vya Hali Vilivyo Wazi Zaidi",
+  "v7_2_news_main_array_item_3_subtitle": "Rangi za hali na vidokezo vya zana sasa vimesawazishwa na ni rahisi kuelewa katika programu yote.",
+  "v7_2_news_main_array_item_4_title": "Snackbars Bora Zaidi",
+  "v7_2_news_main_array_item_4_subtitle": "Snackbars sasa zinaonyesha muda gani zitabaki kwenye skrini — na kuzisogeza husimamisha taima zote za kufuta.",
+  "v7_2_news_main_array_item_5_title": "Dashibodi ya Shughuli ya Kibinafsi Zaidi",
+  "v7_2_news_main_array_item_5_subtitle": "Picha za watumiaji sasa zinaonekana kabla ya majina ya kuonyesha — na kufanya iwe rahisi kutambua ni nani alifanya nini kwa mtazamo wa haraka.",
+  "v7_2_news_features_name": "Masasisho Mengine",
+  "v7_2_news_features_title": "Maboresho",
+  "v7_2_news_features_update_items": [
+    "1. Kuanzia sasa, tunaonyesha katika paneli ya msimamizi ni lini, na na nani, mtumiaji alifanywa asiye hai (kwa watumiaji waliofanywa wasiwe hai baada ya Oktoba 24, 2025, au baada ya v7.0.13 kusakinishwa, chochote kinachokuja baadaye).",
+    "2. Katika mazungumzo ya mwaliko (kutoka kwa menyu kunjuzi ya Shiriki na Mwaliko wa Hali ya Juu), watumiaji walioingizwa ambao hawako hai hawataonyeshwa, na snackbar inayoeleza kwamba watumiaji hawako hai itaonyeshwa.",
+    "3. Sasa tunazuia kuongeza watumiaji wasiokuwa hai kwa mashirika.",
+    "4. Watumiaji wasiokuwa hai hawawezi tena kuongezwa kwenye JustDo.",
+    "5. Baada ya kufanywa wasiwe hai, watumiaji wasiokuwa hai wanaondolewa kutoka kwa Mashirika yote (kwa njia sawa tunayowaondoa kutoka kwa JustDo/Kazi zote). Onyo la kufanywa wasiwe hai limesasishwa ipasavyo.",
+    "6. Kumbukumbu sasa inawekwa ya lini na na nani mtumiaji alifanywa asiwe hai."
+  ]
+}

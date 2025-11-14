@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "最新功能",
+  "v7_2_news_page_hrp": "justdo-v7-2-ui-improvements-file-preview-color-picker-updates",
+  "v7_2_news_page_title": "JustDo v7.2:進階檔案管理、現代化顏色選擇器與智慧狀態追蹤",
+  "v7_2_news_page_description": "探索 JustDo v7.2 的全新功能,包括優化的檔案預覽體驗、現代化顏色選擇器、更清晰的狀態指示器、改進的計時通知訊息,以及顯示使用者頭像的增強活動儀表板。",
+  "v7_2_news_page_main_h1": "JustDo v7.2:透過進階檔案預覽、現代化顏色選擇器與智慧通知提升您的工作流程",
+  "v7_2_news_main_array_item_0_subtitle": "體驗更精緻的介面,包括改進的檔案預覽、現代化顏色選擇、更清晰的狀態指示器,以及更智慧的通知。",
+  "v7_2_news_main_array_item_1_title": "精緻的檔案預覽",
+  "v7_2_news_main_array_item_1_subtitle": "在檢視檔案時享受更流暢的導覽和更簡潔的外觀。",
+  "v7_2_news_main_array_item_2_title": "精美的顏色選擇",
+  "v7_2_news_main_array_item_2_subtitle": "全新的現代化顏色選擇器,讓設計變得輕鬆自在。",
+  "v7_2_news_main_array_item_3_title": "更清晰的狀態指示器",
+  "v7_2_news_main_array_item_3_subtitle": "狀態顏色和提示訊息現在已標準化,在應用程式中更容易理解。",
+  "v7_2_news_main_array_item_4_title": "更優質的通知訊息",
+  "v7_2_news_main_array_item_4_subtitle": "通知訊息現在會顯示停留在螢幕上的時間,將滑鼠懸停在上方會暫停所有關閉計時器。",
+  "v7_2_news_main_array_item_5_title": "更個人化的活動儀表板",
+  "v7_2_news_main_array_item_5_subtitle": "使用者頭像現在會顯示在顯示名稱之前,讓您一眼就能輕鬆識別是誰執行了什麼操作。",
+  "v7_2_news_features_name": "其他更新",
+  "v7_2_news_features_title": "改進項目",
+  "v7_2_news_features_update_items": [
+    "1. 從現在開始,我們會在管理面板中顯示使用者停用的時間和停用者(適用於 2025 年 10 月 24 日之後停用的使用者,或安裝 v7.0.13 之後停用的使用者,以較晚者為準)。",
+    "2. 在邀請對話框中(包括從分享下拉選單和進階邀請),已停用的使用者不會顯示,並會顯示說明使用者已停用的通知訊息。",
+    "3. 我們現在會防止將已停用的使用者加入組織。",
+    "4. 已停用的使用者無法再被加入 JustDo 看板。",
+    "5. 停用後,已停用的使用者會從所有組織中移除(與我們從所有 JustDo 看板/任務中移除他們的方式相同)。停用警告已相應更新。",
+    "6. 現在會保留使用者停用的時間和停用者的記錄。"
+  ]
+}

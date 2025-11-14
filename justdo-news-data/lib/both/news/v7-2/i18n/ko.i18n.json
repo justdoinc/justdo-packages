@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "새로운 기능",
+  "v7_2_news_page_hrp": "justdo-v7-2-ui-improvements-file-preview-color-picker-updates",
+  "v7_2_news_page_title": "JustDo v7.2: 고급 파일 관리, 모던 색상 선택 및 지능형 상태 추적",
+  "v7_2_news_page_description": "개선된 파일 미리보기, 모던 색상 선택기, 명확한 상태 표시, 타이머가 있는 스낵바, 사용자 아바타가 포함된 활동 대시보드 등 JustDo v7.2의 새로운 기능을 확인하세요.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: 고급 파일 미리보기, 모던 색상 선택기 및 스마트 알림으로 워크플로우를 향상시키세요",
+  "v7_2_news_main_array_item_0_subtitle": "개선된 파일 미리보기, 모던 색상 선택, 명확한 상태 표시 및 스마트 알림으로 더욱 세련된 인터페이스를 경험하세요.",
+  "v7_2_news_main_array_item_1_title": "세련된 파일 미리보기",
+  "v7_2_news_main_array_item_1_subtitle": "파일을 볼 때 더욱 부드러운 탐색과 깔끔한 외관을 즐기세요.",
+  "v7_2_news_main_array_item_2_title": "아름다운 색상 선택",
+  "v7_2_news_main_array_item_2_subtitle": "디자인을 쉽게 만드는 신선하고 모던한 색상 선택기입니다.",
+  "v7_2_news_main_array_item_3_title": "명확한 상태 표시",
+  "v7_2_news_main_array_item_3_subtitle": "상태 색상과 툴팁이 이제 앱 전체에서 표준화되어 더 이해하기 쉽습니다.",
+  "v7_2_news_main_array_item_4_title": "개선된 스낵바",
+  "v7_2_news_main_array_item_4_subtitle": "스낵바에 화면에 표시될 시간이 표시되며, 마우스를 올리면 모든 닫기 타이머가 일시 정지됩니다.",
+  "v7_2_news_main_array_item_5_title": "더욱 개인화된 활동 대시보드",
+  "v7_2_news_main_array_item_5_subtitle": "이제 사용자 아바타가 표시 이름 앞에 표시되어 누가 무엇을 했는지 한눈에 쉽게 알아볼 수 있습니다.",
+  "v7_2_news_features_name": "기타 업데이트",
+  "v7_2_news_features_title": "개선 사항",
+  "v7_2_news_features_update_items": [
+    "1. 이제부터 관리자 패널에서 사용자가 언제, 누구에 의해 비활성화되었는지 표시됩니다 (2025년 10월 24일 이후 또는 v7.0.13이 설치된 이후 비활성화된 사용자에 한함).",
+    "2. 초대 대화 상자(공유 드롭다운 및 고급 초대 모두)에서 비활성화된 사용자는 표시되지 않으며, 사용자가 비활성화되었음을 설명하는 스낵바가 표시됩니다.",
+    "3. 이제 비활성화된 사용자를 조직에 추가할 수 없습니다.",
+    "4. 비활성화된 사용자는 더 이상 JustDo 보드에 추가할 수 없습니다.",
+    "5. 비활성화 시 비활성화된 사용자는 모든 조직에서 제거됩니다 (모든 JustDo 보드/작업에서 제거하는 것과 동일한 방식). 비활성화 경고가 그에 따라 업데이트되었습니다.",
+    "6. 이제 사용자가 언제, 누구에 의해 비활성화되었는지 기록이 유지됩니다."
+  ]
+}

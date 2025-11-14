@@ -1,0 +1,29 @@
+{
+  "v7_2_news_title": "v7.2",
+  "v7_2_news_main_name": "Vad är nytt",
+  "v7_2_news_page_hrp": "justdo-v7-2-ui-forbattringar-filforhandsvisning-fargvaljare-uppdateringar",
+  "v7_2_news_page_title": "JustDo v7.2: Avancerad filhantering, modern färgval & intelligent statusspårning",
+  "v7_2_news_page_description": "Upptäck JustDo v7.2 med förbättrad filförhandsvisning, modern färgväljare, tydligare statusindikatorer, förbättrade snackbars med timers och förbättrad aktivitetspanel med användaravatarer. Plus bättre användarhantering.",
+  "v7_2_news_page_main_h1": "JustDo v7.2: Förbättra ditt arbetsflöde med avancerad filförhandsvisning, modern färgväljare & smarta notiser",
+  "v7_2_news_main_array_item_0_subtitle": "Upplev ett mer förfinat gränssnitt med förbättrade filförhandsvisningar, modernt färgval, tydligare statusindikatorer och smartare notiser.",
+  "v7_2_news_main_array_item_1_title": "Filförhandsvisning, förfinad",
+  "v7_2_news_main_array_item_1_subtitle": "Njut av smidigare navigering och ett renare utseende när du visar dina filer.",
+  "v7_2_news_main_array_item_2_title": "Välj färger, vackert",
+  "v7_2_news_main_array_item_2_subtitle": "En fräsch, modern färgväljare som gör design enkelt och naturligt.",
+  "v7_2_news_main_array_item_3_title": "Tydligare statusindikatorer",
+  "v7_2_news_main_array_item_3_subtitle": "Statusfärger och verktygstips är nu standardiserade och lättare att förstå i hela appen.",
+  "v7_2_news_main_array_item_4_title": "Förbättrade snackbars",
+  "v7_2_news_main_array_item_4_subtitle": "Snackbars visar nu hur länge de kommer att vara synliga — och när du hovrar pausas alla timers.",
+  "v7_2_news_main_array_item_5_title": "En mer personlig aktivitetspanel",
+  "v7_2_news_main_array_item_5_subtitle": "Användaravatarer visas nu före visningsnamn — vilket gör det lättare att snabbt se vem som gjorde vad.",
+  "v7_2_news_features_name": "Andra uppdateringar",
+  "v7_2_news_features_title": "Förbättringar",
+  "v7_2_news_features_update_items": [
+    "1. Från och med nu visar vi i adminpanelen när och av vem en användare deaktiverades (för användare som deaktiverades efter 24 oktober 2025, eller efter att v7.0.13 installerades, beroende på vilket som inträffade senast).",
+    "2. I inbjudningsdialogrutan (både från delningsmenyn och avancerad inbjudan) visas inte längre deaktiverade användare, och en snackbar som förklarar att användarna är deaktiverade kommer att visas.",
+    "3. Vi förhindrar nu att deaktiverade användare läggs till i organisationer.",
+    "4. Deaktiverade användare kan inte längre läggas till i en board.",
+    "5. Vid deaktivering tas deaktiverade användare bort från alla organisationer (på samma sätt som vi tar bort dem från alla boards/uppgifter). Deaktiveringsvarningen har uppdaterats därefter.",
+    "6. En logg förs nu över när och av vem en användare deaktiverades."
+  ]
+}
