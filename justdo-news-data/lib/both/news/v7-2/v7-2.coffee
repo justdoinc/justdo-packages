@@ -46,13 +46,20 @@ APP.justdo_crm.registerNews "news",
             "title": "v7_2_news_main_array_item_5_title",
             "subtitle": "v7_2_news_main_array_item_5_subtitle"
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v7-2/assets/5.png"
-          },
-
-          {
-            "title": "v7_2_news_main_array_item_6_title",
-            "subtitle": "v7_2_news_main_array_item_6_subtitle"
           }
         ]
       }
+    },
+    {
+      _id: "features"
+      template_name: "version_release_features"
+      template_data: {
+        title: "v7_2_news_features_title"
+        update_items: "v7_2_news_features_update_items"
+      }
+      name: "v7_2_news_features_name"
+      page_title: "v7_2_news_page_title"
+      page_description: "v7_2_news_page_description"
+      h1: "v7_2_news_page_main_h1"
     }
   ]

@@ -2,12 +2,13 @@
     "v7_2_news_title": "v7.2",
     "v7_2_news_main_name": "What's new",
 
-    "v7_2_news_page_hrp": "v7.2 Hrp",
-    "v7_2_news_page_title": "v7.2 Title",
-    "v7_2_news_page_description": "v7.2 Description",
+    "v7_2_news_page_hrp": "justdo-v7-2-ui-improvements-file-preview-color-picker-updates",
+    "v7_2_news_page_title": "JustDo v7.2: Advanced File Management, Modern Color Selection & Intelligent Status Tracking",
+    
+    "v7_2_news_page_description": "Discover JustDo v7.2 featuring a refined file preview experience, modern color picker, clearer status indicators, improved snackbars with timers, and enhanced activity dashboard with user avatars. Plus better user management controls.",
 
-		"v7_2_news_page_main_h1": "JustDo v7.2 - Title",
-    "v7_2_news_main_array_item_0_subtitle": "JustDo v7.2 - Subtitle",
+		"v7_2_news_page_main_h1": "JustDo v7.2: Enhance Your Workflow with Advanced File Preview, Modern Color Picker & Smart Notifications",
+    "v7_2_news_main_array_item_0_subtitle": "Experience a more refined interface with improved file previews, modern color selection, clearer status indicators, and smarter notifications.",
 
     "v7_2_news_main_array_item_1_title": "File Preview, Refined",
     "v7_2_news_main_array_item_1_subtitle": "Enjoy smoother navigation and a cleaner look when viewing your files.",
@@ -24,7 +25,15 @@
     "v7_2_news_main_array_item_5_title": "A More Personal Activity Dashboard",
     "v7_2_news_main_array_item_5_subtitle": "User avatars now appear before display names — making it easier to recognize who did what at a glance.",
 
-    "v7_2_news_main_array_item_6_title": "More Updates",
-    "v7_2_news_main_array_item_6_subtitle": "From now on we show in the admin panel, when, and by whom a user got deactivated (for users deactivated after October 24th, 2025, or after v7.0.13 got installed, the latter of the two)<br><br>In the invite dialog both from Share dropdown, and Advanced Invite, inputted users that are deactivated won't be shown, and a snackbar explaining the fact the users are deactivated will be shown<br><br>We now prevent adding deactivated users to organizations<br><br>Don't allow adding de-activated users to a JustDo.<br><br>Upon de-activation - remove de-activated users from all Orgs (the same way we remove them from all JustDos/Tasks) update the de-activation warning accordingly.<br><br>Keep a log of when, and by whom, a user got deactivated."
+    "v7_2_news_features_name": "Other Updates",
+    "v7_2_news_features_title": "Improvements",
+    "v7_2_news_features_update_items": [
+      "1. From now on we show in the admin panel, when, and by whom a user got deactivated (for users deactivated after October 24th, 2025, or after v7.0.13 got installed, the latter of the two)",
+      "2. In the invite dialog both from Share dropdown, and Advanced Invite, inputted users that are deactivated won't be shown, and a snackbar explaining the fact the users are deactivated will be shown",
+      "3. We now prevent adding deactivated users to organizations",
+      "4. Don't allow adding de-activated users to a JustDo.",
+      "5. Upon de-activation - remove de-activated users from all Orgs (the same way we remove them from all JustDos/Tasks) update the de-activation warning accordingly.",
+      "6. Keep a log of when, and by whom, a user got deactivated."
+    ]
 
   }
