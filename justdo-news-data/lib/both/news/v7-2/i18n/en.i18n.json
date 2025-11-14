@@ -28,12 +28,12 @@
     "v7_2_news_features_name": "Other Updates",
     "v7_2_news_features_title": "Improvements",
     "v7_2_news_features_update_items": [
-      "1. From now on we show in the admin panel, when, and by whom a user got deactivated (for users deactivated after October 24th, 2025, or after v7.0.13 got installed, the latter of the two)",
-      "2. In the invite dialog both from Share dropdown, and Advanced Invite, inputted users that are deactivated won't be shown, and a snackbar explaining the fact the users are deactivated will be shown",
+      "1. From now on we show in the admin panel when and by whom a user got deactivated (for users deactivated after October 24th, 2025, or after v7.0.13 got installed, whichever comes later)",
+      "2. In the invite dialog (both from Share dropdown and Advanced Invite), entered users that are deactivated won't be shown, and a snackbar explaining that the users are deactivated will be displayed",
       "3. We now prevent adding deactivated users to organizations",
-      "4. Don't allow adding de-activated users to a JustDo.",
-      "5. Upon de-activation - remove de-activated users from all Orgs (the same way we remove them from all JustDos/Tasks) update the de-activation warning accordingly.",
-      "6. Keep a log of when, and by whom, a user got deactivated."
+      "4. Deactivated users can no longer be added to a JustDo",
+      "5. Upon deactivation, deactivated users are removed from all Orgs (the same way we remove them from all JustDos/Tasks). The deactivation warning has been updated accordingly.",
+      "6. A log is now kept of when and by whom a user got deactivated"
     ]
 
   }
