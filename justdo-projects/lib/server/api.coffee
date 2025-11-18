@@ -555,12 +555,13 @@ _.extend Projects.prototype,
     # inviting user, to avoid redundant db server hit)
     #
     invited_user_doc = Accounts.findUserByEmail(invited_user_email)
-    if APP.accounts.isUserDeactivated invited_user_doc
-      throw @_error "permission-denied", "Cannot invite deactivated user #{invited_user_email} to JustDo"
 
     landing_app_root_url = process.env?.LANDING_APP_ROOT_URL
 
-    if not invited_user_doc?
+    if invited_user_doc?
+      if APP.accounts.isUserDeactivated invited_user_doc
+        throw @_error "permission-denied", "Cannot invite deactivated user #{invited_user_email} to JustDo"
+    else
       # If new user, we have to have landing_app_root_url, read comment above
       if not landing_app_root_url?
         throw @_error("env-var-missing", "LANDING_APP_ROOT_URL is unknown, can't invite a new user")
