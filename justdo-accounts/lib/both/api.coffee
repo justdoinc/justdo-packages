@@ -150,6 +150,9 @@ _.extend JustdoAccounts.prototype,
 
     if Meteor.isClient
       check options.loginFunction, Function
+    
+    if @oauth_providers_registry[options.id]?
+      throw @_error "invalid-argument", "OAuth provider id #{options.id} is already registered"
 
     @oauth_providers_registry[options.id] = options
 
