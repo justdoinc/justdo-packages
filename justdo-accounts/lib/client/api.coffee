@@ -350,3 +350,9 @@ _.extend JustdoAccounts.prototype,
     @login_state_tracker.stop()
 
     @logger.debug "Destroyed"
+
+  getUserDeactivatedRemark: (user) ->
+    if @isUserDeactivated(user)
+      return """<span class="badge badge-secondary rounded-0 mr-1" title="This user is deactivated and cannot login to JustDo.&#10;&#10Deactivated users do not count against the available license total.&#10&#10;#{APP.accounts.getUserDeactivatedInfo(user)}">Deactivated</span>"""
+
+    return ""
