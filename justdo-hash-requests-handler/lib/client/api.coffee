@@ -73,14 +73,14 @@ _.extend HashRequestsHandler.prototype,
       if not (request_handler_id = request_hash_args.id)?
         @logger.warn "Hash request args detected but couldn't find hash request id: #{@options.prefix}-id"
       else
-        if not (request_handler = @request_handlers[request_handler_id])
+        if not (requestHandler = @request_handlers[request_handler_id])
           @logger.error "Unknown hash request id: #{request_handler_id}"
         else
           delete request_hash_args.id
 
           @logger.debug "Calling hash request handler: #{request_handler_id}"
 
-          request_handler(request_hash_args)
+          requestHandler(request_hash_args)
 
       # Remove hash request args from hash
       if current_hash != hash_with_no_hash_request_args
