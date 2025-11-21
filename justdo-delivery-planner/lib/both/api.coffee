@@ -113,6 +113,7 @@ _.extend JustdoDeliveryPlanner.prototype,
   
   getAllKnownProjectsOptionsSchema: JustdoDeliveryPlanner.schemas.getAllKnownProjectsOptionsSchema
   getAllKnownProjectsQueryAndQueryOptions: (options, user_id) ->
+    # The returned query of this method uses the PROJECTS_OWNED_BY_USER_AND_STATE_INDEX index.
     check user_id, String
 
     {cleaned_val} =
