@@ -16,11 +16,20 @@ _.extend JustdoHelpers,
 
     return JustdoHelpers.ellipsis(common_name, ellipsis)
 
-  getTaskUrl: (project_id, task_id) ->
-    base_link = "#{env.WEB_APP_ROOT_URL}/p/#{project_id}#&t=main"
-    base_task_link = "#{base_link}&p=/#{task_id}/"
+  getProjectUrl: (project_id) ->
+    if Meteor.isServer
+      env = process.env
+    else
+      env = window.env
 
-    return base_task_link
+    project_url = "#{env.WEB_APP_ROOT_URL}/p/#{project_id}#&t=main"
+    return project_url
+
+  getTaskUrl: (project_id, task_id) ->
+    project_url = @getProjectUrl(project_id)
+    task_url = "#{project_url}&p=/#{task_id}/"
+
+    return task_url
 
   getCoreState: (state) ->
     # Core states in JustDo can be extended. An extended state will be of the form <core-state>::<arbitrary-value>. Core states are those under the tasks schema for possible options for the state field
