@@ -54,7 +54,7 @@ JustdoDeliveryPlanner.schemas.getProjectsCollectionsUnderJustdoCursorOptionsSche
       blackbox: true
       defaultValue: JustdoDeliveryPlanner.projects_collection_default_fields_to_fetch
 
-JustdoDeliveryPlanner.schemas.getKnownProjectsOptionsSchema = new SimpleSchema
+JustdoDeliveryPlanner.schemas.getAllKnownProjectsOptionsSchema = new SimpleSchema
     active_only:
       type: Boolean
       optional: true
