@@ -330,6 +330,9 @@ _.extend JustdoProjectPane.prototype,
     @_tabs_definitions_dep.depend()
 
     return @_tabs_definitions
+  
+  getTabDefinitionById: (tab_id) ->
+    return @getTabsDefinitions()[tab_id]
 
   _tabDefinitionSchema: new SimpleSchema
     tab_id:
