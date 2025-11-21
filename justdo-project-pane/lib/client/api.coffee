@@ -20,6 +20,8 @@ _.extend JustdoProjectPane.prototype,
 
     @_setupEventHandlers()
 
+    @_setupHashRequests()
+
     return
 
   _deferredInit: ->
@@ -27,6 +29,25 @@ _.extend JustdoProjectPane.prototype,
       return
 
     return
+
+  _setupHashRequests: ->
+    APP.hash_requests_handler.addRequestHandler "expand-project-pane", (args) =>
+      if not (tab_id = args["tab-id"])?
+        # We use `@logger.error` instead of `throw @_error` here to allow the hash request handler to continue removing the hash.
+        @logger.error "not-supported", "expand-project-pane hash request received with no tab-id argument"
+        return
+        
+      if not (tab_definition = @getTabDefinitionById(tab_id))?
+        # It's possible that this handler is called when none of the tabs are registered.
+        # In that case, we should return true to keep the hash to allow next re-run
+        # triggered by the reactivity of `getTabDefinitionById` to process the hash again.
+        return true
+
+      @setActiveTab(tab_id)
+      @expand()
+      tab_definition.hashRequestHandler?(args)
+
+      return
   
   _setupEventHandlers: ->
     APP.on "grid-control-created", (gc) =>
