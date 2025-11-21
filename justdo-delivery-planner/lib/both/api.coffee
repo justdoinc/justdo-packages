@@ -110,14 +110,9 @@ _.extend JustdoDeliveryPlanner.prototype,
     @tasks_collection.update(item_id, {$set: {"#{JustdoDeliveryPlanner.task_is_archived_project_field_name}": new_state}})
 
     return new_state
-  getKnownProjects: (project_id, options, user_id) ->
-    # Get all the active projects known to
-
-    if not user_id?
-      return []
-
   
   getAllKnownProjectsOptionsSchema: JustdoDeliveryPlanner.schemas.getAllKnownProjectsOptionsSchema
+  getAllKnownProjectsQueryAndQueryOptions: (options, user_id) ->
     check user_id, String
 
     {cleaned_val} =
@@ -130,7 +125,6 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     query = _.extend {
       "#{JustdoDeliveryPlanner.task_is_project_field_name}": true
-      project_id: project_id
       users: user_id
     }, options.customize_query
 
@@ -147,7 +141,22 @@ _.extend JustdoDeliveryPlanner.prototype,
     if options.active_only
       query[JustdoDeliveryPlanner.task_is_archived_project_field_name] = {$ne: true}
 
-    return @tasks_collection.find(query, {fields: options.fields, sort: options.sort_by}).fetch()
+    query_options = 
+      fields: options.fields
+      sort: options.sort_by
+
+    return {query, query_options}
+
+  getKnownProjects: (project_id, options, user_id) ->
+    # Get all the active projects known to
+
+    if not user_id?
+      return []
+    
+    {query, query_options} = @getAllKnownProjectsQueryAndQueryOptions(options, user_id)
+    query.project_id = project_id
+
+    return @tasks_collection.find(query, query_options).fetch()
 
   isProjectsCollectionEnabledGlobally: -> JustdoDeliveryPlanner.is_projects_collection_enabled_globally
 
