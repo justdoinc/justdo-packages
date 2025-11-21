@@ -342,6 +342,9 @@ _.extend JustdoProjectPane.prototype,
       type: String
     tab_label:
       type: String
+    hashRequestHandler:
+      type: Function
+      optional: true
   registerTab: (tab_definition) ->
     # Note that the process permits tab_definition update
 
