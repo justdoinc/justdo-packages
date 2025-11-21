@@ -110,19 +110,19 @@ _.extend JustdoDeliveryPlanner.prototype,
     @tasks_collection.update(item_id, {$set: {"#{JustdoDeliveryPlanner.task_is_archived_project_field_name}": new_state}})
 
     return new_state
-
-  getKnownProjectsOptionsSchema: JustdoDeliveryPlanner.schemas.getKnownProjectsOptionsSchema
   getKnownProjects: (project_id, options, user_id) ->
     # Get all the active projects known to
 
     if not user_id?
       return []
 
+  
+  getAllKnownProjectsOptionsSchema: JustdoDeliveryPlanner.schemas.getAllKnownProjectsOptionsSchema
     check user_id, String
 
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
-        @getKnownProjectsOptionsSchema,
+        @getAllKnownProjectsOptionsSchema,
         options,
         {self: @, throw_on_error: true}
       )
@@ -283,7 +283,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     projects_collection_options: 
       type: JustdoDeliveryPlanner.schemas.getProjectsCollectionsUnderJustdoCursorOptionsSchema
     projects_options: 
-      type: JustdoDeliveryPlanner.schemas.getKnownProjectsOptionsSchema
+      type: JustdoDeliveryPlanner.schemas.getAllKnownProjectsOptionsSchema
     prune_tree:
       type: Boolean
       optional: true
@@ -344,7 +344,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     # projects_options:
     #
     #   The options that will be provided when calling @getKnownProjects to retrieve the projects
-    #   follows the structure of: JustdoDeliveryPlanner.schemas.getKnownProjectsOptionsSchema
+    #   follows the structure of: JustdoDeliveryPlanner.schemas.getAllKnownProjectsOptionsSchema
     #
     #   The active_only, exclude_tasks, and customize_query settings can be set by the user of this method
     #   but the fields setting is forced by us to _id and parents to ensure no unnecessary invalidation except for things
