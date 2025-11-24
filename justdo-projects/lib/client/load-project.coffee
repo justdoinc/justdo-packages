@@ -304,13 +304,11 @@ _.extend Projects.prototype,
         return false
 
       isSubscribedToEmailNotifications: ->
-        prevent_notifications_for_array =
-          Meteor.user({fields: {"justdo_projects.prevent_notifications_for": 1}})?.justdo_projects?.prevent_notifications_for
-
-        if not _.isArray(prevent_notifications_for_array) or @id not in prevent_notifications_for_array
+        user = Meteor.user({fields: {"justdo_projects.unsubscribe_from_ownership_transfer_notification_emails": 1}})
+        if not user?.justdo_projects?
           return true
 
-        return false
+        return user.justdo_projects.unsubscribe_from_ownership_transfer_notification_emails isnt true
 
       subscribeToEmailNotifications: (subscribe=true, cb) ->
         self.configureEmailNotificationsSubscriptions(subscribe, cb)
