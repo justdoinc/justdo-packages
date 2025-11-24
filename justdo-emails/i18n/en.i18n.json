@@ -8,6 +8,7 @@
     "unread_dm_notification_title_html": "New messages from <span style=\"font-weight: bold;\">__user_name__</span> are waiting for you!",
     "open_in_justdo": "Open in JustDo",
     "unsubscribe_from_justdo": "Unsubscribe from all update notifications from JustDo",
+    "unsubscribe_from_chat_emails": "Unsubscribe from all chat email notifications",
     "unsubscribe_from_project": "Unsubscribe from updates for __project_title__",
     "reply_email_for_support": "Having any issues? Reply to this email for support.",
     "email_config_title": "Email",
