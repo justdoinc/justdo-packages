@@ -475,3 +475,210 @@ JustdoDbMigrations.removeIndexMigration = (options) ->
     run_if_lte_version_installed: options.run_if_lte_version_installed
 
   return migration_script_obj
+
+JustdoDbMigrations.scheduledBatchMigration = (options) ->
+  # This migration type is designed for recurring scheduled tasks that:
+  # 1. Monitor a startingCondition periodically
+  # 2. When condition becomes true, process all batches to completion
+  # 3. Return to monitoring mode after completion
+  # 
+  # Unlike perpetualMaintainer which continuously processes updates,
+  # this is for discrete scheduled events (e.g., weekly emails).
+  
+  {cleaned_val} =
+    JustdoHelpers.simpleSchemaCleanAndValidate(
+      commonBatchedMigrationOptionsSchema,
+      options,
+      {self: @, throw_on_error: true}
+    )
+
+  options = cleaned_val
+
+  # Ensure these are set correctly for scheduled behavior
+  if not options.startingCondition?
+    throw new Error "scheduledBatchMigration requires a startingCondition"
+  
+  options.mark_as_completed_upon_batches_exhaustion = false
+
+  shared_obj = {}
+  check_condition_interval = null
+  batch_timeout = null
+  
+  getMigrationFunctionsThis = (original_this) ->
+    migration_functions_this = Object.create(original_this)
+    return _.extend migration_functions_this,
+      collection: options.collection
+      options: options
+      shared: shared_obj
+
+  runTerminationProcedures = (caller_this) ->
+    migration_functions_this = getMigrationFunctionsThis(caller_this)
+    if _.isFunction options.terminationProcedures
+      options.terminationProcedures.call migration_functions_this
+    return
+
+  clearBatchTimeout = (caller_this) ->
+    if batch_timeout?
+      Meteor.clearTimeout batch_timeout
+      batch_timeout = null
+      caller_this.logProgress "Batch processing timeout cleared"
+    return
+
+  clearConditionInterval = (caller_this) ->
+    if check_condition_interval?
+      Meteor.clearInterval check_condition_interval
+      check_condition_interval = null
+      caller_this.logProgress "Condition monitoring interval cleared"
+    return
+
+  # Start monitoring for the condition
+  startConditionMonitoring = (caller_this) ->
+    caller_this.logProgress "Entering monitoring mode, checking condition every #{JustdoHelpers.msToHumanReadable options.starting_condition_interval_between_checks}."
+    
+    checkCondition = ->
+      if not caller_this.isAllowedToContinue()
+        clearConditionInterval(caller_this)
+        return
+      
+      try
+        if options.startingCondition()
+          clearConditionInterval(caller_this)
+          caller_this.logProgress "Starting condition met, beginning batch processing"
+          startBatchProcessing(caller_this)
+        else
+          caller_this.logProgress "Starting condition not met. Checking again in #{JustdoHelpers.msToHumanReadable options.starting_condition_interval_between_checks}."
+      catch error
+        caller_this.logProgress "Error checking starting condition: #{error.message}", error
+      
+      return
+    
+    check_condition_interval = Meteor.setInterval checkCondition, options.starting_condition_interval_between_checks
+    
+    return
+
+  # Execute batch processing
+  startBatchProcessing = (caller_this) ->
+    getCursor = ->
+      {query, query_options} = options.queryGenerator()
+
+      if query_options?.jd_analytics_skip_logging isnt false
+        query_options.jd_analytics_skip_logging = true
+
+      query_options.limit = options.batch_size
+      res =
+        cursor: options.collection.find(query, query_options)
+        count: -> options.collection.find(query, _.omit(query_options, "limit")).count()
+      
+      return res
+    
+    cursor_res = getCursor()
+    pending_migration_set_cursor = cursor_res.cursor
+
+    num_processed = 0
+    initial_affected_docs_count = cursor_res.count()
+    caller_this.logProgress "Total documents to be processed: #{initial_affected_docs_count}."
+    
+    if initial_affected_docs_count > 0
+      expected_batches = Math.ceil(initial_affected_docs_count / options.batch_size)
+      caller_this.logProgress "Expected batches: #{expected_batches}."
+      caller_this.logProgress "Expected time to complete: #{JustdoHelpers.msToHumanReadable expected_batches * options.delay_between_batches}."
+
+    migration_functions_this = getMigrationFunctionsThis(caller_this)
+
+    if _.isFunction options.initProcedures
+      options.initProcedures.call migration_functions_this
+
+    waitDelayBetweenBatchesAndRunProcessBatchWrapper = ->
+      caller_this.logProgress "Waiting #{JustdoHelpers.msToHumanReadable options.delay_between_batches} before starting the next batch"
+      batch_timeout = Meteor.setTimeout ->
+        processBatchWrapper()
+      , options.delay_between_batches
+
+      return
+
+    processBatchWrapper = ->
+      try
+        processBatch()
+      catch e
+        caller_this.logProgress "Error encountered during batch processing", e
+        
+        # On error, return to monitoring mode after a delay
+        batch_timeout = Meteor.setTimeout ->
+          returnToMonitoringMode(caller_this)
+        , options.delay_between_batches
+
+      return
+
+    processBatch = ->
+      if not caller_this.isAllowedToContinue()
+        return
+
+      if not options.static_query
+        cursor_res = getCursor()
+        pending_migration_set_cursor = cursor_res.cursor
+
+      if cursor_res.count() == 0
+        # All batches exhausted
+        caller_this.logProgress "All batches processed. Total documents processed: #{num_processed}"
+        
+        # Call exhaustion handler
+        if options.onBatchesExaustion?
+          try
+            options.onBatchesExaustion.call(migration_functions_this)
+          catch error
+            caller_this.logProgress "Error in onBatchesExaustion handler", error
+        
+        # Return to monitoring mode
+        returnToMonitoringMode(caller_this)
+        return
+      else
+        caller_this.logProgress "Start batch"
+
+        batch_processed_count = options.batchProcessor.call migration_functions_this, pending_migration_set_cursor
+        num_processed += batch_processed_count
+
+        caller_this.logProgress "#{num_processed}/#{initial_affected_docs_count} documents processed"
+
+        waitDelayBetweenBatchesAndRunProcessBatchWrapper()
+        return
+
+    # Start first batch after a defer
+    Meteor.defer ->
+      processBatchWrapper()
+      return
+    
+    return
+
+  returnToMonitoringMode = (caller_this) ->
+    caller_this.logProgress "Batch processing complete, returning to monitoring mode"
+    
+    runTerminationProcedures(caller_this)
+    
+    # Return to monitoring for next trigger
+    startConditionMonitoring(caller_this)
+    
+    return
+
+  migration_script_obj =
+    runScript: ->
+      self = @
+      
+      # Check condition immediately on startup
+      if options.startingCondition()
+        @logProgress "Starting condition already met, beginning batch processing immediately"
+        startBatchProcessing(self)
+      else
+        # Enter monitoring mode
+        startConditionMonitoring(self)
+      
+      return
+
+    haltScript: ->
+      clearConditionInterval(@)
+      clearBatchTimeout(@)
+      runTerminationProcedures(@)
+      return
+
+    run_if_lte_version_installed: options.run_if_lte_version_installed
+
+  return migration_script_obj
