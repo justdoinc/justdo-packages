@@ -171,14 +171,6 @@ APP.executeAfterAppLibCode ->
 
       return
 
-    "click #register-project-for-daily-email": (e) ->
-      e.stopPropagation()
-
-      project_obj = curProj()
-
-      project_obj.subscribeToDailyEmail(
-        not project_obj.isSubscribedToDailyEmail())
-
     "click .email-notifications": (e) ->
       e.stopPropagation()
 
