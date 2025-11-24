@@ -84,7 +84,7 @@ _.extend PACK.modules.owners,
               project_id: project._id
               task_id: doc_after_delay._id
 
-        if not self._isSubscribedToEmailNotifications(project_id, to)
+        if not self._isSubscribedToEmailNotifications(to)
           # User is not subscribed to email notifications
 
           # console.log "NO SUB" # Keep for future testing
@@ -200,7 +200,7 @@ _.extend PACK.modules.owners,
       # checks are done on update), this is theoretically possible.
       project = self.requireUserIsMemberOfProject(project_id, to._id)
 
-      if not self._isSubscribedToEmailNotifications(project_id, to)
+      if not self._isSubscribedToEmailNotifications(to)
         # User is not subscribed to email notifications
 
         # console.log "NO SUB" # Keep for future testing
