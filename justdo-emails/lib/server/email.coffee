@@ -112,6 +112,11 @@ _.extend JustdoEmails,
         console.warn "An email to a proxy account skipped (#{options.to})"
         return
 
+      # Skip if user has unsubscribed from all emails
+      if JustdoHelpers.isUserEmailUnsubscribedFromAllEmailNotifications(options.to)
+        console.warn "Aan email to a user who has unsubscribed from all emails skipped (#{options.to})"
+        return
+
     # The check above ensures template exists
     template_name = options.template
     template = getTemplate(template_name)
