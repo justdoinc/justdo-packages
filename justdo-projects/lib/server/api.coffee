@@ -1370,12 +1370,11 @@ _.extend Projects.prototype,
 
     return
 
-  _isSubscribedToEmailNotifications: (project_id, user_obj) ->
-    if (prevent_notifications_for = user_obj.justdo_projects?.prevent_notifications_for)?
-      if project_id in prevent_notifications_for
-        return false
+  _isSubscribedToEmailNotifications: (user_obj) ->
+    if not user_obj?.justdo_projects?
+      return true
 
-    return true
+    return user_obj.justdo_projects.unsubscribe_from_ownership_transfer_notification_emails isnt true
 
   isSubscribedToDailyEmail: (project_id, user_id) ->
     @requireLogin user_id
