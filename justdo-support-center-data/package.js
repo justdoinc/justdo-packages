@@ -236,12 +236,12 @@ Package.onUse(function (api) {
   ], both);
 
   // how-to-get-daily-email-notifications
-  api.addFiles([
-    "lib/both/support-articles/how-to-get-daily-email-notifications/how-to-get-daily-email-notifications.html"
-  ], client);
-  api.addFiles([
-    "lib/both/support-articles/how-to-get-daily-email-notifications/how-to-get-daily-email-notifications.coffee"
-  ], both);
+  // api.addFiles([
+  //   "lib/both/support-articles/how-to-get-daily-email-notifications/how-to-get-daily-email-notifications.html"
+  // ], client);
+  // api.addFiles([
+  //   "lib/both/support-articles/how-to-get-daily-email-notifications/how-to-get-daily-email-notifications.coffee"
+  // ], both);
 
   // how-to-change-the-date-format
   api.addFiles([
