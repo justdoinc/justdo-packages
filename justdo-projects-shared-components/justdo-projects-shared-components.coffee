@@ -35,8 +35,8 @@ JustdoProjectsSharedComponents =
       daily_email_projects_array:
         type: [String]
         defaultValue: []
-      prevent_notifications_for:
-        type: [String]
+      unsubscribe_from_ownership_transfer_notification_emails:
+        type: Boolean
         optional: true
       first_jd:
         type: jd_creation_request_simple_schema
