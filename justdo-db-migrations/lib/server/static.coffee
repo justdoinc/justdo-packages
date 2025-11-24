@@ -1,3 +1,6 @@
+# NPM dependencies check
+cron_parser = Npm.require "cron-parser"
+
 commonBatchedMigrationOptionsSchema = new SimpleSchema
     delay_between_batches:
       label: "Delay between batches"
@@ -50,6 +53,10 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
       optional: true
 
     # Default null
+    # Can return:
+    #   - true: condition met, start processing
+    #   - false: condition not met, check again after starting_condition_interval_between_checks
+    #   - Number (ms): condition not met, check again after the returned number of milliseconds
     startingCondition:
       label: "Migration script starting condition"
       type: Function
@@ -82,6 +89,17 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
       optional: true
       defaultValue: 1000 * 30  # 30 seconds default retry delay
 
+    # If true, upon batches exhaustion (and after calling onBatchesExaustion if defined),
+    # the migration will return to monitoring startingCondition instead of waiting delay_before_checking_for_new_batches.
+    # This enables recurring scheduled behavior where the migration cycles between:
+    # monitoring condition -> processing batches -> monitoring condition
+    # Relevant only if mark_as_completed_upon_batches_exhaustion is false and startingCondition is set.
+    initialize_starting_condition_upon_exhaustion:
+      label: "Return to monitoring startingCondition after batches are exhausted"
+      type: Boolean
+      optional: true
+      defaultValue: false
+
 JustdoDbMigrations.commonBatchedMigration = (options) ->
   {cleaned_val} =
     JustdoHelpers.simpleSchemaCleanAndValidate(
@@ -89,8 +107,10 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
       options,
       {self: @, throw_on_error: true}
     )
-
   options = cleaned_val
+
+  if options.initialize_starting_condition_upon_exhaustion and not options.startingCondition?
+    throw APP.justdo_db_migrations._error "invalid-options", "initialize_starting_condition_upon_exhaustion requires a startingCondition"
 
   shared_obj = {}
   getMigrationFunctionsThis = (original_this) ->
@@ -109,7 +129,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
     return
 
   batch_timeout = null
-  clearTimeout = ->
+  clearBatchTimeout = ->
     if batch_timeout?
       Meteor.clearTimeout batch_timeout
       batch_timeout = null
@@ -118,14 +138,53 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
 
     return
 
-  check_starting_condition_interval = null
-  clearStartingConditionInterval = ->
-    if check_starting_condition_interval?
-      Meteor.clearInterval check_starting_condition_interval
-      check_starting_condition_interval = null
+  check_starting_condition_timeout = null
+  clearStartingConditionTimeout = ->
+    if check_starting_condition_timeout?
+      Meteor.clearTimeout check_starting_condition_timeout
+      check_starting_condition_timeout = null
 
-      @logProgress "Starting condition interval cleared"
+      @logProgress "Starting condition timeout cleared"
 
+    return
+
+  # Helper to evaluate startingCondition and determine next interval
+  # Returns: {condition_met: Boolean, next_check_interval: Number (ms) or null}
+  evaluateStartingCondition = ->
+    result = options.startingCondition()
+    
+    if result is true
+      return {condition_met: true, next_check_interval: null}
+    else if _.isNumber(result) and result > 0
+      # startingCondition returned a custom interval in ms
+      return {condition_met: false, next_check_interval: result}
+    else
+      # result is false or any other falsy value
+      return {condition_met: false, next_check_interval: options.starting_condition_interval_between_checks}
+
+  # Start monitoring the startingCondition
+  startConditionMonitoring = (caller_this, callback) ->
+    checkCondition = ->
+      if not caller_this.isAllowedToContinue()
+        return
+
+      try
+        {condition_met, next_check_interval} = evaluateStartingCondition()
+        
+        if condition_met
+          caller_this.logProgress "Starting condition met"
+          callback()
+        else
+          caller_this.logProgress "Starting condition not met. Checking again in #{JustdoHelpers.msToHumanReadable next_check_interval}."
+          check_starting_condition_timeout = Meteor.setTimeout checkCondition, next_check_interval
+      catch error
+        caller_this.logProgress "Error checking starting condition: #{error.message}", error
+        # On error, retry after default interval
+        check_starting_condition_timeout = Meteor.setTimeout checkCondition, options.starting_condition_interval_between_checks
+
+      return
+
+    checkCondition()
     return
 
   migration_script_obj =
@@ -156,7 +215,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
           @logProgress "Total documents to be updated: #{initial_affected_docs_count}."
           expected_batches = Math.ceil(initial_affected_docs_count / options.batch_size)
           @logProgress "Expected batches: #{expected_batches}."
-          @logProgress "Expected time to complete: #{Math.round((expected_batches * options.delay_between_batches) / 1000 / 60)} minutes."
+          @logProgress "Expected time to complete: #{JustdoHelpers.msToHumanReadable expected_batches * options.delay_between_batches}."
 
         migration_functions_this = getMigrationFunctionsThis(@)
 
@@ -164,20 +223,33 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
           options.initProcedures.call migration_functions_this
 
         waitDelayBetweenBatchesAndRunProcessBatchWrapper = =>
-          @logProgress "Waiting #{options.delay_between_batches / 1000}sec before starting the next batch"
+          @logProgress "Waiting #{JustdoHelpers.msToHumanReadable options.delay_between_batches} before starting the next batch"
           batch_timeout = Meteor.setTimeout =>
             processBatchWrapper()
+            return
           , options.delay_between_batches
 
           return
 
-        waitDelayBeforeCheckingForNewBatchesAndRunProcessBatchWrapper = =>
-          # @logProgress "Waiting #{options.delay_before_checking_for_new_batches / 1000}sec before checking for new batches"
+        handleBatchesExhaustion = =>
           if options.onBatchesExaustion?
             options.onBatchesExaustion()
-          batch_timeout = Meteor.setTimeout =>
-            processBatchWrapper()
-          , options.delay_before_checking_for_new_batches
+
+          if options.initialize_starting_condition_upon_exhaustion
+            # Return to monitoring startingCondition.
+            # Call terminationProcedures to clean up resources created by initProcedures,
+            # since initProcedures will be called again when the condition is next met.
+            @logProgress "Batch processing complete, returning to monitoring mode"
+            runTerminationProcedures(@)
+            startConditionMonitoring self, ->
+              scriptWrapper.call self
+              return
+          else
+            # Original behavior: wait and check for new batches
+            batch_timeout = Meteor.setTimeout =>
+              processBatchWrapper()
+              return
+            , options.delay_before_checking_for_new_batches
 
           return
 
@@ -185,9 +257,9 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
           try
             processBatch()
           catch e
-            @logProgress "Error encountered, will try again in #{options.delay_before_checking_for_new_batches / 1000}sec", e
+            @logProgress "Error encountered, will try again in #{JustdoHelpers.msToHumanReadable options.delay_before_checking_for_new_batches}", e
 
-            waitDelayBeforeCheckingForNewBatchesAndRunProcessBatchWrapper()
+            handleBatchesExhaustion()
             # Do not halt the script, some errors, like network issues might be resolved after a while
             # and we don't want to need to restart the server in such a case
             # @halt()
@@ -210,7 +282,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
 
               return
 
-            waitDelayBeforeCheckingForNewBatchesAndRunProcessBatchWrapper()
+            handleBatchesExhaustion()
           else
             @logProgress "Start batch"
 
@@ -234,23 +306,28 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
         return
 
       callScriptWrapper = -> scriptWrapper.call self
-      if options.startingCondition? and not options.startingCondition()
-        # If we got a startingCondition and it isn't met yet, then setup an interval to wait for it.
-        check_starting_condition_interval = Meteor.setInterval ->
-          if options.startingCondition()
-            clearStartingConditionInterval.call(self)
-            callScriptWrapper()
-          else
-            self.logProgress "Starting condition not met. Checking again in #{options.starting_condition_interval_between_checks / 1000} secs."
-        , options.starting_condition_interval_between_checks
+      
+      if options.startingCondition?
+        {condition_met, next_check_interval} = evaluateStartingCondition()
+        
+        if condition_met
+          @logProgress "Starting condition already met, beginning batch processing immediately"
+          callScriptWrapper()
+        else
+          # Start monitoring for the condition
+          @logProgress "Entering monitoring mode, checking condition every #{JustdoHelpers.msToHumanReadable next_check_interval}."
+          check_starting_condition_timeout = Meteor.setTimeout =>
+            startConditionMonitoring self, callScriptWrapper
+            return
+          , next_check_interval
       else
         callScriptWrapper()
 
       return
 
     haltScript: ->
-      clearTimeout.call(@)
-      clearStartingConditionInterval.call(@)
+      clearBatchTimeout.call(@)
+      clearStartingConditionTimeout.call(@)
 
       runTerminationProcedures(@)
 
@@ -475,3 +552,241 @@ JustdoDbMigrations.removeIndexMigration = (options) ->
     run_if_lte_version_installed: options.run_if_lte_version_installed
 
   return migration_script_obj
+
+# Schema for registerCronjob options
+registerCronjobOptionsSchema = new SimpleSchema
+  id:
+    label: "Unique identifier for the cronjob"
+    type: String
+
+  cron_expression:
+    # Cron expression format (POSIX/Vixie cron standard):
+    #
+    # ┌────────────── minute (0-59)
+    # │ ┌──────────── hour (0-23)
+    # │ │ ┌────────── day of month (1-31)
+    # │ │ │ ┌──────── month (1-12 or JAN-DEC)
+    # │ │ │ │ ┌────── day of week (0-7 or SUN-SAT, where 0 and 7 are Sunday)
+    # │ │ │ │ │
+    # * * * * *
+    #
+    # Special characters:
+    #   * - any value
+    #   , - value list separator (e.g., 1,3,5)
+    #   - - range (e.g., 1-5)
+    #   / - step values (e.g., */15 for every 15 minutes)
+    #
+    # Examples:
+    #   "*/2 * * * *"     - every 2 minutes
+    #   "0 9 * * 1-5"     - 9 AM on weekdays
+    #   "0 0 1 * *"       - midnight on the 1st of each month
+    #   "0 */6 * * *"     - every 6 hours
+    #   "30 4 1,15 * *"   - 4:30 AM on the 1st and 15th of each month
+    label: "Cron expression (POSIX/Vixie cron standard)"
+    type: String
+
+  persistent:
+    # If persistent is false:
+    #   - Calculate the next scheduled time from NOW and wait until then
+    #   - Do NOT check if we should run right now (even if past a scheduled time)
+    #
+    # If persistent is true:
+    #   - Run if the last scheduled occurrence is not marked as completed in the DB
+    #   - If no record exists in the DB, treat as if it already ran (initialize the record)
+    label: "Whether to run missed executions on startup"
+    type: Boolean
+    defaultValue: false
+
+  tz:
+    # IANA timezone identifier (e.g., "America/New_York", "Europe/London", "Asia/Jerusalem")
+    # See: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    label: "Timezone for cron expression evaluation"
+    type: String
+    defaultValue: "UTC"
+
+  common_batch_migration_options:
+    # Options to pass to commonBatchedMigration.
+    # Note: `startingCondition` will be ignored as it is constructed from the cron options.
+    label: "Options for commonBatchedMigration"
+    type: Object
+    blackbox: true
+
+JustdoDbMigrations.registerCronjob = (options) ->
+  # registerCronjob: A cron-based scheduling wrapper around commonBatchedMigration
+  #
+  # This function creates a migration script that:
+  # 1. Evaluates a cron expression to determine when to run
+  # 2. Supports persistent mode (run missed executions) and non-persistent mode (skip to next)
+  # 3. Uses system records to track last run times
+  # 4. Passes control to commonBatchedMigration for batch processing
+  #
+  # System record naming: "cron::<id>::last-run"
+  # Record structure: { value: Date, completed: Boolean }
+
+  {cleaned_val} =
+    JustdoHelpers.simpleSchemaCleanAndValidate(
+      registerCronjobOptionsSchema,
+      options,
+      {self: @, throw_on_error: true}
+    )
+  options = cleaned_val
+
+  {id, cron_expression, persistent, tz, common_batch_migration_options} = options
+
+  # Validate cron expression
+  try
+    cron_parser.parseExpression cron_expression, {tz: tz}
+  catch e
+    throw APP.justdo_db_migrations._error "invalid-cron-expression", "Invalid cron expression '#{cron_expression}': #{e.message}"
+
+  # System record name for tracking last run
+  last_run_record_name = "cron::#{id}::last-run"
+
+  # Helper: Get the previous scheduled occurrence relative to a date
+  getPreviousScheduledTime = (reference_date) ->
+    try
+      interval = cron_parser.parseExpression cron_expression,
+        currentDate: reference_date
+        tz: tz
+      return interval.prev().toDate()
+    catch e
+      # If prev() fails (e.g., no previous occurrence), return null
+      return null
+
+  # Helper: Get the next scheduled occurrence relative to a date
+  getNextScheduledTime = (reference_date) ->
+    try
+      interval = cron_parser.parseExpression cron_expression,
+        currentDate: reference_date
+        tz: tz
+      return interval.next().toDate()
+    catch e
+      # If next() fails, return null
+      return null
+
+  # Helper: Get milliseconds until the next scheduled time
+  getMsUntilNextScheduledTime = ->
+    now = new Date()
+    next_time = getNextScheduledTime(now)
+    if not next_time?
+      # Fallback to 1 hour if we can't determine next time
+      return 60 * 60 * 1000
+    return Math.max(0, next_time.getTime() - now.getTime())
+
+  # Create the startingCondition function based on cron options
+  createStartingCondition = ->
+    return ->
+      now = new Date()
+      record = APP.justdo_system_records.getRecord(last_run_record_name)
+
+      # Get the previous scheduled time (the occurrence we might need to run)
+      previous_scheduled_time = getPreviousScheduledTime(now)
+
+      if not previous_scheduled_time?
+        # No previous occurrence exists - wait for next
+        return getMsUntilNextScheduledTime()
+
+      if not record?
+        # No record exists in the DB at all
+        if persistent
+          # Persistent mode with no record: pretend like it already happened
+          # Initialize the record as if it ran
+          APP.justdo_system_records.setRecord last_run_record_name,
+            value: previous_scheduled_time
+            completed: true
+          ,
+            jd_analytics_skip_logging: true
+
+        # In both cases (persistent or not), wait for the next occurrence
+        return getMsUntilNextScheduledTime()
+
+      last_run_time = record.value
+      last_run_completed = record.completed
+
+      if persistent
+        # Persistent mode: run if the last scheduled occurrence wasn't completed
+        if not last_run_time?
+          # No last run time recorded, treat as needing to run
+          return true
+
+        # Check if we need to run:
+        # 1. If previous_scheduled_time > last_run_time: This is a NEW scheduled occurrence
+        # 2. If previous_scheduled_time == last_run_time AND not completed: Server crashed mid-execution
+        if previous_scheduled_time > last_run_time
+          # New scheduled occurrence we haven't run yet
+          return true
+
+        if (previous_scheduled_time.getTime() is last_run_time.getTime()) and not last_run_completed
+          # Same occurrence but incomplete (server crashed mid-execution) - need to retry
+          return true
+
+        # Already ran and completed for this scheduled occurrence
+        return getMsUntilNextScheduledTime()
+      else
+        # Non-persistent mode: never run immediately, always wait for next
+        # Check if we've already executed for the current scheduled period
+        if last_run_time? and previous_scheduled_time <= last_run_time
+          # We've already run for this period, wait for next
+          return getMsUntilNextScheduledTime()
+
+        # There's a scheduled time we haven't run, but in non-persistent mode
+        # we skip it and wait for the next one
+        return getMsUntilNextScheduledTime()
+
+  # Build common_batch_migration_options, overriding startingCondition
+  final_options = _.extend {}, common_batch_migration_options,
+    # Override startingCondition with our cron-based one
+    startingCondition: createStartingCondition()
+
+    # Configure for recurring scheduled behavior
+    mark_as_completed_upon_batches_exhaustion: false
+    initialize_starting_condition_upon_exhaustion: true
+
+    # Set a reasonable check interval based on cron expression
+    # Default to 1 minute if not specified
+    starting_condition_interval_between_checks: common_batch_migration_options.starting_condition_interval_between_checks or (60 * 1000)
+
+  # Wrap onBatchesExaustion to update the system record
+  original_on_batches_exaustion = common_batch_migration_options.onBatchesExaustion
+  final_options.onBatchesExaustion = ->
+    # Mark this scheduled occurrence as completed
+    now = new Date()
+    previous_scheduled_time = getPreviousScheduledTime(now)
+    
+    APP.justdo_system_records.setRecord last_run_record_name,
+      value: previous_scheduled_time or now
+      completed: true
+    ,
+      jd_analytics_skip_logging: true
+
+    # Call the original onBatchesExaustion if provided
+    if _.isFunction original_on_batches_exaustion
+      original_on_batches_exaustion.call(@)
+
+    return
+
+  # Wrap initProcedures to mark the run as started (not completed yet)
+  original_init_procedures = common_batch_migration_options.initProcedures
+  final_options.initProcedures = ->
+    # Mark this scheduled occurrence as started but not completed
+    now = new Date()
+    previous_scheduled_time = getPreviousScheduledTime(now)
+
+    APP.justdo_system_records.setRecord last_run_record_name,
+      value: previous_scheduled_time or now
+      completed: false
+    ,
+      jd_analytics_skip_logging: true
+
+    # Call the original initProcedures if provided
+    if _.isFunction original_init_procedures
+      original_init_procedures.call(@)
+
+    return
+
+  # Remove startingCondition from common_batch_migration_options if it was provided
+  # (we've already set our own)
+  if common_batch_migration_options.startingCondition?
+    console.warn "registerCronjob: startingCondition in common_batch_migration_options is ignored; using cron-based scheduling instead"
+
+  return JustdoDbMigrations.commonBatchedMigration(final_options)
