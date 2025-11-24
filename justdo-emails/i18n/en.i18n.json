@@ -9,5 +9,7 @@
     "open_in_justdo": "Open in JustDo",
     "unsubscribe_from_justdo": "Unsubscribe from all update notifications from JustDo",
     "unsubscribe_from_project": "Unsubscribe from updates for __project_title__",
-    "reply_email_for_support": "Having any issues? Reply to this email for support."
+    "reply_email_for_support": "Having any issues? Reply to this email for support.",
+    "email_config_title": "Email",
+    "unsubscribe_from_all_emails": "Unsubscribe from all emails"
 }

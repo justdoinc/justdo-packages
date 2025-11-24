@@ -1,0 +1,6 @@
+<template name="justdo_emails_unsubscribe_from_all_emails_toggle">
+  <div class="justdo-email-global-notifications-toggle controller-template-default-toggle d-flex mt-3">
+    {{> jdToggle checked=isSubscribed}}
+    <div class="m{{getRtlAwareDirection "l"}}-2">{{_ "unsubscribe_from_all_emails"}}</div>
+  </div>
+</template>

@@ -14,8 +14,8 @@ Npm.depends({
 });
 
 Package.onUse(function (api) {
-  api.use("underscore", server);
-  api.use("coffeescript", server);
+  api.use("underscore", both);
+  api.use("coffeescript", both);
   api.use("email", server);
   api.use("sacha:juice@0.1.4", server);
   api.use("astrocoders:handlebars-server@1.0.3", server);
@@ -24,6 +24,14 @@ Package.onUse(function (api) {
   api.use("tap:i18n", both);
 
   api.use("justdoinc:justdo-analytics@1.0.0", both);
+  api.use("templating", client);
+  api.use('fourseven:scss@3.2.0', client);
+  api.use("justdoinc:justdo-user-config-ui@1.0.0", client);
+
+  api.addFiles("lib/client/config-templates/unsubscribe-from-all-emails-toggle.sass", client);
+  api.addFiles("lib/client/config-templates/unsubscribe-from-all-emails-toggle.html", client);
+  api.addFiles("lib/client/config-templates/unsubscribe-from-all-emails-toggle.coffee", client);
+  api.addFiles("lib/client/register-config-section.coffee", client);
 
   api.addFiles("lib/server/email.coffee", server);
   api.addFiles("lib/server/templates/wrappers/email-wrapper.handlebars", server);
@@ -55,5 +63,5 @@ Package.onUse(function (api) {
   // Always after templates
   this.addI18nFiles(api, "i18n/{}.i18n.json");
 
-  api.export("JustdoEmails", server);
+  api.export("JustdoEmails", both);
 });
