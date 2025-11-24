@@ -42,14 +42,14 @@ _.extend Projects.prototype,
 
     return
 
-  configureEmailNotificationsSubscriptions: (projects_ids, set_subscription_mode=true, cb) ->
+  configureEmailNotificationsSubscriptions: (set_subscription_mode=true, cb) ->
     # set_subscription_mode should be true if you want to subscribe, false
     # to unsubscribe
 
     if not Meteor.userId()?
       @logger.error("Login required in order subscribe/unsubscribe project emails notifications")
 
-    Meteor.call "configureEmailNotificationsSubscriptions", projects_ids, set_subscription_mode, (err) ->
+    Meteor.call "configureEmailNotificationsSubscriptions", set_subscription_mode, (err) ->
       cb?(err)
 
     return
