@@ -321,3 +321,18 @@ _.extend JustdoHelpers,
       return Meteor.users.findOne({
         "emails.address": email_addr_regex
       }, options)
+
+  isUserUnsubscribedFromAllEmailNotifications: (user) ->
+    if _.isString user
+      user = Meteor.users.findOne(user, {fields: {"profile.unsubscribe_from_all_email_notifications": 1}})
+    if Meteor.isClient and not user?
+      user = Meteor.user()
+    
+    if not user?.profile?
+      throw @_error "missing-argument", "User is not provided, or provided user does not include `profile` field"
+    
+    return user.profile.unsubscribe_from_all_email_notifications is true
+  
+  isUserEmailUnsubscribedFromAllEmailNotifications: (email) ->
+    user = @getUserByEmail(email, {fields: {"profile.unsubscribe_from_all_email_notifications": 1}})
+    return @isUserUnsubscribedFromAllEmailNotifications(user)
