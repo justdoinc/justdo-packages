@@ -218,6 +218,12 @@ _.extend JustdoAccounts,
       label_i18n: "lang_schema_label"
       type: String
 
+    unsubscribe_from_all_email_notifications:
+      label: "Disable all email notifications"
+      label_i18n: "unsubscribe_from_all_email_notifications_schema_label"
+      type: Boolean
+      optional: true
+
   get_user_public_info_options_schema: new SimpleSchema
     email:
       label: "Email"

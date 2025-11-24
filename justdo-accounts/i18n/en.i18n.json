@@ -18,5 +18,6 @@
   "lang_schema_label": "Preferred Language",
   "email_schema_label": "Email",
   "ignore_invites_schema_label": "Ignore users with no password (consider them non-existing)",
-  "edit_avatar_colors": "Edit Avatar Colors"
+  "edit_avatar_colors": "Edit Avatar Colors",
+  "unsubscribe_from_all_email_notifications_schema_label": "Unsubscribe from all emails"
 }
