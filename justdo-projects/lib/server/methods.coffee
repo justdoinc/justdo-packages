@@ -122,10 +122,10 @@ _.extend Projects.prototype,
 
         return
 
-      configureEmailNotificationsSubscriptions: (projects_ids, set_subscription_mode=true) ->
+      configureEmailNotificationsSubscriptions: (set_subscription_mode=true) ->
         # Args checks are taken care of by configureEmailNotificationsSubscriptions
 
-        projects_object.configureEmailNotificationsSubscriptions projects_ids, set_subscription_mode, @userId
+        projects_object.configureEmailNotificationsSubscriptions set_subscription_mode, @userId
 
         return
 

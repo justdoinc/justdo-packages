@@ -313,7 +313,7 @@ _.extend Projects.prototype,
         return false
 
       subscribeToEmailNotifications: (subscribe=true, cb) ->
-        self.configureEmailNotificationsSubscriptions(@id, subscribe, cb)
+        self.configureEmailNotificationsSubscriptions(subscribe, cb)
 
         return
 

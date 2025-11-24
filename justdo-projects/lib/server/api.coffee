@@ -1357,42 +1357,16 @@ _.extend Projects.prototype,
 
     return
 
-  configureEmailNotificationsSubscriptions: (projects_ids, set_subscription_mode=true, user_id) ->
+  configureEmailNotificationsSubscriptions: (set_subscription_mode=true, user_id) ->
     @requireLogin user_id
 
-    check projects_ids, Match.OneOf(String, [String])
     check set_subscription_mode, Boolean
 
-    if _.isString projects_ids
-      projects_ids = [projects_ids]
-
-    if projects_ids[0] == "*"
-      # Special case, if projects_ids[0] == "*" and set_subscription_mode is false, unsubscribe notifications from all projects
-
-      if set_subscription_mode == true
-        throw @_error "invalid-argument", "configureEmailUpdateSubscription: projects_ids can't have '*' for set_subscription_mode=true request"
-
-      projects_ids = _.map @projects_collection.find({"members.user_id": user_id}, {fields: {_id: 1}}).fetch(), (doc) -> doc._id
-
-    if set_subscription_mode
-      # putting this requirement here and not before the if statement
-      # because it's always valid to remove subscription even if the
-      # user is not a member of the project anymore
-
-      for project_id in projects_ids
-        @requireUserIsMemberOfProject project_id, user_id
-
-      Meteor.users.update user_id, {
-        $pullAll: {
-          "justdo_projects.prevent_notifications_for": projects_ids
-        }
+    Meteor.users.update user_id, {
+      $set: {
+        "justdo_projects.unsubscribe_from_ownership_transfer_notification_emails": not set_subscription_mode
       }
-    else
-      Meteor.users.update user_id, {
-        $addToSet: {
-          "justdo_projects.prevent_notifications_for": {$each: projects_ids}
-        }
-      }
+    }
 
     return
 
