@@ -1,5 +1,8 @@
 default_email_notifications_state = "once-per-unread"
 
+isDisabled = ->
+  return JustdoHelpers.isUserUnsubscribedFromAllEmailNotifications()
+
 getUserEmailNotificationsState = ->
   email_notifications = Meteor.user().justdo_chat?.email_notifications
 
@@ -10,6 +13,9 @@ getUserEmailNotificationsState = ->
 
 Template.involuntary_unread_email_chat_notifications_subscription_profile_settings.events
   "click .project-conf-unread-notif-email-subscription": ->
+    if isDisabled()
+      return
+
     email_notifications = getUserEmailNotificationsState()
 
     if email_notifications == "once-per-unread"
@@ -21,3 +27,5 @@ Template.involuntary_unread_email_chat_notifications_subscription_profile_settin
 
 Template.involuntary_unread_email_chat_notifications_subscription_profile_settings.helpers
   isSubscribed: -> getUserEmailNotificationsState() == "once-per-unread"
+
+  isDisabled: -> isDisabled()
