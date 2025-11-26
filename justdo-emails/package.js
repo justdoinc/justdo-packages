@@ -42,9 +42,6 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/server/templates/notifications/notifications-added-to-new-project.handlebars", server);
 
-  api.addFiles("lib/server/templates/project-notifications/ownership-transfer.handlebars", server);
-  api.addFiles("lib/server/templates/project-notifications/ownership-transfer-rejected.handlebars", server);
-
   api.addFiles("lib/server/templates/email-verification.handlebars", server);
   api.addFiles("lib/server/templates/password-recovery.handlebars", server);
 
