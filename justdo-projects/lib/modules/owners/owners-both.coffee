@@ -3,6 +3,19 @@ _.extend PACK.modules,
     initBoth: ->
       @attachSchema()
 
+      @_registerEmailTemplates()
+
+      return
+
+    _registerEmailTemplates: ->
+      common_options =
+        user_preference_field_id: "ownership_transfer"
+
+      JustdoEmails.registerEmailTemplate "ownership-transfer", common_options
+      JustdoEmails.registerEmailTemplate "ownership-transfer-rejected", common_options
+      
+      return
+      
     attachSchema: ->
       self = @
 
