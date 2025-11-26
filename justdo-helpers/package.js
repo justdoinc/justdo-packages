@@ -90,6 +90,8 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/barriers.coffee", both);
   api.addFiles("lib/both/testcase.coffee", both);
 
+  // Notification Registrar
+  api.addFiles("lib/both/notification-registrar/notification-registrar-constructor.coffee", both);
   api.addFiles("lib/client/users.coffee", client);
   api.addFiles("lib/client/minimongo.coffee", client);
   api.addFiles("lib/client/blaze-extensions.coffee", client);
