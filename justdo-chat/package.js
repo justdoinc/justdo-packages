@@ -72,7 +72,8 @@ Package.onUse(function (api) {
   api.use("reactive-var", both);
   api.use("tracker", both);
 
-  api.use('justdoinc:justdo-emails@1.0.0', both); // client is needed for media files
+  api.use("astrocoders:handlebars-server@1.0.3", server);
+  api.use('justdoinc:justdo-emails@1.0.0', both);
   api.use("justdoinc:justdo-file-interface@1.0.0", both);
 
   //
@@ -118,7 +119,13 @@ Package.onUse(function (api) {
 
   // Email
   api.addFiles("lib/justdo-chat/server/unread-notifications/email-unread-notifications.coffee", server);
+  // Templates
+  api.addFiles("lib/justdo-chat/server/unread-notifications/templates/notifications-iv-unread-chat.handlebars", server);
+  api.addFiles("lib/justdo-chat/server/unread-notifications/templates/notifications-iv-unread-dm.handlebars", server);
+  // not used yet
+  // api.addFiles("lib/justdo-chat/server/unread-notifications/templates/notifications-iv-unread-group-chat.handlebars", server);
 
+  
   // Firebase Mobile Push notifications
   api.addFiles("lib/justdo-chat/server/unread-notifications/firebase-mobile-push-notifications.coffee", server);
 
