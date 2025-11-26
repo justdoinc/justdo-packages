@@ -28,6 +28,8 @@ Package.onUse(function (api) {
   api.use('fourseven:scss@3.2.0', client);
   api.use("justdoinc:justdo-user-config-ui@1.0.0", client);
 
+  api.addFiles("lib/both/email.coffee", both);
+
   api.addFiles("lib/client/config-templates/unsubscribe-from-all-emails-toggle.sass", client);
   api.addFiles("lib/client/config-templates/unsubscribe-from-all-emails-toggle.html", client);
   api.addFiles("lib/client/config-templates/unsubscribe-from-all-emails-toggle.coffee", client);

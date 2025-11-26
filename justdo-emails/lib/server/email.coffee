@@ -1,5 +1,3 @@
-JustdoEmails = {}
-
 htmlToText = Npm.require "html-to-text"
 
 getTemplate = (templateName) -> Handlebars.templates[templateName]
@@ -104,17 +102,30 @@ _.extend JustdoEmails,
     if options.to.split("@")[1] in forbidden_email_domains
       console.warn "An email to a forbidden email domain skipped (#{options.to})"
       return
+    
+    receiving_user_query =
+      "emails.address": options.to
+    receiving_user_query_options =
+      fields:
+        is_proxy: 1
+        [JustdoEmails.user_preference_subdocument_id]: 1
+    receiving_user_doc = Meteor.users.findOne(receiving_user_query, receiving_user_query_options)
+    if not receiving_user_doc?
+      console.warn "A user with email address #{options.to} not found"
+      return
+    
+    if not @registry.isNotificationIgnoringUserUnsubscribePreference(options.template)
+      # If the notification respects user unsubscribe preference, check the following.
 
-    # For templates that are not bypassed for unsubscribed users, perform additional checks
-    if options.template not in templates_ignoring_user_preference
       # Forbid proxy users from receiving any emails
-      if Meteor.users.findOne({"emails.address": options.to, is_proxy: true}, {fields: {_id: 1}})?
+      if APP.accounts.isProxyUser receiving_user_doc
         console.warn "An email to a proxy account skipped (#{options.to})"
         return
 
-      # Skip if user has unsubscribed from all emails
-      if JustdoHelpers.isUserEmailUnsubscribedFromAllEmailNotifications(options.to)
-        console.warn "Aan email to a user who has unsubscribed from all emails skipped (#{options.to})"
+      # Skip if user has unsubscribed from the notification
+      # This also handles the case where the user has unsubscribed from all notifications.
+      if @registry.isUserUnsubscribedFromNotification receiving_user_doc, options.template
+        console.warn "An email to a user who has unsubscribed from the notification #{options.template} skipped (#{options.to})"
         return
 
     # The check above ensures template exists
