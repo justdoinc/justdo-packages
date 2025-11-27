@@ -8,12 +8,11 @@ _.extend PACK.modules,
       return
 
     _registerEmailTemplates: ->
-      common_options =
-        user_preference_field_id: "ownership_transfer"
+      JustdoEmails.registerEmailType "ownership_transfer",
+        label_i18n: "Ownership Transfer"
+        priority: 200
+        notifications: ["ownership-transfer", "ownership-transfer-rejected"]
 
-      JustdoEmails.registerEmailTemplate "ownership-transfer", common_options
-      JustdoEmails.registerEmailTemplate "ownership-transfer-rejected", common_options
-      
       return
       
     attachSchema: ->

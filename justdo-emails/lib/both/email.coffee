@@ -6,11 +6,13 @@ _.extend JustdoEmails,
 _.extend JustdoEmails,
   registry: JustdoHelpers.createNotificationRegistrar
     user_preference_subdocument_id: JustdoEmails.user_preference_subdocument_id
+    user_config_options:
+      _id: "justdo-emails"
+      title: "Email Notifications"
+      priority: 200
   
-  registerEmailTemplate: (template_id, options) ->
-    # `template_id` should be the same as the name of the Handlebars template file.
-    # In justdo-emails, the `notification_id` is the same as the `template_id` passed to `registerEmaification`
-    options.template = template_id
-    @registry.registerNotification(template_id, options)
+  registerEmailType: (email_type_id, options) ->
+    options.template = email_type_id
+    @registry.registerNotificationType(email_type_id, options)
 
     return
