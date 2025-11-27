@@ -95,6 +95,8 @@ _.extend JustdoEmails,
     #   subject: (string, optional) email subject, if not provided, the default
     #            template subject will be used from @options.default_subjects
     #            @options.site_name will always add as subject suffix
+    #   bypass_notification_registrar: (boolean, optional) if true, the email will be sent directly to the recepient, 
+    #                                                      without checking whether the user has unsubscribed from the notification.
     # }
 
     check(options, build_and_send_options_schema)
@@ -102,6 +104,8 @@ _.extend JustdoEmails,
     if options.to.split("@")[1] in forbidden_email_domains
       console.warn "An email to a forbidden email domain skipped (#{options.to})"
       return
+  
+    template_name = options.template
     
     receiving_user_query =
       "emails.address": options.to
@@ -114,7 +118,7 @@ _.extend JustdoEmails,
       console.warn "A user with email address #{options.to} not found"
       return
     
-    if not @registry.isNotificationIgnoringUserUnsubscribePreference(options.template)
+    if (not options.bypass_notification_registrar) and (not @registry.isNotificationIgnoringUserUnsubscribePreference(options.template))
       # If the notification respects user unsubscribe preference, check the following.
 
       # Forbid proxy users from receiving any emails
@@ -124,12 +128,11 @@ _.extend JustdoEmails,
 
       # Skip if user has unsubscribed from the notification
       # This also handles the case where the user has unsubscribed from all notifications.
-      if @registry.isUserUnsubscribedFromNotification receiving_user_doc, options.template
+      if @registry.isUserUnsubscribedFromNotification receiving_user_doc, template_name
         console.warn "An email to a user who has unsubscribed from the notification #{options.template} skipped (#{options.to})"
         return
 
     # The check above ensures template exists
-    template_name = options.template
     template = getTemplate(template_name)
 
     template_data = {}
