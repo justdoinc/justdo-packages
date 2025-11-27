@@ -59,3 +59,5 @@ JustdoChat.registerChannelType
   # Access by calling the static method: JustdoChat.getChannelTypeConf(channel_type)
   bottom_windows_supplementary_pseudo_collections:
     tasks: "Tasks"
+  
+  unread_notifications_email_template: "notifications-iv-unread-chat"
