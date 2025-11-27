@@ -291,30 +291,6 @@ _.extend Projects.prototype,
 
       subscribeToDailyEmail: (subscribe=true, cb) ->
         self.configureEmailUpdatesSubscriptions(@id, subscribe, cb)
-
-        return
-
-      isSubscribedToDailyEmail: ->
-        daily_email_projects_array =
-          Meteor.user({fields: {"justdo_projects.daily_email_projects_array": 1}})?.justdo_projects?.daily_email_projects_array
-
-        if _.isArray(daily_email_projects_array) and @id in daily_email_projects_array
-          return true
-
-        return false
-
-      isSubscribedToEmailNotifications: ->
-        user = Meteor.user({fields: {"justdo_projects.unsubscribe_from_ownership_transfer_notification_emails": 1}})
-        if not user?.justdo_projects?
-          return true
-
-        return user.justdo_projects.unsubscribe_from_ownership_transfer_notification_emails isnt true
-
-      subscribeToEmailNotifications: (subscribe=true, cb) ->
-        self.configureEmailNotificationsSubscriptions(subscribe, cb)
-
-        return
-
       _schemaStateDefToStateDef: (state_id, schema_state_def) ->
         state_def =
           state_id: state_id

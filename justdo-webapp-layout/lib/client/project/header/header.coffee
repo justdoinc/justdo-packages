@@ -171,14 +171,6 @@ APP.executeAfterAppLibCode ->
 
       return
 
-    "click .email-notifications": (e) ->
-      e.stopPropagation()
-
-      project_obj = curProj()
-
-      project_obj.subscribeToEmailNotifications(
-        not project_obj.isSubscribedToEmailNotifications())
-
     "click .roles-and-groups-manager": ->
       APP.justdo_roles.openRolesAndGroupsManagerDialog()
 
