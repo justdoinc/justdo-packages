@@ -226,7 +226,7 @@ _.extend NotificationRegistrar.prototype,
     if notification_type_has_notifications_ignoring_user_preference
       is_notification_type_ignoring_user_preference = notification_id in notification_type_def.notifications_ignoring_user_preference
 
-    return notification_type_has_notifications_ignoring_user_preference and notification_is_ignoring_user_unsubscribe_preference
+    return is_notification_type_ignoring_user_preference
 
   isUserUnsubscribedFromNotification: (user, notification_id) ->
     # This method is checks individual notification subscription status,
