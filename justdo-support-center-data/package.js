@@ -235,14 +235,6 @@ Package.onUse(function (api) {
     "lib/both/support-articles/how-to-rename-your-justdo/how-to-rename-your-justdo.coffee"
   ], both);
 
-  // how-to-get-daily-email-notifications
-  // api.addFiles([
-  //   "lib/both/support-articles/how-to-get-daily-email-notifications/how-to-get-daily-email-notifications.html"
-  // ], client);
-  // api.addFiles([
-  //   "lib/both/support-articles/how-to-get-daily-email-notifications/how-to-get-daily-email-notifications.coffee"
-  // ], both);
-
   // how-to-change-the-date-format
   api.addFiles([
     "lib/both/support-articles/how-to-change-the-date-format/how-to-change-the-date-format.html"
