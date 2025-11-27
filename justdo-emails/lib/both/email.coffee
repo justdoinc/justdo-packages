@@ -17,3 +17,8 @@ _.extend JustdoEmails,
     @registry.registerNotificationType(email_type_id, options)
 
     return
+  
+  unsubscribeFromType: (user_id, email_type_id) ->
+    @registry.unsubscribeUserFromNotificationType(user_id, email_type_id)
+
+    return
