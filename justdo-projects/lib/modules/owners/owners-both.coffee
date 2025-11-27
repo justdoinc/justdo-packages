@@ -10,14 +10,11 @@ _.extend PACK.modules,
     notification_type: "ownership_transfer"
 
     _registerEmailTemplates: ->
-      APP.on "justdo-emails-registrar-ready", =>
-        JustdoEmails.registerEmailType @notification_type,
-          label_i18n: "ownership_transfer_notifications"
-          priority: 200
-          notifications: ["ownership-transfer", "ownership-transfer-rejected"]
-        
-        return
-
+      JustdoEmails.registerEmailType @notification_type,
+        label_i18n: "ownership_transfer_notifications"
+        priority: 200
+        notifications: ["ownership-transfer", "ownership-transfer-rejected"]
+      
       return
 
     attachSchema: ->
