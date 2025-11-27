@@ -118,7 +118,7 @@ _.extend JustdoEmails,
       console.warn "A user with email address #{options.to} not found"
       return
     
-    if (not options.bypass_notification_registrar) and (not @registry.isNotificationIgnoringUserUnsubscribePreference(options.template))
+    if (not options.bypass_notification_registrar) and (not @registrar.isNotificationIgnoringUserUnsubscribePreference(options.template))
       # If the notification respects user unsubscribe preference, check the following.
 
       # Forbid proxy users from receiving any emails
@@ -128,7 +128,7 @@ _.extend JustdoEmails,
 
       # Skip if user has unsubscribed from the notification
       # This also handles the case where the user has unsubscribed from all notifications.
-      if @registry.isUserUnsubscribedFromNotification receiving_user_doc, template_name
+      if @registrar.isUserUnsubscribedFromNotification receiving_user_doc, template_name
         console.warn "An email to a user who has unsubscribed from the notification #{options.template} skipped (#{options.to})"
         return
 
