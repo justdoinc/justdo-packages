@@ -8,12 +8,7 @@ _.extend JustdoChat.prototype,
     @_getTypeIdentifiyingFields_cached_result = {}
     @_getTypeAugmentedFields_cached_result = {}
 
-    email_notifications = _.map share.channel_types_conf, (conf) -> conf.unread_notifications_email_template 
-    email_notifications = _.compact email_notifications # Remove falsy values
-    JustdoEmails.registerEmailType "justdo_chat",
-      label_i18n: "chat_notifications",
-      priority: 100
-      notifications: email_notifications
+    @_setupNotifications()
 
     return
 
@@ -24,6 +19,19 @@ _.extend JustdoChat.prototype,
     # tick in which we created the object instance.
 
     if @destroyed
+      return
+
+    return
+
+  _setupNotifications: ->
+    APP.on "justdo-emails-registrar-ready", ->
+      email_notifications = _.map share.channel_types_conf, (conf) -> conf.unread_notifications_email_template 
+      email_notifications = _.compact email_notifications # Remove falsy values
+      JustdoEmails.registerEmailType "justdo_chat",
+        label_i18n: "chat_notifications",
+        priority: 100
+        notifications: email_notifications
+      
       return
 
     return
