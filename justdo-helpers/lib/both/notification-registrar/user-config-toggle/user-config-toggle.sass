@@ -1,3 +1,19 @@
 section
   &[section-id="justdo-emails"]
     margin-top: 1rem
+    
+    .notification-registrar-toggle
+      max-height: 50px
+      opacity: 1
+      transform: translateY(0)
+      transform-origin: top
+      overflow: hidden
+      transition: max-height 0.3s ease-out, opacity 0.25s ease-out, transform 0.3s ease-out
+
+      &.disabled
+        max-height: 0
+        opacity: 0
+        transform: translateY(-10px)
+        pointer-events: none
+        margin: 0
+        padding: 0
