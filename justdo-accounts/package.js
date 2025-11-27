@@ -25,6 +25,8 @@ Package.onUse(function (api) {
 
   api.use("templating", client);
   api.use('fourseven:scss@3.2.0', client);
+  api.use("astrocoders:handlebars-server@1.0.3", server);
+  api.use('justdoinc:justdo-emails@1.0.0', both, {unordered: true});
 
   api.use("justdoinc:justdo-aws-base", server, {unordered: true});
 
@@ -48,6 +50,10 @@ Package.onUse(function (api) {
   api.addFiles('lib/both/meteor-accounts-configuration.coffee', both);
   api.addFiles('lib/both/schemas.coffee', both);
   api.addFiles('lib/both/api.coffee', both);
+
+
+  api.addFiles("lib/server/email-templates/email-verification.handlebars", server);
+  api.addFiles("lib/server/email-templates/password-recovery.handlebars", server);
 
   api.addFiles("lib/server/init.coffee", server);
   api.addFiles("lib/server/api.coffee", server);

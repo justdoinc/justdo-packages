@@ -37,9 +37,6 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/server/templates/notifications/notifications-added-to-new-project.handlebars", server);
 
-  api.addFiles("lib/server/templates/email-verification.handlebars", server);
-  api.addFiles("lib/server/templates/password-recovery.handlebars", server);
-
   api.addAssets("media/logo.png", client);
 
   // Uncomment only in packages that integrate with the main applications
