@@ -35,8 +35,6 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/server/templates/admins/contact-request.handlebars", server);
 
-  api.addFiles("lib/server/templates/notifications/notifications-added-to-new-project.handlebars", server);
-
   api.addAssets("media/logo.png", client);
 
   // Uncomment only in packages that integrate with the main applications

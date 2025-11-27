@@ -89,6 +89,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/add-as-guest-toggle/add-as-guest-toggle.coffee", client);
 
   // server
+  api.addFiles('lib/server/email-templates/notifications-added-to-new-project.handlebars', server);
   api.addFiles('lib/server/init.coffee', server);
   api.addFiles('lib/server/api.coffee', server);
   api.addFiles('lib/server/methods.coffee', server);
