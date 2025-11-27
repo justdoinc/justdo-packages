@@ -22,5 +22,3 @@ _.extend JustdoEmails,
     @registrar.unsubscribeUserFromNotificationType(user_id, email_type_id)
 
     return
-
-APP.emit "justdo-emails-registrar-ready"
