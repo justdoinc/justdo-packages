@@ -18,6 +18,12 @@ Template.notification_registrar_user_config_toggle.onCreated ->
   @isMainToggle = ->
     return @data.is_main_toggle
 
+  @isDisabled = ->
+    if @isMainToggle()
+      return false
+    
+    return @isUserUnsubscribedFromAllNotifications()
+
   @isUserUnsubscribedFromAllNotifications = ->
     return @data.registrar.isUserUnsubscribedFromAllNotifications(Meteor.user())
   
@@ -43,18 +49,31 @@ Template.notification_registrar_user_config_toggle.onCreated ->
   return
 
 Template.notification_registrar_user_config_toggle.helpers
+  isMainToggle: ->
+    tpl = Template.instance()
+
+    return tpl.isMainToggle()
+    
+  isDisabled: ->
+    tpl = Template.instance()
+
+    return tpl.isDisabled()
+
   isSubscribed: ->
     tpl = Template.instance()
 
     if tpl.isMainToggle()
       # Main toggle: check if user is NOT unsubscribed from all
-      return tpl.isUserUnsubscribedFromAllNotifications()
+      return not tpl.isUserUnsubscribedFromAllNotifications()
     else
       # Individual notification toggle: check if user is NOT unsubscribed from this notification
-      return tpl.isUserUnsubscribedFromNotificationType(@notification_type_id)
+      return not tpl.isUserUnsubscribedFromNotificationType(@notification_type_id)
 
 Template.notification_registrar_user_config_toggle.events
   "click .notification-registrar-toggle": (e, tpl) ->
+    if tpl.isDisabled()
+      return
+
     if tpl.isMainToggle()
       # Main toggle: toggle unsubscribe_from_all
       tpl.toggleUserUnsubscribedFromAllNotifications()
