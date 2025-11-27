@@ -6,6 +6,7 @@ _.extend JustdoEmails,
 _.extend JustdoEmails,
   registry: JustdoHelpers.createNotificationRegistrar
     user_preference_subdocument_id: JustdoEmails.user_preference_subdocument_id
+    label_i18n: "receive_email_notifications"
     user_config_options:
       _id: "justdo-emails"
       title: "Email Notifications"
