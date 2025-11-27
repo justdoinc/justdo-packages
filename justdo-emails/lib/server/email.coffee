@@ -108,7 +108,7 @@ _.extend JustdoEmails,
     receiving_user_query_options =
       fields:
         is_proxy: 1
-        [JustdoEmails.user_preference_subdocument_id]: 1
+        "profile.#{JustdoEmails.user_preference_subdocument_id}": 1
     receiving_user_doc = Meteor.users.findOne(receiving_user_query, receiving_user_query_options)
     if not receiving_user_doc?
       console.warn "A user with email address #{options.to} not found"
