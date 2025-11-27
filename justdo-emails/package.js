@@ -30,11 +30,6 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/both/email.coffee", both);
 
-  api.addFiles("lib/client/config-templates/unsubscribe-from-all-emails-toggle.sass", client);
-  api.addFiles("lib/client/config-templates/unsubscribe-from-all-emails-toggle.html", client);
-  api.addFiles("lib/client/config-templates/unsubscribe-from-all-emails-toggle.coffee", client);
-  api.addFiles("lib/client/register-config-section.coffee", client);
-
   api.addFiles("lib/server/email.coffee", server);
   api.addFiles("lib/server/templates/wrappers/email-wrapper.handlebars", server);
 
