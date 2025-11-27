@@ -9,7 +9,7 @@ _.extend PACK.modules,
 
     _registerEmailTemplates: ->
       JustdoEmails.registerEmailType "ownership_transfer",
-        label_i18n: "Ownership Transfer"
+        label_i18n: "ownership_transfer_notifications"
         priority: 200
         notifications: ["ownership-transfer", "ownership-transfer-rejected"]
 
