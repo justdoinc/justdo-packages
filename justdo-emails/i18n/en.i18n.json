@@ -12,5 +12,5 @@
     "unsubscribe_from_project": "Unsubscribe from updates for __project_title__",
     "reply_email_for_support": "Having any issues? Reply to this email for support.",
     "email_config_title": "Email",
-    "unsubscribe_from_all_emails": "Unsubscribe from all emails"
+    "receive_email_notifications": "Receive email notifications"
 }
