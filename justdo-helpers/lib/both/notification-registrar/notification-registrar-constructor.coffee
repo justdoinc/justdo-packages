@@ -218,9 +218,14 @@ _.extend NotificationRegistrar.prototype,
     return
   
   isNotificationIgnoringUserUnsubscribePreference: (notification_id) ->
+    is_notification_type_ignoring_user_preference = false
+
     notification_type_def = @requireNotificationTypeByNotificationId(notification_id)
+
     notification_type_has_notifications_ignoring_user_preference = notification_type_def.notifications_ignoring_user_preference?
-    notification_is_ignoring_user_unsubscribe_preference = notification_id in notification_type_def.notifications_ignoring_user_preference
+    if notification_type_has_notifications_ignoring_user_preference
+      is_notification_type_ignoring_user_preference = notification_id in notification_type_def.notifications_ignoring_user_preference
+
     return notification_type_has_notifications_ignoring_user_preference and notification_is_ignoring_user_unsubscribe_preference
 
   isUserUnsubscribedFromNotification: (user, notification_id) ->
