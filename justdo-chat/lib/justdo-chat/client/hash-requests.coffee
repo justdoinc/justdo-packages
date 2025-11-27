@@ -6,11 +6,10 @@ _.extend JustdoChat.prototype,
       return
 
     @hash_requests_handler.addRequestHandler "unsubscribe-c-iv-unread-emails-notifications", (args) =>
-      @setUnreadNotificationsSubscription "email", "off", (err) ->
-        message = "Successfully unsubscribed you from chat email notifications."
+      JustdoEmails.unsubscribeFromType Meteor.userId(), "justdo_chat"
 
-        bootbox.alert(message)
+      message = "Successfully unsubscribed you from chat email notifications."
 
-        return
+      bootbox.alert(message)
 
       return
