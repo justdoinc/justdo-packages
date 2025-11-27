@@ -18,8 +18,8 @@ Package.onUse(function (api) {
   api.use("reactive-var", client);
   api.use("mongo", both);
   api.use("minimongo", both);
-  api.use("blaze", client, {weak: true});
-  api.use("templating", client, {weak: true});
+  api.use("blaze", client);
+  api.use("templating", client);
   api.use("ecmascript", both);
   api.use("random", both);
 
@@ -92,6 +92,10 @@ Package.onUse(function (api) {
 
   // Notification Registrar
   api.addFiles("lib/both/notification-registrar/notification-registrar-constructor.coffee", both);
+  api.addFiles("lib/both/notification-registrar/user-config-toggle/user-config-toggle.html", client);
+  api.addFiles("lib/both/notification-registrar/user-config-toggle/user-config-toggle.coffee", client);
+  api.addFiles("lib/both/notification-registrar/user-config-toggle/user-config-toggle.sass", client);
+
   api.addFiles("lib/client/users.coffee", client);
   api.addFiles("lib/client/minimongo.coffee", client);
   api.addFiles("lib/client/blaze-extensions.coffee", client);
