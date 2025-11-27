@@ -11,7 +11,7 @@ _.extend JustdoChat.prototype,
     email_notifications = _.map share.channel_types_conf, (conf) -> conf.unread_notifications_email_template 
     email_notifications = _.compact email_notifications # Remove falsy values
     JustdoEmails.registerEmailType "justdo_chat",
-      label_i18n: "Task Chat",
+      label_i18n: "chat_notifications",
       priority: 100
       notifications: email_notifications
 
