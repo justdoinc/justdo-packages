@@ -115,20 +115,6 @@ _.extend Projects.prototype,
       postRegInit: ->
         projects_object.postRegInit @userId
 
-      configureEmailUpdatesSubscriptions: (projects_ids, set_subscription_mode=true) ->
-        # Args checks are taken care of by configureEmailUpdatesSubscriptions
-
-        projects_object.configureEmailUpdatesSubscriptions projects_ids, set_subscription_mode, @userId
-
-        return
-
-      configureEmailNotificationsSubscriptions: (set_subscription_mode=true) ->
-        # Args checks are taken care of by configureEmailNotificationsSubscriptions
-
-        projects_object.configureEmailNotificationsSubscriptions set_subscription_mode, @userId
-
-        return
-
       setProjectCustomFields: (project_id, custom_fields) ->
         check(project_id, String)
 
@@ -137,11 +123,6 @@ _.extend Projects.prototype,
         projects_object.setProjectCustomFields project_id, custom_fields, @userId
 
         return
-
-      isSubscribedToDailyEmail: (project_id) ->
-        check(project_id, String)
-
-        projects_object.isSubscribedToDailyEmail project_id, @userId
 
       configureProject: (project_id, configuration) ->
         check(project_id, String)

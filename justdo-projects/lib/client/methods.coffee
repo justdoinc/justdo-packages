@@ -30,30 +30,6 @@ _.extend Projects.prototype,
     Meteor.call "configureProject", project_id, conf, (err) ->
       cb(err)
 
-  configureEmailUpdatesSubscriptions: (projects_ids, set_subscription_mode=true, cb) ->
-    # set_subscription_mode should be true if you want to subscribe, false
-    # to unsubscribe
-
-    if not Meteor.userId()?
-      @logger.error("Login required in order subscribe/unsubscribe project's daily updates")
-
-    Meteor.call "configureEmailUpdatesSubscriptions", projects_ids, set_subscription_mode, (err) ->
-      cb?(err)
-
-    return
-
-  configureEmailNotificationsSubscriptions: (set_subscription_mode=true, cb) ->
-    # set_subscription_mode should be true if you want to subscribe, false
-    # to unsubscribe
-
-    if not Meteor.userId()?
-      @logger.error("Login required in order subscribe/unsubscribe project emails notifications")
-
-    Meteor.call "configureEmailNotificationsSubscriptions", set_subscription_mode, (err) ->
-      cb?(err)
-
-    return
-
   resendEnrollmentEmail: (project_id, invited_user_id, cb) ->
     Meteor.call "resendEnrollmentEmail", project_id, invited_user_id, cb
 

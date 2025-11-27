@@ -32,12 +32,6 @@ JustdoProjectsSharedComponents =
       post_reg_init:
         type: Boolean
         defaultValue: false
-      daily_email_projects_array:
-        type: [String]
-        defaultValue: []
-      unsubscribe_from_ownership_transfer_notification_emails:
-        type: Boolean
-        optional: true
       first_jd:
         type: jd_creation_request_simple_schema
         optional: true

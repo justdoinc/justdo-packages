@@ -82,7 +82,6 @@ Package.onUse(function (api) {
   api.addFiles('lib/client/subscriptions.coffee', client);
   api.addFiles('lib/client/load-project.coffee', client);
   api.addFiles('lib/client/methods.coffee', client);
-  api.addFiles('lib/client/hash-requests.coffee', client);
   api.addFiles('lib/client/drawer-menu-items.coffee', client);
 
   api.addFiles("lib/client/add-as-guest-toggle/add-as-guest-toggle.sass", client);

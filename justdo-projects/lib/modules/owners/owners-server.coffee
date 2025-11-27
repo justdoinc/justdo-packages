@@ -84,15 +84,6 @@ _.extend PACK.modules.owners,
               project_id: project._id
               task_id: doc_after_delay._id
 
-        if not self._isSubscribedToEmailNotifications(to)
-          # User is not subscribed to email notifications
-
-          # console.log "NO SUB" # Keep for future testing
-
-          return
-
-        # console.log "SEND EMAIL" # Keep for future testing
-
         APP.getEnv (env) =>
           base_link = "#{env.WEB_APP_ROOT_URL}/p/#{project_id}#&t=main"
           base_task_link = "#{base_link}&p=/#{task_id}/"
@@ -199,15 +190,6 @@ _.extend PACK.modules.owners,
       # since at the moment, the pending owner can be any user_id (no
       # checks are done on update), this is theoretically possible.
       project = self.requireUserIsMemberOfProject(project_id, to._id)
-
-      if not self._isSubscribedToEmailNotifications(to)
-        # User is not subscribed to email notifications
-
-        # console.log "NO SUB" # Keep for future testing
-
-        return
-
-      # console.log "SEND EMAIL" # Keep for future testing
 
       APP.getEnv (env) =>
         base_link = "#{env.WEB_APP_ROOT_URL}/p/#{project_id}#&t=main"

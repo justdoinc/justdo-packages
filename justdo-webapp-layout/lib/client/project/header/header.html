@@ -65,12 +65,6 @@
         {{/if}}
       {{/each}}
 
-      <li class="dropdown-item email-notifications d-flex align-items-center px-1">
-        {{> jdToggle checked=isSubscribedToEmailNotifications}}
-        <div class="m{{getRtlAwareDirection "l"}}-2">
-          {{_ "email_ownership_transfer_notifications_label"}}
-        </div>
-      </li>
       {{#if showRolesAndGroupsManager}}
         <li class="roles-and-groups-manager dropdown-item d-flex align-items-center px-1">
           <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#users"></use></svg> Roles &amp; Groups Manager
