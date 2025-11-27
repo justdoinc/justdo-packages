@@ -114,6 +114,7 @@ handleContactRequest = (request_details, subject) ->
       template: "contact-request"
       template_data: template_data
       subject: subject
+      bypass_notification_registrar: true
 
   return
 
