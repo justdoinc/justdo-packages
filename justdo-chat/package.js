@@ -225,15 +225,6 @@ Package.onUse(function (api) {
   api.addFiles("lib/ui/bottom-windows/fix-unclickable-area-under-chat-windows.sass", client);
 
   //
-  // User conf
-  //
-  api.addFiles("lib/user-conf/user-conf-involuntary-unread-chat-notifications.coffee", client);
-
-  api.addFiles("lib/user-conf/involuntary-unread-email-chat-notifications/involuntary-unread-email-chat-notifications.html", client);
-  api.addFiles("lib/user-conf/involuntary-unread-email-chat-notifications/involuntary-unread-email-chat-notifications.sass", client);
-  api.addFiles("lib/user-conf/involuntary-unread-email-chat-notifications/involuntary-unread-email-chat-notifications.coffee", client);
-
-  //
   // Project Conf
   //
   api.addFiles("lib/project-conf/justdo-chat-project-config.sass", client);
