@@ -289,8 +289,6 @@ _.extend Projects.prototype,
 
         return feature in custom_features
 
-      subscribeToDailyEmail: (subscribe=true, cb) ->
-        self.configureEmailUpdatesSubscriptions(@id, subscribe, cb)
       _schemaStateDefToStateDef: (state_id, schema_state_def) ->
         state_def =
           state_id: state_id
