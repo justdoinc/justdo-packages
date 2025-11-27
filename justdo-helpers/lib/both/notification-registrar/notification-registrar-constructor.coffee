@@ -4,6 +4,9 @@ NotificationRegistrarOptionsSchema = new SimpleSchema
     # For example, `user.justdo_emails` is created to hold user email preferences.
     type: String
   
+  label_i18n:
+    type: String
+  
   user_config_options:
     # The options we pass to `APP.modules.main.user_config_ui.registerConfigSection`
     # so that the toggle will appear in the user's dropdown.
@@ -91,7 +94,7 @@ _.extend NotificationRegistrar.prototype,
           is_main_toggle: true
           registrar: @
           user_preference_subdocument_id: @options.user_preference_subdocument_id
-          label_i18n: "unsubscribe_from_all_notifications"
+          label_i18n: @options.label_i18n
         priority: 0
 
       return
