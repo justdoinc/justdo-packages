@@ -7,7 +7,7 @@
 
         {{#each templates}}
           <div class="controller-template" controller-template-id="{{id}}">
-            {{> UI.dynamic template=template}}
+            {{> Template.dynamic template=template data=template_data}}
           </div>
         {{/each}}
       </section>
