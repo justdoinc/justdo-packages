@@ -4,6 +4,8 @@ jdc_bottom_windows_supplementary_pseudo_collections = "JDChatBottomWindows"
 _.extend JustdoChat,
   jdc_info_pseudo_collection_name: "JDChatInfo"
 
+  notification_registrar_type: "justdo_chat"
+
   jdc_recent_activity_supplementary_pseudo_collections_prefix: jdc_recent_activity_supplementary_pseudo_collections_prefix
   jdc_recent_activity_channels_collection_name: "#{jdc_recent_activity_supplementary_pseudo_collections_prefix}Channels"
   jdc_recent_activity_messages_collection_name: "#{jdc_recent_activity_supplementary_pseudo_collections_prefix}Messages"
