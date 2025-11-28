@@ -1,10 +1,11 @@
-JustdoEmails = {}
-
 htmlToText = Npm.require "html-to-text"
 
 getTemplate = (templateName) -> Handlebars.templates[templateName]
 
 forbidden_email_domains = ["example.com"]
+
+# Proxy users, and users unsubscribed from all emails, will still receive emails from these templates
+templates_ignoring_user_preference = ["email-verification", "password-recovery"]
 
 build_and_send_options_schema = new SimpleSchema
   to:
@@ -94,6 +95,8 @@ _.extend JustdoEmails,
     #   subject: (string, optional) email subject, if not provided, the default
     #            template subject will be used from @options.default_subjects
     #            @options.site_name will always add as subject suffix
+    #   bypass_notification_registrar: (boolean, optional) if true, the email will be sent directly to the recepient, 
+    #                                                      without checking whether the user has unsubscribed from the notification.
     # }
 
     check(options, build_and_send_options_schema)
@@ -101,15 +104,36 @@ _.extend JustdoEmails,
     if options.to.split("@")[1] in forbidden_email_domains
       console.warn "An email to a forbidden email domain skipped (#{options.to})"
       return
+  
+    template_name = options.template
+    
+    if not options.bypass_notification_registrar
+      receiving_user_query =
+        "emails.address": options.to
+      receiving_user_query_options =
+        fields:
+          is_proxy: 1
+          "profile.#{JustdoEmails.user_preference_subdocument_id}": 1
+      receiving_user_doc = Meteor.users.findOne(receiving_user_query, receiving_user_query_options)
+      if not receiving_user_doc?
+        console.warn "A user with email address #{options.to} not found"
+        return
+      
+      if not @registrar.isNotificationIgnoringUserUnsubscribePreference(options.template)
+        # If the notification respects user unsubscribe preference, check the following.
 
-    # Forbid proxy users from receiving any emails
-    # Except for verification and password reset, as we force them to verify their email and setting up first password by clicking password recovery
-    if Meteor.users.findOne({"emails.address": options.to, is_proxy: true}, {fields: {_id: 1}})? and options.template not in ["email-verification", "password-recovery"]
-      console.warn "An email to a proxy account skipped (#{options.to})"
-      return
+        # Forbid proxy users from receiving any emails
+        if APP.accounts.isProxyUser receiving_user_doc
+          console.warn "An email to a proxy account skipped (#{options.to})"
+          return
+
+        # Skip if user has unsubscribed from the notification
+        # This also handles the case where the user has unsubscribed from all notifications.
+        if @registrar.isUserUnsubscribedFromNotification receiving_user_doc, template_name
+          console.warn "An email to a user who has unsubscribed from the notification #{options.template} skipped (#{options.to})"
+          return
 
     # The check above ensures template exists
-    template_name = options.template
     template = getTemplate(template_name)
 
     template_data = {}

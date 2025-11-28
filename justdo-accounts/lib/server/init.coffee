@@ -1,6 +1,7 @@
 _.extend JustdoAccounts.prototype,
   _immediateInit: ->
     @_setupOAuthRegistry()
+    @_setupNotifications()
     return
 
   _deferredInit: ->

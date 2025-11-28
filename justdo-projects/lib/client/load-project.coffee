@@ -289,34 +289,6 @@ _.extend Projects.prototype,
 
         return feature in custom_features
 
-      subscribeToDailyEmail: (subscribe=true, cb) ->
-        self.configureEmailUpdatesSubscriptions(@id, subscribe, cb)
-
-        return
-
-      isSubscribedToDailyEmail: ->
-        daily_email_projects_array =
-          Meteor.user({fields: {"justdo_projects.daily_email_projects_array": 1}})?.justdo_projects?.daily_email_projects_array
-
-        if _.isArray(daily_email_projects_array) and @id in daily_email_projects_array
-          return true
-
-        return false
-
-      isSubscribedToEmailNotifications: ->
-        prevent_notifications_for_array =
-          Meteor.user({fields: {"justdo_projects.prevent_notifications_for": 1}})?.justdo_projects?.prevent_notifications_for
-
-        if not _.isArray(prevent_notifications_for_array) or @id not in prevent_notifications_for_array
-          return true
-
-        return false
-
-      subscribeToEmailNotifications: (subscribe=true, cb) ->
-        self.configureEmailNotificationsSubscriptions(@id, subscribe, cb)
-
-        return
-
       _schemaStateDefToStateDef: (state_id, schema_state_def) ->
         state_def =
           state_id: state_id

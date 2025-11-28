@@ -31,6 +31,7 @@ Package.onUse(function (api) {
   api.use("justdoinc:justdo-i18n@1.0.0", both);
 
   api.use("justdoinc:justdo-push-notifications@1.0.0", server);
+  api.use("astrocoders:handlebars-server@1.0.3", server);
 
   api.use('justdoinc:hash-requests-handler@1.0.0', both);
   api.use('justdoinc:justdo-login-state@1.0.0', both);
@@ -81,7 +82,6 @@ Package.onUse(function (api) {
   api.addFiles('lib/client/subscriptions.coffee', client);
   api.addFiles('lib/client/load-project.coffee', client);
   api.addFiles('lib/client/methods.coffee', client);
-  api.addFiles('lib/client/hash-requests.coffee', client);
   api.addFiles('lib/client/drawer-menu-items.coffee', client);
 
   api.addFiles("lib/client/add-as-guest-toggle/add-as-guest-toggle.sass", client);
@@ -89,6 +89,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/add-as-guest-toggle/add-as-guest-toggle.coffee", client);
 
   // server
+  api.addFiles('lib/server/email-templates/notifications-added-to-new-project.handlebars', server);
   api.addFiles('lib/server/init.coffee', server);
   api.addFiles('lib/server/api.coffee', server);
   api.addFiles('lib/server/methods.coffee', server);
@@ -116,6 +117,8 @@ Package.onUse(function (api) {
   api.addFiles('lib/modules/owners/templates/ownership-rejection-hash-request-bootbox.html', client);
   api.addFiles('lib/modules/owners/templates/ownership-rejection-hash-request-bootbox.sass', client);
   api.addFiles('lib/modules/owners/owners-client.coffee', client);
+  api.addFiles("lib/modules/owners/email-templates/ownership-transfer.handlebars", server);
+  api.addFiles("lib/modules/owners/email-templates/ownership-transfer-rejected.handlebars", server);
 
   // tickets queues
   api.addFiles('lib/modules/tickets-queues/tickets-queues-both.coffee', both);

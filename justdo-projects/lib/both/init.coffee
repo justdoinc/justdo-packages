@@ -59,6 +59,8 @@ Projects = (options) ->
   # env (server/client) specific init
   @_init()
 
+  @_initNotifications()
+
   @_initModules()
 
   return @
@@ -69,6 +71,14 @@ _.extend Projects.prototype,
   setJustdoAccountsObject: (justdo_accounts) ->
     @justdo_accounts = justdo_accounts
 
+    return
+
+  _initNotifications: ->
+    JustdoEmails.registerEmailType "justdo_projects",
+      label_i18n: "notifications_added_to_new_project_label",
+      priority: 50
+      notifications: ["notifications-added-to-new-project"]
+    
     return
 
   _initModules: ->

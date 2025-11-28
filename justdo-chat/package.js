@@ -72,7 +72,8 @@ Package.onUse(function (api) {
   api.use("reactive-var", both);
   api.use("tracker", both);
 
-  api.use('justdoinc:justdo-emails@1.0.0', both); // client is needed for media files
+  api.use("astrocoders:handlebars-server@1.0.3", server);
+  api.use('justdoinc:justdo-emails@1.0.0', both);
   api.use("justdoinc:justdo-file-interface@1.0.0", both);
 
   //
@@ -118,7 +119,13 @@ Package.onUse(function (api) {
 
   // Email
   api.addFiles("lib/justdo-chat/server/unread-notifications/email-unread-notifications.coffee", server);
+  // Templates
+  api.addFiles("lib/justdo-chat/server/unread-notifications/templates/notifications-iv-unread-chat.handlebars", server);
+  api.addFiles("lib/justdo-chat/server/unread-notifications/templates/notifications-iv-unread-dm.handlebars", server);
+  // not used yet
+  // api.addFiles("lib/justdo-chat/server/unread-notifications/templates/notifications-iv-unread-group-chat.handlebars", server);
 
+  
   // Firebase Mobile Push notifications
   api.addFiles("lib/justdo-chat/server/unread-notifications/firebase-mobile-push-notifications.coffee", server);
 
@@ -216,15 +223,6 @@ Package.onUse(function (api) {
   api.addFiles("lib/ui/bottom-windows/common/bottom-window-open.coffee", client);
 
   api.addFiles("lib/ui/bottom-windows/fix-unclickable-area-under-chat-windows.sass", client);
-
-  //
-  // User conf
-  //
-  api.addFiles("lib/user-conf/user-conf-involuntary-unread-chat-notifications.coffee", client);
-
-  api.addFiles("lib/user-conf/involuntary-unread-email-chat-notifications/involuntary-unread-email-chat-notifications.html", client);
-  api.addFiles("lib/user-conf/involuntary-unread-email-chat-notifications/involuntary-unread-email-chat-notifications.sass", client);
-  api.addFiles("lib/user-conf/involuntary-unread-email-chat-notifications/involuntary-unread-email-chat-notifications.coffee", client);
 
   //
   // Project Conf

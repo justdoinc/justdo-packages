@@ -6,9 +6,6 @@ _.extend Projects.prototype,
     @_setupSubscriptions()
     @_setupProjectRemovalProcedures()
 
-    # Defined in hash-requests.coffee
-    @_setupHashRequests()
-
     # Users related
     @initEncounteredUsersIdsTracker()
     @initEncounteredUsersIdsPublicBasicUsersInfoFetcher()

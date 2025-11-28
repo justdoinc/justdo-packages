@@ -3,6 +3,20 @@ _.extend PACK.modules,
     initBoth: ->
       @attachSchema()
 
+      @_registerEmailTemplates()
+
+      return
+    
+    notification_type: "ownership_transfer"
+
+    _registerEmailTemplates: ->
+      JustdoEmails.registerEmailType @notification_type,
+        label_i18n: "ownership_transfer_notifications"
+        priority: 200
+        notifications: ["ownership-transfer", "ownership-transfer-rejected"]
+      
+      return
+
     attachSchema: ->
       self = @
 

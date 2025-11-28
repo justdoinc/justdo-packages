@@ -49,7 +49,7 @@ _.extend JustdoUserConfigUi.prototype,
     if not settings?
       throw @_error "missing-argument", "settings must be set"
 
-    settings = _.pick settings, "section", "template", "priority"
+    settings = _.pick settings, "section", "template", "template_data", "priority"
 
     if not (section_id = settings.section)?
       throw @_error "invalid-argument", "settings.section must be set"

@@ -163,3 +163,13 @@ _.extend PACK.modules.owners,
       self._reactToOwnershipTransferHashRequest("reject", args)
 
       return
+
+    @hash_requests_handler.addRequestHandler "unsubscribe-projects-email-notifications", (args) =>
+      JustdoEmails.unsubscribeFromType Meteor.userId(), @notification_type
+
+      common_message = "Successfully unsubscribed from ownership transfer email notifications."
+      bootbox.alert(common_message)
+
+      return
+
+    return

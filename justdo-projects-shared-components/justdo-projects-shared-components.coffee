@@ -32,12 +32,6 @@ JustdoProjectsSharedComponents =
       post_reg_init:
         type: Boolean
         defaultValue: false
-      daily_email_projects_array:
-        type: [String]
-        defaultValue: []
-      prevent_notifications_for:
-        type: [String]
-        optional: true
       first_jd:
         type: jd_creation_request_simple_schema
         optional: true
