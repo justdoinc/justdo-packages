@@ -35,6 +35,7 @@ NotificationRegistrar = (options) ->
   
   @_setupUsersSchema()
   @_setupUserConfigSection()
+  @_setupHashRequestHandler()
   
   return @
   
@@ -97,6 +98,43 @@ _.extend NotificationRegistrar.prototype,
 
     return
 
+  _getDashSepUserPreferenceSubdocumentId: ->
+    return JustdoHelpers.underscoreSepTo "-", @options.user_preference_subdocument_id
+
+  _setupHashRequestHandler: ->
+    if Meteor.isClient
+      APP.executeAfterAppLibCode =>
+        if not APP.hash_requests_handler
+          APP.logger.info "No APP.hash_requests_handler available, skipping hash request handler setup"
+
+          return
+
+        dash_sep_user_preference_subdocument_id = @_getDashSepUserPreferenceSubdocumentId()
+        
+        APP.hash_requests_handler.addRequestHandler "unsubscribe-from-#{dash_sep_user_preference_subdocument_id}", (args) =>
+          notification_type = args["notification-type"]
+
+          if _.isEmpty notification_type
+            APP.logger.warn "Hash request: unsubscribe-from-#{dash_sep_user_preference_subdocument_id}: received with no notification-type argument, ignoring request"
+            return
+          
+          notification_type = JustdoHelpers.dashSepTo "_", notification_type
+          
+          if notification_type is "all"
+            @unsubscribeUserFromAllNotifications Meteor.userId()
+            bootbox_message = TAPi18n.__ "successfully_unsubscribed_from_all_notifications"
+
+          else
+            @unsubscribeUserFromNotificationType Meteor.userId(), notification_type
+            notification_type_label = JustdoHelpers.lcFirst TAPi18n.__ @getNotificationType(notification_type).label_i18n
+            bootbox_message = TAPi18n.__ "successfully_unsubscribed_from_notification_type", {notification_type_label: notification_type_label}
+
+          bootbox.alert(bootbox_message)
+
+          return
+        
+    return
+  
   _registerNotificationTypeToggle: (notification_type_id) ->
     notification_type = @requireNotificationType(notification_type_id)
 
