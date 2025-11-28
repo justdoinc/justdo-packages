@@ -9,7 +9,6 @@ _.extend JustdoEmails,
     label_i18n: "receive_email_notifications"
     user_config_options:
       _id: "justdo-emails"
-      title: "Email Notifications"
       priority: 200
   
   registerEmailType: (email_type_id, options) ->
