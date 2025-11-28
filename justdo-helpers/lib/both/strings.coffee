@@ -14,7 +14,12 @@ _.extend JustdoHelpers,
   dashSepTo: (replacement, string) ->
     string += ""
 
-    string.replace /-/g, replacement
+    return string.replace /-/g, replacement
+  
+  underscoreSepTo: (replacement, string) ->
+    string += ""
+
+    return string.replace /_/g, replacement
 
   ucFirst: (string) ->
     string += ""
@@ -47,8 +52,8 @@ _.extend JustdoHelpers,
 
     return n
 
-  padString: (number, size, fill="0") ->
-    number = number.toString();
+  padString: (number, size, fill = "0") ->
+    number = number.toString()
 
     while (number.length < size)
       number = fill + number
@@ -127,7 +132,7 @@ _.extend JustdoHelpers,
 
     return number.toLocaleString()
 
-  bytesToHumanReadable: (size, kb=1000) ->
+  bytesToHumanReadable: (size, kb = 1000) ->
     mb = kb ** 2
     gb = kb ** 3
 
