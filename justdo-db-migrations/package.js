@@ -9,6 +9,10 @@ client = "client"
 server = "server"
 both = [client, server]
 
+Npm.depends({
+  "cron-parser": "4.9.0"
+});
+
 Package.onUse(function (api) {
   api.use("coffeescript", both);
   api.use("underscore", both);
