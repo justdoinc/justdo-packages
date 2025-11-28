@@ -135,6 +135,10 @@ _.extend NotificationRegistrar.prototype,
         
     return
   
+  getHashRequestStringForUnsubscribe: (notification_type_id) ->
+    dash_sep_user_preference_subdocument_id = @_getDashSepUserPreferenceSubdocumentId()
+    return "&hr-id=unsubscribe-from-#{dash_sep_user_preference_subdocument_id}&hr-notification-type=#{JustdoHelpers.underscoreSepTo "-", notification_type_id}"
+
   _registerNotificationTypeToggle: (notification_type_id) ->
     notification_type = @requireNotificationType(notification_type_id)
 
