@@ -54,6 +54,5 @@ APP.getEnv (env) ->
     APP.justdo_chat._setupHtmlTitlePrefixController()
     APP.justdo_chat._setupReceivedMessagesSoundNotification()
     APP.justdo_chat._setupBottomWindows()
-    APP.justdo_chat._setupHashRequests()
 
   return
