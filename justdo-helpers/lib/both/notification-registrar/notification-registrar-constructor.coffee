@@ -19,9 +19,6 @@ NotificationRegistrarOptionsSchema = new SimpleSchema
     type: Object
   "user_config_options._id":
     type: String
-  "user_config_options.title":
-    type: String
-    optional: true
   "user_config_options.priority":
     type: Number
 NotificationRegistrar = (options) ->
@@ -84,7 +81,6 @@ _.extend NotificationRegistrar.prototype,
       user_config_options = @options.user_config_options
 
       APP.modules.main.user_config_ui.registerConfigSection user_config_options._id,
-        title: user_config_options.title
         priority: user_config_options.priority
 
       APP.modules.main.user_config_ui.registerConfigTemplate "unsubscribe-from-all",
