@@ -39,9 +39,9 @@ _.extend JustdoProjectPane.prototype,
         
       if not (tab_definition = @getTabDefinitionById(tab_id))?
         # It's possible that this handler is called when none of the tabs are registered.
-        # In that case, we should return true to keep the hash to allow next re-run
+        # In that case, we should return {keep_hash: true} to keep the hash to allow next re-run
         # triggered by the reactivity of `getTabDefinitionById` to process the hash again.
-        return true
+        return {keep_hash: true}
 
       @setActiveTab(tab_id)
       @expand()

@@ -80,7 +80,7 @@ _.extend HashRequestsHandler.prototype,
 
           @logger.debug "Calling hash request handler: #{request_handler_id}"
 
-          keep_hash = requestHandler(request_hash_args) == true
+          {keep_hash} = requestHandler(request_hash_args) == true
 
       # Remove hash request args from hash
       if (not keep_hash) and current_hash != hash_with_no_hash_request_args
