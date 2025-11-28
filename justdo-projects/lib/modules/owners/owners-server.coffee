@@ -126,7 +126,7 @@ _.extend PACK.modules.owners,
               task_link: base_task_link
               accept_link: base_task_link + "&hr-id=approve-ownership-transfer&hr-project_id=#{project_id}&hr-task_id=#{task_id}&hr-pending_owner_id=#{pending_owner_id}"
               reject_link: base_task_link + "&hr-id=reject-ownership-transfer&hr-project_id=#{project_id}&hr-task_id=#{task_id}&hr-pending_owner_id=#{pending_owner_id}"
-              unsubscribe_link: base_link + "&hr-id=unsubscribe-projects-email-notifications&hr-projects=#{project_id}"
+              unsubscribe_link: base_link + JustdoEmails.getHashRequestStringForUnsubscribe(self.notification_type)
               context: str_context
             subject: "#{project.title} - Ownership Transfer Request"
             # subject: JustdoHelpers.displayName(from) + " :: Task ownership transfer request"
@@ -204,7 +204,7 @@ _.extend PACK.modules.owners,
             project: project
             task: doc
             task_link: base_task_link
-            unsubscribe_link: base_link + "&hr-id=unsubscribe-projects-email-notifications&hr-projects=#{project_id}"
+            unsubscribe_link: base_link + JustdoEmails.getHashRequestStringForUnsubscribe(self.notification_type)
 
           subject: JustdoHelpers.displayName(from) + " :: Rejected ownership transfer"
 
