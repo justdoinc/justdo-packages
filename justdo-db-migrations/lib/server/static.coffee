@@ -135,13 +135,13 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
 
     return
 
-  check_starting_condition_interval = null
-  clearStartingConditionInterval = ->
-    if check_starting_condition_interval?
-      Meteor.clearInterval check_starting_condition_interval
-      check_starting_condition_interval = null
+  check_starting_condition_timeout = null
+  clearStartingConditionTimeout = ->
+    if check_starting_condition_timeout?
+      Meteor.clearTimeout check_starting_condition_timeout
+      check_starting_condition_timeout = null
 
-      @logProgress "Starting condition interval cleared"
+      @logProgress "Starting condition timeout cleared"
 
     return
 
@@ -158,6 +158,31 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
     else
       # result is false or any other falsy value
       return {condition_met: false, next_check_interval: options.starting_condition_interval_between_checks}
+
+  # Start monitoring the startingCondition
+  startConditionMonitoring = (caller_this, callback) ->
+    checkCondition = ->
+      if not caller_this.isAllowedToContinue()
+        return
+
+      try
+        {condition_met, next_check_interval} = evaluateStartingCondition()
+        
+        if condition_met
+          caller_this.logProgress "Starting condition met"
+          callback()
+        else
+          caller_this.logProgress "Starting condition not met. Checking again in #{JustdoHelpers.msToHumanReadable next_check_interval}."
+          check_starting_condition_timeout = Meteor.setTimeout checkCondition, next_check_interval
+      catch error
+        caller_this.logProgress "Error checking starting condition: #{error.message}", error
+        # On error, retry after default interval
+        check_starting_condition_timeout = Meteor.setTimeout checkCondition, options.starting_condition_interval_between_checks
+
+      return
+
+    checkCondition()
+    return
 
   migration_script_obj =
     runScript: ->
@@ -273,6 +298,13 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
         if condition_met
           @logProgress "Starting condition already met, beginning batch processing immediately"
           callScriptWrapper()
+        else
+          # Start monitoring for the condition
+          @logProgress "Entering monitoring mode, checking condition every #{JustdoHelpers.msToHumanReadable next_check_interval}."
+          check_starting_condition_timeout = Meteor.setTimeout =>
+            startConditionMonitoring self, callScriptWrapper
+            return
+          , next_check_interval
       else
         callScriptWrapper()
 
@@ -280,7 +312,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
 
     haltScript: ->
       clearTimeout.call(@)
-      clearStartingConditionInterval.call(@)
+      clearStartingConditionTimeout.call(@)
 
       runTerminationProcedures(@)
 
