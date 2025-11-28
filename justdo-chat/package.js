@@ -108,7 +108,6 @@ Package.onUse(function (api) {
 
   // Client
   api.addFiles("lib/justdo-chat/client/api.coffee", client);
-  api.addFiles("lib/justdo-chat/client/hash-requests.coffee", client);
   api.addFiles("lib/justdo-chat/client/methods.coffee", client);
   api.addFiles("lib/justdo-chat/client/pseudo-collections.coffee", client);
   api.addFiles("lib/justdo-chat/client/subscriptions.coffee", client);

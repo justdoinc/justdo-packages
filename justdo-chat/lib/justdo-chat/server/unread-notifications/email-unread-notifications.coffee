@@ -33,7 +33,7 @@ JustdoChat.registerUnreadChannelsNotificationsManager
         user: user
         counterpart_user_name: counterpart_user_name
         read_link: "#{base_url}"
-        unsubscribe_link: "#{base_url}/#?hr-id=unsubscribe-c-iv-unread-emails-notifications"
+        unsubscribe_link: "#{base_url}/##{JustdoEmails.getHashRequestStringForUnsubscribe(JustdoChat.notification_registrar_type)}"
 
     if channel_type is "task"
       task_doc = channel_obj.getIdentifierTaskDoc() # Cached, don't worry
@@ -60,7 +60,7 @@ JustdoChat.registerUnreadChannelsNotificationsManager
 
         read_link: "#{base_url}/p/#{project_id}#&t=main&p=/#{task_doc._id}/&ref=chat-mail"
 
-        unsubscribe_link: "#{base_url}/#?hr-id=unsubscribe-c-iv-unread-emails-notifications"
+        unsubscribe_link: "#{base_url}/##{JustdoEmails.getHashRequestStringForUnsubscribe(JustdoChat.notification_registrar_type)}"
 
     to = user.emails[0].address
 
