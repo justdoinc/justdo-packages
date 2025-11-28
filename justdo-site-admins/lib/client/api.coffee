@@ -271,7 +271,7 @@ _.extend JustdoSiteAdmins.prototype,
     if not _.isEmpty(is_user_deactivated_remark = APP.accounts.getUserDeactivatedRemark(user))
       remarks.push is_user_deactivated_remark
 
-    if @isLicenseEnabledEnvironment() and not is_user_deactivated
+    if @isLicenseEnabledEnvironment() and _.isEmpty(is_user_deactivated_remark)
       user_license = @isUserLicensed user, pre_computed_hard_licensed_users
 
       if not user_license?.licensed
