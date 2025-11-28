@@ -145,6 +145,20 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
 
     return
 
+  # Helper to evaluate startingCondition and determine next interval
+  # Returns: {condition_met: Boolean, next_check_interval: Number (ms) or null}
+  evaluateStartingCondition = ->
+    result = options.startingCondition()
+    
+    if result is true
+      return {condition_met: true, next_check_interval: null}
+    else if _.isNumber(result) and result > 0
+      # startingCondition returned a custom interval in ms
+      return {condition_met: false, next_check_interval: result}
+    else
+      # result is false or any other falsy value
+      return {condition_met: false, next_check_interval: options.starting_condition_interval_between_checks}
+
   migration_script_obj =
     runScript: ->
       self = @
@@ -252,15 +266,13 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
         return
 
       callScriptWrapper = -> scriptWrapper.call self
-      if options.startingCondition? and not options.startingCondition()
-        # If we got a startingCondition and it isn't met yet, then setup an interval to wait for it.
-        check_starting_condition_interval = Meteor.setInterval ->
-          if options.startingCondition()
-            clearStartingConditionInterval.call(self)
-            callScriptWrapper()
-          else
-            self.logProgress "Starting condition not met. Checking again in #{options.starting_condition_interval_between_checks / 1000} secs."
-        , options.starting_condition_interval_between_checks
+      
+      if options.startingCondition?
+        {condition_met, next_check_interval} = evaluateStartingCondition()
+        
+        if condition_met
+          @logProgress "Starting condition already met, beginning batch processing immediately"
+          callScriptWrapper()
       else
         callScriptWrapper()
 
