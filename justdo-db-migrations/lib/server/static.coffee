@@ -50,6 +50,10 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
     optional: true
 
   # Default null
+  # Can return:
+  #   - true: condition met, start processing
+  #   - false: condition not met, check again after starting_condition_interval_between_checks
+  #   - Number (ms): condition not met, check again after the returned number of milliseconds
   startingCondition:
     label: "Migration script starting condition"
     type: Function
@@ -82,6 +86,17 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
     optional: true
     defaultValue: 1000 * 30  # 30 seconds default retry delay
 
+  # If true, upon batches exhaustion (and after calling onBatchesExaustion if defined),
+  # the migration will return to monitoring startingCondition instead of waiting delay_before_checking_for_new_batches.
+  # This enables recurring scheduled behavior where the migration cycles between:
+  # monitoring condition -> processing batches -> monitoring condition
+  # Relevant only if mark_as_completed_upon_batches_exhaustion is false and startingCondition is set.
+  initialize_starting_condition_upon_exhaustion:
+    label: "Return to monitoring startingCondition after batches are exhausted"
+    type: Boolean
+    optional: true
+    defaultValue: false
+
 JustdoDbMigrations.commonBatchedMigration = (options) ->
   {cleaned_val} =
     JustdoHelpers.simpleSchemaCleanAndValidate(
@@ -89,8 +104,10 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
       options,
       {self: @, throw_on_error: true}
     )
-
   options = cleaned_val
+
+  if options.initialize_starting_condition_upon_exhaustion and not options.startingCondition?
+    throw APP.justdo_db_migrations._error "invalid-options", "initialize_starting_condition_upon_exhaustion requires a startingCondition"
 
   shared_obj = {}
   getMigrationFunctionsThis = (original_this) ->
