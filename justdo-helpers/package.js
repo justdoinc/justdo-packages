@@ -22,6 +22,8 @@ Package.onUse(function (api) {
   api.use("templating", client);
   api.use("ecmascript", both);
   api.use("random", both);
+  api.use("tap:i18n", both);
+  api.use("justdoinc:justdo-i18n@1.0.0", both, {unordered: true});
 
   api.use("astrocoders:handlebars-server@1.0.3", server);
 
@@ -140,6 +142,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/xss.coffee", server);
   api.addFiles("lib/server/url.coffee", server);
   api.addFiles("lib/server/iron-router.coffee", server);
+
+  // I18n files should be added after all templates
+  this.addI18nFiles(api, "lib/both/notification-registrar/i18n/{}.i18n.json", "default_lang_only");
 
   api.export("JustdoHelpers", both);
 });
