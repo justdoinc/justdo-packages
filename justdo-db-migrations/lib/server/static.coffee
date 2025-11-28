@@ -126,7 +126,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
     return
 
   batch_timeout = null
-  clearTimeout = ->
+  clearBatchTimeout = ->
     if batch_timeout?
       Meteor.clearTimeout batch_timeout
       batch_timeout = null
@@ -311,7 +311,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
       return
 
     haltScript: ->
-      clearTimeout.call(@)
+      clearBatchTimeout.call(@)
       clearStartingConditionTimeout.call(@)
 
       runTerminationProcedures(@)
