@@ -156,7 +156,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
           @logProgress "Total documents to be updated: #{initial_affected_docs_count}."
           expected_batches = Math.ceil(initial_affected_docs_count / options.batch_size)
           @logProgress "Expected batches: #{expected_batches}."
-          @logProgress "Expected time to complete: #{Math.round((expected_batches * options.delay_between_batches) / 1000 / 60)} minutes."
+          @logProgress "Expected time to complete: #{JustdoHelpers.msToHumanReadable expected_batches * options.delay_between_batches}."
 
         migration_functions_this = getMigrationFunctionsThis(@)
 
@@ -164,9 +164,10 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
           options.initProcedures.call migration_functions_this
 
         waitDelayBetweenBatchesAndRunProcessBatchWrapper = =>
-          @logProgress "Waiting #{options.delay_between_batches / 1000}sec before starting the next batch"
+          @logProgress "Waiting #{JustdoHelpers.msToHumanReadable options.delay_between_batches} before starting the next batch"
           batch_timeout = Meteor.setTimeout =>
             processBatchWrapper()
+            return
           , options.delay_between_batches
 
           return
@@ -185,7 +186,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
           try
             processBatch()
           catch e
-            @logProgress "Error encountered, will try again in #{options.delay_before_checking_for_new_batches / 1000}sec", e
+            @logProgress "Error encountered, will try again in #{JustdoHelpers.msToHumanReadable options.delay_before_checking_for_new_batches}", e
 
             waitDelayBeforeCheckingForNewBatchesAndRunProcessBatchWrapper()
             # Do not halt the script, some errors, like network issues might be resolved after a while
