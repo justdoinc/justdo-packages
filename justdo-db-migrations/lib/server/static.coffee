@@ -228,13 +228,25 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
 
           return
 
-        waitDelayBeforeCheckingForNewBatchesAndRunProcessBatchWrapper = =>
-          # @logProgress "Waiting #{options.delay_before_checking_for_new_batches / 1000}sec before checking for new batches"
+        handleBatchesExhaustion = =>
           if options.onBatchesExaustion?
             options.onBatchesExaustion()
-          batch_timeout = Meteor.setTimeout =>
-            processBatchWrapper()
-          , options.delay_before_checking_for_new_batches
+
+          if options.initialize_starting_condition_upon_exhaustion
+            # Return to monitoring startingCondition.
+            # Call terminationProcedures to clean up resources created by initProcedures,
+            # since initProcedures will be called again when the condition is next met.
+            @logProgress "Batch processing complete, returning to monitoring mode"
+            runTerminationProcedures(@)
+            startConditionMonitoring self, ->
+              scriptWrapper.call self
+              return
+          else
+            # Original behavior: wait and check for new batches
+            batch_timeout = Meteor.setTimeout =>
+              processBatchWrapper()
+              return
+            , options.delay_before_checking_for_new_batches
 
           return
 
@@ -244,7 +256,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
           catch e
             @logProgress "Error encountered, will try again in #{JustdoHelpers.msToHumanReadable options.delay_before_checking_for_new_batches}", e
 
-            waitDelayBeforeCheckingForNewBatchesAndRunProcessBatchWrapper()
+            handleBatchesExhaustion()
             # Do not halt the script, some errors, like network issues might be resolved after a while
             # and we don't want to need to restart the server in such a case
             # @halt()
@@ -267,7 +279,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
 
               return
 
-            waitDelayBeforeCheckingForNewBatchesAndRunProcessBatchWrapper()
+            handleBatchesExhaustion()
           else
             @logProgress "Start batch"
 
