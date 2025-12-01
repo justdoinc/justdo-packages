@@ -33,7 +33,6 @@ JustdoChat.registerUnreadChannelsNotificationsManager
         user: user
         counterpart_user_name: counterpart_user_name
         read_link: "#{base_url}"
-        unsubscribe_link: "#{base_url}/##{JustdoEmails.getHashRequestStringForUnsubscribe(JustdoChat.notification_registrar_type)}"
 
     if channel_type is "task"
       task_doc = channel_obj.getIdentifierTaskDoc() # Cached, don't worry
