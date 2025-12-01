@@ -68,8 +68,6 @@ _.extend JustdoEmails,
         email_type_label: JustdoHelpers.lcFirst TAPi18n.__ notification_type_def.label_i18n # Currently translated to default lang only
         unsubscribe_link: Meteor.absoluteUrl "##{@getHashRequestStringForUnsubscribe(template_name)}"
         unsubscribe_all_link: Meteor.absoluteUrl "##{@getHashRequestStringForUnsubscribe("all")}"
-
-    console.log {template_name, notification_type_def}
         
     email_html = getTemplate(@options.wrapper_template) email_wrapper_data
 
