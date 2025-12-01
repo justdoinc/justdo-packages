@@ -127,6 +127,8 @@ _.extend JustdoEmails,
     template_name = options.template
     
     if not options.bypass_notification_registrar
+      notification_type_def = @registrar.requireNotificationTypeByNotificationId(template_name)
+
       receiving_user_query =
         "emails.address": options.to
       receiving_user_query_options =
