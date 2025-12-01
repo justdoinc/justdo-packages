@@ -646,7 +646,7 @@ _.extend JustdoAccounts.prototype,
 
               return "notAllowed"
 
-        return        
+        return
 
       optional: true
   _basicUserInfoPublicationHandlerPubConfSchema: new SimpleSchema

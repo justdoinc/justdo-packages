@@ -504,7 +504,7 @@ _.extend Projects.prototype,
     #       *Optional*
     #
     #       The user profile for case email is new to the system.
-    #       
+    #
     #       Need to comply with JustdoAccounts.user_profile_schema above.
     #
     #       Completely ignored if a user with given email already exists
@@ -1399,7 +1399,7 @@ _.extend Projects.prototype,
           $unset["#{conf_subdocument_field_name}.#{conf_name}"] = ""
 
           continue
-        else        
+        else
           throw @_error "validation-error", "#{conf_name} can't be unset"
 
       if _.isRegExp matcher
