@@ -123,29 +123,31 @@ _.extend JustdoEmails,
   
     template_name = options.template
     
-    receiving_user_query =
-      "emails.address": options.to
-    receiving_user_query_options =
-      fields:
-        is_proxy: 1
-        "profile.#{JustdoEmails.user_preference_subdocument_id}": 1
-    receiving_user_doc = Meteor.users.findOne(receiving_user_query, receiving_user_query_options)
-
-    if not receiving_user_doc? and not options.bypass_notification_registrar
-      console.warn "A user with email address #{options.to} not found"
-      return
-    
-    # Forbid proxy users from receiving any emails
-    if APP.accounts.isProxyUser receiving_user_doc
-      console.warn "An email to a proxy account skipped (#{options.to})"
-      return
-
-    if not options.bypass_notification_registrar and not @registrar.isNotificationIgnoringUserUnsubscribePreference(template_name)
-      # Skip if user has unsubscribed from the notification
-      # This also handles the case where the user has unsubscribed from all notifications.
-      if @registrar.isUserUnsubscribedFromNotification receiving_user_doc, template_name
-        console.warn "An email to a user who has unsubscribed from the notification #{template_name} skipped (#{options.to})"
+    if not options.bypass_notification_registrar
+      receiving_user_query =
+        "emails.address": options.to
+      receiving_user_query_options =
+        fields:
+          is_proxy: 1
+          "profile.#{JustdoEmails.user_preference_subdocument_id}": 1
+      receiving_user_doc = Meteor.users.findOne(receiving_user_query, receiving_user_query_options)
+      if not receiving_user_doc?
+        console.warn "A user with email address #{options.to} not found"
         return
+      
+      if not @registrar.isNotificationIgnoringUserUnsubscribePreference(options.template)
+        # If the notification respects user unsubscribe preference, check the following.
+
+        # Forbid proxy users from receiving any emails
+        if APP.accounts.isProxyUser receiving_user_doc
+          console.warn "An email to a proxy account skipped (#{options.to})"
+          return
+
+        # Skip if user has unsubscribed from the notification
+        # This also handles the case where the user has unsubscribed from all notifications.
+        if @registrar.isUserUnsubscribedFromNotification receiving_user_doc, template_name
+          console.warn "An email to a user who has unsubscribed from the notification #{options.template} skipped (#{options.to})"
+          return
 
     # The check above ensures template exists
     template = getTemplate(template_name)
