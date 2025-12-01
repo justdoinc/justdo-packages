@@ -57,10 +57,7 @@ JustdoChat.registerUnreadChannelsNotificationsManager
         user: user
         project_doc: project_doc
         task_doc: task_doc
-
         read_link: "#{base_url}/p/#{project_id}#&t=main&p=/#{task_doc._id}/&ref=chat-mail"
-
-        unsubscribe_link: "#{base_url}/##{JustdoEmails.getHashRequestStringForUnsubscribe(JustdoChat.notification_registrar_type)}"
 
     to = user.emails[0].address
 
