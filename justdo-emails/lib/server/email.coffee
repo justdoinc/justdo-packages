@@ -109,8 +109,9 @@ _.extend JustdoEmails,
     #   subject: (string, optional) email subject, if not provided, the default
     #            template subject will be used from @options.default_subjects
     #            @options.site_name will always add as subject suffix
-    #   bypass_notification_registrar: (boolean, optional): If true, we bypass completely every checks from the notification registrar,
-    #                                                       and send the email directly to the recepient.
+    #   bypass_notification_registrar: (boolean, optional): If true, we treat Justdo Emails as a simple email delivery service 
+    #                                                       by bypassing completely every checks from the notification registrar, 
+    #                                                       and sending the email directly to the recepient.
     #                                                       This means that:
     #                                                       1. We don't require the email to be associated with a user
     #                                                       2. We don't check whether the receiving user is a proxy
