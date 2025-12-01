@@ -43,10 +43,13 @@ _.extend JustdoProjectPane.prototype,
         # triggered by the reactivity of `getTabDefinitionById` to process the hash again.
         return {keep_hash: true}
 
-      @setActiveTab(tab_id)
-      @expand()
-      tab_definition.hashRequestHandler?(args)
+      Tracker.nonreactive =>
+        @setActiveTab(tab_id)
+        @expand()
+        tab_definition.hashRequestHandler?(args)
 
+        return
+        
       return
   
   _setupEventHandlers: ->
