@@ -168,7 +168,7 @@ Meteor.methods
     subject = "New contact request"
 
     if (message = request_details.message)?
-      subject += ": #{request_details.message.substr(0,80)}"
+      subject += ": #{request_details.message.substr(0, 80)}"
 
     handleContactRequest request_details, subject
 
