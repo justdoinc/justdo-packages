@@ -115,6 +115,7 @@ handleContactRequest = (request_details, subject) ->
       template_data: template_data
       subject: subject
       bypass_notification_registrar: true
+      hide_unsubscribe_links: true
 
   return
 
