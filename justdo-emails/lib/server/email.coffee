@@ -4,9 +4,6 @@ getTemplate = (templateName) -> Handlebars.templates[templateName]
 
 forbidden_email_domains = ["example.com"]
 
-# Proxy users, and users unsubscribed from all emails, will still receive emails from these templates
-templates_ignoring_user_preference = ["email-verification", "password-recovery"]
-
 build_and_send_options_schema = new SimpleSchema
   to:
     label: "To"
