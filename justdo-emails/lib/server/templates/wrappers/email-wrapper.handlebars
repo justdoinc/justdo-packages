@@ -168,6 +168,38 @@
       </td>
     </tr>
     {{{body}}}
+
+    {{#unless hide_footer}}
+      <!-- Footer -->
+      <tr>
+        <td bgcolor="#ffffff" align="center" style="padding: 8px 0px 32px 0px;" class="padding-footer">
+          <!--[if (gte mso 9)|(IE)]>
+              <table role="presentation" align="center" border="0" cellspacing="0" cellpadding="0" width="500">
+              <tr>
+              <td align="center" valign="top" width="500">
+              <![endif]-->
+          <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" align="center" style="max-width: 500px;" class="responsive-table">
+            <tr>
+              <td align="center" style="font-size: 12px; line-height: 20px; font-family: Helvetica, Arial, sans-serif; color:#68757B;">
+                {{#unless hide_unsubscribe_links}}
+                  {{#if unsubscribe_link}}
+                    <a href="{{unsubscribe_link}}" target="_blank" style="color: #2B71CF; text-decoration: none;">{{_ "unsubscribe_from_email_type" notification_type=email_type_label}}</a><br>
+                  {{/if}}
+                  <a href="{{unsubscribe_all_link}}" target="_blank" style="color: #2B71CF; text-decoration: none;">{{_ "unsubscribe_from_all_update_notifications"}}</a><br>
+                {{/unless}}
+                {{_ "reply_email_for_support"}}
+              </td>
+            </tr>
+          </table>
+          <!--[if (gte mso 9)|(IE)]>
+              </td>
+              </tr>
+              </table>
+              <![endif]-->
+        </td>
+      </tr>
+    {{/unless}}
+
   </table>
 </body>
 </html>

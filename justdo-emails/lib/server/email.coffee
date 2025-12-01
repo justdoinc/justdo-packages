@@ -26,6 +26,14 @@ build_and_send_options_schema = new SimpleSchema
     label: "Subject"
     type: String
     optional: true
+  hide_footer:
+    label: "Hide footer"
+    type: Boolean
+    optional: true
+  hide_unsubscribe_links:
+    label: "Hide unsubscribe links"
+    type: Boolean
+    optional: true
 
 _.extend JustdoEmails,
   options:
@@ -43,7 +51,7 @@ _.extend JustdoEmails,
 
     wrapper_template: "email-wrapper"
 
-  _buildEmail: (html_content) ->
+  _buildEmail: (html_content, options) ->
     #
     # Build wrapper
     #
@@ -51,7 +59,18 @@ _.extend JustdoEmails,
       body: html_content
       logo_path: @options.logo_path
       landing_app_root_url: process.env?.LANDING_APP_ROOT_URL
+      hide_footer: options.hide_footer
+      hide_unsubscribe_links: options.hide_unsubscribe_links
 
+    template_name = options.template
+    if (notification_type_def = @registrar.getNotificationTypeByNotificationId(template_name))?
+      email_wrapper_data = _.extend email_wrapper_data,
+        email_type_label: JustdoHelpers.lcFirst TAPi18n.__ notification_type_def.label_i18n # Currently translated to default lang only
+        unsubscribe_link: Meteor.absoluteUrl "##{@getHashRequestStringForUnsubscribe(template_name)}"
+        unsubscribe_all_link: Meteor.absoluteUrl "##{@getHashRequestStringForUnsubscribe("all")}"
+
+    console.log {template_name, notification_type_def}
+        
     email_html = getTemplate(@options.wrapper_template) email_wrapper_data
 
     inlined_html = juice email_html
@@ -146,7 +165,7 @@ _.extend JustdoEmails,
 
     template_html = template(template_data)
 
-    email_html = JustdoEmails._buildEmail template_html
+    email_html = JustdoEmails._buildEmail template_html, options
 
     return JustdoEmails._send options.to, subject, email_html
 
