@@ -38,6 +38,10 @@ build_and_send_options_schema = new SimpleSchema
     label: "Send to proxy users"
     type: Boolean
     optional: true
+  bypass_notification_registrar:
+    label: "Bypass notification registrar"
+    type: Boolean
+    optional: true
 
 _.extend JustdoEmails,
   options:
