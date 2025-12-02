@@ -143,6 +143,9 @@ _.extend NotificationRegistrar.prototype,
     return "&hr-id=unsubscribe-from-#{dash_sep_user_preference_subdocument_id}&hr-notification-type=#{JustdoHelpers.underscoreSepTo "-", notification_type_id}"
 
   _registerNotificationTypeToggle: (notification_type_id) ->
+    if not Meteor.isClient
+      return
+
     if not (user_config_ui = APP.modules.main.user_config_ui)?
       return
       
@@ -202,7 +205,7 @@ _.extend NotificationRegistrar.prototype,
 
     # Create a toggle template for this notification in the user config section
     is_all_notifications_ignoring_user_preference = _.size(notification_def.notifications_ignoring_user_preference) is _.size(notification_def.notifications)
-    if Meteor.isClient and not is_all_notifications_ignoring_user_preference
+    if not is_all_notifications_ignoring_user_preference
       @_registerNotificationTypeToggle(notification_type_id)
 
     return
