@@ -57,30 +57,36 @@
     </div>
 
     <ul class="dropdown-menu dropdown-menu-right jd-p-075 animate slideIn shadow-lg border-0" aria-labelledby="settingsDropdown">
-      {{#each settingsDropdownTopItems}}
-        {{#if template}}
-          {{> Template.dynamic template=template data=template_data}}
-        {{else if html}}
-          {{{html}}}
-        {{/if}}
-      {{/each}}
+      {{#with settingsDropdownTopItems}}
+        {{#each this}}
+          {{#if template}}
+            {{> Template.dynamic template=template data=template_data}}
+          {{else if html}}
+            {{{html}}}
+          {{/if}}
+        {{/each}}
+        <hr class="my-2">
+      {{/with}}
 
       {{#if showRolesAndGroupsManager}}
         <li class="roles-and-groups-manager dropdown-item d-flex align-items-center px-1">
           <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#users"></use></svg> Roles &amp; Groups Manager
         </li>
+        <hr class="my-2">
       {{/if}}
 
-      {{#each settingsDropdownMiddleItems}}
-        {{#if template}}
+      {{#with settingsDropdownMiddleItems}}
+        {{#each this}}
+          {{#if template}}
           {{> Template.dynamic template=template data=template_data}}
         {{else if html}}
           {{{html}}}
         {{/if}}
-      {{/each}}
+        {{/each}}
+        <hr class="my-2">
+      {{/with}}
 
       {{#if customJustdoSaveDefaultViewEnabled}}
-        <hr class="my-2">
         <li class="reset-default-views-columns dropdown-item d-flex align-items-center px-1">
           <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#rotate-ccw"/></svg>Load default columns views
         </li>
@@ -90,9 +96,9 @@
             <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#layout"/></svg>Set current columns structure as default
           </li>
         {{/if}}
+        <hr class="my-2">
       {{/if}}
       {{#if is_project_admin}}
-        <hr class="my-2">
         <li id="project-config" class="dropdown-item d-flex align-items-center px-1"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#settings"/></svg> {{_ "configure_this_justdo_label"}}</li>
       {{/if}}
       {{#each settingsDropdownBottomItems}}
