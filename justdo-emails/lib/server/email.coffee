@@ -134,10 +134,14 @@ _.extend JustdoEmails,
       return
   
     template_name = options.template
+        
+    # We need to query user doc if:
+    # 1. We need to check if user is a proxy (when send_to_proxy_users is false)
+    # 2. We need to check notification registrar settings (when bypass is false)
+    need_to_check_proxy = options.send_to_proxy_users isnt true
+    need_to_check_notification_registrar = options.bypass_notification_registrar isnt true
+    need_to_query_user_doc = need_to_check_proxy or need_to_check_notification_registrar
     
-    send_to_proxy_users = options.send_to_proxy_users is true
-    bypass_notification_registrar = options.bypass_notification_registrar is true
-    need_to_query_user_doc = not send_to_proxy_users and not bypass_notification_registrar
     receiving_user_doc = null
     if need_to_query_user_doc
       # Query for the user doc only if we actually need it
@@ -147,11 +151,11 @@ _.extend JustdoEmails,
           "profile.#{JustdoEmails.user_preference_subdocument_id}": 1
       receiving_user_doc = JustdoHelpers.getUserByEmail(options.to, receiving_user_query_options)
 
-    if not send_to_proxy_users and APP.accounts.isProxyUser(receiving_user_doc)
+    if need_to_check_proxy and APP.accounts.isProxyUser(receiving_user_doc)
       console.warn "An email to a proxy account skipped (#{options.to})"
       return
 
-    if not bypass_notification_registrar
+    if need_to_check_notification_registrar
       if not receiving_user_doc?
         console.warn "A user with email address #{options.to} not found"
         return
