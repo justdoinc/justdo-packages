@@ -169,7 +169,7 @@ _.extend JustdoEmails,
         console.warn "An email to a user who has unsubscribed from the notification #{template_name} skipped (#{options.to})"
         return
 
-    # The check above ensures template exists
+    # Ensure the handlebars template exists
     template = getTemplate(template_name)
 
     template_data = {}
