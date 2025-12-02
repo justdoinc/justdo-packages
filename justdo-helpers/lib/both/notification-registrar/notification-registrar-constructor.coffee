@@ -75,16 +75,19 @@ _.extend NotificationRegistrar.prototype,
     return user.profile[@options.user_preference_subdocument_id]
 
   _setupUserConfigSection: ->
-    if Meteor.isServer
+    if not Meteor.isClient
+      return
+    
+    if not (user_config_ui = APP.modules.main.user_config_ui)?
       return
 
     APP.executeAfterAppLibCode =>
       user_config_options = @options.user_config_options
 
-      APP.modules.main.user_config_ui.registerConfigSection user_config_options._id,
+      user_config_ui.registerConfigSection user_config_options._id,
         priority: user_config_options.priority
 
-      APP.modules.main.user_config_ui.registerConfigTemplate "unsubscribe-from-all",
+      user_config_ui.registerConfigTemplate "unsubscribe-from-all",
         section: user_config_options._id
         template: "notification_registrar_user_config_toggle"
         template_data:
@@ -140,11 +143,14 @@ _.extend NotificationRegistrar.prototype,
     return "&hr-id=unsubscribe-from-#{dash_sep_user_preference_subdocument_id}&hr-notification-type=#{JustdoHelpers.underscoreSepTo "-", notification_type_id}"
 
   _registerNotificationTypeToggle: (notification_type_id) ->
+    if not (user_config_ui = APP.modules.main.user_config_ui)?
+      return
+      
     notification_type = @requireNotificationType(notification_type_id)
 
     APP.executeAfterAppLibCode =>
       user_config_options = @options.user_config_options
-      APP.modules.main.user_config_ui.registerConfigTemplate notification_type_id,
+      user_config_ui.registerConfigTemplate notification_type_id,
         section: user_config_options._id
         template: "notification_registrar_user_config_toggle"
         template_data:
