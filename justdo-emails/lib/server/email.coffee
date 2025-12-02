@@ -34,6 +34,10 @@ build_and_send_options_schema = new SimpleSchema
     label: "Hide unsubscribe links"
     type: Boolean
     optional: true
+  send_to_proxy_users:
+    label: "Send to proxy users"
+    type: Boolean
+    optional: true
 
 _.extend JustdoEmails,
   options:
@@ -113,10 +117,10 @@ _.extend JustdoEmails,
     #                                                       by bypassing completely every checks from the notification registrar, 
     #                                                       and sending the email directly to the recepient.
     #                                                       This means that:
-    #                                                       1. We don't require the email to be associated with a user
-    #                                                       2. We don't check whether the receiving user is a proxy
-    #                                                       3. We don't require the email template to be registered in the notification registrar
-    #                                                       4. We don't check whether the receiving user has unsubscribed from any notification
+    #                                                       1. We don't require the email address to be associated with a user
+    #                                                       2. We don't require the email template to be registered in the notification registrar
+    #                                                       3. We don't check whether the receiving user has unsubscribed from any notification
+    #   send_to_proxy_users: (boolean, optional): If true, we send the email to proxy users as well.
     # }
 
     check(options, build_and_send_options_schema)
@@ -127,19 +131,28 @@ _.extend JustdoEmails,
   
     template_name = options.template
     
-    if not options.bypass_notification_registrar
-      notification_type_def = @registrar.requireNotificationTypeByNotificationId(template_name)
-
-      receiving_user_query =
-        "emails.address": options.to
+    send_to_proxy_users = options.send_to_proxy_users is true
+    bypass_notification_registrar = options.bypass_notification_registrar is true
+    need_to_query_user_doc = not send_to_proxy_users and not bypass_notification_registrar
+    receiving_user_doc = null
+    if need_to_query_user_doc
+      # Query for the user doc only if we actually need it
       receiving_user_query_options =
         fields:
           is_proxy: 1
           "profile.#{JustdoEmails.user_preference_subdocument_id}": 1
-      receiving_user_doc = Meteor.users.findOne(receiving_user_query, receiving_user_query_options)
+      receiving_user_doc = JustdoHelpers.getUserByEmail(options.to, receiving_user_query_options)
+
+    if not send_to_proxy_users and APP.accounts.isProxyUser(receiving_user_doc)
+      console.warn "An email to a proxy account skipped (#{options.to})"
+      return
+
+    if not bypass_notification_registrar
       if not receiving_user_doc?
         console.warn "A user with email address #{options.to} not found"
         return
+
+      notification_type_def = @registrar.requireNotificationTypeByNotificationId(template_name)
       
       if not @registrar.isNotificationIgnoringUserUnsubscribePreference(template_name)
         # If the notification respects user unsubscribe preference, check the following.
