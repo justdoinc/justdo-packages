@@ -160,7 +160,8 @@ _.extend JustdoEmails,
         console.warn "A user with email address #{options.to} not found"
         return
 
-      notification_type_def = @registrar.requireNotificationTypeByNotificationId(template_name)
+      # Validate that the notification type is registered (throws if not found)
+      @registrar.requireNotificationTypeByNotificationId(template_name)
       
       # Skip if user has unsubscribed from the notification
       # This also handles the case where the user has unsubscribed from all notifications.
