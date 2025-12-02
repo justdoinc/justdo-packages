@@ -228,13 +228,18 @@ GridControl.installEditor "UnicodeDateEditor",
   ext_actions_buttons: default_ext_buttons
 
   init: ->
+    # Track whether the user explicitly committed the value (via Enter key or datepicker selection)
+    # This prevents accidental saves when tabbing/blurring out without changing the value,
+    # which could convert auto-calculated values to manually-set values.
+    @_user_explicitly_committed = false
+
     $editor = $("""<div class="grid-editor unicode-date-editor" />""")
 
     @$input = $("""<input type="text" class="editor-unicode-date" placeholder="#{JustdoHelpers.getUserPreferredDataFormatInJqueryUiFormat()}" />""")
 
     $editor
       .html(@$input)
-      .appendTo(@context.container);
+      .appendTo(@context.container)
 
     formatter_buttons_width = 0
     for action_button_def in @getAllActionsButtons()
@@ -271,7 +276,10 @@ GridControl.installEditor "UnicodeDateEditor",
       buttonImageOnly: true
       showAnim: ""
       firstDay: Meteor?.user()?.profile?.first_day_of_week or 0
-      onSelect: => @saveAndExit()
+      onSelect: =>
+        @_user_explicitly_committed = true
+        @saveAndExit()
+        return
       onClose: => @focus()
       beforeShowDay: (date) =>
         # console.log "beforeShowDay", date
@@ -288,11 +296,15 @@ GridControl.installEditor "UnicodeDateEditor",
 
     @$input.width(@$input.width() - formatter_buttons_width - 3 - 1) # - 1 compensates the extra margin we add to .udf-id-date-setter only for editors (to have exact alignment with formatter)
 
-    @$input.bind "keydown.nav", (e) ->
+    @$input.bind "keydown.nav", (e) =>
       # Prevent left/right arrows from propagating to avoid grid
       # navigation - they should be used for text navigation.
       if e.keyCode == $.ui.keyCode.LEFT or e.keyCode == $.ui.keyCode.RIGHT
         e.stopImmediatePropagation()
+
+      # Mark as explicitly committed when Enter is pressed
+      if e.keyCode == $.ui.keyCode.ENTER
+        @_user_explicitly_committed = true
 
       return
 
@@ -322,6 +334,32 @@ GridControl.installEditor "UnicodeDateEditor",
       return null
 
     return current_val
+
+  isValueChanged: ->
+    # Override base isValueChanged to prevent accidental saves when tabbing/blurring out
+    # without actually changing the value. This is important for fields with
+    # grid_column_custom_value_generator (auto-calculated values) - we don't want
+    # a simple blur to convert an auto value to a manual value.
+    #
+    # Save only if:
+    # 1. The value actually changed, OR
+    # 2. The user explicitly committed (pressed Enter or selected from datepicker)
+
+    field_doc_value = @getEditorFieldValueFromDoc()
+    serialized_value = @serializeValue()
+
+    # Check if value actually changed
+    if field_doc_value?
+      value_actually_changed = field_doc_value isnt serialized_value
+    else
+      # If field_doc_value is undefined/null, consider it changed only if serialized_value is defined
+      value_actually_changed = serialized_value?
+
+    if value_actually_changed
+      return true
+
+    # Value hasn't changed - only save if user explicitly committed
+    return @_user_explicitly_committed
 
   validator: (value) ->
     if value?
