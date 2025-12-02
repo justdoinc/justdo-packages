@@ -154,19 +154,11 @@ _.extend JustdoEmails,
 
       notification_type_def = @registrar.requireNotificationTypeByNotificationId(template_name)
       
-      if not @registrar.isNotificationIgnoringUserUnsubscribePreference(template_name)
-        # If the notification respects user unsubscribe preference, check the following.
-
-        # Forbid proxy users from receiving any emails
-        if APP.accounts.isProxyUser receiving_user_doc
-          console.warn "An email to a proxy account skipped (#{options.to})"
-          return
-
-        # Skip if user has unsubscribed from the notification
-        # This also handles the case where the user has unsubscribed from all notifications.
-        if @registrar.isUserUnsubscribedFromNotification receiving_user_doc, template_name
-          console.warn "An email to a user who has unsubscribed from the notification #{template_name} skipped (#{options.to})"
-          return
+      # Skip if user has unsubscribed from the notification
+      # This also handles the case where the user has unsubscribed from all notifications.
+      if @registrar.isUserUnsubscribedFromNotification receiving_user_doc, template_name
+        console.warn "An email to a user who has unsubscribed from the notification #{template_name} skipped (#{options.to})"
+        return
 
     # The check above ensures template exists
     template = getTemplate(template_name)
