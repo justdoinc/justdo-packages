@@ -6,6 +6,7 @@
   "workdays_label": "Workdays",
   "holidays_label": "Holidays",
   "personal_leave_label": "Personal Leave",
+  "days_of_week": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
   "holidays_input_description": "* Enter comma separated dates in the format of:<br> YYYY-MM-DD, or, for a range of dates: YYYY-MM-DD--YYYY-MM-DD.",
   "from_time_must_be_before_to_time": "\"From\" time must be before \"To\" time",
   "there_must_be_at_least_one_working_day_on_justdo_level": "There must be at least one working day on JustDo level."
