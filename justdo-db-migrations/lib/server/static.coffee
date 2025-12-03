@@ -2,103 +2,103 @@
 cron_parser = Npm.require "cron-parser"
 
 commonBatchedMigrationOptionsSchema = new SimpleSchema
-  delay_between_batches:
-    label: "Delay between batches"
-    type: SimpleSchema.Integer
+    delay_between_batches:
+      label: "Delay between batches"
+      type: SimpleSchema.Integer
 
-  batch_size:
-    label: "Size of migration per batch"
-    type: SimpleSchema.Integer
+    batch_size:
+      label: "Size of migration per batch"
+      type: SimpleSchema.Integer
 
-  collection:
-    type: "skip-type-check"
+    collection:
+      type: "skip-type-check"
 
-  run_if_lte_version_installed:
-    label: "Version installed that require the migration"
-    type: String
-    optional: true
+    run_if_lte_version_installed:
+      label: "Version installed that require the migration"
+      type: String
+      optional: true
 
-  queryGenerator:
-    label: "Query and query options generator"
-    type: Function
+    queryGenerator:
+      label: "Query and query options generator"
+      type: Function
 
-  # If set to false, the initial queryGenerator will be used to generate all the batches.
-  # If set to true we will call queryGenerator before every call to batchProcessor to create a new cursor
-  # for each batch with the returned query and query_options.
-  static_query:
-    label: "Should the cursor be updated before every batch"
-    type: Boolean
+    # If set to false, the initial queryGenerator will be used to generate all the batches.
+    # If set to true we will call queryGenerator before every call to batchProcessor to create a new cursor
+    # for each batch with the returned query and query_options.
+    static_query:
+      label: "Should the cursor be updated before every batch"
+      type: Boolean
 
-  custom_options:
-    label: "Custom options for migration script"
-    type: Object
-    blackbox: true
-    optional: true
+    custom_options:
+      label: "Custom options for migration script"
+      type: Object
+      blackbox: true
+      optional: true
 
-  initProcedures:
-    label: "Migration script and variable init function"
-    type: Function
-    blackbox: true
-    optional: true
+    initProcedures:
+      label: "Migration script and variable init function"
+      type: Function
+      blackbox: true
+      optional: true
 
-  batchProcessor:
-    label: "Migration function to be called, should return the Number of processed documents"
-    type: Function
-    blackbox: true
+    batchProcessor:
+      label: "Migration function to be called, should return the Number of processed documents"
+      type: Function
+      blackbox: true
 
-  terminationProcedures:
-    label: "Destroyer function for variables created in initProcedures"
-    type: Function
-    blackbox: true
-    optional: true
+    terminationProcedures:
+      label: "Destroyer function for variables created in initProcedures"
+      type: Function
+      blackbox: true
+      optional: true
 
-  # Default null
-  # Can return:
-  #   - true: condition met, start processing
-  #   - false: condition not met, check again after starting_condition_interval_between_checks
-  #   - Number (ms): condition not met, check again after the returned number of milliseconds
-  startingCondition:
-    label: "Migration script starting condition"
-    type: Function
-    blackbox: true
-    optional: true
+    # Default null
+    # Can return:
+    #   - true: condition met, start processing
+    #   - false: condition not met, check again after starting_condition_interval_between_checks
+    #   - Number (ms): condition not met, check again after the returned number of milliseconds
+    startingCondition:
+      label: "Migration script starting condition"
+      type: Function
+      blackbox: true
+      optional: true
 
-  # Miliseconds, relevant only if startingCondition is set
-  starting_condition_interval_between_checks:
-    label: "Interval between checks for starting condition"
-    type: SimpleSchema.Integer
-    defaultValue: 1000 * 60
+    # Miliseconds, relevant only if startingCondition is set
+    starting_condition_interval_between_checks:
+      label: "Interval between checks for starting condition"
+      type: SimpleSchema.Integer
+      defaultValue: 1000 * 60
 
-  onBatchesExaustion:
-    label: "Relevant only if mark_as_completed_upon_batches_exhaustion is false, will run once we can't find more items to process, before beginning the 'delay_before_checking_for_new_batches'"
-    type: Function
-    optional: true
+    onBatchesExaustion:
+      label: "Relevant only if mark_as_completed_upon_batches_exhaustion is false, will run once we can't find more items to process, before beginning the 'delay_before_checking_for_new_batches'"
+      type: Function
+      optional: true
 
-  # Default true
-  mark_as_completed_upon_batches_exhaustion:
-    label: "Should this migration mark itself as completed upon completion"
-    type: Boolean
-    optional: true
-    defaultValue: true
+    # Default true
+    mark_as_completed_upon_batches_exhaustion:
+      label: "Should this migration mark itself as completed upon completion"
+      type: Boolean
+      optional: true
+      defaultValue: true
 
-  # Miliseconds, relevant only if mark_as_completed_upon_batches_exhaustion is false
-  # This is the time that we will wait if the last batch had 0 results.
-  delay_before_checking_for_new_batches:
-    label: "Interval between checks for new migration batches."
-    type: SimpleSchema.Integer
-    optional: true
-    defaultValue: 1000 * 30  # 30 seconds default retry delay
+    # Miliseconds, relevant only if mark_as_completed_upon_batches_exhaustion is false
+    # This is the time that we will wait if the last batch had 0 results.
+    delay_before_checking_for_new_batches:
+      label: "Interval between checks for new migration batches."
+      type: SimpleSchema.Integer
+      optional: true
+      defaultValue: 1000 * 30  # 30 seconds default retry delay
 
-  # If true, upon batches exhaustion (and after calling onBatchesExaustion if defined),
-  # the migration will return to monitoring startingCondition instead of waiting delay_before_checking_for_new_batches.
-  # This enables recurring scheduled behavior where the migration cycles between:
-  # monitoring condition -> processing batches -> monitoring condition
-  # Relevant only if mark_as_completed_upon_batches_exhaustion is false and startingCondition is set.
-  initialize_starting_condition_upon_exhaustion:
-    label: "Return to monitoring startingCondition after batches are exhausted"
-    type: Boolean
-    optional: true
-    defaultValue: false
+    # If true, upon batches exhaustion (and after calling onBatchesExaustion if defined),
+    # the migration will return to monitoring startingCondition instead of waiting delay_before_checking_for_new_batches.
+    # This enables recurring scheduled behavior where the migration cycles between:
+    # monitoring condition -> processing batches -> monitoring condition
+    # Relevant only if mark_as_completed_upon_batches_exhaustion is false and startingCondition is set.
+    initialize_starting_condition_upon_exhaustion:
+      label: "Return to monitoring startingCondition after batches are exhausted"
+      type: Boolean
+      optional: true
+      defaultValue: false
 
 JustdoDbMigrations.commonBatchedMigration = (options) ->
   {cleaned_val} =
