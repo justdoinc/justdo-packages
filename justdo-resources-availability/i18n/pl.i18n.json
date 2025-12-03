@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Ustaw dni robocze JustDo",
-  "set_my_workdays_label": "Ustaw moje dni robocze"
+  "set_justdo_workdays_label": "Ustaw dni robocze JustDo",
+  "set_my_workdays_label": "Ustaw moje dni robocze",
+  "set_justdo_workdays_dialog_title": "Ustaw dni robocze dla __justdo_title__",
+  "set_user_workdays_dialog_title": "Ustaw dni robocze dla __justdo_title__: __user_name__",
+  "workdays_label": "Dni robocze",
+  "holidays_label": "Dni wolne",
+  "personal_leave_label": "Urlop osobisty",
+  "days_of_week": [
+    "Niedziela",
+    "Poniedziałek",
+    "Wtorek",
+    "Środa",
+    "Czwartek",
+    "Piątek",
+    "Sobota"
+  ],
+  "holidays_input_description": "* Wprowadź daty oddzielone przecinkami w formacie:<br> RRRR-MM-DD lub dla zakresu dat: RRRR-MM-DD--RRRR-MM-DD.",
+  "from_time_must_be_before_to_time": "Czas \"Od\" musi być wcześniejszy niż czas \"Do\"",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "Musi być co najmniej jeden dzień roboczy na poziomie JustDo."
 }

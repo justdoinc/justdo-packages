@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "JustDo munkanapok beállítása",
-  "set_my_workdays_label": "Saját munkanapjaim beállítása"
+  "set_justdo_workdays_label": "JustDo munkanabok beállítása",
+  "set_my_workdays_label": "Saját munkanapjaim beállítása",
+  "set_justdo_workdays_dialog_title": "Munkanabok beállítása ehhez: __justdo_title__",
+  "set_user_workdays_dialog_title": "Munkanabok beállítása ehhez: __justdo_title__: __user_name__",
+  "workdays_label": "Munkanapok",
+  "holidays_label": "Ünnepnapok",
+  "personal_leave_label": "Személyes szabadság",
+  "days_of_week": [
+    "Vasárnap",
+    "Hétfő",
+    "Kedd",
+    "Szerda",
+    "Csütörtök",
+    "Péntek",
+    "Szombat"
+  ],
+  "holidays_input_description": "* Adja meg a dátumokat vesszővel elválasztva a következő formátumban:<br> ÉÉÉÉ-HH-NN, vagy dátumtartomány esetén: ÉÉÉÉ-HH-NN--ÉÉÉÉ-HH-NN.",
+  "from_time_must_be_before_to_time": "A \"Kezdő\" időpontnak a \"Befejező\" időpont előtt kell lennie",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "Legalább egy munkanapnak lennie kell JustDo szinten."
 }

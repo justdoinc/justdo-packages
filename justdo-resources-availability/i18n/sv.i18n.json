@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Ställ in JustDo-arbetsdagar",
-  "set_my_workdays_label": "Ställ in mina arbetsdagar"
+  "set_justdo_workdays_label": "Ange arbetsdagar för JustDo",
+  "set_my_workdays_label": "Ställ in mina arbetsdagar",
+  "set_justdo_workdays_dialog_title": "Ange arbetsdagar för __justdo_title__",
+  "set_user_workdays_dialog_title": "Ange arbetsdagar för __justdo_title__: __user_name__",
+  "workdays_label": "Arbetsdagar",
+  "holidays_label": "Helgdagar",
+  "personal_leave_label": "Personlig ledighet",
+  "days_of_week": [
+    "Söndag",
+    "Måndag",
+    "Tisdag",
+    "Onsdag",
+    "Torsdag",
+    "Fredag",
+    "Lördag"
+  ],
+  "holidays_input_description": "* Ange kommaseparerade datum i formatet:<br> ÅÅÅÅ-MM-DD, eller för ett datumintervall: ÅÅÅÅ-MM-DD--ÅÅÅÅ-MM-DD.",
+  "from_time_must_be_before_to_time": "\"Från\"-tid måste vara före \"Till\"-tid",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "Det måste finnas minst en arbetsdag på JustDo-nivå."
 }

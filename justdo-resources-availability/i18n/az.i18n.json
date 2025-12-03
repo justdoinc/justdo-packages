@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "JustDo İş Günlərini Təyin Et",
-  "set_my_workdays_label": "Mənim İş Günlərimi Təyin Et"
+  "set_justdo_workdays_label": "JustDo İş Günlərini Təyin Et",
+  "set_my_workdays_label": "Mənim İş Günlərimi Təyin Et",
+  "set_justdo_workdays_dialog_title": "__justdo_title__ üçün İş Günlərini Təyin Et",
+  "set_user_workdays_dialog_title": "__justdo_title__ üçün İş Günlərini Təyin Et: __user_name__",
+  "workdays_label": "İş Günləri",
+  "holidays_label": "Bayram Günləri",
+  "personal_leave_label": "Şəxsi Məzuniyyət",
+  "days_of_week": [
+    "Bazar",
+    "Bazar ertəsi",
+    "Çərşənbə axşamı",
+    "Çərşənbə",
+    "Cümə axşamı",
+    "Cümə",
+    "Şənbə"
+  ],
+  "holidays_input_description": "* Vergüllə ayrılmış tarixləri aşağıdakı formatda daxil edin:<br> İİİİ-AA-GG, və ya tarix aralığı üçün: İİİİ-AA-GG--İİİİ-AA-GG.",
+  "from_time_must_be_before_to_time": "\"Başlanğıc\" vaxtı \"Bitmə\" vaxtından əvvəl olmalıdır",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "JustDo səviyyəsində ən azı bir iş günü olmalıdır."
 }

@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Nustatyti JustDo darbo dienas",
-  "set_my_workdays_label": "Nustatyti mano darbo dienas"
+  "set_justdo_workdays_label": "Nustatyti JustDo darbo dienas",
+  "set_my_workdays_label": "Nustatyti mano darbo dienas",
+  "set_justdo_workdays_dialog_title": "Nustatyti darbo dienas __justdo_title__",
+  "set_user_workdays_dialog_title": "Nustatyti darbo dienas __justdo_title__: __user_name__",
+  "workdays_label": "Darbo dienos",
+  "holidays_label": "Šventės",
+  "personal_leave_label": "Asmeninės atostogos",
+  "days_of_week": [
+    "Sekmadienis",
+    "Pirmadienis",
+    "Antradienis",
+    "Trečiadienis",
+    "Ketvirtadienis",
+    "Penktadienis",
+    "Šeštadienis"
+  ],
+  "holidays_input_description": "* Įveskite kableliais atskirtus datas formatu:<br> MMMM-MM-DD arba datų intervalui: MMMM-MM-DD--MMMM-MM-DD.",
+  "from_time_must_be_before_to_time": "Laikas \"Nuo\" turi būti anksčiau nei laikas \"Iki\"",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "JustDo lygmenyje turi būti bent viena darbo diena."
 }

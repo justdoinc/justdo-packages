@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Aseta JustDo työpäivät",
-  "set_my_workdays_label": "Aseta omat työpäiväni"
+  "set_justdo_workdays_label": "Aseta JustDo:n työpäivät",
+  "set_my_workdays_label": "Aseta omat työpäiväni",
+  "set_justdo_workdays_dialog_title": "Aseta työpäivät taulukolle __justdo_title__",
+  "set_user_workdays_dialog_title": "Aseta työpäivät taulukolle __justdo_title__: __user_name__",
+  "workdays_label": "Työpäivät",
+  "holidays_label": "Vapaapäivät",
+  "personal_leave_label": "Henkilökohtainen vapaa",
+  "days_of_week": [
+    "Sunnuntai",
+    "Maanantai",
+    "Tiistai",
+    "Keskiviikko",
+    "Torstai",
+    "Perjantai",
+    "Lauantai"
+  ],
+  "holidays_input_description": "* Syötä pilkuilla erotetut päivämäärät muodossa:<br> VVVV-KK-PP, tai päivämääräväli muodossa: VVVV-KK-PP--VVVV-KK-PP.",
+  "from_time_must_be_before_to_time": "\"Alkaen\"-aika on oltava ennen \"Päättyen\"-aikaa",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "JustDo-taulukolla on oltava vähintään yksi työpäivä."
 }

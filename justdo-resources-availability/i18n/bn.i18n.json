@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "JustDo কর্মদিবস সেট করুন",
-  "set_my_workdays_label": "আমার কর্মদিবস সেট করুন"
+  "set_justdo_workdays_label": "JustDo কর্মদিবস সেট করুন",
+  "set_my_workdays_label": "আমার কর্মদিবস সেট করুন",
+  "set_justdo_workdays_dialog_title": "__justdo_title__ এর জন্য কর্মদিবস সেট করুন",
+  "set_user_workdays_dialog_title": "__justdo_title__: __user_name__ এর জন্য কর্মদিবস সেট করুন",
+  "workdays_label": "কর্মদিবস",
+  "holidays_label": "ছুটির দিন",
+  "personal_leave_label": "ব্যক্তিগত ছুটি",
+  "days_of_week": [
+    "রবিবার",
+    "সোমবার",
+    "মঙ্গলবার",
+    "বুধবার",
+    "বৃহস্পতিবার",
+    "শুক্রবার",
+    "শনিবার"
+  ],
+  "holidays_input_description": "* কমা দ্বারা পৃথক করে তারিখ এই ফরম্যাটে লিখুন:<br> YYYY-MM-DD, অথবা, একাধিক তারিখের জন্য: YYYY-MM-DD--YYYY-MM-DD।",
+  "from_time_must_be_before_to_time": "\"শুরু\" সময় অবশ্যই \"শেষ\" সময়ের আগে হতে হবে",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "JustDo স্তরে কমপক্ষে একটি কর্মদিবস থাকতে হবে।"
 }

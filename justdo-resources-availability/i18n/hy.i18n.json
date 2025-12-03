@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Սահմանել JustDo աշխատանքային օրերը",
-  "set_my_workdays_label": "Սահմանել իմ աշխատանքային օրերը"
+  "set_justdo_workdays_label": "Սահմանել JustDo աշխատանքային օրերը",
+  "set_my_workdays_label": "Սահմանել իմ աշխատանքային օրերը",
+  "set_justdo_workdays_dialog_title": "Սահմանել աշխատանքային օրերը __justdo_title__-ի համար",
+  "set_user_workdays_dialog_title": "Սահմանել աշխատանքային օրերը __justdo_title__-ի համար՝ __user_name__",
+  "workdays_label": "Աշխատանքային օրեր",
+  "holidays_label": "Տոներ",
+  "personal_leave_label": "Անձնական արձակուրդ",
+  "days_of_week": [
+    "Կիրակի",
+    "Երկուշաբթի",
+    "Երեքշաբթի",
+    "Չորեքշաբթի",
+    "Հինգշաբթի",
+    "Ուրբաթ",
+    "Շաբաթ"
+  ],
+  "holidays_input_description": "* Մուտքագրեք ամսաթվերը ստորակետով բաժանված՝ հետևյալ ձևաչափով:<br> TTTT-ԱԱ-ՕՕ, կամ ամսաթվերի միջակայքի համար՝ TTTT-ԱԱ-ՕՕ--TTTT-ԱԱ-ՕՕ:",
+  "from_time_must_be_before_to_time": "«Սկսած» ժամանակը պետք է լինի «Մինչև» ժամանակից շուտ",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "JustDo մակարդակում պետք է լինի առնվազն մեկ աշխատանքային օր:"
 }

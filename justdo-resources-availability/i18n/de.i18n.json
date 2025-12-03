@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "JustDo-Arbeitstage festlegen",
-  "set_my_workdays_label": "Meine Arbeitstage festlegen"
+  "set_justdo_workdays_label": "JustDo-Arbeitstage festlegen",
+  "set_my_workdays_label": "Meine Arbeitstage festlegen",
+  "set_justdo_workdays_dialog_title": "Arbeitstage für __justdo_title__ festlegen",
+  "set_user_workdays_dialog_title": "Arbeitstage für __justdo_title__ festlegen: __user_name__",
+  "workdays_label": "Arbeitstage",
+  "holidays_label": "Feiertage",
+  "personal_leave_label": "Persönlicher Urlaub",
+  "days_of_week": [
+    "Sonntag",
+    "Montag",
+    "Dienstag",
+    "Mittwoch",
+    "Donnerstag",
+    "Freitag",
+    "Samstag"
+  ],
+  "holidays_input_description": "* Geben Sie durch Kommas getrennte Daten im Format ein:<br> JJJJ-MM-TT, oder für einen Datumsbereich: JJJJ-MM-TT--JJJJ-MM-TT.",
+  "from_time_must_be_before_to_time": "\"Von\"-Zeit muss vor \"Bis\"-Zeit liegen",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "Es muss mindestens ein Arbeitstag auf JustDo-Ebene vorhanden sein."
 }

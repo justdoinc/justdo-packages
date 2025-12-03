@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Setați zilele lucrătoare JustDo",
-  "set_my_workdays_label": "Setați zilele mele lucrătoare"
+  "set_justdo_workdays_label": "Setează zilele lucrătoare JustDo",
+  "set_my_workdays_label": "Setați zilele mele lucrătoare",
+  "set_justdo_workdays_dialog_title": "Setează zilele lucrătoare pentru __justdo_title__",
+  "set_user_workdays_dialog_title": "Setează zilele lucrătoare pentru __justdo_title__: __user_name__",
+  "workdays_label": "Zile lucrătoare",
+  "holidays_label": "Sărbători legale",
+  "personal_leave_label": "Concediu personal",
+  "days_of_week": [
+    "Duminică",
+    "Luni",
+    "Marți",
+    "Miercuri",
+    "Joi",
+    "Vineri",
+    "Sâmbătă"
+  ],
+  "holidays_input_description": "* Introduceți datele separate prin virgulă în formatul:<br> AAAA-LL-ZZ, sau, pentru un interval de date: AAAA-LL-ZZ--AAAA-LL-ZZ.",
+  "from_time_must_be_before_to_time": "Ora \"De la\" trebuie să fie înaintea orei \"Până la\"",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "Trebuie să existe cel puțin o zi lucrătoare la nivel de JustDo."
 }

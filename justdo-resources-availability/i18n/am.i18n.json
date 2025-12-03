@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "የ JustDo የስራ ቀናት ያዘጋጁ",
-  "set_my_workdays_label": "የኔን የስራ ቀናት ያዘጋጁ"
+  "set_justdo_workdays_label": "የJustDo የስራ ቀናት ያዘጋጁ",
+  "set_my_workdays_label": "የኔን የስራ ቀናት ያዘጋጁ",
+  "set_justdo_workdays_dialog_title": "ለ__justdo_title__ የስራ ቀናት ያዘጋጁ",
+  "set_user_workdays_dialog_title": "ለ__justdo_title__: __user_name__ የስራ ቀናት ያዘጋጁ",
+  "workdays_label": "የስራ ቀናት",
+  "holidays_label": "በዓላት",
+  "personal_leave_label": "የግል እረፍት",
+  "days_of_week": [
+    "እሁድ",
+    "ሰኞ",
+    "ማክሰኞ",
+    "ረቡዕ",
+    "ሐሙስ",
+    "ዓርብ",
+    "ቅዳሜ"
+  ],
+  "holidays_input_description": "* ቀኖችን በኮማ ተለያይተው በዚህ ቅርጸት ያስገቡ:<br> YYYY-MM-DD፣ ወይም፣ ለቀናት ክልል: YYYY-MM-DD--YYYY-MM-DD።",
+  "from_time_must_be_before_to_time": "\"ከ\" ሰዓት \"ወደ\" ሰዓት በፊት መሆን አለበት",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "በJustDo ደረጃ ቢያንስ አንድ የስራ ቀን መኖር አለበት።"
 }

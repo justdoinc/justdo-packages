@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "JustDoの稼働日を設定",
-  "set_my_workdays_label": "自分の稼働日を設定"
+  "set_justdo_workdays_label": "JustDoの稼働日を設定",
+  "set_my_workdays_label": "自分の稼働日を設定",
+  "set_justdo_workdays_dialog_title": "__justdo_title__の稼働日を設定",
+  "set_user_workdays_dialog_title": "__justdo_title__の稼働日を設定: __user_name__",
+  "workdays_label": "稼働日",
+  "holidays_label": "休日",
+  "personal_leave_label": "個人休暇",
+  "days_of_week": [
+    "日曜日",
+    "月曜日",
+    "火曜日",
+    "水曜日",
+    "木曜日",
+    "金曜日",
+    "土曜日"
+  ],
+  "holidays_input_description": "* 以下の形式でカンマ区切りで日付を入力してください:<br> YYYY-MM-DD、または期間の場合: YYYY-MM-DD--YYYY-MM-DD。",
+  "from_time_must_be_before_to_time": "「開始」時刻は「終了」時刻より前である必要があります",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "JustDoレベルで少なくとも1つの稼働日が必要です。"
 }

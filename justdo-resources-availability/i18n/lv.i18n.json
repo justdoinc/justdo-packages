@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Iestatīt JustDo darba dienas",
-  "set_my_workdays_label": "Iestatīt manas darba dienas"
+  "set_justdo_workdays_label": "Iestatīt JustDo darba dienas",
+  "set_my_workdays_label": "Iestatīt manas darba dienas",
+  "set_justdo_workdays_dialog_title": "Iestatīt darba dienas projektam __justdo_title__",
+  "set_user_workdays_dialog_title": "Iestatīt darba dienas projektam __justdo_title__: __user_name__",
+  "workdays_label": "Darba dienas",
+  "holidays_label": "Svētku dienas",
+  "personal_leave_label": "Personīgais atvaļinājums",
+  "days_of_week": [
+    "Svētdiena",
+    "Pirmdiena",
+    "Otrdiena",
+    "Trešdiena",
+    "Ceturtdiena",
+    "Piektdiena",
+    "Sestdiena"
+  ],
+  "holidays_input_description": "* Ievadiet datumus, atdalot tos ar komatu, šādā formātā:<br> GGGG-MM-DD, vai datumu diapazonam: GGGG-MM-DD--GGGG-MM-DD.",
+  "from_time_must_be_before_to_time": "Laiks \"No\" jābūt pirms laika \"Līdz\"",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "JustDo līmenī jābūt vismaz vienai darba dienai."
 }

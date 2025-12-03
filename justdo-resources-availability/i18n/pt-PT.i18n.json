@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Definir Dias Úteis do JustDo",
-  "set_my_workdays_label": "Definir os Meus Dias Úteis"
+  "set_justdo_workdays_label": "Definir Dias de Trabalho do JustDo",
+  "set_my_workdays_label": "Definir os Meus Dias Úteis",
+  "set_justdo_workdays_dialog_title": "Definir Dias de Trabalho para __justdo_title__",
+  "set_user_workdays_dialog_title": "Definir Dias de Trabalho para __justdo_title__: __user_name__",
+  "workdays_label": "Dias de Trabalho",
+  "holidays_label": "Feriados",
+  "personal_leave_label": "Licença Pessoal",
+  "days_of_week": [
+    "Domingo",
+    "Segunda-feira",
+    "Terça-feira",
+    "Quarta-feira",
+    "Quinta-feira",
+    "Sexta-feira",
+    "Sábado"
+  ],
+  "holidays_input_description": "* Introduza datas separadas por vírgulas no formato:<br> AAAA-MM-DD, ou, para um intervalo de datas: AAAA-MM-DD--AAAA-MM-DD.",
+  "from_time_must_be_before_to_time": "A hora \"De\" tem de ser anterior à hora \"Até\"",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "Tem de existir pelo menos um dia de trabalho ao nível do JustDo."
 }

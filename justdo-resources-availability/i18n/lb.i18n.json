@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "JustDo Aarbechtsdeeg astellen",
-  "set_my_workdays_label": "Meng Aarbechtsdeeg astellen"
+  "set_justdo_workdays_label": "JustDo Aarbechtsdeeg festleeën",
+  "set_my_workdays_label": "Meng Aarbechtsdeeg astellen",
+  "set_justdo_workdays_dialog_title": "Aarbechtsdeeg festleeën fir __justdo_title__",
+  "set_user_workdays_dialog_title": "Aarbechtsdeeg festleeën fir __justdo_title__: __user_name__",
+  "workdays_label": "Aarbechtsdeeg",
+  "holidays_label": "Feierdeeg",
+  "personal_leave_label": "Perséinleche Congé",
+  "days_of_week": [
+    "Sonndeg",
+    "Méindeg",
+    "Dënschdeg",
+    "Mëttwoch",
+    "Donneschdeg",
+    "Freideg",
+    "Samschdeg"
+  ],
+  "holidays_input_description": "* Gitt Datumen getrennt duerch Komma an am Format:<br> JJJJ-MM-DD, oder, fir eng Period vu Datumen: JJJJ-MM-DD--JJJJ-MM-DD.",
+  "from_time_must_be_before_to_time": "\"Vun\" Zäit muss virun der \"Bis\" Zäit sinn",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "Et muss mindestens een Aarbechtsdag op JustDo Niveau ginn."
 }

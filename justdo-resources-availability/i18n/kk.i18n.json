@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "JustDo жұмыс күндерін орнату",
-  "set_my_workdays_label": "Менің жұмыс күндерімді орнату"
+  "set_justdo_workdays_label": "JustDo жұмыс күндерін орнату",
+  "set_my_workdays_label": "Менің жұмыс күндерімді орнату",
+  "set_justdo_workdays_dialog_title": "__justdo_title__ үшін жұмыс күндерін орнату",
+  "set_user_workdays_dialog_title": "__justdo_title__ үшін жұмыс күндерін орнату: __user_name__",
+  "workdays_label": "Жұмыс күндері",
+  "holidays_label": "Мерекелер",
+  "personal_leave_label": "Жеке демалыс",
+  "days_of_week": [
+    "Жексенбі",
+    "Дүйсенбі",
+    "Сейсенбі",
+    "Сәрсенбі",
+    "Бейсенбі",
+    "Жұма",
+    "Сенбі"
+  ],
+  "holidays_input_description": "* Үтірмен бөлінген күндерді мына форматта енгізіңіз:<br> ЖЖЖЖ-АА-КК, немесе күндер диапазоны үшін: ЖЖЖЖ-АА-КК--ЖЖЖЖ-АА-КК.",
+  "from_time_must_be_before_to_time": "\"Бастап\" уақыты \"Дейін\" уақытынан бұрын болуы керек",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "JustDo деңгейінде кемінде бір жұмыс күні болуы керек."
 }

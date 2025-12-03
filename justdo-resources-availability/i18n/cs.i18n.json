@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Nastavit pracovní dny JustDo",
-  "set_my_workdays_label": "Nastavit moje pracovní dny"
+  "set_justdo_workdays_label": "Nastavit pracovní dny JustDo",
+  "set_my_workdays_label": "Nastavit moje pracovní dny",
+  "set_justdo_workdays_dialog_title": "Nastavit pracovní dny pro __justdo_title__",
+  "set_user_workdays_dialog_title": "Nastavit pracovní dny pro __justdo_title__: __user_name__",
+  "workdays_label": "Pracovní dny",
+  "holidays_label": "Svátky",
+  "personal_leave_label": "Osobní volno",
+  "days_of_week": [
+    "Neděle",
+    "Pondělí",
+    "Úterý",
+    "Středa",
+    "Čtvrtek",
+    "Pátek",
+    "Sobota"
+  ],
+  "holidays_input_description": "* Zadejte data oddělená čárkami ve formátu:<br> RRRR-MM-DD, nebo pro rozsah dat: RRRR-MM-DD--RRRR-MM-DD.",
+  "from_time_must_be_before_to_time": "Čas \"Od\" musí být před časem \"Do\"",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "Na úrovni JustDo musí být alespoň jeden pracovní den."
 }

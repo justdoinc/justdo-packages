@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Танзими рӯзҳои корӣ дар JustDo",
-  "set_my_workdays_label": "Танзими рӯзҳои кории ман"
+  "set_justdo_workdays_label": "Танзими рӯзҳои корӣ дар JustDo",
+  "set_my_workdays_label": "Танзими рӯзҳои кории ман",
+  "set_justdo_workdays_dialog_title": "Танзими рӯзҳои корӣ барои __justdo_title__",
+  "set_user_workdays_dialog_title": "Танзими рӯзҳои корӣ барои __justdo_title__: __user_name__",
+  "workdays_label": "Рӯзҳои корӣ",
+  "holidays_label": "Рӯзҳои истироҳат (Holidays)",
+  "personal_leave_label": "Рухсатии шахсӣ",
+  "days_of_week": [
+    "Якшанбе",
+    "Душанбе",
+    "Сешанбе",
+    "Чоршанбе",
+    "Панҷшанбе",
+    "Ҷумъа",
+    "Шанбе"
+  ],
+  "holidays_input_description": "* Санаҳоро бо вергул ҷудо карда, дар формати зерин ворид кунед:<br> СССС-ММ-РР, ё барои диапазони санаҳо: СССС-ММ-РР--СССС-ММ-РР.",
+  "from_time_must_be_before_to_time": "Вақти \"Аз\" бояд пеш аз вақти \"То\" бошад",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "Ҳадди ақал як рӯзи корӣ дар сатҳи JustDo бояд мавҷуд бошад."
 }
