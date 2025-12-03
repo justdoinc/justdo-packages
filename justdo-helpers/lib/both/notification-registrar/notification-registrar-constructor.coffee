@@ -31,7 +31,7 @@ NotificationRegistrar = (options) ->
   options = cleaned_val
   @options = options
 
-  @notification_types = {}
+  @notification_categories = {}
   @user_config_section_id = @options.user_config_options._id
   
   @_setupUsersSchema()
@@ -50,10 +50,10 @@ _.extend NotificationRegistrar.prototype,
       "profile.#{user_preference_subdocument_id}.unsubscribe_from_all":
         type: Boolean
         defaultValue: false
-      "profile.#{user_preference_subdocument_id}.unsubscribed_notifications_types":
+      "profile.#{user_preference_subdocument_id}.unsubscribed_notifications_categories":
         type: Array
         optional: true
-      "profile.#{user_preference_subdocument_id}.unsubscribed_notifications_types.$":
+      "profile.#{user_preference_subdocument_id}.unsubscribed_notifications_categories.$":
         type: String
         optional: true
     Meteor.users.attachSchema users_schema
@@ -116,22 +116,22 @@ _.extend NotificationRegistrar.prototype,
         dash_sep_user_preference_subdocument_id = @_getDashSepUserPreferenceSubdocumentId()
         
         APP.hash_requests_handler.addRequestHandler "unsubscribe-from-#{dash_sep_user_preference_subdocument_id}", (args) =>
-          notification_type = args["notification-type"]
+          notification_category = args["notification-category"]
 
-          if _.isEmpty notification_type
-            APP.logger.warn "Hash request: unsubscribe-from-#{dash_sep_user_preference_subdocument_id}: received with no notification-type argument, ignoring request"
+          if _.isEmpty notification_category
+            APP.logger.warn "Hash request: unsubscribe-from-#{dash_sep_user_preference_subdocument_id}: received with no notification-category argument, ignoring request"
             return
           
-          notification_type = JustdoHelpers.dashSepTo "_", notification_type
+          notification_category = JustdoHelpers.dashSepTo "_", notification_category
           
-          if notification_type is "all"
+          if notification_category is "all"
             @disableAllNotificationsForUser Meteor.userId()
             bootbox_message = TAPi18n.__ "successfully_unsubscribed_from_all_notifications"
 
           else
-            @unsubscribeUserFromNotificationType Meteor.userId(), notification_type
-            notification_type_label = JustdoHelpers.lcFirst TAPi18n.__ @getNotificationType(notification_type).label_i18n
-            bootbox_message = TAPi18n.__ "successfully_unsubscribed_from_notification_type", {notification_type_label: notification_type_label}
+            @unsubscribeUserFromNotificationCategory Meteor.userId(), notification_category
+            notification_category_label = JustdoHelpers.lcFirst TAPi18n.__ @getNotificationCategory(notification_category).label_i18n
+            bootbox_message = TAPi18n.__ "successfully_unsubscribed_from_notification_category", {notification_category_label}
 
           bootbox.alert(bootbox_message)
 
@@ -139,36 +139,35 @@ _.extend NotificationRegistrar.prototype,
         
     return
   
-  getHashRequestStringForUnsubscribe: (notification_type_id) ->
+  getHashRequestStringForUnsubscribe: (notification_category_id) ->
     dash_sep_user_preference_subdocument_id = @_getDashSepUserPreferenceSubdocumentId()
-    return "&hr-id=unsubscribe-from-#{dash_sep_user_preference_subdocument_id}&hr-notification-type=#{JustdoHelpers.underscoreSepTo "-", notification_type_id}"
+    return "&hr-id=unsubscribe-from-#{dash_sep_user_preference_subdocument_id}&hr-notification-category=#{JustdoHelpers.underscoreSepTo "-", notification_category_id}"
 
-  _registerNotificationTypeToggle: (notification_type_id) ->
+  _registerNotificationCategoryToggle: (notification_category_id) ->
     if not Meteor.isClient
       return
       
-    notification_type = @requireNotificationType(notification_type_id)
+    notification_category = @requireNotificationCategory(notification_category_id)
 
     APP.executeAfterAppLibCode =>
-      user_config_ui.registerConfigTemplate notification_type_id,
       if not (user_config_ui = APP.modules.main.user_config_ui)?
         return
-        
+
       user_config_ui.registerConfigTemplate notification_category_id,
         section: @user_config_section_id
         template: "notification_registrar_user_config_toggle"
         template_data:
           registrar: @
-          notification_type_id: notification_type_id
+          notification_category_id: notification_category_id
           user_preference_subdocument_id: @options.user_preference_subdocument_id
-          label_i18n: notification_type.label_i18n
-        priority: notification_type.priority
+          label_i18n: notification_category.label_i18n
+        priority: notification_category.priority
 
       return
 
     return
 
-  registerNotificationTypeOptionsSchema: new SimpleSchema
+  registerNotificationCategoryOptionsSchema: new SimpleSchema
     label_i18n:
       # The i18n key for the label to display for this notification toggle
       type: String
@@ -176,66 +175,66 @@ _.extend NotificationRegistrar.prototype,
       # The priority for ordering this toggle in the user config section (lower = higher priority)
       type: Number
     notifications:
-      # The available notifications of the type.
+      # The available notifications of the category.
       # For example, in the context of emails, the notifications are the email templates.
       type: Array
     "notifications.$":
       type: String
     notifications_ignoring_user_preference:
       # Any notifications listed here igores user preference.
-      # It means that the user will still receive the notification even if they unsubscribe from this notification type, or all notifications.
+      # It means that the user will still receive the notification even if they unsubscribe from this notification category, or all notifications.
       # This is useful for notifications like "confirm email" or "password recovery".
       type: Array
       optional: true
     "notifications_ignoring_user_preference.$":
       type: String
-  registerNotificationType: (notification_type_id, options) ->
+  registerNotificationCategory: (notification_category_id, options) ->
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
-        @registerNotificationTypeOptionsSchema,
+        @registerNotificationCategoryOptionsSchema,
         options,
         {throw_on_error: true}
       )
-    notification_def = cleaned_val
-    notification_def._id = notification_type_id
+    notification_category_def = cleaned_val
+    notification_category_def._id = notification_category_id
 
-    if @getNotificationType(notification_type_id)?
-      throw new Meteor.Error "invalid-argument", "Notification type with id #{notification_def._id} already registered"
+    if @getNotificationCategory(notification_category_id)?
+      throw new Meteor.Error "invalid-argument", "Notification category with id #{notification_category_def._id} already registered"
     
-    @notification_types[notification_def._id] = notification_def
+    @notification_categories[notification_category_def._id] = notification_category_def
 
     # Create a toggle template for this notification in the user config section
-    is_all_notifications_ignoring_user_preference = _.size(notification_def.notifications_ignoring_user_preference) is _.size(notification_def.notifications)
+    is_all_notifications_ignoring_user_preference = _.size(notification_category_def.notifications_ignoring_user_preference) is _.size(notification_category_def.notifications)
     if not is_all_notifications_ignoring_user_preference
-      @_registerNotificationTypeToggle(notification_type_id)
+      @_registerNotificationCategoryToggle(notification_category_id)
 
     return
   
-  unregisterNotificationType: (notification_type_id) ->
-    @notification_types = _.without @notification_types, @notification_types[notification_type_id]
+  unregisterNotificationCategory: (notification_category_id) ->
+    @notification_categories = _.without @notification_categories, @notification_categories[notification_category_id]
 
     return
   
-  getNotificationType: (notification_type_id) ->
-    return @notification_types[notification_type_id]
+  getNotificationCategory: (notification_category_id) ->
+    return @notification_categories[notification_category_id]
   
-  requireNotificationType: (notification_type_id) ->
-    if not (notification_type = @getNotificationType(notification_type_id))?
-      throw new Meteor.Error "invalid-argument", "Notification type with id #{notification_type_id} not found"
+  requireNotificationCategory: (notification_category_id) ->
+    if not (notification_category = @getNotificationCategory(notification_category_id))?
+      throw new Meteor.Error "invalid-argument", "Notification category with id #{notification_category_id} not found"
     
-    return notification_type
+    return notification_category
   
-  getNotificationTypeByNotificationId: (notification_id) ->
-    notification_type = _.find @notification_types, (notification_type) ->
-      return notification_id in notification_type.notifications
+  getNotificationCategoryByNotificationId: (notification_id) ->
+    notification_category = _.find @notification_categories, (notification_category) ->
+      return notification_id in notification_category.notifications
     
-    return notification_type
+    return notification_category
   
-  requireNotificationTypeByNotificationId: (notification_id) ->
-    if not (notification_type = @getNotificationTypeByNotificationId(notification_id))?
+  requireNotificationCategoryByNotificationId: (notification_id) ->
+    if not (notification_category = @getNotificationCategoryByNotificationId(notification_id))?
       throw new Meteor.Error "invalid-argument", "Notification with id #{notification_id} not found"
       
-    return notification_type
+    return notification_category
 
   isUserUnsubscribedFromAllNotifications: (user) ->
     if _.isString user
@@ -266,15 +265,15 @@ _.extend NotificationRegistrar.prototype,
     return
   
   isNotificationIgnoringUserUnsubscribePreference: (notification_id) ->
-    is_notification_type_ignoring_user_preference = false
+    is_notification_category_ignoring_user_preference = false
 
-    notification_type_def = @requireNotificationTypeByNotificationId(notification_id)
+    notification_category_def = @requireNotificationCategoryByNotificationId(notification_id)
 
-    notification_type_has_notifications_ignoring_user_preference = notification_type_def.notifications_ignoring_user_preference?
-    if notification_type_has_notifications_ignoring_user_preference
-      is_notification_type_ignoring_user_preference = notification_id in notification_type_def.notifications_ignoring_user_preference
+    notification_category_has_notifications_ignoring_user_preference = notification_category_def.notifications_ignoring_user_preference?
+    if notification_category_has_notifications_ignoring_user_preference
+      is_notification_category_ignoring_user_preference = notification_id in notification_category_def.notifications_ignoring_user_preference
 
-    return is_notification_type_ignoring_user_preference
+    return is_notification_category_ignoring_user_preference
 
   isUserUnsubscribedFromNotification: (user, notification_id) ->
     # This method is checks individual notification subscription status,
@@ -285,10 +284,10 @@ _.extend NotificationRegistrar.prototype,
       # Return false if the notification ignores user unsubscribe preference.
       return false
     
-    notification_type_def = @requireNotificationTypeByNotificationId(notification_id)
-    return @isUserUnsubscribedFromNotificationType(user, notification_type_def._id)
+    notification_category_def = @requireNotificationCategoryByNotificationId(notification_id)
+    return @isUserUnsubscribedFromNotificationCategory(user, notification_category_def._id)
   
-  isUserUnsubscribedFromNotificationType: (user, notification_type_id) ->
+  isUserUnsubscribedFromNotificationCategory: (user, notification_category_id) ->
     if _.isString user
       user = @_getUserDocWithPreferenceSubdocument user
     
@@ -296,26 +295,26 @@ _.extend NotificationRegistrar.prototype,
       # If the user has unsubscribed from all notifications, return true.
       return true
     
-    if not (user_preference_subdocument = @_extractUserPreferenceSubdocument(user))? or _.isEmpty(unsubscribed_notifications_types = user_preference_subdocument.unsubscribed_notifications_types)
-      # If the `user_preference_subdocument`, or `user_preference_subdocument.unsubscribed_notifications_types` does not exist,
+    if not (user_preference_subdocument = @_extractUserPreferenceSubdocument(user))? or _.isEmpty(unsubscribed_notifications_categories = user_preference_subdocument.unsubscribed_notifications_categories)
+      # If the `user_preference_subdocument`, or `user_preference_subdocument.unsubscribed_notifications_categories` does not exist,
       # it means the user didn't unsubscribe from any notifications. (i.e. all notifications are subscribed.)
       return false
     
-    return notification_type_id in unsubscribed_notifications_types
+    return notification_category_id in unsubscribed_notifications_categories
 
-  unsubscribeUserFromNotificationType: (user_id, notification_type_id) ->
+  unsubscribeUserFromNotificationCategory: (user_id, notification_category_id) ->
     modifier =
       $addToSet:
-        "profile.#{@options.user_preference_subdocument_id}.unsubscribed_notifications_types": notification_type_id
+        "profile.#{@options.user_preference_subdocument_id}.unsubscribed_notifications_categories": notification_category_id
 
     Meteor.users.update user_id, modifier
 
     return
   
-  subscribeUserToNotificationType: (user_id, notification_type_id) ->
+  subscribeUserToNotificationCategory: (user_id, notification_category_id) ->
     modifier =
       $pull:
-        "profile.#{@options.user_preference_subdocument_id}.unsubscribed_notifications_types": notification_type_id
+        "profile.#{@options.user_preference_subdocument_id}.unsubscribed_notifications_categories": notification_category_id
 
     Meteor.users.update user_id, modifier
 

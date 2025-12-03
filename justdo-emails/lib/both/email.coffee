@@ -11,11 +11,11 @@ _.extend JustdoEmails,
       _id: "justdo-emails"
       priority: 200
   
-  registerEmailType: (email_type_id, options) ->
-    options.template = email_type_id
-    @registrar.registerNotificationType(email_type_id, options)
+  registerEmailCategory: (email_category_id, options) ->
+    options.template = email_category_id
+    @registrar.registerNotificationCategory(email_category_id, options)
 
     return
   
-  getHashRequestStringForUnsubscribe: (email_type_id) ->
-    return @registrar.getHashRequestStringForUnsubscribe(email_type_id)
+  getHashRequestStringForUnsubscribe: (email_category_id) ->
+    return @registrar.getHashRequestStringForUnsubscribe(email_category_id)
