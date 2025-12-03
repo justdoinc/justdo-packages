@@ -19,8 +19,3 @@ _.extend JustdoEmails,
   
   getHashRequestStringForUnsubscribe: (email_type_id) ->
     return @registrar.getHashRequestStringForUnsubscribe(email_type_id)
-  
-  unsubscribeFromType: (user_id, email_type_id) ->
-    @registrar.unsubscribeUserFromNotificationType(user_id, email_type_id)
-
-    return
