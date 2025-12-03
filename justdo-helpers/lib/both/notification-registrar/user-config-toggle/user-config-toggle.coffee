@@ -32,9 +32,9 @@ Template.notification_registrar_user_config_toggle.onCreated ->
   
   @toggleUserUnsubscribedFromAllNotifications = ->
     if @isUserUnsubscribedFromAllNotifications()
-      @data.registrar.subscribeUserToAllNotifications(Meteor.userId())
+      @data.registrar.enableAllNotificationsForUser(Meteor.userId())
     else
-      @data.registrar.unsubscribeUserFromAllNotifications(Meteor.userId())
+      @data.registrar.disableAllNotificationsForUser(Meteor.userId())
     
     return
   

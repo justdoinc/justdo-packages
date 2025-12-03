@@ -125,7 +125,7 @@ _.extend NotificationRegistrar.prototype,
           notification_type = JustdoHelpers.dashSepTo "_", notification_type
           
           if notification_type is "all"
-            @unsubscribeUserFromAllNotifications Meteor.userId()
+            @disableAllNotificationsForUser Meteor.userId()
             bootbox_message = TAPi18n.__ "successfully_unsubscribed_from_all_notifications"
 
           else
@@ -246,7 +246,7 @@ _.extend NotificationRegistrar.prototype,
     
     return user_preference_subdocument.unsubscribe_from_all is true
   
-  unsubscribeUserFromAllNotifications: (user_id) ->
+  disableAllNotificationsForUser: (user_id) ->
     modifier =
       $set:
         "profile.#{@options.user_preference_subdocument_id}.unsubscribe_from_all": true
@@ -255,7 +255,7 @@ _.extend NotificationRegistrar.prototype,
 
     return
   
-  subscribeUserToAllNotifications: (user_id) ->
+  enableAllNotificationsForUser: (user_id) ->
     modifier =
       $set:
         "profile.#{@options.user_preference_subdocument_id}.unsubscribe_from_all": false
