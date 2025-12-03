@@ -100,7 +100,7 @@ _.extend JustdoResourcesAvailability.prototype,
     #load project specific info
     else
       config_data =
-        title: TAPi18n.__("set_workdays_dialog_title", {justdo_title: project_title})
+        title: TAPi18n.__("set_justdo_workdays_dialog_title", {justdo_title: project_title})
         weekdays: availability_data.justdo_level_data.working_days
         holidays: availability_data.justdo_level_data.holidays
         holidays_label: "holidays_label"
