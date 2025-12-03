@@ -73,35 +73,36 @@ _.extend JustdoResourcesAvailability.prototype,
     self = @
 
     if not project_id
-      project_id = JD.activeJustdo({_id: 1})._id
+      project_id = JD.activeJustdoId()
 
     # load user task specific info
     if task_id?
       #todo: project config
-      alert "Not Ready"
-      return
+      throw @_error "not-supported"
 
+    project_doc_query_options = 
+      fields: _.extend @_getAvailabilityData_getRequiredJustdoFields(), {title: 1}
+    project_doc = @projects_collection.findOne(project_id, project_doc_query_options)
+    if not project_doc?
+      throw @_error "unknown-project"
+    project_title = project_doc.title
+
+    availability_data = @_getAvailabilityData(project_doc, user_id)
+      
     # load user specific info
-    else if user_id?
-      if!(proj_obj = APP.collections.Projects.findOne(project_id))
-        throw "Cant find project id"
-
-      user = Meteor.users.findOne(user_id)
+    if user_id?
       config_data =
-        title: TAPi18n.__("set_user_workdays_dialog_title", {justdo_title: JD.activeJustdo({title: 1}).title, user_name: JustdoHelpers.displayName(user)})
-        weekdays: proj_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]?["#{project_id}:#{user_id}"]?.working_days
-        holidays: proj_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]?["#{project_id}:#{user_id}"]?.holidays
+        title: TAPi18n.__("set_user_workdays_dialog_title", {justdo_title: project_title, user_name: JustdoHelpers.displayName(user_id)})
+        weekdays: availability_data.user_level_data?.working_days
+        holidays: availability_data.user_level_data?.holidays
         holidays_label: "personal_leave_label"
 
     #load project specific info
     else
-      if!(proj_obj = APP.collections.Projects.findOne(project_id))
-        throw "Cant find project id"
-
       config_data =
-        title: TAPi18n.__("set_workdays_dialog_title", {justdo_title: JD.activeJustdo({title: 1}).title})
-        weekdays: proj_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]?[project_id]?.working_days or @default_workdays.working_days
-        holidays: proj_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]?[project_id]?.holidays or @default_workdays.holidays
+        title: TAPi18n.__("set_workdays_dialog_title", {justdo_title: project_title})
+        weekdays: availability_data.justdo_level_data.working_days
+        holidays: availability_data.justdo_level_data.holidays
         holidays_label: "holidays_label"
 
     config_data.config_user_id = user_id
@@ -112,7 +113,6 @@ _.extend JustdoResourcesAvailability.prototype,
     dialog_button_label = TAPi18n.__("close")
     if JD.active_justdo.isAdmin() or user_id == Meteor.userId()
       dialog_button_label = TAPi18n.__("save")
-
 
     bootbox.dialog
       title: config_data.title
