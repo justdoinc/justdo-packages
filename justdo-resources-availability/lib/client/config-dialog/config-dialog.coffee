@@ -10,8 +10,18 @@
   holidays: Set of "YYYY-MM-DD" strings
 ###
 holidays_string_is_valid = new ReactiveVar(true)
-days_of_week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+getDaysOfWeek = ->
+  ret = []
+  days_of_week_array_en = TAPi18n.__("days_of_week", {}, "en").split("\n")
+  days_of_week_array_translated = TAPi18n.__("days_of_week").split("\n")
 
+  for index of days_of_week_array_en
+    en_day = days_of_week_array_en[index]
+    translated_day = days_of_week_array_translated[index]
+    ret.push {en: en_day, translated: translated_day}
+
+  return ret
+  
 Template.justdo_resources_availability_config_dialog.onCreated ->
   data = Template.currentData()
   data.has_issues = new Set()
@@ -30,7 +40,7 @@ Template.justdo_resources_availability_config_dialog.onCreated ->
   return
 
 Template.justdo_resources_availability_config_dialog.helpers
-  week_days: -> return days_of_week
+  daysOfWeek: -> return getDaysOfWeek()
 
   holidaysFormatError: ->
     if holidays_string_is_valid.get()
@@ -39,7 +49,7 @@ Template.justdo_resources_availability_config_dialog.helpers
 
   holidaysList: ->
     ret = ""
-    Template.currentData().holidays.forEach (day)->
+    Template.currentData().holidays.forEach (day) ->
       ret += day + ", "
 
     return ret.slice 0, -2
@@ -67,11 +77,19 @@ Template.justdo_resources_availability_config_dialog.events
 
 
 ###
-  data: day of week like "Sunday"...
+  data: day of week like {en: "Sunday", translated: "星期天"}
 ###
 Template.justdo_resources_availability_config_dialog_workday.onCreated ->
+  @days_of_week = getDaysOfWeek()
+
+  # The index of the day passed to the data of this template in the days_of_week array
+  @day_of_week_index = _.findIndex(@days_of_week, (day_obj) => day_obj.en is @data.en)
+    
+  @getDayOfWeekDataFromParentTemplate = ->
+    return Template.parentData().weekdays[@day_of_week_index]
+  
   @is_holiday = new ReactiveVar()
-  if (day = Template.parentData().weekdays["#{days_of_week.indexOf(Template.instance().data)}"])
+  if (day = @getDayOfWeekDataFromParentTemplate())
     @is_holiday.set(day.holiday)
   else
     @is_holiday.set(true)
@@ -80,8 +98,8 @@ Template.justdo_resources_availability_config_dialog_workday.onCreated ->
   @input_is_okay = new ReactiveVar(true)
 
   @checkData = ->
-    to_time = Template.parentData().weekdays["#{days_of_week.indexOf(Template.instance().data)}"]?.to
-    from_time = Template.parentData().weekdays["#{days_of_week.indexOf(Template.instance().data)}"]?.from
+    to_time = @getDayOfWeekDataFromParentTemplate()?.to
+    from_time = @getDayOfWeekDataFromParentTemplate()?.from
     if from_time <= to_time
       Template.instance().input_is_okay.set(true)
       Template.parentData().has_issues.delete Template.currentData()
@@ -91,7 +109,6 @@ Template.justdo_resources_availability_config_dialog_workday.onCreated ->
     return
 
   return #onCreated
-
 
 Template.justdo_resources_availability_config_dialog_workday.helpers
   isHoliday: ->
@@ -106,12 +123,14 @@ Template.justdo_resources_availability_config_dialog_workday.helpers
     return Template.instance().input_is_okay.get()
 
   fromTime: ->
-    if ( r = Template.parentData().weekdays["#{days_of_week.indexOf(Template.instance().data)}"]?.from )
+    tpl = Template.instance()
+    if ( r = tpl.getDayOfWeekDataFromParentTemplate()?.from )
       return r
     return "08:00"
 
   toTime: ->
-    if ( r = Template.parentData().weekdays["#{days_of_week.indexOf(Template.instance().data)}"]?.to )
+    tpl = Template.instance()
+    if ( r = tpl.getDayOfWeekDataFromParentTemplate()?.to )
       return r
     return "16:00"
 
@@ -123,31 +142,34 @@ Template.justdo_resources_availability_config_dialog_workday.helpers
 
 
 Template.justdo_resources_availability_config_dialog_workday.events
-  "click .form-check-input": (e, tpl)->
+  "click .form-check-input": (e, tpl) ->
     if JD.active_justdo.isAdmin() or Template.parentData().config_user_id == Meteor.userId()
       return true
     return false
 
-  "change .form-check-input": (e, tpl)->
+  "change .form-check-input": (e, tpl) ->
     parent_data = Template.parentData()
-    Meteor._ensure parent_data, "weekdays", "#{days_of_week.indexOf(Template.instance().data)}"
-    parent_data_day = parent_data.weekdays["#{days_of_week.indexOf(Template.instance().data)}"]
+
+    Meteor._ensure parent_data, "weekdays", "#{tpl.day_of_week_index}"
+    parent_data_day = tpl.getDayOfWeekDataFromParentTemplate()
+
     if e.target.checked
       parent_data_day.holiday = false
-      Template.instance().is_holiday.set(false)
+      tpl.is_holiday.set(false)
     else
       parent_data_day.holiday = true
-      Template.instance().is_holiday.set(true)
+      tpl.is_holiday.set(true)
+
     return
 
-  "change .from_time": (e, tpl)->
-    Template.parentData().weekdays["#{days_of_week.indexOf(Template.instance().data)}"].from = e.target.value
+  "change .from_time": (e, tpl) ->
+    tpl.getDayOfWeekDataFromParentTemplate().from = e.target.value
     Template.instance().checkData()
     return
 
-  "change .to_time": (e, tpl)->
+  "change .to_time": (e, tpl) ->
 
-    Template.parentData().weekdays["#{days_of_week.indexOf(Template.instance().data)}"].to = e.target.value
+    tpl.getDayOfWeekDataFromParentTemplate().to = e.target.value
     Template.instance().checkData()
     return
 
