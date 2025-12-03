@@ -282,12 +282,11 @@ GridControl.installEditor "UnicodeDateEditor",
         return
       onClose: => @focus()
       beforeShowDay: (date) =>
-        # console.log "beforeShowDay", date
         is_selectable = true
         extra_classes = []
 
         formatted_date_string = moment(date).format("YYYY-MM-DD")
-        is_holiday = APP.justdo_resources_availability?.workdaysAndHolidaysFor(JD.activeJustdoId(), [formatted_date_string])?.holidays?.has(formatted_date_string)
+        is_holiday = APP.justdo_resources_availability?.workdaysAndHolidaysFor(JD.activeJustdoId(), [formatted_date_string], Meteor.userId())?.holidays?.has(formatted_date_string)
         if is_holiday
           extra_classes.push "udf-holiday"
 
