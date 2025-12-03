@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Imposta Giorni Lavorativi di JustDo",
-  "set_my_workdays_label": "Imposta i Miei Giorni Lavorativi"
+  "set_justdo_workdays_label": "Imposta Giorni Lavorativi di JustDo",
+  "set_my_workdays_label": "Imposta i Miei Giorni Lavorativi",
+  "set_justdo_workdays_dialog_title": "Imposta Giorni Lavorativi per __justdo_title__",
+  "set_user_workdays_dialog_title": "Imposta Giorni Lavorativi per __justdo_title__: __user_name__",
+  "workdays_label": "Giorni Lavorativi",
+  "holidays_label": "Festività",
+  "personal_leave_label": "Permesso Personale",
+  "days_of_week": [
+    "Domenica",
+    "Lunedì",
+    "Martedì",
+    "Mercoledì",
+    "Giovedì",
+    "Venerdì",
+    "Sabato"
+  ],
+  "holidays_input_description": "* Inserire le date separate da virgola nel formato:<br> AAAA-MM-GG, oppure, per un intervallo di date: AAAA-MM-GG--AAAA-MM-GG.",
+  "from_time_must_be_before_to_time": "L'orario \"Da\" deve essere precedente all'orario \"A\"",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "Deve esserci almeno un giorno lavorativo a livello di JustDo."
 }

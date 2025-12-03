@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "JustDo 근무일 설정",
-  "set_my_workdays_label": "내 근무일 설정"
+  "set_justdo_workdays_label": "JustDo 근무일 설정",
+  "set_my_workdays_label": "내 근무일 설정",
+  "set_justdo_workdays_dialog_title": "__justdo_title__ 근무일 설정",
+  "set_user_workdays_dialog_title": "__justdo_title__: __user_name__ 근무일 설정",
+  "workdays_label": "근무일",
+  "holidays_label": "휴일",
+  "personal_leave_label": "개인 휴가",
+  "days_of_week": [
+    "일요일",
+    "월요일",
+    "화요일",
+    "수요일",
+    "목요일",
+    "금요일",
+    "토요일"
+  ],
+  "holidays_input_description": "* 다음 형식으로 쉼표로 구분된 날짜를 입력하세요:<br> YYYY-MM-DD, 또는 기간의 경우: YYYY-MM-DD--YYYY-MM-DD.",
+  "from_time_must_be_before_to_time": "\"시작\" 시간은 \"종료\" 시간보다 이전이어야 합니다",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "JustDo 레벨에는 최소 하나의 근무일이 있어야 합니다."
 }

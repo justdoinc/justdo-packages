@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Установить рабочие дни JustDo",
-  "set_my_workdays_label": "Установить мои рабочие дни"
+  "set_justdo_workdays_label": "Установить рабочие дни JustDo",
+  "set_my_workdays_label": "Установить мои рабочие дни",
+  "set_justdo_workdays_dialog_title": "Установить рабочие дни для __justdo_title__",
+  "set_user_workdays_dialog_title": "Установить рабочие дни для __justdo_title__: __user_name__",
+  "workdays_label": "Рабочие дни",
+  "holidays_label": "Праздники",
+  "personal_leave_label": "Личный отпуск",
+  "days_of_week": [
+    "Воскресенье",
+    "Понедельник",
+    "Вторник",
+    "Среда",
+    "Четверг",
+    "Пятница",
+    "Суббота"
+  ],
+  "holidays_input_description": "* Введите даты через запятую в формате:<br> ГГГГ-ММ-ДД, или, для диапазона дат: ГГГГ-ММ-ДД--ГГГГ-ММ-ДД.",
+  "from_time_must_be_before_to_time": "Время \"С\" должно быть раньше времени \"До\"",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "Должен быть как минимум один рабочий день на уровне JustDo."
 }

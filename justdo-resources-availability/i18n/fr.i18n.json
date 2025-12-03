@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Définir les jours ouvrables JustDo",
-  "set_my_workdays_label": "Définir mes jours ouvrables"
+  "set_justdo_workdays_label": "Définir les jours ouvrables du JustDo",
+  "set_my_workdays_label": "Définir mes jours ouvrables",
+  "set_justdo_workdays_dialog_title": "Définir les jours ouvrables pour __justdo_title__",
+  "set_user_workdays_dialog_title": "Définir les jours ouvrables pour __justdo_title__ : __user_name__",
+  "workdays_label": "Jours ouvrables",
+  "holidays_label": "Jours fériés",
+  "personal_leave_label": "Congés personnels",
+  "days_of_week": [
+    "Dimanche",
+    "Lundi",
+    "Mardi",
+    "Mercredi",
+    "Jeudi",
+    "Vendredi",
+    "Samedi"
+  ],
+  "holidays_input_description": "* Entrez les dates séparées par des virgules au format :<br> AAAA-MM-JJ, ou, pour une plage de dates : AAAA-MM-JJ--AAAA-MM-JJ.",
+  "from_time_must_be_before_to_time": "L'heure \"De\" doit être antérieure à l'heure \"À\"",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "Il doit y avoir au moins un jour ouvrable au niveau du JustDo."
 }

@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "JustDo कार्य दिवस सेट करें",
-  "set_my_workdays_label": "मेरे कार्य दिवस सेट करें"
+  "set_justdo_workdays_label": "JustDo कार्यदिवस सेट करें",
+  "set_my_workdays_label": "मेरे कार्य दिवस सेट करें",
+  "set_justdo_workdays_dialog_title": "__justdo_title__ के लिए कार्यदिवस सेट करें",
+  "set_user_workdays_dialog_title": "__justdo_title__: __user_name__ के लिए कार्यदिवस सेट करें",
+  "workdays_label": "कार्यदिवस",
+  "holidays_label": "छुट्टियाँ",
+  "personal_leave_label": "व्यक्तिगत अवकाश",
+  "days_of_week": [
+    "रविवार",
+    "सोमवार",
+    "मंगलवार",
+    "बुधवार",
+    "गुरुवार",
+    "शुक्रवार",
+    "शनिवार"
+  ],
+  "holidays_input_description": "* तारीखों को इस प्रारूप में अल्पविराम से अलग करके दर्ज करें:<br> YYYY-MM-DD, या, तारीखों की श्रृंखला के लिए: YYYY-MM-DD--YYYY-MM-DD।",
+  "from_time_must_be_before_to_time": "\"से\" समय \"तक\" समय से पहले होना चाहिए",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "JustDo स्तर पर कम से कम एक कार्यदिवस होना चाहिए।"
 }

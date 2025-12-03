@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Ezarri JustDo lan-egunak",
-  "set_my_workdays_label": "Ezarri nire lan-egunak"
+  "set_justdo_workdays_label": "Ezarri JustDo lanegunak",
+  "set_my_workdays_label": "Ezarri nire lan-egunak",
+  "set_justdo_workdays_dialog_title": "Ezarri __justdo_title__ taularako lanegunak",
+  "set_user_workdays_dialog_title": "Ezarri __justdo_title__ taularako lanegunak: __user_name__",
+  "workdays_label": "Lanegunak",
+  "holidays_label": "Jaiegunак",
+  "personal_leave_label": "Baja pertsonala",
+  "days_of_week": [
+    "Igandea",
+    "Astelehena",
+    "Asteartea",
+    "Asteazkena",
+    "Osteguna",
+    "Ostirala",
+    "Larunbata"
+  ],
+  "holidays_input_description": "* Sartu komaz bereizitako datak formatu honetan:<br> UUUU-HH-EE, edo, data tarte baterako: UUUU-HH-EE--UUUU-HH-EE.",
+  "from_time_must_be_before_to_time": "\"Hasiera\" ordua \"Amaiera\" ordua baino lehenagokoa izan behar da",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "JustDo mailan gutxienez lanegun bat egon behar da."
 }

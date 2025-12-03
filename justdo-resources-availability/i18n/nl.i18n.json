@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Stel JustDo Werkdagen in",
-  "set_my_workdays_label": "Stel Mijn Werkdagen in"
+  "set_justdo_workdays_label": "Werkdagen van JustDo instellen",
+  "set_my_workdays_label": "Stel Mijn Werkdagen in",
+  "set_justdo_workdays_dialog_title": "Werkdagen instellen voor __justdo_title__",
+  "set_user_workdays_dialog_title": "Werkdagen instellen voor __justdo_title__: __user_name__",
+  "workdays_label": "Werkdagen",
+  "holidays_label": "Feestdagen",
+  "personal_leave_label": "Persoonlijk verlof",
+  "days_of_week": [
+    "Zondag",
+    "Maandag",
+    "Dinsdag",
+    "Woensdag",
+    "Donderdag",
+    "Vrijdag",
+    "Zaterdag"
+  ],
+  "holidays_input_description": "* Voer datums in gescheiden door komma's in het formaat:<br> JJJJ-MM-DD, of, voor een reeks datums: JJJJ-MM-DD--JJJJ-MM-DD.",
+  "from_time_must_be_before_to_time": "\"Van\" tijd moet voor \"Tot\" tijd zijn",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "Er moet ten minste één werkdag zijn op JustDo-niveau."
 }

@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Постави работни денови во JustDo",
-  "set_my_workdays_label": "Постави мои работни денови"
+  "set_justdo_workdays_label": "Постави работни денови за JustDo",
+  "set_my_workdays_label": "Постави мои работни денови",
+  "set_justdo_workdays_dialog_title": "Постави работни денови за __justdo_title__",
+  "set_user_workdays_dialog_title": "Постави работни денови за __justdo_title__: __user_name__",
+  "workdays_label": "Работни денови",
+  "holidays_label": "Празници",
+  "personal_leave_label": "Personален одмор",
+  "days_of_week": [
+    "Недела",
+    "Понеделник",
+    "Вторник",
+    "Среда",
+    "Четврток",
+    "Петок",
+    "Сабота"
+  ],
+  "holidays_input_description": "* Внесете датуми одделени со запирка во форматот:<br> ГГГГ-ММ-ДД, или, за опсег на датуми: ГГГГ-ММ-ДД--ГГГГ-ММ-ДД.",
+  "from_time_must_be_before_to_time": "Времето \"Од\" мора да биде пред времето \"До\"",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "Мора да има најмалку еден работен ден на ниво на JustDo табла."
 }

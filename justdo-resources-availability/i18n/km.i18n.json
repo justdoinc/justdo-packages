@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "កំណត់ថ្ងៃធ្វើការរបស់ JustDo",
-  "set_my_workdays_label": "កំណត់ថ្ងៃធ្វើការរបស់ខ្ញុំ"
+  "set_justdo_workdays_label": "កំណត់ថ្ងៃធ្វើការរបស់ JustDo",
+  "set_my_workdays_label": "កំណត់ថ្ងៃធ្វើការរបស់ខ្ញុំ",
+  "set_justdo_workdays_dialog_title": "កំណត់ថ្ងៃធ្វើការសម្រាប់ __justdo_title__",
+  "set_user_workdays_dialog_title": "កំណត់ថ្ងៃធ្វើការសម្រាប់ __justdo_title__: __user_name__",
+  "workdays_label": "ថ្ងៃធ្វើការ",
+  "holidays_label": "ថ្ងៃឈប់សម្រាក",
+  "personal_leave_label": "ច្បាប់ឈប់សម្រាកផ្ទាល់ខ្លួន",
+  "days_of_week": [
+    "ថ្ងៃអាទិត្យ",
+    "ថ្ងៃច័ន្ទ",
+    "ថ្ងៃអង្គារ",
+    "ថ្ងៃពុធ",
+    "ថ្ងៃព្រហស្បតិ៍",
+    "ថ្ងៃសុក្រ",
+    "ថ្ងៃសៅរ៍"
+  ],
+  "holidays_input_description": "* បញ្ចូលកាលបរិច្ឆេទដោយបំបែកដោយក្បៀសក្នុងទម្រង់៖<br> YYYY-MM-DD ឬសម្រាប់ចន្លោះកាលបរិច្ឆេទ៖ YYYY-MM-DD--YYYY-MM-DD។",
+  "from_time_must_be_before_to_time": "ពេលវេលា \"ពី\" ត្រូវតែមុនពេលវេលា \"ដល់\"",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "ត្រូវតែមានថ្ងៃធ្វើការយ៉ាងហោចណាស់មួយថ្ងៃនៅកម្រិត JustDo។"
 }

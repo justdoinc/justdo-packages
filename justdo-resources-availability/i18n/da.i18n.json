@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Indstil JustDo arbejdsdage",
-  "set_my_workdays_label": "Indstil mine arbejdsdage"
+  "set_justdo_workdays_label": "Indstil JustDo arbejdsdage",
+  "set_my_workdays_label": "Indstil mine arbejdsdage",
+  "set_justdo_workdays_dialog_title": "Indstil arbejdsdage for __justdo_title__",
+  "set_user_workdays_dialog_title": "Indstil arbejdsdage for __justdo_title__: __user_name__",
+  "workdays_label": "Arbejdsdage",
+  "holidays_label": "Helligdage",
+  "personal_leave_label": "Personlig frihed",
+  "days_of_week": [
+    "Søndag",
+    "Mandag",
+    "Tirsdag",
+    "Onsdag",
+    "Torsdag",
+    "Fredag",
+    "Lørdag"
+  ],
+  "holidays_input_description": "* Indtast kommaseparerede datoer i formatet:<br> ÅÅÅÅ-MM-DD, eller for en række datoer: ÅÅÅÅ-MM-DD--ÅÅÅÅ-MM-DD.",
+  "from_time_must_be_before_to_time": "\"Fra\" tidspunkt skal være før \"Til\" tidspunkt",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "Der skal være mindst én arbejdsdag på JustDo-niveau."
 }

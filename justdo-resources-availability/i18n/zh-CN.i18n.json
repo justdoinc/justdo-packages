@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "设置 JustDo 工作日",
-  "set_my_workdays_label": "设置我的工作日"
+  "set_justdo_workdays_label": "设置 JustDo 工作日",
+  "set_my_workdays_label": "设置我的工作日",
+  "set_justdo_workdays_dialog_title": "为 __justdo_title__ 设置工作日",
+  "set_user_workdays_dialog_title": "为 __justdo_title__ 设置工作日:__user_name__",
+  "workdays_label": "工作日",
+  "holidays_label": "假期",
+  "personal_leave_label": "个人休假",
+  "days_of_week": [
+    "星期日",
+    "星期一",
+    "星期二",
+    "星期三",
+    "星期四",
+    "星期五",
+    "星期六"
+  ],
+  "holidays_input_description": "* 请输入以逗号分隔的日期,格式为:<br>YYYY-MM-DD,或者对于日期范围:YYYY-MM-DD--YYYY-MM-DD。",
+  "from_time_must_be_before_to_time": "\"开始\"时间必须早于\"结束\"时间",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "JustDo 层级必须至少有一个工作日。"
 }

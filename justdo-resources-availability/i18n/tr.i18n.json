@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "JustDo İş Günlerini Ayarla",
-  "set_my_workdays_label": "İş Günlerimi Ayarla"
+  "set_justdo_workdays_label": "JustDo Çalışma Günlerini Ayarla",
+  "set_my_workdays_label": "İş Günlerimi Ayarla",
+  "set_justdo_workdays_dialog_title": "__justdo_title__ için Çalışma Günlerini Ayarla",
+  "set_user_workdays_dialog_title": "__justdo_title__ için Çalışma Günlerini Ayarla: __user_name__",
+  "workdays_label": "Çalışma Günleri",
+  "holidays_label": "Tatil Günleri",
+  "personal_leave_label": "Kişisel İzin",
+  "days_of_week": [
+    "Pazar",
+    "Pazartesi",
+    "Salı",
+    "Çarşamba",
+    "Perşembe",
+    "Cuma",
+    "Cumartesi"
+  ],
+  "holidays_input_description": "* Tarihleri virgülle ayırarak şu formatta girin:<br> YYYY-AA-GG veya bir tarih aralığı için: YYYY-AA-GG--YYYY-AA-GG.",
+  "from_time_must_be_before_to_time": "\"Başlangıç\" saati \"Bitiş\" saatinden önce olmalıdır",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "JustDo düzeyinde en az bir çalışma günü olmalıdır."
 }

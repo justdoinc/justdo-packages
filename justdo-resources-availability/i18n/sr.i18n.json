@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Podesi radne dane u JustDo",
-  "set_my_workdays_label": "Podesi moje radne dane"
+  "set_justdo_workdays_label": "Podesi radne dane za JustDo",
+  "set_my_workdays_label": "Podesi moje radne dane",
+  "set_justdo_workdays_dialog_title": "Podesi radne dane za __justdo_title__",
+  "set_user_workdays_dialog_title": "Podesi radne dane za __justdo_title__: __user_name__",
+  "workdays_label": "Radni dani",
+  "holidays_label": "Praznici",
+  "personal_leave_label": "Lično odsustvo",
+  "days_of_week": [
+    "Nedelja",
+    "Ponedeljak",
+    "Utorak",
+    "Sreda",
+    "Četvrtak",
+    "Petak",
+    "Subota"
+  ],
+  "holidays_input_description": "* Unesite datume razdvojene zarezom u formatu:<br> GGGG-MM-DD, ili, za period datuma: GGGG-MM-DD--GGGG-MM-DD.",
+  "from_time_must_be_before_to_time": "Vreme \"Od\" mora biti pre vremena \"Do\"",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "Mora postojati barem jedan radni dan na nivou JustDo."
 }

@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "שטעלן JustDo אַרבעט טעג",
-  "set_my_workdays_label": "שטעלן מיינע אַרבעט טעג"
+  "set_justdo_workdays_label": "שטעלן JustDo ארבעטסטעג",
+  "set_my_workdays_label": "שטעלן מיינע אַרבעט טעג",
+  "set_justdo_workdays_dialog_title": "שטעלן ארבעטסטעג פֿאַר __justdo_title__",
+  "set_user_workdays_dialog_title": "שטעלן ארבעטסטעג פֿאַר __justdo_title__: __user_name__",
+  "workdays_label": "ארבעטסטעג",
+  "holidays_label": "יום־טובים",
+  "personal_leave_label": "פּערזענלעכער אָרלויב",
+  "days_of_week": [
+    "זונטיק",
+    "מאָנטיק",
+    "דינסטיק",
+    "מיטוואָך",
+    "דאָנערשטיק",
+    "פֿרײַטיק",
+    "שבת"
+  ],
+  "holidays_input_description": "* אַרײַנגעבן קאָמע־צעטיילטע דאַטעס אין דעם פֿאָרמאַט:<br> YYYY-MM-DD, אָדער, פֿאַר אַ קייט פֿון דאַטעס: YYYY-MM-DD--YYYY-MM-DD.",
+  "from_time_must_be_before_to_time": "\"פֿון\" צײַט מוז זײַן פֿאַר \"ביז\" צײַט",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "עס מוז זײַן כאָטש איין ארבעטסטאָג אויף JustDo ניוואָ."
 }

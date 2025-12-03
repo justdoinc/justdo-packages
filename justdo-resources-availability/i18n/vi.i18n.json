@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Đặt Ngày Làm Việc Của JustDo",
-  "set_my_workdays_label": "Đặt Ngày Làm Việc Của Tôi"
+  "set_justdo_workdays_label": "Đặt Ngày Làm Việc của JustDo",
+  "set_my_workdays_label": "Đặt Ngày Làm Việc Của Tôi",
+  "set_justdo_workdays_dialog_title": "Đặt Ngày Làm Việc cho __justdo_title__",
+  "set_user_workdays_dialog_title": "Đặt Ngày Làm Việc cho __justdo_title__: __user_name__",
+  "workdays_label": "Ngày Làm Việc",
+  "holidays_label": "Ngày Lễ",
+  "personal_leave_label": "Nghỉ Phép Cá Nhân",
+  "days_of_week": [
+    "Chủ Nhật",
+    "Thứ Hai",
+    "Thứ Ba",
+    "Thứ Tư",
+    "Thứ Năm",
+    "Thứ Sáu",
+    "Thứ Bảy"
+  ],
+  "holidays_input_description": "* Nhập các ngày cách nhau bằng dấu phẩy theo định dạng:<br> YYYY-MM-DD, hoặc, đối với khoảng thời gian: YYYY-MM-DD--YYYY-MM-DD.",
+  "from_time_must_be_before_to_time": "Thời gian \"Từ\" phải trước thời gian \"Đến\"",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "Phải có ít nhất một ngày làm việc ở cấp độ JustDo."
 }

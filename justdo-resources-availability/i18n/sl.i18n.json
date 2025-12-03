@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Nastavi delovne dni JustDo",
-  "set_my_workdays_label": "Nastavi moje delovne dni"
+  "set_justdo_workdays_label": "Nastavi delovne dneve za JustDo",
+  "set_my_workdays_label": "Nastavi moje delovne dni",
+  "set_justdo_workdays_dialog_title": "Nastavi delovne dneve za __justdo_title__",
+  "set_user_workdays_dialog_title": "Nastavi delovne dneve za __justdo_title__: __user_name__",
+  "workdays_label": "Delovni dnevi",
+  "holidays_label": "Prazniki",
+  "personal_leave_label": "Osebni dopust",
+  "days_of_week": [
+    "Nedelja",
+    "Ponedeljek",
+    "Torek",
+    "Sreda",
+    "Četrtek",
+    "Petek",
+    "Sobota"
+  ],
+  "holidays_input_description": "* Vnesite datume, ločene z vejico, v formatu:<br> LLLL-MM-DD, ali za obseg datumov: LLLL-MM-DD--LLLL-MM-DD.",
+  "from_time_must_be_before_to_time": "Čas \"Od\" mora biti pred časom \"Do\"",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "Na ravni JustDo mora biti vsaj en delovni dan."
 }

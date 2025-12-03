@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Establir dies laborables de JustDo",
-  "set_my_workdays_label": "Establir els meus dies laborables"
+  "set_justdo_workdays_label": "Establir dies laborables de JustDo",
+  "set_my_workdays_label": "Establir els meus dies laborables",
+  "set_justdo_workdays_dialog_title": "Establir dies laborables per a __justdo_title__",
+  "set_user_workdays_dialog_title": "Establir dies laborables per a __justdo_title__: __user_name__",
+  "workdays_label": "Dies laborables",
+  "holidays_label": "Festius",
+  "personal_leave_label": "Permís personal",
+  "days_of_week": [
+    "Diumenge",
+    "Dilluns",
+    "Dimarts",
+    "Dimecres",
+    "Dijous",
+    "Divendres",
+    "Dissabte"
+  ],
+  "holidays_input_description": "* Introduïu dates separades per comes amb el format:<br> AAAA-MM-DD, o bé, per a un interval de dates: AAAA-MM-DD--AAAA-MM-DD.",
+  "from_time_must_be_before_to_time": "L'hora \"Des de\" ha de ser anterior a l'hora \"Fins a\"",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "Hi ha d'haver almenys un dia laborable a nivell de JustDo."
 }

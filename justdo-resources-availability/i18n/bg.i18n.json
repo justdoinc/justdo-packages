@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Задаване на работни дни в JustDo",
-  "set_my_workdays_label": "Задаване на моите работни дни"
+  "set_justdo_workdays_label": "Задаване на работни дни за JustDo",
+  "set_my_workdays_label": "Задаване на моите работни дни",
+  "set_justdo_workdays_dialog_title": "Задаване на работни дни за __justdo_title__",
+  "set_user_workdays_dialog_title": "Задаване на работни дни за __justdo_title__: __user_name__",
+  "workdays_label": "Работни дни",
+  "holidays_label": "Празници",
+  "personal_leave_label": "Личен отпуск",
+  "days_of_week": [
+    "Неделя",
+    "Понеделник",
+    "Вторник",
+    "Сряда",
+    "Четвъртък",
+    "Петък",
+    "Събота"
+  ],
+  "holidays_input_description": "* Въведете дати, разделени със запетая, в следния формат:<br> ГГГГ-ММ-ДД, или за период от дати: ГГГГ-ММ-ДД--ГГГГ-ММ-ДД.",
+  "from_time_must_be_before_to_time": "Началното време трябва да е преди крайното време",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "Трябва да има поне един работен ден на ниво JustDo."
 }

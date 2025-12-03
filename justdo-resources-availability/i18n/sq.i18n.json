@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Cakto Ditët e Punës së JustDo",
-  "set_my_workdays_label": "Cakto Ditët e Mia të Punës"
+  "set_justdo_workdays_label": "Vendos Ditët e Punës për JustDo",
+  "set_my_workdays_label": "Cakto Ditët e Mia të Punës",
+  "set_justdo_workdays_dialog_title": "Vendos Ditët e Punës për __justdo_title__",
+  "set_user_workdays_dialog_title": "Vendos Ditët e Punës për __justdo_title__: __user_name__",
+  "workdays_label": "Ditët e Punës",
+  "holidays_label": "Festat",
+  "personal_leave_label": "Pushim Personal",
+  "days_of_week": [
+    "E Diel",
+    "E Hënë",
+    "E Martë",
+    "E Mërkurë",
+    "E Enjte",
+    "E Premte",
+    "E Shtunë"
+  ],
+  "holidays_input_description": "* Vendosni datat e ndara me presje në formatin:<br> VVVV-MM-DD, ose, për një gamë datash: VVVV-MM-DD--VVVV-MM-DD.",
+  "from_time_must_be_before_to_time": "Koha \"Nga\" duhet të jetë përpara kohës \"Deri\"",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "Duhet të ketë të paktën një ditë pune në nivel JustDo."
 }

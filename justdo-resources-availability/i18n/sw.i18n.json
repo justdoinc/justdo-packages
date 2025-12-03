@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Weka Siku za Kazi za JustDo",
-  "set_my_workdays_label": "Weka Siku Zangu za Kazi"
+  "set_justdo_workdays_label": "Weka Siku za Kazi za JustDo",
+  "set_my_workdays_label": "Weka Siku Zangu za Kazi",
+  "set_justdo_workdays_dialog_title": "Weka Siku za Kazi kwa __justdo_title__",
+  "set_user_workdays_dialog_title": "Weka Siku za Kazi kwa __justdo_title__: __user_name__",
+  "workdays_label": "Siku za Kazi",
+  "holidays_label": "Likizo",
+  "personal_leave_label": "Likizo Binafsi",
+  "days_of_week": [
+    "Jumapili",
+    "Jumatatu",
+    "Jumanne",
+    "Jumatano",
+    "Alhamisi",
+    "Ijumaa",
+    "Jumamosi"
+  ],
+  "holidays_input_description": "* Ingiza tarehe zilizotengwa kwa mkato katika muundo wa:<br> MWAKA-MWEZI-SIKU (YYYY-MM-DD), au, kwa kipindi cha tarehe: MWAKA-MWEZI-SIKU--MWAKA-MWEZI-SIKU (YYYY-MM-DD--YYYY-MM-DD).",
+  "from_time_must_be_before_to_time": "Muda wa \"Kutoka\" lazima uwe kabla ya muda wa \"Hadi\"",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "Lazima kuwe na angalau siku moja ya kazi katika kiwango cha Bodi ya JustDo."
 }

@@ -1,4 +1,21 @@
 {
-  "set_workdays_label": "Määra JustDo tööpäevad",
-  "set_my_workdays_label": "Määra minu tööpäevad"
+  "set_justdo_workdays_label": "Määra JustDo tööpäevad",
+  "set_my_workdays_label": "Määra minu tööpäevad",
+  "set_justdo_workdays_dialog_title": "Määra tööpäevad: __justdo_title__",
+  "set_user_workdays_dialog_title": "Määra tööpäevad __justdo_title__: __user_name__",
+  "workdays_label": "Tööpäevad",
+  "holidays_label": "Pühad",
+  "personal_leave_label": "Isiklik puhkus",
+  "days_of_week": [
+    "Pühapäev",
+    "Esmaspäev",
+    "Teisipäev",
+    "Kolmapäev",
+    "Neljapäev",
+    "Reede",
+    "Laupäev"
+  ],
+  "holidays_input_description": "* Sisesta komadega eraldatud kuupäevad formaadis:<br> AAAA-KK-PP või kuupäevavahemiku jaoks: AAAA-KK-PP--AAAA-KK-PP.",
+  "from_time_must_be_before_to_time": "\"Algus\" aeg peab olema enne \"Lõpp\" aega",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "JustDo tasemel peab olema vähemalt üks tööpäev."
 }
