@@ -1,4 +1,12 @@
 {
   "set_workdays_label": "Set JustDo Workdays",
-  "set_my_workdays_label": "Set My Workdays"
+  "set_my_workdays_label": "Set My Workdays",
+  "set_workdays_dialog_title": "Set Workdays for __justdo_title__",
+  "set_user_workdays_dialog_title": "Set Workdays for __justdo_title__: __user_name__",
+  "workdays_label": "Workdays",
+  "holidays_label": "Holidays",
+  "personal_leave_label": "Personal Leave",
+  "holidays_input_description": "* Enter comma separated dates in the format of:<br> YYYY-MM-DD, or, for a range of dates: YYYY-MM-DD--YYYY-MM-DD.",
+  "from_time_must_be_before_to_time": "\"From\" time must be before \"To\" time",
+  "there_must_be_at_least_one_working_day_on_justdo_level": "There must be at least one working day on JustDo level."
 }

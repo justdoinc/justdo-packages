@@ -1,7 +1,7 @@
 <template name="justdo_resources_availability_config_dialog">
   <div class="resources-availability">
     <div class="resources-availability-section workdays">
-      <div class="resources-availability-title">Workdays</div>
+      <div class="resources-availability-title">{{_ "workdays_label"}}</div>
       <div class="resources-availability-list">
         {{#each week_days}}
           {{>justdo_resources_availability_config_dialog_workday}}
@@ -9,9 +9,9 @@
       </div>
     </div>
     <div class="resources-availability-section holidays">
-      <div class="resources-availability-title">{{holidays_label}}</div>
+      <div class="resources-availability-title">{{_ holidays_label}}</div>
       <textarea {{readonly}} class="form-control availability_config_dialog_holidays {{holidaysFormatError}} mb-1" rows="3" placeholder="YYYY-MM-DD, YYYY-MM-DD,...">{{holidaysList}}</textarea>
-      <small class="text-muted">* Enter comma separated dates in the format of:<br> YYYY-MM-DD, or, for a range of dates: YYYY-MM-DD--YYYY-MM-DD.</small>
+      <small class="text-muted">{{{xssGuard(_ "holidays_input_description")}}}</small>
     </div>
   </div>
 </template>
@@ -28,7 +28,7 @@
       :
       <input type="time" {{readonly}} min="00:00" max="23:59" value={{toTime}} class="to_time form-control form-control-sm {{#unless timesChecked}}border-danger{{/unless}}" required>
       {{#unless timesChecked}}
-        <div class="resources-availability-time-note shadow-sm rounded-sm text-danger">"From" time must be before "To" time</div>
+        <div class="resources-availability-time-note shadow-sm rounded-sm text-danger">{{_ "from_time_must_be_before_to_time"}}</div>
       {{/unless}}
     </div>
   </div>
