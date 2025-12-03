@@ -32,6 +32,7 @@ NotificationRegistrar = (options) ->
   @options = options
 
   @notification_types = {}
+  @user_config_section_id = @options.user_config_options._id
   
   @_setupUsersSchema()
   @_setupUserConfigSection()
@@ -84,11 +85,11 @@ _.extend NotificationRegistrar.prototype,
     APP.executeAfterAppLibCode =>
       user_config_options = @options.user_config_options
 
-      user_config_ui.registerConfigSection user_config_options._id,
+      user_config_ui.registerConfigSection @user_config_section_id,
         priority: user_config_options.priority
 
       user_config_ui.registerConfigTemplate "unsubscribe-from-all",
-        section: user_config_options._id
+        section: @user_config_section_id
         template: "notification_registrar_user_config_toggle"
         template_data:
           is_main_toggle: true
@@ -152,9 +153,8 @@ _.extend NotificationRegistrar.prototype,
     notification_type = @requireNotificationType(notification_type_id)
 
     APP.executeAfterAppLibCode =>
-      user_config_options = @options.user_config_options
       user_config_ui.registerConfigTemplate notification_type_id,
-        section: user_config_options._id
+        section: @user_config_section_id
         template: "notification_registrar_user_config_toggle"
         template_data:
           registrar: @
