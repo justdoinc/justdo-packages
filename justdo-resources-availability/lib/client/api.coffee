@@ -88,10 +88,10 @@ _.extend JustdoResourcesAvailability.prototype,
 
       user = Meteor.users.findOne(user_id)
       config_data =
-        title: "Workdays for #{JD.activeJustdo({_id: 1, title: 1}).title}: #{user.profile.first_name} #{user.profile.last_name}"
+        title: TAPi18n.__("set_user_workdays_dialog_title", {justdo_title: JD.activeJustdo({title: 1}).title, user_name: JustdoHelpers.displayName(user)})
         weekdays: proj_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]?["#{project_id}:#{user_id}"]?.working_days
         holidays: proj_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]?["#{project_id}:#{user_id}"]?.holidays
-        holidays_label: "Personal Leave"
+        holidays_label: "personal_leave_label"
 
     #load project specific info
     else
@@ -99,19 +99,19 @@ _.extend JustdoResourcesAvailability.prototype,
         throw "Cant find project id"
 
       config_data =
-        title: "Workdays for #{JD.activeJustdo({_id: 1, title: 1}).title}"
+        title: TAPi18n.__("set_workdays_dialog_title", {justdo_title: JD.activeJustdo({title: 1}).title})
         weekdays: proj_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]?[project_id]?.working_days or @default_workdays.working_days
         holidays: proj_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]?[project_id]?.holidays or @default_workdays.holidays
-        holidays_label: "Holidays"
+        holidays_label: "holidays_label"
 
     config_data.config_user_id = user_id
 
     message_template =
       JustdoHelpers.renderTemplateInNewNode(Template.justdo_resources_availability_config_dialog, config_data)
 
-    dialog_button_label = "Close"
+    dialog_button_label = TAPi18n.__("close")
     if JD.active_justdo.isAdmin() or user_id == Meteor.userId()
-      dialog_button_label = "Save"
+      dialog_button_label = TAPi18n.__("save")
 
 
     bootbox.dialog
@@ -130,7 +130,7 @@ _.extend JustdoResourcesAvailability.prototype,
           callback: ->
             if not user_id? and self.atLeastOneWorkingDay(config_data.weekdays) == false
               JustdoSnackbar.show
-                text: "There must at least be one working day on JustDo level."
+                text: TAPi18n.__("there_must_be_at_least_one_working_day_on_justdo_level")
               return false
 
             if config_data.has_issues.size > 0
