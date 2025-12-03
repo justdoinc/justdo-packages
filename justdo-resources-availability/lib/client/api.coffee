@@ -28,7 +28,7 @@ _.extend JustdoResourcesAvailability.prototype,
 
   # The following is used for client-side plugins to register/unregister for the project-resources data in the project document
   subscribers_to_project_data: new Set()
-  enableResourceAvailability: (requesting_plugin_id)->
+  enableResourceAvailability: (requesting_plugin_id) ->
     check requesting_plugin_id, String
     if @subscribers_to_project_data.has requesting_plugin_id
       return
@@ -44,11 +44,21 @@ _.extend JustdoResourcesAvailability.prototype,
         listingCondition: () => return JD.active_justdo.isAdmin()
         data:
           template: "justdo_resources_availability_project_config"
-          template_data: {}
+          template_data:
+            level: "justdo"
       }
+
+      JD.registerPlaceholderItem  "#{JustdoResourcesAvailability.project_custom_feature_id}:user-config", {
+        domain: "settings-dropdown-bottom"
+        data:
+          template: "justdo_resources_availability_project_config"
+          template_data: 
+            level: "user"
+      }
+
     return
 
-  disbleResourceAvailability: (requesting_plugin_id)->
+  disbleResourceAvailability: (requesting_plugin_id) ->
     check requesting_plugin_id, String
     @subscribers_to_project_data.delete requesting_plugin_id
     if @subscribers_to_project_data.size == 0
@@ -59,7 +69,7 @@ _.extend JustdoResourcesAvailability.prototype,
 
   # The following will open the resources config dialog.
   # if user_id is provided - then for the user in the current JustDo, else - for the entire JustDo
-  displayConfigDialog: (project_id, user_id, task_id)->
+  displayConfigDialog: (project_id, user_id, task_id) ->
     self = @
 
     if not project_id
@@ -130,8 +140,8 @@ _.extend JustdoResourcesAvailability.prototype,
             expanded_all_holidays = self.parseHolidaysString(holidays_str)
 
             Meteor.call "jdraSaveResourceAvailability", \
-                    project_id,{working_days: config_data.weekdays, holidays: expanded_all_holidays},\
-                    user_id, task_id, (err, ret)->
+                    project_id, {working_days: config_data.weekdays, holidays: expanded_all_holidays}, \
+                    user_id, task_id, (err, ret) ->
               return
 
 
