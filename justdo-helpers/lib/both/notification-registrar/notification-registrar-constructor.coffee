@@ -78,11 +78,11 @@ _.extend NotificationRegistrar.prototype,
   _setupUserConfigSection: ->
     if not Meteor.isClient
       return
-    
-    if not (user_config_ui = APP.modules.main.user_config_ui)?
-      return
 
     APP.executeAfterAppLibCode =>
+      if not (user_config_ui = APP.modules.main.user_config_ui)?
+        return
+
       user_config_options = @options.user_config_options
 
       user_config_ui.registerConfigSection @user_config_section_id,
@@ -146,14 +146,15 @@ _.extend NotificationRegistrar.prototype,
   _registerNotificationTypeToggle: (notification_type_id) ->
     if not Meteor.isClient
       return
-
-    if not (user_config_ui = APP.modules.main.user_config_ui)?
-      return
       
     notification_type = @requireNotificationType(notification_type_id)
 
     APP.executeAfterAppLibCode =>
       user_config_ui.registerConfigTemplate notification_type_id,
+      if not (user_config_ui = APP.modules.main.user_config_ui)?
+        return
+        
+      user_config_ui.registerConfigTemplate notification_category_id,
         section: @user_config_section_id
         template: "notification_registrar_user_config_toggle"
         template_data:
