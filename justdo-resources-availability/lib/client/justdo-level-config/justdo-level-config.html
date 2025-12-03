@@ -1,6 +1,10 @@
 <template name="justdo_resources_availability_project_config">
   <li id="project-resources-availability-config" class="dropdown-item d-flex align-items-center px-1" >
     <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#calendar"></use></svg>
-    {{_ "set_workdays_label"}}
+    {{#if isJustdoLevelConfig}}
+      {{_ "set_workdays_label"}}
+    {{else if isUserLevelConfig}}
+      {{_ "set_my_workdays_label"}}
+    {{/if}}
   </li>
 </template>
