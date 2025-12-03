@@ -11,7 +11,7 @@
 # For individual notification toggles:
 #   - registrar: NotificationRegistrar instance
 #   - user_preference_subdocument_id: string
-#   - notification_type_id: string
+#   - notification_category_id: string
 #   - label_i18n: string (optional, i18n key for label)
 
 Template.notification_registrar_user_config_toggle.onCreated ->
@@ -27,8 +27,8 @@ Template.notification_registrar_user_config_toggle.onCreated ->
   @isUserUnsubscribedFromAllNotifications = ->
     return @data.registrar.isUserUnsubscribedFromAllNotifications(Meteor.user())
   
-  @isUserUnsubscribedFromNotificationType = (notification_type_id) ->
-    return @data.registrar.isUserUnsubscribedFromNotificationType(Meteor.user(), notification_type_id)
+  @isUserUnsubscribedFromNotificationCategory = (notification_category_id) ->
+    return @data.registrar.isUserUnsubscribedFromNotificationCategory(Meteor.user(), notification_category_id)
   
   @toggleUserUnsubscribedFromAllNotifications = ->
     if @isUserUnsubscribedFromAllNotifications()
@@ -38,11 +38,11 @@ Template.notification_registrar_user_config_toggle.onCreated ->
     
     return
   
-  @toggleUserUnsubscribedFromNotificationType = (notification_type_id) ->
-    if @isUserUnsubscribedFromNotificationType(notification_type_id)
-      @data.registrar.subscribeUserToNotificationType(Meteor.userId(), notification_type_id)
+  @toggleUserUnsubscribedFromNotificationCategory = (notification_category_id) ->
+    if @isUserUnsubscribedFromNotificationCategory(notification_category_id)
+      @data.registrar.subscribeUserToNotificationCategory(Meteor.userId(), notification_category_id)
     else
-      @data.registrar.unsubscribeUserFromNotificationType(Meteor.userId(), notification_type_id)
+      @data.registrar.unsubscribeUserFromNotificationCategory(Meteor.userId(), notification_category_id)
 
     return
 
@@ -67,7 +67,7 @@ Template.notification_registrar_user_config_toggle.helpers
       return not tpl.isUserUnsubscribedFromAllNotifications()
     else
       # Individual notification toggle: check if user is NOT unsubscribed from this notification
-      return not tpl.isUserUnsubscribedFromNotificationType(@notification_type_id)
+      return not tpl.isUserUnsubscribedFromNotificationCategory(@notification_category_id)
 
 Template.notification_registrar_user_config_toggle.events
   "click .notification-registrar-toggle": (e, tpl) ->
@@ -79,7 +79,7 @@ Template.notification_registrar_user_config_toggle.events
       tpl.toggleUserUnsubscribedFromAllNotifications()
     else
       # Individual notification toggle
-      tpl.toggleUserUnsubscribedFromNotificationType(@notification_type_id)
+      tpl.toggleUserUnsubscribedFromNotificationCategory(@notification_category_id)
 
     return
 

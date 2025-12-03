@@ -4,7 +4,7 @@ _.extend JustdoAccounts.prototype,
       # Important: Since justdo-accounts is a core package that is a depended by many others,
       # we set the dependency of `justdo-emails` to be `unordered` to avoid circular dependencies.
       # As such, we wrap this code in an `APP.executeAfterAppLibCode` to ensure that the code is executed after `justdo-emails` is available.
-      JustdoEmails.registerEmailType "justdo_accounts",
+      JustdoEmails.registerEmailCategory "justdo_accounts",
         label_i18n: "accounts_notifications",
         priority: 300
         notifications: ["email-verification", "password-recovery"]

@@ -1,4 +1,4 @@
 {
   "successfully_unsubscribed_from_all_notifications": "Successfully unsubscribed from all notifications.",
-  "successfully_unsubscribed_from_notification_type": "Successfully unsubscribed from __notification_type_label__."
+  "successfully_unsubscribed_from_notification_category": "Successfully unsubscribed from __notification_category_label__."
 }

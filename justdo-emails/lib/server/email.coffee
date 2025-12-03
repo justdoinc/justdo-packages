@@ -71,9 +71,9 @@ _.extend JustdoEmails,
       hide_unsubscribe_links: options.hide_unsubscribe_links
 
     template_name = options.template
-    if (notification_type_def = @registrar.getNotificationTypeByNotificationId(template_name))?
+    if (notification_type_def = @registrar.getNotificationCategoryByNotificationId(template_name))?
       email_wrapper_data = _.extend email_wrapper_data,
-        email_type_label: JustdoHelpers.lcFirst TAPi18n.__ notification_type_def.label_i18n # Currently translated to default lang only
+        email_type_label: JustdoHelpers.lcFirst TAPi18n.__ notification_category_def.label_i18n # Currently translated to default lang only
         unsubscribe_link: Meteor.absoluteUrl "##{@getHashRequestStringForUnsubscribe(template_name)}"
         unsubscribe_all_link: Meteor.absoluteUrl "##{@getHashRequestStringForUnsubscribe("all")}"
         
@@ -161,7 +161,7 @@ _.extend JustdoEmails,
         return
 
       # Validate that the notification type is registered (throws if not found)
-      @registrar.requireNotificationTypeByNotificationId(template_name)
+      @registrar.requireNotificationCategoryByNotificationId(template_name)
       
       # Skip if user has unsubscribed from the notification
       # This also handles the case where the user has unsubscribed from all notifications.

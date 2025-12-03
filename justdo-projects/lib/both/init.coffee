@@ -74,7 +74,7 @@ _.extend Projects.prototype,
     return
 
   _initNotifications: ->
-    JustdoEmails.registerEmailType "justdo_projects",
+    JustdoEmails.registerEmailCategory "justdo_projects",
       label_i18n: "notifications_added_to_new_project_label",
       priority: 50
       notifications: ["notifications-added-to-new-project"]
