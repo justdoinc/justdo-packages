@@ -16,6 +16,9 @@ _.extend JustdoUserConfigUi.prototype,
     sections = _.filter sections, (section) -> not _.isEmpty(section.templates)
 
     return sections
+  
+  getSection: (section_id) ->
+    return @sections[section_id]
 
   registerConfigSection: (section_id, settings) ->
     if not section_id?
@@ -70,6 +73,20 @@ _.extend JustdoUserConfigUi.prototype,
       id: template_id
 
     @sections[section_id].templates[template_id] = settings
+
+    return
+  
+  getConfigTemplate: (section_id, template_id) ->
+    if not (section = @getSection(section_id))?
+      throw @_error "unknown-section", "Unknown section id: #{section_id}"
+
+    return section.templates[template_id]
+
+  unregisterConfigTemplate: (section_id, template_id) ->
+    if not (section = @getSection(section_id))?
+      throw @_error "unknown-section", "Unknown section id: #{section_id}"
+
+    section.templates = _.omit section.templates, template_id
 
     return
 
