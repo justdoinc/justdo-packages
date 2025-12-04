@@ -29,5 +29,7 @@ APP.executeAfterAppLibCode ->
 
   main_module.user_config_ui = new JustdoUserConfigUi()
 
+  JustdoHelpers.hooks_barriers.markBarrierAsResolved "post-user-config-ui-init"
+
 # Core user config ui sections and templates are in the
 # justdoinc:justdo-core-user-conf package
