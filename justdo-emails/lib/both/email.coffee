@@ -17,5 +17,10 @@ _.extend JustdoEmails,
 
     return
   
+  registerEmails: (category_id, email_defs) ->
+    @registrar.registerNotifications(category_id, email_defs)
+
+    return
+  
   getHashRequestStringForUnsubscribe: (email_category_id) ->
     return @registrar.getHashRequestStringForUnsubscribe(email_category_id)
