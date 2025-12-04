@@ -827,7 +827,6 @@ _.extend Projects.prototype,
             template: "notifications-added-to-new-project"
             template_data: template_data
             to: to
-            hide_unsubscribe_links: true
             subject: subject
 
         if options.send_push_notification
