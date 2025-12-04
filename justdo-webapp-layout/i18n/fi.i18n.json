@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "Piilota JustDo-paneeli",
   "show_task_pane_label": "Näytä tehtäväpaneeli",
   "hide_task_pane_label": "Piilota tehtäväpaneeli",
-  "email_daily_update_for_this_justdo_label": "Lähetä päivittäiset päivitykset sähköpostitse tälle JustDo-taululle",
-  "email_ownership_transfer_notifications_label": "Lähetä sähköposti-ilmoitukset omistajuuden siirroista",
   "configure_this_justdo_label": "Määritä tämä JustDo-taulu",
   "delete_this_justdo_label": "Poista tämä JustDo-taulu"
 }

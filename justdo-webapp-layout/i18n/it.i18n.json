@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "Nascondi Pannello JustDo",
   "show_task_pane_label": "Mostra Pannello Attività",
   "hide_task_pane_label": "Nascondi Pannello Attività",
-  "email_daily_update_for_this_justdo_label": "Invia aggiornamenti giornalieri via email per questa JustDo Board",
-  "email_ownership_transfer_notifications_label": "Invia notifiche via email per il trasferimento di proprietà",
   "configure_this_justdo_label": "Configura questa JustDo Board",
   "delete_this_justdo_label": "Elimina questa JustDo Board"
 }

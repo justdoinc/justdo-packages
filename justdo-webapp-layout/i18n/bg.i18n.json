@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "Скрий JustDo панел",
   "show_task_pane_label": "Покажи панел със задачи",
   "hide_task_pane_label": "Скрий панел със задачи",
-  "email_daily_update_for_this_justdo_label": "Изпращай дневни актуализации за този JustDo по имейл",
-  "email_ownership_transfer_notifications_label": "Изпращай известия за прехвърляне на собственост по имейл",
   "configure_this_justdo_label": "Конфигурирай този JustDo",
   "delete_this_justdo_label": "Изтрий този JustDo"
 }

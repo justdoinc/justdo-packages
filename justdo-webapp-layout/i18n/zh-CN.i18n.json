@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "隐藏JustDo面板",
   "show_task_pane_label": "显示任务面板",
   "hide_task_pane_label": "隐藏任务面板",
-  "email_daily_update_for_this_justdo_label": "通过电子邮件接收此JustDo看板的每日更新",
-  "email_ownership_transfer_notifications_label": "通过电子邮件接收所有权转移通知",
   "configure_this_justdo_label": "配置此JustDo看板",
   "delete_this_justdo_label": "删除此JustDo看板"
 }

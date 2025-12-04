@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "Ascunde Panoul JustDo",
   "show_task_pane_label": "Afișează Panoul de Sarcini",
   "hide_task_pane_label": "Ascunde Panoul de Sarcini",
-  "email_daily_update_for_this_justdo_label": "Trimite actualizări zilnice pe email pentru acest Panou JustDo",
-  "email_ownership_transfer_notifications_label": "Trimite notificări pe email pentru transferul de proprietate",
   "configure_this_justdo_label": "Configurează acest Panou JustDo",
   "delete_this_justdo_label": "Șterge acest Panou JustDo"
 }

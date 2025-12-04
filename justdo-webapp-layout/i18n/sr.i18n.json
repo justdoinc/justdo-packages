@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "Sakrij JustDo panel",
   "show_task_pane_label": "Prikaži panel zadataka",
   "hide_task_pane_label": "Sakrij panel zadataka",
-  "email_daily_update_for_this_justdo_label": "Šalji dnevna ažuriranja e-poštom za ovaj JustDo",
-  "email_ownership_transfer_notifications_label": "Šalji obaveštenja o prenosu vlasništva e-poštom",
   "configure_this_justdo_label": "Konfiguriši ovaj JustDo",
   "delete_this_justdo_label": "Obriši ovaj JustDo"
 }

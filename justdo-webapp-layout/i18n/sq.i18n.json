@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "Fshih Panelin e JustDo",
   "show_task_pane_label": "Shfaq Panelin e Detyrës",
   "hide_task_pane_label": "Fshih Panelin e Detyrës",
-  "email_daily_update_for_this_justdo_label": "Dërgo përditësime ditore me email për këtë JustDo",
-  "email_ownership_transfer_notifications_label": "Dërgo njoftime të transferimit të pronësisë me email",
   "configure_this_justdo_label": "Konfiguro këtë JustDo",
   "delete_this_justdo_label": "Fshi këtë JustDo"
 }

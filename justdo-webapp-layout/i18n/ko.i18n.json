@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "JustDo 패널 숨기기",
   "show_task_pane_label": "태스크 패널 표시",
   "hide_task_pane_label": "태스크 패널 숨기기",
-  "email_daily_update_for_this_justdo_label": "이 JustDo 보드의 일일 업데이트 이메일 받기",
-  "email_ownership_transfer_notifications_label": "소유권 이전 알림 이메일 받기",
   "configure_this_justdo_label": "이 JustDo 보드 설정",
   "delete_this_justdo_label": "이 JustDo 보드 삭제"
 }

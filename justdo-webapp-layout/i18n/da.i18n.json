@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "Skjul JustDo-panel",
   "show_task_pane_label": "Vis opgavepanel",
   "hide_task_pane_label": "Skjul opgavepanel",
-  "email_daily_update_for_this_justdo_label": "E-mail daglige opdateringer for denne JustDo",
-  "email_ownership_transfer_notifications_label": "E-mail notifikationer om overførsel af ejerskab",
   "configure_this_justdo_label": "Konfigurer denne JustDo",
   "delete_this_justdo_label": "Slet denne JustDo"
 }

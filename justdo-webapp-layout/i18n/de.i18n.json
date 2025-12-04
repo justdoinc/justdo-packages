@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "JustDo-Bereich ausblenden",
   "show_task_pane_label": "Aufgabenbereich anzeigen",
   "hide_task_pane_label": "Aufgabenbereich ausblenden",
-  "email_daily_update_for_this_justdo_label": "Tägliche E-Mail-Updates für dieses JustDo-Board",
-  "email_ownership_transfer_notifications_label": "E-Mail-Benachrichtigungen bei Eigentumsübertragungen",
   "configure_this_justdo_label": "Dieses JustDo-Board konfigurieren",
   "delete_this_justdo_label": "Dieses JustDo-Board löschen"
 }

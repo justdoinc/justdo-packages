@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "הסתר חלונית JustDo",
   "show_task_pane_label": "הצג חלונית משימות",
   "hide_task_pane_label": "הסתר חלונית משימות",
-  "email_daily_update_for_this_justdo_label": "שלח עדכונים יומיים בדוא\"ל עבור לוח JustDo זה",
-  "email_ownership_transfer_notifications_label": "שלח התראות על העברת בעלות בדוא\"ל",
   "configure_this_justdo_label": "הגדר לוח JustDo זה",
   "delete_this_justdo_label": "מחק לוח JustDo זה"
 }

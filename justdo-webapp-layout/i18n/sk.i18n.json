@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "Skryť panel JustDo",
   "show_task_pane_label": "Zobraziť panel úloh",
   "hide_task_pane_label": "Skryť panel úloh",
-  "email_daily_update_for_this_justdo_label": "Posielať denné aktualizácie pre túto JustDo tabuľu e-mailom",
-  "email_ownership_transfer_notifications_label": "Posielať upozornenia o prevode vlastníctva e-mailom",
   "configure_this_justdo_label": "Konfigurovať túto JustDo tabuľu",
   "delete_this_justdo_label": "Vymazať túto JustDo tabuľu"
 }

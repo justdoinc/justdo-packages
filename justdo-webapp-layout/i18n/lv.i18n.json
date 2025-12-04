@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "Paslēpt JustDo paneli",
   "show_task_pane_label": "Rādīt uzdevumu paneli",
   "hide_task_pane_label": "Paslēpt uzdevumu paneli",
-  "email_daily_update_for_this_justdo_label": "Sūtīt ikdienas atjauninājumus par šo JustDo tabulu pa e-pastu",
-  "email_ownership_transfer_notifications_label": "Sūtīt īpašumtiesību nodošanas paziņojumus pa e-pastu",
   "configure_this_justdo_label": "Konfigurēt šo JustDo tabulu",
   "delete_this_justdo_label": "Dzēst šo JustDo tabulu"
 }

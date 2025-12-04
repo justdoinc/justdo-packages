@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "JustDo panelini yashirish",
   "show_task_pane_label": "Vazifa panelini ko'rsatish",
   "hide_task_pane_label": "Vazifa panelini yashirish",
-  "email_daily_update_for_this_justdo_label": "Ushbu JustDo bo'yicha kunlik yangilanishlarni elektron pochtaga yuborish",
-  "email_ownership_transfer_notifications_label": "Egalik huquqini o'tkazish haqidagi xabarnomalarni elektron pochtaga yuborish",
   "configure_this_justdo_label": "Ushbu JustDo-ni sozlash",
   "delete_this_justdo_label": "Ushbu JustDo-ni o'chirish"
 }

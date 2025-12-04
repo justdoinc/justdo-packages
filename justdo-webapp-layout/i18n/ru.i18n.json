@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "Скрыть панель JustDo",
   "show_task_pane_label": "Показать панель задач",
   "hide_task_pane_label": "Скрыть панель задач",
-  "email_daily_update_for_this_justdo_label": "Отправлять ежедневные обновления для этого JustDo по email",
-  "email_ownership_transfer_notifications_label": "Отправлять уведомления о передаче прав владения по email",
   "configure_this_justdo_label": "Настроить этот JustDo",
   "delete_this_justdo_label": "Удалить этот JustDo"
 }

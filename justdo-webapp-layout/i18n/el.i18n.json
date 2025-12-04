@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "Απόκρυψη Πίνακα JustDo",
   "show_task_pane_label": "Εμφάνιση Πίνακα Εργασιών",
   "hide_task_pane_label": "Απόκρυψη Πίνακα Εργασιών",
-  "email_daily_update_for_this_justdo_label": "Αποστολή καθημερινών ενημερώσεων μέσω email για αυτό το JustDo",
-  "email_ownership_transfer_notifications_label": "Αποστολή ειδοποιήσεων μεταφοράς ιδιοκτησίας μέσω email",
   "configure_this_justdo_label": "Διαμόρφωση αυτού του JustDo",
   "delete_this_justdo_label": "Διαγραφή αυτού του JustDo"
 }

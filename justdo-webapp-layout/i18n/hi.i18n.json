@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "JustDo पैन छिपाएँ",
   "show_task_pane_label": "कार्य पैन दिखाएँ",
   "hide_task_pane_label": "कार्य पैन छिपाएँ",
-  "email_daily_update_for_this_justdo_label": "इस JustDo के लिए दैनिक अपडेट ईमेल करें",
-  "email_ownership_transfer_notifications_label": "स्वामित्व हस्तांतरण सूचनाएँ ईमेल करें",
   "configure_this_justdo_label": "इस JustDo को कॉन्फ़िगर करें",
   "delete_this_justdo_label": "इस JustDo को हटाएँ"
 }

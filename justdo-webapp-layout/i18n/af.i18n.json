@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "Verberg JustDo-paneel",
   "show_task_pane_label": "Wys Taak-paneel",
   "hide_task_pane_label": "Verberg Taak-paneel",
-  "email_daily_update_for_this_justdo_label": "E-pos daaglikse opdaterings vir hierdie JustDo",
-  "email_ownership_transfer_notifications_label": "E-pos kennisgewings van eienaarskap-oordrag",
   "configure_this_justdo_label": "Konfigureer hierdie JustDo",
   "delete_this_justdo_label": "Vee hierdie JustDo uit"
 }

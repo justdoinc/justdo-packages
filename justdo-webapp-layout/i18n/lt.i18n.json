@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "Slėpti JustDo skydelį",
   "show_task_pane_label": "Rodyti užduočių skydelį",
   "hide_task_pane_label": "Slėpti užduočių skydelį",
-  "email_daily_update_for_this_justdo_label": "Siųsti kasdienius atnaujinimus el. paštu apie šį JustDo",
-  "email_ownership_transfer_notifications_label": "Siųsti pranešimus el. paštu apie nuosavybės perdavimą",
   "configure_this_justdo_label": "Konfigūruoti šį JustDo",
   "delete_this_justdo_label": "Ištrinti šį JustDo"
 }
