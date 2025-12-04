@@ -1,5 +1,7 @@
 {
   "untitled_task_title": "제목 없는 작업",
   "untitled_project_title": "제목 없는 JustDo",
-  "jd_creation_request_generated_org_name": "생성된 JustDo 보드"
+  "jd_creation_request_generated_org_name": "생성된 JustDo 보드",
+  "ownership_transfer_notifications": "소유권 이전 알림",
+  "notifications_added_to_new_project_label": "JustDo 초대 알림"
 }

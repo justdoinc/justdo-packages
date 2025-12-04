@@ -1,5 +1,7 @@
 {
   "untitled_task_title": "Задача без названия",
   "untitled_project_title": "Безымянный JustDo",
-  "jd_creation_request_generated_org_name": "Сгенерированные JustDo"
+  "jd_creation_request_generated_org_name": "Сгенерированные JustDo",
+  "ownership_transfer_notifications": "Уведомления о передаче прав владения",
+  "notifications_added_to_new_project_label": "Уведомления о приглашении в JustDo"
 }

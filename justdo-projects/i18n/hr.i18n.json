@@ -1,5 +1,7 @@
 {
   "untitled_task_title": "Neimenovani zadatak",
   "untitled_project_title": "Neimenovani JustDo",
-  "jd_creation_request_generated_org_name": "Generirani JustDo-i"
+  "jd_creation_request_generated_org_name": "Generirani JustDo-i",
+  "ownership_transfer_notifications": "Obavijesti o prijenosu vlasništva",
+  "notifications_added_to_new_project_label": "Obavijesti o pozivima u JustDo"
 }
