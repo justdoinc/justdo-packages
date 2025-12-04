@@ -18,5 +18,6 @@
   "lang_schema_label": "선호 언어",
   "email_schema_label": "이메일",
   "ignore_invites_schema_label": "비밀번호가 없는 사용자 무시 (존재하지 않는 것으로 간주)",
-  "edit_avatar_colors": "아바타 색상 편집"
+  "edit_avatar_colors": "아바타 색상 편집",
+  "accounts_notifications": "계정 알림"
 }

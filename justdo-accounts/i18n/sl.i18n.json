@@ -18,5 +18,6 @@
   "lang_schema_label": "Želeni jezik",
   "email_schema_label": "E-pošta",
   "ignore_invites_schema_label": "Prezri uporabnike brez gesla (obravnavaj jih kot neobstoječe)",
-  "edit_avatar_colors": "Uredi barve avatarja"
+  "edit_avatar_colors": "Uredi barve avatarja",
+  "accounts_notifications": "Obvestila računov"
 }

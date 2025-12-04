@@ -18,5 +18,6 @@
   "lang_schema_label": "Ngôn ngữ ưa thích",
   "email_schema_label": "Email",
   "ignore_invites_schema_label": "Bỏ qua người dùng không có mật khẩu (coi họ như không tồn tại)",
-  "edit_avatar_colors": "Chỉnh Sửa Màu Avatar"
+  "edit_avatar_colors": "Chỉnh Sửa Màu Avatar",
+  "accounts_notifications": "Thông Báo Tài Khoản"
 }

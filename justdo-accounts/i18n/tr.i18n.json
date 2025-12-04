@@ -18,5 +18,6 @@
   "lang_schema_label": "Tercih Edilen Dil",
   "email_schema_label": "E-posta",
   "ignore_invites_schema_label": "Şifresi olmayan kullanıcıları yok say (var olmadıklarını kabul et)",
-  "edit_avatar_colors": "Avatar Renklerini Düzenle"
+  "edit_avatar_colors": "Avatar Renklerini Düzenle",
+  "accounts_notifications": "Hesap Bildirimleri"
 }

@@ -18,5 +18,6 @@
   "lang_schema_label": "首选语言",
   "email_schema_label": "电子邮箱",
   "ignore_invites_schema_label": "忽略没有密码的用户（视为不存在）",
-  "edit_avatar_colors": "编辑头像颜色"
+  "edit_avatar_colors": "编辑头像颜色",
+  "accounts_notifications": "账户通知"
 }

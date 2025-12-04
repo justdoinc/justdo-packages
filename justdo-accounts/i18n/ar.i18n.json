@@ -18,5 +18,6 @@
   "lang_schema_label": "اللغة المفضلة",
   "email_schema_label": "البريد الإلكتروني",
   "ignore_invites_schema_label": "تجاهل المستخدمين بدون كلمة مرور (اعتبارهم غير موجودين)",
-  "edit_avatar_colors": "تعديل ألوان الصورة الرمزية"
+  "edit_avatar_colors": "تعديل ألوان الصورة الرمزية",
+  "accounts_notifications": "إشعارات الحسابات"
 }

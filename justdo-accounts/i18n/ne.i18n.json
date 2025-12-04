@@ -18,5 +18,6 @@
   "lang_schema_label": "रुचाइएको भाषा",
   "email_schema_label": "इमेल",
   "ignore_invites_schema_label": "पासवर्ड नभएका प्रयोगकर्ताहरूलाई बेवास्ता गर्नुहोस् (तिनीहरूलाई अविद्यमान मान्नुहोस्)",
-  "edit_avatar_colors": "अवतार रङहरू सम्पादन गर्नुहोस्"
+  "edit_avatar_colors": "अवतार रङहरू सम्पादन गर्नुहोस्",
+  "accounts_notifications": "खाता सूचनाहरू"
 }

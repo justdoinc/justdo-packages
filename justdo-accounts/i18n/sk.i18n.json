@@ -18,5 +18,6 @@
   "lang_schema_label": "Preferovaný jazyk",
   "email_schema_label": "E-mail",
   "ignore_invites_schema_label": "Ignorovať používateľov bez hesla (považovať ich za neexistujúcich)",
-  "edit_avatar_colors": "Upraviť farby avatara"
+  "edit_avatar_colors": "Upraviť farby avatara",
+  "accounts_notifications": "Notifikácie účtov"
 }

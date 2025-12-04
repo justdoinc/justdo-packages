@@ -18,5 +18,6 @@
   "lang_schema_label": "Bevorzugte Sprache",
   "email_schema_label": "E-Mail",
   "ignore_invites_schema_label": "Benutzer ohne Passwort ignorieren (als nicht vorhanden betrachten)",
-  "edit_avatar_colors": "Avatar-Farben bearbeiten"
+  "edit_avatar_colors": "Avatar-Farben bearbeiten",
+  "accounts_notifications": "Kontobenachrichtigungen"
 }

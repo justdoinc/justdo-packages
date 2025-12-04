@@ -18,5 +18,6 @@
   "lang_schema_label": "Voorkeur Taal",
   "email_schema_label": "E-pos",
   "ignore_invites_schema_label": "Ignoreer gebruikers sonder wagwoord (beskou hulle as nie-bestaande)",
-  "edit_avatar_colors": "Wysig Avatar Kleure"
+  "edit_avatar_colors": "Wysig Avatar Kleure",
+  "accounts_notifications": "Rekeninge Kennisgewings"
 }

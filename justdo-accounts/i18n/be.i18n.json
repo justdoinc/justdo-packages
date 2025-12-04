@@ -18,5 +18,6 @@
   "lang_schema_label": "Пажаданая мова",
   "email_schema_label": "Электронная пошта",
   "ignore_invites_schema_label": "Ігнараваць карыстальнікаў без пароля (лічыць іх неіснуючымі)",
-  "edit_avatar_colors": "Рэдагаваць колеры аватара"
+  "edit_avatar_colors": "Рэдагаваць колеры аватара",
+  "accounts_notifications": "Апавяшчэнні ўліковых запісаў"
 }

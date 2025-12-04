@@ -18,5 +18,6 @@
   "lang_schema_label": "Артыкчылык берилген тил",
   "email_schema_label": "Электрондук почта",
   "ignore_invites_schema_label": "Купуя сөзү жок колдонуучуларды этибарга албоо (жок деп эсептөө)",
-  "edit_avatar_colors": "Аватар түстөрүн өзгөртүү"
+  "edit_avatar_colors": "Аватар түстөрүн өзгөртүү",
+  "accounts_notifications": "Аккаунт Билдирмелери"
 }

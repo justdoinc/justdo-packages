@@ -18,5 +18,6 @@
   "lang_schema_label": "Preferált nyelv",
   "email_schema_label": "E-mail",
   "ignore_invites_schema_label": "Jelszó nélküli felhasználók figyelmen kívül hagyása (nem létezőnek tekintése)",
-  "edit_avatar_colors": "Avatár színek szerkesztése"
+  "edit_avatar_colors": "Avatár színek szerkesztése",
+  "accounts_notifications": "Fiókértesítések"
 }

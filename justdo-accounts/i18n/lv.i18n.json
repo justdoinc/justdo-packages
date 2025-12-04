@@ -18,5 +18,6 @@
   "lang_schema_label": "Vēlamā valoda",
   "email_schema_label": "E-pasts",
   "ignore_invites_schema_label": "Ignorēt lietotājus bez paroles (uzskatīt tos par neeksistējošiem)",
-  "edit_avatar_colors": "Rediģēt avatāra krāsas"
+  "edit_avatar_colors": "Rediģēt avatāra krāsas",
+  "accounts_notifications": "Kontu paziņojumi"
 }

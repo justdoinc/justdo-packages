@@ -18,5 +18,6 @@
   "lang_schema_label": "שפה מועדפת",
   "email_schema_label": "אימייל",
   "ignore_invites_schema_label": "התעלם ממשתמשים ללא סיסמה (התייחס אליהם כלא קיימים)",
-  "edit_avatar_colors": "ערוך צבעי אווטאר"
+  "edit_avatar_colors": "ערוך צבעי אווטאר",
+  "accounts_notifications": "התראות חשבונות"
 }

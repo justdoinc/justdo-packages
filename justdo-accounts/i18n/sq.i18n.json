@@ -18,5 +18,6 @@
   "lang_schema_label": "Gjuha e Preferuar",
   "email_schema_label": "Email",
   "ignore_invites_schema_label": "Injoro përdoruesit pa fjalëkalim (konsideroji si jo-ekzistues)",
-  "edit_avatar_colors": "Ndrysho Ngjyrat e Avatarit"
+  "edit_avatar_colors": "Ndrysho Ngjyrat e Avatarit",
+  "accounts_notifications": "Njoftimet e Llogarive"
 }
