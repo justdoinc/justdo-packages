@@ -26,18 +26,6 @@ build_and_send_options_schema = new SimpleSchema
     label: "Subject"
     type: String
     optional: true
-  hide_footer:
-    label: "Hide footer"
-    type: Boolean
-    optional: true
-  hide_unsubscribe_links:
-    label: "Hide unsubscribe links"
-    type: Boolean
-    optional: true
-  send_to_proxy_users:
-    label: "Send to proxy users"
-    type: Boolean
-    optional: true
   bypass_notification_registrar:
     label: "Bypass notification registrar"
     type: Boolean
@@ -59,7 +47,7 @@ _.extend JustdoEmails,
 
     wrapper_template: "email-wrapper"
 
-  _buildEmail: (html_content, options) ->
+  _buildEmail: (html_content, notification_def) ->
     #
     # Build wrapper
     #
@@ -67,14 +55,15 @@ _.extend JustdoEmails,
       body: html_content
       logo_path: @options.logo_path
       landing_app_root_url: process.env?.LANDING_APP_ROOT_URL
-      hide_footer: options.hide_footer
-      hide_unsubscribe_links: options.hide_unsubscribe_links
+      hide_footer: notification_def.custom_options?.hide_footer
+      hide_unsubscribe_links: notification_def.custom_options?.hide_unsubscribe_links
 
-    template_name = options.template
-    if (notification_type_def = @registrar.getNotificationCategoryByNotificationId(template_name))?
+    template_name = notification_def._id
+    notification_category_id = notification_def.notification_category
+    if (notification_category_def = @registrar.getNotificationCategory(notification_category_id))?
       email_wrapper_data = _.extend email_wrapper_data,
         email_type_label: JustdoHelpers.lcFirst TAPi18n.__ notification_category_def.label_i18n # Currently translated to default lang only
-        unsubscribe_link: Meteor.absoluteUrl "##{@getHashRequestStringForUnsubscribe(template_name)}"
+        unsubscribe_link: Meteor.absoluteUrl "##{@getHashRequestStringForUnsubscribe(notification_category_id)}"
         unsubscribe_all_link: Meteor.absoluteUrl "##{@getHashRequestStringForUnsubscribe("all")}"
         
     email_html = getTemplate(@options.wrapper_template) email_wrapper_data
@@ -124,7 +113,6 @@ _.extend JustdoEmails,
     #                                                       1. We don't require the email address to be associated with a user
     #                                                       2. We don't require the email template to be registered in the notification registrar
     #                                                       3. We don't check whether the receiving user has unsubscribed from any notification
-    #   send_to_proxy_users: (boolean, optional): If true, we send the email to proxy users as well.
     # }
 
     check(options, build_and_send_options_schema)
@@ -134,40 +122,32 @@ _.extend JustdoEmails,
       return
   
     template_name = options.template
-        
-    # We need to query user doc if:
-    # 1. We need to check if user is a proxy (when send_to_proxy_users is false)
-    # 2. We need to check notification registrar settings (when bypass is false)
-    need_to_check_proxy = options.send_to_proxy_users isnt true
-    need_to_check_notification_registrar = options.bypass_notification_registrar isnt true
-    need_to_query_user_doc = need_to_check_proxy or need_to_check_notification_registrar
-    
-    receiving_user_doc = null
-    if need_to_query_user_doc
-      # Query for the user doc only if we actually need it
+
+    if not options.bypass_notification_registrar
+      # Validate that the notification is registered (throws if not found)
+      notification_def = @registrar.requireNotification(template_name)
+      
       receiving_user_query_options =
-        fields:
+        fields: _.extend @registrar._getUserPreferredSubdocumentFields(),
           is_proxy: 1
-          "profile.#{JustdoEmails.user_preference_subdocument_id}": 1
       receiving_user_doc = JustdoHelpers.getUserByEmail(options.to, receiving_user_query_options)
 
-    if need_to_check_proxy and APP.accounts.isProxyUser(receiving_user_doc)
-      console.warn "An email to a proxy account skipped (#{options.to})"
-      return
-
-    if need_to_check_notification_registrar
       if not receiving_user_doc?
         console.warn "A user with email address #{options.to} not found"
         return
 
-      # Validate that the notification type is registered (throws if not found)
-      @registrar.requireNotificationCategoryByNotificationId(template_name)
-      
+      if not notification_def.custom_options?.send_to_proxy_users and APP.accounts.isProxyUser(receiving_user_doc)
+        console.warn "An email to a proxy account skipped (#{options.to})"
+        return
+
       # Skip if user has unsubscribed from the notification
       # This also handles the case where the user has unsubscribed from all notifications.
       if @registrar.isUserUnsubscribedFromNotification receiving_user_doc, template_name
         console.warn "An email to a user who has unsubscribed from the notification #{template_name} skipped (#{options.to})"
         return
+    else
+      notification_def = 
+        _id: template_name
 
     # Ensure the handlebars template exists
     template = getTemplate(template_name)
@@ -187,7 +167,7 @@ _.extend JustdoEmails,
 
     template_html = template(template_data)
 
-    email_html = JustdoEmails._buildEmail template_html, options
+    email_html = JustdoEmails._buildEmail template_html, notification_def
 
     return JustdoEmails._send options.to, subject, email_html
 
