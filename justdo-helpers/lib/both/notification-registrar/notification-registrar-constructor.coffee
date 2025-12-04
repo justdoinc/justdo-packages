@@ -271,6 +271,9 @@ _.extend NotificationRegistrar.prototype,
       
     for notification_def in cleaned_notifications_def
       notification_def.notification_category = notification_category
+      if @getNotification(notification_def._id)?
+        throw new Meteor.Error "invalid-argument", "Notification with id #{notification_def._id} already registered"
+      
       @notifications[notification_def._id] = notification_def
 
     @_updateNotificationCategoryToggleRegistration(notification_category)
