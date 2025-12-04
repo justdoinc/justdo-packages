@@ -3,7 +3,7 @@
   "message_editor_input_placeholder": "Digite uma mensagem...",
   "message_editor_sending": "Enviando...",
   "chat_config_title": "Chat",
-  "chat_receive_chat_email_notifications": "Receber notificações de chat por e-mail",
+  "chat_notifications": "Notificações do chat",
   "chat_click_to_unsubscribe": "Você receberá notificações deste chat, clique para cancelar a inscrição",
   "chat_click_to_subscribe": "Inscrever-se para receber notificações deste chat",
   "chat_open_in_a_window": "Abrir chat em uma janela",

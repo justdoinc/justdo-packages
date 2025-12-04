@@ -3,7 +3,7 @@
   "message_editor_input_placeholder": "พิมพ์ข้อความ...",
   "message_editor_sending": "กำลังส่ง...",
   "chat_config_title": "แชท",
-  "chat_receive_chat_email_notifications": "รับการแจ้งเตือนทางอีเมลสำหรับแชท",
+  "chat_notifications": "การแจ้งเตือนแชท",
   "chat_click_to_unsubscribe": "คุณจะได้รับการแจ้งเตือนจากแชทนี้ คลิกเพื่อยกเลิกการติดตาม",
   "chat_click_to_subscribe": "ติดตามการแจ้งเตือนจากแชทนี้",
   "chat_open_in_a_window": "เปิดแชทในหน้าต่างใหม่",

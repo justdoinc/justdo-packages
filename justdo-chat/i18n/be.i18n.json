@@ -3,7 +3,7 @@
   "message_editor_input_placeholder": "Увядзіце паведамленне...",
   "message_editor_sending": "Адпраўленне...",
   "chat_config_title": "Чат",
-  "chat_receive_chat_email_notifications": "Атрымліваць апавяшчэнні пра чат па электроннай пошце",
+  "chat_notifications": "Апавяшчэнні чата",
   "chat_click_to_unsubscribe": "Вы атрымліваеце апавяшчэнні з гэтага чата, націсніце, каб адпісацца",
   "chat_click_to_subscribe": "Падпісацца на апавяшчэнні з гэтага чата",
   "chat_open_in_a_window": "Адкрыць чат у акне",

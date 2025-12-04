@@ -3,7 +3,7 @@
   "message_editor_input_placeholder": "መልእክት ይጻፉ...",
   "message_editor_sending": "እየላከ...",
   "chat_config_title": "ውይይት",
-  "chat_receive_chat_email_notifications": "የውይይት ኢሜይል ማሳወቂያዎችን ይቀበሉ",
+  "chat_notifications": "የውይይት ማሳወቂያዎች",
   "chat_click_to_unsubscribe": "ከዚህ ውይይት ማሳወቂያዎችን ያገኛሉ፣ ለመውጣት ይጫኑ",
   "chat_click_to_subscribe": "ለዚህ ውይይት ማሳወቂያዎችን ለማግኘት ይመዝገቡ",
   "chat_open_in_a_window": "ውይይቱን በአዲስ መስኮት ይክፈቱ",

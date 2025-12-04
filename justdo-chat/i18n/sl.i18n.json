@@ -3,7 +3,7 @@
   "message_editor_input_placeholder": "Vnesite sporočilo...",
   "message_editor_sending": "Pošiljanje...",
   "chat_config_title": "Klepet",
-  "chat_receive_chat_email_notifications": "Prejemaj e-poštna obvestila o klepetu",
+  "chat_notifications": "Obvestila klepeta",
   "chat_click_to_unsubscribe": "Prejemate obvestila iz tega klepeta, kliknite za odjavo",
   "chat_click_to_subscribe": "Naročite se na obvestila iz tega klepeta",
   "chat_open_in_a_window": "Odpri klepet v oknu",

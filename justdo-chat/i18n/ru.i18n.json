@@ -3,7 +3,7 @@
   "message_editor_input_placeholder": "Введите сообщение...",
   "message_editor_sending": "Отправка...",
   "chat_config_title": "Чат",
-  "chat_receive_chat_email_notifications": "Получать уведомления о чате по электронной почте",
+  "chat_notifications": "Уведомления чата",
   "chat_click_to_unsubscribe": "Вы будете получать уведомления из этого чата, нажмите, чтобы отписаться",
   "chat_click_to_subscribe": "Подписаться на уведомления из этого чата",
   "chat_open_in_a_window": "Открыть чат в отдельном окне",

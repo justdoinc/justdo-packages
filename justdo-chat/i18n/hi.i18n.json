@@ -3,7 +3,7 @@
   "message_editor_input_placeholder": "संदेश टाइप करें...",
   "message_editor_sending": "भेजा जा रहा है...",
   "chat_config_title": "चैट",
-  "chat_receive_chat_email_notifications": "चैट ईमेल सूचनाएँ प्राप्त करें",
+  "chat_notifications": "चैट सूचनाएं",
   "chat_click_to_unsubscribe": "आपको इस चैट से सूचनाएं मिलेंगी, सदस्यता रद्द करने के लिए क्लिक करें",
   "chat_click_to_subscribe": "इस चैट की सूचनाओं की सदस्यता लें",
   "chat_open_in_a_window": "चैट को नई विंडो में खोलें",

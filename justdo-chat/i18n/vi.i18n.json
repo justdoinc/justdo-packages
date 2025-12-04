@@ -3,7 +3,7 @@
   "message_editor_input_placeholder": "Viết tin nhắn…",
   "message_editor_sending": "Đang gửi...",
   "chat_config_title": "Trò chuyện",
-  "chat_receive_chat_email_notifications": "Nhận thông báo email về trò chuyện",
+  "chat_notifications": "Thông báo trò chuyện",
   "chat_click_to_unsubscribe": "Bạn sẽ nhận thông báo từ cuộc trò chuyện này, nhấp để hủy đăng ký",
   "chat_click_to_subscribe": "Đăng ký nhận thông báo từ cuộc trò chuyện này",
   "chat_open_in_a_window": "Mở trò chuyện trong cửa sổ mới",
