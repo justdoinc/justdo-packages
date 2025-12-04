@@ -81,6 +81,21 @@ _.extend HashRequestsHandler.prototype,
           @logger.debug "Calling hash request handler: #{request_handler_id}"
 
           request_handler_result = requestHandler(request_hash_args)
+          # requestHandler may return an object to direct the behaviour of the hash handler.
+          # If requestHandler returns undefined, there's simply no effect, otherwise we are currently support the following
+          # options:
+          
+          # {
+          #     keep_hash: true/false # Default: false.
+          #                           #
+          #                           # This basically tells the hash handler that the consumer of the hash request is not ready to use
+          #                           # it, and ask not to clear yet the hash request from the url, until other aspects are ready for its
+          #                           # consumption. (E.g. in the case of the bottom pane, the bottom pane supports certain hash request
+          #                           # 'expand-project-pane' that allows opening the bottom pane in a particular tab. It is possible that
+          #                           # a plugin that registers the tab might not be ready at the time that the hash request attempts to
+          #                           # tell the bottom pane to do something with it, in which case the hash-request handler in the bottom
+          #                           # pane, will return an object with `keep_hash: true`).
+          # }
           keep_hash = request_handler_result?.keep_hash == true
 
       # Remove hash request args from hash
