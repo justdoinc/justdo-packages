@@ -24,12 +24,15 @@ _.extend JustdoChat.prototype,
     return
 
   _setupNotifications: ->
-    email_notifications = _.map share.channel_types_conf, (conf) -> conf.unread_notifications_email_template 
-    email_notifications = _.compact email_notifications # Remove falsy values
     JustdoEmails.registerEmailCategory JustdoChat.notification_registrar_type,
       label_i18n: "chat_notifications",
       priority: 100
-      notifications: email_notifications
+
+      email_notification_defs = _.chain share.channel_types_conf
+        .map (conf) -> {_id: conf.unread_notifications_email_template}
+        .filter (def) -> def._id?
+        .value()
+    JustdoEmails.registerEmails JustdoChat.notification_registrar_type, email_notification_defs
 
     return
 
