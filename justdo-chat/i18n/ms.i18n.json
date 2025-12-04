@@ -3,7 +3,7 @@
   "message_editor_input_placeholder": "Taip mesej...",
   "message_editor_sending": "Menghantar...",
   "chat_config_title": "Sembang",
-  "chat_receive_chat_email_notifications": "Terima pemberitahuan e-mel sembang",
+  "chat_notifications": "Notifikasi sembang",
   "chat_click_to_unsubscribe": "Anda akan menerima pemberitahuan dari sembang ini, klik untuk berhenti melanggan",
   "chat_click_to_subscribe": "Langgan pemberitahuan dari sembang ini",
   "chat_open_in_a_window": "Buka sembang dalam tetingkap",

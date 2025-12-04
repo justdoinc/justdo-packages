@@ -3,7 +3,7 @@
   "message_editor_input_placeholder": "Kirjoita viesti...",
   "message_editor_sending": "Lähetetään...",
   "chat_config_title": "Keskustelu",
-  "chat_receive_chat_email_notifications": "Vastaanota keskusteluilmoituksia sähköpostitse",
+  "chat_notifications": "Chat-ilmoitukset",
   "chat_click_to_unsubscribe": "Saat ilmoituksia tästä keskustelusta, napsauta peruuttaaksesi tilauksen",
   "chat_click_to_subscribe": "Tilaa ilmoitukset tästä keskustelusta",
   "chat_open_in_a_window": "Avaa keskustelu ikkunassa",

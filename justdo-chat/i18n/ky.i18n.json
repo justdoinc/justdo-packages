@@ -3,7 +3,7 @@
   "message_editor_input_placeholder": "Билдирүү жазыңыз...",
   "message_editor_sending": "Жөнөтүлүүдө...",
   "chat_config_title": "Баарлашуу",
-  "chat_receive_chat_email_notifications": "Баарлашуу боюнча электрондук почта билдирүүлөрүн алуу",
+  "chat_notifications": "Чат билдирмелери",
   "chat_click_to_unsubscribe": "Сиз бул чаттан билдирүүлөрдү аласыз, жазылуудан чыгуу үчүн чыкылдатыңыз",
   "chat_click_to_subscribe": "Бул чаттан билдирүүлөрдү алуу үчүн жазылыңыз",
   "chat_open_in_a_window": "Чатты терезеде ачуу",

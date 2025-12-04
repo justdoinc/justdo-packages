@@ -3,7 +3,7 @@
   "message_editor_input_placeholder": "Kirjuta sõnum...",
   "message_editor_sending": "Saatmine...",
   "chat_config_title": "Vestlus",
-  "chat_receive_chat_email_notifications": "Saa vestluse e-posti teavitusi",
+  "chat_notifications": "Vestluse teavitused",
   "chat_click_to_unsubscribe": "Sa saad sellest vestlusest teavitusi, klõpsa tühistamiseks",
   "chat_click_to_subscribe": "Telli selle vestluse teavitused",
   "chat_open_in_a_window": "Ava vestlus aknas",

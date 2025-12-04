@@ -3,7 +3,7 @@
   "message_editor_input_placeholder": "Írj egy üzenetet...",
   "message_editor_sending": "Küldés...",
   "chat_config_title": "Csevegés",
-  "chat_receive_chat_email_notifications": "Csevegési e-mail értesítések fogadása",
+  "chat_notifications": "Csevegés értesítések",
   "chat_click_to_unsubscribe": "Értesítéseket kapsz erről a csevegésről, kattints a leiratkozáshoz",
   "chat_click_to_subscribe": "Feliratkozás a csevegés értesítéseire",
   "chat_open_in_a_window": "Csevegés megnyitása új ablakban",

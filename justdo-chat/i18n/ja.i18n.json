@@ -3,7 +3,7 @@
   "message_editor_input_placeholder": "メッセージを入力...",
   "message_editor_sending": "送信中...",
   "chat_config_title": "チャット",
-  "chat_receive_chat_email_notifications": "チャットのメール通知を受け取る",
+  "chat_notifications": "チャット通知",
   "chat_click_to_unsubscribe": "このチャットの通知を受信中です。クリックして登録解除",
   "chat_click_to_subscribe": "このチャットの通知を受け取る",
   "chat_open_in_a_window": "ウィンドウでチャットを開く",

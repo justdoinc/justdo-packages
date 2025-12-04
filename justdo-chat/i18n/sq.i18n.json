@@ -3,7 +3,7 @@
   "message_editor_input_placeholder": "Shkruani një mesazh...",
   "message_editor_sending": "Po dërgohet...",
   "chat_config_title": "Bisedë",
-  "chat_receive_chat_email_notifications": "Merr njoftime me email për bisedat",
+  "chat_notifications": "Njoftimet e chat",
   "chat_click_to_unsubscribe": "Do të merrni njoftime nga kjo bisedë, klikoni për t'u çregjistruar",
   "chat_click_to_subscribe": "Abonohu për njoftimet nga kjo bisedë",
   "chat_open_in_a_window": "Hap bisedën në një dritare",
