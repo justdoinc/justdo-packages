@@ -399,8 +399,6 @@ _.extend JustdoAccounts.prototype,
     Meteor.defer ->
       JustdoEmails.buildAndSend
         to: email
-        hide_unsubscribe_links: true
-        send_to_proxy_users: true
         template: "email-verification"
         template_data:
           first_name: user_obj.profile?.first_name
@@ -441,8 +439,6 @@ _.extend JustdoAccounts.prototype,
     Meteor.defer ->
       JustdoEmails.buildAndSend
         to: email
-        hide_unsubscribe_links: true
-        send_to_proxy_users: true
         template: "password-recovery"
         template_data:
           first_name: user_obj.profile?.first_name
