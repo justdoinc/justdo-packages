@@ -86,8 +86,6 @@ _.extend PACK.modules.owners,
               if type == "approve" and Meteor.userId() != task.owner_id
                 bootbox.alert("Task ##{task.seqId} is no longer pending transfer to you.")
 
-
-
               return
 
             if type == "approve"
@@ -100,9 +98,6 @@ _.extend PACK.modules.owners,
 
               bootbox.alert("Ownership transfer of task ##{task.seqId} approved.")
 
-              complete()
-
-              return
             else
               data =
                 task: @items_collection.findOne(task_id)
@@ -116,8 +111,6 @@ _.extend PACK.modules.owners,
                 className: "ownership-hr-rejection-dialog bootbox-new-design"
 
                 onEscape: ->
-                  complete()
-
                   return true
 
                 buttons:
@@ -127,8 +120,6 @@ _.extend PACK.modules.owners,
                     className: "btn-light"
 
                     callback: ->
-                      complete()
-
                       return true
 
                   continue:
@@ -139,14 +130,9 @@ _.extend PACK.modules.owners,
 
                       APP.projects.modules.owners.rejectOwnershipTransfer(task_id, reject_message)
 
-                      complete()
-
                       return true
 
-
-
-              return
-
+            complete()
             return 
       return
     return
