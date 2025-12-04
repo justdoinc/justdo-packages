@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "Tem novas mensagens de __user_name__ à sua espera",
   "unread_dm_notification_title_html": "Tem novas mensagens de <span style=\"font-weight: bold;\">__user_name__</span> à sua espera!",
   "open_in_justdo": "Abrir no JustDo",
-  "unsubscribe_from_justdo": "Cancelar a subscrição de todas as notificações de atualizações do JustDo",
-  "unsubscribe_from_project": "Cancelar a subscrição de atualizações para __project_title__",
-  "reply_email_for_support": "Está a ter algum problema? Responda a este e-mail para obter apoio."
+  "reply_email_for_support": "Está a ter algum problema? Responda a este e-mail para obter apoio.",
+  "email_config_title": "Email",
+  "receive_email_notifications": "Receber notificações por email",
+  "unsubscribe_from_email_type": "Cancelar subscrição de __notification_type__",
+  "unsubscribe_from_all_update_notifications": "Cancelar subscrição de todas as notificações por email"
 }

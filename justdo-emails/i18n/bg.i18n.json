@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "Имате нови съобщения от __user_name__",
   "unread_dm_notification_title_html": "Имате нови съобщения от <span style=\"font-weight: bold;\">__user_name__</span>!",
   "open_in_justdo": "Отворете в JustDo",
-  "unsubscribe_from_justdo": "Отпишете се от всички известия за актуализации от JustDo",
-  "unsubscribe_from_project": "Отпишете се от актуализациите за __project_title__",
-  "reply_email_for_support": "Имате проблеми? Отговорете на този имейл за поддръжка."
+  "reply_email_for_support": "Имате проблеми? Отговорете на този имейл за поддръжка.",
+  "email_config_title": "Имейл",
+  "receive_email_notifications": "Получавай имейл известия",
+  "unsubscribe_from_email_type": "Отпиши се от __notification_type__",
+  "unsubscribe_from_all_update_notifications": "Отпиши се от всички имейл известия"
 }

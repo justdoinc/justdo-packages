@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "Nye meldinger fra __user_name__ venter på deg",
   "unread_dm_notification_title_html": "Nye meldinger fra <span style=\"font-weight: bold;\">__user_name__</span> venter på deg!",
   "open_in_justdo": "Åpne i JustDo",
-  "unsubscribe_from_justdo": "Avslutt abonnementet på alle oppdateringsvarslinger fra JustDo",
-  "unsubscribe_from_project": "Avslutt abonnementet på oppdateringer for __project_title__",
-  "reply_email_for_support": "Har du problemer? Svar på denne e-posten for å få hjelp."
+  "reply_email_for_support": "Har du problemer? Svar på denne e-posten for å få hjelp.",
+  "email_config_title": "E-post",
+  "receive_email_notifications": "Motta e-postvarslinger",
+  "unsubscribe_from_email_type": "Avslutt abonnement på __notification_type__",
+  "unsubscribe_from_all_update_notifications": "Avslutt abonnement på alle e-postvarslinger"
 }

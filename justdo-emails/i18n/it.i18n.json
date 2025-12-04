@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "Hai nuovi messaggi da __user_name__ in attesa",
   "unread_dm_notification_title_html": "Hai nuovi messaggi da <span style=\"font-weight: bold;\">__user_name__</span> in attesa!",
   "open_in_justdo": "Apri in JustDo",
-  "unsubscribe_from_justdo": "Annulla l'iscrizione a tutte le notifiche di aggiornamento da JustDo",
-  "unsubscribe_from_project": "Annulla l'iscrizione agli aggiornamenti per __project_title__",
-  "reply_email_for_support": "Hai problemi? Rispondi a questa email per ricevere assistenza."
+  "reply_email_for_support": "Hai problemi? Rispondi a questa email per ricevere assistenza.",
+  "email_config_title": "Email",
+  "receive_email_notifications": "Ricevi notifiche via email",
+  "unsubscribe_from_email_type": "Annulla l'iscrizione da __notification_type__",
+  "unsubscribe_from_all_update_notifications": "Annulla l'iscrizione da tutte le notifiche email"
 }

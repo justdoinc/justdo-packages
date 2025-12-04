@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "__user_name__-ից նոր հաղորդագրություններ են սպասում Ձեզ",
   "unread_dm_notification_title_html": "<span style=\"font-weight: bold;\">__user_name__</span>-ից նոր հաղորդագրություններ են սպասում Ձեզ։",
   "open_in_justdo": "Բացել JustDo-ում",
-  "unsubscribe_from_justdo": "Չեղարկել բաժանորդագրությունը JustDo-ի բոլոր թարմացումների ծանուցումներից",
-  "unsubscribe_from_project": "Չեղարկել բաժանորդագրությունը __project_title__-ի թարմացումներից",
-  "reply_email_for_support": "Խնդիրներ ունե՞ք: Պատասխանեք այս էլ. նամակին աջակցություն ստանալու համար։"
+  "reply_email_for_support": "Խնդիրներ ունե՞ք: Պատասխանեք այս էլ. նամակին աջակցություն ստանալու համար։",
+  "email_config_title": "Էլ. փոստ",
+  "receive_email_notifications": "Ստանալ էլ. փոստի ծանուցումներ",
+  "unsubscribe_from_email_type": "Հրաժարվել __notification_type__ ծանուցումներից",
+  "unsubscribe_from_all_update_notifications": "Հրաժարվել բոլոր էլ. փոստի ծանուցումներից"
 }

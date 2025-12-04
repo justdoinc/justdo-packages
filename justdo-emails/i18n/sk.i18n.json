@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "Čakajú na vás nové správy od __user_name__",
   "unread_dm_notification_title_html": "Čakajú na vás nové správy od <span style=\"font-weight: bold;\">__user_name__</span>!",
   "open_in_justdo": "Otvoriť v JustDo",
-  "unsubscribe_from_justdo": "Odhlásiť sa zo všetkých upozornení na aktualizácie z JustDo",
-  "unsubscribe_from_project": "Odhlásiť sa z aktualizácií pre __project_title__",
-  "reply_email_for_support": "Máte nejaké problémy? Odpovedzte na tento e-mail pre podporu."
+  "reply_email_for_support": "Máte nejaké problémy? Odpovedzte na tento e-mail pre podporu.",
+  "email_config_title": "E-mail",
+  "receive_email_notifications": "Prijímať e-mailové upozornenia",
+  "unsubscribe_from_email_type": "Odhlásiť sa z __notification_type__",
+  "unsubscribe_from_all_update_notifications": "Odhlásiť sa zo všetkých e-mailových upozornení"
 }

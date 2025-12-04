@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "__user_name__ dan yangi xabarlar sizni kutmoqda",
   "unread_dm_notification_title_html": "<span style=\"font-weight: bold;\">__user_name__</span> dan yangi xabarlar sizni kutmoqda!",
   "open_in_justdo": "JustDo da ochish",
-  "unsubscribe_from_justdo": "JustDo dan barcha yangilanish bildirishnomalarini bekor qilish",
-  "unsubscribe_from_project": "__project_title__ yangilanishlaridan obunani bekor qilish",
-  "reply_email_for_support": "Biror muammo bo'lsa? Yordam olish uchun ushbu xatga javob bering."
+  "reply_email_for_support": "Biror muammo bo'lsa? Yordam olish uchun ushbu xatga javob bering.",
+  "email_config_title": "Email",
+  "receive_email_notifications": "Email bildirishnomalarini olish",
+  "unsubscribe_from_email_type": "__notification_type__ dan obunani bekor qilish",
+  "unsubscribe_from_all_update_notifications": "Barcha email bildirishnomalaridan obunani bekor qilish"
 }

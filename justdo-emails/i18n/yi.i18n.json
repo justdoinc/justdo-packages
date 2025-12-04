@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "נייַע אָנזאָגן פֿון __user_name__ װאַרטן אויף אײַך",
   "unread_dm_notification_title_html": "נייַע אָנזאָגן פֿון <span style=\"font-weight: bold;\">__user_name__</span> װאַרטן אויף אײַך!",
   "open_in_justdo": "עפֿענען אין JustDo",
-  "unsubscribe_from_justdo": "זיך אָפּמעלדן פֿון אַלע דערהײַנטיקונג אָנזאָגן פֿון JustDo",
-  "unsubscribe_from_project": "זיך אָפּמעלדן פֿון דערהײַנטיקונגען פֿאַר __project_title__",
-  "reply_email_for_support": "האָט איר עפּעס פּראָבלעמען? ענטפֿערט אױף דעם בליצפּאָסט פֿאַר הילף."
+  "reply_email_for_support": "האָט איר עפּעס פּראָבלעמען? ענטפֿערט אױף דעם בליצפּאָסט פֿאַר הילף.",
+  "email_config_title": "אימעיל",
+  "receive_email_notifications": "באקומען אימעיל מעלדונגען",
+  "unsubscribe_from_email_type": "אפזאגן פון __notification_type__",
+  "unsubscribe_from_all_update_notifications": "אפזאגן פון אלע אימעיל מעלדונגען"
 }

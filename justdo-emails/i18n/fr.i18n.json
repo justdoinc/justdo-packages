@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "De nouveaux messages de __user_name__ vous attendent",
   "unread_dm_notification_title_html": "De nouveaux messages de <span style=\"font-weight: bold;\">__user_name__</span> vous attendent !",
   "open_in_justdo": "Ouvrir dans JustDo",
-  "unsubscribe_from_justdo": "Se désabonner de toutes les notifications de mise à jour de JustDo",
-  "unsubscribe_from_project": "Se désabonner des mises à jour pour __project_title__",
-  "reply_email_for_support": "Vous rencontrez des problèmes ? Répondez à cet e-mail pour obtenir de l'aide."
+  "reply_email_for_support": "Vous rencontrez des problèmes ? Répondez à cet e-mail pour obtenir de l'aide.",
+  "email_config_title": "Email",
+  "receive_email_notifications": "Recevoir les notifications par email",
+  "unsubscribe_from_email_type": "Se désabonner de __notification_type__",
+  "unsubscribe_from_all_update_notifications": "Se désabonner de toutes les notifications par email"
 }

@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "Nei Messagë vun __user_name__ waarden op Iech",
   "unread_dm_notification_title_html": "Nei Messagë vun <span style=\"font-weight: bold;\">__user_name__</span> waarden op Iech!",
   "open_in_justdo": "An JustDo opmaachen",
-  "unsubscribe_from_justdo": "Vun alle Benorichtigungen vun JustDo ofmellen",
-  "unsubscribe_from_project": "Vun de Benorichtigunge fir __project_title__ ofmellen",
-  "reply_email_for_support": "Hutt Dir Problemer? Äntwert op dës E-Mail fir Ënnerstëtzung."
+  "reply_email_for_support": "Hutt Dir Problemer? Äntwert op dës E-Mail fir Ënnerstëtzung.",
+  "email_config_title": "E-Mail",
+  "receive_email_notifications": "E-Mail-Notifikatiounen kréien",
+  "unsubscribe_from_email_type": "Vu __notification_type__ ofmellen",
+  "unsubscribe_from_all_update_notifications": "Vun allen E-Mail-Notifikatiounen ofmellen"
 }

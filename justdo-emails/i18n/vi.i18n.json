@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "Bạn có tin nhắn mới từ __user_name__ đang chờ",
   "unread_dm_notification_title_html": "Bạn có tin nhắn mới từ <span style=\"font-weight: bold;\">__user_name__</span> đang chờ!",
   "open_in_justdo": "Mở trong JustDo",
-  "unsubscribe_from_justdo": "Hủy đăng ký tất cả thông báo cập nhật từ JustDo",
-  "unsubscribe_from_project": "Hủy đăng ký cập nhật cho __project_title__",
-  "reply_email_for_support": "Gặp vấn đề? Hãy trả lời email này để được hỗ trợ."
+  "reply_email_for_support": "Gặp vấn đề? Hãy trả lời email này để được hỗ trợ.",
+  "email_config_title": "Email",
+  "receive_email_notifications": "Nhận thông báo qua email",
+  "unsubscribe_from_email_type": "Hủy đăng ký __notification_type__",
+  "unsubscribe_from_all_update_notifications": "Hủy đăng ký tất cả thông báo email"
 }

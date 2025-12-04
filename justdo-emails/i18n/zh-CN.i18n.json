@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "来自 __user_name__ 的新消息等待您查看",
   "unread_dm_notification_title_html": "来自 <span style=\"font-weight: bold;\">__user_name__</span> 的新消息等待您查看！",
   "open_in_justdo": "在JustDo中打开",
-  "unsubscribe_from_justdo": "取消订阅所有来自JustDo的更新通知",
-  "unsubscribe_from_project": "取消订阅__project_title__的更新",
-  "reply_email_for_support": "遇到任何问题？回复此邮件获取支持。"
+  "reply_email_for_support": "遇到任何问题？回复此邮件获取支持。",
+  "email_config_title": "邮件",
+  "receive_email_notifications": "接收邮件通知",
+  "unsubscribe_from_email_type": "取消订阅__notification_type__",
+  "unsubscribe_from_all_update_notifications": "取消订阅所有邮件通知"
 }

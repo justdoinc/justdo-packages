@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "ከ__user_name__ አዲስ መልዕክቶች እርስዎን እየጠበቁ ነው",
   "unread_dm_notification_title_html": "ከ<span style=\"font-weight: bold;\">__user_name__</span> አዲስ መልዕክቶች እርስዎን እየጠበቁ ነው!",
   "open_in_justdo": "በJustDo ውስጥ ክፈት",
-  "unsubscribe_from_justdo": "ከJustDo ሁሉም የዝመና ማሳወቂያዎች ደንበኝነትዎን ይሰርዙ",
-  "unsubscribe_from_project": "ከ__project_title__ ዝማኔዎች ደንበኝነትዎን ይሰርዙ",
-  "reply_email_for_support": "ማንኛውም ችግር አለዎት? ለድጋፍ ወደዚህ ኢሜይል መልስ ይስጡ።"
+  "reply_email_for_support": "ማንኛውም ችግር አለዎት? ለድጋፍ ወደዚህ ኢሜይል መልስ ይስጡ።",
+  "email_config_title": "ኢሜይል",
+  "receive_email_notifications": "የኢሜይል ማሳወቂያዎችን ተቀበል",
+  "unsubscribe_from_email_type": "ከ__notification_type__ ምዝገባ ይውጡ",
+  "unsubscribe_from_all_update_notifications": "ከሁሉም የኢሜይል ማሳወቂያዎች ምዝገባ ይውጡ"
 }

@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "__user_name__ இடமிருந்து புதிய செய்திகள் உங்களுக்காக காத்திருக்கின்றன",
   "unread_dm_notification_title_html": "<span style=\"font-weight: bold;\">__user_name__</span> இடமிருந்து புதிய செய்திகள் உங்களுக்காக காத்திருக்கின்றன!",
   "open_in_justdo": "JustDo இல் திறக்கவும்",
-  "unsubscribe_from_justdo": "JustDo இலிருந்து அனைத்து புதுப்பிப்பு அறிவிப்புகளிலிருந்தும் விலகவும்",
-  "unsubscribe_from_project": "__project_title__ க்கான புதுப்பிப்புகளிலிருந்து விலகவும்",
-  "reply_email_for_support": "ஏதேனும் சிக்கல்கள் உள்ளதா? ஆதரவுக்கு இந்த மின்னஞ்சலுக்கு பதிலளிக்கவும்."
+  "reply_email_for_support": "ஏதேனும் சிக்கல்கள் உள்ளதா? ஆதரவுக்கு இந்த மின்னஞ்சலுக்கு பதிலளிக்கவும்.",
+  "email_config_title": "மின்னஞ்சல்",
+  "receive_email_notifications": "மின்னஞ்சல் அறிவிப்புகளைப் பெறவும்",
+  "unsubscribe_from_email_type": "__notification_type__ இலிருந்து குழந்தையை நிறுத்து",
+  "unsubscribe_from_all_update_notifications": "அனைத்து மின்னஞ்சல் அறிவிப்புகளிலிருந்தும் குழந்தையை நிறுத்து"
 }

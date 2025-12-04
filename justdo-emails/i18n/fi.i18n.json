@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "Uusia viestejä käyttäjältä __user_name__ odottaa sinua",
   "unread_dm_notification_title_html": "Uusia viestejä käyttäjältä <span style=\"font-weight: bold;\">__user_name__</span> odottaa sinua!",
   "open_in_justdo": "Avaa JustDossa",
-  "unsubscribe_from_justdo": "Lopeta kaikkien JustDon päivitysilmoitusten tilaus",
-  "unsubscribe_from_project": "Lopeta päivitysten tilaus projektille __project_title__",
-  "reply_email_for_support": "Onko ongelmia? Vastaa tähän sähköpostiin saadaksesi tukea."
+  "reply_email_for_support": "Onko ongelmia? Vastaa tähän sähköpostiin saadaksesi tukea.",
+  "email_config_title": "Sähköposti",
+  "receive_email_notifications": "Vastaanota sähköposti-ilmoituksia",
+  "unsubscribe_from_email_type": "Peruuta __notification_type__-tilaus",
+  "unsubscribe_from_all_update_notifications": "Peruuta kaikkien sähköposti-ilmoitusten tilaus"
 }

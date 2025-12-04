@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "Паёмҳои нав аз __user_name__ интизори шумо ҳастанд",
   "unread_dm_notification_title_html": "Паёмҳои нав аз <span style=\"font-weight: bold;\">__user_name__</span> интизори шумо ҳастанд!",
   "open_in_justdo": "Дар JustDo кушоед",
-  "unsubscribe_from_justdo": "Аз ҳамаи огоҳиномаҳои навсозӣ аз JustDo обуна нашавед",
-  "unsubscribe_from_project": "Аз навсозиҳо барои __project_title__ обуна нашавед",
-  "reply_email_for_support": "Оё ягон мушкилӣ доред? Барои дастгирӣ ба ин почта ҷавоб диҳед."
+  "reply_email_for_support": "Оё ягон мушкилӣ доред? Барои дастгирӣ ба ин почта ҷавоб диҳед.",
+  "email_config_title": "Почтаи электронӣ",
+  "receive_email_notifications": "Гирифтани огоҳиҳо тавассути почтаи электронӣ",
+  "unsubscribe_from_email_type": "Бекор кардани обуна аз __notification_type__",
+  "unsubscribe_from_all_update_notifications": "Бекор кардани обуна аз ҳамаи огоҳиҳои почтаи электронӣ"
 }

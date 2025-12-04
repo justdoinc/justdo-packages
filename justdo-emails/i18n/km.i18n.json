@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "មានសារថ្មីពី __user_name__ កំពុងរង់ចាំអ្នក",
   "unread_dm_notification_title_html": "មានសារថ្មីពី <span style=\"font-weight: bold;\">__user_name__</span> កំពុងរង់ចាំអ្នក!",
   "open_in_justdo": "បើកនៅក្នុង JustDo",
-  "unsubscribe_from_justdo": "ឈប់ជាវការជូនដំណឹងអំពីការធ្វើបច្ចុប្បន្នភាពទាំងអស់ពី JustDo",
-  "unsubscribe_from_project": "ឈប់ជាវការធ្វើបច្ចុប្បន្នភាពសម្រាប់ __project_title__",
-  "reply_email_for_support": "មានបញ្ហាអ្វីទេ? ឆ្លើយតបទៅអ៊ីមែលនេះសម្រាប់ការគាំទ្រ។"
+  "reply_email_for_support": "មានបញ្ហាអ្វីទេ? ឆ្លើយតបទៅអ៊ីមែលនេះសម្រាប់ការគាំទ្រ។",
+  "email_config_title": "អ៊ីមែល",
+  "receive_email_notifications": "ទទួលការជូនដំណឹងតាមអ៊ីមែល",
+  "unsubscribe_from_email_type": "បញ្ឈប់ការជាវ __notification_type__",
+  "unsubscribe_from_all_update_notifications": "បញ្ឈប់ការជាវការជូនដំណឹងតាមអ៊ីមែលទាំងអស់"
 }

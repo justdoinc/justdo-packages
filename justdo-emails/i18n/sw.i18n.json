@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "Ujumbe mpya kutoka kwa __user_name__ unakusubiri",
   "unread_dm_notification_title_html": "Ujumbe mpya kutoka kwa <span style=\"font-weight: bold;\">__user_name__</span> unakusubiri!",
   "open_in_justdo": "Fungua katika JustDo",
-  "unsubscribe_from_justdo": "Jitoe kwenye arifa zote za sasisho kutoka JustDo",
-  "unsubscribe_from_project": "Jitoe kwenye sasisho za __project_title__",
-  "reply_email_for_support": "Una tatizo lolote? Jibu barua pepe hii kwa msaada."
+  "reply_email_for_support": "Una tatizo lolote? Jibu barua pepe hii kwa msaada.",
+  "email_config_title": "Barua Pepe",
+  "receive_email_notifications": "Pokea arifa za barua pepe",
+  "unsubscribe_from_email_type": "Acha usajili wa __notification_type__",
+  "unsubscribe_from_all_update_notifications": "Acha usajili wa arifa zote za barua pepe"
 }

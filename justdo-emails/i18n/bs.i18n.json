@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "Nove poruke od __user_name__ vas čekaju",
   "unread_dm_notification_title_html": "Nove poruke od <span style=\"font-weight: bold;\">__user_name__</span> vas čekaju!",
   "open_in_justdo": "Otvori u JustDo",
-  "unsubscribe_from_justdo": "Odjavi se sa svih obavještenja o ažuriranjima iz JustDo",
-  "unsubscribe_from_project": "Odjavi se sa ažuriranja za __project_title__",
-  "reply_email_for_support": "Imate li problema? Odgovorite na ovaj email za podršku."
+  "reply_email_for_support": "Imate li problema? Odgovorite na ovaj email za podršku.",
+  "email_config_title": "Email",
+  "receive_email_notifications": "Primaj obavijesti putem emaila",
+  "unsubscribe_from_email_type": "Odjavi se sa __notification_type__",
+  "unsubscribe_from_all_update_notifications": "Odjavi se sa svih email obavijesti"
 }

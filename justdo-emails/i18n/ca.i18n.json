@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "Tens missatges nous de __user_name__ esperant",
   "unread_dm_notification_title_html": "Tens missatges nous de <span style=\"font-weight: bold;\">__user_name__</span> esperant!",
   "open_in_justdo": "Obre a JustDo",
-  "unsubscribe_from_justdo": "Cancel·la la subscripció a totes les notificacions d'actualització de JustDo",
-  "unsubscribe_from_project": "Cancel·la la subscripció a les actualitzacions de __project_title__",
-  "reply_email_for_support": "Tens algun problema? Respon a aquest correu per obtenir suport."
+  "reply_email_for_support": "Tens algun problema? Respon a aquest correu per obtenir suport.",
+  "email_config_title": "Correu electrònic",
+  "receive_email_notifications": "Rebre notificacions per correu electrònic",
+  "unsubscribe_from_email_type": "Cancel·lar la subscripció de __notification_type__",
+  "unsubscribe_from_all_update_notifications": "Cancel·lar la subscripció de totes les notificacions per correu electrònic"
 }
