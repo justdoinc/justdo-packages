@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "__user_name__ からの新しいメッセージが届いています",
   "unread_dm_notification_title_html": "<span style=\"font-weight: bold;\">__user_name__</span> からの新しいメッセージが届いています！",
   "open_in_justdo": "JustDoで開く",
-  "unsubscribe_from_justdo": "JustDoからのすべての更新通知を解除する",
-  "unsubscribe_from_project": "__project_title__の更新通知を解除する",
-  "reply_email_for_support": "問題がありますか？このメールに返信してサポートを受けてください。"
+  "reply_email_for_support": "問題がありますか？このメールに返信してサポートを受けてください。",
+  "email_config_title": "メール",
+  "receive_email_notifications": "メール通知を受信する",
+  "unsubscribe_from_email_type": "__notification_type__の配信を停止する",
+  "unsubscribe_from_all_update_notifications": "すべてのメール通知の配信を停止する"
 }

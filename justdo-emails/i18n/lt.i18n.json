@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "Jūsų laukia nauji pranešimai nuo __user_name__",
   "unread_dm_notification_title_html": "Jūsų laukia nauji pranešimai nuo <span style=\"font-weight: bold;\">__user_name__</span>!",
   "open_in_justdo": "Atidaryti JustDo",
-  "unsubscribe_from_justdo": "Atsisakyti visų JustDo atnaujinimų pranešimų",
-  "unsubscribe_from_project": "Atsisakyti atnaujinimų iš __project_title__",
-  "reply_email_for_support": "Turite problemų? Atsakykite į šį laišką, jei reikia pagalbos."
+  "reply_email_for_support": "Turite problemų? Atsakykite į šį laišką, jei reikia pagalbos.",
+  "email_config_title": "El. paštas",
+  "receive_email_notifications": "Gauti pranešimus el. paštu",
+  "unsubscribe_from_email_type": "Atsisakyti __notification_type__",
+  "unsubscribe_from_all_update_notifications": "Atsisakyti visų pranešimų el. paštu"
 }

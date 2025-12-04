@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "Mesej baharu dari __user_name__ sedang menunggu anda",
   "unread_dm_notification_title_html": "Mesej baharu dari <span style=\"font-weight: bold;\">__user_name__</span> sedang menunggu anda!",
   "open_in_justdo": "Buka dalam JustDo",
-  "unsubscribe_from_justdo": "Berhenti melanggan semua pemberitahuan kemas kini dari JustDo",
-  "unsubscribe_from_project": "Berhenti melanggan kemas kini untuk __project_title__",
-  "reply_email_for_support": "Menghadapi sebarang masalah? Balas e-mel ini untuk mendapatkan sokongan."
+  "reply_email_for_support": "Menghadapi sebarang masalah? Balas e-mel ini untuk mendapatkan sokongan.",
+  "email_config_title": "E-mel",
+  "receive_email_notifications": "Terima notifikasi e-mel",
+  "unsubscribe_from_email_type": "Berhenti langganan daripada __notification_type__",
+  "unsubscribe_from_all_update_notifications": "Berhenti langganan daripada semua notifikasi e-mel"
 }

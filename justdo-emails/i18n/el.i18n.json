@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "Νέα μηνύματα από τον/την __user_name__ σας περιμένουν",
   "unread_dm_notification_title_html": "Νέα μηνύματα από τον/την <span style=\"font-weight: bold;\">__user_name__</span> σας περιμένουν!",
   "open_in_justdo": "Άνοιγμα στο JustDo",
-  "unsubscribe_from_justdo": "Κατάργηση εγγραφής από όλες τις ειδοποιήσεις ενημερώσεων του JustDo",
-  "unsubscribe_from_project": "Κατάργηση εγγραφής από ενημερώσεις για το __project_title__",
-  "reply_email_for_support": "Αντιμετωπίζετε προβλήματα; Απαντήστε σε αυτό το email για υποστήριξη."
+  "reply_email_for_support": "Αντιμετωπίζετε προβλήματα; Απαντήστε σε αυτό το email για υποστήριξη.",
+  "email_config_title": "Email",
+  "receive_email_notifications": "Λήψη ειδοποιήσεων email",
+  "unsubscribe_from_email_type": "Κατάργηση εγγραφής από __notification_type__",
+  "unsubscribe_from_all_update_notifications": "Κατάργηση εγγραφής από όλες τις ειδοποιήσεις email"
 }

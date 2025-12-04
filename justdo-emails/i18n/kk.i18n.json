@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "__user_name__ пайдаланушысынан жаңа хабарламалар күтіп тұр",
   "unread_dm_notification_title_html": "<span style=\"font-weight: bold;\">__user_name__</span> пайдаланушысынан жаңа хабарламалар күтіп тұр!",
   "open_in_justdo": "JustDo-да ашу",
-  "unsubscribe_from_justdo": "JustDo-дан барлық жаңарту хабарландыруларынан бас тарту",
-  "unsubscribe_from_project": "__project_title__ жобасының жаңартуларынан бас тарту",
-  "reply_email_for_support": "Қиындықтар туындады ма? Қолдау алу үшін осы электрондық поштаға жауап беріңіз."
+  "reply_email_for_support": "Қиындықтар туындады ма? Қолдау алу үшін осы электрондық поштаға жауап беріңіз.",
+  "email_config_title": "Электрондық пошта",
+  "receive_email_notifications": "Электрондық хабарландыруларды алу",
+  "unsubscribe_from_email_type": "__notification_type__ хабарландыруларынан бас тарту",
+  "unsubscribe_from_all_update_notifications": "Барлық электрондық хабарландырулардан бас тарту"
 }

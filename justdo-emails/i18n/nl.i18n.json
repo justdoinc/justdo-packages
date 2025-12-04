@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "Er wachten nieuwe berichten van __user_name__ op je",
   "unread_dm_notification_title_html": "Er wachten nieuwe berichten van <span style=\"font-weight: bold;\">__user_name__</span> op je!",
   "open_in_justdo": "Open in JustDo",
-  "unsubscribe_from_justdo": "Uitschrijven voor alle updatenotificaties van JustDo",
-  "unsubscribe_from_project": "Uitschrijven voor updates van __project_title__",
-  "reply_email_for_support": "Heb je problemen? Beantwoord deze e-mail voor ondersteuning."
+  "reply_email_for_support": "Heb je problemen? Beantwoord deze e-mail voor ondersteuning.",
+  "email_config_title": "E-mail",
+  "receive_email_notifications": "E-mailmeldingen ontvangen",
+  "unsubscribe_from_email_type": "Uitschrijven van __notification_type__",
+  "unsubscribe_from_all_update_notifications": "Uitschrijven van alle e-mailmeldingen"
 }

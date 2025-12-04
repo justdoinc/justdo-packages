@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "來自 __user_name__ 的新訊息等待您查看",
   "unread_dm_notification_title_html": "來自 <span style=\"font-weight: bold;\">__user_name__</span> 的新訊息等待您查看！",
   "open_in_justdo": "於JustDo開啟",
-  "unsubscribe_from_justdo": "取消訂閱所有來自 JustDo 的更新通知",
-  "unsubscribe_from_project": "取消訂閱__project_title__的更新",
-  "reply_email_for_support": "有任何疑問嗎？請回覆此電郵，我們很樂意為您解答。"
+  "reply_email_for_support": "有任何疑問嗎？請回覆此電郵，我們很樂意為您解答。",
+  "email_config_title": "電子郵件",
+  "receive_email_notifications": "接收電子郵件通知",
+  "unsubscribe_from_email_type": "取消訂閱 __notification_type__",
+  "unsubscribe_from_all_update_notifications": "取消訂閱所有電子郵件通知"
 }

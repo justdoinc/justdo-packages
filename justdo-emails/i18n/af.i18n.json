@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "Nuwe boodskappe van __user_name__ wag vir jou",
   "unread_dm_notification_title_html": "Nuwe boodskappe van <span style=\"font-weight: bold;\">__user_name__</span> wag vir jou!",
   "open_in_justdo": "Maak oop in JustDo",
-  "unsubscribe_from_justdo": "Kanselleer intekening op alle opdateringskennisgewings van JustDo",
-  "unsubscribe_from_project": "Kanselleer intekening op opdaterings vir __project_title__",
-  "reply_email_for_support": "Het jy enige probleme? Antwoord op hierdie e-pos vir ondersteuning."
+  "reply_email_for_support": "Het jy enige probleme? Antwoord op hierdie e-pos vir ondersteuning.",
+  "email_config_title": "E-pos",
+  "receive_email_notifications": "Ontvang e-poskennisgewings",
+  "unsubscribe_from_email_type": "Teken af van __notification_type__",
+  "unsubscribe_from_all_update_notifications": "Teken af van alle e-poskennisgewings"
 }

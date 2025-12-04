@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "رسائل جديدة من __user_name__ في انتظارك",
   "unread_dm_notification_title_html": "رسائل جديدة من <span style=\"font-weight: bold;\">__user_name__</span> في انتظارك!",
   "open_in_justdo": "فتح في JustDo",
-  "unsubscribe_from_justdo": "إلغاء الاشتراك من جميع إشعارات التحديث من JustDo",
-  "unsubscribe_from_project": "إلغاء الاشتراك من تحديثات __project_title__",
-  "reply_email_for_support": "هل تواجه أي مشاكل؟ قم بالرد على هذا البريد الإلكتروني للحصول على الدعم."
+  "reply_email_for_support": "هل تواجه أي مشاكل؟ قم بالرد على هذا البريد الإلكتروني للحصول على الدعم.",
+  "email_config_title": "البريد الإلكتروني",
+  "receive_email_notifications": "استلام إشعارات البريد الإلكتروني",
+  "unsubscribe_from_email_type": "إلغاء الاشتراك من __notification_type__",
+  "unsubscribe_from_all_update_notifications": "إلغاء الاشتراك من جميع إشعارات البريد الإلكتروني"
 }

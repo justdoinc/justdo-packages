@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "Új üzenetek várnak rád __user_name__ felhasználótól",
   "unread_dm_notification_title_html": "Új üzenetek várnak rád <span style=\"font-weight: bold;\">__user_name__</span> felhasználótól!",
   "open_in_justdo": "Megnyitás a JustDo-ban",
-  "unsubscribe_from_justdo": "Leiratkozás az összes JustDo értesítésről",
-  "unsubscribe_from_project": "Leiratkozás a(z) __project_title__ frissítéseiről",
-  "reply_email_for_support": "Problémád van? Válaszolj erre az e-mailre segítségért."
+  "reply_email_for_support": "Problémád van? Válaszolj erre az e-mailre segítségért.",
+  "email_config_title": "Email",
+  "receive_email_notifications": "Email értesítések fogadása",
+  "unsubscribe_from_email_type": "Leiratkozás a(z) __notification_type__ értesítésekről",
+  "unsubscribe_from_all_update_notifications": "Leiratkozás az összes email értesítésről"
 }

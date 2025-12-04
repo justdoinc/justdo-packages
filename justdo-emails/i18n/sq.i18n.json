@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "Ju presin mesazhe të reja nga __user_name__",
   "unread_dm_notification_title_html": "Ju presin mesazhe të reja nga <span style=\"font-weight: bold;\">__user_name__</span>!",
   "open_in_justdo": "Hape në JustDo",
-  "unsubscribe_from_justdo": "Çregjistrohu nga të gjitha njoftimet e përditësimeve nga JustDo",
-  "unsubscribe_from_project": "Çregjistrohu nga përditësimet për __project_title__",
-  "reply_email_for_support": "Keni ndonjë problem? Përgjigjuni këtij emaili për ndihmë."
+  "reply_email_for_support": "Keni ndonjë problem? Përgjigjuni këtij emaili për ndihmë.",
+  "email_config_title": "Email",
+  "receive_email_notifications": "Merr njoftime me email",
+  "unsubscribe_from_email_type": "Çregjistrohu nga __notification_type__",
+  "unsubscribe_from_all_update_notifications": "Çregjistrohu nga të gjitha njoftimet me email"
 }

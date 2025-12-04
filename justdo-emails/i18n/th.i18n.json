@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "คุณมีข้อความใหม่จาก __user_name__ รออยู่",
   "unread_dm_notification_title_html": "คุณมีข้อความใหม่จาก <span style=\"font-weight: bold;\">__user_name__</span> รออยู่!",
   "open_in_justdo": "เปิดใน JustDo",
-  "unsubscribe_from_justdo": "ยกเลิกการรับการแจ้งเตือนทั้งหมดจาก JustDo",
-  "unsubscribe_from_project": "ยกเลิกการรับการอัปเดตสำหรับ __project_title__",
-  "reply_email_for_support": "มีปัญหาใดๆ หรือไม่? ตอบกลับอีเมลนี้เพื่อขอรับการสนับสนุน"
+  "reply_email_for_support": "มีปัญหาใดๆ หรือไม่? ตอบกลับอีเมลนี้เพื่อขอรับการสนับสนุน",
+  "email_config_title": "อีเมล",
+  "receive_email_notifications": "รับการแจ้งเตือนทางอีเมล",
+  "unsubscribe_from_email_type": "ยกเลิกการรับ __notification_type__",
+  "unsubscribe_from_all_update_notifications": "ยกเลิกการรับการแจ้งเตือนทางอีเมลทั้งหมด"
 }

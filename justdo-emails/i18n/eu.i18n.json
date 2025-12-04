@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "__user_name__ erabiltzailearen mezu berriak dituzu zain",
   "unread_dm_notification_title_html": "<span style=\"font-weight: bold;\">__user_name__</span> erabiltzailearen mezu berriak dituzu zain!",
   "open_in_justdo": "Ireki JustDo-n",
-  "unsubscribe_from_justdo": "Kendu harpidetza JustDo-ren eguneraketa jakinarazpen guztietatik",
-  "unsubscribe_from_project": "Kendu harpidetza __project_title__ proiektuaren eguneraketetatik",
-  "reply_email_for_support": "Arazorik al duzu? Erantzun mezu honi laguntza jasotzeko."
+  "reply_email_for_support": "Arazorik al duzu? Erantzun mezu honi laguntza jasotzeko.",
+  "email_config_title": "Posta elektronikoa",
+  "receive_email_notifications": "Jaso posta elektronikoko jakinarazpenak",
+  "unsubscribe_from_email_type": "Harpidetza kendu __notification_type__ motatik",
+  "unsubscribe_from_all_update_notifications": "Harpidetza kendu posta elektronikoko jakinarazpen guztietatik"
 }

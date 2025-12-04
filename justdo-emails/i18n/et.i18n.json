@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "Uued sõnumid kasutajalt __user_name__ ootavad sind",
   "unread_dm_notification_title_html": "Uued sõnumid kasutajalt <span style=\"font-weight: bold;\">__user_name__</span> ootavad sind!",
   "open_in_justdo": "Ava JustDos",
-  "unsubscribe_from_justdo": "Loobu kõigist JustDo uuendusteatistest",
-  "unsubscribe_from_project": "Loobu __project_title__ uuendustest",
-  "reply_email_for_support": "Probleeme? Vasta sellele e-kirjale, et saada abi."
+  "reply_email_for_support": "Probleeme? Vasta sellele e-kirjale, et saada abi.",
+  "email_config_title": "E-post",
+  "receive_email_notifications": "Saa e-posti teavitusi",
+  "unsubscribe_from_email_type": "Loobu __notification_type__ tellimusest",
+  "unsubscribe_from_all_update_notifications": "Loobu kõigist e-posti teavitustest"
 }

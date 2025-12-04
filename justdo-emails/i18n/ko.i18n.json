@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "__user_name__님의 새로운 메시지가 도착했습니다",
   "unread_dm_notification_title_html": "<span style=\"font-weight: bold;\">__user_name__</span>님의 새로운 메시지가 도착했습니다!",
   "open_in_justdo": "JustDo에서 열기",
-  "unsubscribe_from_justdo": "JustDo의 모든 업데이트 알림 구독 해제",
-  "unsubscribe_from_project": "__project_title__ 업데이트 구독 해제",
-  "reply_email_for_support": "문제가 있으신가요? 이 이메일에 답장하시면 지원을 받으실 수 있습니다."
+  "reply_email_for_support": "문제가 있으신가요? 이 이메일에 답장하시면 지원을 받으실 수 있습니다.",
+  "email_config_title": "이메일",
+  "receive_email_notifications": "이메일 알림 받기",
+  "unsubscribe_from_email_type": "__notification_type__ 구독 취소",
+  "unsubscribe_from_all_update_notifications": "모든 이메일 알림 구독 취소"
 }

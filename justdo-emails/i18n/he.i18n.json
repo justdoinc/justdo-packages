@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "הודעות חדשות מ-__user_name__ ממתינות לך",
   "unread_dm_notification_title_html": "הודעות חדשות מ-<span style=\"font-weight: bold;\">__user_name__</span> ממתינות לך!",
   "open_in_justdo": "פתח ב-JustDo",
-  "unsubscribe_from_justdo": "הפסק לקבל את כל העדכונים מ-JustDo",
-  "unsubscribe_from_project": "הפסק לקבל עדכונים מ: __project_title__",
-  "reply_email_for_support": "נתקלת בבעיות? השב לאימייל זה לקבלת תמיכה."
+  "reply_email_for_support": "נתקלת בבעיות? השב לאימייל זה לקבלת תמיכה.",
+  "email_config_title": "אימייל",
+  "receive_email_notifications": "קבל התראות באימייל",
+  "unsubscribe_from_email_type": "בטל מנוי מ-__notification_type__",
+  "unsubscribe_from_all_update_notifications": "בטל מנוי מכל התראות האימייל"
 }

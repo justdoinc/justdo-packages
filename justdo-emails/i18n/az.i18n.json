@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "__user_name__ istifadəçisindən yeni mesajlar sizi gözləyir",
   "unread_dm_notification_title_html": "<span style=\"font-weight: bold;\">__user_name__</span> istifadəçisindən yeni mesajlar sizi gözləyir!",
   "open_in_justdo": "JustDo-da aç",
-  "unsubscribe_from_justdo": "JustDo-dan bütün yeniləmə bildirişlərindən abunəliyi ləğv et",
-  "unsubscribe_from_project": "__project_title__ üçün yeniləmələrdən abunəliyi ləğv et",
-  "reply_email_for_support": "Hər hansı bir probleminiz var? Dəstək üçün bu e-poçta cavab verin."
+  "reply_email_for_support": "Hər hansı bir probleminiz var? Dəstək üçün bu e-poçta cavab verin.",
+  "email_config_title": "E-poçt",
+  "receive_email_notifications": "E-poçt bildirişləri al",
+  "unsubscribe_from_email_type": "__notification_type__ bildirişlərindən abunəlikdən çıx",
+  "unsubscribe_from_all_update_notifications": "Bütün e-poçt bildirişlərindən abunəlikdən çıx"
 }

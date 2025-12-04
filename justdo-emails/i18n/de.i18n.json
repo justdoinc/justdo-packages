@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "Neue Nachrichten von __user_name__ warten auf Sie",
   "unread_dm_notification_title_html": "Neue Nachrichten von <span style=\"font-weight: bold;\">__user_name__</span> warten auf Sie!",
   "open_in_justdo": "In JustDo öffnen",
-  "unsubscribe_from_justdo": "Von allen Update-Benachrichtigungen von JustDo abmelden",
-  "unsubscribe_from_project": "Von Updates für __project_title__ abmelden",
-  "reply_email_for_support": "Haben Sie Probleme? Antworten Sie auf diese E-Mail für Support."
+  "reply_email_for_support": "Haben Sie Probleme? Antworten Sie auf diese E-Mail für Support.",
+  "email_config_title": "E-Mail",
+  "receive_email_notifications": "E-Mail-Benachrichtigungen erhalten",
+  "unsubscribe_from_email_type": "Von __notification_type__ abmelden",
+  "unsubscribe_from_all_update_notifications": "Von allen E-Mail-Benachrichtigungen abmelden"
 }

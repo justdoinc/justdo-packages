@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "Ada pesan baru dari __user_name__ yang menunggu Anda",
   "unread_dm_notification_title_html": "Ada pesan baru dari <span style=\"font-weight: bold;\">__user_name__</span> yang menunggu Anda!",
   "open_in_justdo": "Buka di JustDo",
-  "unsubscribe_from_justdo": "Berhenti berlangganan semua notifikasi pembaruan dari JustDo",
-  "unsubscribe_from_project": "Berhenti berlangganan pembaruan untuk __project_title__",
-  "reply_email_for_support": "Ada masalah? Balas email ini untuk mendapatkan bantuan."
+  "reply_email_for_support": "Ada masalah? Balas email ini untuk mendapatkan bantuan.",
+  "email_config_title": "Email",
+  "receive_email_notifications": "Terima notifikasi email",
+  "unsubscribe_from_email_type": "Berhenti berlangganan dari __notification_type__",
+  "unsubscribe_from_all_update_notifications": "Berhenti berlangganan dari semua notifikasi email"
 }

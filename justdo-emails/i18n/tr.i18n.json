@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "__user_name__ kişisinden sizi bekleyen yeni mesajlar var",
   "unread_dm_notification_title_html": "<span style=\"font-weight: bold;\">__user_name__</span> kişisinden sizi bekleyen yeni mesajlar var!",
   "open_in_justdo": "JustDo'da aç",
-  "unsubscribe_from_justdo": "JustDo'dan gelen tüm güncelleme bildirimlerinden çık",
-  "unsubscribe_from_project": "__project_title__ için güncellemelerden çık",
-  "reply_email_for_support": "Herhangi bir sorun mu yaşıyorsunuz? Destek için bu e-postayı yanıtlayın."
+  "reply_email_for_support": "Herhangi bir sorun mu yaşıyorsunuz? Destek için bu e-postayı yanıtlayın.",
+  "email_config_title": "E-posta",
+  "receive_email_notifications": "E-posta bildirimleri al",
+  "unsubscribe_from_email_type": "__notification_type__ bildirimlerinden abonelikten çık",
+  "unsubscribe_from_all_update_notifications": "Tüm e-posta bildirimlerinden abonelikten çık"
 }

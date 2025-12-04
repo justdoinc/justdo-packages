@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "__user_name__ থেকে নতুন বার্তা আপনার জন্য অপেক্ষা করছে",
   "unread_dm_notification_title_html": "<span style=\"font-weight: bold;\">__user_name__</span> থেকে নতুন বার্তা আপনার জন্য অপেক্ষা করছে!",
   "open_in_justdo": "JustDo-তে খুলুন",
-  "unsubscribe_from_justdo": "JustDo থেকে সমস্ত আপডেট বিজ্ঞপ্তি থেকে আনসাবস্ক্রাইব করুন",
-  "unsubscribe_from_project": "__project_title__ এর আপডেট থেকে আনসাবস্ক্রাইব করুন",
-  "reply_email_for_support": "কোনো সমস্যা হচ্ছে? সহায়তার জন্য এই ইমেইলে উত্তর দিন।"
+  "reply_email_for_support": "কোনো সমস্যা হচ্ছে? সহায়তার জন্য এই ইমেইলে উত্তর দিন।",
+  "email_config_title": "ইমেইল",
+  "receive_email_notifications": "ইমেইল নোটিফিকেশন গ্রহণ করুন",
+  "unsubscribe_from_email_type": "__notification_type__ থেকে আনসাবস্ক্রাইব করুন",
+  "unsubscribe_from_all_update_notifications": "সমস্ত ইমেইল নোটিফিকেশন থেকে আনসাবস্ক্রাইব করুন"
 }

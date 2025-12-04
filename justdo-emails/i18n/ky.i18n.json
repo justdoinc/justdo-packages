@@ -7,7 +7,9 @@
   "unread_dm_notification_subject": "__user_name__ колдонуучусунан жаңы билдирүүлөр күтүп жатат",
   "unread_dm_notification_title_html": "<span style=\"font-weight: bold;\">__user_name__</span> колдонуучусунан жаңы билдирүүлөр күтүп жатат!",
   "open_in_justdo": "JustDo'до ачуу",
-  "unsubscribe_from_justdo": "JustDo'дон бардык жаңыртуу билдирүүлөрүнөн баш тартуу",
-  "unsubscribe_from_project": "__project_title__ боюнча жаңыртуулардан баш тартуу",
-  "reply_email_for_support": "Кандайдыр бир көйгөйлөр барбы? Колдоо алуу үчүн бул электрондук почтага жооп бериңиз."
+  "reply_email_for_support": "Кандайдыр бир көйгөйлөр барбы? Колдоо алуу үчүн бул электрондук почтага жооп бериңиз.",
+  "email_config_title": "Электрондук почта",
+  "receive_email_notifications": "Электрондук почта билдирүүлөрүн алуу",
+  "unsubscribe_from_email_type": "__notification_type__ билдирүүлөрүнөн баш тартуу",
+  "unsubscribe_from_all_update_notifications": "Бардык электрондук почта билдирүүлөрүнөн баш тартуу"
 }
