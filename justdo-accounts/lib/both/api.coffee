@@ -7,8 +7,23 @@ _.extend JustdoAccounts.prototype,
       JustdoEmails.registerEmailCategory "justdo_accounts",
         label_i18n: "accounts_notifications",
         priority: 300
-        notifications: ["email-verification", "password-recovery"]
-        notifications_ignoring_user_preference: ["email-verification", "password-recovery"]
+
+      JustdoEmails.registerEmails "justdo_accounts", [
+        {
+          _id: "email-verification"
+          ignore_user_unsubscribe_preference: true
+          custom_options:
+            hide_unsubscribe_links: true
+            send_to_proxy_users: true
+        },
+        {
+          _id: "password-recovery"
+          ignore_user_unsubscribe_preference: true
+          custom_options:
+            hide_unsubscribe_links: true
+            send_to_proxy_users: true
+        }
+      ]
 
       return
 
