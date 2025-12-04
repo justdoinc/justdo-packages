@@ -18,5 +18,6 @@
   "lang_schema_label": "Preferirani jezik",
   "email_schema_label": "Email",
   "ignore_invites_schema_label": "Ignoriši korisnike bez lozinke (smatraj ih nepostojećim)",
-  "edit_avatar_colors": "Uredi boje avatara"
+  "edit_avatar_colors": "Uredi boje avatara",
+  "accounts_notifications": "Obavještenja o nalozima"
 }

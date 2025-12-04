@@ -18,5 +18,6 @@
   "lang_schema_label": "Idioma preferit",
   "email_schema_label": "Correu electrònic",
   "ignore_invites_schema_label": "Ignorar usuaris sense contrasenya (considerar-los inexistents)",
-  "edit_avatar_colors": "Editar colors de l'avatar"
+  "edit_avatar_colors": "Editar colors de l'avatar",
+  "accounts_notifications": "Notificacions de Comptes"
 }

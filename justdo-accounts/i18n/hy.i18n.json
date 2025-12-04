@@ -18,5 +18,6 @@
   "lang_schema_label": "Նախընտրելի լեզու",
   "email_schema_label": "Էլ. փոստ",
   "ignore_invites_schema_label": "Անտեսել առանց գաղտնաբառի օգտատերերին (համարել նրանց գոյություն չունեցող)",
-  "edit_avatar_colors": "Խմբագրել ավատարի գույները"
+  "edit_avatar_colors": "Խմբագրել ավատարի գույները",
+  "accounts_notifications": "Հաշիվների ծանուցումներ"
 }

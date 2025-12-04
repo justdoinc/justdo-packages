@@ -18,5 +18,6 @@
   "lang_schema_label": "Bahasa Pilihan",
   "email_schema_label": "Email",
   "ignore_invites_schema_label": "Abaikan pengguna tanpa kata sandi (anggap mereka tidak ada)",
-  "edit_avatar_colors": "Edit Warna Avatar"
+  "edit_avatar_colors": "Edit Warna Avatar",
+  "accounts_notifications": "Notifikasi Akun"
 }

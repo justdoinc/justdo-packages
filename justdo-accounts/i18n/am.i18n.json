@@ -18,5 +18,6 @@
   "lang_schema_label": "የተመረጠ ቋንቋ",
   "email_schema_label": "ኢሜይል",
   "ignore_invites_schema_label": "የይለፍ ቃል የሌላቸውን ተጠቃሚዎች ችላ በል (እንደሌሉ ቆጠራቸው)",
-  "edit_avatar_colors": "የአቫታር ቀለሞችን አርትዕ"
+  "edit_avatar_colors": "የአቫታር ቀለሞችን አርትዕ",
+  "accounts_notifications": "የመለያዎች ማሳወቂያዎች"
 }

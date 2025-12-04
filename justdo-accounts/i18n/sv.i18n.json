@@ -18,5 +18,6 @@
   "lang_schema_label": "Föredraget språk",
   "email_schema_label": "E-post",
   "ignore_invites_schema_label": "Ignorera användare utan lösenord (betrakta dem som icke-existerande)",
-  "edit_avatar_colors": "Redigera avatarfärger"
+  "edit_avatar_colors": "Redigera avatarfärger",
+  "accounts_notifications": "Kontoaviseringar"
 }

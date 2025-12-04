@@ -18,5 +18,6 @@
   "lang_schema_label": "Предпочитан език",
   "email_schema_label": "Имейл",
   "ignore_invites_schema_label": "Игнорирай потребители без парола (считай ги за несъществуващи)",
-  "edit_avatar_colors": "Редактирай цветовете на аватара"
+  "edit_avatar_colors": "Редактирай цветовете на аватара",
+  "accounts_notifications": "Известия за профили"
 }

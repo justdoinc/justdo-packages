@@ -18,5 +18,6 @@
   "lang_schema_label": "希望言語",
   "email_schema_label": "メールアドレス",
   "ignore_invites_schema_label": "パスワードのないユーザーを無視する（存在しないものとみなす）",
-  "edit_avatar_colors": "アバターの色を編集"
+  "edit_avatar_colors": "アバターの色を編集",
+  "accounts_notifications": "アカウント通知"
 }

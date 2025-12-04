@@ -18,5 +18,6 @@
   "lang_schema_label": "Üstünlük Verilən Dil",
   "email_schema_label": "E-poçt",
   "ignore_invites_schema_label": "Şifrəsi olmayan istifadəçiləri nəzərə almayın (onları mövcud olmayan hesab edin)",
-  "edit_avatar_colors": "Avatar Rənglərini Redaktə Et"
+  "edit_avatar_colors": "Avatar Rənglərini Redaktə Et",
+  "accounts_notifications": "Hesab Bildirişləri"
 }

@@ -18,5 +18,6 @@
   "lang_schema_label": "पसंदीदा भाषा",
   "email_schema_label": "ईमेल",
   "ignore_invites_schema_label": "बिना पासवर्ड वाले उपयोगकर्ताओं को अनदेखा करें (उन्हें गैर-मौजूद मानें)",
-  "edit_avatar_colors": "अवतार के रंग संपादित करें"
+  "edit_avatar_colors": "अवतार के रंग संपादित करें",
+  "accounts_notifications": "खाता सूचनाएं (Accounts Notifications)"
 }

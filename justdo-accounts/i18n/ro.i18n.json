@@ -18,5 +18,6 @@
   "lang_schema_label": "Limba preferată",
   "email_schema_label": "Email",
   "ignore_invites_schema_label": "Ignoră utilizatorii fără parolă (consideră-i inexistenți)",
-  "edit_avatar_colors": "Editează culorile avatarului"
+  "edit_avatar_colors": "Editează culorile avatarului",
+  "accounts_notifications": "Notificări Conturi"
 }

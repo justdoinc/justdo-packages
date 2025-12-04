@@ -18,5 +18,6 @@
   "lang_schema_label": "Idioma Preferido",
   "email_schema_label": "E-mail",
   "ignore_invites_schema_label": "Ignorar usuários sem senha (considerá-los inexistentes)",
-  "edit_avatar_colors": "Editar Cores do Avatar"
+  "edit_avatar_colors": "Editar Cores do Avatar",
+  "accounts_notifications": "Notificações de Contas"
 }

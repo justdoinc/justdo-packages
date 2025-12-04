@@ -18,5 +18,6 @@
   "lang_schema_label": "Eelistatud keel",
   "email_schema_label": "E-post",
   "ignore_invites_schema_label": "Ignoreeri paroolita kasutajaid (käsitle neid mitteolemasolevatena)",
-  "edit_avatar_colors": "Muuda avatari värve"
+  "edit_avatar_colors": "Muuda avatari värve",
+  "accounts_notifications": "Kontode teavitused"
 }

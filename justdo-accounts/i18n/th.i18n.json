@@ -18,5 +18,6 @@
   "lang_schema_label": "ภาษาที่ต้องการ",
   "email_schema_label": "อีเมล",
   "ignore_invites_schema_label": "ละเว้นผู้ใช้ที่ไม่มีรหัสผ่าน (ถือว่าไม่มีตัวตน)",
-  "edit_avatar_colors": "แก้ไขสีอวาตาร์"
+  "edit_avatar_colors": "แก้ไขสีอวาตาร์",
+  "accounts_notifications": "การแจ้งเตือนบัญชี"
 }
