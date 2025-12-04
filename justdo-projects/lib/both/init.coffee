@@ -83,7 +83,7 @@ _.extend Projects.prototype,
         _id: "notifications-added-to-new-project"
         custom_options:
           # Since this email may be sent to addresses that aren't registered in JustDo, if they click the unsubscribe link,
-          # it would bring the user to the landing page instead of unsubscribing.
+          # it would bring the user to the landing page instead of unsubscribing. That's why we hide unsubscribing link for this email category.
           # 
           # User who are registered in JustDo can still choose to unsubscribe from this email category in the user dropdown,
           # since this email category does not ignore user unsubscribe preference.
