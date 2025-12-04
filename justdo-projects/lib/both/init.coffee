@@ -77,7 +77,14 @@ _.extend Projects.prototype,
     JustdoEmails.registerEmailCategory "justdo_projects",
       label_i18n: "notifications_added_to_new_project_label",
       priority: 50
-      notifications: ["notifications-added-to-new-project"]
+
+    JustdoEmails.registerEmails "justdo_projects", [
+      {
+        _id: "notifications-added-to-new-project"
+        custom_options:
+          hide_unsubscribe_links: true
+      }
+    ]
     
     return
 

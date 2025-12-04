@@ -13,7 +13,15 @@ _.extend PACK.modules,
       JustdoEmails.registerEmailCategory @notification_type,
         label_i18n: "ownership_transfer_notifications"
         priority: 200
-        notifications: ["ownership-transfer", "ownership-transfer-rejected"]
+        
+      JustdoEmails.registerEmails @notification_type, [
+        {
+          _id: "ownership-transfer"
+        }
+        {
+          _id: "ownership-transfer-rejected"
+        }
+      ]
       
       return
 
