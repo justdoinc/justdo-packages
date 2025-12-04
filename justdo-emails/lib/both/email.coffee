@@ -10,6 +10,19 @@ _.extend JustdoEmails,
     user_config_options:
       _id: "justdo-emails"
       priority: 200
+    custom_options_schema: new SimpleSchema
+      hide_footer:
+        type: Boolean
+        optional: true
+        defaultValue: false
+      hide_unsubscribe_links:
+        type: Boolean
+        optional: true
+        defaultValue: false
+      send_to_proxy_users:
+        type: Boolean
+        optional: true
+        defaultValue: false
   
   registerEmailCategory: (email_category_id, options) ->
     options.template = email_category_id

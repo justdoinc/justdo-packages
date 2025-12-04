@@ -21,6 +21,10 @@ NotificationRegistrarOptionsSchema = new SimpleSchema
     type: String
   "user_config_options.priority":
     type: Number
+  
+  custom_options_schema:
+    type: SimpleSchema
+    optional: true
 NotificationRegistrar = (options) ->
   {cleaned_val} =
     JustdoHelpers.simpleSchemaCleanAndValidate(
@@ -30,6 +34,8 @@ NotificationRegistrar = (options) ->
     )
   options = cleaned_val
   @options = options
+
+  @custom_options_schema = @options.custom_options_schema
 
   @notification_categories = {}
   @notifications = {}
@@ -237,32 +243,33 @@ _.extend NotificationRegistrar.prototype,
       throw new Meteor.Error "invalid-argument", "Notification category with id #{notification_category_id} not found"
     
     return notification_category
-  notificationSchema: new SimpleSchema
-    _id:
-      type: String
 
-    ignore_user_unsubscribe_preference:
-      # Any notifications with this flag set to true ignores user preference.
-      # It means that the user will still receive the notification even if they unsubscribe from this notification category, or all notifications.
-      # This is useful for notifications like "confirm email" or "password recovery".
-      type: Boolean
-      optional: true
-    
-    custom_options:
-      type: Object
-      blackbox: true
-      optional: true
   registerNotifications: (notification_category, notifications_def) ->
     notification_category_def = @requireNotificationCategory(notification_category)
 
     if not _.isArray notifications_def
       notifications_def = [notifications_def]
 
+    notificationSchema = new SimpleSchema
+      _id:
+        type: String
+  
+      ignore_user_unsubscribe_preference:
+        # Any notifications with this flag set to true ignores user preference.
+        # It means that the user will still receive the notification even if they unsubscribe from this notification category, or all notifications.
+        # This is useful for notifications like "confirm email" or "password recovery".
+        type: Boolean
+        optional: true
+      
+      custom_options:
+        type: @custom_options_schema
+        optional: true
+
     cleaned_notifications_def = []
     for notification_def in notifications_def
       {cleaned_val} =
         JustdoHelpers.simpleSchemaCleanAndValidate(
-          @notificationSchema,
+          notificationSchema,
           notification_def,
           {throw_on_error: true}
         )
