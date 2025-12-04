@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "Peida JustDo paneel",
   "show_task_pane_label": "Näita ülesande paneeli",
   "hide_task_pane_label": "Peida ülesande paneel",
-  "email_daily_update_for_this_justdo_label": "Saada igapäevased uuendused selle JustDo tahvli kohta e-postiga",
-  "email_ownership_transfer_notifications_label": "Saada omandiõiguse ülekandmise teavitused e-postiga",
   "configure_this_justdo_label": "Seadista seda JustDo tahvlit",
   "delete_this_justdo_label": "Kustuta see JustDo tahvel"
 }

@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "Приховати панель JustDo",
   "show_task_pane_label": "Показати панель завдань",
   "hide_task_pane_label": "Приховати панель завдань",
-  "email_daily_update_for_this_justdo_label": "Отримувати щоденні оновлення для цієї дошки JustDo на email",
-  "email_ownership_transfer_notifications_label": "Отримувати сповіщення про передачу прав власності на email",
   "configure_this_justdo_label": "Налаштувати цю дошку JustDo",
   "delete_this_justdo_label": "Видалити цю дошку JustDo"
 }

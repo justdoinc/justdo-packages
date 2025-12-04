@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "JustDo Panelini Gizle",
   "show_task_pane_label": "Görev Panelini Göster",
   "hide_task_pane_label": "Görev Panelini Gizle",
-  "email_daily_update_for_this_justdo_label": "Bu JustDo için günlük güncellemeleri e-posta ile gönder",
-  "email_ownership_transfer_notifications_label": "Sahiplik transferi bildirimlerini e-posta ile gönder",
   "configure_this_justdo_label": "Bu JustDo'yu Yapılandır",
   "delete_this_justdo_label": "Bu JustDo'yu Sil"
 }

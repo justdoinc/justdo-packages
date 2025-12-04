@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "ซ่อนหน้าต่าง JustDo",
   "show_task_pane_label": "แสดงหน้าต่างงาน",
   "hide_task_pane_label": "ซ่อนหน้าต่างงาน",
-  "email_daily_update_for_this_justdo_label": "ส่งอีเมลอัปเดตรายวันสำหรับ JustDo นี้",
-  "email_ownership_transfer_notifications_label": "ส่งอีเมลแจ้งเตือนการโอนความเป็นเจ้าของ",
   "configure_this_justdo_label": "กำหนดค่า JustDo นี้",
   "delete_this_justdo_label": "ลบ JustDo นี้"
 }

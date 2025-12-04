@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "Skrij JustDo ploščo",
   "show_task_pane_label": "Prikaži ploščo z nalogami",
   "hide_task_pane_label": "Skrij ploščo z nalogami",
-  "email_daily_update_for_this_justdo_label": "Pošlji dnevne posodobitve za to JustDo tablo po e-pošti",
-  "email_ownership_transfer_notifications_label": "Pošlji obvestila o prenosu lastništva po e-pošti",
   "configure_this_justdo_label": "Konfiguriraj to JustDo tablo",
   "delete_this_justdo_label": "Izbriši to JustDo tablo"
 }

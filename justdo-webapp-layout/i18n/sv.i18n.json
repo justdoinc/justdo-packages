@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "Dölj JustDo-panelen",
   "show_task_pane_label": "Visa uppgiftspanelen",
   "hide_task_pane_label": "Dölj uppgiftspanelen",
-  "email_daily_update_for_this_justdo_label": "Skicka dagliga uppdateringar via e-post för denna JustDo",
-  "email_ownership_transfer_notifications_label": "Skicka e-postmeddelanden om ägarskapsöverföringar",
   "configure_this_justdo_label": "Konfigurera denna JustDo",
   "delete_this_justdo_label": "Ta bort denna JustDo"
 }

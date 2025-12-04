@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "Թաքցնել JustDo պանելը",
   "show_task_pane_label": "Ցուցադրել առաջադրանքի պանելը",
   "hide_task_pane_label": "Թաքցնել առաջադրանքի պանելը",
-  "email_daily_update_for_this_justdo_label": "Ուղարկել ամենօրյա թարմացումներ էլ. փոստով այս JustDo-ի համար",
-  "email_ownership_transfer_notifications_label": "Ուղարկել էլ. փոստով սեփականության փոխանցման ծանուցումներ",
   "configure_this_justdo_label": "Կարգավորել այս JustDo-ն",
   "delete_this_justdo_label": "Ջնջել այս JustDo-ն"
 }

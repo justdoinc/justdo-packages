@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "জাস্টডু বোর্ড প্যান লুকান",
   "show_task_pane_label": "টাস্ক প্যান দেখান",
   "hide_task_pane_label": "টাস্ক প্যান লুকান",
-  "email_daily_update_for_this_justdo_label": "এই জাস্টডু বোর্ডের জন্য দৈনিক আপডেট ইমেইল করুন",
-  "email_ownership_transfer_notifications_label": "মালিকানা হস্তান্তরের বিজ্ঞপ্তি ইমেইল করুন",
   "configure_this_justdo_label": "এই জাস্টডু বোর্ড কনফিগার করুন",
   "delete_this_justdo_label": "এই জাস্টডু বোর্ড মুছে ফেলুন"
 }

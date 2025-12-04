@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "JustDo панелін жасыру",
   "show_task_pane_label": "Тапсырма панелін көрсету",
   "hide_task_pane_label": "Тапсырма панелін жасыру",
-  "email_daily_update_for_this_justdo_label": "Осы JustDo тақтасы үшін күнделікті жаңартуларды электрондық поштаға жіберу",
-  "email_ownership_transfer_notifications_label": "Меншік құқығының ауысуы туралы хабарландыруларды электрондық поштаға жіберу",
   "configure_this_justdo_label": "Бұл JustDo тақтасын конфигурациялау",
   "delete_this_justdo_label": "Бұл JustDo тақтасын жою"
 }

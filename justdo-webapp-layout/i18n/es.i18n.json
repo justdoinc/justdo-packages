@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "Ocultar panel de JustDo",
   "show_task_pane_label": "Mostrar panel de tareas",
   "hide_task_pane_label": "Ocultar panel de tareas",
-  "email_daily_update_for_this_justdo_label": "Enviar actualizaciones diarias por correo electrónico para este tablero JustDo",
-  "email_ownership_transfer_notifications_label": "Enviar notificaciones de transferencia de propiedad por correo electrónico",
   "configure_this_justdo_label": "Configurar este tablero JustDo",
   "delete_this_justdo_label": "Eliminar este tablero JustDo"
 }

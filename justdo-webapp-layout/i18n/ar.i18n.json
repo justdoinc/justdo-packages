@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "إخفاء لوحة JustDo",
   "show_task_pane_label": "إظهار لوحة المهام",
   "hide_task_pane_label": "إخفاء لوحة المهام",
-  "email_daily_update_for_this_justdo_label": "إرسال تحديثات يومية بالبريد الإلكتروني لهذا اللوح (JustDo)",
-  "email_ownership_transfer_notifications_label": "إرسال إشعارات نقل الملكية بالبريد الإلكتروني",
   "configure_this_justdo_label": "تكوين هذا اللوح (JustDo)",
   "delete_this_justdo_label": "حذف هذا اللوح (JustDo)"
 }

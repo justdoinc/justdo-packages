@@ -59,8 +59,6 @@
   "hide_justdo_pane_label": "Masquer le volet JustDo",
   "show_task_pane_label": "Afficher le volet des tâches",
   "hide_task_pane_label": "Masquer le volet des tâches",
-  "email_daily_update_for_this_justdo_label": "Envoyer des mises à jour quotidiennes par e-mail pour ce tableau JustDo",
-  "email_ownership_transfer_notifications_label": "Envoyer des notifications de transfert de propriété par e-mail",
   "configure_this_justdo_label": "Configurer ce tableau JustDo",
   "delete_this_justdo_label": "Supprimer ce tableau JustDo"
 }
