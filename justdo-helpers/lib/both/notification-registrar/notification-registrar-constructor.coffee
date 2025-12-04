@@ -86,7 +86,7 @@ _.extend NotificationRegistrar.prototype,
     if not Meteor.isClient
       return
 
-    APP.executeAfterAppLibCode =>
+    JustdoHelpers.hooks_barriers.runCbAfterBarriers "post-user-config-ui-init", =>
       if not (user_config_ui = APP.modules.main.user_config_ui)?
         return
 
@@ -175,7 +175,7 @@ _.extend NotificationRegistrar.prototype,
     should_setup_toggle = @_shouldRegisterToggleForNotificationCategory(notification_category_id)
     is_toggle_registered = @_isToggleRegisteredForNotificationCategory(notification_category_id)
     
-    APP.executeAfterAppLibCode =>
+    JustdoHelpers.hooks_barriers.runCbAfterBarriers "post-user-config-ui-init", =>
       if not (user_config_ui = APP.modules.main.user_config_ui)?
         return
 
