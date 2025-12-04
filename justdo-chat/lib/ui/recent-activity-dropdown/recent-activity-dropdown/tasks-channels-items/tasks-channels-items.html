@@ -20,7 +20,7 @@
 
       <div class="item-body d-flex">
         <div class="main-block">
-          {{#if channel_last_message.body}}
+          {{#if $or channel_last_message.body channel_last_message.data}}
             <span class="last-author">{{#with last_message_author}}{{displayName}}{{/with}}: </span><span class="last-message">{{#with channel_last_message}}{{body}}{{/with}}</span>
           {{else if channel_last_message.files_count}}
             {{{xssGuard(_ "chat_dropdown_message_with_files_only_html" author=(displayName last_message_author) count=channel_last_message.files_count)}}}
