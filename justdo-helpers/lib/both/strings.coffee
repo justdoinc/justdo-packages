@@ -25,11 +25,21 @@ _.extend JustdoHelpers,
     string += ""
 
     return string.charAt(0).toUpperCase() + string.substr(1)
+  
+  ucFirstLocaleAware: (string) ->
+    string += ""
+
+    return string.charAt(0).toLocaleUpperCase() + string.substr(1)
 
   lcFirst: (string) ->
     string += ""
 
     return string.charAt(0).toLowerCase() + string.substr(1)
+
+  lcFirstLocaleAware: (string) ->
+    string += ""
+
+    return string.charAt(0).toLocaleLowerCase() + string.substr(1)
 
   substrCount: (string, sub_string, allow_overlapping) ->
     string += ""
