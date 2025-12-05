@@ -64,7 +64,7 @@ _.extend JustdoEmails,
       # Note that we use `getNotificationCategory` instead of `requireNotificationCategory` here,
       # to support the case where `bypass_notification_registrar` is true, and the notification is not registered.
       email_wrapper_data = _.extend email_wrapper_data,
-        email_type_label: JustdoHelpers.lcFirst TAPi18n.__ notification_category_def.label_i18n # Currently translated to default lang only
+        email_type_label: TAPi18n.__ notification_category_def.label_i18n # Currently translated to default lang only
         unsubscribe_link: Meteor.absoluteUrl "##{@getHashRequestStringForUnsubscribe(notification_category_id)}"
         unsubscribe_all_link: Meteor.absoluteUrl "##{@getHashRequestStringForUnsubscribe("all")}"
         
