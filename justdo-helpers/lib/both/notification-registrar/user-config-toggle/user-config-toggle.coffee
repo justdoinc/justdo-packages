@@ -68,6 +68,9 @@ Template.notification_registrar_user_config_toggle.helpers
     else
       # Individual notification toggle: check if user is NOT unsubscribed from this notification
       return not tpl.isUserUnsubscribedFromNotificationCategory(@notification_category_id)
+  
+  ucFirstLocaleAware: (string) ->
+    return JustdoHelpers.ucFirstLocaleAware(string)
 
 Template.notification_registrar_user_config_toggle.events
   "click .notification-registrar-toggle": (e, tpl) ->

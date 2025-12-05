@@ -1,6 +1,6 @@
 <template name="notification_registrar_user_config_toggle">
   <div class="notification-registrar-toggle controller-template-default-toggle d-flex {{#unless isMainToggle}}m{{getRtlAwareDirection "l"}}-2{{/unless}} {{#if isDisabled}}text-secondary disabled{{/if}}">
     {{> jdToggle checked=isSubscribed}}
-    <div class="m{{getRtlAwareDirection "l"}}-2">{{_ label_i18n}}</div>
+    <div class="m{{getRtlAwareDirection "l"}}-2">{{ucFirstLocaleAware(_ label_i18n)}}</div>
   </div>
 </template>
