@@ -8,5 +8,6 @@ _.extend JustdoDeliveryPlanner.prototype,
       "owner_id": 1
       "users": 1
       "state": 1
-    }
+    },
+    {sparse: true}
     return
