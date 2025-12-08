@@ -18,5 +18,7 @@
   "projects_collection_reopen_department": "Diese Abteilung wieder öffnen",
   "projects_collection_create_sub_department": "Eine Unterabteilung erstellen",
   "projects_collection_depth_gt_max_depth_default_err": "__projects_collection_label__ kann nicht über __count__ Ebene hinaus verschachtelt werden",
-  "projects_collection_depth_gt_max_depth_default_err_plural": "__projects_collection_label__ kann nicht über __count__ Ebenen hinaus verschachtelt werden"
+  "projects_collection_depth_gt_max_depth_default_err_plural": "__projects_collection_label__ kann nicht über __count__ Ebenen hinaus verschachtelt werden",
+  "projects_collection_add_to_projects_collection": "Zu __projects_collection__ hinzufügen",
+  "projects_collection_no_projects_collection_available": "Keine __projects_collection__ verfügbar"
 }

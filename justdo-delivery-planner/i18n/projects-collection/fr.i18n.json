@@ -18,5 +18,7 @@
   "projects_collection_reopen_department": "Rouvrir ce Département",
   "projects_collection_create_sub_department": "Créer un Sous-Département",
   "projects_collection_depth_gt_max_depth_default_err": "Impossible d'imbriquer __projects_collection_label__ au-delà de __count__ niveau",
-  "projects_collection_depth_gt_max_depth_default_err_plural": "Impossible d'imbriquer __projects_collection_label__ au-delà de __count__ niveaux"
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Impossible d'imbriquer __projects_collection_label__ au-delà de __count__ niveaux",
+  "projects_collection_add_to_projects_collection": "Ajouter à __projects_collection__",
+  "projects_collection_no_projects_collection_available": "Aucune __projects_collection__ n'est disponible"
 }

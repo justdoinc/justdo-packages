@@ -18,5 +18,7 @@
   "projects_collection_reopen_department": "Sail hau berriz ireki",
   "projects_collection_create_sub_department": "Azpi-Saila sortu",
   "projects_collection_depth_gt_max_depth_default_err": "Ezin da __projects_collection_label__ __count__ mailaren gainetik habiarazi",
-  "projects_collection_depth_gt_max_depth_default_err_plural": "Ezin da __projects_collection_label__ __count__ mailen gainetik habiarazi"
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Ezin da __projects_collection_label__ __count__ mailen gainetik habiarazi",
+  "projects_collection_add_to_projects_collection": "Gehitu __projects_collection__ bildumara",
+  "projects_collection_no_projects_collection_available": "Ez dago __projects_collection__ erabilgarririk"
 }

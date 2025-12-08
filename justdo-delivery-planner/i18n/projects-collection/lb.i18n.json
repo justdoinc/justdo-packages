@@ -18,5 +18,7 @@
   "projects_collection_reopen_department": "Dëst Departement erëm opmaachen",
   "projects_collection_create_sub_department": "En Ënner-Departement erstellen",
   "projects_collection_depth_gt_max_depth_default_err": "Kann __projects_collection_label__ net iwwer __count__ Niveau verschachtelen",
-  "projects_collection_depth_gt_max_depth_default_err_plural": "Kann __projects_collection_label__ net iwwer __count__ Niveauen verschachtelen"
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Kann __projects_collection_label__ net iwwer __count__ Niveauen verschachtelen",
+  "projects_collection_add_to_projects_collection": "Bei __projects_collection__ dobäisetzen",
+  "projects_collection_no_projects_collection_available": "Keng __projects_collection__ sinn verfügbar"
 }

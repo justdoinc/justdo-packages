@@ -18,5 +18,7 @@
   "projects_collection_reopen_department": "ይህን ክፍል እንደገና ክፈት",
   "projects_collection_create_sub_department": "ንዑስ ዲፓርትመንት ፍጠር",
   "projects_collection_depth_gt_max_depth_default_err": "__projects_collection_label__ ከ __count__ ደረጃ በላይ ማዞር አይቻልም",
-  "projects_collection_depth_gt_max_depth_default_err_plural": "__projects_collection_label__ ከ __count__ ደረጃዎች በላይ ማዞር አይቻልም"
+  "projects_collection_depth_gt_max_depth_default_err_plural": "__projects_collection_label__ ከ __count__ ደረጃዎች በላይ ማዞር አይቻልም",
+  "projects_collection_add_to_projects_collection": "ወደ __projects_collection__ ጨምር",
+  "projects_collection_no_projects_collection_available": "ምንም __projects_collection__ አይገኙም"
 }

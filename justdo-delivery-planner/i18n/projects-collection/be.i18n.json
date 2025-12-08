@@ -18,5 +18,7 @@
   "projects_collection_reopen_department": "Адкрыць зноў гэты аддзел",
   "projects_collection_create_sub_department": "Стварыць пададдзел",
   "projects_collection_depth_gt_max_depth_default_err": "Немагчыма ўкласці __projects_collection_label__ больш чым на __count__ узровень",
-  "projects_collection_depth_gt_max_depth_default_err_plural": "Немагчыма ўкласці __projects_collection_label__ больш чым на __count__ узроўні"
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Немагчыма ўкласці __projects_collection_label__ больш чым на __count__ узроўні",
+  "projects_collection_add_to_projects_collection": "Дадаць у __projects_collection__",
+  "projects_collection_no_projects_collection_available": "Няма даступных __projects_collection__"
 }

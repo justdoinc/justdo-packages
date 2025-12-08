@@ -18,5 +18,7 @@
   "projects_collection_reopen_department": "បើកនាយកដ្ឋាននេះឡើងវិញ",
   "projects_collection_create_sub_department": "បង្កើតនាយកដ្ឋានរង",
   "projects_collection_depth_gt_max_depth_default_err": "មិនអាចរៀប __projects_collection_label__ លើសពី __count__ កម្រិត",
-  "projects_collection_depth_gt_max_depth_default_err_plural": "មិនអាចរៀប __projects_collection_label__ លើសពី __count__ កម្រិត"
+  "projects_collection_depth_gt_max_depth_default_err_plural": "មិនអាចរៀប __projects_collection_label__ លើសពី __count__ កម្រិត",
+  "projects_collection_add_to_projects_collection": "បន្ថែមទៅ __projects_collection__",
+  "projects_collection_no_projects_collection_available": "គ្មាន __projects_collection__ ដែលអាចប្រើបាន"
 }

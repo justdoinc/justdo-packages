@@ -18,5 +18,7 @@
   "projects_collection_reopen_department": "Осы бөлімді қайта ашу",
   "projects_collection_create_sub_department": "Ішкі бөлім жасау",
   "projects_collection_depth_gt_max_depth_default_err": "__projects_collection_label__ __count__ деңгейден асыра кірістіру мүмкін емес",
-  "projects_collection_depth_gt_max_depth_default_err_plural": "__projects_collection_label__ __count__ деңгейден асыра кірістіру мүмкін емес"
+  "projects_collection_depth_gt_max_depth_default_err_plural": "__projects_collection_label__ __count__ деңгейден асыра кірістіру мүмкін емес",
+  "projects_collection_add_to_projects_collection": "__projects_collection__ қосу",
+  "projects_collection_no_projects_collection_available": "Қолжетімді __projects_collection__ жоқ"
 }

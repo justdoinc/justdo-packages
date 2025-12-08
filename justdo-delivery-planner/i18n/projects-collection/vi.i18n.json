@@ -18,5 +18,7 @@
   "projects_collection_reopen_department": "Mở lại Phòng ban này",
   "projects_collection_create_sub_department": "Tạo Phòng ban con",
   "projects_collection_depth_gt_max_depth_default_err": "Không thể lồng __projects_collection_label__ quá __count__ cấp",
-  "projects_collection_depth_gt_max_depth_default_err_plural": "Không thể lồng __projects_collection_label__ quá __count__ cấp"
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Không thể lồng __projects_collection_label__ quá __count__ cấp",
+  "projects_collection_add_to_projects_collection": "Thêm vào __projects_collection__",
+  "projects_collection_no_projects_collection_available": "Không có __projects_collection__ nào khả dụng"
 }

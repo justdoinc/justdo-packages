@@ -18,5 +18,7 @@
   "projects_collection_reopen_department": "この部門を再開",
   "projects_collection_create_sub_department": "サブ部門を作成",
   "projects_collection_depth_gt_max_depth_default_err": "__projects_collection_label__を__count__レベルを超えてネストすることはできません",
-  "projects_collection_depth_gt_max_depth_default_err_plural": "__projects_collection_label__を__count__レベルを超えてネストすることはできません"
+  "projects_collection_depth_gt_max_depth_default_err_plural": "__projects_collection_label__を__count__レベルを超えてネストすることはできません",
+  "projects_collection_add_to_projects_collection": "__projects_collection__に追加",
+  "projects_collection_no_projects_collection_available": "利用可能な__projects_collection__がありません"
 }
