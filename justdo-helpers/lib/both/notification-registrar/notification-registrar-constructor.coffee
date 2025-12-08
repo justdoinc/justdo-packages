@@ -143,7 +143,7 @@ _.extend NotificationRegistrar.prototype,
 
           else
             @unsubscribeUserFromNotificationCategory Meteor.userId(), notification_category
-            notification_category_label = JustdoHelpers.lcFirst TAPi18n.__ @requireNotificationCategory(notification_category).label_i18n
+            notification_category_label = TAPi18n.__ @requireNotificationCategory(notification_category).label_i18n
             bootbox_message = TAPi18n.__ "successfully_unsubscribed_from_notification_category", {notification_category_label}
 
           bootbox.alert(bootbox_message)
