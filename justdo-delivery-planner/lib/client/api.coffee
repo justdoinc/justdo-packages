@@ -461,41 +461,6 @@ _.extend JustdoDeliveryPlanner.prototype,
 
       return pc_tasks
 
-    addNewParentToTaskId = (task_id, new_parent_id, gc, cb) ->
-      gc.saveAndExitActiveEditor()
-
-      gc._performLockingOperation (releaseOpsLock, timedout) =>
-        usersDiffConfirmationCbWrappedWithGc = (item_id, target_id, diff, confirm, cancel, options) ->
-          return ProjectPageDialogs.JustdoTaskMembersDiffDialog.usersDiffConfirmationCb(item_id, target_id, diff, confirm, cancel, _.extend {grid_control: gc}, options)
-
-        gc.addParent task_id, {parent: new_parent_id, order: 0}, (err) ->
-          releaseOpsLock()
-
-          cb?(err)
-
-          return
-        , usersDiffConfirmationCbWrappedWithGc
-
-        return
-
-      return
-
-    removeParent = (item_path, gc, cb) ->
-      gc._performLockingOperation (releaseOpsLock, timedout) =>
-        gc._grid_data?.removeParent item_path, (err) =>
-          releaseOpsLock()
-
-          if err?
-            APP.logger.error "Error: #{err}"
-
-          cb?(err)
-
-          return
-
-        return
-
-      return
-    
     for projects_collection_type in @getSupportedProjectsCollectionTypes()
       do (projects_collection_type, position) =>
         type_id = projects_collection_type.type_id
@@ -602,7 +567,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
                         if (task_doc = APP.collections.Tasks.findOne(query, options))?
                           performRemoveParent = ->
-                            removeParent "/#{pc_task_doc._id}/#{task_id}/", gc, (err) ->
+                            APP.justdo_tasks_context_menu.lockGridAndRemoveParent "/#{pc_task_doc._id}/#{task_id}/", gc, (err) ->
                               if err?
                                 console.error err
                               return
@@ -619,7 +584,7 @@ _.extend JustdoDeliveryPlanner.prototype,
                                 snackbar.close()
                                 return
                         else
-                          addNewParentToTaskId task_id, pc_task_doc._id, gc, (err) ->
+                          APP.justdo_tasks_context_menu.addNewParentToTaskId task_id, pc_task_doc._id, gc, (err) ->
                             if err?
                               console.error err
                             return
