@@ -782,7 +782,7 @@ _.extend JustdoTasksContextMenu.prototype,
       self.registerSectionItem "projects", "manage-projects",
         position: 100
         data:
-          label: "Add to project"
+          label: "Add to Project"
           label_i18n: "add_to_project_label"
           is_nested_section: true
           icon_type: "feather"
