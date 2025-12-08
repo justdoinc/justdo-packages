@@ -219,7 +219,7 @@ Template.tasks_context_menu_label_content.helpers
       label_i18n = @label_i18n
     
     if label?
-      return APP.justdo_i18n.getDefaultI18nTextOrCustomInput {text: label, i18n_key: label_i18n, i18n_options: options_i18n}
+      return APP.justdo_i18n.getI18nTextOrFallback {fallback_text: label, i18n_key: label_i18n, i18n_options: options_i18n}
 
     return undefined
 
