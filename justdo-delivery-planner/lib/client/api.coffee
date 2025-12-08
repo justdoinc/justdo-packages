@@ -547,10 +547,13 @@ _.extend JustdoDeliveryPlanner.prototype,
   
     @setup_projects_collection_features_tracker = Tracker.autorun =>
       if @isProjectsCollectionEnabled()
-        @_setupProjectsCollectionFeatures()
+        Tracker.nonreactive =>
+          @_setupProjectsCollectionFeatures()
+          return
       else
-        @_destroyProjectsCollectionFeatures()
-      
+        Tracker.nonreactive =>
+          @_destroyProjectsCollectionFeatures()
+          return
       return
 
     return
