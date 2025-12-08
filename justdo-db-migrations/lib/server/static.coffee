@@ -236,7 +236,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
             # Return to monitoring startingCondition.
             # Call terminationProcedures to clean up resources created by initProcedures,
             # since initProcedures will be called again when the condition is next met.
-            @logProgress "Batch processing complete, returning to monitoring mode"
+            @logProgress "Batch processing complete, returning to monitoring mode (waiting for startingCondition to be met)"
             runTerminationProcedures(@)
             startConditionMonitoring self, ->
               scriptWrapper.call self
