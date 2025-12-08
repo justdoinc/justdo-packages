@@ -170,19 +170,14 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
       if not caller_this.isAllowedToContinue()
         return
 
-      try
-        {condition_met, next_check_interval} = evaluateStartingCondition()
-        
-        if condition_met
-          caller_this.logProgress "Starting condition met"
-          callback()
-        else
-          caller_this.logProgress "Starting condition not met. Checking again in #{JustdoHelpers.msToHumanReadable next_check_interval}."
-          check_starting_condition_timeout = Meteor.setTimeout checkCondition, next_check_interval
-      catch error
-        caller_this.logProgress "Error checking starting condition: #{error.message}", error
-        # On error, retry after default interval
-        check_starting_condition_timeout = Meteor.setTimeout checkCondition, options.starting_condition_interval_between_checks
+      {condition_met, next_check_interval} = evaluateStartingCondition()
+      
+      if condition_met
+        caller_this.logProgress "Starting condition met"
+        callback()
+      else
+        caller_this.logProgress "Starting condition not met. Checking again in #{JustdoHelpers.msToHumanReadable next_check_interval}."
+        check_starting_condition_timeout = Meteor.setTimeout checkCondition, next_check_interval
 
       return
 
