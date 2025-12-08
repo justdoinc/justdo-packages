@@ -530,3 +530,39 @@ _.extend JustdoTasksContextMenu.prototype,
   setGridControlWithOpenedContextMenu: (grid_control) ->
     @_gc_with_opened_context_menu_rv.set(grid_control)
     return
+
+  addNewParentToTaskId: (task_id, new_parent_id, gc, cb) ->
+    gc.saveAndExitActiveEditor() # Exit edit mode to make sure result will appear on tree
+
+    gc._performLockingOperation (releaseOpsLock, timedout) =>
+      # Wrap the usersDiffConfirmationCb with the grid_control, to make it available in the dialog
+      usersDiffConfirmationCbWrappedWithGc = (item_id, target_id, diff, confirm, cancel, options) ->
+        return ProjectPageDialogs.JustdoTaskMembersDiffDialog.usersDiffConfirmationCb(item_id, target_id, diff, confirm, cancel, _.extend {grid_control: gc}, options)
+
+      gc.addParent task_id, {parent: new_parent_id, order: 0}, (err) ->
+        releaseOpsLock()
+
+        cb?(err)
+
+        return
+      , usersDiffConfirmationCbWrappedWithGc
+
+      return
+
+    return
+
+  lockGridAndRemoveParent: (item_path, gc, cb) ->
+    gc._performLockingOperation (releaseOpsLock, timedout) =>
+      gc._grid_data?.removeParent item_path, (err) =>
+        releaseOpsLock()
+
+        if err?
+          APP.logger.error "Error: #{err}"
+
+        cb?(err)
+
+        return
+
+      return
+
+    return

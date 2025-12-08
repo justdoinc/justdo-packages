@@ -726,7 +726,7 @@ _.extend JustdoTasksContextMenu.prototype,
           label_i18n: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
             if task_id? and APP.justdo_delivery_planner.isTaskObjProject(APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "#{JustdoDeliveryPlanner.task_is_project_field_name}": 1}}))
               return "unset_as_a_project_label"
-            return "set_as_a_project_label"          
+            return "set_as_a_project_label"
           op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
             APP.justdo_delivery_planner.toggleTaskIsProject task_id
             return 
@@ -846,40 +846,6 @@ _.extend JustdoTasksContextMenu.prototype,
         )
         
         return project_tasks
-        
-      addNewParentToTaskId = (task_id, new_parent_id, gc, cb) ->
-        gc.saveAndExitActiveEditor() # Exit edit mode, if any, to make sure result will appear on tree (otherwise, will show only when exit edit mode)
-
-        gc._performLockingOperation (releaseOpsLock, timedout) =>
-          # Wrap the usersDiffConfirmationCb with the grid_control, to make it available in the dialog
-          usersDiffConfirmationCbWrappedWithGc = (item_id, target_id, diff, confirm, cancel, options) ->
-            return ProjectPageDialogs.JustdoTaskMembersDiffDialog.usersDiffConfirmationCb(item_id, target_id, diff, confirm, cancel, _.extend {grid_control: gc}, options)
-
-          gc.addParent task_id, {parent: new_parent_id, order: 0}, (err) ->
-            releaseOpsLock()
-
-            cb?(err)
-
-            return
-          , usersDiffConfirmationCbWrappedWithGc
-
-          return
-
-        return
-
-      removeParent = (item_path, gc, cb) ->
-        gc._performLockingOperation (releaseOpsLock, timedout) =>
-          gc._grid_data?.removeParent item_path, (err) =>
-            releaseOpsLock()
-
-            if err?
-              APP.logger.error "Error: #{err}"
-
-            return
-
-          return
-
-        return
 
       self.registerNestedSection "projects", "manage-projects", "manage-active-projects",
         position: 100
@@ -931,7 +897,7 @@ _.extend JustdoTasksContextMenu.prototype,
 
                       if (task_doc = APP.collections.Tasks.findOne(query, options))?
                         performRemoveParent = ->
-                          removeParent "/#{project_task_doc._id}/#{task_id}/", gc, (err) ->
+                          self.lockGridAndRemoveParent "/#{project_task_doc._id}/#{task_id}/", gc, (err) ->
                             if err?
                               console.error err
                             return
@@ -948,7 +914,7 @@ _.extend JustdoTasksContextMenu.prototype,
                               snackbar.close()
                               return
                       else
-                        addNewParentToTaskId task_id, project_task_doc._id, gc, (err) ->
+                        self.addNewParentToTaskId task_id, project_task_doc._id, gc, (err) ->
                           if err?
                             console.error err
                           return
