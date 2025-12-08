@@ -18,5 +18,7 @@
   "projects_collection_reopen_department": "إعادة فتح هذا القسم",
   "projects_collection_create_sub_department": "إنشاء قسم فرعي",
   "projects_collection_depth_gt_max_depth_default_err": "لا يمكن تداخل __projects_collection_label__ أكثر من __count__ مستوى",
-  "projects_collection_depth_gt_max_depth_default_err_plural": "لا يمكن تداخل __projects_collection_label__ أكثر من __count__ مستويات"
+  "projects_collection_depth_gt_max_depth_default_err_plural": "لا يمكن تداخل __projects_collection_label__ أكثر من __count__ مستويات",
+  "projects_collection_add_to_projects_collection": "إضافة إلى __projects_collection__",
+  "projects_collection_no_projects_collection_available": "لا توجد __projects_collection__ متاحة"
 }

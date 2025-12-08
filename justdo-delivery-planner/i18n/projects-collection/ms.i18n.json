@@ -18,5 +18,7 @@
   "projects_collection_reopen_department": "Buka semula Jabatan ini",
   "projects_collection_create_sub_department": "Cipta Sub-Jabatan",
   "projects_collection_depth_gt_max_depth_default_err": "Tidak dapat mengnestekan __projects_collection_label__ melebihi __count__ tahap",
-  "projects_collection_depth_gt_max_depth_default_err_plural": "Tidak dapat mengnestekan __projects_collection_label__ melebihi __count__ tahap"
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Tidak dapat mengnestekan __projects_collection_label__ melebihi __count__ tahap",
+  "projects_collection_add_to_projects_collection": "Tambah ke __projects_collection__",
+  "projects_collection_no_projects_collection_available": "Tiada __projects_collection__ tersedia"
 }

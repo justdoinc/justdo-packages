@@ -18,5 +18,7 @@
   "projects_collection_reopen_department": "Znovu otevřít toto oddělení",
   "projects_collection_create_sub_department": "Vytvořit pododdělení",
   "projects_collection_depth_gt_max_depth_default_err": "Nelze vnořit __projects_collection_label__ za __count__ úroveň",
-  "projects_collection_depth_gt_max_depth_default_err_plural": "Nelze vnořit __projects_collection_label__ za __count__ úrovní"
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Nelze vnořit __projects_collection_label__ za __count__ úrovní",
+  "projects_collection_add_to_projects_collection": "Přidat do __projects_collection__",
+  "projects_collection_no_projects_collection_available": "Nejsou k dispozici žádné __projects_collection__"
 }

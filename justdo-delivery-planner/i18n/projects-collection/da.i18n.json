@@ -18,5 +18,7 @@
   "projects_collection_reopen_department": "Genåbn denne Afdeling",
   "projects_collection_create_sub_department": "Opret en Underafdeling",
   "projects_collection_depth_gt_max_depth_default_err": "Kan ikke indlejre __projects_collection_label__ ud over __count__ niveau",
-  "projects_collection_depth_gt_max_depth_default_err_plural": "Kan ikke indlejre __projects_collection_label__ ud over __count__ niveauer"
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Kan ikke indlejre __projects_collection_label__ ud over __count__ niveauer",
+  "projects_collection_add_to_projects_collection": "Tilføj til __projects_collection__",
+  "projects_collection_no_projects_collection_available": "Ingen __projects_collection__ er tilgængelige"
 }

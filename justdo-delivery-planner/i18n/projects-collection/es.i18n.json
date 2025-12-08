@@ -18,5 +18,7 @@
   "projects_collection_reopen_department": "Reabrir este Departamento",
   "projects_collection_create_sub_department": "Crear un Subdepartamento",
   "projects_collection_depth_gt_max_depth_default_err": "No se puede anidar __projects_collection_label__ más allá de __count__ nivel",
-  "projects_collection_depth_gt_max_depth_default_err_plural": "No se puede anidar __projects_collection_label__ más allá de __count__ niveles"
+  "projects_collection_depth_gt_max_depth_default_err_plural": "No se puede anidar __projects_collection_label__ más allá de __count__ niveles",
+  "projects_collection_add_to_projects_collection": "Agregar a __projects_collection__",
+  "projects_collection_no_projects_collection_available": "No hay __projects_collection__ disponibles"
 }

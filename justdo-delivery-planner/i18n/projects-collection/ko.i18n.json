@@ -18,5 +18,7 @@
   "projects_collection_reopen_department": "이 부서 다시 열기",
   "projects_collection_create_sub_department": "하위 부서 생성",
   "projects_collection_depth_gt_max_depth_default_err": "__projects_collection_label__을(를) __count__단계를 초과하여 중첩할 수 없습니다",
-  "projects_collection_depth_gt_max_depth_default_err_plural": "__projects_collection_label__을(를) __count__단계를 초과하여 중첩할 수 없습니다"
+  "projects_collection_depth_gt_max_depth_default_err_plural": "__projects_collection_label__을(를) __count__단계를 초과하여 중첩할 수 없습니다",
+  "projects_collection_add_to_projects_collection": "__projects_collection__에 추가",
+  "projects_collection_no_projects_collection_available": "사용 가능한 __projects_collection__이(가) 없습니다"
 }
