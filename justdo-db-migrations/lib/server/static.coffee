@@ -668,7 +668,7 @@ JustdoDbMigrations.registerCronjob = (options) ->
     if not next_time?
       # Fallback to 1 hour if we can't determine next time
       return 60 * 60 * 1000
-    return Math.max(0, next_time.getTime() - now.getTime())
+    return Math.max(1000, next_time.getTime() - now.getTime())
 
   # Create the startingCondition function based on cron options
   createStartingCondition = ->
