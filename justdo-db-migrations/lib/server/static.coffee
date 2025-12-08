@@ -685,16 +685,18 @@ JustdoDbMigrations.registerCronjob = (options) ->
 
       if not record?
         # No record exists in the DB at all
-        if persistent
-          # Persistent mode with no record: pretend like it already happened
-          # Initialize the record as if it ran
-          APP.justdo_system_records.setRecord last_run_record_name,
-            value: previous_scheduled_time
-            completed: true
-          ,
-            jd_analytics_skip_logging: true
+        # Initialize the record as if it ran for both persistent and non-persistent modes.
+        # For persistent: prevents running missed occurrences on first deployment
+        #   (e.g., if a weekly email script is deployed mid-week, don't send the email)
+        # For non-persistent: establishes a baseline so future scheduled times can be detected
+        #   (without this, non-persistent scripts would never run because last_run_time would always be null)
+        APP.justdo_system_records.setRecord last_run_record_name,
+          value: previous_scheduled_time
+          completed: true
+        ,
+          jd_analytics_skip_logging: true
 
-        # In both cases (persistent or not), wait for the next occurrence
+        # Wait for the next occurrence
         return getMsUntilNextScheduledTime()
 
       last_run_time = record.value
@@ -720,14 +722,16 @@ JustdoDbMigrations.registerCronjob = (options) ->
         # Already ran and completed for this scheduled occurrence
         return getMsUntilNextScheduledTime()
       else
-        # Non-persistent mode: never run immediately, always wait for next
-        # Check if we've already executed for the current scheduled period
-        if last_run_time? and previous_scheduled_time <= last_run_time
-          # We've already run for this period, wait for next
+        # Non-persistent mode: skip missed executions on startup, but run future scheduled times
+        if not last_run_time?
+          # First time ever: don't run any missed occurrence, wait for the next one
           return getMsUntilNextScheduledTime()
 
-        # There's a scheduled time we haven't run, but in non-persistent mode
-        # we skip it and wait for the next one
+        if previous_scheduled_time > last_run_time
+          # A new scheduled time has arrived since our last run - execute now
+          return true
+
+        # We've already run for this period, wait for next
         return getMsUntilNextScheduledTime()
 
   # Build common_batch_migration_options, overriding startingCondition
