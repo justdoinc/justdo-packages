@@ -412,6 +412,256 @@ _.extend JustdoDeliveryPlanner.prototype,
     
     return
 
+  _setupProjectsCollectionAddToContextmenu: ->
+    self = @
+
+    fields_to_fetch_for_pc_items =
+      _id: 1
+      title: 1
+      seqId: 1
+      parents: 1
+      projects_collection: 1
+
+    getProjectsCollectionsOfTypeSortedBySeqId = (type_id, filter_state, active_item_id) ->
+      active_item = APP.collections.Tasks.findOne(active_item_id, {fields: {parents: 1}})
+
+      current_justdo_id = JD.activeJustdoId()
+      if not current_justdo_id?
+        return []
+
+      options =
+        projects_collection_types: [type_id]
+        fields: fields_to_fetch_for_pc_items
+
+      pc_tasks = self.getProjectsCollectionsUnderJustdoCursor(current_justdo_id, options, Meteor.userId()).fetch()
+
+      # Apply filter if provided
+      if not _.isEmpty(filter_state)
+        filter_regex = new RegExp(JustdoHelpers.escapeRegExp(filter_state), "i")
+        pc_tasks = _.filter pc_tasks, (pc_task) ->
+          return filter_regex.test(pc_task.title)
+
+      # Exclude items that would cause circular chain
+      pc_tasks = self.excludeProjectsCauseCircularChain pc_tasks, active_item_id
+
+      # Sort: items the task already belongs to first, then by seqId descending
+      pc_tasks = pc_tasks.sort (pc_task_a, pc_task_b) ->
+        is_in_pc_a = pc_task_a._id of (active_item?.parents or {})
+        is_in_pc_b = pc_task_b._id of (active_item?.parents or {})
+        if is_in_pc_a and not is_in_pc_b
+          return -1
+        else if not is_in_pc_a and is_in_pc_b
+          return 1
+
+        # Sort by seqId descending
+        if pc_task_a.seqId < pc_task_b.seqId
+          return 1
+        else
+          return -1
+
+      return pc_tasks
+
+    addNewParentToTaskId = (task_id, new_parent_id, gc, cb) ->
+      gc.saveAndExitActiveEditor()
+
+      gc._performLockingOperation (releaseOpsLock, timedout) =>
+        usersDiffConfirmationCbWrappedWithGc = (item_id, target_id, diff, confirm, cancel, options) ->
+          return ProjectPageDialogs.JustdoTaskMembersDiffDialog.usersDiffConfirmationCb(item_id, target_id, diff, confirm, cancel, _.extend {grid_control: gc}, options)
+
+        gc.addParent task_id, {parent: new_parent_id, order: 0}, (err) ->
+          releaseOpsLock()
+
+          cb?(err)
+
+          return
+        , usersDiffConfirmationCbWrappedWithGc
+
+        return
+
+      return
+
+    removeParent = (item_path, gc, cb) ->
+      gc._performLockingOperation (releaseOpsLock, timedout) =>
+        gc._grid_data?.removeParent item_path, (err) =>
+          releaseOpsLock()
+
+          if err?
+            APP.logger.error "Error: #{err}"
+
+          cb?(err)
+
+          return
+
+        return
+
+      return
+    
+    for projects_collection_type in @getSupportedProjectsCollectionTypes()
+      do (projects_collection_type, position) =>
+        type_id = projects_collection_type.type_id
+        section_id = "#{JustdoDeliveryPlanner.add_to_projects_collection_section_id_prefix}#{JustdoHelpers.underscoreSepTo "-", type_id}"
+        nested_section_id = "#{section_id}-items"
+
+        projects_collection_type_label_i18n = projects_collection_type.type_label_i18n
+        projects_collection_type_label_i18n_plural = projects_collection_type.type_label_plural_i18n
+
+        # Register the main section item that opens the nested section
+        APP.justdo_tasks_context_menu.registerSectionItem "projects", section_id,
+          position: 90 # Before the "Add to Project" section
+          data:
+            label: ->
+              label_i18n = "projects_collection_add_to_projects_collection"
+              options_i18n = 
+                projects_collection: TAPi18n.__ projects_collection_type_label_i18n, {}, JustdoI18n.default_lang
+              return TAPi18n.__ label_i18n, options_i18n, JustdoI18n.default_lang
+            label_i18n: ->
+              label_i18n = "projects_collection_add_to_projects_collection"
+              options_i18n = 
+                projects_collection: TAPi18n.__ projects_collection_type_label_i18n
+              return {label_i18n, options_i18n}
+            is_nested_section: true
+            icon_type: "feather"
+            icon_val: -> "corner-#{APP.justdo_i18n.getRtlAwareDirection "right"}-down"
+
+          listingCondition: ->
+            if not (current_justdo_id = JD.activeJustdoId())?
+              return false
+
+            cache_key = "justdo-has-pc-#{type_id}::#{current_justdo_id}"
+            if JustdoHelpers.sameTickCacheExists(cache_key)
+              return JustdoHelpers.sameTickCacheGet(cache_key)
+
+            options =
+              projects_collection_types: [type_id]
+              fields:
+                _id: 1
+
+            justdo_has_pc = self.getProjectsCollectionsUnderJustdoCursor(current_justdo_id, options, Meteor.userId()).count() > 0
+
+            JustdoHelpers.sameTickCacheSet(cache_key, justdo_has_pc)
+
+            return justdo_has_pc
+
+        # Register the nested section with itemsGenerator
+        APP.justdo_tasks_context_menu.registerNestedSection "projects", section_id, nested_section_id,
+          position: 100
+
+          data:
+            display_item_filter_ui: true
+            limit_rendered_items: true
+
+            itemsGenerator: ->
+              gc = APP.justdo_tasks_context_menu.getGridControlWithOpenedContextMenu()
+
+              current_section_filter_state = APP.justdo_tasks_context_menu.getSectionFilterState(nested_section_id)
+
+              cache_key = "#{nested_section_id}::#{current_section_filter_state}"
+              if JustdoHelpers.sameTickCacheExists(cache_key)
+                return JustdoHelpers.sameTickCacheGet(cache_key)
+
+              res = []
+
+              active_item_id = gc.activeItemId()
+              pc_docs = getProjectsCollectionsOfTypeSortedBySeqId(type_id, current_section_filter_state, active_item_id)
+              # Filter out current task from the list
+              filtered_pc_docs = _.filter pc_docs, (pc_doc) -> pc_doc._id isnt active_item_id
+
+              if _.isEmpty(filtered_pc_docs)
+                res.push
+                  label: ->
+                    label_i18n = "projects_collection_no_projects_collection_available"
+                    options_i18n = 
+                      projects_collection: TAPi18n.__ projects_collection_type_label_i18n_plural, {}, JustdoI18n.default_lang
+                    return TAPi18n.__ label_i18n, options_i18n, JustdoI18n.default_lang
+                  label_i18n: ->
+                    label_i18n = "projects_collection_no_projects_collection_available"
+                    options_i18n = 
+                      projects_collection: TAPi18n.__ projects_collection_type_label_i18n_plural
+                    return {label_i18n, options_i18n}
+                  op: -> return
+                  icon_type: "none"
+
+              for pc_task_doc, i in pc_docs
+                do (pc_task_doc, i) ->
+                  if pc_task_doc._id != active_item_id
+                    res.push
+                      id: pc_task_doc._id
+
+                      label: ->
+                        return pc_task_doc.title or ""
+                      label_addendum_template: "projects_collection_jump_to_pc"
+                      op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
+                        query =
+                          _id: task_id
+                          "parents.#{pc_task_doc._id}": {$exists: true}
+
+                        options =
+                          fields:
+                            _id: 1
+                            parents: 1
+
+                        if (task_doc = APP.collections.Tasks.findOne(query, options))?
+                          performRemoveParent = ->
+                            removeParent "/#{pc_task_doc._id}/#{task_id}/", gc, (err) ->
+                              if err?
+                                console.error err
+                              return
+                          if _.size(task_doc.parents) > 1
+                            performRemoveParent()
+                          else
+                            JustdoSnackbar.show
+                              text: "This is the last parent of the task, do you want to remove the task completely?"
+                              showDismissButton: true
+                              actionText: "Remove"
+                              duration: 10000
+                              onActionClick: (snackbar) =>
+                                performRemoveParent()
+                                snackbar.close()
+                                return
+                        else
+                          addNewParentToTaskId task_id, pc_task_doc._id, gc, (err) ->
+                            if err?
+                              console.error err
+                            return
+
+                        return
+                      icon_type: "feather"
+                      icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+                        if not task_id?
+                          return
+
+                        query =
+                          _id: task_id
+
+                        options =
+                          fields:
+                            _id: 1
+                            parents: 1
+
+                        task_doc = APP.collections.Tasks.findOne(query, options)
+
+                        if pc_task_doc._id of task_doc.parents
+                          return "check-square"
+                        return "square"
+
+                      close_on_click: false
+
+              JustdoHelpers.sameTickCacheSet(cache_key, res)
+              return res
+
+      position += 1
+
+    return
+
+  _destroyProjectsCollectionAddToContextmenu: ->
+    for projects_collection_type in @getSupportedProjectsCollectionTypes()
+      type_id = projects_collection_type.type_id
+      section_id = "#{JustdoDeliveryPlanner.add_to_projects_collection_section_id_prefix}#{JustdoHelpers.underscoreSepTo "-", type_id}"
+      APP.justdo_tasks_context_menu.unregisterSectionItem "projects", section_id
+      # Note: Nested sections are automatically cleaned up when the parent section item is unregistered
+
+    return
+
   _registerProjectsCollectionPlugin: ->
     APP.justdo_custom_plugins.installCustomPlugin
       # SETTINGS BEGIN
@@ -531,12 +781,14 @@ _.extend JustdoDeliveryPlanner.prototype,
 
   _setupProjectsCollectionFeatures: ->
     @_setupProjectsCollectionContextmenu()
+    @_setupProjectsCollectionAddToContextmenu()
     @_setupProjectsCollectionTaskType()
         
     return
 
   _destroyProjectsCollectionFeatures: ->
     @_destroyProjectsCollectionContextmenu()
+    @_destroyProjectsCollectionAddToContextmenu()
     @_destroyProjectsCollectionTaskType()
         
     return
