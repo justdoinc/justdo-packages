@@ -23,6 +23,8 @@ _.extend JustdoDeliveryPlanner,
 
   default_time_zone: "America/New_York" # The timezone we will use for users we can't determine their timezone
 
+  add_to_projects_collection_section_id_prefix: "add-to-projects-collection-"
+
   default_simple_member_daily_availability_seconds: 60 * 60 * 3
 
   default_base_project_workdays: [0, 1, 1, 1, 1, 1, 0]

@@ -21,6 +21,9 @@
   "projects_collection_create_sub_department": "Create a Sub-Department",
 
   "projects_collection_depth_gt_max_depth_default_err": "Cannot nest __projects_collection_label__ beyond __count__ level",
-  "projects_collection_depth_gt_max_depth_default_err_plural": "Cannot nest __projects_collection_label__ beyond __count__ levels"
+  "projects_collection_depth_gt_max_depth_default_err_plural": "Cannot nest __projects_collection_label__ beyond __count__ levels",
+
+  "projects_collection_add_to_projects_collection": "Add to __projects_collection__",
+  "projects_collection_no_projects_collection_available": "No __projects_collection__ are available"
 
 }

@@ -1,0 +1,37 @@
+[class*="nested-dropdown-menu-add-to-projects-collection-"]
+  .dropdown-item-label-wrapper
+    display: flex
+    white-space: initial
+    width: 320px
+    .jd-icon-context-action
+      margin-top: 2px
+    .jump-to-task-in-pc
+      display: flex
+      margin-left: auto
+      opacity: 0
+      pointer-events: none
+      padding-left: 8px
+      .jd-icon-context-action
+        margin-right: 0
+        transition: all 0.2s linear
+        cursor: pointer
+        &:hover
+          stroke: black
+          background-color: rgba(0, 0, 0, 0.08)
+      &.show
+        opacity: 1
+        pointer-events: all
+
+// RTL modifications
+.right-to-left
+  [class*="nested-dropdown-menu-add-to-projects-collection-"]
+    .dropdown-item-label-wrapper
+      .jump-to-task-in-pc
+        margin-left: unset
+        margin-right: auto
+        padding-left: unset
+        padding-right: 8px
+        .jd-icon-context-action
+          margin-right: unset
+          margin-left: 0
+
