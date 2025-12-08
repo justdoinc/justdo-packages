@@ -56,7 +56,7 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
     # Can return:
     #   - true: condition met, start processing
     #   - false: condition not met, check again after starting_condition_interval_between_checks
-    #   - Number (ms): condition not met, check again after the returned number of milliseconds
+    #   - Number (ms): condition not met, check again after the returned number of milliseconds. Must be greater than 0.
     startingCondition:
       label: "Migration script starting condition"
       type: Function
@@ -155,7 +155,9 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
     
     if result is true
       return {condition_met: true, next_check_interval: null}
-    else if _.isNumber(result) and result > 0
+    else if _.isNumber(result)
+      if result <= 0
+        throw APP.justdo_db_migrations._error "invalid-options", "startingCondition must return a number greater than 0"
       # startingCondition returned a custom interval in ms
       return {condition_met: false, next_check_interval: result}
     else
