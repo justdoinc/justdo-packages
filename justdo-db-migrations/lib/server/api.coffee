@@ -66,11 +66,10 @@ _.extend JustdoDbMigrations.prototype,
     return APP.justdo_system_records.getRecord(@getCheckpointId(migration_script_id))?.value
     
   setCheckpointOfScript: (migration_script_id, value) ->
-    if not _.isObject value
-      value = {value: value}
-      
-    APP.justdo_system_records.setRecord @getCheckpointId(migration_script_id), value, {jd_analytics_skip_logging: true}
-
+    APP.justdo_system_records.setRecord @getCheckpointId(migration_script_id), 
+      value: value
+    ,
+      jd_analytics_skip_logging: true
     return
 
   removeCheckpointOfScript: (migration_script_id) ->
