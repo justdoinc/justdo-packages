@@ -20,7 +20,6 @@ APP.executeAfterAppLibCode ->
     queryGenerator: ->
       return {}
     exec_interval: 15 * 1000
-    checkpoint_record_name: "#{migration_name}-checkpoint"
     custom_fields_to_fetch: {
       "services.resume.loginTokens.when": 1,
       "services.resume.loginTokens.hashedToken": 1

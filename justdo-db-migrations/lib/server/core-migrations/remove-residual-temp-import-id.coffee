@@ -13,7 +13,6 @@ APP.executeAfterAppLibCode ->
       # Here you can define custom fields to fetch under custom_fields_to_fetch.
       return {"jci:temp_import_id" : {$ne: null}}
     exec_interval: 5 * 1000
-    checkpoint_record_name: "#{migration_name}-checkpoint"
     custom_fields_to_fetch: {}
     batchProcessorForEach: (doc) ->
       update_query = {$unset: {"jci:temp_import_id": 1}}

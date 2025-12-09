@@ -247,6 +247,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
           # since initProcedures will be called again when the condition is next met.
           @logProgress "Batch processing complete, returning to monitoring mode (waiting for startingCondition to be met)"
           runTerminationProcedures(@)
+          @removeCheckpoint()
           startConditionMonitoring self, ->
             scriptWrapper.call self
             return
@@ -347,7 +348,6 @@ JustdoDbMigrations.docExpiryMigration = (options) ->
     ttl, 
     created_at_field,
     exec_interval,
-    last_run_record_name, 
     batchProcessor
   } = options
 

@@ -9,7 +9,6 @@ APP.executeAfterAppLibCode ->
   #     created_at_field: "services.resume.loginTokens.when"
   #     ttl: user_login_resume_token_ttl_ms
   #     exec_interval: 1 * 60 * 60 * 1000 # 1 hour
-  #     last_run_record_name: "#{migration_name}-last-run"
   #     batchProcessor: (cursor) ->
   #       exp_date = new Date()
   #       exp_date.setMilliseconds(exp_date.getMilliseconds() - user_login_resume_token_ttl_ms)

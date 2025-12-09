@@ -11,7 +11,6 @@ APP.executeAfterAppLibCode ->
       # Here you can define custom fields to fetch under custom_fields_to_fetch.
       return {_raw_removed_date: {$ne: null}, users: {$ne: []}}
     exec_interval: 5 * 1000 # 5 seconds
-    checkpoint_record_name: "#{migration_name}-checkpoint"
     custom_fields_to_fetch: {
       users: 1
     }

@@ -8,6 +8,5 @@ _.extend JustdoUserActivePosition.prototype,
       ttl: 12 * 31 * 24 * 60 * 60 * 1000 # 12 months
       created_at_field: "time"
       exec_interval: 1 * 60 * 60 * 1000 # 1 hour
-      last_run_record_name: "#{migration_name}-last-run"
 
     return
