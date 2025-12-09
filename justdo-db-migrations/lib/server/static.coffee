@@ -104,22 +104,6 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
       type: Boolean
       optional: true
       defaultValue: false
-    
-    checkpoint:
-      label: "Checkpoint options"
-      type: Object
-      optional: true
-    
-    "checkpoint.record_name":
-      label: "ID of the system record to store the checkpoint"
-      type: String
-      optional: true
-    
-    "checkpoint.auto_clear_upon_exhaustion_of_batches":
-      label: "Should the checkpoint be cleared upon exhaustion of batches"
-      type: Boolean
-      optional: true
-      defaultValue: false
 
 JustdoDbMigrations.commonBatchedMigration = (options) ->
   {cleaned_val} =
@@ -133,36 +117,14 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
   if options.initialize_starting_condition_upon_exhaustion and not options.startingCondition?
     throw APP.justdo_db_migrations._error "invalid-options", "initialize_starting_condition_upon_exhaustion requires a startingCondition"
 
-  checkpoint_record_name = options.checkpoint?.record_name
-  if options.checkpoint?.auto_clear_upon_exhaustion_of_batches and _.isEmpty checkpoint_record_name
-    throw APP.justdo_db_migrations._error "invalid-options", "Option checkpoint.auto_clear_upon_exhaustion_of_batches requires a checkpoint.record_name"
-
   shared_obj = {}
   getMigrationFunctionsThis = (original_this) ->
     migration_functions_this = Object.create(original_this)
 
-    migration_functions_this = _.extend migration_functions_this,
+    return _.extend migration_functions_this,
       collection: options.collection
       options: options
       shared: shared_obj # XXX
-
-    if not _.isEmpty(checkpoint_record_name)
-      migration_functions_this = _.extend migration_functions_this,
-        getCheckpoint: ->
-          return APP.justdo_system_records.getRecord(checkpoint_record_name)?.value
-
-        setCheckpoint: (value) ->
-          APP.justdo_system_records.setRecord checkpoint_record_name,
-            value: value
-          ,
-            jd_analytics_skip_logging: true
-          return
-
-        clearCheckpoint: ->
-          @setCheckpoint(null)
-          return
-
-    return migration_functions_this
 
   runTerminationProcedures = (caller_this) ->
     migration_functions_this = getMigrationFunctionsThis(caller_this)
@@ -274,9 +236,6 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
         waitDelayBeforeCheckingForNewBatchesAndRunProcessBatchWrapper = =>
           if options.onBatchesExaustion?
             options.onBatchesExaustion.call migration_functions_this
-          
-          if options.checkpoint?.auto_clear_upon_exhaustion_of_batches
-            migration_functions_this.clearCheckpoint()
 
           if options.initialize_starting_condition_upon_exhaustion
             # Return to monitoring startingCondition.
@@ -387,8 +346,6 @@ JustdoDbMigrations.docExpiryMigration = (options) ->
 
   common_batched_migration_options =
     starting_condition_interval_between_checks: exec_interval
-    checkpoint:
-      record_name: last_run_record_name
 
     startingCondition: ->
       # In the worst case, a server that took control in (exec_interval - 1) will expire documents in ((exec_interval * 2) - 1)
@@ -457,9 +414,6 @@ JustdoDbMigrations.perpetualMaintainer = (options) ->
     batch_size: options.batch_size
 
     collection: options.collection
-
-    checkpoint: 
-      record_name: options.checkpoint_record_name
 
     queryGenerator: ->
       query = options.queryGenerator()
