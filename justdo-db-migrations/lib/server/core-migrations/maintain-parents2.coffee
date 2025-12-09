@@ -10,16 +10,16 @@ APP.executeAfterAppLibCode -> # Could have been avoided if we could add the foll
 
     return new Date(date.valueOf() + 1)
 
-  getPreviousCheckpointOrEpoch = ->
-    previous_checkpoint = APP.justdo_system_records.getRecord("maintain-parents2-tasks")?.previous_checkpoint
+  getPreviousCheckpointOrEpoch = (caller_this) ->
+    previous_checkpoint = caller_this.getCheckpoint()
 
     if not _.isDate(previous_checkpoint)
       return getEpochDate()
 
     return previous_checkpoint
 
-  getPreviousCheckpointOrEpochPlusOneMs = ->
-    return getDatePlusOneMs(getPreviousCheckpointOrEpoch())
+  getPreviousCheckpointOrEpochPlusOneMs = (caller_this) ->
+    return getDatePlusOneMs(getPreviousCheckpointOrEpoch(caller_this))
 
   common_batched_migration_options =
     starting_condition_interval_between_checks: 1000 * 60
@@ -37,10 +37,12 @@ APP.executeAfterAppLibCode -> # Could have been avoided if we could add the foll
 
     static_query: false
     queryGenerator: ->
+      self = @
+
       # FETCH_TASKS_BY_RAW_UPDATED_DATE_INDEX
       query =
         _raw_updated_date:
-          $gte: getPreviousCheckpointOrEpochPlusOneMs()
+          $gte: getPreviousCheckpointOrEpochPlusOneMs(self)
         parents2:
           $ne: null
         parents:
@@ -58,7 +60,7 @@ APP.executeAfterAppLibCode -> # Could have been avoided if we could add the foll
 
     batchProcessor: (tasks_collection_cursor) ->
       self = @
-      current_checkpoint = getPreviousCheckpointOrEpochPlusOneMs()
+      current_checkpoint = getPreviousCheckpointOrEpochPlusOneMs(self)
       num_processed = 0
 
       tasks_collection_cursor.forEach (task) ->
@@ -69,10 +71,7 @@ APP.executeAfterAppLibCode -> # Could have been avoided if we could add the foll
 
         return
 
-      APP.justdo_system_records.setRecord "maintain-parents2-tasks",
-        previous_checkpoint: current_checkpoint
-      ,
-        jd_analytics_skip_logging: true
+      self.setCheckpoint(current_checkpoint)
 
       return num_processed
 
