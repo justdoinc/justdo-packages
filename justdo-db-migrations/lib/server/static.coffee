@@ -271,7 +271,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
 
           return
 
-        handleBatchesExhaustion = =>
+        waitDelayBeforeCheckingForNewBatchesAndRunProcessBatchWrapper = =>
           if options.onBatchesExaustion?
             options.onBatchesExaustion.call migration_functions_this
           
@@ -302,7 +302,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
           catch e
             @logProgress "Error encountered, will try again in #{JustdoHelpers.msToHumanReadable options.delay_before_checking_for_new_batches}", e
 
-            handleBatchesExhaustion()
+            waitDelayBeforeCheckingForNewBatchesAndRunProcessBatchWrapper()
             # Do not halt the script, some errors, like network issues might be resolved after a while
             # and we don't want to need to restart the server in such a case
             # @halt()
@@ -325,7 +325,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
 
               return
 
-            handleBatchesExhaustion()
+            waitDelayBeforeCheckingForNewBatchesAndRunProcessBatchWrapper()
           else
             @logProgress "Start batch"
 
