@@ -1,6 +1,4 @@
 APP.executeAfterAppLibCode ->
-  maintain_parents2_migration_script_id = "maintain-parents2"
-
   common_batched_migration_options =
     starting_condition_interval_between_checks: 1000 * 60
     startingCondition: ->
@@ -46,7 +44,7 @@ APP.executeAfterAppLibCode ->
       # Note that last_raw_updated_date is being used by maintain-parents2 ONLY, and it holds a date
       # After check-parents2 finished executing, the most recent _raw_updated_date will be saved into system-records
       # And used by maintain-parents2 to query for documents updated after being checked by check-parents2
-      last_raw_updated_date = APP.justdo_db_migrations.getCheckpointOfScript(maintain_parents2_migration_script_id) or null
+      last_raw_updated_date = APP.justdo_db_migrations.getCheckpointOfScript(JustdoDbMigrations.maintain_parents2_migration_script_id) or null
       num_processed = 0
 
       tasks_collection_cursor.forEach (task) ->
@@ -61,7 +59,7 @@ APP.executeAfterAppLibCode ->
       self.setCheckpoint(current_checkpoint)
 
       if last_raw_updated_date?
-        APP.justdo_db_migrations.setCheckpointOfScript(maintain_parents2_migration_script_id, last_raw_updated_date)
+        APP.justdo_db_migrations.setCheckpointOfScript(JustdoDbMigrations.maintain_parents2_migration_script_id, last_raw_updated_date)
 
       return num_processed
 

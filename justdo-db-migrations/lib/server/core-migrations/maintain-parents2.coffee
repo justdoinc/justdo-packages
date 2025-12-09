@@ -1,3 +1,5 @@
+JustdoDbMigrations.maintain_parents2_migration_script_id = "maintain-parents2"
+
 APP.executeAfterAppLibCode -> # Could have been avoided if we could add the following line to package.js, but it creates circular dep: api.use("stem-capital:projects@0.1.0", both); // Needed for add-justdo-timezone.coffee to have APP.collections.Projects
   getEpochDate = JustdoHelpers.getEpochDate
 
@@ -75,6 +77,6 @@ APP.executeAfterAppLibCode -> # Could have been avoided if we could add the foll
 
       return num_processed
 
-  APP.justdo_db_migrations.registerMigrationScript "maintain-parents2", JustdoDbMigrations.commonBatchedMigration(common_batched_migration_options)
+  APP.justdo_db_migrations.registerMigrationScript JustdoDbMigrations.maintain_parents2_migration_script_id, JustdoDbMigrations.commonBatchedMigration(common_batched_migration_options)
 
   return
