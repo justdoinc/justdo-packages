@@ -382,10 +382,12 @@ JustdoDbMigrations.docExpiryMigration = (options) ->
 
   common_batched_migration_options =
     starting_condition_interval_between_checks: exec_interval
+    checkpoint:
+      record_name: last_run_record_name
 
     startingCondition: ->
       # In the worst case, a server that took control in (exec_interval - 1) will expire documents in ((exec_interval * 2) - 1)
-      last_run = APP.justdo_system_records.getRecord(last_run_record_name)?.value
+      last_run = @getCheckpoint()
 
       return not last_run? or (new Date() - last_run >= exec_interval)
 
@@ -430,8 +432,7 @@ JustdoDbMigrations.docExpiryMigration = (options) ->
       return expired_doc_ids.length
 
     onBatchesExaustion: ->
-      APP.justdo_system_records.setRecord last_run_record_name,
-        value: new Date()
+      @setCheckpoint(new Date())
       return
 
     terminationProcedures: ->
