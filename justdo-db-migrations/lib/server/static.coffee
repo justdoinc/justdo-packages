@@ -310,18 +310,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
       callScriptWrapper = -> scriptWrapper.call self
       
       if options.startingCondition?
-        {condition_met, next_check_interval} = evaluateStartingCondition()
-        
-        if condition_met
-          @logProgress "Starting condition already met, beginning batch processing immediately"
-          callScriptWrapper()
-        else
-          # Start monitoring for the condition
-          @logProgress "Entering monitoring mode, checking condition every #{JustdoHelpers.msToHumanReadable next_check_interval}."
-          check_starting_condition_timeout = Meteor.setTimeout =>
-            startConditionMonitoring self, callScriptWrapper
-            return
-          , next_check_interval
+        startConditionMonitoring self, callScriptWrapper
       else
         callScriptWrapper()
 
