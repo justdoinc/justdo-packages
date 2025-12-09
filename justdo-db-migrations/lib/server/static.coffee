@@ -192,9 +192,10 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
   migration_script_obj =
     runScript: ->
       self = @
+      migration_functions_this = getMigrationFunctionsThis(self)
 
       getCursor = ->
-        {query, query_options} = options.queryGenerator()
+        {query, query_options} = options.queryGenerator.call migration_functions_this
 
         if query_options?.jd_analytics_skip_logging isnt false
           query_options.jd_analytics_skip_logging = true
@@ -219,8 +220,6 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
           @logProgress "Expected batches: #{expected_batches}."
           @logProgress "Expected time to complete: #{JustdoHelpers.msToHumanReadable expected_batches * options.delay_between_batches}."
 
-        migration_functions_this = getMigrationFunctionsThis(@)
-
         if _.isFunction options.initProcedures
           options.initProcedures.call migration_functions_this
 
@@ -235,7 +234,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
 
         handleBatchesExhaustion = =>
           if options.onBatchesExaustion?
-            options.onBatchesExaustion()
+            options.onBatchesExaustion.call migration_functions_this
 
           if options.initialize_starting_condition_upon_exhaustion
             # Return to monitoring startingCondition.

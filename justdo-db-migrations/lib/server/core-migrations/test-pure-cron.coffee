@@ -4,7 +4,7 @@ APP.executeAfterAppLibCode ->
   # After `batchProcessor` is called, the flag is set to true so that `queryGenerator` will return no document,
   # so that `commonBatchedMigration` would think there are no more documents to process, allowing the script to enter monitor mode.
 
-  test_cron_job = JustdoDbMigrations.registerCronjob
+  test_cron_job = JustdoDbMigrations.registerDbCronjob
     id: "test-cron-job"
     cron_expression: "*/10 * * * * *"
 
