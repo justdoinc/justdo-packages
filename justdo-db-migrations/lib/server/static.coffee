@@ -544,8 +544,8 @@ JustdoDbMigrations.removeIndexMigration = (options) ->
 
   return migration_script_obj
 
-# Schema for registerCronjob options
-registerCronjobOptionsSchema = new SimpleSchema
+# Schema for registerDbCronjob options
+registerDbCronjobOptionsSchema = new SimpleSchema
   id:
     label: "Unique identifier for the cronjob"
     type: String
@@ -602,8 +602,8 @@ registerCronjobOptionsSchema = new SimpleSchema
     type: Object
     blackbox: true
 
-JustdoDbMigrations.registerCronjob = (options) ->
-  # registerCronjob: A cron-based scheduling wrapper around commonBatchedMigration
+JustdoDbMigrations.registerDbCronjob = (options) ->
+  # registerDbCronjob: A cron-based scheduling wrapper around commonBatchedMigration
   #
   # This function creates a migration script that:
   # 1. Evaluates a cron expression to determine when to run
@@ -616,7 +616,7 @@ JustdoDbMigrations.registerCronjob = (options) ->
 
   {cleaned_val} =
     JustdoHelpers.simpleSchemaCleanAndValidate(
-      registerCronjobOptionsSchema,
+      registerDbCronjobOptionsSchema,
       options,
       {self: @, throw_on_error: true}
     )
@@ -782,6 +782,6 @@ JustdoDbMigrations.registerCronjob = (options) ->
   # Remove startingCondition from common_batch_migration_options if it was provided
   # (we've already set our own)
   if common_batch_migration_options.startingCondition?
-    console.warn "registerCronjob: startingCondition in common_batch_migration_options is ignored; using cron-based scheduling instead"
+    console.warn "registerDbCronjob: startingCondition in common_batch_migration_options is ignored; using cron-based scheduling instead"
 
   return JustdoDbMigrations.commonBatchedMigration(final_options)
