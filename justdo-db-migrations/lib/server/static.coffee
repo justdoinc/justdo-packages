@@ -193,8 +193,9 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
 
   # Helper to evaluate startingCondition and determine next interval
   # Returns: {condition_met: Boolean, next_check_interval: Number (ms) or null}
-  evaluateStartingCondition = ->
-    result = options.startingCondition()
+  evaluateStartingCondition = (caller_this) ->
+    migration_functions_this = getMigrationFunctionsThis(caller_this)
+    result = options.startingCondition.call migration_functions_this
     
     if result is true
       return {condition_met: true, next_check_interval: null}
@@ -213,7 +214,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
       if not caller_this.isAllowedToContinue()
         return
 
-      {condition_met, next_check_interval} = evaluateStartingCondition()
+      {condition_met, next_check_interval} = evaluateStartingCondition(caller_this)
       
       if condition_met
         caller_this.logProgress "Starting condition met"
