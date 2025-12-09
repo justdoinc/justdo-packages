@@ -58,6 +58,9 @@ _.extend JustdoDbMigrations.prototype,
       @logger.info "NOTE #{migration_script_id} migration script skipped. A version smaller than: #{run_if_lte_version_installed} weren't installed in this environment."
 
     return
+  
+  _getCheckpointId: (migration_script_id) ->
+    return "#{migration_script_id}-checkpoint"
 
   _getCommonThis: (migration_script_id) ->
     self = @
@@ -76,18 +79,25 @@ _.extend JustdoDbMigrations.prototype,
   _getRunScriptThis: (migration_script_id) ->
     self = @
 
+    checkpoint_id = @_getCheckpointId(migration_script_id)
+
     run_script_this = @_getCommonThis(migration_script_id)
 
     _.extend run_script_this,
       markAsCompleted: ->
         self._markMigrationScriptAsNotRunning(migration_script_id)
+        
         update =
           $addToSet:
             completed_migrations:
               migration_id: migration_script_id
               completed_time: new Date()
         APP.collections.SystemRecords.upsert "completed-migrations", update
+
+        @removeCheckpoint()
+        
         @logProgress("Marked as completed")
+
         return
       isAllowedToContinue: ->
         return self.registered_migration_scripts[migration_script_id].allowed_to_continue
@@ -95,6 +105,17 @@ _.extend JustdoDbMigrations.prototype,
         if self.isMigrationScriptMarkedAsNotRunning(migration_script_id)
           self.runMigrationScriptHaltScript(migration_script_id)
 
+        return
+      getCheckpoint: ->
+        return APP.justdo_system_records.getRecord(checkpoint_id)?.value
+      setCheckpoint: (value) ->
+        APP.justdo_system_records.setRecord checkpoint_id,
+          value: value
+        ,
+          jd_analytics_skip_logging: true
+        return
+      removeCheckpoint: ->
+        APP.justdo_system_records.removeRecord(checkpoint_id)
         return
 
     return run_script_this
