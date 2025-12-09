@@ -452,10 +452,13 @@ JustdoDbMigrations.perpetualMaintainer = (options) ->
 
     collection: options.collection
 
+    checkpoint: 
+      record_name: options.checkpoint_record_name
+
     queryGenerator: ->
       query = options.queryGenerator()
 
-      if not (last_checkpoint = APP.justdo_system_records.getRecord(options.checkpoint_record_name)?.value)?
+      if not (last_checkpoint = @getCheckpoint())?
         last_checkpoint = JustdoHelpers.getEpochDate()
 
       query[options.updated_at_field] =
@@ -501,10 +504,7 @@ JustdoDbMigrations.perpetualMaintainer = (options) ->
         return
 
       if checkpoint_val?
-        APP.justdo_system_records.setRecord options.checkpoint_record_name,
-          value: checkpoint_val
-        ,
-          jd_analytics_skip_logging: true
+        @setCheckpoint(checkpoint_val)
 
       return num_processed
 
@@ -517,10 +517,7 @@ JustdoDbMigrations.perpetualMaintainer = (options) ->
 
         default_checkpoint = JustdoHelpers.getDateMsOffset(-1 * margin_of_safety_if_batch_processor_didnt_run)
 
-        APP.justdo_system_records.setRecord options.checkpoint_record_name,
-          value: default_checkpoint
-        ,
-          jd_analytics_skip_logging: true
+        @setCheckpoint(default_checkpoint)
 
       return
 
