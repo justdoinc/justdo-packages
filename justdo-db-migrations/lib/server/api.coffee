@@ -59,8 +59,23 @@ _.extend JustdoDbMigrations.prototype,
 
     return
   
-  _getCheckpointId: (migration_script_id) ->
+  getCheckpointId: (migration_script_id) ->
     return "#{migration_script_id}-checkpoint"
+    
+  getCheckpointOfScript: (migration_script_id) ->
+    return APP.justdo_system_records.getRecord(@getCheckpointId(migration_script_id))?.value
+    
+  setCheckpointOfScript: (migration_script_id, value) ->
+    if not _.isObject value
+      value = {value: value}
+      
+    APP.justdo_system_records.setRecord @getCheckpointId(migration_script_id), value, {jd_analytics_skip_logging: true}
+
+    return
+
+  removeCheckpointOfScript: (migration_script_id) ->
+    APP.justdo_system_records.removeRecord(@getCheckpointId(migration_script_id))
+    return
 
   _getCommonThis: (migration_script_id) ->
     self = @
@@ -78,8 +93,6 @@ _.extend JustdoDbMigrations.prototype,
 
   _getRunScriptThis: (migration_script_id) ->
     self = @
-
-    checkpoint_id = @_getCheckpointId(migration_script_id)
 
     run_script_this = @_getCommonThis(migration_script_id)
 
@@ -107,16 +120,11 @@ _.extend JustdoDbMigrations.prototype,
 
         return
       getCheckpoint: ->
-        return APP.justdo_system_records.getRecord(checkpoint_id)?.value
+        return self.getCheckpointOfScript(migration_script_id)
       setCheckpoint: (value) ->
-        APP.justdo_system_records.setRecord checkpoint_id,
-          value: value
-        ,
-          jd_analytics_skip_logging: true
-        return
+        return self.setCheckpointOfScript(migration_script_id, value)
       removeCheckpoint: ->
-        APP.justdo_system_records.removeRecord(checkpoint_id)
-        return
+        return self.removeCheckpointOfScript(migration_script_id)
 
     return run_script_this
 
