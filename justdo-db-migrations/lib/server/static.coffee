@@ -94,6 +94,11 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
     # This enables recurring scheduled behavior where the migration cycles between:
     # monitoring condition -> processing batches -> monitoring condition
     # Relevant only if mark_as_completed_upon_batches_exhaustion is false and startingCondition is set.
+    #
+    # IMPORTANT NOTE:
+    #
+    # If due to exception, we failed to process a batch, we will still use delay_before_checking_for_new_batches before re-trying. 
+    # So note, that delay_before_checking_for_new_batches is used even when initialize_starting_condition_upon_exhaustion is set to true.
     initialize_starting_condition_upon_exhaustion:
       label: "Return to monitoring startingCondition after batches are exhausted"
       type: Boolean
