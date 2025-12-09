@@ -233,7 +233,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
 
           return
 
-        waitDelayBeforeCheckingForNewBatchesAndRunProcessBatchWrapper = =>
+        waitDelayAndRunProcessBatchWrapper = =>
           if options.onBatchesExaustion?
             options.onBatchesExaustion.call migration_functions_this
 
@@ -264,7 +264,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
             # Note that in this particular case, we aren't 'Waiting for new Batches';
             # We are actually waiting in the hope that the issue that caused the error thrown
             # would get resolved by the 'waitDelay' time.
-            waitDelayBeforeCheckingForNewBatchesAndRunProcessBatchWrapper()
+            waitDelayAndRunProcessBatchWrapper()
 
             # Do not halt the script, some errors, like network issues might be resolved after a while
             # and we don't want to need to restart the server in such a case
@@ -288,7 +288,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
 
               return
 
-            waitDelayBeforeCheckingForNewBatchesAndRunProcessBatchWrapper()
+            waitDelayAndRunProcessBatchWrapper()
           else
             @logProgress "Start batch"
 
