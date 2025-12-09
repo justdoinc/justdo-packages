@@ -38,6 +38,13 @@ _.extend JustdoSystemRecords.prototype,
     check id, String
 
     return @system_records_collection.findOne(id, {jd_analytics_skip_logging: true})
+  
+  removeRecord: (id) ->
+    check id, String
+
+    @system_records_collection.remove({_id: id})
+
+    return
 
   _maintainBuiltinSystemRecords: ->
     # Maintain installed-versions
