@@ -234,24 +234,38 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
           return
 
         waitDelayAndRunProcessBatchWrapper = =>
+          batch_timeout = Meteor.setTimeout =>
+            processBatchWrapper()
+            return
+          , options.delay_before_checking_for_new_batches
+
+          return
+
+        runTerminationProceduresAndStartConditionMonitoring = =>
+          # Return to monitoring startingCondition.
+          # Call terminationProcedures to clean up resources created by initProcedures,
+          # since initProcedures will be called again when the condition is next met.
+          @logProgress "Batch processing complete, returning to monitoring mode (waiting for startingCondition to be met)"
+          runTerminationProcedures(@)
+          startConditionMonitoring self, ->
+            scriptWrapper.call self
+            return
+          
+          return
+
+        performBatchesExhaustionProcedures = =>
           if options.onBatchesExaustion?
             options.onBatchesExaustion.call migration_functions_this
 
-          if options.initialize_starting_condition_upon_exhaustion
-            # Return to monitoring startingCondition.
-            # Call terminationProcedures to clean up resources created by initProcedures,
-            # since initProcedures will be called again when the condition is next met.
-            @logProgress "Batch processing complete, returning to monitoring mode (waiting for startingCondition to be met)"
+          if options.mark_as_completed_upon_batches_exhaustion
+            # Note: `removeCheckpoint` is called inside `markAsCompleted`,
+            # so we don't need to call it here.
+            @markAsCompleted()
             runTerminationProcedures(@)
-            startConditionMonitoring self, ->
-              scriptWrapper.call self
-              return
+          else if options.initialize_starting_condition_upon_exhaustion
+            runTerminationProceduresAndStartConditionMonitoring()
           else
-            # Original behavior: wait and check for new batches
-            batch_timeout = Meteor.setTimeout =>
-              processBatchWrapper()
-              return
-            , options.delay_before_checking_for_new_batches
+            waitDelayAndRunProcessBatchWrapper()
 
           return
 
@@ -281,14 +295,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
             pending_migration_set_cursor = cursor_res.cursor
 
           if cursor_res.count() == 0
-            if options.mark_as_completed_upon_batches_exhaustion
-              @markAsCompleted()
-
-              runTerminationProcedures(@)
-
-              return
-
-            waitDelayAndRunProcessBatchWrapper()
+            performBatchesExhaustionProcedures()
           else
             @logProgress "Start batch"
 
