@@ -259,8 +259,6 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
             options.onBatchesExaustion.call migration_functions_this
 
           if options.mark_as_completed_upon_batches_exhaustion
-            # Note: `removeCheckpoint` is called inside `markAsCompleted`,
-            # so we don't need to call it here.
             @markAsCompleted()
             runTerminationProcedures(@)
           else if options.initialize_starting_condition_upon_exhaustion
