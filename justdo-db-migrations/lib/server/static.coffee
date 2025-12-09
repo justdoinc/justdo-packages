@@ -302,7 +302,11 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
           catch e
             @logProgress "Error encountered, will try again in #{JustdoHelpers.msToHumanReadable options.delay_before_checking_for_new_batches}", e
 
+            # Note that in this particular case, we aren't 'Waiting for new Batches';
+            # We are actually waiting in the hope that the issue that caused the error thrown
+            # would get resolved by the 'waitDelay' time.
             waitDelayBeforeCheckingForNewBatchesAndRunProcessBatchWrapper()
+
             # Do not halt the script, some errors, like network issues might be resolved after a while
             # and we don't want to need to restart the server in such a case
             # @halt()
