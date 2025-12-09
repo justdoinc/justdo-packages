@@ -66,10 +66,18 @@ _.extend JustdoDbMigrations.prototype,
     return APP.justdo_system_records.getRecord(@getCheckpointId(migration_script_id))?.value
     
   setCheckpointOfScript: (migration_script_id, value) ->
-    APP.justdo_system_records.setRecord @getCheckpointId(migration_script_id), 
-      value: value
-    ,
-      jd_analytics_skip_logging: true
+    # Sets the checkpoint to the provided value in the format of {value: value}
+    # If value is null/undefined, it will set the checkpoint to the current date instead.
+
+    if value?
+      doc = {value: value}
+    else
+      doc = 
+        $currentDate:
+          value: true
+
+    APP.justdo_system_records.setRecord @getCheckpointId(migration_script_id), doc, {jd_analytics_skip_logging: true}
+    
     return
 
   removeCheckpointOfScript: (migration_script_id) ->

@@ -401,7 +401,7 @@ JustdoDbMigrations.docExpiryMigration = (options) ->
       return expired_doc_ids.length
 
     onBatchesExaustion: ->
-      @setCheckpoint(new Date())
+      @setCheckpoint()
       return
 
     terminationProcedures: ->
