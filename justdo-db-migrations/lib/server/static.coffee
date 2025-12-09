@@ -667,7 +667,7 @@ JustdoDbMigrations.registerDbCronjob = (options) ->
   try
     cron_parser.parseExpression cron_expression, {tz: tz}
   catch e
-    throw APP.justdo_db_migrations._error "invalid-cron-expression", "Invalid cron expression '#{cron_expression}': #{e.message}"
+    throw APP.justdo_db_migrations._error "invalid-options", "Invalid cron expression '#{cron_expression}': #{e.message}"
 
   # System record name for tracking last run
   last_run_record_name = "cron::#{id}::last-run"
