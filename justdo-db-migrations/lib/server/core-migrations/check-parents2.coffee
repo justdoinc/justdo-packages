@@ -23,7 +23,7 @@ APP.executeAfterAppLibCode ->
 
       # To avoid re-cheking the same batch of documents again and again, the cursor is sorted by the task id.
       # We store the last checked task id in system-records and use it as the starting point of the next batch of documents
-      if (previous_checkpoint = self.getCheckpoint())?
+      if (previous_checkpoint = @getCheckpoint())?
         query._id =
           $gt: previous_checkpoint
 
@@ -38,7 +38,6 @@ APP.executeAfterAppLibCode ->
       return {query, query_options}
 
     batchProcessor: (tasks_collection_cursor) ->
-      self = @
       # Note that current_checkpoint is being used by check-parents2(this script), and it holds task id
       current_checkpoint = null
       # Note that last_raw_updated_date is being used by maintain-parents2 ONLY, and it holds a date
@@ -56,7 +55,7 @@ APP.executeAfterAppLibCode ->
 
         return
 
-      self.setCheckpoint(current_checkpoint)
+      @setCheckpoint(current_checkpoint)
 
       if last_raw_updated_date?
         APP.justdo_db_migrations.setCheckpointOfScript(JustdoDbMigrations.maintain_parents2_migration_script_id, last_raw_updated_date)
