@@ -77,6 +77,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/objects.coffee", both);
   api.addFiles("lib/both/debug-tracker.coffee", both);
   api.addFiles("lib/both/env-helpers.coffee", both);
+  api.addFiles("lib/both/error.coffee", both);
   api.addFiles("lib/both/computed-reactive-var.coffee", both);
   api.addFiles("lib/both/flush-manager.coffee", both);
   api.addFiles("lib/both/client-type.coffee", both);
