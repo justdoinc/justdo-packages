@@ -667,68 +667,54 @@ JustdoDbMigrations.registerDbCronjob = (options) ->
 
   # Create the startingCondition function based on cron options
   createStartingCondition = ->
+    RESTART_TOLERANCE_MS = 5 * 1000  # Time window to distinguish normal operation from restart
+
     return ->
       now = new Date()
-      record = APP.justdo_system_records.getRecord(last_run_record_name)
-
-      # Get the previous scheduled time (the occurrence we might need to run)
       previous_scheduled_time = getPreviousScheduledTime(now)
 
+      # No previous occurrence exists - wait for next
       if not previous_scheduled_time?
-        # No previous occurrence exists - wait for next
         return getMsUntilNextScheduledTime()
 
-      if not record?
-        # No record exists in the DB at all
-        # Initialize the record as if it ran for both persistent and non-persistent modes.
-        # For persistent: prevents running missed occurrences on first deployment
-        #   (e.g., if a weekly email script is deployed mid-week, don't send the email)
-        # For non-persistent: establishes a baseline so future scheduled times can be detected
-        #   (without this, non-persistent scripts would never run because last_run_time would always be null)
+      record = APP.justdo_system_records.getRecord(last_run_record_name)
+      last_run_time = record?.value
+      last_run_completed = record?.completed
+
+      # No record exists in the DB at all
+      # Initialize the record as if it ran for both persistent and non-persistent modes.
+      # For persistent: prevents running missed occurrences on first deployment
+      #   (e.g., if a weekly email script is deployed mid-week, don't send the email)
+      # For non-persistent: establishes a baseline so future scheduled times can be detected
+      #   (without this, non-persistent scripts would never run because last_run_time would always be null)
+      if not last_run_time?
         APP.justdo_system_records.setRecord last_run_record_name,
           value: previous_scheduled_time
           completed: true
         ,
           jd_analytics_skip_logging: true
-
-        # Wait for the next occurrence
         return getMsUntilNextScheduledTime()
 
-      last_run_time = record.value
-      last_run_completed = record.completed
+      is_new_occurrence = previous_scheduled_time > last_run_time
+      is_incomplete_run = (previous_scheduled_time.getTime() is last_run_time.getTime()) and not last_run_completed
 
       if persistent
-        # Persistent mode: run if the last scheduled occurrence wasn't completed
-        if not last_run_time?
-          # No last run time recorded, treat as needing to run
+        # Persistent mode: run missed jobs after server restart
+        if is_new_occurrence or is_incomplete_run
           return true
-
-        # Check if we need to run:
-        # 1. If previous_scheduled_time > last_run_time: This is a NEW scheduled occurrence
-        # 2. If previous_scheduled_time == last_run_time AND not completed: Server crashed mid-execution
-        if previous_scheduled_time > last_run_time
-          # New scheduled occurrence we haven't run yet
-          return true
-
-        if (previous_scheduled_time.getTime() is last_run_time.getTime()) and not last_run_completed
-          # Same occurrence but incomplete (server crashed mid-execution) - need to retry
-          return true
-
-        # Already ran and completed for this scheduled occurrence
-        return getMsUntilNextScheduledTime()
-      else
-        # Non-persistent mode: skip missed executions on startup, but run future scheduled times
-        if not last_run_time?
-          # First time ever: don't run any missed occurrence, wait for the next one
-          return getMsUntilNextScheduledTime()
-
-        if previous_scheduled_time > last_run_time
-          # A new scheduled time has arrived since our last run - execute now
-          return true
-
-        # We've already run for this period, wait for next
         return getMsUntilNextScheduledTime()
 
+      # Non-persistent mode: skip missed executions after restart
+      if not is_new_occurrence
+        return getMsUntilNextScheduledTime()
+
+      # Only run if we're within tolerance of the scheduled time (normal operation vs restart)
+      time_since_scheduled = now.getTime() - previous_scheduled_time.getTime()
+      if time_since_scheduled > RESTART_TOLERANCE_MS
+        return getMsUntilNextScheduledTime()
+
+      return true
+      
   # Build common_batch_migration_options, overriding startingCondition
   final_options = _.extend {}, common_batch_migration_options,
     # Override startingCondition with our cron-based one
