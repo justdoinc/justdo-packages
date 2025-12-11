@@ -684,6 +684,9 @@ JustdoDbMigrations.registerDbCronjob = (options) ->
     RESTART_TOLERANCE_MS = 5 * 1000  # Time window to distinguish normal operation from restart
 
     return ->
+      getBaseReasonString = ->
+        return "cron_expression: #{cron_expression}; persistent: #{persistent};"
+        
       now = new Date()
       previous_scheduled_time = getPreviousScheduledTime(now)
 
@@ -702,6 +705,7 @@ JustdoDbMigrations.registerDbCronjob = (options) ->
       # For non-persistent: establishes a baseline so future scheduled times can be detected
       #   (without this, non-persistent scripts would never run because last_run_time would always be null)
       if not last_run_time?
+        @logProgress "No cron job record exists in the DB, initializing cron job record."
         APP.justdo_system_records.setRecord last_run_record_name,
           value: previous_scheduled_time
           completed: true
@@ -709,26 +713,39 @@ JustdoDbMigrations.registerDbCronjob = (options) ->
           jd_analytics_skip_logging: true
         return getMsUntilNextScheduledTime()
 
-      is_new_occurrence = previous_scheduled_time > last_run_time
-      is_incomplete_run = (previous_scheduled_time.getTime() is last_run_time.getTime()) and not last_run_completed
-
+      # if not last_run_completed
+      #   @logProgress {previous_scheduled_time, last_run_time, last_run_completed}
+      
+      reason = getBaseReasonString()
       if persistent
         # Persistent mode: run missed jobs after server restart
-        if is_new_occurrence or is_incomplete_run
+        if not last_run_completed
+          # If last run wasn't completed, we continue from the last checkpoint.
+          @logProgress "Found an incomplete cron job run from #{last_run_time}, continuing from the last checkpoint #{@getCheckpoint()} since this script is persistent."
           return true
-        return getMsUntilNextScheduledTime()
+        
+        if previous_scheduled_time > last_run_time
+          return true
+        else
+          return {value: getMsUntilNextScheduledTime(), reason: reason}
+      else 
+        # Non-persistent mode: skip missed executions after restart
+        prev_checkpoint = @getCheckpoint()
+        reason += " last_run: #{last_run_time}; last_run_completed: #{last_run_completed}; "
+        if not last_run_completed
+          reason += " previous_checkpoint: #{prev_checkpoint};"
+          @logProgress "Found an incomplete cron job run from #{last_run_time}. Cleared previous checkpoint and waiting for the next scheduled time to run since this script is non-persistent."
+        
+        if prev_checkpoint? and not last_run_completed
+          # For non-persistent mode, if the last run was not completed, we don't continue. Instead, we wait for the next scheduled time to run.
+          # Here we remove the checkpoint to ensure when the next scheduled time comes, all the documents will be processed.
+          @removeCheckpoint()
 
-      # Non-persistent mode: skip missed executions after restart
-      if not is_new_occurrence
-        return getMsUntilNextScheduledTime()
-
-      # Only run if we're within tolerance of the scheduled time (normal operation vs restart)
-      time_since_scheduled = now.getTime() - previous_scheduled_time.getTime()
-      if time_since_scheduled > RESTART_TOLERANCE_MS
-        return getMsUntilNextScheduledTime()
-
-      return true
+        if (now.getTime() - previous_scheduled_time.getTime()) > RESTART_TOLERANCE_MS
+          return {value: getMsUntilNextScheduledTime(), reason: reason}
       
+        return true
+
   # Build common_batch_migration_options, overriding startingCondition
   final_options = _.extend {}, common_batch_migration_options,
     # Override startingCondition with our cron-based one
