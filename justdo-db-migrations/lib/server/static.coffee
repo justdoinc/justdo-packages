@@ -57,6 +57,8 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
     #   - true: condition met, start processing
     #   - false: condition not met, check again after starting_condition_interval_between_checks
     #   - Number (ms): condition not met, check again after the returned number of milliseconds. Must be greater than 0.
+    #   - Object {value: Boolean|Number, reason: String (optional)}: same behavior as above based on `value`,
+    #     with optional `reason` for logging/debugging purposes.
     startingCondition:
       label: "Migration script starting condition"
       type: Function
@@ -158,17 +160,21 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
   evaluateStartingCondition = (caller_this) ->
     migration_functions_this = getMigrationFunctionsThis(caller_this)
     result = options.startingCondition.call migration_functions_this
+
+    if _.isObject result
+      reason = result.reason
+      result = result.value
     
     if result is true
-      return {condition_met: true, next_check_interval: null}
+      return {condition_met: true, next_check_interval: null, reason}
     else if _.isNumber(result)
       if result <= 0
         throw APP.justdo_db_migrations._error "invalid-options", "startingCondition must return a number greater than 0"
       # startingCondition returned a custom interval in ms
-      return {condition_met: false, next_check_interval: result}
+      return {condition_met: false, next_check_interval: result, reason}
     else
       # result is false or any other falsy value
-      return {condition_met: false, next_check_interval: options.starting_condition_interval_between_checks}
+      return {condition_met: false, next_check_interval: options.starting_condition_interval_between_checks, reason}
 
   # Start monitoring the startingCondition
   startConditionMonitoring = (caller_this, callback) ->
@@ -176,13 +182,21 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
       if not caller_this.isAllowedToContinue()
         return
 
-      {condition_met, next_check_interval} = evaluateStartingCondition(caller_this)
+      {condition_met, next_check_interval, reason} = evaluateStartingCondition(caller_this)
       
+      # Construct the log string
+      log_string = ""
       if condition_met
-        caller_this.logProgress "Starting condition met"
+        log_string = "Starting condition met."
+      else
+        log_string = "Starting condition not met. Checking again in #{JustdoHelpers.msToHumanReadable next_check_interval}."
+      if not _.isEmpty reason
+        log_string += " (#{reason})"
+      caller_this.logProgress log_string
+
+      if condition_met
         callback()
       else
-        caller_this.logProgress "Starting condition not met. Checking again in #{JustdoHelpers.msToHumanReadable next_check_interval}."
         check_starting_condition_timeout = Meteor.setTimeout checkCondition, next_check_interval
 
       return
