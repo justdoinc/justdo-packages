@@ -105,7 +105,6 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/core-migrations/batched-collection-updates.coffee", server);
   api.addFiles("lib/server/core-migrations/batched-collection-update-records-cleanup.coffee", server);
   api.addFiles("lib/server/core-migrations/remove-obselete-indexes.coffee", server);
-  api.addFiles("lib/server/core-migrations/test-pure-cron.coffee", server);
   
   api.export("JustdoDbMigrations", both);
 });
