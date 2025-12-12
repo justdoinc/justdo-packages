@@ -56,7 +56,7 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
     # Can return:
     #   - true: condition met, start processing
     #   - false: condition not met, check again after starting_condition_interval_between_checks
-    #   - Number (ms): condition not met, check again after the returned number of milliseconds. Must be greater than 0.
+    #   - Number (ms): condition not met, execute the script after the returned number of milliseconds. Must be greater than 0.
     #   - Object {value: Boolean|Number, reason: String (optional)}: same behavior as above based on `value`,
     #     with optional `reason` for logging/debugging purposes.
     startingCondition:
@@ -171,7 +171,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
       if result <= 0
         throw APP.justdo_db_migrations._error "invalid-options", "startingCondition must return a number greater than 0"
       # startingCondition returned a custom interval in ms
-      return {condition_met: false, next_check_interval: result, reason}
+      return {condition_met: false, next_execution_interval: result, reason}
     else
       # result is false or any other falsy value
       return {condition_met: false, next_check_interval: options.starting_condition_interval_between_checks, reason}
@@ -182,20 +182,26 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
       if not caller_this.isAllowedToContinue()
         return
 
-      {condition_met, next_check_interval, reason} = evaluateStartingCondition(caller_this)
+      {condition_met, next_check_interval, next_execution_interval, reason} = evaluateStartingCondition(caller_this)
       
       # Construct the log string
       log_string = ""
       if condition_met
         log_string = "Starting condition met."
       else
-        log_string = "Starting condition not met. Checking again in #{JustdoHelpers.msToHumanReadable next_check_interval}."
+        log_string = "Starting condition not met. "
+        if next_execution_interval?
+          log_string += "Next execution scheduled in #{JustdoHelpers.msToHumanReadable next_execution_interval}."
+        else
+          log_string += "Checking again in #{JustdoHelpers.msToHumanReadable next_check_interval}."
       if not _.isEmpty reason
         log_string += " (#{reason})"
       caller_this.logProgress log_string
 
       if condition_met
         callback()
+      else if next_execution_interval?
+        check_starting_condition_timeout = Meteor.setTimeout callback, next_execution_interval
       else
         check_starting_condition_timeout = Meteor.setTimeout checkCondition, next_check_interval
 
