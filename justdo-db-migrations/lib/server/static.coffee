@@ -687,18 +687,9 @@ JustdoDbMigrations.registerDbCronjob = (options) ->
 
   # Create the startingCondition function based on cron options
   createStartingCondition = ->
-    RESTART_TOLERANCE_MS = 5 * 1000  # Time window to distinguish normal operation from restart
-
     return ->
-      getBaseReasonString = ->
-        return "cron_expression: #{cron_expression}; persistent: #{persistent};"
-        
       now = new Date()
       previous_scheduled_time = getPreviousScheduledTime(now)
-
-      # No previous occurrence exists - wait for next
-      if not previous_scheduled_time?
-        return getMsUntilNextScheduledTime()
 
       record = APP.justdo_system_records.getRecord(last_run_record_name)
       last_run_time = record?.value
@@ -713,44 +704,49 @@ JustdoDbMigrations.registerDbCronjob = (options) ->
       if not last_run_time?
         @logProgress "No cron job record exists in the DB, initializing cron job record."
         APP.justdo_system_records.setRecord last_run_record_name,
-          value: previous_scheduled_time
+          value: previous_scheduled_time or now
           completed: true
         ,
           jd_analytics_skip_logging: true
         return getMsUntilNextScheduledTime()
 
+      # No previous occurrence exists - wait for next
+      if not previous_scheduled_time?
+        return getMsUntilNextScheduledTime()
+
       # if not last_run_completed
       #   @logProgress {previous_scheduled_time, last_run_time, last_run_completed}
       
+      getBaseReasonString = ->
+        return "cron_expression: #{cron_expression}; persistent: #{persistent};"
       reason = getBaseReasonString()
+      
       if persistent
         # Persistent mode: run missed jobs after server restart
         if not last_run_completed
           # If last run wasn't completed, we continue from the last checkpoint.
           @logProgress "Found an incomplete cron job run from #{last_run_time}, continuing from the last checkpoint #{@getCheckpoint()} since this script is persistent."
           return true
-        
-        if previous_scheduled_time > last_run_time
+
+        is_last_execution_missed = previous_scheduled_time > last_run_time
+        if is_last_execution_missed
+          # In persistent mode, if we find that we missed a scheduled time, we execute the cron job immediately.
           return true
         else
           return {value: getMsUntilNextScheduledTime(), reason: reason}
       else 
         # Non-persistent mode: skip missed executions after restart
-        prev_checkpoint = @getCheckpoint()
         reason += " last_run: #{last_run_time}; last_run_completed: #{last_run_completed}; "
         if not last_run_completed
+          prev_checkpoint = @getCheckpoint()
           reason += " previous_checkpoint: #{prev_checkpoint};"
           @logProgress "Found an incomplete cron job run from #{last_run_time}. Cleared previous checkpoint and waiting for the next scheduled time to run since this script is non-persistent."
-        
-        if prev_checkpoint? and not last_run_completed
-          # For non-persistent mode, if the last run was not completed, we don't continue. Instead, we wait for the next scheduled time to run.
-          # Here we remove the checkpoint to ensure when the next scheduled time comes, all the documents will be processed.
-          @removeCheckpoint()
+          if prev_checkpoint?
+            # For non-persistent mode, if the last run was not completed, we don't continue. Instead, we wait for the next scheduled time to run.
+            # Here we remove the checkpoint to ensure when the next scheduled time comes, all the documents will be processed.
+            @removeCheckpoint()
 
-        if (now.getTime() - previous_scheduled_time.getTime()) > RESTART_TOLERANCE_MS
-          return {value: getMsUntilNextScheduledTime(), reason: reason}
-      
-        return true
+        return {value: getMsUntilNextScheduledTime(), reason: reason}
 
   # Build common_batch_migration_options, overriding startingCondition
   final_options = _.extend {}, common_batch_migration_options,
