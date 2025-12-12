@@ -7,7 +7,7 @@ poc_permitted_domains = [
   "http://daniel-dev.justdo.com:3000", "http://daniel-dev.justdo.com:4000",
 
   # Brian's .com
-  "http://brian.justdo.com:3000/", "http://brian.justdo.com:4000/",
+  "http://brian.justdo.com:3000", "http://brian.justdo.com:4000",
 
   # local http .com
   "http://local.justdo.com", "http://app-local.justdo.com",
@@ -21,7 +21,7 @@ poc_permitted_domains = [
   "http://localhost:3000", "http://localhost:4000"
 
   # Demos
-  "https://demos.justdo.com/", "https://app-demos.justdo.com/",
+  "https://demos.justdo.com", "https://app-demos.justdo.com",
 ]
 
 beta_domains = [
