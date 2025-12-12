@@ -6,6 +6,9 @@ poc_permitted_domains = [
   # Daniel's .com
   "http://daniel-dev.justdo.com:3000", "http://daniel-dev.justdo.com:4000",
 
+  # Brian's .com
+  "http://brian.justdo.com:3000/", "http://brian.justdo.com:4000/",
+
   # local http .com
   "http://local.justdo.com", "http://app-local.justdo.com",
   "http://alpha-local.justdo.com", "http://app-local-beta.justdo.com",
