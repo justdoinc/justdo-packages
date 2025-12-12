@@ -16,6 +16,9 @@ poc_permitted_domains = [
 
   # localhosts
   "http://localhost:3000", "http://localhost:4000"
+
+  # Demos
+  "https://demos.justdo.com/", "https://app-demos.justdo.com/",
 ]
 
 beta_domains = [
