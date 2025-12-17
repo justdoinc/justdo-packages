@@ -90,9 +90,9 @@ _.extend JustdoSplitView.prototype,
       @logger.warn "Container already exists, skipping setup"
 
       return
-    
+
     @container = $("<div>")
-      .addClass("justdo-split-view")
+      .addClass("justdo-split-view d-none d-md-block")
       .appendTo(".global-wrapper")
       # .html("""<div class="place-holder"></div><iframe class="split-view-iframe" frameborder="0" width="100%" height="100%" src="#{@url.get()}"></iframe>""")
 
@@ -155,7 +155,7 @@ _.extend JustdoSplitView.prototype,
       gravity = "sw"
     else if pos == "left"
       gravity = "ne"
-    
+
     return gravity
 
   updateWindowDimToRequiredGravity: ->

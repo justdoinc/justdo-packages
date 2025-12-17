@@ -37,3 +37,37 @@ body
 
   &.no-scroll
     overflow: visible
+
+
+@media (max-width: 768px)
+  nav.navbar,
+  .project-container,
+  #project-main
+    width: auto !important
+
+  .project-header
+    min-width: unset
+
+  #task-pane
+    z-index: 120
+
+  .org-global-header-middle-wrapper
+    justify-content: flex-start !important
+    flex-grow: 1
+
+  .drawer-icon .jd-icon
+    width: 32px !important
+
+  #project-grid-operations
+    overflow-x: auto
+    overflow-y: hidden
+    -webkit-overflow-scrolling: touch
+    margin-right: 20px
+    border-right: 1px solid #c7c7c7
+    .btn-toolbar
+      flex-wrap: nowrap
+      white-space: nowrap
+
+
+
+//
