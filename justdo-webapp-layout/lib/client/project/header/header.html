@@ -3,11 +3,10 @@
     <div class="middle-project-header-items d-flex align-items-center">
       <!-- Toolbar on the left -->
       {{> project_operations_toolbar getGridControl=getGridControl}}
-
       <!-- Toolbar on the right -->
       {{> left_project_header}}
       {{> panes_controls}}
-      <div class="project-header-toolbar-divider"></div>
+      <div class="project-header-toolbar-divider d-none d-md-block"></div>
       {{> right_project_header}}
     </div>
   </div>
@@ -116,13 +115,13 @@
 </template>
 
 <template name="search_comp">
-  <div id="project-search-comp-container"></div>
+  <div id="project-search-comp-container" class="d-none d-md-block"></div>
 </template>
 
 <template name="panes_controls">
   <div id="panes-controls">
     {{#if isBottomPaneAvailable}}
-      <svg class="jd-icon jd-c-pointer text-dark bottom-pane-control {{#if isBottomPaneOpen}}control-opened{{/if}}">
+      <svg class="jd-icon jd-c-pointer text-dark bottom-pane-control d-none d-md-flex {{#if isBottomPaneOpen}}control-opened{{/if}}">
         <title>{{#if isBottomPaneOpen}}{{_ "hide_justdo_pane_label"}}{{else}}{{_ "show_justdo_pane_label"}}{{/if}}</title>
         <use xlink:href="/layout/icons-feather-sprite.svg#sidebar"></use>
       </svg>
@@ -163,7 +162,7 @@
     {{/each}}
 
     {{#if leftNavbarItems.length}}
-      <div class="project-header-toolbar-divider"></div>
+      <div class="project-header-toolbar-divider d-none d-md-block"></div>
     {{/if}}
   </div>
 </template>

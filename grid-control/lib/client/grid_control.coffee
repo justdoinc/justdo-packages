@@ -751,6 +751,9 @@ _.extend GridControl.prototype,
 
       return
 
+    isScreenWidthBelow768 = ->
+      return window.innerWidth < 768
+
     updateFrozenColumnsMode = (new_view) =>
       $current_css_block?.remove()
 
@@ -802,6 +805,11 @@ _.extend GridControl.prototype,
 
         return
       
+      # Disable frozen-columns-mode if screen width is below 768px
+      if isScreenWidthBelow768()
+        exitFrozenColumnsMode()
+        return
+      
       updateFrozenColumnsMode(new_view)
 
       return
@@ -809,7 +817,15 @@ _.extend GridControl.prototype,
     @on "init", viewChangeCb
     @on "grid-view-change", viewChangeCb
 
+    # Handle window resize to dynamically enable/disable frozen-columns-mode
+    resizeHandler = =>
+      viewChangeCb()
+      return
+
+    $(window).on "resize", resizeHandler
+
     @onDestroy ->
+      $(window).off "resize", resizeHandler
       exitFrozenColumnsMode()
       
       return
