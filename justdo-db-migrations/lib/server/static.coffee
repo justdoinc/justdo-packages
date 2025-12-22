@@ -260,17 +260,48 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
         return res
       
       scriptWrapper = ->
-        cursor_res = getCursor()
-        pending_migration_set_cursor = cursor_res.cursor
+        if isCollectionLessMode()
+          processBatch = =>
+            @logProgress "Executing collection-less job"
+            options.batchProcessor.call migration_functions_this
+            @logProgress "Collection-less job completed"
+            performBatchesExhaustionProcedures()
 
-        # The two var below are solely for logging progress
-        num_processed = 0
-        if options.mark_as_completed_upon_batches_exhaustion
-          initial_affected_docs_count = cursor_res.count()
-          @logProgress "Total documents to be updated: #{initial_affected_docs_count}."
-          expected_batches = Math.ceil(initial_affected_docs_count / options.batch_size)
-          @logProgress "Expected batches: #{expected_batches}."
-          @logProgress "Expected time to complete: #{JustdoHelpers.msToHumanReadable expected_batches * options.delay_between_batches}."
+            return
+        else
+          cursor_res = getCursor()
+          pending_migration_set_cursor = cursor_res.cursor
+
+          # The two var below are solely for logging progress
+          num_processed = 0
+          if options.mark_as_completed_upon_batches_exhaustion
+            initial_affected_docs_count = cursor_res.count()
+            @logProgress "Total documents to be updated: #{initial_affected_docs_count}."
+            expected_batches = Math.ceil(initial_affected_docs_count / options.batch_size)
+            @logProgress "Expected batches: #{expected_batches}."
+            @logProgress "Expected time to complete: #{JustdoHelpers.msToHumanReadable expected_batches * options.delay_between_batches}."
+
+          processBatch = =>
+            if not options.static_query
+              cursor_res = getCursor()
+              pending_migration_set_cursor = cursor_res.cursor
+
+            if cursor_res.count() == 0
+              performBatchesExhaustionProcedures()
+            else
+              @logProgress "Start batch"
+
+              num_processed += options.batchProcessor.call migration_functions_this, pending_migration_set_cursor
+
+              if options.mark_as_completed_upon_batches_exhaustion
+                @logProgress "#{num_processed}/#{initial_affected_docs_count} documents processed"
+              else
+                @logProgress "#{num_processed} documents processed"
+                num_processed = 0
+
+              waitDelayBetweenBatchesAndRunProcessBatchWrapper()
+
+              return
 
         if _.isFunction options.initProcedures
           options.initProcedures.call migration_functions_this
@@ -338,28 +369,6 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
             # @halt()
 
           return
-
-        processBatch = =>
-          if not options.static_query
-            cursor_res = getCursor()
-            pending_migration_set_cursor = cursor_res.cursor
-
-          if cursor_res.count() == 0
-            performBatchesExhaustionProcedures()
-          else
-            @logProgress "Start batch"
-
-            num_processed += options.batchProcessor.call migration_functions_this, pending_migration_set_cursor
-
-            if options.mark_as_completed_upon_batches_exhaustion
-              @logProgress "#{num_processed}/#{initial_affected_docs_count} documents processed"
-            else
-              @logProgress "#{num_processed} documents processed"
-              num_processed = 0
-
-            waitDelayBetweenBatchesAndRunProcessBatchWrapper()
-
-            return
 
         Meteor.defer ->
           # To avoid running in the original tick that called the necessary db-migrations, defer the run
