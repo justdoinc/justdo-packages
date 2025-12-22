@@ -5,13 +5,16 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
     delay_between_batches:
       label: "Delay between batches"
       type: SimpleSchema.Integer
+      optional: true # Required unless collection_less_mode is true
 
     batch_size:
       label: "Size of migration per batch"
       type: SimpleSchema.Integer
+      optional: true # Required unless collection_less_mode is true
 
     collection:
       type: "skip-type-check"
+      optional: true # Required unless collection_less_mode is true
 
     run_if_lte_version_installed:
       label: "Version installed that require the migration"
@@ -21,6 +24,7 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
     queryGenerator:
       label: "Query and query options generator"
       type: Function
+      optional: true # Required unless collection_less_mode is true
 
     # If set to false, the initial queryGenerator will be used to generate all the batches.
     # If set to true we will call queryGenerator before every call to batchProcessor to create a new cursor
@@ -28,6 +32,19 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
     static_query:
       label: "Should the cursor be updated before every batch"
       type: Boolean
+      optional: true # Required unless collection_less_mode is true
+
+    # When true, the migration runs without querying a collection.
+    # In this mode:
+    # - `collection`, `queryGenerator`, `batch_size`, `delay_between_batches`, and `static_query` are not required
+    # - `batchProcessor` is called once without a cursor argument
+    # - After `batchProcessor` completes, the script proceeds to batches exhaustion procedures
+    # This is useful for cron-style jobs that don't process documents from a collection.
+    collection_less_mode:
+      label: "Run without querying a collection"
+      type: Boolean
+      optional: true
+      defaultValue: false
 
     custom_options:
       label: "Custom options for migration script"
@@ -116,8 +133,22 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
     )
   options = cleaned_val
 
+  isCollectionLessMode = ->
+    return options.collection_less_mode is true
+
   if options.initialize_starting_condition_upon_exhaustion and not options.startingCondition?
     throw APP.justdo_db_migrations._error "invalid-options", "initialize_starting_condition_upon_exhaustion requires a startingCondition"
+
+  # Validate required options based on collection_less_mode
+  if isCollectionLessMode()
+    collection_mode_required_options = ["collection", "queryGenerator", "batch_size", "static_query", "delay_between_batches"]
+    # In collection_less_mode, collection/queryGenerator/batch_size/static_query are not needed
+    if not _.isEmpty(ignored_options = _.filter(collection_mode_required_options, (option) -> options[option]))
+      console.warn "commonBatchedMigration: #{ignored_options.join(", ")} options are ignored in collection_less_mode"
+  else
+    # In normal mode, these options are required
+    if not _.isEmpty(missing_options = _.filter(collection_mode_required_options, (option) -> not options[option]))
+      throw APP.justdo_db_migrations._error "invalid-options", "#{missing_options.join(", ")} options are required unless collection_less_mode is true"
 
   shared_obj = {}
   getMigrationFunctionsThis = (original_this) ->
