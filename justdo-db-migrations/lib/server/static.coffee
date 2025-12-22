@@ -290,6 +290,9 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
 
         processBatchWrapper = =>
           try
+            if not @isAllowedToContinue()
+              return
+              
             processBatch()
           catch e
             @logProgress "Error encountered, will try again in #{JustdoHelpers.msToHumanReadable options.delay_before_checking_for_new_batches}", e
@@ -306,9 +309,6 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
           return
 
         processBatch = =>
-          if not @isAllowedToContinue()
-            return
-
           if not options.static_query
             cursor_res = getCursor()
             pending_migration_set_cursor = cursor_res.cursor
