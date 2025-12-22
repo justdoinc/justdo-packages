@@ -725,13 +725,12 @@ JustdoDbMigrations.registerDbCronjob = (options) ->
         # Persistent mode: run missed jobs after server restart
         if not last_run_completed
           # If last run wasn't completed, we continue from the last checkpoint.
-          @logProgress "Found an incomplete cron job run from #{last_run_time}, continuing from the last checkpoint #{@getCheckpoint()} since this script is persistent."
-          return true
+          return {value: true, reason: "Found an incomplete cron job run from #{last_run_time}, continuing from the last checkpoint #{@getCheckpoint()} since this script is persistent."}
 
         is_last_execution_missed = previous_scheduled_time > last_run_time
         if is_last_execution_missed
           # In persistent mode, if we find that we missed a scheduled time, we execute the cron job immediately.
-          return true
+          return {value: true, reason: "Found a missed cron job scheduled on #{previous_scheduled_time}, was last executed on #{last_run_time}, executing the cron job immediately since this script is persistent."}
         else
           return {value: getMsUntilNextScheduledTime(), reason: reason}
       else 
