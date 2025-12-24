@@ -54,7 +54,7 @@ Increase the version by 1 when changing the JUSTDO_JOBS_PROCESSOR_CONF ! (that's
 
 A job can be registered by a package, or by the app, by calling the api:
 
-APP.justdo_jobs_processor.registerCronJob(job_id, jobInit, jobStop)
+APP.justdo_jobs_processor.registerJob(job_id, jobInit, jobStop)
 
 Arguments:
 

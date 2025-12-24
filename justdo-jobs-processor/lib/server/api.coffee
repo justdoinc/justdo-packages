@@ -175,7 +175,7 @@ _.extend JustdoJobsProcessor.prototype,
 
     return
 
-  ensureStillInControl: (update_owner_flag=false) ->
+  ensureStillInControl: (update_owner_flag = false) ->
     # @logger.debug "Ensure control interval (in control)"
 
     if not (processor_group_doc = JustdoJobsProcessor.jobs_processor_collection.findOne({_id: @group_uid}, {jd_analytics_skip_logging: true}))?
@@ -276,15 +276,15 @@ _.extend JustdoJobsProcessor.prototype,
 
     return
 
-  registerCronJob: (job_id, jobInit, jobStop) ->
+  registerJob: (job_id, jobInit, jobStop) ->
     if @destroyed
       return
 
     if not symbols_regex.test(job_id)
-      throw @_error "invalid-argument", "registerCronJob: job_id must be dash separated all-lower cased"
+      throw @_error "invalid-argument", "registerJob: job_id must be dash separated all-lower cased"
 
     if not _.isFunction(jobInit)
-      throw @_error "invalid-argument", "registerCronJob: jobInit must be a function"
+      throw @_error "invalid-argument", "registerJob: jobInit must be a function"
 
     @registered_jobs[job_id] = {jobInit, jobStop}
 
