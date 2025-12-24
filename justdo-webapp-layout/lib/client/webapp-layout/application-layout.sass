@@ -38,6 +38,19 @@ body
   &.no-scroll
     overflow: visible
 
+.mobile-toolbar
+  display: none
+  width: 100%
+  position: fixed
+  bottom: 0
+  padding: 24px 40px 36px 40px
+  justify-content: space-between
+  box-shadow: 0px 0px 12px rgba(0, 0, 0 ,0.16)
+  background-color: white
+  .jd-icon
+    width: 32px
+    height: 32px
+    stroke-width: 2px
 
 @media (max-width: 768px)
   nav.navbar,
@@ -67,6 +80,9 @@ body
     .btn-toolbar
       flex-wrap: nowrap
       white-space: nowrap
+
+  .mobile-toolbar
+    display: flex
 
 
 
