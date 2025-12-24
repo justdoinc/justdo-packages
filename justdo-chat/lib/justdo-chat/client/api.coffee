@@ -523,6 +523,68 @@ _.extend JustdoChat.prototype,
 
     return subscribed_unread_channels_count_doc.count
 
+  # Template helpers for transforming data in bot message templates.
+  # Usage in templates: {{fieldName|helperName}} or {{fieldName|helperName:arg1:arg2}}
+  # Example: "{{performed_by|displayName}} updated {{timestamp|friendlyDate}}"
+  data_message_helpers:
+    # Convert user ID to display name
+    # Supports both single user ID and arrays of user IDs
+    displayName: (data, user_id) ->
+      if not user_id?
+        return ""
+      if not _.isArray user_id
+        user_id = [user_id]
+
+      return _.map(user_id, (id) -> JustdoHelpers.displayName(id)).join(", ")
+
+    # Format unicode date string (YYYY-MM-DD) according to user preferences
+    formatDate: (data, date) ->
+      if not date?
+        return "empty"
+        
+      return JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(date)
+    
+    taskSeqId: (data, task_id) ->
+      if (seq_id = APP.collections.Tasks.findOne(task_id, {fields: {seqId: 1}})?.seqId)?
+        return "##{seq_id}"
+
+      return ""
+    
+    fieldLabel: (data, field_id, lang = JustdoI18n.default_lang) ->
+      if (gc = APP.modules.project_page.gridControl())?
+        schema = gc.getSchemaExtendedWithCustomFields()
+      else
+        schema = APP.collections.Tasks.simpleSchema()._schema
+
+      if not (field_def = schema[field_id])?
+        # If we can't find the field definition in the schema, return the field id
+        return field_id
+
+      return TAPi18n.__ field_def.label_i18n, {}, lang
+  
+    stateLabel: (data, state_id, project_id, lang = JustdoI18n.default_lang) ->
+      if (gc = APP.modules.project_page.gridControl())?
+        schema = gc.getSchemaExtendedWithCustomFields()
+      else
+        schema = APP.collections.Tasks.simpleSchema()._schema
+    
+      state_grid_values = schema.state.grid_values
+      if not (state_def = state_grid_values[state_id])?
+        # If we can't find the state in the schema, try to get it from the project doc
+        # First try to find the state in the custom states
+        project_doc = APP.collections.Projects.findOne(data.project_id, {fields: {conf: 1}})
+        if not (state_def = _.find(project_doc?.conf?.custom_states, (def) -> def.state_id is state_id))?
+          # If we can't find the state in the custom states, try to get it from the removed custom states
+          state_def = _.find(project_doc?.conf?.removed_custom_states, (def) -> def.state_id is state_id)
+        
+      label_i18n = state_def.txt_i18n or state_def.txt
+    
+      if not label_i18n?
+        # If we really can't find the state in the project doc, return the state id
+        return state_id
+        
+      return TAPi18n.__ label_i18n, {}, lang
+
   renderDataMessage: (data, bot) ->
     data = _.extend {}, data
 
@@ -532,11 +594,30 @@ _.extend JustdoChat.prototype,
         return TAPi18n.__ data.i18n_key, data.i18n_options
       
       # If msg is from bot and type isn't i18n-message, return the en message and replace any placeholders with variables inside data
-      if (en_msg_temlate = bot_info.msgs_types?[data.type]?.rec_msgs_templates.en)?
-        return en_msg_temlate.replace /{{(.*?)}}/g, (m, placeholder) ->
-          if (val = data[placeholder])?
+      # Supports pipe syntax for helpers: {{fieldName|helperName}} or {{fieldName|helperName:arg1:arg2}}
+      if (en_msg_template = bot_info.msgs_types?[data.type]?.rec_msgs_templates.en)?
+        return en_msg_template.replace /{{(.*?)}}/g, (m, placeholder) =>
+          # Parse placeholder: fieldName|helperName:arg1:arg2
+          parts = placeholder.split("|")
+          field_name = parts[0].trim()
+          
+          # Get value from data
+          val = data[field_name]
+          
+          # Apply helper if specified
+          if (helper_name = parts[1])?
+            helper_name = helper_name.trim()
+            
+            if (helper = @data_message_helpers?[helper_name])?
+              val = helper(data, val)
+            else
+              @logger.warn "Unknown bot message template helper \"#{helper_name}\""
+          else
+            # Default array handling (backward compatible)
             if _.isArray val
               val = val.join ", "
+          
+          if val?
             return val
           else
             return ""
