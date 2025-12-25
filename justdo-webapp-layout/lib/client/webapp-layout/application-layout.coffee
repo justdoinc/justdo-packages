@@ -1,6 +1,7 @@
 APP.executeAfterAppLibCode ->
   main_module = APP.modules.main
   project_page_module = APP.modules.project_page
+  projects = APP.projects
 
   initAppWrapperScolls = ->
     # Since in some situations .app-wrapper has visible scolls and in others
@@ -10,6 +11,20 @@ APP.executeAfterAppLibCode ->
 
     return
 
+  resetMobileToolbarState = ->
+    $(".mobile-toolbar-tabs").removeClass "show"
+    $(".mobile-tab").removeClass "active"
+
+    if $(".project-container").hasClass "open-toolbar"
+      $(".task-pane-control").click()
+
+    return
+
+  highlightToolbarStateTab = (e) ->
+    $(".mobile-toolbar-btn").removeClass "active"
+    $(e.currentTarget).addClass "active"
+    return
+
   Template.app_layout.onRendered ->
     @autorun ->
       # init app scrolls when moving between pages.
@@ -17,6 +32,50 @@ APP.executeAfterAppLibCode ->
       JustdoHelpers.currentPageName() # Our reactive resource
 
       initAppWrapperScolls()
+
+      return
+
+  Template.app_layout.events
+    "click .grid": (e, tpl) ->
+      highlightToolbarStateTab(e)
+      resetMobileToolbarState()
+
+      return
+
+    "click .notifications": (e, tpl) ->
+      highlightToolbarStateTab(e)
+      resetMobileToolbarState()
+
+      $(".mobile-toolbar-tabs").addClass "show"
+      $(".mobile-tab.notifications").addClass "active"
+
+      return
+
+
+    "click .add": (e, tpl) ->
+      $(".mobile-toolbar-btn").removeClass "active"
+      $(".grid").addClass "active"
+
+      resetMobileToolbarState()
+
+      $("#add-sibling-task").click()
+
+      return
+
+    "click .chats": (e, tpl) ->
+      highlightToolbarStateTab(e)
+      resetMobileToolbarState()
+
+      $(".mobile-toolbar-tabs").addClass "show"
+      $(".mobile-tab.chats").addClass "active"
+
+      return
+
+    "click .taskpane": (e, tpl) ->
+      highlightToolbarStateTab(e)
+      resetMobileToolbarState()
+
+      $(".task-pane-control").click()
 
       return
 
@@ -33,7 +92,7 @@ APP.executeAfterAppLibCode ->
         custom_window_dim_gravity = "nw"
         APP.modules.main.logger.warn("Unrecognized custom_window_dim_gravity custom_window_dim_gravity using: #{custom_window_dim_gravity}")
 
-      custom_window_dim_offset = 
+      custom_window_dim_offset =
         _.extend({width: 0, height: 0}, custom_window_dim_offset)
 
       gravity_offset = {left: 0, top: 0}
@@ -49,7 +108,7 @@ APP.executeAfterAppLibCode ->
     projectContainerBelowMinimalWidth: ->
       # Under the project page we allow the .app-wrapper to have visible scrolls
       # if the available width is too small to contain it.
-      # 
+      #
       # The code here controls when it is time to allow the scrolls to show.
       # In addition, when scrolls are not needed anymore (e.g. if the window
       # resized) we make sure to init .app-wrapper scrolls (since after hiding
@@ -66,3 +125,7 @@ APP.executeAfterAppLibCode ->
       last_container_below_minimal_width_value = below
 
       return below
+
+    requiredActions: -> projects.modules.required_actions.getCursor({allow_undefined_fields: true, sort: {date: -1}}).fetch()
+
+    requiredActionsCount: -> projects.modules.required_actions.getCursor({fields: {_id: 1}}).count()

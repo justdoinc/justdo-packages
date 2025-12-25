@@ -3,38 +3,69 @@
     <div class="app-wrapper {{#if projectContainerBelowMinimalWidth}}lt-minimal-project-container-width{{/if}}" style="width: {{getWindowWidth}}px; height: {{getWindowHeight}}px; margin-left: {{windowDimGravityOffset.left}}px; margin-top: {{windowDimGravityOffset.top}}px;">
       {{> header}}
 
-        {{#if $not initialUserStateReady}}
+      {{#if $not initialUserStateReady}}
+        {{> global_loader message="loader_getting_ready"}}
+      {{else}}
+        {{#if loginStateIs "loading"}}
           {{> global_loader message="loader_getting_ready"}}
         {{else}}
-          {{#if loginStateIs "loading"}}
-            {{> global_loader message="loader_getting_ready"}}
-          {{else}}
-            {{#if loginStateIs "logged-out"}}
-              {{#if isInitialLoginState}}
-                {{> global_loader message="loader_getting_ready"}}
-              {{else}}
-                {{> global_loader message="loader_logging_out"}}
-              {{/if}}
+          {{#if loginStateIs "logged-out"}}
+            {{#if isInitialLoginState}}
+              {{> global_loader message="loader_getting_ready"}}
             {{else}}
-              {{#if userRequirePostRegistrationInit}}
-                {{> global_loader message="loader_initiating"}}
-              {{else}}
-                <div class="page-container page-{{currentPageName}}">
-                  {{> yield}}
-                </div>
-              {{/if}}
+              {{> global_loader message="loader_logging_out"}}
+            {{/if}}
+          {{else}}
+            {{#if userRequirePostRegistrationInit}}
+              {{> global_loader message="loader_initiating"}}
+            {{else}}
+              <div class="page-container page-{{currentPageName}}">
+                {{> yield}}
+              </div>
             {{/if}}
           {{/if}}
         {{/if}}
-      </div>
+      {{/if}}
+    </div>
 
-      <div class="mobile-toolbar">
+    <div class="mobile-toolbar-buttons">
+      <div class="mobile-toolbar-btn grid active">
         <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#grid"></use></svg>
+      </div>
+      <div class="mobile-toolbar-btn notifications">
         <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#bell"></use></svg>
+      </div>
+      <div class="mobile-toolbar-btn add">
         <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#plus"></use></svg>
+      </div>
+      <div class="mobile-toolbar-btn chats">
         <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#message-circle"></use></svg>
+      </div>
+      <div class="mobile-toolbar-btn taskpane">
         <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#sidebar"></use></svg>
       </div>
+    </div>
+
+    <div class="mobile-toolbar-tabs">
+      <div class="mobile-tab notifications">
+        <div class="mobile-tab-title">Notifications</div>
+        <div class="required-actions-cards-area">
+          {{#if $eq 0 requiredActionsCount}}
+            <div class="no-actions-card p-3 text-center text-muted">
+              <div class="no-actions-message text-nowrap">{{_ "required_actions_no_pending_action"}}</div>
+            </div>
+          {{else}}
+            {{#each requiredActions}}
+              {{> required_action_card}}
+            {{/each}}
+          {{/if}}
+        </div>
+      </div>
+      <div class="mobile-tab chats">
+        <div class="mobile-tab-title">Chats</div>
+      </div>
+    </div>
+
   </div>
 </template>
 
