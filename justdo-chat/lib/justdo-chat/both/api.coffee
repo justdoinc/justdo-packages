@@ -42,7 +42,7 @@ _.extend JustdoChat.prototype,
 
   requireAllowedChannelType: (channel_type) ->
     if channel_type not in share.channel_types
-      throw @_error "unknown-channel-type", "Unknown channel type #{channel_type}"
+      throw @_error "unknown-channel-type", "Unknown channel type: #{channel_type}"
 
     return
 
@@ -57,6 +57,8 @@ _.extend JustdoChat.prototype,
   # The result shouldn't change during the instance lifetime, so we can cache it
   _getTypeIdentifiyingFields_cached_result: null # initiated to {} on @_immediateInit()
   getTypeIdentifiyingFields: (type) ->
+    @requireAllowedChannelType(type)
+
     if (identifying_fields = @_getTypeIdentifiyingFields_cached_result[type])?
       return identifying_fields
 
@@ -81,6 +83,8 @@ _.extend JustdoChat.prototype,
   # The result shouldn't change during the instance lifetime, so we can cache it
   _getTypeAugmentedFields_cached_result: null # initiated to {} on @_immediateInit()
   getTypeAugmentedFields: (type) ->
+    @requireAllowedChannelType(type)
+
     if (augmented_fields = @_getTypeAugmentedFields_cached_result[type])?
       return augmented_fields
 
