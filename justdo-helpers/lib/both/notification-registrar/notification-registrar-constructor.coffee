@@ -54,8 +54,10 @@ _.extend NotificationRegistrar.prototype,
     users_schema = new SimpleSchema
       "profile.#{user_preference_subdocument_id}":
         type: Object
+        optional: true
       "profile.#{user_preference_subdocument_id}.unsubscribe_from_all":
         type: Boolean
+        optional: true
         defaultValue: false
       "profile.#{user_preference_subdocument_id}.unsubscribed_notifications_categories":
         type: Array
