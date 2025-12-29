@@ -122,7 +122,7 @@ _.extend JustdoChat.prototype,
     current_required_ping_timeout = null
     clearCurrentRequiredPingTimeout = ->
       if current_required_ping_timeout?
-        clearTimeout current_required_ping_timeout   
+        clearTimeout current_required_ping_timeout
 
       current_required_ping_timeout = null
 
@@ -333,7 +333,7 @@ _.extend JustdoChat.prototype,
   # activity subscription, that might never be used.
   _max_recent_activity_publication_age: 1000 * 60 * 5 # 5 mins
 
-  stopChannelsRecentActivityPublication: (_allow_keep_alive=true) ->
+  stopChannelsRecentActivityPublication: (_allow_keep_alive = true) ->
     if not @_subscribed_channels_recent_activity_subscription?
       # Nothing to stop...
 
