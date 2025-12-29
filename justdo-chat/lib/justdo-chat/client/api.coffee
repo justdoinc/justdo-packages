@@ -524,33 +524,84 @@ _.extend JustdoChat.prototype,
     return subscribed_unread_channels_count_doc.count
 
   # Template helpers for transforming data in bot message templates.
-  # Usage in templates: {{fieldName|helperName}} or {{fieldName|helperName:arg1:arg2}}
-  # Example: "{{performed_by|displayName}} updated {{timestamp|friendlyDate}}"
+  #
+  # Format: {{prop1=field1:prop2=field2,...|helper_name:arg1=x:arg2=y}}
+  #
+  # - Before the pipe (|): Field mappings in format "prop=field" separated by colons
+  #   - "prop" is the property name passed to the helper
+  #   - "field" is the field name to extract from the data object
+  #   - Multiple field mappings can be specified, separated by colons
+  #
+  # - After the pipe (|): Helper name and optional static arguments
+  #   - Helper name is required
+  #   - Static arguments are optional, in format "arg=value" separated by colons
+  #   - These are passed as the second argument (args_obj) to the helper
+  #
+  # Helper signature: (fields_obj, args_obj) ->
+  #   - fields_obj: Object containing mapped field values from data
+  #   - args_obj: Object containing static arguments from template
+  #
+  # Examples:
+  #   "{{user_id=performed_by|displayName}}" - maps data.performed_by to fields_obj.user_id
+  #   "{{state_id=state:project_id=project_id|stateLabel:lang=en}}" - multiple fields with static arg
+  #   "{{date=due_date|formatDate}}" - simple field mapping
+  #
   data_message_helpers:
     # Convert user ID to display name
     # Supports both single user ID and arrays of user IDs
-    displayName: (data, user_id) ->
+    # 
+    # Fields: user_id (required)
+    displayName: (fields, args) ->
+      user_id = fields.user_id
+
       if not user_id?
         return ""
-      if not _.isArray user_id
-        user_id = [user_id]
 
-      return _.map(user_id, (id) -> JustdoHelpers.displayName(id)).join(", ")
+      return JustdoHelpers.displayName user_id
 
-    # Format unicode date string (YYYY-MM-DD) according to user preferences
-    formatDate: (data, date) ->
+    # Format unicode date string (YYYY-MM-DD) or a date object according to user preferences
+    # Fields: date (required)
+    formatDate: (fields, args) ->
+      date = fields.date
+
       if not date?
         return "empty"
         
-      return JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(date)
-    
-    taskSeqId: (data, task_id) ->
-      if (seq_id = APP.collections.Tasks.findOne(task_id, {fields: {seqId: 1}})?.seqId)?
-        return "##{seq_id}"
+      user_preferred_date_format = JustdoHelpers.getUserPreferredDateFormat()
+      if _.isString(date)
+        return JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(date, user_preferred_date_format)
+      else
+        return moment(date).format(user_preferred_date_format)
 
-      return ""
-    
-    fieldLabel: (data, field_id, lang = JustdoI18n.default_lang) ->
+    # Returns task seqId with hash prefix, and the task title if it exists in minimongo.
+    # Note that we return in this format: "#seq_id (title)" instead of using `JustdoHelpers.taskCommonName`
+    # since it breaks the hyperlink in the message body.
+    # 
+    # Fields: task_id (required), seq_id (required, used as fallback if task_id is not found in minimongo)
+    # Args: ellipsis (optional, defaults to 40 characters)
+    taskCommonName: (fields, args) ->
+      task_id = fields.task_id
+      seq_id = fields.seq_id
+      ellipsis = args.ellipsis or 40
+
+      if (task_doc = APP.collections.Tasks.findOne(task_id, {fields: {seqId: 1, title: 1}}))?
+        # seqId should always be the same, but we ensure to use the one from the minimongo to be safe.
+        seq_id = task_doc.seqId
+        title = task_doc.title
+
+      ret = "##{seq_id}"
+      if not _.isEmpty(title)
+        ret += " (#{JustdoHelpers.ellipsis(title, ellipsis)})"
+
+      return ret
+
+    # Get field label from schema
+    # Fields: field_id (required)
+    # Args: lang (optional, defaults to JustdoI18n.default_lang)
+    fieldLabel: (fields, args) ->
+      field_id = fields.field_id
+      lang = args.lang or JustdoI18n.default_lang
+
       if (gc = APP.modules.project_page.gridControl())?
         schema = gc.getSchemaExtendedWithCustomFields()
       else
@@ -561,29 +612,95 @@ _.extend JustdoChat.prototype,
         return field_id
 
       return TAPi18n.__ field_def.label_i18n, {}, lang
-  
-    stateLabel: (data, state_id, project_id, lang = JustdoI18n.default_lang) ->
+
+    # Get state label from schema or project custom states
+    # Fields: state_id (required), project_id (required)
+    # Args: lang (optional, defaults to JustdoI18n.default_lang)
+    stateLabel: (fields, args) ->
+      state_id = fields.state_id
+      project_id = fields.project_id
+      lang = args.lang or JustdoI18n.default_lang
+
       if (gc = APP.modules.project_page.gridControl())?
         schema = gc.getSchemaExtendedWithCustomFields()
       else
         schema = APP.collections.Tasks.simpleSchema()._schema
-    
+
       state_grid_values = schema.state.grid_values
       if not (state_def = state_grid_values[state_id])?
         # If we can't find the state in the schema, try to get it from the project doc
         # First try to find the state in the custom states
-        project_doc = APP.collections.Projects.findOne(data.project_id, {fields: {conf: 1}})
+        project_doc = APP.collections.Projects.findOne(project_id, {fields: {conf: 1}})
         if not (state_def = _.find(project_doc?.conf?.custom_states, (def) -> def.state_id is state_id))?
           # If we can't find the state in the custom states, try to get it from the removed custom states
           state_def = _.find(project_doc?.conf?.removed_custom_states, (def) -> def.state_id is state_id)
-        
-      label_i18n = state_def.txt_i18n or state_def.txt
-    
+
+      label_i18n = state_def?.txt_i18n or state_def?.txt
+
       if not label_i18n?
         # If we really can't find the state in the project doc, return the state id
         return state_id
-        
+
       return TAPi18n.__ label_i18n, {}, lang
+
+  # Parse a placeholder string in the format: prop1=field1:prop2=field2,...|helper_name:arg1=x:arg2=y
+  # Returns: { fields_mapping: {prop: field, ...}, helper_name: string, args: {arg: value, ...} }
+  parseDataMessageHelperString: (placeholder) ->
+    KEY_VAL_PAIR_DELIMITER = ":"
+    KEY_VAL_DELIMITER = "="
+
+    result =
+      fields_mapping: {}
+      helper_name: null
+      args: {}
+
+    # Split by pipe to separate fields from helper
+    pipe_parts = placeholder.split JustdoChat.data_message_helper_delimiter
+
+    if pipe_parts.length < 2
+      @logger.warn "Invalid placeholder format (missing helper): \"#{placeholder}\""
+      return
+
+    parseDataMessageHelperArgs = (helper_args_str) ->
+      helper_args = {}
+  
+      for arg in helper_args_str.split KEY_VAL_PAIR_DELIMITER
+        arg = arg.trim()
+        if _.isEmpty arg
+          continue
+  
+        if not arg.includes KEY_VAL_DELIMITER
+          @logger.warn "Invalid argument format (missing #{KEY_VAL_DELIMITER}): \"#{arg}\" in \"#{helper_args_str}\""
+          return
+  
+        [key, value] = arg.split KEY_VAL_DELIMITER
+        key = key.trim()
+        value = value.trim()
+  
+        helper_args[key] = value
+  
+      return helper_args
+
+    # Parse field mappings (prop=field:prop=field:...)
+    fields_part = pipe_parts[0].trim()
+    result.fields_mapping = parseDataMessageHelperArgs(fields_part)
+
+    # Parse helper and arguments (helper_name:arg1=val1:arg2=val2:...)
+    helper_parts = pipe_parts[1].trim().split KEY_VAL_PAIR_DELIMITER
+    
+    # Extract helper name from the first part
+    result.helper_name = helper_parts.shift()
+    if _.isEmpty(result.helper_name)
+      @logger.warn "Invalid helper format (missing helper name): \"#{placeholder}\""
+      return
+
+    if not _.isEmpty(helper_parts)
+      # Convert the args array back to string so that we can pass it to parseDataMessageHelperArgs 
+      helper_args = helper_parts.join KEY_VAL_PAIR_DELIMITER
+      # Parse static arguments
+      result.args = parseDataMessageHelperArgs helper_args
+
+    return result
 
   renderDataMessage: (data, bot) ->
     data = _.extend {}, data
@@ -592,31 +709,37 @@ _.extend JustdoChat.prototype,
       # If msg is from bot and type is i18n-message, return msg based on i18n_key and i18n_options
       if data.type is "i18n-message"
         return TAPi18n.__ data.i18n_key, data.i18n_options
-      
+
       # If msg is from bot and type isn't i18n-message, return the en message and replace any placeholders with variables inside data
-      # Supports pipe syntax for helpers: {{fieldName|helperName}} or {{fieldName|helperName:arg1:arg2}}
+      # Format: {{prop1=field1:prop2=field2,...|helper_name:arg1=x:arg2=y}}
       if (en_msg_template = bot_info.msgs_types?[data.type]?.rec_msgs_templates.en)?
         return en_msg_template.replace /{{(.*?)}}/g, (m, placeholder) =>
-          # Parse placeholder: fieldName|helperName:arg1:arg2
-          parts = placeholder.split("|")
-          field_name = parts[0].trim()
-          
-          # Get value from data
-          val = data[field_name]
-          
-          # Apply helper if specified
-          if (helper_name = parts[1])?
-            helper_name = helper_name.trim()
-            
-            if (helper = @data_message_helpers?[helper_name])?
-              val = helper(data, val)
-            else
-              @logger.warn "Unknown bot message template helper \"#{helper_name}\""
+          # Parse the placeholder
+          if placeholder.includes JustdoChat.data_message_helper_delimiter
+            parsed = @parseDataMessageHelperString(placeholder)
+
+            if not parsed?
+              return ""
+
+            if not parsed.helper_name
+              @logger.warn "No helper specified in placeholder: \"#{placeholder}\""
+              return ""
+
+            # Build fields object by extracting values from data
+            fields_obj = {}
+            for prop_name, field_name of parsed.fields_mapping
+              fields_obj[prop_name] = data[field_name]
+
+            # Get the helper and apply it
+            helper = @data_message_helpers?[parsed.helper_name]
+            if not helper?
+              @logger.warn "Unknown bot message template helper \"#{parsed.helper_name}\""
+              return ""
+
+            val = helper(fields_obj, parsed.args)
           else
-            # Default array handling (backward compatible)
-            if _.isArray val
-              val = val.join ", "
-          
+            val = data[placeholder]
+
           if val?
             return val
           else
