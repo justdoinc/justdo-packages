@@ -743,6 +743,8 @@ _.extend JustdoChat.prototype,
             val = helper(fields_obj, parsed.args)
           else
             val = data[placeholder]
+            if _.isArray val
+              val = val.join ", "
 
           if val?
             return val
