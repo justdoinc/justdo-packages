@@ -541,9 +541,9 @@ _.extend JustdoChat.prototype,
           else
             return ""
 
-    # Return as-is if message isn't from bot.
-    return data
-
+    # Return fallback message if either bot or message type is unknown.
+    return TAPi18n.__ "unknown_bot_or_bot_message_type", {bot_id: bot, message_type: data.type}
+    
   linkTaskId: (msg_body) ->
     return msg_body.replace /(^|\s|\W)#([0-9]{1,6})(?=($|[\s.,;]))/g, (match, spaces, task_id) ->
       task_seq_id = parseInt(task_id, 10)
