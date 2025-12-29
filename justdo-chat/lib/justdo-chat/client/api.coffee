@@ -582,7 +582,7 @@ _.extend JustdoChat.prototype,
     taskCommonName: (fields, args) ->
       task_id = fields.task_id
       seq_id = fields.seq_id
-      ellipsis = args.ellipsis or 40
+      ellipsis = parseInt(args.ellipsis) or 40
 
       if (task_doc = APP.collections.Tasks.findOne(task_id, {fields: {seqId: 1, title: 1}}))?
         # seqId should always be the same, but we ensure to use the one from the minimongo to be safe.
