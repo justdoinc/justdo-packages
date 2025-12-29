@@ -748,44 +748,50 @@ JustdoDbMigrations.registerDbCronjob = (options) ->
           completed: true
         ,
           jd_analytics_skip_logging: true
-        return getMsUntilNextScheduledTime()
+        return {value: getMsUntilNextScheduledTime(), reason: "First execution of the cron job."}
 
+      getCronExpressionAndPersistentString = ->
+        return "cron_expression: #{cron_expression}; persistent: #{persistent};"
+      getLastRunSuccessString = ->
+        return "Last scheduled run completed successfully on #{last_run_time}."
+        
       # No previous occurrence exists - wait for next
       if not previous_scheduled_time?
-        return getMsUntilNextScheduledTime()
+        return {value: getMsUntilNextScheduledTime(), reason: "Unable to determine the previous scheduled time - THIS SHOULD NOT HAPPEN! #{getCronExpressionAndPersistentString()}"}
 
-      # if not last_run_completed
-      #   @logProgress {previous_scheduled_time, last_run_time, last_run_completed}
-      
-      getBaseReasonString = ->
-        return "cron_expression: #{cron_expression}; persistent: #{persistent};"
-      reason = getBaseReasonString()
-      
+      is_last_execution_missed = previous_scheduled_time > last_run_time
+
       if persistent
         # Persistent mode: run missed jobs after server restart
         if not last_run_completed
           # If last run wasn't completed, we continue from the last checkpoint.
           return {value: true, reason: "Found an incomplete cron job run from #{last_run_time}, continuing from the last checkpoint #{@getCheckpoint()} since this script is persistent."}
 
-        is_last_execution_missed = previous_scheduled_time > last_run_time
         if is_last_execution_missed
           # In persistent mode, if we find that we missed a scheduled time, we execute the cron job immediately.
           return {value: true, reason: "Found a missed cron job scheduled on #{previous_scheduled_time}, was last executed on #{last_run_time}, executing the cron job immediately since this script is persistent."}
         else
-          return {value: getMsUntilNextScheduledTime(), reason: reason}
+          return {value: getMsUntilNextScheduledTime(), reason: "#{getLastRunSuccessString()} #{getCronExpressionAndPersistentString()}"}
       else 
+        cron_expression_and_persistent_string = getCronExpressionAndPersistentString()
+        if is_last_execution_missed
+          reason = "Found a missed cron job scheduled on #{previous_scheduled_time}, was last executed on #{last_run_time}, waiting for the next scheduled time since this script is non-persistent."
+        else
+          reason = getLastRunSuccessString()
+
         # Non-persistent mode: skip missed executions after restart
-        reason += " last_run: #{last_run_time}; last_run_completed: #{last_run_completed}; "
+        cron_expression_and_persistent_string += " last_run: #{last_run_time}; last_run_completed: #{last_run_completed}; "
         if not last_run_completed
           prev_checkpoint = @getCheckpoint()
-          reason += " previous_checkpoint: #{prev_checkpoint};"
-          @logProgress "Found an incomplete cron job run from #{last_run_time}. Cleared previous checkpoint and waiting for the next scheduled time to run since this script is non-persistent."
+          cron_expression_and_persistent_string += " previous_checkpoint: #{prev_checkpoint};"
+          reason = "Found an incomplete cron job run from #{last_run_time}. Cleared previous checkpoint and waiting for the next scheduled time to run since this script is non-persistent."
+
           if prev_checkpoint?
             # For non-persistent mode, if the last run was not completed, we don't continue. Instead, we wait for the next scheduled time to run.
             # Here we remove the checkpoint to ensure when the next scheduled time comes, all the documents will be processed.
             @removeCheckpoint()
 
-        return {value: getMsUntilNextScheduledTime(), reason: reason}
+        return {value: getMsUntilNextScheduledTime(), reason: "#{reason} #{cron_expression_and_persistent_string}"}
 
   # Build common_batch_migration_options, overriding startingCondition
   final_options = _.extend {}, common_batch_migration_options,
