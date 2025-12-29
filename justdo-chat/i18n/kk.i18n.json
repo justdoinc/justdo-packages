@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Файлдар Файлдар бөліміне сақталды",
   "chat_files_exceeds_size_limit_error": "Келесі файл __limit__ өлшем шегінен асқандықтан тіркелмеді: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Келесі файлдар __limit__ өлшем шегінен асқандықтан тіркелмеді: __files__",
-  "chat_drop_pane_overlay": "Файлдарды тіркеу үшін апарып тастаңыз"
+  "chat_drop_pane_overlay": "Файлдарды тіркеу үшін апарып тастаңыз",
+  "unknown_bot_or_bot_message_type": "Белгісіз бот немесе бот хабарлама түрі. Бот ID: \"__bot_id__\", Хабарлама түрі: \"__message_type__\""
 }

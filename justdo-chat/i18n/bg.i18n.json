@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Файловете са запазени в раздела Файлове",
   "chat_files_exceeds_size_limit_error": "Следният файл не е прикачен, тъй като превишава ограничението за размер от __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Следните файлове не са прикачени, тъй като превишават ограничението за размер от __limit__: __files__",
-  "chat_drop_pane_overlay": "Пуснете за прикачване на файлове"
+  "chat_drop_pane_overlay": "Пуснете за прикачване на файлове",
+  "unknown_bot_or_bot_message_type": "Неизвестен бот или тип съобщение на бот. Bot ID: \"__bot_id__\", Тип съобщение: \"__message_type__\""
 }

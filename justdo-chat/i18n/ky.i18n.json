@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Файлдар Файлдар бөлүмүнө сакталды",
   "chat_files_exceeds_size_limit_error": "Төмөнкү файл __limit__ көлөм чегинен ашкандыктан тиркелбей калды: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Төмөнкү файлдар __limit__ көлөм чегинен ашкандыктан тиркелбей калды: __files__",
-  "chat_drop_pane_overlay": "Файлдарды тиркөө үчүн таштаңыз"
+  "chat_drop_pane_overlay": "Файлдарды тиркөө үчүн таштаңыз",
+  "unknown_bot_or_bot_message_type": "Белгисиз бот же бот билдирүүсүнүн түрү. Бот ID: \"__bot_id__\", Билдирүү түрү: \"__message_type__\""
 }

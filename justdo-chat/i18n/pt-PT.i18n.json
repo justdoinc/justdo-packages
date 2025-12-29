@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Ficheiros guardados no separador Ficheiros",
   "chat_files_exceeds_size_limit_error": "O seguinte ficheiro não foi anexado porque excede o limite de tamanho de __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Os seguintes ficheiros não foram anexados porque excedem o limite de tamanho de __limit__: __files__",
-  "chat_drop_pane_overlay": "Largar para anexar ficheiros"
+  "chat_drop_pane_overlay": "Largar para anexar ficheiros",
+  "unknown_bot_or_bot_message_type": "Bot desconhecido ou tipo de mensagem de bot desconhecido. ID do Bot: \"__bot_id__\", Tipo de mensagem: \"__message_type__\""
 }

@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Файлы захаваны ва ўкладцы Файлы",
   "chat_files_exceeds_size_limit_error": "Наступны файл не далучаны, бо ён перавышае абмежаванне памеру __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Наступныя файлы не далучаны, бо яны перавышаюць абмежаванне памеру __limit__: __files__",
-  "chat_drop_pane_overlay": "Перацягніце, каб далучыць файлы"
+  "chat_drop_pane_overlay": "Перацягніце, каб далучыць файлы",
+  "unknown_bot_or_bot_message_type": "Невядомы бот або тып паведамлення бота. ID бота: \"__bot_id__\", Тып паведамлення: \"__message_type__\""
 }

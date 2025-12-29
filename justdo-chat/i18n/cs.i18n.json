@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Soubory uloženy na kartu Soubory",
   "chat_files_exceeds_size_limit_error": "Následující soubor nebyl přiložen, protože překračuje limit velikosti __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Následující soubory nebyly přiloženy, protože překračují limit velikosti __limit__: __files__",
-  "chat_drop_pane_overlay": "Přetáhněte pro přílohu souborů"
+  "chat_drop_pane_overlay": "Přetáhněte pro přílohu souborů",
+  "unknown_bot_or_bot_message_type": "Neznámý bot nebo typ zprávy bota. ID bota: \"__bot_id__\", Typ zprávy: \"__message_type__\""
 }

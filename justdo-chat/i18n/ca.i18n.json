@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Fitxers desats a la pestanya Fitxers",
   "chat_files_exceeds_size_limit_error": "El següent arxiu no s'ha adjuntat perquè supera el límit de mida de __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Els següents arxius no s'han adjuntat perquè superen el límit de mida de __limit__: __files__",
-  "chat_drop_pane_overlay": "Deixa anar per adjuntar arxius"
+  "chat_drop_pane_overlay": "Deixa anar per adjuntar arxius",
+  "unknown_bot_or_bot_message_type": "Bot o tipus de missatge de bot desconegut. ID del Bot: \"__bot_id__\", Tipus de missatge: \"__message_type__\""
 }

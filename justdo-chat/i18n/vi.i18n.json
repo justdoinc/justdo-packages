@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Tệp đã được lưu vào tab Tệp",
   "chat_files_exceeds_size_limit_error": "Tệp sau không được đính kèm vì vượt quá giới hạn kích thước __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Các tệp sau không được đính kèm vì vượt quá giới hạn kích thước __limit__: __files__",
-  "chat_drop_pane_overlay": "Thả để đính kèm tệp"
+  "chat_drop_pane_overlay": "Thả để đính kèm tệp",
+  "unknown_bot_or_bot_message_type": "Bot không xác định hoặc loại tin nhắn bot không xác định. Bot ID: \"__bot_id__\", Loại tin nhắn: \"__message_type__\""
 }

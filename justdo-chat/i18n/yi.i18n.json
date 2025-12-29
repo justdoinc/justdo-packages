@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "טעקעס אויפֿגעהיטן אין טעקעס טאַב",
   "chat_files_exceeds_size_limit_error": "די פֿאָלגנדע טעקע איז ניט אָנגעהענגט ווײַל זי איבערשרײַט די גרייס גרענעץ פֿון __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "די פֿאָלגנדע טעקעס זענען ניט אָנגעהענגט ווײַל זיי איבערשרײַטן די גרייס גרענעץ פֿון __limit__: __files__",
-  "chat_drop_pane_overlay": "אַראָפּלאָזן צו אָנהענגן טעקעס"
+  "chat_drop_pane_overlay": "אַראָפּלאָזן צו אָנהענגן טעקעס",
+  "unknown_bot_or_bot_message_type": "אומבאַוווּסטער באָט אָדער באָט אָנזאָג טיפּ. באָט ID: \"__bot_id__\", אָנזאָג טיפּ: \"__message_type__\""
 }

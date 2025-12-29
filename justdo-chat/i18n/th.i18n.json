@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "ไฟล์ถูกบันทึกไปยังแท็บไฟล์",
   "chat_files_exceeds_size_limit_error": "ไฟล์ต่อไปนี้ไม่ได้แนบมากับข้อความเนื่องจากเกินขีดจำกัดขนาด __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "ไฟล์ต่อไปนี้ไม่ได้แนบมากับข้อความเนื่องจากเกินขีดจำกัดขนาด __limit__: __files__",
-  "chat_drop_pane_overlay": "วางเพื่อแนบไฟล์"
+  "chat_drop_pane_overlay": "วางเพื่อแนบไฟล์",
+  "unknown_bot_or_bot_message_type": "ไม่รู้จักบอทหรือประเภทข้อความของบอท Bot ID: \"__bot_id__\", ประเภทข้อความ: \"__message_type__\""
 }

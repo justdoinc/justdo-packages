@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "கோப்புகள் Files டேபில் சேமிக்கப்பட்டுள்ளன",
   "chat_files_exceeds_size_limit_error": "பின்வரும் கோப்பு __limit__ அளவு வரம்பை மீறுவதால் இணைக்கப்படவில்லை: __files__",
   "chat_files_exceeds_size_limit_error_plural": "பின்வரும் கோப்புகள் __limit__ அளவு வரம்பை மீறுவதால் இணைக்கப்படவில்லை: __files__",
-  "chat_drop_pane_overlay": "கோப்புகளை இணைக்க இங்கே விடுங்கள்"
+  "chat_drop_pane_overlay": "கோப்புகளை இணைக்க இங்கே விடுங்கள்",
+  "unknown_bot_or_bot_message_type": "அறியப்படாத போட் அல்லது போட் செய்தி வகை. போட் அடையாளம்: \"__bot_id__\", செய்தி வகை: \"__message_type__\""
 }

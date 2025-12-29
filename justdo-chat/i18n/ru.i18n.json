@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Файлы сохранены во вкладку \"Файлы\"",
   "chat_files_exceeds_size_limit_error": "Следующий файл не прикреплён, поскольку превышает ограничение размера __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Следующие файлы не прикреплены, поскольку превышают ограничение размера __limit__: __files__",
-  "chat_drop_pane_overlay": "Перетащите для прикрепления файлов"
+  "chat_drop_pane_overlay": "Перетащите для прикрепления файлов",
+  "unknown_bot_or_bot_message_type": "Неизвестный бот или тип сообщения бота. ID бота: \"__bot_id__\", Тип сообщения: \"__message_type__\""
 }

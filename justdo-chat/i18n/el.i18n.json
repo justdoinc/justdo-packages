@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Τα αρχεία αποθηκεύτηκαν στην καρτέλα Αρχεία",
   "chat_files_exceeds_size_limit_error": "Το παρακάτω αρχείο δεν επισυνάφθηκε επειδή υπερβαίνει το όριο μεγέθους των __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Τα παρακάτω αρχεία δεν επισυνάφθηκαν επειδή υπερβαίνουν το όριο μεγέθους των __limit__: __files__",
-  "chat_drop_pane_overlay": "Σύρετε εδώ για να επισυνάψετε αρχεία"
+  "chat_drop_pane_overlay": "Σύρετε εδώ για να επισυνάψετε αρχεία",
+  "unknown_bot_or_bot_message_type": "Άγνωστο bot ή τύπος μηνύματος bot. Bot ID: \"__bot_id__\", Τύπος μηνύματος: \"__message_type__\""
 }

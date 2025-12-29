@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Bestanden opgeslagen in Bestanden tab",
   "chat_files_exceeds_size_limit_error": "Het volgende bestand is niet bijgevoegd omdat het de groottenlimiet van __limit__ overschrijdt: __files__",
   "chat_files_exceeds_size_limit_error_plural": "De volgende bestanden zijn niet bijgevoegd omdat ze de groottenlimiet van __limit__ overschrijden: __files__",
-  "chat_drop_pane_overlay": "Sleep hier om bestanden bij te voegen"
+  "chat_drop_pane_overlay": "Sleep hier om bestanden bij te voegen",
+  "unknown_bot_or_bot_message_type": "Onbekende bot of botberichttype. Bot-ID: \"__bot_id__\", Berichttype: \"__message_type__\""
 }

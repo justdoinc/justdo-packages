@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Датотеките се зачувани во таб Датотеки",
   "chat_files_exceeds_size_limit_error": "Следната датотека не е прикачена бидејќи ја надминува ограничувањето за големина од __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Следните датотеки не се прикачени бидејќи го надминуваат ограничувањето за големина од __limit__: __files__",
-  "chat_drop_pane_overlay": "Повлечете за да прикачите датотеки"
+  "chat_drop_pane_overlay": "Повлечете за да прикачите датотеки",
+  "unknown_bot_or_bot_message_type": "Непознат бот или тип на порака од бот. ID на бот: \"__bot_id__\", Тип на порака: \"__message_type__\""
 }

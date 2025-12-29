@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "파일이 파일 탭에 저장되었습니다",
   "chat_files_exceeds_size_limit_error": "다음 파일은 크기 제한 __limit__을(를) 초과하여 첨부되지 않았습니다: __files__",
   "chat_files_exceeds_size_limit_error_plural": "다음 파일들은 크기 제한 __limit__을(를) 초과하여 첨부되지 않았습니다: __files__",
-  "chat_drop_pane_overlay": "파일을 첨부하려면 드롭하세요"
+  "chat_drop_pane_overlay": "파일을 첨부하려면 드롭하세요",
+  "unknown_bot_or_bot_message_type": "알 수 없는 봇 또는 봇 메시지 유형입니다. 봇 ID: \"__bot_id__\", 메시지 유형: \"__message_type__\""
 }

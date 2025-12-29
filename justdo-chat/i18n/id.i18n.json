@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "File disimpan ke tab Files",
   "chat_files_exceeds_size_limit_error": "File berikut tidak dilampirkan karena melebihi batas ukuran __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "File-file berikut tidak dilampirkan karena melebihi batas ukuran __limit__: __files__",
-  "chat_drop_pane_overlay": "Lepas untuk melampirkan file"
+  "chat_drop_pane_overlay": "Lepas untuk melampirkan file",
+  "unknown_bot_or_bot_message_type": "Bot atau tipe pesan bot tidak dikenal. ID Bot: \"__bot_id__\", Tipe pesan: \"__message_type__\""
 }

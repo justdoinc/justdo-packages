@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Lêers gestoor na Lêers oortjie",
   "chat_files_exceeds_size_limit_error": "Die volgende lêer is nie geheg nie omdat dit die grootte limiet van __limit__ oorskry: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Die volgende lêers is nie geheg nie omdat hulle die grootte limiet van __limit__ oorskry: __files__",
-  "chat_drop_pane_overlay": "Sleep om lêers te heg"
+  "chat_drop_pane_overlay": "Sleep om lêers te heg",
+  "unknown_bot_or_bot_message_type": "Onbekende bot of bot-boodskaптipe. Bot ID: \"__bot_id__\", Boodskaптipe: \"__message_type__\""
 }

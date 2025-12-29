@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Fájlok elmentve a Fájlok fülre",
   "chat_files_exceeds_size_limit_error": "A következő fájl nem lett csatolva, mivel meghaladja a __limit__ méretkorlátot: __files__",
   "chat_files_exceeds_size_limit_error_plural": "A következő fájlok nem lettek csatolva, mivel meghaladják a __limit__ méretkorlátot: __files__",
-  "chat_drop_pane_overlay": "Húzd ide a fájlok csatolásához"
+  "chat_drop_pane_overlay": "Húzd ide a fájlok csatolásához",
+  "unknown_bot_or_bot_message_type": "Ismeretlen bot vagy bot üzenettípus. Bot azonosító: \"__bot_id__\", Üzenet típusa: \"__message_type__\""
 }

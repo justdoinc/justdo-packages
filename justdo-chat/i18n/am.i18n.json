@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "ፋይሎች በፋይሎች ትር ውስጥ ተቀምጠዋል",
   "chat_files_exceeds_size_limit_error": "የሚከተለው ፋይል ከ __limit__ መጠን ገደብ በላይ በመሆኑ አልተያያዘም፦ __files__",
   "chat_files_exceeds_size_limit_error_plural": "የሚከተሉት ፋይሎች ከ __limit__ መጠን ገደብ በላይ በመሆናቸው አልተያያዙም፦ __files__",
-  "chat_drop_pane_overlay": "ፋይሎችን ለማያያዝ ይጣሉ"
+  "chat_drop_pane_overlay": "ፋይሎችን ለማያያዝ ይጣሉ",
+  "unknown_bot_or_bot_message_type": "ያልታወቀ ቦት ወይም የቦት መልእክት አይነት። የቦት መለያ፡ \"__bot_id__\"፣ የመልእክት አይነት፡ \"__message_type__\""
 }

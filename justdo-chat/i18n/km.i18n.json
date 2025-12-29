@@ -3,7 +3,7 @@
   "message_editor_input_placeholder": "វាយសារ...",
   "message_editor_sending": "កំពុងផ្ញើ...",
   "chat_config_title": "ជជែកកម្សាន្ត",
-  "chat_notifications": "ការជូនដំណឹងការជជែក",
+  "chat_notifications": "ការជូនដំណឹងជជែកកំសាន្ត",
   "chat_click_to_unsubscribe": "អ្នកនឹងទទួលបានការជូនដំណឹងពីការជជែកនេះ ចុចដើម្បីលុបការជាវ",
   "chat_click_to_subscribe": "ជាវការជូនដំណឹងពីការជជែកនេះ",
   "chat_open_in_a_window": "បើកការជជែកក្នុងវីនដូ",
@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "ឯកសារត្រូវបានរក្សាទុកក្នុងផ្ទាំងឯកសារ",
   "chat_files_exceeds_size_limit_error": "ឯកសារខាងក្រោមមិនត្រូវបានភ្ជាប់ទេ ព្រោះវាលើសពីកម្រិតទំហំ __limit__៖ __files__",
   "chat_files_exceeds_size_limit_error_plural": "ឯកសារខាងក្រោមមិនត្រូវបានភ្ជាប់ទេ ព្រោះវាលើសពីកម្រិតទំហំ __limit__៖ __files__",
-  "chat_drop_pane_overlay": "ទម្លាក់ដើម្បីភ្ជាប់ឯកសារ"
+  "chat_drop_pane_overlay": "ទម្លាក់ដើម្បីភ្ជាប់ឯកសារ",
+  "unknown_bot_or_bot_message_type": "មិនស្គាល់ bot ឬប្រភេទសារ bot។ Bot ID: \"__bot_id__\", ប្រភេទសារ: \"__message_type__\""
 }

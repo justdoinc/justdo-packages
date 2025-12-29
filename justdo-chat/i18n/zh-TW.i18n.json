@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "檔案已儲存至檔案分頁",
   "chat_files_exceeds_size_limit_error": "以下檔案因超過 __limit__ 的大小限制而未附加：__files__",
   "chat_files_exceeds_size_limit_error_plural": "以下檔案因超過 __limit__ 的大小限制而未附加：__files__",
-  "chat_drop_pane_overlay": "拖放以附加檔案"
+  "chat_drop_pane_overlay": "拖放以附加檔案",
+  "unknown_bot_or_bot_message_type": "未知的機器人或機器人訊息類型。機器人 ID:「__bot_id__」,訊息類型:「__message_type__」"
 }

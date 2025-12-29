@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Faili saglabāti failu cilnē",
   "chat_files_exceeds_size_limit_error": "Šis fails netiek pievienots, jo pārsniedz izmēra ierobežojumu __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Šie faili netiek pievienoti, jo pārsniedz izmēra ierobežojumu __limit__: __files__",
-  "chat_drop_pane_overlay": "Velciet šeit, lai pievienotu failus"
+  "chat_drop_pane_overlay": "Velciet šeit, lai pievienotu failus",
+  "unknown_bot_or_bot_message_type": "Nezināms bots vai bota ziņojuma tips. Bota ID: \"__bot_id__\", Ziņojuma tips: \"__message_type__\""
 }

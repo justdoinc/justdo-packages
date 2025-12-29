@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Fișierele au fost salvate în fila Fișiere",
   "chat_files_exceeds_size_limit_error": "Următorul fișier nu a fost atașat deoarece depășește limita de dimensiune de __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Următoarele fișiere nu au fost atașate deoarece depășesc limita de dimensiune de __limit__: __files__",
-  "chat_drop_pane_overlay": "Trage aici pentru a atașa fișiere"
+  "chat_drop_pane_overlay": "Trage aici pentru a atașa fișiere",
+  "unknown_bot_or_bot_message_type": "Bot necunoscut sau tip de mesaj bot necunoscut. ID Bot: \"__bot_id__\", Tip mesaj: \"__message_type__\""
 }

@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Failai išsaugoti failų skirtuke",
   "chat_files_exceeds_size_limit_error": "Šis failas nepridėtas, nes viršija dydžio limitą __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Šie failai nepridėti, nes viršija dydžio limitą __limit__: __files__",
-  "chat_drop_pane_overlay": "Nuvilkite norėdami pridėti failus"
+  "chat_drop_pane_overlay": "Nuvilkite norėdami pridėti failus",
+  "unknown_bot_or_bot_message_type": "Nežinomas robotas arba roboto pranešimo tipas. Roboto ID: \"__bot_id__\", Pranešimo tipas: \"__message_type__\""
 }

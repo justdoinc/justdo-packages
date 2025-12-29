@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Faili zimehifadhiwa katika kichupo cha Faili",
   "chat_files_exceeds_size_limit_error": "Faili ifuatayo haijaunganishwa kwa sababu imezidi kikomo cha ukubwa wa __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Faili zifuatazo hazijaunganishwa kwa sababu zimezidi kikomo cha ukubwa wa __limit__: __files__",
-  "chat_drop_pane_overlay": "Dondosha ili kuunganisha faili"
+  "chat_drop_pane_overlay": "Dondosha ili kuunganisha faili",
+  "unknown_bot_or_bot_message_type": "Bot isiyojulikana au aina ya ujumbe wa bot. Kitambulisho cha Bot: \"__bot_id__\", Aina ya ujumbe: \"__message_type__\""
 }

@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Датотеке сачуване у таб Датотеке",
   "chat_files_exceeds_size_limit_error": "Sledeći fajl nije priložen jer prelazi ograničenje veličine od __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Sledeći fajlovi nisu priloženi jer prelaze ograničenje veličine od __limit__: __files__",
-  "chat_drop_pane_overlay": "Prevuci da priložiš fajlove"
+  "chat_drop_pane_overlay": "Prevuci da priložiš fajlove",
+  "unknown_bot_or_bot_message_type": "Nepoznat bot ili tip bot poruke. Bot ID: \"__bot_id__\", Tip poruke: \"__message_type__\""
 }

@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "ファイルはファイルタブに保存されました",
   "chat_files_exceeds_size_limit_error": "以下のファイルは __limit__ のサイズ制限を超えているため添付されませんでした: __files__",
   "chat_files_exceeds_size_limit_error_plural": "以下のファイルは __limit__ のサイズ制限を超えているため添付されませんでした: __files__",
-  "chat_drop_pane_overlay": "ドロップしてファイルを添付"
+  "chat_drop_pane_overlay": "ドロップしてファイルを添付",
+  "unknown_bot_or_bot_message_type": "不明なボットまたはボットメッセージタイプです。ボットID: \"__bot_id__\"、メッセージタイプ: \"__message_type__\""
 }

@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Failid salvestatud failide sakki",
   "chat_files_exceeds_size_limit_error": "Järgmist faili ei lisatud, kuna see ületab suuruse piirangu __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Järgmisi faile ei lisatud, kuna need ületavad suuruse piirangu __limit__: __files__",
-  "chat_drop_pane_overlay": "Lohista failide lisamiseks"
+  "chat_drop_pane_overlay": "Lohista failide lisamiseks",
+  "unknown_bot_or_bot_message_type": "Tundmatu bot või boti sõnumi tüüp. Boti ID: \"__bot_id__\", Sõnumi tüüp: \"__message_type__\""
 }

@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "ফাইলগুলো ফাইল ট্যাবে সংরক্ষিত হয়েছে",
   "chat_files_exceeds_size_limit_error": "নিম্নলিখিত ফাইলটি সংযুক্ত করা হয়নি কারণ এটি __limit__ এর আকার সীমা অতিক্রম করেছে: __files__",
   "chat_files_exceeds_size_limit_error_plural": "নিম্নলিখিত ফাইলগুলি সংযুক্ত করা হয়নি কারণ এগুলি __limit__ এর আকার সীমা অতিক্রম করেছে: __files__",
-  "chat_drop_pane_overlay": "ফাইল সংযুক্ত করতে ড্রপ করুন"
+  "chat_drop_pane_overlay": "ফাইল সংযুক্ত করতে ড্রপ করুন",
+  "unknown_bot_or_bot_message_type": "অজানা বট বা বট বার্তা ধরন। বট আইডি: \"__bot_id__\", বার্তা ধরন: \"__message_type__\""
 }

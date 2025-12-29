@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Skedarët u ruajtën në skedën e Skedarëve",
   "chat_files_exceeds_size_limit_error": "Skedari i mëposhtëm nuk është bashkangjitur sepse e kalon kufirin e madhësisë prej __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Skedarët e mëposhtëm nuk janë bashkangjitur sepse e kalojnë kufirin e madhësisë prej __limit__: __files__",
-  "chat_drop_pane_overlay": "Lëshoni për të bashkangjitur skedarët"
+  "chat_drop_pane_overlay": "Lëshoni për të bashkangjitur skedarët",
+  "unknown_bot_or_bot_message_type": "Bot i panjohur ose lloj mesazhi bot-i. ID e Bot-it: \"__bot_id__\", Lloji i mesazhit: \"__message_type__\""
 }

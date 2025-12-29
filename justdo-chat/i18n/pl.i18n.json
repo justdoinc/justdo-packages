@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Pliki zapisane w zakładce Pliki",
   "chat_files_exceeds_size_limit_error": "Następujący plik nie został dołączony, ponieważ przekracza limit rozmiaru __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Następujące pliki nie zostały dołączone, ponieważ przekraczają limit rozmiaru __limit__: __files__",
-  "chat_drop_pane_overlay": "Upuść aby dołączyć pliki"
+  "chat_drop_pane_overlay": "Upuść aby dołączyć pliki",
+  "unknown_bot_or_bot_message_type": "Nieznany bot lub typ wiadomości bota. ID bota: \"__bot_id__\", Typ wiadomości: \"__message_type__\""
 }

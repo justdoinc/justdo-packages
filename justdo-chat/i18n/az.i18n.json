@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Fayllar Fayllar tabına saxlanıldı",
   "chat_files_exceeds_size_limit_error": "Aşağıdaki fayl __limit__ ölçü limitini aşdığı üçün əlavə edilmədi: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Aşağıdaki fayllar __limit__ ölçü limitini aşdığı üçün əlavə edilmədi: __files__",
-  "chat_drop_pane_overlay": "Faylları əlavə etmək üçün buraya atın"
+  "chat_drop_pane_overlay": "Faylları əlavə etmək üçün buraya atın",
+  "unknown_bot_or_bot_message_type": "Naməlum bot və ya bot mesaj növü. Bot ID: \"__bot_id__\", Mesaj növü: \"__message_type__\""
 }

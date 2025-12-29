@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Datoteke shranjene v zavihek Datoteke",
   "chat_files_exceeds_size_limit_error": "Naslednja datoteka ni priložena, ker presega omejitev velikosti __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Naslednje datoteke niso priložene, ker presegajo omejitev velikosti __limit__: __files__",
-  "chat_drop_pane_overlay": "Spustite za priložitev datotek"
+  "chat_drop_pane_overlay": "Spustite za priložitev datotek",
+  "unknown_bot_or_bot_message_type": "Neznan robot ali vrsta sporočila robota. ID robota: \"__bot_id__\", Vrsta sporočila: \"__message_type__\""
 }

@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "फाइलें Files टैब में सेव हो गईं",
   "chat_files_exceeds_size_limit_error": "निम्नलिखित फाइल संलग्न नहीं की गई है क्योंकि यह __limit__ की साइज़ सीमा से अधिक है: __files__",
   "chat_files_exceeds_size_limit_error_plural": "निम्नलिखित फाइलें संलग्न नहीं की गई हैं क्योंकि वे __limit__ की साइज़ सीमा से अधिक हैं: __files__",
-  "chat_drop_pane_overlay": "फाइलें संलग्न करने के लिए यहां ड्रॉप करें"
+  "chat_drop_pane_overlay": "फाइलें संलग्न करने के लिए यहां ड्रॉप करें",
+  "unknown_bot_or_bot_message_type": "अज्ञात बॉट या बॉट संदेश प्रकार। बॉट ID: \"__bot_id__\", संदेश प्रकार: \"__message_type__\""
 }

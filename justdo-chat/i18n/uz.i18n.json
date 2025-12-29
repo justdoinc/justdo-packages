@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Fayllar Fayllar bo'limiga saqlandi",
   "chat_files_exceeds_size_limit_error": "Quyidagi fayl __limit__ hajm chegarasidan oshgani uchun biriktirilmadi: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Quyidagi fayllar __limit__ hajm chegarasidan oshgani uchun biriktirilmadi: __files__",
-  "chat_drop_pane_overlay": "Fayllarni biriktirish uchun tashlang"
+  "chat_drop_pane_overlay": "Fayllarni biriktirish uchun tashlang",
+  "unknown_bot_or_bot_message_type": "Noma'lum bot yoki bot xabar turi. Bot ID: \"__bot_id__\", Xabar turi: \"__message_type__\""
 }

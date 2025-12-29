@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "Fichieren an de Fichieren Tab gespäichert",
   "chat_files_exceeds_size_limit_error": "Dësen Fichier gëtt net ugefüügt well hien d'Gréisst-Limit vu __limit__ iwwerschreift: __files__",
   "chat_files_exceeds_size_limit_error_plural": "Dës Fichieren ginn net ugefüügt well si d'Gréisst-Limit vu __limit__ iwwerschreiden: __files__",
-  "chat_drop_pane_overlay": "Fallt fir Fichieren unzehänken"
+  "chat_drop_pane_overlay": "Fallt fir Fichieren unzehänken",
+  "unknown_bot_or_bot_message_type": "Onbekannte Bot oder Bot-Noriichtentyp. Bot ID: \"__bot_id__\", Noriichtentyp: \"__message_type__\""
 }

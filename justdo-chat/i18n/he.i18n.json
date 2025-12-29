@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "קבצים נשמרו בלשונית הקבצים",
   "chat_files_exceeds_size_limit_error": "הקובץ הבא לא צורף מכיוון שהוא חורג ממגבלת הגודל של __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "הקבצים הבאים לא צורפו מכיוון שהם חורגים ממגבלת הגודל של __limit__: __files__",
-  "chat_drop_pane_overlay": "גרור כדי לצרף קבצים"
+  "chat_drop_pane_overlay": "גרור כדי לצרף קבצים",
+  "unknown_bot_or_bot_message_type": "בוט לא ידוע או סוג הודעת בוט לא ידועה. מזהה בוט: \"__bot_id__\", סוג הודעה: \"__message_type__\""
 }

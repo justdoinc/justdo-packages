@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "File salvati nella scheda File",
   "chat_files_exceeds_size_limit_error": "Il seguente file non è stato allegato perché supera il limite di dimensione di __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "I seguenti file non sono stati allegati perché superano il limite di dimensione di __limit__: __files__",
-  "chat_drop_pane_overlay": "Trascina per allegare file"
+  "chat_drop_pane_overlay": "Trascina per allegare file",
+  "unknown_bot_or_bot_message_type": "Bot o tipo di messaggio bot sconosciuto. ID Bot: \"__bot_id__\", Tipo di messaggio: \"__message_type__\""
 }

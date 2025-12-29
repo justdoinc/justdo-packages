@@ -12,5 +12,6 @@
   "chat_files_saved_to_files_tab": "تم حفظ الملفات في تبويب الملفات",
   "chat_files_exceeds_size_limit_error": "لم يتم إرفاق الملف التالي لأنه يتجاوز الحد الأقصى للحجم __limit__: __files__",
   "chat_files_exceeds_size_limit_error_plural": "لم يتم إرفاق الملفات التالية لأنها تتجاوز الحد الأقصى للحجم __limit__: __files__",
-  "chat_drop_pane_overlay": "اسحب لإرفاق الملفات"
+  "chat_drop_pane_overlay": "اسحب لإرفاق الملفات",
+  "unknown_bot_or_bot_message_type": "بوت غير معروف أو نوع رسالة بوت غير معروف. معرّف البوت: \"__bot_id__\"، نوع الرسالة: \"__message_type__\""
 }
