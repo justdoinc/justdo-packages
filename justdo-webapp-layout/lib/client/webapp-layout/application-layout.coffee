@@ -25,6 +25,20 @@ APP.executeAfterAppLibCode ->
     $(e.currentTarget).addClass "active"
     return
 
+  Template.app_layout.onCreated ->
+    @loading_more_items = new ReactiveVar false
+
+    # Request recent activity when template is created
+    APP.justdo_chat.requestSubscribedChannelsRecentActivity({additional_recent_activity_request: false})
+
+    return
+
+  Template.app_layout.onDestroyed ->
+    # Stop recent activity publication when template is destroyed
+    APP.justdo_chat.stopChannelsRecentActivityPublication()
+
+    return
+
   Template.app_layout.onRendered ->
     @autorun ->
       # init app scrolls when moving between pages.
@@ -129,3 +143,13 @@ APP.executeAfterAppLibCode ->
     requiredActions: -> projects.modules.required_actions.getCursor({allow_undefined_fields: true, sort: {date: -1}}).fetch()
 
     requiredActionsCount: -> projects.modules.required_actions.getCursor({fields: {_id: 1}}).count()
+
+    isLoadingRecentActivity: ->
+      subscription_state = APP.justdo_chat.getSubscribedChannelsRecentActivityState()
+      return subscription_state == "no-sub" or subscription_state == "initial-not-ready"
+
+    recentActivityItems: ->
+      return APP.collections.JDChatRecentActivityChannels.find({}, {sort: {last_message_date: -1}}).fetch()
+
+    getSubscribedChannelsRecentActivityState: ->
+      return APP.justdo_chat.getSubscribedChannelsRecentActivityState()
