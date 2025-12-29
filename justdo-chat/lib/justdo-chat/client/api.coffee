@@ -548,7 +548,6 @@ _.extend JustdoChat.prototype,
   #
   data_message_helpers:
     # Convert user ID to display name
-    # Supports both single user ID and arrays of user IDs
     # 
     # Fields: user_id (required)
     displayName: (fields, args) ->
@@ -560,6 +559,7 @@ _.extend JustdoChat.prototype,
       return JustdoHelpers.displayName user_id
 
     # Format unicode date string (YYYY-MM-DD) or a date object according to user preferences
+    # 
     # Fields: date (required)
     formatDate: (fields, args) ->
       date = fields.date
@@ -596,6 +596,7 @@ _.extend JustdoChat.prototype,
       return ret
 
     # Get field label from schema
+    # 
     # Fields: field_id (required)
     # Args: lang (optional, defaults to JustdoI18n.default_lang)
     fieldLabel: (fields, args) ->
@@ -614,6 +615,7 @@ _.extend JustdoChat.prototype,
       return TAPi18n.__ field_def.label_i18n, {}, lang
 
     # Get state label from schema or project custom states
+    # 
     # Fields: state_id (required), project_id (required)
     # Args: lang (optional, defaults to JustdoI18n.default_lang)
     stateLabel: (fields, args) ->
