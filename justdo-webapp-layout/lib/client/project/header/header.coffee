@@ -82,7 +82,7 @@ APP.executeAfterAppLibCode ->
         if is_untitled
           project_name = "Untitled JustDo"
 
-        project_name_el = """<div id="project-name" spellcheck="false" """
+        project_name_el = """<div id="project-name" dir="auto" spellcheck="false" """
 
         if is_admin
           contenteditable = true
