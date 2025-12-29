@@ -646,6 +646,8 @@ _.extend JustdoChat.prototype,
   # Parse a placeholder string in the format: prop1=field1:prop2=field2,...|helper_name:arg1=x:arg2=y
   # Returns: { fields_mapping: {prop: field, ...}, helper_name: string, args: {arg: value, ...} }
   parseDataMessageHelperString: (placeholder) ->
+    self = @
+
     KEY_VAL_PAIR_DELIMITER = ":"
     KEY_VAL_DELIMITER = "="
 
@@ -670,8 +672,8 @@ _.extend JustdoChat.prototype,
           continue
   
         if not arg.includes KEY_VAL_DELIMITER
-          @logger.warn "Invalid argument format (missing #{KEY_VAL_DELIMITER}): \"#{arg}\" in \"#{helper_args_str}\""
-          return
+          self.logger.warn "Invalid argument format (missing #{KEY_VAL_DELIMITER}): \"#{arg}\" in \"#{helper_args_str}\""
+          return helper_args
   
         [key, value] = arg.split KEY_VAL_DELIMITER
         key = key.trim()
