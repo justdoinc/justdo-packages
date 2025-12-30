@@ -14,8 +14,7 @@ APP.executeAfterAppLibCode ->
   resetMobileToolbarState = (e) ->
     $(".mobile-toolbar-tabs").removeClass "show"
     $(".mobile-tab").removeClass "active"
-
-    toolbar_open = project_page_module.preferences.get()?.toolbar_open
+    
     project_page_module.updatePreferences({toolbar_open: false})
 
     APP.justdo_project_pane.collapse()
@@ -86,7 +85,6 @@ APP.executeAfterAppLibCode ->
     "click .task-pane": (e, tpl) ->
       resetMobileToolbarState(e)
 
-      toolbar_open = project_page_module.preferences.get()?.toolbar_open
       project_page_module.updatePreferences({toolbar_open: true})
 
       return
