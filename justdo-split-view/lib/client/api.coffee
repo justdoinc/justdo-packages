@@ -92,7 +92,7 @@ _.extend JustdoSplitView.prototype,
       return
 
     @container = $("<div>")
-      .addClass("justdo-split-view d-none d-md-block")
+      .addClass("justdo-split-view")
       .appendTo(".global-wrapper")
       # .html("""<div class="place-holder"></div><iframe class="split-view-iframe" frameborder="0" width="100%" height="100%" src="#{@url.get()}"></iframe>""")
 

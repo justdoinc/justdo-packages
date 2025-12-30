@@ -11,18 +11,18 @@ APP.executeAfterAppLibCode ->
 
     return
 
-  resetMobileToolbarState = ->
+  resetMobileToolbarState = (e) ->
     $(".mobile-toolbar-tabs").removeClass "show"
     $(".mobile-tab").removeClass "active"
 
-    if $(".project-container").hasClass "open-toolbar"
-      $(".task-pane-control").click()
+    toolbar_open = project_page_module.preferences.get()?.toolbar_open
+    project_page_module.updatePreferences({toolbar_open: false})
 
-    return
+    APP.justdo_project_pane.collapse()
 
-  highlightToolbarStateTab = (e) ->
     $(".mobile-toolbar-btn").removeClass "active"
     $(e.currentTarget).addClass "active"
+
     return
 
   Template.app_layout.onCreated ->
@@ -51,45 +51,41 @@ APP.executeAfterAppLibCode ->
 
   Template.app_layout.events
     "click .grid": (e, tpl) ->
-      highlightToolbarStateTab(e)
-      resetMobileToolbarState()
+      resetMobileToolbarState(e)
 
       return
 
     "click .notifications": (e, tpl) ->
-      highlightToolbarStateTab(e)
-      resetMobileToolbarState()
+      resetMobileToolbarState(e)
 
       $(".mobile-toolbar-tabs").addClass "show"
       $(".mobile-tab.notifications").addClass "active"
 
       return
 
-
-    "click .add": (e, tpl) ->
-      $(".mobile-toolbar-btn").removeClass "active"
-      $(".grid").addClass "active"
-
-      resetMobileToolbarState()
-
-      $("#add-sibling-task").click()
-
-      return
-
     "click .chats": (e, tpl) ->
-      highlightToolbarStateTab(e)
-      resetMobileToolbarState()
+      resetMobileToolbarState(e)
 
       $(".mobile-toolbar-tabs").addClass "show"
       $(".mobile-tab.chats").addClass "active"
 
       return
 
-    "click .taskpane": (e, tpl) ->
-      highlightToolbarStateTab(e)
-      resetMobileToolbarState()
+    "click .bottom-pane": (e, tpl) ->
+      if not APP.justdo_project_pane.isExpanded()
+        resetMobileToolbarState(e)
 
-      $(".task-pane-control").click()
+        APP.justdo_project_pane.expand()
+        if not APP.justdo_project_pane.isFullScreen()
+          APP.justdo_project_pane.toggleFullScreen()
+
+      return
+
+    "click .task-pane": (e, tpl) ->
+      resetMobileToolbarState(e)
+      
+      toolbar_open = project_page_module.preferences.get()?.toolbar_open
+      project_page_module.updatePreferences({toolbar_open: true})
 
       return
 
