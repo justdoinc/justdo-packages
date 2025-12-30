@@ -23,6 +23,8 @@ APP.executeAfterAppLibCode ->
     $(".mobile-toolbar-btn").removeClass "active"
     $(e.currentTarget).addClass "active"
 
+    $(".bottom-windows").addClass "chats-hidden"
+
     return
 
   Template.app_layout.onCreated ->
@@ -83,7 +85,7 @@ APP.executeAfterAppLibCode ->
 
     "click .task-pane": (e, tpl) ->
       resetMobileToolbarState(e)
-      
+
       toolbar_open = project_page_module.preferences.get()?.toolbar_open
       project_page_module.updatePreferences({toolbar_open: true})
 
