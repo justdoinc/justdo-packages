@@ -48,7 +48,7 @@
 
     <div class="mobile-toolbar-tabs">
       <div class="mobile-tab notifications">
-        <div class="mobile-tab-title">Notifications</div>
+        <div class="mobile-tab-title">{{_ "notifications_label"}}</div>
         <div class="required-actions-cards-area">
           {{#if $eq 0 requiredActionsCount}}
             <div class="no-actions-card p-3 text-center text-muted">
@@ -62,7 +62,7 @@
         </div>
       </div>
       <div class="mobile-tab chats">
-        <div class="mobile-tab-title">Chats</div>
+        <div class="mobile-tab-title">{{_ "chats_label"}}</div>
         {{#if isLoadingRecentActivity}}
           <div class="loading-recent-activity-items-container">
             <div class="loader">
