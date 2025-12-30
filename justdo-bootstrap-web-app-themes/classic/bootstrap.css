@@ -2916,6 +2916,9 @@ input[type="button"].btn-block {
 .tab-content > .active {
   display: block; }
 
+.page-container.page-project {
+  background-color: white; }
+
 .navbar {
   position: relative;
   display: flex;

@@ -34,7 +34,7 @@
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
   --font-family-sans-serif: 'Dosis', sans-serif;
-  --font-family-monospace: 'Dosis', sans-serif; 
+  --font-family-monospace: 'Dosis', sans-serif;
 }
 
 *,
@@ -2925,6 +2925,9 @@ input[type="button"].btn-block {
 
 .tab-content > .active {
   display: block; }
+
+.page-container.page-project {
+  background-color: unset; }
 
 .navbar {
   position: relative;
