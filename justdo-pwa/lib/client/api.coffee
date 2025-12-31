@@ -2,6 +2,7 @@ _.extend JustdoPwa.prototype,
   _immediateInit: ->
     @_setupGlobalTemplateHelpers()
     @_setupTaskPaneStateTracker()
+    @_setupGridControlFrozenColumnsModeHandler()
 
     return
 
@@ -55,6 +56,34 @@ _.extend JustdoPwa.prototype,
         @task_pane_state_tracker.stop()
         return
       
+      return
+
+    return
+
+  _setupGridControlFrozenColumnsModeHandler: ->
+    # This tracker listens for window resize events and triggers a re-evaluation
+    # of frozen columns mode on all registered grid controls when the mobile layout
+    # state changes. This ensures frozen columns are disabled in mobile view and
+    # re-enabled (if applicable) in desktop view.
+    
+    self = @
+    resizeHandler = ->
+      is_mobile_layout = self.isMobileLayout()
+
+      for grid_control in GridControl.getAllRegisteredGridControls()
+        if is_mobile_layout
+          grid_control.disableFrozenColumnsMode()
+          grid_control.exitFrozenColumnsMode()
+        else
+          grid_control.enableFrozenColumnsMode()
+          grid_control.reevaluateFrozenColumnsMode()
+
+      return
+
+    $(window).on "resize", resizeHandler
+
+    @onDestroy =>
+      $(window).off "resize", resizeHandler
       return
 
     return
