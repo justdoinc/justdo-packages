@@ -14,7 +14,7 @@ _.extend JustdoAiKit,
 
   tasks_summary_tasks_limit: 30
 
-  enable_chat_assistant_for_project_level: false
+  enable_chat_assistant_for_project_level: true
 
   template_generator_show_skip_btn_delay: 1200
 
