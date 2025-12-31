@@ -663,8 +663,19 @@ _.extend GridControl.prototype,
   _setupFrozenColumnsMaintainer: ->
     _frozen_columns_mode = false
     _frozen_columns_mode_rv = new ReactiveVar _frozen_columns_mode
-
     @isFrozenColumnsMode = -> _frozen_columns_mode_rv.get()
+
+    _frozen_column_mode_disabled = false
+    @disableFrozenColumnsMode = ->
+      _frozen_column_mode_disabled = true
+      return
+
+    @enableFrozenColumnsMode = ->
+      _frozen_column_mode_disabled = false
+      return
+    
+    @isFrozenColumnsModeDisabled = ->
+      return _frozen_column_mode_disabled
 
     @getColumnWidthHiddenByFrozenColumnsNonReactive = (column_field_id) ->
       # Returns 0 if:
@@ -752,6 +763,9 @@ _.extend GridControl.prototype,
       return
 
     updateFrozenColumnsMode = (new_view) =>
+      if @isFrozenColumnsModeDisabled()
+        return
+
       $current_css_block?.remove()
 
       frozen_columns_css = ""
@@ -777,7 +791,7 @@ _.extend GridControl.prototype,
 
       return
 
-    exitFrozenColumnsMode = =>
+    @exitFrozenColumnsMode = =>
       if $current_css_block?
         $current_css_block.remove()
         $current_css_block = null
@@ -798,7 +812,7 @@ _.extend GridControl.prototype,
         new_view = @getView()
 
       if new_view[0].frozen isnt true # the _validateView ensures that if there are frozen fields, they are all in the beginning.
-        exitFrozenColumnsMode()
+        @exitFrozenColumnsMode()
 
         return
       
@@ -809,8 +823,12 @@ _.extend GridControl.prototype,
     @on "init", viewChangeCb
     @on "grid-view-change", viewChangeCb
 
+    # Expose method to allow external triggering of frozen columns mode re-evaluation
+    # (e.g., from justdo-pwa when mobile layout changes)
+    @reevaluateFrozenColumnsMode = -> viewChangeCb()
+
     @onDestroy ->
-      exitFrozenColumnsMode()
+      @exitFrozenColumnsMode()
       
       return
 
