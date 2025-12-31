@@ -654,7 +654,7 @@ _.extend JustdoAiKit,
 
       requestGenerator: (template_data) ->
         req = 
-          "model": "gpt-4o"
+          "model": "gpt-5.1"
           "messages": [
             {
               "role": "system",
@@ -837,7 +837,7 @@ _.extend JustdoAiKit,
             "type": "json_object"
           "top_p": 1,
           "n": 1,
-          "max_tokens": 4096,
+          "max_completion_tokens": 4096,
           "presence_penalty": 0,
           "frequency_penalty": 0
 
