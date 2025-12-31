@@ -1,6 +1,12 @@
+converter = null
+
+initConverter = _.once -> converter = new showdown.Converter()
+
 chatbox_dropdown = null
 
 Template.ai_kit_chatbox_dropdown_btn.onCreated ->
+  initConverter()
+
   AiKitChatboxDropdownConstructor = JustdoHelpers.generateNewTemplateDropdown "ai-kit-chatbox", "ai_kit_dropdown_chatbox",
     custom_bound_element_options:
       close_button_html: null
@@ -101,7 +107,7 @@ Template.ai_kit_dropdown_chatbox.onCreated ->
           else
             msg += "\n\n#{task_strings}"
           
-          msg = JustdoHelpers.nl2br msg
+          msg = converter.makeHtml msg
           msg = APP.justdo_chat.linkTaskId msg
 
         existing_messages.push 
