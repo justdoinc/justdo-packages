@@ -111,7 +111,7 @@ _.extend JustdoAiKit,
                     "description": "An array of tasks."
                     "items":
                       "type": "object"
-                      "description": "A task represented as an array of its attributes."                
+                      "description": "A task represented as an array of its attributes."
                       "properties":
                         title:
                           "type": "string"
@@ -311,7 +311,7 @@ _.extend JustdoAiKit,
         
         return
       streamedResponseParser: (parsed_item, template_data, req_id) ->
-        states = ["pending", "in-progress", "done", "will-not-do", "on-hold", "duplicate", "nil"]          
+        states = ["pending", "in-progress", "done", "will-not-do", "on-hold", "duplicate", "nil"]
         {title, start, end, due, state, key, parent} = parsed_item
 
         fields = 
@@ -490,7 +490,7 @@ _.extend JustdoAiKit,
             {
               "role": "assistant",
               "content": """[["Research Seasonal Trends",0,-1],["Analyze Popular Ingredients",1,0],["Study Competitor Offerings",2,0],["Create Drink Recipes",3,-1],["Develop Flavor Profiles",4,3],["Test Drink Combinations",5,3],["Design Drink Presentation",6,-1],["Select Glassware",7,6],["Create Garnish Ideas",8,6],["Develop Marketing Strategy",9,-1],["Social Media Promotion",10,9],["In-Store Advertising",11,9],["Customer Engagement Activities",12,9]]"""
-            },            
+            },
             {
               "role" : "user",
               "content" : """{"target_task":"Backend Development", "additional_context":{"project":"IT firm management","parents":["R&D","Mobile App Development","Sprints","v1.0.0","Implement new feature 1"],"siblings":["Design & UX/UI","Frontend Development","QA"],"children":["Feature B"]}}"""
