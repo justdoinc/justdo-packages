@@ -1,6 +1,8 @@
 _.extend JustdoPwa.prototype,
   _immediateInit: ->
     @_setupGlobalTemplateHelpers()
+    @_setupTaskPaneStateTracker()
+
     return
 
   _deferredInit: ->
@@ -17,3 +19,48 @@ _.extend JustdoPwa.prototype,
       return "d-none d-md-#{display_mode}"
       
     return
+
+  _setupTaskPaneStateTracker: ->
+    # This tracker is used to hide the task pane when the screen changes to mobile layout,
+    # and restore to the original task pane state when the screen changes to desktop layout.
+
+    APP.executeAfterAppLibCode =>
+      is_mobile_layout = false
+      is_task_pane_expanded_before_mobile_layout = false
+
+      @task_pane_state_tracker = Tracker.autorun =>
+        project_page_preferences = APP.modules.project_page.preferences.get()
+
+        prev_is_mobile_layout = is_mobile_layout
+        is_mobile_layout = @isMobileLayout()
+
+        is_entering_mobile_layout = is_mobile_layout and (not prev_is_mobile_layout)
+        is_exiting_mobile_layout = (not is_mobile_layout) and prev_is_mobile_layout
+
+        if is_entering_mobile_layout
+          if project_page_preferences.toolbar_open
+            is_task_pane_expanded_before_mobile_layout = true
+            APP.modules.project_page.updatePreferences({toolbar_open: false})
+          else
+            is_task_pane_expanded_before_mobile_layout = false
+        else if is_exiting_mobile_layout
+          if is_task_pane_expanded_before_mobile_layout
+            APP.modules.project_page.updatePreferences({toolbar_open: true})
+
+          is_task_pane_expanded_before_mobile_layout = null
+        
+        return
+
+      @onDestroy =>
+        @task_pane_state_tracker.stop()
+        return
+      
+      return
+
+    return
+
+  getBrowserDimention: ->
+    return APP.modules.main.window_dim.get()
+
+  isMobileLayout: ->
+    return @getBrowserDimention().width < JustdoPwa.mobile_breakpoint
