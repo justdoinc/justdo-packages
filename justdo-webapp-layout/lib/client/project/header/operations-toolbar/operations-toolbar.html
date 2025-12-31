@@ -31,11 +31,11 @@
         {{> item_duplicate_control getGridControl=getGridControl}} {{!-- Defined in the justdo-item-duplicate-control package --}}
       {{/if}}
       {{> rows_styling_control getGridControl=getGridControl}} {{!-- Defined in the justdo-rows-styling package --}}
-      <div class="project-header-toolbar-divider d-none d-md-block"></div>
-      <div class="d-none d-md-block">
+      <div class="project-header-toolbar-divider {{hideInMobileLayout}}"></div>
+      <div class="{{hideInMobileLayout}}">
         {{> search_comp getGridControl=getGridControl}}
       </div>
-      <div class="project-header-toolbar-divider d-none d-md-block" style="{{#unless displayPrioritySlider}}display: none{{/unless}}"></div>
+      <div class="project-header-toolbar-divider {{hideInMobileLayout}}" style="{{#unless displayPrioritySlider}}display: none{{/unless}}"></div>
       <div style="{{#unless displayPrioritySlider}}display: none{{/unless}}">
         {{> justdo_priority_slider id="operations_toolbar_priority_slider" getGridControl=getGridControl}}
       </div>

@@ -1,6 +1,6 @@
 <template name="task_pane">
   <div id="task-pane" class="selected-tab-{{task_pane_section_id}}">
-    <div class="task-pane-resizable d-none d-md-block">
+    <div class="task-pane-resizable {{hideInMobileLayout}}">
       <div class="task-pane-resize-token"></div>
     </div>
     <div class="task-pane-header-container">

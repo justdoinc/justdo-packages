@@ -1,5 +1,5 @@
 <template name="tutorials">
-  <div class="tutorials-wrapper d-none d-md-block">
+  <div class="tutorials-wrapper {{hideInMobileLayout}}">
     {{#each tutorials}}
       <div class="tutorial-item {{class}} {{status}}">
         <div class="tutorial-icon">

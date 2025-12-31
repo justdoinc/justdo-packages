@@ -1,5 +1,5 @@
 <template name="print_menu_button">
-  <div class="print-dropdown dropdown project-header-button d-none d-md-block">
+  <div class="print-dropdown dropdown project-header-button {{hideInMobileLayout}}">
     <svg class="jd-icon jd-c-pointer text-dark" data-display="static" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><use xlink:href="/layout/icons-feather-sprite.svg#printer"/></svg>
     <ul class="dropdown-menu dropdown-menu-right jd-p-075 animate slideIn shadow-lg border-0">
       <li class="dropdown-header px-1 py-0"><small class="text-uppercase font-weight-bold">{{_ "print_dropdown_print_justdo"}}</small></li>
