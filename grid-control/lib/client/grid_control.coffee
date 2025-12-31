@@ -305,7 +305,7 @@ _.extend GridControl,
 
 Util.inherits GridControl, EventEmitter
 
-activeItemObj = (fields, _grid_data_structure=true) ->
+activeItemObj = (fields, _grid_data_structure = true) ->
   if _grid_data_structure
     return @getCurrentPathObj(fields)
 
@@ -599,7 +599,7 @@ _.extend GridControl.prototype,
 
     @_init_dfd.resolve()
 
-  getAllDependentFields: (field_id, extended_schema=null) ->
+  getAllDependentFields: (field_id, extended_schema = null) ->
     # Returns all the fields that are depending on field_id
 
     if not extended_schema?
@@ -995,7 +995,7 @@ _.extend GridControl.prototype,
         @container.removeClass state_name
 
   _destroyStatesClassesComputations: ->
-    if @_states_classes_computations?    
+    if @_states_classes_computations?
       for comp in @_states_classes_computations
         comp.stop()
 
@@ -1282,7 +1282,7 @@ _.extend GridControl.prototype,
 
       field_def = extended_schema[field_name]
       if not field_def.grid_visible_column
-        err "Provided view has a column for non-visible field `#{field_name}`"        
+        err "Provided view has a column for non-visible field `#{field_name}`"
 
       if column.frozen? and not _.isBoolean column.frozen
         err "Provided view has a column with invalid 'frozen' property value, must be a Boolean"
@@ -1869,14 +1869,14 @@ _.extend GridControl.prototype,
   #
   # activate row/path
   #
-  activateRow: (row, cell = 0, scroll_into_view = true, resulted_from_smart_guess=false) ->
+  activateRow: (row, cell = 0, scroll_into_view = true, resulted_from_smart_guess = false) ->
     @_grid.setActiveCell(row, cell, scroll_into_view)
 
     @emit "row-activated", row, cell, scroll_into_view, resulted_from_smart_guess
 
     return
 
-  activatePath: (path, cell=0, options) ->
+  activatePath: (path, cell = 0, options) ->
     if not path?
       @logger.debug "activatePath: no path provided"
       
@@ -2139,7 +2139,7 @@ _.extend GridControl.prototype,
 
     return
 
-  getFieldDef: (field_id, throw_if_not_exists=true) ->
+  getFieldDef: (field_id, throw_if_not_exists = true) ->
     extended_schema = @getSchemaExtendedWithCustomFields()
 
     if field_id not of extended_schema
@@ -2540,7 +2540,7 @@ _.extend GridControl.prototype,
 
     $(".#{style_tag_class}").remove()
     if height_px? # if not, we just remove, i.e. resuming to default
-      $("html > head").append($("""<style class="#{style_tag_class}">.#{grid_uid} .slick-header-column { padding-top: #{vertical_paddings}px; padding-bottom: #{vertical_paddings}px; } .#{grid_uid}</style>"""));
+      $("html > head").append($("""<style class="#{style_tag_class}">.#{grid_uid} .slick-header-column { padding-top: #{vertical_paddings}px; padding-bottom: #{vertical_paddings}px; } .#{grid_uid}</style>"""))
 
     @_grid.resizeCanvas()
 
@@ -2840,7 +2840,7 @@ _.extend GridControl.prototype,
   getDomain: ->
     return @options.domain
   
-  getFieldRawDescription: (field_id, option_id=undefined) ->
+  getFieldRawDescription: (field_id, option_id = undefined) ->
     # Receives a field_id and an optional option_id, returns the raw-description for the field in its unevaluated-raw form.
     #
     # If option_id is provided, returns the raw-description for the specific option, and if the option doesn't have a description,
@@ -2858,7 +2858,7 @@ _.extend GridControl.prototype,
       return undefined
 
     if field_def.grid_values? and not _.isEmpty(option_id)
-      if not (value_def = field_def.grid_values[option_id])?        
+      if not (value_def = field_def.grid_values[option_id])?
         return undefined
       
       return value_def.description
@@ -2872,7 +2872,7 @@ _.extend GridControl.prototype,
 
     return @getFieldRawDescription(field_id, option_id)?
 
-  evaluateDescriptionValue: (field_id, doc, xss_options=undefined) ->
+  evaluateDescriptionValue: (field_id, doc, xss_options = undefined) ->
     # Provided with field_id, doc (optional) and xss_options (optional), 
     # returns the XSS-Guarded description value for the field.
     # 
