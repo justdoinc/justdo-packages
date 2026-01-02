@@ -12,4 +12,11 @@ _.extend JustdoMcp.prototype,
   # as the base for all the packages based on
   # justdo-package-skeleton >= 0.0.4
   _errors_types:
-    _.extend {}, JustdoHelpers.common_errors_types, {}
+    _.extend {}, JustdoHelpers.common_errors_types,
+      "unauthorized": "Authentication required"
+      "invalid-token": "Invalid or expired authentication token"
+      "invalid-api-key": "Invalid API key"
+      "tool-not-found": "The requested tool was not found"
+      "invalid-tool-input": "Invalid input parameters for the tool"
+      "tool-execution-failed": "Tool execution failed"
+      "rate-limit-exceeded": "Rate limit exceeded"

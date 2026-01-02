@@ -1,4 +1,5 @@
-default_options = {}
+default_options =
+  api_base_path: "/api/mcp/v1"
 
 options_schema =
   both:
@@ -10,6 +11,11 @@ options_schema =
     tasks_collection:
       type: "skip-type-check"
       optional: false
+      bind_to_instance: true
+
+    api_base_path:
+      type: String
+      optional: true
       bind_to_instance: true
 
 # options_schema

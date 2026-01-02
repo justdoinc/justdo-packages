@@ -1,7 +1,7 @@
 Package.describe({
   name: "justdoinc:justdo-mcp",
   version: "1.0.0",
-  summary: "",
+  summary: "MCP (Model Context Protocol) API for JustDo - enables AI agents to interact with JustDo",
   git: "https://github.com/justdoinc/justdo-shared-packages/tree/master/justdo-mcp"
 });
 
@@ -14,26 +14,10 @@ Package.onUse(function (api) {
   api.use("underscore", both);
   api.use("mongo", both);
 
-  // Uncomment if you want to use NPM peer dependencies using
-  // checkNpmVersions.
-  //
-  // Introducing new NPM packages procedure:
-  //
-  // * Uncomment the lines below.
-  // * Add your packages to the main web-app package.json dependencies section.
-  // * Call $ meteor npm install
-  // * Call $ meteor npm shrinkwrap
-  //
-  // Add to the peer dependencies checks to one of the JS/Coffee files of your package,
-  // Example:
-  //
-  //   import { checkNpmVersions } from "meteor/tmeasday:check-npm-versions"
-  //
-  //   checkNpmVersions({
-  //     'colors': '1.1.x'
-  //   }, 'justdoinc:justdo-mcp')
-  // api.use("ecmascript", both);
-  // api.use("tmeasday:check-npm-versions@0.3.1", both);
+  // api.use("ecmascript", server);
+  // api.use("tmeasday:check-npm-versions@0.3.1", server);
+  api.use("webapp", server);
+  api.use("check", both);
 
   // api.use("stevezhu:lodash@4.17.2", both);
   api.use("templating", client);
