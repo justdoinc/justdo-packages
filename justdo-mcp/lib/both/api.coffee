@@ -19,9 +19,3 @@ _.extend JustdoMcp.prototype,
       return
 
     return
-
-  isPluginInstalledOnProjectDoc: (project_doc) ->
-    return APP.projects.isPluginInstalledOnProjectDoc(JustdoMcp.project_custom_feature_id, project_doc)
-
-  getProjectDocIfPluginInstalled: (project_id) ->
-    return @projects_collection.findOne({_id: project_id, "conf.custom_features": JustdoMcp.project_custom_feature_id})
