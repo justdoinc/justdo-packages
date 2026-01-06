@@ -1,0 +1,16 @@
+// Bootstrap-compatible breakpoint values
+$breakpoint-xs: 0;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+// PWA-specific mobile breakpoint
+$mobile-breakpoint: $breakpoint-md;
+
+// Mixins for responsive design
+@mixin mobile {
+  @media (max-width: #{$mobile-breakpoint - 1px}) {
+    @content;
+  }
+}

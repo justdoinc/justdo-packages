@@ -70,6 +70,8 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
+  api.addFiles("lib/client/global-styles/_vars.scss", client, {isImport: true});
+
   api.addFiles("lib/client/mobile-layout/mobile-layout.sass", client);
   api.addFiles("lib/client/mobile-layout/mobile-layout.html", client);
   api.addFiles("lib/client/mobile-layout/mobile-layout.coffee", client);
