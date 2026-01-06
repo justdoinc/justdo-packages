@@ -1,3 +1,5 @@
+@import "{justdoinc:justdo-pwa}/lib/client/global-styles/_vars.scss"
+
 .mobile-navbar-buttons
   display: none
   width: 100%
@@ -50,6 +52,6 @@
     font-weight: bold
     margin-bottom: 4px
 
-@media (max-width: 768px)
+@include mobile
   .mobile-navbar-buttons
     display: flex

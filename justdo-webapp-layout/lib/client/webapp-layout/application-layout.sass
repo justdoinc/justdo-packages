@@ -1,4 +1,5 @@
 @import "{justdoinc:justdo-webapp-layout}/lib/client/global-sass/global-vars.sass"
+@import "{justdoinc:justdo-pwa}/lib/client/global-styles/_vars.scss"
 
 html
   overflow: hidden
@@ -38,7 +39,7 @@ body
   &.no-scroll
     overflow: visible
 
-@media (max-width: 768px)
+@include mobile
   nav.navbar,
   .project-container,
   #project-main
@@ -92,6 +93,3 @@ body
       position: unset
       margin-top: 16px
       padding: 4px
-
-
-//
