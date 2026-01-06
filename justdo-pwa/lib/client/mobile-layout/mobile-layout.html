@@ -2,7 +2,7 @@
   <div class="mobile-navbar-buttons">
     {{#each tabs}}
       {{#if shouldRenderTab}}
-        <div class="mobile-navbar-btn {{_id}} {{#if isActiveTab _id}}active{{/if}}" data-tab="{{_id}}">
+        <div class="mobile-navbar-btn {{_id}} {{#if isActiveTab _id}}active{{/if}} {{#if isTabDisabled}}disabled{{/if}}" data-tab="{{_id}}">
           <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#{{icon}}"></use></svg>
         </div>
       {{/if}}

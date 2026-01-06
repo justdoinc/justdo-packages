@@ -1,3 +1,7 @@
+tab_disabled_rules =
+  "bottom-pane": ->
+    not APP.justdo_split_view.enabled.get()
+
 Template.mobile_navbar.helpers
   tabs: -> JustdoPwa.default_mobile_tabs
 
@@ -9,6 +13,12 @@ Template.mobile_navbar.helpers
       return @listingCondition()
 
     return true
+
+  isTabDisabled: ->
+    rule = tab_disabled_rules[@_id]
+    if rule?
+      return rule()
+    false
 
 Template.mobile_navbar.events
   "click .mobile-navbar-btn": (e, tpl) ->
