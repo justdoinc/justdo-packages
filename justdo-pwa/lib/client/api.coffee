@@ -4,7 +4,7 @@ _.extend JustdoPwa.prototype,
 
     @_setupGlobalTemplateHelpers()
     @_setupTaskPaneStateTracker()
-    @_setupGridControlFrozenColumnsModeHandler()
+    @_setupGridControlFrozenColumnsModeTracker()
 
     return
 
@@ -78,37 +78,39 @@ _.extend JustdoPwa.prototype,
         return
 
       @onDestroy =>
-        @task_pane_state_tracker.stop()
+        @task_pane_state_tracker?.stop()
+        @task_pane_state_tracker = null
         return
       
       return
 
     return
 
-  _setupGridControlFrozenColumnsModeHandler: ->
+  _setupGridControlFrozenColumnsModeTracker: ->
     # This tracker listens for window resize events and triggers a re-evaluation
     # of frozen columns mode on all registered grid controls when the mobile layout
     # state changes. This ensures frozen columns are disabled in mobile view and
     # re-enabled (if applicable) in desktop view.
     
-    self = @
-    resizeHandler = ->
-      is_mobile_layout = self.isMobileLayout()
+    APP.executeAfterAppLibCode =>
+      @grid_control_frozen_columns_mode_tracker = Tracker.autorun =>
+        is_mobile_layout = @isMobileLayout()
 
-      for grid_control in GridControl.getAllRegisteredGridControls()
-        if is_mobile_layout
-          grid_control.disableFrozenColumnsMode()
-          grid_control.exitFrozenColumnsMode()
-        else
-          grid_control.enableFrozenColumnsMode()
-          grid_control.reevaluateFrozenColumnsMode()
+        for grid_control in GridControl.getAllRegisteredGridControls()
+          if is_mobile_layout
+            grid_control.disableFrozenColumnsMode()
+            grid_control.exitFrozenColumnsMode()
+          else
+            grid_control.enableFrozenColumnsMode()
+            grid_control.reevaluateFrozenColumnsMode()
 
-      return
+        return
 
-    $(window).on "resize", resizeHandler
+      @onDestroy =>
+        @grid_control_frozen_columns_mode_tracker?.stop()
+        @grid_control_frozen_columns_mode_tracker = null
+        return
 
-    @onDestroy =>
-      $(window).off "resize", resizeHandler
       return
 
     return
