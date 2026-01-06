@@ -9,12 +9,12 @@ _.extend JustdoPwa,
       _id: "notifications"
       label: "notifications_label"
       icon: "bell"
-      tab_template: "mobile_tab_notifications"
+      template: "mobile_tab_notifications"
     ,
       _id: "chats"
       label: "chats_label"
       icon: "message-circle"
-      tab_template: "recent_activity_dropdown"
+      template: "recent_activity_dropdown"
     ,
       _id: "bottom-pane"
       label: "bottom-pane"

@@ -12,10 +12,10 @@
 
 <template name="mobile_tabs">
   {{#with activeTabDefinition}}
-    {{#if tab_template}}
+    {{#if template}}
       <div class="mobile-tab {{_id}}">
         <div class="mobile-tab-title">{{_ label}}</div>
-        <div class="mobile-tab-content">{{> Template.dynamic template=tab_template}}</div>
+        <div class="mobile-tab-content">{{> Template.dynamic template=template}}</div>
       </div>
     {{/if}}
   {{/with}}
