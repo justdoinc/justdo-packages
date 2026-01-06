@@ -14,13 +14,7 @@ _.extend JustdoPwa,
       _id: "chats"
       label: "chats_label"
       icon: "message-circle"
-      onActivate: ->
-        APP.justdo_chat.requestSubscribedChannelsRecentActivity({additional_recent_activity_request: false})
-        return
-      onDeactivate: ->
-        APP.justdo_chat.stopChannelsRecentActivityPublication()
-        return
-      tab_template: "mobile_tab_chats"
+      tab_template: "recent_activity_dropdown"
     ,
       _id: "bottom-pane"
       label: "bottom-pane"

@@ -25,14 +25,3 @@ Template.mobile_tab_notifications.helpers
   requiredActions: -> APP.projects.modules.required_actions.getCursor({allow_undefined_fields: true, sort: {date: -1}}).fetch()
 
   requiredActionsCount: -> APP.projects.modules.required_actions.getCursor({fields: {_id: 1}}).count()
-
-Template.mobile_tab_chats.helpers
-  isLoadingRecentActivity: ->
-    subscription_state = APP.justdo_chat.getSubscribedChannelsRecentActivityState()
-    return subscription_state in ["no-sub", "initial-not-ready"]
-
-  recentActivityItems: ->
-    return APP.collections.JDChatRecentActivityChannels.find({}, {sort: {last_message_date: -1}}).fetch()
-
-  getSubscribedChannelsRecentActivityState: ->
-    return APP.justdo_chat.getSubscribedChannelsRecentActivityState()

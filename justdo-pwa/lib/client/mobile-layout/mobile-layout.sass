@@ -3,7 +3,14 @@
 
 $mobile-navbar-height: 92px
 
+$mobile-tab-vertical-padding: 12px
+$mobile-tab-horizontal-padding: 20px
+
+$mobile-tab-title-margin-bottom: 4px
 $mobile-tab-title-line-height: 1.5em
+
+// Since mobile-tab is fixed position, we need to calculate the max-height of the content based on the viewport height.
+$mobile-tab-content-max-height: calc(100vh - #{$navbar-height} - #{$mobile-navbar-height} - #{$mobile-tab-vertical-padding} - #{$mobile-tab-title-line-height} - #{$mobile-tab-title-margin-bottom})
 
 .mobile-navbar-buttons
   display: none
@@ -41,23 +48,28 @@ $mobile-tab-title-line-height: 1.5em
   height: 100%
   z-index: 1
   display: block
-  padding: 12px 20px
+  padding: $mobile-tab-vertical-padding $mobile-tab-horizontal-padding
   &.notifications
     .required-actions-card
       width: auto
   &.chats
+    .mobile-tab-content
+      overflow: hidden
     .recent-activity-items-viewport
-      max-height: unset
+      // In chat tab, we load `recent_activity_dropdown` template dynamically.
+      // The template handles the scroll event to load more items,
+      // so we set the max-height of it's viewport instead of the tab content.
+      max-height: $mobile-tab-content-max-height
       .recent-activity-item
         padding: 8px 0px
 
   .mobile-tab-title
     font-size: 16px
     font-weight: bold
-    margin-bottom: 4px
+    margin-bottom: $mobile-tab-title-margin-bottom
 
   .mobile-tab-content
-    max-height: calc(100% - #{$mobile-navbar-height} - #{$navbar-height} -  #{$mobile-tab-title-line-height})
+    max-height: $mobile-tab-content-max-height
     overflow: auto
 
 @include mobile
