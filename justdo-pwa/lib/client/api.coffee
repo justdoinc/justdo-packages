@@ -12,6 +12,24 @@ _.extend JustdoPwa.prototype,
     if @destroyed
       return
 
+    @_resetActiveTabUponExitingMobileLayout()
+
+    return
+
+  _resetActiveTabUponExitingMobileLayout: ->
+    # This tracker is used to reset the active tab to "main" when the screen changes to desktop layout,
+    # so that the `onDeactivate` callback of the active tab is called to perform any necessary cleanup
+    # e.g. unsubscribe from publications.
+    @_reset_active_tab_upon_exiting_mobile_layout_tracker = Tracker.autorun =>
+      if not @isMobileLayout()
+        @setActiveTab("main")
+
+      return
+
+    @onDestroy =>
+      @_reset_active_tab_upon_exiting_mobile_layout_tracker?.stop()
+      @_reset_active_tab_upon_exiting_mobile_layout_tracker = null
+      return
     return
   
   _setupGlobalTemplateHelpers: ->
