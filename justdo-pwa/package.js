@@ -70,6 +70,10 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
+  api.addFiles("lib/client/mobile-layout/mobile-layout.sass", client);
+  api.addFiles("lib/client/mobile-layout/mobile-layout.html", client);
+  api.addFiles("lib/client/mobile-layout/mobile-layout.coffee", client);
+
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", both);

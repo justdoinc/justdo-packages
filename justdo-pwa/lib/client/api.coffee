@@ -1,5 +1,7 @@
 _.extend JustdoPwa.prototype,
   _immediateInit: ->
+    @active_tab_rv = new ReactiveVar "main"
+
     @_setupGlobalTemplateHelpers()
     @_setupTaskPaneStateTracker()
     @_setupGridControlFrozenColumnsModeHandler()
@@ -93,3 +95,24 @@ _.extend JustdoPwa.prototype,
 
   isMobileLayout: ->
     return @getBrowserDimention().width < JustdoPwa.mobile_breakpoint
+  
+  getTabDefinition: (tab_id) ->
+    return _.find JustdoPwa.default_mobile_tabs, (tab) -> tab._id is tab_id
+
+  getActiveTab: ->
+    return @active_tab_rv.get()
+
+  getActiveTabDefinition: ->
+    return @getTabDefinition(@getActiveTab())
+
+  setActiveTab: (new_tab_id) ->
+    cur_tab_id = Tracker.nonreactive => @getActiveTab()
+    cur_tab_definition = @getTabDefinition(cur_tab_id)
+    cur_tab_definition?.onDeactivate?()
+
+    @active_tab_rv.set(new_tab_id)
+
+    new_tab_definition = @getTabDefinition(new_tab_id)
+    new_tab_definition?.onActivate?()
+
+    return

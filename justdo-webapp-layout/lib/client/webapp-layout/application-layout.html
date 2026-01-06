@@ -28,81 +28,10 @@
       {{/if}}
     </div>
 
-    <div class="mobile-toolbar-buttons">
-      <div class="mobile-toolbar-btn grid active">
-        <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#grid"></use></svg>
-      </div>
-      <div class="mobile-toolbar-btn notifications">
-        <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#bell"></use></svg>
-      </div>
-      <div class="mobile-toolbar-btn chats">
-        <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#message-circle"></use></svg>
-      </div>
-      <div class="mobile-toolbar-btn bottom-pane">
-        <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#sidebar"></use></svg>
-      </div>
-      <div class="mobile-toolbar-btn task-pane">
-        <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#sidebar"></use></svg>
-      </div>
-    </div>
-
-    <div class="mobile-toolbar-tabs">
-      <div class="mobile-tab notifications">
-        <div class="mobile-tab-title">{{_ "notifications_label"}}</div>
-        <div class="required-actions-cards-area">
-          {{#if $eq 0 requiredActionsCount}}
-            <div class="no-actions-card p-3 text-center text-muted">
-              <div class="no-actions-message text-nowrap">{{_ "required_actions_no_pending_action"}}</div>
-            </div>
-          {{else}}
-            {{#each requiredActions}}
-              {{> required_action_card}}
-            {{/each}}
-          {{/if}}
-        </div>
-      </div>
-      <div class="mobile-tab chats">
-        <div class="mobile-tab-title">{{_ "chats_label"}}</div>
-        {{#if isLoadingRecentActivity}}
-          <div class="loading-recent-activity-items-container">
-            <div class="loader">
-              <div class="double-bounce1 bg-primary"></div>
-              <div class="double-bounce2 bg-primary"></div>
-            </div>
-          </div>
-        {{else}}
-          {{#with recentActivityItems}}
-            <div class="recent-activity-items-container">
-              <div class="recent-activity-items-viewport">
-                <div class="recent-activity-items">
-                  {{#each this}}
-                    {{> recent_activity_item}}
-                  {{/each}}
-
-                  {{#if $eq getSubscribedChannelsRecentActivityState "all"}}
-                    <div class="more-items-container">
-                      <span class="no-more-items text-muted">{{_ "chat_dropdown_no_more_messages"}}</span>
-                    </div>
-                  {{else}}
-                    <div class="more-items-container">
-                      <a href="#" class="load-more-items">{{_ "chat_dropdown_loading_more_messages"}}</a>
-                    </div>
-                  {{/if}}
-                </div>
-              </div>
-              <div class="recent-activity-items-footer">
-                <div class="mark-all-activity-read text-primary">{{_ "chat_dropdown_mark_all_as_read"}}</div>
-              </div>
-            </div>
-          {{else}}
-            <div class="no-recent-activity-items-container">
-              <i class="fa fa-comments" aria-hidden="true"></i>
-              <p>{{_ "chat_dropdown_you_have_no_messages"}}</p>
-            </div>
-          {{/with}}
-        {{/if}}
-      </div>
-    </div>
+    {{#if isMobileLayout}}
+      {{> mobile_navbar}}
+      {{> mobile_tabs}}
+    {{/if}}
 
   </div>
 </template>
