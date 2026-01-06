@@ -15,7 +15,7 @@
     {{#if template}}
       <div class="mobile-tab {{_id}}">
         <div class="mobile-tab-title">{{_ label}}</div>
-        <div class="mobile-tab-content">{{> Template.dynamic template=template}}</div>
+        <div class="mobile-tab-content">{{> Template.dynamic template=template data=template_data}}</div>
       </div>
     {{/if}}
   {{/with}}

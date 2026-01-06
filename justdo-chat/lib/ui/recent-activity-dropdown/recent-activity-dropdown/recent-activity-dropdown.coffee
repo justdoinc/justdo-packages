@@ -24,7 +24,11 @@ share.RecentActivityDropdown = JustdoHelpers.generateNewTemplateDropdown "recent
 Template.recent_activity_dropdown.onCreated ->
   @loading_more_items = new ReactiveVar false
 
-  APP.justdo_chat.requestSubscribedChannelsRecentActivity({additional_recent_activity_request: false})
+  request_subscription_options = 
+    additional_recent_activity_request: false
+  if @data.initial_messages_to_request?
+    request_subscription_options.initial_messages_to_request = @data.initial_messages_to_request
+  APP.justdo_chat.requestSubscribedChannelsRecentActivity(request_subscription_options)
 
   return
 

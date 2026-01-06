@@ -15,6 +15,8 @@ _.extend JustdoPwa,
       label: "chats_label"
       icon: "message-circle"
       template: "recent_activity_dropdown"
+      template_data:
+        initial_messages_to_request: 20
     ,
       _id: "bottom-pane"
       label: "bottom-pane"
