@@ -827,7 +827,7 @@ _.extend GridControl.prototype,
     # (e.g., from justdo-pwa when mobile layout changes)
     @reevaluateFrozenColumnsMode = -> viewChangeCb()
 
-    @onDestroy ->
+    @onDestroy =>
       @exitFrozenColumnsMode()
       
       return
