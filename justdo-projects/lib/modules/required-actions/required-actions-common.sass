@@ -2,13 +2,27 @@ $comp-vert-margins: 8px
 
 .card-with-avatar
   $avatar-width: 30px
+  display: flex
+  justify-content: space-between
+
+  .card-with-avatar-content
+    display: flex
+    margin-right: 12px
 
   .card-avatar
-    position: absolute
-
     .justdo-avatar
       width: $avatar-width
       height: $avatar-width
 
   .card-details
-    margin-left: $avatar-width + 10
+    margin-left: 10px
+
+// RTL modifications
+.right-to-left
+  .card-with-avatar
+    .card-with-avatar-content
+      margin-right: unset
+      margin-left: 12px
+      .card-details
+        margin-left: unset
+        margin-right: 10px
