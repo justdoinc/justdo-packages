@@ -1,10 +1,8 @@
-common_helpers = 
-  isActiveTab: (tab_id) -> 
-    return APP.justdo_pwa.getActiveTab() is tab_id
-
-Template.mobile_navbar.helpers common_helpers
 Template.mobile_navbar.helpers
   tabs: -> JustdoPwa.default_mobile_tabs
+
+  isActiveTab: (tab_id) -> 
+    return APP.justdo_pwa.getActiveTab() is tab_id
 
   shouldRenderTab: ->
     if @listingCondition?
