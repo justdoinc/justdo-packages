@@ -17,11 +17,9 @@ Template.mobile_navbar.events
     return
 
 Template.mobile_tabs.helpers
-  getActiveTabTemplate: ->
+  activeTabDefinition: ->
     tab_definition = APP.justdo_pwa.getActiveTabDefinition()
-    if (template = tab_definition.tab_template)?
-      return template
-    return
+    return tab_definition
 
 Template.mobile_tab_notifications.helpers
   requiredActions: -> APP.projects.modules.required_actions.getCursor({allow_undefined_fields: true, sort: {date: -1}}).fetch()

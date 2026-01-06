@@ -7,12 +7,12 @@ _.extend JustdoPwa,
       icon: "grid"
     ,
       _id: "notifications"
-      label: "notifications"
+      label: "notifications_label"
       icon: "bell"
       tab_template: "mobile_tab_notifications"
     ,
       _id: "chats"
-      label: "chats"
+      label: "chats_label"
       icon: "message-circle"
       onActivate: ->
         APP.justdo_chat.requestSubscribedChannelsRecentActivity({additional_recent_activity_request: false})
