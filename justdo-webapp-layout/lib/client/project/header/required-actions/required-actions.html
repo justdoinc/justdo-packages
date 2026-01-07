@@ -6,16 +6,24 @@
 
 <template name="required_actions_bell">
   <div class="required-actions-bell project-header-button dropdown {{#if $eq requiredActionsCount 0}}no-actions{{else}}pending-actions{{/if}} {{#if $gt requiredActionsCount 9}}many-actions{{/if}}">
-    <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#bell"/></svg>
-      <div class="required-actions-count">
-        {{#if $lte requiredActionsCount 9}}
-          {{requiredActionsCount}}
-        {{else}}
-          9+
-        {{/if}}
+    {{#if shouldCreateDropdown}}
+      <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        {{> required_actions_bell_icon}}
+        {{> required_actions_dropdown}}
       </div>
-      {{> required_actions_dropdown}}
-    </div>
+    {{else}}
+      {{> required_actions_bell_icon}}
+    {{/if}}
+  </div>
+</template>
+
+<template name="required_actions_bell_icon">
+  <svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#bell"/></svg>
+  <div class="required-actions-count">
+    {{#if $lte requiredActionsCount 9}}
+      {{requiredActionsCount}}
+    {{else}}
+      9+
+    {{/if}}
   </div>
 </template>
