@@ -3,7 +3,11 @@
     {{#each tabs}}
       {{#if shouldRenderTab}}
         <div class="mobile-navbar-btn {{_id}} {{#if isActiveTab _id}}active{{/if}}" data-tab="{{_id}}">
-          <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#{{icon}}"></use></svg>
+          {{#if icon_template}}
+            {{> Template.dynamic template=icon_template data=icon_template_data}}
+          {{else}}
+            <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#{{icon}}"></use></svg>
+          {{/if}}
         </div>
       {{/if}}
     {{/each}}

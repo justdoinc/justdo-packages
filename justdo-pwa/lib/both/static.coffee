@@ -13,7 +13,9 @@ _.extend JustdoPwa,
     ,
       _id: "chats"
       label: "chats_label"
-      icon: "message-circle"
+      icon_template: "justdo_chat_recent_activity_button"
+      icon_template_data:
+        skip_dropdown_creation: true
       tab_template: "recent_activity_dropdown"
       tab_template_data:
         initial_messages_to_request: 20
