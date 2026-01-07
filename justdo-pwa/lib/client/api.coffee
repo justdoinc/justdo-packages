@@ -64,7 +64,9 @@ _.extend JustdoPwa.prototype,
         is_exiting_mobile_layout = (not is_mobile_layout) and prev_is_mobile_layout
 
         if is_entering_mobile_layout
-          if project_page_preferences.toolbar_open
+          # When a user first loads the app, project_page_preferences.toolbar_open does not exist yet.
+          # In that case, it's regarded as true by WireframeManager (search for `toolbar_open` in 015-project-page-wireframe-manager.coffee)
+          if (project_page_preferences.toolbar_open is true) or (not project_page_preferences.toolbar_open?)
             is_task_pane_expanded_before_mobile_layout = true
             APP.modules.project_page.updatePreferences({toolbar_open: false})
           else
