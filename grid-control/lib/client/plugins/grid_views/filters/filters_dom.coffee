@@ -182,7 +182,7 @@ _.extend GridControl.prototype,
           
           # Factor in also title column width because it's freezed, if the current dropdown isn't from title column
           field_id = target.element.parent().data "field_id"
-          if field_id isnt "title"
+          if (field_id isnt "title") and @isFrozenColumnsMode() # Only factor in title column width if we are in frozen columns mode
             title_column_width = _.find(@getView(), (column) => column.field is "title")?.width or 0
             if APP.justdo_i18n.isRtl()
               container_position.right -= title_column_width
