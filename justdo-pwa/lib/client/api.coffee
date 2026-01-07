@@ -87,16 +87,20 @@ _.extend JustdoPwa.prototype,
     return
 
   _setupGridControlFrozenColumnsModeTracker: ->
-    # This tracker listens for window resize events and triggers a re-evaluation
-    # of frozen columns mode on all registered grid controls when the mobile layout
-    # state changes. This ensures frozen columns are disabled in mobile view and
+    # This checks whether mobile layout is active and triggers a re-evaluation
+    # of frozen columns mode on grid controls.
+    # This ensures frozen columns are disabled in mobile view and
     # re-enabled (if applicable) in desktop view.
     
-    APP.executeAfterAppLibCode =>
-      @grid_control_frozen_columns_mode_tracker = Tracker.autorun =>
-        is_mobile_layout = @isMobileLayout()
+    APP.on "grid-control-created", (grid_control) =>
+      # We wait for the "init" event to ensure grid_control._grid is available.
+      grid_control.on "init", =>
+        if grid_control.pwa_frozen_columns_mode_tracker?
+          return
 
-        for grid_control in GridControl.getAllRegisteredGridControls()
+        grid_control.pwa_frozen_columns_mode_tracker = Tracker.autorun =>
+          is_mobile_layout = @isMobileLayout()
+
           if is_mobile_layout
             grid_control.disableFrozenColumnsMode()
             grid_control.exitFrozenColumnsMode()
@@ -104,11 +108,13 @@ _.extend JustdoPwa.prototype,
             grid_control.enableFrozenColumnsMode()
             grid_control.reevaluateFrozenColumnsMode()
 
-        return
+          return
 
-      @onDestroy =>
-        @grid_control_frozen_columns_mode_tracker?.stop()
-        @grid_control_frozen_columns_mode_tracker = null
+        grid_control.onDestroy =>
+          grid_control.pwa_frozen_columns_mode_tracker.stop()
+          grid_control.pwa_frozen_columns_mode_tracker = null
+          return
+
         return
 
       return
