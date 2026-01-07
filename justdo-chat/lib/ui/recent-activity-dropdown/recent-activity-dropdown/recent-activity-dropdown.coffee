@@ -26,7 +26,7 @@ Template.recent_activity_dropdown.onCreated ->
 
   request_subscription_options = 
     additional_recent_activity_request: false
-  if @data.initial_messages_to_request?
+  if @data?.initial_messages_to_request?
     request_subscription_options.initial_messages_to_request = @data.initial_messages_to_request
   APP.justdo_chat.requestSubscribedChannelsRecentActivity(request_subscription_options)
 
