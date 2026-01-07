@@ -1,9 +1,10 @@
 share.current_recent_activity_dropdown = null # We assume only one button per app instance
 
 Template.justdo_chat_recent_activity_button.onRendered ->
-  @recent_activity_dropdown = new share.RecentActivityDropdown(@firstNode) # defined in ./recent-activity-dropdown/recent-activity-dropdown.coffee
+  if not @data?.skip_dropdown_creation
+    @recent_activity_dropdown = new share.RecentActivityDropdown(@firstNode) # defined in ./recent-activity-dropdown/recent-activity-dropdown.coffee
 
-  share.current_recent_activity_dropdown = @recent_activity_dropdown
+    share.current_recent_activity_dropdown = @recent_activity_dropdown
 
   Tracker.autorun ->
     APP.getJustdoChatObject()?.requireSubscribedUnreadChannelsCountSubscription()
