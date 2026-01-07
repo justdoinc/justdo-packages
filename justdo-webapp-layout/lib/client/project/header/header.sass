@@ -1,3 +1,5 @@
+@import "{justdoinc:justdo-pwa}/lib/client/global-styles/_vars.scss"
+
 $project-logo-max-width: 0 // With the introduction of the new design, we decided to revoke the logo feature
 
 .project-header
@@ -6,8 +8,15 @@ $project-logo-max-width: 0 // With the introduction of the new design, we decide
   .middle-project-header-items
     height: inherit
 
+.project-name-wrapper
+  display: flex
+  align-items: center
+
 .project-header-button
   margin: 0 3px
+
+  #project-name
+    text-align: center
 
 .navbar .dropdown-item
   cursor: pointer
@@ -16,11 +25,13 @@ $project-logo-max-width: 0 // With the introduction of the new design, we decide
     color: #212529
 
 #project-name
+  display: flex
+  align-items: center
+  height: 100%
   background-color: transparent
   font-size: 16px
-  width: 222px
+  width: auto
   max-width: 400px
-  text-align: center
   white-space: nowrap
   overflow: hidden
   text-overflow: ellipsis
@@ -114,3 +125,8 @@ $project-logo-max-width: 0 // With the introduction of the new design, we decide
   &:active
     transform: scale(1)
     box-shadow: 0 2px 12px rgba(0, 0, 0, .12)
+
+@include mobile
+  .project-name-wrapper
+    flex-grow: 1
+    justify-content: flex-start
