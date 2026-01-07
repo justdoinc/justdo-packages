@@ -38,6 +38,8 @@ APP.executeAfterAppLibCode ->
     drawerAfterJdVersionItems: -> JD.getPlaceholderItems("drawer-after-jd-version")
     
   JD.registerPlaceholderItem "justdo-chat-recent-activity",
+    listingCondition: ->
+      return not APP.justdo_pwa.isMobileLayout()
     data:
       template: "justdo_chat_recent_activity_button"
       template_data: {}
