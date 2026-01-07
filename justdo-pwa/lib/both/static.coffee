@@ -21,7 +21,9 @@ _.extend JustdoPwa,
       _id: "bottom-pane"
       label: "bottom-pane"
       icon: "sidebar"
-      listingCondition: -> JD.activeJustdoId()?
+      listingCondition: -> 
+        # Require active justdo and at least one tab to be registered
+        return JD.activeJustdoId()? and not _.isEmpty(APP.justdo_project_pane?.getTabsDefinitions())
       onActivate: ->
         APP.justdo_project_pane.expand()
         APP.justdo_project_pane.enterFullScreen()
@@ -33,7 +35,9 @@ _.extend JustdoPwa,
       _id: "task-pane"
       label: "task-pane"
       icon: "sidebar"
-      listingCondition: -> JD.activeJustdoId()?
+      listingCondition: -> 
+        # Require active item
+        return JD.activeItemId()?
       onActivate: ->
         APP.modules.project_page.updatePreferences({toolbar_open: true})
         return
