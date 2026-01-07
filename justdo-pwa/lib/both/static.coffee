@@ -8,7 +8,9 @@ _.extend JustdoPwa,
     ,
       _id: "notifications"
       label: "notifications_label"
-      icon: "bell"
+      icon_template: "required_actions_bell"
+      icon_template_data:
+        skip_dropdown_creation: true
       tab_template: "mobile_tab_notifications"
     ,
       _id: "chats"
