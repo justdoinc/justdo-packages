@@ -663,7 +663,8 @@ _.extend GridControl.prototype,
   _setupFrozenColumnsMaintainer: ->
     _frozen_columns_mode = false
     _frozen_columns_mode_rv = new ReactiveVar _frozen_columns_mode
-    @isFrozenColumnsMode = -> _frozen_columns_mode_rv.get()
+    @isFrozenColumnsMode = -> 
+      return not @isFrozenColumnsModeDisabled() and _frozen_columns_mode_rv.get()
 
     _frozen_column_mode_disabled = false
     @disableFrozenColumnsMode = ->
