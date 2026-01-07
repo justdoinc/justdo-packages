@@ -9,13 +9,13 @@ _.extend JustdoPwa,
       _id: "notifications"
       label: "notifications_label"
       icon: "bell"
-      template: "mobile_tab_notifications"
+      tab_template: "mobile_tab_notifications"
     ,
       _id: "chats"
       label: "chats_label"
       icon: "message-circle"
-      template: "recent_activity_dropdown"
-      template_data:
+      tab_template: "recent_activity_dropdown"
+      tab_template_data:
         initial_messages_to_request: 20
     ,
       _id: "bottom-pane"
