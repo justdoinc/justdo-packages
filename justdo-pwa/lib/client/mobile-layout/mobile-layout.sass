@@ -16,7 +16,6 @@ $mobile-tab-content-max-height: calc(100dvh - #{$navbar-height} - #{$mobile-navb
 @mixin scrollable-container($max-height: $mobile-tab-content-max-height)
   max-height: $max-height
   overflow: auto
-  overscroll-behavior: contain
   // The following prevents layout shift when the scrollbar becomes visible.
   scrollbar-gutter: stable
 
@@ -49,6 +48,7 @@ $mobile-tab-content-max-height: calc(100dvh - #{$navbar-height} - #{$mobile-navb
     cursor: pointer
 
 .mobile-tab
+  overscroll-behavior: contain
   position: fixed
   top: 45px
   background-color: #ffffff
