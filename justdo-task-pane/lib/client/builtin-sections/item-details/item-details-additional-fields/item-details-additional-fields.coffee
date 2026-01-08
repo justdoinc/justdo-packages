@@ -73,7 +73,7 @@ APP.executeAfterAppLibCode ->
     if not is_col_frozen_col and  (is_col_hidden_to_the_left or is_col_hidden_to_the_right)
       # Scroll the col into view if it's not visible
 
-      $slick_viewport.animate { scrollLeft: scroll_left }, 500
+      $slick_viewport.animate {scrollLeft: scroll_left}, 500
 
     setTimeout ->
       $col_header.removeClass "shine-slick-grid-column-header"
@@ -326,7 +326,7 @@ APP.executeAfterAppLibCode ->
     field_editor = gc.generateFieldEditor(field_id, current_item_id, grid_column_editor)
 
     $field_editor_container = this.$(".field-editor")
-    $field_editor_container.data("editor_field_id", field_id)    
+    $field_editor_container.data("editor_field_id", field_id)
     $field_editor_container.data("editor", field_editor)
     $field_editor_container.html(field_editor.$dom_node)
 
@@ -341,5 +341,20 @@ APP.executeAfterAppLibCode ->
     # The following was called before, it came up during optimization profiling as inefficient
     # and seemed to be unnecessary 
     # $(window).trigger("resize.autosize")
+
+    @autorun (computation) ->
+      # This autorun is to fix an issue where, if the page is loaded with task pane collapsed,
+      # the textarea editor's internal "resize.autosize" call will create a line per character
+      # since the task pane has a width of 0 when collapsed.
+      # The `$(window).trigger("resize.autosize")` above does not seem to fix it either.
+
+      # Non-existance `toolbar_open` value is regarded as true
+      is_task_pane_open = APP.modules.project_page.preferences.get()?.toolbar_open isnt false
+      
+      if is_task_pane_open
+        field_editor.editor.$input?.trigger("resize.autosize")
+        computation.stop()
+
+      return
 
     return
