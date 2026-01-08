@@ -1,4 +1,5 @@
 @import "{justdoinc:justdo-webapp-layout}/lib/client/global-sass/global-vars.sass"
+@import "{justdoinc:justdo-pwa}/lib/client/global-styles/_vars.scss"
 
 nav.navbar
   .project-header-button
@@ -433,3 +434,11 @@ nav.navbar
     .add-task-button
       margin-left: unset
       margin-right: 8px
+
+@include mobile
+  nav.navbar
+    width: auto !important
+
+  .drawer-icon 
+    .jd-icon
+      width: 32px !important

@@ -1,4 +1,5 @@
 @import "{justdoinc:justdo-chat}/lib/ui/bottom-windows/common/vars.scss"
+@import "{justdoinc:justdo-pwa}/lib/client/global-styles/_vars.scss"
 
 $window-height: 420px
 $default-chat-input-height: 44px
@@ -35,3 +36,14 @@ $default-chat-input-height: 44px
   .message-editor-wrapper
     padding-left: unset
     padding-right: 12px
+
+@include mobile
+  .bottom-windows
+    .chat-window.open-chat-window
+      position: fixed
+      top: 45px
+      left: 0
+      bottom: 92px
+      height: auto
+      .messages-board-viewport
+        height: 100%

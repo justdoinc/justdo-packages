@@ -1,3 +1,5 @@
+@import "{justdoinc:justdo-pwa}/lib/client/global-styles/_vars.scss"
+
 #project-grid-operations
   flex-grow: 1
   margin-right: 8px
@@ -59,3 +61,14 @@
           &:hover
             opacity: 0.75
             stroke: white
+
+@include mobile
+  #project-grid-operations
+    overflow-x: auto
+    overflow-y: hidden
+    -webkit-overflow-scrolling: touch
+    margin-right: 20px
+    border-right: 1px solid #c7c7c7
+    .btn-toolbar
+      flex-wrap: nowrap
+      white-space: nowrap

@@ -1,3 +1,5 @@
+@import "{justdoinc:justdo-pwa}/lib/client/global-styles/_vars.scss"
+
 $bottom-windows-control-element-width: 35px
 $bottom-windows-elements-margin: 8px
 
@@ -72,3 +74,9 @@ $bottom-windows-elements-margin: 8px
   .bottom-windows-hide
     right: unset
     left: -$bottom-windows-control-element-width - $bottom-windows-elements-margin
+
+@include mobile
+  .bottom-windows
+    .bottom-windows-hide-up
+      display: block
+    

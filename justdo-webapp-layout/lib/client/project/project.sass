@@ -1,4 +1,5 @@
 @import "{justdoinc:justdo-webapp-layout}/lib/client/global-sass/global-vars.sass"
+@import "{justdoinc:justdo-pwa}/lib/client/global-styles/_vars.scss"
 
 .page-container.page-project
   // Cancel default page-container paddings
@@ -86,3 +87,21 @@
       position: absolute
       left: 0
       right: unset
+
+@include mobile
+  .project-container,
+  #project-main
+    width: auto !important
+
+  .project-container.open-toolbar
+    z-index: 2
+    #task-pane
+      top: 0
+      left: 0 !important
+      width: 100% !important
+
+  .project-header
+    min-width: unset
+
+  #task-pane
+    z-index: 120

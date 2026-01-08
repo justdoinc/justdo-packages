@@ -1,5 +1,4 @@
 @import "{justdoinc:justdo-webapp-layout}/lib/client/global-sass/global-vars.sass"
-@import "{justdoinc:justdo-pwa}/lib/client/global-styles/_vars.scss"
 
 html
   overflow: hidden
@@ -38,48 +37,3 @@ body
 
   &.no-scroll
     overflow: visible
-
-@include mobile
-  nav.navbar,
-  .project-container,
-  #project-main
-    width: auto !important
-
-  .project-container.open-toolbar
-    z-index: 2
-    #task-pane
-      top: 0
-      left: 0 !important
-      width: 100% !important
-
-  .project-header
-    min-width: unset
-
-  #task-pane
-    z-index: 120
-
-  .drawer-icon .jd-icon
-    width: 32px !important
-
-  #project-grid-operations
-    overflow-x: auto
-    overflow-y: hidden
-    -webkit-overflow-scrolling: touch
-    margin-right: 20px
-    border-right: 1px solid #c7c7c7
-    .btn-toolbar
-      flex-wrap: nowrap
-      white-space: nowrap
-
-  .bottom-windows
-    .bottom-windows-hide-up
-      display: block
-    
-    .chat-window.open-chat-window
-      position: fixed
-      top: 45px
-      left: 0
-      bottom: 92px
-      height: auto
-      .messages-board-viewport
-        height: 100%
