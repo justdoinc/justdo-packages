@@ -8,6 +8,7 @@ _.extend JustdoPwa.prototype,
     @_setupGlobalTemplateHelpers()
     @_setupTaskPaneStateTracker()
     @_setupGridControlFrozenColumnsModeTracker()
+    @_setupGridControlPreActivateRowHandler()
     @_setupProjectPaneHeightTracker()
 
     return
@@ -138,6 +139,22 @@ _.extend JustdoPwa.prototype,
 
       return
 
+    return
+
+  _setupGridControlPreActivateRowHandler: ->
+    # This hook is responsible to set the active tab to "main" when a row is activated in the main grid under mobile layout.
+    APP.on "grid-control-created", (grid_control) =>
+      if grid_control.getDomain() isnt "project-page-main-grid"
+        return
+      
+      grid_control.on "pre-activate-row", =>
+        if @isMobileLayout()
+          @setActiveTab("main")
+          return
+
+        return
+
+      return
     return
 
   _setupProjectPaneHeightTracker: ->
