@@ -8,6 +8,7 @@ _.extend JustdoPwa.prototype,
     @_setupGlobalTemplateHelpers()
     @_setupTaskPaneStateTracker()
     @_setupGridControlFrozenColumnsModeTracker()
+    @_setupProjectPaneHeightTracker()
 
     return
 
@@ -133,6 +134,26 @@ _.extend JustdoPwa.prototype,
           grid_control.pwa_frozen_columns_mode_tracker = null
           return
 
+        return
+
+      return
+
+    return
+
+  _setupProjectPaneHeightTracker: ->
+    # This tracker is responsible for setting the collapsed project pane height to 0 under mobile layout
+    # to alllow accurate layout rendering.
+    JustdoHelpers.hooks_barriers.runCbAfterBarriers "post-justdo-project-pane-init", =>
+      @project_pane_height_tracker = Tracker.autorun =>
+        if @isMobileLayout()
+          APP.justdo_project_pane.setCollapsedHeight 0
+        else
+          APP.justdo_project_pane.setCollapsedHeight JustdoProjectPane.collapsed_height
+        return
+
+      @onDestroy =>
+        @project_pane_height_tracker?.stop()
+        @project_pane_height_tracker = null
         return
 
       return

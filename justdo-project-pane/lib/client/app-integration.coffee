@@ -23,3 +23,5 @@ APP.getEnv (env) ->
   # If an env variable affect this package load, check its value here
   # remember env vars are Strings
   APP.justdo_project_pane = new JustdoProjectPane()
+  JustdoHelpers.hooks_barriers.markBarrierAsResolved "post-justdo-project-pane-init"
+  return
