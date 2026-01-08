@@ -23,10 +23,10 @@ _.extend JustdoPwa.prototype,
   _setupIsMobileLayoutTracker: ->
     APP.executeAfterAppLibCode =>
       @is_mobile_layout_tracker = Tracker.autorun =>
-        # The reason we have `is_mobile_layout_rv` instead of returning `APP.modules.main.window_dim.get().width < JustdoPwa.mobile_breakpoint`
+        # The reason we have `is_mobile_layout_rv` instead of returning `@getBrowserDimension().width < JustdoPwa.mobile_breakpoint`
         # directly in `isMobileLayout` is to avoid unnecessary re-evaluations of the tracker depending on it,
-        # since `APP.modules.main.window_dim.get()` triggers re-computation on every pixel change in the window size.
-        @is_mobile_layout_rv.set APP.modules.main.window_dim.get().width < JustdoPwa.mobile_breakpoint
+        # since `@getBrowserDimension()` triggers re-computation on every pixel change in the window size.
+        @is_mobile_layout_rv.set @getBrowserDimension().width < JustdoPwa.mobile_breakpoint
         return
 
       @onDestroy =>
@@ -160,7 +160,7 @@ _.extend JustdoPwa.prototype,
 
     return
 
-  getBrowserDimention: ->
+  getBrowserDimension: ->
     return APP.modules.main.window_dim.get()
 
   isMobileLayout: ->
