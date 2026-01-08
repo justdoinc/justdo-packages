@@ -60,7 +60,7 @@ _.extend JustdoProjectPane.prototype,
       if gc.getDomain() isnt "project-page-main-grid"
         return
 
-      gc.on "row-activated", =>
+      gc.on "pre-activate-row", =>
         if @isFullScreen()
           @exitFullScreen()
         return
