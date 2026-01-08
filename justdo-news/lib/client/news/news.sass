@@ -1,3 +1,6 @@
+@import "{justdoinc:justdo-webapp-layout}/lib/client/global-sass/global-vars.sass"
+@import "{justdoinc:justdo-pwa}/lib/client/global-styles/_vars.scss"
+
 .news
   display: flex
   flex-direction: column
@@ -101,3 +104,9 @@
       font-size: 16px !important
       .jd-icon
         display: none !important
+
+@include mobile
+  .bootbox.system-update-dialog
+    .modal-dialog
+      width: auto
+      min-width: unset
