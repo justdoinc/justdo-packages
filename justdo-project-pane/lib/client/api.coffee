@@ -9,6 +9,8 @@ _.extend JustdoProjectPane.prototype,
 
     @_full_screen_rv = new ReactiveVar false
 
+    @_collapsed_height_rv = new ReactiveVar JustdoProjectPane.collapsed_height
+    
     @_pane_state_tracker = undefined
     @_setupPaneUpdater()
 
@@ -213,7 +215,7 @@ _.extend JustdoProjectPane.prototype,
       APP.justdo_split_view.size.set pane_state_to_apply.expand_height
 
     if changed_state_options.is_expanded is false
-      APP.justdo_split_view.size.set JustdoProjectPane.collapsed_height
+      APP.justdo_split_view.size.set @getCollapsedHeight()
 
     if changed_state_options.expand_height?
       APP.justdo_split_view.size.set changed_state_options.expand_height
@@ -442,3 +444,13 @@ _.extend JustdoProjectPane.prototype,
     else
       @enterFullScreen()
     return
+
+  setCollapsedHeight: (height) -> 
+    if not _.isNumber(height)
+      throw @_error "invalid-argument", "Height is not a number: #{height}"
+
+    @_collapsed_height_rv.set height
+    return
+
+  getCollapsedHeight: -> 
+    return @_collapsed_height_rv.get()
