@@ -26,8 +26,8 @@ _.extend JustdoPwa,
       label: "bottom-pane"
       icon: "sidebar"
       listingCondition: -> 
-        # Require active justdo and at least one tab to be registered
-        return JD.activeJustdoId()? and not _.isEmpty(APP.justdo_project_pane?.getTabsDefinitions())
+        # Require active justdo and the project pane to be enabled
+        return JD.activeJustdoId()? and not (APP.justdo_project_pane?.getPaneState()?.disabled)
       onActivate: ->
         APP.justdo_project_pane.expand()
         APP.justdo_project_pane.enterFullScreen()
