@@ -53,7 +53,7 @@ Template.recent_activity_item_user.events
     if not (dropdown_instance = Template.instance().getDropdownInstance())?
       # We shouldn't get here
 
-      logger.warn "Can't find dropdown instance"
+      APP.justdo_chat.logger.warn "Can't find dropdown instance"
 
       return
 
