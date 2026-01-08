@@ -8,6 +8,8 @@ $breakpoint-xl: 1200px;
 // PWA-specific mobile breakpoint
 $mobile-breakpoint: $breakpoint-md;
 
+$mobile-navbar-height: 92px;
+
 // Mixins for responsive design
 @mixin mobile {
   @media (max-width: #{$mobile-breakpoint - 1px}) {
