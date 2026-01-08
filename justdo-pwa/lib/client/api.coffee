@@ -1,5 +1,8 @@
 _.extend JustdoPwa.prototype,
   _immediateInit: ->
+    @is_mobile_layout_rv = new ReactiveVar false
+    @_setupIsMobileLayoutTracker()
+
     @active_tab_rv = new ReactiveVar "main"
 
     @_setupGlobalTemplateHelpers()
@@ -16,23 +19,38 @@ _.extend JustdoPwa.prototype,
 
     return
 
+  _setupIsMobileLayoutTracker: ->
+    APP.executeAfterAppLibCode =>
+      @is_mobile_layout_tracker = Tracker.autorun =>
+        # The reason we have `is_mobile_layout_rv` instead of returning `APP.modules.main.window_dim.get().width < JustdoPwa.mobile_breakpoint`
+        # directly in `isMobileLayout` is to avoid unnecessary re-evaluations of the tracker depending on it,
+        # since `APP.modules.main.window_dim.get()` triggers re-computation on every pixel change in the window size.
+        @is_mobile_layout_rv.set APP.modules.main.window_dim.get().width < JustdoPwa.mobile_breakpoint
+        return
+
+      @onDestroy =>
+        @is_mobile_layout_tracker?.stop()
+        @is_mobile_layout_tracker = null
+        return
+
+      return
+
+    return
+
   _resetActiveTabUponExitingMobileLayout: ->
     # This tracker is used to reset the active tab to "main" when the screen changes to desktop layout,
     # so that the `onDeactivate` callback of the active tab is called to perform any necessary cleanup
     # e.g. unsubscribe from publications.
-    APP.executeAfterAppLibCode =>
-      prev_is_mobile_layout = @isMobileLayout()
-      @_reset_active_tab_upon_exiting_mobile_layout_tracker = Tracker.autorun =>
-        if prev_is_mobile_layout and not @isMobileLayout()
-          @setActiveTab("main")
 
-        prev_is_mobile_layout = @isMobileLayout()
-        return
+    @_reset_active_tab_upon_exiting_mobile_layout_tracker = Tracker.autorun =>
+      if not @isMobileLayout()
+        @setActiveTab("main")
 
-      @onDestroy =>
-        @_reset_active_tab_upon_exiting_mobile_layout_tracker?.stop()
-        @_reset_active_tab_upon_exiting_mobile_layout_tracker = null
-        return
+      return
+
+    @onDestroy =>
+      @_reset_active_tab_upon_exiting_mobile_layout_tracker?.stop()
+      @_reset_active_tab_upon_exiting_mobile_layout_tracker = null
       return
     
     return
@@ -101,9 +119,7 @@ _.extend JustdoPwa.prototype,
           return
 
         grid_control.pwa_frozen_columns_mode_tracker = Tracker.autorun =>
-          is_mobile_layout = @isMobileLayout()
-
-          if is_mobile_layout
+          if @isMobileLayout()
             grid_control.disableFrozenColumnsMode()
             grid_control.exitFrozenColumnsMode()
           else
@@ -127,7 +143,7 @@ _.extend JustdoPwa.prototype,
     return APP.modules.main.window_dim.get()
 
   isMobileLayout: ->
-    return @getBrowserDimention().width < JustdoPwa.mobile_breakpoint
+    return @is_mobile_layout_rv.get()
   
   getTabDefinition: (tab_id) ->
     return _.find JustdoPwa.default_mobile_tabs, (tab) -> tab._id is tab_id
