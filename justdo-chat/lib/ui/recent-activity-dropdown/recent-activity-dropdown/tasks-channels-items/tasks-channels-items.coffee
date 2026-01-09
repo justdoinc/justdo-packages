@@ -56,12 +56,7 @@ Template.recent_activity_item_task.events
 
     # We do this outside of activateTask() since it might be called when we don't
     # have template instance set any longer (Meteor.defer)
-    if not (dropdown_instance = Template.instance().getDropdownInstance())?
-      # We shouldn't get here
-
-      APP.justdo_chat.logger.warn "Can't find dropdown instance"
-
-      return
+    dropdown_instance = Template.instance().getDropdownInstance()
 
     if $(e.target).closest(".task-details").length == 0
       # Open/highlight the window for the channel.
@@ -104,7 +99,7 @@ Template.recent_activity_item_task.events
 
       channel_obj.setChannelUnreadState(false)
 
-      dropdown_instance.closeDropdown()
+      dropdown_instance?.closeDropdown()
 
       return
 
@@ -113,7 +108,7 @@ Template.recent_activity_item_task.events
       channel_obj = getTaskChannelObjectForTaskId(@task_id)
       channel_obj.setChannelUnreadState(false)
 
-      dropdown_instance.closeDropdown()
+      dropdown_instance?.closeDropdown()
 
       APP.modules.project_page.setCurrentTaskPaneSectionId("details")
 
