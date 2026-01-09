@@ -66,6 +66,3 @@ APP.executeAfterAppLibCode ->
       last_container_below_minimal_width_value = below
 
       return below
-
-    isMobileLayout: ->
-      return APP.justdo_pwa?.isMobileLayout()

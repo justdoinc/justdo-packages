@@ -58,6 +58,11 @@ _.extend JustdoPwa.prototype,
     return
   
   _setupGlobalTemplateHelpers: ->
+    self = @
+
+    Template.registerHelper "isMobileLayout", ->
+      return self.isMobileLayout()
+
     Template.registerHelper "hideInMobileLayout", (display_mode) ->
       if not display_mode?
         display_mode = "block"
