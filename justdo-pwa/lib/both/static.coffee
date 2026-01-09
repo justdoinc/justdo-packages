@@ -18,7 +18,7 @@ _.extend JustdoPwa,
       icon_template: "justdo_chat_recent_activity_button"
       icon_template_data:
         skip_dropdown_creation: true
-      tab_template: "recent_activity_dropdown"
+      tab_template: "mobile_tab_chats"
       tab_template_data:
         initial_messages_to_request: 20
     ,
