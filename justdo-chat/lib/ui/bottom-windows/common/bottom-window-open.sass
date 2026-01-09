@@ -1,5 +1,6 @@
 @import "{justdoinc:justdo-chat}/lib/ui/bottom-windows/common/vars.scss"
 @import "{justdoinc:justdo-pwa}/lib/client/global-styles/_vars.scss"
+@import "{justdoinc:justdo-webapp-layout}/lib/client/global-sass/global-vars.sass"
 
 $window-height: 420px
 $default-chat-input-height: 44px
@@ -40,9 +41,9 @@ $default-chat-input-height: 44px
 @include mobile
   .chat-window.open-chat-window
     position: fixed
-    top: 45px
+    top: $navbar-height
     left: 0
-    bottom: 92px
+    bottom: calc(#{$mobile-navbar-height} - 8px)
     height: auto
     .minimize-chat
       display: none
