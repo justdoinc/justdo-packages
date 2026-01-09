@@ -16,7 +16,15 @@ Template.task_channel_chat_bottom_windows_header.onCreated ->
     if (tasks_collection_doc = APP.collections.Tasks.findOne({_id: @task_id}, {fields: chat_window_required_fields}))?
       return tasks_collection_doc
 
-    return APP.justdo_chat.bottom_windows_supplementary_pseudo_collections.tasks.findOne({_id: @task_id}, {fields: chat_window_required_fields})
+    if (bottom_window_task_doc = APP.justdo_chat.bottom_windows_supplementary_pseudo_collections.tasks.findOne({_id: @task_id}, {fields: chat_window_required_fields}))?
+      return bottom_window_task_doc
+    
+    # Despite the name "bottom-window-header", this template (along with "bottom-window-open")
+    # is used in the chat window of the PWA mobile layout too.
+    # Since we don't setup a the bottom windows manager, and we re-use the recent activity dropdown as the chat tab,
+    # we attempt to fetch the task doc from the recent activity supplementary pseudo collection as well.
+    if (recent_activity_task_doc = APP.justdo_chat.recent_activity_supplementary_pseudo_collections.tasks.findOne({_id: @task_id}, {fields: chat_window_required_fields}))?
+      return recent_activity_task_doc
 
   return
 
