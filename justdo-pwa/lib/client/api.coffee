@@ -5,6 +5,8 @@ _.extend JustdoPwa.prototype,
 
     @active_tab_rv = new ReactiveVar "main"
 
+    @active_chat_channel_rv = new ReactiveVar null
+
     @_setupGlobalTemplateHelpers()
     @_setupTaskPaneStateTracker()
     @_setupGridControlFrozenColumnsModeTracker()
@@ -207,4 +209,15 @@ _.extend JustdoPwa.prototype,
     new_tab_definition = @getTabDefinition(new_tab_id)
     new_tab_definition?.onActivate?()
 
+    return
+
+  setActiveChatChannel: (channel_type, channel_identifier) ->
+    @active_chat_channel_rv.set({channel_type, channel_identifier})
+    return
+
+  getActiveChatChannel: ->
+    return @active_chat_channel_rv.get()
+
+  clearActiveChatChannel: ->
+    @active_chat_channel_rv.set null
     return
