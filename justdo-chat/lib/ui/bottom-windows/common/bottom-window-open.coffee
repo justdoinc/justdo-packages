@@ -5,6 +5,7 @@ Template.chat_bottom_windows_open.onCreated ->
   @channel_obj = @channelObjectGenerator()
   @header_template = @data.header_template
 
+  # The following aren't in use. They are reserved for group channel.
   @titleGenerator = @data.titleGenerator
   @tooltipGenerator = @data.tooltipGenerator
   @titleUrlGenerator = @data.titleUrlGenerator
