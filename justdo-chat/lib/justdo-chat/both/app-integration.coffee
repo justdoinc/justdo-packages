@@ -53,7 +53,6 @@ APP.getEnv (env) ->
   if Meteor.isClient
     APP.justdo_chat._setupHtmlTitlePrefixController()
     APP.justdo_chat._setupReceivedMessagesSoundNotification()
-    if not APP.justdo_pwa.isMobileLayout()
-      APP.justdo_chat._setupBottomWindows()
+    APP.justdo_chat._setupBottomWindows()
 
   return

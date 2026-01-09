@@ -199,11 +199,18 @@ _.extend JustdoChat.prototype,
     return
 
   _setupBottomWindows: ->
-    @_justdo_chat_bottom_windows_manager = new JustdoChatBottomWindowsManager
-      justdo_chat: @
+    @_bottom_windows_manager_tracker = Tracker.autorun =>
+      if APP.justdo_pwa.isMobileLayout()
+        @_justdo_chat_bottom_windows_manager?.destroy()
+        @_justdo_chat_bottom_windows_manager = null
+      else
+        @_justdo_chat_bottom_windows_manager = new JustdoChatBottomWindowsManager
+          justdo_chat: @
 
+      return
+    
     @onDestroy =>
-      @_justdo_chat_bottom_windows_manager.destroy()
+      @_bottom_windows_manager_tracker.stop()
 
       return
 
