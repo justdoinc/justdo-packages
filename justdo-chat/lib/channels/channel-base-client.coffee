@@ -155,7 +155,7 @@ _.extend ChannelBaseClient.prototype,
     return "jdc-saved-editor-content::#{Meteor.userId()}"
 
   _getChannelSerializedIdentifier: ->
-    return @channel_type + "::" + _.map(@getChannelIdentifier(), (val ,key) => key + ":" + val).sort().join("|")
+    return @channel_type + "::" + _.map(@getChannelIdentifier(), (val , key) => key + ":" + val).sort().join("|")
 
   _getChannelsCollection: ->
     if (custom_collection = @options.custom_channels_collection)?
