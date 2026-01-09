@@ -34,7 +34,6 @@ Template.mobile_tab_chats.helpers
   activeChatChannel: ->
     return APP.justdo_pwa.getActiveChatChannel()
 
-
 Template.mobile_tab_chats_active_chat_channel.onRendered ->
   Meteor.defer =>
     @$(".open-chat-window").addClass("window-active")
@@ -53,11 +52,18 @@ Template.mobile_tab_chats_active_chat_channel.helpers
       channel_identifier: channel_identifier
 
     if channel_type is "task"
+      task_id = channel_identifier.task_id
+      project_id = APP.collections.Tasks.findOne(task_id, {fields: {project_id: 1}})?.project_id
+      if not project_id?
+        project_id = APP.justdo_chat.recent_activity_supplementary_pseudo_collections.tasks.findOne({_id: task_id}, {fields: {project_id: 1}})?.project_id
+
       _.extend data,
+        task_id: task_id
+        project_id: project_id
         header_template: "task_channel_chat_bottom_windows_header"
         channelObjectGenerator: ->
           channel_conf = 
-            tasks_collection: APP.justdo_chat.bottom_windows_supplementary_pseudo_collections.tasks
+            tasks_collection: APP.justdo_chat.recent_activity_supplementary_pseudo_collections.tasks
             task_id: channel_identifier.task_id
           return APP.justdo_chat.generateClientChannelObject("task", channel_conf)
 
