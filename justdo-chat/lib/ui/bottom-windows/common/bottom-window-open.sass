@@ -38,12 +38,13 @@ $default-chat-input-height: 44px
     padding-right: 12px
 
 @include mobile
-  .bottom-windows
-    .chat-window.open-chat-window
-      position: fixed
-      top: 45px
-      left: 0
-      bottom: 92px
-      height: auto
-      .messages-board-viewport
-        height: 100%
+  .chat-window.open-chat-window
+    position: fixed
+    top: 45px
+    left: 0
+    bottom: 92px
+    height: auto
+    .minimize-chat
+      display: none
+    .messages-board-viewport
+      height: 100%

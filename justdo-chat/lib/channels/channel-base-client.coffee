@@ -247,7 +247,10 @@ _.extend ChannelBaseClient.prototype,
     #
     # cb is called when the operation is completed.
 
-    return @justdo_chat._justdo_chat_bottom_windows_manager.makeWindowVisible @channel_type, @getChannelIdentifier(), {onComplete: cb}
+    if APP.justdo_pwa.isMobileLayout()
+      APP.justdo_pwa.setActiveChatChannel(@channel_type, @getChannelIdentifier())
+    else
+      return @justdo_chat._justdo_chat_bottom_windows_manager.makeWindowVisible @channel_type, @getChannelIdentifier(), {onComplete: cb}
 
   removeWindow: (cb) ->
     # A proxy to ease calling to the method under the bottom windows manager with the same name

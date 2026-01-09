@@ -111,12 +111,18 @@ Template.chat_bottom_windows_open.helpers
 
 Template.chat_bottom_windows_open.events
   "click .close-chat": (e, tpl) ->
-    APP.justdo_chat._justdo_chat_bottom_windows_manager.removeWindow tpl.channel_type, tpl.channel_identifier
+    if APP.justdo_pwa.isMobileLayout()
+      APP.justdo_pwa.clearActiveChatChannel()
+    else
+      APP.justdo_chat._justdo_chat_bottom_windows_manager.removeWindow tpl.channel_type, tpl.channel_identifier
 
     return
 
   "click .minimize-chat": (e, tpl) ->
-    APP.justdo_chat._justdo_chat_bottom_windows_manager.minimizeWindow tpl.channel_type, tpl.channel_identifier
+    if APP.justdo_pwa.isMobileLayout()
+      APP.justdo_pwa.clearActiveChatChannel()
+    else
+      APP.justdo_chat._justdo_chat_bottom_windows_manager.minimizeWindow tpl.channel_type, tpl.channel_identifier
 
     return
 
