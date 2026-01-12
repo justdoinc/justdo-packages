@@ -70,6 +70,9 @@ Package.onUse(function (api) {
   api.addFiles("ui/project-pane/project-pane.html", client);
   api.addFiles("ui/project-pane/project-pane.coffee", client);
 
+  // Mobile layout
+  api.addFiles("ui/mobile-tab/mobile-tab.sass", client);
+
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", client);
