@@ -12,6 +12,7 @@ _.extend JustdoPwa.prototype,
     @_setupGridControlFrozenColumnsModeTracker()
     @_setupGridControlPreActivateRowHandler()
     @_setupProjectPaneHeightTracker()
+    @_setupDynamicHead()
 
     return
 
@@ -182,6 +183,27 @@ _.extend JustdoPwa.prototype,
 
       return
 
+    return
+
+  _setupDynamicHead: ->
+    getMetaViewportContent = ->
+      return $("meta[name='viewport']").attr("content")
+
+    original_meta_viewport_content = getMetaViewportContent()
+    
+    @_dynamic_head_tracker = Tracker.autorun =>
+      if @isMobileLayout()
+        meta_viewport_content_with_zoom_restriction = original_meta_viewport_content + ", maximum-scale=1.0, user-scalable=no"
+        $("meta[name='viewport']").attr("content", meta_viewport_content_with_zoom_restriction)
+      else
+        $("meta[name='viewport']").attr("content", original_meta_viewport_content)
+        return
+    
+    @onDestroy =>
+      @_dynamic_head_tracker?.stop()
+      @_dynamic_head_tracker = null
+      return
+    
     return
 
   getBrowserDimension: ->
