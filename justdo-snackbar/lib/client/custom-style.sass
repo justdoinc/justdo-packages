@@ -1,3 +1,5 @@
+@import "{justdoinc:justdo-pwa}/lib/client/global-styles/_vars.scss"
+
 .justdo-snackbar-container
   display: flex
   flex-direction: column-reverse
@@ -55,3 +57,7 @@
       right: unset
       left: 0
 
+@include mobile
+  .justdo-snackbar-container
+    bottom: $mobile-navbar-height
+    margin-bottom: 0
