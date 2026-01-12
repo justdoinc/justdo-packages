@@ -24,6 +24,8 @@ _.extend JustdoProjectPane.prototype,
 
     @_setupHashRequests()
 
+    @_registerMobileTab()
+
     return
 
   _deferredInit: ->
@@ -91,6 +93,24 @@ _.extend JustdoProjectPane.prototype,
       @project_pane_auto_collapse_handler = null
       return
 
+    return
+
+  _registerMobileTab: ->
+    APP.justdo_pwa.registerMobileTab "project-pane",
+      label: "project_pane_label"
+      order: 400
+      icon: "sidebar"
+      listingCondition: => 
+        # Require active justdo and the project pane to be enabled
+        return JD.activeJustdoId()? and not (@getPaneState()?.disabled)
+      onActivate: =>
+        @expand()
+        @enterFullScreen()
+        return
+      onDeactivate: =>
+        @collapse()
+        return
+        
     return
 
   _pane_state_schema: new SimpleSchema

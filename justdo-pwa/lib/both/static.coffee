@@ -25,18 +25,4 @@ _.extend JustdoPwa,
       tab_template: "mobile_tab_chats"
       tab_template_data:
         initial_messages_to_request: 20
-    ,
-      _id: "bottom-pane"
-      label: "bottom-pane"
-      icon: "sidebar"
-      listingCondition: -> 
-        # Require active justdo and the project pane to be enabled
-        return JD.activeJustdoId()? and not (APP.justdo_project_pane?.getPaneState()?.disabled)
-      onActivate: ->
-        APP.justdo_project_pane.expand()
-        APP.justdo_project_pane.enterFullScreen()
-        return
-      onDeactivate: ->
-        APP.justdo_project_pane.collapse()
-        return
   ]

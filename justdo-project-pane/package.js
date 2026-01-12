@@ -46,6 +46,8 @@ Package.onUse(function (api) {
   api.use("meteorspark:util@0.2.0", client);
   api.use("meteorspark:logger@0.3.0", client);
   api.use("justdoinc:justdo-helpers@1.0.0", client);
+  api.use("tap:i18n", both);
+  api.use("justdoinc:justdo-i18n@1.0.0", both);
 
   api.use("justdoinc:justdo-split-view@1.0.0", client);
 
@@ -76,6 +78,8 @@ Package.onUse(function (api) {
   // Note: app-integration need to load last, so immediateInit procedures in
   // the server will have the access to the apis loaded after the init.coffee
   // file. 
+
+  this.addI18nFiles(api, "i18n/{}.i18n.json", "default_lang_only");
 
   api.export("JustdoProjectPane", client);
 });
