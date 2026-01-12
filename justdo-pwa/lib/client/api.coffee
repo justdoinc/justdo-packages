@@ -3,7 +3,6 @@ _.extend JustdoPwa.prototype,
     @is_mobile_layout_rv = new ReactiveVar false
     @_setupIsMobileLayoutTracker()
 
-    @active_tab_rv = new ReactiveVar "main"
 
     @active_chat_channel_rv = new ReactiveVar null
 
@@ -43,13 +42,13 @@ _.extend JustdoPwa.prototype,
     return
 
   _resetActiveTabUponExitingMobileLayout: ->
-    # This tracker is used to reset the active tab to "main" when the screen changes to desktop layout,
+    # This tracker is used to reset the active tab to JustdoPwa.main_mobile_tab_id when the screen changes to desktop layout,
     # so that the `onDeactivate` callback of the active tab is called to perform any necessary cleanup
     # e.g. unsubscribe from publications.
 
     @_reset_active_tab_upon_exiting_mobile_layout_tracker = Tracker.autorun =>
       if not @isMobileLayout()
-        @setActiveTab("main")
+        @setActiveTab(JustdoPwa.main_mobile_tab_id)
 
       return
 
@@ -150,14 +149,14 @@ _.extend JustdoPwa.prototype,
     return
 
   _setupGridControlPreActivateRowHandler: ->
-    # This hook is responsible to set the active tab to "main" when a row is activated in the main grid under mobile layout.
+    # This hook is responsible to set the active tab to JustdoPwa.main_mobile_tab_id when a row is activated in the main grid under mobile layout.
     APP.on "grid-control-created", (grid_control) =>
       if grid_control.getDomain() isnt "project-page-main-grid"
         return
       
       grid_control.on "pre-activate-row", =>
         if @isMobileLayout()
-          @setActiveTab("main")
+          @setActiveTab(JustdoPwa.main_mobile_tab_id)
           return
 
         return
