@@ -21,10 +21,44 @@ _.extend JustdoPwa.prototype,
 
     return
 
+  _getManifestName: ->
+    root_url = JustdoHelpers.getRootUrl()
+    
+    try
+      URL = JustdoHelpers.getURL()
+      url_obj = new URL root_url
+      hostname = url_obj.hostname
+    catch
+      return "JustDo"
+    
+    # Remove www. prefix if present
+    hostname = hostname.replace /^www\./, ""
+    
+    # Case 1: Root domain justdo.com -> "JustDo"
+    if hostname is "justdo.com"
+      return "JustDo"
+    
+    # Case 2: Subdomain of justdo.com (e.g., app-fair-wood.justdo.com, premium.justdo.com)
+    justdo_subdomain_match = hostname.match /^([^.]+)\.justdo\.com$/
+    if justdo_subdomain_match
+      subdomain = justdo_subdomain_match[1]
+      # Convert "app-fair-wood" to "Fair Wood", "premium" to "Premium"
+      # Remove "app-" prefix if present
+      subdomain = subdomain.replace /^app-/, ""
+      # Convert dashes to spaces and capitalize each word
+      formatted_subdomain = subdomain
+        .split("-")
+        .map((word) -> JustdoHelpers.ucFirst(word))
+        .join(" ")
+      return "JustDo - #{formatted_subdomain}"
+    
+    # Case 3: Non-justdo.com domain (e.g., justdo.kompletit.com)
+    return "JustDo - #{hostname}"
+
   _generateManifest: ->
     manifest = 
-      name: "JustDo"
-      short_name: "JustDo"
+      name: @_getManifestName()
+      short_name: @_getManifestName()
       start_url: "/"
       display: "minimal-ui"
       background_color: "#000000"
