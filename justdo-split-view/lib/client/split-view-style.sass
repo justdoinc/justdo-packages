@@ -1,3 +1,5 @@
+@import "{justdoinc:justdo-pwa}/lib/client/global-styles/_vars.scss"
+
 // Obsolete, add this class to the main container with a <div class="place-holder"> and an iframe
 // to see what we had in mind back then.
 // .justdo-split-view-container-default-design
@@ -34,3 +36,7 @@
   background-color: white
   &.bottom-side
     box-shadow: 0 4px 35px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08)
+
+@include mobile
+  .justdo-split-view
+    z-index: 1
