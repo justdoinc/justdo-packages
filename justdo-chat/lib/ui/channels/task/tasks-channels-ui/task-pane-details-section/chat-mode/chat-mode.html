@@ -14,7 +14,7 @@
       <div class="subscribers-management-button-block text-primary">
         <div class="subscribers-management"><i class="fa fa-user"></i> {{#if isSubscriptionReady}}{{subscribersCount}}{{else}}&nbsp;&nbsp;&nbsp;{{/if}}</div>
       </div>
-      <div class="open-chat-in-window-container" title="{{_ "chat_open_in_a_window"}}">
+      <div class="open-chat-in-window-container {{hideInMobileLayout}}" title="{{_ "chat_open_in_a_window"}}">
         <div class="open-chat-in-window text-primary">
           <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#external-link"/></svg>
         </div>
