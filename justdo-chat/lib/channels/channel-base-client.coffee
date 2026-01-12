@@ -248,7 +248,11 @@ _.extend ChannelBaseClient.prototype,
     # cb is called when the operation is completed.
 
     if APP.justdo_pwa.isMobileLayout()
-      APP.justdo_pwa.setActiveChatChannel(@channel_type, @getChannelIdentifier())
+      if cb?
+        @logger.warn "makeWindowVisible: Mobile layout is active. cb will be ignored."
+
+      @justdo_chat.setActiveMobileChatChannel(@channel_type, @getChannelIdentifier())
+      return
     else
       return @justdo_chat._justdo_chat_bottom_windows_manager.makeWindowVisible @channel_type, @getChannelIdentifier(), {onComplete: cb}
 
