@@ -7,8 +7,6 @@ _.extend JustdoPwa.prototype,
     @mobile_tabs_dep = new Tracker.Dependency()
     @_setupDefaultMobileTabs()
 
-
-    @active_chat_channel_rv = new ReactiveVar null
     @active_mobile_tab_rv = new ReactiveVar JustdoPwa.main_mobile_tab_id
 
     @_setupGlobalTemplateHelpers()
@@ -323,15 +321,4 @@ _.extend JustdoPwa.prototype,
     new_tab_definition = @getMobileTab(new_tab_id)
     new_tab_definition?.onActivate?()
 
-    return
-
-  setActiveChatChannel: (channel_type, channel_identifier) ->
-    @active_chat_channel_rv.set({channel_type, channel_identifier})
-    return
-
-  getActiveChatChannel: ->
-    return @active_chat_channel_rv.get()
-
-  clearActiveChatChannel: ->
-    @active_chat_channel_rv.set null
     return

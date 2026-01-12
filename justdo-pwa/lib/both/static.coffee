@@ -16,13 +16,4 @@ _.extend JustdoPwa,
       icon_template_data:
         skip_dropdown_creation: true
       tab_template: "mobile_tab_notifications"
-    ,
-      _id: "chats"
-      label: "chats_label"
-      icon_template: "justdo_chat_recent_activity_button"
-      icon_template_data:
-        skip_dropdown_creation: true
-      tab_template: "mobile_tab_chats"
-      tab_template_data:
-        initial_messages_to_request: 20
   ]

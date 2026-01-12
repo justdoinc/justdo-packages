@@ -223,6 +223,11 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/ui/bottom-windows/fix-unclickable-area-under-chat-windows.sass", client);
 
+  // Mobile tab
+  api.addFiles("lib/ui/mobile-tab/mobile-tab.sass", client);
+  api.addFiles("lib/ui/mobile-tab/mobile-tab.html", client);
+  api.addFiles("lib/ui/mobile-tab/mobile-tab.coffee", client);
+
   //
   // Project Conf
   //

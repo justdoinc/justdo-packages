@@ -63,6 +63,5 @@
   "hide_task_pane_label": "Hide Task Pane",
   "configure_this_justdo_label": "Configure this JustDo",
   "delete_this_justdo_label": "Delete this JustDo",
-  "notifications_label": "Notifications",
-  "chats_label": "Chats"
+  "notifications_label": "Notifications"
 }

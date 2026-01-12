@@ -1,0 +1,11 @@
+<template name="mobile_tab_chats">
+  {{#with activeChatChannel}}
+    {{> mobile_tab_chats_active_chat_channel}}
+  {{else}}
+    {{> recent_activity_dropdown initial_messages_to_request=initialMessagesToRequest}}
+  {{/with}}
+</template>
+
+<template name="mobile_tab_chats_active_chat_channel">
+  {{> chat_bottom_windows_open templateData}}
+</template>
