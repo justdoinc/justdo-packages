@@ -24,3 +24,4 @@ options =
   tasks_collection: APP.collections.Tasks
 
 APP.justdo_pwa = new JustdoPwa(options)
+JustdoHelpers.hooks_barriers.markBarrierAsResolved "post-justdo-pwa-init"
