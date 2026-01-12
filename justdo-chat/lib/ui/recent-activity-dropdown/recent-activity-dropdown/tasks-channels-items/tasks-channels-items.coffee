@@ -58,7 +58,7 @@ Template.recent_activity_item_task.events
     # have template instance set any longer (Meteor.defer)
     dropdown_instance = Template.instance().getDropdownInstance()
 
-    if $(e.target).closest(".task-details").length == 0
+    if APP.justdo_pwa.isMobileLayout() or $(e.target).closest(".task-details").length == 0
       # Open/highlight the window for the channel.
       channel_obj = getTaskChannelObjectForTaskId(@task_id)
 
