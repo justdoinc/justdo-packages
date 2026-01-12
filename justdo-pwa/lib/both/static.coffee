@@ -7,6 +7,7 @@ _.extend JustdoPwa,
   default_mobile_tabs: [
       _id: JustdoPwa.main_mobile_tab_id
       label: "main"
+      order: 100
       icon: "grid"
     ,
       _id: "notifications"

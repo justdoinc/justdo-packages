@@ -3,8 +3,13 @@ _.extend JustdoPwa.prototype,
     @is_mobile_layout_rv = new ReactiveVar false
     @_setupIsMobileLayoutTracker()
 
+    @mobile_tabs = {}
+    @mobile_tabs_dep = new Tracker.Dependency()
+    @_setupDefaultMobileTabs()
+
 
     @active_chat_channel_rv = new ReactiveVar null
+    @active_mobile_tab_rv = new ReactiveVar JustdoPwa.main_mobile_tab_id
 
     @_setupGlobalTemplateHelpers()
     @_setupTaskPaneStateTracker()
@@ -19,7 +24,7 @@ _.extend JustdoPwa.prototype,
     if @destroyed
       return
 
-    @_resetActiveTabUponExitingMobileLayout()
+    @_resetActiveMobileTabUponExitingMobileLayout()
 
     return
 
@@ -41,14 +46,14 @@ _.extend JustdoPwa.prototype,
 
     return
 
-  _resetActiveTabUponExitingMobileLayout: ->
+  _resetActiveMobileTabUponExitingMobileLayout: ->
     # This tracker is used to reset the active tab to JustdoPwa.main_mobile_tab_id when the screen changes to desktop layout,
     # so that the `onDeactivate` callback of the active tab is called to perform any necessary cleanup
     # e.g. unsubscribe from publications.
 
     @_reset_active_tab_upon_exiting_mobile_layout_tracker = Tracker.autorun =>
       if not @isMobileLayout()
-        @setActiveTab(JustdoPwa.main_mobile_tab_id)
+        @setActiveMobileTab(JustdoPwa.main_mobile_tab_id)
 
       return
 
@@ -156,7 +161,7 @@ _.extend JustdoPwa.prototype,
       
       grid_control.on "pre-activate-row", =>
         if @isMobileLayout()
-          @setActiveTab(JustdoPwa.main_mobile_tab_id)
+          @setActiveMobileTab(JustdoPwa.main_mobile_tab_id)
           return
 
         return
@@ -211,23 +216,111 @@ _.extend JustdoPwa.prototype,
   isMobileLayout: ->
     return @is_mobile_layout_rv.get()
   
-  getTabDefinition: (tab_id) ->
-    return _.find JustdoPwa.default_mobile_tabs, (tab) -> tab._id is tab_id
+  _setupDefaultMobileTabs: ->
+    for tab_id, tab_definition of JustdoPwa.default_mobile_tabs
+      @registerMobileTab tab_id, tab_definition
+      
+    return
 
-  getActiveTab: ->
-    return @active_tab_rv.get()
+  _registerMobileTabSchema: new SimpleSchema
+    label:
+      type: String
+    order:
+      type: Number
+    icon:
+      # icon_template will take precedence over icon
+      type: String
+      optional: true
+    icon_template: 
+      type: String
+      optional: true
+    icon_template_data:
+      type: Object
+      blackbox: true
+      optional: true
+    tab_template:
+      type: String
+      optional: true
+    tab_template_data:
+      type: Object
+      blackbox: true
+      optional: true
+    listingCondition: 
+      type: Function
+      optional: true
+    onActivate:
+      type: Function
+      optional: true
+    onDeactivate:
+      type: Function
+      optional: true
+  registerMobileTab: (tab_id, options) ->
+    check tab_id, String
+    if @getMobileTab(tab_id)?
+      throw @_error "invalid-argument", "Mobile tab #{tab_id} already registered"
 
-  getActiveTabDefinition: ->
-    return @getTabDefinition(@getActiveTab())
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_registerMobileTabSchema,
+        options,
+        {self: @, throw_on_error: true}
+      )
+    options = cleaned_val
 
-  setActiveTab: (new_tab_id) ->
-    cur_tab_id = Tracker.nonreactive => @getActiveTab()
-    cur_tab_definition = @getTabDefinition(cur_tab_id)
+    @mobile_tabs[tab_id] = options
+    @mobile_tabs_dep.changed()
+
+    return
+
+  unregisterMobileTab: (tab_id) ->
+    @requireMobileTab tab_id
+
+    @mobile_tabs = _.without @mobile_tabs, tab_id
+    @mobile_tabs_dep.changed()
+
+    return
+
+  getMobileTab: (tab_id) ->
+    @mobile_tabs_dep.depend()
+    
+    if (tab_def = @mobile_tabs[tab_id])?
+      cloned_tab_def = _.extend {}, tab_def,
+        _id: tab_id
+
+      return cloned_tab_def
+
+    return
+
+  requireMobileTab: (tab_id) ->
+    if not (tab = @getMobileTab(tab_id))?
+      throw @_error "invalid-argument", "Mobile tab #{tab_id} not registered"
+
+    return tab
+
+  getMobileTabs: ->
+    @mobile_tabs_dep.depend()
+    
+    mobile_tabs = []
+    for tab_id, tab_definition of @mobile_tabs
+      mobile_tabs.push _.extend {}, tab_definition,
+        _id: tab_id
+
+    sorted_mobile_tabs = _.sortBy mobile_tabs, (tab) -> tab.order
+    return sorted_mobile_tabs
+
+  getActiveMobileTabId: ->
+    return @active_mobile_tab_rv.get()
+
+  getActiveMobileTab: ->
+    return @getMobileTab(@getActiveMobileTabId())
+
+  setActiveMobileTab: (new_tab_id) ->
+    cur_tab_definition = Tracker.nonreactive => @getActiveMobileTab()
     cur_tab_definition?.onDeactivate?()
 
-    @active_tab_rv.set(new_tab_id)
+    @active_mobile_tab_rv.set(new_tab_id)
 
-    new_tab_definition = @getTabDefinition(new_tab_id)
+    new_tab_definition = @getMobileTab(new_tab_id)
     new_tab_definition?.onActivate?()
 
     return
