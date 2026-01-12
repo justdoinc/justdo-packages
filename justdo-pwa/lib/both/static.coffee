@@ -39,17 +39,4 @@ _.extend JustdoPwa,
       onDeactivate: ->
         APP.justdo_project_pane.collapse()
         return
-    ,
-      _id: "task-pane"
-      label: "task-pane"
-      icon: "sidebar"
-      listingCondition: -> 
-        # Require active item
-        return JD.activeItemId()?
-      onActivate: ->
-        APP.modules.project_page.updatePreferences({toolbar_open: true})
-        return
-      onDeactivate: ->
-        APP.modules.project_page.updatePreferences({toolbar_open: false})
-        return
   ]

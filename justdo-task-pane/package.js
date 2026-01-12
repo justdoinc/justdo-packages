@@ -50,6 +50,12 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/template-helpers.coffee", client);
   api.addFiles("lib/client/builtin-sections-to-item-types.coffee", client);
 
+  // 
+  // Mobile tab
+  // 
+  api.addFiles("lib/client/mobile-tab/mobile-tab.coffee", client);
+  api.addFiles("lib/client/mobile-tab/mobile-tab.sass", client);
+
   //
   // task pane layout templates
   //
@@ -114,6 +120,8 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/builtin-sections/item-settings/notifications/item-settings-notifications.html", client);
 
   // Always after templates
+  this.addI18nFiles(api, "i18n/{}.i18n.json", "default_lang_only");
+  
   // Activity
   this.addI18nFiles(api, "i18n/activity/{}.i18n.json");
 
