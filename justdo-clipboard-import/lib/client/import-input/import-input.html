@@ -1,8 +1,37 @@
 <template name="justdo_clipboard_import_input">
   <div class="justdo-clipboard-import-container">
+    {{#if isParsing}}
+      <div class="justdo-clipboard-import-parsing-container">
+        {{> loader size="48"}}
+        <div class="parsing-message">{{_ "clipboard_import_parsing_file"}}</div>
+      </div>
+    {{/if}}
+
     {{#if waitingForPaste}}
-      <textarea class="form-control justdo-clipboard-import-paste-target"
-                placeholder="{{_ pasteTargetPlaceholder}}"></textarea>
+      <div class="justdo-clipboard-import-drop-zone {{#if isDragging}}dragging{{/if}}">
+        <textarea class="form-control justdo-clipboard-import-paste-target"
+                  placeholder="{{_ pasteTargetPlaceholder}}"></textarea>
+        <div class="justdo-clipboard-import-drop-overlay">
+          <svg class="drop-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          <span>{{_ "clipboard_import_drop_file_here"}}</span>
+        </div>
+      </div>
+      <div class="justdo-clipboard-import-file-upload">
+        <label class="btn btn-outline-secondary btn-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          {{_ "clipboard_import_choose_file"}}
+          <input type="file" class="justdo-clipboard-import-file-input" accept=".csv,.xlsx,.xls" style="display: none;">
+        </label>
+        <span class="file-types-hint">{{_ "clipboard_import_supported_file_types"}}</span>
+      </div>
       <small><i>{{_ "clipboard_import_rows_limit" limit=importLimit}}</i></small>
       <div class="justdo-clipboard-import-intro">
         <a href="https://justdo.com/support/360015993900--import-tasks-from-excel-csv-to-justdo-spreadsheet-migration" target="_blank">{{_ "clipboard_import_how_does_it_work"}}</a>

@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Limited to __limit__ tasks",
   "clipboard_import_too_many_rows": "Too many rows, you may copy up to __limit__ rows.",
   "clipboard_import_cant_find_tabular_data": "Can't find tabular information in clipboard.",
-  "clipboard_import_placeholder_msg": "Copy content from your spreadsheet and paste it here to create tasks.\nThe first column is regarded as the Subject.",
+  "clipboard_import_placeholder_msg": "Paste spreadsheet content here, or drag & drop a CSV/Excel file.\nThe first column is regarded as the Subject.",
   "clipboard_import_skip_column": "-- skip column --",
   "clipboard_import_index_column": "Original Index (will not be imported)",
   "clipboard_import_indent_level": "Indent Level",
   "clipboard_import_manage_columns": "Manage Columns",
   "clipboard_import_user_not_found": "User not found in the current JustDo, invite the user first.",
-  "clipboard_import_how_does_it_work": "How does it work?"
+  "clipboard_import_how_does_it_work": "How does it work?",
+  "clipboard_import_drop_file_here": "Drop file here",
+  "clipboard_import_choose_file": "Choose File",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Unsupported file type. Please use CSV, XLSX, or XLS files.",
+  "clipboard_import_file_empty": "The file appears to be empty.",
+  "clipboard_import_file_read_error": "Error reading file. Please try again.",
+  "clipboard_import_file_parse_error": "Error parsing file. Please check the file format.",
+  "clipboard_import_parsing_file": "Processing file..."
 }

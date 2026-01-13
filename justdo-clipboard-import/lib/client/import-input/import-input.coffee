@@ -1,3 +1,11 @@
+import {checkNpmVersions} from "meteor/tmeasday:check-npm-versions"
+
+checkNpmVersions({
+  "xlsx": "0.20.3"
+}, "justdoinc:justdo-clipboard-import")
+
+XLSX = require "xlsx"
+
 loadSavedImportConfig = (tpl) ->
   saved_import_config = amplify.store tpl.data.import_config_local_storage_key
   if saved_import_config?
@@ -6,7 +14,201 @@ loadSavedImportConfig = (tpl) ->
     #     $(".import-row-checkbox[row-index=#{row_index}]").click()
     if ({cols} = saved_import_config)?
       $(".justdo-clipboard-import-input-selector").each (i) ->
-        $(this).find("a[field-id='#{cols[i]}']").click()
+        $(@).find("a[field-id='#{cols[i]}']").click()
+
+        return
+  return
+
+# Unified parsing function using SheetJS XLSX library
+# Supports CSV text, HTML strings, and binary spreadsheet data
+# Uses chunked processing to avoid blocking the main thread
+parseSpreadsheetData = (data, options = {}, callback) ->
+  # Options:
+  #   type: "string" (for CSV/HTML text) or "array" (for binary XLSX/XLS)
+  type = options.type or "string"
+
+  workbook = XLSX.read data, {type: type}
+
+  # Get the first sheet
+  first_sheet_name = workbook.SheetNames[0]
+  worksheet = workbook.Sheets[first_sheet_name]
+
+  if not worksheet?
+    callback []
+    return
+
+  # Convert to 2D array with all values as strings
+  rows = XLSX.utils.sheet_to_json worksheet, {header: 1, raw: false, defval: ""}
+
+  # For small datasets, process synchronously
+  if rows.length < 500
+    filtered_rows = processRowsSync rows
+    callback filtered_rows
+    return
+
+  # For large datasets, use chunked processing to avoid blocking UI
+  processRowsChunked rows, callback
+  return
+
+# Synchronous row processing for small datasets
+processRowsSync = (rows) ->
+  longest_row_length = 0
+  filtered_rows = []
+  for row in rows
+    # Check if row has any non-empty cells
+    has_content = false
+    for cell in row
+      if cell? and String(cell).trim().length > 0
+        has_content = true
+        break
+    if has_content
+      # Convert all cells to strings
+      string_row = []
+      for cell in row
+        if cell?
+          string_row.push String(cell)
+        else
+          string_row.push ""
+      filtered_rows.push string_row
+      if string_row.length > longest_row_length
+        longest_row_length = string_row.length
+
+  # Normalize row lengths
+  for row in filtered_rows
+    while row.length < longest_row_length
+      row.push ""
+
+  return filtered_rows
+
+# Chunked row processing for large datasets
+# Processes rows in batches, yielding to the main thread periodically
+processRowsChunked = (rows, callback) ->
+  chunk_size = 500
+  current_index = 0
+  longest_row_length = 0
+  filtered_rows = []
+
+  processChunk = ->
+    end_index = Math.min(current_index + chunk_size, rows.length)
+
+    while current_index < end_index
+      row = rows[current_index]
+      # Check if row has any non-empty cells
+      has_content = false
+      for cell in row
+        if cell? and String(cell).trim().length > 0
+          has_content = true
+          break
+      if has_content
+        # Convert all cells to strings
+        string_row = []
+        for cell in row
+          if cell?
+            string_row.push String(cell)
+          else
+            string_row.push ""
+        filtered_rows.push string_row
+        if string_row.length > longest_row_length
+          longest_row_length = string_row.length
+      current_index += 1
+
+    if current_index < rows.length
+      # Yield to main thread before processing next chunk
+      setTimeout processChunk, 0
+    else
+      # All rows processed, normalize lengths and return
+      for row in filtered_rows
+        while row.length < longest_row_length
+          row.push ""
+      callback filtered_rows
+    return
+
+  # Start processing first chunk
+  processChunk()
+  return
+
+processFileData = (tpl, rows) ->
+  if rows.length == 0
+    tpl.data.dialog_state.set "wait_for_paste"
+    JustdoSnackbar.show
+      text: TAPi18n.__ "clipboard_import_file_empty"
+    return
+
+  if rows.length > JustdoClipboardImport.import_limit
+    tpl.data.dialog_state.set "wait_for_paste"
+    JustdoSnackbar.show
+      text: TAPi18n.__ "clipboard_import_too_many_rows", {limit: JustdoClipboardImport.import_limit}
+    return
+
+  tpl.data.clipboard_data.set rows
+  tpl.data.dialog_state.set "has_data"
+  Tracker.afterFlush ->
+    loadSavedImportConfig tpl
+    return
+  return
+
+handleFileUpload = (tpl, file) ->
+  if not file?
+    return
+
+  file_name = file.name.toLowerCase()
+  file_extension = file_name.split(".").pop()
+
+  if file_extension not in ["csv", "xlsx", "xls"]
+    JustdoSnackbar.show
+      text: TAPi18n.__ "clipboard_import_unsupported_file_type"
+    return
+
+  # Show parsing state immediately to provide user feedback
+  tpl.data.dialog_state.set "parsing"
+
+  reader = new FileReader()
+
+  reader.onerror = ->
+    tpl.data.dialog_state.set "wait_for_paste"
+    JustdoSnackbar.show
+      text: TAPi18n.__ "clipboard_import_file_read_error"
+    return
+
+  if file_extension == "csv"
+    # CSV files are read as text and parsed using XLSX
+    reader.onload = (e) ->
+      # Defer parsing to allow UI to update with loading state
+      setTimeout ->
+        try
+          csv_text = e.target.result
+          parseSpreadsheetData csv_text, {type: "string"}, (rows) ->
+            processFileData tpl, rows
+            return
+        catch err
+          console.error "CSV parsing error:", err
+          tpl.data.dialog_state.set "wait_for_paste"
+          JustdoSnackbar.show
+            text: TAPi18n.__ "clipboard_import_file_parse_error"
+        return
+      , 0
+      return
+    reader.readAsText file
+  else
+    # XLSX/XLS files are read as binary array
+    reader.onload = (e) ->
+      # Defer parsing to allow UI to update with loading state
+      setTimeout ->
+        try
+          array_buffer = e.target.result
+          parseSpreadsheetData new Uint8Array(array_buffer), {type: "array"}, (rows) ->
+            processFileData tpl, rows
+            return
+        catch err
+          console.error "XLSX parsing error:", err
+          tpl.data.dialog_state.set "wait_for_paste"
+          JustdoSnackbar.show
+            text: TAPi18n.__ "clipboard_import_file_parse_error"
+        return
+      , 0
+      return
+    reader.readAsArrayBuffer file
+
   return
 
 bindTargetToPaste = (tpl) ->
@@ -14,98 +216,79 @@ bindTargetToPaste = (tpl) ->
     e.stopPropagation()
     e.preventDefault()
     clipboard_data = e.originalEvent.clipboardData
-    if ("text/html" in clipboard_data.types)
-      data = clipboard_data.getData("text/html")
-      data_text = clipboard_data.getData("text/plain").split("\r\n").map (row) -> row.split "\t"
 
-      # Info about why we use [^\x05] can be found on: https://bugzilla.mozilla.org/show_bug.cgi?id=1579867
-      tr_reg_exp = /<\s*tr[^>]*>([^\x05]*?)<\s*\/\s*tr>/g
-      td_reg_exp = /<\s*td[^>]*>([^\x05]*?)<\s*\/\s*td>/g
-      longest_row_length = 0
-      rows = []
-      processing_row_number = 0
-      while ((tr = tr_reg_exp.exec(data)) != null)
-        cells = []
-        row_length = 0
-        all_cells_are_empty = true
-        processing_row_number += 1
-        processing_column_number = 0
-        while ((td = td_reg_exp.exec(tr[1])) != null)
-          processing_column_number += 1
-          cell = td[1]
+    # Show parsing state immediately
+    tpl.data.dialog_state.set "parsing"
 
-          cell = cell.replace /\r\n/g, ""
-          cell = cell.replace /<br\/?>/g, "\n"
-          cell = cell.replace /&quot;/g , '"'
-          cell = cell.replace /&#39;/g, "'"
-          cell = cell.replace /&nbsp;/g, " "
-          cell = cell.replace /&amp;/g, "&"
+    # Get clipboard data before deferring
+    html_data = if "text/html" in clipboard_data.types then clipboard_data.getData("text/html") else null
+    text_data = if "text/plain" in clipboard_data.types then clipboard_data.getData("text/plain") else null
 
-          # catch all html tags
-          cell = cell.replace(/<span[^\x05]+?style=['"]mso-spacerun:yes['"]>[^\x05]+?<\/span>/g, "")
-          cell = cell.replace /<[^>]+>/g, ""
+    # Defer processing to allow UI to update
+    setTimeout ->
+      handleClipboardParsing tpl, html_data, text_data
+      return
+    , 0
 
-          cell = cell.replace /&lt;/g, "<"
-          cell = cell.replace /&gt;/g, ">"
+    return
 
-          all_hashes_regexp = /#+$/
+  return
 
-          if (all_hashes_regexp.test cell)
-            # Copying cell value from Excel with very short cell length might yield "#####"
-            # We'll use the value from text (instead of from html) for the actual value in those cases
-            cell_from_text = data_text[processing_row_number-1][processing_column_number-1]
-            if (cell isnt cell_from_text)
-              cell = cell_from_text
+# Handle clipboard data parsing with async support
+handleClipboardParsing = (tpl, html_data, text_data) ->
+  parseAndProcess = (data, fallback_data) ->
+    try
+      parseSpreadsheetData data, {type: "string"}, (rows) ->
+        if rows.length == 0 and fallback_data?
+          # Try fallback data
+          parseAndProcess fallback_data, null
+          return
 
-          cells.push cell
+        if rows.length == 0
+          tpl.data.dialog_state.set "wait_for_paste"
+          JustdoSnackbar.show
+            text: TAPi18n.__ "clipboard_import_cant_find_tabular_data"
+          return
 
-          if cell.trim().length > 0
-            all_cells_are_empty = false
-            row_length = processing_column_number
+        # Limit max number of rows to import
+        if rows.length > JustdoClipboardImport.import_limit
+          tpl.data.dialog_state.set "wait_for_paste"
+          JustdoSnackbar.show
+            text: TAPi18n.__ "clipboard_import_too_many_rows", {limit: JustdoClipboardImport.import_limit}
+          return
 
-          if (colspan = $(td[0]).attr("colspan"))?
-            colspan = parseInt colspan, 10
-            colspan -= 2
-            for i in [0..colspan]
-              cells.push ""
-              processing_column_number += 1
-
-        if not all_cells_are_empty
-          rows.push cells
-          if longest_row_length < row_length
-            longest_row_length = row_length
-
-      #limit max number of rows to import
-      if rows.length > JustdoClipboardImport.import_limit
-        JustdoSnackbar.show
-          text: TAPi18n.__ "clipboard_import_too_many_rows", {limit: JustdoClipboardImport.import_limit}
-        return
-
-      #trim all rows according to the longest row. This handles cases where the entire row is copied to
-      #the clipboard
-      for row_number of rows
-        rows[row_number] = rows[row_number].slice 0, longest_row_length
-
-      if rows.length > 0
         tpl.data.clipboard_data.set rows
         tpl.data.dialog_state.set "has_data"
         Tracker.afterFlush ->
           loadSavedImportConfig tpl
           return
         return
-    else
-      tpl.data.dialog_state.set "wait_for_paste"
-      JustdoSnackbar.show
-        text: TAPi18n.__ "clipboard_import_cant_find_tabular_data"
-
+    catch err
+      console.error "Clipboard parsing error:", err
+      if fallback_data?
+        parseAndProcess fallback_data, null
+      else
+        tpl.data.dialog_state.set "wait_for_paste"
+        JustdoSnackbar.show
+          text: TAPi18n.__ "clipboard_import_cant_find_tabular_data"
     return
 
+  # Try HTML first (best for Excel/Google Sheets), then fall back to plain text
+  if html_data?
+    parseAndProcess html_data, text_data
+  else if text_data?
+    parseAndProcess text_data, null
+  else
+    tpl.data.dialog_state.set "wait_for_paste"
+    JustdoSnackbar.show
+      text: TAPi18n.__ "clipboard_import_cant_find_tabular_data"
   return
 
 Template.justdo_clipboard_import_input.onCreated ->
   self = @
 
   @getAvailableFieldTypes = @data.getAvailableFieldTypes
+  @isDragging = new ReactiveVar false
 
   Meteor.defer ->
     self.data.dialog_state.set "wait_for_paste"
@@ -123,6 +306,11 @@ Template.justdo_clipboard_import_input.onCreated ->
       Meteor.defer =>
         bindTargetToPaste self
         return
+    else if state == "parsing"
+      # Disable buttons while parsing to prevent user interaction
+      $(".justdo-clipboard-import-main-button, .justdo-import-clipboard-data-reset-button, .col-def-selector, .import-row-checkbox, .justdo-clipboard-import-dialog .close").prop "disabled", true
+      $(".justdo-clipboard-import-main-button").html TAPi18n.__("cancel")
+      $("#progressbar").hide()
     else if state == "has_data"
       $(".justdo-clipboard-import-main-button").html TAPi18n.__("import")
     else if state == "importing"
@@ -138,7 +326,11 @@ Template.justdo_clipboard_import_input.onCreated ->
 Template.justdo_clipboard_import_input.helpers
   waitingForPaste: -> Template.instance().data.dialog_state.get() is "wait_for_paste"
 
+  isParsing: -> Template.instance().data.dialog_state.get() is "parsing"
+
   pasteTargetPlaceholder: -> "clipboard_import_placeholder_msg"
+
+  isDragging: -> Template.instance().isDragging.get()
 
   hasData: -> Template.instance().data.dialog_state.get() in ["has_data", "importing"]
 
@@ -163,7 +355,7 @@ Template.justdo_clipboard_import_input.helpers
   isUserObject: (cell_data) -> _.isObject(cell_data) and cell_data.user_obj?
 
 Template.justdo_clipboard_import_input.events
-  "keyup .justdo-clipboard-import-paste-target": (e, tpl)->
+  "keyup .justdo-clipboard-import-paste-target": (e, tpl) ->
     $(".justdo-clipboard-import-paste-target").val("")
 
     return false
@@ -180,4 +372,44 @@ Template.justdo_clipboard_import_input.events
 
     return
 
+  "dragenter .justdo-clipboard-import-drop-zone": (e, tpl) ->
+    e.stopPropagation()
+    e.preventDefault()
+    tpl.isDragging.set true
+    return
+
+  "dragover .justdo-clipboard-import-drop-zone": (e, tpl) ->
+    e.stopPropagation()
+    e.preventDefault()
+    tpl.isDragging.set true
+    return
+
+  "dragleave .justdo-clipboard-import-drop-zone": (e, tpl) ->
+    e.stopPropagation()
+    e.preventDefault()
+    # Only set dragging to false if we're leaving the drop zone entirely
+    # Check if the related target is inside the drop zone
+    related_target = e.relatedTarget
+    drop_zone = e.currentTarget
+    if not drop_zone.contains(related_target)
+      tpl.isDragging.set false
+    return
+
+  "drop .justdo-clipboard-import-drop-zone": (e, tpl) ->
+    e.stopPropagation()
+    e.preventDefault()
+    tpl.isDragging.set false
+
+    files = e.originalEvent.dataTransfer.files
+    if files.length > 0
+      handleFileUpload tpl, files[0]
+
+    return
+
+  "change .justdo-clipboard-import-file-input": (e, tpl) ->
+    files = e.target.files
+    if files.length > 0
+      handleFileUpload tpl, files[0]
+    # Reset the input so the same file can be selected again
+    e.target.value = ""
     return

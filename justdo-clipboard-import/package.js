@@ -38,6 +38,10 @@ Package.onUse(function (api) {
   //   }, 'justdoinc:justdo-clipboard-import')
   // api.use("ecmascript", both);
   // api.use("tmeasday:check-npm-versions@0.3.1", both);
+  
+  // Enable ecmascript for client-side npm package usage (xlsx for file import)
+  api.use("ecmascript", client);
+  api.use("tmeasday:check-npm-versions@0.3.1", both);
 
   // api.use("stevezhu:lodash@4.17.2", both);
   api.use("templating", client);
