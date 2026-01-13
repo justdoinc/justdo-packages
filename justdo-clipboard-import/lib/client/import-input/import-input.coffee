@@ -14,33 +14,42 @@ loadSavedImportConfig = (tpl) ->
 # Unified parsing function using SheetJS XLSX library
 # Supports CSV text, HTML strings, and binary spreadsheet data
 # Uses chunked processing to avoid blocking the main thread
+# Callback signature: (err, rows) - Node-style callback
 parseSpreadsheetData = (data, options = {}, callback) ->
   # Options:
   #   type: "string" (for CSV/HTML text) or "array" (for binary XLSX/XLS)
+  #   tpl: template instance (required for setting dialog_state on error)
   type = options.type or "string"
+  tpl = options.tpl
 
   JustdoXlsx.requireXlsx (XLSX) ->
-    workbook = XLSX.read data, {type: type}
+    try
+      workbook = XLSX.read data, {type: type}
 
-    # Get the first sheet
-    first_sheet_name = workbook.SheetNames[0]
-    worksheet = workbook.Sheets[first_sheet_name]
+      # Get the first sheet
+      first_sheet_name = workbook.SheetNames[0]
+      worksheet = workbook.Sheets[first_sheet_name]
 
-    if not worksheet?
-      callback []
-      return
+      if not worksheet?
+        callback null, []
+        return
 
-    # Convert to 2D array with all values as strings
-    rows = XLSX.utils.sheet_to_json worksheet, {header: 1, raw: false, defval: ""}
+      # Convert to 2D array with all values as strings
+      rows = XLSX.utils.sheet_to_json worksheet, {header: 1, raw: false, defval: ""}
 
-    # For small datasets, process synchronously
-    if rows.length < 500
-      filtered_rows = processRowsSync rows
-      callback filtered_rows
-      return
+      # For small datasets, process synchronously
+      if rows.length < 500
+        filtered_rows = processRowsSync rows
+        callback null, filtered_rows
+        return
 
-    # For large datasets, use chunked processing to avoid blocking UI
-    processRowsChunked rows, callback
+      # For large datasets, use chunked processing to avoid blocking UI
+      processRowsChunked rows, (result) ->
+        callback null, result
+        return
+    catch err
+      tpl?.data.dialog_state.set "wait_for_paste"
+      callback err, null
     return
 
   return
@@ -165,44 +174,23 @@ handleFileUpload = (tpl, file) ->
       text: TAPi18n.__ "clipboard_import_file_read_error"
     return
 
-  if file_extension == "csv"
-    # CSV files are read as text and parsed using XLSX
-    reader.onload = (e) ->
-      # Defer parsing to allow UI to update with loading state
-      setTimeout ->
-        try
-          csv_text = e.target.result
-          parseSpreadsheetData csv_text, {type: "string"}, (rows) ->
-            processFileData tpl, rows
-            return
-        catch err
-          console.error "CSV parsing error:", err
-          tpl.data.dialog_state.set "wait_for_paste"
+  # XLSX/XLS files are read as binary array
+  reader.onload = (e) ->
+    # Defer parsing to allow UI to update with loading state
+    setTimeout ->
+      array_buffer = e.target.result
+      parseSpreadsheetData new Uint8Array(array_buffer), {type: "array", tpl: tpl}, (err, rows) ->
+        if err
+          console.error "File parsing error:", err
           JustdoSnackbar.show
             text: TAPi18n.__ "clipboard_import_file_parse_error"
+          return
+        processFileData tpl, rows
         return
-      , 0
       return
-    reader.readAsText file
-  else
-    # XLSX/XLS files are read as binary array
-    reader.onload = (e) ->
-      # Defer parsing to allow UI to update with loading state
-      setTimeout ->
-        try
-          array_buffer = e.target.result
-          parseSpreadsheetData new Uint8Array(array_buffer), {type: "array"}, (rows) ->
-            processFileData tpl, rows
-            return
-        catch err
-          console.error "XLSX parsing error:", err
-          tpl.data.dialog_state.set "wait_for_paste"
-          JustdoSnackbar.show
-            text: TAPi18n.__ "clipboard_import_file_parse_error"
-        return
-      , 0
-      return
-    reader.readAsArrayBuffer file
+    , 0
+    return
+  reader.readAsArrayBuffer file
 
   return
 
@@ -232,40 +220,40 @@ bindTargetToPaste = (tpl) ->
 # Handle clipboard data parsing with async support
 handleClipboardParsing = (tpl, html_data, text_data) ->
   parseAndProcess = (data, fallback_data) ->
-    try
-      parseSpreadsheetData data, {type: "string"}, (rows) ->
-        if rows.length == 0 and fallback_data?
-          # Try fallback data
+    parseSpreadsheetData data, {type: "string", tpl: tpl}, (err, rows) ->
+      if err
+        console.error "Clipboard parsing error:", err
+        if fallback_data?
           parseAndProcess fallback_data, null
-          return
-
-        if rows.length == 0
-          tpl.data.dialog_state.set "wait_for_paste"
+        else
           JustdoSnackbar.show
             text: TAPi18n.__ "clipboard_import_cant_find_tabular_data"
-          return
-
-        # Limit max number of rows to import
-        if rows.length > JustdoClipboardImport.import_limit
-          tpl.data.dialog_state.set "wait_for_paste"
-          JustdoSnackbar.show
-            text: TAPi18n.__ "clipboard_import_too_many_rows", {limit: JustdoClipboardImport.import_limit}
-          return
-
-        tpl.data.clipboard_data.set rows
-        tpl.data.dialog_state.set "has_data"
-        Tracker.afterFlush ->
-          loadSavedImportConfig tpl
-          return
         return
-    catch err
-      console.error "Clipboard parsing error:", err
-      if fallback_data?
+
+      if rows.length == 0 and fallback_data?
+        # Try fallback data
         parseAndProcess fallback_data, null
-      else
+        return
+
+      if rows.length == 0
         tpl.data.dialog_state.set "wait_for_paste"
         JustdoSnackbar.show
           text: TAPi18n.__ "clipboard_import_cant_find_tabular_data"
+        return
+
+      # Limit max number of rows to import
+      if rows.length > JustdoClipboardImport.import_limit
+        tpl.data.dialog_state.set "wait_for_paste"
+        JustdoSnackbar.show
+          text: TAPi18n.__ "clipboard_import_too_many_rows", {limit: JustdoClipboardImport.import_limit}
+        return
+
+      tpl.data.clipboard_data.set rows
+      tpl.data.dialog_state.set "has_data"
+      Tracker.afterFlush ->
+        loadSavedImportConfig tpl
+        return
+      return
     return
 
   # Try HTML first (best for Excel/Google Sheets), then fall back to plain text
