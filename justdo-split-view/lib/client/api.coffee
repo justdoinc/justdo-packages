@@ -90,7 +90,7 @@ _.extend JustdoSplitView.prototype,
       @logger.warn "Container already exists, skipping setup"
 
       return
-    
+
     @container = $("<div>")
       .addClass("justdo-split-view")
       .appendTo(".global-wrapper")
@@ -155,7 +155,7 @@ _.extend JustdoSplitView.prototype,
       gravity = "sw"
     else if pos == "left"
       gravity = "ne"
-    
+
     return gravity
 
   updateWindowDimToRequiredGravity: ->

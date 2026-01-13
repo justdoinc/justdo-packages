@@ -37,3 +37,105 @@ body
 
   &.no-scroll
     overflow: visible
+
+.mobile-toolbar-buttons
+  display: none
+  width: 100%
+  position: fixed
+  bottom: 0
+  padding: 0px 30px
+  justify-content: space-between
+  box-shadow: 0px 0px 12px rgba(0, 0, 0 ,0.16)
+  background-color: white
+  z-index: 200
+  .mobile-toolbar-btn
+    padding: 24px 12px 36px 12px
+    border-top: 4px solid white
+    &.active
+      border-top: 4px solid black
+    &.bottom-pane
+      svg
+        transform: rotate(-90deg)
+  .jd-icon
+    width: 28px
+    height: 28px
+    stroke-width: 2px
+    cursor: pointer
+
+.mobile-toolbar-tabs
+  position: fixed
+  top: 45px
+  background-color: #ffffff
+  width: 100%
+  height: 100%
+  z-index: 1
+  display: none
+  &.show
+    display: block
+  .mobile-tab
+    padding: 12px 20px
+    display: none
+    &.active
+      display: block
+    &.notifications
+      .required-actions-card
+        width: auto
+    &.chats
+      .recent-activity-item
+        padding: 8px 0px
+  .mobile-tab-title
+    font-size: 16px
+    font-weight: bold
+    margin-bottom: 4px
+
+@media (max-width: 768px)
+  nav.navbar,
+  .project-container,
+  #project-main
+    width: auto !important
+
+  .project-container.open-toolbar
+    z-index: 2
+    #task-pane
+      top: 0
+      left: 0 !important
+      width: 100% !important
+
+  .project-header
+    min-width: unset
+
+  #task-pane
+    z-index: 120
+
+  .org-global-header-middle-wrapper
+    justify-content: flex-start !important
+    flex-grow: 1
+
+  .drawer-icon .jd-icon
+    width: 32px !important
+
+  #project-grid-operations
+    overflow-x: auto
+    overflow-y: hidden
+    -webkit-overflow-scrolling: touch
+    margin-right: 20px
+    border-right: 1px solid #c7c7c7
+    .btn-toolbar
+      flex-wrap: nowrap
+      white-space: nowrap
+
+  .mobile-toolbar-buttons
+    display: flex
+
+  .bottom-windows
+    .chat-window.open-chat-window
+      position: fixed
+      top: 45px
+      left: 0
+      bottom: 92px
+      height: auto
+      .messages-board-viewport
+        height: 100%
+
+
+//

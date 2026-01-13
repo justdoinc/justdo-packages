@@ -7044,10 +7044,6 @@ a.text-dark:hover, a.text-dark:focus {
   background-color: white;
 }
 
-.project-container {
-  background-color: #F3F5F6
-}
-
 .navbar {
   background-color: rgba( var(--color-primary), 1);
 }
