@@ -1,1 +1,0 @@
-_.extend JustdoXlsx.prototype, {}
