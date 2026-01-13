@@ -1,5 +1,11 @@
 JustdoXlsx = 
   requireXlsx: (cb) ->
+    if Meteor.isServer
+      # The fact that this package is available under both is because we want to serve the XLSX.full.min.js file
+      # so that the XLSX package can be loaded dynamically and cached.
+      throw new Meteor.Error "not-implemented", "Use XLSX NPM package instead"
+      return
+
     # The use of barrier ensures that cb will execute only once,
     # even if the script is loaded multiple times.
     
