@@ -6,7 +6,7 @@ APP.executeAfterAppLibCode ->
     batch_size: 100
     collection: APP.collections.Tasks
     updated_at_field: "_raw_updated_date"
-    delayed_updated_at_field: 1000 * 60 * 2 # Delay to avoid interrupting on-going active clipboard imports.
+    delayed_updated_at_field: 1000 * 60 * 60 # Delay to avoid interrupting on-going active clipboard imports.
     queryGenerator: ->
       # IMPORTANT!!! this is a JustdoDbMigrations.perpetualMaintainer and not a JustdoDbMigrations.commonBatchedMigration .
       # The queryGenerator of a perpetualMaintainer receives only the query and no query options.
