@@ -54,7 +54,7 @@
         secondButtonTextColor: '#4CAF50',
         backgroundColor: '#323232',
         pos: 'bottom-left',
-        // To show the snackbar indefinitely, set duration to a number lte 0.
+        // To show the snackbar indefinitely, set duration to 0
         duration: 5000,
         customClass: '',
         onActionClick: function(element) {
@@ -73,8 +73,13 @@
         }
 
         var options = Extend(true, $defaults, $options);
+        if (options.duration <= 0) {
+            // Normalize negative duration
+            options.duration = 0;
+        }
+
         if (options.duration > 0) {
-            // Enforce minimum duration only if duration is greater than 0.
+            // Enforce minimum duration only if duration is greater than 0 (0 should show indefinetly).
             options.duration = Math.max(options.duration, minimum_duration);
         }
 
