@@ -50,12 +50,9 @@ showErrorInSnackbarAndRevertState = (options) ->
   options.dialog_state.set "has_data"
   $("#progressbar .ui-progressbar-value").css "background", "#e91e63"
 
-  if not options.snackbar_duration?
-    options.snackbar_duration = 5000
-
   JustdoSnackbar.show
     text: options.snackbar_message
-    duration: options.snackbar_duration
+    duration: 0
 
   if options.problematic_row?
     scrollToAndHighlightProblematicRow options.problematic_row
@@ -277,7 +274,6 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
             showErrorInSnackbarAndRevertState
               dialog_state: modal_data.dialog_state
               snackbar_message: "#{JustdoPlanningUtilities.task_duration_pseudo_field_label} should be an integer. Import aborted."
-              snackbar_duration: 15000
               problematic_row: line_number
             return false
         else if cell_val.length > 0 and field_id != "clipboard-import-no-import" and field_id != "task-indent-level"
@@ -299,7 +295,6 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
                 showErrorInSnackbarAndRevertState
                   dialog_state: modal_data.dialog_state
                   snackbar_message: TAPi18n.__("clipboard_import_invalid_option_value", {field: field_def.label, val: cell_val, line: line_number})
-                  snackbar_duration: 15000
                   problematic_row: line_number
 
                 return false
@@ -322,7 +317,6 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
                 showErrorInSnackbarAndRevertState
                   dialog_state: modal_data.dialog_state
                   snackbar_message: TAPi18n.__("clipboard_import_invalid_option_value", {field: field_def.label, val: cell_val, line: line_number})
-                  snackbar_duration: 15000
                   problematic_row: line_number
 
                 return false
@@ -336,13 +330,12 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
             cell_val = parseFloat(cell_val.trim())
 
             if _.isNaN cell_val
-                showErrorInSnackbarAndRevertState
-                  dialog_state: modal_data.dialog_state
-                  snackbar_message: TAPi18n.__("clipboard_import_value_should_be_number", {val: original_cell_val, line: line_number})
-                  snackbar_duration: 15000
-                  problematic_row: line_number
+              showErrorInSnackbarAndRevertState
+                dialog_state: modal_data.dialog_state
+                snackbar_message: TAPi18n.__("clipboard_import_value_should_be_number", {val: original_cell_val, line: line_number})
+                problematic_row: line_number
 
-                return false
+              return false
 
             # Check valid range
             out_of_range = false
@@ -393,7 +386,6 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
         showErrorInSnackbarAndRevertState
           dialog_state: modal_data.dialog_state
           snackbar_message: TAPi18n.__("clipboard_import_invalid_indent", {line: line_number})
-          snackbar_duration: 15000
           problematic_row: line_number
 
         return false
@@ -408,7 +400,6 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
         showErrorInSnackbarAndRevertState
           dialog_state: modal_data.dialog_state
           snackbar_message: TAPi18n.__("clipboard_import_milestone_can_only_have_identical_start_and_end_date", {line: line_number, task: task.title})
-          snackbar_duration: 15000
           problematic_row: line_number
         return false
 
@@ -617,7 +608,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
     return true
 
-  undoImport = (trials = 0, show_err=false) ->
+  undoImport = (trials = 0, show_err = false) ->
     # task_paths_added is reversed as we need to remove the tasks in the deepest level first
 
     paths_to_remove = new Set()
@@ -646,7 +637,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
             error_text = "#{err.reason}. #{error_text}"
           JustdoSnackbar.show
             text: error_text
-            duration: 15000
+            duration: 0
 
       return
 
@@ -660,7 +651,6 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       showErrorInSnackbarAndRevertState
         dialog_state: modal_data.dialog_state
         snackbar_message: TAPi18n.__("clipboard_import_failed_with_reason", {reason: err?.reason or TAPi18n.__("clipboard_import_incorrect_dependency_found")})
-        snackbar_duration: 15000
 
       undoImport()
 
@@ -674,7 +664,6 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       showErrorInSnackbarAndRevertState
         dialog_state: modal_data.dialog_state
         snackbar_message: TAPi18n.__("clipboard_import_failed_with_reason", {reason: err.reason})
-        snackbar_duration: 15000
 
       undoImport()
 
@@ -687,7 +676,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     bootbox.hideAll()
     JustdoSnackbar.show
       text: TAPi18n.__("clipboard_import_task_imported", {count: task_paths_added.length})
-      duration: 1000 * 60 * 2 # 2 mins
+      duration: 0
       actionText: TAPi18n.__("undo")
       showDismissButton: true
       onActionClick: (snackbar) =>
@@ -737,7 +726,7 @@ Template.justdo_clipboard_import_activation_icon.events
         if modal_data.dialog_state.get() == "importing"
           JustdoSnackbar.show
             text: TAPi18n.__ "clipboard_import_importing_is_in_progress"
-            duration: 1000 * 20 # 20 secs
+            duration: 0
           return false
 
         return true
