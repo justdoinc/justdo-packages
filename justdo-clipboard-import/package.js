@@ -39,10 +39,6 @@ Package.onUse(function (api) {
   // api.use("ecmascript", both);
   // api.use("tmeasday:check-npm-versions@0.3.1", both);
   
-  // Enable ecmascript for client-side npm package usage (xlsx for file import)
-  api.use("ecmascript", client);
-  api.use("tmeasday:check-npm-versions@0.3.1", both);
-
   // api.use("stevezhu:lodash@4.17.2", both);
   api.use("templating", client);
   api.use('fourseven:scss@3.2.0', client);
@@ -63,6 +59,7 @@ Package.onUse(function (api) {
 
   api.use("reactive-var", both);
   api.use("tracker", client);
+  api.use("justdoinc:justdo-xlsx@1.0.0", client);
 
   api.addFiles("lib/both/analytics.coffee", both);
 

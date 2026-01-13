@@ -1,11 +1,3 @@
-import {checkNpmVersions} from "meteor/tmeasday:check-npm-versions"
-
-checkNpmVersions({
-  "xlsx": "0.20.3"
-}, "justdoinc:justdo-clipboard-import")
-
-XLSX = require "xlsx"
-
 loadSavedImportConfig = (tpl) ->
   saved_import_config = amplify.store tpl.data.import_config_local_storage_key
   if saved_import_config?
@@ -27,27 +19,30 @@ parseSpreadsheetData = (data, options = {}, callback) ->
   #   type: "string" (for CSV/HTML text) or "array" (for binary XLSX/XLS)
   type = options.type or "string"
 
-  workbook = XLSX.read data, {type: type}
+  JustdoXlsx.requireXlsx (XLSX) ->
+    workbook = XLSX.read data, {type: type}
 
-  # Get the first sheet
-  first_sheet_name = workbook.SheetNames[0]
-  worksheet = workbook.Sheets[first_sheet_name]
+    # Get the first sheet
+    first_sheet_name = workbook.SheetNames[0]
+    worksheet = workbook.Sheets[first_sheet_name]
 
-  if not worksheet?
-    callback []
+    if not worksheet?
+      callback []
+      return
+
+    # Convert to 2D array with all values as strings
+    rows = XLSX.utils.sheet_to_json worksheet, {header: 1, raw: false, defval: ""}
+
+    # For small datasets, process synchronously
+    if rows.length < 500
+      filtered_rows = processRowsSync rows
+      callback filtered_rows
+      return
+
+    # For large datasets, use chunked processing to avoid blocking UI
+    processRowsChunked rows, callback
     return
 
-  # Convert to 2D array with all values as strings
-  rows = XLSX.utils.sheet_to_json worksheet, {header: 1, raw: false, defval: ""}
-
-  # For small datasets, process synchronously
-  if rows.length < 500
-    filtered_rows = processRowsSync rows
-    callback filtered_rows
-    return
-
-  # For large datasets, use chunked processing to avoid blocking UI
-  processRowsChunked rows, callback
   return
 
 # Synchronous row processing for small datasets
