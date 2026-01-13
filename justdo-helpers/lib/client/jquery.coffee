@@ -12,7 +12,7 @@ _.extend JustdoHelpers,
       dataType: "script"
       cache: true
       url: url)
-    options = _.omit options, "bypass_cdn"
+    options = _.omit options, "bypass_cdn" # bypass_cdn is our option and not jQuery ajax's so we omit it.
 
     # Use $.ajax() since it is more flexible than $.getScript
     # Return the jqXHR object so we can chain callbacks
