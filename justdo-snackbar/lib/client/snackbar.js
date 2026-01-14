@@ -78,7 +78,11 @@
             options.duration = 0;
         }
 
-        if (options.duration > 0) {
+        function isIndefiniteDuration (duration) {
+            return duration === 0; 
+        }
+
+        if (!isIndefiniteDuration(options.duration)) {
             // Enforce minimum duration only if duration is greater than 0 (0 should show indefinetly).
             options.duration = Math.max(options.duration, minimum_duration);
         }
@@ -193,8 +197,16 @@
             delay ? setTimeout(animate, delay) : animate();
         };
 
+        snackbar.isIndefiniteDuration = function() {
+            return isIndefiniteDuration(this._duration) // 0 or negative duration is indefinite
+        };
+
         // Function to start/restart the timer
         snackbar.startTimer = function(isInitialStart) {
+            if (this.isIndefiniteDuration()) {
+                return;
+            }
+            
             if (this._timeoutId) {
                 clearTimeout(this._timeoutId);
             }
@@ -221,6 +233,10 @@
 
         // Function to pause the timer
         snackbar.pauseTimer = function() {
+            if (this.isIndefiniteDuration()) {
+                return;
+            }
+            
             if (this._timeoutId) {
                 clearTimeout(this._timeoutId);
                 this._timeoutId = null;
@@ -262,7 +278,7 @@
             togglePauseState(false);
         });
 
-        if (options.duration) {
+        if (!isIndefiniteDuration(options.duration)) {
             snackbar.startTimer(true); // Initial start from 100%
         }
 
