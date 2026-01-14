@@ -6,7 +6,10 @@ APP.executeAfterAppLibCode ->
     batch_size: 100
     collection: APP.collections.Tasks
     updated_at_field: "_raw_updated_date"
-    delayed_updated_at_field: 1000 * 60 * 60 # Delay to avoid interrupting on-going active clipboard imports.
+    # This is a 2nd layer protection for orphaned temp_import_ids (e.g., if import crashed or user closed browser).
+    # The primary cleanup happens via clearupTempImportId() when import completes successfully.
+    # The 1-hour delay avoids interrupting long-running imports that are still in progress.
+    delayed_updated_at_field: 1000 * 60 * 60
     queryGenerator: ->
       # IMPORTANT!!! this is a JustdoDbMigrations.perpetualMaintainer and not a JustdoDbMigrations.commonBatchedMigration .
       # The queryGenerator of a perpetualMaintainer receives only the query and no query options.
