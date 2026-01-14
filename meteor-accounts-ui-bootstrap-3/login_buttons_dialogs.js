@@ -253,12 +253,10 @@
     // IE8 doesn't support the 'input' event, so we'll run this on the keyup as
     // well. (Keeping the 'input' event means that this also fires when you use
     // the mouse to change the contents of the field, eg 'Cut' menu item.)
-    'input, keyup input': function(event) {
+    'input input[id^="configure-login-service-dialog-"], keyup input[id^="configure-login-service-dialog-"]': function(event) {
       // if the event fired on one of the configuration input fields,
       // check whether we should enable the 'save configuration' button
-      if (event.target.id.indexOf('configure-login-service-dialog') === 0){
-        updateSaveDisabled();
-      }
+      updateSaveDisabled();
     }
   });
 
