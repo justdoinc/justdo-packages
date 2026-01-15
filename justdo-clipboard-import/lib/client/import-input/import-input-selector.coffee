@@ -35,14 +35,17 @@ Template.justdo_clipboard_import_input_selector.onCreated ->
 
 Template.justdo_clipboard_import_input_selector.onRendered ->
   self = @
+  $selector = $(self.firstNode)
 
-  $(".justdo-clipboard-import-input-selector").on "shown.bs.dropdown", ->
-    $(".clipboard-import-selector-search").focus()
+  # Scope handlers to this template instance only to avoid accumulating handlers
+  # when multiple columns are rendered
+  $selector.on "shown.bs.dropdown", ->
+    $selector.find(".clipboard-import-selector-search").focus()
     return
 
-  $(".justdo-clipboard-import-input-selector").on "hidden.bs.dropdown", ->
+  $selector.on "hidden.bs.dropdown", ->
     self.search_input_rv.set null
-    $(".clipboard-import-selector-search").val null
+    $selector.find(".clipboard-import-selector-search").val null
     return
 
   return

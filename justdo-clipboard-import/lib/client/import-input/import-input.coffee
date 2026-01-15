@@ -195,7 +195,9 @@ handleFileUpload = (tpl, file) ->
   return
 
 bindTargetToPaste = (tpl) ->
-  $(".justdo-clipboard-import-dialog").bind "paste", (e) ->
+  # Unbind previous paste handler to prevent duplicate handlers accumulating
+  # when reset is clicked and dialog_state returns to "wait_for_paste"
+  $(".justdo-clipboard-import-dialog").off("paste").on "paste", (e) ->
     e.stopPropagation()
     e.preventDefault()
     clipboard_data = e.originalEvent.clipboardData
