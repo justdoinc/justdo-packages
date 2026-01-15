@@ -36,15 +36,11 @@ _.extend JustdoClipboardImport.prototype,
 
     return
 
-  getLocalStorageKey: ->
-    return "jci-last-selection::#{Meteor.userId()}"
   # Normalize a string for comparison by removing special characters and converting to lowercase
   _normalizeStringForComparison: (str) ->
     if not str?
       return ""
 
-  saveImportConfig: (selected_columns_definitions) ->
-    storage_key = @getLocalStorageKey()
     # Remove underscores, dashes, extra whitespace, and newlines; convert to lowercase
     normalized_str = String(str).toLowerCase()
       .replace(/[-_\n\r]+/g, " ")
@@ -52,13 +48,41 @@ _.extend JustdoClipboardImport.prototype,
       .trim()
     return normalized_str
 
+  # Generate a signature from headers array for use in storage key
+  # Uses normalized, lowercased headers joined together
+  getHeaderSignature: (headers) ->
+    if _.isEmpty headers
+      return
+    
+    # Normalize each header: lowercase, remove special chars, trim
+    signature_str = _.map(headers, (header) => @_normalizeStringForComparison(header)).join("|")
+
+    return signature_str
+
+  getLocalStorageKey: (headers) ->
+    base_key = "jci-last-selection::#{Meteor.userId()}"
+    if headers? and (signature = @getHeaderSignature(headers))?
+      return "#{base_key}::#{signature}"
+    return base_key
+
+  saveImportFieldConfig: (selected_columns_definitions, headers) ->
     import_config =
-      # rows: Array.from modal_data.rows_to_skip_set.get()
       cols: []
 
     for col_def in selected_columns_definitions
       import_config.cols.push col_def._id
 
-    amplify.store storage_key, import_config
+    if not _.isEmpty(headers)
+      # Save with header-specific key
+      key_with_headers = @getLocalStorageKey(headers)
+      amplify.store key_with_headers, import_config
+
+    key_without_headers = @getLocalStorageKey()
+    amplify.store key_without_headers, import_config
+
     return
+
+  getImportFieldConfig: (headers) ->
+    key = @getLocalStorageKey(headers)
+    return amplify.store key
 

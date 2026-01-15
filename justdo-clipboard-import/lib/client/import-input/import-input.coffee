@@ -1,3 +1,6 @@
+markAsSmartMatched = (tpl) ->
+  tpl.data.smart_match_occurred.set true
+  return
 
 # Get all possible matches for a field (including i18n translations and aliases)
 getFieldMatchNames = (field_def, field_id) ->
@@ -45,6 +48,7 @@ autoMatchColumnHeaders = (tpl) ->
     return
   
   [fields_obj, fields_array] = available_field_types
+  fallback_cols = APP.justdo_clipboard_import.getImportFieldConfig()?.cols
   
   # Also include the special import fields
   extended_fields_obj = _.extend {}, fields_obj, JustdoClipboardImport.special_import_fields
@@ -60,50 +64,63 @@ autoMatchColumnHeaders = (tpl) ->
   
   # Track which fields have been matched to avoid duplicates
   matched_field_ids = new Set()
-  
-  # Try to match each column header
-  $(".justdo-clipboard-import-input-selector").each (col_index) ->
-    header_value = header_row[col_index]
-    if not header_value? or _.isEmpty(normalized_header)
-      return
-    normalized_header = APP.justdo_clipboard_import._normalizeStringForComparison(header_value)
-    
-    # Try to find a matching field
-    if (matched_field_id = name_to_field_id[normalized_header])?
-      # Skip if this field was already matched (except for "clipboard-import-no-import")
-      if (matched_field_id isnt "clipboard-import-no-import") and matched_field_ids.has(matched_field_id)
-        return
-      
-      # Click the matching field option
-      $selector = $(@)
-      $field_option = $selector.find("a[field-id='#{matched_field_id}']")
+
+  setFieldIfNotMatchedAlready = ($el, field_id) ->
+    if (not matched_field_ids.has(field_id)) or (field_id is "clipboard-import-no-import")
+      $field_option = $el.find("a[field-id='#{field_id}']")
       if $field_option.length > 0
         $field_option.click()
-        matched_field_ids.add(matched_field_id)
+        matched_field_ids.add(field_id)
+        return true
+        
+    return false
+  
+  smart_matched = false
+  # Try to match each column header
+  $(".justdo-clipboard-import-input-selector").each (col_index) ->
+    $el = $(@)
+
+    header_value = header_row[col_index]
+    normalized_header = APP.justdo_clipboard_import._normalizeStringForComparison(header_value)
+    
+    # Try to find a matching field via smart guess first
+    col_smart_matched = false
+    if header_value? and not _.isEmpty(normalized_header)
+      if (matched_field_id = name_to_field_id[normalized_header])?
+        # Skip if this field was already matched (except for "clipboard-import-no-import")
+        if setFieldIfNotMatchedAlready $el, matched_field_id
+          col_smart_matched = true
+          smart_matched = true
+    
+    # If smart guess didn't match, try fallback config
+    if not col_smart_matched and (fallback_field_id = fallback_cols?[col_index])?
+      setFieldIfNotMatchedAlready $el, fallback_field_id
     
     return
 
-  if matched_field_ids.size isnt 0
-    # If some fields were matched, skip the first row
-    $(".justdo-clipboard-import-table .import-row-checkbox").first().click()
-    
+  if smart_matched
+    # If some fields were smart-matched (header-based), skip the first row as it likely contains headers
+    markAsSmartMatched tpl
   
   return
 
 loadSavedImportConfig = (tpl) ->
-  saved_import_config = amplify.store APP.justdo_clipboard_import.getLocalStorageKey()
-  if saved_import_config?
-    # if ({rows} = saved_import_config)?
-    #   for row_index in rows
-    #     $(".import-row-checkbox[row-index=#{row_index}]").click()
-    if ({cols} = saved_import_config)?
-      $(".justdo-clipboard-import-input-selector").each (i) ->
-        $(@).find("a[field-id='#{cols[i]}']").click()
-
-        return
+  clipboard_data = tpl.data.clipboard_data.get()
+  current_headers = clipboard_data[0] or []
+  
+  # Try to get config with header-specific key first
+  header_aware_field_conf = APP.justdo_clipboard_import.getImportFieldConfig(current_headers)
+  
+  if (column_ids = header_aware_field_conf?.cols)?
+    # Found config for these exact headers - use it directly
+    $(".justdo-clipboard-import-input-selector").each (i) ->
+      if (column_id = column_ids[i])?
+        $(@).find("a[field-id='#{column_id}']").click()
+      return
+    markAsSmartMatched tpl
   else
-    # No saved config, try to auto-match column headers
     autoMatchColumnHeaders tpl
+  
   return
 
 # Unified parsing function using SheetJS XLSX library

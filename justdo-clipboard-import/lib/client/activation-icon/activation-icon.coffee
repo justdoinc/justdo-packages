@@ -166,9 +166,15 @@ getSelectedColumnsDefinitions = ->
 testDataAndImport = (modal_data, selected_columns_definitions) ->
   modal_data.dialog_state.set "importing"
   modal_data.import_helper_message.set "clipboard_import_preparing"
-  APP.justdo_clipboard_import.saveImportConfig selected_columns_definitions
-  # Check that all columns have the same number of cells
   cp_data = modal_data.clipboard_data.get()
+  # Save both field config and headers for future imports
+  # Only save headers if smart matching occurred (headers were auto-recognized)
+  if modal_data.smart_match_occurred.get()
+    headers = cp_data[0] or []
+    APP.justdo_clipboard_import.saveImportFieldConfig selected_columns_definitions, headers
+  else
+    APP.justdo_clipboard_import.saveImportFieldConfig selected_columns_definitions
+  # Check that all columns have the same number of cells
   number_of_columns = cp_data[0].length
   project_id = JD.activeJustdo({_id: 1})._id
   line_number = 0
@@ -684,6 +690,7 @@ Template.justdo_clipboard_import_activation_icon.events
       getAvailableFieldTypes: getAvailableFieldTypes
       date_fields_date_format: new ReactiveVar(null)
       import_helper_message: new ReactiveVar "clipboard_import_preparing"
+      smart_match_occurred: new ReactiveVar false
 
     message_template =
       JustdoHelpers.renderTemplateInNewNode(Template.justdo_clipboard_import_input, modal_data)
@@ -719,6 +726,7 @@ Template.justdo_clipboard_import_activation_icon.events
             modal_data.dialog_state.set "wait_for_paste"
             modal_data.clipboard_data.set []
             modal_data.rows_to_skip_set.set(new Set())
+            modal_data.smart_match_occurred.set false
 
             Meteor.defer ->
               $(".justdo-clipboard-import-paste-target").focus()
