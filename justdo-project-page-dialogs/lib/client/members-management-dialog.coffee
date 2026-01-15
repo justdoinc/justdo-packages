@@ -707,12 +707,12 @@ APP.executeAfterAppLibCode ->
       message_arr.push "<div class='recent-batched-msg-text'>"
 
       if members_to_add.length > 0 and members_to_remove.length > 0
-        message_arr.push TAPi18n.__("members_mgmt_dialog_adding_and_removing_user", {add_count: members_to_add.length, remove_count: members_to_remove.length, tasks_count: total_tasks_in_job})
+        message_arr.push TAPi18n.__("members_mgmt_dialog_adding_and_removing_user", {add_count: members_to_add.length, remove_count: members_to_remove.length, task_count: total_tasks_in_job})
       else
         if members_to_add.length > 0
-          message_arr.push TAPi18n.__("members_mgmt_dialog_adding_user", {count: members_to_add.length, tasks_count: total_tasks_in_job})
+          message_arr.push TAPi18n.__("members_mgmt_dialog_adding_user", {count: members_to_add.length, task_count: total_tasks_in_job})
         if members_to_remove.length > 0
-          message_arr.push TAPi18n.__("members_mgmt_dialog_removing_user", {count: members_to_remove.length, tasks_count: total_tasks_in_job})
+          message_arr.push TAPi18n.__("members_mgmt_dialog_removing_user", {count: members_to_remove.length, task_count: total_tasks_in_job})
 
       if tasks_to_list_by_their_name.length > 0
         message_arr.push TAPi18n.__("members_mgmt_dialog_under_task", {count: tasks_to_list_by_their_name.length, task_name: _.map(tasks_to_list_by_their_name, (task_id) -> "<span class='task'>#{JustdoHelpers.taskCommonName(APP.collections.Tasks.findOne(task_id), 50)}</span>").join(", ")})
