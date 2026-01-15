@@ -28,3 +28,18 @@ _.extend JustdoClipboardImport,
       label: "Outline Level"
       label_i18n: "clipboard_import_indent_level"
       _id: "task-indent-level"
+
+  # Import aliases for common field name variations
+  # Keys are field IDs, values are arrays of alternative names that should match the field
+  import_aliases:
+    title: ["name", "subject", "task name", "task", "task title", "taskname"]
+    description: ["notes", "note", "status", "comments", "comment", "details"]
+    owner_id: ["owner", "assigned to", "assignee", "responsible"]
+    start_date: ["start", "begin", "begin date", "start time", "planned start"]
+    end_date: ["end", "finish", "end time", "finish date", "planned finish"]
+    due_date: ["due", "deadline"]
+    priority: ["priority", "importance"]
+    state: ["state", "status"]
+    status: ["% complete", "percent complete", "complete", "completion"]
+    "task-indent-level": ["outline level", "level", "indent", "indent level", "wbs", "hierarchy level", "task level"]
+    "clipboard-import-index": ["#", "id", "index", "row number", "row index", "original index"]

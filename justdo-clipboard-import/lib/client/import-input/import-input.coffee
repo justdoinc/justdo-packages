@@ -1,3 +1,105 @@
+# Normalize a string for comparison by removing special characters and converting to lowercase
+normalizeForComparison = (str) ->
+  if not str?
+    return ""
+
+  # Remove underscores, dashes, extra whitespace, and newlines; convert to lowercase
+  normalized_str = String(str).toLowerCase()
+    .replace(/[-_\n\r]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+  return normalized_str
+
+# Get all possible matches for a field (including i18n translations and aliases)
+getFieldMatchNames = (field_def, field_id) ->
+  match_names = []
+  
+  # Add the field label (English)
+  if field_def?.label?
+    match_names.push normalizeForComparison(field_def.label)
+
+  # Add the i18n label if available (current user language)
+  if field_def?.label_i18n?
+    i18n_label = TAPi18n.__(field_def.label_i18n)
+    if i18n_label and i18n_label != field_def.label_i18n
+      match_names.push normalizeForComparison(i18n_label)
+  
+  # Add any custom clipboard import label
+  if field_def?.custom_clipboard_import_label?
+    match_names.push normalizeForComparison(field_def.custom_clipboard_import_label)
+  
+  # Add aliases from the JustdoClipboardImport.import_aliases map
+  if JustdoClipboardImport.import_aliases[field_id]?
+    for alias in JustdoClipboardImport.import_aliases[field_id]
+      match_names.push normalizeForComparison(alias)
+  
+  # Also check aliases for the substitute field (e.g., jpu:basket_end_date_formatter -> end_date)
+  if field_def.grid_column_substitue_field? and JustdoClipboardImport.import_aliases[field_def.grid_column_substitue_field]?
+    for alias in JustdoClipboardImport.import_aliases[field_def.grid_column_substitue_field]
+      match_names.push normalizeForComparison(alias)
+  
+  # Add the field ID itself (normalized)
+  match_names.push normalizeForComparison(field_id)
+  
+  # Return unique values
+  return _.uniq(match_names)
+
+# Try to auto-match column headers to fields
+autoMatchColumnHeaders = (tpl) ->
+  clipboard_data = tpl.data.clipboard_data.get()
+  # Get the first row as potential headers
+  header_row = clipboard_data[0]
+  # Get available field types
+  available_field_types = tpl.getAvailableFieldTypes()
+  if _.isEmpty(header_row) or _.isEmpty(clipboard_data) or _.isEmpty(available_field_types)
+    return
+  
+  [fields_obj, fields_array] = available_field_types
+  
+  # Also include the special import fields
+  extended_fields_obj = _.extend {}, fields_obj, JustdoClipboardImport.special_import_fields
+  
+  # Build a mapping from normalized names to field IDs
+  name_to_field_id = {}
+  for field_id, field_def of extended_fields_obj
+    match_names = getFieldMatchNames(field_def, field_id)
+    for match_name in match_names
+      if match_name and not name_to_field_id[match_name]?
+        # Don't overwrite if already exists (first match wins)
+        name_to_field_id[match_name] = field_id
+  
+  # Track which fields have been matched to avoid duplicates
+  matched_field_ids = new Set()
+  
+  # Try to match each column header
+  $(".justdo-clipboard-import-input-selector").each (col_index) ->
+    header_value = header_row[col_index]
+    normalized_header = normalizeForComparison(header_value)
+    if not header_value? or _.isEmpty(normalized_header)
+      return
+    
+    # Try to find a matching field
+    if (matched_field_id = name_to_field_id[normalized_header])?
+      # Skip if this field was already matched (except for "clipboard-import-no-import")
+      if (matched_field_id isnt "clipboard-import-no-import") and matched_field_ids.has(matched_field_id)
+        return
+      
+      # Click the matching field option
+      $selector = $(@)
+      $field_option = $selector.find("a[field-id='#{matched_field_id}']")
+      if $field_option.length > 0
+        $field_option.click()
+        matched_field_ids.add(matched_field_id)
+    
+    return
+
+  if matched_field_ids.size isnt 0
+    # If some fields were matched, skip the first row
+    $(".justdo-clipboard-import-table .import-row-checkbox").first().click()
+    
+  
+  return
+
 loadSavedImportConfig = (tpl) ->
   saved_import_config = amplify.store tpl.data.import_config_local_storage_key
   if saved_import_config?
@@ -9,6 +111,9 @@ loadSavedImportConfig = (tpl) ->
         $(@).find("a[field-id='#{cols[i]}']").click()
 
         return
+  else
+    # No saved config, try to auto-match column headers
+    autoMatchColumnHeaders tpl
   return
 
 # Unified parsing function using SheetJS XLSX library
