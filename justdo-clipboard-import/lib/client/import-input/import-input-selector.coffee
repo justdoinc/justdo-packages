@@ -3,33 +3,33 @@ Template.justdo_clipboard_import_input_selector.onCreated ->
   self.search_input_rv = new ReactiveVar null
   self.parent_data = Template.parentData(1)
   self.available_field_types_crv = JustdoHelpers.newComputedReactiveVar null, ->
-   if _.isEmpty(available_field_types = self.parent_data.getAvailableFieldTypes())
-    return
-    
-   # To maintain certain options at top/bottom, we manipulate the array and object of available field types explicitly.
-   # available_field_types[0] is an object
-   _.extend available_field_types[0],
-    "clipboard-import-no-import":
-      label: "-- skip column --"
-      label_i18n: "clipboard_import_skip_column"
-      _id: "clipboard-import-no-import"
+    if _.isEmpty(available_field_types = self.parent_data.getAvailableFieldTypes())
+      return
+      
+    # To maintain certain options at top/bottom, we manipulate the array and object of available field types explicitly.
+    # available_field_types[0] is an object
+    _.extend available_field_types[0],
+      "clipboard-import-no-import":
+        label: "-- skip column --"
+        label_i18n: "clipboard_import_skip_column"
+        _id: "clipboard-import-no-import"
 
-    "clipboard-import-index":
-       label: "Original Index (will not be imported)"
-       label_i18n: "clipboard_import_index_column"
-       _id: "clipboard-import-index"
+      "clipboard-import-index":
+        label: "Original Index (will not be imported)"
+        label_i18n: "clipboard_import_index_column"
+        _id: "clipboard-import-index"
 
-     "task-indent-level":
-       label: "Outline Level"
-       label_i18n: "clipboard_import_indent_level"
-       _id: "task-indent-level"
+      "task-indent-level":
+        label: "Outline Level"
+        label_i18n: "clipboard_import_indent_level"
+        _id: "task-indent-level"
 
-   # available_field_types[1] is an array
-   # unshift = prepend
-   available_field_types[1].unshift available_field_types[0]["clipboard-import-no-import"], available_field_types[0]["clipboard-import-index"]
-   available_field_types[1].push available_field_types[0]["task-indent-level"]
+    # available_field_types[1] is an array
+    # unshift = prepend
+    available_field_types[1].unshift available_field_types[0]["clipboard-import-no-import"], available_field_types[0]["clipboard-import-index"]
+    available_field_types[1].push available_field_types[0]["task-indent-level"]
 
-   return available_field_types
+    return available_field_types
 
   return
 
