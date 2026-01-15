@@ -1,45 +1,35 @@
-# Normalize a string for comparison by removing special characters and converting to lowercase
-normalizeForComparison = (str) ->
-  if not str?
-    return ""
-
-  # Remove underscores, dashes, extra whitespace, and newlines; convert to lowercase
-  normalized_str = String(str).toLowerCase()
-    .replace(/[-_\n\r]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-  return normalized_str
 
 # Get all possible matches for a field (including i18n translations and aliases)
 getFieldMatchNames = (field_def, field_id) ->
+  normalizeStringForComparison = APP.justdo_clipboard_import._normalizeStringForComparison
   match_names = []
   
   # Add the field label (English)
   if field_def?.label?
-    match_names.push normalizeForComparison(field_def.label)
+    match_names.push normalizeStringForComparison(field_def.label)
 
   # Add the i18n label if available (current user language)
   if field_def?.label_i18n?
     i18n_label = TAPi18n.__(field_def.label_i18n)
     if i18n_label and (i18n_label isnt field_def.label_i18n)
-      match_names.push normalizeForComparison(i18n_label)
+      match_names.push normalizeStringForComparison(i18n_label)
   
   # Add any custom clipboard import label
   if field_def?.custom_clipboard_import_label?
-    match_names.push normalizeForComparison(field_def.custom_clipboard_import_label)
+    match_names.push normalizeStringForComparison(field_def.custom_clipboard_import_label)
   
   # Add aliases from the JustdoClipboardImport.import_aliases map
   if JustdoClipboardImport.import_aliases[field_id]?
     for alias in JustdoClipboardImport.import_aliases[field_id]
-      match_names.push normalizeForComparison(alias)
+      match_names.push normalizeStringForComparison(alias)
   
   # Also check aliases for the substitute field (e.g., jpu:basket_end_date_formatter -> end_date)
   if field_def.grid_column_substitue_field? and JustdoClipboardImport.import_aliases[field_def.grid_column_substitue_field]?
     for alias in JustdoClipboardImport.import_aliases[field_def.grid_column_substitue_field]
-      match_names.push normalizeForComparison(alias)
+      match_names.push normalizeStringForComparison(alias)
   
   # Add the field ID itself (normalized)
-  match_names.push normalizeForComparison(field_id)
+  match_names.push normalizeStringForComparison(field_id)
   
   # Return unique values
   return _.uniq(match_names)
@@ -74,9 +64,9 @@ autoMatchColumnHeaders = (tpl) ->
   # Try to match each column header
   $(".justdo-clipboard-import-input-selector").each (col_index) ->
     header_value = header_row[col_index]
-    normalized_header = normalizeForComparison(header_value)
     if not header_value? or _.isEmpty(normalized_header)
       return
+    normalized_header = APP.justdo_clipboard_import._normalizeStringForComparison(header_value)
     
     # Try to find a matching field
     if (matched_field_id = name_to_field_id[normalized_header])?

@@ -38,9 +38,19 @@ _.extend JustdoClipboardImport.prototype,
 
   getLocalStorageKey: ->
     return "jci-last-selection::#{Meteor.userId()}"
+  # Normalize a string for comparison by removing special characters and converting to lowercase
+  _normalizeStringForComparison: (str) ->
+    if not str?
+      return ""
 
   saveImportConfig: (selected_columns_definitions) ->
     storage_key = @getLocalStorageKey()
+    # Remove underscores, dashes, extra whitespace, and newlines; convert to lowercase
+    normalized_str = String(str).toLowerCase()
+      .replace(/[-_\n\r]+/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
+    return normalized_str
 
     import_config =
       # rows: Array.from modal_data.rows_to_skip_set.get()
