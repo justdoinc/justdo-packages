@@ -29,7 +29,7 @@
   "clipboard_import_placeholder_msg": "Paste spreadsheet content here, or drag & drop a CSV/Excel file.\nThe first column is regarded as the Subject.",
   "clipboard_import_skip_column": "-- skip column --",
   "clipboard_import_index_column": "Original Index (will not be imported)",
-  "clipboard_import_indent_level": "Indent Level",
+  "clipboard_import_indent_level": "Outline Level",
   "clipboard_import_manage_columns": "Manage Columns",
   "clipboard_import_user_not_found": "User not found in the current JustDo, invite the user first.",
   "clipboard_import_how_does_it_work": "How does it work?",

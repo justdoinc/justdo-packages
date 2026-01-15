@@ -20,7 +20,7 @@ Template.justdo_clipboard_import_input_selector.onCreated ->
        _id: "clipboard-import-index"
 
      "task-indent-level":
-       label: "Indent Level"
+       label: "Outline Level"
        label_i18n: "clipboard_import_indent_level"
        _id: "task-indent-level"
 
