@@ -13,3 +13,18 @@ _.extend JustdoClipboardImport,
   custom_page_label: "justdo-clipboard-import"
 
   import_limit: 10000
+
+  # Special import fields used in column selectors for clipboard import
+  special_import_fields:
+    "clipboard-import-no-import":
+      label: "-- skip column --"
+      label_i18n: "clipboard_import_skip_column"
+      _id: "clipboard-import-no-import"
+    "clipboard-import-index":
+      label: "Original Index (will not be imported)"
+      label_i18n: "clipboard_import_index_column"
+      _id: "clipboard-import-index"
+    "task-indent-level":
+      label: "Outline Level"
+      label_i18n: "clipboard_import_indent_level"
+      _id: "task-indent-level"

@@ -8,21 +8,7 @@ Template.justdo_clipboard_import_input_selector.onCreated ->
       
     # To maintain certain options at top/bottom, we manipulate the array and object of available field types explicitly.
     # available_field_types[0] is an object
-    _.extend available_field_types[0],
-      "clipboard-import-no-import":
-        label: "-- skip column --"
-        label_i18n: "clipboard_import_skip_column"
-        _id: "clipboard-import-no-import"
-
-      "clipboard-import-index":
-        label: "Original Index (will not be imported)"
-        label_i18n: "clipboard_import_index_column"
-        _id: "clipboard-import-index"
-
-      "task-indent-level":
-        label: "Outline Level"
-        label_i18n: "clipboard_import_indent_level"
-        _id: "task-indent-level"
+    _.extend available_field_types[0], JustdoClipboardImport.special_import_fields
 
     # available_field_types[1] is an array
     # unshift = prepend
