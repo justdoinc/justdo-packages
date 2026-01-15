@@ -120,12 +120,44 @@ loadSavedImportConfig = (tpl) ->
 # Supports CSV text, HTML strings, and binary spreadsheet data
 # Uses chunked processing to avoid blocking the main thread
 # Callback signature: (err, rows) - Node-style callback
-parseSpreadsheetData = (data, options = {}, callback) ->
+parseSpreadsheetData = (data, options = {}) ->
   # Options:
   #   type: "string" (for CSV/HTML text) or "array" (for binary XLSX/XLS)
   #   tpl: template instance (required for setting dialog_state on error)
   type = options.type or "string"
+  source = "clipboard"
+  error_i18n_key = "clipboard_import_cant_find_tabular_data"
+  if type is "array"
+    source = "file"
+    error_i18n_key = "clipboard_import_file_parse_error"
   tpl = options.tpl
+
+  callback = (err, rows) ->
+    if err?
+      console.error "#{JustdoHelpers.ucFirst source} parsing error:", err
+      JustdoSnackbar.show
+        text: TAPi18n.__ error_i18n_key
+      return
+
+    if _.isEmpty rows
+      tpl.data.dialog_state.set "wait_for_paste"
+      JustdoSnackbar.show
+        text: TAPi18n.__ error_i18n_key
+      return
+    
+    if rows.length > JustdoClipboardImport.import_limit
+      tpl.data.dialog_state.set "wait_for_paste"
+      JustdoSnackbar.show
+        text: TAPi18n.__ "clipboard_import_too_many_rows", {limit: JustdoClipboardImport.import_limit}
+      return
+    
+    tpl.data.clipboard_data.set rows
+    tpl.data.dialog_state.set "has_data"
+    Tracker.afterFlush ->
+      loadSavedImportConfig tpl
+      return
+      
+    return
 
   JustdoXlsx.requireXlsx (XLSX) ->
     try
@@ -154,7 +186,7 @@ parseSpreadsheetData = (data, options = {}, callback) ->
         return
     catch err
       tpl?.data.dialog_state.set "wait_for_paste"
-      callback err, null
+      callback err
     return
 
   return
@@ -236,26 +268,6 @@ processRowsChunked = (rows, callback) ->
   processChunk()
   return
 
-processFileData = (tpl, rows) ->
-  if rows.length == 0
-    tpl.data.dialog_state.set "wait_for_paste"
-    JustdoSnackbar.show
-      text: TAPi18n.__ "clipboard_import_file_empty"
-    return
-
-  if rows.length > JustdoClipboardImport.import_limit
-    tpl.data.dialog_state.set "wait_for_paste"
-    JustdoSnackbar.show
-      text: TAPi18n.__ "clipboard_import_too_many_rows", {limit: JustdoClipboardImport.import_limit}
-    return
-
-  tpl.data.clipboard_data.set rows
-  tpl.data.dialog_state.set "has_data"
-  Tracker.afterFlush ->
-    loadSavedImportConfig tpl
-    return
-  return
-
 handleFileUpload = (tpl, file) ->
   if not file?
     return
@@ -284,14 +296,7 @@ handleFileUpload = (tpl, file) ->
     # Defer parsing to allow UI to update with loading state
     setTimeout ->
       array_buffer = e.target.result
-      parseSpreadsheetData new Uint8Array(array_buffer), {type: "array", tpl: tpl}, (err, rows) ->
-        if err
-          console.error "File parsing error:", err
-          JustdoSnackbar.show
-            text: TAPi18n.__ "clipboard_import_file_parse_error"
-          return
-        processFileData tpl, rows
-        return
+      parseSpreadsheetData new Uint8Array(array_buffer), {type: "array", tpl: tpl}
       return
     , 0
     return
@@ -326,52 +331,13 @@ bindTargetToPaste = (tpl) ->
 
 # Handle clipboard data parsing with async support
 handleClipboardParsing = (tpl, html_data, text_data) ->
-  parseAndProcess = (data, fallback_data) ->
-    parseSpreadsheetData data, {type: "string", tpl: tpl}, (err, rows) ->
-      if err
-        console.error "Clipboard parsing error:", err
-        if fallback_data?
-          parseAndProcess fallback_data, null
-        else
-          JustdoSnackbar.show
-            text: TAPi18n.__ "clipboard_import_cant_find_tabular_data"
-        return
-
-      if rows.length == 0 and fallback_data?
-        # Try fallback data
-        parseAndProcess fallback_data, null
-        return
-
-      if rows.length == 0
-        tpl.data.dialog_state.set "wait_for_paste"
-        JustdoSnackbar.show
-          text: TAPi18n.__ "clipboard_import_cant_find_tabular_data"
-        return
-
-      # Limit max number of rows to import
-      if rows.length > JustdoClipboardImport.import_limit
-        tpl.data.dialog_state.set "wait_for_paste"
-        JustdoSnackbar.show
-          text: TAPi18n.__ "clipboard_import_too_many_rows", {limit: JustdoClipboardImport.import_limit}
-        return
-
-      tpl.data.clipboard_data.set rows
-      tpl.data.dialog_state.set "has_data"
-      Tracker.afterFlush ->
-        loadSavedImportConfig tpl
-        return
-      return
-    return
-
-  # Try HTML first (best for Excel/Google Sheets), then fall back to plain text
-  if html_data?
-    parseAndProcess html_data, text_data
-  else if text_data?
-    parseAndProcess text_data, null
+  if (data_to_parse = html_data or text_data)?
+    parseSpreadsheetData data_to_parse, {type: "string", tpl: tpl}
   else
     tpl.data.dialog_state.set "wait_for_paste"
     JustdoSnackbar.show
       text: TAPi18n.__ "clipboard_import_cant_find_tabular_data"
+
   return
 
 Template.justdo_clipboard_import_input.onCreated ->
