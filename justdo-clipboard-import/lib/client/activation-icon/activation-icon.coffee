@@ -32,9 +32,6 @@ custom_allowed_dates_formats = ["MMM DD YYYY", "DD MMMM YYYY", "Others"]
 getLocalStorageKey = ->
   return "jci-last-selection::#{Meteor.userId()}"
 
-getDefaultDateFormat = ->
-  return JustdoHelpers.getUserPreferredDateFormat()
-
 isDateFieldDef = (field_def) ->
   date_formatters = ["unicodeDateFormatter"]
 
@@ -788,7 +785,7 @@ Template.justdo_clipboard_import_activation_icon.events
                 className: "bootbox-new-design"
                 inputType: "select"
                 inputOptions: options
-                value: getDefaultDateFormat()
+                value: JustdoHelpers.getUserPreferredDateFormat()
                 rtl_ready: true
                 callback: (date_format) =>
                   if date_format?
