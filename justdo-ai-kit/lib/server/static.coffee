@@ -1,3 +1,7 @@
+{jsonrepair} = Npm.require "jsonrepair"
+parseWithJsonRepair = (str) ->
+  return JSON.parse jsonrepair(str)
+
 _.extend JustdoAiKit,
   openai_template_generation_model: "gpt-4o-mini"
 
@@ -26,7 +30,7 @@ _.extend JustdoAiKit,
 
         # Add back the missing bracket from .split()
         finished_intermediate_res += "]"
-        return JSON.parse finished_intermediate_res
+        return parseWithJsonRepair finished_intermediate_res
     
     "project_template":
       parser: (chunk, snapshot, stream_state) ->
@@ -77,7 +81,7 @@ _.extend JustdoAiKit,
 
         stream_state.intermediate_res = incomplete_intermediate_res
 
-        finished_intermediate_res = JSON.parse finished_intermediate_res
+        finished_intermediate_res = parseWithJsonRepair finished_intermediate_res
         
         return finished_intermediate_res
 
