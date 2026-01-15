@@ -21,7 +21,7 @@ getFieldMatchNames = (field_def, field_id) ->
   # Add the i18n label if available (current user language)
   if field_def?.label_i18n?
     i18n_label = TAPi18n.__(field_def.label_i18n)
-    if i18n_label and i18n_label != field_def.label_i18n
+    if i18n_label and (i18n_label isnt field_def.label_i18n)
       match_names.push normalizeForComparison(i18n_label)
   
   # Add any custom clipboard import label
