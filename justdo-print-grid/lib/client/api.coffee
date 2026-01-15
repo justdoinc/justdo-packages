@@ -495,7 +495,7 @@ _.extend JustdoPrintGrid.prototype,
 
         headers_rows_labels.push field_label
 
-      headers_rows_labels.push "Task Level", "Task Path"
+      headers_rows_labels.push "Outline Level", "Task Path"
 
       rowsCSV = [headers_rows_labels]
 
