@@ -35,3 +35,20 @@ _.extend JustdoClipboardImport.prototype,
       return
 
     return
+
+  getLocalStorageKey: ->
+    return "jci-last-selection::#{Meteor.userId()}"
+
+  saveImportConfig: (selected_columns_definitions) ->
+    storage_key = @getLocalStorageKey()
+
+    import_config =
+      # rows: Array.from modal_data.rows_to_skip_set.get()
+      cols: []
+
+    for col_def in selected_columns_definitions
+      import_config.cols.push col_def._id
+
+    amplify.store storage_key, import_config
+    return
+

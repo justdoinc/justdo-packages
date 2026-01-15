@@ -29,9 +29,6 @@ if JustdoPlanningUtilities?
 
 custom_allowed_dates_formats = ["MMM DD YYYY", "DD MMMM YYYY", "Others"]
 
-getLocalStorageKey = ->
-  return "jci-last-selection::#{Meteor.userId()}"
-
 isDateFieldDef = (field_def) ->
   date_formatters = ["unicodeDateFormatter"]
 
@@ -54,19 +51,6 @@ showErrorInSnackbarAndRevertState = (options) ->
   if options.problematic_row?
     scrollToAndHighlightProblematicRow options.problematic_row
 
-  return
-
-saveImportConfig = (selected_columns_definitions) ->
-  storage_key = getLocalStorageKey()
-
-  import_config =
-    # rows: Array.from modal_data.rows_to_skip_set.get()
-    cols: []
-
-  for col_def in selected_columns_definitions
-    import_config.cols.push col_def._id
-
-  amplify.store storage_key, import_config
   return
 
 setProgressbarValue = (processed_lines, total_lines) ->
@@ -182,7 +166,7 @@ getSelectedColumnsDefinitions = ->
 testDataAndImport = (modal_data, selected_columns_definitions) ->
   modal_data.dialog_state.set "importing"
   modal_data.import_helper_message.set "clipboard_import_preparing"
-  saveImportConfig selected_columns_definitions
+  APP.justdo_clipboard_import.saveImportConfig selected_columns_definitions
   # Check that all columns have the same number of cells
   cp_data = modal_data.clipboard_data.get()
   number_of_columns = cp_data[0].length
@@ -699,7 +683,6 @@ Template.justdo_clipboard_import_activation_icon.events
       rows_to_skip_set: new ReactiveVar(new Set())
       getAvailableFieldTypes: getAvailableFieldTypes
       date_fields_date_format: new ReactiveVar(null)
-      import_config_local_storage_key: getLocalStorageKey()
       import_helper_message: new ReactiveVar "clipboard_import_preparing"
 
     message_template =

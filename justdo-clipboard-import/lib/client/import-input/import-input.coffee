@@ -101,7 +101,7 @@ autoMatchColumnHeaders = (tpl) ->
   return
 
 loadSavedImportConfig = (tpl) ->
-  saved_import_config = amplify.store tpl.data.import_config_local_storage_key
+  saved_import_config = amplify.store APP.justdo_clipboard_import.getLocalStorageKey()
   if saved_import_config?
     # if ({rows} = saved_import_config)?
     #   for row_index in rows
