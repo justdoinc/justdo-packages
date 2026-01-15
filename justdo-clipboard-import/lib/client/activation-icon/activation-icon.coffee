@@ -750,6 +750,18 @@ Template.justdo_clipboard_import_activation_icon.events
             if selected_columns_definitions.length < (number_of_columns)
               JustdoSnackbar.show
                 text: TAPi18n.__ "clipboard_import_please_select_all_column_fields"
+
+              # Scroll to the first unselected column header and highlight entire column
+              $(".justdo-clipboard-import-input-selector").each (index) ->
+                $el = $(@)
+                if $el.find("button[value]").length == 0
+                  $el_parent = $el.parent()
+                  $el_parent.get(0).scrollIntoView({behavior: "smooth", block: "center", inline: "center"})
+                  # Highlight all cells in this column (header and data cells)
+                  col_index = $el_parent.attr("data-col-index")
+                  $("[data-col-index='#{col_index}']").effect("highlight", {}, 10000)
+                  return false # Break the .each loop
+
               return false
 
             # Manage dates - ask for input format

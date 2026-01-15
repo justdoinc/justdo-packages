@@ -47,12 +47,12 @@
         {{/if}}
 
         <table class="justdo-clipboard-import-table table table-sm">
-          <tr>
-            <td class="bg-light import-column-header">
+          <tr class="bg-light">
+            <td class="import-column-header">
               {{_ "import"}}
             </td>
             {{#each numberOfColumns}}
-              <th class="bg-light" data-col-index="{{@index}}">
+              <th data-col-index="{{@index}}">
                 {{> justdo_clipboard_import_input_selector}}
               </th>
             {{/each}}
