@@ -2,7 +2,7 @@ BarriersOptionsSchema = new SimpleSchema
   missing_barrier_timeout:
     type: Number
     optional: true
-    defaultValue: 2000
+    defaultValue: 5000
   
 Barriers = (options={}) ->
   {cleaned_val} =
