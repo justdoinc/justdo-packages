@@ -1873,6 +1873,14 @@ _.extend GridControl.prototype,
   # activate row/path
   #
   activateRow: (row, cell = 0, scroll_into_view = true, resulted_from_smart_guess = false) ->
+    @emit "pre-activate-row", row, cell, scroll_into_view, resulted_from_smart_guess
+
+    if scroll_into_view and not Tracker.inFlush()
+      # Flush to ensure any DOM updates caused by "pre-activate-row" event is finished,
+      # so that the scroll into view is accurate.
+      @logger.debug "activateRow: flushing to ensure DOM updates caused by 'pre-activate-row' event are finished"
+      Tracker.flush()
+
     @_grid.setActiveCell(row, cell, scroll_into_view)
 
     @emit "row-activated", row, cell, scroll_into_view, resulted_from_smart_guess
