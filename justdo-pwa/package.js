@@ -48,6 +48,7 @@ Package.onUse(function (api) {
   api.use("meteorspark:logger@0.3.0", both);
   api.use("justdoinc:justdo-helpers@1.0.0", both);
   api.use("iron:router@1.1.2", both);
+  api.use("francocatena:status@1.5.3", client);
 
   api.use("justdoinc:justdo-analytics@1.0.0", both);
 

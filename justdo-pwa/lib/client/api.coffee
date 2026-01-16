@@ -10,6 +10,7 @@ _.extend JustdoPwa.prototype,
     @active_mobile_tab_rv = new ReactiveVar JustdoPwa.main_mobile_tab_id
 
     @_setupGlobalTemplateHelpers()
+    @_setupMeteorStatusShowDelayTracker()
     @_setupTaskPaneStateTracker()
     @_setupGridControlFrozenColumnsModeTracker()
     @_setupGridControlPreActivateRowHandler()
@@ -74,6 +75,23 @@ _.extend JustdoPwa.prototype,
       
       return "d-none d-md-#{display_mode}"
       
+    return
+
+  _setupMeteorStatusShowDelayTracker: ->
+    original_show_delay = Status.getShowDelay()
+    @meteor_status_show_delay_tracker = Tracker.autorun =>
+      if @isMobileLayout()
+        Status.setShowDelay(JustdoPwa.meteor_status_show_delay)
+      else
+        Status.setShowDelay(original_show_delay)
+        
+      return
+    
+    @onDestroy =>
+      @meteor_status_show_delay_tracker?.stop()
+      @meteor_status_show_delay_tracker = null
+      return
+    
     return
 
   _setupTaskPaneStateTracker: ->
