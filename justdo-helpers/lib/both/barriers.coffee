@@ -95,9 +95,12 @@ _.extend Barriers.prototype,
 
     Meteor.setTimeout =>
       if not cb_executed
-        console.error "Barriers [#{not_resolved_promises.join(", ")}] timeout after #{@missing_barrier_timeout}ms. cb will be executed."
-        runCb()
         not_resolved_promises = await @_getNotResolvedPromises barrier_ids, barriers_promises
+        console.error "Barriers [#{not_resolved_promises.join(", ")}] timeout after #{@missing_barrier_timeout}ms. cb will be executed."
+        try
+          runCb()
+        catch err
+          console.error "Error executing callback after barrier timeout:", err
       return
     , @missing_barrier_timeout
 
