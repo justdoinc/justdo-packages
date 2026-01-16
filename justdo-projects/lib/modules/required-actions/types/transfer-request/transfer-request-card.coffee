@@ -116,7 +116,7 @@ Template.required_action_card_transfer_request_input.onRendered ->
       Meteor.defer ->
         textarea_height = $textarea.outerHeight()
 
-        if textarea_height > 40
+        if (textarea_height > 40) and not APP.justdo_pwa.isMobileLayout()
           show_shortcut_cue.set true
         else
           show_shortcut_cue.set false

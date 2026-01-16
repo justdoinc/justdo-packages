@@ -1,5 +1,5 @@
 <template name="required_action_card_transfer_request">
-  <div class="card-with-avatar">
+  <div class="card-with-avatar {{#if $eq getState "pre-reject"}}flex-column{{/if}}">
     <div class="card-with-avatar-content">
       <div class="card-avatar">
         {{#with currentOwnerDoc}}
@@ -9,10 +9,11 @@
       <div class="card-details">
         {{{xssGuard(_ "transfer_request_card_transfer_request" user=currentOwnerDisplayname task_url=taskURL project_name=getActionProjectTitle seqId=seqId task_title=(cutString title 80))}}}
       </div>
-      {{#if $eq getState "pre-reject"}}
-        {{> required_action_card_transfer_request_input}}
-      {{/if}}
     </div>
+
+    {{#if $eq getState "pre-reject"}}
+      {{> required_action_card_transfer_request_input}}
+    {{/if}}
 
     <div class="action-buttons">
       {{#if $eq getState "pre-reject"}}
