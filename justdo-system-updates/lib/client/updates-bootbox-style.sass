@@ -1,3 +1,5 @@
+@import "{justdoinc:justdo-pwa}/lib/client/global-styles/_vars.scss"
+  
 .system-update-dialog
   .modal-dialog
     width: 80%
@@ -48,3 +50,26 @@
       border-left: unset
       padding-left: unset
       margin-left: unset
+
+@include mobile
+  .bootbox.system-update-dialog
+    .modal-dialog
+      width: auto
+      min-width: unset
+      overflow: hidden
+      margin: 0
+      max-width: 100%
+      height: 100dvh
+      .modal-content
+        display: flex
+        flex-direction: column
+        height: 100%
+
+      .modal-header,
+      .modal-footer
+        flex-shrink: 0
+
+      .modal-body
+        flex: 1 1 auto
+        overflow-y: auto
+        -webkit-overflow-scrolling: touch
