@@ -27,25 +27,10 @@ _.extend GridControl.prototype,
     grid_control = @
     init_context_menu()
 
-    column_index_of_last_opened_cmenu = null # excludes the handle from the count
-    setColumnIndexOfLastOpenedCmenu = (e, val) ->
-      # Checks whether event is mouse right click, and if so
-      # sets column_index_of_last_opened_cmenu to val.
-      # If val is not set, will try to find the column index
-      # from the event.
+    getColumnIndexFromGridColumnHeader = ($grid_column_header) ->
+      val = $grid_column_header.index()
 
-      if e.which == 3 or
-            (e.which == 1 and e.ctrlKey == true)
-             # Under mac, users can open the context menu by clicking on the left
-             # mouse key together with the ctrl key, on other systems, this won't
-             # have any effect since the context menu won't be opened
-
-        if not val?
-          val = $(e.target).closest(grid_control.getColumnsContextMenuTargetSelector()).index()
-
-        column_index_of_last_opened_cmenu = val
-
-      return
+      return val
 
     # Find missing fields
     missing_fields = @fieldsMissingFromView()
@@ -83,8 +68,9 @@ _.extend GridControl.prototype,
             }
             submenu.push
               text: JustdoHelpers.xssGuard(label, {allow_html_parsing: true, enclosing_char: ''})
-              action: (e) =>
-                grid_control.addFieldToView(field, column_index_of_last_opened_cmenu + 1)
+              action: (e, $grid_column_header) =>
+                column_index = getColumnIndexFromGridColumnHeader($grid_column_header)
+                grid_control.addFieldToView(field, column_index + 1)
         
         return JustdoHelpers.localeAwareSortCaseInsensitive submenu, (item) -> item.text.toLowerCase()
 
@@ -230,15 +216,13 @@ _.extend GridControl.prototype,
       setupAutoFocusOnSubmenuOpen(type)
       setupSubmenuProtection(type)
 
-      $grid_control_cmenu_target.bind "mousedown", (e) ->
-        return setColumnIndexOfLastOpenedCmenu(e)
-      
       return
 
     hide_columns_to_the_right_menu_item =
       text: TAPi18n.__ "hide_columns_to_the_right_label"
-      action: (e) =>
-        @setView @getView().slice(0, column_index_of_last_opened_cmenu + 1)
+      action: (e, $grid_column_header) =>
+        column_index = getColumnIndexFromGridColumnHeader($grid_column_header)
+        @setView @getView().slice(0, column_index + 1)
         
         return
 
@@ -279,8 +263,9 @@ _.extend GridControl.prototype,
     hide_menu_item = [
       {
         text: TAPi18n.__ "hide_column_label"
-        action: (e) =>
-          @_hideFieldColumn(@getView()[column_index_of_last_opened_cmenu].field)
+        action: (e, $grid_column_header) =>
+          column_index = getColumnIndexFromGridColumnHeader($grid_column_header)
+          @_hideFieldColumn(@getView()[column_index].field)
       }
     ]
     setupColumnContextMenu("last", hide_menu_item)
