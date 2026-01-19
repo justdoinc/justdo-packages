@@ -2770,6 +2770,10 @@ _.extend GridControl.prototype,
 
     return {tasks_count, limit_reached}
 
+  collapseAll: ->
+    @_grid_data.collapseAllPaths()
+    return
+
   expandDepth: (options) ->
     default_options =
       depth: undefined # undefined is unlimited
