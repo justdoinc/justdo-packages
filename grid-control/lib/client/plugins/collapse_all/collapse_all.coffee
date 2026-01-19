@@ -1,17 +1,21 @@
 EXPAND_TO_LEVEL_LIMIT = 3
 
 setupCollapseAllButton = (grid_control) ->
-  $el = $("""<div class="grid-state-button collapse-grid-button" title="Collapse all tree"><svg><use xlink:href="/layout/icons-feather-sprite.svg#minus"></use></svg></div>""")
+  menu_items = grid_control.getCollapseExpandMenuItems()
+  collapse_all_menu_item = menu_items.collapse_all
+  expand_all_menu_item = menu_items.expand_all
+
+  $el = $("""<div class="grid-state-button collapse-grid-button" title="#{TAPi18n.__ collapse_all_menu_item.label}"><svg><use xlink:href="/layout/icons-feather-sprite.svg#minus"></use></svg></div>""")
     .click =>
-      grid_control._grid_data.collapseAllPaths()
+      collapse_all_menu_item.action()
+      return
 
   $(".slick-header-column:first", grid_control.container)
     .prepend($el)
 
   $el = $("""<div class="grid-state-button expand-grid-button" jd-tt="expand-grid"><svg><use xlink:href="/layout/icons-feather-sprite.svg#plus"></use></svg></div>""")
     .click =>
-      grid_control.expandDepth()
-
+      expand_all_menu_item.action()
       return
 
   $(".slick-header-column:first", grid_control.container)
