@@ -17,5 +17,9 @@
   "tree_control_tooltip_emails_count": "__emails_count__ emails",
   "tree_control_tooltip_task_is_a_project": "Task is a Project",
   "tree_control_tooltip_task_is_archived_project": "Task is a Closed Project",
-  "tree_control_tooltip_task_is_archived": "Task is archived"
+  "tree_control_tooltip_task_is_archived": "Task is archived",
+
+  "collapse_all_tasks_label": "Collapse all tasks",
+  "expand_all_tasks_label": "Expand all tasks",
+  "expand_levels_label": "Expand levels"
 }
