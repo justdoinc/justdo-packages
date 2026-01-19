@@ -14,6 +14,7 @@ _.extend JustdoPwa.prototype,
     @_setupTaskPaneStateTracker()
     @_setupGridControlFrozenColumnsModeTracker()
     @_setupGridControlPreActivateRowHandler()
+    @_setupGridControlClickToShowHeaderContextMenuHandler()
     @_setupProjectPaneHeightTracker()
     @_setupDynamicHead()
 
@@ -183,6 +184,26 @@ _.extend JustdoPwa.prototype,
         return
 
       return
+    return
+
+  _setupGridControlClickToShowHeaderContextMenuHandler: ->
+    APP.on "grid-control-created", (grid_control) =>
+      column_header_selector = grid_control.getColumnsContextMenuTargetSelector()
+      slick_grid_jquery_event =
+        args: ["click", column_header_selector]
+        handler: (e) =>
+          if @isMobileLayout()
+            # Create a synthetic `contextmenu` event based on the original `click` event,
+            # preserving all coordinates and properties.
+            contextMenuEvent = $.Event e,
+              type: "contextmenu"
+            $(e.currentTarget).trigger(contextMenuEvent)
+          return
+
+      grid_control.installCustomJqueryEvent(slick_grid_jquery_event)
+
+      return
+
     return
 
   _setupProjectPaneHeightTracker: ->
