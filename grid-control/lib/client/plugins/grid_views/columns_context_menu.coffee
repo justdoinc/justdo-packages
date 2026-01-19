@@ -19,7 +19,12 @@ _.extend GridControl.prototype,
     # Current possible types: "first", "common"
     return "#dropdown-" + @_getColumnsManagerContextMenuId(type)
 
+  getColumnsContextMenuTargetSelector: ->
+    return ".slick-header-column"
+
   _setupColumnsManagerContextMenu: ->
+    # Store reference to this instance for use in event handlers
+    grid_control = @
     init_context_menu()
 
     column_index_of_last_opened_cmenu = null # excludes the handle from the count
@@ -36,7 +41,7 @@ _.extend GridControl.prototype,
              # have any effect since the context menu won't be opened
 
         if not val?
-          val = $(e.target).closest(".slick-header-column").index()
+          val = $(e.target).closest(grid_control.getColumnsContextMenuTargetSelector()).index()
 
         column_index_of_last_opened_cmenu = val
 
@@ -44,9 +49,6 @@ _.extend GridControl.prototype,
 
     # Find missing fields
     missing_fields = @fieldsMissingFromView()
-
-    # Store reference to this instance for use in event handlers
-    grid_control = @
 
     append_fields_menu = []
 
@@ -208,7 +210,7 @@ _.extend GridControl.prototype,
     setupColumnContextMenu = (type, additional_menu_items_arr) =>
       $(@_getColumnsManagerContextMenuSelector(type)).remove()
       
-      grid_control_cmenu_target_selector = ".slick-header-column"
+      grid_control_cmenu_target_selector = grid_control.getColumnsContextMenuTargetSelector()
       if type is "first"
         grid_control_cmenu_target_selector = grid_control_cmenu_target_selector += ":first"
       else if type is "last"
