@@ -1,3 +1,5 @@
+EXPAND_TO_LEVEL_LIMIT = 3
+
 setupCollapseAllButton = (grid_control) ->
   $el = $("""<div class="grid-state-button collapse-grid-button" title="Collapse all tree"><svg><use xlink:href="/layout/icons-feather-sprite.svg#minus"></use></svg></div>""")
     .click =>
@@ -16,6 +18,29 @@ setupCollapseAllButton = (grid_control) ->
     .prepend($el)
 
   return
+
+_.extend GridControl.prototype,
+  getCollapseExpandMenuItems: ->
+    grid_control = @
+
+    collapse_expand_menu_items =
+      collapse_all:
+        label: TAPi18n.__ "collapse_all_tasks_label"
+        action: -> grid_control.collapseAll()
+
+      expand_all:
+        label: TAPi18n.__ "expand_all_tasks_label"
+        action: -> grid_control.expandDepth()
+
+      expand_to_level:
+        label: TAPi18n.__ "expand_levels_label"
+        sub_items: [1..EXPAND_TO_LEVEL_LIMIT].map (level) ->
+          ret = 
+            label: level
+            action: -> grid_control.expandDepth({depth: level})
+          return ret
+
+    return collapse_expand_menu_items
 
 _.extend PACK.Plugins,
   collapse_all:
