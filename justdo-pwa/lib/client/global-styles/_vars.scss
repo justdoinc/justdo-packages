@@ -11,6 +11,9 @@ $breakpoint-xl: 1200px;
 $mobile-breakpoint: $breakpoint-md;
 
 $mobile-navbar-height: 74px;
+// This is the padding used by mobile navbar.
+// Use of this value prevents elements shown at the bottom of the screen from being cut off by the rounded corners of the device.
+$mobile-horizontal-safety-padding: 30px;
 
 // Mixins for responsive design
 @mixin mobile {
