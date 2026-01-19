@@ -1,20 +1,23 @@
 <template name="expand_grid_tooltip">
   <div class="dropdown expand-grid-dropdown">
     <div class="dropdown-menu p-2 shadow-lg border-0 show">
-      <div class="dropdown-item expand-grid-item expand-grid-level">Expand all tasks</div>
-      {{#if levels}}
+      {{#with expandAllDef}}
+        <div class="dropdown-item expand-grid-item expand-grid-all">{{_ label}}</div>
+      {{/with}}
+
+      {{#with expandToLevelDef}}
         <div class="dropdown-item expand-grid-item dropdown-submenu">
-          Expand levels
+          {{_ label}}
           <div class="dropdown-menu levels-menu p-2 shadow-lg border-0">
-            {{#each levels}}
-              <div class="dropdown-item expand-grid-level" level="{{this}}">{{this}}</div>
+            {{#each sub_items}}
+              <div class="dropdown-item expand-grid-level" level="{{label}}">{{label}}</div>
             {{/each}}
           </div>
           <div class="context-nested-section-item-caret">
             <i class="fa fa-caret-{{getRtlAwareDirection "right"}}"></i>
           </div>
         </div>
-      {{/if}}
+      {{/with}}
     </div>
   </div>
 </template>
