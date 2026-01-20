@@ -15,6 +15,7 @@ _.extend JustdoPwa.prototype,
     @_setupGridControlFrozenColumnsModeTracker()
     @_setupGridControlPreActivateRowHandler()
     @_setupGridControlClickToShowHeaderContextMenuHandler()
+    @_setupGridControlHeaderContextMenuExtraItems()
     @_setupProjectPaneHeightTracker()
     @_setupDynamicHead()
 
@@ -188,6 +189,7 @@ _.extend JustdoPwa.prototype,
 
   _setupGridControlClickToShowHeaderContextMenuHandler: ->
     APP.on "grid-control-created", (grid_control) =>
+      # This event handler is responsible for triggering the context menu when a column header is clicked on mobile layout.
       column_header_selector = grid_control.getColumnsContextMenuTargetSelector()
       slick_grid_jquery_event =
         args: ["click", column_header_selector]
@@ -205,6 +207,28 @@ _.extend JustdoPwa.prototype,
       return
 
     return
+
+  _setupGridControlHeaderContextMenuExtraItems: ->
+    APP.on "grid-control-created", (grid_control) =>
+      grid_control.on "pre-grid-columns-header-context-menu-attach", (menu) =>
+        # Add collapse/expand menu items
+        if @isMobileLayout() and (collapse_expand_menu_items = grid_control.getCollapseExpandMenuItems?())?
+          menu.push
+            text: collapse_expand_menu_items.collapse_all.label
+            action: collapse_expand_menu_items.collapse_all.action
+
+          menu.push
+            text: collapse_expand_menu_items.expand_all.label
+            action: collapse_expand_menu_items.expand_all.action
+
+          menu.push
+            text: collapse_expand_menu_items.expand_to_level.label
+            subMenu: collapse_expand_menu_items.expand_to_level.sub_items.map (item) ->
+              ret =
+                text: item.label
+                action: item.action
+              return ret
+      return
 
   _setupProjectPaneHeightTracker: ->
     # This tracker is responsible for setting the collapsed project pane height to 0 under mobile layout
