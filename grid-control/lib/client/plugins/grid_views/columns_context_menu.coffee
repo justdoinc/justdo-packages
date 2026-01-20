@@ -222,6 +222,9 @@ _.extend GridControl.prototype,
       $grid_control_cmenu_target = $(grid_control_cmenu_target_selector, @container)
       
       menu = append_fields_menu.concat(additional_menu_items_arr)
+
+      # Emit event to allow other plugins to modify the menu items before they are attached
+      @emit "pre-grid-columns-header-context-menu-attach", menu
       
       context.attach $grid_control_cmenu_target,
         id: @_getColumnsManagerContextMenuId(type)
