@@ -174,16 +174,31 @@ _.extend GridControl.prototype,
           submenuCloseTimer = null
         return
 
-      # When mouse enters submenu with search, clear any pending close timer
+      # When mouse enters a submenu, clear any pending close timer for that submenu
+      # and remove hover protection from OTHER submenus (to allow them to close)
       $menu.on "mouseenter", ".dropdown-submenu", (e) ->
+        $entered_submenu = $(e.currentTarget)
+        
         if submenuCloseTimer
           Meteor.clearTimeout(submenuCloseTimer)
           submenuCloseTimer = null
+        
+        # Remove hover protection from all OTHER submenus at the same level
+        # This allows the "Add Column" submenu to close when "Expand level" is entered
+        $menu.find(".dropdown-submenu").not($entered_submenu).removeClass("context-menu-hover-protection")
         return
 
       # When mouse leaves submenu, protect if search input has content or is focused
       $menu.on "mouseleave", ".dropdown-submenu", (e) ->
         $submenu = $(e.currentTarget)
+        
+        # Only apply delayed protection if this submenu contains the search input
+        $search_input = $submenu.find(".grid-columns-search-input")
+        if _.isEmpty $search_input
+          # No search input in this submenu, remove protection immediately
+          $submenu.removeClass("context-menu-hover-protection")
+          return
+        
         submenuCloseTimer = Meteor.setTimeout ->
           if not $submenu.is(":hover")
             $submenu.removeClass("context-menu-hover-protection")
