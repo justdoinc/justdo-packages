@@ -57,8 +57,7 @@ Package.onUse(function (api) {
 
   api.use("matb33:collection-hooks@0.8.4", both);
 
-  api.use("momentjs:moment", both);
-  api.use("risul:moment-timezone@0.5.0_5", both);
+  api.use("justdoinc:justdo-moment@1.0.0", both);
 
   api.use("justdoinc:justdo-jobs-processor", both);
 

@@ -40,7 +40,7 @@ Package.onUse(function (api) {
 
   api.use('aldeed:simple-schema@1.3.1', both);
   api.use('aldeed:collection2@2.3.2', both);
-  api.use('risul:moment-timezone@0.5.0_5', client)
+  api.use("justdoinc:justdo-moment@1.0.0", both);
 
   api.use("matb33:collection-hooks@0.8.4", both);
 

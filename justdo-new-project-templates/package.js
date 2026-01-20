@@ -48,7 +48,7 @@ Package.onUse(function (api) {
   api.use("meteorspark:logger@0.3.0", both);
   api.use("justdoinc:justdo-helpers@1.0.0", both);
   api.use("iron:router@1.1.2", both);
-  api.use("momentjs:moment", both);
+  api.use("justdoinc:justdo-moment@1.0.0", both);
   api.use("tap:i18n", both);
   api.use("justdoinc:justdo-i18n@1.0.0", both);
 

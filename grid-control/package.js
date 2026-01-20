@@ -28,7 +28,7 @@ Package.onUse(function (api) {
   api.use("tap:i18n", both);
   api.use('justdoinc:justdo-i18n@1.0.0', both);
 
-  api.use('momentjs:moment@2.10.3', both);
+  api.use("justdoinc:justdo-moment@1.0.0", both);
 
   api.use('stem-capital:slick-grid', client);
   api.use('stem-capital:grid-data', client);

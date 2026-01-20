@@ -37,7 +37,7 @@ Package.onUse(function (api) {
   api.use("iron:router@1.0.9", both, {weak: true});
   api.use("vazco:universe-html-purifier@1.2.3", both);
   api.use("peerlibrary:async@1.5.2_1", both);
-  api.use("momentjs:moment",both);
+  api.use("justdoinc:justdo-moment@1.0.0", both);
 
   api.use("aldeed:simple-schema@1.5.3", both);
 

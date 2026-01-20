@@ -55,8 +55,7 @@ Package.onUse(function (api) {
 
   api.use("justdoinc:justdo-analytics@1.0.0", both);
   api.use("tap:i18n", both);
-  api.use("momentjs:moment", both);
-  api.use("rzymek:moment-locales", both);
+  api.use("justdoinc:justdo-moment@1.0.0", both);
 
   api.use("matb33:collection-hooks@0.8.4", both);
   api.use("meteorspark:app@0.3.0", both);
