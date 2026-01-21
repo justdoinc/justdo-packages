@@ -7016,3 +7016,11 @@ a.text-dark:hover, a.text-dark:focus {
 .org-global-header-middle-wrapper .slash {
   color: #878e9d !important
 }
+
+.pe-none {
+  pointer-events: none;
+}
+
+.pe-auto {
+  pointer-events: auto;
+}

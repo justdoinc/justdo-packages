@@ -7337,3 +7337,11 @@ $active-row-and-search-result-editable-cell-background-color: #cfbde1
 .org-global-header-middle-wrapper .slash {
   color: #90772c !important
 }
+
+.pe-none {
+  pointer-events: none;
+}
+
+.pe-auto {
+  pointer-events: auto;
+}

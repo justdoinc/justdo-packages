@@ -7192,3 +7192,11 @@ a.text-dark:hover, a.text-dark:focus {
 .bg-selected {
   background-color: rgba(var(--color-primary), 0.16) !important;
 }
+
+.pe-none {
+  pointer-events: none;
+}
+
+.pe-auto {
+  pointer-events: auto;
+}
