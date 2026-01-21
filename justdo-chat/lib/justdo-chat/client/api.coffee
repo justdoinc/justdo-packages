@@ -343,7 +343,7 @@ _.extend JustdoChat.prototype,
   # activity subscription, that might never be used.
   _max_recent_activity_publication_age: 1000 * 60 * 5 # 5 mins
 
-  stopChannelsRecentActivityPublication: (_allow_keep_alive = true) ->
+  stopChannelsRecentActivityPublication: (_allow_keep_alive=true) ->
     if not @_subscribed_channels_recent_activity_subscription?
       # Nothing to stop...
 

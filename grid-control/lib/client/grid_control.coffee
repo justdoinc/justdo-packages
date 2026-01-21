@@ -305,7 +305,7 @@ _.extend GridControl,
 
 Util.inherits GridControl, EventEmitter
 
-activeItemObj = (fields, _grid_data_structure = true) ->
+activeItemObj = (fields, _grid_data_structure=true) ->
   if _grid_data_structure
     return @getCurrentPathObj(fields)
 
@@ -599,7 +599,7 @@ _.extend GridControl.prototype,
 
     @_init_dfd.resolve()
 
-  getAllDependentFields: (field_id, extended_schema = null) ->
+  getAllDependentFields: (field_id, extended_schema=null) ->
     # Returns all the fields that are depending on field_id
 
     if not extended_schema?
@@ -1887,7 +1887,7 @@ _.extend GridControl.prototype,
 
     return
 
-  activatePath: (path, cell = 0, options) ->
+  activatePath: (path, cell=0, options) ->
     if not path?
       @logger.debug "activatePath: no path provided"
       
@@ -2150,7 +2150,7 @@ _.extend GridControl.prototype,
 
     return
 
-  getFieldDef: (field_id, throw_if_not_exists = true) ->
+  getFieldDef: (field_id, throw_if_not_exists=true) ->
     extended_schema = @getSchemaExtendedWithCustomFields()
 
     if field_id not of extended_schema
@@ -2855,7 +2855,7 @@ _.extend GridControl.prototype,
   getDomain: ->
     return @options.domain
   
-  getFieldRawDescription: (field_id, option_id = undefined) ->
+  getFieldRawDescription: (field_id, option_id=undefined) ->
     # Receives a field_id and an optional option_id, returns the raw-description for the field in its unevaluated-raw form.
     #
     # If option_id is provided, returns the raw-description for the specific option, and if the option doesn't have a description,
