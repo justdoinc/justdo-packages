@@ -32,6 +32,7 @@
   background-color: rgba(255, 255, 255, 0.85)
   top: -100px
   transition: top 0.25s ease-in-out
+  gap: 32px
   &.container
     flex-direction: row !important
     padding-left: 0
@@ -39,9 +40,6 @@
     flex-grow: 0 !important
 
   .versions-dropdown
-    border-right: 1px solid #E0E2E6
-    padding-right: 24px
-    margin-right: 24px
     .dropdown-menu
       li
         cursor: pointer
@@ -61,6 +59,7 @@
     transition: background-color 0.35s
     color: white
     box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08)
+    justify-content: space-between
     &:hover
       background-color: rgba(2, 123, 255, 0.2)
     .jd-icon
@@ -104,3 +103,15 @@
       font-size: 16px !important
       .jd-icon
         display: none !important
+
+@include mobile
+  .system-update-dialog
+    .news-navigation
+      &.container
+        flex-direction: column !important
+        gap: 4px
+      .versions-dropdown
+        width: 100%
+      .news-navigation-items
+        width: 100%
+        padding: 12px

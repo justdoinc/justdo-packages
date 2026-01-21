@@ -22,12 +22,13 @@
               {{/if}}
             </div>
           {{/if}}
-
-          {{#with activeNews}}
-            {{#each templates}}
-              <a href="{{getNewsTabPath}}" class="news-navigation-item {{isTabActive _id}}" data-tab_id="{{_id}}">{{_ name}}</a>
-            {{/each}}
-          {{/with}}
+          <div class="news-navigation-items">
+            {{#with activeNews}}
+              {{#each templates}}
+                <a href="{{getNewsTabPath}}" class="news-navigation-item {{isTabActive _id}}" data-tab_id="{{_id}}">{{_ name}}</a>
+              {{/each}}
+            {{/with}}
+          </div>
         </div>
       {{/if}}
 
