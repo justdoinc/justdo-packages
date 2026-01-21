@@ -1872,7 +1872,7 @@ _.extend GridControl.prototype,
   #
   # activate row/path
   #
-  activateRow: (row, cell = 0, scroll_into_view = true, resulted_from_smart_guess = false) ->
+  activateRow: (row, cell=0, scroll_into_view=true, resulted_from_smart_guess=false) ->
     @emit "pre-activate-row", row, cell, scroll_into_view, resulted_from_smart_guess
 
     if scroll_into_view and not Tracker.inFlush()
@@ -2887,7 +2887,7 @@ _.extend GridControl.prototype,
 
     return @getFieldRawDescription(field_id, option_id)?
 
-  evaluateDescriptionValue: (field_id, doc, xss_options = undefined) ->
+  evaluateDescriptionValue: (field_id, doc, xss_options=undefined) ->
     # Provided with field_id, doc (optional) and xss_options (optional), 
     # returns the XSS-Guarded description value for the field.
     # 
