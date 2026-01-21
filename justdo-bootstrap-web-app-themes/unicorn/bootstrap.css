@@ -2926,7 +2926,7 @@ input[type="button"].btn-block {
 .tab-content > .active {
   display: block; }
 
-.page-container.page-project {
+.app-wrapper {
   background-color: unset; }
 
 .navbar {
