@@ -3,6 +3,10 @@ _.extend JustdoFormulaFields,
   plugin_human_readable_name: "Formulas"
   custom_field_type_id: "formula-field"
 
+  # Symbol indexes used for replacing field placeholders with single-character
+  # variables when converting formulas to mathjs-compatible expressions
+  symbols_indexes: "abcdefghijklmnopqrstuvwxyz"
+
   # The following is relevant to all fields (including client side pseudo fields,
   # and builtin), not only custom fields
   supported_fields_types: [Number]
