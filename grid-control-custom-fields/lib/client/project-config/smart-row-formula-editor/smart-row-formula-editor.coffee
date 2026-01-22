@@ -214,18 +214,9 @@ APP.executeAfterAppLibCode ->
             alert(TAPi18n.__("smart_row_formula_editor_error_unknown_field", {field: ref_field}))
             return
 
-        # Validate formula syntax with mathjs
+        # Validate formula syntax with mathjs using the shared utility
         try
-          # Replace field placeholders with symbols for validation
-          symbols_indexes = "abcdefghijklmnopqrstuvwxyz"
-          field_to_symbol = {}
-          symbol_index = 0
-          mathjs_formula = user_inputted_formula.replace field_component_regex, (match, field_id) ->
-            if field_id not of field_to_symbol
-              field_to_symbol[field_id] = symbols_indexes[symbol_index]
-              symbol_index += 1
-            return field_to_symbol[field_id]
-
+          {mathjs_formula} = APP.justdo_formula_fields.replaceFieldsWithSymbols(user_inputted_formula)
           JustdoMathjs.parseSingleRestrictedRationalExpression(mathjs_formula)
         catch err
           alert(TAPi18n.__("smart_row_formula_editor_error_invalid_formula", {error: err.reason or err.message}))
@@ -245,14 +236,9 @@ APP.executeAfterAppLibCode ->
 
       # Auto-set grid_dependencies_fields from formula placeholders
       if not _.isEmpty(user_inputted_formula)
-        field_component_regex = /\{([a-zA-Z0-9:\-_]+)\}/g
-        dependencies = []
-        match = null
-        while (match = field_component_regex.exec(user_inputted_formula)) isnt null
-          if match[1] not in dependencies
-            dependencies.push(match[1])
-
-        current_field_def.grid_dependencies_fields = dependencies
+        # Use the shared utility to extract field references
+        {field_to_symbol} = APP.justdo_formula_fields.replaceFieldsWithSymbols(user_inputted_formula)
+        current_field_def.grid_dependencies_fields = _.keys(field_to_symbol)
       else
         delete current_field_def.grid_dependencies_fields
 

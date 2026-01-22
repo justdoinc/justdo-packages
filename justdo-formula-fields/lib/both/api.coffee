@@ -37,6 +37,41 @@ _.extend JustdoFormulaFields.prototype,
   removeRedundantSpacesFormula: (formula) ->
     return formula.replace(/\s+/g, " ")
 
+  # Utility method that replaces field placeholders in a formula with single-character
+  # symbols for mathjs evaluation.
+  #
+  # This is a simpler version of processFormula() that doesn't perform validation
+  # against project custom fields, making it suitable for use in contexts where
+  # full validation isn't needed (e.g., client-side formatters).
+  #
+  # Returns:
+  # {
+  #   mathjs_formula: The formula with field placeholders replaced by symbols
+  #   field_to_symbol: An object mapping field_id -> symbol
+  # }
+  #
+  # Throws an error if too many unique fields are found (> 26).
+  replaceFieldsWithSymbols: (formula) ->
+    field_to_symbol = {}
+    symbol_index = 0
+
+    mathjs_formula = formula.replace JustdoFormulaFields.formula_fields_components_matcher_regex, (match, field_id) ->
+      if field_id of field_to_symbol
+        return field_to_symbol[field_id]
+
+      if symbol_index >= JustdoFormulaFields.symbols_indexes.length
+        throw new Meteor.Error "too-many-fields", "Formula has too many unique field references (max: #{JustdoFormulaFields.symbols_indexes.length})"
+
+      field_to_symbol[field_id] = JustdoFormulaFields.symbols_indexes[symbol_index]
+      symbol_index += 1
+
+      return field_to_symbol[field_id]
+
+    return {
+      mathjs_formula: mathjs_formula
+      field_to_symbol: field_to_symbol
+    }
+
   processFormula: (formula, formula_field_id, project_custom_fields, options) ->
     # Gets the non-human readable version of the formula.
     #
