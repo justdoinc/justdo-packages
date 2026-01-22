@@ -54,9 +54,8 @@ GridControl.installFormatter formatter_name,
     if not formula? or formula is ""
       return ""
 
-    # Extract field placeholders from formula using the same regex as justdo-formula-fields
-    # The pattern matches {field_id} and captures field_id
-    field_component_regex = /\{([a-zA-Z0-9:\-_]+)\}/g
+    # Use the shared regex from JustdoFormulaFields for extracting field placeholders
+    field_component_regex = JustdoFormulaFields.formula_fields_components_matcher_regex
 
     # Collect all referenced fields and their values
     field_to_symbol = {}
