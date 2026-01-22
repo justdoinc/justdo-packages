@@ -53,6 +53,7 @@ Package.onUse(function (api) {
   api.use("matb33:collection-hooks@0.8.4", client);
 
   api.use("stem-capital:grid-control", client);
+  api.use("justdoinc:justdo-mathjs@1.0.0", client);
   api.use("tap:i18n", both);
   api.use("justdoinc:justdo-i18n", both);
 
@@ -87,6 +88,10 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/project-config/project-config.coffee", client);
   api.addFiles("lib/client/project-config/project-config.sass", client);
   api.addFiles("lib/client/project-config/project-config.html", client);
+
+  api.addFiles("lib/client/project-config/smart-row-formula-editor/smart-row-formula-editor.coffee", client);
+  api.addFiles("lib/client/project-config/smart-row-formula-editor/smart-row-formula-editor.sass", client);
+  api.addFiles("lib/client/project-config/smart-row-formula-editor/smart-row-formula-editor.html", client);
 
   // Always after templates
   this.addI18nFiles(api, "i18n/{}.i18n.json");

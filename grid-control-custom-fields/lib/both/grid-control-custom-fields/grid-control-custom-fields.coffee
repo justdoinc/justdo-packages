@@ -397,7 +397,9 @@ _.extend GridControlCustomFields,
           formatter_type = null
         else
           if not (formatter_type = custom_field_definition.formatter)?
-            if custom_field_definition.field_type == "select"
+            if custom_field_definition.custom_field_type_id == "smart-row-formula"
+              formatter_type = "smartRowFormulaFormatter"
+            else if custom_field_definition.field_type == "select"
               formatter_type = "keyValueFormatter"
             else if custom_field_definition.field_type == "multi_select"
               formatter_type = "MultiSelectFormatter"
@@ -809,6 +811,15 @@ GridControlCustomFields.registerCustomFieldsTypes "basic-calc",
   type_id: "calc"
   label: "Smart Numbers" # Derive from the descendants
   label_i18n: "grid_control_custom_fields_smart_numbers_label"
+
+GridControlCustomFields.registerCustomFieldsTypes "smart-row-formula",
+  type_id: "number"
+  label: "Smart Row Formula"
+  label_i18n: "grid_control_custom_fields_smart_row_formula_label"
+  settings_button_template: "smart_row_formula_editor_opener"
+  custom_field_options:
+    decimal: true
+    grid_editable_column: false
 
 for field_type in GridControlCustomFields._available_field_types
   if (field_id_prefix_schema = field_type.field_id_prefix_schema)?

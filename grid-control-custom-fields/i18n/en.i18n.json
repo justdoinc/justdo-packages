@@ -13,7 +13,18 @@
   "grid_control_custom_fields_select_label": "Options",
   "grid_control_custom_fields_multi_select_label": "Multi Options",
   "grid_control_custom_fields_smart_numbers_label": "Smart Numbers",
+  "grid_control_custom_fields_smart_row_formula_label": "Smart Row Formula",
   "grid_control_custom_fields_unknown_type_label": "Unknown type",
   "grid_control_custom_fields_disabled_field_label": "Disabled field",
-  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Empty</i>"
+  "grid_control_custom_fields_empty_field_placeholder_html": "<i class=\"text-secondary\">Empty</i>",
+
+  "smart_row_formula_editor_title": "Configure Formula",
+  "smart_row_formula_editor_formula_label": "Formula",
+  "smart_row_formula_editor_formula_placeholder": "e.g. {hours} * {rate}",
+  "smart_row_formula_editor_formula_help": "Use {field_id} to reference other fields. Supports +, -, *, / operators.",
+  "smart_row_formula_editor_available_fields_label": "Available Fields",
+  "smart_row_formula_editor_add_field_button": "Insert",
+  "smart_row_formula_editor_error_no_fields": "Formula must reference at least one field.",
+  "smart_row_formula_editor_error_unknown_field": "Unknown field: __field__",
+  "smart_row_formula_editor_error_invalid_formula": "Invalid formula: __error__"
 }
