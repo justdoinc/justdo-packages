@@ -5,9 +5,6 @@
 # including references to Smart Number (calculated) fields.
 #
 
-# Map symbol indexes for mathjs variable substitution
-symbols_indexes = "abcdefghijklmnopqrstuvwxyz"
-
 formatter_name = "smartRowFormulaFormatter"
 GridControl.installFormatter formatter_name,
   # Invalidate when any dependency field changes
@@ -73,7 +70,7 @@ GridControl.installFormatter formatter_name,
         # Already processed this field
         return match
 
-      field_to_symbol[field_id] = symbols_indexes[symbol_index]
+      field_to_symbol[field_id] = JustdoFormulaFields.symbols_indexes[symbol_index]
       symbol_index += 1
 
       # Get field schema to check if it's a calculated field

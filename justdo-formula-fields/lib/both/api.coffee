@@ -1,5 +1,3 @@
-symbols_indexex = "abcdefghijklmnopqrstuvwxyz"
-
 _.extend JustdoFormulaFields.prototype,
   _bothImmediateInit: ->
     # @_bothImmediateInit runs before the specific env's @_immediateInit()
@@ -117,7 +115,7 @@ _.extend JustdoFormulaFields.prototype,
       if field_name of field_to_symbol
         return field_to_symbol[field_name]
 
-      field_to_symbol[field_name] = symbols_indexex[placeholders_found]
+      field_to_symbol[field_name] = JustdoFormulaFields.symbols_indexes[placeholders_found]
 
       placeholders_found += 1
 
