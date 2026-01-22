@@ -194,8 +194,8 @@ APP.executeAfterAppLibCode ->
 
       # Validate the formula
       if not _.isEmpty(user_inputted_formula)
-        # Extract field references and validate
-        field_component_regex = /\{([a-zA-Z0-9:\-_]+)\}/g
+        # Extract field references and validate using the shared regex from JustdoFormulaFields
+        field_component_regex = JustdoFormulaFields.formula_fields_components_matcher_regex
         referenced_fields = []
         match = null
         while (match = field_component_regex.exec(user_inputted_formula)) isnt null
