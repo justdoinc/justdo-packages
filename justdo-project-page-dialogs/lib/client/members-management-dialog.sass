@@ -1,3 +1,6 @@
+@import "{justdoinc:justdo-webapp-layout}/lib/client/global-sass/global-vars.sass"
+@import "{justdoinc:justdo-pwa}/lib/client/global-styles/_vars.scss"
+
 .members-editor-search
   display: flex
   align-items: center
@@ -304,22 +307,30 @@
     padding: 20px 27px
     border-top: 1px solid #EDF1F8
   .checkbox
-    position: absolute
-    bottom: -56px
-    left: 27px
+    border-top: 1px solid #EDF1F8
+    color: #3D495B
+    padding: 12px 20px
     label
       user-select: none
       display: flex
       align-items: center
       color: #3D495B
+      margin-bottom: 0
     .cascade-action-checkbox
       margin-right: 8px
   .section-caption
     color: #3D495B
     display: flex
     align-items: center
-    justify-content: space-between
     margin-bottom: 12px
+    gap: 6px
+  .section-actions-wrapper
+    display: flex
+    justify-content: space-between
+    flex-grow: 1
+    .section-actions
+      display: flex
+      gap: 6px
 
   .user-btn
     cursor: pointer
@@ -360,9 +371,6 @@
     cursor: pointer
     &:hover
       text-decoration: underline
-
-  .select-all
-    margin: 0 4px
 
   .invite-new-member
     display: flex
@@ -447,3 +455,17 @@
       .jd-icon
         margin-right: unset
         margin-left: 2px
+
+@include mobile
+  .members-editor-dialog
+    .modal-dialog
+      min-width: unset
+      .section-caption
+        flex-direction: column
+        align-items: start
+        gap: 2px
+      .section-actions-wrapper
+        width: 100%
+        .invite-new-member
+          .jd-icon
+            display: none

@@ -3,7 +3,7 @@
   "members_mgmt_dialog_updates": "Updates",
   "members_mgmt_dialog_find_member": "Find member",
   "members_mgmt_dialog_apply_changes_to_all_child_tasks": "Apply changes to all child-tasks",
-  "members_mgmt_dialog_new_members": "New members",
+  "members_mgmt_dialog_new_members": "New",
   "members_mgmt_dialog_no_results": "No results found",
   "members_mgmt_dialog_confirm_edit_members": "Confirm edit members",
   "members_mgmt_dialog_detailed_progress": "Processed __num_processed__ tasks out of __total_amount__",

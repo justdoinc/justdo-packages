@@ -59,17 +59,19 @@
 <template name="task_pane_item_details_members_editor_section">
   <div class="members-list-container members-list-{{action_id}}-container">
     <div class="section-caption">
-      <div class="d-flex">
-        {{caption}}
-        <div class="select-all text-primary">{{_ "all"}}</div>
-        <div class="select-none text-primary">{{_ "none"}}</div>
-      </div>
-      {{#if showInviteMembersSection}}
-        <div class="invite-new-member text-primary">
-          <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#plus"></use></svg>
-          {{_ "members_mgmt_dialog_new_members"}}
+      {{caption}}
+      <div class="section-actions-wrapper">
+        <div class="section-actions">
+          <div class="select-all text-primary">{{_ "all"}}</div>
+          <div class="select-none text-primary">{{_ "none"}}</div>
         </div>
-      {{/if}}
+        {{#if showInviteMembersSection}}
+          <div class="invite-new-member text-primary">
+            <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#plus"></use></svg>
+            {{_ "members_mgmt_dialog_new_members"}}
+          </div>
+        {{/if}}
+      </div>
     </div>
     {{#if $not action_users_empty}}{{!-- If there are members for this action --}}
       <div class="members-editor-dialog-{{action_id}}-section members-list">
