@@ -110,24 +110,33 @@ GridControl.installFormatter formatter_name,
     if has_error
       return ""
 
-    # Check if any value is missing or invalid
+    # Check if all values are missing/empty, and convert values to numbers
+    all_fields_empty = true
     for field_id, symbol of field_to_symbol
       value = field_values[field_id]
 
       if not value? or value is ""
-        # Missing or empty value - return blank
-        return ""
+        # Missing or empty value - treat as 0
+        field_values[field_id] = 0
+      else
+        # At least one field has a value
+        all_fields_empty = false
 
-      if not _.isNumber(value)
-        if _.isString(value)
-          parsed = parseFloat(value)
-          if _.isNaN(parsed)
-            # Non-numeric string value - return blank
-            return ""
-          field_values[field_id] = parsed
-        else
-          # Non-numeric value - return blank
-          return ""
+        if not _.isNumber(value)
+          if _.isString(value)
+            parsed = parseFloat(value)
+            if _.isNaN(parsed)
+              # Non-numeric string value - treat as 0
+              field_values[field_id] = 0
+            else
+              field_values[field_id] = parsed
+          else
+            # Non-numeric value - treat as 0
+            field_values[field_id] = 0
+
+    # Only return blank if ALL dependent fields are empty
+    if all_fields_empty
+      return ""
 
     # Build the mathjs formula by replacing placeholders with symbols
     mathjs_formula = formula.replace field_component_regex, (match, field_id) ->
