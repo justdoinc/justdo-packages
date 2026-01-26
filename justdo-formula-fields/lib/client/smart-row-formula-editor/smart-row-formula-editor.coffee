@@ -139,8 +139,10 @@ APP.executeAfterAppLibCode ->
       project_custom_fields = project_page_module.curProj()?.getProjectCustomFields() or []
       field_def = _.find project_custom_fields, (x) -> x.field_id == field_id
 
-      formula = field_def?.field_options?.formula or ""
+      if _.isEmpty(formula = field_def?.field_options?.formula)
+        return ""
 
+      formula = APP.justdo_formula_fields.getHumanReadableFormulaForCurrentLoadedProject(formula, field_id)
       return formula
 
     availableFields: ->
@@ -149,9 +151,9 @@ APP.executeAfterAppLibCode ->
 
   Template.smart_row_formula_editor.events
     "click .add-field": (e, tpl) ->
-      field_id_to_add = tpl.$(".field-to-add-selector").val()
+      label_to_add = tpl.$(".field-to-add-selector").val()
 
-      if not field_id_to_add
+      if not label_to_add
         return
 
       $formula_input = tpl.$(".formula-input")
@@ -162,12 +164,12 @@ APP.executeAfterAppLibCode ->
       cur_text = $formula_input.val()
       text_pre_last_pos = cur_text.substr(0, last_pos)
       text_after_last_pos = cur_text.substr(last_pos)
-      new_text = "#{text_pre_last_pos}{#{field_id_to_add}}#{text_after_last_pos}"
+      new_text = "#{text_pre_last_pos}{#{label_to_add}}#{text_after_last_pos}"
 
       $formula_input.val(new_text)
 
       # Focus the input and set cursor position after the inserted field
-      new_pos = last_pos + field_id_to_add.length + 2 # +2 for the braces
+      new_pos = last_pos + label_to_add.length + 2 # +2 for the braces
       formula_input.focus()
       formula_input.setSelectionRange(new_pos, new_pos)
 
@@ -192,67 +194,53 @@ APP.executeAfterAppLibCode ->
 
         return
 
-      # Validate the formula
-      if not _.isEmpty(user_inputted_formula)
-        # Extract field references and validate using the shared regex from JustdoFormulaFields
-        field_component_regex = JustdoFormulaFields.formula_fields_components_matcher_regex
-        referenced_fields = []
-        match = null
-        while (match = field_component_regex.exec(user_inputted_formula)) isnt null
-          referenced_fields.push(match[1])
+      saveFormulaAndClose = (formula) ->
+        # Save the formula to the custom field definition
+        custom_fields = project_page_module.curProj()?.getProjectCustomFields()
+        current_field_def = _.find custom_fields, (custom_field) -> custom_field.field_id == current_field_id
 
-        if referenced_fields.length == 0
-          alert(TAPi18n.__ "smart_row_formula_editor_error_no_fields")
+        if not current_field_def?
+          alert("Field not found")
           return
 
-        # Validate that all referenced fields exist
-        available_fields = getAvailableFieldsForFormula(current_field_id)
-        available_field_ids = _.pluck(available_fields, "field_id")
+        # Set the formula in field_options
+        Meteor._ensure current_field_def, "field_options"
+        current_field_def.field_options.formula = formula
 
-        for ref_field in referenced_fields
-          if ref_field not in available_field_ids
-            alert(TAPi18n.__("smart_row_formula_editor_error_unknown_field", {field: ref_field}))
+        # Auto-set grid_dependencies_fields from formula placeholders
+        if not _.isEmpty(formula)
+          # Use the shared utility to extract field references
+          {field_to_symbol} = APP.justdo_formula_fields.replaceFieldsWithSymbols(formula)
+          current_field_def.grid_dependencies_fields = _.keys(field_to_symbol)
+        else
+          delete current_field_def.grid_dependencies_fields
+
+        # Also set grid_column_formatter_options.formula for the formatter to use
+        Meteor._ensure current_field_def, "grid_column_formatter_options"
+        current_field_def.grid_column_formatter_options.formula = formula
+
+        project_page_module.curProj()?.setProjectCustomFields custom_fields, (err) ->
+          if err?
+            alert(err.reason)
             return
 
-        # Validate formula syntax with mathjs using the shared utility
-        try
-          {mathjs_formula} = APP.justdo_formula_fields.replaceFieldsWithSymbols(user_inputted_formula)
-          JustdoMathjs.parseSingleRestrictedRationalExpression(mathjs_formula)
-        catch err
-          alert(TAPi18n.__("smart_row_formula_editor_error_invalid_formula", {error: err.reason or err.message}))
+          close()
+
           return
 
-      # Save the formula to the custom field definition
-      custom_fields = project_page_module.curProj()?.getProjectCustomFields()
-      current_field_def = _.find custom_fields, (custom_field) -> custom_field.field_id == current_field_id
-
-      if not current_field_def?
-        alert("Field not found")
         return
 
-      # Set the formula in field_options
-      Meteor._ensure current_field_def, "field_options"
-      current_field_def.field_options.formula = user_inputted_formula
-
-      # Auto-set grid_dependencies_fields from formula placeholders
-      if not _.isEmpty(user_inputted_formula)
-        # Use the shared utility to extract field references
-        {field_to_symbol} = APP.justdo_formula_fields.replaceFieldsWithSymbols(user_inputted_formula)
-        current_field_def.grid_dependencies_fields = _.keys(field_to_symbol)
+      # Convert human-readable formula to machine-readable and save
+      if _.isEmpty(user_inputted_formula)
+        saveFormulaAndClose(null)
       else
-        delete current_field_def.grid_dependencies_fields
+        APP.justdo_formula_fields.getFormulaFromHumanReadableFormulaForCurrentLoadedProject user_inputted_formula, current_field_id, (err, formula) ->
+          if err?
+            alert(err.reason)
+            return
 
-      # Also set grid_column_formatter_options.formula for the formatter to use
-      Meteor._ensure current_field_def, "grid_column_formatter_options"
-      current_field_def.grid_column_formatter_options.formula = user_inputted_formula
+          saveFormulaAndClose(formula)
 
-      project_page_module.curProj()?.setProjectCustomFields custom_fields, (err) ->
-        if err?
-          alert(err.reason)
           return
-
-        close()
-
-        return
 
       return
