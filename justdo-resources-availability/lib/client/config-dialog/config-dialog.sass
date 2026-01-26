@@ -1,3 +1,5 @@
+@import "{justdoinc:justdo-pwa}/lib/client/global-styles/_vars.scss"
+
 .holidays_format_error
   color: red
 
@@ -54,3 +56,12 @@
 
 .holidays_format_error
   color: red !important
+
+@include mobile
+  .resources-availability-section
+    .resources-title
+      .form-check-label
+        width: 40px
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
