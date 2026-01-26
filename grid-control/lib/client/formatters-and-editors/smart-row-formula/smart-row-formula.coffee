@@ -227,7 +227,7 @@ GridControl.installFormatter formatter_name,
 
     value = JustdoHelpers.roundNumber value, 2
 
-    style_right = APP.justdo_i18n.getRtlAwareDirection "right"
+    style_right = APP.justdo_i18n.getRtlAwareDirection "left"
 
     return """<div style="font-weight: bold; text-decoration: underline; text-align: #{style_right};">#{JustdoHelpers.localeAwareNumberRepresentation value}</div>"""
 
