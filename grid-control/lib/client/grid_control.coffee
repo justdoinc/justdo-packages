@@ -733,13 +733,7 @@ _.extend GridControl.prototype,
       # e might be null, don't use it
 
       # At the moment we support only the first column freeze, hence "title"
-      if APP.justdo_i18n.isRtl()
-        # In RTL mode, use 'right' property instead of 'left'
-        # scrollLeft in RTL is typically negative (Chrome/Safari) or counts from max (Firefox)
-        # We use Math.abs to handle the negative values from WebKit browsers
-        $(getHeaderColumnSelector("title")).css("right", "#{Math.abs(scrolls.scrollLeft)}px")
-      else
-        $(getHeaderColumnSelector("title")).css("left", "#{scrolls.scrollLeft}px")
+      $(getHeaderColumnSelector("title")).css("left", "#{scrolls.scrollLeft}px")
 
       return
 
@@ -777,8 +771,7 @@ _.extend GridControl.prototype,
       })
 
     clearSlickGridOnScrollFnEffect = ->
-      # Clear both left and right to handle LTR/RTL mode switches
-      $(getHeaderColumnSelector("title")).css("left", "").css("right", "")
+      $(getHeaderColumnSelector("title")).css("left", "")
 
       return
 
