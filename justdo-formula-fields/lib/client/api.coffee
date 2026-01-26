@@ -17,7 +17,7 @@ _.extend JustdoFormulaFields.prototype,
     custom_feature_maintainer =
       APP.modules.project_page.setupProjectCustomFeatureOnProjectPage JustdoFormulaFields.project_custom_feature_id,
         installer: =>
-          @installCustomField()
+          @installSmartFormulaCustomField()
 
           project_formulas_subscription_maintainer = Tracker.nonreactive ->
             return Tracker.autorun ->
@@ -28,7 +28,7 @@ _.extend JustdoFormulaFields.prototype,
           return
 
         destroyer: =>
-          @uninstallCustomField()
+          @uninstallSmartFormulaCustomField()
 
           if project_formulas_subscription_maintainer?
             project_formulas_subscription_maintainer.stop()
@@ -44,7 +44,7 @@ _.extend JustdoFormulaFields.prototype,
 
     return
 
-  installCustomField: ->
+  installSmartFormulaCustomField: ->
     GridControlCustomFields.registerCustomFieldsTypes JustdoFormulaFields.custom_field_type_id,
       type_id: "number"
       label: "Formula"
@@ -57,7 +57,7 @@ _.extend JustdoFormulaFields.prototype,
 
     return
 
-  uninstallCustomField: ->
+  uninstallSmartFormulaCustomField: ->
     GridControlCustomFields.unregisterCustomFieldsTypes JustdoFormulaFields.custom_field_type_id
 
     return
