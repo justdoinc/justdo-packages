@@ -229,6 +229,6 @@ GridControl.installFormatter formatter_name,
 
     style_right = APP.justdo_i18n.getRtlAwareDirection "left"
 
-    return """<div style="font-weight: bold; text-decoration: underline; text-align: #{style_right};">#{JustdoHelpers.localeAwareNumberRepresentation value}</div>"""
+    return """<div style="font-weight: bold; text-decoration: underline; text-align: #{style_right}; direction: ltr;">#{JustdoHelpers.localeAwareNumberRepresentation value}</div>"""
 
   print_formatter_produce_html: true
