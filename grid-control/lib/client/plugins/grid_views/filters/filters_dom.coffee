@@ -167,8 +167,8 @@ _.extend GridControl.prototype,
     @$filter_dropdown
       .position
         of: $connected_element
-        my: "#{APP.justdo_i18n.getRtlAwareDirection "left"} top"
-        at: "#{APP.justdo_i18n.getRtlAwareDirection "left"} bottom"
+        my: "left top"
+        at: "left bottom"
         collision: "fit fit"
 
         using: (new_position, details) =>
