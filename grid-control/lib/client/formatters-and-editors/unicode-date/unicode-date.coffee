@@ -412,8 +412,6 @@ GridControl.installEditor "UnicodeDateEditor",
     $firstNode.find(".editor-unicode-date")
       .keydown (e) ->
         if e.which == 13
-          field_editor.save()
-
           $(e.target).blur()
 
           return
