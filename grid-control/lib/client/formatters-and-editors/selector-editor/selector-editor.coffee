@@ -100,6 +100,7 @@ GridControl.installEditor "SelectorEditor",
       sanitize: false
       size: 8
       liveSearch: show_live_search
+      dropdownAlignRight: APP.justdo_i18n.isRtl()
 
     @$select_picker = @$select.next()
 
