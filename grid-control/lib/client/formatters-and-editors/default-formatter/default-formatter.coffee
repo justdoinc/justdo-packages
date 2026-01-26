@@ -52,7 +52,7 @@ GridControl.installFormatter "defaultFormatter",
               custom_style += """background-color: #{bg_color}; color: #{JustdoHelpers.getFgColor(bg_color)};"""
 
       if schema.type is Number
-        custom_style += " text-align: #{APP.justdo_i18n.getRtlAwareDirection "right"};"
+        custom_style += " text-align: #{APP.justdo_i18n.getRtlAwareDirection "right"}; direction: ltr;"
         if schema.decimal is true
           value = formatDecimals(value)
 
