@@ -812,15 +812,6 @@ GridControlCustomFields.registerCustomFieldsTypes "basic-calc",
   label: "Smart Numbers" # Derive from the descendants
   label_i18n: "grid_control_custom_fields_smart_numbers_label"
 
-GridControlCustomFields.registerCustomFieldsTypes "smart-row-formula",
-  type_id: "number"
-  label: "Smart Row Formula"
-  label_i18n: "grid_control_custom_fields_smart_row_formula_label"
-  settings_button_template: "smart_row_formula_editor_opener"
-  custom_field_options:
-    decimal: true
-    grid_editable_column: false
-
 for field_type in GridControlCustomFields._available_field_types
   if (field_id_prefix_schema = field_type.field_id_prefix_schema)?
     if not (field_id_prefix = field_type.field_id_prefix)?

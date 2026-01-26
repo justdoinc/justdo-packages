@@ -135,9 +135,6 @@ Package.onUse(function (api) {
   api.addFiles('lib/client/formatters-and-editors/calculated-field/calculated-field.sass', client);
   api.addFiles('lib/client/formatters-and-editors/calculated-field/functions/common-filter-aware-tree-op-calculator-funcs.coffee', client);
 
-  api.addFiles('lib/client/formatters-and-editors/smart-row-formula/smart-row-formula.coffee', client);
-  api.addFiles('lib/client/formatters-and-editors/smart-row-formula/smart-row-formula.sass', client);
-
   api.addFiles('lib/client/formatters-and-editors/default-formatter/default-formatter.coffee', client);
   api.addFiles('lib/client/formatters-and-editors/default-formatter/default-formatter.sass', client);
   api.addFiles('lib/client/formatters-and-editors/default-formatter/extensions/status-field-formatter.coffee', client);
