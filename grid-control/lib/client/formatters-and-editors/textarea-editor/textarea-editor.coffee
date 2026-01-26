@@ -5,7 +5,7 @@ GridControl.installEditor "TextareaEditor",
     custom_style = ""
 
     if @context.schema.type is Number
-      custom_style += " text-align: right;"
+      custom_style += " text-align: #{APP.justdo_i18n.getRtlAwareDirection "right"}; direction: ltr;"
 
     @$input = $("""<textarea dir="auto" rows="1" class="mousetrap" #{if custom_style != "" then " style=\"#{custom_style}\"" else ""} />""")
 
