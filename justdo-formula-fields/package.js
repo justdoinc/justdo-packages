@@ -50,7 +50,6 @@ Package.onUse(function (api) {
   api.use("iron:router@1.1.2", both);
 
   api.use("justdoinc:justdo-mathjs@1.0.0", both);
-  
 
   api.use("justdoinc:justdo-analytics@1.0.0", both);
 
@@ -60,6 +59,7 @@ Package.onUse(function (api) {
   
   api.use("reactive-var", both);
   api.use("tracker", client);
+  api.use("stem-capital:grid-control", client);
 
   api.addFiles("lib/both/analytics.coffee", both);
 
@@ -82,6 +82,13 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/formula-options-editor/formula-options-editor.sass", client);
   api.addFiles("lib/client/formula-options-editor/formula-options-editor.html", client);
   api.addFiles("lib/client/formula-options-editor/formula-options-editor.coffee", client);
+
+  api.addFiles("lib/client/smart-row-formula-editor/smart-row-formula-editor.coffee", client);
+  api.addFiles("lib/client/smart-row-formula-editor/smart-row-formula-editor.sass", client);
+  api.addFiles("lib/client/smart-row-formula-editor/smart-row-formula-editor.html", client);
+
+  api.addFiles("lib/client/smart-row-formula-formatter/smart-row-formula-formatter.coffee", client);
+  api.addFiles("lib/client/smart-row-formula-formatter/smart-row-formula-formatter.sass", client);
 
   api.addFiles("lib/client/project-conf/project-conf.sass", client);
   api.addFiles("lib/client/project-conf/project-conf.html", client);
