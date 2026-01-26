@@ -8,6 +8,10 @@ _.extend JustdoFormulaFields.prototype,
 
     @registerConfigTemplate()
     @setupCustomFeatureMaintainer()
+    # Smart Row Formula is considered a core custom field type.
+    # We install it here so that it is available for all projects, 
+    # regardless of whether the project has "JustdoFormulaFields" installed.
+    @installSmartRowFormulaField()
 
     return
 
@@ -60,6 +64,27 @@ _.extend JustdoFormulaFields.prototype,
   uninstallSmartFormulaCustomField: ->
     GridControlCustomFields.unregisterCustomFieldsTypes JustdoFormulaFields.custom_field_type_id
 
+    return
+
+  installSmartRowFormulaField: ->
+    GridControlCustomFields.registerCustomFieldsTypes "smart-row-formula",
+      type_id: "number"
+      label: "Smart Row Formula"
+      label_i18n: "grid_control_custom_fields_smart_row_formula_label"
+      settings_button_template: "smart_row_formula_editor_opener"
+      custom_field_options:
+        decimal: true
+        grid_editable_column: false
+
+    @onDestroy =>
+      @uninstallSmartRowFormulaField()
+
+      return
+
+    return
+
+  uninstallSmartRowFormulaField: ->
+    GridControlCustomFields.unregisterCustomFieldsTypes "smart-row-formula"
     return
 
   getCurrentGridControlObject: -> APP.modules.project_page.gridControl()
