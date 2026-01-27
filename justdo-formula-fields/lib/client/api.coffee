@@ -173,6 +173,20 @@ _.extend JustdoFormulaFields.prototype,
 
     return cb(undefined, formula)
 
+  getHumanReadableFormula: (field_id) ->
+    field_def = @getCurrentProjectCustomFieldDefinition(field_id)
+    formula_type = field_def?.custom_field_type_id
+
+    if @isSmartRowFormulaField formula_type
+      formula = field_def?.field_options?.formula or ""
+    else
+      formula = APP.collections.Formulas.findOne({custom_field_id: field_id})?.formula or ""
+
+    if not _.isEmpty(formula)
+      return @getHumanReadableFormulaForCurrentLoadedProject(formula, field_id, formula_type)
+
+    return ""
+
   showFormulaEditingRulesDialog: ->
     data = {}
 
