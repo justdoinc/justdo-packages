@@ -243,7 +243,7 @@ _.extend JustdoFormulaFields.prototype,
     if custom_field_def.disabled is true
       throw new Meteor.Error "invalid-formula", "Field #{custom_field_def.field_id} is disabled and can't be used in a formula."
 
-    if formula_type is JustdoFormulaFields.smart_row_formula_field_type_id
+    if @isSmartRowFormulaField formula_type
       supported_field_types = JustdoFormulaFields.supported_custom_fields_types_for_smart_row_formula
       supported_field_type_ids = JustdoFormulaFields.supported_custom_fields_types_ids_for_smart_row_formula
     else
@@ -284,7 +284,11 @@ _.extend JustdoFormulaFields.prototype,
     if field_def._id of JustdoFormulaFields.forbidden_fields
       return false
     
-    if formula_type is JustdoFormulaFields.smart_row_formula_field_type_id
+    if @isSmartRowFormulaField formula_type
       return @_isFieldAvailableForSmartRowFormula(field_def)
     else
       return @_isFieldAvailableForSmartFormula(field_def)
+
+  isSmartRowFormulaField: (formula_type) ->
+    # Check if a field definition is a smart row formula field
+    return formula_type is JustdoFormulaFields.smart_row_formula_field_type_id
