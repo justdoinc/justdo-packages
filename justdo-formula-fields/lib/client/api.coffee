@@ -108,11 +108,11 @@ _.extend JustdoFormulaFields.prototype,
 
       field_def._id = field_id
 
-      if not @_isFieldAvailableForFormulas(field_def)
-        continue
-      
       if field_def._id is formula_field_id
         # Can't add itself!
+        continue
+
+      if not @_isFieldAvailableForFormulas(field_def)
         continue
 
       if (custom_field_def = @getCurrentProjectCustomFieldDefinition(field_def._id))?
