@@ -126,6 +126,8 @@ _.extend JustdoFormulaFields.prototype,
     #     #
     #     #   IMPORTANT: FOR NOW WE SUPPORT ONLY skip_if_fields_are_missing=true !
     # }
+    # 
+    # formula_type: JustdoFormulaFields.custom_field_type_id (default) or JustdoFormulaFields.smart_row_formula_field_type_id
 
     if _.isEmpty project_custom_fields or not _.isArray(project_custom_fields)
       throw new Meteor.Error "invalid-argument", "processFormula: project_custom_fields argument can't be empty"
@@ -141,9 +143,11 @@ _.extend JustdoFormulaFields.prototype,
     if field_custom_field_def.disabled
       throw new Meteor.Error "disabled-field", "Formula field (#{formula_field_id}) is disabled and can't be processed."
 
+    formula_type = options?.formula_type or JustdoFormulaFields.custom_field_type_id
+    supported_formula_field_ids = [JustdoFormulaFields.custom_field_type_id, JustdoFormulaFields.smart_row_formula_field_type_id]
     # Ensure formula_field_id is a Formula field
-    if field_custom_field_def.custom_field_type_id != JustdoFormulaFields.custom_field_type_id
-      throw new Meteor.Error "not-a-formula-field", "Formula field type id must be: '#{JustdoFormulaFields.custom_field_type_id}'. (received a field of type: '#{field_custom_field_def.custom_field_type_id}')."
+    if field_custom_field_def.custom_field_type_id not in supported_formula_field_ids
+      throw new Meteor.Error "not-a-formula-field", "Formula field type id must be #{supported_formula_field_ids.map((field_id)-> "\"#{field_id}\"").join(" or ")}. (received a field of type: \"#{field_custom_field_def.custom_field_type_id}\")."
 
     placeholders_found = 0
     mathjs_formula = formula.replace JustdoFormulaFields.formula_fields_components_matcher_regex, (all_match, field_name) =>
@@ -167,7 +171,7 @@ _.extend JustdoFormulaFields.prototype,
         # Field is not necessarily a custom field, but, if it is a custom field
         # we have some extra checks to do.
 
-        @throwErrorIfNotAllowedCustomFieldDef(field_name_custom_field_def)
+        @throwErrorIfNotAllowedCustomFieldDef(field_name_custom_field_def, formula_type)
 
       return field_to_symbol[field_name]
 
@@ -235,19 +239,26 @@ _.extend JustdoFormulaFields.prototype,
 
     return ret
 
-  throwErrorIfNotAllowedCustomFieldDef: (custom_field_def) ->
+  throwErrorIfNotAllowedCustomFieldDef: (custom_field_def, formula_type=JustdoFormulaFields.custom_field_type_id) ->
     if custom_field_def.disabled is true
       throw new Meteor.Error "invalid-formula", "Field #{custom_field_def.field_id} is disabled and can't be used in a formula."
 
-    if custom_field_def.field_type not in JustdoFormulaFields.supported_custom_fields_types
+    if formula_type is JustdoFormulaFields.smart_row_formula_field_type_id
+      supported_field_types = JustdoFormulaFields.supported_custom_fields_types_for_smart_row_formula
+      supported_field_type_ids = JustdoFormulaFields.supported_custom_fields_types_ids_for_smart_row_formula
+    else
+      supported_field_types = JustdoFormulaFields.supported_custom_fields_types
+      supported_field_type_ids = JustdoFormulaFields.supported_custom_fields_types_ids
+
+    if custom_field_def.field_type not in supported_field_types
       throw new Meteor.Error "invalid-formula", "Custom fields of type: #{custom_field_def.field_type}, are not supported in formulas."
 
     if (custom_field_type_id = custom_field_def.custom_field_type_id)?
       # Note, at the past we didn't have custom_field_type_id set to custom fields, only field_type,
       # so, for backward compatibility, we can't rely on custom_field_type_id to exist.
 
-      if custom_field_type_id not in JustdoFormulaFields.supported_custom_fields_types_ids
-        throw new Meteor.Error "invalid-formula", "Custom fields of type: #{JustdoFormulaFields.custom_field_type_id}, are not supported in formulas."
+      if custom_field_type_id not in supported_field_type_ids
+        throw new Meteor.Error "invalid-formula", "Custom fields of type: #{custom_field_type_id}, are not supported in formulas."
 
     return
 
