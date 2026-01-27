@@ -191,8 +191,8 @@ GridControl.installFormatter formatter_name,
 
     return {value: value}
 
-  getHumanReadableFormula: (field_id) ->
-    human_readable_formula = APP.justdo_formula_fields.getHumanReadableFormula field_id
+  getHumanReadableFormula: (field_id, grid_control) ->
+    human_readable_formula = APP.justdo_formula_fields.getHumanReadableFormula field_id, grid_control
     human_readable_formula = JustdoHelpers.xssGuard human_readable_formula
     return human_readable_formula
 
@@ -202,7 +202,7 @@ GridControl.installFormatter formatter_name,
   slick_grid: ->
     friendly_args = @getFriendlyArgs()
 
-    {formatter_obj, schema, field} = friendly_args
+    {formatter_obj, schema, field, grid_control} = friendly_args
 
     value = formatter_obj.getFieldValue(friendly_args)
 
@@ -242,7 +242,7 @@ GridControl.installFormatter formatter_name,
 
     style_right = APP.justdo_i18n.getRtlAwareDirection "right"
 
-    human_readable_formula = formatter_obj.getHumanReadableFormula field
+    human_readable_formula = formatter_obj.getHumanReadableFormula field, grid_control
 
     return """
       <div class="grid-formatter smart-row-formula-formatter" style="#{custom_color}" title="#{human_readable_formula}">
@@ -253,7 +253,7 @@ GridControl.installFormatter formatter_name,
   print: (doc, field, path) ->
     friendly_args = @getFriendlyArgs()
 
-    {formatter_obj, field} = friendly_args
+    {formatter_obj, field, grid_control} = friendly_args
 
     value = formatter_obj.getFieldValue(friendly_args)
 
@@ -264,7 +264,7 @@ GridControl.installFormatter formatter_name,
 
     style_right = APP.justdo_i18n.getRtlAwareDirection "left"
 
-    human_readable_formula = formatter_obj.getHumanReadableFormula field
+    human_readable_formula = formatter_obj.getHumanReadableFormula field, grid_control
 
     return """<div style="font-weight: bold; text-decoration: underline; text-align: #{style_right}; direction: ltr;" title="#{human_readable_formula}">#{JustdoHelpers.localeAwareNumberRepresentation value}</div>"""
 

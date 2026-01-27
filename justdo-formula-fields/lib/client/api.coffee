@@ -95,8 +95,8 @@ _.extend JustdoFormulaFields.prototype,
   getCurrentProjectCustomFieldDefinition: (field_id) ->
     return current_field_def = _.find @getCurrentProjectCustomFields(), (custom_field) -> custom_field.field_id == field_id
 
-  getFieldsAvailableForFormulasInCurrentLoadedProject: (formula_field_id, include_removed_fields=false, formula_type) ->
-    if not (gc = @getCurrentGridControlObject())
+  getFieldsAvailableForFormulasInCurrentLoadedProject: (formula_field_id, include_removed_fields=false, formula_type, grid_control) ->
+    if not (gc = grid_control or @getCurrentGridControlObject())
       throw @_error "no-grid-control-loaded"
 
     all_fields = gc.getSchemaExtendedWithCustomFields(include_removed_fields)
@@ -127,9 +127,9 @@ _.extend JustdoFormulaFields.prototype,
 
     return available_fields
 
-  getHumanReadableFormulaForCurrentLoadedProject: (formula, formula_field_id, formula_type) ->
+  getHumanReadableFormulaForCurrentLoadedProject: (formula, formula_field_id, formula_type, grid_control) ->
     available_fields_including_removed =
-      @getFieldsAvailableForFormulasInCurrentLoadedProject(formula_field_id, true, formula_type)
+      @getFieldsAvailableForFormulasInCurrentLoadedProject(formula_field_id, true, formula_type, grid_control)
 
     human_readable_formula = formula.replace JustdoFormulaFields.formula_fields_components_matcher_regex, (a, b) ->
       field_def = _.find available_fields_including_removed, (field_def) -> field_def._id == b
@@ -173,7 +173,7 @@ _.extend JustdoFormulaFields.prototype,
 
     return cb(undefined, formula)
 
-  getHumanReadableFormula: (field_id) ->
+  getHumanReadableFormula: (field_id, grid_control) ->
     field_def = @getCurrentProjectCustomFieldDefinition(field_id)
     formula_type = field_def?.custom_field_type_id
 
@@ -183,7 +183,7 @@ _.extend JustdoFormulaFields.prototype,
       formula = APP.collections.Formulas.findOne({custom_field_id: field_id})?.formula or ""
 
     if not _.isEmpty(formula)
-      return @getHumanReadableFormulaForCurrentLoadedProject(formula, field_id, formula_type)
+      return @getHumanReadableFormulaForCurrentLoadedProject(formula, field_id, formula_type, grid_control)
 
     return ""
 
