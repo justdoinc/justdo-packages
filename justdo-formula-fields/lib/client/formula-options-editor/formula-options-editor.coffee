@@ -277,17 +277,7 @@ JustdoHelpers.hooks_barriers.runCbAfterBarriers "justdo-formula-fields-init", ->
 
     getHumanReadableFormula: ->
       tpl = Template.instance()
-
-      if APP.justdo_formula_fields.isSmartRowFormulaField tpl.formula_type
-        field_def = APP.justdo_formula_fields.getCurrentProjectCustomFieldDefinition(tpl.field_id)
-        formula = field_def?.field_options?.formula or ""
-      else
-        formula = APP.collections.Formulas.findOne({custom_field_id: tpl.field_id})?.formula or ""
-
-      if not _.isEmpty(formula)
-        return APP.justdo_formula_fields.getHumanReadableFormulaForCurrentLoadedProject(formula, tpl.field_id, tpl.formula_type)
-
-      return ""
+      return APP.justdo_formula_fields.getHumanReadableFormula(tpl.field_id)
 
     showFiltersSection: ->
       tpl = Template.instance()

@@ -191,13 +191,18 @@ GridControl.installFormatter formatter_name,
 
     return {value: value}
 
+  getHumanReadableFormula: (field_id) ->
+    human_readable_formula = APP.justdo_formula_fields.getHumanReadableFormula field_id
+    human_readable_formula = JustdoHelpers.xssGuard human_readable_formula
+    return human_readable_formula
+
   #
   # Formatters
   #
   slick_grid: ->
     friendly_args = @getFriendlyArgs()
 
-    {formatter_obj, schema} = friendly_args
+    {formatter_obj, schema, field} = friendly_args
 
     value = formatter_obj.getFieldValue(friendly_args)
 
@@ -237,8 +242,10 @@ GridControl.installFormatter formatter_name,
 
     style_right = APP.justdo_i18n.getRtlAwareDirection "right"
 
+    human_readable_formula = formatter_obj.getHumanReadableFormula field
+
     return """
-      <div class="grid-formatter smart-row-formula-formatter" style="#{custom_color}">
+      <div class="grid-formatter smart-row-formula-formatter" style="#{custom_color}" title="#{human_readable_formula}">
         <div style="font-weight: bold; text-decoration: underline; text-align: #{style_right};">#{JustdoHelpers.localeAwareNumberRepresentation value}</div>
       </div>
     """
@@ -246,7 +253,7 @@ GridControl.installFormatter formatter_name,
   print: (doc, field, path) ->
     friendly_args = @getFriendlyArgs()
 
-    {formatter_obj} = friendly_args
+    {formatter_obj, field} = friendly_args
 
     value = formatter_obj.getFieldValue(friendly_args)
 
@@ -257,6 +264,8 @@ GridControl.installFormatter formatter_name,
 
     style_right = APP.justdo_i18n.getRtlAwareDirection "left"
 
-    return """<div style="font-weight: bold; text-decoration: underline; text-align: #{style_right}; direction: ltr;">#{JustdoHelpers.localeAwareNumberRepresentation value}</div>"""
+    human_readable_formula = formatter_obj.getHumanReadableFormula field
+
+    return """<div style="font-weight: bold; text-decoration: underline; text-align: #{style_right}; direction: ltr;" title="#{human_readable_formula}">#{JustdoHelpers.localeAwareNumberRepresentation value}</div>"""
 
   print_formatter_produce_html: true
