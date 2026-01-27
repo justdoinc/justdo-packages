@@ -2,6 +2,7 @@ _.extend JustdoFormulaFields,
   project_custom_feature_id: "justdo_formula_fields" # Use underscores
   plugin_human_readable_name: "Formulas"
   custom_field_type_id: "formula-field"
+  smart_row_formula_field_type_id: "smart-row-formula"
 
   # Symbol indexes used for replacing field placeholders with single-character
   # variables when converting formulas to mathjs-compatible expressions
@@ -12,11 +13,23 @@ _.extend JustdoFormulaFields,
   supported_fields_types: [Number]
 
   # The following 2 are extra checks specific to custom fields
+  # These are used for the regular (server-side) formula field
   supported_custom_fields_types: ["number"]
   supported_custom_fields_types_ids: ["basic-number-decimal"]
   # Note 1: at the past we didn't have custom_field_type_id set to custom fields, only field_type, so we can't rely solely on custom_field_type_id
   # Note 2: at the moment one formula can't rely on another formula, more derived development
   #         is necessary to support all the cases involved to add that feature.
+
+_.extend JustdoFormulaFields,
+  # Smart Row Formula (client-side) can support additional field types
+  # since it runs on the client and can access client-only calculated fields
+  # The smart row formula supports:
+  # - Regular number fields
+  # - Smart Numbers (calc fields) - client-side calculated fields
+  # - Other Smart Row Formula fields
+  supported_formatters_for_smart_row_formula: ["calculatedFieldFormatter", "smartRowFormulaFormatter"]
+  supported_custom_fields_types_for_smart_row_formula: ["number", "calc"]
+  supported_custom_fields_types_ids_for_smart_row_formula: ["basic-number-decimal", "basic-calc", JustdoFormulaFields.smart_row_formula_field_type_id]
 
   max_allowed_chars_in_processed_mathjs_formula: 50
 
