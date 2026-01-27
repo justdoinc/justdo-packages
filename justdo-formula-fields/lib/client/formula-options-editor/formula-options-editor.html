@@ -21,18 +21,22 @@
       </div>
     </div>
   </div>
-  <div class="editor-caption font-weight-bold text-body text-uppercase mt-4">Set formula filters</div>
-  <div class="custom-field-options"></div>
-  <div class="add-custom-field-option d-flex align-items-center py-2 mb-2">
-    <input type="text" class="new-option-label form-control form-control-sm" placeholder="Add filter">
-    <div class="add-custom-field-dates d-flex">
-      <input class="new-option-begin form-control form-control-sm" type="text" placeholder="Begin">
-      <input class="new-option-end form-control form-control-sm" type="text" placeholder="End">
+
+  {{#if showFiltersSection}}
+    <div class="editor-caption font-weight-bold text-body text-uppercase mt-4">Set formula filters</div>
+    <div class="custom-field-options"></div>
+    <div class="add-custom-field-option d-flex align-items-center py-2 mb-2">
+      <input type="text" class="new-option-label form-control form-control-sm" placeholder="Add filter">
+      <div class="add-custom-field-dates d-flex">
+        <input class="new-option-begin form-control form-control-sm" type="text" placeholder="Begin">
+        <input class="new-option-end form-control form-control-sm" type="text" placeholder="End">
+      </div>
+      <div class="add-custom-field-btn d-flex align-items-center">
+        <svg class="jd-icon-custom-field text-primary add-option" aria-hidden="true"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
+      </div>
     </div>
-    <div class="add-custom-field-btn d-flex align-items-center">
-      <svg class="jd-icon-custom-field text-primary add-option" aria-hidden="true"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
-    </div>
-  </div>
+  {{/if}}
+  
   <div class="text-right">
     <button type="button" class="btn btn-primary btn-sm cancel">Cancel</button>
     <button type="button" class="btn btn-primary btn-sm save">Save</button>
