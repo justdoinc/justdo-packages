@@ -278,7 +278,7 @@ JustdoHelpers.hooks_barriers.runCbAfterBarriers "justdo-formula-fields-init", ->
     getHumanReadableFormula: ->
       tpl = Template.instance()
 
-      if tpl.formula_type is JustdoFormulaFields.smart_row_formula_field_type_id
+      if APP.justdo_formula_fields.isSmartRowFormulaField tpl.formula_type
         field_def = APP.justdo_formula_fields.getCurrentProjectCustomFieldDefinition(tpl.field_id)
         formula = field_def?.field_options?.formula or ""
       else
@@ -438,7 +438,7 @@ JustdoHelpers.hooks_barriers.runCbAfterBarriers "justdo-formula-fields-init", ->
           alert("Field not found")
           return
 
-        if formula_type is JustdoFormulaFields.smart_row_formula_field_type_id
+        if APP.justdo_formula_fields.isSmartRowFormulaField formula_type
           # Save the formula for smart row formula fields
           Meteor._ensure current_field_def, "field_options"
           current_field_def.field_options.formula = formula
@@ -474,7 +474,7 @@ JustdoHelpers.hooks_barriers.runCbAfterBarriers "justdo-formula-fields-init", ->
         return
 
       saveFormulaAndClose = (formula) ->
-        if formula_type is JustdoFormulaFields.smart_row_formula_field_type_id
+        if APP.justdo_formula_fields.isSmartRowFormulaField formula_type
           saveFieldOptionsAndClose(formula)
         else
           APP.justdo_formula_fields.setCustomFieldFormula project_page_module.curProj().id, current_field_id, formula, (err) ->
