@@ -198,3 +198,138 @@ _.extend JustdoFormulaFields.prototype,
             return true
 
     return
+
+  getSmartRowFormulaDependencies: (formula) ->
+    # Get the direct dependencies of a smart row formula
+    # Returns an array of field IDs
+    if not formula? or _.isEmpty(formula)
+      return []
+
+    {field_to_symbol} = @replaceFieldsWithSymbols(formula)
+
+    return _.keys(field_to_symbol)
+
+  getFlattenedDependencies: (field_id, custom_fields, visited_fields=null) ->
+    # Recursively find all dependencies for a smart row formula field,
+    # including dependencies of nested smart row formula fields.
+    #
+    # Arguments:
+    #   field_id: The field ID to find dependencies for
+    #   custom_fields: Array of custom field definitions
+    #   visited_fields: Set of already visited field IDs (for cycle detection)
+    #
+    # Returns:
+    #   Array of unique field IDs that this field depends on (directly or indirectly)
+
+    if not visited_fields?
+      visited_fields = {}
+
+    # Prevent infinite loops from circular dependencies
+    if field_id of visited_fields
+      return []
+
+    visited_fields[field_id] = true
+
+    field_def = _.find custom_fields, (cf) -> cf.field_id is field_id
+
+    if not field_def?
+      return []
+
+    direct_dependencies = @getSmartRowFormulaDependencies(field_def.field_options?.formula)
+
+    if _.isEmpty(direct_dependencies)
+      return []
+
+    all_dependencies = []
+
+    for dep_field_id in direct_dependencies
+      # Add the direct dependency
+      all_dependencies.push dep_field_id
+
+      # Check if the dependency is also a smart row formula
+      dep_field_def = _.find custom_fields, (cf) -> cf.field_id is dep_field_id
+
+      if @isSmartRowFormulaField(dep_field_def?.custom_field_type_id)
+        # Recursively get its dependencies
+        nested_dependencies = @getFlattenedDependencies(dep_field_id, custom_fields, visited_fields)
+        all_dependencies = all_dependencies.concat(nested_dependencies)
+
+    # Return unique dependencies, excluding the field itself
+    return _.uniq(_.without(all_dependencies, field_id))
+
+  getFieldsDependingOnField: (target_field_id, custom_fields) ->
+    # Find all smart row formula fields that depend on the given field
+    # (either directly or through nested smart row formula dependencies)
+    #
+    # Arguments:
+    #   target_field_id: The field ID to check for dependents
+    #   custom_fields: Array of custom field definitions
+    #
+    # Returns:
+    #   Array of field IDs that depend on target_field_id
+
+    dependent_field_ids = []
+
+    for field_def in custom_fields
+      if not @isSmartRowFormulaField(field_def.custom_field_type_id)
+        continue
+
+      if field_def.field_id is target_field_id
+        continue
+
+      # Get the current flattened dependencies for this field
+      flattened_deps = @getFlattenedDependencies(field_def.field_id, custom_fields)
+
+      if target_field_id in flattened_deps
+        dependent_field_ids.push field_def.field_id
+
+    return dependent_field_ids
+
+  updateDependenciesForField: (field_id, custom_fields) ->
+    # Update grid_dependencies_fields for a smart row formula field
+    # with the flattened dependencies (including nested dependencies)
+    #
+    # Arguments:
+    #   field_id: The field ID to update dependencies for
+    #   custom_fields: Array of custom field definitions (will be modified in place)
+    #
+    # Returns:
+    #   true if dependencies were updated, false otherwise
+
+    field_def = _.find custom_fields, (cf) -> cf.field_id is field_id
+
+    if not field_def?
+      return false
+
+    if not @isSmartRowFormulaField(field_def.custom_field_type_id)
+      return false
+
+    flattened_deps = @getFlattenedDependencies(field_id, custom_fields)
+
+    if not _.isEmpty(flattened_deps)
+      field_def.grid_dependencies_fields = flattened_deps
+    else
+      delete field_def.grid_dependencies_fields
+
+    return true
+
+  updateDependentFieldsDependencies: (changed_field_id, custom_fields) ->
+    # Update dependencies for all smart row formula fields that depend on the changed field.
+    # This should be called after a field's formula or dependencies change.
+    #
+    # Arguments:
+    #   changed_field_id: The field ID that was changed
+    #   custom_fields: Array of custom field definitions (will be modified in place)
+    #
+    # Returns:
+    #   Array of field IDs that were updated
+
+    updated_field_ids = []
+
+    dependent_field_ids = @getFieldsDependingOnField(changed_field_id, custom_fields)
+
+    for dep_field_id in dependent_field_ids
+      if @updateDependenciesForField(dep_field_id, custom_fields)
+        updated_field_ids.push dep_field_id
+
+    return updated_field_ids
