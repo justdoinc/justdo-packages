@@ -1,5 +1,11 @@
 default_option_color = "00000000"
 
+getFormulaTypeFromData = (data) ->
+  if data?.formula_type?
+    return data.formula_type
+
+  return JustdoFormulaFields.custom_field_type_id
+
 generatePickerDropdown = (selected_color) ->
   return new JustdoColorPickerDropdownController
     label: "Pick a background color"
@@ -81,7 +87,10 @@ JustdoHelpers.hooks_barriers.runCbAfterBarriers "justdo-formula-fields-init", ->
     return
 
   Template.custom_field_conf_formula_field_editor_opener.onRendered ->
-    @options_editor = new project_page_module.CustomFieldFormulaFieldEditor(@firstNode, {field_id: @data.field_id})
+    template_data = _.extend {}, @data,
+      formula_type: getFormulaTypeFromData(@data)
+
+    @options_editor = new project_page_module.CustomFieldFormulaFieldEditor(@firstNode, template_data)
 
     return
 
@@ -146,6 +155,7 @@ JustdoHelpers.hooks_barriers.runCbAfterBarriers "justdo-formula-fields-init", ->
 
   Template.custom_field_conf_formula_field_editor.onCreated ->
     @field_id = @data.field_id
+    @formula_type = getFormulaTypeFromData(@data)
 
     @show_add_button = new ReactiveVar(false)
 
@@ -261,15 +271,28 @@ JustdoHelpers.hooks_barriers.runCbAfterBarriers "justdo-formula-fields-init", ->
       return tpl.new_option_color_picker_dropdown_controller
 
     availableFields: ->
-      return APP.justdo_formula_fields.getFieldsAvailableForFormulasInCurrentLoadedProject(@field_id, false)
+      tpl = Template.instance()
+
+      return APP.justdo_formula_fields.getFieldsAvailableForFormulasInCurrentLoadedProject(tpl.field_id, false, tpl.formula_type)
 
     getHumanReadableFormula: ->
-      formula = APP.collections.Formulas.findOne({custom_field_id: @field_id})?.formula or ""
+      tpl = Template.instance()
+
+      if tpl.formula_type is JustdoFormulaFields.smart_row_formula_field_type_id
+        field_def = APP.justdo_formula_fields.getCurrentProjectCustomFieldDefinition(tpl.field_id)
+        formula = field_def?.field_options?.formula or ""
+      else
+        formula = APP.collections.Formulas.findOne({custom_field_id: tpl.field_id})?.formula or ""
 
       if not _.isEmpty(formula)
-        return APP.justdo_formula_fields.getHumanReadableFormulaForCurrentLoadedProject(formula, @field_id)
+        return APP.justdo_formula_fields.getHumanReadableFormulaForCurrentLoadedProject(formula, tpl.field_id, tpl.formula_type)
 
       return ""
+
+    showFiltersSection: ->
+      tpl = Template.instance()
+
+      return tpl.formula_type is JustdoFormulaFields.custom_field_type_id
 
   Template.custom_field_conf_formula_field_editor.events
     "click .add-option": (e, tpl) ->
@@ -294,17 +317,27 @@ JustdoHelpers.hooks_barriers.runCbAfterBarriers "justdo-formula-fields-init", ->
     "click .add-field": (e, tpl) ->
       label_to_add = tpl.$(".field-to-add-selector").val()
 
+      if not label_to_add
+        return
+
       $formula_input = tpl.$(".formula-input")
       formula_input = $formula_input.get(0)
 
-      last_pos = formula_input.selectionStart or 0
+      last_pos = formula_input.selectionStart
+      if not _.isNumber(last_pos)
+        last_pos = $formula_input.val().length
 
       cur_text = $formula_input.val()
       text_pre_last_pos = cur_text.substr(0, last_pos)
       text_after_last_pos = cur_text.substr(last_pos)
       new_text = "#{text_pre_last_pos}{#{label_to_add}}#{text_after_last_pos}"
 
-      field_to_add = $formula_input.val(new_text)
+      $formula_input.val(new_text)
+
+      # Focus the input and set cursor position after the inserted field
+      new_pos = last_pos + label_to_add.length + 2 # +2 for the braces
+      formula_input.focus()
+      formula_input.setSelectionRange(new_pos, new_pos)
 
       return
 
@@ -321,7 +354,8 @@ JustdoHelpers.hooks_barriers.runCbAfterBarriers "justdo-formula-fields-init", ->
       return
 
     "click .save": (e, tpl) ->
-      current_field_id = @field_id
+      current_field_id = tpl.field_id
+      formula_type = tpl.formula_type
 
       user_inputted_formula = tpl.$(".formula-input").val().trim()
 
@@ -332,7 +366,7 @@ JustdoHelpers.hooks_barriers.runCbAfterBarriers "justdo-formula-fields-init", ->
 
         return
 
-      saveFieldOptionsAndClose = ->
+      saveFieldOptionsAndClose = (formula) ->
         grid_ranges = []
 
         validation_failed = false
@@ -400,6 +434,26 @@ JustdoHelpers.hooks_barriers.runCbAfterBarriers "justdo-formula-fields-init", ->
         custom_fields = project_page_module.curProj()?.getProjectCustomFields()
         current_field_def = _.find custom_fields, (custom_field) -> custom_field.field_id == current_field_id
 
+        if not current_field_def?
+          alert("Field not found")
+          return
+
+        if formula_type is JustdoFormulaFields.smart_row_formula_field_type_id
+          # Save the formula for smart row formula fields
+          Meteor._ensure current_field_def, "field_options"
+          current_field_def.field_options.formula = formula
+
+          # Auto-set grid_dependencies_fields from formula placeholders
+          if not _.isEmpty(formula)
+            {field_to_symbol} = APP.justdo_formula_fields.replaceFieldsWithSymbols(formula)
+            current_field_def.grid_dependencies_fields = _.keys(field_to_symbol)
+          else
+            delete current_field_def.grid_dependencies_fields
+
+          # Also set grid_column_formatter_options.formula for the formatter to use
+          Meteor._ensure current_field_def, "grid_column_formatter_options"
+          current_field_def.grid_column_formatter_options.formula = formula
+
         if not _.isEmpty(grid_ranges)
           current_field_def.grid_ranges = grid_ranges
           current_field_def.filter_type = "numeric-filter"
@@ -420,20 +474,21 @@ JustdoHelpers.hooks_barriers.runCbAfterBarriers "justdo-formula-fields-init", ->
         return
 
       saveFormulaAndClose = (formula) ->
-        APP.justdo_formula_fields.setCustomFieldFormula project_page_module.curProj().id, current_field_id, formula, (err) ->
-          if err?
-            alert(err.reason)
-
+        if formula_type is JustdoFormulaFields.smart_row_formula_field_type_id
+          saveFieldOptionsAndClose(formula)
+        else
+          APP.justdo_formula_fields.setCustomFieldFormula project_page_module.curProj().id, current_field_id, formula, (err) ->
+            if err?
+              alert(err.reason)
+            else
+              saveFieldOptionsAndClose()
             return
-
-          saveFieldOptionsAndClose()
-
-          return
+        return
 
       if _.isEmpty(user_inputted_formula)
         saveFormulaAndClose(null)
       else
-        APP.justdo_formula_fields.getFormulaFromHumanReadableFormulaForCurrentLoadedProject user_inputted_formula, current_field_id, (err, formula) ->
+        APP.justdo_formula_fields.getFormulaFromHumanReadableFormulaForCurrentLoadedProject user_inputted_formula, current_field_id, formula_type, (err, formula) ->
           if err?
             alert(err.reason)
 

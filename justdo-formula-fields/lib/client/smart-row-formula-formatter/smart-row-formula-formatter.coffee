@@ -197,12 +197,40 @@ GridControl.installFormatter formatter_name,
   slick_grid: ->
     friendly_args = @getFriendlyArgs()
 
-    {formatter_obj} = friendly_args
+    {formatter_obj, schema} = friendly_args
 
     value = formatter_obj.getFieldValue(friendly_args)
 
     if value is ""
       return """<div class="grid-formatter smart-row-formula-formatter"></div>"""
+
+    custom_color = ""
+    if (grid_ranges = schema?.grid_ranges)?
+      value_range = null
+      for range_def in grid_ranges
+        if not (range = range_def.range)?
+          console.warn "A range definition without range property detected, this shouldn't happen, please check"
+        else
+          [min, max] = range
+
+          if not min? and not max?
+            value_range = range_def
+          else if not min? and max >= value
+            value_range = range_def
+          else if not max? and min <= value
+            value_range = range_def
+          else if min <= value and max >= value
+            value_range = range_def
+
+          if value_range?
+            break
+
+      if value_range?
+        if (bg_color = value_range.bg_color)?
+          bg_color = JustdoHelpers.normalizeBgColor(bg_color)
+
+          if bg_color != "transparent"
+            custom_color += """background-color: #{bg_color}; color: #{JustdoHelpers.getFgColor(bg_color)};"""
 
     # Round to 2 decimal places
     value = JustdoHelpers.roundNumber value, 2
@@ -210,7 +238,7 @@ GridControl.installFormatter formatter_name,
     style_right = APP.justdo_i18n.getRtlAwareDirection "right"
 
     return """
-      <div class="grid-formatter smart-row-formula-formatter">
+      <div class="grid-formatter smart-row-formula-formatter" style="#{custom_color}">
         <div style="font-weight: bold; text-decoration: underline; text-align: #{style_right};">#{JustdoHelpers.localeAwareNumberRepresentation value}</div>
       </div>
     """
