@@ -6,7 +6,7 @@ generatePickerDropdown = (selected_color) ->
     opener_custom_class: "custom-fields-justdo-color-picker-opener"
     default_color: selected_color
 
-APP.executeAfterAppLibCode ->
+JustdoHelpers.hooks_barriers.runCbAfterBarriers "justdo-formula-fields-init", ->
   project_page_module = APP.modules.project_page
 
   project_page_module.CustomFieldFormulaFieldEditor = JustdoHelpers.generateNewTemplateDropdown "custom-field-formula-field-editor", "custom_field_conf_formula_field_editor",

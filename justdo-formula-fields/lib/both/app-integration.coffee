@@ -30,5 +30,6 @@ APP.getEnv (env) ->
   # If an env variable affect this package load, check its value here
   # remember env vars are Strings
   APP.justdo_formula_fields = new JustdoFormulaFields(options)
+  JustdoHelpers.hooks_barriers.markBarrierAsResolved "justdo-formula-fields-init"
 
   return

@@ -1,4 +1,4 @@
-APP.executeAfterAppLibCode ->
+JustdoHelpers.hooks_barriers.runCbAfterBarriers "justdo-formula-fields-init", ->
   project_page_module = APP.modules.project_page
 
   project_page_module.SmartRowFormulaEditor = JustdoHelpers.generateNewTemplateDropdown "smart-row-formula-editor", "smart_row_formula_editor",
