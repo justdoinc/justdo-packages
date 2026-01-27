@@ -67,7 +67,7 @@ _.extend JustdoFormulaFields.prototype,
     return
 
   installSmartRowFormulaField: ->
-    GridControlCustomFields.registerCustomFieldsTypes "smart-row-formula",
+    GridControlCustomFields.registerCustomFieldsTypes JustdoFormulaFields.smart_row_formula_field_type_id,
       type_id: "number"
       label: "Smart Row Formula"
       label_i18n: "grid_control_custom_fields_smart_row_formula_label"
@@ -84,7 +84,7 @@ _.extend JustdoFormulaFields.prototype,
     return
 
   uninstallSmartRowFormulaField: ->
-    GridControlCustomFields.unregisterCustomFieldsTypes "smart-row-formula"
+    GridControlCustomFields.unregisterCustomFieldsTypes JustdoFormulaFields.smart_row_formula_field_type_id
     return
 
   getCurrentGridControlObject: -> APP.modules.project_page.gridControl()
