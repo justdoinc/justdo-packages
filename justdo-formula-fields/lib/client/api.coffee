@@ -95,7 +95,7 @@ _.extend JustdoFormulaFields.prototype,
   getCurrentProjectCustomFieldDefinition: (field_id) ->
     return current_field_def = _.find @getCurrentProjectCustomFields(), (custom_field) -> custom_field.field_id == field_id
 
-  getFieldsAvailableForFormulasInCurrentLoadedProject: (formula_field_id, include_removed_fields=false) ->
+  getFieldsAvailableForFormulasInCurrentLoadedProject: (formula_field_id, include_removed_fields=false, formula_type) ->
     if not (gc = @getCurrentGridControlObject())
       throw @_error "no-grid-control-loaded"
 
@@ -112,7 +112,7 @@ _.extend JustdoFormulaFields.prototype,
         # Can't add itself!
         continue
 
-      if not @_isFieldAvailableForFormulas(field_def)
+      if not @_isFieldAvailableForFormulas(field_def, formula_type)
         continue
 
       if (custom_field_def = @getCurrentProjectCustomFieldDefinition(field_def._id))?
@@ -127,9 +127,9 @@ _.extend JustdoFormulaFields.prototype,
 
     return available_fields
 
-  getHumanReadableFormulaForCurrentLoadedProject: (formula, formula_field_id) ->
+  getHumanReadableFormulaForCurrentLoadedProject: (formula, formula_field_id, formula_type) ->
     available_fields_including_removed =
-      @getFieldsAvailableForFormulasInCurrentLoadedProject(formula_field_id, true)
+      @getFieldsAvailableForFormulasInCurrentLoadedProject(formula_field_id, true, formula_type)
 
     human_readable_formula = formula.replace JustdoFormulaFields.formula_fields_components_matcher_regex, (a, b) ->
       field_def = _.find available_fields_including_removed, (field_def) -> field_def._id == b
@@ -145,9 +145,9 @@ _.extend JustdoFormulaFields.prototype,
 
     return human_readable_formula
 
-  getFormulaFromHumanReadableFormulaForCurrentLoadedProject: (human_readable_formula, formula_field_id, cb) ->
+  getFormulaFromHumanReadableFormulaForCurrentLoadedProject: (human_readable_formula, formula_field_id, formula_type=JustdoFormulaFields.custom_field_type_id, cb) ->
     available_fields_including_removed =
-      @getFieldsAvailableForFormulasInCurrentLoadedProject(formula_field_id, true)
+      @getFieldsAvailableForFormulasInCurrentLoadedProject(formula_field_id, true, formula_type)
 
     try
       formula = human_readable_formula.replace JustdoFormulaFields.formula_human_readable_fields_components_matcher_regex, (a, b) =>
