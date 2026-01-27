@@ -119,7 +119,7 @@ _.extend JustdoFormulaFields.prototype,
         # If field is a custom field, we have some extra rules.
 
         try
-          @throwErrorIfNotAllowedCustomFieldDef(custom_field_def)
+          @throwErrorIfNotAllowedCustomFieldDef(custom_field_def, formula_type)
         catch e
           continue
 
@@ -167,7 +167,7 @@ _.extend JustdoFormulaFields.prototype,
     try
       # We process the formula in this stage, to ensure no exception is raised (consider this
       # step as validation testing).
-      processed_formula_result = @processFormula(formula, formula_field_id, APP.modules.project_page.curProj().getProjectCustomFields())
+      processed_formula_result = @processFormula(formula, formula_field_id, APP.modules.project_page.curProj().getProjectCustomFields(), {formula_type: formula_type})
     catch e
       return cb(e)
 
