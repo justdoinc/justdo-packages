@@ -191,10 +191,13 @@ GridControl.installFormatter formatter_name,
 
     return {value: value}
 
-  getHumanReadableFormula: (field_id, grid_control) ->
+  getHumanReadableFormulaAttribute: (field_id, grid_control) ->
     human_readable_formula = APP.justdo_formula_fields.getHumanReadableFormula field_id, grid_control
+    if _.isEmpty(human_readable_formula)
+      return ""
+
     human_readable_formula = JustdoHelpers.xssGuard human_readable_formula
-    return human_readable_formula
+    return " title=\"#{human_readable_formula}\""
 
   #
   # Formatters
@@ -242,10 +245,10 @@ GridControl.installFormatter formatter_name,
 
     style_right = APP.justdo_i18n.getRtlAwareDirection "right"
 
-    human_readable_formula = formatter_obj.getHumanReadableFormula field, grid_control
+    human_readable_formula_attribute = formatter_obj.getHumanReadableFormulaAttribute field, grid_control
 
     return """
-      <div class="grid-formatter smart-row-formula-formatter" style="#{custom_color}" title="#{human_readable_formula}">
+      <div class="grid-formatter smart-row-formula-formatter" #{if not _.isEmpty(custom_color) then "style=\"#{custom_color}\"" else ""} #{human_readable_formula_attribute}>
         <div style="font-weight: bold; text-decoration: underline; text-align: #{style_right};">#{JustdoHelpers.localeAwareNumberRepresentation value}</div>
       </div>
     """
@@ -264,8 +267,8 @@ GridControl.installFormatter formatter_name,
 
     style_right = APP.justdo_i18n.getRtlAwareDirection "left"
 
-    human_readable_formula = formatter_obj.getHumanReadableFormula field, grid_control
+    human_readable_formula_attribute = formatter_obj.getHumanReadableFormulaAttribute field, grid_control
 
-    return """<div style="font-weight: bold; text-decoration: underline; text-align: #{style_right}; direction: ltr;" title="#{human_readable_formula}">#{JustdoHelpers.localeAwareNumberRepresentation value}</div>"""
+    return """<div style="font-weight: bold; text-decoration: underline; text-align: #{style_right}; direction: ltr;" #{human_readable_formula_attribute}>#{JustdoHelpers.localeAwareNumberRepresentation value}</div>"""
 
   print_formatter_produce_html: true
