@@ -444,11 +444,14 @@ JustdoHelpers.hooks_barriers.runCbAfterBarriers "justdo-formula-fields-init", ->
           current_field_def.field_options.formula = formula
 
           # Auto-set grid_dependencies_fields from formula placeholders
+          # including recursive dependencies from nested smart row formulas
           if not _.isEmpty(formula)
-            {field_to_symbol} = APP.justdo_formula_fields.replaceFieldsWithSymbols(formula)
-            current_field_def.grid_dependencies_fields = _.keys(field_to_symbol)
+            current_field_def.grid_dependencies_fields = APP.justdo_formula_fields.getFlattenedDependencies(current_field_id, custom_fields)
           else
             delete current_field_def.grid_dependencies_fields
+
+          # Update dependencies for all smart row formula fields that depend on this field
+          APP.justdo_formula_fields.updateDependentFieldsDependencies(current_field_id, custom_fields)
 
           # Also set grid_column_formatter_options.formula for the formatter to use
           Meteor._ensure current_field_def, "grid_column_formatter_options"
