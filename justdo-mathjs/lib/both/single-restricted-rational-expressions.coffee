@@ -22,7 +22,8 @@ forbidden_chars = [
   "{", # Don't support objects
   "}",
 
-  ".", # Don't support Property accessor
+  # Note: "." (dot) is NOT in forbidden_chars to allow decimal numbers like 0.01 or .01
+  # Property accessor pattern (like a.property) is checked separately below
 
   "'", # Don't support transpose (matrices related)
 
@@ -40,6 +41,13 @@ forbidden_chars = [
 ]
 
 forbidden_chars_exists_regex = RegExp("[" + forbidden_chars.join("") + "]")
+
+# Property accessor pattern: detect property access attempts
+# Matches: identifier or closing paren followed by dot and identifier
+# Examples caught: "abs.constructor", "(1).constructor"
+# Note: Decimal numbers like "0.01" or ".01" are NOT matched (digit before dot)
+# Note: "]" is included for completeness but would already be blocked by forbidden_chars
+property_accessor_regex = /[\]a-zA-Z_)]\.[a-zA-Z_]/
 
 forbidden_words = [
   "not",
@@ -70,6 +78,9 @@ parseSingleRestrictedRationalExpression = (expression) ->
   if forbidden_chars_exists_regex.test(expression)
     throw new Meteor.Error "not-a-single-rational-expression", "The following aren't allowed: " + forbidden_chars.join(", ")
 
+  if property_accessor_regex.test(expression)
+    throw new Meteor.Error "not-a-single-rational-expression", "Property accessor (.) isn't allowed"
+
   if forbidden_words_exists_regex.test(expression)
     throw new Meteor.Error "not-a-single-rational-expression", "The following aren't allowed: " + forbidden_words.join(", ")
 
@@ -79,6 +90,11 @@ parseSingleRestrictedRationalExpression = (expression) ->
     throw new Meteor.Error "not-a-single-rational-expression", "Parsing failed", e
 
   node.traverse (node, path, parent) ->
+    # Security: Reject property access (e.g., "abs.constructor") to prevent
+    # accessing Function constructor or other dangerous properties
+    if node.type == "AccessorNode"
+      throw new Meteor.Error "not-a-single-rational-expression", "Property accessor (.) isn't allowed"
+
     if node.type == "FunctionNode"
       if node.fn.name not of supported_functions
         throw new Meteor.Error "not-a-single-rational-expression", "The function '#{node.fn.name}' isn't supported. Only the following functions are supported: #{_.keys(supported_functions).join(", ")}."
