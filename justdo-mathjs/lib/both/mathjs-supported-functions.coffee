@@ -11,4 +11,5 @@ share.supported_functions = {
   mean: null
   median: null
   min: null
+  sqrt: null
 }
