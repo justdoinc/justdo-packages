@@ -99,6 +99,12 @@ GridControl.installFormatter formatter_name,
           has_error = true
           return match
         value = nested_result?.value
+      else if _.isFunction(field_schema?.grid_column_manual_and_auto_values_getter)
+        {manual_value, auto_value} = field_schema.grid_column_manual_and_auto_values_getter(doc._id)
+        if manual_value?
+          value = manual_value
+        else
+          value = auto_value
       else
         # Regular field - get raw value from document
         value = doc[field_id]
