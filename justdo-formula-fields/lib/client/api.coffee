@@ -139,7 +139,11 @@ _.extend JustdoFormulaFields.prototype,
       else
         field_label = field_def.label
 
-      return "{" + field_label + "}"
+      # Escape special characters in the field label to support arbitrary labels
+      # including those with {, }, \, or mathematical operators
+      escaped_label = JustdoFormulaFields.escapeFieldLabelForFormula(field_label)
+
+      return "{" + escaped_label + "}"
 
     human_readable_formula = @removeRedundantSpacesFormula(human_readable_formula)
 
@@ -151,10 +155,13 @@ _.extend JustdoFormulaFields.prototype,
 
     try
       formula = human_readable_formula.replace JustdoFormulaFields.formula_human_readable_fields_components_matcher_regex, (a, b) =>
-        field_def = _.find available_fields_including_removed, (field_def) -> field_def.label == b
+        # Unescape the field label to handle labels with special characters like {, }, \
+        unescaped_label = JustdoFormulaFields.unescapeFieldLabelFromFormula(b)
+
+        field_def = _.find available_fields_including_removed, (field_def) -> field_def.label == unescaped_label
 
         if not field_def?
-          throw @_error "human-readable-field-match-failed", "Field {#{b}} can't be found or not available for use in formulas."
+          throw @_error "human-readable-field-match-failed", "Field {#{unescaped_label}} can't be found or not available for use in formulas."
         else
           field_id = field_def._id
 

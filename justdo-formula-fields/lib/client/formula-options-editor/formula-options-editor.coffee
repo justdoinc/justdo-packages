@@ -310,6 +310,9 @@ JustdoHelpers.hooks_barriers.runCbAfterBarriers "justdo-formula-fields-init", ->
       if not label_to_add
         return
 
+      # Escape the field label to handle special characters like {, }, \
+      escaped_label = JustdoFormulaFields.escapeFieldLabelForFormula(label_to_add)
+
       $formula_input = tpl.$(".formula-input")
       formula_input = $formula_input.get(0)
 
@@ -320,12 +323,12 @@ JustdoHelpers.hooks_barriers.runCbAfterBarriers "justdo-formula-fields-init", ->
       cur_text = $formula_input.val()
       text_pre_last_pos = cur_text.substr(0, last_pos)
       text_after_last_pos = cur_text.substr(last_pos)
-      new_text = "#{text_pre_last_pos}{#{label_to_add}}#{text_after_last_pos}"
+      new_text = "#{text_pre_last_pos}{#{escaped_label}}#{text_after_last_pos}"
 
       $formula_input.val(new_text)
 
       # Focus the input and set cursor position after the inserted field
-      new_pos = last_pos + label_to_add.length + 2 # +2 for the braces
+      new_pos = last_pos + escaped_label.length + 2 # +2 for the braces
       formula_input.focus()
       formula_input.setSelectionRange(new_pos, new_pos)
 

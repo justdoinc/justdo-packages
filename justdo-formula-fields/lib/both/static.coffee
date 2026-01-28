@@ -50,8 +50,30 @@ JustdoFormulaFields.formula_fields_components_matcher_regex =
 JustdoFormulaFields.forbidden_fields_suffixes = ["priv:"]
 JustdoFormulaFields.forbidden_fields_suffixes_regex = new RegExp("^(#{JustdoFormulaFields.forbidden_fields_suffixes.join("|")})")
 
+# This regex matches field labels in human-readable formulas, including escaped characters.
+# It captures content between { and } that may include escaped sequences like \{, \}, \\
+# Pattern breakdown:
+#   \{                      - Opening brace
+#   ((?:[^{}\\]|\\.)+)      - Capture group: one or more of:
+#                             [^{}\\]  - any char except {, }, or \
+#                             \\.      - OR a backslash followed by any char (escaped char)
+#   \}                      - Closing brace
 JustdoFormulaFields.formula_human_readable_fields_components_matcher_regex =
-  new RegExp("\{([^{}]+)\}", "g")
+  new RegExp("\\{((?:[^{}\\\\]|\\\\.)+)\\}", "g")
+
+# Escapes special characters in a field label for use in human-readable formulas.
+# Characters that need escaping: \ (backslash), { (open brace), } (close brace)
+# The order matters: backslashes must be escaped first to avoid double-escaping.
+JustdoFormulaFields.escapeFieldLabelForFormula = (label) ->
+  return label
+    .replace(/\\/g, '\\\\')  # Escape backslashes first
+    .replace(/\{/g, '\\{')   # Escape opening braces
+    .replace(/\}/g, '\\}')   # Escape closing braces
+
+# Unescapes a field label from human-readable formula format.
+# Converts \\ -> \, \{ -> {, \} -> }
+JustdoFormulaFields.unescapeFieldLabelFromFormula = (escaped_label) ->
+  return escaped_label.replace(/\\(.)/g, '$1')
 
 # The following fields *can't* in any case be included in a formula
 # (we use object for quick access, values are completely ignored!)
