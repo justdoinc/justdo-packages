@@ -190,6 +190,9 @@ _.extend JustdoFiles.prototype,
       onBeforeUpload: (file) ->
         self.emit "avatars-before-upload", file, @
 
+        if not @user()?
+          return "Non logged in user cannot upload files"
+
         if file.size <= self.options.max_file_size
           return true
 
