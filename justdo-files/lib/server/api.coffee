@@ -314,6 +314,9 @@ _.extend JustdoFiles.prototype,
     return return_obj
 
   removeUserAvatar: (options, user_ids) ->
+    # IMPORTANAT: This method removes all files owned by the users in `user_ids` except the ones in `exclude`.
+    # Avatars collection may have files other than avatars. Actual avatar files has the `meta.is_avatar` field set to true. 
+    # This method performs removal WITHOUT CHECKING the `meta.is_avatar` field!
     check user_ids, Match.OneOf String, [String]
 
     if _.isString user_ids
