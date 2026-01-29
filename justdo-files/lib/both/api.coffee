@@ -179,7 +179,7 @@ _.extend JustdoFiles.prototype,
     @avatars_collection = new FilesCollection
       debug: false
 
-      collectionName: "user_avatars"
+      collectionName: JustdoFiles.user_avatars_fs_collection_name
 
       allowClientCode: false
 

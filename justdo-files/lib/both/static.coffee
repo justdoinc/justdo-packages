@@ -39,6 +39,7 @@ _.extend JustdoFiles,
   tasks_files_collection_name: "tasks_files"
   tasks_files_publication_name: "jdfTaskFiles"
   avatars_collection_name: "avatars_collection"
+  user_avatars_fs_collection_name: "user_avatars"
 
 _.extend JustdoFiles,
   supported_collection_names: [
