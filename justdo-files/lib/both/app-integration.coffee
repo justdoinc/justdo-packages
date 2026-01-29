@@ -30,6 +30,6 @@ APP.getEnv (env) ->
       max_file_size: parseInt(env.JUSTDO_FILES_MAX_FILESIZE, 10) or 104857600 # 104857600 == 100MB
 
     APP.justdo_files = new JustdoFiles(options)
-    APP.emit "justdo-files-initiated"
+    JustdoHelpers.hooks_barriers.markBarrierAsResolved "justdo-files-initiated"
 
   return
