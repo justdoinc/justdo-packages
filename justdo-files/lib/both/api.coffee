@@ -188,6 +188,8 @@ _.extend JustdoFiles.prototype,
       protected: false
 
       onBeforeUpload: (file) ->
+        self.emit "avatars-before-upload", file, @
+
         if file.size <= self.options.max_file_size
           return true
 
