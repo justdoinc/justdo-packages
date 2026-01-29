@@ -108,16 +108,23 @@ _.extend JustdoFiles.prototype,
                 return
 
             # Used by avatar collection only.
-            if file?.meta?.is_avatar
+            if @collectionName is JustdoFiles.user_avatars_fs_collection_name
               avatar_user_id = file.userId
-              APP.justdo_files.removeUserAvatar {exclude: file._id}, avatar_user_id
 
-              # We store only the absolute path of the link to avatar in users collection
-              # so that the avatar file can be cached by CDN if such is enabled.
-              avatar_link = justdo_files_this.getAvatarShareableLink(file._id)
-              avatar_path = new URL(avatar_link).pathname
-              Meteor.users.update(avatar_user_id, {$set: {"profile.profile_pic": avatar_path}})
-              return
+              # Files with this flag set to true should not be removed by `removeUserAvatar`, 
+              # and should not trigger the removal of other files in the avatars collection owned by the same user.
+              bypass_old_file_removal = (file?.meta?.bypass_old_file_removal) and (APP.justdo_site_admins.isUserSiteAdmin(avatar_user_id))
+              if not bypass_old_file_removal
+                APP.justdo_files.removeUserAvatar {exclude: file._id}, avatar_user_id
+              
+              if file?.meta?.is_avatar
+                # We store only the absolute path of the link to avatar in users collection
+                # so that the avatar file can be cached by CDN if such is enabled.
+                avatar_link = justdo_files_this.getAvatarShareableLink(file._id)
+                avatar_path = new URL(avatar_link).pathname
+                Meteor.users.update(avatar_user_id, {$set: {"profile.profile_pic": avatar_path}})
+
+              justdo_files_this.emit "avatars-after-upload", file, @
 
           return
 
@@ -328,10 +335,31 @@ _.extend JustdoFiles.prototype,
     if _.isString exclude
       exclude = [exclude]
 
+    site_admin_user_ids = _.filter user_ids, (user_id) -> APP.justdo_site_admins.isUserSiteAdmin(user_id)
+    user_ids = _.difference user_ids, site_admin_user_ids
+
     #
     # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
     # and to drop obsolete indexes (see AVATARS_COLLECTION_USERID_INDEX)
     #
-    @avatars_collection.remove({_id: {$nin: exclude}, userId: {$in: user_ids}})
+    query =
+      _id: 
+        $nin: exclude
+      userId:
+        $in: user_ids
+
+    if not _.isEmpty user_ids
+      @avatars_collection.remove(query)
+
+    if not _.isEmpty site_admin_user_ids
+      _.extend query,
+        userId: 
+          $in: site_admin_user_ids
+        "meta.bypass_old_file_removal":
+          # Files with this flag set to true should not be removed, 
+          # and should not trigger the removal of other files in the avatars collection owned by the same user.
+          $ne: true
+
+      @avatars_collection.remove(query)
 
     return
