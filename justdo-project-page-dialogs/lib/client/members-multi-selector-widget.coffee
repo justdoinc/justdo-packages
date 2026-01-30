@@ -2,7 +2,7 @@ Template.members_multi_selector_widget.onCreated ->
   tpl = @
 
   tpl.search_input_rv = new ReactiveVar null
-  tpl.filtered_members_rv = new ReactiveVar null  # member ids array
+  tpl.filtered_members_rv = @data?.filtered_members_rv or new ReactiveVar null  # member ids array
   tpl.show_dropdown_menu_rv = new ReactiveVar false
 
   tpl.autorun ->
