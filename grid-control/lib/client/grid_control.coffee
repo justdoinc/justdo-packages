@@ -680,6 +680,11 @@ _.extend GridControl.prototype,
 
       current_scroll_left = @getViewportScrollLeft()
 
+      # In RTL mode, scrollLeft is negative (WebKit/Chrome) or counts from max (Firefox)
+      # We use Math.abs to normalize the scroll value for our calculation
+      if APP.justdo_i18n.isRtl()
+        current_scroll_left = Math.abs(current_scroll_left)
+
       width_occupied_by_frozen_columns = 0
       total_width_of_preceding_columns = 0
       target_column_width = 0
@@ -736,7 +741,14 @@ _.extend GridControl.prototype,
 
           total_width_of_preceding_columns += column.width
 
-        @setViewportScrollLeft(total_width_of_preceding_columns - width_occupied_by_frozen_columns)
+        scroll_target = total_width_of_preceding_columns - width_occupied_by_frozen_columns
+
+        if APP.justdo_i18n.isRtl()
+          # In RTL, scrollLeft is negative (WebKit) or counts from max (Firefox)
+          # jQuery normalizes this, but we need to set the scroll as negative for proper RTL behavior
+          @setViewportScrollLeft(-scroll_target)
+        else
+          @setViewportScrollLeft(scroll_target)
 
       return
 
