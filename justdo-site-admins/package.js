@@ -64,6 +64,8 @@ Package.onUse(function (api) {
   api.use("http", server);
   api.use("tracker", client);
 
+  api.use("justdoinc:justdo-db-migrations@1.0.0", both);
+
   api.addFiles("lib/both/analytics.coffee", both);
 
   api.addFiles("lib/both/init.coffee", both);
