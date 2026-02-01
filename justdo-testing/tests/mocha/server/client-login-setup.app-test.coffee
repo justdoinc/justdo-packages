@@ -3,7 +3,7 @@
 # @config enabled
 #
 # Server-side setup for client login tests.
-# Ensures test users are seeded before client tests run.
+# Fixtures listed in the manifest (users) are auto-seeded before tests run.
 #
 # Run with:
 #   ./test-packages.bash justdo-testing
@@ -11,13 +11,7 @@
 {expect} = require "chai"
 
 describe "Client Login POC - Server Setup", ->
-  @timeout(10000)
-  
-  before (done) ->
-    APP.getEnv ->
-      TestFixtures.ensure("users")
-      done()
-    return
+  before TestFixtures.beforeHook()
   
   it "should have test users available", ->
     users = TestFixtures.get("users")

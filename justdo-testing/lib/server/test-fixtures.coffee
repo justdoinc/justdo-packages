@@ -148,5 +148,90 @@ TestFixtures =
     console.log "  Seeded: #{Object.keys(@_seeded).filter((k) => @_seeded[k]).join(', ')}"
     console.log "  Seed order: #{@_seedOrder.join(' -> ')}"
 
+  # Wait for auto-seeded fixtures to be ready
+  # Used by tests to wait for manifest fixtures to be seeded before running
+  # @param cb [Function] Callback: cb(error) - error is null on success, Error on failure
+  #
+  # Usage:
+  #   before (done) ->
+  #     TestFixtures.waitForFixtures(done)  # Passes error to Mocha's done()
+  #     return
+  #
+  # Note: This only works in test mode. In non-test mode, cb is called immediately.
+  # The barrier and seeding state are initialized by fixture-bootstrap.coffee
+  waitForFixtures: (cb) ->
+    # In non-test mode, just call callback immediately
+    if not (Meteor.isTest or Meteor.isAppTest)
+      cb?(null)
+      return
+    
+    # Wait for APP environment to be ready, then wait for fixtures barrier
+    APP.getEnv =>
+      # If seeding already complete, check for errors immediately
+      if @_seedingComplete
+        cb?(@_seedingError)
+        return
+      
+      # Wait for the fixtures barrier to be resolved
+      @_barriers.runCbAfterBarriers "test-fixtures-seeded", =>
+        cb?(@_seedingError)
+      return
+    return
+
+  # Get seeding error if any (for diagnostic purposes)
+  # @return [Error|null] The error that occurred during seeding, or null if successful
+  getSeedingError: ->
+    @_seedingError
+
+  # Returns a Mocha before hook function that waits for fixtures
+  # This handles timeout automatically - no need for @timeout() in tests
+  #
+  # @param additionalSetup [Function] Optional callback after fixtures are ready
+  #   - If takes 0 args: synchronous, runs and completes
+  #   - If takes 1 arg (done): async, must call done() when complete
+  #
+  # Usage:
+  #   # Simple - just wait for fixtures
+  #   before TestFixtures.beforeHook()
+  #
+  #   # With sync additional setup
+  #   before TestFixtures.beforeHook ->
+  #     users = TestFixtures.get("users")
+  #     # ... sync setup ...
+  #
+  #   # With async additional setup
+  #   before TestFixtures.beforeHook (done) ->
+  #     users = TestFixtures.get("users")
+  #     # ... async setup ...
+  #     done()
+  #
+  beforeHook: (additionalSetup) ->
+    self = @
+    return (done) ->
+      # Disable Mocha timeout - barrier has its own 120s timeout
+      @timeout(0)
+      
+      self.waitForFixtures (err) =>
+        if err
+          done(err)
+          return
+        
+        # No additional setup - we're done
+        unless additionalSetup?
+          done()
+          return
+        
+        # Check if additionalSetup expects a callback (async)
+        if additionalSetup.length > 0
+          # Async: pass done to additionalSetup
+          additionalSetup(done)
+        else
+          # Sync: run and call done
+          try
+            additionalSetup()
+            done()
+          catch e
+            done(e)
+
 # Make globally available
 @TestFixtures = TestFixtures

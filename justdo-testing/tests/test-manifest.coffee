@@ -13,16 +13,16 @@ if Meteor.isServer
         env: {}  # No special env vars needed
         mocha_tests: [
           "TestFixtures System"
+          "TestFixtures.beforeHook"
           "TestManifest System"
           "TEST_CONSTANTS"
           "Test Helper Functions"
           "Client Login POC - Server Setup"
           "Client Login POC"
         ]
+        fixtures: ["users"]  # Needed for Client Login POC tests
         primary: true
       }
     ]
-    
-    fixtures: []  # Self-tests don't use fixtures
     
     apps: ["web-app", "landing-app"]  # Available in both apps

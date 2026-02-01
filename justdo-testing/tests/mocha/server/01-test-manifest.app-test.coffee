@@ -169,7 +169,7 @@ describe "TestManifest System", ->
       expect(result.conflicts.length).to.equal 0
       expect(result.env.SAME_VAR).to.equal "same"
   
-  describe "getFixtures", ->
+  describe "getFixtures (package-level, deprecated)", ->
     beforeEach ->
       TestManifest.register "fixture-pkg-1",
         configurations: [{ id: "test", mocha_tests: ["T"], primary: true }]
@@ -187,6 +187,98 @@ describe "TestManifest System", ->
       expect(fixtures).to.include "custom"
       
       # Should not have duplicates
+      userCount = fixtures.filter((f) -> f is "users").length
+      expect(userCount).to.equal 1
+  
+  describe "getConfigurationFixtures", ->
+    beforeEach ->
+      TestManifest.register "config-fixture-pkg",
+        configurations: [
+          {
+            id: "enabled"
+            mocha_tests: ["Enabled Tests"]
+            fixtures: ["users", "projects", "feature"]  # Config-specific
+            primary: true
+          }
+          {
+            id: "disabled"
+            mocha_tests: ["Disabled Tests"]
+            fixtures: ["users"]  # Minimal fixtures
+            isolation_only: true
+          }
+        ]
+      
+      TestManifest.register "fallback-pkg",
+        configurations: [
+          { id: "test", mocha_tests: ["Tests"], primary: true }
+          # No config-level fixtures
+        ]
+        fixtures: ["users", "projects"]  # Package-level fallback
+    
+    it "should return config-specific fixtures", ->
+      fixtures = TestManifest.getConfigurationFixtures("config-fixture-pkg", "enabled")
+      
+      expect(fixtures).to.deep.equal ["users", "projects", "feature"]
+    
+    it "should return different fixtures for different configs", ->
+      enabledFixtures = TestManifest.getConfigurationFixtures("config-fixture-pkg", "enabled")
+      disabledFixtures = TestManifest.getConfigurationFixtures("config-fixture-pkg", "disabled")
+      
+      expect(enabledFixtures).to.deep.equal ["users", "projects", "feature"]
+      expect(disabledFixtures).to.deep.equal ["users"]
+    
+    it "should fall back to package-level fixtures if config has none", ->
+      fixtures = TestManifest.getConfigurationFixtures("fallback-pkg", "test")
+      
+      expect(fixtures).to.deep.equal ["users", "projects"]
+    
+    it "should return empty array for unknown package", ->
+      fixtures = TestManifest.getConfigurationFixtures("unknown-pkg", "test")
+      
+      expect(fixtures).to.deep.equal []
+    
+    it "should return empty array for unknown config", ->
+      fixtures = TestManifest.getConfigurationFixtures("config-fixture-pkg", "unknown")
+      
+      expect(fixtures).to.deep.equal []
+    
+    it "should return a copy, not the original array", ->
+      fixtures1 = TestManifest.getConfigurationFixtures("config-fixture-pkg", "enabled")
+      fixtures1.push("modified")
+      
+      fixtures2 = TestManifest.getConfigurationFixtures("config-fixture-pkg", "enabled")
+      expect(fixtures2).to.not.include "modified"
+  
+  describe "getFixturesForConfigs", ->
+    beforeEach ->
+      TestManifest.register "multi-config-pkg",
+        configurations: [
+          {
+            id: "enabled"
+            mocha_tests: ["Tests"]
+            fixtures: ["users", "feature-a"]
+            primary: true
+          }
+          {
+            id: "alternative"
+            mocha_tests: ["Alt Tests"]
+            fixtures: ["users", "feature-b"]
+          }
+        ]
+    
+    it "should collect unique fixtures from multiple configs", ->
+      configs = [
+        { packageId: "multi-config-pkg", id: "enabled" }
+        { packageId: "multi-config-pkg", id: "alternative" }
+      ]
+      
+      fixtures = TestManifest.getFixturesForConfigs(configs)
+      
+      expect(fixtures).to.include "users"
+      expect(fixtures).to.include "feature-a"
+      expect(fixtures).to.include "feature-b"
+      
+      # users should not be duplicated
       userCount = fixtures.filter((f) -> f is "users").length
       expect(userCount).to.equal 1
   

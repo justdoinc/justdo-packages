@@ -54,17 +54,33 @@ if Package["justdoinc:your-package"]?
 Use in tests:
 
 ```coffeescript
+# Simple - just wait for fixtures
 describe "Your Feature", ->
-  before (done) ->
-    @timeout(10000)
-    APP.getEnv ->
-      TestFixtures.ensure("your-feature")
-      done()
+  before TestFixtures.beforeHook()
   
   it "should do something", ->
     { myDoc } = TestFixtures.get("your-feature")
     # Test with myDoc...
+
+# With additional sync setup
+describe "Your Feature", ->
+  before TestFixtures.beforeHook ->
+    { myDoc } = TestFixtures.get("your-feature")
+    # ... custom sync setup ...
+
+# With additional async setup
+describe "Your Feature", ->
+  before TestFixtures.beforeHook (done) ->
+    # ... async setup ...
+    done()
 ```
+
+**How it works:**
+- `beforeHook()` waits for manifest fixtures to be auto-seeded
+- Handles timeout internally (120s via barriers) - no need for `@timeout()`
+- If seeding fails, tests fail immediately with a clear error
+- Optional callback for additional setup after fixtures are ready
+- Use `ensure()` only for fixtures NOT declared in the manifest
 
 ### TestManifest
 
@@ -78,19 +94,22 @@ if Meteor.isServer
       {
         id: "enabled"
         env: { YOUR_FEATURE: "true" }
-        tests: ["Your Feature Tests"]
+        mocha_tests: ["Your Feature Tests"]
+        fixtures: ["users", "projects", "your-feature"]  # Full fixtures
         primary: true
       }
       {
         id: "disabled"
         env: { YOUR_FEATURE: "false" }
-        tests: ["Your Feature Not Available"]
+        mocha_tests: ["Your Feature Not Available"]
+        fixtures: ["users"]  # Minimal fixtures
         isolation_only: true
       }
     ]
-    fixtures: ["users", "your-feature"]
     apps: ["web-app"]
 ```
+
+**Configuration-specific fixtures:** Each configuration can specify its own `fixtures` array. This allows different test configurations to seed different data, making tests faster and more isolated.
 
 ### TEST_CONSTANTS
 
@@ -135,7 +154,9 @@ Where N is 1, 2, or 3.
 - `getPackage(packageId)` - Get a package's manifest
 - `getConfigurations(packageIds, options)` - Get merged configurations
 - `mergeEnvVars(configs)` - Merge environment variables
-- `getFixtures(packageIds)` - Get required fixtures
+- `getConfigurationFixtures(packageId, configId)` - Get fixtures for a specific configuration
+- `getFixturesForConfigs(configs)` - Get unique fixtures for multiple configurations
+- `getFixtures(packageIds)` - Get package-level fixtures (deprecated, use config-level)
 
 ### Helper Functions
 

@@ -3,7 +3,7 @@
 # Allows packages to declare their test configurations, including:
 # - Required environment variables
 # - Mocha test suites to run (filtered via MOCHA_GREP)
-# - Fixtures to seed
+# - Fixtures to seed (can be per-configuration or package-level)
 # - Installation requirements (for non-symlinked packages)
 #
 # Usage:
@@ -14,21 +14,28 @@
 #         id: "enabled"
 #         env: { YOUR_FEATURE: "true" }
 #         mocha_tests: ["Your Feature Tests"]
+#         fixtures: ["users", "projects", "your-feature"]  # Config-specific fixtures
 #         primary: true
 #       }
 #       {
 #         id: "disabled"
 #         env: { YOUR_FEATURE: "false" }
 #         mocha_tests: ["Your Feature Not Available"]
+#         fixtures: ["users"]  # Minimal fixtures for disabled tests
 #         isolation_only: true
 #       }
 #     ]
-#     fixtures: ["users", "projects"]
+#     fixtures: ["users"]  # Optional: fallback for configs without fixtures
+#
+# Fixture resolution:
+# - If a configuration has a `fixtures` array, use those fixtures
+# - Otherwise, fall back to package-level `fixtures` array
+# - This allows different test configurations to seed different data
 #
 # The test runner reads these manifests to:
 # - Determine which env vars to set
 # - Filter Mocha tests via MOCHA_GREP
-# - Know which fixtures to seed
+# - Know which fixtures to seed for each configuration
 # - Handle package installation if needed
 
 TestManifest =
@@ -132,9 +139,10 @@ TestManifest =
     
     {env: merged, conflicts}
 
-  # Get fixtures required for a set of packages
+  # Get fixtures required for a set of packages (package-level fallback)
   # @param packageIds [Array<String>] Package IDs
   # @return [Array<String>] Unique fixture IDs
+  # @deprecated Use getConfigurationFixtures for config-specific fixtures
   getFixtures: (packageIds) ->
     fixtures = []
     
@@ -143,6 +151,42 @@ TestManifest =
       continue unless manifest?
       
       for fixture in (manifest.fixtures or [])
+        fixtures.push(fixture) unless fixture in fixtures
+    
+    fixtures
+
+  # Get fixtures for a specific configuration
+  # @param packageId [String] Package ID
+  # @param configId [String] Configuration ID
+  # @return [Array<String>] Fixture IDs for this configuration
+  getConfigurationFixtures: (packageId, configId) ->
+    manifest = @_registry[packageId]
+    return [] unless manifest?
+    
+    # Find the specific configuration
+    config = null
+    for c in (manifest.configurations or [])
+      if c.id is configId
+        config = c
+        break
+    
+    return [] unless config?
+    
+    # Use config-level fixtures if specified, otherwise fall back to package-level
+    if config.fixtures?
+      return config.fixtures.slice()  # Return copy
+    else
+      return (manifest.fixtures or []).slice()  # Fall back to package-level
+
+  # Get fixtures for multiple configurations (merges unique fixtures)
+  # @param configs [Array<Object>] Configurations with packageId
+  # @return [Array<String>] Unique fixture IDs
+  getFixturesForConfigs: (configs) ->
+    fixtures = []
+    
+    for config in configs
+      configFixtures = @getConfigurationFixtures(config.packageId, config.id)
+      for fixture in configFixtures
         fixtures.push(fixture) unless fixture in fixtures
     
     fixtures

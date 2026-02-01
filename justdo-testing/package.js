@@ -14,7 +14,7 @@ Package.onUse(function(api) {
   
   // Dependencies for test helpers
   api.use('accounts-base', 'server', {weak: true});
-  api.use('justdoinc:justdo-helpers@1.0.0', 'server', {weak: true});
+  api.use('justdoinc:justdo-helpers@1.0.0', 'server');  // Required for Barriers (fixture auto-seeding)
   api.use('justdoinc:justdo-site-admins@1.0.0', 'server', {weak: true});
   api.use('justdoinc:justdo-accounts@1.0.0', 'server', {weak: true});
   api.use('justdoinc:justdo-projects@1.0.0', 'server', {weak: true});
@@ -32,7 +32,8 @@ Package.onUse(function(api) {
     'lib/server/mergeable-vars.coffee',
     'lib/server/helpers.coffee',
     'lib/server/users-fixture.coffee',
-    'lib/server/projects-fixture.coffee'
+    'lib/server/projects-fixture.coffee',
+    'lib/server/fixture-bootstrap.coffee'  // Must be last - auto-seeds fixtures from TEST_FIXTURES env var
   ], 'server');
   
   // Export for use in tests
