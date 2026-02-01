@@ -1,7 +1,7 @@
 # TestManifest Self-Tests
 #
 # Tests the TestManifest coordinator functionality including:
-# - Registration with mocha_tests and cypress_tests fields
+# - Registration with mocha_tests fields
 # - Configuration filtering
 # - Env var merging
 # - Fixture collection
@@ -35,31 +35,20 @@ describe "TestManifest System", ->
       expect(TestManifest.hasPackage("test-pkg")).to.be.true
       expect(TestManifest.getRegisteredPackages()).to.include "test-pkg"
     
-    it "should register a package manifest with cypress_tests only", ->
-      TestManifest.register "cypress-only-pkg",
-        configurations: [
-          { id: "basic", cypress_tests: ["UI Test Suite"], primary: true }
-        ]
-        fixtures: []
-      
-      expect(TestManifest.hasPackage("cypress-only-pkg")).to.be.true
-    
-    it "should register a package manifest with both mocha_tests and cypress_tests", ->
-      TestManifest.register "both-tests-pkg",
+    it "should register a package manifest with multiple test suites", ->
+      TestManifest.register "multi-test-pkg",
         configurations: [
           {
             id: "basic"
-            mocha_tests: ["Server Suite"]
-            cypress_tests: ["UI Suite"]
+            mocha_tests: ["Server Suite", "API Suite"]
             primary: true
           }
         ]
         fixtures: []
       
-      manifest = TestManifest.getPackage("both-tests-pkg")
+      manifest = TestManifest.getPackage("multi-test-pkg")
       config = manifest.configurations[0]
-      expect(config.mocha_tests).to.deep.equal ["Server Suite"]
-      expect(config.cypress_tests).to.deep.equal ["UI Suite"]
+      expect(config.mocha_tests).to.deep.equal ["Server Suite", "API Suite"]
     
     it "should require at least one configuration", ->
       expect(->
@@ -76,33 +65,13 @@ describe "TestManifest System", ->
           ]
       ).to.throw(/missing required 'id' field/)
     
-    it "should require at least one mocha_tests or cypress_tests entry", ->
+    it "should require at least one mocha_tests entry", ->
       expect(->
         TestManifest.register "no-tests",
           configurations: [
-            { id: "basic", mocha_tests: [], cypress_tests: [] }
+            { id: "basic", mocha_tests: [] }
           ]
-      ).to.throw(/at least one mocha_tests or cypress_tests/)
-    
-    it "should allow empty cypress_tests if mocha_tests has entries", ->
-      # Should not throw
-      TestManifest.register "mocha-only",
-        configurations: [
-          { id: "basic", mocha_tests: ["Suite"], cypress_tests: [], primary: true }
-        ]
-        fixtures: []
-      
-      expect(TestManifest.hasPackage("mocha-only")).to.be.true
-    
-    it "should allow empty mocha_tests if cypress_tests has entries", ->
-      # Should not throw
-      TestManifest.register "cypress-only",
-        configurations: [
-          { id: "basic", mocha_tests: [], cypress_tests: ["UI Suite"], primary: true }
-        ]
-        fixtures: []
-      
-      expect(TestManifest.hasPackage("cypress-only")).to.be.true
+      ).to.throw(/at least one mocha_tests entry/)
   
   describe "getPackage", ->
     it "should return the registered manifest", ->
@@ -124,14 +93,14 @@ describe "TestManifest System", ->
     beforeEach ->
       TestManifest.register "pkg-a",
         configurations: [
-          { id: "enabled", mocha_tests: ["A Tests"], cypress_tests: ["A UI"], primary: true }
+          { id: "enabled", mocha_tests: ["A Tests"], primary: true }
           { id: "disabled", mocha_tests: ["A Disabled"], isolation_only: true }
         ]
         fixtures: ["users"]
       
       TestManifest.register "pkg-b",
         configurations: [
-          { id: "full", mocha_tests: ["B Tests"], cypress_tests: ["B UI"], primary: true }
+          { id: "full", mocha_tests: ["B Tests"], primary: true }
           { id: "minimal", mocha_tests: ["B Minimal"] }
         ]
         fixtures: ["projects"]
@@ -160,10 +129,9 @@ describe "TestManifest System", ->
       for config in configs
         expect(config.packageId).to.exist
     
-    it "should preserve mocha_tests and cypress_tests in returned configs", ->
+    it "should preserve mocha_tests in returned configs", ->
       configs = TestManifest.getConfigurations(["pkg-a"])
       expect(configs[0].mocha_tests).to.deep.equal ["A Tests"]
-      expect(configs[0].cypress_tests).to.deep.equal ["A UI"]
   
   describe "mergeEnvVars", ->
     it "should merge comma-separated env vars", ->

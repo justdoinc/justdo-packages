@@ -3,7 +3,6 @@
 # Allows packages to declare their test configurations, including:
 # - Required environment variables
 # - Mocha test suites to run (filtered via MOCHA_GREP)
-# - Cypress test suites to run (filtered via @cypress/grep)
 # - Fixtures to seed
 # - Installation requirements (for non-symlinked packages)
 #
@@ -14,15 +13,13 @@
 #       {
 #         id: "enabled"
 #         env: { YOUR_FEATURE: "true" }
-#         mocha_tests: ["Your Feature Tests"]      # Server-side Mocha tests
-#         cypress_tests: ["Your Feature UI"]       # Browser E2E Cypress tests
+#         mocha_tests: ["Your Feature Tests"]
 #         primary: true
 #       }
 #       {
 #         id: "disabled"
 #         env: { YOUR_FEATURE: "false" }
 #         mocha_tests: ["Your Feature Not Available"]
-#         cypress_tests: []
 #         isolation_only: true
 #       }
 #     ]
@@ -31,7 +28,6 @@
 # The test runner reads these manifests to:
 # - Determine which env vars to set
 # - Filter Mocha tests via MOCHA_GREP
-# - Filter Cypress tests via --env grep="pattern"
 # - Know which fixtures to seed
 # - Handle package installation if needed
 
@@ -44,8 +40,7 @@ TestManifest =
   #   - configurations: [Array<Object>] List of test configurations
   #     - id: [String] Configuration ID
   #     - env: [Object] Environment variables to set
-  #     - mocha_tests: [Array<String>] Mocha test suite names (server-side)
-  #     - cypress_tests: [Array<String>] Cypress test suite names (E2E)
+  #     - mocha_tests: [Array<String>] Mocha test suite names
   #     - primary: [Boolean] Include when testing with other packages
   #     - isolation_only: [Boolean] Only run when testing this package alone
   #   - fixtures: [Array<String>] Fixture IDs to ensure before tests
@@ -64,12 +59,9 @@ TestManifest =
       unless config.id?
         throw new Error("[TestManifest] Configuration in '#{packageId}' missing required 'id' field")
       
-      # Validate test fields - require at least mocha_tests or cypress_tests
-      hasMochaTests = config.mocha_tests?.length > 0
-      hasCypressTests = config.cypress_tests?.length > 0
-      
-      unless hasMochaTests or hasCypressTests
-        throw new Error("[TestManifest] Configuration '#{config.id}' in '#{packageId}' must have at least one mocha_tests or cypress_tests entry")
+      # Validate test fields - require mocha_tests
+      unless config.mocha_tests?.length > 0
+        throw new Error("[TestManifest] Configuration '#{config.id}' in '#{packageId}' must have at least one mocha_tests entry")
     
     @_registry[packageId] = manifest
     console.log "[TestManifest] Registered manifest: #{packageId} (#{manifest.configurations.length} configs)"

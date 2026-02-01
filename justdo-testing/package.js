@@ -19,7 +19,7 @@ Package.onUse(function(api) {
   api.use('justdoinc:justdo-accounts@1.0.0', 'server', {weak: true});
   api.use('justdoinc:justdo-projects@1.0.0', 'server', {weak: true});
   
-  // Shared constants (available to both server and client for Cypress)
+  // Shared constants (available to both server and client)
   api.addFiles([
     'lib/both/test-constants.coffee'
   ], ['client', 'server']);

@@ -3,7 +3,7 @@
 # Utility functions for creating test data in fixtures.
 # These are designed to be idempotent - they check if data exists before creating.
 #
-# All helper functions use TEST_CONSTANTS for consistency with Cypress tests.
+# All helper functions use TEST_CONSTANTS for consistency.
 
 # Default test password (sha-256 hash of "test_password")
 DEFAULT_TEST_PASSWORD =

@@ -16,8 +16,9 @@ if Meteor.isServer
           "TestManifest System"
           "TEST_CONSTANTS"
           "Test Helper Functions"
+          "Client Login POC - Server Setup"
+          "Client Login POC"
         ]
-        cypress_tests: []  # No Cypress tests for the testing infrastructure
         primary: true
       }
     ]

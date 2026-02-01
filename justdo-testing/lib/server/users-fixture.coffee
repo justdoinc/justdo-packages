@@ -5,7 +5,7 @@
 #
 # Uses TEST_CONSTANTS to ensure consistency between:
 # - Server-side fixtures (this file)
-# - Cypress E2E tests (via test-constants.json)
+# - Client-side tests (via Meteor method)
 #
 # Available users after seeding:
 #   - siteAdmin1, siteAdmin2, siteAdmin3: Site admin users

@@ -1,16 +1,13 @@
 # TEST_CONSTANTS - Shared test data constants
 #
-# These constants are used by both:
-# - Server-side fixtures (to create test users)
-# - Cypress E2E tests (to login as test users)
+# These constants are used by test fixtures to create test users
+# and by client-side tests to login as those users.
 #
 # This ensures test credentials are consistent across all test types.
 #
-# Usage (Server):
+# Usage:
 #   TEST_CONSTANTS.users.siteAdmin1.email
-#
-# Usage (Cypress):
-#   Import from cypress/support/test-constants.json (generated at test startup)
+#   TEST_CONSTANTS.users.siteAdmin1.password
 
 TEST_CONSTANTS =
   # Test user definitions
@@ -94,7 +91,7 @@ TEST_CONSTANTS =
   projects:
     defaultTitle: "Test Project"
 
-# Server-only: Expose constants via a method for Cypress to retrieve
+# Expose constants via a method for client tests to retrieve
 if Meteor.isServer
   Meteor.methods
     "test.getConstants": ->

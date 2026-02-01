@@ -8,7 +8,7 @@ This package provides a unified testing infrastructure that works across both `j
 
 - **TestFixtures** - Modular test data seeding system with dependency resolution
 - **TestManifest** - Package test configuration system for multi-config testing
-- **TEST_CONSTANTS** - Shared test data constants for server tests and Cypress E2E tests
+- **TEST_CONSTANTS** - Shared test data constants for server and client tests
 - **Helper functions** - Utilities for creating test users, projects, and tasks
 
 ## Installation
@@ -97,12 +97,8 @@ if Meteor.isServer
 Access test user credentials:
 
 ```coffeescript
-# Server-side
 email = TEST_CONSTANTS.users.siteAdmin1.email
 password = TEST_CONSTANTS.users.siteAdmin1.password
-
-# Cypress (via generated JSON)
-# testConstants = require('../../support/test-constants.json')
 ```
 
 ## Available Fixtures
