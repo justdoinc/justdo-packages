@@ -48,6 +48,6 @@ TestFixtures.register "projects",
     expect(rootTask._id).to.be.a "string"
     expect(rootTask.title).to.equal "Test Root Task"
     
-    console.log "[projects fixture] Created project '#{project.title}' with #{project.members.length} members and 1 task"
+    TestLogger.log "[projects fixture]", "Created project '#{project.title}' with #{project.members.length} members and 1 task"
     
     return { project, rootTask }

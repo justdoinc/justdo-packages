@@ -27,6 +27,7 @@ Package.onUse(function(api) {
   // Server-side test infrastructure
   // Load order is controlled by the array order below
   api.addFiles([
+    'lib/server/test-logger.coffee',       // Must be first - provides TestLogger for all other files
     'lib/server/test-fixtures.coffee',
     'lib/server/test-manifest.coffee',
     'lib/server/mergeable-vars.coffee',

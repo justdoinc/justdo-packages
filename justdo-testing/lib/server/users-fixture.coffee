@@ -49,6 +49,6 @@ TestFixtures.register "users",
         expect(users[userKey].site_admin?.is_site_admin).to.equal true,
           "User #{userKey} should have site_admin.is_site_admin = true"
     
-    console.log "[users fixture] Created #{Object.keys(users).length} test users"
+    TestLogger.log "[users fixture]", "Created #{Object.keys(users).length} test users"
     
     return users

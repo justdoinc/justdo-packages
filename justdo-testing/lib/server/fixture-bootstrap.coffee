@@ -36,7 +36,7 @@ if Meteor.isServer and (Meteor.isTest or Meteor.isAppTest)
     _testFixtureIds = testFixtures.split(',').map((f) -> f.trim()).filter((f) -> f.length > 0)
   
   if _testFixtureIds.length > 0
-    console.log "[TestFixtures] Auto-seeding #{_testFixtureIds.length} fixture(s): #{_testFixtureIds.join(', ')}"
+    TestLogger.log "[TestFixtures]", "Auto-seeding #{_testFixtureIds.length} fixture(s): #{_testFixtureIds.join(', ')}"
     
     Meteor.startup ->
       APP.getEnv ->
@@ -49,26 +49,26 @@ if Meteor.isServer and (Meteor.isTest or Meteor.isAppTest)
             stepNum = index + 1
             
             if TestFixtures.isRegistered(fixtureId)
-              console.log "[TestFixtures] (#{stepNum}/#{_testFixtureIds.length}) Seeding '#{fixtureId}'..."
+              TestLogger.log "[TestFixtures]", "(#{stepNum}/#{_testFixtureIds.length}) Seeding '#{fixtureId}'..."
               fixtureStart = Date.now()
               TestFixtures.ensure(fixtureId)
               duration = Date.now() - fixtureStart
-              console.log "[TestFixtures] (#{stepNum}/#{_testFixtureIds.length}) ✓ '#{fixtureId}' seeded (#{duration}ms)"
+              TestLogger.log "[TestFixtures]", "(#{stepNum}/#{_testFixtureIds.length}) ✓ '#{fixtureId}' seeded (#{duration}ms)"
               seededCount++
             else
-              console.warn "[TestFixtures] (#{stepNum}/#{_testFixtureIds.length}) ⚠ '#{fixtureId}' not registered, skipping"
+              TestLogger.warn "[TestFixtures]", "(#{stepNum}/#{_testFixtureIds.length}) ⚠ '#{fixtureId}' not registered, skipping"
               skippedCount++
           
           totalDuration = Date.now() - startTime
-          console.log "[TestFixtures] Auto-seeding complete - Seeded: #{seededCount}, Skipped: #{skippedCount}, Total: #{totalDuration}ms"
+          TestLogger.log "[TestFixtures]", "Auto-seeding complete - Seeded: #{seededCount}, Skipped: #{skippedCount}, Total: #{totalDuration}ms"
           
           TestFixtures._seedingComplete = true
           TestFixtures._barriers.markBarrierAsResolved(BARRIER_ID)
         catch err
           # FAIL-FAST: Store error and resolve barrier immediately
           totalDuration = Date.now() - startTime
-          console.error "[TestFixtures] Auto-seeding FAILED after #{totalDuration}ms (#{seededCount}/#{_testFixtureIds.length} seeded)"
-          console.error "[TestFixtures] Error: #{err.message}"
+          TestLogger.error "[TestFixtures]", "Auto-seeding FAILED after #{totalDuration}ms (#{seededCount}/#{_testFixtureIds.length} seeded)"
+          TestLogger.error "[TestFixtures]", "Error: #{err.message}"
           
           TestFixtures._seedingError = err
           TestFixtures._seedingComplete = true

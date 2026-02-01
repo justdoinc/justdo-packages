@@ -39,14 +39,14 @@ TestFixtures =
   #   - seed: [Function] Function that creates the test data, returns data object
   register: (id, options) ->
     if @_registry[id]?
-      console.warn "[TestFixtures] Warning: Overwriting existing fixture: #{id}"
+      TestLogger.warn "[TestFixtures]", "Warning: Overwriting existing fixture: #{id}"
     
     @_registry[id] =
       dependencies: options.dependencies or []
       seed: options.seed
       seededData: null
     
-    console.log "[TestFixtures] Registered fixture: #{id}"
+    TestLogger.log "[TestFixtures]", "Registered fixture: #{id}"
 
   # Ensure a fixture (and its dependencies) are seeded
   # @param id [String] The fixture ID to ensure
@@ -72,20 +72,20 @@ TestFixtures =
         @ensure(depId)
       
       # Seed this fixture
-      console.log "[TestFixtures] Seeding fixture: #{id}"
+      TestLogger.log "[TestFixtures]", "Seeding fixture: #{id}"
       startTime = Date.now()
       
       try
         fixture.seededData = fixture.seed()
       catch error
-        console.error "[TestFixtures] Error seeding fixture '#{id}':", error
+        TestLogger.error "[TestFixtures]", "Error seeding fixture '#{id}': #{error.message}"
         throw error
       
       @_seeded[id] = true
       @_seedOrder.push(id)
       
       elapsed = Date.now() - startTime
-      console.log "[TestFixtures] Seeded fixture: #{id} (#{elapsed}ms)"
+      TestLogger.log "[TestFixtures]", "Seeded fixture: #{id} (#{elapsed}ms)"
       
       return fixture.seededData
     finally
@@ -139,14 +139,14 @@ TestFixtures =
     @_seeding = {}
     for id, fixture of @_registry
       fixture.seededData = null
-    console.log "[TestFixtures] Reset all fixture state"
+    TestLogger.log "[TestFixtures]", "Reset all fixture state"
 
   # Debug helper - print status of all fixtures
   debug: ->
-    console.log "[TestFixtures] Status:"
-    console.log "  Registered: #{Object.keys(@_registry).join(', ')}"
-    console.log "  Seeded: #{Object.keys(@_seeded).filter((k) => @_seeded[k]).join(', ')}"
-    console.log "  Seed order: #{@_seedOrder.join(' -> ')}"
+    TestLogger.log "[TestFixtures]", "Status:"
+    TestLogger.log "[TestFixtures]", "  Registered: #{Object.keys(@_registry).join(', ')}"
+    TestLogger.log "[TestFixtures]", "  Seeded: #{Object.keys(@_seeded).filter((k) => @_seeded[k]).join(', ')}"
+    TestLogger.log "[TestFixtures]", "  Seed order: #{@_seedOrder.join(' -> ')}"
 
   # Wait for auto-seeded fixtures to be ready
   # Used by tests to wait for manifest fixtures to be seeded before running

@@ -56,7 +56,7 @@ TestManifest =
   #     - apps: [Array<String>] Which apps to install to for testing
   register: (packageId, manifest) ->
     if @_registry[packageId]?
-      console.warn "[TestManifest] Warning: Overwriting existing manifest: #{packageId}"
+      TestLogger.warn "[TestManifest]", "Warning: Overwriting existing manifest: #{packageId}"
     
     # Validate manifest structure
     unless manifest.configurations?.length > 0
@@ -71,7 +71,7 @@ TestManifest =
         throw new Error("[TestManifest] Configuration '#{config.id}' in '#{packageId}' must have at least one mocha_tests entry")
     
     @_registry[packageId] = manifest
-    console.log "[TestManifest] Registered manifest: #{packageId} (#{manifest.configurations.length} configs)"
+    TestLogger.log "[TestManifest]", "Registered manifest: #{packageId} (#{manifest.configurations.length} configs)"
 
   # Get a package's manifest
   # @param packageId [String] The package ID
@@ -102,7 +102,7 @@ TestManifest =
     for packageId in packageIds
       manifest = @_registry[packageId]
       unless manifest?
-        console.warn "[TestManifest] Unknown package: #{packageId}"
+        TestLogger.warn "[TestManifest]", "Unknown package: #{packageId}"
         continue
       
       for config in manifest.configurations
@@ -206,10 +206,10 @@ TestManifest =
 
   # Debug helper
   debug: ->
-    console.log "[TestManifest] Registered packages:"
+    TestLogger.log "[TestManifest]", "Registered packages:"
     for packageId, manifest of @_registry
       configIds = manifest.configurations.map((c) -> c.id).join(", ")
-      console.log "  #{packageId}: #{configIds}"
+      TestLogger.log "[TestManifest]", "  #{packageId}: #{configIds}"
 
 # Make globally available
 @TestManifest = TestManifest
