@@ -25,7 +25,8 @@ APP.executeAfterAppLibCode ->
     tutorials: -> [] # JustdoTutorials.getRelevantTutorialsToState()
 
     supportCenterUrl: ->
-      return new URL("/support", env.LANDING_APP_ROOT_URL)
+      landing_app_root_url = env.LANDING_APP_ROOT_URL or "https://justdo.com"
+      return new URL("/support", landing_app_root_url)
 
   Template.tutorials_submenu_dropdown.events
     "click .support-center": (e) ->

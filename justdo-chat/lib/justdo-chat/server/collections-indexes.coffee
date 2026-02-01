@@ -4,21 +4,26 @@ _.extend JustdoChat.prototype,
   # With the introduction of new channel types, there's no "task_id" in document, that it'll break insertions if "unique" is set to true.
   _dropUniqueIndexes: ->
     raw_channels_collection = @channels_collection.rawCollection()
-    raw_channels_collection.indexes()
-      .then (indexes) =>
-        indexes_to_drop = []
-        for index in indexes
-          if index.unique
-            indexes_to_drop.push index.name
+    db = MongoInternals.defaultRemoteCollectionDriver().mongo.db
+    # Ensure collection exists before attempting to drop indexes to avoid "ns does not exist" error
+    db.createCollection(raw_channels_collection.collectionName).catch(->)
+      .then =>
+        raw_channels_collection.indexes()
+          .then (indexes) =>
+            indexes_to_drop = []
+            for index in indexes
+              if index.unique
+                indexes_to_drop.push index.name
 
-        if _.isEmpty indexes_to_drop
-          return
+            if _.isEmpty indexes_to_drop
+              return
 
-        raw_channels_collection.dropIndexes indexes_to_drop
-          .then => @logger.info "Dropped unique indexes: #{indexes_to_drop}"
-          .catch (err) => @logger.error "Unable to drop unique indexes #{indexes_to_drop}. Error: #{err}"
+            raw_channels_collection.dropIndexes indexes_to_drop
+              .then => @logger.info "Dropped unique indexes: #{indexes_to_drop}"
+              .catch (err) => @logger.error "Unable to drop unique indexes #{indexes_to_drop}. Error: #{err}"
+            return
+          .catch (err) => @logger.error err
         return
-      .catch (err) => @logger.error err
     return
 
   _ensureIndexesExists: ->
