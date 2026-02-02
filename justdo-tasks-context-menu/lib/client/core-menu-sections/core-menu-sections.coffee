@@ -442,10 +442,11 @@ _.extend JustdoTasksContextMenu.prototype,
         op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info, gc) ->
           APP.modules.project_page.performOp("zoomIn", gc)
 
+          APP.justdo_tasks_context_menu.hide()
+
           return
         icon_type: "feather"
         icon_val: "zoom-in"
-        close_on_click: true
 
     behavior_by_editor_type = 
       SelectorEditor:
