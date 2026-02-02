@@ -392,6 +392,32 @@ Template.common_chat_message_editor.helpers
     return tpl.is_dragging_files_into_drop_pane.get()
 
 Template.common_chat_message_editor.events
+  "paste .message-editor": (e, tpl) ->
+    # Only handle paste if files are enabled for this channel
+    channel_obj = tpl.data.getChannelObject?()
+    if not channel_obj?
+      return
+
+    is_files_enabled = APP.justdo_chat.isFilesEnabled channel_obj.channel_type
+    if not is_files_enabled
+      return
+
+    is_user_allowed_to_upload = APP.justdo_file_interface.isUserAllowedToUploadTaskFile channel_obj.getChannelIdentifier().task_id, Meteor.userId()
+    if not is_user_allowed_to_upload
+      return
+
+    clipboard_data = e.originalEvent.clipboardData
+    if not clipboard_data?.files?.length
+      return
+
+    e.preventDefault()
+    e.stopPropagation()
+
+    tpl.attachFiles clipboard_data.files
+    tpl.showOrHideSendButtonBasedOnUserInput()
+
+    return
+
   "keyup .message-editor": (e, tpl) ->
     @getChannelObject().saveTempMessage tpl.getInputValue()
 
