@@ -7,6 +7,13 @@ $breakpoint-md: 768px;
 $breakpoint-lg: 992px;
 $breakpoint-xl: 1200px;
 
+$safe-area-inset-top: env(safe-area-inset-top);
+$safe-area-inset-bottom: env(safe-area-inset-bottom);
+$safe-area-inset-left: env(safe-area-inset-left);
+$safe-area-inset-right: env(safe-area-inset-right);
+
+$safe-area-inset-top-plus-navbar-height: calc(#{$safe-area-inset-top} + #{$navbar-height});
+
 // PWA-specific mobile breakpoint
 $mobile-breakpoint: $breakpoint-md;
 

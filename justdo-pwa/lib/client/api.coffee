@@ -258,7 +258,7 @@ _.extend JustdoPwa.prototype,
     
     @_dynamic_head_tracker = Tracker.autorun =>
       if @isMobileLayout()
-        meta_viewport_content_with_zoom_restriction = original_meta_viewport_content + ", maximum-scale=1.0, user-scalable=no"
+        meta_viewport_content_with_zoom_restriction = original_meta_viewport_content + ", maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
         $("meta[name='viewport']").attr("content", meta_viewport_content_with_zoom_restriction)
       else
         $("meta[name='viewport']").attr("content", original_meta_viewport_content)

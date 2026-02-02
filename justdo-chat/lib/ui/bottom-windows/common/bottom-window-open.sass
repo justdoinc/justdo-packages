@@ -41,7 +41,7 @@ $default-chat-input-height: 44px
 @include mobile
   .chat-window.open-chat-window
     position: fixed
-    top: $navbar-height
+    top: $safe-area-inset-top-plus-navbar-height
     left: 0
     bottom: calc(#{$mobile-navbar-height} - 8px)
     height: auto

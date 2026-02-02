@@ -26,7 +26,7 @@
 .mobile-tab
   overscroll-behavior: contain
   position: fixed
-  top: 45px
+  top: $safe-area-inset-top-plus-navbar-height
   background-color: #ffffff
   width: 100%
   height: 100%
@@ -46,6 +46,13 @@
     @include scrollable-container
 
 @include mobile
+  body
+    padding-top: $safe-area-inset-top
+    padding-bottom: $safe-area-inset-bottom
+    padding-left: $safe-area-inset-left
+    padding-right: $safe-area-inset-right
+    background-color: rgba(var(--color-primary), 1)
+
   .mobile-navbar-buttons
     display: flex
 
