@@ -80,12 +80,12 @@ _.extend JustdoPwa.prototype,
     return
 
   _setupMeteorStatusShowDelayTracker: ->
-    original_show_delay = Status.getShowDelay()
+    original_show_delay = Status.getDisplayDelayMs()
     @meteor_status_show_delay_tracker = Tracker.autorun =>
       if @isMobileLayout()
-        Status.setShowDelay(JustdoPwa.meteor_status_show_delay)
+        Status.setDisplayDelayMs(JustdoPwa.meteor_status_show_delay)
       else
-        Status.setShowDelay(original_show_delay)
+        Status.setDisplayDelayMs(original_show_delay)
         
       return
     
