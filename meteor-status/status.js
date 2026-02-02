@@ -1,7 +1,7 @@
 var template = new ReactiveVar('bootstrap3')
 var options  = new ReactiveVar({})
-var DEFAULT_SHOW_DELAY = 500
-var show_delay = new ReactiveVar(DEFAULT_SHOW_DELAY)
+var DEFAULT_DISPLAY_DELAY_MS = 500
+var display_delay_ms = new ReactiveVar(DEFAULT_DISPLAY_DELAY_MS)
 var defaults = {
   classes: {
     bootstrap3:  'alert-warning',
@@ -26,11 +26,11 @@ Status = {
     if (_options) options.set(_options)
   },
 
-  setShowDelay: function (value) {
-    show_delay.set(value)
+  setDisplayDelayMs: function (value) {
+    display_delay_ms.set(value)
   },
 
-  getShowDelay: function () {
-    return show_delay.get()
+  getDisplayDelayMs: function () {
+    return display_delay_ms.get()
   }
 }
