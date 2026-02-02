@@ -7,36 +7,36 @@ status_messages =
 
 Template.status_alert.onCreated ->
   @should_show_status_rv = new ReactiveVar(false)
-  @show_delay_handle = null
+  @pending_display_timeout = null
 
-  @setShowDelayHandle = =>
+  @scheduleDelayedDisplay = =>
     # If already showing or delay pending, do nothing
     is_showing = Tracker.nonreactive => @should_show_status_rv.get()
-    is_going_to_show = @show_delay_handle?
+    is_going_to_show = @pending_display_timeout?
 
     if (not is_showing) and (not is_going_to_show)
       # Start delay before showing
-      @show_delay_handle = Meteor.setTimeout =>
+      @pending_display_timeout = Meteor.setTimeout =>
         @should_show_status_rv.set(true)
-        @show_delay_handle = null
+        @pending_display_timeout = null
         return
-      , Status.getShowDelay()
+      , Status.getDisplayDelayMs()
 
     return
 
-  @clearShowDelayHandle = =>
-    if @show_delay_handle?
-      Meteor.clearTimeout(@show_delay_handle)
-      @show_delay_handle = null
+  @cancelScheduledDisplay = =>
+    if @pending_display_timeout?
+      Meteor.clearTimeout(@pending_display_timeout)
+      @pending_display_timeout = null
     return
 
   @setShouldShowStatus = (should_show) =>
     if should_show
-      # @should_show_status_rv.set(true) is done in @setShowDelayHandle()
-      @setShowDelayHandle()
+      # @should_show_status_rv.set(true) is done in @scheduleDelayedDisplay()
+      @scheduleDelayedDisplay()
     else
       # Clear any pending delay and hide immediately
-      @clearShowDelayHandle()
+      @cancelScheduledDisplay()
       @should_show_status_rv.set(false)
 
     return
@@ -60,7 +60,7 @@ Template.status_alert.onCreated ->
   return
 
 Template.status_alert.onDestroyed ->
-  @clearShowDelayHandle()
+  @cancelScheduledDisplay()
   return
 
 Template.status_alert.helpers
