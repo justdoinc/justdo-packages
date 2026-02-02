@@ -445,6 +445,7 @@ _.extend JustdoTasksContextMenu.prototype,
           return
         icon_type: "feather"
         icon_val: "zoom-in"
+        close_on_click: true
 
     behavior_by_editor_type = 
       SelectorEditor:
