@@ -10,4 +10,4 @@
 @include mobile
   .dashboard-footer
     margin-top: 0
-    padding-bottom: $mobile-navbar-height
+    padding-bottom: calc(#{$safe-area-inset-top} + #{$mobile-navbar-height})
