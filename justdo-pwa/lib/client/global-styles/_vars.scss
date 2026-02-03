@@ -36,7 +36,7 @@ $mobile-tab-title-margin-bottom: 4px;
 $mobile-tab-title-line-height: 1.5em;
 
 // Since mobile-tab is fixed position, we need to calculate the max-height of the content based on the viewport height.
-$mobile-tab-content-max-height: calc(100dvh - #{$navbar-height} - #{$mobile-navbar-height} - #{$mobile-tab-vertical-padding} - #{$mobile-tab-title-line-height} - #{$mobile-tab-title-margin-bottom});
+$mobile-tab-content-max-height: calc(100dvh - #{$navbar-height} - #{$mobile-navbar-height} - #{$mobile-tab-vertical-padding} - #{$mobile-tab-title-line-height} - #{$mobile-tab-title-margin-bottom} - #{$safe-area-inset-top});
 
 // Mixin for scrollable containers that prevents layout shift and rubber-banding
 @mixin scrollable-container($max-height: $mobile-tab-content-max-height) {
