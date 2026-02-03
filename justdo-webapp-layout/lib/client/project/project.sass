@@ -93,10 +93,9 @@
     padding-left: 0
     padding-right: 0
     width: 100% !important
-    // The magic numbers below are coming from 015-project-page-wireframe-manager.coffee
-    // 21: the height of the horizontal scrollbar
-    // 2: The height offset of default project_container_dim.height
-    padding-bottom: $mobile-navbar-height - 21 - 2 
+
+  #project-main
+    height: calc(100% - #{$mobile-navbar-height} - #{$project-header-height} + 10px) !important
 
   .project-container.open-toolbar
     z-index: 1
