@@ -32,7 +32,6 @@
   height: 100%
   z-index: 1
   display: block
-  padding: $mobile-tab-vertical-padding $mobile-tab-horizontal-padding
   &.notifications
     .required-actions-card
       width: auto
@@ -41,9 +40,11 @@
     font-size: 16px
     font-weight: bold
     margin-bottom: $mobile-tab-title-margin-bottom
+    padding: $mobile-tab-title-padding
 
   .mobile-tab-content
     @include scrollable-container
+    padding: $mobile-tab-content-padding
 
 @include mobile
   body

@@ -32,6 +32,9 @@ $mobile-horizontal-safety-padding: 30px;
 $mobile-tab-vertical-padding: 12px;
 $mobile-tab-horizontal-padding: 20px;
 
+$mobile-tab-title-padding: $mobile-tab-vertical-padding $mobile-tab-horizontal-padding 0 $mobile-tab-horizontal-padding;
+$mobile-tab-content-padding: 0 $mobile-tab-horizontal-padding $mobile-tab-vertical-padding $mobile-tab-horizontal-padding;
+
 $mobile-tab-title-margin-bottom: 4px;
 $mobile-tab-title-line-height: 1.5em;
 
