@@ -49,6 +49,10 @@ APP.executeAfterAppLibCode ->
     "click .drawer-icon": ->
       $(".global-wrapper").addClass "drawer-open"
 
+    "click .brand": ->
+      $(".global-wrapper").removeClass "drawer-open"
+      return
+
     "click .create-new-project":(e, tmpl) ->
       APP.projects.createNewProject({}, (err, project_id) ->
         if err?
