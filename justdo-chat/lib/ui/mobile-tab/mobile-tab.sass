@@ -5,11 +5,13 @@
     .mobile-tab-content
       overflow: hidden
       scrollbar-gutter: unset
+      padding: 0
       .recent-activity-items-viewport
         // In chat tab, we load `recent_activity_dropdown` template dynamically.
         // The template handles the scroll event to load more items,
         // so we set the max-height of it's viewport instead of the tab content.
         @include scrollable-container
+        padding: $mobile-tab-content-padding
         .recent-activity-item
           padding: 8px 4px 8px 0px
 
