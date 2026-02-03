@@ -1,5 +1,4 @@
 @import "{justdoinc:justdo-webapp-layout}/lib/client/global-sass/global-vars.sass"
-@import "{justdoinc:justdo-pwa}/lib/client/global-styles/_vars.scss"
 
 .app-wrapper
   display: flex
@@ -12,8 +11,3 @@
 .page-dashboard
   display: flex
   flex-direction: column
-
-@include mobile
-  .page-dashboard
-    padding-bottom: calc(#{$safe-area-inset-top} + #{$mobile-navbar-height})
-    
