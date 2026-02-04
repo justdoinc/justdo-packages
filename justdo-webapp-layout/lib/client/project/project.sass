@@ -4,6 +4,7 @@
 .page-container.page-project
   // Cancel default page-container paddings
   padding: 0
+  height: 100%
 
 .page-container-header
   position: relative
@@ -88,14 +89,17 @@
       right: unset
 
 @include mobile
+  .page-container.page-project
+    height: calc(100% - #{$safe-area-inset-top-plus-navbar-height} - #{$mobile-navbar-height})
+
+  .project-container
+    height: 100% !important
+
   .project-container,
   #project-main
     padding-left: 0
     padding-right: 0
     width: 100% !important
-
-  #project-main
-    height: calc(100% - #{$mobile-navbar-height} - #{$project-header-height} + 10px) !important
 
   .project-container.open-toolbar
     z-index: 1
