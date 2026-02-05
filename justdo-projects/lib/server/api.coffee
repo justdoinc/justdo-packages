@@ -833,7 +833,7 @@ _.extend Projects.prototype,
           # Send push notification
           if APP.justdo_push_notifications.isFirebaseEnabled()
             APP.justdo_push_notifications.pnUsersViaFirebase
-              message_type: "prj-inv"
+              message_type: Projects.project_invite_push_notification_message_type
 
               # title: ""
 

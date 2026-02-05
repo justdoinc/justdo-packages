@@ -15,5 +15,6 @@ _.extend Projects.prototype,
 
     # Defined in api.coffee
     @_setupEventHooks()
+    @_setupPushNotificationsHandlers()
 
     return

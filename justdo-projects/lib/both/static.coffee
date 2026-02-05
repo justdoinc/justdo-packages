@@ -32,3 +32,5 @@ _.extend Projects,
   jd_creation_request_supported_fields: ["title", "state", "start_date", "end_date", "due_date", "status", "archived", "parent"]
   
   jd_creation_request_max_tasks: 200
+
+  project_invite_push_notification_message_type: "prj-inv"

@@ -300,3 +300,13 @@ _.extend Projects.prototype,
     @once "post-handle-jd-creation-request", _postCreateProjectFromJdCreationRequestCb
 
     return
+
+  _setupPushNotificationsHandlers: ->
+    JustdoHelpers.hooks_barriers.runCbAfterBarriers "post-justdo-pwa-init", ->
+      APP.justdo_pwa?.registerPushNotificationTapHandler Projects.project_invite_push_notification_message_type, (notification) =>
+        Router.go "project", {_id: notification.data.project_id}
+        return
+
+      return
+
+    return
