@@ -1,6 +1,7 @@
 {
   "add_column_label": "Pridať stĺpec",
   "hide_column_label": "Skryť stĺpec",
+  "edit_custom_fields_label": "Upraviť vlastné polia",
   "freeze_column_label": "Zmraziť stĺpec",
   "unfreeze_column_label": "Rozmraziť stĺpec",
   "hide_columns_to_the_right_label": "Skryť stĺpce vpravo",

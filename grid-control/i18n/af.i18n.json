@@ -1,6 +1,7 @@
 {
   "add_column_label": "Voeg Kolom By",
   "hide_column_label": "Versteek Kolom",
+  "edit_custom_fields_label": "Redigeer Pasgemaakte Velde",
   "freeze_column_label": "Vries Kolom",
   "unfreeze_column_label": "Ontvries Kolom",
   "hide_columns_to_the_right_label": "Versteek Kolomme na Regs",

@@ -1,6 +1,7 @@
 {
   "add_column_label": "Lägg till kolumn",
   "hide_column_label": "Dölj kolumn",
+  "edit_custom_fields_label": "Redigera anpassade fält",
   "freeze_column_label": "Frys kolumn",
   "unfreeze_column_label": "Avfrys kolumn",
   "hide_columns_to_the_right_label": "Dölj kolumner till höger",

@@ -2760,7 +2760,20 @@ if (typeof Slick === "undefined") {
     function handleContextMenu(e) {
       var $cell = $(e.target).closest(".slick-cell", $canvas);
       if ($cell.length === 0) {
-        return;
+        // Fallback: check if clicking on a row (empty space within row bounds)
+        var $row = $(e.target).closest(".slick-row", $canvas);
+        if ($row.length) {
+          // Use the last column's cell from the row
+          var lastColumnIndex = columns.length - 1;
+          $cell = $row.find(".slick-cell.r" + lastColumnIndex);
+        }
+        
+        // If still no cell found, we're clicking on empty space outside rows
+        // Just trigger the event without cell context (let handlers deal with it)
+        if (!$cell.length) {
+          trigger(self.onContextMenu, {}, e);
+          return;
+        }
       }
 
       // are we editing this cell?
@@ -2858,6 +2871,24 @@ if (typeof Slick === "undefined") {
       if (!$cell.length) {
         var $row = $(e.target).closest(".slick-row", $canvas);
         if (!$row.length) {
+          // Fallback: clicking on empty space (viewport/canvas background)
+          // Try to calculate row from Y position and return the last column
+          try {
+            if ($viewport && $viewport.length && e.pageY != null) {
+              var viewportOffset = $viewport.offset();
+              var y = e.pageY - viewportOffset.top + $viewport[0].scrollTop;
+              var row = getRowFromPosition(y);
+              var lastColumnIndex = columns.length - 1;
+              if (row >= 0 && row < getDataLength() && lastColumnIndex >= 0) {
+                return {
+                  "row": row,
+                  "cell": lastColumnIndex
+                };
+              }
+            }
+          } catch (ex) {
+            // Ignore errors and return null
+          }
           return null;
         }
 

@@ -1,6 +1,7 @@
 {
   "add_column_label": "Додади колона",
   "hide_column_label": "Сокриј колона",
+  "edit_custom_fields_label": "Уреди прилагодени полиња",
   "freeze_column_label": "Замрзни колона",
   "unfreeze_column_label": "Одмрзни колона",
   "hide_columns_to_the_right_label": "Сокриј колони надесно",

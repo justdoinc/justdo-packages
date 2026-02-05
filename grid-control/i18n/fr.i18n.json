@@ -1,6 +1,7 @@
 {
   "add_column_label": "Ajouter une colonne",
   "hide_column_label": "Masquer la colonne",
+  "edit_custom_fields_label": "Modifier les champs personnalisés",
   "freeze_column_label": "Figer la colonne",
   "unfreeze_column_label": "Défiger la colonne",
   "hide_columns_to_the_right_label": "Masquer les colonnes à droite",

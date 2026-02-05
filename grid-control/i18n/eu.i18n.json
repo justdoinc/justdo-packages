@@ -1,6 +1,7 @@
 {
   "add_column_label": "Gehitu Zutabea",
   "hide_column_label": "Ezkutatu Zutabea",
+  "edit_custom_fields_label": "Eremu Pertsonalizatuak Editatu",
   "freeze_column_label": "Izoztu Zutabea",
   "unfreeze_column_label": "Desizoztu Zutabea",
   "hide_columns_to_the_right_label": "Eskuineko Zutabeak Ezkutatu",

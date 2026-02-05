@@ -1,6 +1,7 @@
 {
   "add_column_label": "Oszlop hozzáadása",
   "hide_column_label": "Oszlop elrejtése",
+  "edit_custom_fields_label": "Egyéni mezők szerkesztése",
   "freeze_column_label": "Oszlop rögzítése",
   "unfreeze_column_label": "Oszlop feloldása",
   "hide_columns_to_the_right_label": "Jobbra lévő oszlopok elrejtése",

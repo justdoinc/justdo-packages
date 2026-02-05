@@ -1,6 +1,7 @@
 {
   "add_column_label": "நெடுவரிசை சேர்",
   "hide_column_label": "நெடுவரிசையை மறை",
+  "edit_custom_fields_label": "தனிப்பயன் புலங்களைத் திருத்து",
   "freeze_column_label": "நெடுவரிசையை உறைய வை",
   "unfreeze_column_label": "நெடுவரிசையை உறைநீக்கு",
   "hide_columns_to_the_right_label": "வலதுபுறத்தில் உள்ள நெடுவரிசைகளை மறை",

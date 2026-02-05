@@ -1,6 +1,7 @@
 {
   "add_column_label": "Aggiungi Colonna",
   "hide_column_label": "Nascondi Colonna",
+  "edit_custom_fields_label": "Modifica Campi Personalizzati",
   "freeze_column_label": "Blocca Colonna",
   "unfreeze_column_label": "Sblocca Colonna",
   "hide_columns_to_the_right_label": "Nascondi Colonne a Destra",

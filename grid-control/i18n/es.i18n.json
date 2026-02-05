@@ -1,6 +1,7 @@
 {
   "add_column_label": "Añadir columna",
   "hide_column_label": "Ocultar columna",
+  "edit_custom_fields_label": "Editar Campos Personalizados",
   "freeze_column_label": "Congelar columna",
   "unfreeze_column_label": "Descongelar columna",
   "hide_columns_to_the_right_label": "Ocultar Columnas a la Derecha",

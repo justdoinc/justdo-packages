@@ -1,6 +1,7 @@
 {
   "add_column_label": "顯示欄目",
   "hide_column_label": "隱藏欄目",
+  "edit_custom_fields_label": "編輯自訂欄位",
   "freeze_column_label": "凍結欄目",
   "unfreeze_column_label": "解凍欄目",
   "hide_columns_to_the_right_label": "隱藏右側欄位",

@@ -119,15 +119,58 @@ _.extend JustdoTasksContextMenu.prototype,
       if not (gc = GridControl.getRegisteredGridControlFromEvent(e))?
         throw @_error "fatal", "Cannot find grid control from event."
 
-      if not (event_item = gc.getEventItem(e))?
+      event_item = gc.getEventItem(e)
+      event_path = gc.getEventPath(e)
+      field_info = gc.getEventFormatterDetails(e)
+      event_row = gc.getEventRow(e)
+
+      # If we couldn't get event info (e.g., clicking on empty space to the right of columns),
+      # try to calculate the row from the Y position and use the last column
+      if not event_item? or not event_path? or not field_info?
+        try
+          grid = gc._grid
+          $viewport = $(e.target).closest(".slick-viewport")
+          
+          if $viewport.length and grid?
+            viewportOffset = $viewport.offset()
+            y = e.pageY - viewportOffset.top + $viewport[0].scrollTop
+            rowHeight = grid.getOptions().rowHeight
+            row = grid.getRowFromPosition?(y) ? Math.floor(y / rowHeight)
+            lastColumnIndex = gc.getView().length - 1
+            
+            if row >= 0 and row < grid.getDataLength() and lastColumnIndex >= 0
+              event_row = row
+              event_item = gc._grid_data.getItem(row)
+              event_path = gc._grid_data.getItemPath(row)
+              
+              column_view_state = gc.getView()[lastColumnIndex]
+              field_name = column_view_state.field
+              extended_schema = gc.getSchemaExtendedWithCustomFields()
+              column_field_schema = extended_schema[field_name]
+              
+              if column_field_schema?
+                formatter_name = column_field_schema.grid_column_formatter
+                formatter_obj = GridControl.getFormatters()[formatter_name]
+              
+              field_info = {
+                field_name
+                column_view_state
+                column_field_schema
+                formatter_obj
+                formatter_name
+              }
+        catch ex
+          # Ignore errors and fall through to the null checks below
+
+      if not event_item?
         # Can't find event's item
         return
 
-      if not (event_path = gc.getEventPath(e))?
+      if not event_path?
         # Can't find event's path
         return
 
-      if not (field_info = gc.getEventFormatterDetails(e))?
+      if not field_info?
         # Can't find event's field info
         return
 
@@ -148,7 +191,7 @@ _.extend JustdoTasksContextMenu.prototype,
 
       @updateFieldValAndDependenciesReactiveVars()
 
-      gc.activateRow(gc.getEventRow(e), 0, false) # false is to avoid scroll into view that will cause the viewport to horizontally jump to the grid's left
+      gc.activateRow(event_row, 0, false) # false is to avoid scroll into view that will cause the viewport to horizontally jump to the grid's left
 
       Tracker.flush()
 

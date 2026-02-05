@@ -1,6 +1,7 @@
 {
   "add_column_label": "Afegir columna",
   "hide_column_label": "Amagar columna",
+  "edit_custom_fields_label": "Editar camps personalitzats",
   "freeze_column_label": "Fixar columna",
   "unfreeze_column_label": "Desfixar columna",
   "hide_columns_to_the_right_label": "Amagar columnes de la dreta",

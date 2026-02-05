@@ -1,6 +1,7 @@
 {
   "add_column_label": "Tilføj kolonne",
   "hide_column_label": "Skjul kolonne",
+  "edit_custom_fields_label": "Rediger brugerdefinerede felter",
   "freeze_column_label": "Fastfrys kolonne",
   "unfreeze_column_label": "Ophæv frysning af kolonne",
   "hide_columns_to_the_right_label": "Skjul kolonner til højre",

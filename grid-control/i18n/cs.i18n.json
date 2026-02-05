@@ -1,6 +1,7 @@
 {
   "add_column_label": "Přidat sloupec",
   "hide_column_label": "Skrýt sloupec",
+  "edit_custom_fields_label": "Upravit vlastní pole",
   "freeze_column_label": "Zmrazit sloupec",
   "unfreeze_column_label": "Odmrazit sloupec",
   "hide_columns_to_the_right_label": "Skrýt sloupce vpravo",

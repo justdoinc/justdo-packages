@@ -1,6 +1,7 @@
 {
   "add_column_label": "Dodaj stupac",
   "hide_column_label": "Sakrij stupac",
+  "edit_custom_fields_label": "Uredi prilagođena polja",
   "freeze_column_label": "Zamrzni stupac",
   "unfreeze_column_label": "Odmrzni stupac",
   "hide_columns_to_the_right_label": "Sakrij stupce desno",

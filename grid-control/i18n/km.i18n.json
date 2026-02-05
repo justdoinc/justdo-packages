@@ -1,6 +1,7 @@
 {
   "add_column_label": "បន្ថែមជួរឈរ",
   "hide_column_label": "លាក់ជួរឈរ",
+  "edit_custom_fields_label": "កែសម្រួលវាលផ្ទាល់ខ្លួន",
   "freeze_column_label": "បង្កកជួរឈរ",
   "unfreeze_column_label": "ដោះបង្កកជួរឈរ",
   "hide_columns_to_the_right_label": "លាក់ជួរនៅខាងស្តាំ",

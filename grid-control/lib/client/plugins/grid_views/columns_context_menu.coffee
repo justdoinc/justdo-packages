@@ -1,3 +1,6 @@
+# Buffer added to fade speed to ensure animation completes before clearing search inputs
+CONTEXT_MENU_FADE_BUFFER_MS = 50
+
 init_context_menu = _.once ->
   # Note: seems that there is no issue with calling this one
   # more than once. So no worries if using context for other
@@ -205,6 +208,33 @@ _.extend GridControl.prototype,
       
       return
 
+    # Clear search inputs and reset submenu when context menu completely closes
+    # Use capture phase to run before context.js handler hides the menu
+    clearSearchInputsHandler = (e) =>
+      isMenuVisible = $(".dropdown-context").is(":visible")
+      isClickInContextMenu = $(e.target).closest(".dropdown-context").length > 0
+      
+      # Only act if a context menu is visible and the click is outside the context menu entirely
+      if isMenuVisible and not isClickInContextMenu
+        # Wait for the fadeOut animation to complete before clearing search inputs
+        Meteor.setTimeout =>
+          $(".grid-columns-search-input").each (index, input) =>
+            $input = $(input)
+            if $input.val() isnt ""
+              $input.val("")
+              # Trigger a keyup event to reset the filter
+              $input.trigger("keyup")
+          return
+        , context.CONSTANTS.FADE_SPEED_MS + CONTEXT_MENU_FADE_BUFFER_MS
+      return
+    
+    # Remove any existing handler and add new one with capture phase
+    document.removeEventListener("mousedown", clearSearchInputsHandler, true)
+    document.addEventListener("mousedown", clearSearchInputsHandler, true)
+    
+    # Store reference for cleanup
+    @_clearSearchInputsHandler = clearSearchInputsHandler
+
     setupColumnContextMenu = (type, additional_menu_items_arr) =>
       $(@_getColumnsManagerContextMenuSelector(type)).remove()
       
@@ -287,6 +317,97 @@ _.extend GridControl.prototype,
     # common columns context menu
     setupColumnContextMenu("common", hide_menu_item)
 
+    # Handle right-click on empty space to the right of the last column header
+    # For admins: show "Add Column" submenu + "Edit Custom Fields" option
+    # For non-admins: show only "Add Column" submenu
+    $headerColumns = $(".slick-header-columns", @container)
+    
+    # Create two separate context menus for the empty space:
+    # one for admins (with Edit Custom Fields) and one for non-admins (without)
+    emptySpaceAdminMenuId = @_getColumnsManagerContextMenuId("empty-space-admin")
+    emptySpaceNonAdminMenuId = @_getColumnsManagerContextMenuId("empty-space-non-admin")
+    $(@_getColumnsManagerContextMenuSelector("empty-space-admin")).remove()
+    $(@_getColumnsManagerContextMenuSelector("empty-space-non-admin")).remove()
+    
+    # Admin menu: Add Column + Edit Custom Fields
+    empty_space_admin_menu = append_fields_menu.concat([
+      {
+        text: TAPi18n.__ "edit_custom_fields_label"
+        action: (e) =>
+          APP.modules.project_page.project_config_ui.show()
+      }
+    ])
+    
+    # Non-admin menu: Add Column only
+    empty_space_non_admin_menu = append_fields_menu.slice() # clone the array
+    
+    # Create both menus
+    context.attach $headerColumns,
+      id: emptySpaceAdminMenuId
+      data: empty_space_admin_menu
+    
+    context.attach $headerColumns,
+      id: emptySpaceNonAdminMenuId
+      data: empty_space_non_admin_menu
+    
+    # Set up search functionality for both empty space menus
+    for emptySpaceMenuType in ["empty-space-admin", "empty-space-non-admin"]
+      setupSearchFunctionality(emptySpaceMenuType)
+      setupAutoFocusOnSubmenuOpen(emptySpaceMenuType)
+      setupSubmenuProtection(emptySpaceMenuType)
+    
+    # Helper function to show context menu at position
+    # Uses constants from meteor-context-menu/lib/context.js for consistent positioning
+    showContextMenuAtPosition = (menuId, e) =>
+      $dd = $("#dropdown-" + menuId)
+      if $dd.length > 0
+        # Hide any other visible context menus
+        $(".dropdown-context:not(.dropdown-context-sub)").hide()
+        
+        # Position and show the menu using context.CONSTANTS for consistency
+        left = e.pageX
+        if APP?.justdo_i18n?.isRtl()
+          left = left - $dd.width() + context.CONSTANTS.HORIZONTAL_OFFSET
+        else
+          left -= context.CONSTANTS.HORIZONTAL_OFFSET
+        
+        autoH = $dd.height() + context.CONSTANTS.HEIGHT_BUFFER
+        if (e.pageY + autoH) > $("html").height()
+          $dd.addClass("dropdown-context-up").css({
+            top: e.pageY - context.CONSTANTS.VERTICAL_OFFSET_ABOVE - autoH
+            left: left
+          }).fadeIn(context.CONSTANTS.FADE_SPEED_MS)
+        else
+          $dd.removeClass("dropdown-context-up").css({
+            top: e.pageY + context.CONSTANTS.VERTICAL_OFFSET_BELOW
+            left: left
+          }).fadeIn(context.CONSTANTS.FADE_SPEED_MS)
+    
+    # Override the default contextmenu behavior for the header columns container
+    $headerColumns.off("contextmenu").on "contextmenu", (e) =>
+      # Only handle if clicking on empty space (not on a column header)
+      if $(e.target).closest(".slick-header-column").length is 0
+        e.preventDefault()
+        e.stopPropagation()
+        
+        # Set the column index to the last column (for "Add Column" submenu)
+        lastColumnIndex = @getView().length - 1
+        setColumnIndexOfLastOpenedCmenu(e, lastColumnIndex)
+        
+        # Show appropriate menu based on admin status
+        if JD?.active_justdo?.isAdmin?()
+          showContextMenuAtPosition(emptySpaceAdminMenuId, e)
+        else
+          showContextMenuAtPosition(emptySpaceNonAdminMenuId, e)
+      
+      return
+
   _destroyColumnsManagerContextMenu: ->
-    $(@_getColumnsManagerContextMenuSelector("first")).remove()
-    $(@_getColumnsManagerContextMenuSelector("common")).remove()
+    # Remove all column context menus
+    for menuType in ["first", "last", "common", "empty-space-admin", "empty-space-non-admin"]
+      $(@_getColumnsManagerContextMenuSelector(menuType)).remove()
+    # Remove the empty space handler
+    $(".slick-header-columns", @container).off "contextmenu"
+    # Remove the document-level search clear handler
+    if @_clearSearchInputsHandler
+      document.removeEventListener("mousedown", @_clearSearchInputsHandler, true)

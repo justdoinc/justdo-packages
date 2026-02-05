@@ -1,6 +1,7 @@
 {
   "add_column_label": "Sütun əlavə et",
   "hide_column_label": "Sütunu gizlət",
+  "edit_custom_fields_label": "Xüsusi Sahələri Redaktə Et",
   "freeze_column_label": "Sütunu dondur",
   "unfreeze_column_label": "Sütunu dondan çıxar",
   "hide_columns_to_the_right_label": "Sağdakı Sütunları Gizlət",

@@ -1,6 +1,7 @@
 {
   "add_column_label": "ዓምድ ጨምር",
   "hide_column_label": "ዓምድ ደብቅ",
+  "edit_custom_fields_label": "ብጁ መስኮች አስተካክል",
   "freeze_column_label": "ዓምድ አቁም",
   "unfreeze_column_label": "ዓምድ አንቀሳቅስ",
   "hide_columns_to_the_right_label": "በቀኝ ያሉ አምዶችን ደብቅ",

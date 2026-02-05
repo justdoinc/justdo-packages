@@ -1,6 +1,7 @@
 {
   "add_column_label": "Add Column",
   "hide_column_label": "Hide Column",
+  "edit_custom_fields_label": "Edit Custom Fields",
   "freeze_column_label": "Freeze Column",
   "unfreeze_column_label": "Unfreeze Column",
   "hide_columns_to_the_right_label": "Hide Columns to the Right",

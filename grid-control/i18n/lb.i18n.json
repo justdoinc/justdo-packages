@@ -1,6 +1,7 @@
 {
   "add_column_label": "Kolonn dobäisetzen",
   "hide_column_label": "Kolonn verstoppen",
+  "edit_custom_fields_label": "Benotzerdefinéiert Felder beaarbechten",
   "freeze_column_label": "Kolonn fräieren",
   "unfreeze_column_label": "Kolonn entfräieren",
   "hide_columns_to_the_right_label": "Kolonnen op der rechter Säit verstoppen",

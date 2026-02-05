@@ -1,6 +1,7 @@
 {
   "add_column_label": "Добави колона",
   "hide_column_label": "Скрий колона",
+  "edit_custom_fields_label": "Редактирай персонализирани полета",
   "freeze_column_label": "Фиксирай колона",
   "unfreeze_column_label": "Освободи колона",
   "hide_columns_to_the_right_label": "Скрий колоните отдясно",

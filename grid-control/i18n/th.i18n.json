@@ -1,6 +1,7 @@
 {
   "add_column_label": "เพิ่มคอลัมน์",
   "hide_column_label": "ซ่อนคอลัมน์",
+  "edit_custom_fields_label": "แก้ไขฟิลด์ที่กำหนดเอง",
   "freeze_column_label": "ตรึงคอลัมน์",
   "unfreeze_column_label": "ยกเลิกการตรึงคอลัมน์",
   "hide_columns_to_the_right_label": "ซ่อนคอลัมน์ทางขวา",

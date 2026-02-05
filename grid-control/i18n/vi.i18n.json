@@ -1,6 +1,7 @@
 {
   "add_column_label": "Thêm cột",
   "hide_column_label": "Ẩn cột",
+  "edit_custom_fields_label": "Chỉnh Sửa Trường Tùy Chỉnh",
   "freeze_column_label": "Cố định cột",
   "unfreeze_column_label": "Bỏ cố định cột",
   "hide_columns_to_the_right_label": "Ẩn Cột bên Phải",

@@ -1,6 +1,7 @@
 {
   "add_column_label": "Kolom toevoegen",
   "hide_column_label": "Kolom verbergen",
+  "edit_custom_fields_label": "Aangepaste velden bewerken",
   "freeze_column_label": "Kolom bevriezen",
   "unfreeze_column_label": "Kolom ontdooien",
   "hide_columns_to_the_right_label": "Kolommen Rechts Verbergen",

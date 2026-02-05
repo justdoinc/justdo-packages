@@ -1,6 +1,7 @@
 {
   "add_column_label": "कॉलम जोड़ें",
   "hide_column_label": "कॉलम छिपाएं",
+  "edit_custom_fields_label": "कस्टम फ़ील्ड संपादित करें",
   "freeze_column_label": "कॉलम फ्रीज करें",
   "unfreeze_column_label": "कॉलम अनफ्रीज करें",
   "hide_columns_to_the_right_label": "दाईं ओर के कॉलम छुपाएं",

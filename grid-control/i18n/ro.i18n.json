@@ -1,6 +1,7 @@
 {
   "add_column_label": "Adăugare coloană",
   "hide_column_label": "Ascundere coloană",
+  "edit_custom_fields_label": "Editează câmpuri personalizate",
   "freeze_column_label": "Blocare coloană",
   "unfreeze_column_label": "Deblocare coloană",
   "hide_columns_to_the_right_label": "Ascunde Coloanele din Dreapta",

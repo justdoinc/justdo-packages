@@ -1,6 +1,7 @@
 {
   "add_column_label": "Dodaj kolonu",
   "hide_column_label": "Sakrij kolonu",
+  "edit_custom_fields_label": "Uredi prilagođena polja",
   "freeze_column_label": "Zamrzni kolonu",
   "unfreeze_column_label": "Odmrzni kolonu",
   "hide_columns_to_the_right_label": "Sakrij kolone desno",

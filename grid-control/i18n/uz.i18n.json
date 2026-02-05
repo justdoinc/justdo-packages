@@ -1,6 +1,7 @@
 {
   "add_column_label": "Ustun qo'shish",
   "hide_column_label": "Ustunni yashirish",
+  "edit_custom_fields_label": "Maxsus maydonlarni tahrirlash",
   "freeze_column_label": "Ustunni muzlatish",
   "unfreeze_column_label": "Ustunni muzdan tushirish",
   "hide_columns_to_the_right_label": "O'ng tomondagi ustunlarni yashirish",

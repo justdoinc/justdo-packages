@@ -1,6 +1,7 @@
 {
   "add_column_label": "Баған қосу",
   "hide_column_label": "Бағанды жасыру",
+  "edit_custom_fields_label": "Реттелетін өрістерді өңдеу",
   "freeze_column_label": "Бағанды бекіту",
   "unfreeze_column_label": "Бағанды босату",
   "hide_columns_to_the_right_label": "Оң жақтағы бағандарды жасыру",

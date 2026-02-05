@@ -1,6 +1,7 @@
 {
   "add_column_label": "Προσθήκη Στήλης",
   "hide_column_label": "Απόκρυψη Στήλης",
+  "edit_custom_fields_label": "Επεξεργασία Προσαρμοσμένων Πεδίων",
   "freeze_column_label": "Πάγωμα Στήλης",
   "unfreeze_column_label": "Ξεπάγωμα Στήλης",
   "hide_columns_to_the_right_label": "Απόκρυψη Στηλών στα Δεξιά",

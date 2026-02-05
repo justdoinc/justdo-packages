@@ -1,6 +1,7 @@
 {
   "add_column_label": "Pridėti stulpelį",
   "hide_column_label": "Slėpti stulpelį",
+  "edit_custom_fields_label": "Redaguoti pasirinktinius laukus",
   "freeze_column_label": "Užfiksuoti stulpelį",
   "unfreeze_column_label": "Atfiksuoti stulpelį",
   "hide_columns_to_the_right_label": "Paslėpti stulpelius dešinėje",

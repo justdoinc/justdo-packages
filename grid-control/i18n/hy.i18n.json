@@ -1,6 +1,7 @@
 {
   "add_column_label": "Ավելացնել սյունակ",
   "hide_column_label": "Թաքցնել սյունակը",
+  "edit_custom_fields_label": "Խմբագրել հատուկ դաշտերը",
   "freeze_column_label": "Սառեցնել սյունակը",
   "unfreeze_column_label": "Ապասառեցնել սյունակը",
   "hide_columns_to_the_right_label": "Թաքցնել աջ կողմի սյունակները",

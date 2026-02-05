@@ -1,6 +1,7 @@
 {
   "add_column_label": "Lisää sarake",
   "hide_column_label": "Piilota sarake",
+  "edit_custom_fields_label": "Muokkaa mukautettuja kenttiä",
   "freeze_column_label": "Lukitse sarake",
   "unfreeze_column_label": "Vapauta sarake",
   "hide_columns_to_the_right_label": "Piilota oikealla olevat sarakkeet",

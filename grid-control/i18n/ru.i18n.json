@@ -1,6 +1,7 @@
 {
   "add_column_label": "Добавить столбец",
   "hide_column_label": "Скрыть столбец",
+  "edit_custom_fields_label": "Редактировать пользовательские поля",
   "freeze_column_label": "Закрепить столбец",
   "unfreeze_column_label": "Открепить столбец",
   "hide_columns_to_the_right_label": "Скрыть столбцы справа",

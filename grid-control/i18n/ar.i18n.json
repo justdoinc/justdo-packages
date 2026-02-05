@@ -1,6 +1,7 @@
 {
   "add_column_label": "إضافة عمود",
   "hide_column_label": "إخفاء العمود",
+  "edit_custom_fields_label": "تعديل الحقول المخصصة",
   "freeze_column_label": "تثبيت العمود",
   "unfreeze_column_label": "إلغاء تثبيت العمود",
   "hide_columns_to_the_right_label": "إخفاء الأعمدة على اليمين",

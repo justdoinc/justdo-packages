@@ -1,6 +1,7 @@
 {
   "add_column_label": "Тилкени кошуу",
   "hide_column_label": "Тилкени жашыруу",
+  "edit_custom_fields_label": "Жеке талааларды өзгөртүү",
   "freeze_column_label": "Тилкени тоңдуруу",
   "unfreeze_column_label": "Тилкени эритүү",
   "hide_columns_to_the_right_label": "Оң жактагы мамычаларды жашыруу",

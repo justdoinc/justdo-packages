@@ -1,6 +1,7 @@
 {
   "add_column_label": "কলাম যোগ করুন",
   "hide_column_label": "কলাম লুকান",
+  "edit_custom_fields_label": "কাস্টম ফিল্ড সম্পাদনা করুন",
   "freeze_column_label": "কলাম স্থির করুন",
   "unfreeze_column_label": "কলাম অস্থির করুন",
   "hide_columns_to_the_right_label": "ডানের কলামগুলি লুকান",

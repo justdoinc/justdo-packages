@@ -1,6 +1,7 @@
 {
   "add_column_label": "Дадаць слупок",
   "hide_column_label": "Схаваць слупок",
+  "edit_custom_fields_label": "Рэдагаваць карыстацкія палі",
   "freeze_column_label": "Замарозіць слупок",
   "unfreeze_column_label": "Размарозіць слупок",
   "hide_columns_to_the_right_label": "Схаваць слупкі справа",

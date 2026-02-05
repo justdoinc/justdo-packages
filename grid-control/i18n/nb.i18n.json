@@ -1,6 +1,7 @@
 {
   "add_column_label": "Legg til kolonne",
   "hide_column_label": "Skjul kolonne",
+  "edit_custom_fields_label": "Rediger egendefinerte felt",
   "freeze_column_label": "Frys kolonne",
   "unfreeze_column_label": "Opphev frysing av kolonne",
   "hide_columns_to_the_right_label": "Skjul kolonner til høyre",

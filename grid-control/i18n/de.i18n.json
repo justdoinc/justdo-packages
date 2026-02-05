@@ -1,6 +1,7 @@
 {
   "add_column_label": "Spalte hinzufügen",
   "hide_column_label": "Spalte ausblenden",
+  "edit_custom_fields_label": "Benutzerdefinierte Felder bearbeiten",
   "freeze_column_label": "Spalte fixieren",
   "unfreeze_column_label": "Spalte lösen",
   "hide_columns_to_the_right_label": "Spalten rechts ausblenden",

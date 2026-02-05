@@ -1,6 +1,7 @@
 {
   "add_column_label": "Lisa veerg",
   "hide_column_label": "Peida veerg",
+  "edit_custom_fields_label": "Muuda kohandatud välju",
   "freeze_column_label": "Kinnita veerg",
   "unfreeze_column_label": "Vabasta veerg",
   "hide_columns_to_the_right_label": "Peida paremal asuvad veerud",

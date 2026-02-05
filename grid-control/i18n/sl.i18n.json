@@ -1,6 +1,7 @@
 {
   "add_column_label": "Dodaj stolpec",
   "hide_column_label": "Skrij stolpec",
+  "edit_custom_fields_label": "Uredi polja po meri",
   "freeze_column_label": "Zamrzni stolpec",
   "unfreeze_column_label": "Odmrzni stolpec",
   "hide_columns_to_the_right_label": "Skrij stolpce na desni",

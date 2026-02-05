@@ -1,6 +1,7 @@
 {
   "add_column_label": "הוסף עמודה",
   "hide_column_label": "הסתר עמודה",
+  "edit_custom_fields_label": "ערוך שדות מותאמים אישית",
   "freeze_column_label": "הקפא עמודה",
   "unfreeze_column_label": "בטל הקפאת עמודה",
   "hide_columns_to_the_right_label": "הסתר עמודות מימין",

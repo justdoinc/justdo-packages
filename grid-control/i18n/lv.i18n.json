@@ -1,6 +1,7 @@
 {
   "add_column_label": "Pievienot kolonnu",
   "hide_column_label": "Paslēpt kolonnu",
+  "edit_custom_fields_label": "Rediģēt pielāgotus laukus",
   "freeze_column_label": "Fiksēt kolonnu",
   "unfreeze_column_label": "Atfiksēt kolonnu",
   "hide_columns_to_the_right_label": "Slēpt kolonnas pa labi",

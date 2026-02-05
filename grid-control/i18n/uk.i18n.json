@@ -1,6 +1,7 @@
 {
   "add_column_label": "Додати стовпець",
   "hide_column_label": "Приховати стовпець",
+  "edit_custom_fields_label": "Редагувати користувацькі поля",
   "freeze_column_label": "Закріпити стовпець",
   "unfreeze_column_label": "Відкріпити стовпець",
   "hide_columns_to_the_right_label": "Приховати стовпці праворуч",
