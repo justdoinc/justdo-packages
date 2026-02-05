@@ -165,7 +165,8 @@ _.extend GridControl.prototype,
       $addColumnSubmenu.on "mouseenter.grid-search-focus", ->
         $searchInput = $addColumnSubmenu.find(".grid-columns-search-input")
         if not _.isEmpty $searchInput
-          $searchInput.focus()
+          # Use preventScroll to avoid browser auto-scrolling the body when focusing
+          $searchInput[0]?.focus({ preventScroll: true })
       
       return
 
@@ -357,31 +358,48 @@ _.extend GridControl.prototype,
       setupSubmenuProtection(emptySpaceMenuType)
     
     # Helper function to show context menu at position
-    # Uses constants from meteor-context-menu/lib/context.js for consistent positioning
+    # Replicates the exact positioning logic from context.attach/addContext for consistency
     showContextMenuAtPosition = (menuId, e) =>
       $dd = $("#dropdown-" + menuId)
       if $dd.length > 0
         # Hide any other visible context menus
         $(".dropdown-context:not(.dropdown-context-sub)").hide()
         
-        # Position and show the menu using context.CONSTANTS for consistency
+        # Remove any previous positioning classes
+        $dd.removeClass("dropdown-context-up dropdown-context-left")
+        
+        # Calculate height with buffer (same as addContext)
+        autoH = $dd.height() + context.CONSTANTS.HEIGHT_BUFFER
+        
+        # Calculate horizontal position (same as addContext)
         left = e.pageX
-        if APP?.justdo_i18n?.isRtl()
+        isRtl = APP?.justdo_i18n?.isRtl()
+        
+        if isRtl
           left = left - $dd.width() + context.CONSTANTS.HORIZONTAL_OFFSET
         else
           left -= context.CONSTANTS.HORIZONTAL_OFFSET
         
-        autoH = $dd.height() + context.CONSTANTS.HEIGHT_BUFFER
+        # Vertical positioning: open downward by default, flip upward if not enough space below
         if (e.pageY + autoH) > $("html").height()
+          # Not enough space below - open upwards
           $dd.addClass("dropdown-context-up").css({
             top: e.pageY - context.CONSTANTS.VERTICAL_OFFSET_ABOVE - autoH
             left: left
           }).fadeIn(context.CONSTANTS.FADE_SPEED_MS)
         else
-          $dd.removeClass("dropdown-context-up").css({
+          # Default: open downwards
+          $dd.css({
             top: e.pageY + context.CONSTANTS.VERTICAL_OFFSET_BELOW
             left: left
           }).fadeIn(context.CONSTANTS.FADE_SPEED_MS)
+        
+        # Horizontal collision detection for left edge (same as addContext)
+        autoL = $dd.width() - context.CONSTANTS.HEIGHT_BUFFER
+        if (e.pageX + autoL) > $("html").width()
+          $dd.addClass("dropdown-context-left").css({
+            left: e.pageX - $dd.width() + context.CONSTANTS.HORIZONTAL_OFFSET
+          })
     
     # Override the default contextmenu behavior for the header columns container
     $headerColumns.off("contextmenu").on "contextmenu", (e) =>
