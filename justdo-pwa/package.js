@@ -49,6 +49,7 @@ Package.onUse(function (api) {
   api.use("justdoinc:justdo-helpers@1.0.0", both);
   api.use("iron:router@1.1.2", both);
   api.use("francocatena:status@1.5.3", client);
+  api.use("justdoinc:justdo-push-notifications@1.0.0", server, {weak: true});
 
   api.use("justdoinc:justdo-analytics@1.0.0", both);
 
@@ -71,6 +72,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/publications.coffee", server);
 
   api.addFiles("lib/client/api.coffee", client);
+  api.addFiles("lib/client/api-push-notifications.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
   api.addFiles("lib/client/global-styles/_vars.scss", client, {isImport: true});

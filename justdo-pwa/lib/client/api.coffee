@@ -19,6 +19,10 @@ _.extend JustdoPwa.prototype,
     @_setupProjectPaneHeightTracker()
     @_setupDynamicHead()
 
+    # Defined in api-push-notifications.coffee
+    @_setupPushNotificationsRegistration()
+    @_setupPushNotificationsHandlers()
+
     return
 
   _deferredInit: ->
