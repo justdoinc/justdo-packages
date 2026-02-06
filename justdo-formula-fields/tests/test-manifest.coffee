@@ -7,6 +7,7 @@ TestManifest?.register "justdo-formula-fields",
         "JustdoFormulaFields - Static Utilities"
         "JustdoFormulaFields - API"
         "JustdoFormulaFields - Dependency Tracking"
+        "JustdoFormulaFields - Formatter Caching"
       ]
       fixtures: []
       primary: true

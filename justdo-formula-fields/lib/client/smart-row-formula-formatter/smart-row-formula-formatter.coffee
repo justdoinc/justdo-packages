@@ -4,6 +4,21 @@
 # A client-side formula field that evaluates same-row formulas,
 # including references to Smart Number (calculated) fields.
 #
+# Caching strategy (two layers):
+#
+# Layer 1 — Per-column compile cache (grid_control column data):
+#   The formula string is identical for every row of the same column.
+#   We cache the result of replaceFieldsWithSymbols + parseSingleRestrictedRationalExpression
+#   + compile per column in grid_control._columns_data. This avoids re-parsing the
+#   formula on every cell render. The cache is invalidated when the formula text
+#   changes (detected by slickGridColumnStateMaintainer).
+#
+# Layer 2 — Per-row nested evaluation cache (sameTickCache):
+#   When multiple smart row formula columns in the same row reference the same
+#   nested smart row formula field, sameTickCache ensures each nested field is
+#   evaluated at most once per render tick. The cache auto-clears at the end
+#   of the JS tick (after the synchronous render completes).
+#
 
 formatter_name = "smartRowFormulaFormatter"
 GridControl.installFormatter formatter_name,
@@ -34,6 +49,8 @@ GridControl.installFormatter formatter_name,
 
         if current_formula != cached_formula
           @setCurrentColumnData("formula", current_formula)
+          # Clear the compile cache so it gets rebuilt with the new formula
+          @clearCurrentColumnData("srf_compiled")
 
           dep.changed()
 
@@ -43,6 +60,24 @@ GridControl.installFormatter formatter_name,
       formula_watch_computation.stop()
 
     return
+
+  # Get or build the compiled formula for a given field.
+  # Returns {field_to_symbol, compiled} from cache if the formula hasn't changed,
+  # otherwise parses, validates, and compiles, then caches the result.
+  _getCompiledFormula: (grid_control, field, formula) ->
+    cached = grid_control.getColumnData(field, "srf_compiled")
+
+    if cached? and cached.formula is formula
+      return cached
+
+    {mathjs_formula, field_to_symbol} = APP.justdo_formula_fields.replaceFieldsWithSymbols(formula)
+    parsed_formula = JustdoMathjs.parseSingleRestrictedRationalExpression(mathjs_formula)
+    compiled = parsed_formula.compile()
+
+    result = {formula, mathjs_formula, field_to_symbol, compiled}
+    grid_control.setColumnData(field, "srf_compiled", result)
+
+    return result
 
   getFieldValue: (friendly_args) ->
     {formatter_obj, grid_control, field, path, doc, schema, _evaluating_fields} = friendly_args
@@ -60,9 +95,14 @@ GridControl.installFormatter formatter_name,
     if not formula? or formula is ""
       return ""
 
-    # Use the shared utility from JustdoFormulaFields for extracting field placeholders
-    # and mapping them to single-character symbols for mathjs evaluation
-    {mathjs_formula, field_to_symbol} = APP.justdo_formula_fields.replaceFieldsWithSymbols(formula)
+    # Layer 1: Use per-column compile cache.
+    # The formula is the same for every row of this column, so we avoid
+    # re-parsing and re-compiling on each cell render.
+    try
+      {field_to_symbol, compiled} = formatter_obj._getCompiledFormula(grid_control, field, formula)
+    catch e
+      # Formula parse/compile error — return blank
+      return ""
 
     # Collect field values
     field_values = {}
@@ -145,12 +185,9 @@ GridControl.installFormatter formatter_name,
     for field_id, symbol of field_to_symbol
       mathjs_args[symbol] = field_values[field_id]
 
-    # Evaluate the formula using the restricted parser to enforce the same
-    # security restrictions (forbidden chars, forbidden words, function whitelist)
-    # that the server-side formula validation uses.
+    # Evaluate using the pre-compiled expression (Layer 1 cache).
+    # Only compiled.evaluate() runs per cell — parse and compile are cached.
     try
-      parsed_formula = JustdoMathjs.parseSingleRestrictedRationalExpression(mathjs_formula)
-      compiled = parsed_formula.compile()
       result = compiled.evaluate(mathjs_args)
     catch e
       # Evaluation error - return blank
@@ -167,12 +204,25 @@ GridControl.installFormatter formatter_name,
   # The _evaluating_fields parameter is a set (object) of field IDs currently
   # being evaluated up the call stack. If field_id is already in the set,
   # we have a circular dependency and return an error to prevent infinite recursion.
+  #
+  # Layer 2: Results are cached in sameTickCache keyed by (field_id, path) so
+  # that if multiple columns in the same row reference the same nested formula,
+  # it is evaluated at most once per render tick.
   evaluateFormula: (grid_control, field_id, path, doc, _evaluating_fields) ->
     if not _evaluating_fields?
       _evaluating_fields = {}
 
+    # Layer 2: Check per-row nested evaluation cache.
+    # If this field was already evaluated for this row in the current tick,
+    # return the cached result immediately.
+    cache_key = "srf-eval::#{field_id}::#{path}"
+    if JustdoHelpers.sameTickCacheExists(cache_key)
+      return JustdoHelpers.sameTickCacheGet(cache_key)
+
     # Circular dependency guard: if this field is already being evaluated
     # up the call stack, bail out to prevent infinite recursion.
+    # We intentionally do NOT cache this result — circular dependency detection
+    # is call-chain-specific and the cache should only hold fully resolved values.
     if field_id of _evaluating_fields
       return {error: true}
 
@@ -187,7 +237,9 @@ GridControl.installFormatter formatter_name,
     formula = formatter_options?.formula
 
     if not formula? or formula is ""
-      return {value: null}
+      result = {value: null}
+      JustdoHelpers.sameTickCacheSet(cache_key, result)
+      return result
 
     # Create a minimal friendly_args for getFieldValue
     friendly_args =
@@ -202,9 +254,12 @@ GridControl.installFormatter formatter_name,
     value = @getFieldValue(friendly_args)
 
     if value is ""
-      return {value: null}
+      result = {value: null}
+    else
+      result = {value: value}
 
-    return {value: value}
+    JustdoHelpers.sameTickCacheSet(cache_key, result)
+    return result
 
   getHumanReadableFormulaAttribute: (field_id, grid_control) ->
     human_readable_formula = APP.justdo_formula_fields.getHumanReadableFormula field_id, grid_control
