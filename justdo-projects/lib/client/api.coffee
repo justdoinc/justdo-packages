@@ -305,6 +305,7 @@ _.extend Projects.prototype,
     JustdoHelpers.hooks_barriers.runCbAfterBarriers "post-justdo-pwa-init", ->
       APP.justdo_pwa?.registerPushNotificationTapHandler Projects.project_invite_push_notification_message_type, (notification) =>
         Router.go "project", {_id: notification.data.project_id}
+        APP.justdo_pwa.setActiveMobileTab JustdoPwa.main_mobile_tab_id
         return
 
       return
