@@ -1,6 +1,6 @@
 _.extend JustdoFormulaFields,
   project_custom_feature_id: "justdo_formula_fields" # Use underscores
-  plugin_human_readable_name: "Formulas"
+  plugin_human_readable_name: "Formulas - OBSOLETE"
   custom_field_type_id: "formula-field"
   smart_row_formula_field_type_id: "smart-row-formula"
 
