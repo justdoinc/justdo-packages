@@ -79,65 +79,66 @@ Template.mobile_tab_chats.helpers
     return APP.justdo_chat.getActiveMobileChatChannel()
 
 Template.mobile_tab_chats_active_chat_channel.onCreated ->
-  channel_type = @data?.channel_type
-  channel_identifier = @data?.channel_identifier
+  @channelObjectGenerator = ->
+    {channel_type, channel_identifier} = APP.justdo_chat.getActiveMobileChatChannel()
 
-  @getDefaultChatWindowTemplateData = ->
+    if channel_type is "task"
+      channel_conf =
+        tasks_collection: APP.justdo_chat.recent_activity_supplementary_pseudo_collections.tasks
+        task_id: channel_identifier.task_id
+      return APP.justdo_chat.generateClientChannelObject(channel_type, channel_conf)
+
+    if channel_type is "user"
+      receiving_user_id = _.find channel_identifier.user_ids, (user_id) -> user_id isnt Meteor.userId()
+      return APP.justdo_chat.generateClientUserChatChannel receiving_user_id, {open_bottom_window: false}
+
+  return
+
+Template.mobile_tab_chats_active_chat_channel.onRendered ->
+  @autorun =>
+    if @channel_obj?
+      @channel_obj.destroy()
+
+    @channel_obj = @channelObjectGenerator()
+    @channel_obj.enterFocusMode()
+    Meteor.defer =>
+      @$(".open-chat-window").addClass("window-active")
+      @$(".message-editor").focus()
+      return
+    return
+
+  return
+
+Template.mobile_tab_chats_active_chat_channel.helpers
+  templateData: ->
+    tpl = Template.instance()
+
+    {channel_type, channel_identifier} = APP.justdo_chat.getActiveMobileChatChannel()
+
     default_chat_window_template_data = 
       channel_type: channel_type
       channel_identifier: channel_identifier
 
-    return default_chat_window_template_data
+    if channel_type is "task"
+      task_id = channel_identifier.task_id
+      project_id = APP.collections.Tasks.findOne(task_id, {fields: {project_id: 1}})?.project_id
+      if not project_id?
+        project_id = APP.justdo_chat.recent_activity_supplementary_pseudo_collections.tasks.findOne({_id: task_id}, {fields: {project_id: 1}})?.project_id
 
-  if channel_type is "task"
-    task_id = channel_identifier.task_id
-    project_id = APP.collections.Tasks.findOne(task_id, {fields: {project_id: 1}})?.project_id
-    if not project_id?
-      project_id = APP.justdo_chat.recent_activity_supplementary_pseudo_collections.tasks.findOne({_id: task_id}, {fields: {project_id: 1}})?.project_id
-
-    @channelObjectGenerator = ->
-      channel_conf = 
-        tasks_collection: APP.justdo_chat.recent_activity_supplementary_pseudo_collections.tasks
-        task_id: channel_identifier.task_id
-      return APP.justdo_chat.generateClientChannelObject("task", channel_conf)
-
-    @getTemplateDataForChatWindow = ->
-      data = _.extend @getDefaultChatWindowTemplateData(),
+      data = _.extend default_chat_window_template_data,
         task_id: task_id
         project_id: project_id
         header_template: "task_channel_chat_bottom_windows_header"
-        channelObjectGenerator: @channelObjectGenerator
+        channelObjectGenerator: tpl.channelObjectGenerator
 
       return data
 
-  if channel_type is "user"
-    receiving_user_id = _.find channel_identifier.user_ids, (user_id) -> user_id isnt Meteor.userId()
+    if channel_type is "user"
+      receiving_user_id = _.find channel_identifier.user_ids, (user_id) -> user_id isnt Meteor.userId()
 
-    @channelObjectGenerator = ->
-      return APP.justdo_chat.generateClientUserChatChannel receiving_user_id, {open_bottom_window: false}
-
-    @getTemplateDataForChatWindow = ->
-      data = _.extend @getDefaultChatWindowTemplateData(),
+      data = _.extend default_chat_window_template_data,
         header_template: "user_channel_chat_bottom_windows_header"
         receiving_user_id: receiving_user_id
-        channelObjectGenerator: @channelObjectGenerator
+        channelObjectGenerator: tpl.channelObjectGenerator
 
       return data
-  
-  return
-
-Template.mobile_tab_chats_active_chat_channel.onRendered ->
-  Meteor.defer =>
-    channel_obj = @channelObjectGenerator()
-    channel_obj.enterFocusMode()
-
-    @$(".open-chat-window").addClass("window-active")
-    @$(".message-editor").focus()
-    return
-
-  return
-  
-Template.mobile_tab_chats_active_chat_channel.helpers
-  templateData: ->
-    tpl = Template.instance()
-    return tpl.getTemplateDataForChatWindow()

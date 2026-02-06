@@ -1,9 +1,9 @@
 <template name="mobile_tab_chats">
-  {{#with activeChatChannel}}
+  {{#if activeChatChannel}}
     {{> mobile_tab_chats_active_chat_channel}}
   {{else}}
     {{> recent_activity_dropdown initial_messages_to_request=initialMessagesToRequest}}
-  {{/with}}
+  {{/if}}
 </template>
 
 <template name="mobile_tab_chats_active_chat_channel">
