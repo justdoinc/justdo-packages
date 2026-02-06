@@ -50,7 +50,7 @@ _.extend JustdoFormulaFields.prototype,
   #   field_to_symbol: An object mapping field_id -> symbol
   # }
   #
-  # Throws an error if too many unique fields are found (> 26).
+  # Throws an error if too many unique fields are found (> symbols_indexes.length).
   replaceFieldsWithSymbols: (formula) ->
     field_to_symbol = {}
     symbol_index = 0
