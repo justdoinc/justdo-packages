@@ -23,6 +23,53 @@ _.extend JustdoChat.prototype,
     @active_mobile_chat_channel_rv.set null
     return
 
+  _setupPushNotificationsHandlers: ->
+    self = @
+
+    JustdoHelpers.hooks_barriers.runCbAfterBarriers "post-justdo-pwa-init", ->
+      APP.justdo_pwa?.registerPushNotificationTapHandler JustdoChat.chat_message_push_notification_message_type, (notification) =>
+        channel_type = notification.data.channel_type
+        channel_id = notification.data.channel_id
+        channel_identifier = {}
+
+        is_task_channel = channel_type is "task"
+        is_user_channel = channel_type is "user"
+        if is_task_channel
+          channel_identifier.task_id = notification.data.task_id
+          channel_identifier.project_id = notification.data.project_id
+        if is_user_channel
+          channel_identifier.user_ids = [Meteor.userId(), notification.data.sender]
+
+        # First clear all active chat screens and set the chats tab as active
+        self.clearActiveMobileChatChannel()
+        APP.justdo_pwa.setActiveMobileTab "chats"
+
+        # Before opening the chat screen related to the notification, 
+        # wait for the channel to be ready and other related resources to be ready.
+        JustdoHelpers.awaitValueFromReactiveResource
+          reactiveResource: ->
+            reactive_res = 
+              channel_exists_in_recent_activity: APP.collections.JDChatRecentActivityChannels.findOne({_id: channel_id})?
+            if is_task_channel
+              _.extend reactive_res, 
+                task_exists: APP.justdo_chat.recent_activity_supplementary_pseudo_collections.tasks.findOne({_id: channel_identifier.task_id})?
+                project_exists: APP.collections.Projects.findOne({_id: channel_identifier.project_id})?
+            return reactive_res
+          evaluator: (reactive_res) ->
+            ready = reactive_res.channel_exists_in_recent_activity
+            if is_task_channel
+              ready = ready and reactive_res.task_exists and reactive_res.project_exists
+            return ready
+          cb: ->
+            self.setActiveMobileChatChannel channel_type, channel_identifier
+            return
+          timeout: 5000
+
+        return
+
+      return
+    return
+
 Template.mobile_tab_chats.helpers
   initialMessagesToRequest: ->
     tpl = Template.instance()

@@ -20,6 +20,7 @@ _.extend JustdoChat.prototype,
 
     # Defined in /lib/ui/mobile-tab/mobile-tab.coffee
     @_setupMobileTab()
+    @_setupPushNotificationsHandlers()
 
     return
 
