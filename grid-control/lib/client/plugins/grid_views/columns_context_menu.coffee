@@ -264,8 +264,10 @@ _.extend GridControl.prototype,
       
       return
 
+    hide_columns_to_the_right_i18n_key =
+      if APP.justdo_i18n.isRtl() then "hide_columns_to_the_left_label" else "hide_columns_to_the_right_label"
     hide_columns_to_the_right_menu_item =
-      text: TAPi18n.__ "hide_columns_to_the_right_label"
+      text: TAPi18n.__ hide_columns_to_the_right_i18n_key
       action: (e) =>
         @setView @getView().slice(0, column_index_of_last_opened_cmenu + 1)
         
@@ -394,12 +396,20 @@ _.extend GridControl.prototype,
             left: left
           }).fadeIn(context.CONSTANTS.FADE_SPEED_MS)
         
-        # Horizontal collision detection for left edge (same as addContext)
-        autoL = $dd.width() - context.CONSTANTS.HEIGHT_BUFFER
-        if (e.pageX + autoL) > $("html").width()
-          $dd.addClass("dropdown-context-left").css({
-            left: e.pageX - $dd.width() + context.CONSTANTS.HORIZONTAL_OFFSET
-          })
+        # Horizontal collision detection (same as addContext)
+        if isRtl
+          # RTL: check for collision with left edge
+          if left < 0
+            $dd.addClass("dropdown-context-left").css({
+              left: e.pageX - context.CONSTANTS.HORIZONTAL_OFFSET
+            })
+        else
+          # LTR: check for collision with right edge
+          autoL = $dd.width() - context.CONSTANTS.HEIGHT_BUFFER
+          if (e.pageX + autoL) > $("html").width()
+            $dd.addClass("dropdown-context-left").css({
+              left: e.pageX - $dd.width() + context.CONSTANTS.HORIZONTAL_OFFSET
+            })
     
     # Override the default contextmenu behavior for the header columns container
     $headerColumns.off("contextmenu").on "contextmenu", (e) =>

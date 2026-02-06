@@ -5,6 +5,7 @@
   "freeze_column_label": "Freeze Column",
   "unfreeze_column_label": "Unfreeze Column",
   "hide_columns_to_the_right_label": "Hide Columns to the Right",
+  "hide_columns_to_the_left_label": "Hide Columns to the Left",
 
   "tree_control_tooltip_gantt_milestone": "Gantt Milestone",
   "tree_control_tooltip_buffer_task": "Buffer Task",
