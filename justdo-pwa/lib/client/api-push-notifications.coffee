@@ -2,6 +2,7 @@ _.extend JustdoPwa.prototype,
   _pn_token_rv: new ReactiveVar null
   _pn_tap_handlers: {}
   _pn_received_handlers: {}
+  _pn_pending_tap_action: null
 
   isNativePlatform: ->
     return window.Capacitor?.isNativePlatform?()
@@ -101,11 +102,16 @@ _.extend JustdoPwa.prototype,
 
     if type is "received"
       handler = @getPushNotificationReceivedHandler(pn_message_type)
+      return handler?(notification)
     if type is "tap"
-      handler = @getPushNotificationTapHandler(pn_message_type)
-
-    if handler?
-      return handler(notification)
+      if (handler = @getPushNotificationTapHandler(pn_message_type))?
+        return handler(notification)
+      else
+        # If no handler found for a tap notification, queue it for later processing.
+        # This handles the race condition where a notification tap (e.g. from lock screen
+        # cold start) arrives before the tap handler has been registered.
+        @logger.debug "No tap handler found for message type #{pn_message_type}, queuing notification"
+        @_pn_pending_tap_action = notification
 
     return
 
@@ -120,7 +126,13 @@ _.extend JustdoPwa.prototype,
     handlers_map[pn_message_type] = handler
     return
   registerPushNotificationTapHandler: (pn_message_type, handler) ->
-    return @_registerPushNotificationHandler pn_message_type, handler, @_pn_tap_handlers
+    @_registerPushNotificationHandler pn_message_type, handler, @_pn_tap_handlers
+
+    if @_pn_pending_tap_action?.data.pn_message_type is pn_message_type
+      @logger.debug "Processing queued tap notification for message type #{pn_message_type}"
+      @_processPushNotification @_pn_pending_tap_action, "tap"
+      
+    return
   registerPushNotificationReceivedHandler: (pn_message_type, handler) ->
     return @_registerPushNotificationHandler pn_message_type, handler, @_pn_received_handlers
 
@@ -128,10 +140,7 @@ _.extend JustdoPwa.prototype,
     check pn_message_type, String
     check handlers_map, Object
 
-    if not (handler = handlers_map[pn_message_type])?
-      throw @_error "invalid-argument", "Push notification handler not registered for message type #{pn_message_type}"
-
-    return handler
+    return handlers_map[pn_message_type]
   getPushNotificationTapHandler: (pn_message_type) ->
     return @_getPushNotificationHandler pn_message_type, @_pn_tap_handlers
   getPushNotificationReceivedHandler: (pn_message_type) ->
