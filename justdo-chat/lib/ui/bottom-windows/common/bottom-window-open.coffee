@@ -1,15 +1,20 @@
 Template.chat_bottom_windows_open.onCreated ->
-  @channel_type = @data.channel_type
-  @channel_identifier = @data.channel_identifier
-  @channelObjectGenerator = @data.channelObjectGenerator
-  @channel_obj = @channelObjectGenerator()
-  @header_template = @data.header_template
+  @autorun =>
+    current_data = Template.currentData()
+    if @channel_obj?
+      @channel_obj.destroy()
 
-  # The following aren't in use. They are reserved for group channel.
-  @titleGenerator = @data.titleGenerator
-  @tooltipGenerator = @data.tooltipGenerator
-  @titleUrlGenerator = @data.titleUrlGenerator
-  @onClickTitle = @data.onClickTitle
+    @channel_type = current_data.channel_type
+    @channel_identifier = current_data.channel_identifier
+    @channelObjectGenerator = current_data.channelObjectGenerator
+    @channel_obj = @channelObjectGenerator()
+    @header_template = current_data.header_template
+
+    # The following aren't in use. They are reserved for group channel.
+    @titleGenerator = current_data.titleGenerator
+    @tooltipGenerator = current_data.tooltipGenerator
+    @titleUrlGenerator = current_data.titleUrlGenerator
+    @onClickTitle = current_data.onClickTitle
 
   return
 
