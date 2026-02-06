@@ -100,7 +100,7 @@ GridControl.installFormatter formatter_name,
           return match
         value = nested_result?.value
       else if _.isFunction(field_schema?.grid_column_manual_and_auto_values_getter)
-        {manual_value, auto_value} = field_schema.grid_column_manual_and_auto_values_getter(doc._id)
+        {manual_value, auto_value} = field_schema.grid_column_manual_and_auto_values_getter(doc)
         if manual_value?
           value = manual_value
         else
