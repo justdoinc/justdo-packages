@@ -2,15 +2,11 @@
 
 GridControl.installEditor "TextareaEditor",
   init: ->
-    custom_style = ""
-
+    numeric_class = ""
     if @context.schema.type is Number
-      # Numbers should always be right-aligned and LTR direction (like Excel),
-      # regardless of the app's text direction. direction:ltr ensures the minus
-      # sign appears on the left side of the number.
-      custom_style += " text-align: right; direction: ltr;"
+      numeric_class = " jd-numeric-value"
 
-    @$input = $("""<textarea dir="auto" rows="1" class="mousetrap" #{if custom_style != "" then " style=\"#{custom_style}\"" else ""} />""")
+    @$input = $("""<textarea dir="auto" rows="1" class="mousetrap#{numeric_class}" />""")
 
     $wrapper = @generateInputWrappingElement()
 

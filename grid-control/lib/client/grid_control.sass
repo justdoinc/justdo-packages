@@ -269,3 +269,10 @@ $standard-cell-padding-bottom: 3px
     .jd-icon
       left: auto
       right: 12px
+
+// Numeric value display: always right-aligned with LTR direction (like Excel),
+// regardless of the app's text direction. direction:ltr ensures negative signs
+// appear on the left side of the number.
+.jd-numeric-value
+  text-align: right
+  direction: ltr

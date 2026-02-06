@@ -52,10 +52,6 @@ GridControl.installFormatter "defaultFormatter",
               custom_style += """background-color: #{bg_color}; color: #{JustdoHelpers.getFgColor(bg_color)};"""
 
       if schema.type is Number
-        # Numbers should always be right-aligned and LTR direction (like Excel),
-        # regardless of the app's text direction. direction:ltr ensures the minus
-        # sign appears on the left side of the number.
-        custom_style += " text-align: right; direction: ltr;"
         if schema.decimal is true
           value = formatDecimals(value)
 
@@ -66,8 +62,10 @@ GridControl.installFormatter "defaultFormatter",
         linkClass: "jd-underline font-weight-bold text-body"
 
     custom_classes = ""
+    if schema?.type is Number
+      custom_classes += " jd-numeric-value"
     if (customClasses = friendly_args.formatter_options?.customClasses)
-      custom_classes = customClasses(friendly_args) or ""
+      custom_classes += " " + (customClasses(friendly_args) or "")
 
     html_comment = undefined
     if (htmlCommentGenerator = friendly_args.formatter_options?.htmlCommentGenerator)

@@ -406,14 +406,12 @@ GridControl.installFormatter formatter_name,
     if (err = value.err)?
       return "Error: #{err}"
       
-    # Numbers should always be right-aligned with LTR direction (like Excel),
-    # regardless of the app's text direction
     # If field is calculated field, show its returned value
     if (cval = value.cval)?
       cval = JustdoHelpers.roundNumber cval, 2
-      return """<div style="font-weight: bold; text-decoration: underline; text-align: right; direction: ltr;">#{JustdoHelpers.localeAwareNumberRepresentation cval}</div>"""
+      return """<div class="jd-numeric-value" style="font-weight: bold; text-decoration: underline;">#{JustdoHelpers.localeAwareNumberRepresentation cval}</div>"""
 
-    return """<div style="text-align: right; direction: ltr;">#{JustdoHelpers.localeAwareNumberRepresentation value}</div>"""
+    return """<div class="jd-numeric-value">#{JustdoHelpers.localeAwareNumberRepresentation value}</div>"""
 
   #
   # Actions buttons

@@ -313,13 +313,11 @@ GridControl.installFormatter formatter_name,
     # Round to 2 decimal places
     value = JustdoHelpers.roundNumber value, 2
 
-    style_right = APP.justdo_i18n.getRtlAwareDirection "right"
-
     human_readable_formula_attribute = formatter_obj.getHumanReadableFormulaAttribute field, grid_control
 
     return """
       <div class="grid-formatter smart-row-formula-formatter" #{if not _.isEmpty(custom_color) then "style=\"#{custom_color}\"" else ""} #{human_readable_formula_attribute}>
-        <div style="font-weight: bold; text-decoration: underline; text-align: #{style_right};">#{JustdoHelpers.localeAwareNumberRepresentation value}</div>
+        <div class="jd-numeric-value" style="font-weight: bold; text-decoration: underline;">#{JustdoHelpers.localeAwareNumberRepresentation value}</div>
       </div>
     """
 
@@ -335,10 +333,8 @@ GridControl.installFormatter formatter_name,
 
     value = JustdoHelpers.roundNumber value, 2
 
-    style_right = APP.justdo_i18n.getRtlAwareDirection "left"
-
     human_readable_formula_attribute = formatter_obj.getHumanReadableFormulaAttribute field, grid_control
 
-    return """<div style="font-weight: bold; text-decoration: underline; text-align: #{style_right}; direction: ltr;" #{human_readable_formula_attribute}>#{JustdoHelpers.localeAwareNumberRepresentation value}</div>"""
+    return """<div class="jd-numeric-value" style="font-weight: bold; text-decoration: underline;" #{human_readable_formula_attribute}>#{JustdoHelpers.localeAwareNumberRepresentation value}</div>"""
 
   print_formatter_produce_html: true
