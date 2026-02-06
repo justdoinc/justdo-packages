@@ -228,7 +228,15 @@ _.extend JustdoFormulaFields.prototype,
 
     {field_to_symbol} = @replaceFieldsWithSymbols(formula)
 
-    return _.keys(field_to_symbol)
+    direct_dependencies = _.keys(field_to_symbol)
+    
+    grid_control = @getCurrentGridControlObject()
+    for dep_field_id in direct_dependencies
+      field_def = grid_control.getFieldDef(dep_field_id)
+      if field_def?.grid_dependencies_fields?
+        direct_dependencies = direct_dependencies.concat(field_def.grid_dependencies_fields)
+
+    return _.uniq direct_dependencies
 
   getFlattenedDependencies: (field_id, custom_fields, visited_fields=null) ->
     # Recursively find all dependencies for a smart row formula field,
