@@ -104,16 +104,20 @@ _.extend Barriers.prototype,
     return
 
   markBarrierAsResolved: (barrier_id) ->
-    if not @barriers_registry[barrier_id]?
-      return
-    
+    # Ensure the barrier is registered before resolving it.
+    # This handles the case where markBarrierAsResolved is called before
+    # any runCbAfterBarriers has registered the barrier. Without this,
+    # the resolve would be silently lost, and later runCbAfterBarriers
+    # calls would create a new promise that never gets resolved.
+    @_ensureHookDepnendenciesDefined barrier_id
+
     @barriers_registry[barrier_id].resolve()
     return
   
   markBarrierAsRejected: (barrier_id) ->
-    if not @barriers_registry[barrier_id]?
-      return
-    
+    # Same as markBarrierAsResolved — ensure registration before rejecting.
+    @_ensureHookDepnendenciesDefined barrier_id
+
     @barriers_registry[barrier_id].reject()
     return
 
