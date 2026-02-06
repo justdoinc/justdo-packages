@@ -221,22 +221,29 @@ _.extend JustdoFormulaFields.prototype,
     return
 
   getSmartRowFormulaDependencies: (formula) ->
-    # Get the direct dependencies of a smart row formula
-    # Returns an array of field IDs
+    # Get the direct dependencies of a smart row formula.
+    # Returns an array of unique field IDs, including both the fields
+    # referenced in the formula and their own grid_dependencies_fields
+    # (i.e., the fields that the grid needs to re-render when they change).
     if not formula? or _.isEmpty(formula)
       return []
 
     {field_to_symbol} = @replaceFieldsWithSymbols(formula)
 
-    direct_dependencies = _.keys(field_to_symbol)
-    
+    # First pass: collect the formula's direct field references
+    formula_dependencies = _.keys(field_to_symbol)
+
+    # Second pass: collect grid_dependencies_fields from each direct dependency.
+    # This is done in a separate array to avoid mutating formula_dependencies
+    # while iterating over it.
+    additional_dependencies = []
     grid_control = @getCurrentGridControlObject()
-    for dep_field_id in direct_dependencies
+    for dep_field_id in formula_dependencies
       field_def = grid_control.getFieldDef(dep_field_id)
       if field_def?.grid_dependencies_fields?
-        direct_dependencies = direct_dependencies.concat(field_def.grid_dependencies_fields)
+        additional_dependencies = additional_dependencies.concat(field_def.grid_dependencies_fields)
 
-    return _.uniq direct_dependencies
+    return _.uniq formula_dependencies.concat(additional_dependencies)
 
   getFlattenedDependencies: (field_id, custom_fields, visited_fields=null) ->
     # Recursively find all dependencies for a smart row formula field,

@@ -45,7 +45,13 @@ GridControl.installFormatter formatter_name,
     return
 
   getFieldValue: (friendly_args) ->
-    {formatter_obj, grid_control, field, path, doc, schema} = friendly_args
+    {formatter_obj, grid_control, field, path, doc, schema, _evaluating_fields} = friendly_args
+
+    # _evaluating_fields tracks which smart row formula fields are currently
+    # being evaluated up the call stack, preventing infinite recursion from
+    # circular dependencies (e.g., field A references field B which references field A).
+    if not _evaluating_fields?
+      _evaluating_fields = {}
 
     # Get formula from schema grid_column_formatter_options
     formatter_options = schema?.grid_column_formatter_options
@@ -54,24 +60,15 @@ GridControl.installFormatter formatter_name,
     if not formula? or formula is ""
       return ""
 
-    # Use the shared regex from JustdoFormulaFields for extracting field placeholders
-    field_component_regex = JustdoFormulaFields.formula_fields_components_matcher_regex
+    # Use the shared utility from JustdoFormulaFields for extracting field placeholders
+    # and mapping them to single-character symbols for mathjs evaluation
+    {mathjs_formula, field_to_symbol} = APP.justdo_formula_fields.replaceFieldsWithSymbols(formula)
 
-    # Collect all referenced fields and their values
-    field_to_symbol = {}
+    # Collect field values
     field_values = {}
-    symbol_index = 0
     has_error = false
 
-    # First pass: extract all field references and get their values
-    formula.replace field_component_regex, (match, field_id) ->
-      if field_id of field_to_symbol
-        # Already processed this field
-        return match
-
-      field_to_symbol[field_id] = JustdoFormulaFields.symbols_indexes[symbol_index]
-      symbol_index += 1
-
+    for field_id, symbol of field_to_symbol
       # Get field schema to check if it's a calculated field
       field_schema = grid_control.getFieldDef field_id
 
@@ -84,7 +81,7 @@ GridControl.installFormatter formatter_name,
         if calc_result?.err?
           # Error in calculated field
           has_error = true
-          return match
+          break
 
         if calc_result?.cval?
           value = calc_result.cval
@@ -93,11 +90,12 @@ GridControl.installFormatter formatter_name,
         else
           value = null
       else if field_schema?.grid_column_formatter is "smartRowFormulaFormatter"
-        # This is another Smart Row Formula field - get its calculated value
-        nested_result = formatter_obj.evaluateFormula(grid_control, field_id, path, doc)
+        # This is another Smart Row Formula field - get its calculated value.
+        # Pass _evaluating_fields to detect circular dependencies.
+        nested_result = formatter_obj.evaluateFormula(grid_control, field_id, path, doc, _evaluating_fields)
         if nested_result?.error
           has_error = true
-          return match
+          break
         value = nested_result?.value
       else if _.isFunction(field_schema?.grid_column_manual_and_auto_values_getter)
         {manual_value, auto_value} = field_schema.grid_column_manual_and_auto_values_getter(doc)
@@ -110,8 +108,6 @@ GridControl.installFormatter formatter_name,
         value = doc[field_id]
 
       field_values[field_id] = value
-
-      return match
 
     if has_error
       return ""
@@ -144,18 +140,16 @@ GridControl.installFormatter formatter_name,
     if all_fields_empty
       return ""
 
-    # Build the mathjs formula by replacing placeholders with symbols
-    mathjs_formula = formula.replace field_component_regex, (match, field_id) ->
-      return field_to_symbol[field_id]
-
     # Prepare mathjs evaluation arguments
     mathjs_args = {}
     for field_id, symbol of field_to_symbol
       mathjs_args[symbol] = field_values[field_id]
 
-    # Evaluate the formula using mathjs
+    # Evaluate the formula using the restricted parser to enforce the same
+    # security restrictions (forbidden chars, forbidden words, function whitelist)
+    # that the server-side formula validation uses.
     try
-      parsed_formula = JustdoMathjs.math.parse(mathjs_formula)
+      parsed_formula = JustdoMathjs.parseSingleRestrictedRationalExpression(mathjs_formula)
       compiled = parsed_formula.compile()
       result = compiled.evaluate(mathjs_args)
     catch e
@@ -167,9 +161,23 @@ GridControl.installFormatter formatter_name,
 
     return result
 
-  # Helper method to evaluate a formula for a specific field
-  # Used for nested smart row formula references
-  evaluateFormula: (grid_control, field_id, path, doc) ->
+  # Helper method to evaluate a formula for a specific field.
+  # Used for nested smart row formula references.
+  #
+  # The _evaluating_fields parameter is a set (object) of field IDs currently
+  # being evaluated up the call stack. If field_id is already in the set,
+  # we have a circular dependency and return an error to prevent infinite recursion.
+  evaluateFormula: (grid_control, field_id, path, doc, _evaluating_fields) ->
+    if not _evaluating_fields?
+      _evaluating_fields = {}
+
+    # Circular dependency guard: if this field is already being evaluated
+    # up the call stack, bail out to prevent infinite recursion.
+    if field_id of _evaluating_fields
+      return {error: true}
+
+    _evaluating_fields[field_id] = true
+
     field_schema = grid_control.getFieldDef field_id
 
     if not field_schema?
@@ -189,6 +197,7 @@ GridControl.installFormatter formatter_name,
       path: path
       doc: doc
       schema: field_schema
+      _evaluating_fields: _evaluating_fields
 
     value = @getFieldValue(friendly_args)
 

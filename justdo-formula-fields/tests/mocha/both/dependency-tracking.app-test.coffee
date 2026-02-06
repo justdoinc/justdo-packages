@@ -104,6 +104,46 @@ if Package["justdoinc:justdo-formula-fields"]? and Meteor.isClient
         expect(result.filter((x) -> x == "field_b")).to.have.length 1
         return
 
+      it "should not transitively chase grid_dependencies_fields of added dependencies", ->
+        # field_a has grid_deps=[field_c], field_c has grid_deps=[field_d].
+        # getSmartRowFormulaDependencies should only collect one level of
+        # grid_dependencies_fields (from the formula's direct references),
+        # NOT chase into field_c's own grid_dependencies_fields.
+        # Transitive resolution is getFlattenedDependencies' responsibility.
+        field_defs = {
+          field_a:
+            grid_dependencies_fields: ["field_c"]
+          field_c:
+            grid_dependencies_fields: ["field_d"]
+        }
+        instance.getCurrentGridControlObject = -> mockGridControl(field_defs)
+        result = instance.getSmartRowFormulaDependencies("{field_a}")
+        expect(result).to.include "field_a"
+        expect(result).to.include "field_c"
+        # field_d should NOT be included — it's a transitive dep of field_c,
+        # not a direct grid_dependency of a formula reference
+        expect(result).to.not.include "field_d"
+        return
+
+      it "should handle mutual grid_dependencies without infinite iteration", ->
+        # field_a has grid_deps=[field_b], field_b has grid_deps=[field_a].
+        # Before the two-pass fix, the array was mutated during iteration,
+        # which could chase in circles. Now it only iterates over the
+        # original formula references.
+        field_defs = {
+          field_a:
+            grid_dependencies_fields: ["field_b"]
+          field_b:
+            grid_dependencies_fields: ["field_a"]
+        }
+        instance.getCurrentGridControlObject = -> mockGridControl(field_defs)
+        result = instance.getSmartRowFormulaDependencies("{field_a} + {field_b}")
+        expect(result).to.include "field_a"
+        expect(result).to.include "field_b"
+        # Should contain exactly 2 entries — no duplicates from circular grid_deps
+        expect(result).to.have.length 2
+        return
+
     # ========================================
     # getFlattenedDependencies
     # ========================================
