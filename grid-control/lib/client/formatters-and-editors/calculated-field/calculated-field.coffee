@@ -406,14 +406,14 @@ GridControl.installFormatter formatter_name,
     if (err = value.err)?
       return "Error: #{err}"
       
-    style_right = APP.justdo_i18n.getRtlAwareDirection "right"
-
+    # Numbers should always be right-aligned with LTR direction (like Excel),
+    # regardless of the app's text direction
     # If field is calculated field, show its returned value
     if (cval = value.cval)?
       cval = JustdoHelpers.roundNumber cval, 2
-      return """<div style="font-weight: bold; text-decoration: underline; text-align: #{style_right};">#{JustdoHelpers.localeAwareNumberRepresentation cval}</div>"""
+      return """<div style="font-weight: bold; text-decoration: underline; text-align: right; direction: ltr;">#{JustdoHelpers.localeAwareNumberRepresentation cval}</div>"""
 
-    return """<div style="text-align: #{style_right};">#{JustdoHelpers.localeAwareNumberRepresentation value}</div>"""
+    return """<div style="text-align: right; direction: ltr;">#{JustdoHelpers.localeAwareNumberRepresentation value}</div>"""
 
   #
   # Actions buttons
@@ -543,11 +543,9 @@ GridControl.installEditorExtension
       if APP.justdo_i18n.isRtl()
         @$input.attr "dir", "rtl"
 
-      style_right = APP.justdo_i18n.getRtlAwareDirection "right"
-
       if not _.isNaN(parseFloat(@getEditorFieldValueFromDoc()))
-        # Align numeral values to the right
-        @$input.css({"text-align": "#{style_right}"})
+        # Numbers should always be right-aligned with LTR direction (like Excel)
+        @$input.css({"text-align": "right", "direction": "ltr"})
 
       @$input.addClass("cfld-editor-textarea")
 

@@ -5,7 +5,10 @@ GridControl.installEditor "TextareaEditor",
     custom_style = ""
 
     if @context.schema.type is Number
-      custom_style += " text-align: #{APP.justdo_i18n.getRtlAwareDirection "right"}; direction: ltr;"
+      # Numbers should always be right-aligned and LTR direction (like Excel),
+      # regardless of the app's text direction. direction:ltr ensures the minus
+      # sign appears on the left side of the number.
+      custom_style += " text-align: right; direction: ltr;"
 
     @$input = $("""<textarea dir="auto" rows="1" class="mousetrap" #{if custom_style != "" then " style=\"#{custom_style}\"" else ""} />""")
 

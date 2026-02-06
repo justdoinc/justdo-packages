@@ -52,7 +52,10 @@ GridControl.installFormatter "defaultFormatter",
               custom_style += """background-color: #{bg_color}; color: #{JustdoHelpers.getFgColor(bg_color)};"""
 
       if schema.type is Number
-        custom_style += " text-align: #{APP.justdo_i18n.getRtlAwareDirection "right"}; direction: ltr;"
+        # Numbers should always be right-aligned and LTR direction (like Excel),
+        # regardless of the app's text direction. direction:ltr ensures the minus
+        # sign appears on the left side of the number.
+        custom_style += " text-align: right; direction: ltr;"
         if schema.decimal is true
           value = formatDecimals(value)
 
