@@ -8,7 +8,9 @@
 #
 # Usage:
 #   # In your-package/tests/test-manifest.coffee:
-#   TestManifest.register "your-package",
+#   # (No `if Meteor.isServer` guard needed - manifests are only loaded
+#   #  by the Node.js test runner, not by Meteor)
+#   TestManifest?.register "your-package",
 #     configurations: [
 #       {
 #         id: "enabled"
