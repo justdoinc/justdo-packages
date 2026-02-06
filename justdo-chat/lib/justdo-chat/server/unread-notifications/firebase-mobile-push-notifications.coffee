@@ -46,7 +46,9 @@ if APP.justdo_push_notifications.isFirebaseEnabled()
         options.data.task_id = task_doc._id
       
       if channel_type is "user"
-        sender_display_name = JustdoHelpers.displayName channel_obj.getCounterpartUser()
+        sender_user = channel_obj.getCounterpartUser()
+        options.data.sender = sender_user._id
+        sender_display_name = JustdoHelpers.displayName sender_user
         options.body = "New chat message from #{sender_display_name}"
 
       # APP.justdo_push_notifications.pnUsersViaFirebase
