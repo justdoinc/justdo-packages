@@ -40,3 +40,4 @@ _.extend JustdoChat,
     "pdf"
   ]
 
+  chat_message_push_notification_message_type: "unread-chat"

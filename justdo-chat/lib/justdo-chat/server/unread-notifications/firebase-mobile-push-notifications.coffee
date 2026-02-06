@@ -19,7 +19,7 @@ if APP.justdo_push_notifications.isFirebaseEnabled()
         return
       
       options = 
-        message_type: "unread-chat"
+        message_type: JustdoChat.chat_message_push_notification_message_type
         recipients_ids: [user._id]
         networks: ["mobile"]
         data:
