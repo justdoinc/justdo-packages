@@ -5,6 +5,7 @@
   "freeze_column_label": "تثبيت العمود",
   "unfreeze_column_label": "إلغاء تثبيت العمود",
   "hide_columns_to_the_right_label": "إخفاء الأعمدة على اليمين",
+  "hide_columns_to_the_left_label": "إخفاء الأعمدة إلى اليسار",
   "tree_control_tooltip_gantt_milestone": "معلم غانت",
   "tree_control_tooltip_buffer_task": "مهمة احتياطية",
   "tree_control_tooltip_Meetings": "اجتماعات",

@@ -5,6 +5,7 @@
   "freeze_column_label": "Ganda Safu",
   "unfreeze_column_label": "Ondoa Ugandishaji wa Safu",
   "hide_columns_to_the_right_label": "Ficha Safu za Kulia",
+  "hide_columns_to_the_left_label": "Ficha Safu Wima Upande wa Kushoto",
   "tree_control_tooltip_gantt_milestone": "Hatua Muhimu ya Gantt",
   "tree_control_tooltip_buffer_task": "Kazi ya Kinga",
   "tree_control_tooltip_Meetings": "Mikutano",

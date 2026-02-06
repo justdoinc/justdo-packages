@@ -5,6 +5,7 @@
   "freeze_column_label": "冻结列",
   "unfreeze_column_label": "解冻列",
   "hide_columns_to_the_right_label": "隐藏右侧列",
+  "hide_columns_to_the_left_label": "隐藏左侧列",
   "tree_control_tooltip_gantt_milestone": "甘特图里程碑",
   "tree_control_tooltip_buffer_task": "缓冲任务",
   "tree_control_tooltip_Meetings": "会议",

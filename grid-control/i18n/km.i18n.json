@@ -5,6 +5,7 @@
   "freeze_column_label": "បង្កកជួរឈរ",
   "unfreeze_column_label": "ដោះបង្កកជួរឈរ",
   "hide_columns_to_the_right_label": "លាក់ជួរនៅខាងស្តាំ",
+  "hide_columns_to_the_left_label": "លាក់ជួរឈរខាងឆ្វេង",
   "tree_control_tooltip_gantt_milestone": "ចំណុចសំខាន់នៃ Gantt",
   "tree_control_tooltip_buffer_task": "កិច្ចការបម្រុង",
   "tree_control_tooltip_Meetings": "កិច្ចប្រជុំ",

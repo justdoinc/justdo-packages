@@ -5,6 +5,7 @@
   "freeze_column_label": "Zablokuj kolumnę",
   "unfreeze_column_label": "Odblokuj kolumnę",
   "hide_columns_to_the_right_label": "Ukryj kolumny po prawej",
+  "hide_columns_to_the_left_label": "Ukryj kolumny po lewej",
   "tree_control_tooltip_gantt_milestone": "Kamień milowy Gantta",
   "tree_control_tooltip_buffer_task": "Zadanie buforowe",
   "tree_control_tooltip_Meetings": "Spotkania",

@@ -5,6 +5,7 @@
   "freeze_column_label": "Congelar Coluna",
   "unfreeze_column_label": "Descongelar Coluna",
   "hide_columns_to_the_right_label": "Ocultar Colunas à Direita",
+  "hide_columns_to_the_left_label": "Ocultar Colunas à Esquerda",
   "tree_control_tooltip_gantt_milestone": "Marco do Gantt",
   "tree_control_tooltip_buffer_task": "Tarefa de Buffer",
   "tree_control_tooltip_Meetings": "Reuniões",

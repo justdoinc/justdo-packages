@@ -5,6 +5,7 @@
   "freeze_column_label": "Bekukan Kolom",
   "unfreeze_column_label": "Cairkan Kolom",
   "hide_columns_to_the_right_label": "Sembunyikan Kolom di Sebelah Kanan",
+  "hide_columns_to_the_left_label": "Sembunyikan Kolom di Sebelah Kiri",
   "tree_control_tooltip_gantt_milestone": "Tonggak Gantt",
   "tree_control_tooltip_buffer_task": "Tugas Penyangga",
   "tree_control_tooltip_Meetings": "Rapat",

@@ -5,6 +5,7 @@
   "freeze_column_label": "Πάγωμα Στήλης",
   "unfreeze_column_label": "Ξεπάγωμα Στήλης",
   "hide_columns_to_the_right_label": "Απόκρυψη Στηλών στα Δεξιά",
+  "hide_columns_to_the_left_label": "Απόκρυψη Στηλών στα Αριστερά",
   "tree_control_tooltip_gantt_milestone": "Ορόσημο Gantt",
   "tree_control_tooltip_buffer_task": "Εργασία Buffer",
   "tree_control_tooltip_Meetings": "Συναντήσεις",

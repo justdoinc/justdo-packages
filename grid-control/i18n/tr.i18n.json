@@ -5,6 +5,7 @@
   "freeze_column_label": "Sütunu Sabitle",
   "unfreeze_column_label": "Sütun Sabitlemesini Kaldır",
   "hide_columns_to_the_right_label": "Sağdaki Sütunları Gizle",
+  "hide_columns_to_the_left_label": "Soldaki Sütunları Gizle",
   "tree_control_tooltip_gantt_milestone": "Gantt Kilometre Taşı",
   "tree_control_tooltip_buffer_task": "Tampon Görev",
   "tree_control_tooltip_Meetings": "Toplantılar",

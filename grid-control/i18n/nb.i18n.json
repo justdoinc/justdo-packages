@@ -5,6 +5,7 @@
   "freeze_column_label": "Frys kolonne",
   "unfreeze_column_label": "Opphev frysing av kolonne",
   "hide_columns_to_the_right_label": "Skjul kolonner til høyre",
+  "hide_columns_to_the_left_label": "Skjul kolonner til venstre",
   "tree_control_tooltip_gantt_milestone": "Gantt-milepæl",
   "tree_control_tooltip_buffer_task": "Bufferoppgave",
   "tree_control_tooltip_Meetings": "Møter",

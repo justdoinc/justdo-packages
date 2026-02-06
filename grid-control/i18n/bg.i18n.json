@@ -5,6 +5,7 @@
   "freeze_column_label": "Фиксирай колона",
   "unfreeze_column_label": "Освободи колона",
   "hide_columns_to_the_right_label": "Скрий колоните отдясно",
+  "hide_columns_to_the_left_label": "Скрий колоните вляво",
   "tree_control_tooltip_gantt_milestone": "Етап в диаграмата на Гант",
   "tree_control_tooltip_buffer_task": "Буферна задача",
   "tree_control_tooltip_Meetings": "Срещи",

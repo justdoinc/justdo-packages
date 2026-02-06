@@ -5,6 +5,7 @@
   "freeze_column_label": "Blocare coloană",
   "unfreeze_column_label": "Deblocare coloană",
   "hide_columns_to_the_right_label": "Ascunde Coloanele din Dreapta",
+  "hide_columns_to_the_left_label": "Ascunde Coloanele din Stânga",
   "tree_control_tooltip_gantt_milestone": "Jalon Gantt",
   "tree_control_tooltip_buffer_task": "Sarcină tampon",
   "tree_control_tooltip_Meetings": "Întâlniri",

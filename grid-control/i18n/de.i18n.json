@@ -5,6 +5,7 @@
   "freeze_column_label": "Spalte fixieren",
   "unfreeze_column_label": "Spalte lösen",
   "hide_columns_to_the_right_label": "Spalten rechts ausblenden",
+  "hide_columns_to_the_left_label": "Spalten links ausblenden",
   "tree_control_tooltip_gantt_milestone": "Gantt-Meilenstein",
   "tree_control_tooltip_buffer_task": "Pufferaufgabe",
   "tree_control_tooltip_Meetings": "Besprechungen",

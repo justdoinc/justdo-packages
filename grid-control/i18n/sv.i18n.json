@@ -5,6 +5,7 @@
   "freeze_column_label": "Frys kolumn",
   "unfreeze_column_label": "Avfrys kolumn",
   "hide_columns_to_the_right_label": "Dölj kolumner till höger",
+  "hide_columns_to_the_left_label": "Dölj kolumner till vänster",
   "tree_control_tooltip_gantt_milestone": "Gantt-milstolpe",
   "tree_control_tooltip_buffer_task": "Bufferttask",
   "tree_control_tooltip_Meetings": "Möten",

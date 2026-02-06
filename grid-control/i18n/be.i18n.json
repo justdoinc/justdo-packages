@@ -5,6 +5,7 @@
   "freeze_column_label": "Замарозіць слупок",
   "unfreeze_column_label": "Размарозіць слупок",
   "hide_columns_to_the_right_label": "Схаваць слупкі справа",
+  "hide_columns_to_the_left_label": "Схаваць слупкі злева",
   "tree_control_tooltip_gantt_milestone": "Веха Ганта",
   "tree_control_tooltip_buffer_task": "Буферная задача",
   "tree_control_tooltip_Meetings": "Сустрэчы",

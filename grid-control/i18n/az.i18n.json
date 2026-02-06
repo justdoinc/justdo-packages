@@ -5,6 +5,7 @@
   "freeze_column_label": "Sütunu dondur",
   "unfreeze_column_label": "Sütunu dondan çıxar",
   "hide_columns_to_the_right_label": "Sağdakı Sütunları Gizlət",
+  "hide_columns_to_the_left_label": "Soldakı Sütunları Gizlət",
   "tree_control_tooltip_gantt_milestone": "Qantt (Gantt) mərhələsi",
   "tree_control_tooltip_buffer_task": "Bufer tapşırıq",
   "tree_control_tooltip_Meetings": "Görüşlər",

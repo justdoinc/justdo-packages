@@ -5,6 +5,7 @@
   "freeze_column_label": "Kolom bevriezen",
   "unfreeze_column_label": "Kolom ontdooien",
   "hide_columns_to_the_right_label": "Kolommen Rechts Verbergen",
+  "hide_columns_to_the_left_label": "Kolommen links verbergen",
   "tree_control_tooltip_gantt_milestone": "Gantt-mijlpaal",
   "tree_control_tooltip_buffer_task": "Buffertaak",
   "tree_control_tooltip_Meetings": "Vergaderingen",

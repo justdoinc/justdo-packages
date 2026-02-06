@@ -5,6 +5,7 @@
   "freeze_column_label": "स्तम्भ जमाउनुहोस्",
   "unfreeze_column_label": "स्तम्भ पगाल्नुहोस्",
   "hide_columns_to_the_right_label": "दाईं तिरका स्तम्भहरू लुकाउनुहोस्",
+  "hide_columns_to_the_left_label": "बायाँका स्तम्भहरू लुकाउनुहोस्",
   "tree_control_tooltip_gantt_milestone": "गान्ट माइलस्टोन",
   "tree_control_tooltip_buffer_task": "बफर कार्य",
   "tree_control_tooltip_Meetings": "बैठकहरू",

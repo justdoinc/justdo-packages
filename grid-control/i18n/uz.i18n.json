@@ -5,6 +5,7 @@
   "freeze_column_label": "Ustunni muzlatish",
   "unfreeze_column_label": "Ustunni muzdan tushirish",
   "hide_columns_to_the_right_label": "O'ng tomondagi ustunlarni yashirish",
+  "hide_columns_to_the_left_label": "Chap tomondagi ustunlarni yashirish",
   "tree_control_tooltip_gantt_milestone": "Gantt muddati (Gantt Milestone)",
   "tree_control_tooltip_buffer_task": "Zaxira vazifa (Buffer Task)",
   "tree_control_tooltip_Meetings": "Uchrashuvlar",

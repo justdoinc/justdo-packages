@@ -5,6 +5,7 @@
   "freeze_column_label": "Ngrij Kolonën",
   "unfreeze_column_label": "Zhblloko Kolonën",
   "hide_columns_to_the_right_label": "Fshih Kolonat në të Djathtë",
+  "hide_columns_to_the_left_label": "Fshih Kolonat në të Majtë",
   "tree_control_tooltip_gantt_milestone": "Pikë Kryesore e Gantt-it",
   "tree_control_tooltip_buffer_task": "Detyrë Buferike",
   "tree_control_tooltip_Meetings": "Takime",

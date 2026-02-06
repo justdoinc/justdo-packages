@@ -5,6 +5,7 @@
   "freeze_column_label": "Oszlop rögzítése",
   "unfreeze_column_label": "Oszlop feloldása",
   "hide_columns_to_the_right_label": "Jobbra lévő oszlopok elrejtése",
+  "hide_columns_to_the_left_label": "Bal oldali oszlopok elrejtése",
   "tree_control_tooltip_gantt_milestone": "Gantt mérföldkő",
   "tree_control_tooltip_buffer_task": "Puffer feladat",
   "tree_control_tooltip_Meetings": "Megbeszélések",

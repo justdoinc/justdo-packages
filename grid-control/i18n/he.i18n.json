@@ -5,6 +5,7 @@
   "freeze_column_label": "הקפא עמודה",
   "unfreeze_column_label": "בטל הקפאת עמודה",
   "hide_columns_to_the_right_label": "הסתר עמודות מימין",
+  "hide_columns_to_the_left_label": "הסתר עמודות משמאל",
   "tree_control_tooltip_gantt_milestone": "אבן דרך בגאנט",
   "tree_control_tooltip_buffer_task": "משימת חוצץ",
   "tree_control_tooltip_Meetings": "פגישות",

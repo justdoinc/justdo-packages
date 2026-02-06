@@ -5,6 +5,7 @@
   "freeze_column_label": "פֿרירן קאָלום",
   "unfreeze_column_label": "אויפטויען קאָלום",
   "hide_columns_to_the_right_label": "באהאלטן קאלומען צו דער רעכטער זײט",
+  "hide_columns_to_the_left_label": "באהאלטן שפאלטן לינקס",
   "tree_control_tooltip_gantt_milestone": "גאַנט מיילשטיין",
   "tree_control_tooltip_buffer_task": "באַפער אויפגאַבע",
   "tree_control_tooltip_Meetings": "זיצונגען",

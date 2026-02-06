@@ -5,6 +5,7 @@
   "freeze_column_label": "Закрепить столбец",
   "unfreeze_column_label": "Открепить столбец",
   "hide_columns_to_the_right_label": "Скрыть столбцы справа",
+  "hide_columns_to_the_left_label": "Скрыть столбцы слева",
   "tree_control_tooltip_gantt_milestone": "Веха Ганта",
   "tree_control_tooltip_buffer_task": "Буферная задача",
   "tree_control_tooltip_Meetings": "Встречи",

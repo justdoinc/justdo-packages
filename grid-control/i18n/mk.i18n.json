@@ -5,6 +5,7 @@
   "freeze_column_label": "Замрзни колона",
   "unfreeze_column_label": "Одмрзни колона",
   "hide_columns_to_the_right_label": "Сокриј колони надесно",
+  "hide_columns_to_the_left_label": "Сокриј колони налево",
   "tree_control_tooltip_gantt_milestone": "Ганттов камен-темелник",
   "tree_control_tooltip_buffer_task": "Сигурносна задача",
   "tree_control_tooltip_Meetings": "Состаноци",

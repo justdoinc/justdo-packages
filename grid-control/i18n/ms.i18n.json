@@ -5,6 +5,7 @@
   "freeze_column_label": "Bekukan Lajur",
   "unfreeze_column_label": "Nyahbeku Lajur",
   "hide_columns_to_the_right_label": "Sembunyikan Lajur ke Kanan",
+  "hide_columns_to_the_left_label": "Sembunyikan Lajur di Sebelah Kiri",
   "tree_control_tooltip_gantt_milestone": "Tonggak Pencapaian Gantt",
   "tree_control_tooltip_buffer_task": "Tugas Penampan",
   "tree_control_tooltip_Meetings": "Mesyuarat",

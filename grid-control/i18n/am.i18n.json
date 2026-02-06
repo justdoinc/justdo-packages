@@ -5,6 +5,7 @@
   "freeze_column_label": "ዓምድ አቁም",
   "unfreeze_column_label": "ዓምድ አንቀሳቅስ",
   "hide_columns_to_the_right_label": "በቀኝ ያሉ አምዶችን ደብቅ",
+  "hide_columns_to_the_left_label": "ወደ ግራ ያሉ አምዶች ደብቅ",
   "tree_control_tooltip_gantt_milestone": "የጋንት ግብ (Gantt Milestone)",
   "tree_control_tooltip_buffer_task": "የመጠባበቂያ ተግባር",
   "tree_control_tooltip_Meetings": "ስብሰባዎች",

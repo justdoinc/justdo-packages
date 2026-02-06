@@ -5,6 +5,7 @@
   "freeze_column_label": "Тилкени тоңдуруу",
   "unfreeze_column_label": "Тилкени эритүү",
   "hide_columns_to_the_right_label": "Оң жактагы мамычаларды жашыруу",
+  "hide_columns_to_the_left_label": "Сол жактагы багандарды жашыруу",
   "tree_control_tooltip_gantt_milestone": "Гант этабы (Gantt Milestone)",
   "tree_control_tooltip_buffer_task": "Буфер тапшырмасы",
   "tree_control_tooltip_Meetings": "Жолугушуулар",

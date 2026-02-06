@@ -5,6 +5,7 @@
   "freeze_column_label": "कॉलम फ्रीज करें",
   "unfreeze_column_label": "कॉलम अनफ्रीज करें",
   "hide_columns_to_the_right_label": "दाईं ओर के कॉलम छुपाएं",
+  "hide_columns_to_the_left_label": "बाईं ओर के कॉलम छिपाएं",
   "tree_control_tooltip_gantt_milestone": "गैंट माइलस्टोन",
   "tree_control_tooltip_buffer_task": "बफर कार्य",
   "tree_control_tooltip_Meetings": "बैठकें",

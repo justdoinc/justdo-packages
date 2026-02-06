@@ -5,6 +5,7 @@
   "freeze_column_label": "Blocca Colonna",
   "unfreeze_column_label": "Sblocca Colonna",
   "hide_columns_to_the_right_label": "Nascondi Colonne a Destra",
+  "hide_columns_to_the_left_label": "Nascondi Colonne a Sinistra",
   "tree_control_tooltip_gantt_milestone": "Milestone Gantt",
   "tree_control_tooltip_buffer_task": "Attività Cuscinetto",
   "tree_control_tooltip_Meetings": "Riunioni",

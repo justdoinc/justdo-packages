@@ -5,6 +5,7 @@
   "freeze_column_label": "Fastfrys kolonne",
   "unfreeze_column_label": "Ophæv frysning af kolonne",
   "hide_columns_to_the_right_label": "Skjul kolonner til højre",
+  "hide_columns_to_the_left_label": "Skjul kolonner til venstre",
   "tree_control_tooltip_gantt_milestone": "Gantt-milepæl",
   "tree_control_tooltip_buffer_task": "Buffertask",
   "tree_control_tooltip_Meetings": "Møder",
