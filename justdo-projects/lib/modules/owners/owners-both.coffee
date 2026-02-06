@@ -8,6 +8,8 @@ _.extend PACK.modules,
       return
     
     notification_type: "ownership_transfer"
+    ownership_transfer_request_push_notification_message_type: "owner-trans-req"
+    ownership_transfer_request_rejected_push_notification_message_type: "owner-trans-dec"
 
     _registerEmailTemplates: ->
       JustdoEmails.registerEmailCategory @notification_type,

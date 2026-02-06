@@ -72,7 +72,7 @@ _.extend PACK.modules.owners,
         # Send push notification
         if APP.justdo_push_notifications.isFirebaseEnabled()
           APP.justdo_push_notifications.pnUsersViaFirebase
-            message_type: "owner-trans-req"
+            message_type: self.ownership_transfer_request_push_notification_message_type
 
             body: "#{JustdoHelpers.displayName(from)} asks you to take ownership over task"
 
@@ -170,7 +170,7 @@ _.extend PACK.modules.owners,
       # Send push notification
       if APP.justdo_push_notifications.isFirebaseEnabled()
         APP.justdo_push_notifications.pnUsersViaFirebase
-          message_type: "owner-trans-dec"
+          message_type: self.ownership_transfer_request_rejected_push_notification_message_type
 
           body: "#{JustdoHelpers.displayName(from)} rejected your ownership transfer request"
 
