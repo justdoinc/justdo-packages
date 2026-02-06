@@ -2,6 +2,7 @@ _.extend PACK.modules.owners,
   initClient: ->
     @_setupMethods()
     @_setupHashRequests()
+    @_setupPushNotificationsHandlers()
 
     return
 
@@ -147,6 +148,21 @@ _.extend PACK.modules.owners,
 
     @hash_requests_handler.addRequestHandler "reject-ownership-transfer", (args) =>
       self._reactToOwnershipTransferHashRequest("reject", args)
+
+      return
+
+    return
+
+  _setupPushNotificationsHandlers: ->
+    self = @
+
+    ownershipTransferPnHandler = (notification) =>
+      APP.justdo_pwa.setActiveMobileTab "notifications"
+      return
+
+    JustdoHelpers.hooks_barriers.runCbAfterBarriers "post-justdo-pwa-init", ->
+      APP.justdo_pwa?.registerPushNotificationTapHandler self.ownership_transfer_request_push_notification_message_type, ownershipTransferPnHandler
+      APP.justdo_pwa?.registerPushNotificationTapHandler self.ownership_transfer_request_rejected_push_notification_message_type, ownershipTransferPnHandler
 
       return
 
