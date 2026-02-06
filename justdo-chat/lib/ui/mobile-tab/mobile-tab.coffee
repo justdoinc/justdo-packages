@@ -11,7 +11,7 @@ _.extend JustdoChat.prototype,
         initial_messages_to_request: 20
     return
 
-  active_mobile_chat_channel_rv: new ReactiveVar null
+  active_mobile_chat_channel_rv: new ReactiveVar null, JustdoHelpers.jsonComp
   setActiveMobileChatChannel: (channel_type, channel_identifier) ->
     @active_mobile_chat_channel_rv.set({channel_type, channel_identifier})
     return
