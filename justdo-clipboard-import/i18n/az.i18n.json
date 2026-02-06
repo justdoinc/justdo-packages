@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "__limit__ tapşırıqla məhdudlaşdırılıb",
   "clipboard_import_too_many_rows": "Həddindən artıq sətir, ən çox __limit__ sətir kopyalaya bilərsiniz.",
   "clipboard_import_cant_find_tabular_data": "Mübadilə buferində cədvəl məlumatı tapılmadı.",
-  "clipboard_import_placeholder_msg": "Tapşırıqlar yaratmaq üçün cədvəlinizdən məzmunu kopyalayın və buraya yapışdırın.\nBirinci sütun Mövzu kimi qəbul edilir.",
+  "clipboard_import_placeholder_msg": "Cədvəl məzmununu bura yapışdırın və ya CSV/Excel faylını sürüyüb buraxın.\nBirinci sütun Mövzu kimi qəbul edilir.",
   "clipboard_import_skip_column": "-- sütunu keç --",
   "clipboard_import_index_column": "Orijinal İndeks (idxal edilməyəcək)",
   "clipboard_import_indent_level": "Abzas Səviyyəsi",
   "clipboard_import_manage_columns": "Sütunları İdarə Et",
   "clipboard_import_user_not_found": "İstifadəçi cari JustDo-da tapılmadı, əvvəlcə istifadəçini dəvət edin.",
-  "clipboard_import_how_does_it_work": "Bu necə işləyir?"
+  "clipboard_import_how_does_it_work": "Bu necə işləyir?",
+  "clipboard_import_drop_file_here": "Faylı bura atın",
+  "clipboard_import_choose_file": "Fayl Seçin",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Dəstəklənməyən fayl növü. Zəhmət olmasa CSV, XLSX və ya XLS fayllarından istifadə edin.",
+  "clipboard_import_file_empty": "Fayl boş görünür.",
+  "clipboard_import_file_read_error": "Fayl oxunarkən xəta baş verdi. Zəhmət olmasa yenidən cəhd edin.",
+  "clipboard_import_file_parse_error": "Fayl təhlil edilərkən xəta baş verdi. Zəhmət olmasa fayl formatını yoxlayın.",
+  "clipboard_import_parsing_file": "Fayl işlənir..."
 }

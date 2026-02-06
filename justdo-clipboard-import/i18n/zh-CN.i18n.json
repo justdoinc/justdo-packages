@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "限制为__limit__个任务",
   "clipboard_import_too_many_rows": "行数过多，最多可复制__limit__行。",
   "clipboard_import_cant_find_tabular_data": "在剪贴板中找不到表格信息。",
-  "clipboard_import_placeholder_msg": "从电子表格复制内容并粘贴到此处以创建任务。\n第一列被视为主题。",
+  "clipboard_import_placeholder_msg": "在此处粘贴电子表格内容,或拖放CSV/Excel文件。\n第一列将被视为主题。",
   "clipboard_import_skip_column": "-- 跳过此列 --",
   "clipboard_import_index_column": "原始索引（不会被导入）",
   "clipboard_import_indent_level": "缩进级别",
   "clipboard_import_manage_columns": "管理列",
   "clipboard_import_user_not_found": "在当前JustDo中找不到用户，请先邀请该用户。",
-  "clipboard_import_how_does_it_work": "这是如何工作的？"
+  "clipboard_import_how_does_it_work": "这是如何工作的？",
+  "clipboard_import_drop_file_here": "将文件拖放到此处",
+  "clipboard_import_choose_file": "选择文件",
+  "clipboard_import_supported_file_types": "CSV、XLSX、XLS",
+  "clipboard_import_unsupported_file_type": "不支持的文件类型,请使用CSV、XLSX或XLS文件。",
+  "clipboard_import_file_empty": "文件似乎为空。",
+  "clipboard_import_file_read_error": "读取文件时出错,请重试。",
+  "clipboard_import_file_parse_error": "解析文件时出错,请检查文件格式。",
+  "clipboard_import_parsing_file": "处理文件中..."
 }

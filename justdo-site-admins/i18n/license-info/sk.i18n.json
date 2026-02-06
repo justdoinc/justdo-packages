@@ -6,8 +6,8 @@
   "license_info_licensed_until": "Licencia platná do __date__",
   "license_info_expiring_msg": "Licencia pre túto doménu vyprší dňa <b>__date__</b>.",
   "license_info_expired_msg": "Licencia pre túto doménu vypršala dňa <b>__expire_date__</b>. <br>Prosím, obnovte si licenciu do <b>__shutdown_date__</b>, aby ste predišli prerušeniu služby.",
-  "license_info_renew_license_instructions": "Pre obnovenie licencie kliknite na tlačidlo \"Obnoviť licenciu\" nižšie. Náš tím podpory je pripravený pomôcť vám s akýmikoľvek otázkami.<br><br>Ďakujeme, že ste členom komunity JustDo. Neustále pracujeme na nových funkciách, aby sme zlepšili váš používateľský zážitok!",
-  "license_info_please_contact_site_admins": "Pre viac informácií kontaktujte svojich správcov stránky alebo nás kontaktujte na info@justdo.com .",
+  "license_info_renew_license_instructions": "Ak chcete obnoviť svoju licenciu, kliknite na tlačidlo \"Obnoviť licenciu\" nižšie. <br><br>Môžete sa tiež obrátiť na náš tím na adrese <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>. Náš tým podpory je tu, aby vám pomohol s akýmikoľvek otázkami.<br><br>Ďakujeme, že ste cenným členom komunity JustDo. Neustále pracujeme na nových funkciách na zlepšenie vašej používateľskej skúsenosti!",
+  "license_info_please_contact_site_admins": "Pre viac informácií sa obráťte na správcov stránky alebo nás kontaktujte na adrese <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>.",
   "license_info_valid_until_and_licensed_users": "Táto doména má licenciu platnú do <b>__date__</b> pre <b>__count__</b> používateľov. <br> Ďakujeme, že ste členom komunity JustDo. Neustále pracujeme na nových funkciách, aby sme zlepšili váš používateľský zážitok!",
   "license_info_expiring_in_days": "(Vyprší za __days_string__)",
   "license_info_expired_in_days": "(Vypršalo pred __days_string__)"

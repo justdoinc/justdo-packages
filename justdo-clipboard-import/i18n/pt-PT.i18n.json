@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Limitado a __limit__ tarefas",
   "clipboard_import_too_many_rows": "Demasiadas linhas, pode copiar até __limit__ linhas.",
   "clipboard_import_cant_find_tabular_data": "Não é possível encontrar informação tabular na área de transferência.",
-  "clipboard_import_placeholder_msg": "Copie o conteúdo da sua folha de cálculo e cole-o aqui para criar tarefas.\nA primeira coluna é considerada como o Assunto.",
+  "clipboard_import_placeholder_msg": "Cole o conteúdo da folha de cálculo aqui, ou arraste e largue um ficheiro CSV/Excel.\nA primeira coluna é considerada como o Assunto.",
   "clipboard_import_skip_column": "-- ignorar coluna --",
   "clipboard_import_index_column": "Índice Original (não será importado)",
   "clipboard_import_indent_level": "Nível de Indentação",
   "clipboard_import_manage_columns": "Gerir Colunas",
   "clipboard_import_user_not_found": "Utilizador não encontrado no JustDo atual, convide o utilizador primeiro.",
-  "clipboard_import_how_does_it_work": "Como funciona?"
+  "clipboard_import_how_does_it_work": "Como funciona?",
+  "clipboard_import_drop_file_here": "Largue o ficheiro aqui",
+  "clipboard_import_choose_file": "Escolher Ficheiro",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Tipo de ficheiro não suportado. Por favor, use ficheiros CSV, XLSX ou XLS.",
+  "clipboard_import_file_empty": "O ficheiro parece estar vazio.",
+  "clipboard_import_file_read_error": "Erro ao ler o ficheiro. Por favor, tente novamente.",
+  "clipboard_import_file_parse_error": "Erro ao processar o ficheiro. Por favor, verifique o formato do ficheiro.",
+  "clipboard_import_parsing_file": "A processar ficheiro..."
 }

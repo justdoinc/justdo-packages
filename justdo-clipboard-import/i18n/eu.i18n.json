@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "__limit__ atazara mugatuta",
   "clipboard_import_too_many_rows": "Errenkada gehiegi, gehienez __limit__ errenkada kopia ditzakezu.",
   "clipboard_import_cant_find_tabular_data": "Ezin da arbelean informazio tabularrik aurkitu.",
-  "clipboard_import_placeholder_msg": "Kopiatu zure kalkulu-orriko edukia eta itsatsi hemen atazak sortzeko.\nLehen zutabea Gaia gisa hartuko da.",
+  "clipboard_import_placeholder_msg": "Itsatsi kalkulu-orriaren edukia hemen, edo arrastatu eta jaregin CSV/Excel fitxategi bat.\nLehenengo zutabea Gaia gisa hartzen da.",
   "clipboard_import_skip_column": "-- saltatu zutabea --",
   "clipboard_import_index_column": "Jatorrizko Indizea (ez da inportatuko)",
   "clipboard_import_indent_level": "Koska Maila",
   "clipboard_import_manage_columns": "Zutabeak Kudeatu",
   "clipboard_import_user_not_found": "Erabiltzailea ez da aurkitu uneko JustDo-n, gonbidatu erabiltzailea lehenik.",
-  "clipboard_import_how_does_it_work": "Nola funtzionatzen du?"
+  "clipboard_import_how_does_it_work": "Nola funtzionatzen du?",
+  "clipboard_import_drop_file_here": "Jaregin fitxategia hemen",
+  "clipboard_import_choose_file": "Aukeratu Fitxategia",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Fitxategi mota ez da onartzen. Mesedez, erabili CSV, XLSX edo XLS fitxategiak.",
+  "clipboard_import_file_empty": "Fitxategia hutsik dagoela dirudi.",
+  "clipboard_import_file_read_error": "Errorea fitxategia irakurtzean. Mesedez, saiatu berriro.",
+  "clipboard_import_file_parse_error": "Errorea fitxategia aztertzean. Mesedez, egiaztatu fitxategiaren formatua.",
+  "clipboard_import_parsing_file": "Fitxategia prozesatzen..."
 }

@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Ograničeno na __limit__ zadataka",
   "clipboard_import_too_many_rows": "Previše redova, možete kopirati do __limit__ redova.",
   "clipboard_import_cant_find_tabular_data": "Ne mogu pronaći tabelarne informacije u međuspremniku.",
-  "clipboard_import_placeholder_msg": "Kopirajte sadržaj iz vaše tabele i zalijepite ga ovdje da biste kreirali zadatke.\nPrva kolona se smatra Predmetom.",
+  "clipboard_import_placeholder_msg": "Zalijepite sadržaj proračunske tabele ovdje, ili prevucite i ispustite CSV/Excel datoteku.\nPrva kolona se smatra Predmetom.",
   "clipboard_import_skip_column": "-- preskoči kolonu --",
   "clipboard_import_index_column": "Originalni indeks (neće biti uvezen)",
   "clipboard_import_indent_level": "Nivo uvlačenja",
   "clipboard_import_manage_columns": "Upravljanje kolonama",
   "clipboard_import_user_not_found": "Korisnik nije pronađen u trenutnom JustDo, prvo pozovite korisnika.",
-  "clipboard_import_how_does_it_work": "Kako ovo funkcioniše?"
+  "clipboard_import_how_does_it_work": "Kako ovo funkcioniše?",
+  "clipboard_import_drop_file_here": "Ispustite datoteku ovdje",
+  "clipboard_import_choose_file": "Odaberi datoteku",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Nepodržani tip datoteke. Molimo koristite CSV, XLSX ili XLS datoteke.",
+  "clipboard_import_file_empty": "Datoteka izgleda prazna.",
+  "clipboard_import_file_read_error": "Greška pri čitanju datoteke. Molimo pokušajte ponovo.",
+  "clipboard_import_file_parse_error": "Greška pri parsiranju datoteke. Molimo provjerite format datoteke.",
+  "clipboard_import_parsing_file": "Obrada datoteke..."
 }

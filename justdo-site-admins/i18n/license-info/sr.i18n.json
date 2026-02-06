@@ -6,8 +6,8 @@
   "license_info_licensed_until": "Лиценца важи до __date__",
   "license_info_expiring_msg": "Лиценца за овај домен истиче <b>__date__</b>.",
   "license_info_expired_msg": "Лиценца за овај домен је истекла <b>__expire_date__</b>. <br>Молимо вас да обновите лиценцу до <b>__shutdown_date__</b> како бисте избегли прекид услуге.",
-  "license_info_renew_license_instructions": "Да бисте обновили лиценцу, кликните на дугме \"Обновите лиценцу\" испод. Наш тим за подршку је ту да вам помогне са свим питањима.<br><br>Хвала вам што сте цењени члан JustDo заједнице. Непрестано радимо на новим функцијама како бисмо побољшали ваше искуство!",
-  "license_info_please_contact_site_admins": "За више информација, молимо вас да контактирате администраторе сајта или нас контактирајте на info@justdo.com .",
+  "license_info_renew_license_instructions": "Da biste obnovili licencu, kliknite na dugme \"Obnovi licencu\" ispod. <br><br>Takođe možete kontaktirati naš tim na <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>. Naš tim za podršku je tu da vam pomogne sa svim pitanjima.<br><br>Hvala vam što ste cenjeni član JustDo zajednice. Kontinuirano radimo na novim funkcijama kako bismo unapredili vaše iskustvo!",
+  "license_info_please_contact_site_admins": "Za više informacija, kontaktirajte administratore sajta ili nas kontaktirajte na <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>.",
   "license_info_valid_until_and_licensed_users": "Лиценца за овај домен важи до <b>__date__</b> за <b>__count__</b> корисника. <br> Хвала вам што сте цењени члан JustDo заједнице. Непрестано радимо на новим функцијама како бисмо побољшали ваше искуство!",
   "license_info_expiring_in_days": "(Истиче за __days_string__)",
   "license_info_expired_in_days": "(Истекла пре __days_string__)"

@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "จำกัดที่ __limit__ งาน",
   "clipboard_import_too_many_rows": "มีแถวมากเกินไป คุณสามารถคัดลอกได้สูงสุด __limit__ แถว",
   "clipboard_import_cant_find_tabular_data": "ไม่พบข้อมูลตารางในคลิปบอร์ด",
-  "clipboard_import_placeholder_msg": "คัดลอกเนื้อหาจากสเปรดชีตของคุณและวางที่นี่เพื่อสร้างงาน\nคอลัมน์แรกจะถือว่าเป็นหัวข้อ",
+  "clipboard_import_placeholder_msg": "วางเนื้อหาสปรีดชีตที่นี่ หรือลากและวางไฟล์ CSV/Excel\nคอลัมน์แรกจะถูกใช้เป็นหัวข้องาน",
   "clipboard_import_skip_column": "-- ข้ามคอลัมน์ --",
   "clipboard_import_index_column": "ดัชนีต้นฉบับ (จะไม่ถูกนำเข้า)",
   "clipboard_import_indent_level": "ระดับการเยื้อง",
   "clipboard_import_manage_columns": "จัดการคอลัมน์",
   "clipboard_import_user_not_found": "ไม่พบผู้ใช้ใน JustDo ปัจจุบัน กรุณาเชิญผู้ใช้ก่อน",
-  "clipboard_import_how_does_it_work": "ทำงานอย่างไร?"
+  "clipboard_import_how_does_it_work": "ทำงานอย่างไร?",
+  "clipboard_import_drop_file_here": "วางไฟล์ที่นี่",
+  "clipboard_import_choose_file": "เลือกไฟล์",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "ไฟล์ประเภทนี้ไม่รองรับ กรุณาใช้ไฟล์ CSV, XLSX หรือ XLS",
+  "clipboard_import_file_empty": "ดูเหมือนว่าไฟล์จะว่างเปล่า",
+  "clipboard_import_file_read_error": "เกิดข้อผิดพลาดในการอ่านไฟล์ กรุณาลองใหม่อีกครั้ง",
+  "clipboard_import_file_parse_error": "เกิดข้อผิดพลาดในการแปลงไฟล์ กรุณาตรวจสอบรูปแบบไฟล์",
+  "clipboard_import_parsing_file": "กำลังประมวลผลไฟล์..."
 }

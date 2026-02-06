@@ -6,8 +6,8 @@
   "license_info_licensed_until": "Licenseret indtil __date__",
   "license_info_expiring_msg": "Licensen for dette domæne udløber den <b>__date__</b>.",
   "license_info_expired_msg": "Licensen for dette domæne udløb den <b>__expire_date__</b>. <br>Forny venligst din licens inden <b>__shutdown_date__</b> for at undgå serviceafbrydelse.",
-  "license_info_renew_license_instructions": "For at forny din licens, klik venligst på knappen \"Forny Licens\" nedenfor. Vores supportteam står klar til at hjælpe dig med eventuelle spørgsmål.<br><br>Tak fordi du er et værdsat medlem af JustDo fællesskabet. Vi arbejder løbende på nye funktioner for at forbedre din oplevelse!",
-  "license_info_please_contact_site_admins": "For mere information, kontakt venligst dine systemadministratorer, eller kontakt os på info@justdo.com .",
+  "license_info_renew_license_instructions": "For at forny din licens, klik venligst på knappen \"Forny licens\" nedenfor. <br><br>Du kan også kontakte vores team på <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>. Vores supportteam er her for at hjælpe dig med eventuelle spørgsmål.<br><br>Tak fordi du er et værdsat medlem af JustDo-fællesskabet. Vi arbejder løbende på nye funktioner for at forbedre din oplevelse!",
+  "license_info_please_contact_site_admins": "For mere information, kontakt venligst dine sideadministratorer, eller kontakt os på <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>.",
   "license_info_valid_until_and_licensed_users": "Dette domæne er licenseret indtil <b>__date__</b> for <b>__count__</b> brugere. <br> Tak fordi du er et værdsat medlem af JustDo fællesskabet. Vi arbejder løbende på nye funktioner for at forbedre din oplevelse!",
   "license_info_expiring_in_days": "(Udløber om __days_string__)",
   "license_info_expired_in_days": "(Udløbet for __days_string__)"

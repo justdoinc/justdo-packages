@@ -6,8 +6,8 @@
   "license_info_licensed_until": "Leseni inatumika hadi __date__",
   "license_info_expiring_msg": "Leseni ya tovuti hii itaisha tarehe <b>__date__</b>.",
   "license_info_expired_msg": "Leseni ya tovuti hii iliisha tarehe <b>__expire_date__</b>. <br>Tafadhali huisha leseni yako kabla ya <b>__shutdown_date__</b> ili kuepuka kusitishwa kwa huduma.",
-  "license_info_renew_license_instructions": "Ili kuhuisha leseni yako, tafadhali bofya kitufe cha \"Huisha Leseni\" hapo chini. Timu yetu ya msaada iko tayari kukusaidia na maswali yoyote.<br><br>Asante kwa kuwa mshiriki anayethaminiwa wa jamii ya JustDo. Tunafanya kazi kuendelea kuboresha huduma zetu!",
-  "license_info_please_contact_site_admins": "Kwa maelezo zaidi, tafadhali wasiliana na wasimamizi wa tovuti, au wasiliana nasi kupitia info@justdo.com .",
+  "license_info_renew_license_instructions": "Ili kuhuisha leseni yako, tafadhali bonyeza kitufe cha \"Huisha Leseni\" hapa chini. <br><br>Unaweza pia kuwasiliana na timu yetu kwa <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>. Timu yetu ya usaidizi iko hapa kukusaidia na maswali yoyote.<br><br>Asante kwa kuwa mwanachama maarufu wa jamii ya JustDo. Tunaendelea kufanya kazi kwenye vipengele vipya ili kuboresha uzoefu wako!",
+  "license_info_please_contact_site_admins": "Kwa taarifa zaidi, tafadhali wasiliana na wasimamizi wa tovuti yako, au wasiliana nasi kwa <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>.",
   "license_info_valid_until_and_licensed_users": "Tovuti hii ina leseni hadi <b>__date__</b> kwa watumiaji <b>__count__</b>. <br> Asante kwa kuwa mshiriki anayethaminiwa wa jamii ya JustDo. Tunafanya kazi kuendelea kuboresha huduma zetu!",
   "license_info_expiring_in_days": "(Inaisha baada ya __days_string__)",
   "license_info_expired_in_days": "(Iliisha __days_string__)"

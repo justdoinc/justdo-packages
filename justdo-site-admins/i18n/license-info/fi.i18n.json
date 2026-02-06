@@ -6,8 +6,8 @@
   "license_info_licensed_until": "Lisenssi voimassa __date__ asti",
   "license_info_expiring_msg": "Tämän verkkotunnuksen lisenssi päättyy <b>__date__</b>.",
   "license_info_expired_msg": "Tämän verkkotunnuksen lisenssi päättyi <b>__expire_date__</b>. <br>Ole hyvä ja uusi lisenssisi <b>__shutdown_date__</b> mennessä välttääksesi palvelukatkokset.",
-  "license_info_renew_license_instructions": "Uusiaksesi lisenssisi, klikkaa alla olevaa \"Uusi lisenssi\" -painiketta. Tukitiimimme auttaa sinua mielellään kysymyksissäsi.<br><br>Kiitos, että olet JustDo-yhteisön arvokas jäsen. Kehitämme jatkuvasti uusia ominaisuuksia parantaaksemme käyttökokemustasi!",
-  "license_info_please_contact_site_admins": "Lisätietoja saat sivuston ylläpitäjiltä tai ottamalla yhteyttä osoitteeseen info@justdo.com.",
+  "license_info_renew_license_instructions": "Uusi lisenssisi napsauttamalla alla olevaa \"Uusi lisenssi\" -painiketta. <br><br>Voit myös ottaa yhteyttä tiimimme osoitteessa <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>. Tukitiimimme on täällä auttamassa sinua mahdollisissa kysymyksissä.<br><br>Kiitos, että olet arvostettu JustDo-yhteisön jäsen. Työskentelemme jatkuvasti uusien ominaisuuksien parissa parantaaksemme kokemustasi!",
+  "license_info_please_contact_site_admins": "Lisätietoja varten ota yhteyttä sivuston ylläpitäjiin tai ota meihin yhteyttä osoitteessa <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>.",
   "license_info_valid_until_and_licensed_users": "Tämän verkkotunnuksen lisenssi on voimassa <b>__date__</b> asti <b>__count__</b> käyttäjälle. <br> Kiitos, että olet JustDo-yhteisön arvokas jäsen. Kehitämme jatkuvasti uusia ominaisuuksia parantaaksemme käyttökokemustasi!",
   "license_info_expiring_in_days": "(Päättyy __days_string__)",
   "license_info_expired_in_days": "(Päättynyt __days_string__)"

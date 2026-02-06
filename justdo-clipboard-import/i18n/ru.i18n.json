@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Ограничено __limit__ задачами",
   "clipboard_import_too_many_rows": "Слишком много строк, вы можете скопировать до __limit__ строк.",
   "clipboard_import_cant_find_tabular_data": "Не удается найти табличную информацию в буфере обмена.",
-  "clipboard_import_placeholder_msg": "Скопируйте содержимое из вашей электронной таблицы и вставьте его здесь для создания задач.\nПервый столбец считается темой.",
+  "clipboard_import_placeholder_msg": "Вставьте содержимое таблицы сюда или перетащите CSV/Excel файл.\nПервый столбец считается темой.",
   "clipboard_import_skip_column": "-- пропустить столбец --",
   "clipboard_import_index_column": "Исходный индекс (не будет импортирован)",
   "clipboard_import_indent_level": "Уровень отступа",
   "clipboard_import_manage_columns": "Управление столбцами",
   "clipboard_import_user_not_found": "Пользователь не найден в текущем JustDo, сначала пригласите пользователя.",
-  "clipboard_import_how_does_it_work": "Как это работает?"
+  "clipboard_import_how_does_it_work": "Как это работает?",
+  "clipboard_import_drop_file_here": "Перетащите файл сюда",
+  "clipboard_import_choose_file": "Выбрать файл",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Неподдерживаемый тип файла. Пожалуйста, используйте файлы CSV, XLSX или XLS.",
+  "clipboard_import_file_empty": "Файл пуст.",
+  "clipboard_import_file_read_error": "Ошибка чтения файла. Пожалуйста, попробуйте снова.",
+  "clipboard_import_file_parse_error": "Ошибка разбора файла. Пожалуйста, проверьте формат файла.",
+  "clipboard_import_parsing_file": "Обработка файла..."
 }

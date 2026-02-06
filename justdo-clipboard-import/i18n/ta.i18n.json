@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "__limit__ பணிகளுக்கு மட்டுப்படுத்தப்பட்டுள்ளது",
   "clipboard_import_too_many_rows": "மிக அதிக வரிசைகள், நீங்கள் அதிகபட்சம் __limit__ வரிசைகளை நகலெடுக்கலாம்.",
   "clipboard_import_cant_find_tabular_data": "கிளிப்போர்டில் அட்டவணை தகவல்களைக் காண முடியவில்லை.",
-  "clipboard_import_placeholder_msg": "உங்கள் விரிதாளிலிருந்து உள்ளடக்கத்தை நகலெடுத்து இங்கே ஒட்டவும், பணிகளை உருவாக்க.\nமுதல் நெடுவரிசை தலைப்பாக கருதப்படும்.",
+  "clipboard_import_placeholder_msg": "விரிதாள் உள்ளடக்கத்தை இங்கே ஒட்டவும், அல்லது CSV/Excel கோப்பை இழுத்து விடவும்.\nமுதல் நெடுவரிசை பொருள் (Subject) ஆக கருதப்படும்.",
   "clipboard_import_skip_column": "-- நெடுவரிசையை தவிர் --",
   "clipboard_import_index_column": "அசல் குறியீடு (இறக்குமதி செய்யப்படாது)",
   "clipboard_import_indent_level": "உள்தள்ளல் நிலை",
   "clipboard_import_manage_columns": "நெடுவரிசைகளை நிர்வகி",
   "clipboard_import_user_not_found": "தற்போதைய JustDo-வில் பயனர் கண்டறியப்படவில்லை, முதலில் பயனரை அழைக்கவும்.",
-  "clipboard_import_how_does_it_work": "இது எவ்வாறு செயல்படுகிறது?"
+  "clipboard_import_how_does_it_work": "இது எவ்வாறு செயல்படுகிறது?",
+  "clipboard_import_drop_file_here": "கோப்பை இங்கே விடவும்",
+  "clipboard_import_choose_file": "கோப்பைத் தேர்ந்தெடு",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "ஆதரிக்கப்படாத கோப்பு வகை. தயவுசெய்து CSV, XLSX அல்லது XLS கோப்புகளைப் பயன்படுத்தவும்.",
+  "clipboard_import_file_empty": "கோப்பு காலியாக உள்ளது.",
+  "clipboard_import_file_read_error": "கோப்பைப் படிப்பதில் பிழை. தயவுசெய்து மீண்டும் முயற்சிக்கவும்.",
+  "clipboard_import_file_parse_error": "கோப்பை பகுப்பாய்வு செய்வதில் பிழை. தயவுசெய்து கோப்பு வடிவத்தைச் சரிபார்க்கவும்.",
+  "clipboard_import_parsing_file": "கோப்பு செயலாக்கப்படுகிறது..."
 }

@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "__limit__টি টাস্কের মধ্যে সীমাবদ্ধ",
   "clipboard_import_too_many_rows": "অতিরিক্ত সারি, আপনি সর্বোচ্চ __limit__টি সারি কপি করতে পারেন।",
   "clipboard_import_cant_find_tabular_data": "ক্লিপবোর্ডে টেবিল আকারের তথ্য পাওয়া যায়নি।",
-  "clipboard_import_placeholder_msg": "আপনার স্প্রেডশীট থেকে বিষয়বস্তু কপি করুন এবং টাস্ক তৈরি করতে এখানে পেস্ট করুন।\nপ্রথম কলামটি বিষয় (Subject) হিসেবে বিবেচিত হবে।",
+  "clipboard_import_placeholder_msg": "এখানে স্প্রেডশীট কন্টেন্ট পেস্ট করুন, অথবা CSV/Excel ফাইল ড্র্যাগ এবং ড্রপ করুন।\nপ্রথম কলামকে সাবজেক্ট হিসেবে গণ্য করা হয়।",
   "clipboard_import_skip_column": "-- কলাম এড়িয়ে যান --",
   "clipboard_import_index_column": "মূল সূচক (ইমপোর্ট করা হবে না)",
   "clipboard_import_indent_level": "ইন্ডেন্ট স্তর",
   "clipboard_import_manage_columns": "কলাম ব্যবস্থাপনা",
   "clipboard_import_user_not_found": "বর্তমান JustDo-তে ব্যবহারকারী পাওয়া যায়নি, প্রথমে ব্যবহারকারীকে আমন্ত্রণ জানান।",
-  "clipboard_import_how_does_it_work": "এটি কীভাবে কাজ করে?"
+  "clipboard_import_how_does_it_work": "এটি কীভাবে কাজ করে?",
+  "clipboard_import_drop_file_here": "এখানে ফাইল ড্রপ করুন",
+  "clipboard_import_choose_file": "ফাইল নির্বাচন করুন",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "অসমর্থিত ফাইল টাইপ। অনুগ্রহ করে CSV, XLSX, অথবা XLS ফাইল ব্যবহার করুন।",
+  "clipboard_import_file_empty": "ফাইলটি খালি বলে মনে হচ্ছে।",
+  "clipboard_import_file_read_error": "ফাইল পড়তে ত্রুটি হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।",
+  "clipboard_import_file_parse_error": "ফাইল পার্স করতে ত্রুটি হয়েছে। অনুগ্রহ করে ফাইল ফরম্যাট পরীক্ষা করুন।",
+  "clipboard_import_parsing_file": "ফাইল প্রসেস করা হচ্ছে..."
 }

@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Limitéiert op __limit__ Aufgaben",
   "clipboard_import_too_many_rows": "Ze vill Reien, Dir kënnt bis zu __limit__ Reie kopéieren.",
   "clipboard_import_cant_find_tabular_data": "Kann keng tabelléiert Informatiounen am Zwëschenoflag fannen.",
-  "clipboard_import_placeholder_msg": "Kopéiert den Inhalt aus Ärem Tabellekalkblat a peecht en hei eran fir Aufgaben ze erstellen.\nDéi éischt Kolonn gëtt als Titel betruecht.",
+  "clipboard_import_placeholder_msg": "Fëgt Tabelleninhalt hei an, oder zitt & lässt eng CSV/Excel Datei falen.\nDéi éischt Kolonn gëtt als Betreff ugesinn.",
   "clipboard_import_skip_column": "-- Kolonn iwwersprangen --",
   "clipboard_import_index_column": "Original Index (gëtt net importéiert)",
   "clipboard_import_indent_level": "Anréckniveau",
   "clipboard_import_manage_columns": "Kolonne verwalten",
   "clipboard_import_user_not_found": "Benotzer net am aktuellen JustDo fonnt, lued de Benotzer fir d'éischt an.",
-  "clipboard_import_how_does_it_work": "Wéi funktionéiert et?"
+  "clipboard_import_how_does_it_work": "Wéi funktionéiert et?",
+  "clipboard_import_drop_file_here": "Datei hei deposéieren",
+  "clipboard_import_choose_file": "Datei wielen",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Net ënnerstëtzte Dateityp. Benotzt w.e.g. CSV, XLSX, oder XLS Dateien.",
+  "clipboard_import_file_empty": "D'Datei schéngt eidel ze sinn.",
+  "clipboard_import_file_read_error": "Feeler beim Liese vun der Datei. Probéiert w.e.g. nach eng Kéier.",
+  "clipboard_import_file_parse_error": "Feeler beim Parse vun der Datei. Iwwerpréift w.e.g. d'Dateiformat.",
+  "clipboard_import_parsing_file": "Datei veraarbechten..."
 }

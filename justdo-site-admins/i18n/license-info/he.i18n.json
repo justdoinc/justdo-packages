@@ -6,8 +6,8 @@
   "license_info_licensed_until": "בתוקף עד __date__",
   "license_info_expiring_msg": "הרישיון עבור דומיין זה יפוג בתאריך <b>__date__</b>.",
   "license_info_expired_msg": "הרישיון עבור דומיין זה פג בתאריך <b>__expire_date__</b>. <br>אנא חדש את הרישיון עד <b>__shutdown_date__</b> כדי למנוע הפרעה בשירות.",
-  "license_info_renew_license_instructions": "לחידוש הרישיון, אנא לחץ על כפתור \"חדש רישיון\" למטה. צוות התמיכה שלנו כאן לעזור לך בכל שאלה.<br><br>תודה שאתה חבר מוערך בקהילת JustDo. אנחנו עובדים ללא הרף על תכונות חדשות כדי לשפר את החוויה שלך!",
-  "license_info_please_contact_site_admins": "למידע נוסף, אנא פנה למנהלי האתר, או צור איתנו קשר בכתובת info@justdo.com .",
+  "license_info_renew_license_instructions": "כדי לחדש את הרישיון שלך, אנא לחץ על כפתור \"חדש רישיון\" למטה. <br><br>אתה יכול גם ליצור קשר עם הצוות שלנו בכתובת <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>. צוות התמיכה שלנו כאן כדי לסייע לך עם כל שאלה.<br><br>תודה שאתה חבר מוערך בקהילת JustDo. אנו עובדים ללא הרף על תכונות חדשות כדי לשפר את החוויה שלך!",
+  "license_info_please_contact_site_admins": "למידע נוסף, אנא פנה למנהלי האתר שלך, או צור איתנו קשר בכתובת <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>.",
   "license_info_valid_until_and_licensed_users": "דומיין זה מורשה עד <b>__date__</b> עבור <b>__count__</b> משתמשים. <br> תודה שאתה חבר מוערך בקהילת JustDo. אנחנו עובדים ללא הרף על תכונות חדשות כדי לשפר את החוויה שלך!",
   "license_info_expiring_in_days": "(פג תוקף בעוד __days_string__)",
   "license_info_expired_in_days": "(פג לפני __days_string__)"

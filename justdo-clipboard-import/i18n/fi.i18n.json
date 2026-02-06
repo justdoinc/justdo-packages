@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Rajoitettu __limit__ tehtävään",
   "clipboard_import_too_many_rows": "Liian monta riviä, voit kopioida enintään __limit__ riviä.",
   "clipboard_import_cant_find_tabular_data": "Leikepöydältä ei löydy taulukkomuotoista tietoa.",
-  "clipboard_import_placeholder_msg": "Kopioi sisältö taulukkolaskentaohjelmastasi ja liitä se tähän luodaksesi tehtäviä.\nEnsimmäistä saraketta pidetään Aiheena.",
+  "clipboard_import_placeholder_msg": "Liitä taulukon sisältö tähän tai vedä ja pudota CSV/Excel-tiedosto.\nEnsimmäinen sarake tulkitaan aiheeksi.",
   "clipboard_import_skip_column": "-- ohita sarake --",
   "clipboard_import_index_column": "Alkuperäinen indeksi (ei tuoda)",
   "clipboard_import_indent_level": "Sisennystaso",
   "clipboard_import_manage_columns": "Hallitse sarakkeita",
   "clipboard_import_user_not_found": "Käyttäjää ei löydy nykyisestä JustDosta, kutsu käyttäjä ensin.",
-  "clipboard_import_how_does_it_work": "Miten tämä toimii?"
+  "clipboard_import_how_does_it_work": "Miten tämä toimii?",
+  "clipboard_import_drop_file_here": "Pudota tiedosto tähän",
+  "clipboard_import_choose_file": "Valitse tiedosto",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Tiedostotyyppiä ei tueta. Käytä CSV-, XLSX- tai XLS-tiedostoja.",
+  "clipboard_import_file_empty": "Tiedosto vaikuttaa olevan tyhjä.",
+  "clipboard_import_file_read_error": "Virhe tiedoston lukemisessa. Yritä uudelleen.",
+  "clipboard_import_file_parse_error": "Virhe tiedoston jäsentämisessä. Tarkista tiedostomuoto.",
+  "clipboard_import_parsing_file": "Käsitellään tiedostoa..."
 }

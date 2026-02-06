@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "__limit__ कार्यहरूमा सीमित",
   "clipboard_import_too_many_rows": "धेरै पङ्क्तिहरू, तपाईं __limit__ पङ्क्तिहरूसम्म कपी गर्न सक्नुहुन्छ।",
   "clipboard_import_cant_find_tabular_data": "क्लिपबोर्डमा तालिका जानकारी फेला पार्न सकिएन।",
-  "clipboard_import_placeholder_msg": "कार्यहरू सिर्जना गर्न तपाईंको स्प्रेडसिटबाट सामग्री कपी गर्नुहोस् र यहाँ पेस्ट गर्नुहोस्।\nपहिलो स्तम्भलाई विषयको रूपमा लिइन्छ।",
+  "clipboard_import_placeholder_msg": "यहाँ स्प्रेडशिट सामग्री टाँस्नुहोस्, वा CSV/Excel फाइल ड्र्याग र ड्रप गर्नुहोस्।\nपहिलो स्तम्भलाई विषयको रूपमा मानिन्छ।",
   "clipboard_import_skip_column": "-- स्तम्भ छोड्नुहोस् --",
   "clipboard_import_index_column": "मूल अनुक्रमणिका (आयात गरिने छैन)",
   "clipboard_import_indent_level": "इन्डेन्ट स्तर",
   "clipboard_import_manage_columns": "स्तम्भहरू व्यवस्थापन गर्नुहोस्",
   "clipboard_import_user_not_found": "हालको JustDo मा प्रयोगकर्ता फेला परेन, पहिले प्रयोगकर्तालाई आमन्त्रण गर्नुहोस्।",
-  "clipboard_import_how_does_it_work": "यो कसरी काम गर्छ?"
+  "clipboard_import_how_does_it_work": "यो कसरी काम गर्छ?",
+  "clipboard_import_drop_file_here": "यहाँ फाइल छोड्नुहोस्",
+  "clipboard_import_choose_file": "फाइल छान्नुहोस्",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "असमर्थित फाइल प्रकार। कृपया CSV, XLSX, वा XLS फाइलहरू प्रयोग गर्नुहोस्।",
+  "clipboard_import_file_empty": "फाइल खाली देखिन्छ।",
+  "clipboard_import_file_read_error": "फाइल पढ्न त्रुटि। कृपया फेरि प्रयास गर्नुहोस्।",
+  "clipboard_import_file_parse_error": "फाइल पार्स गर्न त्रुटि। कृपया फाइल ढाँचा जाँच गर्नुहोस्।",
+  "clipboard_import_parsing_file": "फाइल प्रशोधन गर्दै..."
 }

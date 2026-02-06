@@ -6,8 +6,8 @@
   "license_info_licensed_until": "Licence derīga līdz __date__",
   "license_info_expiring_msg": "Šī domēna licence beigsies <b>__date__</b>.",
   "license_info_expired_msg": "Šī domēna licence beidzās <b>__expire_date__</b>. <br>Lūdzu, atjaunojiet licenci līdz <b>__shutdown_date__</b>, lai izvairītos no pakalpojuma pārtraukšanas.",
-  "license_info_renew_license_instructions": "Lai atjaunotu licenci, lūdzu, noklikšķiniet uz pogas \"Atjaunot licenci\" zemāk. Mūsu atbalsta komanda ir gatava palīdzēt ar jebkuriem jautājumiem.<br><br>Paldies, ka esat daļa no JustDo kopienas. Mēs nepārtraukti strādājam pie jauniem uzlabojumiem, lai pilnveidotu Jūsu pieredzi!",
-  "license_info_please_contact_site_admins": "Lai iegūtu vairāk informācijas, lūdzu, sazinieties ar vietnes administratoriem vai rakstiet mums uz info@justdo.com.",
+  "license_info_renew_license_instructions": "Lai atjaunotu savu licenci, lūdzu, noklikšķiniet uz pogas \"Atjaunot licenci\" zemāk. <br><br>Jūs varat arī sazināties ar mūsu komandu pa e-pastu <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>. Mūsu atbalsta komanda ir gatava palīdzēt jums ar jebkādiem jautājumiem.<br><br>Paldies, ka esat vērtīgs JustDo kopienas loceklis. Mēs pastāvīgi strādājam pie jaunām funkcijām, lai uzlabotu jūsu pieredzi!",
+  "license_info_please_contact_site_admins": "Lai iegūtu papildu informāciju, lūdzu, sazinieties ar savas vietnes administratoriem vai ar mums pa e-pastu <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>.",
   "license_info_valid_until_and_licensed_users": "Šī domēna licence ir derīga līdz <b>__date__</b> un paredzēta <b>__count__</b> lietotājiem. <br> Paldies, ka esat daļa no JustDo kopienas. Mēs nepārtraukti strādājam pie jauniem uzlabojumiem, lai pilnveidotu Jūsu pieredzi!",
   "license_info_expiring_in_days": "(Beigsies pēc __days_string__)",
   "license_info_expired_in_days": "(Beidzās pirms __days_string__)"

@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Terhad kepada __limit__ tugas",
   "clipboard_import_too_many_rows": "Terlalu banyak baris, anda boleh menyalin sehingga __limit__ baris.",
   "clipboard_import_cant_find_tabular_data": "Tidak dapat mencari maklumat berbentuk jadual dalam papan keratan.",
-  "clipboard_import_placeholder_msg": "Salin kandungan dari hamparan anda dan tampal di sini untuk mencipta tugas.\nKolum pertama dianggap sebagai Subjek.",
+  "clipboard_import_placeholder_msg": "Tampal kandungan hamparan di sini, atau seret & lepas fail CSV/Excel.\nLajur pertama dianggap sebagai Subjek.",
   "clipboard_import_skip_column": "-- langkau kolum --",
   "clipboard_import_index_column": "Indeks Asal (tidak akan diimport)",
   "clipboard_import_indent_level": "Tahap Inden",
   "clipboard_import_manage_columns": "Urus Kolum",
   "clipboard_import_user_not_found": "Pengguna tidak ditemui dalam JustDo semasa, jemput pengguna terlebih dahulu.",
-  "clipboard_import_how_does_it_work": "Bagaimana ia berfungsi?"
+  "clipboard_import_how_does_it_work": "Bagaimana ia berfungsi?",
+  "clipboard_import_drop_file_here": "Lepaskan fail di sini",
+  "clipboard_import_choose_file": "Pilih Fail",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Jenis fail tidak disokong. Sila gunakan fail CSV, XLSX, atau XLS.",
+  "clipboard_import_file_empty": "Fail kelihatan kosong.",
+  "clipboard_import_file_read_error": "Ralat membaca fail. Sila cuba lagi.",
+  "clipboard_import_file_parse_error": "Ralat menghurai fail. Sila semak format fail.",
+  "clipboard_import_parsing_file": "Memproses fail..."
 }

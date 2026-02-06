@@ -6,8 +6,8 @@
   "license_info_licensed_until": "Лицензиран до __date__",
   "license_info_expiring_msg": "Лицензът за този домейн ще изтече на <b>__date__</b>.",
   "license_info_expired_msg": "Лицензът за този домейн е изтекъл на <b>__expire_date__</b>. <br>Моля, подновете лиценза си до <b>__shutdown_date__</b>, за да избегнете прекъсване на услугата.",
-  "license_info_renew_license_instructions": "За да подновите лиценза си, моля, кликнете върху бутона \"Подновяване на лиценз\" по-долу. Нашият екип за поддръжка е на разположение да ви помогне с всякакви въпроси.<br><br>Благодарим ви, че сте ценен член на общността на JustDo. Ние непрекъснато работим върху нови функции, за да подобрим вашето преживяване!",
-  "license_info_please_contact_site_admins": "За повече информация, моля, свържете се с администраторите на сайта или се свържете с нас на info@justdo.com .",
+  "license_info_renew_license_instructions": "За да подновите лиценза си, моля кликнете на бутона \"Подновяване на лиценз\" по-долу. <br><br>Можете също да се свържете с нашия екип на <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>. Нашият екип за поддръжка е тук, за да ви помогне с всякакви въпроси.<br><br>Благодарим ви, че сте ценен член на общността на JustDo. Ние непрекъснато работим по нови функции, за да подобрим вашето изживяване!",
+  "license_info_please_contact_site_admins": "За повече информация, моля свържете се с администраторите на сайта или се обърнете към нас на <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>.",
   "license_info_valid_until_and_licensed_users": "Този домейн е лицензиран до <b>__date__</b> за <b>__count__</b> потребители. <br> Благодарим ви, че сте ценен член на общността на JustDo. Ние непрекъснато работим върху нови функции, за да подобрим вашето преживяване!",
   "license_info_expiring_in_days": "(Изтича след __days_string__)",
   "license_info_expired_in_days": "(Изтекъл преди __days_string__)"

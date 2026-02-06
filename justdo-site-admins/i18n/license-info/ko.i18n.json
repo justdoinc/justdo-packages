@@ -6,8 +6,8 @@
   "license_info_licensed_until": "__date__까지 유효",
   "license_info_expiring_msg": "이 도메인의 라이선스는 <b>__date__</b>에 만료됩니다.",
   "license_info_expired_msg": "이 도메인의 라이선스는 <b>__expire_date__</b>에 만료되었습니다. <br>서비스 중단을 피하기 위해 <b>__shutdown_date__</b>까지 라이선스를 갱신해 주세요.",
-  "license_info_renew_license_instructions": "라이선스를 갱신하시려면 아래의 \"라이선스 갱신\" 버튼을 클릭해 주세요. 문의 사항이 있으시면 저희 지원팀이 도와드리겠습니다.<br><br>JustDo 커뮤니티의 소중한 멤버가 되어 주셔서 감사합니다. 저희는 더 나은 사용자 경험을 위해 새로운 기능을 지속적으로 개발하고 있습니다!",
-  "license_info_please_contact_site_admins": "자세한 내용은 사이트 관리자에게 문의하시거나 info@justdo.com으로 연락해 주세요.",
+  "license_info_renew_license_instructions": "라이선스를 갱신하려면 아래의 \"라이선스 갱신\" 버튼을 클릭하세요. <br><br>또한 <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>으로 문의하실 수 있습니다. 저희 지원팀이 궁금하신 사항을 도와드리겠습니다.<br><br>JustDo 커뮤니티의 소중한 회원이 되어 주셔서 감사합니다. 더 나은 경험을 제공하기 위해 지속적으로 새로운 기능을 개발하고 있습니다!",
+  "license_info_please_contact_site_admins": "자세한 내용은 사이트 관리자에게 문의하시거나, <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>으로 연락 주세요.",
   "license_info_valid_until_and_licensed_users": "이 도메인은 <b>__date__</b>까지 <b>__count__</b>명의 사용자에 대해 유효합니다. <br> JustDo 커뮤니티의 소중한 멤버가 되어 주셔서 감사합니다. 저희는 더 나은 사용자 경험을 위해 새로운 기능을 지속적으로 개발하고 있습니다!",
   "license_info_expiring_in_days": "(__days_string__ 후 만료)",
   "license_info_expired_in_days": "(__days_string__ 전 만료)"

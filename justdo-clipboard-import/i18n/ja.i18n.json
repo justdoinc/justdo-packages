@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "__limit__個のタスクに制限されています",
   "clipboard_import_too_many_rows": "行数が多すぎます。最大__limit__行までコピーできます。",
   "clipboard_import_cant_find_tabular_data": "クリップボードに表形式の情報が見つかりません。",
-  "clipboard_import_placeholder_msg": "スプレッドシートの内容をコピーしてここに貼り付けると、タスクが作成されます。\n最初の列は件名として扱われます。",
+  "clipboard_import_placeholder_msg": "スプレッドシートの内容をここに貼り付けるか、CSV/Excelファイルをドラッグ&ドロップしてください。\n最初の列は件名として扱われます。",
   "clipboard_import_skip_column": "-- 列をスキップ --",
   "clipboard_import_index_column": "元のインデックス（インポートされません）",
   "clipboard_import_indent_level": "インデントレベル",
   "clipboard_import_manage_columns": "列の管理",
   "clipboard_import_user_not_found": "ユーザーが現在のJustDoで見つかりません。先にユーザーを招待してください。",
-  "clipboard_import_how_does_it_work": "使い方"
+  "clipboard_import_how_does_it_work": "使い方",
+  "clipboard_import_drop_file_here": "ファイルをここにドロップ",
+  "clipboard_import_choose_file": "ファイルを選択",
+  "clipboard_import_supported_file_types": "CSV、XLSX、XLS",
+  "clipboard_import_unsupported_file_type": "サポートされていないファイル形式です。CSV、XLSX、またはXLSファイルを使用してください。",
+  "clipboard_import_file_empty": "ファイルが空のようです。",
+  "clipboard_import_file_read_error": "ファイルの読み込みエラーが発生しました。もう一度お試しください。",
+  "clipboard_import_file_parse_error": "ファイルの解析エラーが発生しました。ファイル形式を確認してください。",
+  "clipboard_import_parsing_file": "ファイルを処理中..."
 }

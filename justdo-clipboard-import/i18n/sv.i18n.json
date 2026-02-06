@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Begränsat till __limit__ uppgifter",
   "clipboard_import_too_many_rows": "För många rader, du kan kopiera upp till __limit__ rader.",
   "clipboard_import_cant_find_tabular_data": "Kan inte hitta tabelldata i urklipp.",
-  "clipboard_import_placeholder_msg": "Kopiera innehåll från ditt kalkylblad och klistra in det här för att skapa uppgifter.\nDen första kolumnen betraktas som Ämne.",
+  "clipboard_import_placeholder_msg": "Klistra in kalkylbladsinnehåll här, eller dra och släpp en CSV/Excel-fil.\nFörsta kolumnen betraktas som ämne.",
   "clipboard_import_skip_column": "-- hoppa över kolumn --",
   "clipboard_import_index_column": "Ursprungligt index (kommer inte att importeras)",
   "clipboard_import_indent_level": "Indenteringsnivå",
   "clipboard_import_manage_columns": "Hantera kolumner",
   "clipboard_import_user_not_found": "Användaren hittades inte i den aktuella JustDo, bjud in användaren först.",
-  "clipboard_import_how_does_it_work": "Hur fungerar det?"
+  "clipboard_import_how_does_it_work": "Hur fungerar det?",
+  "clipboard_import_drop_file_here": "Släpp fil här",
+  "clipboard_import_choose_file": "Välj fil",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Filtypen stöds inte. Vänligen använd CSV-, XLSX- eller XLS-filer.",
+  "clipboard_import_file_empty": "Filen verkar vara tom.",
+  "clipboard_import_file_read_error": "Fel vid läsning av fil. Vänligen försök igen.",
+  "clipboard_import_file_parse_error": "Fel vid tolkning av fil. Vänligen kontrollera filformatet.",
+  "clipboard_import_parsing_file": "Bearbetar fil..."
 }

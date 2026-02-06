@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Kufizuar në __limit__ detyra",
   "clipboard_import_too_many_rows": "Shumë rreshta, mund të kopjoni deri në __limit__ rreshta.",
   "clipboard_import_cant_find_tabular_data": "Nuk mund të gjenden informacione tabelore në kujtesën e përkohshme.",
-  "clipboard_import_placeholder_msg": "Kopjoni përmbajtjen nga fleta juaj llogaritëse dhe ngjiteni këtu për të krijuar detyra.\nKolona e parë konsiderohet si Subjekti.",
+  "clipboard_import_placeholder_msg": "Ngjitni përmbajtjen e fletëllogaritjes këtu, ose zvarritni dhe lëshoni një skedar CSV/Excel.\nKolona e parë konsiderohet si Titulli (Subject).",
   "clipboard_import_skip_column": "-- kapërce kolonën --",
   "clipboard_import_index_column": "Indeksi origjinal (nuk do të importohet)",
   "clipboard_import_indent_level": "Niveli i thellësisë",
   "clipboard_import_manage_columns": "Menaxho kolonat",
   "clipboard_import_user_not_found": "Përdoruesi nuk u gjet në JustDo-n aktual, ftojeni përdoruesin fillimisht.",
-  "clipboard_import_how_does_it_work": "Si funksionon?"
+  "clipboard_import_how_does_it_work": "Si funksionon?",
+  "clipboard_import_drop_file_here": "Lësho skedarin këtu",
+  "clipboard_import_choose_file": "Zgjidh Skedar",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Lloj skedari i pambështetur. Ju lutemi përdorni skedarë CSV, XLSX, ose XLS.",
+  "clipboard_import_file_empty": "Skedari duket të jetë bosh.",
+  "clipboard_import_file_read_error": "Gabim në leximin e skedarit. Ju lutemi provoni përsëri.",
+  "clipboard_import_file_parse_error": "Gabim në analizimin e skedarit. Ju lutemi kontrolloni formatin e skedarit.",
+  "clipboard_import_parsing_file": "Po përpunohet skedari..."
 }

@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Dibatasi hingga __limit__ tugas",
   "clipboard_import_too_many_rows": "Terlalu banyak baris, Anda dapat menyalin hingga __limit__ baris.",
   "clipboard_import_cant_find_tabular_data": "Tidak dapat menemukan informasi tabel di clipboard.",
-  "clipboard_import_placeholder_msg": "Salin konten dari spreadsheet Anda dan tempel di sini untuk membuat tugas.\nKolom pertama dianggap sebagai Subjek.",
+  "clipboard_import_placeholder_msg": "Tempel konten spreadsheet di sini, atau seret & lepas file CSV/Excel.\nKolom pertama dianggap sebagai Subjek.",
   "clipboard_import_skip_column": "-- lewati kolom --",
   "clipboard_import_index_column": "Indeks Asli (tidak akan diimpor)",
   "clipboard_import_indent_level": "Tingkat Indentasi",
   "clipboard_import_manage_columns": "Kelola Kolom",
   "clipboard_import_user_not_found": "Pengguna tidak ditemukan di JustDo saat ini, undang pengguna terlebih dahulu.",
-  "clipboard_import_how_does_it_work": "Bagaimana cara kerjanya?"
+  "clipboard_import_how_does_it_work": "Bagaimana cara kerjanya?",
+  "clipboard_import_drop_file_here": "Lepas file di sini",
+  "clipboard_import_choose_file": "Pilih File",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Jenis file tidak didukung. Silakan gunakan file CSV, XLSX, atau XLS.",
+  "clipboard_import_file_empty": "File tampaknya kosong.",
+  "clipboard_import_file_read_error": "Kesalahan membaca file. Silakan coba lagi.",
+  "clipboard_import_file_parse_error": "Kesalahan mengurai file. Silakan periksa format file.",
+  "clipboard_import_parsing_file": "Memproses file..."
 }

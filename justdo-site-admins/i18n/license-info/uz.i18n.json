@@ -6,8 +6,8 @@
   "license_info_licensed_until": "__date__ gacha litsenziyalangan",
   "license_info_expiring_msg": "Ushbu domen uchun litsenziya <b>__date__</b> da tugaydi.",
   "license_info_expired_msg": "Ushbu domen uchun litsenziya <b>__expire_date__</b> da tugadi. <br>Xizmat ko'rsatishda uzilishlarning oldini olish uchun, iltimos, <b>__shutdown_date__</b> gacha litsenziyangizni yangilang.",
-  "license_info_renew_license_instructions": "Litsenziyani yangilash uchun, quyidagi \"Litsenziyani yangilash\" tugmasini bosing. Bizning yordam guruhimiz savollaringizga javob berishga tayyor.<br><br>JustDo jamoasining qadrli a'zosi bo'lganingiz uchun tashakkur. Biz sizning tajribangizni yaxshilash uchun yangi funksiyalar ustida doimiy ishlamoqdamiz!",
-  "license_info_please_contact_site_admins": "Qo'shimcha ma'lumot olish uchun, sayt administratorlari bilan bog'laning yoki info@justdo.com manziliga murojaat qiling.",
+  "license_info_renew_license_instructions": "Litsenziyangizni yangilash uchun quyidagi \"Litsenziyani Yangilash\" tugmasini bosing. <br><br>Shuningdek, jamoamiz bilan <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a> orqali bog'lanishingiz mumkin. Qo'llab-quvvatlash jamoamiz har qanday savollaringizda sizga yordam berishga tayyor.<br><br>JustDo hamjamiyatining qadrli a'zosi ekaningiz uchun tashakkur. Biz tajribangizni yaxshilash uchun yangi imkoniyatlar ustida doimiy ishlamoqdamiz!",
+  "license_info_please_contact_site_admins": "Qo'shimcha ma'lumot olish uchun sayt ma'murlariga murojaat qiling yoki <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a> orqali biz bilan bog'laning.",
   "license_info_valid_until_and_licensed_users": "Ushbu domen <b>__date__</b> gacha <b>__count__</b> foydalanuvchi uchun litsenziyalangan. <br> JustDo jamoasining qadrli a'zosi bo'lganingiz uchun tashakkur. Biz sizning tajribangizni yaxshilash uchun yangi funksiyalar ustida doimiy ishlamoqdamiz!",
   "license_info_expiring_in_days": "(__days_string__ da tugaydi)",
   "license_info_expired_in_days": "(__days_string__ oldin tugagan)"

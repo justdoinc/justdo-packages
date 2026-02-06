@@ -6,8 +6,8 @@
   "license_info_licensed_until": "I licencuar deri më __date__",
   "license_info_expiring_msg": "Licenca për këtë domain do të skadojë më <b>__date__</b>.",
   "license_info_expired_msg": "Licenca për këtë domain ka skaduar më <b>__expire_date__</b>. <br>Ju lutemi rinovoni licencën tuaj deri më <b>__shutdown_date__</b> për të shmangur ndërprerjen e shërbimit.",
-  "license_info_renew_license_instructions": "Për të rinovuar licencën tuaj, ju lutemi klikoni butonin \"Rinovoni Licencën\" më poshtë. Ekipi ynë i mbështetjes është këtu për t'ju ndihmuar me çdo pyetje.<br><br>Faleminderit që jeni një anëtar i vlerësuar i komunitetit JustDo. Ne po punojmë vazhdimisht në veçori të reja për të përmirësuar përvojën tuaj!",
-  "license_info_please_contact_site_admins": "Për më shumë informacion, ju lutemi kontaktoni administratorët e faqes suaj, ose na kontaktoni në info@justdo.com .",
+  "license_info_renew_license_instructions": "Për të rinovuar licencën tuaj, ju lutemi klikoni butonin \"Rinovoni Licencën\" më poshtë. <br><br>Gjithashtu mund të kontaktoni ekipin tonë në <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>. Ekipi ynë i mbështetjes është këtu për t'ju ndihmuar me çdo pyetje.<br><br>Faleminderit që jeni anëtar i vlerësuar i komunitetit JustDo. Ne jemi duke punuar vazhdimisht në veçori të reja për të përmirësuar përvojën tuaj!",
+  "license_info_please_contact_site_admins": "Për më shumë informacion, ju lutemi kontaktoni administratorët e faqes suaj, ose na kontaktoni në <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>.",
   "license_info_valid_until_and_licensed_users": "Ky domain është i licencuar deri më <b>__date__</b> për <b>__count__</b> përdorues. <br> Faleminderit që jeni një anëtar i vlerësuar i komunitetit JustDo. Ne po punojmë vazhdimisht në veçori të reja për të përmirësuar përvojën tuaj!",
   "license_info_expiring_in_days": "(Skadon për __days_string__)",
   "license_info_expired_in_days": "(Ka skaduar para __days_string__)"

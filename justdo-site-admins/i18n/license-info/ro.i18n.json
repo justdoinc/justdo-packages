@@ -6,8 +6,8 @@
   "license_info_licensed_until": "Licență valabilă până la __date__",
   "license_info_expiring_msg": "Licența pentru acest domeniu va expira la data de <b>__date__</b>.",
   "license_info_expired_msg": "Licența pentru acest domeniu a expirat la data de <b>__expire_date__</b>. <br>Vă rugăm să reînnoiți licența până la data de <b>__shutdown_date__</b> pentru a evita întreruperea serviciului.",
-  "license_info_renew_license_instructions": "Pentru a reînnoi licența, vă rugăm să faceți clic pe butonul \"Reînnoire licență\" de mai jos. Echipa noastră de suport vă stă la dispoziție pentru orice întrebări.<br><br>Vă mulțumim că sunteți un membru valoros al comunității JustDo. Lucrăm constant la noi funcționalități pentru a îmbunătăți experiența dumneavoastră!",
-  "license_info_please_contact_site_admins": "Pentru mai multe informații, vă rugăm să contactați administratorii site-ului sau să ne scrieți la info@justdo.com .",
+  "license_info_renew_license_instructions": "Pentru a reînnoi licența, vă rugăm să faceți clic pe butonul \"Reînnoiește Licența\" de mai jos. <br><br>De asemenea, puteți contacta echipa noastră la <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>. Echipa noastră de suport este aici pentru a vă ajuta cu orice întrebări.<br><br>Vă mulțumim că sunteți un membru valoros al comunității JustDo. Lucrăm continuu la noi funcționalități pentru a vă îmbunătăți experiența!",
+  "license_info_please_contact_site_admins": "Pentru mai multe informații, vă rugăm să contactați administratorii site-ului sau să ne contactați la <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>.",
   "license_info_valid_until_and_licensed_users": "Acest domeniu este licențiat până la data de <b>__date__</b> pentru <b>__count__</b> utilizatori. <br> Vă mulțumim că sunteți un membru valoros al comunității JustDo. Lucrăm constant la noi funcționalități pentru a îmbunătăți experiența dumneavoastră!",
   "license_info_expiring_in_days": "(Expiră în __days_string__)",
   "license_info_expired_in_days": "(A expirat acum __days_string__)"

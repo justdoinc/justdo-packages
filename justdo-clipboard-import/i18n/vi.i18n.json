@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Giới hạn __limit__ công việc",
   "clipboard_import_too_many_rows": "Quá nhiều hàng, bạn có thể sao chép tối đa __limit__ hàng.",
   "clipboard_import_cant_find_tabular_data": "Không thể tìm thấy thông tin dạng bảng trong clipboard.",
-  "clipboard_import_placeholder_msg": "Sao chép nội dung từ bảng tính của bạn và dán vào đây để tạo công việc.\nCột đầu tiên được xem là Chủ đề.",
+  "clipboard_import_placeholder_msg": "Dán nội dung bảng tính vào đây, hoặc kéo thả tệp CSV/Excel.\nCột đầu tiên được coi là Tiêu đề.",
   "clipboard_import_skip_column": "-- bỏ qua cột --",
   "clipboard_import_index_column": "Chỉ mục Gốc (sẽ không được nhập)",
   "clipboard_import_indent_level": "Mức độ Thụt lề",
   "clipboard_import_manage_columns": "Quản lý Cột",
   "clipboard_import_user_not_found": "Không tìm thấy người dùng trong JustDo hiện tại, hãy mời người dùng trước.",
-  "clipboard_import_how_does_it_work": "Cách thức hoạt động?"
+  "clipboard_import_how_does_it_work": "Cách thức hoạt động?",
+  "clipboard_import_drop_file_here": "Thả tệp vào đây",
+  "clipboard_import_choose_file": "Chọn tệp",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Loại tệp không được hỗ trợ. Vui lòng sử dụng tệp CSV, XLSX hoặc XLS.",
+  "clipboard_import_file_empty": "Tệp có vẻ trống.",
+  "clipboard_import_file_read_error": "Lỗi khi đọc tệp. Vui lòng thử lại.",
+  "clipboard_import_file_parse_error": "Lỗi khi phân tích tệp. Vui lòng kiểm tra định dạng tệp.",
+  "clipboard_import_parsing_file": "Đang xử lý tệp..."
 }

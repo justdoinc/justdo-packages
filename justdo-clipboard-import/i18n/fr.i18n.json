@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Limité à __limit__ tâches",
   "clipboard_import_too_many_rows": "Trop de lignes, vous pouvez copier jusqu'à __limit__ lignes.",
   "clipboard_import_cant_find_tabular_data": "Impossible de trouver des informations tabulaires dans le presse-papiers.",
-  "clipboard_import_placeholder_msg": "Copiez le contenu de votre feuille de calcul et collez-le ici pour créer des tâches.\nLa première colonne est considérée comme le Sujet.",
+  "clipboard_import_placeholder_msg": "Collez le contenu de la feuille de calcul ici, ou glissez-déposez un fichier CSV/Excel.\nLa première colonne est considérée comme le Sujet.",
   "clipboard_import_skip_column": "-- ignorer la colonne --",
   "clipboard_import_index_column": "Index original (ne sera pas importé)",
   "clipboard_import_indent_level": "Niveau d'indentation",
   "clipboard_import_manage_columns": "Gérer les colonnes",
   "clipboard_import_user_not_found": "Utilisateur non trouvé dans le JustDo actuel, invitez d'abord l'utilisateur.",
-  "clipboard_import_how_does_it_work": "Comment ça marche ?"
+  "clipboard_import_how_does_it_work": "Comment ça marche ?",
+  "clipboard_import_drop_file_here": "Déposez le fichier ici",
+  "clipboard_import_choose_file": "Choisir un fichier",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Type de fichier non pris en charge. Veuillez utiliser des fichiers CSV, XLSX ou XLS.",
+  "clipboard_import_file_empty": "Le fichier semble être vide.",
+  "clipboard_import_file_read_error": "Erreur de lecture du fichier. Veuillez réessayer.",
+  "clipboard_import_file_parse_error": "Erreur d'analyse du fichier. Veuillez vérifier le format du fichier.",
+  "clipboard_import_parsing_file": "Traitement du fichier..."
 }

@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Piiratud __limit__ ülesandeni",
   "clipboard_import_too_many_rows": "Liiga palju ridu, võid kopeerida kuni __limit__ rida.",
   "clipboard_import_cant_find_tabular_data": "Lõikelaual ei leidu tabeliandmeid.",
-  "clipboard_import_placeholder_msg": "Kopeeri sisu oma arvutustabelist ja kleebi see siia ülesannete loomiseks.\nEsimest veergu käsitletakse kui Teemat.",
+  "clipboard_import_placeholder_msg": "Kleepige arvutustabeli sisu siia või lohistage CSV/Excel-fail.\nEsimest veergu käsitletakse teemana.",
   "clipboard_import_skip_column": "-- jäta veerg vahele --",
   "clipboard_import_index_column": "Algne indeks (ei impordita)",
   "clipboard_import_indent_level": "Taande tase",
   "clipboard_import_manage_columns": "Halda veerge",
   "clipboard_import_user_not_found": "Kasutajat ei leitud praeguses JustDos, kutsu kasutaja esmalt.",
-  "clipboard_import_how_does_it_work": "Kuidas see töötab?"
+  "clipboard_import_how_does_it_work": "Kuidas see töötab?",
+  "clipboard_import_drop_file_here": "Lohistage fail siia",
+  "clipboard_import_choose_file": "Vali fail",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Toetamata failitüüp. Palun kasutage CSV, XLSX või XLS faile.",
+  "clipboard_import_file_empty": "Fail tundub olevat tühi.",
+  "clipboard_import_file_read_error": "Viga faili lugemisel. Palun proovige uuesti.",
+  "clipboard_import_file_parse_error": "Viga faili parsimisel. Palun kontrollige faili vormingut.",
+  "clipboard_import_parsing_file": "Faili töötlemine..."
 }

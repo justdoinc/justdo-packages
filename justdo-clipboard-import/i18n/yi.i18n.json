@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "באַגרענעצט צו __limit__ אױפֿגאַבן",
   "clipboard_import_too_many_rows": "צו פֿיל שורות, איר קענט קאָפּירן ביז __limit__ שורות.",
   "clipboard_import_cant_find_tabular_data": "קען נישט געפֿינען טאַבעלע אינפֿאָרמאַציע אין קליפּבאָרד.",
-  "clipboard_import_placeholder_msg": "קאָפּירט אינהאַלט פֿון אײַער בלאַט און קלעפּט עס דאָ צו שאַפֿן אױפֿגאַבן.\nדער ערשטער עמוד װערט באַטראַכט װי דער טעמע.",
+  "clipboard_import_placeholder_msg": "אײַנקלעפּן גיטערשייט אינהאַלט דאָ, אָדער שלעפּן און אַראָפּלאָזן אַ CSV/Excel טעקע.\nדער ערשטער זייַל ווערט באַטראַכט אַלס דער נושא.",
   "clipboard_import_skip_column": "-- איבערהיפּן עמוד --",
   "clipboard_import_index_column": "אָריגינעלער אינדעקס (װעט נישט אַרײַנגעפֿירט װערן)",
   "clipboard_import_indent_level": "אײַנרוקונג שטאַפּל",
   "clipboard_import_manage_columns": "פֿאַרװאַלטן עמודים",
   "clipboard_import_user_not_found": "באַניצער נישט געפֿונען אין דעם איצטיקן JustDo, לאַדנט אײַן דעם באַניצער צוערשט.",
-  "clipboard_import_how_does_it_work": "ווי אַרבעט עס?"
+  "clipboard_import_how_does_it_work": "ווי אַרבעט עס?",
+  "clipboard_import_drop_file_here": "אַראָפּלאָזן טעקע דאָ",
+  "clipboard_import_choose_file": "אויסקלייַבן טעקע",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "אומגעשטיצטער טעקע סאָרט. ביטע ניצן CSV, XLSX, אָדער XLS טעקעס.",
+  "clipboard_import_file_empty": "די טעקע זעט אויס ליידיק.",
+  "clipboard_import_file_read_error": "גרייַז בײַם לייענען טעקע. ביטע פּרוּווט נאָכאַמאָל.",
+  "clipboard_import_file_parse_error": "גרייַז בײַם פּאַרסירן טעקע. ביטע איבערקוקט די טעקע פֿאָרמאַט.",
+  "clipboard_import_parsing_file": "פּראָצעסירן טעקע..."
 }

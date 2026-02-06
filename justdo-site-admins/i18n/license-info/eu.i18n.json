@@ -6,8 +6,8 @@
   "license_info_licensed_until": "__date__ arte baimendua",
   "license_info_expiring_msg": "Domeinu honetarako lizentzia <b>__date__</b>-ean iraungiko da.",
   "license_info_expired_msg": "Domeinu honetarako lizentzia <b>__expire_date__</b>-ean iraungi zen. <br>Mesedez, berritu zure lizentzia <b>__shutdown_date__</b> baino lehen zerbitzuan etenik ez izateko.",
-  "license_info_renew_license_instructions": "Zure lizentzia berritzeko, egin klik beheko \"Lizentzia Berritu\" botoian. Gure laguntza taldea prest dago edozein zalantza argitzeko.<br><br>Eskerrik asko JustDo komunitateko kide balioduna izateagatik. Etengabe ari gara lanean zure esperientzia hobetzeko funtzio berrietan!",
-  "license_info_please_contact_site_admins": "Informazio gehiago nahi izanez gero, jarri harremanetan zure guneko administratzaileekin, edo info@justdo.com helbidera idatzi.",
+  "license_info_renew_license_instructions": "Zure lizentzia berritzeko, egin klik beheko \"Lizentzia Berritu\" botoian. <br><br>Gure taldearekin ere harremanetan jar zaitezke hemen: <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>. Gure laguntza-taldea edozein galderarekin laguntzeko prest dago.<br><br>Eskerrik asko JustDo komunitateko kide baliotsua izateagatik. Etengabe funtzionalitate berrietan ari gara lan egiten zure esperientzia hobetzeko!",
+  "license_info_please_contact_site_admins": "Informazio gehiagorako, jarri harremanetan zure guneko administratzaileekin, edo kontaktatu gaitzazu hemen: <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>.",
   "license_info_valid_until_and_licensed_users": "Domeinu hau <b>__date__</b> arte baimenduta dago <b>__count__</b> erabiltzailerentzat. <br> Eskerrik asko JustDo komunitateko kide balioduna izateagatik. Etengabe ari gara lanean zure esperientzia hobetzeko funtzio berrietan!",
   "license_info_expiring_in_days": "(__days_string__ barru iraungiko da)",
   "license_info_expired_in_days": "(__days_string__ direla iraungi da)"

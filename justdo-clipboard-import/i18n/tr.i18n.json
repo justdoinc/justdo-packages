@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "__limit__ görevle sınırlı",
   "clipboard_import_too_many_rows": "Çok fazla satır, en fazla __limit__ satır kopyalayabilirsiniz.",
   "clipboard_import_cant_find_tabular_data": "Panoda tablo bilgisi bulunamadı.",
-  "clipboard_import_placeholder_msg": "Görevler oluşturmak için elektronik tablonuzdan içeriği kopyalayın ve buraya yapıştırın.\nİlk sütun Konu olarak kabul edilir.",
+  "clipboard_import_placeholder_msg": "Elektronik tablo içeriğini buraya yapıştırın veya bir CSV/Excel dosyası sürükleyip bırakın.\nİlk sütun Konu olarak kabul edilir.",
   "clipboard_import_skip_column": "-- sütunu atla --",
   "clipboard_import_index_column": "Orijinal Dizin (içe aktarılmayacak)",
   "clipboard_import_indent_level": "Girinti Seviyesi",
   "clipboard_import_manage_columns": "Sütunları Yönet",
   "clipboard_import_user_not_found": "Kullanıcı mevcut JustDo'da bulunamadı, önce kullanıcıyı davet edin.",
-  "clipboard_import_how_does_it_work": "Nasıl çalışır?"
+  "clipboard_import_how_does_it_work": "Nasıl çalışır?",
+  "clipboard_import_drop_file_here": "Dosyayı buraya bırakın",
+  "clipboard_import_choose_file": "Dosya Seç",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Desteklenmeyen dosya türü. Lütfen CSV, XLSX veya XLS dosyaları kullanın.",
+  "clipboard_import_file_empty": "Dosya boş görünüyor.",
+  "clipboard_import_file_read_error": "Dosya okunurken hata oluştu. Lütfen tekrar deneyin.",
+  "clipboard_import_file_parse_error": "Dosya ayrıştırılırken hata oluştu. Lütfen dosya formatını kontrol edin.",
+  "clipboard_import_parsing_file": "Dosya işleniyor..."
 }

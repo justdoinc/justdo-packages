@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Omejeno na __limit__ nalog",
   "clipboard_import_too_many_rows": "Preveč vrstic, lahko kopirate do __limit__ vrstic.",
   "clipboard_import_cant_find_tabular_data": "V odložišču ni mogoče najti tabelaričnih podatkov.",
-  "clipboard_import_placeholder_msg": "Kopirajte vsebino iz vaše preglednice in jo prilepite sem za ustvarjanje nalog.\nPrvi stolpec se šteje kot Zadeva.",
+  "clipboard_import_placeholder_msg": "Prilepite vsebino preglednice tukaj ali povlecite in spustite CSV/Excel datoteko.\nPrvi stolpec se obravnava kot zadeva.",
   "clipboard_import_skip_column": "-- preskoči stolpec --",
   "clipboard_import_index_column": "Izvirni indeks (ne bo uvožen)",
   "clipboard_import_indent_level": "Raven zamika",
   "clipboard_import_manage_columns": "Upravljaj stolpce",
   "clipboard_import_user_not_found": "Uporabnik ni najden v trenutnem JustDo, najprej povabite uporabnika.",
-  "clipboard_import_how_does_it_work": "Kako deluje?"
+  "clipboard_import_how_does_it_work": "Kako deluje?",
+  "clipboard_import_drop_file_here": "Spustite datoteko tukaj",
+  "clipboard_import_choose_file": "Izberi datoteko",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Nepodprt tip datoteke. Prosimo, uporabite CSV, XLSX ali XLS datoteke.",
+  "clipboard_import_file_empty": "Datoteka je videti prazna.",
+  "clipboard_import_file_read_error": "Napaka pri branju datoteke. Prosimo, poskusite znova.",
+  "clipboard_import_file_parse_error": "Napaka pri razčlenjevanju datoteke. Prosimo, preverite obliko datoteke.",
+  "clipboard_import_parsing_file": "Obdelava datoteke..."
 }

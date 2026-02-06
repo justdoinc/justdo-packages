@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Սահմանափակված է __limit__ խնդիրներով",
   "clipboard_import_too_many_rows": "Չափազանց շատ տողեր, դուք կարող եք պատճենել մինչև __limit__ տող:",
   "clipboard_import_cant_find_tabular_data": "Հնարավոր չէ գտնել աղյուսակային տեղեկատվություն սեղմատախտակում:",
-  "clipboard_import_placeholder_msg": "Պատճենեք բովանդակությունը ձեր աղյուսակից և տեղադրեք այստեղ՝ խնդիրներ ստեղծելու համար:\nԱռաջին սյունակը համարվում է Թեմա:",
+  "clipboard_import_placeholder_msg": "Տեղադրեք աղյուսակի բովանդակությունը այստեղ կամ քաշեք և գցեք CSV/Excel ֆայլ:\nԱռաջին սյունակը համարվում է Թեման:",
   "clipboard_import_skip_column": "-- բաց թողնել սյունակը --",
   "clipboard_import_index_column": "Սկզբնական ինդեքս (չի ներմուծվի)",
   "clipboard_import_indent_level": "Ներդրման մակարդակ",
   "clipboard_import_manage_columns": "Կառավարել սյունակները",
   "clipboard_import_user_not_found": "Օգտատերը չի գտնվել ընթացիկ JustDo-ում, նախ հրավիրեք օգտատիրոջը:",
-  "clipboard_import_how_does_it_work": "Ինչպե՞ս է այն աշխատում"
+  "clipboard_import_how_does_it_work": "Ինչպե՞ս է այն աշխատում",
+  "clipboard_import_drop_file_here": "Գցեք ֆայլը այստեղ",
+  "clipboard_import_choose_file": "Ընտրել ֆայլ",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Չապահովվող ֆայլի տեսակ: Խնդրում ենք օգտագործել CSV, XLSX կամ XLS ֆայլեր:",
+  "clipboard_import_file_empty": "Ֆայլը կարծես դատարկ է:",
+  "clipboard_import_file_read_error": "Ֆայլի կարդալու սխալ: Խնդրում ենք կրկին փորձել:",
+  "clipboard_import_file_parse_error": "Ֆայլի վերլուծության սխալ: Խնդրում ենք ստուգել ֆայլի ձևաչափը:",
+  "clipboard_import_parsing_file": "Ֆայլի մշակում..."
 }

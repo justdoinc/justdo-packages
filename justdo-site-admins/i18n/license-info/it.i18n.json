@@ -6,8 +6,8 @@
   "license_info_licensed_until": "Licenza valida fino al __date__",
   "license_info_expiring_msg": "La licenza per questo dominio scadrà il <b>__date__</b>.",
   "license_info_expired_msg": "La licenza per questo dominio è scaduta il <b>__expire_date__</b>. <br>Si prega di rinnovare la licenza entro il <b>__shutdown_date__</b> per evitare interruzioni del servizio.",
-  "license_info_renew_license_instructions": "Per rinnovare la licenza, clicca sul pulsante \"Rinnova Licenza\" qui sotto. Il nostro team di supporto è a disposizione per qualsiasi domanda.<br><br>Grazie per essere un prezioso membro della comunità JustDo. Lavoriamo costantemente su nuove funzionalità per migliorare la tua esperienza!",
-  "license_info_please_contact_site_admins": "Per maggiori informazioni, contatta gli amministratori del sito o scrivici a info@justdo.com .",
+  "license_info_renew_license_instructions": "Per rinnovare la tua licenza, clicca sul pulsante \"Rinnova Licenza\" qui sotto. <br><br>Puoi anche contattare il nostro team all'indirizzo <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>. Il nostro team di supporto è qui per assisterti con qualsiasi domanda.<br><br>Grazie per essere un membro prezioso della community JustDo. Lavoriamo continuamente su nuove funzionalità per migliorare la tua esperienza!",
+  "license_info_please_contact_site_admins": "Per ulteriori informazioni, contatta gli amministratori del sito o contattaci all'indirizzo <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>.",
   "license_info_valid_until_and_licensed_users": "Questo dominio ha una licenza valida fino al <b>__date__</b> per <b>__count__</b> utenti. <br> Grazie per essere un prezioso membro della comunità JustDo. Lavoriamo costantemente su nuove funzionalità per migliorare la tua esperienza!",
   "license_info_expiring_in_days": "(Scade tra __days_string__)",
   "license_info_expired_in_days": "(Scaduta da __days_string__)"

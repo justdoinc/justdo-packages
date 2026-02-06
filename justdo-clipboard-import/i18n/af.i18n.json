@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Beperk tot __limit__ take",
   "clipboard_import_too_many_rows": "Te veel rye, jy kan tot __limit__ rye kopieer.",
   "clipboard_import_cant_find_tabular_data": "Kan nie tabulêre inligting in knipbord vind nie.",
-  "clipboard_import_placeholder_msg": "Kopieer inhoud van jou sigblad en plak dit hier om take te skep.\nDie eerste kolom word beskou as die Onderwerp.",
+  "clipboard_import_placeholder_msg": "Plak sigblad inhoud hier, of sleep & los 'n CSV/Excel lêer.\nDie eerste kolom word beskou as die Onderwerp.",
   "clipboard_import_skip_column": "-- slaan kolom oor --",
   "clipboard_import_index_column": "Oorspronklike Indeks (sal nie ingevoer word nie)",
   "clipboard_import_indent_level": "Inkepingsvlak",
   "clipboard_import_manage_columns": "Bestuur Kolomme",
   "clipboard_import_user_not_found": "Gebruiker nie in die huidige JustDo gevind nie, nooi die gebruiker eers uit.",
-  "clipboard_import_how_does_it_work": "Hoe werk dit?"
+  "clipboard_import_how_does_it_work": "Hoe werk dit?",
+  "clipboard_import_drop_file_here": "Los lêer hier",
+  "clipboard_import_choose_file": "Kies Lêer",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Nie-ondersteunde lêertipe. Gebruik asseblief CSV, XLSX, of XLS lêers.",
+  "clipboard_import_file_empty": "Die lêer blyk leeg te wees.",
+  "clipboard_import_file_read_error": "Fout met lees van lêer. Probeer asseblief weer.",
+  "clipboard_import_file_parse_error": "Fout met ontleding van lêer. Kontroleer asseblief die lêerformaat.",
+  "clipboard_import_parsing_file": "Verwerk lêer..."
 }

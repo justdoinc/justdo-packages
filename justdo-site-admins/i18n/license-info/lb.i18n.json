@@ -6,8 +6,8 @@
   "license_info_licensed_until": "Lizenzéiert bis __date__",
   "license_info_expiring_msg": "D'Lizenz fir dësen Domain leeft den <b>__date__</b> of.",
   "license_info_expired_msg": "D'Lizenz fir dësen Domain ass den <b>__expire_date__</b> ofgelaf. <br>Wannechgelift erneiert Är Lizenz virum <b>__shutdown_date__</b> fir Ënnerbriechungen ze verhënneren.",
-  "license_info_renew_license_instructions": "Fir Är Lizenz ze erneieren, klickt wannechgelift op de Knäppchen \"Lizenz erneieren\" hei drënner. Eist Support-Team steet Iech bei Froen zur Verfügung.<br><br>Merci dass Dir e wäertvolle Member vun der JustDo Communautéit sidd. Mir schaffen ëmmer un neie Funktiounen fir Är Erfarung ze verbesseren!",
-  "license_info_please_contact_site_admins": "Fir méi Informatiounen, kontaktéiert wannechgelift Är Site-Administrateuren oder schreift eis op info@justdo.com .",
+  "license_info_renew_license_instructions": "Fir Är Lizenz ze erneieren, klickt w.e.g. op de Knäppchen \"Lizenz erneieren\" hei ënnen. <br><br>Dir kënnt och eis Team kontaktéieren op <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>. Eist Support-Team hëlleft Iech gären bei all Froen.<br><br>Merci datt Dir e geschätzten Member vun der JustDo Community sidd. Mir schaffen kontinuéierlech un neie Funktiounen fir Är Erfahrung ze verbesseren!",
+  "license_info_please_contact_site_admins": "Fir méi Informatioun, kontaktéiert w.e.g. Är Site-Administrateuren, oder kontaktéiert eis op <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>.",
   "license_info_valid_until_and_licensed_users": "Dësen Domain ass bis den <b>__date__</b> fir <b>__count__</b> Benotzer lizenzéiert. <br> Merci dass Dir e wäertvolle Member vun der JustDo Communautéit sidd. Mir schaffen ëmmer un neie Funktiounen fir Är Erfarung ze verbesseren!",
   "license_info_expiring_in_days": "(Leeft of an __days_string__)",
   "license_info_expired_in_days": "(Ofgelaf säit __days_string__)"

@@ -6,8 +6,8 @@
   "license_info_licensed_until": "มีผลถึงวันที่ __date__",
   "license_info_expiring_msg": "ใบอนุญาตสำหรับโดเมนนี้จะหมดอายุในวันที่ <b>__date__</b>",
   "license_info_expired_msg": "ใบอนุญาตสำหรับโดเมนนี้หมดอายุเมื่อวันที่ <b>__expire_date__</b> <br>กรุณาต่ออายุใบอนุญาตภายในวันที่ <b>__shutdown_date__</b> เพื่อป้องกันการหยุดชะงักของบริการ",
-  "license_info_renew_license_instructions": "เพื่อต่ออายุใบอนุญาต กรุณาคลิกที่ปุ่ม \"ต่ออายุใบอนุญาต\" ด้านล่าง ทีมสนับสนุนของเราพร้อมช่วยเหลือคุณในทุกคำถาม<br><br>ขอบคุณที่เป็นสมาชิกที่มีค่าของชุมชน JustDo เรากำลังพัฒนาฟีเจอร์ใหม่ๆ อย่างต่อเนื่องเพื่อพัฒนาประสบการณ์การใช้งานของคุณ!",
-  "license_info_please_contact_site_admins": "สำหรับข้อมูลเพิ่มเติม กรุณาติดต่อผู้ดูแลระบบของคุณ หรือติดต่อเราที่ info@justdo.com",
+  "license_info_renew_license_instructions": "หากต้องการต่ออายุใบอนุญาต กรุณาคลิกปุ่ม \"ต่ออายุใบอนุญาต\" ด้านล่าง <br><br>คุณยังสามารถติดต่อทีมงานของเราได้ที่ <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a> ทีมสนับสนุนของเราพร้อมช่วยเหลือคุณในทุกคำถาม<br><br>ขอบคุณที่เป็นสมาชิกคนสำคัญของชุมชน JustDo เรากำลังพัฒนาฟีเจอร์ใหม่ ๆ อย่างต่อเนื่องเพื่อปรับปรุงประสบการณ์การใช้งานของคุณ!",
+  "license_info_please_contact_site_admins": "สำหรับข้อมูลเพิ่มเติม กรุณาติดต่อผู้ดูแลระบบของคุณ หรือติดต่อเราได้ที่ <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>",
   "license_info_valid_until_and_licensed_users": "โดเมนนี้มีใบอนุญาตถึงวันที่ <b>__date__</b> สำหรับผู้ใช้ <b>__count__</b> คน <br> ขอบคุณที่เป็นสมาชิกที่มีค่าของชุมชน JustDo เรากำลังพัฒนาฟีเจอร์ใหม่ๆ อย่างต่อเนื่องเพื่อพัฒนาประสบการณ์การใช้งานของคุณ!",
   "license_info_expiring_in_days": "(จะหมดอายุใน __days_string__)",
   "license_info_expired_in_days": "(หมดอายุแล้ว __days_string__)"

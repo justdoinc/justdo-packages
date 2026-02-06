@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "__limit__ тапсырмамен шектелген",
   "clipboard_import_too_many_rows": "Тым көп жол, сіз __limit__ жолға дейін көшіре аласыз.",
   "clipboard_import_cant_find_tabular_data": "Алмасу буферінде кестелік ақпарат табылмады.",
-  "clipboard_import_placeholder_msg": "Кестеңізден мазмұнды көшіріп, тапсырмалар жасау үшін оны осы жерге қойыңыз.\nБірінші баған Тақырып ретінде қарастырылады.",
+  "clipboard_import_placeholder_msg": "Кесте мазмұнын осында қойыңыз немесе CSV/Excel файлын сүйреп апарып тастаңыз.\nБірінші баған Тақырып ретінде қарастырылады.",
   "clipboard_import_skip_column": "-- бағанды өткізіп жіберу --",
   "clipboard_import_index_column": "Бастапқы индекс (импортталмайды)",
   "clipboard_import_indent_level": "Шегініс деңгейі",
   "clipboard_import_manage_columns": "Бағандарды басқару",
   "clipboard_import_user_not_found": "Пайдаланушы ағымдағы JustDo-да табылмады, алдымен пайдаланушыны шақырыңыз.",
-  "clipboard_import_how_does_it_work": "Бұл қалай жұмыс істейді?"
+  "clipboard_import_how_does_it_work": "Бұл қалай жұмыс істейді?",
+  "clipboard_import_drop_file_here": "Файлды осында тастаңыз",
+  "clipboard_import_choose_file": "Файлды таңдау",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Қолдау көрсетілмейтін файл түрі. CSV, XLSX немесе XLS файлдарын пайдаланыңыз.",
+  "clipboard_import_file_empty": "Файл бос сияқты.",
+  "clipboard_import_file_read_error": "Файлды оқу қатесі. Қайталап көріңіз.",
+  "clipboard_import_file_parse_error": "Файлды талдау қатесі. Файл форматын тексеріңіз.",
+  "clipboard_import_parsing_file": "Файл өңделуде..."
 }

@@ -6,8 +6,8 @@
   "license_info_licensed_until": "ליצענזירט ביז __date__",
   "license_info_expiring_msg": "די ליצענץ פֿאַר דעם דאָמען וועט אויסגיין אום <b>__date__</b>.",
   "license_info_expired_msg": "די ליצענץ פֿאַר דעם דאָמען איז אויסגעגאַנגען אום <b>__expire_date__</b>. <br>ביטע באַנײַט אײַער ליצענץ ביז <b>__shutdown_date__</b> צו פֿאַרמײַדן סערוויס איבעררײַס.",
-  "license_info_renew_license_instructions": "צו באַנײַען אײַער ליצענץ, ביטע דרוקט דעם \"באַנײַען ליצענץ\" קנעפּל אונטן. אונדזער שטיצע מאַנשאַפֿט איז דאָ אײַך צו העלפֿן מיט סײַ וועלכע פֿראַגעס.<br><br>אַ דאַנק פֿאַר זײַן אַ געשאַצטער מיטגליד פֿון די JustDo געמיינשאַפֿט. מיר אַרבעטן כּסדר אויף נײַע פֿונקציעס צו פֿאַרבעסערן אײַער דערפֿאַרונג!",
-  "license_info_please_contact_site_admins": "פֿאַר מער אינפֿאָרמאַציע, ביטע פֿאַרבינדט זיך מיט אײַערע זײַטל אַדמיניסטראַטאָרס, אָדער קאָנטאַקטירט אונדז בײַ info@justdo.com .",
+  "license_info_renew_license_instructions": "צו באַנייען אייער ליצענץ, ביטע דריקט אויפֿן \"באַנייען ליצענץ\" קנעפּל אונטן. <br><br>איר קענט אויך דערגרייכן אונדזער טים ביי <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>. אונדזער שטיצע טים איז דאָ צו העלפֿן אייך מיט אַלע פֿראַגעס.<br><br>אַ דאַנק פֿאַר זיין אַ ווערטפֿולער מיטגליד פֿון דער JustDo געמיינדע. מיר אַרבעטן שטענדיק אויף נייע פֿונקציעס צו פֿאַרבעסערן אייער דערפֿאַרונג!",
+  "license_info_please_contact_site_admins": "פֿאַר מער אינפֿאָרמאַציע, ביטע ווענדט זיך צו אייערע סייט אַדמיניסטראַטאָרן, אָדער קאָנטאַקטירט אונדז ביי <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>.",
   "license_info_valid_until_and_licensed_users": "דער דאָמען איז ליצענזירט ביז <b>__date__</b> פֿאַר <b>__count__</b> באַניצערס. <br> אַ דאַנק פֿאַר זײַן אַ געשאַצטער מיטגליד פֿון די JustDo געמיינשאַפֿט. מיר אַרבעטן כּסדר אויף נײַע פֿונקציעס צו פֿאַרבעסערן אײַער דערפֿאַרונג!",
   "license_info_expiring_in_days": "(גייט אויס אין __days_string__)",
   "license_info_expired_in_days": "(אויסגעגאַנגען פֿאַר __days_string__)"

@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Beperkt tot __limit__ taken",
   "clipboard_import_too_many_rows": "Te veel rijen, u kunt maximaal __limit__ rijen kopiëren.",
   "clipboard_import_cant_find_tabular_data": "Kan geen tabelinformatie vinden in het klembord.",
-  "clipboard_import_placeholder_msg": "Kopieer inhoud van uw spreadsheet en plak het hier om taken te maken.\nDe eerste kolom wordt beschouwd als het Onderwerp.",
+  "clipboard_import_placeholder_msg": "Plak spreadsheetinhoud hier, of sleep een CSV/Excel-bestand.\nDe eerste kolom wordt beschouwd als het onderwerp.",
   "clipboard_import_skip_column": "-- kolom overslaan --",
   "clipboard_import_index_column": "Originele Index (wordt niet geïmporteerd)",
   "clipboard_import_indent_level": "Inspringniveau",
   "clipboard_import_manage_columns": "Kolommen beheren",
   "clipboard_import_user_not_found": "Gebruiker niet gevonden in de huidige JustDo, nodig de gebruiker eerst uit.",
-  "clipboard_import_how_does_it_work": "Hoe werkt het?"
+  "clipboard_import_how_does_it_work": "Hoe werkt het?",
+  "clipboard_import_drop_file_here": "Sleep bestand hierheen",
+  "clipboard_import_choose_file": "Kies bestand",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Niet-ondersteund bestandstype. Gebruik CSV-, XLSX- of XLS-bestanden.",
+  "clipboard_import_file_empty": "Het bestand lijkt leeg te zijn.",
+  "clipboard_import_file_read_error": "Fout bij het lezen van bestand. Probeer het opnieuw.",
+  "clipboard_import_file_parse_error": "Fout bij het parseren van bestand. Controleer het bestandsformaat.",
+  "clipboard_import_parsing_file": "Bestand verwerken..."
 }

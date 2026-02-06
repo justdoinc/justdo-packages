@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Ограничено на __limit__ задачи",
   "clipboard_import_too_many_rows": "Премногу редови, можете да копирате до __limit__ редови.",
   "clipboard_import_cant_find_tabular_data": "Не може да се најдат табеларни информации во clipboard-от.",
-  "clipboard_import_placeholder_msg": "Копирајте содржина од вашата табела и залепете ја овде за да креирате задачи.\nПрвата колона се смета за Наслов.",
+  "clipboard_import_placeholder_msg": "Залепете содржина од табеларен документ овде, или повлечете и пуштете CSV/Excel датотека.\nПрвата колона се смета како Предмет.",
   "clipboard_import_skip_column": "-- прескокни колона --",
   "clipboard_import_index_column": "Оригинален индекс (нема да се увезе)",
   "clipboard_import_indent_level": "Ниво на вовлекување",
   "clipboard_import_manage_columns": "Управувај со колони",
   "clipboard_import_user_not_found": "Корисникот не е пронајден во тековниот JustDo, прво поканете го корисникот.",
-  "clipboard_import_how_does_it_work": "Како функционира ова?"
+  "clipboard_import_how_does_it_work": "Како функционира ова?",
+  "clipboard_import_drop_file_here": "Пуштете датотека овде",
+  "clipboard_import_choose_file": "Избери датотека",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Неподдржан тип на датотека. Ве молиме користете CSV, XLSX или XLS датотеки.",
+  "clipboard_import_file_empty": "Датотеката изгледа празна.",
+  "clipboard_import_file_read_error": "Грешка при читање на датотеката. Ве молиме обидете се повторно.",
+  "clipboard_import_file_parse_error": "Грешка при обработка на датотеката. Ве молиме проверете го форматот на датотеката.",
+  "clipboard_import_parsing_file": "Обработка на датотека..."
 }

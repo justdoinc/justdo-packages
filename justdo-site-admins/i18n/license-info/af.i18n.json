@@ -6,8 +6,8 @@
   "license_info_licensed_until": "Gelisensieer tot __date__",
   "license_info_expiring_msg": "Die lisensie vir hierdie domein verval op <b>__date__</b>.",
   "license_info_expired_msg": "Die lisensie vir hierdie domein het verval op <b>__expire_date__</b>. <br>Hernu asseblief jou lisensie voor <b>__shutdown_date__</b> om diensonderbreking te vermy.",
-  "license_info_renew_license_instructions": "Om jou lisensie te hernu, klik asseblief op die \"Hernu Lisensie\" knoppie hieronder. Ons ondersteuningspan is hier om jou te help met enige vrae.<br><br>Dankie dat jy 'n waardevolle lid van die JustDo-gemeenskap is. Ons werk voortdurend aan nuwe funksies om jou ervaring te verbeter!",
-  "license_info_please_contact_site_admins": "Vir meer inligting, kontak asseblief jou werf-administrateurs, of kontak ons by info@justdo.com .",
+  "license_info_renew_license_instructions": "Om jou lisensie te hernu, klik asseblief op die \"Hernu Lisensie\" knoppie hieronder. <br><br>Jy kan ook ons span kontak by <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>. Ons ondersteuningspan is hier om jou met enige vrae te help.<br><br>Dankie dat jy 'n gewaardeerde lid van die JustDo-gemeenskap is. Ons werk deurlopend aan nuwe funksies om jou ervaring te verbeter!",
+  "license_info_please_contact_site_admins": "Vir meer inligting, kontak asseblief jou werf-administrateurs, of kontak ons by <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>.",
   "license_info_valid_until_and_licensed_users": "Hierdie domein is gelisensieer tot <b>__date__</b> vir <b>__count__</b> gebruikers. <br> Dankie dat jy 'n waardevolle lid van die JustDo-gemeenskap is. Ons werk voortdurend aan nuwe funksies om jou ervaring te verbeter!",
   "license_info_expiring_in_days": "(Verval oor __days_string__)",
   "license_info_expired_in_days": "(Het verval __days_string__)"

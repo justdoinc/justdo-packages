@@ -6,8 +6,8 @@
   "license_info_licensed_until": "Litsents kehtib kuni __date__",
   "license_info_expiring_msg": "Selle domeeni litsents aegub <b>__date__</b>.",
   "license_info_expired_msg": "Selle domeeni litsents aegus <b>__expire_date__</b>. <br>Palun pikendage oma litsentsi enne <b>__shutdown_date__</b>, et vältida teenuse katkestusi.",
-  "license_info_renew_license_instructions": "Litsentsi pikendamiseks klõpsake alloleval nupul \"Pikenda litsentsi\". Meie tugimeeskond on valmis teid küsimuste korral aitama.<br><br>Täname, et olete JustDo kogukonna väärtuslik liige. Töötame pidevalt uute funktsioonide kallal, et teie kasutuskogemust parandada!",
-  "license_info_please_contact_site_admins": "Lisateabe saamiseks pöörduge oma saidi administraatorite poole või võtke meiega ühendust aadressil info@justdo.com .",
+  "license_info_renew_license_instructions": "Litsentsi uuendamiseks klõpsake allolevat nuppu \"Uuenda litsentsi\". <br><br>Võite ka pöörduda meie meeskonna poole aadressil <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>. Meie tugimeeskond on siin, et aidata teil kõigi küsimustega.<br><br>Täname, et olete JustDo kogukonna väärtuslik liige. Töötame pidevalt uute funktsioonide kallal, et parandada teie kasutuskogemust!",
+  "license_info_please_contact_site_admins": "Lisateabe saamiseks pöörduge oma saidi administraatorite poole või võtke meiega ühendust aadressil <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>.",
   "license_info_valid_until_and_licensed_users": "Selle domeeni litsents kehtib kuni <b>__date__</b> <b>__count__</b> kasutajale. <br> Täname, et olete JustDo kogukonna väärtuslik liige. Töötame pidevalt uute funktsioonide kallal, et teie kasutuskogemust parandada!",
   "license_info_expiring_in_days": "(Aegub __days_string__)",
   "license_info_expired_in_days": "(Aegunud __days_string__)"

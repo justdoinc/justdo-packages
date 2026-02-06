@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "מוגבל ל-__limit__ משימות",
   "clipboard_import_too_many_rows": "יותר מדי שורות, ניתן להעתיק עד __limit__ שורות.",
   "clipboard_import_cant_find_tabular_data": "לא ניתן למצוא מידע טבלאי בלוח.",
-  "clipboard_import_placeholder_msg": "העתק תוכן מהגיליון האלקטרוני שלך והדבק אותו כאן כדי ליצור משימות.\nהעמודה הראשונה נחשבת כנושא.",
+  "clipboard_import_placeholder_msg": "הדבק תוכן גיליון אלקטרוני כאן, או גרור ושחרר קובץ CSV/Excel.\nהעמודה הראשונה נחשבת לנושא.",
   "clipboard_import_skip_column": "-- דלג על עמודה --",
   "clipboard_import_index_column": "אינדקס מקורי (לא ייובא)",
   "clipboard_import_indent_level": "רמת הזחה",
   "clipboard_import_manage_columns": "ניהול עמודות",
   "clipboard_import_user_not_found": "המשתמש לא נמצא ב-JustDo הנוכחי, הזמן את המשתמש תחילה.",
-  "clipboard_import_how_does_it_work": "איך זה עובד?"
+  "clipboard_import_how_does_it_work": "איך זה עובד?",
+  "clipboard_import_drop_file_here": "שחרר קובץ כאן",
+  "clipboard_import_choose_file": "בחר קובץ",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "סוג קובץ לא נתמך. אנא השתמש בקבצי CSV, XLSX או XLS.",
+  "clipboard_import_file_empty": "הקובץ נראה ריק.",
+  "clipboard_import_file_read_error": "שגיאה בקריאת הקובץ. אנא נסה שוב.",
+  "clipboard_import_file_parse_error": "שגיאה בניתוח הקובץ. אנא בדוק את פורמט הקובץ.",
+  "clipboard_import_parsing_file": "מעבד קובץ..."
 }

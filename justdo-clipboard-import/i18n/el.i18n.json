@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Περιορισμός σε __limit__ εργασίες",
   "clipboard_import_too_many_rows": "Πάρα πολλές γραμμές, μπορείτε να αντιγράψετε έως __limit__ γραμμές.",
   "clipboard_import_cant_find_tabular_data": "Δεν βρέθηκαν πινακοποιημένες πληροφορίες στο πρόχειρο.",
-  "clipboard_import_placeholder_msg": "Αντιγράψτε περιεχόμενο από το υπολογιστικό σας φύλλο και επικολλήστε το εδώ για να δημιουργήσετε εργασίες.\nΗ πρώτη στήλη θεωρείται ως το Θέμα.",
+  "clipboard_import_placeholder_msg": "Επικολλήστε περιεχόμενο υπολογιστικού φύλλου εδώ, ή σύρετε και αποθέστε ένα αρχείο CSV/Excel.\nΗ πρώτη στήλη θεωρείται ως το Θέμα.",
   "clipboard_import_skip_column": "-- παράλειψη στήλης --",
   "clipboard_import_index_column": "Αρχικός Δείκτης (δεν θα εισαχθεί)",
   "clipboard_import_indent_level": "Επίπεδο Εσοχής",
   "clipboard_import_manage_columns": "Διαχείριση Στηλών",
   "clipboard_import_user_not_found": "Ο χρήστης δεν βρέθηκε στο τρέχον JustDo, προσκαλέστε πρώτα τον χρήστη.",
-  "clipboard_import_how_does_it_work": "Πώς λειτουργεί;"
+  "clipboard_import_how_does_it_work": "Πώς λειτουργεί;",
+  "clipboard_import_drop_file_here": "Αποθέστε το αρχείο εδώ",
+  "clipboard_import_choose_file": "Επιλογή Αρχείου",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Μη υποστηριζόμενος τύπος αρχείου. Παρακαλώ χρησιμοποιήστε αρχεία CSV, XLSX ή XLS.",
+  "clipboard_import_file_empty": "Το αρχείο φαίνεται να είναι κενό.",
+  "clipboard_import_file_read_error": "Σφάλμα ανάγνωσης αρχείου. Παρακαλώ δοκιμάστε ξανά.",
+  "clipboard_import_file_parse_error": "Σφάλμα ανάλυσης αρχείου. Παρακαλώ ελέγξτε τη μορφή του αρχείου.",
+  "clipboard_import_parsing_file": "Επεξεργασία αρχείου..."
 }

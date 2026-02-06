@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Begrenset til __limit__ oppgaver",
   "clipboard_import_too_many_rows": "For mange rader, du kan kopiere opptil __limit__ rader.",
   "clipboard_import_cant_find_tabular_data": "Kan ikke finne tabelldata i utklippstavlen.",
-  "clipboard_import_placeholder_msg": "Kopier innhold fra regnearket ditt og lim det inn her for å opprette oppgaver.\nDen første kolonnen regnes som Emne.",
+  "clipboard_import_placeholder_msg": "Lim inn regnearkinnhold her, eller dra og slipp en CSV/Excel-fil.\nDen første kolonnen regnes som emnet.",
   "clipboard_import_skip_column": "-- hopp over kolonne --",
   "clipboard_import_index_column": "Opprinnelig indeks (vil ikke bli importert)",
   "clipboard_import_indent_level": "Innrykksnivå",
   "clipboard_import_manage_columns": "Administrer kolonner",
   "clipboard_import_user_not_found": "Bruker ikke funnet i gjeldende JustDo, inviter brukeren først.",
-  "clipboard_import_how_does_it_work": "Hvordan fungerer det?"
+  "clipboard_import_how_does_it_work": "Hvordan fungerer det?",
+  "clipboard_import_drop_file_here": "Slipp fil her",
+  "clipboard_import_choose_file": "Velg fil",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Filtypen støttes ikke. Vennligst bruk CSV, XLSX eller XLS-filer.",
+  "clipboard_import_file_empty": "Filen ser ut til å være tom.",
+  "clipboard_import_file_read_error": "Feil ved lesing av fil. Vennligst prøv igjen.",
+  "clipboard_import_file_parse_error": "Feil ved parsing av fil. Vennligst sjekk filformatet.",
+  "clipboard_import_parsing_file": "Behandler fil..."
 }

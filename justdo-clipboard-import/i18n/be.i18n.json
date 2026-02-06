@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Абмежавана да __limit__ задач",
   "clipboard_import_too_many_rows": "Занадта шмат радкоў, вы можаце скапіяваць да __limit__ радкоў.",
   "clipboard_import_cant_find_tabular_data": "Не ўдалося знайсці табліцу ў буферы абмену.",
-  "clipboard_import_placeholder_msg": "Скапіруйце змесціва з вашай электроннай табліцы і ўстаўце яго тут, каб стварыць задачы.\nПершы слупок лічыцца Тэмай.",
+  "clipboard_import_placeholder_msg": "Устаўце змесціво табліцы сюды або перацягніце CSV/Excel файл.\nПершы слупок лічыцца Тэмай.",
   "clipboard_import_skip_column": "-- прапусціць слупок --",
   "clipboard_import_index_column": "Арыгінальны індэкс (не будзе імпартаваны)",
   "clipboard_import_indent_level": "Узровень водступу",
   "clipboard_import_manage_columns": "Кіраваць слупкамі",
   "clipboard_import_user_not_found": "Карыстальнік не знойдзены ў бягучым JustDo, спачатку запрасіце карыстальніка.",
-  "clipboard_import_how_does_it_work": "Як гэта працуе?"
+  "clipboard_import_how_does_it_work": "Як гэта працуе?",
+  "clipboard_import_drop_file_here": "Перацягніце файл сюды",
+  "clipboard_import_choose_file": "Выбраць файл",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Непадтрымліваемы тып файла. Калі ласка, выкарыстоўвайце файлы CSV, XLSX або XLS.",
+  "clipboard_import_file_empty": "Здаецца, файл пусты.",
+  "clipboard_import_file_read_error": "Памылка чытання файла. Калі ласка, паспрабуйце яшчэ раз.",
+  "clipboard_import_file_parse_error": "Памылка апрацоўкі файла. Калі ласка, праверце фармат файла.",
+  "clipboard_import_parsing_file": "Апрацоўка файла..."
 }

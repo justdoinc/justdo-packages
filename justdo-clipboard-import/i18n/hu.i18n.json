@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "__limit__ feladatra korlátozva",
   "clipboard_import_too_many_rows": "Túl sok sor, maximum __limit__ sort másolhat.",
   "clipboard_import_cant_find_tabular_data": "Nem található táblázatos információ a vágólapon.",
-  "clipboard_import_placeholder_msg": "Másolja a tartalmat a táblázatkezelőből, és illessze be ide a feladatok létrehozásához.\nAz első oszlop a Tárgynak felel meg.",
+  "clipboard_import_placeholder_msg": "Illessze be ide a táblázat tartalmát, vagy húzzon ide egy CSV/Excel fájlt.\nAz első oszlop a Tárgynak minősül.",
   "clipboard_import_skip_column": "-- oszlop kihagyása --",
   "clipboard_import_index_column": "Eredeti index (nem kerül importálásra)",
   "clipboard_import_indent_level": "Behúzási szint",
   "clipboard_import_manage_columns": "Oszlopok kezelése",
   "clipboard_import_user_not_found": "A felhasználó nem található a jelenlegi JustDo-ban, először hívja meg a felhasználót.",
-  "clipboard_import_how_does_it_work": "Hogyan működik?"
+  "clipboard_import_how_does_it_work": "Hogyan működik?",
+  "clipboard_import_drop_file_here": "Húzza ide a fájlt",
+  "clipboard_import_choose_file": "Fájl kiválasztása",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Nem támogatott fájltípus. Kérjük, használjon CSV, XLSX vagy XLS fájlokat.",
+  "clipboard_import_file_empty": "A fájl üresnek tűnik.",
+  "clipboard_import_file_read_error": "Hiba a fájl olvasása során. Kérjük, próbálja újra.",
+  "clipboard_import_file_parse_error": "Hiba a fájl feldolgozása során. Kérjük, ellenőrizze a fájl formátumát.",
+  "clipboard_import_parsing_file": "Fájl feldolgozása..."
 }

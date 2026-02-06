@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Ierobežots līdz __limit__ uzdevumiem",
   "clipboard_import_too_many_rows": "Pārāk daudz rindu, jūs varat kopēt līdz __limit__ rindām.",
   "clipboard_import_cant_find_tabular_data": "Nevar atrast tabulas informāciju starpliktuvē.",
-  "clipboard_import_placeholder_msg": "Nokopējiet saturu no jūsu izklājlapas un ielīmējiet to šeit, lai izveidotu uzdevumus.\nPirmā kolonna tiek uzskatīta par Tēmu.",
+  "clipboard_import_placeholder_msg": "Ielīmējiet izklājlapas saturu šeit vai velciet un nometiet CSV/Excel failu.\nPirmā kolonna tiek uzskatīta par tēmu.",
   "clipboard_import_skip_column": "-- izlaist kolonnu --",
   "clipboard_import_index_column": "Oriģinālais indekss (netiks importēts)",
   "clipboard_import_indent_level": "Atkāpes līmenis",
   "clipboard_import_manage_columns": "Pārvaldīt kolonnas",
   "clipboard_import_user_not_found": "Lietotājs nav atrasts pašreizējā JustDo, vispirms uzaiciniet lietotāju.",
-  "clipboard_import_how_does_it_work": "Kā tas darbojas?"
+  "clipboard_import_how_does_it_work": "Kā tas darbojas?",
+  "clipboard_import_drop_file_here": "Nometiet failu šeit",
+  "clipboard_import_choose_file": "Izvēlēties failu",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Neatbalstīts faila tips. Lūdzu, izmantojiet CSV, XLSX vai XLS failus.",
+  "clipboard_import_file_empty": "Fails šķiet tukšs.",
+  "clipboard_import_file_read_error": "Kļūda nolasot failu. Lūdzu, mēģiniet vēlreiz.",
+  "clipboard_import_file_parse_error": "Kļūda parsējot failu. Lūdzu, pārbaudiet faila formātu.",
+  "clipboard_import_parsing_file": "Apstrādā failu..."
 }

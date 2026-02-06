@@ -6,8 +6,8 @@
   "license_info_licensed_until": "មានសុពលភាពដល់ __date__",
   "license_info_expiring_msg": "អាជ្ញាប័ណ្ណសម្រាប់ដូមេននេះនឹងផុតកំណត់នៅ <b>__date__</b>។",
   "license_info_expired_msg": "អាជ្ញាប័ណ្ណសម្រាប់ដូមេននេះបានផុតកំណត់នៅ <b>__expire_date__</b>។ <br>សូមបន្តអាជ្ញាប័ណ្ណរបស់អ្នកត្រឹម <b>__shutdown_date__</b> ដើម្បីជៀសវាងការរំខានសេវាកម្ម។",
-  "license_info_renew_license_instructions": "ដើម្បីបន្តអាជ្ញាប័ណ្ណរបស់អ្នក សូមចុចប៊ូតុង \"បន្តអាជ្ញាប័ណ្ណ\" ខាងក្រោម។ ក្រុមគាំទ្ររបស់យើងនៅទីនេះដើម្បីជួយអ្នកជាមួយនឹងសំណួរផ្សេងៗ។<br><br>សូមអរគុណសម្រាប់ការក្លាយជាសមាជិកដ៏មានតម្លៃនៃសហគមន៍ JustDo។ យើងកំពុងបន្តធ្វើការលើមុខងារថ្មីៗដើម្បីកែលម្អបទពិសោធន៍របស់អ្នក!",
-  "license_info_please_contact_site_admins": "សម្រាប់ព័ត៌មានបន្ថែម សូមទាក់ទងអ្នកគ្រប់គ្រងគេហទំព័ររបស់អ្នក ឬទាក់ទងមកយើងតាមរយៈ info@justdo.com ។",
+  "license_info_renew_license_instructions": "ដើម្បីបន្តអាជ្ញាប័ណ្ណរបស់អ្នក សូមចុចលើប៊ូតុង \"បន្តអាជ្ញាប័ណ្ណ\" ខាងក្រោម។ <br><br>អ្នកក៏អាចទាក់ទងក្រុមការងាររបស់យើងតាមរយៈ <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>។ ក្រុមជំនួយរបស់យើងនៅទីនេះដើម្បីជួយអ្នកលើសំណួរណាមួយ។<br><br>សូមអរគុណដែលអ្នកជាសមាជិកដ៏មានតម្លៃនៃសហគមន៍ JustDo។ យើងកំពុងបន្តធ្វើការលើមុខងារថ្មីៗដើម្បីកែលម្អបទពិសោធន៍របស់អ្នក!",
+  "license_info_please_contact_site_admins": "សម្រាប់ព័ត៌មានបន្ថែម សូមទាក់ទងអ្នកគ្រប់គ្រងគេហទំព័ររបស់អ្នក ឬទាក់ទងមកយើងខ្ញុំតាមរយៈ <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>។",
   "license_info_valid_until_and_licensed_users": "ដូមេននេះមានអាជ្ញាប័ណ្ណរហូតដល់ <b>__date__</b> សម្រាប់អ្នកប្រើប្រាស់ចំនួន <b>__count__</b> នាក់។ <br> សូមអរគុណសម្រាប់ការក្លាយជាសមាជិកដ៏មានតម្លៃនៃសហគមន៍ JustDo។ យើងកំពុងបន្តធ្វើការលើមុខងារថ្មីៗដើម្បីកែលម្អបទពិសោធន៍របស់អ្នក!",
   "license_info_expiring_in_days": "(ផុតកំណត់ក្នុងរយៈពេល __days_string__)",
   "license_info_expired_in_days": "(បានផុតកំណត់ __days_string__)"

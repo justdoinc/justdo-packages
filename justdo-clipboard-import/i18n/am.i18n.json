@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "እስከ __limit__ ተግባራት የተገደበ",
   "clipboard_import_too_many_rows": "በጣም ብዙ ረድፎች፣ እስከ __limit__ ረድፎች መቅዳት ይችላሉ።",
   "clipboard_import_cant_find_tabular_data": "በቅንጥብ ሰሌዳው ውስጥ የሠንጠረዥ መረጃ ማግኘት አልተቻለም።",
-  "clipboard_import_placeholder_msg": "ከእርስዎ ሰንጠረዥ ይዘትን ይቅዱ እና ተግባራትን ለመፍጠር እዚህ ይለጥፉ።\nየመጀመሪያው ዓምድ እንደ ርዕስ ይቆጠራል።",
+  "clipboard_import_placeholder_msg": "የስፕረድሺት ይዘትን እዚህ ይለጥፉ፣ ወይም CSV/Excel ፋይል ይጎትቱ እና ይጣሉ።\nመጀመሪያው አምድ እንደ ርዕሰ ጉዳይ ይቆጠራል።",
   "clipboard_import_skip_column": "-- ዓምድ መዝለል --",
   "clipboard_import_index_column": "ዋናው ጠቋሚ (አይገባም)",
   "clipboard_import_indent_level": "የማስገቢያ ደረጃ",
   "clipboard_import_manage_columns": "ዓምዶችን ማስተዳደር",
   "clipboard_import_user_not_found": "ተጠቃሚው በአሁኑ ጀስትዱ (JustDo) ውስጥ አልተገኘም፣ መጀመሪያ ተጠቃሚውን ይጋብዙ።",
-  "clipboard_import_how_does_it_work": "እንዴት ይሰራል?"
+  "clipboard_import_how_does_it_work": "እንዴት ይሰራል?",
+  "clipboard_import_drop_file_here": "ፋይል እዚህ ይጣሉ",
+  "clipboard_import_choose_file": "ፋይል ይምረጡ",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "ያልተደገፈ የፋይል አይነት። እባክዎ CSV, XLSX, ወይም XLS ፋይሎችን ይጠቀሙ።",
+  "clipboard_import_file_empty": "ፋይሉ ባዶ ይመስላል።",
+  "clipboard_import_file_read_error": "ፋይልን በማንበብ ላይ ስህተት። እባክዎ እንደገና ይሞክሩ።",
+  "clipboard_import_file_parse_error": "ፋይልን በመተንተን ላይ ስህተት። እባክዎ የፋይል ቅርጸቱን ያረጋግጡ።",
+  "clipboard_import_parsing_file": "ፋይል በማቀናበር ላይ..."
 }

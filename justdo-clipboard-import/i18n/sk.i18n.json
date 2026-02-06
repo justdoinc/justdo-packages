@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Obmedzené na __limit__ úloh",
   "clipboard_import_too_many_rows": "Príliš veľa riadkov, môžete skopírovať až __limit__ riadkov.",
   "clipboard_import_cant_find_tabular_data": "V schránke sa nenašli tabuľkové informácie.",
-  "clipboard_import_placeholder_msg": "Skopírujte obsah z vašej tabuľky a vložte ho sem na vytvorenie úloh.\nPrvý stĺpec sa považuje za Predmet.",
+  "clipboard_import_placeholder_msg": "Vložte sem obsah tabuľky alebo presuňte CSV/Excel súbor.\nPrvý stĺpec sa považuje za predmet.",
   "clipboard_import_skip_column": "-- preskočiť stĺpec --",
   "clipboard_import_index_column": "Pôvodný index (nebude importovaný)",
   "clipboard_import_indent_level": "Úroveň odsadenia",
   "clipboard_import_manage_columns": "Spravovať stĺpce",
   "clipboard_import_user_not_found": "Používateľ nebol nájdený v aktuálnom JustDo, najprv pozvite používateľa.",
-  "clipboard_import_how_does_it_work": "Ako to funguje?"
+  "clipboard_import_how_does_it_work": "Ako to funguje?",
+  "clipboard_import_drop_file_here": "Sem presuňte súbor",
+  "clipboard_import_choose_file": "Vybrať súbor",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Nepodporovaný typ súboru. Prosím, použite CSV, XLSX alebo XLS súbory.",
+  "clipboard_import_file_empty": "Súbor sa zdá byť prázdny.",
+  "clipboard_import_file_read_error": "Chyba pri čítaní súboru. Skúste to prosím znova.",
+  "clipboard_import_file_parse_error": "Chyba pri spracovaní súboru. Skontrolujte prosím formát súboru.",
+  "clipboard_import_parsing_file": "Spracovávanie súboru..."
 }

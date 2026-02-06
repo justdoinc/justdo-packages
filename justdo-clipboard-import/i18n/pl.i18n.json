@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Ograniczenie do __limit__ zadań",
   "clipboard_import_too_many_rows": "Zbyt wiele wierszy, możesz skopiować maksymalnie __limit__ wierszy.",
   "clipboard_import_cant_find_tabular_data": "Nie można znaleźć informacji tabelarycznych w schowku.",
-  "clipboard_import_placeholder_msg": "Skopiuj zawartość z arkusza kalkulacyjnego i wklej ją tutaj, aby utworzyć zadania.\nPierwsza kolumna jest traktowana jako Temat.",
+  "clipboard_import_placeholder_msg": "Wklej zawartość arkusza kalkulacyjnego tutaj lub przeciągnij i upuść plik CSV/Excel.\nPierwsza kolumna jest traktowana jako Temat.",
   "clipboard_import_skip_column": "-- pomiń kolumnę --",
   "clipboard_import_index_column": "Oryginalny indeks (nie zostanie zaimportowany)",
   "clipboard_import_indent_level": "Poziom wcięcia",
   "clipboard_import_manage_columns": "Zarządzaj kolumnami",
   "clipboard_import_user_not_found": "Nie znaleziono użytkownika w bieżącym JustDo, najpierw zaproś użytkownika.",
-  "clipboard_import_how_does_it_work": "Jak to działa?"
+  "clipboard_import_how_does_it_work": "Jak to działa?",
+  "clipboard_import_drop_file_here": "Upuść plik tutaj",
+  "clipboard_import_choose_file": "Wybierz plik",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Nieobsługiwany typ pliku. Proszę użyć plików CSV, XLSX lub XLS.",
+  "clipboard_import_file_empty": "Plik wydaje się być pusty.",
+  "clipboard_import_file_read_error": "Błąd odczytu pliku. Spróbuj ponownie.",
+  "clipboard_import_file_parse_error": "Błąd parsowania pliku. Sprawdź format pliku.",
+  "clipboard_import_parsing_file": "Przetwarzanie pliku..."
 }

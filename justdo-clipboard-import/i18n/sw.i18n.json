@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Kikomo cha kazi __limit__",
   "clipboard_import_too_many_rows": "Safu mlalo nyingi mno, unaweza kunakili hadi safu mlalo __limit__.",
   "clipboard_import_cant_find_tabular_data": "Haiwezi kupata taarifa za jedwali kwenye ubao wa kunakili.",
-  "clipboard_import_placeholder_msg": "Nakili maudhui kutoka kwenye jedwali lako na bandika hapa ili kuunda kazi.\nSafu ya kwanza inachukuliwa kuwa Mada.",
+  "clipboard_import_placeholder_msg": "Bandika maudhui ya jedwali hapa, au buruta na udondoshe faili ya CSV/Excel.\nSafu wima ya kwanza inachukuliwa kama Kichwa.",
   "clipboard_import_skip_column": "-- ruka safu wima --",
   "clipboard_import_index_column": "Kielezo cha Awali (hakitaingizwa)",
   "clipboard_import_indent_level": "Kiwango cha Kujiweka Ndani",
   "clipboard_import_manage_columns": "Simamia Safu Wima",
   "clipboard_import_user_not_found": "Mtumiaji hajapatikana katika JustDo ya sasa, mwalike mtumiaji kwanza.",
-  "clipboard_import_how_does_it_work": "Inafanyaje kazi?"
+  "clipboard_import_how_does_it_work": "Inafanyaje kazi?",
+  "clipboard_import_drop_file_here": "Dondosha faili hapa",
+  "clipboard_import_choose_file": "Chagua Faili",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Aina ya faili isiyosaidiwa. Tafadhali tumia faili za CSV, XLSX, au XLS.",
+  "clipboard_import_file_empty": "Faili inaonekana kuwa tupu.",
+  "clipboard_import_file_read_error": "Hitilafu katika kusoma faili. Tafadhali jaribu tena.",
+  "clipboard_import_file_parse_error": "Hitilafu katika kuchakata faili. Tafadhali angalia muundo wa faili.",
+  "clipboard_import_parsing_file": "Inachakata faili..."
 }

@@ -6,8 +6,8 @@
   "license_info_licensed_until": "__date__ tarihine kadar lisanslı",
   "license_info_expiring_msg": "Bu alan adının lisansı <b>__date__</b> tarihinde sona erecek.",
   "license_info_expired_msg": "Bu alan adının lisansı <b>__expire_date__</b> tarihinde sona erdi. <br>Hizmet kesintisi yaşamamak için lütfen <b>__shutdown_date__</b> tarihine kadar lisansınızı yenileyin.",
-  "license_info_renew_license_instructions": "Lisansınızı yenilemek için aşağıdaki \"Lisansı Yenile\" düğmesine tıklayın. Destek ekibimiz tüm sorularınız için yanınızda.<br><br>JustDo topluluğunun değerli bir üyesi olduğunuz için teşekkür ederiz. Deneyiminizi iyileştirmek için sürekli yeni özellikler üzerinde çalışıyoruz!",
-  "license_info_please_contact_site_admins": "Daha fazla bilgi için lütfen site yöneticilerinize ulaşın veya info@justdo.com adresinden bizimle iletişime geçin.",
+  "license_info_renew_license_instructions": "Lisansınızı yenilemek için lütfen aşağıdaki \"Lisansı Yenile\" düğmesine tıklayın. <br><br>Ayrıca ekibimize <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a> adresinden ulaşabilirsiniz. Destek ekibimiz tüm sorularınızda size yardımcı olmak için burada.<br><br>JustDo topluluğunun değerli bir üyesi olduğunuz için teşekkür ederiz. Deneyiminizi geliştirmek için sürekli olarak yeni özellikler üzerinde çalışıyoruz!",
+  "license_info_please_contact_site_admins": "Daha fazla bilgi için lütfen site yöneticilerinize ulaşın veya <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a> adresinden bizimle iletişime geçin.",
   "license_info_valid_until_and_licensed_users": "Bu alan adı <b>__date__</b> tarihine kadar <b>__count__</b> kullanıcı için lisanslıdır. <br> JustDo topluluğunun değerli bir üyesi olduğunuz için teşekkür ederiz. Deneyiminizi iyileştirmek için sürekli yeni özellikler üzerinde çalışıyoruz!",
   "license_info_expiring_in_days": "(__days_string__ içinde sona eriyor)",
   "license_info_expired_in_days": "(__days_string__ önce sona erdi)"

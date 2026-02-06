@@ -2,7 +2,7 @@
   "plugin_store_title": "កម្មវិធីបន្ថែម",
   "plugin_store_additional_info": "ព័ត៌មានបន្ថែម",
   "plugin_store_learn_more": "ស្វែងយល់បន្ថែម",
-  "plugin_store_developer": "អ្នកអភិវឌ្ឍន៍",
+  "plugin_store_developer": "អ្នកបង្កើត",
   "plugin_store_version": "កំណែ៖ <strong class=\"text-primary\">__version__</strong>",
   "plugin_store_developer_company": "ក្រុមហ៊ុន៖ <strong class=\"text-primary\">__company_name__</strong>",
   "plugin_store_developer_website": "គេហទំព័រ៖ <strong class=\"text-primary\"><a href=\"__company_website__\">__company_website__</a></strong>",

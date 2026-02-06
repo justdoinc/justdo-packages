@@ -10,7 +10,7 @@
   "unset_as_a_project_label": "Projektstatus aufheben",
   "close_project_label": "Projekt schließen",
   "repoen_project_label": "Projekt wieder öffnen",
-  "add_to_project_label": "Zum Projekt hinzufügen",
+  "add_to_project_label": "Zu Projekt hinzufügen",
   "apply_value_to_subtree": "__value__ auf Unterbaum anwenden",
   "bulk_set_options_label": "Festlegen"
 }

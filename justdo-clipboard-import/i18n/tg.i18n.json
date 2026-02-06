@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Маҳдуд ба __limit__ вазифа",
   "clipboard_import_too_many_rows": "Сатрҳои зиёд, шумо метавонед то __limit__ сатрро нусхабардорӣ кунед.",
   "clipboard_import_cant_find_tabular_data": "Маълумоти ҷадвалӣ дар ҳофизаи муваққатӣ ёфт нашуд.",
-  "clipboard_import_placeholder_msg": "Мундариҷаро аз ҷадвали ҳисоби худ нусхабардорӣ карда, онро ин ҷо часпонед то вазифаҳо эҷод шаванд.\nСутуни аввал ҳамчун Мавзӯъ ҳисобида мешавад.",
+  "clipboard_import_placeholder_msg": "Мундариҷаи ҷадвали электрониро дар ин ҷо гузоред ё файли CSV/Excel-ро кашида гузоред.\nСутуни аввал ҳамчун Мавзӯъ ҳисоб карда мешавад.",
   "clipboard_import_skip_column": "-- сутунро пропуск кунед --",
   "clipboard_import_index_column": "Индекси аслӣ (ворид карда намешавад)",
   "clipboard_import_indent_level": "Сатҳи фосилагузорӣ",
   "clipboard_import_manage_columns": "Идоракунии сутунҳо",
   "clipboard_import_user_not_found": "Корбар дар JustDo-и ҷорӣ ёфт нашуд, аввал корбарро даъват кунед.",
-  "clipboard_import_how_does_it_work": "Ин чӣ тавр кор мекунад?"
+  "clipboard_import_how_does_it_work": "Ин чӣ тавр кор мекунад?",
+  "clipboard_import_drop_file_here": "Файлро дар ин ҷо гузоред",
+  "clipboard_import_choose_file": "Интихоби файл",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Навъи файли дастгирӣнашуда. Лутфан файлҳои CSV, XLSX ё XLS-ро истифода баред.",
+  "clipboard_import_file_empty": "Файл холӣ менамояд.",
+  "clipboard_import_file_read_error": "Хатогӣ ҳангоми хондани файл. Лутфан аз нав кӯшиш кунед.",
+  "clipboard_import_file_parse_error": "Хатогӣ ҳангоми таҳлили файл. Лутфан формати файлро санҷед.",
+  "clipboard_import_parsing_file": "Коркарди файл..."
 }

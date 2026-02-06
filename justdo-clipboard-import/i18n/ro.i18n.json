@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Limitat la __limit__ sarcini",
   "clipboard_import_too_many_rows": "Prea multe rânduri, puteți copia până la __limit__ rânduri.",
   "clipboard_import_cant_find_tabular_data": "Nu s-au găsit informații tabulare în clipboard.",
-  "clipboard_import_placeholder_msg": "Copiați conținutul din foaia de calcul și lipiți-l aici pentru a crea sarcini.\nPrima coloană este considerată ca fiind Subiectul.",
+  "clipboard_import_placeholder_msg": "Lipiți conținutul foii de calcul aici sau trageți și plasați un fișier CSV/Excel.\nPrima coloană este considerată Subiectul.",
   "clipboard_import_skip_column": "-- omite coloana --",
   "clipboard_import_index_column": "Index original (nu va fi importat)",
   "clipboard_import_indent_level": "Nivel de indentare",
   "clipboard_import_manage_columns": "Gestionează coloanele",
   "clipboard_import_user_not_found": "Utilizatorul nu a fost găsit în JustDo-ul curent, invitați mai întâi utilizatorul.",
-  "clipboard_import_how_does_it_work": "Cum funcționează?"
+  "clipboard_import_how_does_it_work": "Cum funcționează?",
+  "clipboard_import_drop_file_here": "Plasați fișierul aici",
+  "clipboard_import_choose_file": "Alegeți Fișier",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Tip de fișier neacceptat. Vă rugăm folosiți fișiere CSV, XLSX sau XLS.",
+  "clipboard_import_file_empty": "Fișierul pare să fie gol.",
+  "clipboard_import_file_read_error": "Eroare la citirea fișierului. Vă rugăm încercați din nou.",
+  "clipboard_import_file_parse_error": "Eroare la procesarea fișierului. Vă rugăm verificați formatul fișierului.",
+  "clipboard_import_parsing_file": "Se procesează fișierul..."
 }

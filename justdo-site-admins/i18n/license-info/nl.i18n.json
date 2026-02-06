@@ -6,8 +6,8 @@
   "license_info_licensed_until": "Licentie geldig tot __date__",
   "license_info_expiring_msg": "De licentie voor dit domein verloopt op <b>__date__</b>.",
   "license_info_expired_msg": "De licentie voor dit domein is verlopen op <b>__expire_date__</b>. <br>Vernieuw uw licentie vóór <b>__shutdown_date__</b> om onderbreking van de dienst te voorkomen.",
-  "license_info_renew_license_instructions": "Klik op de knop \"Licentie Verlengen\" hieronder om uw licentie te vernieuwen. Ons ondersteuningsteam staat klaar om u te helpen met eventuele vragen.<br><br>Bedankt dat u een gewaardeerd lid bent van de JustDo-gemeenschap. We werken voortdurend aan nieuwe functies om uw ervaring te verbeteren!",
-  "license_info_please_contact_site_admins": "Neem voor meer informatie contact op met uw sitebeheerders of stuur een e-mail naar info@justdo.com .",
+  "license_info_renew_license_instructions": "Om uw licentie te verlengen, klikt u op de knop \"Licentie verlengen\" hieronder. <br><br>U kunt ook contact opnemen met ons team via <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>. Ons supportteam staat klaar om u te helpen met eventuele vragen.<br><br>Bedankt dat u een gewaardeerd lid bent van de JustDo-gemeenschap. We werken voortdurend aan nieuwe functies om uw ervaring te verbeteren!",
+  "license_info_please_contact_site_admins": "Voor meer informatie kunt u contact opnemen met uw sitebeheerders, of neem contact met ons op via <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>.",
   "license_info_valid_until_and_licensed_users": "Dit domein heeft een licentie tot <b>__date__</b> voor <b>__count__</b> gebruikers. <br> Bedankt dat u een gewaardeerd lid bent van de JustDo-gemeenschap. We werken voortdurend aan nieuwe functies om uw ervaring te verbeteren!",
   "license_info_expiring_in_days": "(Verloopt __days_string__)",
   "license_info_expired_in_days": "(Verlopen __days_string__)"

@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "限制為 __limit__ 個任務",
   "clipboard_import_too_many_rows": "行數過多，您最多可以複製 __limit__ 行。",
   "clipboard_import_cant_find_tabular_data": "在剪貼簿中找不到表格資料。",
-  "clipboard_import_placeholder_msg": "從您的電子表格複製內容並貼在此處以建立任務。\n第一欄將被視為主旨。",
+  "clipboard_import_placeholder_msg": "在此貼上試算表內容,或拖放 CSV/Excel 檔案。\n第一欄將視為主旨。",
   "clipboard_import_skip_column": "-- 跳過此欄 --",
   "clipboard_import_index_column": "原始索引（不會被匯入）",
   "clipboard_import_indent_level": "縮排層級",
   "clipboard_import_manage_columns": "管理欄位",
   "clipboard_import_user_not_found": "在目前的 JustDo 中找不到該使用者，請先邀請該使用者。",
-  "clipboard_import_how_does_it_work": "這是如何運作的？"
+  "clipboard_import_how_does_it_work": "這是如何運作的？",
+  "clipboard_import_drop_file_here": "將檔案拖放至此",
+  "clipboard_import_choose_file": "選擇檔案",
+  "clipboard_import_supported_file_types": "CSV、XLSX、XLS",
+  "clipboard_import_unsupported_file_type": "不支援的檔案類型,請使用 CSV、XLSX 或 XLS 檔案。",
+  "clipboard_import_file_empty": "檔案似乎是空的。",
+  "clipboard_import_file_read_error": "讀取檔案時發生錯誤,請再試一次。",
+  "clipboard_import_file_parse_error": "解析檔案時發生錯誤,請檢查檔案格式。",
+  "clipboard_import_parsing_file": "處理檔案中..."
 }

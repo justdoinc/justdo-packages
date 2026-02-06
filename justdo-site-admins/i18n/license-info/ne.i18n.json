@@ -6,8 +6,8 @@
   "license_info_licensed_until": "__date__ सम्म इजाजतपत्र",
   "license_info_expiring_msg": "यस डोमेनको इजाजतपत्र <b>__date__</b> मा समाप्त हुनेछ।",
   "license_info_expired_msg": "यस डोमेनको इजाजतपत्र <b>__expire_date__</b> मा समाप्त भएको छ। <br>कुनै सेवा अवरोध नहोस् भन्नका लागि कृपया <b>__shutdown_date__</b> सम्ममा आफ्नो इजाजतपत्र नवीकरण गर्नुहोस्।",
-  "license_info_renew_license_instructions": "आफ्नो इजाजतपत्र नवीकरण गर्न, कृपया तलको \"इजाजतपत्र नवीकरण गर्नुहोस्\" बटनमा क्लिक गर्नुहोस्। कुनै प्रश्न भएमा हाम्रो सहयोग टोली तपाईंलाई मद्दत गर्न तयार छ।<br><br>JustDo समुदायको मूल्यवान सदस्य बन्नुभएकोमा धन्यवाद। हामी तपाईंको अनुभवलाई अझ राम्रो बनाउन निरन्तर नयाँ सुविधाहरूमा काम गरिरहेका छौं!",
-  "license_info_please_contact_site_admins": "थप जानकारीको लागि, कृपया आफ्नो साइट प्रशासकहरूलाई सम्पर्क गर्नुहोस्, वा हामीलाई info@justdo.com मा सम्पर्क गर्नुहोस्।",
+  "license_info_renew_license_instructions": "आफ्नो इजाजतपत्र नवीकरण गर्न, कृपया तलको \"इजाजतपत्र नवीकरण गर्नुहोस्\" बटनमा क्लिक गर्नुहोस्। <br><br>तपाईं हाम्रो टोलीलाई <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a> मा पनि सम्पर्क गर्न सक्नुहुन्छ। हाम्रो सपोर्ट टोली तपाईंका कुनै पनि प्रश्नहरूमा सहयोग गर्न यहाँ छ।<br><br>JustDo समुदायको मूल्यवान सदस्य भएकोमा धन्यवाद। हामी तपाईंको अनुभव सुधार गर्न नयाँ सुविधाहरूमा निरन्तर काम गरिरहेका छौं!",
+  "license_info_please_contact_site_admins": "थप जानकारीको लागि, कृपया आफ्नो साइट प्रशासकहरूलाई सम्पर्क गर्नुहोस्, वा हामीलाई <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a> मा सम्पर्क गर्नुहोस्।",
   "license_info_valid_until_and_licensed_users": "यो डोमेन <b>__date__</b> सम्म <b>__count__</b> प्रयोगकर्ताहरूको लागि इजाजतपत्र प्राप्त छ। <br> JustDo समुदायको मूल्यवान सदस्य बन्नुभएकोमा धन्यवाद। हामी तपाईंको अनुभवलाई अझ राम्रो बनाउन निरन्तर नयाँ सुविधाहरूमा काम गरिरहेका छौं!",
   "license_info_expiring_in_days": "(__days_string__ मा समाप्त हुँदैछ)",
   "license_info_expired_in_days": "(__days_string__ अघि समाप्त भएको)"

@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Limitat a __limit__ tasques",
   "clipboard_import_too_many_rows": "Massa files, podeu copiar fins a __limit__ files.",
   "clipboard_import_cant_find_tabular_data": "No es pot trobar informació tabular al portapapers.",
-  "clipboard_import_placeholder_msg": "Copieu el contingut del vostre full de càlcul i enganxeu-lo aquí per crear tasques.\nLa primera columna es considera com l'Assumpte.",
+  "clipboard_import_placeholder_msg": "Enganxeu el contingut del full de càlcul aquí, o arrossegueu i deixeu anar un fitxer CSV/Excel.\nLa primera columna es considera l'Assumpte.",
   "clipboard_import_skip_column": "-- ometre columna --",
   "clipboard_import_index_column": "Índex original (no s'importarà)",
   "clipboard_import_indent_level": "Nivell de sagnat",
   "clipboard_import_manage_columns": "Gestionar columnes",
   "clipboard_import_user_not_found": "Usuari no trobat al JustDo actual, convideu primer l'usuari.",
-  "clipboard_import_how_does_it_work": "Com funciona?"
+  "clipboard_import_how_does_it_work": "Com funciona?",
+  "clipboard_import_drop_file_here": "Deixeu anar el fitxer aquí",
+  "clipboard_import_choose_file": "Triar fitxer",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Tipus de fitxer no compatible. Si us plau, utilitzeu fitxers CSV, XLSX o XLS.",
+  "clipboard_import_file_empty": "El fitxer sembla estar buit.",
+  "clipboard_import_file_read_error": "Error en llegir el fitxer. Si us plau, torneu-ho a intentar.",
+  "clipboard_import_file_parse_error": "Error en analitzar el fitxer. Si us plau, comproveu el format del fitxer.",
+  "clipboard_import_parsing_file": "Processant fitxer..."
 }

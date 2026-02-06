@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "កំណត់ត្រឹម __limit__ កិច្ចការ",
   "clipboard_import_too_many_rows": "ជួរដេកច្រើនពេក អ្នកអាចចម្លងបានរហូតដល់ __limit__ ជួរដេក។",
   "clipboard_import_cant_find_tabular_data": "មិនអាចរកឃើញព័ត៌មានតារាងនៅក្នុងក្តារតម្បៀតខ្ទាស់។",
-  "clipboard_import_placeholder_msg": "ចម្លងមាតិកាពីសៀវភៅបញ្ជីរបស់អ្នក និងបិទភ្ជាប់វានៅទីនេះដើម្បីបង្កើតកិច្ចការ។\nជួរឈរទីមួយត្រូវបានចាត់ទុកជាប្រធានបទ។",
+  "clipboard_import_placeholder_msg": "បិទភ្ជាប់មាតិកាតារាងទិន្នន័យនៅទីនេះ ឬអូសនិងទម្លាក់ឯកសារ CSV/Excel។\nជួរឈរទីមួយត្រូវបានចាត់ទុកជាប្រធានបទ។",
   "clipboard_import_skip_column": "-- រំលងជួរឈរ --",
   "clipboard_import_index_column": "លំដាប់ដើម (នឹងមិនត្រូវបាននាំចូល)",
   "clipboard_import_indent_level": "កម្រិតចូលបន្ទាត់",
   "clipboard_import_manage_columns": "គ្រប់គ្រងជួរឈរ",
   "clipboard_import_user_not_found": "រកមិនឃើញអ្នកប្រើប្រាស់នៅក្នុង JustDo បច្ចុប្បន្ន សូមអញ្ជើញអ្នកប្រើប្រាស់ជាមុនសិន។",
-  "clipboard_import_how_does_it_work": "តើវាដំណើរការយ៉ាងដូចម្តេច?"
+  "clipboard_import_how_does_it_work": "តើវាដំណើរការយ៉ាងដូចម្តេច?",
+  "clipboard_import_drop_file_here": "ទម្លាក់ឯកសារនៅទីនេះ",
+  "clipboard_import_choose_file": "ជ្រើសរើសឯកសារ",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "ប្រភេទឯកសារមិនត្រូវបានគាំទ្រ។ សូមប្រើឯកសារ CSV, XLSX, ឬ XLS។",
+  "clipboard_import_file_empty": "ឯកសារហាក់ដូចជាទទេ។",
+  "clipboard_import_file_read_error": "កំហុសក្នុងការអានឯកសារ។ សូមព្យាយាមម្តងទៀត។",
+  "clipboard_import_file_parse_error": "កំហុសក្នុងការវិភាគឯកសារ។ សូមពិនិត្យទ្រង់ទ្រាយឯកសារ។",
+  "clipboard_import_parsing_file": "កំពុងដំណើរការឯកសារ..."
 }

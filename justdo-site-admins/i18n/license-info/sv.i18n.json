@@ -6,8 +6,8 @@
   "license_info_licensed_until": "Licensierad till __date__",
   "license_info_expiring_msg": "Licensen för denna domän går ut <b>__date__</b>.",
   "license_info_expired_msg": "Licensen för denna domän gick ut <b>__expire_date__</b>. <br>Vänligen förnya din licens senast <b>__shutdown_date__</b> för att undvika avbrott i tjänsten.",
-  "license_info_renew_license_instructions": "För att förnya din licens, klicka på knappen \"Förnya licens\" nedan. Vårt supportteam finns här för att hjälpa dig med eventuella frågor.<br><br>Tack för att du är en värdefull medlem i JustDo-gemenskapen. Vi arbetar kontinuerligt med nya funktioner för att förbättra din upplevelse!",
-  "license_info_please_contact_site_admins": "För mer information, vänligen kontakta dina webbplatsadministratörer eller kontakta oss på info@justdo.com .",
+  "license_info_renew_license_instructions": "För att förnya din licens, klicka på knappen \"Förnya licens\" nedan. <br><br>Du kan också kontakta vårt team på <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>. Vårt supportteam finns här för att hjälpa dig med eventuella frågor.<br><br>Tack för att du är en värdefull medlem i JustDo-communityn. Vi arbetar kontinuerligt med nya funktioner för att förbättra din upplevelse!",
+  "license_info_please_contact_site_admins": "För mer information, vänligen kontakta dina webbplatsadministratörer eller kontakta oss på <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>.",
   "license_info_valid_until_and_licensed_users": "Denna domän är licensierad till <b>__date__</b> för <b>__count__</b> användare. <br> Tack för att du är en värdefull medlem i JustDo-gemenskapen. Vi arbetar kontinuerligt med nya funktioner för att förbättra din upplevelse!",
   "license_info_expiring_in_days": "(Går ut om __days_string__)",
   "license_info_expired_in_days": "(Gick ut för __days_string__ sedan)"

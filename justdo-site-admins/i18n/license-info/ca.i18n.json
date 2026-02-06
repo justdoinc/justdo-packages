@@ -6,8 +6,8 @@
   "license_info_licensed_until": "Llicència vàlida fins __date__",
   "license_info_expiring_msg": "La llicència per aquest domini caducarà el <b>__date__</b>.",
   "license_info_expired_msg": "La llicència per aquest domini va caducar el <b>__expire_date__</b>. <br>Si us plau, renovi la seva llicència abans del <b>__shutdown_date__</b> per evitar interrupcions del servei.",
-  "license_info_renew_license_instructions": "Per renovar la seva llicència, faci clic al botó \"Renovar Llicència\" a continuació. El nostre equip de suport està disponible per ajudar-lo amb qualsevol pregunta.<br><br>Gràcies per ser un membre valuós de la comunitat JustDo. Continuem treballant en noves funcionalitats per millorar la seva experiència!",
-  "license_info_please_contact_site_admins": "Per a més informació, contacti amb els administradors del lloc o escrigui'ns a info@justdo.com .",
+  "license_info_renew_license_instructions": "Per renovar la vostra llicència, si us plau, feu clic al botó \"Renovar Llicència\" a continuació. <br><br>També podeu contactar amb el nostre equip a <a href=\"mailto:info@justdo.com?subject=Sol·licitud%20de%20renovació%20de%20llicència&body=__data__\">info@justdo.com</a>. El nostre equip de suport està aquí per ajudar-vos amb qualsevol pregunta.<br><br>Gràcies per ser un membre valuós de la comunitat JustDo. Treballem contínuament en noves funcionalitats per millorar la vostra experiència!",
+  "license_info_please_contact_site_admins": "Per a més informació, si us plau, contacteu amb els administradors del vostre lloc, o contacteu-nos a <a href=\"mailto:info@justdo.com?subject=Sol·licitud%20de%20renovació%20de%20llicència&body=__data__\">info@justdo.com</a>.",
   "license_info_valid_until_and_licensed_users": "Aquest domini té llicència fins el <b>__date__</b> per a <b>__count__</b> usuaris. <br> Gràcies per ser un membre valuós de la comunitat JustDo. Continuem treballant en noves funcionalitats per millorar la seva experiència!",
   "license_info_expiring_in_days": "(Caduca en __days_string__)",
   "license_info_expired_in_days": "(Caducat fa __days_string__)"

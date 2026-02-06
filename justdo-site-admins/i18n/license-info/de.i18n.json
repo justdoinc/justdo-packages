@@ -6,8 +6,8 @@
   "license_info_licensed_until": "Lizenziert bis __date__",
   "license_info_expiring_msg": "Die Lizenz für diese Domain läuft am <b>__date__</b> ab.",
   "license_info_expired_msg": "Die Lizenz für diese Domain ist am <b>__expire_date__</b> abgelaufen. <br>Bitte erneuern Sie Ihre Lizenz bis zum <b>__shutdown_date__</b>, um Serviceunterbrechungen zu vermeiden.",
-  "license_info_renew_license_instructions": "Um Ihre Lizenz zu erneuern, klicken Sie bitte auf die Schaltfläche \"Lizenz erneuern\" unten. Unser Support-Team hilft Ihnen gerne bei Fragen.<br><br>Vielen Dank, dass Sie ein geschätztes Mitglied der JustDo-Community sind. Wir arbeiten kontinuierlich an neuen Funktionen, um Ihr Erlebnis zu verbessern!",
-  "license_info_please_contact_site_admins": "Für weitere Informationen wenden Sie sich bitte an Ihre Site-Administratoren oder kontaktieren Sie uns unter info@justdo.com.",
+  "license_info_renew_license_instructions": "Um Ihre Lizenz zu erneuern, klicken Sie bitte auf die Schaltfläche \"Lizenz erneuern\" unten. <br><br>Sie können sich auch an unser Team unter <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a> wenden. Unser Support-Team steht Ihnen bei Fragen gerne zur Verfügung.<br><br>Vielen Dank, dass Sie ein geschätztes Mitglied der JustDo-Community sind. Wir arbeiten kontinuierlich an neuen Funktionen, um Ihr Erlebnis zu verbessern!",
+  "license_info_please_contact_site_admins": "Für weitere Informationen wenden Sie sich bitte an Ihre Website-Administratoren oder kontaktieren Sie uns unter <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>.",
   "license_info_valid_until_and_licensed_users": "Diese Domain ist bis zum <b>__date__</b> für <b>__count__</b> Benutzer lizenziert. <br> Vielen Dank, dass Sie ein geschätztes Mitglied der JustDo-Community sind. Wir arbeiten kontinuierlich an neuen Funktionen, um Ihr Erlebnis zu verbessern!",
   "license_info_expiring_in_days": "(Läuft in __days_string__ ab)",
   "license_info_expired_in_days": "(Abgelaufen seit __days_string__)"

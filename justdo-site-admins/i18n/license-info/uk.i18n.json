@@ -6,8 +6,8 @@
   "license_info_licensed_until": "Ліцензія дійсна до __date__",
   "license_info_expiring_msg": "Термін дії ліцензії для цього домену закінчується <b>__date__</b>.",
   "license_info_expired_msg": "Термін дії ліцензії для цього домену закінчився <b>__expire_date__</b>. <br>Будь ласка, поновіть ліцензію до <b>__shutdown_date__</b>, щоб уникнути переривання обслуговування.",
-  "license_info_renew_license_instructions": "Щоб поновити ліцензію, натисніть кнопку \"Поновити ліцензію\" нижче. Наша служба підтримки готова допомогти вам з будь-якими питаннями.<br><br>Дякуємо, що ви є цінним членом спільноти JustDo. Ми постійно працюємо над новими функціями для покращення вашого досвіду!",
-  "license_info_please_contact_site_admins": "Для отримання додаткової інформації, будь ласка, зверніться до адміністраторів сайту або зв'яжіться з нами за адресою info@justdo.com .",
+  "license_info_renew_license_instructions": "Щоб продовжити ліцензію, натисніть кнопку \"Продовжити ліцензію\" нижче. <br><br>Ви також можете зв'язатися з нашою командою за адресою <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>. Наша команда підтримки готова допомогти вам з будь-якими питаннями.<br><br>Дякуємо, що ви є цінним учасником спільноти JustDo. Ми постійно працюємо над новими функціями, щоб покращити ваш досвід!",
+  "license_info_please_contact_site_admins": "Для отримання додаткової інформації зверніться до адміністраторів сайту або зв'яжіться з нами за адресою <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>.",
   "license_info_valid_until_and_licensed_users": "Ліцензія для цього домену дійсна до <b>__date__</b> для <b>__count__</b> користувачів. <br> Дякуємо, що ви є цінним членом спільноти JustDo. Ми постійно працюємо над новими функціями для покращення вашого досвіду!",
   "license_info_expiring_in_days": "(Закінчується через __days_string__)",
   "license_info_expired_in_days": "(Закінчилась __days_string__)"

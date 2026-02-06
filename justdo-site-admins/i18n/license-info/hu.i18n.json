@@ -6,8 +6,8 @@
   "license_info_licensed_until": "Licenc érvényes eddig: __date__",
   "license_info_expiring_msg": "A domain licenc lejár ekkor: <b>__date__</b>.",
   "license_info_expired_msg": "A domain licenc lejárt ekkor: <b>__expire_date__</b>. <br>Kérjük, újítsa meg licencét <b>__shutdown_date__</b>-ig a szolgáltatás megszakításának elkerülése érdekében.",
-  "license_info_renew_license_instructions": "A licenc megújításához kattintson az alábbi \"Licenc megújítása\" gombra. Támogatói csapatunk készséggel segít bármilyen kérdésben.<br><br>Köszönjük, hogy a JustDo közösség értékes tagja. Folyamatosan dolgozunk új funkciókon, hogy javítsuk felhasználói élményét!",
-  "license_info_please_contact_site_admins": "További információért forduljon a webhely adminisztrátoraihoz, vagy lépjen kapcsolatba velünk az info@justdo.com címen.",
+  "license_info_renew_license_instructions": "A licenc megújításához kattintson az alábbi \"Licenc megújítása\" gombra. <br><br>Kapcsolatba léphet csapatunkkal is a <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a> címen. Ügyfélszolgálatunk minden kérdésben rendelkezésére áll.<br><br>Köszönjük, hogy a JustDo közösség értékes tagja! Folyamatosan dolgozunk új funkciókon, hogy javítsuk az élményét!",
+  "license_info_please_contact_site_admins": "További információkért kérjük, vegye fel a kapcsolatot az oldal adminisztrátorával, vagy lépjen velünk kapcsolatba a <a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a> címen.",
   "license_info_valid_until_and_licensed_users": "Ez a domain <b>__date__</b>-ig licencelt <b>__count__</b> felhasználó számára. <br> Köszönjük, hogy a JustDo közösség értékes tagja. Folyamatosan dolgozunk új funkciókon, hogy javítsuk felhasználói élményét!",
   "license_info_expiring_in_days": "(Lejár __days_string__ múlva)",
   "license_info_expired_in_days": "(Lejárt __days_string__)"

@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "Limite di __limit__ attività",
   "clipboard_import_too_many_rows": "Troppe righe, puoi copiare fino a __limit__ righe.",
   "clipboard_import_cant_find_tabular_data": "Impossibile trovare informazioni tabulari negli appunti.",
-  "clipboard_import_placeholder_msg": "Copia il contenuto dal tuo foglio di calcolo e incollalo qui per creare attività.\nLa prima colonna è considerata come l'Oggetto.",
+  "clipboard_import_placeholder_msg": "Incolla qui il contenuto del foglio di calcolo, oppure trascina e rilascia un file CSV/Excel.\nLa prima colonna è considerata come Oggetto.",
   "clipboard_import_skip_column": "-- salta colonna --",
   "clipboard_import_index_column": "Indice Originale (non sarà importato)",
   "clipboard_import_indent_level": "Livello di Indentazione",
   "clipboard_import_manage_columns": "Gestisci Colonne",
   "clipboard_import_user_not_found": "Utente non trovato nel JustDo corrente, invita prima l'utente.",
-  "clipboard_import_how_does_it_work": "Come funziona?"
+  "clipboard_import_how_does_it_work": "Come funziona?",
+  "clipboard_import_drop_file_here": "Rilascia il file qui",
+  "clipboard_import_choose_file": "Scegli File",
+  "clipboard_import_supported_file_types": "CSV, XLSX, XLS",
+  "clipboard_import_unsupported_file_type": "Tipo di file non supportato. Utilizza file CSV, XLSX o XLS.",
+  "clipboard_import_file_empty": "Il file sembra essere vuoto.",
+  "clipboard_import_file_read_error": "Errore nella lettura del file. Riprova.",
+  "clipboard_import_file_parse_error": "Errore nell'analisi del file. Controlla il formato del file.",
+  "clipboard_import_parsing_file": "Elaborazione file in corso..."
 }

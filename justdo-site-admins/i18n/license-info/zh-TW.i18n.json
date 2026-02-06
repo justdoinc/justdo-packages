@@ -6,8 +6,8 @@
   "license_info_licensed_until": "授權有效期至 __date__",
   "license_info_expiring_msg": "此網域的授權將於 <b>__date__</b> 到期。",
   "license_info_expired_msg": "此網域的授權已於 <b>__expire_date__</b> 到期。<br>請在 <b>__shutdown_date__</b> 前更新您的授權，以避免服務中斷。",
-  "license_info_renew_license_instructions": "若要更新授權，請點擊下方的「更新授權」按鈕。如有任何問題，我們的支援團隊將很樂意為您提供協助。<br><br>感謝您成為 JustDo 社群的重要成員。我們持續開發新功能，以提升您的使用體驗！",
-  "license_info_please_contact_site_admins": "如需更多資訊，請聯繫您的網站管理員，或寄信至 info@justdo.com 與我們聯絡。",
+  "license_info_renew_license_instructions": "若要續約您的授權,請點擊下方的「續約授權」按鈕。<br><br>您也可以透過電子郵件聯繫我們的團隊:<a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>。我們的支援團隊隨時為您解答任何問題。<br><br>感謝您成為 JustDo 社群的重要成員。我們持續開發新功能,以提升您的使用體驗!",
+  "license_info_please_contact_site_admins": "如需更多資訊,請聯繫您的網站管理員,或透過電子郵件與我們聯繫:<a href=\"mailto:info@justdo.com?subject=License%20renewal%20request&body=__data__\">info@justdo.com</a>。",
   "license_info_valid_until_and_licensed_users": "此網域的授權有效期至 <b>__date__</b>，可使用人數為 <b>__count__</b> 位。<br>感謝您成為 JustDo 社群的重要成員。我們持續開發新功能，以提升您的使用體驗！",
   "license_info_expiring_in_days": "（將於 __days_string__ 到期）",
   "license_info_expired_in_days": "（已過期 __days_string__）"

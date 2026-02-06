@@ -26,11 +26,19 @@
   "clipboard_import_rows_limit": "محدود بـ __limit__ مهمة",
   "clipboard_import_too_many_rows": "عدد كبير جدًا من الصفوف، يمكنك نسخ حتى __limit__ صف.",
   "clipboard_import_cant_find_tabular_data": "لا يمكن العثور على معلومات جدولية في الحافظة.",
-  "clipboard_import_placeholder_msg": "انسخ المحتوى من جدول البيانات الخاص بك والصقه هنا لإنشاء مهام.\nسيتم اعتبار العمود الأول كموضوع.",
+  "clipboard_import_placeholder_msg": "الصق محتوى جدول البيانات هنا، أو اسحب وأفلت ملف CSV/Excel.\nيُعتبر العمود الأول هو الموضوع.",
   "clipboard_import_skip_column": "-- تخطي العمود --",
   "clipboard_import_index_column": "الفهرس الأصلي (لن يتم استيراده)",
   "clipboard_import_indent_level": "مستوى المسافة البادئة",
   "clipboard_import_manage_columns": "إدارة الأعمدة",
   "clipboard_import_user_not_found": "لم يتم العثور على المستخدم في JustDo الحالي، قم بدعوة المستخدم أولاً.",
-  "clipboard_import_how_does_it_work": "كيف يعمل ذلك؟"
+  "clipboard_import_how_does_it_work": "كيف يعمل ذلك؟",
+  "clipboard_import_drop_file_here": "أسقط الملف هنا",
+  "clipboard_import_choose_file": "اختر ملف",
+  "clipboard_import_supported_file_types": "CSV، XLSX، XLS",
+  "clipboard_import_unsupported_file_type": "نوع ملف غير مدعوم. يرجى استخدام ملفات CSV أو XLSX أو XLS.",
+  "clipboard_import_file_empty": "يبدو أن الملف فارغ.",
+  "clipboard_import_file_read_error": "خطأ في قراءة الملف. يرجى المحاولة مرة أخرى.",
+  "clipboard_import_file_parse_error": "خطأ في تحليل الملف. يرجى التحقق من تنسيق الملف.",
+  "clipboard_import_parsing_file": "جاري معالجة الملف..."
 }
